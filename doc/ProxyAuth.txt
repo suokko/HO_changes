@@ -1,0 +1,137 @@
+Hallo! 
+
+Ich habe bereits so eine Connection realisiert. Meine Klasse, mit der ich das mache werde ich dir gleich einmal hier mitschicken: 
+
+
+Code:	
+
+package hoplugins.utils; 
+
+import java.io.BufferedReader; 
+import java.io.InputStreamReader; 
+import java.io.PrintWriter; 
+import java.net.URL; 
+import java.net.URLConnection; 
+import java.util.Properties; 
+
+import sun.misc.BASE64Encoder; 
+
+public class ConnectionUtil { 
+   private static String sessionID = null; 
+    
+   private boolean useProxy = false; 
+   private String proxyHost = null; 
+   private String proxyPort = null; 
+   private String proxyUser = null; 
+   private String proxyPwd = null; 
+    
+   public ConnectionUtil() { 
+      this(null, null, null, null); 
+   } 
+    
+   public ConnectionUtil(String proxyHost, String proxyPort) { 
+      this(proxyHost, proxyPort, null, null); 
+   } 
+    
+   public ConnectionUtil(String proxyHost, String proxyPort, String proxyUser, String proxyPwd) { 
+      this.useProxy = true; 
+      this.proxyHost = proxyHost; 
+      this.proxyPort = proxyPort; 
+      this.proxyUser = proxyUser; 
+      this.proxyPwd = proxyPwd; 
+   } 
+    
+   public String doCommunicate(String pageURL, String requestString) { 
+      Properties prop = System.getProperties(); 
+      try { 
+         URL url = new URL(pageURL); 
+         URLConnection con = url.openConnection(); 
+          
+         // if we have allready a session -> use this 
+         if(sessionID != null) 
+            con.setRequestProperty("Cookie", sessionID); 
+          
+         con.setDefaultUseCaches(false); 
+         con.setDoInput(true); 
+          
+         if(useProxy == true) { 
+            prop.put("proxySet", "true"); 
+            prop.put("proxyHost", this.proxyHost); 
+            prop.put("proxyPort", this.proxyPort); 
+            System.setProperties(prop); 
+
+            if(this.proxyUser != null && this.proxyPwd != null) { 
+               String pw = this.proxyUser + ":" + this.proxyPwd; 
+               String epw = (new BASE64Encoder()).encode(pw.getBytes()); 
+               con.setRequestProperty("Proxy-Authorization", "Basic " + epw); 
+            } 
+         } else { 
+            prop.put("proxySet", "false"); 
+            System.setProperties(prop); 
+         } 
+          
+         if(requestString != null) { 
+            con.setDoOutput(true); 
+             
+            PrintWriter pw = new PrintWriter(con.getOutputStream()); 
+            pw.write(requestString); 
+            pw.close(); 
+             
+            if(sessionID == null) { 
+               sessionID = con.getHeaderField("Set-Cookie"); 
+               sessionID = sessionID.substring(0, sessionID.indexOf(";")); 
+            } 
+         } else { 
+            con.setDoOutput(false); 
+            sessionID = null; 
+         } 
+          
+         StringBuffer sb = new StringBuffer(); 
+         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8")); 
+         String input; 
+         while((input = in.readLine()) != null) { 
+            sb.append(input); 
+         } 
+          
+         return sb.toString();          
+      } catch (Exception e) { 
+         e.printStackTrace(); 
+         return null; 
+      } 
+   } 
+} 
+	
+
+
+Der Aufruf sieht dann folgendermaßen aus: 
+wenn kein Proxy verwendet werden soll: 
+
+Code:	
+
+ConnectionUtil conUtil = new ConnectionUtil(); 
+conUtil.doCommunicate("http://www.hattrick.org/default.asp", "action=login&loginname=" + hattrickUser + "&password=" + hattrickPwd; 
+	
+
+
+wenn Proxy ohne Authentication verwendet werden soll: 
+
+Code:	
+
+ConnectionUtil conUtil = new ConnectionUtil("proxy", "port"); 
+conUtil.doCommunicate("http://www.hattrick.org/default.asp", "action=login&loginname=" + hattrickUser + "&password=" + hattrickPwd; 
+	
+
+
+wenn Proxy mit Authentication verwendet werden soll: 
+
+Code:	
+
+ConnectionUtil conUtil = new ConnectionUtil("proxy", "port", "user", "pwd"); 
+conUtil.doCommunicate("http://www.hattrick.org/default.asp", "action=login&loginname=" + hattrickUser + "&password=" + hattrickPwd; 
+	
+
+
+Ich hoffe dir, damit geholfen zu haben! 
+
+Grüße 
+Hasel

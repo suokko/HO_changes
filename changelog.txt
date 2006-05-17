@@ -1,0 +1,104 @@
+#04-02-06 fix nethyperon: Fix in case-sensitive table name for SpielerNotizenTable
+
+Version 1.381
+------------
+#28-01-06 enh draghetto : Added Speciality in SkillTester
+#26-01-06 fix draghetto : Fix when 2 trainers on team, best is taken
+#20-01-06 enh ragtime   : User can have there private HO.config for HO.sh 
+#19-01-06 fix draghetto : Training prevision and other bugs
+
+Version 1.38
+------------
+#17-01-06 enh draghetto : match engine
+#16-01-06 fix draghetto : fixed bug in sorting. External Attacker now before reserve keeper
+#12-01-06 ehn draghetto : more feature for the integration.. more to come
+#12-01-06 fix thetom    : fixed bug in getPosition. Calculation now adapted to extended use of additional XXX Role
+#10-01-06 add draghetto : New Configuration table system
+#08-01-06 add draghetto : RatingPrediction offset
+#06-01-06 fix ragtime   : season28 changes fully included in RatingPrediction
+#04-01-06 fix ragtime   : new (buggy!) ratings.dat (+season28 change No.11!)
+#02-01-06 enh draghetto : Statistic is now Week based
+#03-01-06 fix ragtime   : adapted rating prediction (season28 changes 2.-10.!
+#02-01-06 ref draghetto : new script and config dir
+#01-01-06 fix ragtime   : adapted rating prediction with 300 matches (for season27!)
+#27-12-05 enh draghetto : Update to new SVN server
+#23-12-05 enh draghetto : New tactical order, xml exporter new date, new Def attacker bonus in stars
+
+Version 1.37
+------------
+#16-12-05 ref draghetto : mysql case refactoring
+#14-12-05 add fooczy	: column width saved
+
+Version 1.36
+------------
+#26-11-05 add fooczy	: add Notepad in Menu Utility
+#23-11-05 enh draghetto : encrypted EPV and Rating config files
+#23-11-05 enh draghetto : All saved lineup are put into file
+#22-11-05 add draghetto : lineup.dat file for browser plugin
+#19-11-05 add fooczy    : columns configurable
+#11-11-05 add draghetto	: Sub TeamSpirit Added
+#04-11-05 add draghetto	: first version of EPV added
+#03-11-05 enh ragtime	: rating predict. of attack&defense with non-linear model
+#02-11-05 enh draghetto	: HO works with other DB (Tested on MySQL)
+#31-10-05 enh ragtime	: adapted HO.sh for starting with HOLauncher (fixed bug!) 
+#25-10-05 add draghetto	: Moved Training prevision from plugin to main HO code
+#24-10-05 enh draghetto	: New training calculation supported
+#24-10-05 add draghetto	: Auto Update of HO using Refresh menu
+#23-10-05 enh ragtime	: included new forwards towards wing in rating prediction 
+#23-10-05 fix ragtime	: impoved MF prediction for high ratings (non-linear!)
+#23-10-05 enh fooczy	: add forward towards Wing fields to playerDetailsPanel
+#20-10-05 enh draghetto	: MatchPrediction dialog
+#20-10-05 add draghetto	: DB in use error reporting
+#17-10-05 enh draghetto	: improved matchEngine
+#16-10-05 add fooczy	: multi-account and db-locations in user.xml beta version
+#16-10-05 del fooczy	: delete concept with db.properites
+#16-10-05 add fooczy	: variable DB location; ConnectionParameter handle in a properties file
+#12-10-05 add jailbird  : Uploaded Logger which does not yet work. Anyone can help?
+#11-10-05 add fooczy    : UserParameter add methods for loading and saving as a properties file
+#11-10-05 enh draghetto : Players excluded from combobox if exclude last lineup enabled
+#10-10-05 fix draghetto : Updated formulas for KeeperTool and Injury
+
+Version 1.35
+------------
+#05-10-05 add draghetto : titles in Injury and Keeper Tool dialog 
+#05-10-05 add fooczy 	: pluginUpdater integrated
+#05-10-05 enh draghetto : fixed problem with Injury and Keeper Tool dialog 
+#14-09-05 enh ragtime 	: now 6% lower defense rating if "playing creative"
+#02-10-05 add draghetto : injury calculator added
+#21-09-05 fix jailbird 	: bug fixed with match highlights
+#21-09-05 add fooczy 	: the icon-Thing (playing creatively)
+#19-09-05 ref fooczy 	: move static method from Spieler to tools.PlayerHelper
+#19-09-05 enh jailbird 	: enhanced TransferScout to a higher level
+#19-09-05 add draghetto : reverse lineup in lineup tab
+#19-09-05 add draghetto : exclude last lineup in lineup tab
+#19-09-05 add draghetto : keeper tool
+#16-09-05 add fooczy 	: add new MenuItem HO! Plugins
+#16-09-05 fix draghetto : CounterAttack tactic in match simulation
+#16-09-05 add draghetto : number of HO users
+#14-09-05 add ragtime 	: using "playing creative" in defense rating pediction
+#14-09-05 add draghetto : first beta of EPV API
+#14-09-05 fix thetom 	: loddarstats parms adapted to V3.2
+#12-09-05 add draghetto : new plugin menu
+#12-09-05 add Fooczy 	: new creative field
+
+Version 1.34
+------------
+#05-09-04 del draghetto : removed empty hoplugins directory
+#05-09-05 fix thetom 	: Ratingprediction aow & counter attack prediction
+#05-09-05 fix thetom 	: HO.sh updated
+
+Version 1.33
+------------
+#23.08.05 del thetom 	: deleted ho.jarcontent due it is no more supported 
+#23.08.05 add thetom 	: Manifest.mf Manifest file for ho.jar
+#23.08.05 add thetom 	: Readme containing some project information.
+#23.08.05 add thetom 	: deployment directory containing files needed for deploying HO
+#13.08.05 add thetom   	: added changelog to repository
+#11.08.05 add jailbird  : creation of svn repository
+
+
+-------------legend---------------
+add : added some new feature / file
+enh : extended / improved existing feature
+fix : fixed a feature / function
+ref : refactoring
