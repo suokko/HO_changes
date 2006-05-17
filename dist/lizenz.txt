@@ -1,0 +1,26 @@
+Lizenzbedingungen
+Die Anerkennung der folgenden Lizenzbedingungen ist eine Voraussetzung für den Download und die Nutzung des Programmes "Hattrick Organizer" (im folgenden "Software" genannt). Lesen Sie die Bedingungen sorgfältig durch, bevor Sie die Software benutzen. Sollten Sie mit einer der folgenden Bestimmungen nicht einverstanden sein, so benutzen Sie diese Software nicht und löschen Sie sie von Ihren Datenträgern. Die Lizenzbedingungen sind in jedem Download-Paket als Textdatei enthalten.
+Stand: 02.06.2003
+Nutzungserlaubnis
+Die angebotene Software ist Freeware.
+ 
+
+Reproduktion und Weitervertrieb
+Sie sind berechtigt, diese Software mit den damit verbundenen Dateien kostenlos an Dritte weiterzugeben, solange Sie exakte Kopien der auf meiner Homepage zum Download angebotenen Software anfertigen. Die in der Software enthaltene Programmbeschreibung darf frei verwendet werden, um das Programm vorzustellen. Ich verfüge über die erforderlichen Rechte, um diese Vertriebsgenehmigung zu erteilen.
+Es ist nicht erlaubt, die im Paket enthaltenen Dateien in irgendeiner Form zu verändern. Insbesondere dürfen keine Dateien aus den Programmpaketen entfernt oder neue hinzugefügt werden. Die Software sowie die damit verbundenen Dateien dürfen nicht dekompiliert, disassembliert, entschlüsselt oder irgendwie anderweitig verändert werden.
+Wird die Software im Rahmen einer CD weitergegeben, so dürfen Sie für die Produktion der CD, nicht jedoch für die hier lizensierte Software eine Gebühr verlangen. Die Gebühr muss in einem angemessenen Verhältnis zum Aufwand für die Produktion der CD stehen.
+Die Berechtigung zur Weitergabe betrifft ausschließlich das Recht zur Verbreitung der Software auf CD und in Online-Medien (z.B. Free- und Sharewaresammlungen). Alle sonstigen Rechte, insbesondere das Eigentum und das Urheberrecht an der Software verbleiben beim Hersteller.
+Sie dürfen die Software und ihre Dokumentation keinem kommerziellen Programm beilegen, außer mit schriftlicher Erlaubnis des Herstellers.
+Die Weitergabe erfolgt unter ausdrücklicher Anerkennung der Lizenzvereinbarungen.
+ 
+
+Produktunterstützung
+Als Anwender dieser Software haben Sie keinen Anspruch auf Produktunterstützung ("Support") durch den Hersteller. Trotzdem ist der Hersteller bemüht, Supportanfragen zu beantworten. Stellen Sie vor dem Absenden einer Anfrage sicher, dass Sie mit der jeweils aktuellen Version der Software arbeiten. Vielleicht sind auftretende Schwierigkeiten in der aktuellen Programmversion bereits behoben. Geben Sie immer an, auf welche Programmversion sich ihre Anfrage bezieht.
+ 
+
+Beschränkte Gewährleistung
+Diese Software wird bereitgestellt "wie besehen". Soweit gesetzlich zulässig, lehnt der Hersteller alle Gewährleistungen hinsichtlich der Software ab unabhängig davon, ob sie ausdrücklich oder konkludent gewährt worden sind, einschließlich, aber nicht beschränkt auf konkludente Gewährleistungen für Tauglichkeit und Eignung für einen bestimmten Zweck. Soweit gesetzlich zulässig, haften der Hersteller oder seine Lieferanten auf keinen Fall für irgendwelche Schäden gleich welcher Art, einschließlich, aber nicht beschränkt auf direkte oder indirekte Schäden aus Körperverletzung, entgangenem Gewinn, Betriebsunterbrechung, Verlust geschäftlicher Informationen oder irgendeinem anderen Vermögensschaden aus der Benutzung der Software oder aus der Tatsache, dass sie nicht benutzt werden kann, selbst wenn der Hersteller auf die Möglichkeit solcher Schäden hingewiesen worden ist. In keinem Fall kann die Haftung die an den Hersteller gezahlte Gebühr überschreiten. Einige Staaten/Gerichtsbarkeiten gestatten den Ausschluß oder die Begrenzung der Haftung für Folge- oder zufällig entstandene Schäden nicht, in diesen Fällen gelten die vorstehenden Bestimmungen für Sie möglicherweise nicht.
+ 
+
+Sonstige Bestimmungen
+Die Lizenzvereinbarungen für diese Software können von Zeit zu Zeit angepasst werden. Daher gelten stets die mit der vom Kunden eingesetzten Version dieser Software ausgelieferten Lizenzbestimmungen. Sollten eine oder mehrere Bestimmungen dieser Vereinbarungen ungültig sein oder werden, bleiben alle übrigen Bestimmungen der Lizenzvereinbarungen gültig. Ungültige Bestimmungen sind durch solche zu ersetzen, die dem wirtschaftlichen Zweck der ursprünglichen möglichst nahe kommen. Alle erwähnten Warenzeichen und Copyrights gehören ihren jeweiligen Eigentümern. Ist der Kunde Kaufmann, gilt Gerichtsstand Unna, Deutschland.

@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<project name="HO" basedir="." default="release">
+
+	<path id="master-classpath">		
+		<fileset dir="../dist">
+			<include name="hsqldb.jar"/>
+			<include name="jl1.0.jar"/>
+		</fileset>
+	</path>
+
+	<target name="release">
+	    <mkdir dir="tmpBuild"/>
+	    
+	    <javac srcdir="../src/java" destdir="tmpBuild" deprecation="true">
+			<classpath refid="master-classpath"/>
+ 	    </javac>
+	    <jar compress="true" update="false" manifest="manifest.mf" destfile="ho.jar">
+	    	<fileset dir="tmpBuild">
+	    		<include name="de/**"/>
+	    		<include name="plugins/**"/>
+	    		<include name="gui/User*"/>
+	      	</fileset>
+	    </jar>		    
+
+	    <java dir="../proguard/lib/" jar="../proguard/lib/proguard.jar" fork="yes">         
+	    	<arg value="@ho.pro"/>
+       	    </java> 	    
+	    	  
+	    <jar compress="true" update="true" destfile="../proguard/lib/hocoded.jar">
+	    	<fileset dir="../src/conf">
+	    		<include name="gui/bilder/**"/>
+	    		<include name="**/svn"/>
+	      	</fileset>
+	    </jar>	
+	    	      	      			
+	    <zip update="false" destfile="release.zip">
+	    	<fileset dir="../dist">
+	    		<include name="**"/>
+			<exclude name="**/svn/"/>	    		
+			<exclude name="**/updater.jar"/>	    		
+	      	</fileset>
+	    	<fileset dir="../proguard/lib">
+	    		<include name="hocoded.jar" />
+	      	</fileset>	      
+	    	<fileset dir="../.">
+	    		<include name="hoplugins/**" />
+	    		<exclude name="hoplugins/**/cvs" />	    		
+	      	</fileset>	 
+	    	<fileset dir="tmpBuild">
+	    		<include name="HOLauncher.class" />
+	      	</fileset>	    	      	     	
+	    </zip>	
+	    
+	    <delete file="ho.jar"/>
+	    <delete dir="tmpBuild"/>
+	    <delete file="../proguard/lib/hocoded.jar"/>	    	    
+	</target>
+
+	<target name="ratings">
+	    <mkdir dir="tmpBuild"/>
+	    
+	    <javac destdir="tmpBuild" deprecation="true">
+		<src path="../src/java"/>
+    		<src path="../test/java"/>	    
+		<classpath refid="master-classpath"/>
+ 	    </javac>
+
+	    <zip update="false" destfile="ratings.zip">
+	    	<fileset dir="../config/ratings">
+	    		<include name="*.dat"/>
+	    		<exclude name="**/cvs" />	    		
+	      	</fileset>
+	    </zip>	
+ 	    
+	    <java classname="de.hattrickorganizer.encrypt.EncryptRatings">         
+         	<classpath>           
+           	<pathelement path="tmpBuild"/>
+         	</classpath>
+       	    </java> 
+       	    
+       	    	    
+       	    <copy file="ratings.dat" todir="../dist"/>
+	    <copy file="ratings.dat" todir=".."/>
+	    
+	    <delete file="ratings.dat"/>
+	    <delete file="ratings.zip"/>
+	    <delete dir="tmpBuild"/>
+
+	</target>
+	
+	<target name="epv">
+	    <mkdir dir="tmpBuild"/>
+	    
+	    <javac destdir="tmpBuild" deprecation="true">
+		<src path="../src/java"/>
+    		<src path="../test/java"/>	    
+		<classpath refid="master-classpath"/>
+ 	    </javac>
+
+	    <zip update="false" destfile="epv.zip">
+	    	<fileset dir="../config/epv">
+	    		<include name="*.dat"/>
+	    		<exclude name="**/cvs" />	    		
+	      	</fileset>
+	    </zip>	
+ 	    
+	    <java classname="de.hattrickorganizer.encrypt.EncryptEPV">         
+         	<classpath>           
+           	<pathelement path="tmpBuild"/>
+         	</classpath>
+       	    </java> 
+       	    
+       	    	    
+       	    <copy file="epv.dat" todir="../dist"/>
+	    <copy file="epv.dat" todir=".."/>
+	    
+	    <delete file="epv.dat"/>
+	    <delete file="epv.zip"/>
+	    <delete dir="tmpBuild"/>
+
+	</target>
+</project>

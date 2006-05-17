@@ -1,0 +1,26 @@
+Hi Tom,
+
+Here's the engine, as you can see the package say it all about it so i think you know what to do with it :)
+
+I've already moved in plugin directories the 3 Classes i use in my plugin to access the engine
+
+Let me know when a new version of HO is available so i can start integrating TA with HO
+
+Max
+
+P.S. Info for FoolNoon
+TeamRatingPanel 
+- I have defined a IHOMiniModel model that i use to reference the HO model, that is never assigned, you must assign to it the real model
+
+MatchEnginePanel 
+- Right now this Panel is inside a Dialog i open and i don't have any way to control when it is closed, so i have a plubic method i call once the ok button is pressed in the dialog that stops the underground calculation thread! You have to make this private and have it called once the window is closed
+ 
+public static void main(String[] args){ 
+TeamData a = new TeamData("Team1",new TeamRatings(8, 18, 15, 13, 12, 8, 13),IMatchDetails.TAKTIK_KONTER,10); 
+TeamData b = new TeamData("Team2",new TeamRatings(12, 10, 12, 12, 10, 8, 10),IMatchDetails.TAKTIK_NORMAL,0); 
+MatchData match = new MatchData(a,b); 
+for (int i = 0; i < 91; i++) { 
+match.advance(); 
+} 
+match.recap(); 
+}
