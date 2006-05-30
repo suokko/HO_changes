@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: . ./  ./hoplugins ./hsqldb.jar ./jl1.0.jar
-Created-By: HO-Team
-Main-Class: de.hattrickorganizer.HO
-Java-Version: 1.4
-
