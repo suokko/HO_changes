@@ -1,0 +1,7 @@
+HO
+---
+HO.jar ships with lgpl
+
+RatingPrediction
+---
+predicitonCoded.jar is free, but not lgpl. You are not allowed to link predictionCoded.jar with any other programs than HO or HO-Plugins. Redistribution is prohibited. All rights belong to developer.
