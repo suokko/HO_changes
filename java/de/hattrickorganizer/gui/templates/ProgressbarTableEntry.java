@@ -1,0 +1,279 @@
+// %1341813328:de.hattrickorganizer.gui.templates%
+package de.hattrickorganizer.gui.templates;
+
+/**
+ * TODO Missing Class Documentation
+ *
+ * @author TODO Author Name
+ */
+public class ProgressbarTableEntry extends TableEntry {
+    //~ Instance fields ----------------------------------------------------------------------------
+
+    private java.awt.Color m_clBGColor = java.awt.Color.WHITE;
+    private java.awt.Color m_clFGColor = java.awt.Color.BLUE;
+    private javax.swing.JProgressBar m_clProgressbar;
+    private String m_sAddText = "";
+    private double m_dFaktor4Label = 1;
+    private int m_iAktuellerWert;
+    private int m_iMaxWert;
+    private int m_iMinWert;
+    private int m_iNachkommastellen;
+
+    //~ Constructors -------------------------------------------------------------------------------
+
+    /**
+     * Creates a new ProgressbarTableEntry object.
+     *
+     * @param aktuellerwert TODO Missing Constructuor Parameter Documentation
+     * @param minwert TODO Missing Constructuor Parameter Documentation
+     * @param maxwert TODO Missing Constructuor Parameter Documentation
+     * @param nachkommastellen TODO Missing Constructuor Parameter Documentation
+     * @param faktor4Label TODO Missing Constructuor Parameter Documentation
+     * @param bgcolor TODO Missing Constructuor Parameter Documentation
+     * @param fgcolor TODO Missing Constructuor Parameter Documentation
+     * @param addText TODO Missing Constructuor Parameter Documentation
+     */
+    public ProgressbarTableEntry(int aktuellerwert, int minwert, int maxwert, int nachkommastellen,
+                                 double faktor4Label, java.awt.Color bgcolor,
+                                 java.awt.Color fgcolor, String addText) {
+        m_iAktuellerWert = aktuellerwert;
+        m_iMaxWert = maxwert;
+        m_iMinWert = minwert;
+        m_iNachkommastellen = nachkommastellen;
+        m_dFaktor4Label = faktor4Label;
+        m_clBGColor = bgcolor;
+        m_clFGColor = fgcolor;
+        m_sAddText = addText;
+
+        createComponent();
+    }
+
+    //~ Methods ------------------------------------------------------------------------------------
+
+    /**
+     * Setter for property m_clFGColor.
+     *
+     * @param m_sAddText New value of property m_clFGColor.
+     */
+    public final void setAddText(String m_sAddText) {
+        this.m_sAddText = m_sAddText;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_clFGColor.
+     *
+     * @return Value of property m_clFGColor.
+     */
+    public final String getAddText() {
+        return m_sAddText;
+    }
+
+    /**
+     * Setter for property m_iAktuellerWert.
+     *
+     * @param m_iAktuellerWert New value of property m_iAktuellerWert.
+     */
+    public final void setAktuellerWert(int m_iAktuellerWert) {
+        this.m_iAktuellerWert = m_iAktuellerWert;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_iAktuellerWert.
+     *
+     * @return Value of property m_iAktuellerWert.
+     */
+    public final int getAktuellerWert() {
+        return m_iAktuellerWert;
+    }
+
+    /**
+     * Setter for property m_clBGColor.
+     *
+     * @param m_clBGColor New value of property m_clBGColor.
+     */
+    public final void setBGColor(java.awt.Color m_clBGColor) {
+        this.m_clBGColor = m_clBGColor;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_clBGColor.
+     *
+     * @return Value of property m_clBGColor.
+     */
+    public final java.awt.Color getBGColor() {
+        return m_clBGColor;
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @param isSelected TODO Missing Method Parameter Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public final javax.swing.JComponent getComponent(boolean isSelected) {
+        if (isSelected) {
+            m_clProgressbar.setOpaque(true);
+            m_clProgressbar.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+        } else {
+            m_clProgressbar.setOpaque(true);
+            m_clProgressbar.setBackground(m_clBGColor);
+        }
+
+        return m_clProgressbar;
+    }
+
+    /**
+     * Setter for property m_clFGColor.
+     *
+     * @param m_clFGColor New value of property m_clFGColor.
+     */
+    public final void setFGColor(java.awt.Color m_clFGColor) {
+        this.m_clFGColor = m_clFGColor;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_clFGColor.
+     *
+     * @return Value of property m_clFGColor.
+     */
+    public final java.awt.Color getFGColor() {
+        return m_clFGColor;
+    }
+
+    /**
+     * Setter for property m_dFaktor4Label.
+     *
+     * @param m_dFaktor4Label New value of property m_dFaktor4Label.
+     */
+    public final void setFaktor4Label(double m_dFaktor4Label) {
+        this.m_dFaktor4Label = m_dFaktor4Label;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_dFaktor4Label.
+     *
+     * @return Value of property m_dFaktor4Label.
+     */
+    public final double getFaktor4Label() {
+        return m_dFaktor4Label;
+    }
+
+    /**
+     * Setter for property m_iMaxWert.
+     *
+     * @param m_iMaxWert New value of property m_iMaxWert.
+     */
+    public final void setMaxWert(int m_iMaxWert) {
+        this.m_iMaxWert = m_iMaxWert;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_iMaxWert.
+     *
+     * @return Value of property m_iMaxWert.
+     */
+    public final int getMaxWert() {
+        return m_iMaxWert;
+    }
+
+    /**
+     * Setter for property m_iMinWert.
+     *
+     * @param m_iMinWert New value of property m_iMinWert.
+     */
+    public final void setMinWert(int m_iMinWert) {
+        this.m_iMinWert = m_iMinWert;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_iMinWert.
+     *
+     * @return Value of property m_iMinWert.
+     */
+    public final int getMinWert() {
+        return m_iMinWert;
+    }
+
+    /**
+     * Setter for property m_iNachkommastellen.
+     *
+     * @param m_iNachkommastellen New value of property m_iNachkommastellen.
+     */
+    public final void setNachkommastellen(int m_iNachkommastellen) {
+        this.m_iNachkommastellen = m_iNachkommastellen;
+        updateComponent();
+    }
+
+    /**
+     * Getter for property m_iNachkommastellen.
+     *
+     * @return Value of property m_iNachkommastellen.
+     */
+    public final int getNachkommastellen() {
+        return m_iNachkommastellen;
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     */
+    public final void clear() {
+        m_clProgressbar.setString("");
+        m_clProgressbar.setValue(0);
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @param o TODO Missing Method Parameter Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public final int compareTo(Object o) {
+        if (o instanceof ProgressbarTableEntry) {
+            final ProgressbarTableEntry entry = (ProgressbarTableEntry) o;
+
+            if (getAktuellerWert() < entry.getAktuellerWert()) {
+                return -1;
+            } else if (getAktuellerWert() > entry.getAktuellerWert()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     */
+    public final void createComponent() {
+        m_clProgressbar = new javax.swing.JProgressBar();
+        m_clProgressbar.setStringPainted(true);
+        updateComponent();
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     */
+    public final void updateComponent() {
+        m_clProgressbar.setMinimum(m_iMinWert);
+        m_clProgressbar.setMaximum(m_iMaxWert);
+        m_clProgressbar.setValue(m_iAktuellerWert);
+        m_clProgressbar.setBackground(m_clBGColor);
+        m_clProgressbar.setForeground(m_clFGColor);
+
+        //m_clProgressbar.
+        m_clProgressbar.setString(de.hattrickorganizer.tools.Helper.round((m_iAktuellerWert * m_dFaktor4Label),
+                                                                          m_iNachkommastellen)
+                                  + m_sAddText);
+    }
+}
