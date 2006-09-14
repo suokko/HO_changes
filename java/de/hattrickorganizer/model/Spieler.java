@@ -673,8 +673,14 @@ public final class Spieler implements plugins.ISpieler {
         float bonus = 0;
 
         //Bonus = log  (Erfharung) zur Basis 10 * 2 * Userfaktor , 0.0 - 2.6 ca 0 bis 1.5 Sterne
-        bonus = (float) ((Math.log(m_iErfahrung) / Math.log(10)) * 2.0f * FormulaFactors.instance()
-                                                                                        .getErfahrungs_Faktor());
+        
+        /*Modified by Catrone in order to avoid the non-existant value resulting in a player's negative evaluation*/
+		if ( m_iErfahrung == 0 )
+		{
+			return bonus; /*If experience is non-existent, the bonus is zero!*/
+		}
+        
+        bonus = (float) ((Math.log(m_iErfahrung) / Math.log(10)) * 2.0f * FormulaFactors.instance().getErfahrungs_Faktor());
 
         return bonus;
     }
@@ -2409,7 +2415,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         final float koeffizient = (1.0f - ((float) m_iKondition / 8.0f));
-
+        
         float twValue = fo.getTorwartScaled(normalized) * (m_iTorwart
                         + getSubskill4SkillWithOffset(SKILL_TORWART));
         twValue -= (twValue * (koeffizient * FormulaFactors.instance().m_fTW_Kondi_Faktor));
@@ -2444,7 +2450,7 @@ public final class Spieler implements plugins.ISpieler {
         float toValue = (fo.getTorschussScaled(normalized) * (m_iTorschuss
                         + getSubskill4SkillWithOffset(SKILL_TORSCHUSS)));
         toValue -= (toValue * (koeffizient * FormulaFactors.instance().m_fTS_Kondi_Faktor));
-
+        
         return twValue + spValue + veValue + flValue + paValue + stValue + toValue;
     }
 
