@@ -130,6 +130,8 @@ public class Helper extends LanguageFiles {
 
     /** Gesamteinstufung */
     public static final CBItem[] EINSTUFUNG = {
+										    	 new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden),
+										                 ISpieler.katastrophal),
                                                   new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal),
                                                              ISpieler.katastrophal),
                                                   new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich),

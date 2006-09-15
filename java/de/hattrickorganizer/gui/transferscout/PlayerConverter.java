@@ -36,6 +36,7 @@ public class PlayerConverter {
         // Get all skills for active language
         // This should be the same language as in Hattrick
         skills = new ArrayList();
+        skills.add(homodel.getResource().getProperty("nonexisting").toLowerCase());
         skills.add(homodel.getResource().getProperty("katastrophal").toLowerCase());
         skills.add(homodel.getResource().getProperty("erbaermlich").toLowerCase());
         skills.add(homodel.getResource().getProperty("armselig").toLowerCase());
