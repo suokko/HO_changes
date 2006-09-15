@@ -111,6 +111,8 @@ public interface ISpieler {
 
     /** TODO Missing Parameter Documentation */
     public static final int katastrophal = 1;
+    
+    public static final int nicht_vorhanden = 0;
 
     //TR-Typen , unfortunatly doubled due desgin error, main defs ar ein ITeam
 

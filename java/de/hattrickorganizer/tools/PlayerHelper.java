@@ -205,6 +205,12 @@ public class PlayerHelper {
         }
 
         switch (bewertungwert) {
+        
+        	case ISpieler.nicht_vorhanden: {
+        		bewertung = HOVerwaltung.instance().getResource().getProperty("nonexisting");
+        		break;
+        	}
+            
             case ISpieler.katastrophal: {
                 bewertung = HOVerwaltung.instance().getResource().getProperty("katastrophal");
                 break;
