@@ -758,11 +758,11 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
                                                                      47000, 500));
 
         //Forum
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("http://hoforum.natom.de",
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("http://forum.hattrickorganizer.net/index.php",
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      namenColor, 150, 270, 42600,
                                                                      47000, 500));
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("http://hoforum.natom.de",
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("http://forum.hattrickorganizer.net/index.php",
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      Color.black, 153, 273, 42600,
                                                                      47000, 500));

@@ -497,7 +497,7 @@ public final class HOMainFrame
 		}
 		//Forum
 		else if (source.equals(m_jmForumItem)) {
-			HelperWrapper.instance().openUrlInUserBRowser("http://www.wow-auctions.net/ho/phpBB2/index.php");
+			HelperWrapper.instance().openUrlInUserBRowser("http://forum.hattrickorganizer.net/index.php");
 		}
 		//        //chat
 		//        else if ( actionEvent.getSource().equals( m_jmChatItem ) )

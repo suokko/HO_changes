@@ -336,7 +336,7 @@ public final class UpdateController {
 		if (!UpdateHelper
 			.instance()
 			.download(
-			"http://www.wow-auctions.net/ho/download/ho_" + ver + ".zip",
+			"http://prdownloads.sourceforge.net/ho1/HO_" + ver + ".zip?download",
 			tmp)) {
 			wait.setVisible(false);								
 			return;
