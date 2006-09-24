@@ -39,7 +39,7 @@ import de.hattrickorganizer.tools.backup.BackupDialog;
 /**
  * DOCUMENT ME!
  *
- * @author tom
+ * @author tom 
  */
 public class DBZugriff {
 	//~ Static fields/initializers -----------------------------------------------------------------
