@@ -17,7 +17,7 @@ import java.util.List;
 public class PlayerConverter {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** List of all 20 ratings for the active language */
+    /** List of all 21 ratings for the active language */
     private List skills;
     private List skillvalues;
     private List specialities;
@@ -60,7 +60,7 @@ public class PlayerConverter {
 
         skillvalues = new ArrayList();
 		
-        for (int k = 0; k < 20; k++) {
+        for (int k = 0; k < skills.size(); k++) {
             skillvalues.add(new Integer(k));
         }
 
