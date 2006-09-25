@@ -73,7 +73,7 @@ public class Player {
      * @return Returns attack
      */
     public final int getAttack() {
-        return attack + 1;
+        return attack;
     }
 
     /**
@@ -91,7 +91,7 @@ public class Player {
      * @return Returns defense
      */
     public final int getDefense() {
-        return defense + 1;
+        return defense;
     }
 
     /**
@@ -109,7 +109,7 @@ public class Player {
      * @return Returns experience
      */
     public final int getExperience() {
-        return experience + 1;
+        return experience;
     }
 
     /**
@@ -163,7 +163,7 @@ public class Player {
      * @return Returns form
      */
     public final int getForm() {
-        return form + 1;
+        return form;
     }
 
     /**
@@ -181,7 +181,7 @@ public class Player {
      * @return Returns goalKeeping
      */
     public final int getGoalKeeping() {
-        return goalKeeping + 1;
+        return goalKeeping;
     }
 
     /**
@@ -241,7 +241,7 @@ public class Player {
      * @return Returns leadership
      */
     public final int getLeadership() {
-        return leadership + 1;
+        return leadership;
     }
 
     /**
@@ -259,7 +259,7 @@ public class Player {
      * @return Returns passing
      */
     public final int getPassing() {
-        return passing + 1;
+        return passing;
     }
 
     /**
@@ -277,7 +277,7 @@ public class Player {
      * @return Returns playmaking
      */
     public final int getPlayMaking() {
-        return playMaking + 1;
+        return playMaking;
     }
 
     /**
@@ -349,7 +349,7 @@ public class Player {
      * @return Returns setPieces
      */
     public final int getSetPieces() {
-        return setPieces + 1;
+        return setPieces;
     }
 
     /**
@@ -385,7 +385,7 @@ public class Player {
      * @return Returns stamina
      */
     public final int getStamina() {
-        return stamina + 1;
+        return stamina;
     }
 
     /**
@@ -421,7 +421,7 @@ public class Player {
      * @return Returns wing
      */
     public final int getWing() {
-        return wing + 1;
+        return wing;
     }
 
     /**
