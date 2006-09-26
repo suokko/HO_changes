@@ -288,11 +288,72 @@ public class PlayerConverter {
             }
 
             p = 5;
-
+            lines.remove(p);
+            p = 6;
             while (p < lines.size()) {
                 lines.remove(p);
             }
 
+            // Extract minimal bid
+            tmp = lines.get(4).toString();
+            int n = 0;
+            int k = 0;
+            String bid = "";
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) < '0') || (tmp.charAt(k) > '9')) {
+                    n++;
+                } else {
+                    tmp = tmp.substring(n);
+                    break;
+                }
+
+                k++;
+            }
+            k = 0;
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
+                    bid += tmp.charAt(k);
+                }
+
+                k++;
+            }
+
+            // Extract current bid if any
+            tmp = lines.get(lines.size() - 1).toString();
+            n = 0;
+            k = 0;
+            String curbid = "";
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) < '0') || (tmp.charAt(k) > '9')) {
+                    n++;
+                } else {
+                    tmp = tmp.substring(n);
+                    break;
+                }
+
+                k++;
+            }
+            k = 0;
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
+                    curbid += tmp.charAt(k);
+                }
+
+                k++;
+            }
+
+            if (lines.size() >= 6) {
+                if (!curbid.equals("")) {
+                    if (Integer.valueOf(curbid).intValue() >= Integer.valueOf(bid).intValue()) {
+                        lines.remove(4);
+                    } else {
+                        lines.remove(5);
+                    }
+                } else {
+                        lines.remove(5);
+                }
+            }
+            
             //
             // We have now prepared our input to our needs
             // Let's extract the values now
@@ -325,8 +386,7 @@ public class PlayerConverter {
 
             String age = "";
             p = 0;
-
-            int n = 0;
+            n = 0;
 
             while (p < tmp.length()) {
                 if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
@@ -382,8 +442,7 @@ public class PlayerConverter {
 
             String exp = "";
             p = 0;
-
-            int k = 0;
+            k = 0;
 
             while (p < tmp.length()) {
                 if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
@@ -566,7 +625,7 @@ public class PlayerConverter {
             }
 
             if (mytext.indexOf(price) >= 0) {
-                mytext = mytext.substring(0, mytext.indexOf(price));
+                mytext = mytext.substring(0, mytext.lastIndexOf(price));
             }
 
             char[] cs = new char[teamname.length()];
