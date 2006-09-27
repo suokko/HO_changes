@@ -32,22 +32,22 @@ public class ScoutEintrag {
     protected int m_iAlter = 17;
 
     /** Erfahrung */
-    protected int m_iErfahrung = 1;
+    protected int m_iErfahrung = 0;
 
     /** Fluegelspiel */
-    protected int m_iFluegelspiel = 1;
+    protected int m_iFluegelspiel = 0;
 
     /** Form */
-    protected int m_iForm = 1;
+    protected int m_iForm = 0;
 
     /** Kondition */
-    protected int m_iKondition = 1;
+    protected int m_iKondition = 0;
 
     /** Marktwert */
     protected int m_iMarktwert = 1000;
 
     /** Passpiel */
-    protected int m_iPasspiel = 1;
+    protected int m_iPasspiel = 0;
 
     /** PlayerID */
     protected int m_iPlayerID;
@@ -59,19 +59,19 @@ public class ScoutEintrag {
     protected int m_iSpeciality;
 
     /** Spielaufbau */
-    protected int m_iSpielaufbau = 1;
+    protected int m_iSpielaufbau = 0;
 
     /** Standards */
-    protected int m_iStandards = 1;
+    protected int m_iStandards = 0;
 
     /** Torschuss */
-    protected int m_iTorschuss = 1;
+    protected int m_iTorschuss = 0;
 
     /** Torwart */
-    protected int m_iTorwart = 1;
+    protected int m_iTorwart = 0;
 
     /** Verteidigung */
-    protected int m_iVerteidigung = 1;
+    protected int m_iVerteidigung = 0;
 
     //~ Constructors -------------------------------------------------------------------------------
 
