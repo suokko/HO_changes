@@ -624,6 +624,14 @@ public class PlayerConverter {
                 mytext = mytext.substring(p);
             }
 
+            tmp = "";
+            while (price.length() > 3) {
+                tmp = (price.substring(price.length() - 3) + " " + tmp).trim();
+                price = price.substring(0, price.length() - 3);
+            }
+            if (tmp.length() > 0) {
+                price = price + " " + tmp;
+            }
             if (mytext.indexOf(price) >= 0) {
                 mytext = mytext.substring(0, mytext.lastIndexOf(price));
             }
