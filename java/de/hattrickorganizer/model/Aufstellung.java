@@ -13,9 +13,9 @@ import java.util.Vector;
 import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.logik.Aufstellungsassistent;
-import prediction.ratingPredictionManager;
 import prediction.RatingPredictionConfig;
+import prediction.ratingPredictionManager;
+import de.hattrickorganizer.logik.Aufstellungsassistent;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -363,14 +363,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getCentralAttackRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-        double value = Math.max(1, rpManager.getCentralAttackRatings());
-        if (value>1) {
-        	value += UserParameter.instance().middleAttackOffset; 
-        }
-        return value;
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+	        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+	        double value = Math.max(1, rpManager.getCentralAttackRatings());
+	        if (value>1) {
+	        	value += UserParameter.instance().middleAttackOffset; 
+	        }
+	        return value;
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
@@ -379,14 +383,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getCentralDefenseRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-		double value = Math.max(1, rpManager.getCentralDefenseRatings());
-		if (value>1) {
-			value += UserParameter.instance().middleDefenceOffset; 
-		}
-		return value;        
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+	        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+			double value = Math.max(1, rpManager.getCentralDefenseRatings());
+			if (value>1) {
+				value += UserParameter.instance().middleDefenceOffset; 
+			}
+			return value;        
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
@@ -489,14 +497,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getLeftAttackRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-		//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-		double value = Math.max(1, rpManager.getLeftAttackRatings());
-		if (value>1) {
-			value += UserParameter.instance().leftAttackOffset; 
-		}
-		return value;    
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+			double value = Math.max(1, rpManager.getLeftAttackRatings());
+			if (value>1) {
+				value += UserParameter.instance().leftAttackOffset; 
+			}
+			return value;
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
@@ -505,14 +517,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getLeftDefenseRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-		//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-		double value = Math.max(1, rpManager.getLeftDefenseRatings());
-		if (value>1) {
-			value += UserParameter.instance().leftDefenceOffset; 
-		}
-		return value;    
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+			double value = Math.max(1, rpManager.getLeftDefenseRatings());
+			if (value>1) {
+				value += UserParameter.instance().leftDefenceOffset; 
+			}
+			return value;    
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
@@ -650,14 +666,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getMidfieldRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-		//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-		double value = Math.max(1, rpManager.getMFRatings());
-		if (value>1) {
-			value += UserParameter.instance().midfieldOffset; 
-		}
-		return value;    
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+			double value = Math.max(1, rpManager.getMFRatings());
+			if (value>1) {
+				value += UserParameter.instance().midfieldOffset; 
+			}
+			return value;
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
@@ -916,14 +936,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getRightAttackRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-		//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-		double value = Math.max(1, rpManager.getRightAttackRatings());
-		if (value>1) {
-			value += UserParameter.instance().rightAttackfOffset; 
-		}
-		return value;  
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+			double value = Math.max(1, rpManager.getRightAttackRatings());
+			if (value>1) {
+				value += UserParameter.instance().rightAttackfOffset; 
+			}
+			return value;
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
@@ -932,14 +956,18 @@ public  class Aufstellung implements plugins.ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public final double getRightDefenseRating() {
-        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
-		//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
-		double value = Math.max(1, rpManager.getRightDefenseRatings());
-		if (value>1) {
-			value += UserParameter.instance().rightDefenceOffset; 
-		}
-		return value; 
+    	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
+	        final ratingPredictionManager rpManager = new ratingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+	
+			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
+			double value = Math.max(1, rpManager.getRightDefenseRatings());
+			if (value>1) {
+				value += UserParameter.instance().rightDefenceOffset; 
+			}
+			return value; 
+    	} else {
+    		return 0.0d;
+    	}
     }
 
     /**
