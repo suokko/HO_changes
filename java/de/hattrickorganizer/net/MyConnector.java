@@ -209,8 +209,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		final String page = getWebPage(surl, false);
 
 		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance ().getResource ().getProperty("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
-		//return worker.parseMenuFromString(page);
-		return "www202.hattrick.org";
+		return worker.parseMenuFromString(page);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
