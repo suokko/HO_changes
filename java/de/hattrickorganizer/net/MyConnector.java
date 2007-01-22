@@ -13,6 +13,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,7 +29,6 @@ import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.MyHelper;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
@@ -47,6 +50,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
 	private String m_sCookie;
+	private Map cookie = new HashMap();
 	private String m_sProxyHost = "";
 	private String m_sProxyPort = "";
 	private String m_sUserName = "";
@@ -90,7 +94,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 	
 	public static String getHOSite() {
-		return "http://www.hattrickorganizer.net";	
+		return "http://www.hattrickorganizer.de";	
 	}
 	
 	/**
@@ -117,6 +121,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public void setAuthenticated(boolean value) {
 		m_bAuthenticated = value;
 		m_sCookie = null;
+		cookie = new HashMap();
 	}
 
 	/**
@@ -133,7 +138,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @throws IOException TODO Missing Method Exception Documentation
 	 */
-	public void getCookie() throws IOException {
+	private void getCookie() throws IOException {
 		final HttpURLConnection httpurlconnection =
 			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip))
 				.openConnection();
@@ -142,8 +147,29 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		HttpURLConnection.setFollowRedirects(true);
 		httpurlconnection.connect();
-		m_sCookie = httpurlconnection.getHeaderField("set-cookie");
+		extractCookie(httpurlconnection.getHeaderField("set-cookie"));
+				
 		httpurlconnection.disconnect();
+	}
+
+	private void extractCookie(String v) {
+		m_sCookie = v;
+		StringTokenizer st = new StringTokenizer(m_sCookie, ";");
+
+		// the specification dictates that the first name/value pair
+		// in the string is the cookie name and value, so let's handle
+		// them as a special case:
+		if (st.hasMoreTokens()) {
+			String token = st.nextToken();
+			String name = token.substring(0, token.indexOf("="));
+			String value = token.substring(token.indexOf("=") + 1, token.length());
+			cookie.put(name, value);
+		}
+
+		while (st.hasMoreTokens()) {
+			String token = st.nextToken();
+			cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +209,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 		final String page = getWebPage(surl, false);
 
 		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance ().getResource ().getProperty("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
-		return worker.parseMenuFromString(page);
+		//return worker.parseMenuFromString(page);
+		return "www202.hattrick.org";
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -1000,7 +1027,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		//HttpURLConnection httpurlconnection = (HttpURLConnection)(new URL("http://" + gui.UserParameter.instance ().htip + "/Common/default.asp?loginname=" + s + "&password=" + s1 + "&actionType=login&loginType=CHPP")).openConnection();        //"normal§ Password
 		httpurlconnection.setRequestMethod("GET");
-		httpurlconnection.setRequestProperty("cookie", m_sCookie);
+		
+		httpurlconnection.setRequestProperty("cookie", getCookieString());
+		
 		infoHO(httpurlconnection);
 
 		HttpURLConnection.setFollowRedirects(true);
@@ -1010,7 +1039,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		if ((s2 != null) && !s2.equals(m_sCookie)) {
 			//HOLogger.instance().log(getClass()," got a new Cookie: " + s2);
-			m_sCookie = s2;
+			extractCookie(s2);
+			//m_sCookie = s2;
+			
 		}
 
 		final String encoding = httpurlconnection.getContentEncoding();
@@ -1093,6 +1124,20 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return loggedIn;
 	}
 
+	private String getCookieString() {
+		StringBuffer cookieStringBuffer = new StringBuffer();
+		Iterator cookieNames = cookie.keySet().iterator();
+		while (cookieNames.hasNext()) {
+			String cookieName = (String) cookieNames.next();
+			cookieStringBuffer.append(cookieName);
+			cookieStringBuffer.append("=");
+			cookieStringBuffer.append((String) cookie.get(cookieName));
+			if (cookieNames.hasNext())
+				cookieStringBuffer.append(";");					
+		}
+		return cookieStringBuffer.toString();
+	}
+
 	/**
 	 * TODO Missing Method Documentation
 	 *
@@ -1105,9 +1150,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 				true);
 			m_bAuthenticated = false;
 			m_sCookie = null;
+			cookie = new HashMap();
 		} catch (IOException ioexception) {
 			m_bAuthenticated = false;
 			m_sCookie = null;
+			cookie = new HashMap();
 			throw ioexception;
 		}
 	}
@@ -1331,7 +1378,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		infoHO(httpurlconnection);
 
 		if (needCookie) {
-			httpurlconnection.setRequestProperty("cookie", m_sCookie);
+			httpurlconnection.setRequestProperty("cookie", getCookieString());
 		}
 
 		try {
@@ -1351,7 +1398,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 			if ((s1 != null) && !s1.equals(m_sCookie)) {
 				HOLogger.instance().log(getClass()," got a new Cookie: " + s1);
-				m_sCookie = s1;
+				extractCookie(s1);
 			}
 		}
 
