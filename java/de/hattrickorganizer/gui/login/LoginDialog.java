@@ -275,46 +275,10 @@ public class LoginDialog
 			gui.UserParameter.instance().htip = MyConnector.instance().getHattrickIPAdress();
 
 			if (gui.UserParameter.instance().htip.equals("")) {
-				//Info
-				m_clMainFrame.getInfoPanel().setLangInfoText(
-					de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
-						"Downloadfehler")
-						+ ": Error got Empty HT Server IP : "
-						+ gui.UserParameter.instance().htip,
-					de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
-				de.hattrickorganizer.tools.Helper.showMessage(
-					this,
-					de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
-						"Downloadfehler")
-						+ " Error got Empty HT Server IP: "
-						+ gui.UserParameter.instance().htip,
-					de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
-						"Fehler"),
-					JOptionPane.ERROR_MESSAGE);
 				gui.UserParameter.instance().htip = "www.hattrick.org";
-				LoginDialog.loginWaitDialog.setVisible(false);
-				return;
 			}
 		} catch (Exception e) {
-			//Info
-			m_clMainFrame.getInfoPanel().setLangInfoText(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
-					"Downloadfehler")
-					+ " Error retrieving HT Server : "
-					+ gui.UserParameter.instance().htip,
-				de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
-			de.hattrickorganizer.tools.Helper.showMessage(
-				this,
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
-					"Downloadfehler")
-					+ " Error retrieving HT Server : "
-					+ gui.UserParameter.instance().htip,
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
-					"Fehler"),
-				JOptionPane.ERROR_MESSAGE);
 			gui.UserParameter.instance().htip = "www.hattrick.org";
-			LoginDialog.loginWaitDialog.setVisible(false);
-			return;
 		}
 
 		try {
