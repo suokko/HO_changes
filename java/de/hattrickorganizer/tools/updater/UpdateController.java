@@ -487,8 +487,8 @@ public final class UpdateController {
 								if (update == JOptionPane.YES_OPTION) {
 									UpdateController.updateHO(news.getVersion());
 								}
-								break;
 							}
+							break;
 						}
 					case News.EPV :
 						{
@@ -531,6 +531,7 @@ public final class UpdateController {
 								new NewsPanel(news),
 								"Plugin News",
 								JOptionPane.INFORMATION_MESSAGE);
+							break;
 						}
 					case News.MESSAGE :
 						{
@@ -539,6 +540,7 @@ public final class UpdateController {
 								new NewsPanel(news),
 								"HO News",
 								JOptionPane.INFORMATION_MESSAGE);
+							break;
 						}
 					default :
 						{
