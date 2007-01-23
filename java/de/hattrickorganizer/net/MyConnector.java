@@ -94,7 +94,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 	
 	public static String getHOSite() {
-		return "http://www.hattrickorganizer.de";	
+		return "http://www.hattrickorganizer.net";
 	}
 	
 	/**
