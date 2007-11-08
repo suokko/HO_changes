@@ -195,7 +195,7 @@ public class XMLMatchLineupParser {
             //rating nur für leute die gespielt haben
             if ((roleID < 12) || (roleID > 18)) {
                 tmp = (Element) ele.getElementsByTagName("RatingStars").item(0);
-                rating = Double.parseDouble(tmp.getFirstChild().getNodeValue());
+                rating = Double.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",","."));
             }
         }
 
