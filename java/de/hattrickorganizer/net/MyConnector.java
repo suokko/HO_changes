@@ -297,7 +297,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String url =
 			"http://"
 				+ gui.UserParameter.instance().htip
-				+ "/Common/matchesArchive.asp?outputType=XML&actionType=view";
+				+ "/chppxml.axd?file=matchesarchive";
 
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
@@ -328,7 +328,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String url =
 			"http://"
 				+ gui.UserParameter.instance().htip
-				+ "/Common/matchLineup.asp?outputType=XML&actionType=view";
+				+ "/chppxml.axd?file=matchlineup";
 
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
@@ -374,7 +374,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String url =
 			"http://"
 				+ gui.UserParameter.instance().htip
-				+ "/Common/matchDetails.asp?outputType=XML&actionType=view";
+				+ "/chppxml.axd?file=matchdetails";
 
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
@@ -397,7 +397,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String url =
 			"http://"
 				+ gui.UserParameter.instance().htip
-				+ "/Common/matches.asp?outputType=XML&actionType=view";
+				+ "/chppxml.axd?file=matches";
 
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);

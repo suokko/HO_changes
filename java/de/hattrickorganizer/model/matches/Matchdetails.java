@@ -1104,7 +1104,7 @@ public class Matchdetails implements plugins.IMatchDetails {
             String myMatch = "";
 
             try {
-                myMatch = de.hattrickorganizer.net.MyConnector.instance().getHattrickXMLFile("/common/live.asp?outputType=XML&actionType=addMatch&matchID="
+                myMatch = de.hattrickorganizer.net.MyConnector.instance().getHattrickXMLFile("/chppxml.axd?file=live&actionType=addMatch&matchID="
                                                                                              + matchID);
             } catch (Exception ex) {
                 HOLogger.instance().log(getClass(),ex);
@@ -1115,7 +1115,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
             //delete match from ht live
             try {
-                myMatch = de.hattrickorganizer.net.MyConnector.instance().getHattrickXMLFile("/common/live.asp?outputType=XML&actionType=deleteMatch&matchID="
+                myMatch = de.hattrickorganizer.net.MyConnector.instance().getHattrickXMLFile("/chppxml.axd?file=live&actionType=deleteMatch&matchID="
                                                                                              + matchID);
             } catch (Exception ex) {
                 HOLogger.instance().log(getClass(),ex);
@@ -1188,7 +1188,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
                     try {
                         tmpTeam = de.hattrickorganizer.net.MyConnector.instance()
-                                                                      .getHattrickXMLFile("/common/matchLineup.asp?outputType=XML&actionType=view&matchID="
+                                                                      .getHattrickXMLFile("/chppxml.axd?file=matchlineup&&matchID="
                                                                                           + match
                                                                                           + "&teamID="
                                                                                           + homeTeamID);
@@ -1201,7 +1201,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
                     try {
                         tmpTeam = de.hattrickorganizer.net.MyConnector.instance()
-                                                                      .getHattrickXMLFile("/common/matchLineup.asp?outputType=XML&actionType=view&matchID="
+                                                                      .getHattrickXMLFile("/chppxml.axd?file=matchlineup&&matchID="
                                                                                           + match
                                                                                           + "&teamID="
                                                                                           + awayTeamID);

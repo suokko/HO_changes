@@ -66,7 +66,7 @@ public final class HOMainFrame
 	//~ Static fields/initializers -----------------------------------------------------------------
 
 	/** TODO Missing Parameter Documentation */
-	public static final double VERSION = 1.395d;
+	public static final double VERSION = 1.397d;
 
 	/** TODO Missing Parameter Documentation */
 	private static final boolean DEVELOPMENT = false;
