@@ -314,49 +314,57 @@ public final class UpdateController {
 		double version = MyConnector.instance().getLatestVersion();
 		if (version != HOMainFrame.VERSION) {
 			//Infro anzeigen das es ein Update gibt
-			int update =
-				JOptionPane.showConfirmDialog(
+//			int update =
+//				JOptionPane.showConfirmDialog(
+//					HOMainFrame.instance(),
+//					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+//					HOVerwaltung.instance().getResource().getProperty("update")+"?",
+//					JOptionPane.YES_NO_OPTION);
+//
+//			if (update == JOptionPane.YES_OPTION) {
+//				updateHO(version);
+//			}
+			int update = JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
 					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-					HOVerwaltung.instance().getResource().getProperty("update")+"?",
+					"Open page?",
 					JOptionPane.YES_NO_OPTION);
-
 			if (update == JOptionPane.YES_OPTION) {
-				updateHO(version);
-			}
+				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
+			}			
 		}			
 	}
 
-	public static void updateHO(double version) {
-		File tmp = new File("update.zip");
-		String ver = "" + version;
-		ver = ver.replaceAll("\\.", "");
-		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
-		wait.setVisible(true);
-		if (!UpdateHelper
-			.instance()
-			.download(
-			"http://prdownloads.sourceforge.net/ho1/HO_" + ver + ".zip?download",
-			tmp)) {
-			wait.setVisible(false);								
-			return;
-		}
-			wait.setVisible(false);
-		try {
-			ZipHelper zip = new ZipHelper("update.zip");
-			String dir = System.getProperty("user.dir");						
-			zip.extractFile("HO.bat",dir);
-			zip.extractFile("HO.sh",dir);
-			zip.extractFile("HOLauncher.class",dir);
-			zip.close();
-		} catch (Exception e) {
-			return;
-		}
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
-									  JOptionPane.INFORMATION_MESSAGE);
-		
-		HOMainFrame.instance().beenden();	
-	}
+//	public static void updateHO(double version) {
+//		File tmp = new File("update.zip");
+//		String ver = "" + version;
+//		ver = ver.replaceAll("\\.", "");
+//		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+//		wait.setVisible(true);
+//		if (!UpdateHelper
+//			.instance()
+//			.download(
+//			"http://prdownloads.sourceforge.net/ho1/HO_" + ver + ".zip?download",
+//			tmp)) {
+//			wait.setVisible(false);								
+//			return;
+//		}
+//			wait.setVisible(false);
+//		try {
+//			ZipHelper zip = new ZipHelper("update.zip");
+//			String dir = System.getProperty("user.dir");						
+//			zip.extractFile("HO.bat",dir);
+//			zip.extractFile("HO.sh",dir);
+//			zip.extractFile("HOLauncher.class",dir);
+//			zip.close();
+//		} catch (Exception e) {
+//			return;
+//		}
+//		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
+//									  JOptionPane.INFORMATION_MESSAGE);
+//		
+//		HOMainFrame.instance().beenden();	
+//	}
 
 	public static void check4EPVUpdate() {
 		Extension data = MyConnector.instance().getEpvVersion();
@@ -478,15 +486,24 @@ public final class UpdateController {
 					case News.HO :
 						{
 							if (!UserParameter.instance().updateCheck && news.getVersion()>HOMainFrame.VERSION) {
-								int update =
-									JOptionPane.showConfirmDialog(
+//								int update =
+//									JOptionPane.showConfirmDialog(
+//										HOMainFrame.instance(),
+//										HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+//										HOVerwaltung.instance().getResource().getProperty("update") + "?",
+//										JOptionPane.YES_NO_OPTION);
+//								if (update == JOptionPane.YES_OPTION) {
+//									UpdateController.updateHO(news.getVersion());
+//								}
+								int update = JOptionPane.showConfirmDialog(
 										HOMainFrame.instance(),
-										HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-										HOVerwaltung.instance().getResource().getProperty("update") + "?",
+										"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+										"Open page?",
 										JOptionPane.YES_NO_OPTION);
 								if (update == JOptionPane.YES_OPTION) {
-									UpdateController.updateHO(news.getVersion());
+									HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
 								}
+								
 							}
 							break;
 						}

@@ -159,7 +159,7 @@ public class XMLManager implements plugins.IXMLParser {
 
         while (indexComm > -1) {
             final int endComm = inputString.indexOf("-->");
-            final String comment = inputString.substring(indexComm, endComm - indexComm + 3);
+            final String comment = inputString.substring(indexComm, endComm + 3);
             inputString = inputString.replaceAll(comment, "");
             indexComm = inputString.indexOf("<!--");
         }

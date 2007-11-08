@@ -168,7 +168,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		while (st.hasMoreTokens()) {
 			String token = st.nextToken();
-			cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
+            if(token.indexOf("=")>0)
+			    cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
+            else {
+                cookie.put(token, "");                
+            }
 		}
 	}
 
