@@ -20,16 +20,16 @@ public class ArenaSizer {
     //Einnahmen
 
     /** TODO Missing Parameter Documentation */
-    public static final float STEH_EINTRITT = 55f;
+    public static final float STEH_EINTRITT = 65f;
 
     /** TODO Missing Parameter Documentation */
-    public static final float SITZ_EINTRITT = 80f;
+    public static final float SITZ_EINTRITT = 95f;
 
     /** TODO Missing Parameter Documentation */
-    public static final float DACH_EINTRITT = 110f;
+    public static final float DACH_EINTRITT = 130f;
 
     /** TODO Missing Parameter Documentation */
-    public static final float LOGEN_EINTRITT = 275f;
+    public static final float LOGEN_EINTRITT = 325f;
 
     //laufende Kosten
 
@@ -48,19 +48,19 @@ public class ArenaSizer {
     //Bau
 
     /** TODO Missing Parameter Documentation */
-    public static float STEH_AUSBAU = 600f;
+    public static float STEH_AUSBAU = 450f;
 
     /** TODO Missing Parameter Documentation */
-    public static float SITZ_AUSBAU = 1000f;
+    public static float SITZ_AUSBAU = 750f;
 
     /** TODO Missing Parameter Documentation */
-    public static float DACH_AUSBAU = 1200f;
+    public static float DACH_AUSBAU = 900f;
 
     /** TODO Missing Parameter Documentation */
-    public static float LOGEN_AUSBAU = 4000f;
+    public static float LOGEN_AUSBAU = 3000f;
 
     /** TODO Missing Parameter Documentation */
-    public static float ABRISS = 80f;
+    public static float ABRISS = 60f;
 
     /** TODO Missing Parameter Documentation */
     public static float FIXKOSTEN = 100000f;
