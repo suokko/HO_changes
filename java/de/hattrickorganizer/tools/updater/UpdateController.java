@@ -53,7 +53,7 @@ public final class UpdateController {
     private static File tmp = null;
 
     /** TODO Missing Parameter Documentation */
-    public static final String PLUGINS_HOMEPAGE = "http://www.hoplugins.de";
+    public static final String PLUGINS_HOMEPAGE = "http://plugins.hattrickorganizer.net";
 
     /** TODO Missing Parameter Documentation */
     protected static final String WEB_FLAGSFILE = PLUGINS_HOMEPAGE + "/xml/flags.zip";
@@ -312,7 +312,7 @@ public final class UpdateController {
 
 	public static void check4update() {
 		double version = MyConnector.instance().getLatestVersion();
-		if (version != HOMainFrame.VERSION) {
+		if (version > HOMainFrame.VERSION) {
 			//Infro anzeigen das es ein Update gibt
 //			int update =
 //				JOptionPane.showConfirmDialog(
@@ -335,36 +335,36 @@ public final class UpdateController {
 		}			
 	}
 
-//	public static void updateHO(double version) {
-//		File tmp = new File("update.zip");
-//		String ver = "" + version;
-//		ver = ver.replaceAll("\\.", "");
-//		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
-//		wait.setVisible(true);
-//		if (!UpdateHelper
-//			.instance()
-//			.download(
-//			"http://prdownloads.sourceforge.net/ho1/HO_" + ver + ".zip?download",
-//			tmp)) {
-//			wait.setVisible(false);								
-//			return;
-//		}
-//			wait.setVisible(false);
-//		try {
-//			ZipHelper zip = new ZipHelper("update.zip");
-//			String dir = System.getProperty("user.dir");						
-//			zip.extractFile("HO.bat",dir);
-//			zip.extractFile("HO.sh",dir);
-//			zip.extractFile("HOLauncher.class",dir);
-//			zip.close();
-//		} catch (Exception e) {
-//			return;
-//		}
-//		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
-//									  JOptionPane.INFORMATION_MESSAGE);
-//		
-//		HOMainFrame.instance().beenden();	
-//	}
+	public static void updateHO(double version) {
+		File tmp = new File("update.zip");
+		String ver = "" + version;
+		ver = ver.replaceAll("\\.", "");
+		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+		wait.setVisible(true);
+		if (!UpdateHelper
+			.instance()
+			.download(
+			"http://prdownloads.sourceforge.net/ho1/HO_" + ver + ".zip?download",
+			tmp)) {
+			wait.setVisible(false);								
+			return;
+		}
+			wait.setVisible(false);
+		try {
+			ZipHelper zip = new ZipHelper("update.zip");
+			String dir = System.getProperty("user.dir");						
+			zip.extractFile("HO.bat",dir);
+			zip.extractFile("HO.sh",dir);
+			zip.extractFile("HOLauncher.class",dir);
+			zip.close();
+		} catch (Exception e) {
+			return;
+		}
+		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
+									  JOptionPane.INFORMATION_MESSAGE);
+		
+		HOMainFrame.instance().beenden();	
+	}
 
 	public static void check4EPVUpdate() {
 		Extension data = MyConnector.instance().getEpvVersion();
