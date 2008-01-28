@@ -939,7 +939,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
         for (int k = 0; k < m_vHighlights.size(); k++) {
             final MatchHighlight tmp = (MatchHighlight) m_vHighlights.get(k);
-            report.append(tmp.getEventText());
+            report.append(tmp.getEventText()+" ");
         }
 
         return report.toString();
@@ -1410,36 +1410,21 @@ public class Matchdetails implements plugins.IMatchDetails {
                             boolean replaceend = false;
 
                             if (eventtext.indexOf(String.valueOf(subjectplayerid)) >= 0) {
-                                eventtext = eventtext.replaceAll("<A HREF=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + subjectplayerid,
-                                                                 "<B><FONT COLOR=" + subplayerColor);
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/PlayerDetails\\.asp\\?PlayerID="
+                                                                 + subjectplayerid + ".*?>",
+                                                                 "<FONT COLOR=" + subplayerColor + "#><B>");
                                 replaceend = true;
                             }
 
                             if (eventtext.indexOf(String.valueOf(objectplayerid)) >= 0) {
-                                eventtext = eventtext.replaceAll("<A HREF=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + objectplayerid,
-                                                                 "<B><FONT COLOR=" + objplayerColor);
-                                replaceend = true;
-                            }
-
-                            if (eventtext.indexOf(String.valueOf(subjectplayerid)) >= 0) {
-                                eventtext = eventtext.replaceAll("<a href=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + subjectplayerid,
-                                                                 "<B><FONT COLOR=" + subplayerColor);
-                                replaceend = true;
-                            }
-
-                            if (eventtext.indexOf(String.valueOf(objectplayerid)) >= 0) {
-                                eventtext = eventtext.replaceAll("<a href=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + objectplayerid,
-                                                                 "<B><FONT COLOR=" + objplayerColor);
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/PlayerDetails\\.asp\\?PlayerID="
+                                                                 + objectplayerid + ".*?>",
+                                                                 "<FONT COLOR=" + objplayerColor + "#><B>");
                                 replaceend = true;
                             }
 
                             if (replaceend) {
-                                eventtext = eventtext.replaceAll("</A>", "</B></FONT>");
-                                eventtext = eventtext.replaceAll("</a>", "</B></FONT>");
+                                eventtext = eventtext.replaceAll("(?i)</A>", "</B></FONT>");
                             }
                         }
 
@@ -1541,36 +1526,21 @@ public class Matchdetails implements plugins.IMatchDetails {
                             boolean replaceend = false;
 
                             if (eventtext.indexOf(String.valueOf(tmp.getSpielerID())) >= 0) {
-                                eventtext = eventtext.replaceAll("<A HREF=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + tmp.getSpielerID(),
-                                                                 "<B><FONT COLOR=" + subplayerColor);
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/PlayerDetails\\.asp\\?PlayerID="
+                                                                 + tmp.getSpielerID() + ".*?>",
+                                                                 "<FONT COLOR=" + subplayerColor + "#><B>");
                                 replaceend = true;
                             }
 
                             if (eventtext.indexOf(String.valueOf(tmp.getGehilfeID())) >= 0) {
-                                eventtext = eventtext.replaceAll("<A HREF=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + tmp.getGehilfeID(),
-                                                                 "<B><FONT COLOR=" + objplayerColor);
-                                replaceend = true;
-                            }
-
-                            if (eventtext.indexOf(String.valueOf(tmp.getSpielerID())) >= 0) {
-                                eventtext = eventtext.replaceAll("<a href=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + tmp.getSpielerID(),
-                                                                 "<B><FONT COLOR=" + subplayerColor);
-                                replaceend = true;
-                            }
-
-                            if (eventtext.indexOf(String.valueOf(tmp.getGehilfeID())) >= 0) {
-                                eventtext = eventtext.replaceAll("<a href=\"PlayerDetails\\.asp\\?playerID="
-                                                                 + tmp.getGehilfeID(),
-                                                                 "<B><FONT COLOR=" + objplayerColor);
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/PlayerDetails\\.asp\\?PlayerID="
+                                                                 + tmp.getGehilfeID() + ".*?>",
+                                                                 "<FONT COLOR=" + objplayerColor + "#><B>");
                                 replaceend = true;
                             }
 
                             if (replaceend) {
-                                eventtext = eventtext.replaceAll("</A>", "</B></FONT>");
-                                eventtext = eventtext.replaceAll("</a>", "</B></FONT>");
+                                eventtext = eventtext.replaceAll("(?i)</A>", "</B></FONT>");
                             }
 
                             tmp.setSpielerName(subjectplayername);
