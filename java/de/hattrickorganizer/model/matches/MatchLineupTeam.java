@@ -33,6 +33,8 @@ public class MatchLineupTeam implements IMatchLineupTeam {
 
     /** TODO Missing Parameter Documentation */
     protected int m_iTeamID;
+    // null player to fill empty spots
+    private final static MatchLineupPlayer NULLPLAYER = new MatchLineupPlayer(-1, 0, -1, -1d, "", -1, 0, -1);
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -125,8 +127,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
                 return player;
             }
         }
-
-        return null;
+        return NULLPLAYER;
     }
 
     /**
