@@ -1,6 +1,8 @@
 package de.hattrickorganizer.gui.model;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
@@ -55,6 +57,8 @@ final public class UserColumnFactory {
 	
 	/** id from the column DATUM **/
 	public static final int AUTO_LINEUP = 510;
+	public static final DecimalFormat NF = new DecimalFormat("###,##0");
+	
 	
 	/**
 	 * 
@@ -422,6 +426,10 @@ final public class UserColumnFactory {
 	 * @return PlayerColumn[]
 	 */
 	protected static PlayerColumn[] createPlayerAdditionalArray(){
+		
+			final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+			currencyFormat.setMaximumFractionDigits(0);
+		
 			final PlayerColumn [] playerAdditionalArray = new PlayerColumn[11];
 			
 			playerAdditionalArray[0] =new PlayerColumn(10," "," ",0){
@@ -539,7 +547,7 @@ final public class UserColumnFactory {
 				final int gehalt = (int) (player.getGehalt() / gui.UserParameter.instance().faktorGeld);
 				if(playerCompare == null){
 				
-                final String gehalttext = java.text.NumberFormat.getCurrencyInstance().format(gehalt);
+                final String gehalttext = currencyFormat.format(gehalt);
 					return new DoppelLabelEntry(new ColorLabelEntry(gehalt,
                         gehalttext + bonus,
                         ColorLabelEntry.FG_STANDARD,
@@ -553,7 +561,7 @@ final public class UserColumnFactory {
 
                 final int gehalt2 = (int) (playerCompare.getGehalt() / gui.UserParameter
                                                                            .instance().faktorGeld);
-                final String gehalttext = java.text.NumberFormat.getCurrencyInstance().format(gehalt);
+                final String gehalttext = currencyFormat.format(gehalt);
 				return new DoppelLabelEntry(new ColorLabelEntry(gehalt,
 									                        gehalttext + bonus,
 									                        ColorLabelEntry.FG_STANDARD,
@@ -587,8 +595,7 @@ final public class UserColumnFactory {
                             ColorLabelEntry.FG_STANDARD,
                             ColorLabelEntry.BG_STANDARD,
                             SwingConstants.RIGHT),
-                            new ColorLabelEntry(Helper.round(player.getMarkwert()
-                                   - playerCompare.getMarkwert(),0)));
+                            new ColorLabelEntry(player.getMarkwert()-playerCompare.getMarkwert(),0));
 				}
 				public void setSize(TableColumn column){
 					column.setMinWidth(Helper.calcCellWidth(90));
@@ -613,7 +620,7 @@ final public class UserColumnFactory {
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
 					double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
-					final String text = java.text.NumberFormat.getCurrencyInstance().format(price);
+					final String text = currencyFormat.format(price);
 
 					if(playerCompare == null){
 					
@@ -635,15 +642,12 @@ final public class UserColumnFactory {
                             ColorLabelEntry.FG_STANDARD,
                             ColorLabelEntry.BG_STANDARD,
                             SwingConstants.RIGHT),
-                            new ColorLabelEntry( Helper.round(price-compareepv,0))
+                            new ColorLabelEntry( (float)(price-compareepv), 0)
                             );
 				}
 			};
 			return playerAdditionalArray;
 
-			
-			
-			
 	}
 	
 }

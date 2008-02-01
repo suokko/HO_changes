@@ -147,9 +147,6 @@ public class ColorLabelEntry extends TableEntry {
         createComponent();
     }
 
- 
- 
-
     /**
      * ColorLabel mit Image zur Darstellung von Veränderungen
      *
@@ -209,7 +206,15 @@ public class ColorLabelEntry extends TableEntry {
         this(zahl, ColorLabelEntry.BG_STANDARD, false);
     }
 
-
+    /**
+     * ColorLabel zu darstellen von Veränderungen
+     *
+     * @param zahl TODO Missing Constructuor Parameter Documentation
+     * @param nachkommastellen TODO Missing Constructuor Parameter Documentation
+     */
+    public ColorLabelEntry(float zahl, int nachkommastellen) {
+        this(zahl, ColorLabelEntry.BG_STANDARD, false, false, nachkommastellen);
+    }
  
     /**
      * ColorLabel zu darstellen von Veränderungen mit Hintergrundfarbe
@@ -252,7 +257,9 @@ public class ColorLabelEntry extends TableEntry {
             if (currencyformat) {
                 m_sText = "+" + CURRENCYFORMAT.format(m_dZahl);
             } else {
-                m_sText = "+" + Helper.round(m_dZahl, nachkommastellen);
+                //m_sText = "+" + Helper.round(m_dZahl, nachkommastellen);
+                m_sText = "+" + Helper.formatDouble(m_dZahl, nachkommastellen);
+            	
             }
 
             if (!farbeInvertieren) {
@@ -264,7 +271,7 @@ public class ColorLabelEntry extends TableEntry {
             if (currencyformat) {
                 m_sText = "" + CURRENCYFORMAT.format(m_dZahl);
             } else {
-                m_sText = "" + Helper.round(m_dZahl, nachkommastellen);
+                m_sText = Helper.formatDouble(m_dZahl, nachkommastellen);
             }
 
             if (!farbeInvertieren) {

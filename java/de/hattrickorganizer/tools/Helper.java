@@ -2398,6 +2398,26 @@ public class Helper extends LanguageFiles {
         //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
         return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
     }
+    
+    /**
+     * Get the formatted string for the given value using the specified
+     * amount of fraction digits, the system default locale and thousand-separators. 
+     * @param value the original value
+     * @param fractiondigits amount of fraction digits
+     * @return the formatted string
+     */
+    public static String formatDouble(double value, int fractiondigits) {
+    	DecimalFormat df = (DecimalFormat)DecimalFormat.getInstance();
+    	String pattern = "###,###,##0";
+    	if (fractiondigits>0) {
+    		pattern += ".";
+    		for (int i=0; i<fractiondigits; i++) {
+    			pattern += "0";
+    		}
+    	}
+    	df.applyPattern(pattern);
+    	return df.format(value);
+    }
 
     /**
      * Zeigt eine Meldung per JOptionPane an, aber immer nur eine!
