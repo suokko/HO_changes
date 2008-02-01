@@ -849,9 +849,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getWorldDetails() throws IOException {
 		final String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/worldDetails.asp?outputType=XML&actionType=leagues";
+			//"http://" + gui.UserParameter.instance().htip + "/Common/worldDetails.asp?outputType=XML&actionType=leagues";
+			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=worlddetails";
 
 		return getPage(url, true);
 	}
