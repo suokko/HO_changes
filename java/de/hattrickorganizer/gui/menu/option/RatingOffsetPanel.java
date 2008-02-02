@@ -228,19 +228,21 @@ public final class RatingOffsetPanel
 
 	public void calculate() {
 		double offset[][] = RatingOptimizer.optimize((int) numberMatches.getValue());
-		numberMatches.setValue((int) offset[7][0]);
-		for(int i = 0; i < 7; i++) {
-			slider[i].setValue((int) (100 * offset[i][0]));
-			double value = offset[i][1];
-			if (value>0) {				
-				if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-					err[i].setText(Helper.DEFAULTDEZIMALFORMAT.format(value));
+		if (offset.length > 7) { // length=7 -> no matches, nothing to do 
+			numberMatches.setValue((int) offset[7][0]);
+			for(int i = 0; i < 7; i++) {
+				slider[i].setValue((int) (100 * offset[i][0]));
+				double value = offset[i][1];
+				if (value>0) {				
+					if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
+						err[i].setText(Helper.DEFAULTDEZIMALFORMAT.format(value));
+					} else {
+						err[i].setText(Helper.DEZIMALFORMAT_2STELLEN.format(value));
+					}								
 				} else {
-					err[i].setText(Helper.DEZIMALFORMAT_2STELLEN.format(value));
-				}								
-			} else {
-				err[i].setText("");
-			}			
+					err[i].setText("");
+				}			
+			}
 		}
 		stateChanged(null);
 	}
