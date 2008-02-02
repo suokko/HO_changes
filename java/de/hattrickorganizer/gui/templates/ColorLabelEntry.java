@@ -56,8 +56,6 @@ public class ColorLabelEntry extends TableEntry {
 
     /** TODO Missing Parameter Documentation */
     public static final Color BG_FLAGGEN = new Color(222, 218, 210);
-    private static java.text.NumberFormat CURRENCYFORMAT = java.text.NumberFormat
-                                                           .getCurrencyInstance();
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -68,7 +66,7 @@ public class ColorLabelEntry extends TableEntry {
     private JComponent m_clComponent;
     private String m_sText = "";
     private String m_sTooltip = "";
-
+    
     //Für Compareto
     private double m_dZahl = Double.NEGATIVE_INFINITY;
     private int m_iAusrichtung = SwingConstants.LEFT;
@@ -162,38 +160,18 @@ public class ColorLabelEntry extends TableEntry {
             m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell);
         }
 
+        m_iAusrichtung = SwingConstants.RIGHT;
+        m_clBGColor = background;
+    	
+        // Create Component first, then change the text accordingly [setValueAsText()]
+        createComponent();
+
         if ((intzahl == 0) && (Math.abs(zahl) > 0.005d) && mitText) {
             //Keine negativen Subskills, Kann beim Skillup passieren
             final double zahl2 = intzahl + Math.max(0d, zahl);
-
-            String text = "";
-
-            if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-                text = Helper.DEFAULTDEZIMALFORMAT.format(Helper.round(zahl2,gui.UserParameter
-                                                                                            .instance().anzahlNachkommastellen));
-            } else {
-                text = Helper.DEZIMALFORMAT_2STELLEN.format(Helper.round(zahl2,gui.UserParameter
-                                                                                              .instance().anzahlNachkommastellen));
-            }
-
-            if (zahl2 > 0) {
-                m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;
-
-                m_sText = "+" + text;
-            } else if (zahl2 < 0) {
-                m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
-                m_sText = "" + text;
-            } else {
-                m_sText = "";
-                m_clFGColor = ColorLabelEntry.FG_STANDARD;
-            }
+            setValueAsText(zahl2, background, false, false, 
+            		gui.UserParameter.instance().anzahlNachkommastellen, true);
         }
-
-        m_clBGColor = background;
-        m_iAusrichtung = SwingConstants.RIGHT;
-        createComponent();
-
-        //m_clComponent.setFont( m_clComponent.getFont().deriveFont( m_clComponent.getFont().getSize2D() - 4f ) );
     }
 
 
@@ -206,15 +184,7 @@ public class ColorLabelEntry extends TableEntry {
         this(zahl, ColorLabelEntry.BG_STANDARD, false);
     }
 
-    /**
-     * ColorLabel zu darstellen von Veränderungen
-     *
-     * @param zahl TODO Missing Constructuor Parameter Documentation
-     * @param nachkommastellen TODO Missing Constructuor Parameter Documentation
-     */
-    public ColorLabelEntry(float zahl, int nachkommastellen) {
-        this(zahl, ColorLabelEntry.BG_STANDARD, false, false, nachkommastellen);
-    }
+
  
     /**
      * ColorLabel zu darstellen von Veränderungen mit Hintergrundfarbe
@@ -237,7 +207,7 @@ public class ColorLabelEntry extends TableEntry {
      */
     public ColorLabelEntry(float zahl, java.awt.Color bg_color, boolean currencyformat,
                            boolean farbeInvertieren) {
-        this(zahl, bg_color, currencyformat, farbeInvertieren, 1);
+        this(zahl, bg_color, currencyformat, farbeInvertieren, 0);
     }
 
     /**
@@ -251,42 +221,10 @@ public class ColorLabelEntry extends TableEntry {
      */
     public ColorLabelEntry(float zahl, java.awt.Color bg_color, boolean currencyformat,
                            boolean farbeInvertieren, int nachkommastellen) {
-        m_dZahl = zahl;
-
-        if (m_dZahl > 0) {
-            if (currencyformat) {
-                m_sText = "+" + CURRENCYFORMAT.format(m_dZahl);
-            } else {
-                //m_sText = "+" + Helper.round(m_dZahl, nachkommastellen);
-                m_sText = "+" + Helper.formatDouble(m_dZahl, nachkommastellen);
-            	
-            }
-
-            if (!farbeInvertieren) {
-                m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;
-            } else {
-                m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
-            }
-        } else if (m_dZahl < 0) {
-            if (currencyformat) {
-                m_sText = "" + CURRENCYFORMAT.format(m_dZahl);
-            } else {
-                m_sText = Helper.formatDouble(m_dZahl, nachkommastellen);
-            }
-
-            if (!farbeInvertieren) {
-                m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
-            } else {
-                m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;
-            }
-        } else {
-            m_sText = "";
-            m_clFGColor = ColorLabelEntry.FG_STANDARD;
-        }
-
-        m_clBGColor = bg_color;
-        m_iAusrichtung = SwingConstants.RIGHT;
+    	m_iAusrichtung = SwingConstants.RIGHT;
         createComponent();
+    	setValueAsText((double)zahl, bg_color, currencyformat, farbeInvertieren, 
+    			nachkommastellen, true);
     }
 
     /**
@@ -300,24 +238,48 @@ public class ColorLabelEntry extends TableEntry {
      */
     public ColorLabelEntry(double zahl, java.awt.Color bg_color, boolean currencyformat,
                            int nachkommastellen) {
-        m_dZahl = zahl;
-
-        if (currencyformat) {
-            m_sText = CURRENCYFORMAT.format(zahl);
-        } else {
-            final java.text.NumberFormat format = java.text.NumberFormat.getInstance();
-            format.setMaximumFractionDigits(nachkommastellen);
-            format.setMinimumFractionDigits(nachkommastellen);
-
-            m_sText = format.format(zahl).replace(',', '.');
-        }
-
-        m_clBGColor = bg_color;
         m_iAusrichtung = SwingConstants.RIGHT;
         createComponent();
+        setValueAsText(zahl, bg_color, currencyformat, false, nachkommastellen, 
+        		false);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    /**
+     * Sammelmethode, um den Wert aus 'zahl' zu formatieren und die Instanz-Felder 
+     * dementsprechend füllen. 
+     * @param zahl				zu formatierende Zahl
+     * @param bg_color			Hintergrundfarbe
+     * @param currencyformat	as Währung formatieren?
+     * @param farbeInvertieren	Farbe invertieren?
+     * @param nachkommastellen	Anzahl der Nachkommastellen
+     * @param colorAndSign		soll das Feld farbig sein und ein 
+     * 								Vorzeichen bekommen (für Veränderungen)
+     */
+    private void setValueAsText (double zahl, java.awt.Color bg_color, boolean currencyformat,
+            boolean farbeInvertieren, int nachkommastellen, boolean colorAndSign) { 
+        m_dZahl = zahl;
+
+        m_sText = (m_dZahl>0&&colorAndSign?"+":"") + 
+        				Helper.getNumberFormat(currencyformat, nachkommastellen).format(m_dZahl);
+        	
+        if (colorAndSign) {
+        	if (m_dZahl > 0 && !farbeInvertieren ||
+        		m_dZahl < 0 && farbeInvertieren) {
+        		// Positiv
+        		m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;    		
+        	} else if (m_dZahl == 0) {
+        		// Neutral
+        		m_sText = "";
+        		m_clFGColor = ColorLabelEntry.FG_STANDARD;    		
+        	} else {
+        		// Negativ
+        		m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
+        	}
+        }
+        if (bg_color != null)
+        	m_clBGColor = bg_color;
+        updateComponent();
+    }
 
     /**
      * TODO Missing Method Documentation
@@ -347,11 +309,10 @@ public class ColorLabelEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     public final JComponent getComponent(boolean isSelected) {
+        m_clComponent.setOpaque(true);
         if (isSelected) {
-            m_clComponent.setOpaque(true);
             m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
-            m_clComponent.setOpaque(true);
             m_clComponent.setBackground(m_clBGColor);
         }
 
@@ -423,7 +384,7 @@ public class ColorLabelEntry extends TableEntry {
 
  
     /**
-     * Ändern der Grafik der Veränderung
+     * Ändern der Grafik der Veränderung (Für Werte ohne Sub, d.h. Form/Kondi/XP...)
      *
      * @param zahl TODO Missing Constructuor Parameter Documentation
      * @param aktuell TODO Missing Constructuor Parameter Documentation
@@ -435,12 +396,11 @@ public class ColorLabelEntry extends TableEntry {
         if (mitText) {
             setGraphicalChangeValue(zahl);
         }
-
         updateComponent();
     }
 
     /**
-     * Ändern der Grafik der Veränderung
+     * Ändern der Grafik der Veränderung (Für Werte mit Sub, d.h. z.B. die normalen Skills)
      *
      * @param intzahl TODO Missing Constructuor Parameter Documentation
      * @param zahl TODO Missing Constructuor Parameter Documentation
@@ -454,10 +414,8 @@ public class ColorLabelEntry extends TableEntry {
         if (mitText) {
             //Keine negativen Subskills, kann beim Levelup passieren
             final double zahl2 = intzahl + Math.max(0d, zahl);
-
             setGraphicalChangeValue(zahl2);
         }
-
         updateComponent();
     }
 
@@ -466,25 +424,9 @@ public class ColorLabelEntry extends TableEntry {
      * @param number
      */
     private final void setGraphicalChangeValue(double number){
-    	String text = "";
-    	if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-            text = Helper.DEFAULTDEZIMALFORMAT.format(Helper.round(number, gui.UserParameter
-                                                                                        .instance().anzahlNachkommastellen));
-        } else {
-            text = Helper.DEZIMALFORMAT_2STELLEN.format(Helper.round(number,gui.UserParameter
-                                                                                          .instance().anzahlNachkommastellen));
-        }
-    	if (number > 0) {
-            m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;
-
-            m_sText = "+" + text;
-        } else if (number < 0) {
-            m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
-            m_sText = "" + text;
-        } else {
-            m_sText = "";
-            m_clFGColor = ColorLabelEntry.FG_STANDARD;
-        }
+    	setValueAsText(number, null, false, false, 
+    			gui.UserParameter.instance().anzahlNachkommastellen, 
+    			true);
     }
     /**
      * TODO Missing Method Documentation
@@ -538,33 +480,11 @@ public class ColorLabelEntry extends TableEntry {
      * @param showZero TODO Missing Method Parameter Documentation
      */
     public final void setSpezialNumber(int zahl, boolean currencyformat, boolean showZero) {
-        if (zahl > 0) {
-            if (currencyformat) {
-                m_sText = "+" + CURRENCYFORMAT.format(zahl);
-            } else {
-                m_sText = "+" + zahl;
-            }
-
-            m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;
-        } else if (zahl < 0) {
-            if (currencyformat) {
-                m_sText = CURRENCYFORMAT.format(zahl);
-            } else {
-                m_sText = "" + zahl;
-            }
-
-            m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
-        } else {
-            if (showZero) {
-                m_sText = "0";
-            } else {
-                m_sText = "";
-            }
-
-            m_clFGColor = ColorLabelEntry.FG_STANDARD;
-        }
-
-        updateComponent();
+    	setValueAsText(zahl, null, currencyformat, false, 0, true);
+    	if (zahl == 0 && !showZero) {
+    		m_sText = "";
+    		updateComponent();
+    	}
     }
 
     /**
@@ -574,30 +494,9 @@ public class ColorLabelEntry extends TableEntry {
      * @param currencyformat TODO Missing Method Parameter Documentation
      */
     public final void setSpezialNumber(float zahl, boolean currencyformat) {
-        final float newZahl = Helper.round(zahl,gui.UserParameter.instance().anzahlNachkommastellen);
-
-        if (newZahl > 0) {
-            if (currencyformat) {
-                m_sText = "+" + CURRENCYFORMAT.format(newZahl);
-            } else {
-                m_sText = "+" + newZahl;
-            }
-
-            m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;
-        } else if (newZahl < 0) {
-            if (currencyformat) {
-                m_sText = CURRENCYFORMAT.format(newZahl);
-            } else {
-                m_sText = "" + newZahl;
-            }
-
-            m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
-        } else {
-            m_sText = "";
-            m_clFGColor = ColorLabelEntry.FG_STANDARD;
-        }
-
-        updateComponent();
+    	setValueAsText(zahl, null, currencyformat, false, 
+    			gui.UserParameter.instance().anzahlNachkommastellen, 
+    			true);
     }
 
     //----Zugriff----------------------------
