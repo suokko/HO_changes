@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.Window;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -416,6 +417,8 @@ public class Helper extends LanguageFiles {
     public static javax.swing.ImageIcon MINILEER = new javax.swing.ImageIcon(new java.awt.image.BufferedImage(8,
                                                                                                               8,
                                                                                                               java.awt.image.BufferedImage.TYPE_INT_ARGB));
+
+	public static NumberFormat CURRENCYFORMAT = java.text.NumberFormat.getCurrencyInstance();
 
     /** wird für das Parsen in parseFloat benötigt */
     public static DecimalFormat INTEGERFORMAT = new java.text.DecimalFormat("#0");
@@ -2398,26 +2401,6 @@ public class Helper extends LanguageFiles {
         //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
         return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
     }
-    
-    /**
-     * Get the formatted string for the given value using the specified
-     * amount of fraction digits, the system default locale and thousand-separators. 
-     * @param value the original value
-     * @param fractiondigits amount of fraction digits
-     * @return the formatted string
-     */
-    public static String formatDouble(double value, int fractiondigits) {
-    	DecimalFormat df = (DecimalFormat)DecimalFormat.getInstance();
-    	String pattern = "###,###,##0";
-    	if (fractiondigits>0) {
-    		pattern += ".";
-    		for (int i=0; i<fractiondigits; i++) {
-    			pattern += "0";
-    		}
-    	}
-    	df.applyPattern(pattern);
-    	return df.format(value);
-    }
 
     /**
      * Zeigt eine Meldung per JOptionPane an, aber immer nur eine!
@@ -2540,4 +2523,23 @@ public class Helper extends LanguageFiles {
             return "0.0";
         }
     }
+
+	/**
+	 * Returns a NumberFormat based on the parameters
+	 * @param currencyformat
+	 * @param nachkommastellen
+	 * @return
+	 */
+	public static NumberFormat getNumberFormat(boolean currencyformat, int nachkommastellen) {
+		NumberFormat numFormat;
+		if (currencyformat) {
+			numFormat = Helper.CURRENCYFORMAT;
+		} else {
+			numFormat = NumberFormat.getNumberInstance();
+		}
+		numFormat.setMinimumFractionDigits(nachkommastellen);
+		numFormat.setMaximumFractionDigits(nachkommastellen);
+		return numFormat;
+
+	}
 }

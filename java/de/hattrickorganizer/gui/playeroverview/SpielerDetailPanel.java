@@ -442,10 +442,11 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             m_jpRating.setRating(m_clSpieler.getLetzteBewertung());
         }
 
+        final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
+		final String gehalttext = Helper.getNumberFormat(true, 0).format(gehalt);
+		final String tsitext = Helper.getNumberFormat(false, 0).format(m_clSpieler.getMarkwert());
         if (m_clVergleichsSpieler == null) {
             String bonus = "";
-            final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
-            final String gehalttext = java.text.NumberFormat.getCurrencyInstance().format(gehalt);
 
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
@@ -453,9 +454,9 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
                                                                  .getProperty("Bonus") + ")";
             }
 
-            m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
+            m_jpGehalt.getLinks().setText(gehalttext + bonus);
             m_jpGehalt.getRechts().clear();
-            m_jpMartwert.getLinks().setText(m_clSpieler.getMarkwert() + "");
+            m_jpMartwert.getLinks().setText(tsitext);
             m_jpMartwert.getRechts().clear();
             m_jpForm.setText(PlayerHelper.getNameForSkill(m_clSpieler.getForm()) + "");
             m_jpForm2.clear();
@@ -512,20 +513,17 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
 
         } else {
             String bonus = "";
-            final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
             final int gehalt2 = (int) (m_clVergleichsSpieler.getGehalt() / gui.UserParameter
                                                                            .instance().faktorGeld);
-            final String gehalttext = java.text.NumberFormat.getCurrencyInstance().format(gehalt);
-
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
                         + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                  .getProperty("Bonus") + ")";
             }
 
-            m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
+            m_jpGehalt.getLinks().setText(gehalttext + bonus);
             m_jpGehalt.getRechts().setSpezialNumber(gehalt - gehalt2, true);
-            m_jpMartwert.getLinks().setText(m_clSpieler.getMarkwert() + "");
+            m_jpMartwert.getLinks().setText(tsitext);
             m_jpMartwert.getRechts().setSpezialNumber(m_clSpieler.getMarkwert()
                                                       - m_clVergleichsSpieler.getMarkwert(), false);
             m_jpForm.setText(PlayerHelper.getNameForSkill(m_clSpieler.getForm()) + "");
@@ -661,7 +659,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         EPVData data = new EPVData(m_clSpieler);
 
         double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
-        final String epvtext = java.text.NumberFormat.getCurrencyInstance().format(price);
+        final String epvtext = Helper.getNumberFormat(true, 0).format(price);
         m_jpEPV.setText( epvtext );
         
         
