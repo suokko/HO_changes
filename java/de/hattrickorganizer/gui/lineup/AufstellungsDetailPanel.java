@@ -142,9 +142,9 @@ final class AufstellungsDetailPanel extends ImagePanel
                                        };
     private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
 	private CBItem[] TRAINERTYPE = {
-			new CBItem(HOMiniModel.instance().getResource().getProperty("Defensiv"),0),
-			new CBItem(HOMiniModel.instance().getResource().getProperty("balanced"),2),
-			new CBItem(HOMiniModel.instance().getResource().getProperty("Offensiv"),1),
+			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.defensive"),0),
+			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.normal"),2),
+			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.offensive"),1),
 		};    
 	private JComboBox m_jcbTrainerType= new JComboBox(TRAINERTYPE);
     private CBItem[] STIMMUNG = {
