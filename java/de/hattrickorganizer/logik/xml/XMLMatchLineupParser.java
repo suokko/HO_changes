@@ -169,7 +169,9 @@ public class XMLMatchLineupParser {
         tmp = (Element) ele.getElementsByTagName("PlayerID").item(0);
         spielerID = Integer.parseInt(tmp.getFirstChild().getNodeValue());
         tmp = (Element) ele.getElementsByTagName("RoleID").item(0);
-        roleID = Integer.parseInt(tmp.getFirstChild().getNodeValue());
+        if (tmp != null) {
+        	roleID = Integer.parseInt(tmp.getFirstChild().getNodeValue());
+        }
 
         //nur wenn Spieler existiert
         if (spielerID > 0) {
