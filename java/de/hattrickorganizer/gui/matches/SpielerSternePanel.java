@@ -232,7 +232,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         } else if (m_iPositionsID == ISpielerPosition.substBack) {
             m_jlPosition.setText(properties.getProperty("Reserve")
                                  + " "
-                                 + properties.getProperty("Innenverteidiger"));
+                                 + properties.getProperty("defender"));
         } else if (m_iPositionsID == ISpielerPosition.substForward) {
             m_jlPosition.setText(properties.getProperty("Reserve")
                                  + " "

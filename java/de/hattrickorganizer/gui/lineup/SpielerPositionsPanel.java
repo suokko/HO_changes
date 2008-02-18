@@ -486,11 +486,15 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
             	final String nameForPosition = (m_bMinimize)?SpielerPosition.getKurzNameForPosition(position
                         .getPosition()):SpielerPosition.getNameForPosition(position
                                 .getPosition());
-                if ((m_jcbTaktik.getItemCount() == 1)
-                    && (position.getId() != ISpielerPosition.keeper)) {
-                    m_jlPosition.setText(properties.getProperty("Reserve")
-                                         + " "
-                                         + nameForPosition);
+                if ((m_jcbTaktik.getItemCount() == 1) && (position.getId() != ISpielerPosition.keeper)) {
+                	//special naming for reserve defender
+                	if (!m_bMinimize && position.getId() == ISpielerPosition.substBack) {
+                		m_jlPosition.setText(properties.getProperty("Reserve")
+                                + " " + properties.getProperty("defender"));
+                	} else {
+                		m_jlPosition.setText(properties.getProperty("Reserve")
+                                         + " " + nameForPosition);
+                	}
                 } else {
                     m_jlPosition.setText(nameForPosition);
                 }
