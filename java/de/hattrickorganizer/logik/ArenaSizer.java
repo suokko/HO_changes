@@ -26,7 +26,7 @@ public class ArenaSizer {
     public static final float SITZ_EINTRITT = 95f;
 
     /** TODO Missing Parameter Documentation */
-    public static final float DACH_EINTRITT = 130f;
+    public static final float DACH_EINTRITT = 180f;
 
     /** TODO Missing Parameter Documentation */
     public static final float LOGEN_EINTRITT = 325f;
