@@ -11,6 +11,7 @@ import java.util.Hashtable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
@@ -124,7 +125,12 @@ public class xmlEconomyParser {
             ele = (Element) root.getElementsByTagName("SupportersPopularity").item(0);
 
             if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-                hash.put("SupportersPopularity", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            	// workaround for HT bug from 19.02.2008: copy current supporter mood level
+            	String supPop = XMLManager.instance().getFirstChildNodeValue(ele);
+            	if (supPop == null || supPop.trim().equals("")) {
+            		supPop = ""+HOVerwaltung.instance().getModel().getFinanzen().getSupporter();
+            	}
+            	hash.put("SupportersPopularity", supPop);
             }
 
             ele = (Element) root.getElementsByTagName("FanClubSize").item(0);
