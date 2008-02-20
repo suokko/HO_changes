@@ -6,6 +6,7 @@ import plugins.IPlayerData;
 import plugins.ISpieler;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.HOLogger;
 import prediction.EPVCalculator;
 
 /**
@@ -56,7 +57,12 @@ public class EPV implements plugins.IEPV {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final double getPrice(IEPVData data, int week) {    	
-        return EPVCalculator.getInstance().getPrice( data, week, HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate() );		
+    public final double getPrice(IEPVData data, int week) {
+    	try {
+    		return EPVCalculator.getInstance().getPrice( data, week, HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate() );
+    	} catch (Exception e) {
+    		HOLogger.instance().log(EPV.class, e);
+    		return 0d;
+    	}
     }
 }
