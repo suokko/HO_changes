@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Properties;
 
 import javax.swing.JCheckBox;
@@ -178,8 +179,9 @@ public final class LanguagesDialog extends UpdaterDialog {
         Object[][] tmp = new Object[hashi.size()][4];
         boolean enabled = true;
 
-        for (int i = 0; i < tmp.length; i++) {
-            HPLanguageInfo element = (HPLanguageInfo) hashi.elements().nextElement();
+        int i=0;
+        for (Iterator it=hashi.values().iterator(); it.hasNext(); i++) {
+            HPLanguageInfo element = (HPLanguageInfo)it.next();
             tmp[i][1] = getLabel(enabled, element.getFilename());
             tmp[i][2] = getLabel(enabled, "-");
             tmp[i][3] = getLabel(enabled, element.getVersion());
