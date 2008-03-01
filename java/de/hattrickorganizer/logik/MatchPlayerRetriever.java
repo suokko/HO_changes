@@ -415,7 +415,7 @@ public class MatchPlayerRetriever {
 
         for (int i = 0; i < 11; i++) {
             // If playerID==0 red card
-            if (matchPosition[i].getPlayerID() == 0) {
+            if (matchPosition[i] == null || matchPosition[i].getPlayerID() == 0) {
                 // get updated position with sent off data
                 MatchPosition posTmp = getSentOffPLayer(matchId, matchPosition, i, matchLineup,
                                                         playerIds);
