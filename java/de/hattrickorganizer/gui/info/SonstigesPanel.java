@@ -101,8 +101,8 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
                                                                          .getFinanzen();
         m_jpJugend.setText(PlayerHelper.getNameForSkill(verein.getJugend()));
         m_jpFansAnzahl.setText(verein.getFans() + "");
-        m_jpFans.setText(Finanzen.getNameForLevel(finanzen.getSupporter()));
-        m_jpSponsoren.setText(Finanzen.getNameForLevel(finanzen.getSponsoren()));
+        m_jpFans.setText(Finanzen.getNameForLevelFans(finanzen.getSupporter()));
+        m_jpSponsoren.setText(Finanzen.getNameForLevelSponsors(finanzen.getSponsoren()));
         m_jpUngeschlagen.setText(verein.getUngeschlagen() + "");
         m_jpSiegeInFolge.setText(verein.getSiege() + "");
         m_jpAnzahlSpieler.setText(HOVerwaltung.instance().getModel().getAllSpieler().size() + "");

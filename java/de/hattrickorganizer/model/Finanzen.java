@@ -1,47 +1,58 @@
 // %1497023504:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import java.sql.Timestamp;
+
+import de.hattrickorganizer.tools.HOLogger;
+
 /**
  * Enthält alle Informationen zu den Finanzen
  */
 public class Finanzen implements plugins.IFinanzen {
     //~ Static fields/initializers -----------------------------------------------------------------
+	/*
+	 * level constants for the fan mood (SupportersPopularity)
+	 * 11 'Sending love poems to you
+	 * 10 'dancing in the streets
+	 * 9 'high on life
+	 * 8 'delirious
+	 * 7 'satisfied
+	 * 6 'content
+	 * 5 'calm
+	 * 4 'disappointed
+	 * 3 'irritated
+	 * 2 'angry
+	 * 1 'furious
+	 * 0 'murderous
+	 */
+    public static final int LV_fans_vergoettern_Dich = 11;
+    public static final int LV_fans_im_siebten_Himmel = 10;
+    public static final int LV_fans_euphorisch = 9;
+    public static final int LV_fans_uebergluecklich = 8;
+    public static final int LV_fans_gluecklich = 7;
+    public static final int LV_fans_zufrieden = 6;
+    public static final int LV_fans_ruhig = 5;
+    public static final int LV_fans_disappointed = 4; 
+    public static final int LV_fans_irritiert = 3;
+    public static final int LV_fans_angry = 2;
+    public static final int LV_fans_wuetend = 1;
+    public static final int LV_fans_blutduerstig = 0;
+    
+    private static Timestamp DATE_NEW_FANLEVELS = new Timestamp(1203897600000L); // 25.02.2008
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //Konstanten
-    //////////////////////////////////////////////////////////////////////////////// 
-    //Stimmung
+    // level constants for the sponsor mood
+    public static final int LV_spons_vergoettern_Dich = 9;
+    public static final int LV_spons_im_siebten_Himmel = 8;
+    public static final int LV_spons_euphorisch = 7;
+    public static final int LV_spons_uebergluecklich = 6;
+    public static final int LV_spons_gluecklich = 5;
+    public static final int LV_spons_zufrieden = 4;
+    public static final int LV_spons_ruhig = 3;
+    public static final int LV_spons_irritiert = 2;
+    public static final int LV_spons_wuetend = 1;
+    public static final int LV_spons_blutduerstig = 0;
 
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_vergoettern_Dich = 9;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_im_siebten_Himmel = 8;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_euphorisch = 7;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_uebergluecklich = 6;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_gluecklich = 5;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_zufrieden = 4;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_ruhig = 3;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_irritiert = 2;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_wuetend = 1;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int LV_blutduerstig = 0;
-
+    
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Einnahmen Gesamt */
@@ -184,7 +195,7 @@ public class Finanzen implements plugins.IFinanzen {
     /**
      * Creates a new Finanzen object.
      *
-     * @param rs TODO Missing Constructuor Parameter Documentation
+     * @param rs ResultSet with the data from the DB query
      */
     public Finanzen(java.sql.ResultSet rs) {
         try {
@@ -220,6 +231,7 @@ public class Finanzen implements plugins.IFinanzen {
             m_iLetzteKostenGesamt = rs.getInt("LetzteKostGesamt");
             m_iLetzteGewinnVerlust = rs.getInt("LetzteGewinnVerlust");
         } catch (Exception e) {
+        	HOLogger.instance().debug(Finanzen.class, e);
         }
     }
 
@@ -230,46 +242,67 @@ public class Finanzen implements plugins.IFinanzen {
     ////////////////////////////////////////////////////////////////////////////////    
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Get the name string for a numerical level.
      *
-     * @param level TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * @param level the numerical value (e.g. from CHPP interface)
+     * @return the i18n'ed name for the level
      */
-    public static String getNameForLevel(int level) {
+    public static String getNameForLevelFans(int level) {
+    	return getNameForLevelFans(level, null);
+    }
+    
+    /**
+     * Get the name string for a numerical level.
+     *
+     * @param level the numerical value (e.g. from CHPP interface)
+     * @param date time of the match (importand cause the fanlevels changed)
+     * @return the i18n'ed name for the level
+     */
+    public static String getNameForLevelFans(int level, Timestamp date) {
+    	// previously, fan and sponsor levels where identical, 
+    	//   thats why we can simply use sponsor values
+    	if (date != null && date.before(DATE_NEW_FANLEVELS)) {
+    		return getNameForLevelSponsors(level);
+    	}
         switch (level) {
-            case LV_vergoettern_Dich:
+            case LV_fans_vergoettern_Dich:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_sending_love_poems_to_you");
 
-            case LV_im_siebten_Himmel:
+            case LV_fans_im_siebten_Himmel:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_dancing_in_the_streets");
 
-            case LV_euphorisch:
+            case LV_fans_euphorisch:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_high_on_life");
 
-            case LV_uebergluecklich:
+            case LV_fans_uebergluecklich:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_delirious");
 
-            case LV_gluecklich:
+            case LV_fans_gluecklich:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_satisfied");
 
-            case LV_zufrieden:
+            case LV_fans_zufrieden:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_content");
 
-            case LV_ruhig:
+            case LV_fans_ruhig:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_calm");
 
-            case LV_irritiert:
+            case LV_fans_disappointed:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_disappointed");
+                
+            case LV_fans_irritiert:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_irritated");
+                
+            case LV_fans_angry:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_angry");
 
-            case LV_wuetend:
+            case LV_fans_wuetend:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_furious");
 
-            case LV_blutduerstig:
+            case LV_fans_blutduerstig:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_murderous");
 
             default: {
-                if (level > LV_vergoettern_Dich) {
+                if (level > LV_fans_vergoettern_Dich) {
                     return de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                   .getProperty("ss_sending_love_poems_to_you");
                 }
@@ -279,6 +312,55 @@ public class Finanzen implements plugins.IFinanzen {
         }
     }
 
+    /**
+     * Get the name string for a numerical level.
+     *
+     * @param level the numerical value (e.g. from CHPP interface)
+     * @return the i18n'ed name for the level
+     */
+    public static String getNameForLevelSponsors(int level) {
+        switch (level) {
+            case LV_spons_vergoettern_Dich:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_sending_love_poems_to_you");
+
+            case LV_spons_im_siebten_Himmel:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_dancing_in_the_streets");
+
+            case LV_spons_euphorisch:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_high_on_life");
+
+            case LV_spons_uebergluecklich:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_delirious");
+
+            case LV_spons_gluecklich:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_satisfied");
+
+            case LV_spons_zufrieden:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_content");
+
+            case LV_spons_ruhig:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_calm");
+
+            case LV_spons_irritiert:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_irritated");
+                
+            case LV_spons_wuetend:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_furious");
+
+            case LV_spons_blutduerstig:
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_murderous");
+
+            default: {
+                if (level > LV_spons_vergoettern_Dich) {
+                    return de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
+                                                                  .getProperty("ss_sending_love_poems_to_you");
+                }
+
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+            }
+        }
+    }
+    
     /**
      * Setter for property m_iEinnahmenGesamt.
      *
