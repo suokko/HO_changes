@@ -21,7 +21,9 @@ import de.hattrickorganizer.model.matches.MatchKurzInfo;
 public class ArenaStatistikTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	private static final long serialVersionUID = 7187251269604772672L;
+
+	/** TODO Missing Parameter Documentation */
     public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
 
     /** TODO Missing Parameter Documentation */
@@ -557,7 +559,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
             //Fanstimmung
             m_clData[i][12] = new ColorLabelEntry(de.hattrickorganizer.model.Finanzen
-                                                  .getNameForLevel(match.getFanZufriedenheit()),
+                                                  .getNameForLevelFans(match.getFanZufriedenheit(), match.getMatchDateAsTimestamp()),
                                                   ColorLabelEntry.FG_STANDARD, background,
                                                   JLabel.LEFT);
 
