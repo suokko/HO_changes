@@ -68,13 +68,13 @@ public class ArenaSizer {
     //Verteilung
 
     /** TODO Missing Parameter Documentation */
-    public static final float STEH_PROZENT = 62.5f;
+    public static final float STEH_PROZENT = 60.0f;
 
     /** TODO Missing Parameter Documentation */
-    public static final float SITZ_PROZENT = 25.0f;
+    public static final float SITZ_PROZENT = 23.5f;
 
     /** TODO Missing Parameter Documentation */
-    public static final float DACH_PROZENT = 10.0f;
+    public static final float DACH_PROZENT = 14.0f;
 
     /** TODO Missing Parameter Documentation */
     public static final float LOGEN_PROZENT = 2.5f;
