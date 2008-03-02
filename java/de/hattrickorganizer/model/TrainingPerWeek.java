@@ -17,6 +17,7 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
     private int hattrickWeek = -1;
     private int hrfId;
     private int intensity = -1;
+    private int staminaTrainingPart = -1;
     private int typ = -1;
     private int week = -1;
     private int year = -1;
@@ -31,14 +32,15 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
      * @param year
      * @param typ
      * @param intensity
+     * @param staminaTrainingPart
      */
-    public TrainingPerWeek(int week, int year, int typ, int intensity) {
+    public TrainingPerWeek(int week, int year, int typ, int intensity, int staminaTrainingPart) {
         this.week = week;
         this.year = year;
         this.typ = typ;
         this.intensity = intensity;
+        this.staminaTrainingPart = staminaTrainingPart;
     }
-
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -93,6 +95,24 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
      */
     public final int getHrfId() {
         return hrfId;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param staminaTrainingPart
+     */
+    public final void setStaminaTrainingPart(int staminaTrainingPart) {
+        this.staminaTrainingPart = staminaTrainingPart;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return
+     */
+    public final int getStaminaTrainingPart() {
+        return this.staminaTrainingPart;
     }
 
     /**
@@ -158,6 +178,7 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("TrainingPerWeek[");
         buffer.append("intensity = " + intensity);
+        buffer.append(", staminaTrainingPart = " + staminaTrainingPart);
         buffer.append(", typ = " + typ);
         buffer.append(", week = " + week);
         buffer.append(", year = " + year);

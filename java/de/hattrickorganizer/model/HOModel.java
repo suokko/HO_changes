@@ -464,7 +464,9 @@ public class HOModel {
                         player.calcFullSubskills(old, m_clVerein.getCoTrainer(),
                                                  m_clVerein.getTorwartTrainer(),
                                                  getTrainer().getTrainer(),
-                                                 m_clTeam.getTrainingslevel(), calcDate);
+                                                 m_clTeam.getTrainingslevel(), 
+                                                 m_clTeam.getStaminaTrainingPart(),
+                                                 calcDate);
                         break;
                     }
 
@@ -473,7 +475,9 @@ public class HOModel {
                         player.calcIncrementalSubskills(old, m_clVerein.getCoTrainer(),
                                                         m_clVerein.getTorwartTrainer(),
                                                         getTrainer().getTrainer(),
-                                                        m_clTeam.getTrainingslevel(), m_iID);
+                                                        m_clTeam.getTrainingslevel(), 
+                                                        m_clTeam.getStaminaTrainingPart(),
+                                                        m_iID);
                         break;
                     }
 

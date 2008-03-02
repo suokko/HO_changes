@@ -648,6 +648,7 @@ public class ConvertXml2Hrf {
     protected final void createTeam() throws Exception {
         m_sHRFBuffer.append("[team]" + "\n");
         m_sHRFBuffer.append("trLevel=" + m_htTraining.get("TrainingLevel") + "\n");
+        m_sHRFBuffer.append("staminaTrainingPart=" + m_htTraining.get("StaminaTrainingPart") + "\n");
         m_sHRFBuffer.append("trTypeValue=" + m_htTraining.get("TrainingType") + "\n");
         m_sHRFBuffer.append("trType="
                             + de.hattrickorganizer.model.Team.getNameForTraining(Integer.parseInt(m_htTraining.get("TrainingType")

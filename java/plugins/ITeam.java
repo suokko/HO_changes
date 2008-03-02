@@ -299,6 +299,8 @@ public interface ITeam {
      */
     public void setTrainingslevel(int m_iTrainingslevel);
 
+    public void setStaminaTrainingPart(int m_iStaminaTrainingPart);
+
     ////////////////////////////////////////////////////////////////////////////////
     //Accessor
     ////////////////////////////////////////////////////////////////////////////////     
@@ -309,4 +311,7 @@ public interface ITeam {
      * @return Value of property m_iTrainingslevel.
      */
     public int getTrainingslevel();
+    
+    public int getStaminaTrainingPart();
+    
 }

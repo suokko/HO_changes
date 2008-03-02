@@ -22,11 +22,12 @@ public final class FutureTrainingTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[4];
+		columns = new ColumnDescriptor[5];
 		columns[0]= new ColumnDescriptor("TYPE",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("INTENSITY",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("WEEK",Types.INTEGER,false);
 		columns[3]= new ColumnDescriptor("SEASON",Types.INTEGER,false);
+		columns[4] = new ColumnDescriptor("STAMINATRAININGPART",Types.INTEGER,false);
 	}
 	
 	public List getFutureTrainingsVector() {
@@ -43,7 +44,8 @@ public final class FutureTrainingTable extends AbstractTable {
 					train.setTyp(rs.getInt("TYPE")); 
 					train.setIntensitaet(rs.getInt("INTENSITY")); 
 					train.setWeek(rs.getInt("WEEK"));
-					train.setSeason(rs.getInt("SEASON"));						
+					train.setSeason(rs.getInt("SEASON"));
+					train.setStaminaTrainingPart(rs.getInt("STAMINATRAININGPART"));
 					vTrainings.add(train);
 				}
 			}
@@ -96,6 +98,7 @@ public final class FutureTrainingTable extends AbstractTable {
 				train.setWeek(week);
 				train.setSeason(season);
 				train.setIntensitaet(-1);
+				train.setStaminaTrainingPart(-1);
 				train.setTyp(-1);
 				saveFutureTraining(train);				
 			}
@@ -113,12 +116,12 @@ public final class FutureTrainingTable extends AbstractTable {
 	public void saveFutureTraining(IFutureTrainingWeek training) {
 		if (training != null) {
 			String statement =
-				"update "+getTableName()+" set TYPE= " + training.getTyp() + ", INTENSITY=" + training.getIntensitaet() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();
+				"update "+getTableName()+" set TYPE= " + training.getTyp() + ", INTENSITY=" + training.getIntensitaet() + ", STAMINATRAININGPART=" + training.getStaminaTrainingPart() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();
 			int count = adapter.executeUpdate(statement);
 
 			if (count == 0) {
-				adapter.executeUpdate("insert into "+getTableName()+" (TYPE, INTENSITY, WEEK, SEASON) values (" //$NON-NLS-1$
-				+training.getTyp() + ", " + training.getIntensitaet() + ", " + training.getWeek() + ", " + training.getSeason() + ")");
+				adapter.executeUpdate("insert into "+getTableName()+" (TYPE, INTENSITY, WEEK, SEASON, STAMINATRAININGPART) values (" //$NON-NLS-1$
+				+training.getTyp() + ", " + training.getIntensitaet() + ", " + training.getWeek() + ", " + training.getSeason() + "," + training.getStaminaTrainingPart() + ")");
 			}
 
 		}

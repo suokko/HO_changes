@@ -183,7 +183,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	}
 
 	private void updatePoints(int skillIndex) {
-		double length = player.getTrainingLength(getTrainedSkillCode(skillIndex), coTrainer, keeperTrainer, trainer, 100);
+		double length = player.getTrainingLength(getTrainedSkillCode(skillIndex), coTrainer, keeperTrainer, trainer, 100, 0);
 
 		double modifier = ((double) (length + seasonPassed )) / ((double) (length + seasonPassed - 1));
 		int pos = getSkillPosition(skillIndex);
@@ -236,7 +236,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	*/
 	private double getOffset(int skillIndex) {
 		double offset = player.getSubskill4SkillWithOffset(skillIndex);
-		double length = player.getTrainingLength(getTrainedSkillCode(skillIndex), coTrainer, keeperTrainer, trainer, 100);
+		double length = player.getTrainingLength(getTrainedSkillCode(skillIndex), coTrainer, keeperTrainer, trainer, 100, 0);
 		return offset * length;
 	}
 
@@ -250,7 +250,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	private double getTrainingLength(int trType) {		
 		int age = player.getAlter();
 		player.setAlter(age+seasonPassed);		
-		double limit = player.getTrainingLength(trType, coTrainer, keeperTrainer, trainer, 100);
+		double limit = player.getTrainingLength(trType, coTrainer, keeperTrainer, trainer, 100, 0);
 		player.setAlter(age);			
 		return limit;
 	}
@@ -283,8 +283,8 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	* @param tw the training week settings for the considered week
 	*/
 	private void processTraining(int skillIndex, double point, IFutureTrainingWeek tw) {
-		// recalculate point value with the intensity for the current week 			
-		point = (point * tw.getIntensitaet()) / 100d;
+		// recalculate point value with the intensity for the current week
+		point = (point * (tw.getIntensitaet()/100d) * (100d-tw.getStaminaTrainingPart())/100d);
 		int pos = getSkillPosition(skillIndex);
 		finalPoints[pos] = finalPoints[pos] + point;
 

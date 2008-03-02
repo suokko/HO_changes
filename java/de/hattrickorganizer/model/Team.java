@@ -1,6 +1,8 @@
 // %233313029:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import de.hattrickorganizer.tools.HRFFileParser;
+
 /**
  * Enth�lt die Daten des Teams (nicht der Spieler!)
  */
@@ -52,6 +54,8 @@ public final class Team implements plugins.ITeam {
     /** Trainingsintensit�t */
     private int m_iTrainingslevel;
 
+    private int m_iStaminaTrainingPart;
+
     //~ Constructors -------------------------------------------------------------------------------
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -59,6 +63,7 @@ public final class Team implements plugins.ITeam {
     ////////////////////////////////////////////////////////////////////////////////       
     public Team(java.util.Properties properties) throws Exception {
         m_iTrainingslevel = Integer.parseInt(properties.getProperty("trlevel", "0"));
+        m_iStaminaTrainingPart = Integer.parseInt(properties.getProperty("staminatrainingpart", "0"));
         m_sTrainingsArt = properties.getProperty("trtype", "");
 		m_iStimmungInt = Integer.parseInt(properties.getProperty("stamningvalue", "0"));
         m_sStimmung = properties.getProperty("stamning", "");
@@ -83,6 +88,7 @@ public final class Team implements plugins.ITeam {
      */
     public Team(java.sql.ResultSet rs) throws Exception {
         m_iTrainingslevel = rs.getInt("TrainingsIntensitaet");
+        m_iStaminaTrainingPart = rs.getInt("StaminaTrainingPart");
         m_sTrainingsArt = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sTrainingsArt"));
         m_sStimmung = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sStimmung"));
         m_sSelbstvertrauen = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sSelbstvertrauen"));
@@ -464,7 +470,7 @@ public final class Team implements plugins.ITeam {
     public int getTrainingsArtAsInt() {
         return m_iTrainingsArt;
     }
-
+    
     /**
      * Setter for property m_iTrainingslevel.
      *
@@ -472,6 +478,10 @@ public final class Team implements plugins.ITeam {
      */
     public void setTrainingslevel(int m_iTrainingslevel) {
         this.m_iTrainingslevel = m_iTrainingslevel;
+    }
+
+    public void setStaminaTrainingPart(int m_iStaminaTrainingPart) {
+        this.m_iStaminaTrainingPart = m_iStaminaTrainingPart;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -485,6 +495,9 @@ public final class Team implements plugins.ITeam {
      */
     public int getTrainingslevel() {
         return m_iTrainingslevel;
+    }
+    public int getStaminaTrainingPart() {
+        return m_iStaminaTrainingPart;
     }
 	public int getSubStimmung() {
 		return subStimmung;

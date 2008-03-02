@@ -42,6 +42,18 @@ public interface ITrainingWeek {
      */
     public int getHrfId();
 
+	/**
+	* Set the StaminaTrainingPart
+	*
+	* @param intensity
+	*/
+	public void setStaminaTrainingPart(int staminaTrainingPart);
+	/**
+	* Returns the StaminaTrainingPart
+	*
+	* @return intensity
+	*/
+	public int getStaminaTrainingPart();
     /**
      * TODO Missing Method Documentation
      *

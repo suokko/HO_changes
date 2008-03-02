@@ -2,6 +2,18 @@ package plugins;
 
 public interface IFutureTrainingWeek {
 	/**
+	* Set the StaminaTrainingPart
+	*
+	* @param staminaTrainingPart
+	*/
+	public abstract void setStaminaTrainingPart(int staminaTrainingPart);
+	/**
+	* Returns the StaminaTrainingPart
+	*
+	* @return staminaTrainingPart
+	*/
+	public abstract int getStaminaTrainingPart();
+	/**
 	* Set the training intensity
 	*
 	* @param intensity

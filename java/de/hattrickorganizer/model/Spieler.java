@@ -578,8 +578,8 @@ public final class Spieler implements plugins.ISpieler {
 	 * @deprecated
 	 */
 	public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
-								int intensitaet) {
-			return (int) Math.round(getTrainingLength(trTyp,coTrainer,twTrainer,trainerLvl,intensitaet));								
+								int intensitaet, int staminaTrainingPart) {
+			return (int) Math.round(getTrainingLength(trTyp,coTrainer,twTrainer,trainerLvl,intensitaet, staminaTrainingPart));								
 	}
 
     /////////////////////////////////////////////////7
@@ -589,42 +589,42 @@ public final class Spieler implements plugins.ISpieler {
     // @return duration of training based on settings and tr type, calls calcTraining for nested calculation
     ///////////////////////////////////////////////////77
     public double getTrainingLength(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
-                                int intensitaet) {
+                                int intensitaet, int staminaTrainingPart) {
         switch (trTyp) {
             case TORWART:
                 return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter, 
-                                    twTrainer, trainerLvl, intensitaet);
+                                    twTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case ALLGEMEIN:
                 return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter, 
-                                    coTrainer, trainerLvl, intensitaet);
+                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case KONDITION:
                 return gui.UserParameter.instance().DAUER_KONDITION;
 
             case SPIELAUFBAU:
                 return calcTraining(gui.UserParameter.instance().DAUER_SPIELAUFBAU, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case FLUEGELSPIEL:
                 return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case CHANCENVERWERTUNG:
                 return calcTraining(gui.UserParameter.instance().DAUER_CHANCENVERWERTUNG, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case VERTEIDIGUNG:
                 return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case PASSPIEL:
 				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter, 
-								coTrainer, trainerLvl, intensitaet);
+								coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
             
             case TA_STEILPAESSE:
                 return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter, 
-                                    coTrainer, trainerLvl, intensitaet);
+                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case STANDARDS:
 
@@ -633,11 +633,11 @@ public final class Spieler implements plugins.ISpieler {
 
             case TA_ABWEHRVERHALTEN:
                 return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG * 2, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
 			case TA_EXTERNALATTACK:
 				return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL*100d/60d, m_iAlter,
-								 coTrainer, trainerLvl, intensitaet);
+								 coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 								         
             default:
                 return -1;
@@ -2078,13 +2078,14 @@ public final class Spieler implements plugins.ISpieler {
      * @param twTrainer TODO Missing Method Parameter Documentation
      * @param trainerlevel TODO Missing Method Parameter Documentation
      * @param intensitaet TODO Missing Method Parameter Documentation
+     * @param staminaTrainingPart TODO Missing Method Parameter Documentation
      */
     public void calcFullSubskills(java.sql.Timestamp hrftimestamp, int coTrainer, int twTrainer,
-                                  int trainerlevel, int intensitaet) {
+                                  int trainerlevel, int intensitaet, int staminaTrainingPart) {
         final Spieler oldspieler = de.hattrickorganizer.database.DBZugriff.instance()
                                                                           .getSpielerBeforeDate(hrftimestamp,
                                                                                                 getSpielerID());
-        calcFullSubskills(oldspieler, coTrainer, twTrainer, trainerlevel, intensitaet, hrftimestamp);
+        calcFullSubskills(oldspieler, coTrainer, twTrainer, trainerlevel, intensitaet, staminaTrainingPart, hrftimestamp);
     }
 
     /**
@@ -2096,10 +2097,11 @@ public final class Spieler implements plugins.ISpieler {
      * @param twTrainer TODO Missing Constructuor Parameter Documentation
      * @param trainerlevel TODO Missing Constructuor Parameter Documentation
      * @param intensitaet TODO Missing Constructuor Parameter Documentation
+     * @param staminaTrainingPart TODO Missing Constructuor Parameter Documentation
      * @param hrftimestamp TODO Missing Constructuor Parameter Documentation
      */
     public void calcFullSubskills(ISpieler old, int coTrainer, int twTrainer, int trainerlevel,
-                                  int intensitaet, Timestamp hrftimestamp) {
+                                  int intensitaet, int staminaTrainingPart, Timestamp hrftimestamp) {
         final plugins.ITrainingPerPlayer trainingPerPlayer = de.hattrickorganizer.logik.TrainingsManager.instance()
                                                                                                         .calculateFullTrainingForPlayer(this,
                                                                                                                                         de.hattrickorganizer.logik.TrainingsManager.instance()
@@ -2113,7 +2115,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                           coTrainer,
                                                                                                                           twTrainer,
                                                                                                                           trainerlevel,
-                                                                                                                          intensitaet),
+                                                                                                                          intensitaet,
+                                                                                                                          staminaTrainingPart),
                                                                     2);
 
             if (m_dSubTorwart >= 1.0d) {
@@ -2131,7 +2134,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                                coTrainer,
                                                                                                                                twTrainer,
                                                                                                                                trainerlevel,
-                                                                                                                               intensitaet),
+                                                                                                                               intensitaet,
+                                                                                                                               staminaTrainingPart),
                                                                          2);
 
             if (m_dSubVerteidigung >= 1.0d) {
@@ -2149,7 +2153,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                               coTrainer,
                                                                                                                               twTrainer,
                                                                                                                               trainerlevel,
-                                                                                                                              intensitaet),
+                                                                                                                              intensitaet,
+                                                                                                                              staminaTrainingPart),
                                                                         2);
 
             if (m_dSubSpielaufbau >= 1.0d) {
@@ -2167,7 +2172,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                            coTrainer,
                                                                                                                            twTrainer,
                                                                                                                            trainerlevel,
-                                                                                                                           intensitaet),
+                                                                                                                           intensitaet,
+                                                                                                                           staminaTrainingPart),
                                                                      2);
 
             if (m_dSubPasspiel >= 1.0d) {
@@ -2185,7 +2191,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                                coTrainer,
                                                                                                                                twTrainer,
                                                                                                                                trainerlevel,
-                                                                                                                               intensitaet),
+                                                                                                                               intensitaet,
+                                                                                                                               staminaTrainingPart),
                                                                          2);
 
             if (m_dSubFluegelspiel >= 1.0d) {
@@ -2203,7 +2210,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                             coTrainer,
                                                                                                                             twTrainer,
                                                                                                                             trainerlevel,
-                                                                                                                            intensitaet),
+                                                                                                                            intensitaet,
+                                                                                                                            staminaTrainingPart),
                                                                       2);
 
             if (m_dSubTorschuss >= 1.0d) {
@@ -2221,7 +2229,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                             coTrainer,
                                                                                                                             twTrainer,
                                                                                                                             trainerlevel,
-                                                                                                                            intensitaet),
+                                                                                                                            intensitaet,
+                                                                                                                            staminaTrainingPart),
                                                                       2);
 
             if (m_dSubStandards >= 1.0d) {
@@ -2247,7 +2256,7 @@ public final class Spieler implements plugins.ISpieler {
      * @param hrfID TODO Missing Constructuor Parameter Documentation
      */
     public void calcIncrementalSubskills(ISpieler old, int coTrainer, int twTrainer,
-                                         int trainerlevel, int intensitaet, int hrfID) {
+                                         int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
         final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
         final plugins.ITrainingPerPlayer trainingPerPlayer = de.hattrickorganizer.logik.TrainingsManager.instance()
                                                                                                         .calculateWeeklyTrainingForPlayer(this,
@@ -2262,7 +2271,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                           coTrainer,
                                                                                                                           twTrainer,
                                                                                                                           trainerlevel,
-                                                                                                                          intensitaet),
+                                                                                                                          intensitaet,
+                                                                                                                          staminaTrainingPart),
                                                                     2);
             m_dSubTorwart = m_dSubTorwart + old.getSubskill4Pos(SKILL_TORWART);
 
@@ -2279,7 +2289,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                                coTrainer,
                                                                                                                                twTrainer,
                                                                                                                                trainerlevel,
-                                                                                                                               intensitaet),
+                                                                                                                               intensitaet,
+                                                                                                                               staminaTrainingPart),
                                                                          2);
             m_dSubVerteidigung = m_dSubVerteidigung + old.getSubskill4Pos(SKILL_VERTEIDIGUNG);
 
@@ -2296,7 +2307,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                               coTrainer,
                                                                                                                               twTrainer,
                                                                                                                               trainerlevel,
-                                                                                                                              intensitaet),
+                                                                                                                              intensitaet,
+                                                                                                                              staminaTrainingPart),
                                                                         2);
             m_dSubSpielaufbau = m_dSubSpielaufbau + old.getSubskill4Pos(SKILL_SPIELAUFBAU);
 
@@ -2315,7 +2327,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                            coTrainer,
                                                                                                                            twTrainer,
                                                                                                                            trainerlevel,
-                                                                                                                           intensitaet),
+                                                                                                                           intensitaet,
+                                                                                                                           staminaTrainingPart),
                                                                      2);
             m_dSubPasspiel = m_dSubPasspiel + old.getSubskill4Pos(SKILL_PASSSPIEL);
 
@@ -2334,7 +2347,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                                coTrainer,
                                                                                                                                twTrainer,
                                                                                                                                trainerlevel,
-                                                                                                                               intensitaet),
+                                                                                                                               intensitaet,
+                                                                                                                               staminaTrainingPart),
                                                                          2);
             m_dSubFluegelspiel = m_dSubFluegelspiel + old.getSubskill4Pos(SKILL_FLUEGEL);
 
@@ -2353,7 +2367,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                             coTrainer,
                                                                                                                             twTrainer,
                                                                                                                             trainerlevel,
-                                                                                                                            intensitaet),
+                                                                                                                            intensitaet,
+                                                                                                                            staminaTrainingPart),
                                                                       2);
             m_dSubTorschuss = m_dSubTorschuss + old.getSubskill4Pos(SKILL_TORSCHUSS);
 
@@ -2372,7 +2387,8 @@ public final class Spieler implements plugins.ISpieler {
                                                                                                                             coTrainer,
                                                                                                                             twTrainer,
                                                                                                                             trainerlevel,
-                                                                                                                            intensitaet),
+                                                                                                                            intensitaet,
+                                                                                                                            staminaTrainingPart),
                                                                       2);
             m_dSubStandards = m_dSubStandards + old.getSubskill4Pos(SKILL_STANDARDS);
 
@@ -2570,6 +2586,7 @@ public final class Spieler implements plugins.ISpieler {
      * @param anzTrainer TODO Missing Method Parameter Documentation
      * @param trainerLvl TODO Missing Method Parameter Documentation
      * @param intensitaet TODO Missing Method Parameter Documentation
+     * @param staminaTrainingPart TODO Missing Method Parameter Documentation
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -2605,11 +2622,10 @@ public final class Spieler implements plugins.ISpieler {
     
     // new training caculator for testing 
     protected double calcTraining(double dauer, int alter, int anzTrainer, int trainerLvl,
-                               int intensitaet) {
-        float aBonus = 0;
+                               int intensitaet, int staminaTrainingPart) {
         float trBonus = 0;
         float coBonus = 0;
-        float intBonus = 0;       
+        double intBonus = 0;       
         double weeks = 0;
         // percentage increase per year should be different for every TriningType and passed as argument!
         double INCREASE = 8;
@@ -2619,10 +2635,7 @@ public final class Spieler implements plugins.ISpieler {
         
         // THIS SHOULD BE REPLACED BY THE TRAINING MODEL FUNCTION! 
         weeks = dauer * Math.pow(1d+percentage/100d, (double)(alter - 17));
-        
-        // calc bonus as before (just to change not that much in this function ;-))
-        aBonus = (float)(weeks - dauer);
-        
+                
         if (trainerLvl < 8) {
             //faktor optimal 1.0
             trBonus = (7 - trainerLvl) * gui.UserParameter.instance().TrainerFaktor;
@@ -2632,9 +2645,8 @@ public final class Spieler implements plugins.ISpieler {
                   - Helper.getLogarithmus(anzTrainer + 1, 10)) * gui.UserParameter.instance().CoTrainerFaktor;
 
         //faktor optimal 0.1
-        intBonus = ((100 - intensitaet) * gui.UserParameter.instance().IntensitaetFaktor);
-        
-        return dauer + aBonus + trBonus + coBonus + intBonus;
+        intBonus = ((100 - (intensitaet * (100d-staminaTrainingPart)/100d)) * gui.UserParameter.instance().IntensitaetFaktor);
+        return weeks + trBonus + coBonus + intBonus;
     }
 
     /**
