@@ -109,6 +109,8 @@ public class XMLTrainingParser {
             hash.put("TeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("TrainingLevel").item(0);
             hash.put("TrainingLevel", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            ele = (Element) root.getElementsByTagName("StaminaTrainingPart").item(0);
+            hash.put("StaminaTrainingPart", (XMLManager.instance().getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("NewTrainingLevel ").item(0);
 
             if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {

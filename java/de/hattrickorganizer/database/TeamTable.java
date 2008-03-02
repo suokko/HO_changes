@@ -21,7 +21,7 @@ public final class TeamTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[14];
+		columns = new ColumnDescriptor[15];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("TrainingsIntensitaet",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("TrainingsArt",Types.INTEGER,false);
@@ -36,6 +36,7 @@ public final class TeamTable extends AbstractTable {
 		columns[11]= new ColumnDescriptor("iErfahrung451",Types.INTEGER,false);
 		columns[12]= new ColumnDescriptor("iErfahrung532",Types.INTEGER,false);
 		columns[13]= new ColumnDescriptor("iErfahrung343",Types.INTEGER,false);
+		columns[14]= new ColumnDescriptor("StaminaTrainingPart",Types.INTEGER,false);
 	}
 
 	protected String[] getCreateIndizeStatements() {
@@ -58,10 +59,12 @@ public final class TeamTable extends AbstractTable {
 			delete( awhereS, awhereV );
 			//insert vorbereiten
 			statement =
-				"INSERT INTO "+getTableName()+" ( TrainingsIntensitaet , TrainingsArt, sTrainingsArt , iStimmung, sStimmung , iSelbstvertrauen, sSelbstvertrauen , iErfahrung541 , iErfahrung433 , iErfahrung352 , iErfahrung451 , iErfahrung532 , iErfahrung343, HRF_ID ) VALUES(";
+				"INSERT INTO "+getTableName()+" ( TrainingsIntensitaet , StaminaTrainingPart, TrainingsArt, sTrainingsArt , iStimmung, sStimmung , iSelbstvertrauen, sSelbstvertrauen , iErfahrung541 , iErfahrung433 , iErfahrung352 , iErfahrung451 , iErfahrung532 , iErfahrung343, HRF_ID ) VALUES(";
 			statement
 				+= (""
 					+ team.getTrainingslevel()
+					+ ","
+					+ team.getStaminaTrainingPart()
 					+ ","
 					+ team.getTrainingsArtAsInt()
 					+ ",'"

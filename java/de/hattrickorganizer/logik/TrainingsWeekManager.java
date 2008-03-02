@@ -157,6 +157,7 @@ public class TrainingsWeekManager {
 
                 if (trainType != -1) {
                     final int trainIntensitaet = rs.getInt("TRAININGSINTENSITAET");
+                    final int trainStaminaTrainPart = rs.getInt("STAMINATRAININGPART");
                     final int hrfId = rs.getInt("HRF_ID");
 
                     final Timestamp tStamp = rs.getTimestamp("DATUM");
@@ -207,14 +208,14 @@ public class TrainingsWeekManager {
 
                                 if (traincalculated == false) {
                                     final TrainingPerWeek tpw = new TrainingPerWeek(i, trainYear,
-                                                                                    -1, -1);
+                                                                                    -1, -1, -1);
                                     tpw.setHrfId(hrfId);
                                     output.add(tpw);
                                 }
                             } catch (Exception e) {
                                 // Training im InputVektor nicht vorhanden -> leertraining anlegen
                                 // if training not in the input vector -> add empty train
-                                final TrainingPerWeek tpw = new TrainingPerWeek(i, trainYear, -1, -1);
+                                final TrainingPerWeek tpw = new TrainingPerWeek(i, trainYear, -1, -1, -1);
                                 tpw.setHrfId(hrfId);
                                 output.add(tpw);
                             }
@@ -243,14 +244,16 @@ public class TrainingsWeekManager {
                             if (traincalculated == false) {
                                 final TrainingPerWeek t = new TrainingPerWeek(trainWeek, trainYear,
                                                                               trainType,
-                                                                              trainIntensitaet);
+                                                                              trainIntensitaet,
+                                                                              trainStaminaTrainPart);
                                 t.setHrfId(hrfId);
                                 output.add(t);
                             }
                         } catch (Exception e) {
                             final TrainingPerWeek t = new TrainingPerWeek(trainWeek, trainYear,
                                                                           trainType,
-                                                                          trainIntensitaet);
+                                                                          trainIntensitaet,
+                                                                          trainStaminaTrainPart);
                             t.setHrfId(hrfId);
                             output.add(t);
                         }
@@ -327,7 +330,8 @@ public class TrainingsWeekManager {
                                                               trainNumber - index);
             final TrainingPerWeek newTrain = new TrainingPerWeek(train.getWeek(), train.getYear(),
                                                                  train.getTyp(),
-                                                                 train.getIntensitaet());
+                                                                 train.getIntensitaet(),
+                                                                 train.getStaminaTrainingPart());
             newTrain.setHattrickSeason(htDate.getSeason());
             newTrain.setHattrickWeek(htDate.getWeek());
             newTrain.setHrfId(train.getHrfId());

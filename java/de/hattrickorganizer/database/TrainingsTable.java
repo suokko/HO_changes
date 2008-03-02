@@ -15,11 +15,12 @@ public final class TrainingsTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[4];
+		columns = new ColumnDescriptor[5];
 		columns[0]= new ColumnDescriptor("Week",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("Year",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("Typ",Types.INTEGER,false);
 		columns[3]= new ColumnDescriptor("Intensity",Types.INTEGER,false);
+		columns[4]= new ColumnDescriptor("StaminaTrainingPart",Types.INTEGER,false);
 
 	}
 
@@ -35,8 +36,8 @@ public final class TrainingsTable extends AbstractTable {
 
 			delete( awhereS, awhereV );
 			
-			String statement = "INSERT INTO "+getTableName()+" ( Week, Year, Typ, Intensity ) VALUES ( ";
-			statement += (training.getWeek() + ", " + training.getYear() + ", " + training.getTyp() + ", " + training.getIntensitaet() + " )");
+			String statement = "INSERT INTO "+getTableName()+" ( Week, Year, Typ, Intensity, StaminaTrainingPart ) VALUES ( ";
+			statement += (training.getWeek() + ", " + training.getYear() + ", " + training.getTyp() + ", " + training.getIntensitaet() + ", " + training.getStaminaTrainingPart() + " )");
 
 			adapter.executeUpdate(statement);
 		}
@@ -59,7 +60,7 @@ public final class TrainingsTable extends AbstractTable {
 				rs.beforeFirst();
 
 				while (rs.next()) {
-					vTrainings.add(new de.hattrickorganizer.model.TrainingPerWeek(rs.getInt("week"), rs.getInt("year"), rs.getInt("Typ"), rs.getInt("Intensity")));
+					vTrainings.add(new de.hattrickorganizer.model.TrainingPerWeek(rs.getInt("week"), rs.getInt("year"), rs.getInt("Typ"), rs.getInt("Intensity"), rs.getInt("StaminaTrainingPart")));
 				}
 			}
 		} catch (Exception e) {

@@ -46,7 +46,7 @@ public class DBZugriff {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** TODO Missing Parameter Documentation */
-	private static final int DBVersion = 4;
+	private static final int DBVersion = 5;
 
 	/** TODO Missing Parameter Documentation 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -1605,6 +1605,8 @@ public class DBZugriff {
 						updateDBv3();
 					case 3 :	
 						updateDBv4();
+					case 4 :	
+						updateDBv5();
 						
 						//case 2: updateDB_v3(); // For future versions!
 				}
@@ -1736,7 +1738,25 @@ public class DBZugriff {
 		// do version checking again before applying!
 		saveUserParameter("DBVersion", 4);
 	}
-	
+
+	/**
+	 * TODO Missing Method Documentation
+	 *
+	 * @throws Exception TODO Missing Method Exception Documentation
+	 */
+	private void updateDBv5() throws Exception {
+				
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN STAMINATRAININGPART INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE TRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE FUTURETRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
+		m_clJDBCAdapter.executeUpdate("UPDATE FUTURETRAINING SET STAMINATRAININGPART=5");		
+
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		saveUserParameter("DBVersion", 5);
+	}
+
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);

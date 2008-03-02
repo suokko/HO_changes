@@ -10,6 +10,9 @@ import plugins.IFutureTrainingWeek;
  */
 public class FutureTrainingWeek implements IFutureTrainingWeek {
 	
+    /** Training staminaTrainingPart */
+    private int staminaTrainingPart;
+
     /** Training intensity */
     private int intensitaet;
 
@@ -22,6 +25,24 @@ public class FutureTrainingWeek implements IFutureTrainingWeek {
     /** HT week */
     private int week;
 
+    /**
+     * Set the StaminaTrainingPart
+     *
+     * @param staminaTrainingPart
+     */
+    public void setStaminaTrainingPart(int staminaTrainingPart) {
+        this.staminaTrainingPart = staminaTrainingPart;
+    }
+
+    /**
+     * Returns the StaminaTrainingPart
+     *
+     * @return staminaTrainingPart
+     */
+    public int getStaminaTrainingPart() {
+        return staminaTrainingPart;
+    }
+    
     /**
 * Set the training intensity
 *
@@ -113,6 +134,7 @@ public class FutureTrainingWeek implements IFutureTrainingWeek {
 
         buffer.append("HattrickTrainingWeek[");
         buffer.append("intensitaet = " + intensitaet);
+        buffer.append(", staminaTrainingPart  = " + staminaTrainingPart);
         buffer.append(", season = " + season);
         buffer.append(", typ = " + typ);
         buffer.append(", week = " + week);

@@ -276,6 +276,8 @@ public class MatchPlayerRetriever {
     private MatchPosition getSentOffPLayer(int matchId, MatchPosition[] lineup, int position,
                                            ITeamLineup startingLineup, Map playerIds) {
         final MatchPosition matchPosition = lineup[position];
+        
+        if (matchPosition == null) return null;
 
         // Get list of playerID from comment		        
         final String query = "select SPIELERID from MATCHHIGHLIGHTS WHERE MATCHID = " + matchId

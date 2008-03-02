@@ -355,7 +355,8 @@ public class TrainingsManager implements ITrainingsManager {
                         // If player received training for this game and has not received points the the previous
                         if ((value.doubleValue() > 0) && (weekPoints == 0)) {
                             double d = actualTrainValue
-                                       + ((train.getIntensitaet() * value.doubleValue()) / 100);
+                                       + ((train.getIntensitaet() * ((100d-train.getStaminaTrainingPart())/100d) 
+                                    		   * value.doubleValue()) / 100);
 
                             //Setzen der Berechneten Werte f?r den ersten skill
                             //setting calculated values for the primary skill
@@ -372,7 +373,9 @@ public class TrainingsManager implements ITrainingsManager {
                             if (!skilluptime.after(trainingDate.getTime())) {
                                 //Spieler aktuell noch vorhanden //player still in squad
                                 final double d = actualTrainValue2
-                                                 + ((train.getIntensitaet() * p_f_schusstraining_Standard) / 100);
+                                                 + ((train.getIntensitaet() * 
+                                                		 ((100d-train.getStaminaTrainingPart())/100d) *
+                                                		 p_f_schusstraining_Standard) / 100);
 
                                 //SETZTEN Des neuen trainingswertes
                                 //set new train values
@@ -548,7 +551,9 @@ public class TrainingsManager implements ITrainingsManager {
 
                 // If player received training for this game and has not received points the the previous
                 if ((value.doubleValue() > 0) && (weekPoints == 0)) {
-                    double d = ((train.getIntensitaet() * value.doubleValue()) / 100);
+                    double d = ((train.getIntensitaet() * 
+                    			((100d-train.getStaminaTrainingPart())/100d) * 
+                    				value.doubleValue()) / 100);
 
                     //Setzen der Berechneten Werte f?r den ersten skill
                     //setting calculated values for the primary skill
@@ -560,7 +565,9 @@ public class TrainingsManager implements ITrainingsManager {
 
                 //If scoring training is exercised, all players must have 50% Standards training too
                 if (trainskill2 != -1) {
-                    final double d = ((train.getIntensitaet() * p_f_schusstraining_Standard) / 100);
+                    final double d = ((train.getIntensitaet() * 
+                    					((100d-train.getStaminaTrainingPart())/100d) * 
+                    						p_f_schusstraining_Standard) / 100);
 
                     //SETZTEN Des neuen trainingswertes
                     //set new train values
