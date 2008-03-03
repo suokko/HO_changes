@@ -27,15 +27,15 @@ import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
 import de.hattrickorganizer.database.DBZugriff;
-import prediction.ratingPredictionManager;
 import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Team;
+import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.backup.HOZip;
 import de.hattrickorganizer.tools.xml.XMLManager;
-
+import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 
 //implement IPlugin for integration into HO
 //Refreshable to get informed by data updates
@@ -72,7 +72,7 @@ public class XMLExporter  {
             // Date           
             m_clSpinnerModel.setCalendarField(java.util.Calendar.MONTH);
             ((JSpinner.DateEditor) m_jsSpinner.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
-            m_clSpinnerModel.setValue(ratingPredictionManager.LAST_CHANGE);
+            m_clSpinnerModel.setValue(RatingPredictionManager.LAST_CHANGE);
 	
             JFrame owner = HOMiniModel.instance().getGUI().getOwner4Dialog();
             final JDialog dialog = new JDialog(owner, "Export starts at date:");

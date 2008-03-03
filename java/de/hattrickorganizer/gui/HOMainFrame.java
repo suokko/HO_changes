@@ -8,10 +8,10 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.sql.Timestamp;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.InputMap;
@@ -66,7 +66,7 @@ public final class HOMainFrame
 	//~ Static fields/initializers -----------------------------------------------------------------
 
 	/** TODO Missing Parameter Documentation */
-	public static final double VERSION = 1.399d;
+	public static final double VERSION = 1.400d;
 
 	/** TODO Missing Parameter Documentation */
 	private static final boolean DEVELOPMENT = false;
@@ -113,7 +113,7 @@ public final class HOMainFrame
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
-	
+
 	private static int status = READY;
 	//~ Instance fields ----------------------------------------------------------------------------
 
@@ -259,7 +259,10 @@ public final class HOMainFrame
 	//~ Methods ------------------------------------------------------------------------------------
 
 	private String getVersionString() {
-		String txt = String.valueOf(VERSION);
+		NumberFormat nf = NumberFormat.getInstance(Locale.US);
+		nf.setMinimumFractionDigits(3);
+		String txt = nf.format(VERSION);
+
 		if (isDevelopment()) {
 			txt = txt + " DEV";
 		}
@@ -507,7 +510,7 @@ public final class HOMainFrame
 		//                tools.BrowserLauncher.openURL( "http://chat.uin4d.de/" );
 		//            }
 		//            catch ( java.io.IOException ioex )
-		//            {                
+		//            {
 		//            }
 		//        }
 		//Hattrick
@@ -563,7 +566,7 @@ public final class HOMainFrame
 						server.setHOServer(hoServerImp);
 						soms.setChat(hoServerImp);
 
-						//Info String vorbereiten                        
+						//Info String vorbereiten
 						info =
 							team.getTeamName()
 								+ " ("
@@ -587,7 +590,7 @@ public final class HOMainFrame
 							rmiDialog.getPort(),
 							info);
 
-						//man könnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...                        
+						//man könnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...
 					} else {
 						//Fehlermeldung
 					}
@@ -611,7 +614,7 @@ public final class HOMainFrame
 
 						//man könnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
 					} else {
-						//Fehlermeldung                        
+						//Fehlermeldung
 						de.hattrickorganizer.tools.Helper.showMessage(
 							this,
 							HOVerwaltung.instance().getResource().getProperty("KeinServer")
@@ -621,7 +624,7 @@ public final class HOMainFrame
 							HOVerwaltung.instance().getResource().getProperty("Fehler"),
 							JOptionPane.ERROR_MESSAGE);
 
-						//Dialog shutdown                                                
+						//Dialog shutdown
 						soms.setVisible(false);
 						soms.dispose();
 
@@ -676,7 +679,7 @@ public final class HOMainFrame
 		} else if (source.equals(m_jmiPluginsLibrary)) {
 			UpdateController.showPluginUpdaterLibraries();
 		}
-		HOMainFrame.setHOStatus(HOMainFrame.READY);		
+		HOMainFrame.setHOStatus(HOMainFrame.READY);
 	}
 
 	/**
@@ -845,8 +848,8 @@ public final class HOMainFrame
 		//        m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
 		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty("Training") + " 2", m_jpSkillAenderungsPanel );
 		//        //Adden
-		//        m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty("Training"), m_jtpTraining );        
-		//        
+		//        m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty("Training"), m_jtpTraining );
+		//
 		//Transferscout
 		m_jpTransferScout = new TransferScoutPanel();
 
@@ -880,7 +883,7 @@ public final class HOMainFrame
 		   logik.matchEngine.TeamData a = new logik.matchEngine.TeamData("Team1",new logik.matchEngine.TeamRatings(8, 18, 15, 13, 12, 8, 13),plugins.IMatchDetails.TAKTIK_KONTER,10);
 		   logik.matchEngine.TeamData b = new logik.matchEngine.TeamData("Team2",new logik.matchEngine.TeamRatings(12, 10, 12, 12, 10, 8, 10),plugins.IMatchDetails.TAKTIK_NORMAL,0);
 		   //gui.matchprediction.MatchEnginePanel enginepanel    =   new gui.matchprediction.MatchEnginePanel( a, b );
-		
+
 		   JDialog dialog = new JDialog( );
 		   dialog.getContentPane().setLayout( new BorderLayout() );
 		   dialog.getContentPane().add( model.HOMiniModel.instance ().getGUI().createMatchPredictionPanel( a, b ), BorderLayout.CENTER );
@@ -1074,7 +1077,7 @@ public final class HOMainFrame
 
 		m_jmMenuBar.add(m_jmToolsMenu);
 
-		//		Plugin Menu		
+		//		Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
 
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);
@@ -1280,7 +1283,7 @@ public final class HOMainFrame
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////77
-	//helper 
+	//helper
 	/////////////////////////////////////////////////////////////////////////////////////////////////77
 	public void startPluginModuls(
 		de.hattrickorganizer.gui.utils.InterruptionWindow interuptionWindow) {
@@ -1307,8 +1310,8 @@ public final class HOMainFrame
 					final String name =
 						"hoplugins."
 							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-					final Class fileclass = Class.forName(name);					
-					//Das Class-Object definiert kein Interface ... 
+					final Class fileclass = Class.forName(name);
+					//Das Class-Object definiert kein Interface ...
 					if (!fileclass.isInterface()) {
 						//... und ist von ILib abgeleitet
 						if (plugins.ILib.class.isAssignableFrom(fileclass)) {
@@ -1352,8 +1355,8 @@ public final class HOMainFrame
 					final String name =
 						"hoplugins."
 							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-					final Class fileclass = Class.forName(name);					
-					//Das Class-Object definiert kein Interface ... 
+					final Class fileclass = Class.forName(name);
+					//Das Class-Object definiert kein Interface ...
 					if (!fileclass.isInterface()) {
 						//... und ist von IPlugin abgeleitet, nicht die Libs nochmal starten!
 						if (plugins.IPlugin.class.isAssignableFrom(fileclass)
@@ -1423,7 +1426,7 @@ public final class HOMainFrame
 		}
 	}
 
-	//----------------Unused Listener----------------------------    
+	//----------------Unused Listener----------------------------
 	public void windowActivated(java.awt.event.WindowEvent windowEvent) {
 	}
 
@@ -1437,7 +1440,7 @@ public final class HOMainFrame
 		System.exit(0);
 	}
 
-	//----------------Listener--------------------------------------    
+	//----------------Listener--------------------------------------
 
 	/**
 	 * Beenden von HO
@@ -1682,10 +1685,10 @@ public final class HOMainFrame
 			}
 		}
 
-		// Set HOE file		
+		// Set HOE file
 		FileExtensionManager.createDirFile();
-		
-		// Usermanagement Login-Dialog 
+
+		// Usermanagement Login-Dialog
 		try {
 			if (!User.getCurrentUser().isSingleUser()) {
 				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
@@ -1725,7 +1728,7 @@ public final class HOMainFrame
 			buffy.close();
 
 			if (ids.size() > 0) {
-				//Math.floor(Math.random()*10)                
+				//Math.floor(Math.random()*10)
 				de.hattrickorganizer.net.MyConnector.m_sIDENTIFIER =
 					ids.get((int) Math.floor(Math.random() * ids.size())).toString();
 			}
@@ -1839,7 +1842,7 @@ public final class HOMainFrame
 				"gui/bilder/vf.jpg");
 		}
 
-		new ExtensionListener().run(); 
+		new ExtensionListener().run();
 		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
 
 	}
