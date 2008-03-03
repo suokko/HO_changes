@@ -111,6 +111,9 @@ public interface ISpielerPosition {
 
     //Konstanten f�r Position
 
+    /** Number of Positions [0 (Keeper) - 24 (extraCD) => 25] **/
+    public static final byte NUM_POSITIONS = 25;
+    
     /** Keeper */
     public static final byte TORWART = 0;
 
@@ -180,6 +183,15 @@ public interface ISpielerPosition {
 
     /** forward toward wing Thorsten Dietz 25-09-2005 */
     public static final byte STURM_AUS = 21;
+
+    /** additional forward */
+    public static final byte POS_ZUS_STUERMER = 22;
+
+    /** additional midfield */
+    public static final byte POS_ZUS_MITTELFELD = 23;
+
+    /** additional defender */
+    public static final byte POS_ZUS_INNENV = 24;
 
     /** Unknown */
     public static final byte UNBESTIMMT = -1;

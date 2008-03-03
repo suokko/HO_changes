@@ -2,7 +2,15 @@ package plugins;
 
 public interface IRatingPredictionConfig {
 
-	public IRatingPredictionParameter getCentralAttackParameters() ;
+    public static final int THISSIDE = IRatingPredictionParameter.THISSIDE;
+    public static final int OTHERSIDE = IRatingPredictionParameter.OTHERSIDE;
+    public static final int BOTHSIDES = IRatingPredictionParameter.BOTHSIDES;
+    public static final int MIDDLE = IRatingPredictionParameter.MIDDLE;
+
+    public String getPredictionName ();
+    public int getPredictionType ();
+
+    public IRatingPredictionParameter getCentralAttackParameters() ;
 
 	public IRatingPredictionParameter getSideAttackParameters() ;
 
@@ -11,5 +19,7 @@ public interface IRatingPredictionConfig {
 	public IRatingPredictionParameter getSideDefenseParameters() ;
 
 	public IRatingPredictionParameter getMidfieldParameters() ;
-	
+
+	public IRatingPredictionParameter getPlayerStrenghParameters();
+
 }
