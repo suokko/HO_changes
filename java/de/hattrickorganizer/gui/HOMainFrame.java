@@ -128,8 +128,9 @@ public final class HOMainFrame
 		new JMenu(HOVerwaltung.instance().getResource().getProperty("About"));
 	private final JMenu m_jmDatei =
 		new JMenu(HOVerwaltung.instance().getResource().getProperty("Datei"));
-	private final JMenu m_jmHoFriendlyMenu =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
+	// disabled HOFriendly, aik, 05.03.2008
+//	private final JMenu m_jmHoFriendlyMenu =
+//		new JMenu(HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
 	private final JMenu m_jmPluginMenu =
 		new JMenu(HOVerwaltung.instance().getResource().getProperty("Plugins"));
 	private final JMenu m_jmPluginsRefresh =
@@ -153,12 +154,12 @@ public final class HOMainFrame
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Forum"));
 	private final JMenuItem m_jmHattrickItem =
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Hattrick"));
-	private final JMenuItem m_jmHoFriendly =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
+//	private final JMenuItem m_jmHoFriendly =
+//		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
 	private final JMenuItem m_jmHomepageItem =
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Homepage"));
-	private final JMenuItem m_jmIPAdresse =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("IP"));
+//	private final JMenuItem m_jmIPAdresse =
+//		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("IP"));
 
 	//private JMenuItem               m_jmFixturesItem        =   new JMenuItem( model.HOVerwaltung.instance ().getResource ().getProperty("FixturesDownload") );
 	private final JMenuItem m_jmImportItem =
@@ -167,7 +168,7 @@ public final class HOMainFrame
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Optionen"));
 	private final JMenuItem m_jmPluginsHomepage =
 		new JMenuItem("HO! " + HOVerwaltung.instance().getResource().getProperty("Plugins"));
-	private final JMenuItem m_jmRatingItem = new JMenuItem("Friendly-Rating");
+//	private final JMenuItem m_jmRatingItem = new JMenuItem("Friendly-Rating");
 	private final JMenuItem m_jmTraining =
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("SubskillsBerechnen"));
 	private final JMenuItem m_jmiArena =
@@ -518,136 +519,137 @@ public final class HOMainFrame
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
 		}
 		//HOFriendly Server
-		else if (source.equals(m_jmHoFriendly)) {
-			final ServerTeam team =
-				HOVerwaltung.instance().getModel().getVerein().erstelleServerTeam();
-
-			if (team.getAnzAufgestellteSpieler() < 8) {
-				de.hattrickorganizer.tools.Helper.showMessage(
-					this,
-					HOVerwaltung.instance().getResource().getProperty("ZuWenigSpieler"),
-					HOVerwaltung.instance().getResource().getProperty("Fehler"),
-					JOptionPane.ERROR_MESSAGE);
-				HOMainFrame.setHOStatus(HOMainFrame.READY);
-				return;
-			}
-
-			final de.hattrickorganizer.gui.hoFriendly.RMIDialog rmiDialog =
-				new de.hattrickorganizer.gui.hoFriendly.RMIDialog(this);
-
-			if (!rmiDialog.isAbgebrochen()) {
-				if (rmiDialog.isServer()) {
-					final de.hattrickorganizer.model.Server server =
-						new de.hattrickorganizer.model.Server(
-							rmiDialog.getServerIP(),
-							rmiDialog.getPort());
-
-					if (server.noError()) {
-						de.hattrickorganizer.net.rmiHOFriendly.HOServerImp hoServerImp = null;
-
-						//Server Screen erzeugen
-						final de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog soms =
-							new de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog(this, true);
-						final de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen nms =
-							new de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen(soms);
-						String info = null;
-
-						//String[]    find        ={ " " };
-						//String[]    replace =   { "%20%" };
-						//Werte übergeben
-						server.setScreen1(nms);
-
-						//Server Team noch setzen
-						server.setHeimTeam(team);
-
-						//Socket Server anlegen
-						hoServerImp =
-							new de.hattrickorganizer.net.rmiHOFriendly.HOServerImp(server);
-						server.setHOServer(hoServerImp);
-						soms.setChat(hoServerImp);
-
-						//Info String vorbereiten
-						info =
-							team.getTeamName()
-								+ " ("
-								+ team.getManagerName()
-								+ ")  "
-								+ HOVerwaltung.instance().getModel().getLiga().getLiga();
-						info = info.trim();
-
-						//tools.MyHelper.replaceSubString( find, replace, request );
-						try {
-							info = java.net.URLEncoder.encode(info, "UTF-8");
-
-							//             HOLogger.instance().log(HOMainFrame.class,"Register request : " + info );
-						} catch (Exception e) {
-						}
-
-						//Socket starten
-						hoServerImp.createServer(
-							rmiDialog.isInternetServer(),
-							rmiDialog.getServerIP(),
-							rmiDialog.getPort(),
-							info);
-
-						//man könnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...
-					} else {
-						//Fehlermeldung
-					}
-
-					//Client
-				} else {
-					de.hattrickorganizer.net.rmiHOFriendly.HoClientImp hoClientImp = null;
-
-					//Client Screen erzeugen
-					final de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog soms =
-						new de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog(this, false);
-					final de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen nms =
-						new de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen(soms);
-
-					hoClientImp = new de.hattrickorganizer.net.rmiHOFriendly.HoClientImp(nms);
-					soms.setChat(hoClientImp);
-
-					if (hoClientImp.connect2Server(rmiDialog.getClientIP(), rmiDialog.getPort())) {
-						//Spiel starten
-						hoClientImp.sendStarteFriendly(team);
-
-						//man könnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
-					} else {
-						//Fehlermeldung
-						de.hattrickorganizer.tools.Helper.showMessage(
-							this,
-							HOVerwaltung.instance().getResource().getProperty("KeinServer")
-								+ rmiDialog.getServerIP()
-								+ ":"
-								+ rmiDialog.getPort(),
-							HOVerwaltung.instance().getResource().getProperty("Fehler"),
-							JOptionPane.ERROR_MESSAGE);
-
-						//Dialog shutdown
-						soms.setVisible(false);
-						soms.dispose();
-
-						if (hoClientImp != null) {
-							hoClientImp.shutdown();
-							hoClientImp = null;
-						}
-					}
-				}
-			}
-		} else if (source.equals(m_jmIPAdresse)) {
-			try {
-				de.hattrickorganizer.tools.BrowserLauncher.openURL(
-					MyConnector.getHOSite()+"/IPAdresse.html");
-			} catch (java.io.IOException ioex) {
-			}
-		} else if (source.equals(m_jmRatingItem)) {
-			try {
-				de.hattrickorganizer.tools.BrowserLauncher.openURL(
-					"http://tooldesign.ch/ho/ranking.php");
-			} catch (java.io.IOException ioex) {
-			}
-		} else if (source.equals(m_jmiKeeperTool)) {
+//		else if (source.equals(m_jmHoFriendly)) {
+//			final ServerTeam team =
+//				HOVerwaltung.instance().getModel().getVerein().erstelleServerTeam();
+//
+//			if (team.getAnzAufgestellteSpieler() < 8) {
+//				de.hattrickorganizer.tools.Helper.showMessage(
+//					this,
+//					HOVerwaltung.instance().getResource().getProperty("ZuWenigSpieler"),
+//					HOVerwaltung.instance().getResource().getProperty("Fehler"),
+//					JOptionPane.ERROR_MESSAGE);
+//				HOMainFrame.setHOStatus(HOMainFrame.READY);
+//				return;
+//			}
+//
+//			final de.hattrickorganizer.gui.hoFriendly.RMIDialog rmiDialog =
+//				new de.hattrickorganizer.gui.hoFriendly.RMIDialog(this);
+//
+//			if (!rmiDialog.isAbgebrochen()) {
+//				if (rmiDialog.isServer()) {
+//					final de.hattrickorganizer.model.Server server =
+//						new de.hattrickorganizer.model.Server(
+//							rmiDialog.getServerIP(),
+//							rmiDialog.getPort());
+//
+//					if (server.noError()) {
+//						de.hattrickorganizer.net.rmiHOFriendly.HOServerImp hoServerImp = null;
+//
+//						//Server Screen erzeugen
+//						final de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog soms =
+//							new de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog(this, true);
+//						final de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen nms =
+//							new de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen(soms);
+//						String info = null;
+//
+//						//String[]    find        ={ " " };
+//						//String[]    replace =   { "%20%" };
+//						//Werte übergeben
+//						server.setScreen1(nms);
+//
+//						//Server Team noch setzen
+//						server.setHeimTeam(team);
+//
+//						//Socket Server anlegen
+//						hoServerImp =
+//							new de.hattrickorganizer.net.rmiHOFriendly.HOServerImp(server);
+//						server.setHOServer(hoServerImp);
+//						soms.setChat(hoServerImp);
+//
+//						//Info String vorbereiten
+//						info =
+//							team.getTeamName()
+//								+ " ("
+//								+ team.getManagerName()
+//								+ ")  "
+//								+ HOVerwaltung.instance().getModel().getLiga().getLiga();
+//						info = info.trim();
+//
+//						//tools.MyHelper.replaceSubString( find, replace, request );
+//						try {
+//							info = java.net.URLEncoder.encode(info, "UTF-8");
+//
+//							//             HOLogger.instance().log(HOMainFrame.class,"Register request : " + info );
+//						} catch (Exception e) {
+//						}
+//
+//						//Socket starten
+//						hoServerImp.createServer(
+//							rmiDialog.isInternetServer(),
+//							rmiDialog.getServerIP(),
+//							rmiDialog.getPort(),
+//							info);
+//
+//						//man könnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...
+//					} else {
+//						//Fehlermeldung
+//					}
+//
+//					//Client
+//				} else {
+//					de.hattrickorganizer.net.rmiHOFriendly.HoClientImp hoClientImp = null;
+//
+//					//Client Screen erzeugen
+//					final de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog soms =
+//						new de.hattrickorganizer.gui.hoFriendly.HOFriendlyDialog(this, false);
+//					final de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen nms =
+//						new de.hattrickorganizer.net.rmiHOFriendly.NetMatchScreen(soms);
+//
+//					hoClientImp = new de.hattrickorganizer.net.rmiHOFriendly.HoClientImp(nms);
+//					soms.setChat(hoClientImp);
+//
+//					if (hoClientImp.connect2Server(rmiDialog.getClientIP(), rmiDialog.getPort())) {
+//						//Spiel starten
+//						hoClientImp.sendStarteFriendly(team);
+//
+//						//man könnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
+//					} else {
+//						//Fehlermeldung
+//						de.hattrickorganizer.tools.Helper.showMessage(
+//							this,
+//							HOVerwaltung.instance().getResource().getProperty("KeinServer")
+//								+ rmiDialog.getServerIP()
+//								+ ":"
+//								+ rmiDialog.getPort(),
+//							HOVerwaltung.instance().getResource().getProperty("Fehler"),
+//							JOptionPane.ERROR_MESSAGE);
+//
+//						//Dialog shutdown
+//						soms.setVisible(false);
+//						soms.dispose();
+//
+//						if (hoClientImp != null) {
+//							hoClientImp.shutdown();
+//							hoClientImp = null;
+//						}
+//					}
+//				}
+//			}
+//		} else if (source.equals(m_jmIPAdresse)) {
+//			try {
+//				de.hattrickorganizer.tools.BrowserLauncher.openURL(
+//					MyConnector.getHOSite()+"/IPAdresse.html");
+//			} catch (java.io.IOException ioex) {
+//			}
+//		} else if (source.equals(m_jmRatingItem)) {
+//			try {
+//				de.hattrickorganizer.tools.BrowserLauncher.openURL(
+//					"http://tooldesign.ch/ho/ranking.php");
+//			} catch (java.io.IOException ioex) {
+//			}
+//		}
+		else if (source.equals(m_jmiKeeperTool)) {
 			keeperTool.reload();
 			keeperTool.setVisible(true);
 		} else if (source.equals(m_jmiNotepad)) {
@@ -1026,19 +1028,19 @@ public final class HOMainFrame
 
 		/////
 		//HOFriendly
-		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
-		m_jmHoFriendly.addActionListener(this);
-		m_jmHoFriendlyMenu.add(m_jmHoFriendly);
-
-		m_jmHoFriendlyMenu.addSeparator();
-
-		m_jmIPAdresse.addActionListener(this);
-		m_jmHoFriendlyMenu.add(m_jmIPAdresse);
-
-		m_jmRatingItem.addActionListener(this);
-		m_jmHoFriendlyMenu.add(m_jmRatingItem);
-
-		m_jmMenuBar.add(m_jmHoFriendlyMenu);
+//		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
+//		m_jmHoFriendly.addActionListener(this);
+//		m_jmHoFriendlyMenu.add(m_jmHoFriendly);
+//
+//		m_jmHoFriendlyMenu.addSeparator();
+//
+//		m_jmIPAdresse.addActionListener(this);
+//		m_jmHoFriendlyMenu.add(m_jmIPAdresse);
+//
+//		m_jmRatingItem.addActionListener(this);
+//		m_jmHoFriendlyMenu.add(m_jmRatingItem);
+//
+//		m_jmMenuBar.add(m_jmHoFriendlyMenu);
 
 		//About
 		m_jmHomepageItem.addActionListener(this);
@@ -1299,6 +1301,7 @@ public final class HOMainFrame
 				new de.hattrickorganizer.gui.utils.ExampleFileFilter();
 			filter.addExtension("class");
 			filter.setDescription("Java Class File");
+			filter.setIgnoreDirectories(true);
 
 			//Alle class-Dateien in den Ordner holen
 			final java.io.File[] files = folder.listFiles(filter);
