@@ -56,7 +56,8 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
     private String description;
     private String fullDescription;
     private boolean useExtensionsInDescription = true;
-
+    private boolean ignoreDirectories = false;
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -249,7 +250,7 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      */
     public final boolean accept(File f) {
         if (f != null) {
-            if (f.isDirectory()) {
+            if (f.isDirectory() && !ignoreDirectories) {
                 return true;
             }
 
@@ -282,4 +283,12 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
         filters.put(extension.toLowerCase(), this);
         fullDescription = null;
     }
+
+	public boolean isIgnoreDirectories() {
+		return ignoreDirectories;
+	}
+
+	public void setIgnoreDirectories(boolean ignoreDirectories) {
+		this.ignoreDirectories = ignoreDirectories;
+	}
 }
