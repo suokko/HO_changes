@@ -7,21 +7,23 @@
  */
 package de.hattrickorganizer.logik;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
 import plugins.ISpieler;
+import plugins.ITeam;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.AufstellungOld;
 import de.hattrickorganizer.model.HOMiniModel;
-//import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
-import prediction.ratingPredictionManager;
-import prediction.RatingPredictionConfig;
+import de.hattrickorganizer.prediction.RatingPredictionConfig;
+import de.hattrickorganizer.prediction.RatingPredictionManager;
+import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * @author mamato
@@ -38,7 +40,7 @@ public class RatingOptimizer {
 		double[] linear = new double[7];
 		double[] quadratic = new double[7];
 		
-		List matches = MatchExporter.getDataUsefullMatches(ratingPredictionManager.LAST_CHANGE);
+		List matches = MatchExporter.getDataUsefullMatches(RatingPredictionManager.LAST_CHANGE, RatingPredictionManager.LAST_CHANGE_FRIENDLY);
 
 		int i = 0;
 		int count = 0;
@@ -46,6 +48,10 @@ public class RatingOptimizer {
 			ExportMatchData matchData = (ExportMatchData) matches.get(i);
 			i++;
 			double[] diff = getOffset(matchData);
+//			System.out.print ("Diffs for Match "+matchData.getInfo().getMatchID()+": ");
+//			for (int d=0; d<diff.length; d++)
+//				System.out.print (diff[d] + " ");
+//			System.out.println ("");
 			// Secure match data not found
 			if (diff[0] == -2) {
 				continue;
@@ -131,7 +137,7 @@ public class RatingOptimizer {
 		}
 
 		int hrfID = DBZugriff.instance().getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
-		ratingPredictionManager rpm = new ratingPredictionManager(lineup, DBZugriff.instance().getTeam(hrfID), (short) DBZugriff.instance().getTrainerType(hrfID), RatingPredictionConfig.getInstance() );
+		RatingPredictionManager rpm = new RatingPredictionManager(lineup, DBZugriff.instance().getTeam(hrfID), (short) DBZugriff.instance().getTrainerType(hrfID), RatingPredictionConfig.getInstance() );
 		double[] offset = new double[7];		
 		if (details.getHeimId() == HOMiniModel.instance().getBasics().getTeamId()) {
 					offset[0] = 0.875d + det.getHomeRightDef() / 4.0d - rpm.getRightDefenseRatings();                    
@@ -153,8 +159,105 @@ public class RatingOptimizer {
 					offset[6] = 0.875d + det.getGuestLeftAtt() / 4.0d - rpm.getLeftAttackRatings();
                     
                 }
-                    
+        debugDiffs ("cd", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("sd_l", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("sd_r", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("mid", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("sa_l", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("sa_r", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("ca", det, rpm, DBZugriff.instance().getTeam(hrfID));
 		return offset;
 	}
 
+	private static void debugDiffs (String type, IMatchDetails det, RatingPredictionManager rpm, ITeam team) {
+		boolean home = false;
+		if (HOMiniModel.instance().getBasics().getTeamId() == det.getHeimId()) {
+			home = true;
+		}
+		int attitude = 0;
+		int tactic = 0;
+		int stimmung = team.getStimmungAsInt();
+		if (home) {
+			attitude = det.getHomeEinstellung();
+			tactic = det.getHomeTacticType();
+		} else {
+			attitude = det.getGuestEinstellung();
+			tactic = det.getGuestTacticType();
+		}
+		double calc = 0;
+		double real = 0;
+		if (type.equals("cd")) {
+			calc = rpm.getCentralDefenseRatings();
+			if (home) {
+				real = det.getHomeMidDef();
+			} else {
+				real = det.getGuestMidDef();				
+			}
+		} else if (type.equals("sd_l")) {
+			calc = rpm.getLeftDefenseRatings();
+			if (home) {
+				real = det.getHomeLeftDef();
+			} else {
+				real = det.getGuestLeftDef();				
+			}
+		} else if (type.equals("sd_r")) {
+			calc = rpm.getRightDefenseRatings();
+			if (home) {
+				real = det.getHomeRightDef();
+			} else {
+				real = det.getGuestRightDef();				
+			}
+		} else if (type.equals("mid")) {
+			calc = rpm.getMFRatings();
+			if (home) {
+				real = det.getHomeMidfield();
+			} else {
+				real = det.getGuestMidfield();				
+			}
+		} else if (type.equals("ca")) {
+			calc = rpm.getCentralAttackRatings();
+			if (home) {
+				real = det.getHomeMidAtt();
+			} else {
+				real = det.getGuestMidAtt();				
+			}
+		} else if (type.equals("sa_l")) {
+			calc = rpm.getLeftAttackRatings();
+			if (home) {
+				real = det.getHomeLeftAtt();
+			} else {
+				real = det.getGuestLeftAtt();				
+			}
+		} else if (type.equals("sa_r")) {
+			calc = rpm.getRightAttackRatings();
+			if (home) {
+				real = det.getHomeRightAtt();
+			} else {
+				real = det.getGuestRightAtt();				
+			}
+		}
+
+	
+		NumberFormat nf = NumberFormat.getNumberInstance();
+		nf.setMaximumFractionDigits(3);
+		nf.setMinimumFractionDigits(3);
+		nf.setMaximumIntegerDigits(1);
+		nf.setMinimumIntegerDigits(1);
+		
+		NumberFormat pf = NumberFormat.getPercentInstance();
+		pf.setMaximumFractionDigits(2);
+		pf.setMinimumFractionDigits(2);
+		pf.setMinimumIntegerDigits(3);
+		pf.setMaximumIntegerDigits(3);
+		
+		real = 0.875 + real / 4;
+		String calcDiff = (calc-real>0?" ":"") + nf.format(calc-real);
+		String calcPerc = (calc/real>0?" ":"") + pf.format(calc/real);
+		
+		HOLogger.instance().debug(RatingOptimizer.class, type+" diffs for Match "+det.getMatchID()
+				+": (H"+(home?"1":"0")+"/T"+tactic+"/A"+attitude+"/S"+stimmung+") "
+				+"real="+nf.format(real)+ " | "
+				+"calc="+nf.format(calc)+" ("+calcDiff+" "+calcPerc+")");
+		
+	}
 }

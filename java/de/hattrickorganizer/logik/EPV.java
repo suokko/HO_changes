@@ -7,7 +7,7 @@ import plugins.ISpieler;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import prediction.EPVCalculator;
+import de.hattrickorganizer.prediction.EPVCalculator;
 
 /**
  * Main EPV manager class

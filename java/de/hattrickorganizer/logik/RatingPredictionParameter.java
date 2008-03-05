@@ -1,4 +1,4 @@
-package de.hattrickorganizer.logik;
+/*package de.hattrickorganizer.logik;
 
 import plugins.IRatingPredictionParameter;
 
@@ -25,3 +25,4 @@ public class RatingPredictionParameter implements IRatingPredictionParameter{
 
 		
 }
+*/

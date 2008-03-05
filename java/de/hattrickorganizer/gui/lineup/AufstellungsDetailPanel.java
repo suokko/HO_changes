@@ -28,6 +28,7 @@ import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.tools.PlayerHelper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
@@ -147,6 +148,8 @@ final class AufstellungsDetailPanel extends ImagePanel
 			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.offensive"),1),
 		};    
 	private JComboBox m_jcbTrainerType= new JComboBox(TRAINERTYPE);
+	private CBItem[] PREDICTIONTYPE = getPredictionItems();
+	private JComboBox m_jcbPredictionType= new JComboBox(PREDICTIONTYPE);
     private CBItem[] STIMMUNG = {
                                     new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg),
                                                ITeam.TS_wie_im_kalten_Krieg),
@@ -370,6 +373,7 @@ final class AufstellungsDetailPanel extends ImagePanel
             setStimmung(homodel.getTeam().getStimmungAsInt(),homodel.getTeam().getSubStimmung());
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
             setTrainerType(homodel.getTrainer().getTrainerTyp());
+            setPredictionType(RatingPredictionConfig.getInstancePredictionType());
             m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(homodel.getAufstellung()
                                                                                   .getAvgExpierence()));
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
@@ -439,6 +443,9 @@ final class AufstellungsDetailPanel extends ImagePanel
     	de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbTrainerType, newTrainerType);
     }
     
+    public void setPredictionType (int newPredictionType) {
+    	de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbPredictionType, newPredictionType);
+    }
     /**
      * TODO Missing Method Documentation
      *
@@ -514,6 +521,9 @@ final class AufstellungsDetailPanel extends ImagePanel
             } else if (event.getSource().equals(m_jcbTrainerType)) {
             	HOVerwaltung.instance().getModel().getTrainer().
             			setTrainerTyp(((CBItem)m_jcbTrainerType.getSelectedItem()).getId());
+            	refresh();
+            } else if (event.getSource().equals(m_jcbPredictionType)) {
+            	RatingPredictionConfig.setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId());
             	refresh();
             }
         }
@@ -612,52 +622,55 @@ final class AufstellungsDetailPanel extends ImagePanel
         JLabel label;
         JPanel panel;
 
+        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
+        												.getResource();
+
+        int yPos = 1;
+        
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = yPos;
         constraints.gridwidth = 2;
         layout.setConstraints(m_jpRating, constraints);
         add(m_jpRating, constraints);
 
+        yPos++;
         panel = new JPanel(new BorderLayout());
         panel.setOpaque(true);
-        m_jpGesamtStaerke.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("Gesamtstaerke"));
+        m_jpGesamtStaerke.setToolTipText(properties.getProperty("Gesamtstaerke"));
         panel.add(m_jpGesamtStaerke.getComponent(false), BorderLayout.CENTER);
         m_jpGesamtStaerkeText.setFontStyle(Font.BOLD);
-        m_jpGesamtStaerkeText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Gesamtstaerke"));
+        m_jpGesamtStaerkeText.setToolTipText(properties.getProperty("Gesamtstaerke"));
         panel.add(m_jpGesamtStaerkeText.getComponent(false), BorderLayout.EAST);
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = yPos;
         constraints.gridwidth = 2;
         constraints.weighty = 0.0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         layout.setConstraints(panel, constraints);
         add(panel);
 
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource();
 
+        yPos++;
         constraints.gridx = 1;
-        constraints.gridy = 3;
+        constraints.gridy = yPos;
         constraints.gridwidth = 2;
         m_jcbEinstellung.addItemListener(this);
         m_jcbEinstellung.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Einstellung"));
         layout.setConstraints(m_jcbEinstellung, constraints);
         add(m_jcbEinstellung);
 
+        yPos++;
         constraints.gridx = 1;
-        constraints.gridy = 4;
+        constraints.gridy = yPos;
         constraints.gridwidth = 2;
         m_jcbTaktik.addItemListener(this);
         m_jcbTaktik.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Taktik"));
         layout.setConstraints(m_jcbTaktik, constraints);
         add(m_jcbTaktik);
 
+        yPos++;
         constraints.gridx = 1;
-        constraints.gridy = 5;
+        constraints.gridy = yPos;
         constraints.gridwidth = 2;
         m_jchSpielort.addItemListener(this);
         m_jchSpielort.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Spielort"));
@@ -665,8 +678,9 @@ final class AufstellungsDetailPanel extends ImagePanel
         layout.setConstraints(m_jchSpielort, constraints);
         add(m_jchSpielort);
 
+        yPos++;
         constraints.gridx = 1;
-        constraints.gridy = 6;
+        constraints.gridy = yPos;
         constraints.gridwidth = 1;
 
         //model.HOVerwaltung.instance ().getResource ().getProperty( "HATStat" ) );
@@ -674,35 +688,38 @@ final class AufstellungsDetailPanel extends ImagePanel
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
-        constraints.gridy = 6;
+        constraints.gridy = yPos;
 
         //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance ().getResource ().getProperty( "tt_AufstellungsDetails_HatStat" ) );
         layout.setConstraints(m_jpHatstat.getComponent(false), constraints);
         add(m_jpHatstat.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel("Loddar Stats"),7);
+        yPos++;
+        initLabel(constraints,layout,new JLabel("Loddar Stats"), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 7;
+        constraints.gridy = yPos;
 
         //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance ().getResource ().getProperty( "tt_AufstellungsDetails_LoddarStat" ) );
         layout.setConstraints(m_jpLoddarstat.getComponent(false), constraints);
         add(m_jpLoddarstat.getComponent(false));
 
+        yPos++;
         constraints.gridx = 1;
-        constraints.gridy = 8;
+        constraints.gridy = yPos;
         constraints.gridwidth = 1;
         label = new JLabel(properties.getProperty("Taktikstaerke"));
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
-        constraints.gridy = 8;
+        constraints.gridy = yPos;
         constraints.weightx = 1.0;
         layout.setConstraints(m_jpTaktikStaerke.getComponent(false), constraints);
         add(m_jpTaktikStaerke.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Stimmung")),9);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Stimmung")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 9;
+        constraints.gridy = yPos;
         m_jcbMainStimmung.addItemListener(this);
 		m_jcbMainStimmung.setPreferredSize(new Dimension(50,
                                                      de.hattrickorganizer.tools.Helper
@@ -711,9 +728,10 @@ final class AufstellungsDetailPanel extends ImagePanel
         layout.setConstraints(m_jcbMainStimmung, constraints);
         add(m_jcbMainStimmung);
 
-		initLabel(constraints,layout,new JLabel("Sub"+properties.getProperty("Stimmung")),10);
+        yPos++;
+		initLabel(constraints,layout,new JLabel("Sub"+properties.getProperty("Stimmung")), yPos);
 		constraints.gridx = 2;
-		constraints.gridy = 10;
+        constraints.gridy = yPos;
 		m_jcbSubStimmung.addItemListener(this);
 		m_jcbSubStimmung.setPreferredSize(new Dimension(50,
 													 de.hattrickorganizer.tools.Helper
@@ -722,9 +740,10 @@ final class AufstellungsDetailPanel extends ImagePanel
 		layout.setConstraints(m_jcbSubStimmung, constraints);
 		add(m_jcbSubStimmung);
 		
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Selbstvertrauen")),11);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Selbstvertrauen")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 11;
+        constraints.gridy = yPos;
         m_jcbSelbstvertrauen.addItemListener(this);
         m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50,
                                                             de.hattrickorganizer.tools.Helper
@@ -733,9 +752,10 @@ final class AufstellungsDetailPanel extends ImagePanel
         layout.setConstraints(m_jcbSelbstvertrauen, constraints);
         add(m_jcbSelbstvertrauen);
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Trainer")),12);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Trainer")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 12;
+        constraints.gridy = yPos;
         m_jcbTrainerType.addItemListener(this);
 		m_jcbTrainerType.setPreferredSize(new Dimension(50,
                                                      de.hattrickorganizer.tools.Helper
@@ -744,66 +764,102 @@ final class AufstellungsDetailPanel extends ImagePanel
         layout.setConstraints(m_jcbTrainerType, constraints);
         add(m_jcbTrainerType);
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung")),13);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("PredictionType")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 13;
+        constraints.gridy = yPos;
+        m_jcbPredictionType.addItemListener(this);
+		m_jcbPredictionType.setPreferredSize(new Dimension(50,
+                                                     de.hattrickorganizer.tools.Helper
+                                                     .calcCellWidth(20)));
+		//m_jcbPredictionType.setMaximumRowCount(3);
+        layout.setConstraints(m_jcbPredictionType, constraints);
+        add(m_jcbPredictionType);
+
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpDurchschnittErfahrung.getComponent(false), constraints);
         add(m_jpDurchschnittErfahrung.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("AktuellesSystem")),14);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("AktuellesSystem")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 14;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpAktuellesSystem.getComponent(false), constraints);
         add(m_jpAktuellesSystem.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("ErfahrungAktuellesSys")),15);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("ErfahrungAktuellesSys")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 15;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrungAktuellesSystem.getComponent(false), constraints);
         add(m_jpErfahrungAktuellesSystem.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung433")),16);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung433")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 16;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung433.getComponent(false), constraints);
         add(m_jpErfahrung433.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung442")),17);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung442")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 17;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung442.getComponent(false), constraints);
         add(m_jpErfahrung442.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung532")),18);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung532")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 18;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung532.getComponent(false), constraints);
         add(m_jpErfahrung532.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung541")),19);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung541")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 19;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung541.getComponent(false), constraints);
         add(m_jpErfahrung541.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung352")),20);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung352")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 20;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung352.getComponent(false), constraints);
         add(m_jpErfahrung352.getComponent(false));
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung343")),21);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung343")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 21;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung343.getComponent(false), constraints);
         add(m_jpErfahrung343.getComponent(false));
 
 
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung451")),22);
+        yPos++;
+        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung451")), yPos);
         constraints.gridx = 2;
-        constraints.gridy = 22;
+        constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
         add(m_jpErfahrung451.getComponent(false));
+    }
+
+    private CBItem[] getPredictionItems () {
+        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
+        											.getResource();
+		String[] allPredictionNames = RatingPredictionConfig.getAllPredictionNames();
+		CBItem[] allItems = new CBItem[allPredictionNames.length];
+		for (int i=0; i < allItems.length; i++)	{
+			String predictionName = allPredictionNames[i];
+			if (properties.containsKey("prediction."+predictionName))
+				predictionName = properties.getProperty("prediction."+predictionName);
+			allItems[i] = new CBItem(predictionName, i);
+		}
+		return allItems;
     }
     
     private void initLabel(GridBagConstraints constraints,GridBagLayout layout, JLabel label, int y){
