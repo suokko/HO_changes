@@ -10,7 +10,9 @@ import java.util.Vector;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
+import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
+import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -26,11 +28,23 @@ public class MatchExporter {
 	/**
 	 * List of useful data for export
 	 *
-	 * @param time starting data to export from
+	 * @param startingDate starting data to export from (for all matchTypes)
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public static List getDataUsefullMatches(Date StartingDate) {		
+	public static List getDataUsefullMatches (Date startingDate) {
+		return getDataUsefullMatches(startingDate, startingDate);
+	}
+	
+	/**
+	 * List of useful data for export
+	 *
+	 * @param startingDate starting data to export from (for non friendlies)
+	 * @param startingDateForFriendlies starting data to export from (for friendlies)
+	 *
+	 * @return List of ExportMatchData objects
+	 */
+	public static List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {		
 		HOLogger.instance().log(MatchExporter.class, "Collecting Data");		
 		List export = new ArrayList();
 
@@ -40,7 +54,12 @@ public class MatchExporter {
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
 			//details holen
 			IMatchDetails details = HOMiniModel.instance().getMatchDetails(matches[i].getMatchID());
-			if (isValidMatch(matches[i], details, StartingDate)) {				
+			boolean isFriendly = (matches[i].getMatchTyp() == IMatchLineup.TESTSPIEL
+									|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTSPIEL 
+									|| matches[i].getMatchTyp() == IMatchLineup.TESTPOKALSPIEL
+									|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTCUPSPIEL);
+			if (isValidMatch(matches[i], details, startingDateForFriendlies) && isFriendly
+					|| isValidMatch(matches[i], details, startingDate) && !isFriendly ) {				
 						
 				//Nun lineup durchlaufen und Spielerdaten holen
 				Vector aufstellung = DBZugriff.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
