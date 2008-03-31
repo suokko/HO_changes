@@ -17,7 +17,7 @@ public final class ScoutTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[19];
+		columns = new ColumnDescriptor[20];
 		columns[0]= new ColumnDescriptor("PlayerID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("Name",Types.VARCHAR,true,127);
 		columns[2]= new ColumnDescriptor("Info",Types.VARCHAR,false,256);
@@ -38,7 +38,7 @@ public final class ScoutTable extends AbstractTable {
 		columns[16]= new ColumnDescriptor("Price",Types.INTEGER,false);
 		columns[17]= new ColumnDescriptor("Deadline",Types.TIMESTAMP,false);
 		columns[18]= new ColumnDescriptor("Wecker",Types.BOOLEAN,false);
-
+		columns[19]= new ColumnDescriptor("AgeDays",Types.INTEGER,false);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public final class ScoutTable extends AbstractTable {
 
 				// Prepare insert statement
 				sql =
-					"INSERT INTO "+getTableName()+" (Name, Info, Age, Marktwert, Kondition, Erfahrung,  Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Deadline, Wecker, PlayerID, Speciality, Price ) VALUES (";
+					"INSERT INTO "+getTableName()+" (Name, Info, Age, AgeDays, Marktwert, Kondition, Erfahrung,  Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Deadline, Wecker, PlayerID, Speciality, Price ) VALUES (";
 				sql
 					+= ("'"
 						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(scout.getName())
@@ -75,6 +75,8 @@ public final class ScoutTable extends AbstractTable {
 						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(scout.getInfo())
 						+ "',"
 						+ scout.getAlter()
+						+ ","
+						+ scout.getAgeDays()
 						+ ","
 						+ scout.getMarktwert()
 						+ ","
@@ -128,7 +130,7 @@ public final class ScoutTable extends AbstractTable {
 
 		try {
 			final String sql =
-				"SELECT PlayerID, Name, Info, Age, Marktwert, Speciality, Kondition, Erfahrung, Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Price, Deadline, Wecker FROM "+getTableName();
+				"SELECT PlayerID, Name, Info, Age, AgeDays, Marktwert, Speciality, Kondition, Erfahrung, Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Price, Deadline, Wecker FROM "+getTableName();
 			final ResultSet rs = adapter.executeQuery(sql);
 			rs.beforeFirst();
 

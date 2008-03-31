@@ -123,8 +123,8 @@ public class TransferTable extends JTable implements de.hattrickorganizer.gui.Re
         setMinWidth(2, 80);
         setMinWidth(3, 135);
         setMinWidth(4, 135);
-        setMinWidth(5, 20);
-        setPreferredWidth(5, 20);
+        setMinWidth(5, 40);
+        setPreferredWidth(5, 40);
         setMinWidth(6, 80);
 
         for (int i = 7; i <= 16; i++) {

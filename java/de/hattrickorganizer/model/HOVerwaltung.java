@@ -98,7 +98,10 @@ public class HOVerwaltung {
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
+            	// Age Years
                 summe += ((Spieler) vSpieler.get(i)).getAlter();
+                // Age Days
+                summe += (float)((Spieler) vSpieler.get(i)).getAgeDays()/112;
             }
         }
 

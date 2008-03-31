@@ -533,6 +533,7 @@ public class HelperWrapper implements plugins.IHelper {
                                  .getNextTempSpielerID());
         tempSpieler.setName(spieler.getName());
         tempSpieler.setAlter(spieler.getAlter());
+        tempSpieler.setAgeDays(spieler.getAgeDays());
         tempSpieler.setErfahrung(spieler.getErfahrung());
         tempSpieler.setForm(spieler.getForm());
         tempSpieler.setKondition(spieler.getKondition());
@@ -616,6 +617,7 @@ public class HelperWrapper implements plugins.IHelper {
         }
 
         tempSpieler.setAlter(player.getAge());
+        tempSpieler.setAgeDays(player.getAgeDays());
         tempSpieler.setErfahrung(player.getExperience());
         tempSpieler.setForm(player.getForm());
         tempSpieler.setKondition(player.getStamina());

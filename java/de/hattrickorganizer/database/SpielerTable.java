@@ -19,7 +19,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[56];
+		columns = new ColumnDescriptor[57];
 		columns[0] = new ColumnDescriptor("HRF_ID", Types.INTEGER, false);
 		columns[1] = new ColumnDescriptor("Datum", Types.TIMESTAMP, false);
 		columns[2] = new ColumnDescriptor("GelbeKarten", Types.INTEGER, false);
@@ -76,6 +76,7 @@ public final class SpielerTable extends AbstractTable {
 		columns[53] = new ColumnDescriptor("TransferListed", Types.INTEGER, false);
 		columns[54] = new ColumnDescriptor("Caps", Types.INTEGER, false);
 		columns[55] = new ColumnDescriptor("CapsU20", Types.INTEGER, false);
+		columns[56] = new ColumnDescriptor("AgeDays", Types.INTEGER, false);
 
 	}
 
@@ -107,7 +108,17 @@ public final class SpielerTable extends AbstractTable {
 
 				//insert vorbereiten
 				statement =
-					"INSERT into "+getTableName()+" ( GelbeKarten , SpielerID , Name , Age , Kondition , Form , Torwart , Verteidigung , Spielaufbau , Fluegel , Torschuss , Passpiel , Standards , SubTorwart , SubVerteidigung , SubSpielaufbau , SubFluegel , SubTorschuss , SubPasspiel , SubStandards , OffsetTorwart , OffsetVerteidigung , OffsetSpielaufbau , OffsetFluegel , OffsetTorschuss , OffsetPasspiel , OffsetStandards , iSpezialitaet , sSpezialitaet , iCharakter , sCharakter , iAnsehen , sAnsehen , iAgressivitaet , sAgressivitaet , Fuehrung , Erfahrung , Gehalt , Bonus , Land , Marktwert , Verletzt , ToreFreund , ToreLiga , TorePokal , ToreGesamt , Hattrick , Bewertung , TrainerTyp, Trainer, HRF_ID, Datum, PlayerNumber, TransferListed,  Caps, CapsU20 ) VALUES(";
+					"INSERT into "+getTableName()+" ( GelbeKarten , SpielerID , Name , Age , AgeDays , "
+						+ "Kondition , Form , Torwart , Verteidigung , Spielaufbau , Fluegel , "
+						+ "Torschuss , Passpiel , Standards , SubTorwart , SubVerteidigung , "
+						+ "SubSpielaufbau , SubFluegel , SubTorschuss , SubPasspiel , SubStandards , "
+						+ "OffsetTorwart , OffsetVerteidigung , OffsetSpielaufbau , OffsetFluegel , "
+						+ "OffsetTorschuss , OffsetPasspiel , OffsetStandards , iSpezialitaet , "
+						+ "sSpezialitaet , iCharakter , sCharakter , iAnsehen , sAnsehen , "
+						+ "iAgressivitaet , sAgressivitaet , Fuehrung , Erfahrung , Gehalt , "
+						+ "Bonus , Land , Marktwert , Verletzt , ToreFreund , ToreLiga , TorePokal , "
+						+ "ToreGesamt , Hattrick , Bewertung , TrainerTyp, Trainer, HRF_ID, Datum, "
+						+ "PlayerNumber, TransferListed,  Caps, CapsU20 ) VALUES(";
 				statement
 					+= (""
 						+ player.getGelbeKarten()
@@ -117,6 +128,8 @@ public final class SpielerTable extends AbstractTable {
 						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(player.getName())
 						+ "',"
 						+ player.getAlter()
+						+ ","
+						+ player.getAgeDays()
 						+ ","
 						+ player.getKondition()
 						+ ","

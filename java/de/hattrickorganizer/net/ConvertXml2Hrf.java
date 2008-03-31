@@ -566,6 +566,7 @@ public class ConvertXml2Hrf {
             m_sHRFBuffer.append("[player" + ht.get("PlayerID").toString() + "]" + "\n");
             m_sHRFBuffer.append("name=" + ht.get("PlayerName").toString() + "\n");
             m_sHRFBuffer.append("ald=" + ht.get("Age").toString() + "\n");
+            m_sHRFBuffer.append("agedays=" + ht.get("AgeDays").toString() + "\n");
             m_sHRFBuffer.append("ska=" + ht.get("InjuryLevel").toString() + "\n");
             m_sHRFBuffer.append("for=" + ht.get("PlayerForm").toString() + "\n");
             m_sHRFBuffer.append("uth=" + ht.get("StaminaSkill").toString() + "\n");

@@ -312,7 +312,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
             m_clData[i][0] = new SpielerLabelEntry(aktuellerSpieler, null, 0f, false, false);
 
             //Alter
-            m_clData[i][1] = new ColorLabelEntry(aktuellerSpieler.getAlter() + "",
+            m_clData[i][1] = new ColorLabelEntry(aktuellerSpieler.getAlterWithAgeDays(), aktuellerSpieler.getAlterWithAgeDaysAsString(),
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 

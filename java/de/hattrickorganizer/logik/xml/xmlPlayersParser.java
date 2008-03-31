@@ -85,6 +85,8 @@ public class xmlPlayersParser {
                 hash.put("PlayerNumber", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("Age").item(0);
                 hash.put("Age", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                ele = (Element) root.getElementsByTagName("AgeDays").item(0);
+                hash.put("AgeDays", (XMLManager.instance().getFirstChildNodeValue(ele)));
 
                 //TSI löste Marktwert ab!
                 ele = (Element) root.getElementsByTagName("TSI").item(0);

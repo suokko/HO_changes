@@ -107,7 +107,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                                          + ": ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
     private JTextArea jtaNotizen = new JTextArea();
-    private JTextField jtfAlter = new JTextField("17");
+    private JTextField jtfAlter = new JTextField("17.0");
     private JTextField jtfMarktwert = new JTextField("1000");
     private JTextField jtfPrice = new JTextField("0");
 	private JLabel jtfEPV = new JLabel("",JLabel.RIGHT);
@@ -209,7 +209,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
             tempSpieler.setMarkwert(Integer.parseInt(jtfMarktwert.getText()));
             tempSpieler.setSpezialitaet(((CBItem) jcbSpeciality.getSelectedItem()).getId());
-            tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText()));
+            tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
+            tempSpieler.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
             tempSpieler.setErfahrung(((CBItem) jcbErfahrung.getSelectedItem()).getId());
             tempSpieler.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
             tempSpieler.setKondition(((CBItem) jcbKondition.getSelectedItem()).getId());
@@ -227,7 +228,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         } else {
             clScoutEintrag.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
             clScoutEintrag.setPrice(Integer.parseInt(jtfPrice.getText()));
-            clScoutEintrag.setAlter(Integer.parseInt(jtfAlter.getText()));
+            clScoutEintrag.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
+            clScoutEintrag.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
             clScoutEintrag.setMarktwert(Integer.parseInt(jtfMarktwert.getText()));
             clScoutEintrag.setName(jtfName.getText());
             clScoutEintrag.setInfo(jtaNotizen.getText());
@@ -263,8 +265,6 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
         if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                        .instance(), jtfAlter, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfMarktwert, false)
             || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfPlayerID, false)
@@ -326,7 +326,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtfPlayerID.setText(clScoutEintrag.getPlayerID() + "");
         jtfName.setText(clScoutEintrag.getName());
         jtfPrice.setText(clScoutEintrag.getPrice() + "");
-        jtfAlter.setText(clScoutEintrag.getAlter() + "");
+        jtfAlter.setText(clScoutEintrag.getAlter() + "." + clScoutEintrag.getAgeDays());
         jtfMarktwert.setText(clScoutEintrag.getMarktwert() + "");
         jtaNotizen.setText(clScoutEintrag.getInfo());
         jcbSpeciality.removeItemListener(this);
@@ -390,7 +390,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         tempSpieler.setPasspiel(((CBItem) jcbPasspiel.getSelectedItem()).getId());
         tempSpieler.setStandards(((CBItem) jcbStandard.getSelectedItem()).getId());
         tempSpieler.setSpielaufbau(((CBItem) jcbSpielaufbau.getSelectedItem()).getId());
-		tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText()));
+        tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
+        tempSpieler.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
 		IEPVData data = new EPVData(tempSpieler);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));
@@ -569,7 +570,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             if (player != null) {
                 jtfPlayerID.setText(player.getPlayerID() + "");
                 jtfName.setText(player.getPlayerName());
-                jtfAlter.setText(player.getAge() + "");
+                jtfAlter.setText(player.getAge() + "." + player.getAgeDays());
                 jtfPrice.setText(player.getPrice() + "");
                 jtfMarktwert.setText(player.getTSI() + "");
                 jtaNotizen.setText(player.getInfo());

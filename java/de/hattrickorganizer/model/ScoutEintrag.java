@@ -31,6 +31,9 @@ public class ScoutEintrag {
     /** Alter */
     protected int m_iAlter = 17;
 
+    /** Age Days */
+    protected int m_iAgeDays = 0;
+
     /** Erfahrung */
     protected int m_iErfahrung = 0;
 
@@ -91,6 +94,7 @@ public class ScoutEintrag {
             m_iPlayerID = rs.getInt("PlayerID");
             m_sName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Name"));
             m_iAlter = rs.getInt("Age");
+            m_iAgeDays = rs.getInt("AgeDays");
             m_iMarktwert = rs.getInt("Marktwert");
             m_iSpeciality = rs.getInt("Speciality");
             m_iKondition = rs.getInt("Kondition");
@@ -130,6 +134,48 @@ public class ScoutEintrag {
      */
     public final int getAlter() {
         return m_iAlter;
+    }
+
+    /**
+     * Setter for property m_iAgeDays.
+     *
+     * @param m_iAgeDays New value of property m_iAgeDays.
+     */
+    public final void setAgeDays(int m_iAgeDays) {
+        this.m_iAgeDays = m_iAgeDays;
+    }
+
+    /**
+     * Getter for property m_iAlter.
+     *
+     * @return Value of property m_iAlter.
+     */
+    public final int getAgeDays() {
+        return m_iAgeDays;
+    }
+
+    /**
+     * Calculates full age with days
+     * 
+     * @return Double value of age & agedays combined,
+     * 			i.e. age + agedays/112
+     */
+    public double getAlterWithAgeDays() {
+    	double retVal = getAlter();
+    	retVal += (double)getAgeDays()/112;
+    	return retVal;
+    }
+
+    /**
+     * Calculates String for full age with days
+     * 
+     * @return String of age & agedays combined,
+     * 			format is "YY.DDD"
+     */
+    public String getAlterWithAgeDaysAsString() {
+    	// format = yy.ddd
+    	String retVal = getAlter() + "." + getAgeDays();
+    	return retVal;
     }
 
     /**
@@ -466,6 +512,7 @@ public class ScoutEintrag {
         eintrag.setPlayerID(getPlayerID());
         eintrag.setName(new String(getName()));
         eintrag.setAlter(getAlter());
+        eintrag.setAgeDays(getAgeDays());
         eintrag.setMarktwert(getMarktwert());
         eintrag.setSpeciality(getSpeciality());
         eintrag.setErfahrung(getErfahrung());
