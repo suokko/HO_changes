@@ -560,7 +560,7 @@ public class TransferTableModel extends AbstractTableModel {
                                                  ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
 
             //Alter
-            m_clData[i][5] = new ColorLabelEntry(aktuellerScoutEintrag.getAlter(),
+            m_clData[i][5] = new ColorLabelEntry(aktuellerScoutEintrag.getAlterWithAgeDays(), aktuellerScoutEintrag.getAlterWithAgeDaysAsString(),
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, JLabel.CENTER);
 

@@ -70,7 +70,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     private JLabel jlStatus = new JLabel("Status: ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
     private JTextArea jtaNotes = new JTextArea(5, 20);
-    private JTextField jtfAge = new JTextField("17");
+    private JTextField jtfAge = new JTextField("17.0");
     private JTextField jtfName = new JTextField();
     private JTextField jtfPlayerID = new JTextField("0");
     private JTextField jtfPrice = new JTextField("0");
@@ -149,8 +149,6 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      */
     public final void focusLost(FocusEvent e) {
         if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                        .instance(), jtfAge, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfTSI, false)
             || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfPlayerID, false)
@@ -187,7 +185,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
             if (player != null) {
                 jtfPlayerID.setText(player.getPlayerID() + "");
                 jtfName.setText(player.getPlayerName());
-                jtfAge.setText(player.getAge() + "");
+                jtfAge.setText(player.getAge() + "." + player.getAgeDays());
+                
                 jtfPrice.setText(player.getPrice() + "");
                 jtfTSI.setText(player.getTSI() + "");
                 jtaNotes.setText(player.getInfo());
@@ -277,8 +276,6 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         final ScoutEintrag entry = new ScoutEintrag();
 
         if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                        .instance(), jtfAge, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfTSI, false)
             || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfPlayerID, false)
@@ -288,7 +285,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         }
 
         entry.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
-        entry.setAlter(Integer.parseInt(jtfAge.getText()));
+        entry.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
+        entry.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
         entry.setPrice(Integer.parseInt(jtfPrice.getText()));
         entry.setMarktwert(Integer.parseInt(jtfTSI.getText()));
         entry.setSpeciality(((CBItem) jcbSpeciality.getSelectedItem()).getId());
@@ -549,7 +547,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         tempSpieler.setPasspiel(((CBItem) jcbPassing.getSelectedItem()).getId());
         tempSpieler.setStandards(((CBItem) jcbStandards.getSelectedItem()).getId());
         tempSpieler.setSpielaufbau(((CBItem) jcbPlaymaking.getSelectedItem()).getId());
-		tempSpieler.setAlter(Integer.parseInt(jtfAge.getText()));
+        tempSpieler.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
+        tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
 		IEPVData data = new EPVData(tempSpieler);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));		

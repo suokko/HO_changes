@@ -7,6 +7,7 @@
 package de.hattrickorganizer.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Vector;
 
 import plugins.ISpieler;
@@ -99,6 +100,9 @@ public final class Spieler implements plugins.ISpieler {
     /** Alter */
     private int m_iAlter;
 
+    /** Age Days */
+    private int m_iAgeDays;
+
     /** Ansehen (ekel usw. ) */
     private int m_iAnsehen = 1;
 
@@ -161,7 +165,7 @@ public final class Spieler implements plugins.ISpieler {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Member
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
 
     /** SpielerID */
     private int m_iSpielerID;
@@ -196,7 +200,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Transferlisted */
     private int m_iTransferlisted;
 
-    //TODO Noch in DB adden    
+    //TODO Noch in DB adden
 
     /** Fetchdate */
 
@@ -218,7 +222,7 @@ public final class Spieler implements plugins.ISpieler {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Konstruktor
-    ////////////////////////////////////////////////////////////////////////////////        
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Creates a new instance of Spieler
@@ -236,6 +240,7 @@ public final class Spieler implements plugins.ISpieler {
             m_iSpielerID = rs.getInt("SpielerID");
             m_sName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Name"));
             m_iAlter = rs.getInt("Age");
+            m_iAgeDays = rs.getInt("AgeDays");
             m_iKondition = rs.getInt("Kondition");
             m_iForm = rs.getInt("Form");
             m_iTorwart = rs.getInt("Torwart");
@@ -318,6 +323,7 @@ public final class Spieler implements plugins.ISpieler {
         m_iSpielerID = Integer.parseInt(properties.getProperty("id", "0"));
         m_sName = properties.getProperty("name", "");
         m_iAlter = Integer.parseInt(properties.getProperty("ald", "0"));
+        m_iAgeDays = Integer.parseInt(properties.getProperty("agedays", "0"));
         m_iKondition = Integer.parseInt(properties.getProperty("uth", "0"));
         m_iForm = Integer.parseInt(properties.getProperty("for", "0"));
         m_iTorwart = Integer.parseInt(properties.getProperty("mlv", "0"));
@@ -438,7 +444,7 @@ public final class Spieler implements plugins.ISpieler {
     public java.lang.String getAgressivitaetString() {
         return m_sAgressivitaet;
     }
-	
+
     /**
      * liefert das Datum des letzen LevelAufstiegs f�r den angeforderten Skill Vector filled with
      * object[] [0] = Time der �nderung [1] = Boolean: false=Keine �nderung gefunden
@@ -467,6 +473,101 @@ public final class Spieler implements plugins.ISpieler {
      */
     public int getAlter() {
         return m_iAlter;
+    }
+
+    /**
+     * Setter for property m_iAgeDays.
+     *
+     * @param m_iAlter New value of property m_iAgeDays.
+     */
+    public void setAgeDays(int m_iAgeDays) {
+    	this.m_iAgeDays = m_iAgeDays;
+    }
+
+    /**
+     * Getter for property m_iAgeDays.
+     *
+     * @return Value of property m_iAgeDays.
+     */
+    public int getAgeDays() {
+    	return m_iAgeDays;
+    }
+
+    /**
+     * Calculates full age with days and offset
+     *
+     * @return Double value of age & agedays & offset combined,
+     * 			i.e. age + (agedays+offset)/112
+     */
+    public double getAlterWithAgeDays() {
+      	long hrftime = HOMiniModel.instance().getBasics().getDatum().getTime();
+    	long now = new Date().getTime();
+    	long diff = (now - hrftime) / (1000*60*60*24);
+    	int years = getAlter();
+    	int days = getAgeDays();
+    	double retVal = years + (double)(days+diff)/112;
+    	return retVal;
+    }
+
+    /**
+     * Calculates String for full age with days and offset
+     *
+     * @return String of age & agedays & offset combined,
+     * 			format is "YY.DDD" or
+     * 			"YY.DDD+1" (if player had his birthday since last HRF)
+     */
+    public String getAlterWithAgeDaysAsString() {
+    	// format = yy.ddd
+      	long hrftime = HOMiniModel.instance().getBasics().getDatum().getTime();
+    	long now = new Date().getTime();
+    	long diff = (now - hrftime) / (1000*60*60*24);
+    	int years = getAlter();
+    	int days = getAgeDays();
+    	days += diff;
+    	boolean birthday = false;
+    	while (days > 111) {
+    		days -= 112;
+    		years++;
+    		birthday = true;
+    	}
+    	String retVal = years + "." + days;
+    	if (birthday)
+    		retVal += "+1";
+    	return retVal;
+    }
+
+    /**
+     * Get the full i18n'd string represention the players age. Includes
+     * the birthay indicator as well.
+     * @return the full i18n'd string represention the players age
+     */
+    public String getAgeStringFull() {
+      	long hrftime = HOMiniModel.instance().getBasics().getDatum().getTime();
+    	long now = new Date().getTime();
+    	long diff = (now - hrftime) / (1000*60*60*24);
+    	int years = getAlter();
+    	int days = getAgeDays();
+    	days += diff;
+    	boolean birthday = false;
+    	while (days > 111) {
+    		days -= 112;
+    		years++;
+    		birthday = true;
+    	}
+    	StringBuffer ret = new StringBuffer();
+    	ret.append(years);
+    	ret.append(" ");
+    	ret.append(HOVerwaltung.instance().getResource().getProperty("age.years"));
+    	ret.append(" ");
+    	ret.append(days);
+    	ret.append(" ");
+    	ret.append(HOVerwaltung.instance().getResource().getProperty("age.days"));
+    	if (birthday) {
+    		ret.append(" (");
+    		ret.append(HOVerwaltung.instance().getResource().getProperty("age.birthday"));
+    		ret.append(")");
+    	}
+    	return ret.toString();
     }
 
     /**
@@ -579,7 +680,7 @@ public final class Spieler implements plugins.ISpieler {
 	 */
 	public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
 								int intensitaet, int staminaTrainingPart) {
-			return (int) Math.round(getTrainingLength(trTyp,coTrainer,twTrainer,trainerLvl,intensitaet, staminaTrainingPart));								
+			return (int) Math.round(getTrainingLength(trTyp,coTrainer,twTrainer,trainerLvl,intensitaet, staminaTrainingPart));
 	}
 
     /////////////////////////////////////////////////7
@@ -592,11 +693,11 @@ public final class Spieler implements plugins.ISpieler {
                                 int intensitaet, int staminaTrainingPart) {
         switch (trTyp) {
             case TORWART:
-                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter, 
+                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter,
                                     twTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case ALLGEMEIN:
-                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter, 
+                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter,
                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case KONDITION:
@@ -619,16 +720,16 @@ public final class Spieler implements plugins.ISpieler {
                                      coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case PASSPIEL:
-				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter, 
+				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter,
 								coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
-            
+
             case TA_STEILPAESSE:
-                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter, 
+                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter,
                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
 
             case STANDARDS:
 
-                //calcTraining( gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,  coTrainer, trainerLvl, intensitaet );           
+                //calcTraining( gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,  coTrainer, trainerLvl, intensitaet );
                 return gui.UserParameter.instance().DAUER_STANDARDS;
 
             case TA_ABWEHRVERHALTEN:
@@ -638,7 +739,7 @@ public final class Spieler implements plugins.ISpieler {
 			case TA_EXTERNALATTACK:
 				return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL*100d/60d, m_iAlter,
 								 coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
-								         
+
             default:
                 return -1;
         }
@@ -673,13 +774,13 @@ public final class Spieler implements plugins.ISpieler {
         float bonus = 0;
 
         //Bonus = log  (Erfharung) zur Basis 10 * 2 * Userfaktor , 0.0 - 2.6 ca 0 bis 1.5 Sterne
-        
+
         /*Modified by Catrone in order to avoid the non-existant value resulting in a player's negative evaluation*/
 		if ( m_iErfahrung == 0 )
 		{
 			return bonus; /*If experience is non-existent, the bonus is zero!*/
 		}
-        
+
         bonus = (float) ((Math.log(m_iErfahrung) / Math.log(10)) * 2.0f * FormulaFactors.instance().getErfahrungs_Faktor());
 
         return bonus;
@@ -862,7 +963,7 @@ public final class Spieler implements plugins.ISpieler {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Accessor
-    ////////////////////////////////////////////////////////////////////////////////      
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property m_iKondition.
@@ -1141,7 +1242,7 @@ public final class Spieler implements plugins.ISpieler {
            Integer     i               =   null;
            Integer     key             =   null;
            Timestamp   worker          =   null;
-    
+
            //1. von aktuellem HRF-Date bis zum dortigen Datum Liste der Trainings-Wochen erstellen
            hrfIdList   =   DBZugriff.instance ().getHRFList ( min, max );
            enum        =   hrfIdList.keys ();
@@ -1156,7 +1257,7 @@ public final class Spieler implements plugins.ISpieler {
            {
                key =   (Integer) enum.nextElement ();
                i   =   (Integer) weeksList.get ( key );
-    
+
                //alle entfernen die nicht das passende Training haben...
                if ( !isSkillTrained( skill, i.intValue () ) )
                {
@@ -1170,7 +1271,7 @@ public final class Spieler implements plugins.ISpieler {
                key     =   (Integer) enum.nextElement ();
                i       =   (Integer) weeksList.get ( key );
                worker  =   (Timestamp) hrfIdList.get ( key );
-    
+
                //worker.
                //alle entfernen die nicht mehr ben�tigt werden
            }
@@ -2405,7 +2506,7 @@ public final class Spieler implements plugins.ISpieler {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Helper
-    ////////////////////////////////////////////////////////////////////////////////       
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * liefert den Kapit�nswert f�r den Spieler
@@ -2431,7 +2532,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         final float koeffizient = (1.0f - ((float) m_iKondition / 8.0f));
-        
+
         float twValue = fo.getTorwartScaled(normalized) * (m_iTorwart
                         + getSubskill4SkillWithOffset(SKILL_TORWART));
         twValue -= (twValue * (koeffizient * FormulaFactors.instance().m_fTW_Kondi_Faktor));
@@ -2453,12 +2554,12 @@ public final class Spieler implements plugins.ISpieler {
                         + getSubskill4SkillWithOffset(SKILL_PASSSPIEL)));
 		// Fix for new Defensive Attacker position
 		if (fo.getPosition()==ISpielerPosition.STURM_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
-			paValue = paValue * 1.5f;	
-		}		                        
+			paValue = paValue * 1.5f;
+		}
         paValue -= (paValue * (koeffizient * FormulaFactors.instance().m_fPS_Kondi_Faktor));
 
 
-		
+
         float stValue = (fo.getStandardsScaled(normalized) * (m_iStandards
                         + getSubskill4SkillWithOffset(SKILL_STANDARDS)));
         stValue -= (stValue * (koeffizient * FormulaFactors.instance().m_fST_Kondi_Faktor));
@@ -2466,7 +2567,7 @@ public final class Spieler implements plugins.ISpieler {
         float toValue = (fo.getTorschussScaled(normalized) * (m_iTorschuss
                         + getSubskill4SkillWithOffset(SKILL_TORSCHUSS)));
         toValue -= (toValue * (koeffizient * FormulaFactors.instance().m_fTS_Kondi_Faktor));
-        
+
         return twValue + spValue + veValue + flValue + paValue + stValue + toValue;
     }
 
@@ -2481,11 +2582,11 @@ public final class Spieler implements plugins.ISpieler {
     public float calcPosValue(byte pos, boolean mitForm) {
     	float es = -1.0f;
     	final FactorObject factor = FormulaFactors.instance().getPositionFactor(pos);
-    	
+
     	if(factor != null)
     		es = calcPosValue(factor,false);
     	 else{
-    		 //	For Coach or factor not found return 0 
+    		 //	For Coach or factor not found return 0
     		 return 0.0f;
     	 }
 
@@ -2616,26 +2717,26 @@ public final class Spieler implements plugins.ISpieler {
 //
 //        //faktor optimal 0.1
 //        intBonus = ((100 - intensitaet) * gui.UserParameter.instance().IntensitaetFaktor);
-//        
+//
 //        return dauer + aBonus + trBonus + coBonus + intBonus;
 //    }
-    
-    // new training caculator for testing 
+
+    // new training caculator for testing
     protected double calcTraining(double dauer, int alter, int anzTrainer, int trainerLvl,
                                int intensitaet, int staminaTrainingPart) {
         float trBonus = 0;
         float coBonus = 0;
-        double intBonus = 0;       
+        double intBonus = 0;
         double weeks = 0;
         // percentage increase per year should be different for every TriningType and passed as argument!
         double INCREASE = 8;
-        
+
         // at the moment this can be modified by the simple (single) options Faktor...
         double percentage = INCREASE * gui.UserParameter.instance().AlterFaktor;
-        
-        // THIS SHOULD BE REPLACED BY THE TRAINING MODEL FUNCTION! 
+
+        // THIS SHOULD BE REPLACED BY THE TRAINING MODEL FUNCTION!
         weeks = dauer * Math.pow(1d+percentage/100d, (double)(alter - 17));
-                
+
         if (trainerLvl < 8) {
             //faktor optimal 1.0
             trBonus = (7 - trainerLvl) * gui.UserParameter.instance().TrainerFaktor;

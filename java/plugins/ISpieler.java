@@ -300,6 +300,37 @@ public interface ISpieler {
     public int getAlter();
 
     /**
+     * Setter for property m_iAgeDays.
+     *
+     * @param m_iAlter New value of property m_iAgeDays.
+     */
+    public void setAgeDays(int m_iAgeDays);
+
+    /**
+     * Getter for property m_iAgeDays.
+     *
+     * @return Value of property m_iAgeDays.
+     */
+    public int getAgeDays();
+
+    /**
+     * Calculates full age with days and offset
+     * 
+     * @return Double value of age & agedays & offset combined,
+     * 			i.e. age + (agedays+offset)/112
+     */
+    public double getAlterWithAgeDays();
+
+    /**
+     * Calculates String for full age with days and offset
+     * 
+     * @return String of age & agedays & offset combined,
+     * 			format is "YY.DDD" or
+     * 			"YY.DDD+1" (if player had his birthday since last HRF)
+     */
+    public String getAlterWithAgeDaysAsString();
+
+    /**
      * Setter for property m_iAnsehen.
      *
      * @param m_iAnsehen New value of property m_iAnsehen.

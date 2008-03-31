@@ -13,6 +13,7 @@ public class Player {
     private String expiryTime;
     private String playerName;
     private int age;
+    private int ageDays;
     private int attack;
     private int defense;
     private int experience;
@@ -58,6 +59,24 @@ public class Player {
         return age;
     }
 
+    /**
+     * Setter for ageDays
+     *
+     * @param i Set ageDays to i
+     */
+    public final void setAgeDays(int i) {
+        ageDays = i;
+    }
+
+    /**
+     * Getter for ageDays
+     *
+     * @return Returns ageDays
+     */
+    public final int getAgeDays() {
+        return ageDays;
+    }
+    
     /**
      * Setter for attack
      *

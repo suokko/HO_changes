@@ -417,6 +417,44 @@ public class PlayerConverter {
                 error = 2;
             }
 
+            // Get ageDays from line 2
+            tmp = lines.get(1).toString();
+            int ageIndex = tmp.indexOf(age) + age.length();
+            tmp = tmp.substring(ageIndex);
+
+            String ageDays = "";
+            p = 0;
+            n = 0;
+
+            while (p < tmp.length()) {
+                if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
+                    n++;
+                } else {
+                    tmp = tmp.substring(n);
+                    break;
+                }
+
+                p++;
+            }
+
+            p = 0;
+
+            while (p < tmp.length()) {
+                if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+                    ageDays = ageDays + tmp.charAt(p);
+                } else {
+                    break;
+                }
+
+                p++;
+            }
+            
+            if (!ageDays.equals("")) {
+                player.setAgeDays(Integer.valueOf(ageDays).intValue());
+            } else {
+                error = 2;
+            }
+
             // Get tsi from line 3
             tmp = lines.get(2).toString();
 

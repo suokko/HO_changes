@@ -454,7 +454,7 @@ final public class UserColumnFactory {
 			
 			playerAdditionalArray[2] =new PlayerColumn(30," ","Alter",20){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
-					return new ColorLabelEntry(player.getAlter() + "",
+					return new ColorLabelEntry(player.getAlterWithAgeDays(), player.getAlterWithAgeDaysAsString(),
                             ColorLabelEntry.FG_STANDARD,
                             ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 				}

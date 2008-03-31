@@ -612,7 +612,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
                                                  SwingConstants.LEFT);
 
             //Alter
-            m_clData[i][2] = new ColorLabelEntry(aktuellerSpieler.getAlter() + "",
+            m_clData[i][2] = new ColorLabelEntry(aktuellerSpieler.getAlterWithAgeDays(), aktuellerSpieler.getAlterWithAgeDaysAsString(),
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 

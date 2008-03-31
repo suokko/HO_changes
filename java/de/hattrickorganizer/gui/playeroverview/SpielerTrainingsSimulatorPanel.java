@@ -91,7 +91,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     private final JComboBox m_jcbTorwart = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbVerteidigung = new JComboBox(Helper.EINSTUFUNG);
 	private final JComboBox m_jcbSpeciality = new JComboBox(Helper.EINSTUFUNG_SPECIALITY);    
-	private JTextField jtfAge = new JTextField("17");	    
+	private JTextField jtfAge = new JTextField("17.0");	    
     private final JLabel m_jlErfahrung = new JLabel();
     private final JLabel m_jlFluegel = new JLabel();
     private final JLabel m_jlForm = new JLabel();
@@ -158,6 +158,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
                                      .getNextTempSpielerID());
             tempSpieler.setName("Temp " + Math.abs(tempSpieler.getSpielerID()));
 			tempSpieler.setAlter(getAge());
+			tempSpieler.setAgeDays(getAgeDays());
             tempSpieler.setErfahrung(((CBItem) m_jcbErfahrung.getSelectedItem()).getId());
             tempSpieler.setForm(((CBItem) m_jcbForm.getSelectedItem()).getId());
             tempSpieler.setKondition(((CBItem) m_jcbKondition.getSelectedItem()).getId());
@@ -219,7 +220,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
      */
     private void setCBs() {
         m_jlName.setText(m_clSpieler.getName());
-		jtfAge.setText(m_clSpieler.getAlter()+"");
+		jtfAge.setText(m_clSpieler.getAlter()+"."+m_clSpieler.getAgeDays());
         Helper.markierenComboBox(m_jcbForm, m_clSpieler.getForm());
         Helper.markierenComboBox(m_jcbErfahrung,
                                                             m_clSpieler.getErfahrung());
@@ -463,6 +464,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
                                                       - m_clSpieler.calcPosValue(ISpielerPosition.STURM_DEF,
                                                                                  true), false);
 		tempSpieler.setAlter(getAge());
+		tempSpieler.setAgeDays(getAgeDays());
 		tempSpieler.setFuehrung(m_clSpieler.getFuehrung());
 		tempSpieler.setSpezialitaet(m_clSpieler.getSpezialitaet());		        
         EPVData data = new EPVData(tempSpieler);
@@ -474,7 +476,16 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 	private int getAge() {
 		int age = m_clSpieler.getAlter();
 		try {
-			age = Integer.parseInt(jtfAge.getText());
+			age = Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", ""));
+		} catch (NumberFormatException e) {
+		}
+		return age;
+	}
+
+	private int getAgeDays() {
+		int age = m_clSpieler.getAgeDays();
+		try {
+			age = Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", ""));
 		} catch (NumberFormatException e) {
 		}
 		return age;
@@ -839,7 +850,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
      */
     private void resetCBs() {
         m_jlName.setText("");
-		jtfAge.setText("17");
+		jtfAge.setText("17.0");
         m_jlForm.setIcon(Helper.getImageIcon4Veraenderung(0));
         m_jlKondition.setIcon(Helper.getImageIcon4Veraenderung(0));
         m_jlErfahrung.setIcon(Helper.getImageIcon4Veraenderung(0));

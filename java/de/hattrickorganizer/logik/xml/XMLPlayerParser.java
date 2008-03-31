@@ -97,6 +97,8 @@ public class XMLPlayerParser {
         player.setForm(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Age").item(0);
         player.setAlter(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
+        tmp = (Element) ele.getElementsByTagName("AgeDays").item(0);
+        player.setAgeDays(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Experience").item(0);
         player.setErfahrung(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Leadership").item(0);

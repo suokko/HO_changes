@@ -398,6 +398,9 @@ public class XMLExporter  {
 					ele = doc.createElement("Alter");
 					tmpEle.appendChild(ele);
 					ele.appendChild(doc.createTextNode("" + playerData.getAlter()));
+					ele = doc.createElement("AgeDays");
+					tmpEle.appendChild(ele);
+					ele.appendChild(doc.createTextNode("" + playerData.getAgeDays()));
 					ele = doc.createElement("TSI");
 					tmpEle.appendChild(ele);
 					ele.appendChild(doc.createTextNode("" + playerData.getMarkwert()));

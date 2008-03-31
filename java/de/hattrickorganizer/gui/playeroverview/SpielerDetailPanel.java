@@ -236,7 +236,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             m_jpWertSturmAus,
             m_jpWertSturmDef
     };
-    
+
     private final byte[] playerPosition = new byte[]{
     		ISpielerPosition.TORWART,
             ISpielerPosition.INNENVERTEIDIGER,
@@ -257,10 +257,10 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             ISpielerPosition.STURM,
             ISpielerPosition.STURM_AUS,
             ISpielerPosition.STURM_DEF
-            
+
     };
-    
-    
+
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -309,12 +309,12 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             HOMainFrame.instance().getSpielerAnalyseMainPanel()
                                                 .setSpieler4Top(m_clSpieler.getSpielerID());
             HOMainFrame.instance().showTab(HOMainFrame.SPIELERANALYSE);
-            
+
         } else if (actionevent.getSource().equals(m_jbAnalyse2)) {
             HOMainFrame.instance().getSpielerAnalyseMainPanel()
                                                 .setSpieler4Bottom(m_clSpieler.getSpielerID());
             HOMainFrame.instance().showTab(HOMainFrame.SPIELERANALYSE);
-            
+
         } else if (actionevent.getSource().equals(m_jbOffsets)) {
             new SpielerOffsetDialog(HOMainFrame.instance(), m_clSpieler)
             .setVisible(true);
@@ -324,7 +324,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     /**
      * action on focus gained => do nothing
      *
-     * @param event 
+     * @param event
      */
     public void focusGained(java.awt.event.FocusEvent event) {
     }
@@ -332,7 +332,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     /**
      * action on focus lost => save player note
      *
-     * @param event 
+     * @param event
      */
     public final void focusLost(java.awt.event.FocusEvent event) {
         if (m_clSpieler != null) {
@@ -389,7 +389,8 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     private void setLabels() {
         m_jpName.setText(m_clSpieler.getName());
         m_jpName.setFGColor(ColorLabelEntry.getForegroundForSpieler(m_clSpieler));
-        m_jpAlter.setText(m_clSpieler.getAlter() + "");
+        m_jpAlter.setText(m_clSpieler.getAlterWithAgeDaysAsString());
+        m_jpAlter.setToolTipText(m_clSpieler.getAgeStringFull());
         m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler
                                                                                          .getNationalitaet()));
 
@@ -655,14 +656,14 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         m_jtaNotizen.setEditable(true);
         m_jtaNotizen.setText(de.hattrickorganizer.database.DBZugriff.instance().getSpielerNotiz(m_clSpieler
                                                                                                 .getSpielerID()));
-        
+
         EPVData data = new EPVData(m_clSpieler);
 
         double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
         final String epvtext = Helper.getNumberFormat(true, 0).format(price);
         m_jpEPV.setText( epvtext );
-        
-        
+
+
         m_jbTransvergleich.setEnabled(true);
         m_jbStatistik.setEnabled(true);
         m_jbAnalyse1.setEnabled(true);
@@ -675,12 +676,12 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
                 gui.UserParameter.instance().anzahlNachkommastellen)+ "");
     	labelEntry.getRechts().clear();
     }
-    
-    
+
+
     private void showWithCompare(DoppelLabelEntry labelEntry,byte playerPosition){
     	labelEntry.getLinks().setText(Helper.round(m_clSpieler.calcPosValue(playerPosition,true),
                 gui.UserParameter.instance().anzahlNachkommastellen)+ "");
-    	
+
     	labelEntry.getRechts().setSpezialNumber(m_clSpieler.calcPosValue(playerPosition,true)
     					- m_clVergleichsSpieler.calcPosValue(playerPosition,true),false);
     }
@@ -697,7 +698,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     }
 
     /**
-     * search player to compare 
+     * search player to compare
      */
     private void findVergleichsSpieler() {
         final int id = m_clSpieler.getSpielerID();
@@ -770,17 +771,17 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         label = new JLabel(properties.getProperty("Aufgestellt"));
         initNormalLabel(0,3,constraints,layout,panel,label);
         initNormalField(1,3,constraints,layout,panel,m_jpAufgestellt.getComponent(false));
- 
+
         label = new JLabel(properties.getProperty("Bewertung"));
         initNormalLabel(0,4,constraints,layout,panel,label);
         initNormalField(1,4,constraints,layout,panel,m_jpRating.getComponent(false));
 
         label = new JLabel(properties.getProperty("BestePosition"));
         initNormalLabel(0,5,constraints,layout,panel,label);
-        initNormalField(1,5,constraints,layout,panel,m_jpBestPos.getComponent(false));        
- 
+        initNormalField(1,5,constraints,layout,panel,m_jpBestPos.getComponent(false));
+
 // ***** Block 2
-        
+
         label = new JLabel(properties.getProperty("Gruppe"));
         initNormalLabel(4,0,constraints,layout,panel,label);
         //m_jcbTeamInfoSmilie.setPreferredSize ( new Dimension( 40, 16 ) );
@@ -848,23 +849,23 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         constraints.gridwidth = 4;
         layout.setConstraints(label, constraints);
         panel.add(label);
-        
-        
+
+
         constraints.gridwidth = 1;
         label = new JLabel(properties.getProperty("Erfahrung"));
         initNormalLabel(0,7,constraints,layout,panel,label);
         initYellowMainField(1,7,constraints,layout,panel,m_jpErfahrung.getComponent(false));
-        initYellowChangesField(2,7,constraints,layout,panel,m_jpErfahrung2.getComponent(false)); 
- 
+        initYellowChangesField(2,7,constraints,layout,panel,m_jpErfahrung2.getComponent(false));
+
         label = new JLabel(properties.getProperty("Form"));
         initNormalLabel(4,7,constraints,layout,panel,label);
         initYellowMainField(5,7,constraints,layout,panel,m_jpForm.getComponent(false));
-        initYellowChangesField(6,7,constraints,layout,panel,m_jpForm2.getComponent(false)); 
- 
+        initYellowChangesField(6,7,constraints,layout,panel,m_jpForm2.getComponent(false));
+
         label = new JLabel(properties.getProperty("Kondition"));
         initNormalLabel(0,8,constraints,layout,panel,label);
         initYellowMainField(1,8,constraints,layout,panel,m_jpKondition.getComponent(false));
-        initYellowChangesField(2,8,constraints,layout,panel,m_jpKondition2.getComponent(false)); 
+        initYellowChangesField(2,8,constraints,layout,panel,m_jpKondition2.getComponent(false));
 
         label = new JLabel(properties.getProperty("Torwart"));
         initNormalLabel(4,8,constraints,layout,panel,label);
@@ -889,18 +890,18 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         label = new JLabel(properties.getProperty("Verteidigung"));
         initNormalLabel(4,10,constraints,layout,panel,label);
         initYellowMainField(5,10,constraints,layout,panel,m_jpVerteidigung.getComponent(false));
-        initYellowChangesField(6,10,constraints,layout,panel,m_jpVerteidigung2.getComponent(false));    
- 
+        initYellowChangesField(6,10,constraints,layout,panel,m_jpVerteidigung2.getComponent(false));
+
         label = new JLabel(properties.getProperty("Torschuss"));
         initNormalLabel(0,11,constraints,layout,panel,label);
         initYellowMainField(1,11,constraints,layout,panel,m_jpTorschuss.getComponent(false));
         initYellowChangesField(2,11,constraints,layout,panel,m_jpTorschuss2.getComponent(false));
- 
+
         label = new JLabel(properties.getProperty("Standards"));
         initNormalLabel(4,11,constraints,layout,panel,label);
         initYellowMainField(5,11,constraints,layout,panel,m_jpStandards.getComponent(false));
         initYellowChangesField(6,11,constraints,layout,panel,m_jpStandards2.getComponent(false));
- 
+
         m_jtaNotizen.addFocusListener(this);
         m_jtaNotizen.setEditable(false);
 
@@ -946,7 +947,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         label = new JLabel(properties.getProperty("Spezialitaet"));
         initNormalLabel(8,1,constraints,layout,panel,label);
         initNormalField(9,1,constraints,layout,panel,m_jpSpezialitaet.getComponent(false));
- 
+
         label = new JLabel(properties.getProperty("Aggressivitaet"));
         initNormalLabel(8,2,constraints,layout,panel,label);
         initNormalField(9,2,constraints,layout,panel,m_jpAggressivitaet.getComponent(false));
@@ -997,15 +998,15 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         label = new JLabel(properties.getProperty("Marktwert"));
         initNormalLabel(8,13,constraints,layout,panel,label);
         initNormalField(9,13,constraints,layout,panel,m_jpEPV.getComponent(false));
-        
-        
+
+
         //Button
         final JPanel buttonpanel = new JPanel();
 
         //buttonpanel.setLayout( new BoxLayout( buttonpanel, BoxLayout.X_AXIS ) );
         buttonpanel.setOpaque(false);
 
- 
+
         m_jbTransvergleich.setToolTipText(properties.getProperty("tt_Spieler_transfervergleich"));
         m_jbTransvergleich.setPreferredSize(new Dimension(28, 28));
         m_jbTransvergleich.setEnabled(false);
@@ -1034,7 +1035,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         constraints.gridheight = 18;
         layout.setConstraints(label, constraints);
         panel.add(label);
-        
+
         constraints.gridheight = 1;
 
         for (int i = 0; i < playerPositionValues.length; i++) {
@@ -1046,7 +1047,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
 
         add(panel, BorderLayout.CENTER);
     }
-    
+
  	/**
 	 * init a label
 	 * @param x
@@ -1063,7 +1064,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     	layout.setConstraints(label, constraints);
     	panel.add(label);
     }
-    
+
     /**
      * init a value field
      * @param x
@@ -1081,7 +1082,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         layout.setConstraints(component, constraints);
         panel.add(component);
     }
-    
+
     /**
      * init a label
      * @param y
@@ -1096,7 +1097,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         layout.setConstraints(label, constraints);
         panel.add(label);
     }
-    
+
     /**
      * init a value field
      * @param y
@@ -1153,7 +1154,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     	c.gridx = x;
         c.gridy = y;
     }
-    
+
     private void initButton(JButton button, String tooltipText, JPanel buttonpanel){
     	button.setToolTipText(tooltipText);
     	button.setPreferredSize(new Dimension(28, 28));
