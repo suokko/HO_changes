@@ -389,8 +389,9 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     private void setLabels() {
         m_jpName.setText(m_clSpieler.getName());
         m_jpName.setFGColor(ColorLabelEntry.getForegroundForSpieler(m_clSpieler));
-        m_jpAlter.setText(m_clSpieler.getAlterWithAgeDaysAsString());
-        m_jpAlter.setToolTipText(m_clSpieler.getAgeStringFull());
+        String tmpAge = m_clSpieler.getAgeStringFull();
+        m_jpAlter.setText(tmpAge);
+        m_jpAlter.setToolTipText(tmpAge);
         m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler
                                                                                          .getNationalitaet()));
 
