@@ -33,101 +33,69 @@ public class FormulaFactors extends Configuration {
     protected static final int ANZ_FAKTOROBJEKTE = 19;
 
     //~ Instance fields ----------------------------------------------------------------------------
+    // skill factors
+    public float m_fFL_Kondi_Faktor = 0.25f; // wing
+    public float m_fPS_Kondi_Faktor =0;		 // passing
+    public float m_fSP_Kondi_Faktor = 0.50f; // playmaking
+    public float m_fST_Kondi_Faktor = 0.1f;	 // set pieces
+    public float m_fTS_Kondi_Faktor = 0.2f;  // scoring
+    public float m_fTW_Kondi_Faktor = 0.2f;  // goalkeeping
+    public float m_fVE_Kondi_Faktor = 0.2f;  // defense
 
-    /** TODO Missing Parameter Documentation */
-    public float m_fFL_Kondi_Faktor = 0;
+    // experience factor
+    public float m_fErfahrungs_Faktor = 0.45f;
 
-    /** TODO Missing Parameter Documentation */
-    public float m_fPS_Kondi_Faktor =0;
-
-    /** TODO Missing Parameter Documentation */
-    public float m_fSP_Kondi_Faktor = 0.58f;
-
-    /** TODO Missing Parameter Documentation */
-    public float m_fST_Kondi_Faktor = 0;
-
-    /** TODO Missing Parameter Documentation */
-    public float m_fTS_Kondi_Faktor = 0;
-
-    /** TODO Missing Parameter Documentation */
-    public float m_fTW_Kondi_Faktor = 0;
-
-    /** TODO Missing Parameter Documentation */
-    public float m_fVE_Kondi_Faktor = 0;
-
-    /** genereller ErfahrungFaktor */
-    public float m_fErfahrungs_Faktor = 0.43f;
-
-    /** genereller FormFaktor */
+    // general form factor
     public float m_fForm_Faktor = 0.65f;
 
-    ////////////////////////////////AV//////////////////////////////////////////    
-
-    /** TODO Missing Parameter Documentation */
+    ////////////////////////////////AV//////////////////////////////////////////
+    // wingback
     FactorObject m_clAussenVerteidiger;
-
-    /** TODO Missing Parameter Documentation */
+    // def wingback
     FactorObject m_clAussenVerteidiger_DEF;
-
-    /** TODO Missing Parameter Documentation */
+    // wingback towards middle
     FactorObject m_clAussenVerteidiger_IN;
-
-    /** TODO Missing Parameter Documentation */
+    // off wingback
     FactorObject m_clAussenVerteidiger_OFF;
 
-    ////////////////////////////////AM//////////////////////////////////////////    
-
-    /** TODO Missing Parameter Documentation */
+    ////////////////////////////////AM//////////////////////////////////////////
+    // normal winger
     FactorObject m_clFluegelspieler;
-
-    /** TODO Missing Parameter Documentation */
+    // def winger
     FactorObject m_clFluegelspieler_DEF;
-
-    /** TODO Missing Parameter Documentation */
+    // winger towards middle
     FactorObject m_clFluegelspieler_IN;
-
-    /** TODO Missing Parameter Documentation */
+    // off winger
     FactorObject m_clFluegelspieler_OFF;
 
-    ////////////////////////////////Central_DEF//////////////////////////////////////////    
-
-    /** TODO Missing Parameter Documentation */
+    ////////////////////////////////Central_DEF//////////////////////////////////////////
+    // central defender
     FactorObject m_clInnenVerteidiger;
-
-    /** TODO Missing Parameter Documentation */
+    // defender towards wing
     FactorObject m_clInnenVerteidiger_AUS;
-
-    /** TODO Missing Parameter Documentation */
+    // offensive defender
     FactorObject m_clInnenVerteidiger_OFF;
 
-    ////////////////////////////////MS//////////////////////////////////////////    
-
-    /** TODO Missing Parameter Documentation */
+    ////////////////////////////////MS//////////////////////////////////////////
+    // normal foreward
     FactorObject m_clSturm;
-
-    /** TODO Missing Parameter Documentation */
+    // defensive forward
     FactorObject m_clSturm_DEF;
-    
-    /** TODO Missing Parameter Documentation */
+    // forward towards wing
     FactorObject m_clSturm_AUS;
 
-    ////////////////////////////////TW//////////////////////////////////////////    
-
-    /** TODO Missing Parameter Documentation */
+    ////////////////////////////////TW//////////////////////////////////////////
+    // keeper
     FactorObject m_clTorwart;
 
-    ////////////////////////////////ZM//////////////////////////////////////////    
-
-    /** TODO Missing Parameter Documentation */
+    ////////////////////////////////ZM//////////////////////////////////////////
+    // normal inner midfielder
     FactorObject m_clZentralesMittelfeld;
-
-    /** TODO Missing Parameter Documentation */
+    // inner towards wing
     FactorObject m_clZentralesMittelfeld_AUS;
-
-    /** TODO Missing Parameter Documentation */
+    // def inner
     FactorObject m_clZentralesMittelfeld_DEF;
-
-    /** TODO Missing Parameter Documentation */
+    // off inner
     FactorObject m_clZentralesMittelfeld_OFF;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -141,9 +109,7 @@ public class FormulaFactors extends Configuration {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the singleton FormulaFactors instance.
      */
     public static FormulaFactors instance() {
         if (m_clInstance == null) {
@@ -156,8 +122,6 @@ public class FormulaFactors extends Configuration {
 
     /**
      * liefert Array mit allen Objekten
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public FactorObject[] getAllObj() {
         final FactorObject[] allObj = new FactorObject[ANZ_FAKTOROBJEKTE];
@@ -184,7 +148,7 @@ public class FormulaFactors extends Configuration {
         return allObj;
     }
 
-  
+
     /**
      * Setter for property m_fForm_Faktor.
      *
@@ -222,7 +186,7 @@ public class FormulaFactors extends Configuration {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Import star formulas from the default XML.
      */
     public void importDefaults() {
         //vorsichtshalber vorinitialisieren.
@@ -234,75 +198,63 @@ public class FormulaFactors extends Configuration {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Initialize member with 'hardcoded' default values.
+     * Usually these values should never be used, as we read the default.xml afterwards.
      */
     public void init() {
-        //                                     position                        ,tw, sa, pass, flueg, abw, schuss, std, kondi
-        m_clTorwart = new FactorObject(ISpielerPosition.TORWART, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        m_clInnenVerteidiger = new FactorObject(ISpielerPosition.INNENVERTEIDIGER,
-                                                0.0f, 0.6f, 0.4f, 0.0f, 8.0f, 0.0f, 0.0f, 1.0f);
-        m_clInnenVerteidiger_AUS = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_AUS,
-                                                    0.0f, 0.0f, 0.0f, 2.5f, 6.5f, 0.0f, 0.0f, 1.0f);
-        m_clInnenVerteidiger_OFF = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_OFF,
-                                                    0.0f, 1.6f, 0.4f, 0.0f, 7.0f, 0.0f, 0.0f, 1.0f);
-        m_clAussenVerteidiger_IN = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_IN,
-                                                    0.0f, 0.0f, 0.2f, 1.8f, 7.0f, 0.0f, 0.0f, 1.0f);
-        m_clAussenVerteidiger_OFF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_OFF,
-                                                     0.0f, 0.4f, 0.1f, 3.5f, 5.0f, 0.0f, 0.0f, 1.0f);
-        m_clAussenVerteidiger_DEF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_DEF,
-                                                     0.0f, 0.0f, 0.0f, 1.5f, 8.0f, 0.0f, 0.0f, 0.5f);
-        m_clAussenVerteidiger = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER,
-                                                 0.0f, 0.0f, 0.0f, 2.5f, 6.5f, 0.0f, 0.0f, 1.0f);
-        m_clFluegelspieler_OFF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_OFF,
-                                                  0.0f, 1.0f, 1.0f, 7.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-        m_clFluegelspieler_DEF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_DEF,
-                                                  0.0f, 1.0f, 1.0f, 4.5f, 2.5f, 0.0f, 0.0f, 1.0f);
-        m_clFluegelspieler_IN = new FactorObject(ISpielerPosition.FLUEGELSPIEL_IN,
-                                                 0.0f, 2.0f, 1.0f, 4.5f, 1.0f, 0.0f, 0.0f, 1.5f);
-        m_clFluegelspieler = new FactorObject(ISpielerPosition.FLUEGELSPIEL,
-                                              0.0f, 1.0f, 1.3f, 5.5f, 1.2f, 0.0f, 0.0f, 1.0f);
-        m_clZentralesMittelfeld_OFF = new FactorObject(ISpielerPosition.MITTELFELD_OFF,
-                                                       0.0f, 5.5f, 2.3f, 0.0f, 0.2f, 0.0f, 0.0f,2.0f);
-        m_clZentralesMittelfeld_DEF = new FactorObject(ISpielerPosition.MITTELFELD_DEF,
-                                                       0.0f, 5.5f, 0.2f, 0.0f, 2.3f, 0.0f, 0.0f,2.0f);
-        m_clZentralesMittelfeld_AUS = new FactorObject(ISpielerPosition.MITTELFELD_AUS,
-                                                       0.0f, 4.5f, 0.9f, 1.7f, 0.9f, 0.0f, 0.0f,2.0f);
-        m_clZentralesMittelfeld = new FactorObject(ISpielerPosition.MITTELFELD,0.0f, 6.2f, 0.9f, 0.0f, 0.9f, 0.0f, 0.0f, 2.0f);
-        m_clSturm = new FactorObject(ISpielerPosition.STURM, 0.0f, 0.0f, 2.7f, 0.0f, 0.0f, 6.5f, 0.0f, 0.8f);
-        m_clSturm_DEF = new FactorObject(ISpielerPosition.STURM_DEF, 0.0f, 1.5f, 2.5f, 0.0f, 0.0f, 5.0f, 0.0f, 1.0f);
-        m_clSturm_AUS = new FactorObject(ISpielerPosition.STURM_AUS, 0.0f, 0.0f, 1.5f, 6.5f, 0.0f, 6.5f, 0.0f, 1.0f);
-        m_fForm_Faktor = 0.60f;
-        m_fErfahrungs_Faktor = 0.35f;
+        //                                     position,									tw,   sa,   ps,   fl,   vt,   ts,   std,  kondi
+        m_clTorwart = new FactorObject(ISpielerPosition.TORWART,		      		 		10.0f,0.0f, 0.0f, 0.0f, 2.6f, 0.0f, 0.0f, 0.0f);
+        m_clInnenVerteidiger = new FactorObject(ISpielerPosition.INNENVERTEIDIGER,			0.0f, 3.0f, 0.5f, 0.0f, 9.0f, 0.0f, 0.0f, 0.0f);
+        m_clInnenVerteidiger_AUS = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_AUS,	0.0f, 1.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
+        m_clInnenVerteidiger_OFF = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_OFF,	0.0f, 5.0f, 0.5f, 0.0f, 6.0f, 0.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger_IN = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_IN,	0.0f, 1.0f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger_OFF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_OFF,0.0f, 1.5f, 1.5f, 4.0f, 6.0f, 0.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger_DEF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_DEF,0.0f, 0.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER,		0.0f, 1.0f, 1.0f, 4.0f, 8.0f, 0.0f, 0.0f, 0.0f);
+        m_clFluegelspieler_OFF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_OFF,		0.0f, 3.0f, 2.5f, 7.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+        m_clFluegelspieler_DEF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_DEF,		0.0f, 3.5f, 2.0f, 5.0f, 4.0f, 0.0f, 0.0f, 0.0f);
+        m_clFluegelspieler_IN = new FactorObject(ISpielerPosition.FLUEGELSPIEL_IN,			0.0f, 6.0f, 2.0f, 4.0f, 2.0f, 0.0f, 0.0f, 0.0f);
+        m_clFluegelspieler = new FactorObject(ISpielerPosition.FLUEGELSPIEL,				0.0f, 3.5f, 2.5f, 7.0f, 1.5f, 0.0f, 0.0f, 0.0f);
+        m_clZentralesMittelfeld_OFF = new FactorObject(ISpielerPosition.MITTELFELD_OFF,		0.0f, 8.0f, 3.5f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f);
+        m_clZentralesMittelfeld_DEF = new FactorObject(ISpielerPosition.MITTELFELD_DEF,		0.0f, 8.0f, 2.0f, 0.0f, 3.5f, 0.0f, 0.0f, 0.0f);
+	    m_clZentralesMittelfeld_AUS = new FactorObject(ISpielerPosition.MITTELFELD_AUS,		0.0f, 6.0f, 2.0f, 5.0f, 2.0f, 0.0f, 0.0f, 0.0f);
+        m_clZentralesMittelfeld = new FactorObject(ISpielerPosition.MITTELFELD,				0.0f, 8.0f, 3.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f);
+        m_clSturm = new FactorObject(ISpielerPosition.STURM,								0.0f, 0.0f, 3.0f, 1.5f, 0.0f, 9.0f, 0.0f, 0.0f);
+        m_clSturm_DEF = new FactorObject(ISpielerPosition.STURM_DEF,						0.0f, 5.0f, 3.0f, 0.0f, 0.0f, 6.0f, 0.0f, 0.0f);
+        m_clSturm_AUS = new FactorObject(ISpielerPosition.STURM_AUS,						0.0f, 0.0f, 3.0f, 4.0f, 0.0f, 6.5f, 0.0f, 0.0f);
+        m_fForm_Faktor = 0.65f;
+        m_fErfahrungs_Faktor = 0.45f;
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Initialize member for stamina settings with 'hardcoded' default values.
+     * Usually these values should never be used, as we read the default.xml afterwards.
      */
     public void initKondition() {
-        m_fSP_Kondi_Faktor = 0.58f;
-        m_fTW_Kondi_Faktor = 0.0f;
-        m_fVE_Kondi_Faktor = 0.0f;
+        m_fSP_Kondi_Faktor = 0.50f;
+        m_fTW_Kondi_Faktor = 0.2f;
+        m_fVE_Kondi_Faktor = 0.2f;
         m_fPS_Kondi_Faktor = 0.0f;
-        m_fTS_Kondi_Faktor = 0.0f;
-        m_fFL_Kondi_Faktor = 0.0f;
-        m_fST_Kondi_Faktor = 0.0f;
+        m_fTS_Kondi_Faktor = 0.2f;
+        m_fFL_Kondi_Faktor = 0.25f;
+        m_fST_Kondi_Faktor = 0.1f;
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Read an XML file with star formula configurations.
      *
-     * @param dateiname TODO Missing Method Parameter Documentation
+     * @param dateiname the filename of the xml config
      */
     public void readFromXML(String dateiname) {
     	final XMLManager manager = XMLManager.instance();
     	final Document doc = manager.parseFile(dateiname);
         Element ele = null;
 
-    	
+
     	if (doc == null) {
             return;
         }
-    	
+
         //Tabelle erstellen
     	final Element root = doc.getDocumentElement();
 
@@ -353,12 +305,12 @@ public class FormulaFactors extends Configuration {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Read the single skill contributions for a position.
      *
-     * @param tagname TODO Missing Method Parameter Documentation
-     * @param root TODO Missing Method Parameter Documentation
+     * @param tagname tag name for a position
+     * @param root the XML root element
      *
-     * @return TODO Missing Return Method Documentation
+     * @return the created FactorObject
      */
     public FactorObject readObject(String tagname, Element root) {
         Element ele = null;
@@ -405,7 +357,9 @@ public class FormulaFactors extends Configuration {
         }
     }
 
-    //TODO write2XML, readFromXML...
+    /**
+     * Write the currently configured values into a specified file.
+     */
     public void write2XML(String filename) {
         try {
             Document doc = null;
@@ -489,12 +443,7 @@ public class FormulaFactors extends Configuration {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param obj TODO Missing Method Parameter Documentation
-     * @param root TODO Missing Method Parameter Documentation
-     * @param tagName TODO Missing Method Parameter Documentation
+     * Add data for a single position to the XML tree.
      */
     protected void writeFaktorObj(Document doc, FactorObject obj, Element root, String tagName) {
         Element ele = null;
@@ -536,10 +485,10 @@ public class FormulaFactors extends Configuration {
         final org.w3c.dom.Comment comment = doc.createComment("unused since HO! 1.25");
         tmpEle.insertBefore(comment, ele);
     }
-    
+
     /**
      * Return a FactorObject for hoPosition
-     * 
+     *
      * @author Thorsten Dietz
      * @param playerPosition
      * @return
@@ -571,7 +520,7 @@ public class FormulaFactors extends Configuration {
             return null;
     }
     }
-    
+
     /**
      * set factorObject for a hoPosition
      *
@@ -652,11 +601,11 @@ public class FormulaFactors extends Configuration {
         case ISpielerPosition.STURM_DEF:
             m_clSturm_DEF = factorObject;
             break;
-        
+
 		case ISpielerPosition.STURM_AUS:
 			m_clSturm_AUS = factorObject;
 			break;
-    }      
+    }
      }
 	public HashMap getValues() {
 		HashMap map = new HashMap();
@@ -668,7 +617,7 @@ public class FormulaFactors extends Configuration {
 		map.put("m_fTW_Kondi_Faktor",String.valueOf(m_fTW_Kondi_Faktor));
 		map.put("m_fVE_Kondi_Faktor",String.valueOf(m_fVE_Kondi_Faktor));
 		map.put("m_fErfahrungs_Faktor",String.valueOf(m_fErfahrungs_Faktor));
-		map.put("m_fForm_Faktor",String.valueOf(m_fForm_Faktor));		
+		map.put("m_fForm_Faktor",String.valueOf(m_fForm_Faktor));
 		return map;
 	}
 
@@ -682,5 +631,5 @@ public class FormulaFactors extends Configuration {
 		m_fVE_Kondi_Faktor = getFloatValue(values,"m_fVE_Kondi_Faktor");
 		m_fErfahrungs_Faktor = getFloatValue(values,"m_fErfahrungs_Faktor");
 		m_fForm_Faktor = getFloatValue(values,"m_fForm_Faktor");
-	}	
+	}
 }
