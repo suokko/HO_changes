@@ -937,11 +937,13 @@ public final class Spieler implements plugins.ISpieler {
             byte idealPos = ISpielerPosition.UNBESTIMMT;
             float maxStk = -1.0f;
 
-            //            int                         index       =   -1;
             for (int i = 0; (allPos != null) && (i < allPos.length); i++) {
-                if (calcPosValue(allPos[i],true) > maxStk) {
-                    //                   index       =   i;
-                    maxStk = calcPosValue(allPos[i],true);
+// 31.03.2008, aik: this normalized version to determine the best position is
+//   a bit irritationg/misleading. We decided to use the 'raw' star values from now one.
+//                if (calcPosValue(allPos[i],true) > maxStk) {
+//                	maxStk = calcPosValue(allPos[i],true);
+                if (calcPosValue(allPos[i].getPosition(),true) > maxStk) {
+                	maxStk = calcPosValue(allPos[i].getPosition(),true);
                     idealPos = allPos[i].getPosition();
                 }
             }
