@@ -210,7 +210,7 @@ public class FormulaFactors extends Configuration {
         m_clAussenVerteidiger_IN = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_IN,	0.0f, 1.0f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
         m_clAussenVerteidiger_OFF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_OFF,0.0f, 1.5f, 1.5f, 4.0f, 6.0f, 0.0f, 0.0f, 0.0f);
         m_clAussenVerteidiger_DEF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_DEF,0.0f, 0.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
-        m_clAussenVerteidiger = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER,		0.0f, 1.0f, 1.0f, 4.0f, 8.0f, 0.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER,		0.0f, 1.0f, 0.0f, 3.5f, 8.0f, 0.0f, 0.0f, 0.0f);
         m_clFluegelspieler_OFF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_OFF,		0.0f, 3.0f, 2.5f, 7.0f, 1.0f, 0.0f, 0.0f, 0.0f);
         m_clFluegelspieler_DEF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_DEF,		0.0f, 3.5f, 2.0f, 5.0f, 4.0f, 0.0f, 0.0f, 0.0f);
         m_clFluegelspieler_IN = new FactorObject(ISpielerPosition.FLUEGELSPIEL_IN,			0.0f, 6.0f, 2.0f, 4.0f, 2.0f, 0.0f, 0.0f, 0.0f);
