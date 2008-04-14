@@ -2,11 +2,12 @@ package de.hattrickorganizer.logik.exporter;
 
 import java.util.Hashtable;
 
+import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 
 
-public class ExportMatchData {
+public class ExportMatchData implements IExportMatchData {
 	
 	private Hashtable players;
 	private IMatchDetails details;

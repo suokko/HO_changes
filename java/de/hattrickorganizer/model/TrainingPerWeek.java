@@ -1,6 +1,12 @@
 // %531033194:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import java.util.Calendar;
+import java.util.Locale;
+
+import de.hattrickorganizer.tools.HelperWrapper;
+
+
 
 // %1110567470171:hoplugins.commons.model%
 
@@ -41,6 +47,7 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
         this.intensity = intensity;
         this.staminaTrainingPart = staminaTrainingPart;
     }
+    
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -196,4 +203,23 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
 		previousHrfId = i;
 	}
 
+	/**
+	 * calculate the training date for this week/year
+	 * 
+	 * @return	training date  
+	 */
+	public Calendar getTrainingDate () {
+		// Kalenderwerte setzen
+		// set calendar values
+		final Calendar cal = Calendar.getInstance(Locale.UK);
+		cal.setFirstDayOfWeek(Calendar.SUNDAY);
+		cal.set(Calendar.YEAR, getYear());
+		cal.set(Calendar.WEEK_OF_YEAR, getWeek());
+
+		/** get last training date BEFORE this date */ 
+        Calendar trainingDate = HelperWrapper.instance().getLastTrainingDate(cal.getTime(),
+        				HOMiniModel.instance().getXtraDaten().getTrainingDate());
+
+        return trainingDate;
+	}
 }

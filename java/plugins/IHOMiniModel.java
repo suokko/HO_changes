@@ -1,6 +1,7 @@
 // %612514260:plugins%
 package plugins;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -311,4 +312,14 @@ public interface IHOMiniModel {
 	 * @return Spieler instance
 	 */
 	public ISpieler createPlayer(IPlayerData data);	
+	
+	/**
+	 * List of useful data for export
+	 *
+	 * @param startingDate starting data to export from (for non friendlies)
+	 * @param startingDateForFriendlies starting data to export from (for friendlies)
+	 *
+	 * @return List of IExportMatchData objects
+	 */
+	public List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
 }

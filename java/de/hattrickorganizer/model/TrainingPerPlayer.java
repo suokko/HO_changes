@@ -1,7 +1,18 @@
 // %2751235623:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Vector;
+
 import plugins.ISpieler;
+import plugins.ITeam;
+import plugins.ITrainingPerPlayer;
+import plugins.ITrainingWeek;
+import de.hattrickorganizer.logik.TrainingPoint;
+import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**
@@ -37,13 +48,23 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 
     //Verteidigung
     private double VE;
+    
+    /** calculate training for this training date only */ 
+    private Date timestamp = null;
+    
+    //~ Constants ----------------------------------------------------------------------------------
+    //variable for adjusting amount of set pieces when training scoring
+    private static final float p_f_schusstraining_Standard = 0.6f;
 
+    private TrainingPoint trainPoint;
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new TrainingPerPlayer object.
      */
     public TrainingPerPlayer() {
+//    	trainPoint = new TrainingPoint();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -211,6 +232,23 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
     }
 
     /**
+	 * @return the timestamp
+	 */
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	/**
+	 * Set the timestamp
+	 * if not null, calculate sub increase for this training date only
+	 * 
+	 * @param timestamp the timestamp to set
+	 */
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	/**
      * DOCUMENT ME!
      *
      * @return
@@ -219,4 +257,156 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
         return spieler.getSpielerID() + ":" + TW + ":" + VE + ":" + SA + ":" + PS + ":" + FL + ":"
                + TS + ":" + ST + "\n";
     }
+
+    /**
+     * add sub values of another ITrainingPerPlayer instance to this instance
+     * @param values	the instance we take the values from
+     */
+    public void addValues (ITrainingPerPlayer values) {
+    	setFL(this.getFL() + values.getFL());
+    	setKO(this.getKO() + values.getKO());
+    	setPS(this.getPS() + values.getPS());
+    	setSA(this.getSA() + values.getSA());
+    	setST(this.getST() + values.getST());
+    	setTS(this.getTS() + values.getTS());
+    	setTW(this.getTW() + values.getTW());
+    	setVE(this.getVE() + values.getVE());
+    }
+
+	/**
+	 * Checks if trainingDate is after the last skill up in skillType
+	 * 
+	 * @param trainingDate
+	 * @param skillType
+	 * @return
+	 */
+	private boolean isAfterSkillup (Calendar trainingDate, int skillType) {
+		if (getTimestamp() == null)
+			return true;
+		Date skillupTime = getLastSkillupDate(skillType, getTimestamp());
+		if (trainingDate.getTimeInMillis() > skillupTime.getTime())
+			return true;
+		else
+			return false;
+	}
+	
+    /**
+     * Updates the training results
+     */
+    private void calculateTrainingResults(ITrainingWeek train) {
+    	double d = trainPoint.calcTrainingPoints(false);
+    	int trainType = train.getTyp();
+		Calendar trainingDate = train.getTrainingDate();
+    	switch (trainType) {
+		case ITeam.TA_SPIELAUFBAU:
+	        //Spielaufbau // playmaking
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_SPIELAUFBAU))
+				setSA (d);
+			break;
+		case ITeam.TA_VERTEIDIGUNG:
+            //Verteidigung //defense
+		case ITeam.TA_ABWEHRVERHALTEN:
+            //defensive positions
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_VERTEIDIGUNG))
+				setVE (d);
+			break;
+		case ITeam.TA_FLANKEN:
+            //Flankenlaeufe //wing
+		case ITeam.TA_EXTERNALATTACK:
+			// Fluegelangriff //Lateral offensive            
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_FLUEGEL))
+				setFL (d);
+			break;
+		case ITeam.TA_PASSSPIEL:
+            //Passspiel //passing
+		case ITeam.TA_STEILPAESSE:
+            // through passes
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_PASSSPIEL))
+				setPS (d);
+			break;
+		case ITeam.TA_TORWART:
+            //Torwart //keeper
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORWART))
+				setTW (d);
+			break;
+		case ITeam.TA_CHANCEN:
+            //Chancenverwertung //Torschuss //scoring
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORSCHUSS))
+				setTS (d);
+			break;
+		case ITeam.TA_SCHUSSTRAINING:
+            //Schusstraining //shooting
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORSCHUSS))
+				setTS (d);
+            // Shooting gives some training in Set Pieces, too
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
+	            setST(p_f_schusstraining_Standard * trainPoint.calcTrainingPoints(true));
+			break;
+		case ITeam.TA_STANDARD:
+            //Standardsituationen //set pieces
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
+				setST (d);
+			break;
+		case ITeam.TA_KONDITION:
+			//Kondition //stamina
+			if (isAfterSkillup(trainingDate, ISpieler.SKILL_KONDITION))
+				setSA (d);
+			break;
+		}
+    }
+
+    /**
+     * Calculates the lask skillup for the player in the corrct train
+     *
+     * @param trainskill Skill we are looking for a skillup
+     * @param trainTime Trainingtime
+     *
+     * @return Last skillup Date, or Date(0) if no skillup were found
+     */
+    private Date getLastSkillupDate(int trainskill, Date trainTime) {
+        //Feststellung wann die relevanten Skillupswaren
+        //get relevant skillups for calculation period
+        final Vector levelups = getSpieler().getAllLevelUp(trainskill);
+        Date skilluptime = new Date(0);
+
+        for (Iterator it = levelups.iterator(); it.hasNext();) {
+            final Object[] aobj = (Object[]) it.next();
+            final Boolean bLevel = (Boolean) aobj[1];
+
+            if (bLevel.booleanValue() == true) {
+                final Date tmpTime = new Date(((Timestamp) aobj[0]).getTime());
+
+                if ((tmpTime.before(trainTime)) && (tmpTime.after(skilluptime))) {
+                    skilluptime = HelperWrapper.instance()
+                    					.getLastTrainingDate(tmpTime,
+                    							HOMiniModel.instance().getXtraDaten()
+                    							.getTrainingDate())
+                    							.getTime();
+                }
+            }
+        }
+
+        return skilluptime;
+    }
+
+    /**
+     * get the training point for this instance
+     * @return	training point
+     */
+	public TrainingPoint getTrainPoint() {
+		return trainPoint;
+	}
+
+	/**
+	 * set the training point for this instance and
+	 * calculate the sub skills for the player using 
+	 * the training week from this training point
+	 *  
+	 * @param trainPoint	training point
+	 */
+	public void setTrainPoint(TrainingPoint trainPoint) {
+		this.trainPoint = trainPoint;
+		calculateTrainingResults(trainPoint.getTrainWeek());
+	}
+    
 }

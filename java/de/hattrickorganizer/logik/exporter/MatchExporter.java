@@ -12,7 +12,6 @@ import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
-import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -120,7 +119,7 @@ public class MatchExporter {
 			return false;
 		} else //Datum i.O. weitere checks fahren
 			{
-			//Highlights prï¿½fen auf Verletzung oder Roter Karte
+			//Highlights prüfen auf Verletzung, Rote Karte, Verwirrung, Unterschätzung
 			for (int j = 0;(highlights != null) && (j < highlights.size()); j++) {
 				plugins.IMatchHighlight hlight = (IMatchHighlight) highlights.get(j);
 
@@ -134,9 +133,14 @@ public class MatchExporter {
 								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
 								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)
 								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER))))) {
+								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
+								// Tactical Problems // Verwirrung
+								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME)
+								// Unterschaetzen
+								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT))))) {
 					return false;
 				}
+				
 			} //ende for highlight check
 		}
 		return true;

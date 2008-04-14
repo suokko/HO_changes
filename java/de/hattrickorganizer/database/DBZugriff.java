@@ -1367,7 +1367,7 @@ public class DBZugriff {
 		String sql =
 			"select trainingdate from HRF, XTRADATA where HRF.hrf_id=XTRADATA.hrf_id and trainingdate < (select trainingdate from XTRADATA where hrf_id="
 				+ hrfId
-				+ ") order by datum desc";
+				+ ") order by datum desc limit 1";
 		final ResultSet rs = m_clJDBCAdapter.executeQuery(sql);
 
 		try {
@@ -1768,6 +1768,22 @@ public class DBZugriff {
 				
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN AGEDAYS INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN AGEDAYS INTEGER");
+
+		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
+		// Reset Training Speed Parameters for New Training
+		UserConfigurationTable userConf = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME); 
+		userConf.update("DAUER_TORWART", "3.7");
+		userConf.update("DAUER_VERTEIDIGUNG", "6.1");
+		userConf.update("DAUER_SPIELAUFBAU", "5.5");
+		userConf.update("DAUER_PASSPIEL", "4.5");
+		userConf.update("DAUER_FLUEGELSPIEL", "3.8");
+		userConf.update("DAUER_CHANCENVERWERTUNG", "5.2");
+		userConf.update("DAUER_STANDARDS", "2.0");
+
+		userConf.update("AlterFaktor", "1.0");
+		userConf.update("TrainerFaktor", "1.0");
+		userConf.update("CoTrainerFaktor", "1.0");
+		userConf.update("IntensitaetFaktor", "1.0");
 
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
