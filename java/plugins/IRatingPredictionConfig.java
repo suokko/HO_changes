@@ -4,7 +4,7 @@ public interface IRatingPredictionConfig {
 
     public static final int THISSIDE = IRatingPredictionParameter.THISSIDE;
     public static final int OTHERSIDE = IRatingPredictionParameter.OTHERSIDE;
-    public static final int BOTHSIDES = IRatingPredictionParameter.BOTHSIDES;
+    public static final int ALLSIDES = IRatingPredictionParameter.ALLSIDES;
     public static final int MIDDLE = IRatingPredictionParameter.MIDDLE;
 
     public String getPredictionName ();
