@@ -6,8 +6,8 @@
  */
 package plugins;
 
-import java.sql.Timestamp;
-
+import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 
 
@@ -22,25 +22,28 @@ import java.util.Vector;
 public interface ITrainingsManager {
     //~ Methods ------------------------------------------------------------------------------------
 
-    /////////////////////// Deprecated, to be removed ///////////////////////////
-
     /**
-     * DOCUMENT ME!
+     * get a new training point instance
      *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @deprecated returns current PlayerTrainingVector calculates new vector if current is null
-     */
-    public Vector getPlayerTrainingsVector();
-
-    ////////////////Accessor///////////////    
-
-    /**
-     * returns instance of TrainingPoint
-     *
-     * @return TODO Missing Return Method Documentation
+     * @return new training point
      */
     public ITrainingPoint getTrainingPoint();
+
+    /**
+     * get a new training point instance
+     * initialized with existing ITrainingWeek
+     *
+     * @return new training point
+     */
+    public ITrainingPoint getTrainingPoint(ITrainingWeek trainWeek);
+
+    /**
+     * get a new training point instance
+     * initialized with a new ITrainingWeek created by the arguments
+     *
+     * @return new training point
+     */
+    public ITrainingPoint getTrainingPoint (int year, int week, int type, int intensity, int staminaTrainingPart);
 
     /**
      * returns current TrainingVector calculates new vector if current is null
@@ -49,32 +52,6 @@ public interface ITrainingsManager {
      */
     public Vector getTrainingsVector();
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param inputTrainings Trainingweeks to use
-     * @param zeitpunkt null for current, time til training is calculated
-     *
-     * @return Vector of ITrainingPerPlayer Object for all Players
-     *
-     * @deprecated calculates training 4 all players Trainings ( Weeks) must be calculated first!
-     */
-    public Vector calculateData(Vector inputTrainings, Timestamp zeitpunkt);
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param inputSpieler Player to use
-     * @param inputTrainings preset Trainingweeks
-     * @param zeitpunkt estamiated time, null for current
-     *
-     * @return TrainingPerPlayer
-     *
-     * @deprecated liefert die komplette Trainings in jedem skill eines Spielers calculates
-     *             TRaining for given Player for each skill
-     */
-    public ITrainingPerPlayer calculateDataForPlayer(ISpieler inputSpieler, Vector inputTrainings,
-                                                     Timestamp zeitpunkt);
 
     ///////////////////////// Lower API, just call if you know what you'return doing :) ///////////////////////////
 
@@ -89,22 +66,42 @@ public interface ITrainingsManager {
     public Vector calculateTrainings(Vector inputTrainings);
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param trainings TODO Missing Constructuor Parameter Documentation
-     *
-     * @see : for complete recalculation  fillWithData( ITrainingsManager.calculateTrainings(
-     *      IHOMiniModel.getDBManualTrainingsVector() ) );
-     * @deprecated initializes and calculates All Data for training
-     */
-    public void fillWithData(Vector trainings);
-
-    //Funktion für einen Spieler -> PlayerID vorhanden -> nach dem Brunnder
-
-    /**
      * Method to force a recalculation of decimal subskills
      *
      * @param showBar TODO Missing Constructuor Parameter Documentation
      */
     public void recalcSubskills(boolean showBar);
+
+    /**
+     * Calculates how long the player was on the field in the specified match
+     * @param matchId	the match to check
+     * @param playerId	the player to check
+     * @return	number of minutes the player was on the field
+     */
+    public int getMinutesPlayed (int matchId, int playerId);
+
+    /**
+     * Creates a list of matches for the specified training
+     * 
+     * @param trainingDate	use this trainingDate
+     * @return	list of matchIds (type Integer)
+     */
+    public List getMatchesForTraining (Calendar trainingDate);
+    
+    /**
+     * Returns the base points a player gets for this training type 
+     * in a full match at this position
+     * @param trainType 	training type
+     * @param position		player position id
+     * @return base points
+     */
+    public double getBasePoints (int trainType, int position);
+
+    /**
+     * Calculates how long the player was on the field in the specified match
+     * @param matchId	the match to check
+     * @param playerId	the player to check
+     * @return	number of minutes the player was on the field
+     */
+    public int getMatchPosition (int matchId, int playerId);
 }

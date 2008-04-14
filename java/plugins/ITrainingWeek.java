@@ -6,6 +6,8 @@
  */
 package plugins;
 
+import java.util.Calendar;
+
 /**
  * DOCUMENT ME!
  *
@@ -102,4 +104,11 @@ public interface ITrainingWeek {
      * @return TODO Missing Return Method Documentation
      */
     public String toString();
+
+	/**
+	 * calculate the training date for this week/year
+	 * 
+	 * @return	training date  
+	 */
+    public Calendar getTrainingDate ();
 }

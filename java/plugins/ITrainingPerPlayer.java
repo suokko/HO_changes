@@ -6,6 +6,7 @@
  */
 package plugins;
 
+
 /**
  * DOCUMENT ME!
  *
@@ -76,4 +77,11 @@ public interface ITrainingPerPlayer {
      * @return Value of property VE.
      */
     public double getVE();
+
+    /**
+     * add sub values of another ITrainingPerPlayer instance to this instance
+     * @param values	the instance we take the values from
+     */
+    public void addValues (ITrainingPerPlayer values);
+
 }

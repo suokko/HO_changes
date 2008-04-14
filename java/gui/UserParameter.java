@@ -4,11 +4,10 @@ package gui;
 import java.awt.Color;
 import java.util.HashMap;
 
-import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.model.*;
-import de.hattrickorganizer.tools.MyHelper;
-
 import plugins.ILineUp;
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.model.Configuration;
+import de.hattrickorganizer.tools.MyHelper;
 
 
 /**
@@ -385,10 +384,10 @@ public final class UserParameter extends Configuration {
     public float AlterFaktor = 1.0f;
 
     /** TODO Missing Parameter Documentation */
-    public float CoTrainerFaktor = 3.33f;
+    public float CoTrainerFaktor = 1.0f;
 
     /** TODO Missing Parameter Documentation */
-    public float IntensitaetFaktor = 0.1f;
+    public float IntensitaetFaktor = 1.0f;
 
     /*gibt die mindeststärke für einen Spieler an für seine Idealpos um vom Aufstellungsassi bei idealpos gesetzt zu werden*/
 
@@ -418,28 +417,28 @@ public final class UserParameter extends Configuration {
     public float DAUER_ALLGEMEIN = 1.0f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_CHANCENVERWERTUNG = 7.0f;
+    public float DAUER_CHANCENVERWERTUNG = 5.2f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_FLUEGELSPIEL = 5.0f;
+    public float DAUER_FLUEGELSPIEL = 3.8f;
 
     /** TODO Missing Parameter Documentation */
     public float DAUER_KONDITION = 1.0f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_PASSPIEL = 5.0f;
+    public float DAUER_PASSPIEL = 4.5f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_SPIELAUFBAU = 7.0f;
+    public float DAUER_SPIELAUFBAU = 5.5f;
 
     /** TODO Missing Parameter Documentation */
     public float DAUER_STANDARDS = 2.0f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_TORWART = 5.0f;
+    public float DAUER_TORWART = 3.7f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_VERTEIDIGUNG = 8.0f;
+    public float DAUER_VERTEIDIGUNG = 6.1f;
 
     //Timezone
 

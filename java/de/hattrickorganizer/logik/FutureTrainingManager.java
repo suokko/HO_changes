@@ -19,11 +19,11 @@ import de.hattrickorganizer.model.PlayerSkillup;
  * @author Draghetto
  */
 public class FutureTrainingManager implements IFutureTrainingManager {
-	/** Actual Training points */
+	/** Actual Training sub */
 	public double[] actual = new double[8];
 		
-	/** Maximum training points after future trainings */
-	public double[] finalPoints = new double[8];
+	/** Maximum training sub after future trainings */
+	public double[] finalSub = new double[8];
 
 	/** Number of skillup with maximum training */
 	public int[] finalSkillup = new int[8];
@@ -32,14 +32,14 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	private ISpieler player;
 	private List futureTrainings;
 	private List futureSkillups;
-	private int seasonPassed = 0;
+	private int weeksPassed = 0;
 
 	private int keeperTrainer;
 	private int coTrainer;
 	private int trainer;
 
 	/**
-	* Calculates the effects of the future trainings for the provived player
+	* Calculates the effects of the future trainings for the provided player
 	*
 	* @param p The active player
 	* @param trainings The future trainings
@@ -70,93 +70,37 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		
 		// rest the other 4 arrays min and max level are equals to actual at beginning
 		for (int i = 0; i < 8; i++) {
-			finalPoints[i] = actual[i];
+			finalSub[i] = actual[i];
 			finalSkillup[i] = 0;
 		}
 
-		seasonPassed = 0;
+		weeksPassed = 0;
 		int position = HOMiniModel.instance().getHelper().getPosition(player.getIdealPosition());
-		int actualSeason = HOMiniModel.instance().getBasics().getSeason();		
 		// Iterate thru all the future training weeks
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
+			weeksPassed++;
 			IFutureTrainingWeek tw = (IFutureTrainingWeek) this.futureTrainings.get(index-1);
 			
-			// check that the actual simulated week is after end of year
-			// if so player is one year older and increase the needed point by one due to age            			
-
-			if (tw.getSeason()> actualSeason + seasonPassed) {
-				seasonPassed++;
-				updatePoints(ISpieler.SKILL_TORWART);
-				updatePoints(ISpieler.SKILL_SPIELAUFBAU);
-				updatePoints(ISpieler.SKILL_PASSSPIEL);
-				updatePoints(ISpieler.SKILL_FLUEGEL);
-				updatePoints(ISpieler.SKILL_VERTEIDIGUNG);
-				updatePoints(ISpieler.SKILL_TORSCHUSS);
-				updatePoints(ISpieler.SKILL_STANDARDS);
-				updatePoints(ISpieler.SKILL_KONDITION);
-			}
-
 			double point = HOMiniModel.instance().getTrainingsManager().getTrainingPoint().getTrainingPoint(tw.getTyp(), new Integer(position)).doubleValue();
-			//HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
-			// Depending on the type of training, update the proper skill with the provived min and max training points
+//			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
+			// Depending on the type of training, update the proper skill with the provided training points
 			switch (tw.getTyp()) {
 				case ITeam.TA_TORWART :
-					processTraining(ISpieler.SKILL_TORWART, point, tw);
-
-					break;
-
 				case ITeam.TA_SPIELAUFBAU :
-					processTraining(ISpieler.SKILL_SPIELAUFBAU, point, tw);
-
-					break;
-
 				case ITeam.TA_PASSSPIEL :
-					processTraining(ISpieler.SKILL_PASSSPIEL, point, tw);
-
-					break;
-
 				case ITeam.TA_STEILPAESSE :
-					processTraining(ISpieler.SKILL_PASSSPIEL, point, tw);
-
-					break;
-
 				case ITeam.TA_FLANKEN :
-					processTraining(ISpieler.SKILL_FLUEGEL, point, tw);
-
-					break;
-
 				case ITeam.TA_VERTEIDIGUNG :
-					processTraining(ISpieler.SKILL_VERTEIDIGUNG, point, tw);
-
-					break;
-
 				case ITeam.TA_ABWEHRVERHALTEN :
-					processTraining(ISpieler.SKILL_VERTEIDIGUNG, point, tw);
-
-					break;
-
 				case ITeam.TA_CHANCEN :
-					processTraining(ISpieler.SKILL_TORSCHUSS, point, tw);
-
+				case ITeam.TA_STANDARD :
+				case ITeam.TA_KONDITION :
+				case ITeam.TA_EXTERNALATTACK :
+					processTraining(getSkillForTraining(tw.getTyp()), point, tw);
 					break;
-
 				case ITeam.TA_SCHUSSTRAINING :
 					processTraining(ISpieler.SKILL_TORSCHUSS, point, tw);
 					processTraining(ISpieler.SKILL_STANDARDS, 0.5d, tw);
-
-					break;
-
-				case ITeam.TA_STANDARD :
-					processTraining(ISpieler.SKILL_STANDARDS, point, tw);
-
-					break;
-
-				case ITeam.TA_KONDITION :
-					processTraining(ISpieler.SKILL_KONDITION, point, tw);
-					break;
-
-				case ITeam.TA_EXTERNALATTACK :
-					processTraining(ISpieler.SKILL_FLUEGEL, point, tw);
 					break;
 			}
 		}		
@@ -169,30 +113,27 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		fp.setPlaymaking(getFinalValue(ISpieler.SKILL_SPIELAUFBAU));
 		fp.setSetpieces(getFinalValue(ISpieler.SKILL_STANDARDS));
 		fp.setStamina(getFinalValue(ISpieler.SKILL_KONDITION));
-		fp.setAge(player.getAlter()+seasonPassed);
+		fp.setAge(player.getAlter()+(int)(Math.floor((player.getAgeDays()+7*weeksPassed)/112d)));
 		fp.setPlayerId(player.getSpielerID());
 		return fp;
 	}
-	
+
+	/**
+	 * get the final value (incl. skillups and sub) for a specific skill
+	 * 
+	 * @param skillIndex	index of the skill
+	 * @return				value for this skill
+	 */
 	private double getFinalValue(int skillIndex) {		
-		double value = getSkillValue(player,skillIndex);
+		double value = player.getValue4Skill4(skillIndex);
 		int pos = getSkillPosition(skillIndex);
 		value = value + finalSkillup[pos];
-		value = value + finalPoints[pos]/getTrainingLength(getTrainedSkillCode(skillIndex));		
+		value = value + finalSub[pos];		
 		return value;
 	}
 
-	private void updatePoints(int skillIndex) {
-		double length = player.getTrainingLength(getTrainedSkillCode(skillIndex), coTrainer, keeperTrainer, trainer, 100, 0);
-
-		double modifier = ((double) (length + seasonPassed )) / ((double) (length + seasonPassed - 1));
-		int pos = getSkillPosition(skillIndex);
-		actual[pos] = actual[pos] * modifier;
-		finalPoints[pos] = finalPoints[pos] * modifier;
-	}
-
 	/**
-	* Get the array of the actual training points
+	* Get the array of the actual training sub
 	*
 	* @return
 	*/
@@ -210,12 +151,12 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	}
 
 	/**
-	* Get the array of the maximum training points
+	* Get the array of the maximum training sub
 	*
 	* @return
 	*/
 	public double[] getMax() {
-		return finalPoints;
+		return finalSub;
 	}
 
 	/**
@@ -228,45 +169,54 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	}
 
 	/**
-	* Return the offset points for the skill
+	* Return the offset and sub for the skill
 	*
-	* @param skill the skill index to analyze
+	* @param skillIndex the skill index to analyze
 	*
-	* @return the decimal of a player
+	* @return the sub with offset of a player
 	*/
 	private double getOffset(int skillIndex) {
 		double offset = player.getSubskill4SkillWithOffset(skillIndex);
-		double length = player.getTrainingLength(getTrainedSkillCode(skillIndex), coTrainer, keeperTrainer, trainer, 100, 0);
-		return offset * length;
+		return offset;
 	}
 
 	/**
-	* Calculates the number of points needed for a skillup
+	* Calculates the number of weeks needed for a future skillup
+	* 
+	* @param skillIndex		skill to use (from ISpieler.SKILL*)
+	* @param	intensity	training intensity
+	* @param	staminaTrainingPart	stamina share
 	*
-	* @param trType
-	*
-	* @return
+	* @return	the predicted length
 	*/
-	private double getTrainingLength(int trType) {		
+	private double getTrainingLength(int skillIndex, int intensity, int staminaTrainingPart) {
+		int trType = getPrimaryTrainingForSkill(skillIndex);
+		int pos = getSkillPosition(skillIndex);
+		int curSkillUps = finalSkillup[pos];
 		int age = player.getAlter();
-		player.setAlter(age+seasonPassed);		
-		double limit = player.getTrainingLength(trType, coTrainer, keeperTrainer, trainer, 100, 0);
-		player.setAlter(age);			
+		int ageDays = player.getAgeDays();
+		int realSkill = player.getValue4Skill4(skillIndex);
+		// Set age and skill for simulation
+		player.setAlter (age + (int)Math.floor((ageDays + 7*weeksPassed)/112d));
+		player.setValue4Skill4 (skillIndex, realSkill+curSkillUps);
+		double limit = player.getTrainingLength(trType, coTrainer, keeperTrainer, trainer, intensity, staminaTrainingPart);
+//		HOLogger.instance().debug(getClass(), "getTrLen for "+player.getName()+": weeksPassed="+weeksPassed+", age="+player.getAlter()+", skill="+getSkillValue(player, skillIndex)+", limit="+limit);
+		// Undo simulation changes on player
+		player.setAlter(age);
+		player.setValue4Skill4 (skillIndex, realSkill);
 		return limit;
 	}
 
 	/**
-	* Checks if a skillup on min or max trainings has happened
+	* Checks if a skillup has happened
 	*
 	* @param skillIndex the skill to consider
-	* @param limit the number of needed point for that skill to have a skillup
 	*
 	* @return true if skillup happened
 	*/
-	private boolean checkSkillup(int pos, double limit) {
-		if (finalPoints[pos] >= limit) {
-			//finalPoints[skillIndex] = finalPoints[skillIndex] - limit;
-			finalPoints[pos] = 0;
+	private boolean checkSkillup(int pos) {
+		if (finalSub[pos] >= 1) {
+			finalSub[pos] -= 1;
 			finalSkillup[pos]++;
 
 			return true;
@@ -279,26 +229,33 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	* Updates the training situation
 	*
 	* @param skillIndex The skill to be updated
-	* @param point The minimum points added
+	* @param point The points to be added
 	* @param tw the training week settings for the considered week
 	*/
 	private void processTraining(int skillIndex, double point, IFutureTrainingWeek tw) {
-		// recalculate point value with the intensity for the current week
-		point = (point * (tw.getIntensitaet()/100d) * (100d-tw.getStaminaTrainingPart())/100d);
-		int pos = getSkillPosition(skillIndex);
-		finalPoints[pos] = finalPoints[pos] + point;
+		// number of weeks necessary to have a skillup
+		double trainLength = getTrainingLength(skillIndex, tw.getIntensitaet(), tw.getStaminaTrainingPart());
 
-		// number of points necessary to have a skillup
-		double trainLength = getTrainingLength(getTrainedSkillCode(skillIndex));
+		// If invalid training (trType does not train this skill)
+		if (trainLength == -1)
+			return;
+		
+		// calculate increase in sub
+		double subForThisWeek = point/trainLength;
+		
+		int pos = getSkillPosition(skillIndex);
+		// add sub to skill
+		finalSub[pos] = finalSub[pos] + subForThisWeek;
+
 
 		// check if skillup happened!
-		if (checkSkillup(pos, trainLength)) {
+		if (checkSkillup(pos)) {
 			PlayerSkillup su = new PlayerSkillup();
 
 			su.setHtSeason(tw.getSeason());
 			su.setHtWeek(tw.getWeek());
 			su.setType(skillIndex);
-			su.setValue(getSkillValue(player, skillIndex) + finalSkillup[pos]);
+			su.setValue(player.getValue4Skill4(skillIndex) + finalSkillup[pos]);
 			su.setTrainType(ISkillup.SKILLUP_FUTURE);
 
 			if ((skillIndex == ISpieler.SKILL_KONDITION) && (su.getValue() > 9)) {
@@ -309,7 +266,14 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		}
 	}
 
-	private int getTrainedSkillCode(int skillIndex) {
+	/**
+	 * Gets the primary training for a specific skill
+	 * (e.g. ISpieler.SKILL_SPIELAUFBAU -> ITeam.TA_SPIELAUFBAU)
+	 *  
+	 * @param skillIndex	the skill to use
+	 * @return				the primary training type
+	 */
+	private int getPrimaryTrainingForSkill (int skillIndex) {
 		switch (skillIndex) {
 			case ISpieler.SKILL_TORWART :
 				return ISpieler.TORWART;
@@ -339,32 +303,41 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		return 0;
 	}
 
-	public static int getSkillValue(ISpieler spieler, int skillIndex) {
-		switch (skillIndex) {
-			case ISpieler.SKILL_TORWART :
-				return spieler.getTorwart();
+	/**
+	 * Gets the skill trained by a specific training type
+	 * (ITeam.TA_* -> ISpieler.SKILL_*)
+	 * 
+	 * @param trType	training type
+	 * @return			the trained skill
+	 */
+	private int getSkillForTraining (int trType) {
+		switch (trType) {
+			case ITeam.TA_TORWART:
+				return ISpieler.SKILL_TORWART;
 
-			case ISpieler.SKILL_SPIELAUFBAU :
-				return spieler.getSpielaufbau();
+			case ITeam.TA_SPIELAUFBAU:
+				return ISpieler.SKILL_SPIELAUFBAU;
 
-			case ISpieler.SKILL_PASSSPIEL :
-				return spieler.getPasspiel();
+			case ITeam.TA_PASSSPIEL:
+				return ISpieler.SKILL_PASSSPIEL;
 
-			case ISpieler.SKILL_FLUEGEL :
-				return spieler.getFluegelspiel();
+			case ITeam.TA_FLANKEN:
+			case ITeam.TA_EXTERNALATTACK:
+				return ISpieler.SKILL_FLUEGEL;
 
-			case ISpieler.SKILL_VERTEIDIGUNG :
-				return spieler.getVerteidigung();
+			case ITeam.TA_VERTEIDIGUNG:
+			case ITeam.TA_ABWEHRVERHALTEN:
+				return ISpieler.SKILL_VERTEIDIGUNG;
 
-			case ISpieler.SKILL_TORSCHUSS :
-				return spieler.getTorschuss();
+			case ITeam.TA_CHANCEN:
+			case ITeam.TA_SCHUSSTRAINING:
+				return ISpieler.SKILL_TORSCHUSS;
 
-			case ISpieler.SKILL_STANDARDS :
-				return spieler.getStandards();
+			case ITeam.TA_STANDARD:
+				return ISpieler.SKILL_STANDARDS;
 
-			case ISpieler.SKILL_KONDITION :
-				return spieler.getKondition();
-
+			case ITeam.TA_KONDITION:
+				return ISpieler.SKILL_KONDITION;
 		}
 
 		return 0;

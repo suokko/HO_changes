@@ -135,7 +135,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                                                                   .getProperty("FaktorSpieleralter"),
                                            
         //faktor optimal 1.0
-        20, 0, 10.0f, 10.0f, 120);
+        200, 0, 100.0f, 1.0f, 120);
         m_jslAlterFaktor.setValue((float) gui.UserParameter.instance().AlterFaktor);
         m_jslAlterFaktor.addChangeListener(this);
         add(m_jslAlterFaktor);
@@ -145,7 +145,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                                                                     .getProperty("FaktorTrainerfertigkeit"),
                                              
         //faktor optimal 1.0
-        20, 0, 10.0f, 10.0f, 120);
+        200, 0, 100.0f, 1.0f, 120);
         m_jslTrainerFaktor.setValue((float) gui.UserParameter.instance().TrainerFaktor);
         m_jslTrainerFaktor.addChangeListener(this);
         add(m_jslTrainerFaktor);
@@ -155,7 +155,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                                                                       .getProperty("FaktorCoTraineranzahl"),
                                                
         //faktor optimal 1.0
-        20, 1, 3.3f, 10.0f, 120);
+        200, 0, 100.0f, 1.0f, 120);
         m_jslCoTrainerFaktor.setValue((float) gui.UserParameter.instance().CoTrainerFaktor);
         m_jslCoTrainerFaktor.addChangeListener(this);
         add(m_jslCoTrainerFaktor);
@@ -164,8 +164,8 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                                                                         .getResource()
                                                                                         .getProperty("FaktorIntensitaet"),
                                                  
-        //faktor optimal 0.1
-        20, 1, 100.0f, 10.0f, 120);
+        //faktor optimal 1.0
+        200, 0, 100.0f, 1.0f, 120);
         m_jslIntensitaetFaktor.setValue((float) gui.UserParameter.instance().IntensitaetFaktor);
         m_jslIntensitaetFaktor.addChangeListener(this);
         add(m_jslIntensitaetFaktor);

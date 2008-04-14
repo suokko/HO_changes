@@ -1123,6 +1123,14 @@ public interface ISpieler {
     public int getValue4Skill4(int skill);
 
     /**
+     * set Skillvalue 4 skill
+     *
+     * @param skill the skill to change
+     * @param value the new skill value
+     */
+	public void setValue4Skill4(int skill, int value);
+
+	/**
      * Setter for property m_iVerletzt.
      *
      * @param m_iVerletzt New value of property m_iVerletzt.

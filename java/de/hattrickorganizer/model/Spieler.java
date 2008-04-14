@@ -17,7 +17,6 @@ import plugins.ITrainingWeek;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -693,53 +692,53 @@ public final class Spieler implements plugins.ISpieler {
                                 int intensitaet, int staminaTrainingPart) {
         switch (trTyp) {
             case TORWART:
-                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter,
-                                    twTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter, 
+                                    twTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
 
             case ALLGEMEIN:
-                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter,
-                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter, 
+                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getForm());
 
             case KONDITION:
                 return gui.UserParameter.instance().DAUER_KONDITION;
 
             case SPIELAUFBAU:
                 return calcTraining(gui.UserParameter.instance().DAUER_SPIELAUFBAU, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getSpielaufbau());
 
             case FLUEGELSPIEL:
                 return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             case CHANCENVERWERTUNG:
                 return calcTraining(gui.UserParameter.instance().DAUER_CHANCENVERWERTUNG, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorschuss());
 
             case VERTEIDIGUNG:
                 return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
             case PASSPIEL:
-				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter,
-								coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
-
+				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter, 
+								coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
+            
             case TA_STEILPAESSE:
-                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter,
-                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter, 
+                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case STANDARDS:
-
-                //calcTraining( gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,  coTrainer, trainerLvl, intensitaet );
-                return gui.UserParameter.instance().DAUER_STANDARDS;
+                return calcTraining(gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,
+                					coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());           
+//                return gui.UserParameter.instance().DAUER_STANDARDS;
 
             case TA_ABWEHRVERHALTEN:
                 return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG * 2, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
+                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
 			case TA_EXTERNALATTACK:
 				return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL*100d/60d, m_iAlter,
-								 coTrainer, trainerLvl, intensitaet, staminaTrainingPart);
-
+								 coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
+								         
             default:
                 return -1;
         }
@@ -1222,67 +1221,6 @@ public final class Spieler implements plugins.ISpieler {
         //TSI
         return m_iMarkwert;
     }
-
-    /**
-     * liefert die Anzahl der Wochen die der Spieler den angeforderten Skill trainiert hat TODO :
-     * Unfertig!
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     * @param trainingstype TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-
-    /*public int getWeeksTrained( int skill )
-       {
-           int         trainedWeeks    =   0;
-           Timestamp   max             =   HOVerwaltung.instance ().getModel ().getBasics ().getDatum ();
-           Timestamp   min             =   getLastLevelUp( skill );
-           Hashtable   weeksList       =   new Hashtable();//Liste der Id's die in Frage kommen
-           Hashtable   hrfIdList       =   new Hashtable(); //liste aller HRF die in diesem Zeitraum liegen
-           Enumeration enum            =   null;
-           Integer     i               =   null;
-           Integer     key             =   null;
-           Timestamp   worker          =   null;
-
-           //1. von aktuellem HRF-Date bis zum dortigen Datum Liste der Trainings-Wochen erstellen
-           hrfIdList   =   DBZugriff.instance ().getHRFList ( min, max );
-           enum        =   hrfIdList.keys ();
-           while ( enum.hasMoreElements () )
-           {
-               i = (Integer) enum.nextElement ();
-               weeksList.put ( i, new Integer (DBZugriff.instance ().getTrainingsartByHRFID ( i.intValue () ) ) );
-           }
-           //2a. Alle Wochen entfernen die nicht diesen Skill trainiert haben
-           enum    =   weeksList.keys ();
-           while( enum.hasMoreElements () )
-           {
-               key =   (Integer) enum.nextElement ();
-               i   =   (Integer) weeksList.get ( key );
-
-               //alle entfernen die nicht das passende Training haben...
-               if ( !isSkillTrained( skill, i.intValue () ) )
-               {
-                   weeksList.remove ( key );
-               }
-           }
-           //2b. F�r jede Trainingswoche nur ein HRF behalten
-           enum    =   weeksList.keys ();
-           while( enum.hasMoreElements () )
-           {
-               key     =   (Integer) enum.nextElement ();
-               i       =   (Integer) weeksList.get ( key );
-               worker  =   (Timestamp) hrfIdList.get ( key );
-
-               //worker.
-               //alle entfernen die nicht mehr ben�tigt werden
-           }
-           //3. Nun Liste der TR-Weeks durchlaufen und pr�fen ob Spieler gespielt hat und nicht verletzt ist
-           //4. Dann pr�fen ob gespielte Pos trainiert wurde
-           //5. Dann Training + 1;
-           return trainedWeeks;
-       }
-     */
 
     /**
      * gibt an ob der angeforderte Skill beim diesem Trainingstyp trainiert wird
@@ -1955,59 +1893,6 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Getter for property m_clFetchDate.
-     *
-     * @return Value of property m_clFetchDate.
-     */
-
-    /*    public java.sql.Timestamp getFetchDate ()
-       {
-           return m_clFetchDate;
-       }
-     */
-
-    /**
-     * Setter for property m_clFetchDate.
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-
-    /*    public void setFetchDate (java.sql.Timestamp m_clFetchDate)
-       {
-           this.m_clFetchDate = m_clFetchDate;
-       }
-     */
-
-    /**
-     * parsed nen String ins DateFormat
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-
-    /*    public void setFetchDateFromString( String date )
-       {
-           try
-           {
-               //Hattrick
-               java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss", java.util.Locale.GERMANY );
-               m_clFetchDate   =    new java.sql.Timestamp(  simpleFormat.parse ( date ).getTime () );
-           }
-           catch ( Exception e )
-           {
-               try
-               {
-                   //Hattrick
-                   java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat ( "yyyy-MM-dd", java.util.Locale.GERMANY );
-                   m_clFetchDate   =    new java.sql.Timestamp(  simpleFormat.parse ( date ).getTime () );
-               }
-               catch ( Exception ex )
-               {
-               }
-           }
-       }
-     */
-
-    /**
      * Getter for property m_iTrikotnummer.
      *
      * @return Value of property m_iTrikotnummer.
@@ -2094,6 +1979,49 @@ public final class Spieler implements plugins.ISpieler {
                 return 0;
         }
     }
+
+    /**
+     * set Skillvalue 4 skill
+     *
+     * @param skill the skill to change
+     * @param value the new skill value
+     */
+	public void setValue4Skill4(int skill, int value) {
+		switch (skill) {
+			case SKILL_TORWART :
+				setTorwart(value);
+				break;
+
+			case SKILL_SPIELAUFBAU :
+				setSpielaufbau(value);
+				break;
+
+			case SKILL_PASSSPIEL :
+				setPasspiel(value);
+				break;
+
+			case SKILL_FLUEGEL :
+				setFluegelspiel(value);
+				break;
+
+			case SKILL_VERTEIDIGUNG :
+				setVerteidigung(value);
+				break;
+
+			case SKILL_TORSCHUSS :
+				setTorschuss(value);
+				break;
+
+			case SKILL_STANDARDS :
+				setStandards(value);
+				break;
+
+			case SKILL_KONDITION :
+				setKondition(value);
+				break;
+
+		}
+	}
 
     /**
      * Setter for property m_iVerletzt.
@@ -2360,7 +2288,11 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void calcIncrementalSubskills(ISpieler old, int coTrainer, int twTrainer,
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
-        final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
+//        System.out.println ("calcIncSS: "+
+//        		old.getSpielerID()+", cos="+coTrainer+", tw="+twTrainer
+//        		+", tr="+trainerlevel+", ti="+intensitaet+", ss="+staminaTrainingPart
+//        		+", hrf="+hrfID);
+    	final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
         final plugins.ITrainingPerPlayer trainingPerPlayer = de.hattrickorganizer.logik.TrainingsManager.instance()
                                                                                                         .calculateWeeklyTrainingForPlayer(this,
                                                                                                                                           trainingWeek);
@@ -2682,74 +2614,33 @@ public final class Spieler implements plugins.ISpieler {
 
     /**
      * internal calculation of training duration
+     * 
+     * @param baseLength base length 
+     * 		(i.e. the normalized length for a skillup for a 17Y trainee, 
+     * 		solid coach, 10 co, 100% TI, 0% Stamina) 
+     * @param age player's age
+     * @param trTyp training type
+     * @param cotrainer number of assistants
+     * @param trainerLvl trainer level
+     * @param intensitaet training intensity
+     * @param staminaTrainingPart stamina share
      *
-     * @param dauer TODO Missing Method Parameter Documentation
-     * @param alter TODO Missing Method Parameter Documentation
-     * @param trTyp TODO Missing Method Parameter Documentation
-     * @param anzTrainer TODO Missing Method Parameter Documentation
-     * @param trainerLvl TODO Missing Method Parameter Documentation
-     * @param intensitaet TODO Missing Method Parameter Documentation
-     * @param staminaTrainingPart TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * @return length for a single skillup
      */
-//    protected double calcTraining1(double dauer, int alter, int anzTrainer, int trainerLvl, int intensitaet) {
-//        //return dauer + Math.round( dauer * ( ( ( alter - 17 ) * gui.UserParameter.instance ().AlterFaktor ) + ( ( 7 - trainerLvl ) * gui.UserParameter.instance ().TrainerFaktor ) + ( ( 10 - anzTrainer ) * gui.UserParameter.instance ().CoTrainerFaktor ) +  ( ( 100 - intensitaet ) * gui.UserParameter.instance ().IntensitaetFaktor ) ) );
-//        float aBonus = 0;
-//        float trBonus = 0;
-//        float coBonus = 0;
-//        float intBonus = 0;
-//
-//        //f�r alter �ber 19 1 woche drauf
-//        if (alter == 19) {
-//            //19 J�hrige brauchen in etwa 1 Woche mehr...
-//            aBonus = 0.6f;
-//        } else if (alter > 19) {
-//            //faktor optimal 1.0
-//            aBonus = (alter - 19) * gui.UserParameter.instance().AlterFaktor;
-//        }
-//
-//        if (trainerLvl < 8) {
-//            //faktor optimal 1.0
-//            trBonus = (7 - trainerLvl) * gui.UserParameter.instance().TrainerFaktor;
-//        }
-//
-//        coBonus = (Helper.getLogarithmus(11, 10)
-//                  - Helper.getLogarithmus(anzTrainer + 1, 10)) * gui.UserParameter.instance().CoTrainerFaktor;
-//
-//        //faktor optimal 0.1
-//        intBonus = ((100 - intensitaet) * gui.UserParameter.instance().IntensitaetFaktor);
-//
-//        return dauer + aBonus + trBonus + coBonus + intBonus;
-//    }
-
-    // new training caculator for testing
-    protected double calcTraining(double dauer, int alter, int anzTrainer, int trainerLvl,
-                               int intensitaet, int staminaTrainingPart) {
-        float trBonus = 0;
-        float coBonus = 0;
-        double intBonus = 0;
-        double weeks = 0;
-        // percentage increase per year should be different for every TriningType and passed as argument!
-        double INCREASE = 8;
-
-        // at the moment this can be modified by the simple (single) options Faktor...
-        double percentage = INCREASE * gui.UserParameter.instance().AlterFaktor;
-
-        // THIS SHOULD BE REPLACED BY THE TRAINING MODEL FUNCTION!
-        weeks = dauer * Math.pow(1d+percentage/100d, (double)(alter - 17));
-
-        if (trainerLvl < 8) {
-            //faktor optimal 1.0
-            trBonus = (7 - trainerLvl) * gui.UserParameter.instance().TrainerFaktor;
-        }
-
-        coBonus = (Helper.getLogarithmus(11, 10)
-                  - Helper.getLogarithmus(anzTrainer + 1, 10)) * gui.UserParameter.instance().CoTrainerFaktor;
-
-        //faktor optimal 0.1
-        intBonus = ((100 - (intensitaet * (100d-staminaTrainingPart)/100d)) * gui.UserParameter.instance().IntensitaetFaktor);
-        return weeks + trBonus + coBonus + intBonus;
+    protected double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
+                               int intensitaet, int staminaTrainingPart, int curSkill) {
+//    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
+    	double ageFactor = Math.pow(1.04, age-17) * gui.UserParameter.instance().AlterFaktor;
+    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
+    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5))*0.1) * gui.UserParameter.instance().TrainerFaktor;
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10))*0.2) * gui.UserParameter.instance().CoTrainerFaktor;
+    	double tiFactor = (1 / (intensitaet/100d)) * gui.UserParameter.instance().IntensitaetFaktor;
+    	double staminaFactor = 1 / (1 - staminaTrainingPart/100d);
+    	double trainLength = baseLength * ageFactor * skillFactor * trainerFactor * coFactor * tiFactor * staminaFactor;
+    	if (trainLength < 1)
+    		trainLength = 1;
+//    	System.out.println ("Factors for "+getName()+": "+ageFactor+"/"+skillFactor+"/"+trainerFactor+"/"+coFactor+"/"+tiFactor+"/"+staminaFactor+" -> "+trainLength);
+    	return trainLength;
     }
 
     /**

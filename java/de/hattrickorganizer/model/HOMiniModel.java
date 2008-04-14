@@ -1,6 +1,7 @@
 // %1056836646:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import java.util.Date;
 import java.util.List;
 
 import plugins.IBasics;
@@ -26,6 +27,7 @@ import plugins.ITrainingsManager;
 import plugins.IVerein;
 import plugins.IXtraData;
 import de.hattrickorganizer.logik.FutureTrainingManager;
+import de.hattrickorganizer.logik.exporter.MatchExporter;
 
 
 /**
@@ -460,4 +462,17 @@ public class HOMiniModel implements IHOMiniModel {
 		
 		return tempSpieler;			
 	}
+
+	/**
+	 * List of useful data for export
+	 *
+	 * @param startingDate starting data to export from (for non friendlies)
+	 * @param startingDateForFriendlies starting data to export from (for friendlies)
+	 *
+	 * @return List of ExportMatchData objects
+	 */
+	public List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
+		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies);
+	}
+
 }
