@@ -111,6 +111,11 @@ public class MatchExporter {
 		if ((info.getMatchStatus() != IMatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
 			return false;
 		}
+		// Check for WO
+		if (details.getHomeMidfield() == 1 &&
+			details.getGuestMidfield() == 1) {
+			return false;
+		}
 		Vector highlights = details.getHighlights();
 		//Aussortieren starten...
 		if ((info.getMatchDateAsTimestamp().before(startingDate)) //Zu alt !!!
