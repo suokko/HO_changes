@@ -545,74 +545,11 @@ public class PlayerHelper {
      */
     public static boolean check4SkillUp(int skill, ISpieler oldPlayer, ISpieler currentPlayer) {
         if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0)) {
-            switch (skill) {
-                case ISpieler.SKILL_STANDARDS:
-                    return (oldPlayer.getStandards() < currentPlayer.getStandards()) ? true : false;
-
-                case ISpieler.SKILL_PASSSPIEL:
-                    return (oldPlayer.getPasspiel() < currentPlayer.getPasspiel()) ? true : false;
-
-                case ISpieler.SKILL_TORSCHUSS:
-                    return (oldPlayer.getTorschuss() < currentPlayer.getTorschuss()) ? true : false;
-
-                case ISpieler.SKILL_SPIELAUFBAU:
-                    return (oldPlayer.getSpielaufbau() < currentPlayer.getSpielaufbau()) ? true
-                                                                                         : false;
-
-                case ISpieler.SKILL_FLUEGEL:
-                    return (oldPlayer.getFluegelspiel() < currentPlayer.getFluegelspiel()) ? true
-                                                                                           : false;
-
-                case ISpieler.SKILL_TORWART:
-                    return (oldPlayer.getTorwart() < currentPlayer.getTorwart()) ? true : false;
-
-                case ISpieler.SKILL_VERTEIDIGUNG:
-                    return (oldPlayer.getVerteidigung() < currentPlayer.getVerteidigung()) ? true
-                                                                                           : false;
-
-                case ISpieler.SKILL_KONDITION:
-                    return (oldPlayer.getKondition() < currentPlayer.getKondition()) ? true : false;
-
-                case ISpieler.SKILL_EXPIERIENCE:
-                    return (oldPlayer.getErfahrung() < currentPlayer.getErfahrung()) ? true : false;
-            }
+        	if (oldPlayer.getValue4Skill4(skill) < currentPlayer.getValue4Skill4(skill)) {
+//        		HOLogger.instance().debug(PlayerHelper.class, "Skillup for "+currentPlayer.getName()+" ("+currentPlayer.getSpielerID()+"), skill="+skill+", oldVal="+oldPlayer.getValue4Skill4(skill)+" < cur="+currentPlayer.getValue4Skill4(skill));
+        		return true;
+        	}
         }
-
-        //No Skill ???
         return false;
-
-        /*old
-           java.sql.Timestamp  compareDate =   null;
-           boolean             hasLevelUp  =   false;
-           Object[]            obj         =   null;
-        
-           obj =   getLastLevelUp( skill );
-           try
-           {
-               //hat levelup ?
-               if ( ((Boolean)obj[1]).booleanValue() )
-               {
-                   compareDate = (java.sql.Timestamp) obj[0];
-                   if ( (compareDate != null )
-                   //und im Zeitrahmen von +- 10 Sec
-           //                && ( compareDate.getTime() > hrftimestamp.getTime()-10000 )
-           //                && ( compareDate.getTime() < hrftimestamp.getTime()+10000 ) )
-                           && database.DBZugriff.instance().gleicheTrainingsWoche( hrftimestamp, compareDate ) )
-                           {
-                               hasLevelUp  =   true;
-                           }
-                           else
-                           {
-                               hasLevelUp  =   false;
-                           }
-                       }
-                   }
-                   catch (Exception e )
-                   {
-                       hasLevelUp = false;
-                   }
-        
-                   return hasLevelUp;
-         **/
     }
 }
