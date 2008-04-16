@@ -1975,6 +1975,18 @@ public final class Spieler implements plugins.ISpieler {
             case SKILL_STANDARDS:
                 return m_iStandards;
 
+            case SKILL_KONDITION:
+                return m_iKondition;
+
+            case SKILL_EXPIERIENCE:
+                return m_iErfahrung;
+
+            case SKILL_FORM:
+                return m_iForm;
+
+            case SKILL_LEADERSHIP:
+                return m_iFuehrung;
+            
             default:
                 return 0;
         }
@@ -2020,6 +2032,17 @@ public final class Spieler implements plugins.ISpieler {
 				setKondition(value);
 				break;
 
+			case SKILL_EXPIERIENCE:
+				setErfahrung(value);
+				break;
+
+			case SKILL_FORM:
+				setForm(value);
+				break;
+
+			case SKILL_LEADERSHIP:
+				setFuehrung(value);
+				break;
 		}
 	}
 
