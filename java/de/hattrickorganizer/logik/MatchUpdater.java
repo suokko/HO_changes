@@ -68,7 +68,7 @@ public class MatchUpdater {
                             for (Iterator iter = matchPlayers.iterator(); iter.hasNext();) {
                                 final MatchPosition position = (MatchPosition) iter.next();
 
-                                if (position.getPlayerID() == id) {
+                                if (position != null && position.getPlayerID() == id) {
                                     updates.add("UPDATE MATCHLINEUPPLAYER SET SPIELERID="
                                                 + position.getPlayerID() + ", NAME='"
                                                 + position.getName() + "', STATUS=2, FIELDPOS="
