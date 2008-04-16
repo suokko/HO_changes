@@ -191,6 +191,7 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
         buffer.append(", year = " + year);
         buffer.append(", hattrickWeek = " + hattrickWeek);
         buffer.append(", hattrickSeason = " + hattrickSeason);
+        buffer.append(", trainDate = " + getTrainingDate().getTime().toLocaleString());
         buffer.append(", hrfId = " + hrfId);
         buffer.append("]");
         return buffer.toString();
@@ -212,11 +213,30 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
 		// Kalenderwerte setzen
 		// set calendar values
 		final Calendar cal = Calendar.getInstance(Locale.UK);
+		
+		/** 
+		 * Start of Week is Sunday, because all Trainings in all Countries 
+		 * are before Sunday (actually the are on Thursday and Friday)
+		 */
 		cal.setFirstDayOfWeek(Calendar.SUNDAY);
+		/**
+		 * Set year and week from instance fields
+		 */
 		cal.set(Calendar.YEAR, getYear());
 		cal.set(Calendar.WEEK_OF_YEAR, getWeek());
+		/**
+		 * Set day of the week to saturday, so that the 
+		 * calculated training date is in this week
+		 * (remember that a week starts at sunday as stated above)
+		 */
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 
-		/** get last training date BEFORE this date */ 
+		/** 
+		 * get last training date BEFORE this date
+		 * Because our calendar date is a saturday and
+		 * the trainings are on thursday and friday, 
+		 * the training date is is in the same week  
+		 */ 
         Calendar trainingDate = HelperWrapper.instance().getLastTrainingDate(cal.getTime(),
         				HOMiniModel.instance().getXtraDaten().getTrainingDate());
 
