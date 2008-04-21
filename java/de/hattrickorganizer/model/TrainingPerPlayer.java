@@ -347,11 +347,6 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
 				setST (d);
 			break;
-		case ITeam.TA_KONDITION:
-			//Kondition //stamina
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_KONDITION))
-				setSA (d);
-			break;
 		}
     }
 

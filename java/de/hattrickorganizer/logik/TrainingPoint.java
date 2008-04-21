@@ -250,10 +250,11 @@ public class TrainingPoint implements ITrainingPoint {
 	 */
 	public void addTrainingMatch (int minutes, int posId) {
 //		System.out.println ("Match added for player "+spieler.getName()+": train="+train+", min="+minutes+", bP="+basePoints);
-		double basePoints = getTrainingPoint(trainWeek.getTyp(), new Integer (posId)).doubleValue();
-		matchesForTraining.add(new MatchForTraining(minutes, basePoints));
-		Collections.sort(matchesForTraining);
-		calcTrainingPoints (false);
+		if (minutes > 0) {
+			double basePoints = getTrainingPoint(trainWeek.getTyp(), new Integer (posId)).doubleValue();
+			matchesForTraining.add(new MatchForTraining(minutes, basePoints));
+			Collections.sort(matchesForTraining);
+		}
 	}
 
     /**
