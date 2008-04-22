@@ -59,7 +59,7 @@ public class PlayerConverter {
         skills.add(homodel.getResource().getProperty("goettlich").toLowerCase());
 
         skillvalues = new ArrayList();
-		
+
         for (int k = 0; k < skills.size(); k++) {
             skillvalues.add(new Integer(k));
         }
@@ -148,7 +148,7 @@ public class PlayerConverter {
 
         final Player player = new Player();
 		String teamname = "";
-		
+
         // Init some helper variables
         String mytext = text;
         final List lines = new ArrayList();
@@ -215,7 +215,7 @@ public class PlayerConverter {
                         if (tmp.indexOf(skills.get(k).toString()) >= 0) {
                             p--;
                             tmp = lines.get(p).toString();
-                           
+
                             while (p > 0) {
                                 p--;
                                 lines.remove(p);
@@ -247,14 +247,18 @@ public class PlayerConverter {
                 //Search for TSI-line (ending in numbers)
                 tmp = lines.get(p).toString();
 
-                if ((tmp.charAt(tmp.length() - 1) >= '0') && (tmp.charAt(tmp.length() - 1) <= '9')) {
+                if ((tmp.charAt(tmp.length() - 1) >= '0') && (tmp.charAt(tmp.length() - 1) <= '9') ) {
+                	if (tmp.length()>9 && tmp.substring(tmp.length()-9, tmp.length()).indexOf(".")>-1) {
+                		p++;
+                		continue;
+                	}
 					String teamline = lines.get(p + 2).toString();
-					teamname = teamline.split(":")[1].trim();					                
+					teamname = teamline.split(":")[1].trim();
                     while (p > 2) {
                         p--;
                         lines.remove(p);
                     }
-					
+
                     break;
                 }
 
@@ -353,7 +357,7 @@ public class PlayerConverter {
                         lines.remove(5);
                 }
             }
-            
+
             //
             // We have now prepared our input to our needs
             // Let's extract the values now
@@ -448,7 +452,7 @@ public class PlayerConverter {
 
                 p++;
             }
-            
+
             if (!ageDays.equals("")) {
                 player.setAgeDays(Integer.valueOf(ageDays).intValue());
             } else {
@@ -681,7 +685,7 @@ public class PlayerConverter {
             }
 
             mytext = mytext.replaceAll(teamname, new String(cs)).toLowerCase();
-            
+
             cs = new char[name.length()];
 
             for (int cl = 0; cl < cs.length; cl++) {
