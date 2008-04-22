@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Properties;
 
@@ -47,8 +46,9 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                                                                 FocusListener, KeyListener
 {
     //~ Static fields/initializers -----------------------------------------------------------------
-	
-    private static int iTempSpielerID = -1;
+
+	private static final long serialVersionUID = -3287232092187457640L;
+	private static int iTempSpielerID = -1;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -277,7 +277,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         if (focusEvent.getSource().equals(jtfAlter)) {
 			setLabels();
         }
-                
+
     }
 
     /**
@@ -380,7 +380,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         final Spieler tempSpieler = new Spieler();
         tempSpieler.setSpezialitaet(((CBItem) jcbSpeciality.getSelectedItem()).getId());
         tempSpieler.setErfahrung(((CBItem) jcbErfahrung.getSelectedItem()).getId());
-		tempSpieler.setFuehrung(3); 
+		tempSpieler.setFuehrung(3);
         tempSpieler.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
         tempSpieler.setKondition(((CBItem) jcbKondition.getSelectedItem()).getId());
         tempSpieler.setVerteidigung(((CBItem) jcbVerteidigung.getSelectedItem()).getId());
@@ -502,7 +502,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                                                                                gui.UserParameter
                                                                                .instance().anzahlNachkommastellen)
                                        + "");
-        
+
         jpWertSturmAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
                 																.calcPosValue(ISpielerPosition.STURM_AUS,
 															                              true),
@@ -526,7 +526,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         clScoutEintrag.setPasspiel(((CBItem) jcbPasspiel.getSelectedItem()).getId());
         clScoutEintrag.setStandards(((CBItem) jcbStandard.getSelectedItem()).getId());
         clScoutEintrag.setSpielaufbau(((CBItem) jcbSpielaufbau.getSelectedItem()).getId());
-        
+
     }
 
     /**
@@ -876,7 +876,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         label = new JLabel(properties.getProperty("Sturm"));
         panel.add(label);
         panel.add(jpWertSturm.getComponent(false));
-        
+
         label = new JLabel(properties.getProperty("Sturm_Aus"));
         panel.add(label);
         panel.add(jpWertSturmAus.getComponent(false));
