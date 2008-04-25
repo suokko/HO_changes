@@ -46,7 +46,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
     private JCheckBox m_jchEigenenSpiele = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                                 .getResource()
                                                                                                 .getProperty("AktuellerSpielplanDownload"),
-                                                         false);
+                                                         true);
     private JCheckBox m_jchHRF = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                       .getResource()
                                                                                       .getProperty("HRFDownload"),
@@ -58,7 +58,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
     private JCheckBox m_jchSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                             .getResource()
                                                                                             .getProperty("FixturesDownload"),
-                                                     false);
+                                                     true);
     private JList m_jlAlterSeasons = new JList();
     private SpinnerDateModel m_clSpinnerModel = new SpinnerDateModel();
     private JSpinner m_jsSpinner = new JSpinner(m_clSpinnerModel);
