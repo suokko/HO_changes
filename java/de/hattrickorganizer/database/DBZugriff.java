@@ -39,7 +39,7 @@ import de.hattrickorganizer.tools.backup.BackupDialog;
 /**
  * DOCUMENT ME!
  *
- * @author tom 
+ * @author tom
  */
 public class DBZugriff {
 	//~ Static fields/initializers -----------------------------------------------------------------
@@ -58,6 +58,7 @@ public class DBZugriff {
 
 	/** DB-Adapter */
 	private JDBCAdapter m_clJDBCAdapter = null; //new JDBCAdapter();
+	private DBAdapter m_clDBAdapter = null;
 
 	/** all Tables */
 	private final Hashtable tables = new Hashtable();
@@ -94,7 +95,7 @@ public class DBZugriff {
 
 				String msg = e.getMessage();
 				boolean recover = User.getCurrentUser().isHSQLDB();
-				
+
 				if (msg.indexOf("The database is already in use by another process") > -1) {
 					msg =
 						"The database is already in use. You have another HO running or the database is still closing, wait and try again";
@@ -131,7 +132,7 @@ public class DBZugriff {
 			// Do we need to create the database from scratch?
 			if (!existsDB) {
 				//firstStart.createAllTables();
-				tempInstance.createAllTables();				
+				tempInstance.createAllTables();
 				UserConfigurationTable configTable = (UserConfigurationTable) tempInstance.getTable(UserConfigurationTable.TABLENAME);
 				configTable.store(UserParameter.instance());
 				configTable.store(HOParameter.instance());
@@ -185,6 +186,17 @@ public class DBZugriff {
 	//Accessor
 	public JDBCAdapter getAdapter() {
 		return m_clJDBCAdapter;
+	}
+
+	/**
+	 * Get an DBAdapter instance (lazy initialisation).
+	 * @return an DBAdapter instance
+	 */
+	public DBAdapter getDBAdapter() {
+		if (m_clDBAdapter == null) {
+			m_clDBAdapter = new DBAdapter();
+		}
+		return m_clDBAdapter;
 	}
 
 	/**
@@ -328,7 +340,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param time
 	 * @param spielerid
 	 * @return
@@ -380,7 +392,7 @@ public class DBZugriff {
 		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, spieler, date);
 	}
 
-	// ------------------------------- LigaTable -------------------------------------------------	
+	// ------------------------------- LigaTable -------------------------------------------------
 
 	/**
 	 * Gibt alle bekannten Ligaids zurück
@@ -742,7 +754,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public int getHRFID4Date(Timestamp time) {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getHrfId4Date(time);
@@ -1274,7 +1286,7 @@ public class DBZugriff {
 		getTable(PaarungTable.TABLENAME).delete(whereSpalten, whereValues);
 	}
 
-	//	------------------------------- MatchDetailsTable -------------------------------------------------	
+	//	------------------------------- MatchDetailsTable -------------------------------------------------
 
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
@@ -1351,7 +1363,7 @@ public class DBZugriff {
 	}
 
 	public double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String group) {
-		return StatisticQuery.getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF,group);		
+		return StatisticQuery.getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF,group);
 	}
 	// --------------------------------- TODO ---------------------------
 
@@ -1591,7 +1603,7 @@ public class DBZugriff {
 			version = DBVersion - 1;
 		}
 
-		// We may now update depending on the version identifier!	        
+		// We may now update depending on the version identifier!
 		if (version != DBVersion) {
 			try {
 				HOLogger.instance().log(getClass(), "Updating DB to version " + DBVersion + "...");
@@ -1601,15 +1613,15 @@ public class DBZugriff {
 						updateDBv1();
 					case 1 :
 						updateDBv2();
-					case 2 :	
+					case 2 :
 						updateDBv3();
-					case 3 :	
+					case 3 :
 						updateDBv4();
-					case 4 :	
+					case 4 :
 						updateDBv5();
-					case 5 :	
+					case 5 :
 						updateDBv6();
-						
+
 						//case 2: updateDB_v3(); // For future versions!
 				}
 
@@ -1710,13 +1722,13 @@ public class DBZugriff {
 	 * @throws Exception TODO Missing Method Exception Documentation
 	 */
 	private void updateDBv3() throws Exception {
-				
+
 		changeColumnType("MATCHDETAILS","Matchreport","Matchreport","VARCHAR(8196)");
 		changeColumnType("MatchHighlights","EventText","EventText","VARCHAR(512)");
 		changeColumnType("FAKTOREN","HOPosition","HOPosition","INTEGER");
 		changeColumnType("POSITIONEN","Taktik","Taktik","INTEGER");
 		changeColumnType("SPIELERNOTIZ","userPos","userPos","INTEGER");
-		
+
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MatchHighLights RENAME TO MATCHHIGHLIGHTS");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SpielerSkillup RENAME TO SPIELERSKILLUP");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE USERCOLUMNS ADD COLUMN COLUMN_WIDTH INTEGER");
@@ -1725,14 +1737,14 @@ public class DBZugriff {
 		// do version checking again before applying!
 		saveUserParameter("DBVersion", 3);
 	}
-	
+
 	/**
 	 * TODO Missing Method Documentation
 	 *
 	 * @throws Exception TODO Missing Method Exception Documentation
 	 */
 	private void updateDBv4() throws Exception {
-				
+
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT DROP COLUMN Finanzberater");
 
 		// Always set field DBVersion to the new value as last action.
@@ -1747,11 +1759,11 @@ public class DBZugriff {
 	 * @throws Exception TODO Missing Method Exception Documentation
 	 */
 	private void updateDBv5() throws Exception {
-				
+
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN STAMINATRAININGPART INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE TRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE FUTURETRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE FUTURETRAINING SET STAMINATRAININGPART=5");		
+		m_clJDBCAdapter.executeUpdate("UPDATE FUTURETRAINING SET STAMINATRAININGPART=5");
 
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
@@ -1765,13 +1777,13 @@ public class DBZugriff {
 	 * @throws Exception TODO Missing Method Exception Documentation
 	 */
 	private void updateDBv6() throws Exception {
-				
+
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN AGEDAYS INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN AGEDAYS INTEGER");
 
 		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
 		// Reset Training Speed Parameters for New Training
-		UserConfigurationTable userConf = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME); 
+		UserConfigurationTable userConf = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME);
 		userConf.update("DAUER_TORWART", "3.7");
 		userConf.update("DAUER_VERTEIDIGUNG", "6.1");
 		userConf.update("DAUER_SPIELAUFBAU", "5.5");
@@ -1793,11 +1805,11 @@ public class DBZugriff {
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN "+oldName);		
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN "+oldName);
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN "+newName+" "+ type);
-		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET "+newName+"=TEMPCOLUMN");	
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN TEMPCOLUMN");	
-	}	
+		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET "+newName+"=TEMPCOLUMN");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN TEMPCOLUMN");
+	}
 	/**
 	 * Alle \ entfernen
 	 *
@@ -1841,12 +1853,12 @@ public class DBZugriff {
 		final char[] chars = text.toCharArray();
 
 		for (int i = 0; i < chars.length; i++) {
-			int code = (int) chars[i];		
-			if ((chars[i] == '"') || (chars[i] == '\'') || (chars[i] == '´')) {							
+			int code = (int) chars[i];
+			if ((chars[i] == '"') || (chars[i] == '\'') || (chars[i] == '´')) {
 				buffer.append("#");
 			} else if ( code == 92) {
 				buffer.append("§");
-			} else {										
+			} else {
 				buffer.append("" + chars[i]);
 			}
 		}

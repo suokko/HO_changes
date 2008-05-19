@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import plugins.IBasics;
+import plugins.IDBAdapter;
 import plugins.IEPV;
 import plugins.IFinanzen;
 import plugins.IFutureTrainingManager;
@@ -72,6 +73,15 @@ public class HOMiniModel implements IHOMiniModel {
     }
 
     /**
+     * Get the the IDBAdapter instance
+     *
+     * @return a valid IDBAdapter instance
+     */
+    public IDBAdapter getDBAdapter() {
+        return de.hattrickorganizer.database.DBZugriff.instance().getDBAdapter();
+    }
+
+    /**
      * Gibt alle alte Spieler zurück
      *
      * @return TODO Missing Return Method Documentation
@@ -80,7 +90,7 @@ public class HOMiniModel implements IHOMiniModel {
         return getModel().getAllOldSpieler();
     }
 
-    //---------Spieler--------------------------------------    
+    //---------Spieler--------------------------------------
 
     /**
      * Gibt alle Spieler zurück
@@ -420,13 +430,13 @@ public class HOMiniModel implements IHOMiniModel {
 	}
 
 	public List getFutureTrainingWeeks() {
-		return de.hattrickorganizer.database.DBZugriff.instance().getFutureTrainingsVector();		
+		return de.hattrickorganizer.database.DBZugriff.instance().getFutureTrainingsVector();
 	}
 
 	public void saveFutureTraining(IFutureTrainingWeek training) {
-		de.hattrickorganizer.database.DBZugriff.instance().saveFutureTraining(training);		
+		de.hattrickorganizer.database.DBZugriff.instance().saveFutureTraining(training);
 	}
-	
+
 	public ISpieler createPlayer(IPlayerData data) {
 		final Spieler tempSpieler = new Spieler();
 		tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
@@ -444,23 +454,23 @@ public class HOMiniModel implements IHOMiniModel {
 
 		tempSpieler.setTorschuss((int) data.getAttack());
 		tempSpieler.setTrainingsOffsetTorschuss(data.getAttack()%1);
-		
+
 		tempSpieler.setTorwart((int) data.getGoalKeeping());
 		tempSpieler.setTrainingsOffsetTorwart(data.getAttack()%1);
-		
+
 		tempSpieler.setFluegelspiel((int) data.getWing());
 		tempSpieler.setTrainingsOffsetFluegelspiel(data.getWing()%1);
-		
+
 		tempSpieler.setPasspiel((int) data.getPassing());
 		tempSpieler.setTrainingsOffsetPasspiel(data.getPassing()%1);
-		
+
 		tempSpieler.setStandards((int) data.getSetPieces());
 		tempSpieler.setTrainingsOffsetStandards(data.getSetPieces()%1);
-		
+
 		tempSpieler.setSpielaufbau((int) data.getPlayMaking());
 		tempSpieler.setTrainingsOffsetSpielaufbau(data.getPlayMaking()%1);
-		
-		return tempSpieler;			
+
+		return tempSpieler;
 	}
 
 	/**
