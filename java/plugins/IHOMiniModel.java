@@ -21,6 +21,13 @@ public interface IHOMiniModel {
     public IJDBCAdapter getAdapter();
 
     /**
+     * Get the the IDBAdapter instance
+     *
+     * @return a valid IDBAdapter instance
+     */
+    public IDBAdapter getDBAdapter();
+
+    /**
      * Returns all Player, you have ever had, but not the actual player. To get all player, you
      * have ever had, use getAllSpieler and getAllOldSpieler
      *
@@ -60,8 +67,8 @@ public interface IHOMiniModel {
 
 	/**
 	 * Returns the EPV Manager
-	 * 
-	 * @return The EPV Manager 
+	 *
+	 * @return The EPV Manager
 	 */
     public IEPV getEPV();
     //-------Finanzen---------------------------------------
@@ -281,38 +288,38 @@ public interface IHOMiniModel {
      * @param training TODO Missing Constructuor Parameter Documentation
      */
     public void saveTraining(ITrainingWeek training);
-    
+
 	/**
 	 * gets IFutureTrainingManager
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List trainings, int cotrainer, int keeper, int trainerLvl);
-	
-	
+
+
 	/**
 	 * gets future Trainingsweeks from DB
 	 *
 	 * @return TODO Missing Return Method Documentation
-	 */	
+	 */
 	public List getFutureTrainingWeeks();
 
 	/**
 	 * stores FutureTrainingWeek in database
 	 *
 	 * @param training TODO Missing Constructuor Parameter Documentation
-	 */	
+	 */
 	public void saveFutureTraining(IFutureTrainingWeek training);
 
 	/**
 	 * Creates a ISpieler instance for external use
 	 *
 	 * @param data player data to be created
-	 * 
+	 *
 	 * @return Spieler instance
 	 */
-	public ISpieler createPlayer(IPlayerData data);	
-	
+	public ISpieler createPlayer(IPlayerData data);
+
 	/**
 	 * List of useful data for export
 	 *
