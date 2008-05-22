@@ -1,70 +1,60 @@
-[general] 	
+[general]
 version=3.0
-delta=0.875
-multiplier=0.25
+multiplier=0.20
+delta=0.8
+squareMod=0.065
 trainerOff=1.15
 trainerDef=0.9
 trainerNeutral=1.05
 confidence=0.009
 
-[passing]
-# FWs always split there contribution between both sides
-multiplier=0.5
-fw_norm=0.2	# forward normal
-fw_def=0.3	# forward defensive
-extra_fw=0.18	# extra forward
-
-[passing_thisside]
-wi_norm=0.35	# winger normal
-wi_off=0.4	# winger offensive
-wi_def=0.3	# winger defensive
-wi_tm=0.3		# winger to middle
-im_norm=0.25	# inner midfield norm
-im_off=0.28	# inner midfield offensive
-im_def=0.23	# inner midfield defensive
-im_tw=0.33		# inner midfield to wing
-extra_im=0.23	# extra inner midfield
-fw_tw=0.24		# forward to wing
+[scoring_middle]
+extra_fw=0.15
+fw_norm=0.3
+fw_def=0.15
 
 [passing_middle]
-# Single/Extra IMs always split there contribution between both sides
-multiplier=0.5
-im_norm=0.25	# inner midfield norm
-im_off=0.28	# inner midfield offensive
-im_def=0.23	# inner midfield defensive
-extra_im=0.23	# extra inner midfield
-
-[scoring]
-# FWs always split there contribution between both sides
-multiplier=0.5
-fw_norm=0.35	# forward normal
-fw_def=0.28	# forward defensive
-extra_fw=0.32	# extra forward
-
-[scoring_thisside]
-fw_tw=0.39		# forward to wing
-
-# Added by flattermann:
-[scoring_otherside]
-fw_tw=0.1		# forward to wing
-
-[winger]
-# FWs always split there contribution between both sides
-multiplier=0.5
-fw_norm=0.25	# forward normal
-fw_def=0.23	# forward defensive
-extra_fw=0.23	# extra forward
+extra_fw=0.1
+extra_im=0.12
+im_norm=0.135
+im_off=0.157
+im_def=0.112
 
 [winger_thisside]
-wb_norm=0.52	# wingback normal
-wb_off=0.57	# wingback offensive
-wb_def=0.34	# wingback defensive
-wb_tm=0.34		# wingback to middle
-cd_tw=0.34		# central defender to wing
-wi_norm=0.8	# winger normal
-wi_off=0.96	# winger offensive
-wi_def=0.72	# winger defensive
-wi_tm=0.68		# winger to middle
-im_tw=0.58		# inner midfield to wing
-fw_tw=0.35		# forward to wing
+cd_tw=0.1
+wb_norm=0.55
+wb_off=0.7
+wb_def=0.35
+wb_tm=0.35
+im_tw=0.5
+wi_norm=1
+wi_off=1.2
+wi_def=1
+wi_tm=0.6
+fw_norm=0.4
+fw_tw=0.65
+fw_def=0.25
+cd_tw=0.25
 
+[scoring_thisside]
+fw_tw=0.5
+fw_norm=0.3
+fw_def=0.15
+
+[scoring_otherside]
+fw_tw=0.25
+fw_norm=0.3
+fw_def=0.15
+
+[passing_thisside]
+im_norm=0.269
+im_off=0.3
+im_def=0.25
+im_tw=0.35
+wi_norm=0.234
+wi_off=0.25
+wi_def=0.2
+wi_tm=0.21
+fw_norm=0.1
+fw_def=0.1
+fw_tw=0.15

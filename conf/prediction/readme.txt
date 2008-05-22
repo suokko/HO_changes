@@ -11,8 +11,8 @@ All parameter files have the same syntax. The files are case insensitive.
 They contain at least one [general] section and one [SKILLNAME] or [SKILLNAME_SIDENAME] section.
 
 SKILLNAME is one of {goalkeeping, defending, playmaking, passing, scoring, winger}.
-SIDENAME is one of {allsides, thisside, middle, otherside}
-If the SIDENAME is omitted, we take ALLSIDES as default.
+SIDENAME is one of {bothsides, thisside, middle, otherside}
+If the SIDENAME is omitted, we take BOTHSIDES as default.
 
 Every section has several option=value pairs. (See below for a list of all options)
 
@@ -38,7 +38,7 @@ If we calculate the right side, THISSIDE means right side and OTHERSIDE means le
 
 The players are classified in the following manner:
 
-ALLSIDES:	All Players
+BOTHSIDES:	All Players
 
 MIDDLE:		Keeper, Extra Players,
 		Single CA , Single IM, Single FW (if not TowardsWing)
@@ -86,37 +86,30 @@ xpDelta=x			...
 staminaMin=x			if stamina < x then stamina = x
 formMin=x			...
 xpMin=x
-skillMin=x
 
 staminaMax=x			if stamina > x then stamina = x
 formMax=x			...
 xpMax=x
-skillMax=x
 
 staminaMultiplier=x		stamina = stamina * x
 formMultiplier=x		...
 xpMultiplier=x
-skillMultiplier=x
 
 staminaPower=x			stamina = stamina^x (i.e. stamina raised by x)
 formPower=x			...	(Use 0.5 as x for square root)
 xpPower=x
-skillPower=x
 
 staminaLog=x			stamina = log_x(stamina) (i.e. log of stamina with base x)
 formLog=x			...	(Use 10 as x for base-10-log)
 xpLog=x
-skillLog=x
 
 finalStaminaMultiplier=x	stamina = stamina * x
 finalFormMultiplier=x
 finalXpMultiplier=x
-finalSkillMultiplier=x
 
 finalStaminaDelta=x		stamina = stamina + x
 finalFormDelta=x
 finalXpDelta=x
-finalSkillDelta=x
 
 Now we can calculate the result using these options:
 We start with result=skill
