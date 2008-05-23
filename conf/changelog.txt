@@ -1,0 +1,111 @@
+Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
+
+Changelist HO! 1.401
+====================
+- Updated rating prediction (thx Flattermann and many supporters)
+- Include new training speed calculation (thx Flattermann)
+- Added days of players age
+- Show birthdays in training prognosis (Training Experience plugin)
+- Added new star formulas (thx HO forum users, esp. chokky and Xell)
+- Use simple star rating to determine players best position
+- Fix mixed flags of Oman and Al Yaman
+- Updated Dutch language to version 3.4 (thx Jeronim0)
+- Updated Serbian languages to version 3.1 (thx chokky)
+- Updated French language to version 3.3 - fixes also bugs at player skill parsing in the Transfer plugin (thx guitch)
+
+Plugin Updates:
+---------------
+- Flags plugin 3.17
+- Feedback plugin 1.0 (included in HO 1.401)
+
+
+Changelist HO! 1.400
+====================
+- Added first implementation of new rating formulas (new match engine)
+  BIG THX to Flattermann for his effort - he provided GREAT help!
+- Added option to switch between old and new match engine in the lineup panel
+- Added correct handling of new fan mood levels
+- Added stamina training part (thx Flattermann)
+- Changed seat distribution in ArenaSizer (60/23.5/14/2.5)
+- Added Quatar and Tanzania and their flags
+- Added Srpski (Serbian) [latin and kyrillic] as new HO languages (thx chokky + jablan)
+- Update Dutch translation (thx jeronim0)
+- Prevent possible NPE with red cards (MatchPlayerRetriever)
+- Fix minor bug in language update dialog (duplicate entries)
+- Catch possible NPE when getting EPV value of certain players
+- Minor bugfixes when loading plugins
+- Removed EPV splash screen
+- Removed HoFriendly as demanded by CHPPs
+- Removed player tab from TeamAnalyzer as demanded by CHPPs
+- Small updates for all languages (thx to many HO! forum users)
+
+Plugin Updates:
+---------------
+- EvilCard 0.95
+- Flags plugin 3.16
+- InternationalFriendlyAnalyzer (IFA) 0.93
+- TeamAnalyzer 2.66 (included in HO 1.400)
+- Training Experience 1.24 (included in HO 1.400)
+- Transfers plugin 0.971 (included in HO 1.400)
+
+Special Notes:
+--------------
+HO 1.400 includes a first version to predict the ratings of the new match engine. The quality proved to be quite good at internal tests, but the differences may be a bit higher than for the old engine. Use the prediction offset calculation to get better results and provide feedback in the HO! forum. That way we can enhance the accuracy. Thx!
+
+The 2 most active HO1 developers from the lasst months are on vacation for the next 2 respectively 3 weeks. Thats not planned, but a funny coincidence. It might get a bit silent from HO! side during this time. We expect to have helpful feedback when we're back - especially regardings the new rating predictions.
+
+
+Changelist HO! 1.399
+====================
+- Adaption to CHPP changes (worlddetails)
+- Added Turkish and Galician as new HO languages (thx Yusuf and Pablo)
+- Lineup panel: fixed bug that lead to a "4-4-2 all normal lineup" instead
+  of the real last / actual lineup of the team
+- Fixed coloring of players in match reports (thx to drake79)
+  Note: it's necessary to re-download old matches with buggy coloring
+- Player overview: use no fraction digits when visualising differences
+  in TSI, salary and market value. Show thousand delimiter instead.
+- Lineup panel: added option to simulate the trainer type (thx drake79)
+- fixed a bug that prevented further downloads when a match with more
+  than 3 injured players occured
+- ArenaSizer: 18 Euro income from seats under roof
+- Lineup panel: fixed label of Reserve Defender
+- HT bug hotfix: copy last supporter mood level to current, if its missing in the XML
+
+Converter Plugin:
+-----------------
+- Adaption to CHPP change (worlddetails)
+
+
+
+Changelist HO! 1.398
+====================
+- TeamAnalyzer: fix a problem with matches with less than 11 players
+- ArenaSizer: use correct prices (like in HO! 1.396)
+- include all current flags
+- compiled using Java 1.4 class compatibility (hopefully fixes some TA issues
+  for Java 1.4 and Mac users)
+- change internal URL for Plugin downloads to plugins.hattrickorganizer.net
+- removed upload of EPV data
+- changed version check to allow a newer version in the local installation
+- prevent NPE in MatchPopulator (TeamAnalyzer)
+- prevent NSEEx in RatingUtil (Commons)
+- prevent NPE in HTCalendarFactory (Commons)
+
+
+ Special Note 1:
+ ---------------
+ To those who did not notice yet: with the help of our fellow user Odicin we 
+ were able to fix the 3rd party plugins "International Friendly Analyzer" and 
+ "Flags plugin". Both plugins stopped working after the HT/CHPP change last 
+ November. If you use these plugins and have problems with the update of new 
+ flags, make sure to have the latest version installed. 
+ Check this menu: File -> Update -> Plugins -> Normal.
+ 
+ 
+ Special Note 2:
+ ---------------
+ Thanks to the work of two HO! users Yusuf and Pablo we can offer "Turkish" 
+ and "Galician(Galego)" as new HO! language soon. Unfortunately both didn't 
+ make it into HO! 1.398, we're very sorry! But in the next days both should 
+ be available using the HO! update for language files.
