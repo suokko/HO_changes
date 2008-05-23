@@ -2654,7 +2654,8 @@ public final class Spieler implements plugins.ISpieler {
                                int intensitaet, int staminaTrainingPart, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
     	double ageFactor = Math.pow(1.04, age-17) * gui.UserParameter.instance().AlterFaktor;
-    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
+//    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
+    	double skillFactor = 3.25*Math.pow((curSkill+1d)/20, 3) - 6*Math.pow((curSkill+1d)/20, 2) + 5*(curSkill+1d)/20 - 0.15d;
     	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5))*0.1) * gui.UserParameter.instance().TrainerFaktor;
     	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10))*0.2) * gui.UserParameter.instance().CoTrainerFaktor;
     	double tiFactor = (1 / (intensitaet/100d)) * gui.UserParameter.instance().IntensitaetFaktor;
