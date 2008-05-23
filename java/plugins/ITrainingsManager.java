@@ -23,6 +23,16 @@ public interface ITrainingsManager {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
+     * returns an empty ITrainingPerPlayer instance
+     */
+	public ITrainingPerPlayer getTrainingPerPlayer();
+
+    /**
+     * returns a ITrainingPerPlayer instance for a specific player
+     */
+	public ITrainingPerPlayer getTrainingPerPlayer(ISpieler player);
+	
+    /**
      * get a new training point instance
      *
      * @return new training point

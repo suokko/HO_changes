@@ -10,8 +10,8 @@ import java.util.Vector;
 import plugins.ISpieler;
 import plugins.ITeam;
 import plugins.ITrainingPerPlayer;
+import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.logik.TrainingPoint;
 import de.hattrickorganizer.tools.HelperWrapper;
 
 
@@ -56,7 +56,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
     //variable for adjusting amount of set pieces when training scoring
     private static final float p_f_schusstraining_Standard = 0.6f;
 
-    private TrainingPoint trainPoint;
+    private ITrainingPoint trainPoint;
     
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -64,7 +64,13 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
      * Creates a new TrainingPerPlayer object.
      */
     public TrainingPerPlayer() {
-//    	trainPoint = new TrainingPoint();
+    }
+
+    /**
+     * Creates a new TrainingPerPlayer object initialized with a specific player
+     */
+    public TrainingPerPlayer(ISpieler player) {
+    	this.spieler = player; 
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -273,6 +279,31 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
     	setVE(this.getVE() + values.getVE());
     }
 
+    /**
+     * Returns the training (sub)skill for a specific skill type
+     * 
+     * @param skillType		skill type from ISpieler.SKILL_*
+     * @return				the (sub)skill for this skill type
+     */
+    public double getSkillValue (int skillType) {
+    	switch (skillType) {
+    	case ISpieler.SKILL_TORWART:
+    		return this.getTW();
+    	case ISpieler.SKILL_VERTEIDIGUNG:
+    		return this.getVE();
+    	case ISpieler.SKILL_FLUEGEL:
+    		return this.getFL();
+    	case ISpieler.SKILL_SPIELAUFBAU:
+    		return this.getSA();
+    	case ISpieler.SKILL_TORSCHUSS:
+    		return this.getTS();
+    	case ISpieler.SKILL_PASSSPIEL:
+    		return this.getPS();
+    	case ISpieler.SKILL_STANDARDS:
+    		return this.getST();
+    	}
+    	return 0;
+    }
 	/**
 	 * Checks if trainingDate is after the last skill up in skillType
 	 * 
@@ -388,7 +419,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
      * get the training point for this instance
      * @return	training point
      */
-	public TrainingPoint getTrainPoint() {
+	public ITrainingPoint getTrainPoint() {
 		return trainPoint;
 	}
 
@@ -399,7 +430,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 	 *  
 	 * @param trainPoint	training point
 	 */
-	public void setTrainPoint(TrainingPoint trainPoint) {
+	public void setTrainPoint(ITrainingPoint trainPoint) {
 		this.trainPoint = trainPoint;
 		calculateTrainingResults(trainPoint.getTrainWeek());
 	}

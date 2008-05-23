@@ -6,6 +6,8 @@
  */
 package plugins;
 
+import java.util.Date;
+
 
 /**
  * DOCUMENT ME!
@@ -83,5 +85,36 @@ public interface ITrainingPerPlayer {
      * @param values	the instance we take the values from
      */
     public void addValues (ITrainingPerPlayer values);
+
+    /**
+     * Returns the training (sub)skill for a specific skill type
+     * 
+     * @param skillType		skill type from ISpieler.SKILL_*
+     * @return				the (sub)skill for this skill type
+     */
+    public double getSkillValue (int skillType);
+
+	/**
+	 * Set the timestamp
+	 * if not null, calculate sub increase for this training date only
+	 * 
+	 * @param timestamp the timestamp to set
+	 */
+	public void setTimestamp(Date timestamp);
+
+    /**
+	 * get the training point for this instance
+	 * @return	training point
+	 */
+	public ITrainingPoint getTrainPoint();
+
+	/**
+	 * set the training point for this instance and
+	 * calculate the sub skills for the player using 
+	 * the training week from this training point
+	 *  
+	 * @param trainPoint	training point
+	 */
+	public void setTrainPoint(ITrainingPoint trainPoint);
 
 }
