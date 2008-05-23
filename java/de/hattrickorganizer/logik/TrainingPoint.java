@@ -249,9 +249,9 @@ public class TrainingPoint implements ITrainingPoint {
 	 * @param posId		Position of the player in this match
 	 */
 	public void addTrainingMatch (int minutes, int posId) {
-//		System.out.println ("Match added for player "+spieler.getName()+": train="+train+", min="+minutes+", bP="+basePoints);
 		if (minutes > 0) {
 			double basePoints = getTrainingPoint(trainWeek.getTyp(), new Integer (posId)).doubleValue();
+//			System.out.println ("Match added: train="+trainWeek.getTyp()+", min="+minutes+", pos="+posId+", bP="+basePoints);
 			matchesForTraining.add(new MatchForTraining(minutes, basePoints));
 			Collections.sort(matchesForTraining);
 		}
@@ -289,10 +289,16 @@ public class TrainingPoint implements ITrainingPoint {
     	return points;
     }
 
+    /**
+     * Returns the training week for this training point
+     */
 	public ITrainingWeek getTrainWeek() {
 		return trainWeek;
 	}
 
+    /**
+     * Sets the training week for this training point
+     */
 	public void setTrainWeek(ITrainingWeek trainWeek) {
 		this.trainWeek = trainWeek;
 	}

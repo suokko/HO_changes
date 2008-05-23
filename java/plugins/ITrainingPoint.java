@@ -43,4 +43,8 @@ public interface ITrainingPoint {
      */
     public double calcTrainingPoints (boolean ignorePosition);
 
+    /**
+     * Returns the training week for this training point
+     */
+	public ITrainingWeek getTrainWeek();
 }

@@ -78,6 +78,20 @@ public class TrainingsManager implements ITrainingsManager {
     }
 
     /**
+     * returns an empty ITrainingPerPlayer instance
+     */
+	public ITrainingPerPlayer getTrainingPerPlayer() {
+		return (new TrainingPerPlayer());
+	}
+
+    /**
+     * returns a ITrainingPerPlayer instance for a specific player
+     */
+	public ITrainingPerPlayer getTrainingPerPlayer(ISpieler player) {
+		return (new TrainingPerPlayer(player));
+	}
+
+    /**
      * TODO Missing Method Documentation
      *
      * @param hrfId TODO Missing Method Parameter Documentation
@@ -148,8 +162,7 @@ public class TrainingsManager implements ITrainingsManager {
             timestamp = new Timestamp(c.getTimeInMillis());
         }
 
-        TrainingPerPlayer output = new TrainingPerPlayer();
-        output.setSpieler(spieler);
+        ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
 
 //        System.out.println ("Start calcFullTraining for "+spieler.getName()+", output="+output);
 
@@ -214,8 +227,7 @@ public class TrainingsManager implements ITrainingsManager {
         final ISpieler spieler = inputSpieler;
         final int playerID = spieler.getSpielerID();
 
-        TrainingPerPlayer output = new TrainingPerPlayer();
-        output.setSpieler(spieler);
+        ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
         if (timestamp != null)
         	output.setTimestamp(timestamp);
 //        System.out.println ("Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((zeitpunkt!=null)?zeitpunkt.toString():"")+", trainDate="+train.getTrainingDate().getTime().toLocaleString());
@@ -248,10 +260,9 @@ public class TrainingsManager implements ITrainingsManager {
 //                    		+"Player "+playerID
 //                    		+" played "+minutesPlayed+"mins at pos "+playerMatchPosition.intValue());
                     trainPoints.addTrainingMatch (minutesPlayed, playerMatchPosition.intValue());
-                    output.setTrainPoint(trainPoints);
                 }
-
             }
+            output.setTrainPoint(trainPoints);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
         }
