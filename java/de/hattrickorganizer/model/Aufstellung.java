@@ -10,12 +10,13 @@ import gui.UserParameter;
 
 import java.util.Vector;
 
-import de.hattrickorganizer.prediction.RatingPredictionConfig;
-import de.hattrickorganizer.prediction.RatingPredictionManager;
 import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.Aufstellungsassistent;
+import de.hattrickorganizer.prediction.RatingPredictionConfig;
+import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -60,8 +61,8 @@ public  class Aufstellung implements plugins.ILineUp {
     /** TacticType */
     private int m_iTacticType;
 
-    /** Heim/Ausw */
-    private short m_sHeimspiel = -1;
+    /** Home/Away/AwayDerby */
+    private short m_sLocation = -1;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -72,9 +73,9 @@ public  class Aufstellung implements plugins.ILineUp {
         initPositionen442();
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Konstruktor
-    /////////////////////////////////////////////////////////////////////////////////        
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Creates a new instance of Aufstellung
@@ -234,13 +235,13 @@ public  class Aufstellung implements plugins.ILineUp {
     //    	for (int i = ISpielerPosition.rightBack; i < ISpielerPosition.beginnReservere; i++) {
     //            ISpieler player = HOVerwaltung.instance().getModel().getAufstellung()
     //                                          .getPlayerByPositionID(i);
-    //            
+    //
     //            if(player != null && player.getSpezialitaet() == ISpieler.KOPFBALLSTARK)
-    //            	isHeadmanInLineUp = true; 
+    //            	isHeadmanInLineUp = true;
     //            byte tactic = HOVerwaltung.instance().getModel().getAufstellung().getTactic4PositionID(i);
     //            strength+=PlayerHelper.getSpecialEventEffect(player,i,tactic);
-    //    	
-    //            
+    //
+    //
     //    	}
     //    	if(isHeadmanInLineUp)
     //    		strength++;
@@ -365,11 +366,11 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getCentralAttackRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 	        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 	        double value = Math.max(1, rpManager.getCentralAttackRatings());
 	        if (value>1) {
-	        	value += UserParameter.instance().middleAttackOffset; 
+	        	value += UserParameter.instance().middleAttackOffset;
 	        }
 	        return value;
     	} else {
@@ -385,13 +386,13 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getCentralDefenseRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 	        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getCentralDefenseRatings());
 			if (value>1) {
-				value += UserParameter.instance().middleDefenceOffset; 
+				value += UserParameter.instance().middleDefenceOffset;
 			}
-			return value;        
+			return value;
     	} else {
     		return 0.0d;
     	}
@@ -499,11 +500,11 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getLeftAttackRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getLeftAttackRatings());
 			if (value>1) {
-				value += UserParameter.instance().leftAttackOffset; 
+				value += UserParameter.instance().leftAttackOffset;
 			}
 			return value;
     	} else {
@@ -519,13 +520,13 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getLeftDefenseRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getLeftDefenseRatings());
 			if (value>1) {
-				value += UserParameter.instance().leftDefenceOffset; 
+				value += UserParameter.instance().leftDefenceOffset;
 			}
-			return value;    
+			return value;
     	} else {
     		return 0.0d;
     	}
@@ -550,22 +551,22 @@ public  class Aufstellung implements plugins.ILineUp {
 		float AoW;
 		float AiM;
 
-		// constants 
+		// constants
 		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
 		// updated to V3.2
 		final float MFS = 0.0f;
 
-		// constants 
+		// constants
 		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
 		// updated to V3.2
 		final float VF = 0.47f;
 
-		// constants 
+		// constants
 		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
 		// updated to V3.2
 		float ZG = 0.37f;
 
-		// constants 
+		// constants
 		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
 		// updated to V3.2
 		final float KG = 0.25f;
@@ -633,7 +634,7 @@ public  class Aufstellung implements plugins.ILineUp {
 		// convert reduced float rating (1.00....20.99) to original integer HT rating (1...80)
 		// one +0.5 is because of correct rounding to integer
 		return (int) (((x - 1.0f) * 4.0f) + 1.0f);
-	}	
+	}
     /**
      * errechnet die Gesamt MF St�rke
      *
@@ -656,9 +657,9 @@ public  class Aufstellung implements plugins.ILineUp {
         return de.hattrickorganizer.tools.Helper.round(stk, 1);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Ratings
-    /////////////////////////////////////////////////////////////////////////////////           
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Predicts MF-Rating
@@ -668,11 +669,11 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getMidfieldRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getMFRatings());
 			if (value>1) {
-				value += UserParameter.instance().midfieldOffset; 
+				value += UserParameter.instance().midfieldOffset;
 			}
 			return value;
     	} else {
@@ -744,27 +745,22 @@ public  class Aufstellung implements plugins.ILineUp {
 
     /**
      * Setter for property m_sHeimspiel.
-     *
      * @param m_sHeimspiel New value of property m_sHeimspiel.
      */
-    public final void setHeimspiel(short m_sHeimspiel) {
-        this.m_sHeimspiel = m_sHeimspiel;
+    public final void setHeimspiel(short location) {
+        this.m_sLocation = location;
     }
 
     /**
-     * Getter for property m_sHeimspiel.
-     *
-     * @return Value of property m_sHeimspiel.
+     * Get the location constant for the match (home/away/awayderby)
+     * TODO: determine away derby (aik) !!!
+     * @return the location constant for the match
      */
     public final short getHeimspiel() {
-        if (m_sHeimspiel < 0) {
+        if (m_sLocation < 0) {
             try {
-                //Heim/Ausw abfrage lass ich grad mal sein ;)
-                final plugins.IMatchKurzInfo[] matches = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                                .getMatchesKurzInfo(HOVerwaltung.instance()
-                                                                                                                                .getModel()
-                                                                                                                                .getBasics()
-                                                                                                                                .getTeamId());
+                final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(
+                		HOVerwaltung.instance().getModel().getBasics().getTeamId());
                 plugins.IMatchKurzInfo match = null;
 
                 for (int i = 0; (matches != null) && (matches.length > i); i++) {
@@ -775,14 +771,14 @@ public  class Aufstellung implements plugins.ILineUp {
                     }
                 }
 
-                m_sHeimspiel = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
+                m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
                                                                  .getTeamId()) ? (short) 1 : (short) 0;
             } catch (Exception e) {
-                m_sHeimspiel = 0;
+            	m_sLocation = 0;
             }
         }
 
-        return m_sHeimspiel;
+        return m_sLocation;
     }
 
     /* Umrechnung von double auf 1-80 int*/
@@ -853,9 +849,9 @@ public  class Aufstellung implements plugins.ILineUp {
         //m_clAssi.setPositionen ( m_vPositionen );
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Accessor
-    /////////////////////////////////////////////////////////////////////////////////           
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property m_vPositionen.
@@ -938,11 +934,11 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getRightAttackRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getRightAttackRatings());
 			if (value>1) {
-				value += UserParameter.instance().rightAttackfOffset; 
+				value += UserParameter.instance().rightAttackfOffset;
 			}
 			return value;
     	} else {
@@ -958,13 +954,13 @@ public  class Aufstellung implements plugins.ILineUp {
     public final double getRightDefenseRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-	
+
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getRightDefenseRatings());
 			if (value>1) {
-				value += UserParameter.instance().rightDefenceOffset; 
+				value += UserParameter.instance().rightDefenceOffset;
 			}
-			return value; 
+			return value;
     	} else {
     		return 0.0d;
     	}
@@ -1117,9 +1113,9 @@ public  class Aufstellung implements plugins.ILineUp {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    STK Funcs
-    /////////////////////////////////////////////////////////////////////////////////        
+    /////////////////////////////////////////////////////////////////////////////////
     public final float getTacticLevel(int type) {
         float value = 0.0f;
 
@@ -1225,7 +1221,7 @@ public  class Aufstellung implements plugins.ILineUp {
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            //existiert Spieler noch ? 
+            //existiert Spieler noch ?
             if ((HOVerwaltung.instance().getModel() != null)
                 && (HOVerwaltung.instance().getModel().getSpieler(pos.getSpielerId()) == null)) {
                 //nein dann zuweisung aufheben
@@ -1234,9 +1230,9 @@ public  class Aufstellung implements plugins.ILineUp {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Aktions Funcs
-    ///////////////////////////////////////////////////////////////////////////////// 
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * erstellt die automatische Aufstellung
@@ -1259,9 +1255,9 @@ public  class Aufstellung implements plugins.ILineUp {
         setAutoKapitaen(null);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Debug Funcs
-    /////////////////////////////////////////////////////////////////////////////////          
+    /////////////////////////////////////////////////////////////////////////////////
     public final void dump() {
         HOLogger.instance().log(getClass(),"Std-aufstellung");
         dumpValues();
@@ -1487,9 +1483,9 @@ public  class Aufstellung implements plugins.ILineUp {
         m_iKapitaen = temp.getKapitaen();
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Datenbank Funcs
-    /////////////////////////////////////////////////////////////////////////////////        
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * L�dt ein System aus der Datenbank ein
@@ -1503,9 +1499,9 @@ public  class Aufstellung implements plugins.ILineUp {
         checkAufgestellteSpieler();
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //    Helper Funcs
-    /////////////////////////////////////////////////////////////////////////////////        
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * l�scht die aufgestellten Spieler
@@ -1603,10 +1599,10 @@ public  class Aufstellung implements plugins.ILineUp {
     //    private int getAnzSturm()
     //    {
     //        int anzahl  =   0;
-    //        
+    //
     //        anzahl  +=  getAnzPosImSystem( ISpielerPosition.STURM );
     //        anzahl  +=  getAnzPosImSystem( ISpielerPosition.STURM_DEF );
-    //        
+    //
     //        return anzahl;
     //    }
 
@@ -1701,9 +1697,7 @@ public  class Aufstellung implements plugins.ILineUp {
             }
 
             HOLogger.instance().log(getClass(),"PosID: "
-                               + ((SpielerPosition) m_vPositionen.elementAt(i)).getNameForID(((SpielerPosition) m_vPositionen
-                                                                                              .elementAt(i))
-                                                                                             .getId())
+                               + SpielerPosition.getNameForID(((SpielerPosition) m_vPositionen.elementAt(i)).getId())
                                + " ,Spieler :" + name + " , Stk : " + stk);
         }
 
@@ -1756,9 +1750,9 @@ public  class Aufstellung implements plugins.ILineUp {
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////
     //  INIT
-    /////////////////////////////////////////////////////////////////////////////////        
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * stellt das 4-4-2 Grundsystem ein
@@ -1803,6 +1797,12 @@ public  class Aufstellung implements plugins.ILineUp {
         // TODO Auto-generated method stub
         return new SpielerPosition(sp.getId(), sp2.getSpielerId(), sp2.getTaktik());
     }
-    
-    
+
+    /**
+     * Debug logging.
+     */
+//    private static void debug(String txt) {
+//    	HOLogger.instance().debug(Aufstellung.class, txt);
+//    }
+
 }
