@@ -5,6 +5,7 @@ Changelist HO! 1.401
 - Updated rating prediction (thx Flattermann and many supporters)
 - Include new training speed calculation (thx Flattermann)
 - Added days of players age
+- Added the "away derby" option to the match lineup and it's prediction
 - Show birthdays in training prognosis (Training Experience plugin)
 - Added new star formulas (thx HO forum users, esp. chokky and Xell)
 - Use simple star rating to determine players best position
@@ -12,6 +13,7 @@ Changelist HO! 1.401
 - Updated Dutch language to version 3.4 (thx Jeronim0)
 - Updated Serbian languages to version 3.1 (thx chokky)
 - Updated French language to version 3.3 - fixes also bugs at player skill parsing in the Transfer plugin (thx guitch)
+- Automatically enable options league- and team-schedule in download dialog
 
 Plugin Updates:
 ---------------
@@ -95,17 +97,17 @@ Changelist HO! 1.398
 
  Special Note 1:
  ---------------
- To those who did not notice yet: with the help of our fellow user Odicin we 
- were able to fix the 3rd party plugins "International Friendly Analyzer" and 
- "Flags plugin". Both plugins stopped working after the HT/CHPP change last 
- November. If you use these plugins and have problems with the update of new 
- flags, make sure to have the latest version installed. 
+ To those who did not notice yet: with the help of our fellow user Odicin we
+ were able to fix the 3rd party plugins "International Friendly Analyzer" and
+ "Flags plugin". Both plugins stopped working after the HT/CHPP change last
+ November. If you use these plugins and have problems with the update of new
+ flags, make sure to have the latest version installed.
  Check this menu: File -> Update -> Plugins -> Normal.
- 
- 
+
+
  Special Note 2:
  ---------------
- Thanks to the work of two HO! users Yusuf and Pablo we can offer "Turkish" 
- and "Galician(Galego)" as new HO! language soon. Unfortunately both didn't 
- make it into HO! 1.398, we're very sorry! But in the next days both should 
+ Thanks to the work of two HO! users Yusuf and Pablo we can offer "Turkish"
+ and "Galician(Galego)" as new HO! language soon. Unfortunately both didn't
+ make it into HO! 1.398, we're very sorry! But in the next days both should
  be available using the HO! update for language files.
