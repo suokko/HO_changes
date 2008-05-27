@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * DOCUMENT ME!
+ * Interface for severy match details.
  *
  * @author thomas.werth
  */
@@ -19,61 +19,41 @@ public interface IMatchDetails {
 
     /** TODO Missing Parameter Documentation */
     public static final int EINSTELLUNG_UNBEKANNT = -1000;
-
-    /** TODO Missing Parameter Documentation */
+    /** Play it cool */
     public static final int EINSTELLUNG_PIC = -1;
-
-    /** TODO Missing Parameter Documentation */
+    /** Normal */
     public static final int EINSTELLUNG_NORMAL = 0;
-
-    /** TODO Missing Parameter Documentation */
+    /** Match of the Season */
     public static final int EINSTELLUNG_MOTS = 1;
 
-    /** TODO Missing Parameter Documentation */
-
-    //rain
+    /** rain */
     public static final int WETTER_REGEN = 0;
-
-    /** TODO Missing Parameter Documentation */
+    /** overcast */
     public static final int WETTER_BEWOELKT = 1;
-
-    /** TODO Missing Parameter Documentation */
+    /** cloudy */
     public static final int WETTER_WOLKIG = 2;
-
-    /** TODO Missing Parameter Documentation */
-
-    //sun
+    /** sun */
     public static final int WETTER_SONNE = 3;
 
-    /** TODO Missing Parameter Documentation */
-
-    // = Normal
+    /** Normal tactic */
     public static final int TAKTIK_NORMAL = 0;
-
-    /** TODO Missing Parameter Documentation */
-
-    // = Pressing
+    /** Pressing tactic */
     public static final int TAKTIK_PRESSING = 1;
-
-    /** TODO Missing Parameter Documentation */
-
-    //= Counter
+    /** Counter attack tactic */
     public static final int TAKTIK_KONTER = 2;
-
-    /** TODO Missing Parameter Documentation */
-
-    //= Attack On Middle
+    /** AiM - Attack On Middle */
     public static final int TAKTIK_MIDDLE = 3;
-
-    /** TODO Missing Parameter Documentation */
-
-    //= Attack on Wings 
+    /** AoW - Attack On Wings */
     public static final int TAKTIK_WINGS = 4;
-
-    /** TODO Missing Parameter Documentation */
-
-    //= Play creatively
+    /** Play creatively */
     public static final int TAKTIK_CREATIVE = 7;
+
+    /** away match */
+    public static final short LOCATION_AWAY = 0;
+    /** home match */
+    public static final short LOCATION_HOME = 1;
+    /** away derby */
+    public static final short LOCATION_AWAYDERBY = 2;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -200,7 +180,7 @@ public interface IMatchDetails {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Accessor
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property Home Team ID
