@@ -21,7 +21,7 @@ A hash sign ("#") starts a comment, every character after the # is ignored in th
 If you want to create your own RatingParameters, copy the directory 'default' to a new name and add that name to the file predictionTypes.conf.
 Then, play with the values in midfield.dat, centralattack.dat...
 
-The prediction files are read by HO! everytime he tries to predict the ratings, therefore you can change the values and immediately see the result, without closing and 
+The prediction files are read by HO! everytime he tries to predict the ratings, therefore you can change the values and immediately see the result, without closing and
 reopening HO!.
 
 
@@ -55,7 +55,7 @@ How will the ratings be calculated?
 
 First, HO! parses the parameter file and seaches for all [SKILLNAME] and [SKILLNAME_SIDENAME] sections.
 
-After that, HO! calculates the player strength for all players on the SIDENAME's side, based on the player's skill, form, stamina and xp using the parameters from the file 
+After that, HO! calculates the player strength for all players on the SIDENAME's side, based on the player's skill, form, stamina and xp using the parameters from the file
 playerstrength.dat.
 The PlayerStrength is multiplied with the PlayerWeight from the current section in the parameter file.
 For all players, PlayerStrength*PlayerWeight is added up. If there are general options (see below) in this section, they will be applied now.
@@ -71,7 +71,7 @@ Useable options in the config files
 playerstrength.dat:
 ~~~~~~~~~~~~~~~~~~~
 
-The PlayerStrength is calculated from these input values: 
+The PlayerStrength is calculated from these input values:
 skill, stamina, form, xp (experience)
 
 In this file, the options are ALWAYS processed in the following order:
@@ -146,7 +146,7 @@ teamSpiritPower=x
 
 home=x			if game is home game then rating = rating * home
 away=x			same for away
-awayDerby=x		same for away derby (not implemented)
+awayDerby=x		same for away derby (since HO! 1.401)
 
 pic=x			if you play PIC then rating = rating * pic
 mots=x			same for MOTS
@@ -216,12 +216,12 @@ im_off=0.9
 extra_im=0.85
 ...
 
-Therefore the PlayerStrengh of all normal IMs is multiplied with 0.5 * 1 = 0.5, 
+Therefore the PlayerStrengh of all normal IMs is multiplied with 0.5 * 1 = 0.5,
 the PlayerStrengh of all offensive IMs is multiplied with 0.5 * 0.9 = 0.45 and so on.
 After that, everything is added up to the PlaymakingSum.
 
 In the end, the parameters from the [general] section are applied to this PlaymakingSum.
-I.e. 
+I.e.
 PlaymakingSum = PlaymakingSum * multiplier
 PlaymakingSum = PlaymakingSum + (1+squareMod)*PlaymakingSum^2
 PlaymakingSum = PlaymakingSum + delta
