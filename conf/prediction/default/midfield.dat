@@ -1,9 +1,10 @@
-# Midfield rating prediction based on research from GM_Sule
+# Midfield rating prediction based on research from GM-Sule
 # http://www.esnips.com/web/matchp/
 #
 [general]
 version=3.0
-multiplier=0.138
+multiplier=0.139
+#delta=0.875
 delta=1
 squareMod=0
 home=1.20
@@ -11,7 +12,17 @@ awayDerby=1.10
 pic=0.85
 mots=1.15
 tacticCounter=0.93
-teamspiritPower=0.44
+
+# Teamspirit Multiplier is calculated as: 
+# (TS*teamspiritPreMulti)^teamspiritPower
+
+# GM-Sule normalizes the TS to ~6.5 (=2.546^2)
+teamspiritPreMulti=0.154270611 	# 1/(2.546^2) (Original GM-Sule)
+teamspiritPower=0.5 		# SQRT (Original GM-Sule)
+
+# Alternative GM-Mjoelnir
+#multiplier=0.123
+#teamspiritPower=0.6            # GM-Mjoelnir
 
 [playmaking]
 cd_norm=0.25
@@ -30,5 +41,5 @@ wi_off=0.35
 wi_def=0.35
 wi_tm=0.6
 fw_def=0.45
-extra_cd=0.2
+extra_cd=0.21
 extra_im=0.8

@@ -1,6 +1,8 @@
 HO! Rating Prediction
 =====================
 
+Please send comments to Flattermann by HT-Mail or email <flattermannHO@gmail.com>.
+
 Overview
 ========
 
@@ -11,8 +13,8 @@ All parameter files have the same syntax. The files are case insensitive.
 They contain at least one [general] section and one [SKILLNAME] or [SKILLNAME_SIDENAME] section.
 
 SKILLNAME is one of {goalkeeping, defending, playmaking, passing, scoring, winger}.
-SIDENAME is one of {bothsides, thisside, middle, otherside}
-If the SIDENAME is omitted, we take BOTHSIDES as default.
+SIDENAME is one of {allsides, thisside, middle, otherside}
+If the SIDENAME is omitted, we take ALLSIDES as default.
 
 Every section has several option=value pairs. (See below for a list of all options)
 
@@ -21,7 +23,7 @@ A hash sign ("#") starts a comment, every character after the # is ignored in th
 If you want to create your own RatingParameters, copy the directory 'default' to a new name and add that name to the file predictionTypes.conf.
 Then, play with the values in midfield.dat, centralattack.dat...
 
-The prediction files are read by HO! everytime he tries to predict the ratings, therefore you can change the values and immediately see the result, without closing and
+The prediction files are read by HO! everytime he tries to predict the ratings, therefore you can change the values and immediately see the result, without closing and 
 reopening HO!.
 
 
@@ -38,7 +40,7 @@ If we calculate the right side, THISSIDE means right side and OTHERSIDE means le
 
 The players are classified in the following manner:
 
-BOTHSIDES:	All Players
+ALLSIDES:	All Players
 
 MIDDLE:		Keeper, Extra Players,
 		Single CA , Single IM, Single FW (if not TowardsWing)
@@ -55,7 +57,7 @@ How will the ratings be calculated?
 
 First, HO! parses the parameter file and seaches for all [SKILLNAME] and [SKILLNAME_SIDENAME] sections.
 
-After that, HO! calculates the player strength for all players on the SIDENAME's side, based on the player's skill, form, stamina and xp using the parameters from the file
+After that, HO! calculates the player strength for all players on the SIDENAME's side, based on the player's skill, form, stamina and xp using the parameters from the file 
 playerstrength.dat.
 The PlayerStrength is multiplied with the PlayerWeight from the current section in the parameter file.
 For all players, PlayerStrength*PlayerWeight is added up. If there are general options (see below) in this section, they will be applied now.
@@ -71,12 +73,16 @@ Useable options in the config files
 playerstrength.dat:
 ~~~~~~~~~~~~~~~~~~~
 
-The PlayerStrength is calculated from these input values:
+The PlayerStrength is calculated from these input values: 
 skill, stamina, form, xp (experience)
 
 In this file, the options are ALWAYS processed in the following order:
 
 Option				Function
+
+skillSubDeltaForLevelY=x	if (skill = Y AND subskill=0) then skill = skill + x
+				(This is used for unknown subskills, i.e. the player did not get training yet and 
+				the user did not enter a subskill offset manually)
 
 skillDelta=x			skill = skill + x
 staminaDelta=x			stamina = stamina + x
@@ -86,30 +92,37 @@ xpDelta=x			...
 staminaMin=x			if stamina < x then stamina = x
 formMin=x			...
 xpMin=x
+skillMin=x
 
 staminaMax=x			if stamina > x then stamina = x
 formMax=x			...
 xpMax=x
+skillMax=x
 
 staminaMultiplier=x		stamina = stamina * x
 formMultiplier=x		...
 xpMultiplier=x
+skillMultiplier=x
 
 staminaPower=x			stamina = stamina^x (i.e. stamina raised by x)
 formPower=x			...	(Use 0.5 as x for square root)
 xpPower=x
+skillPower=x
 
 staminaLog=x			stamina = log_x(stamina) (i.e. log of stamina with base x)
 formLog=x			...	(Use 10 as x for base-10-log)
 xpLog=x
+skillLog=x
 
 finalStaminaMultiplier=x	stamina = stamina * x
 finalFormMultiplier=x
 finalXpMultiplier=x
+finalSkillMultiplier=x
 
 finalStaminaDelta=x		stamina = stamina + x
 finalFormDelta=x
 finalXpDelta=x
+finalSkillDelta=x
 
 Now we can calculate the result using these options:
 We start with result=skill
@@ -216,12 +229,12 @@ im_off=0.9
 extra_im=0.85
 ...
 
-Therefore the PlayerStrengh of all normal IMs is multiplied with 0.5 * 1 = 0.5,
-the PlayerStrengh of all offensive IMs is multiplied with 0.5 * 0.9 = 0.45 and so on.
+Therefore the PlayerStrength of all normal IMs is multiplied with 0.5 * 1 = 0.5, 
+the PlayerStrength of all offensive IMs is multiplied with 0.5 * 0.9 = 0.45 and so on.
 After that, everything is added up to the PlaymakingSum.
 
 In the end, the parameters from the [general] section are applied to this PlaymakingSum.
-I.e.
+I.e. 
 PlaymakingSum = PlaymakingSum * multiplier
 PlaymakingSum = PlaymakingSum + (1+squareMod)*PlaymakingSum^2
 PlaymakingSum = PlaymakingSum + delta
