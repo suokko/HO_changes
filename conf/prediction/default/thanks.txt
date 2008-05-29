@@ -1,10 +1,10 @@
 The rating prediction is based on:
 
-centraldefense	HO_old with changes
-sidedefense	Discount Fed, Schattenweber, GM-Vinstuen
-midfield	GM-Sule, GM-Mjoelnir
-centralattack	Discount Fed, Schattenweber, GM-Vinstuen
-sideattack	Discount Fed, Schattenweber, GM-Vinstuen
+centraldefense	Discount Fed, Schattenweber, GM-Vinstuen, MK-Bold
+sidedefense	Discount Fed, Schattenweber, GM-Vinstuen, MK-Bold
+midfield	GM-Sule & GM-Mjoelnir
+centralattack	Discount Fed, Schattenweber, GM-Vinstuen, MK-Bold
+sideattack	Discount Fed, Schattenweber, GM-Vinstuen, MK-Bold
 playerstrength	Discound Fed, GM-Mjoelnir and others
 
 We would like to thank everybody who helped!

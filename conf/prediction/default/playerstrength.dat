@@ -1,55 +1,17 @@
 [general]
+# if (skill = Y and subskill=0) then skill = skill + x	(skillSubDeltaForLevelY)
 # skill = skill - 1			(skillDelta)
-# stamina = stamina - 1			(staminaDelta)
-# form = form - 1			(formDelta)
-# if (stamina < 0) then stamina = 0	(staminaMin)
-# if (form < 0) then form = 0		(formMin)
-# if (xp < 1) then xp = 1		(xpMin)
-# if (stamina > 8) then stamina = 8	(staminaMax)
-# if (form > 8) then form = 8		(formMax)
-# stamina = stamina/7			(staminaMultiplier)
-# form = form/7				(formMultiplier)
-# stamina = stamina^(0.461*7/8)		(staminaPower)
-# form = form^(0.504*7/8)		(formPower)
-# xp = log10(xp)			(xpLog)
-# 
-# result = skill
-# result = result * 1 * stamina		(resultMultiStamina)
-# result = result * 1 * form		(resultMultiForm)
-# result = result + 2*0.428*xp		(resultAddXp)
-#
-skillDelta=-1
-staminaDelta=-1
-formDelta=-1
-staminaMin=0
-formMin=0
-xpMin=1
-staminaMax=7
-formMax=7
-staminaMultiplier=0.14286 	# 1/7
-formMultiplier=0.14286 		# 1/7
-xpMultiplier=1
-staminaPower=0.403375		# 0.461*7/8
-formPower=0.441			# 0.504*7/8
-xpLog=10			# Log base 10
-resultMultiStamina=1
-resultMultiForm=1
-resultMultiXp=0
-resultAddXp=0.856		# 2*0.428
-
-[playmaking]
-# skill = skill - 1			(skillDelta)
-# stamina = stamina - 1			(staminaDelta)
-# form = form - 1			(formDelta)
-# xp = xp - 1				(xpDelta)
+# stamina = stamina - 0.5		(staminaDelta)
+# form = form - 0.5			(formDelta)
+# xp = xp - 0.5				(xpDelta)
 # if (stamina < 0) then stamina = 0	(staminaMin)
 # if (form < 0) then form = 0		(formMin)
 # if (xp < 0) then xp = 0		(xpMin)
-# if (stamina > 7) then stamina = 7	(staminaMax)
+# if (stamina > 8.25) then stamina = 8.25	(staminaMax)
 # if (form > 7) then form = 7		(formMax)
 # stamina = stamina/7			(staminaMultiplier)
 # form = form/7				(formMultiplier)
-# stamina = stamina^0.403375		(staminaPower)
+# stamina = stamina^0.5			(staminaPower)
 # form = form^0.5			(formPower)
 # xp = xp^0.5				(xpPower)
 # xp = 7.16% * xp			(finalXpMultiplier)
@@ -61,22 +23,25 @@ resultAddXp=0.856		# 2*0.428
 # result = result * 1 * xp		(resultMultiXp)
 #
 # Id est:
-# stamina-Factor = ((stamina-1)/7)^0.403375
-# form-Factor = sqrt ((form-1)/7)
-# xp-Factor = 1 + 7.16% * sqrt(xp-1)
+# stamina-Factor = sqrt ((stamina-0.5)/7)
+# form-Factor = sqrt ((form-0.5)/7)
+# xp-Factor = 1 + 7.16% * sqrt(xp-0.5)
 #
-skillDelta=-1
-staminaDelta=-1
-formDelta=-1
-xpDelta=-1
+skillDelta=-1.0
+staminaDelta=-0.5
+formDelta=-0.5
+xpDelta=-0.5
+skillMin=0
 staminaMin=0
 formMin=0
 xpMin=0
-staminaMax=7
+staminaMax=8.25
 formMax=7
-staminaMultiplier=0.14286 	# 1/7
-formMultiplier=0.14286 		# 1/7
-staminaPower=0.403375		#
+staminaMultiplier=0.1428571 	# 1/7
+formMultiplier=0.1428571	# 1/7
+#staminaPower=0.403375		#
+#staminaPower=0.34		# equals 5% loss from excellent to solid and solid to passable /Mj
+staminaPower=0.5		# Square Root
 formPower=0.5			# Square Root
 xpPower=0.5			# Square Root
 finalXpMultiplier=0.0716
@@ -85,3 +50,15 @@ resultMultiStamina=1
 resultMultiForm=1
 resultMultiXp=1
 
+# SkillSubDeltas:
+# Default is to add 0.5 subskill for skills 0 (non existant) up to 7 (solid)
+# Uncomment the next line to ignore the skillSubDeltas
+#[ignore]
+skillSubDeltaForLevel0=0.5
+skillSubDeltaForLevel1=0.5
+skillSubDeltaForLevel2=0.5
+skillSubDeltaForLevel3=0.5
+skillSubDeltaForLevel4=0.5
+skillSubDeltaForLevel5=0.5
+skillSubDeltaForLevel6=0.5
+skillSubDeltaForLevel7=0.5

@@ -23,7 +23,7 @@ trainerNeutral=1
 
 # SKILLNAME is one of: 	{goalkeeper, playmaking, passing, winger, scoring, defending}
 #
-# SIDENAME is one of:	bothsides	the weights are applied to every matching player (default)
+# SIDENAME is one of:	allsides	the weights are applied to every matching player (default)
 			thisside	the weights are applied to the current side's players 
 			otherside	the weights are applied to the other side's players
 					(e.g. right side defence -> use left side players, 
