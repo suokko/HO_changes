@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 import plugins.ILineUp;
+import plugins.IMatchDetails;
 import plugins.IRatingPredictionConfig;
 import plugins.IRatingPredictionManager;
 import plugins.IRatingPredictionParameter;
@@ -168,9 +169,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
        	retVal *= Math.pow((teamspirit * params.getParam(sectionName, "teamSpiritPreMulti", 1/4.5)), 
        				params.getParam(sectionName, "teamSpiritPower", 0));
         
-    	if (heimspiel == 1)
+    	if (heimspiel == IMatchDetails.LOCATION_HOME)
     		retVal *= params.getParam(sectionName, "home", 1);
-    	else if (heimspiel == 2)
+    	else if (heimspiel == IMatchDetails.LOCATION_AWAYDERBY)
     		retVal *= params.getParam(sectionName, "awayDerby", 1);
     	else
     		retVal *= params.getParam(sectionName, "away", 1);

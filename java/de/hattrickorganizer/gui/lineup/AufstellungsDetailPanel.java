@@ -246,9 +246,7 @@ final class AufstellungsDetailPanel extends ImagePanel
      * @param location the constant for the location
      */
     public void setLocation(int location) {
-		m_jcbLocation.removeItemListener(this);
 		de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbLocation, location);
-		m_jcbLocation.addItemListener(this);
 
     }
 
@@ -351,13 +349,16 @@ final class AufstellungsDetailPanel extends ImagePanel
 
             m_jcbTaktik.removeItemListener(this);
             m_jcbEinstellung.removeItemListener(this);
+            m_jcbLocation.removeItemListener(this);
             de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbTaktik,
                                                                 aufstellung.getTacticType());
             de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbEinstellung,
                                                                 aufstellung.getAttitude());
+            de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbLocation,
+            													aufstellung.getHeimspiel());
             m_jcbTaktik.addItemListener(this);
             m_jcbEinstellung.addItemListener(this);
-            setLocation(aufstellung.getHeimspiel());
+            m_jcbLocation.addItemListener(this);
 
             final double gesamtstaerke = aufstellung.getGesamtStaerke(allSpieler, true);
 
@@ -533,17 +534,13 @@ final class AufstellungsDetailPanel extends ImagePanel
             } else if (event.getSource().equals(m_jcbPredictionType)) {
             	RatingPredictionConfig.setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId());
             	refresh();
+            } else if (event.getSource().equals(m_jcbLocation)) {
+            	HOVerwaltung.instance().getModel().getAufstellung().setHeimspiel((short)((CBItem)m_jcbLocation.getSelectedItem()).getId());
+                refresh();
             }
+
         }
 
-        //Auch deselected notwendig!
-        if (event.getSource().equals(m_jcbLocation)) {
-//            HOVerwaltung.instance().getModel().getAufstellung().setHeimspiel(m_jchSpielort
-//                                                                             .isSelected()
-//                                                                             ? (short) 1 : (short) 0);
-        	HOVerwaltung.instance().getModel().getAufstellung().setHeimspiel((short)((CBItem)m_jcbLocation.getSelectedItem()).getId());
-            refresh();
-        }
     }
 
     /**
