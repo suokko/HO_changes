@@ -82,13 +82,13 @@ public class ArenaSizer {
     //Fan-FAKTOREn
 
     /** TODO Missing Parameter Documentation */
-    public static final int FANS_GUT = 30;
+    public static final int FANS_GUT = 25;
 
     /** TODO Missing Parameter Documentation */
-    public static final int FANS_NORMAL = 25;
+    public static final int FANS_NORMAL = 20;
 
     /** TODO Missing Parameter Documentation */
-    public static final int FANS_SCHLECHT = 20;
+    public static final int FANS_SCHLECHT = 15;
 
     //~ Constructors -------------------------------------------------------------------------------
 
