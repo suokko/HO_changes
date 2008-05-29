@@ -440,6 +440,13 @@ public interface IMatchHighlight {
     /** TODO Missing Parameter Documentation */
     public static final int HIGHLIGHT_SUB_SPIELENDE = 99;
 
+    //walk over (HIGHLIGHT_KARTEN only)
+    /** walkover - home team wins */
+    public static final int HIGHLIGHT_SUB_WALKOVER_HOMETEAM_WINS = 1;
+
+    /** walkover - home team wins */
+    public static final int HIGHLIGHT_SUB_WALKOVER_AWAYTEAM_WINS = 2;
+    
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
