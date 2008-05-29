@@ -98,6 +98,9 @@ public class TrainingPoint implements ITrainingPoint {
 
     //Verteidigung //Defense
     private Hashtable VE;
+    
+    //Standards //Set Pieces
+    private Hashtable SETPIECES;
 
     //Order is the same as in Data. As value only SpielerIDS (do i have to translate this?) -> same index for same players
     private Hashtable p_Ht_trainPositionen = new Hashtable();
@@ -132,10 +135,6 @@ public class TrainingPoint implements ITrainingPoint {
      * @return training points earned in that match
      */
     public final Double getTrainingPoint(int trtype, Integer playerMatchPosition) {
-        if ((trtype == ITeam.TA_STANDARD) || (trtype == ITeam.TA_KONDITION)) {
-            return new Double(1.0);
-        }
-
         final Hashtable positions = (Hashtable) p_Ht_trainPositionen.get(new Integer(trtype));
 
         if (positions == null) {
@@ -228,6 +227,20 @@ public class TrainingPoint implements ITrainingPoint {
         LATOFF.put(new Integer(10), new Double(0.6));
         LATOFF.put(new Integer(11), new Double(0.6));
         
+        // TODO flattermann: The default SetPieces taker gets 25% bonus as well
+        SETPIECES = new Hashtable();
+        SETPIECES.put(new Integer(1), new Double(1.25)); // Goalkeepers train 25% faster
+        SETPIECES.put(new Integer(2), new Double(1.0));
+        SETPIECES.put(new Integer(3), new Double(1.0));
+        SETPIECES.put(new Integer(4), new Double(1.0));
+        SETPIECES.put(new Integer(5), new Double(1.0));
+        SETPIECES.put(new Integer(6), new Double(1.0));
+        SETPIECES.put(new Integer(7), new Double(1.0));
+        SETPIECES.put(new Integer(8), new Double(1.0));
+        SETPIECES.put(new Integer(9), new Double(1.0));
+        SETPIECES.put(new Integer(10), new Double(1.0));
+        SETPIECES.put(new Integer(11), new Double(1.0));
+
         //die einzelnen Trainingsarten hinzuf?gen
         //add all traintypes to one hashtable with all trainingstypes
         p_Ht_trainPositionen.put(new Integer(ITeam.TA_SPIELAUFBAU), SA);
@@ -240,6 +253,7 @@ public class TrainingPoint implements ITrainingPoint {
         p_Ht_trainPositionen.put(new Integer(ITeam.TA_ABWEHRVERHALTEN), AV);
         p_Ht_trainPositionen.put(new Integer(ITeam.TA_STEILPAESSE), SP);
         p_Ht_trainPositionen.put(new Integer(ITeam.TA_EXTERNALATTACK), LATOFF);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_STANDARD), SETPIECES);
     }
 
     /**
