@@ -17,8 +17,11 @@ Changelist HO! 1.401
 
 Plugin Updates:
 ---------------
-- Flags plugin 3.17
 - Feedback plugin 1.0 (included in HO 1.401)
+- Training Experience plugin 1.25 (included in HO 1.401)
+- Flags plugin 3.17
+- EvilCard plugin 0.951
+- SpecialEvents plugin 1.21
 
 
 Changelist HO! 1.400
