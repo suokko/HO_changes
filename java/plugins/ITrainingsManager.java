@@ -20,6 +20,12 @@ import java.util.Vector;
  * encapsulates Trainingscalculation and data
  */
 public interface ITrainingsManager {
+	public static final int PLAYERSTATUS_OK = 0;
+	public static final int PLAYERSTATUS_NO_MATCHDATA = -1;
+	public static final int PLAYERSTATUS_NO_MATCHDETAILS = -2;
+	public static final int PLAYERSTATUS_NOT_IN_LINEUP = -3;
+	public static final int PLAYERSTATUS_RED_CARD = -4;
+	
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -91,6 +97,14 @@ public interface ITrainingsManager {
     public int getMinutesPlayed (int matchId, int playerId);
 
     /**
+     * Returns the player status (PLAYERSTATUS_*) for a player in a specific match
+     * @param matchId	match id
+     * @param playerId 	player id
+     * @return	player status
+     */
+    public int getPlayerStatus (int matchId, int playerId);
+
+    /**
      * Creates a list of matches for the specified training
      * 
      * @param trainingDate	use this trainingDate
@@ -108,10 +122,11 @@ public interface ITrainingsManager {
     public double getBasePoints (int trainType, int position);
 
     /**
-     * Calculates how long the player was on the field in the specified match
-     * @param matchId	the match to check
-     * @param playerId	the player to check
-     * @return	number of minutes the player was on the field
+     * Returns the positionId for a player in a specific match
+     * If he is not in the lineup, return the player status (PLAYERSTATUS_*)
+     * @param matchId	match id
+     * @param playerId 	player id
+     * @return	position id
      */
     public int getMatchPosition (int matchId, int playerId);
 }

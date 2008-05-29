@@ -236,7 +236,7 @@ public class TrainingsManager implements ITrainingsManager {
             return output;
         }
 
-        TrainingPoint trainPoints = new TrainingPoint(train);
+        ITrainingPoint trainPoints = getTrainingPoint(train);
         Calendar trainingDate = train.getTrainingDate();
 
         try {
@@ -244,22 +244,19 @@ public class TrainingsManager implements ITrainingsManager {
 
         	for (int i=0; i<matches.size(); i++) {
                 final int matchId = ((Integer)matches.get(i)).intValue();
-                final Map matchData = getMatchLineup(matchId);
-                Integer playerMatchPosition = (Integer) matchData.get(new Integer(playerID));
-                // Minutes played in the current match
-                int minutesPlayed = 0;
-                
-                // Player not played, position is 0
-                if (playerMatchPosition == null) {
-                    playerMatchPosition = new Integer(0);
-                } else {
+                int playerPos = getMatchPosition(matchId, playerID);
+                // TODO if the player got a red card, playerPos is PLAYERSTATUS_RED_CARD
+                // Perhaps we could try to guess the real position using the
+                // startup lineup from this game?
+                // For now, players with red card DO NOT get any training at all :(
+                if (playerPos > 0) {
                 	// Player has played -> check how long he was on the field
                 	// (i.e. if he got a red card or injured)
-                    minutesPlayed = getMinutesPlayed (matchId, playerID);
+                    int minutesPlayed = getMinutesPlayed (matchId, playerID);
 //                    HOLogger.instance().debug(getClass(), "Match "+matchId+": "
-//                    		+"Player "+playerID
-//                    		+" played "+minutesPlayed+"mins at pos "+playerMatchPosition.intValue());
-                    trainPoints.addTrainingMatch (minutesPlayed, playerMatchPosition.intValue());
+//                    		+"Player "+spieler.getName()+" ("+playerID+")"
+//                    		+" played "+minutesPlayed+"mins at pos "+playerPos);
+                    trainPoints.addTrainingMatch (minutesPlayed, playerPos);
                 }
             }
             output.setTrainPoint(trainPoints);
@@ -314,15 +311,15 @@ public class TrainingsManager implements ITrainingsManager {
     	int endMinute = -1;
     	int posId = getMatchPosition(matchId, playerId);
     	// Player was not on the field -> 0 minutes
-    	if (posId < 0)
+		// OR
+		// No Matchdetails found, probably not downloaded... 
+		// Let's expect the worst and assume that the player
+		// did not play (-> 0 minutes)
+    	if (posId == PLAYERSTATUS_NOT_IN_LINEUP ||
+    			posId == PLAYERSTATUS_NO_MATCHDATA ||
+    			posId == PLAYERSTATUS_NO_MATCHDETAILS)
     		return 0;
        	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
-    	if (details == null) {
-    		// No Matchdetails found, probably not downloaded... 
-    		// Let's hope the best and assume that the player
-    		// could play the full game (=90 mins)
-    		return 90;
-    	}
         Vector highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
         	IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
@@ -343,8 +340,29 @@ public class TrainingsManager implements ITrainingsManager {
        	        	break;
        			}
        		} else if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN) {
-       			// Player left the field because of a red card
        			switch (curHighlight.getHighlightSubTyp()) {
+       			/**
+       			 * Check for Walkover
+       			 */
+       			case IMatchHighlight.HIGHLIGHT_SUB_WALKOVER_HOMETEAM_WINS:
+       			case IMatchHighlight.HIGHLIGHT_SUB_WALKOVER_AWAYTEAM_WINS:
+       				boolean home = false;
+       				if (details.getHeimId() == p_IHMM_HOMiniModel.getBasics().getTeamId())
+       					home = true;
+       				// Check if our team has fielded at least 9 players
+       				if (details.getLineup(home).size() >= 9)
+       					endMinute = 90;
+       				else
+       					endMinute = 0;
+       				break;
+       			/**
+       			 * Check for Red Cards
+       			 * 
+       			 * Unfortunately, this does not work very well, because players with a red card
+       			 * are not transmitted in lineup from Hattrick. Therefore, we don't know
+       			 * on which position the player played. :(
+       			 * Nevertheless, we check how long he played in this match.
+       			 */
        			case IMatchHighlight.HIGHLIGHT_SUB_ROT:
        			case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ:
        			case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR:
@@ -399,21 +417,58 @@ public class TrainingsManager implements ITrainingsManager {
     }
 
     /**
+     * Returns the player status (PLAYERSTATUS_*) for a player in a specific match
+     * @param matchId	match id
+     * @param playerId 	player id
+     * @return	player status
+     */
+    public int getPlayerStatus (int matchId, int playerId) {
+    	Map matchData = getMatchLineup(matchId);
+    	// No Lineup for this match
+    	if (matchData == null)
+    		return PLAYERSTATUS_NO_MATCHDATA;
+       	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
+    	if (details == null)
+    		// No Matchdetails found, probably not downloaded... 
+    		return PLAYERSTATUS_NO_MATCHDETAILS;
+    	Integer posId = (Integer)matchData.get(new Integer(playerId));
+    	// Player not in lineup
+    	if (posId == null) {
+    		// Check if he got a red card
+            Vector highlights = details.getHighlights();
+            for (int i=0; i<highlights.size(); i++) {
+            	IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
+           		if (curHighlight.getSpielerID() == playerId &&
+           				curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN &&
+           					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ ||
+           						curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR ||
+           						curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT)
+           			) {
+           			return PLAYERSTATUS_RED_CARD;
+           		}
+            }
+            // He did not get a red card, i.e. he is really not in lineup
+   			return PLAYERSTATUS_NOT_IN_LINEUP;
+    	}
+    	return PLAYERSTATUS_OK;
+    }
+    
+    /**
      * Returns the positionId for a player in a specific match
+     * If he is not in the lineup, return the player status (PLAYERSTATUS_*)
      * @param matchId	match id
      * @param playerId 	player id
      * @return	position id
      */
     public int getMatchPosition (int matchId, int playerId) {
-    	Map matchData = getMatchLineup(matchId);
-    	// No Lineup for this match
-    	if (matchData == null)
-    		return -1;
-    	Integer posId = (Integer)matchData.get(new Integer(playerId));
-    	// Player not in lineup
-    	if (posId == null)
-    		return -2;
-    	return posId.intValue();
+    	int playerStatus = getPlayerStatus(matchId, playerId);
+    	if (playerStatus == PLAYERSTATUS_OK) {
+        	Map matchData = getMatchLineup(matchId);
+        	Integer posId = (Integer)matchData.get(new Integer(playerId));    		
+        	return posId.intValue();
+    	} else {
+    		return playerStatus;
+    	}
     }
     
     /**

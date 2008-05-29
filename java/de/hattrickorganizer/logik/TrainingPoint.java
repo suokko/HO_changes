@@ -249,7 +249,7 @@ public class TrainingPoint implements ITrainingPoint {
 	 * @param posId		Position of the player in this match
 	 */
 	public void addTrainingMatch (int minutes, int posId) {
-		if (minutes > 0) {
+		if (minutes > 0 && posId > 0) {
 			double basePoints = getTrainingPoint(trainWeek.getTyp(), new Integer (posId)).doubleValue();
 //			System.out.println ("Match added: train="+trainWeek.getTyp()+", min="+minutes+", pos="+posId+", bP="+basePoints);
 			matchesForTraining.add(new MatchForTraining(minutes, basePoints));
