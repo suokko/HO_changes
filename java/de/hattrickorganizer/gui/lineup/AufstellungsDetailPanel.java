@@ -18,7 +18,6 @@ import javax.swing.SwingConstants;
 import plugins.IMatchDetails;
 import plugins.ISpieler;
 import plugins.ITeam;
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
@@ -31,7 +30,6 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.tools.PlayerHelper;
-import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
 /**
@@ -250,30 +248,6 @@ final class AufstellungsDetailPanel extends ImagePanel
 
     }
 
-    //	 unused code
-    //	Fooczy	2005-09-12
-    //    private void resetLabels()
-    //    {
-    //          m_jpRating.clear();
-    //          setTaktik( model.machtes.Matchdetails.TAKTIK_NORMAL );
-    //          setEinstellung( model.machtes.Matchdetails.EINSTELLUNG_NORMAL );
-    //          m_jpGesamtStaerke.clear ();
-    //          m_jpGesamtStaerkeText.clear();
-    //          //m_jpTaktikStaerke.clear ();
-    //          setStimmung( model.Team.TS_ruhig );
-    //          setSelbstvertrauen( model.Team.SV_stark );
-    //          m_jpDurchschnittErfahrung.clear();
-    //          m_jpAktuellesSystem.clear();
-    //          m_jpErfahrungAktuellesSystem.clear();
-    //          m_jpErfahrung433.clear();
-    //          m_jpErfahrung442.clear();
-    //          m_jpErfahrung532.clear();
-    //          m_jpErfahrung541.clear();
-    //          m_jpErfahrung352.clear();
-    //          m_jpErfahrung343.clear();
-    //          m_jpErfahrung451.clear();
-    //    }
-    //
     private void setLabels() {
         if (HOVerwaltung.instance().getModel().getTeam() != null) {
             final HOModel homodel = HOVerwaltung.instance().getModel();
@@ -347,19 +321,6 @@ final class AufstellungsDetailPanel extends ImagePanel
             //Farben neu berechnen
             m_jpRating.calcColorBorders();
 
-            m_jcbTaktik.removeItemListener(this);
-            m_jcbEinstellung.removeItemListener(this);
-            m_jcbLocation.removeItemListener(this);
-            de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbTaktik,
-                                                                aufstellung.getTacticType());
-            de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbEinstellung,
-                                                                aufstellung.getAttitude());
-            de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbLocation,
-            													aufstellung.getHeimspiel());
-            m_jcbTaktik.addItemListener(this);
-            m_jcbEinstellung.addItemListener(this);
-            m_jcbLocation.addItemListener(this);
-
             final double gesamtstaerke = aufstellung.getGesamtStaerke(allSpieler, true);
 
             //*2 wegen halben Sternen
@@ -371,10 +332,15 @@ final class AufstellungsDetailPanel extends ImagePanel
                                    + "");
             m_jpHatstat.setText(aufstellung.getHATStats() + "");
             m_jpTaktikStaerke.setText(getTaktikString());
+
             setStimmung(homodel.getTeam().getStimmungAsInt(),homodel.getTeam().getSubStimmung());
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
             setTrainerType(homodel.getTrainer().getTrainerTyp());
             setPredictionType(RatingPredictionConfig.getInstancePredictionType());
+            setTaktik(aufstellung.getTacticType());
+            setEinstellung(aufstellung.getAttitude());
+            setLocation(aufstellung.getHeimspiel());
+
             m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(homodel.getAufstellung()
                                                                                   .getAvgExpierence()));
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
@@ -480,91 +446,61 @@ final class AufstellungsDetailPanel extends ImagePanel
      */
     public void itemStateChanged(ItemEvent event) {
         if (event.getStateChange() == ItemEvent.SELECTED) {
-            //Taktik geändert
             if (event.getSource().equals(m_jcbTaktik)) {
-                // Fooczy playing creatively 21-09-2005
-                //int selectedTacticType = ((CBItem) m_jcbTaktik.getSelectedItem()).getId();
-                //PlayerHelper.currentTacticType = selectedTacticType;
-                //
-                //            	Bewertung neu berechnen
-                HOVerwaltung.instance().getModel().getAufstellung().setTacticType(((CBItem) m_jcbTaktik
-                                                                                   .getSelectedItem())
-                                                                                  .getId());
-                refresh();
-				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-				FileExtensionManager.extractLineup("Actual");
-                // Fooczy playing creatively 21-09-2005
-                // de.hattrickorganizer.gui.HOMainFrame.instance().getAufstellungsPanel().update();
+                // Tactic changed
+                HOVerwaltung.instance().getModel().getAufstellung().
+                		setTacticType(((CBItem) m_jcbTaktik.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbEinstellung)) {
-                //Bewertung neu berechnen
-                HOVerwaltung.instance().getModel().getAufstellung().setAttitude(((CBItem) m_jcbEinstellung
-                                                                                 .getSelectedItem())
-                                                                                .getId());
-                refresh();
-				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-				FileExtensionManager.extractLineup("Actual");
+            	// Attitude changed
+                HOVerwaltung.instance().getModel().getAufstellung().
+                		setAttitude(((CBItem) m_jcbEinstellung.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbMainStimmung)) {
-				HOVerwaltung.instance().getModel().getTeam().setStimmungAsInt(((CBItem) m_jcbMainStimmung.getSelectedItem()).getId());
-				HOVerwaltung.instance().getModel().getTeam().setSubStimmung(((CBItem) m_jcbSubStimmung.getSelectedItem()).getId());
-
-                HOVerwaltung.instance().getModel().getTeam().setStimmung(((CBItem) m_jcbMainStimmung
-                                                                          .getSelectedItem())
-                                                                         .getText());
-                refresh();
+            	// team spirit changed
+				HOVerwaltung.instance().getModel().getTeam().
+						setStimmungAsInt(((CBItem) m_jcbMainStimmung.getSelectedItem()).getId());
+                HOVerwaltung.instance().getModel().getTeam().
+                		setStimmung(((CBItem) m_jcbMainStimmung.getSelectedItem()).getText());
 			} else if (event.getSource().equals(m_jcbSubStimmung)) {
-				HOVerwaltung.instance().getModel().getTeam().setStimmungAsInt(((CBItem) m_jcbMainStimmung.getSelectedItem()).getId());
-				HOVerwaltung.instance().getModel().getTeam().setSubStimmung(((CBItem) m_jcbSubStimmung.getSelectedItem()).getId());
-
-				HOVerwaltung.instance().getModel().getTeam().setStimmung(((CBItem) m_jcbMainStimmung
-																		  .getSelectedItem())
-																		 .getText());
-				refresh();
+				// team spirit (sub) changed
+				HOVerwaltung.instance().getModel().getTeam().
+						setSubStimmung(((CBItem) m_jcbSubStimmung.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbSelbstvertrauen)) {
-                HOVerwaltung.instance().getModel().getTeam().setSelbstvertrauenAsInt(((CBItem) m_jcbSelbstvertrauen
-                                                                                      .getSelectedItem())
-                                                                                     .getId());
-                HOVerwaltung.instance().getModel().getTeam().setSelbstvertrauen(((CBItem) m_jcbSelbstvertrauen
-                                                                                 .getSelectedItem())
-                                                                                .getText());
-                refresh();
+            	// team confidence changed
+                HOVerwaltung.instance().getModel().getTeam().
+                		setSelbstvertrauenAsInt(((CBItem) m_jcbSelbstvertrauen.getSelectedItem()).getId());
+                HOVerwaltung.instance().getModel().getTeam().
+                		setSelbstvertrauen(((CBItem) m_jcbSelbstvertrauen.getSelectedItem()).getText());
             } else if (event.getSource().equals(m_jcbTrainerType)) {
+            	// trainer type changed
             	HOVerwaltung.instance().getModel().getTrainer().
             			setTrainerTyp(((CBItem)m_jcbTrainerType.getSelectedItem()).getId());
-            	refresh();
             } else if (event.getSource().equals(m_jcbPredictionType)) {
-            	RatingPredictionConfig.setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId());
-            	refresh();
+            	// prediction type changed
+            	RatingPredictionConfig.
+            			setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbLocation)) {
-            	HOVerwaltung.instance().getModel().getAufstellung().setHeimspiel((short)((CBItem)m_jcbLocation.getSelectedItem()).getId());
-                refresh();
+            	// location changed
+            	HOVerwaltung.instance().getModel().getAufstellung().
+            			setHeimspiel((short)((CBItem)m_jcbLocation.getSelectedItem()).getId());
             }
-
+            refresh();
         }
-
     }
 
     /**
      * Reinit the GUI:
      */
     public void reInit() {
-        //resetLabels();
         setLabels();
-
-        //        invalidate();
-        //        validate();
-        //        repaint();
     }
 
     /**
      * Refresh the GUI.
      */
     public void refresh() {
-        //resetLabels();
+    	removeItemListeners();
         setLabels();
-
-        //        invalidate();
-        //        validate();
-        //        repaint();
+        addItemListeners();
     }
 
     /**
@@ -660,7 +596,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbEinstellung.addItemListener(this);
         m_jcbEinstellung.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Einstellung"));
         layout.setConstraints(m_jcbEinstellung, constraints);
         add(m_jcbEinstellung);
@@ -669,7 +604,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbTaktik.addItemListener(this);
         m_jcbTaktik.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Taktik"));
         layout.setConstraints(m_jcbTaktik, constraints);
         add(m_jcbTaktik);
@@ -678,7 +612,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbLocation.addItemListener(this);
         m_jcbLocation.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Spielort"));
         m_jcbLocation.setOpaque(false);
         layout.setConstraints(m_jcbLocation, constraints);
@@ -726,7 +659,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         initLabel(constraints,layout,new JLabel(properties.getProperty("Stimmung")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jcbMainStimmung.addItemListener(this);
 		m_jcbMainStimmung.setPreferredSize(new Dimension(50,
                                                      de.hattrickorganizer.tools.Helper
                                                      .calcCellWidth(20)));
@@ -738,7 +670,6 @@ final class AufstellungsDetailPanel extends ImagePanel
 		initLabel(constraints,layout,new JLabel("Sub"+properties.getProperty("Stimmung")), yPos);
 		constraints.gridx = 2;
         constraints.gridy = yPos;
-		m_jcbSubStimmung.addItemListener(this);
 		m_jcbSubStimmung.setPreferredSize(new Dimension(50,
 													 de.hattrickorganizer.tools.Helper
 													 .calcCellWidth(20)));
@@ -750,7 +681,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         initLabel(constraints,layout,new JLabel(properties.getProperty("Selbstvertrauen")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jcbSelbstvertrauen.addItemListener(this);
         m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50,
                                                             de.hattrickorganizer.tools.Helper
                                                             .calcCellWidth(20)));
@@ -762,7 +692,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         initLabel(constraints,layout,new JLabel(properties.getProperty("Trainer")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jcbTrainerType.addItemListener(this);
 		m_jcbTrainerType.setPreferredSize(new Dimension(50,
                                                      de.hattrickorganizer.tools.Helper
                                                      .calcCellWidth(20)));
@@ -774,7 +703,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         initLabel(constraints,layout,new JLabel(properties.getProperty("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jcbPredictionType.addItemListener(this);
 		m_jcbPredictionType.setPreferredSize(new Dimension(50,
                                                      de.hattrickorganizer.tools.Helper
                                                      .calcCellWidth(20)));
@@ -852,6 +780,37 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
         add(m_jpErfahrung451.getComponent(false));
+       
+        // Add all item listeners
+        addItemListeners();
+    }
+
+    /**
+     * Add all item listeners to the combo boxes
+     */
+    private void addItemListeners() {
+        m_jcbEinstellung.addItemListener(this);
+        m_jcbTaktik.addItemListener(this);
+        m_jcbLocation.addItemListener(this);
+        m_jcbMainStimmung.addItemListener(this);
+		m_jcbSubStimmung.addItemListener(this);
+        m_jcbSelbstvertrauen.addItemListener(this);
+        m_jcbTrainerType.addItemListener(this);
+        m_jcbPredictionType.addItemListener(this);
+    }
+
+    /**
+     * Remove all item listeners from the combo boxes
+     */
+    private void removeItemListeners() {
+        m_jcbEinstellung.removeItemListener(this);
+        m_jcbTaktik.removeItemListener(this);
+        m_jcbLocation.removeItemListener(this);
+        m_jcbMainStimmung.removeItemListener(this);
+		m_jcbSubStimmung.removeItemListener(this);
+        m_jcbSelbstvertrauen.removeItemListener(this);
+        m_jcbTrainerType.removeItemListener(this);
+        m_jcbPredictionType.removeItemListener(this);
     }
 
     private CBItem[] getPredictionItems () {
