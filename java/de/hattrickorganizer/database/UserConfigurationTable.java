@@ -51,7 +51,13 @@ public final class UserConfigurationTable extends AbstractTable {
 		adapter.executeUpdate(sql.toString());
 	}
 
-	public int update(String key, String value) {
+	/**
+	 * Update a key in the user configuration
+	 * if the key does not exist yet, insert it
+	 * @param key
+	 * @param value
+	 */
+	public void update(String key, String value) {
 		final StringBuffer updateSQL = new StringBuffer(80);
 		updateSQL.append("UPDATE ");
 		updateSQL.append(getTableName());
@@ -64,7 +70,11 @@ public final class UserConfigurationTable extends AbstractTable {
 		updateSQL.append(" = '");
 		updateSQL.append(key);
 		updateSQL.append("'");
-		return adapter.executeUpdate(updateSQL.toString());
+		// Try to update the key in the DB
+		int updated = adapter.executeUpdate(updateSQL.toString());
+		if (updated == 0)
+			// Key not yet in DB -> insert key/value
+			insert(key, value);
 	}
 
 	private String getStringValue(String key) {
@@ -119,19 +129,34 @@ public final class UserConfigurationTable extends AbstractTable {
 	}
 
 	/**
+	 * Get the last HO release where we have completed successfully a config update
+	 * @return	the ho version of the last conf update
+	 */
+	public double getLastConfUpdate() {
+		double version = 0;
+		try {
+			final ResultSet rs = adapter.executeQuery("SELECT CONFIG_VALUE FROM " + TABLENAME + " WHERE CONFIG_KEY = 'LastConfUpdate'");
+
+			if ((rs != null) && rs.first()) {
+				version = rs.getDouble(1);
+			}
+			rs.close();
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), e);
+		}
+		return version;
+	}
+
+	/**
 	 * update/ insert method
 	 * @param obj
 	 */
 	public void store(IUserConfiguration obj) {
 		final HashMap values = obj.getValues();
 		final Set keys = values.keySet();
-		int updated = 0;
 		for (Iterator iter = keys.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
-			updated = update(key, (values.get(key) != null) ? values.get(key).toString() : "");
-			if (updated == 0) {
-				insert(key, (values.get(key) != null) ? values.get(key).toString() : "");
-			}				
+			update(key, (values.get(key) != null) ? values.get(key).toString() : "");
 		}		
 	}
 

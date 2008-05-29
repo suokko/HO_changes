@@ -367,11 +367,11 @@ public final class UserParameter extends Configuration {
     public boolean tempTabTransferscout = true;
 
     //Update
-	public boolean newsCheck = true;
+	public boolean newsCheck = false;
 	
-	public boolean userCheck = true;
+	public boolean userCheck = false;
     /** TODO Missing Parameter Documentation */
-    public boolean updateCheck = true;
+    public boolean updateCheck = false;
 	
     //Zahlen hinter den Bewertungen anzeigen
 
