@@ -138,10 +138,12 @@ public class DBZugriff {
 				configTable.store(HOParameter.instance());
 				configTable.store(FormulaFactors.instance());
 			} else {
+				//Check if there are any updates on the database to be done.
 				tempInstance.updateDB();
 			}
-			//Check if there are any updates on the database to be done.
-
+			// Check if there are any config updates
+			// new since 1.401 - flattermann
+			tempInstance.updateConfig();
 			m_clInstance = tempInstance;
 		}
 
@@ -1572,10 +1574,20 @@ public class DBZugriff {
 	/**
 	 * Set a single UserParameter in the DB
 	 *
-	 * @param fieldName TODO Missing Constructuor Parameter Documentation
-	 * @param value TODO Missing Constructuor Parameter Documentation
+	 * @param fieldName 	the name of the parameter to set
+	 * @param value 		the target value
 	 */
 	private void saveUserParameter(String fieldName, int value) {
+		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName,value + "");
+	}
+
+	/**
+	 * Set a single UserParameter in the DB
+	 *
+	 * @param fieldName 	the name of the parameter to set
+	 * @param value 		the target value
+	 */
+	private void saveUserParameter(String fieldName, double value) {
 		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName,value + "");
 	}
 
@@ -1781,22 +1793,6 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN AGEDAYS INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN AGEDAYS INTEGER");
 
-		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
-		// Reset Training Speed Parameters for New Training
-		UserConfigurationTable userConf = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME);
-		userConf.update("DAUER_TORWART", "3.7");
-		userConf.update("DAUER_VERTEIDIGUNG", "6.1");
-		userConf.update("DAUER_SPIELAUFBAU", "5.5");
-		userConf.update("DAUER_PASSPIEL", "4.5");
-		userConf.update("DAUER_FLUEGELSPIEL", "3.8");
-		userConf.update("DAUER_CHANCENVERWERTUNG", "5.2");
-		userConf.update("DAUER_STANDARDS", "2.0");
-
-		userConf.update("AlterFaktor", "1.0");
-		userConf.update("TrainerFaktor", "1.0");
-		userConf.update("CoTrainerFaktor", "1.0");
-		userConf.update("IntensitaetFaktor", "1.0");
-
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
 		// do version checking again before applying!
@@ -1866,8 +1862,70 @@ public class DBZugriff {
 		return buffer.toString();
 	}
 
+	/**
+	 * Automatic update of User Configuration parameters
+	 * 
+	 * This method is similar to the updateDB() method above
+	 * The main difference is that it is based on the
+	 * HO release version instead of the DB version
+	 * 
+	 * @author flattermann <flattermannHO@gmail.com>
+	 */
+	private void updateConfig () {
+		double lastConfigUpdate = ((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).getLastConfUpdate();
+		/**
+		 * We have to use separate 'if-then' clauses for each conf version (ascending order)
+		 * because a user might have skipped some HO releases
+		 * 
+		 * DO NOT use 'if-then-else' here, as this would ignores some updates! 
+		 */
+		if (lastConfigUpdate < 1.400) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.400...");
+			updateConfigTo1400();
+		}
+		
+		if (lastConfigUpdate < 1.401) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.401...");
+			updateConfigTo1401();
+		}
+	}
 
+	private void updateConfigTo1400 () {
+		// DUMMY
 
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.400);
+	}
 
+	private void updateConfigTo1401 () {
+		// Reset Training Speed Parameters for New Training
+		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
+		saveUserParameter("DAUER_TORWART", 3.7);
+		saveUserParameter("DAUER_VERTEIDIGUNG", 6.1);
+		saveUserParameter("DAUER_SPIELAUFBAU", 5.5);
+		saveUserParameter("DAUER_PASSPIEL", 4.5);
+		saveUserParameter("DAUER_FLUEGELSPIEL", 3.8);
+		saveUserParameter("DAUER_CHANCENVERWERTUNG", 5.2);
+		saveUserParameter("DAUER_STANDARDS", 2.0);
+
+		saveUserParameter("AlterFaktor", 1.0);
+		saveUserParameter("TrainerFaktor", 1.0);
+		saveUserParameter("CoTrainerFaktor", 1.0);
+		saveUserParameter("IntensitaetFaktor", 1.0);
+		
+		// Reset Rating offsets for Rating Prediction
+		// because of changes in the prediction files
+		HOLogger.instance().info(this.getClass(), "Resetting rating prediction offsets");
+		saveUserParameter("leftDefenceOffset", 0.0);
+		saveUserParameter("middleDefenceOffset", 0.0);
+		saveUserParameter("rightDefenceOffset", 0.0);
+		saveUserParameter("midfieldOffset", 0.0);
+		saveUserParameter("leftAttackOffset", 0.0);
+		saveUserParameter("middleAttackOffset", 0.0);
+		saveUserParameter("rightAttackfOffset", 0.0);
+
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.401);		
+	}
 
 }
