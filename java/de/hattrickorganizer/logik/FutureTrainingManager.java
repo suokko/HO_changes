@@ -216,7 +216,15 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	*/
 	private boolean checkSkillup(int pos) {
 		if (finalSub[pos] >= 1) {
-			finalSub[pos] -= 1;
+//			Alternative 1: Set sub=0 after a skillup 
+//			(We will use this, until the training speed formula is optimized)
+			finalSub[pos] = 0;
+
+//			TODO flattermann
+//			Alternative 2: Use overflow sub after a skillup
+//			(This would be more accurate. But only if the underlaying formula is exact) 
+//			finalSub[pos] -= 1;
+
 			finalSkillup[pos]++;
 
 			return true;
@@ -319,6 +327,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 				return ISpieler.SKILL_SPIELAUFBAU;
 
 			case ITeam.TA_PASSSPIEL:
+			case ITeam.TA_STEILPAESSE:
 				return ISpieler.SKILL_PASSSPIEL;
 
 			case ITeam.TA_FLANKEN:

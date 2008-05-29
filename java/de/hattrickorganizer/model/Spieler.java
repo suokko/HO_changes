@@ -729,7 +729,6 @@ public final class Spieler implements plugins.ISpieler {
             case STANDARDS:
                 return calcTraining(gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,
                 					coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());           
-//                return gui.UserParameter.instance().DAUER_STANDARDS;
 
             case TA_ABWEHRVERHALTEN:
                 return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG * 2, m_iAlter,
@@ -2650,7 +2649,7 @@ public final class Spieler implements plugins.ISpieler {
      *
      * @return length for a single skillup
      */
-    protected double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
+    protected static double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
                                int intensitaet, int staminaTrainingPart, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
     	double ageFactor = Math.pow(1.04, age-17) * gui.UserParameter.instance().AlterFaktor;
