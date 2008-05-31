@@ -14,6 +14,7 @@ Changelist HO! 1.401
 - Updated Serbian languages to version 3.1 (thx chokky)
 - Updated French language to version 3.3 - fixes also bugs at player skill parsing in the Transfer plugin (thx guitch)
 - Automatically enable options league- and team-schedule in download dialog
+- Arena Sizer: use lower fan factors
 
 Plugin Updates:
 ---------------
