@@ -202,6 +202,7 @@ public class TrainingPoint implements ITrainingPoint {
         SCHT.put(new Integer(11), new Double(0.6));
 
         AV = new Hashtable();
+        AV.put(new Integer(1), new Double(0.5));
         AV.put(new Integer(2), new Double(0.5));
         AV.put(new Integer(3), new Double(0.5));
         AV.put(new Integer(4), new Double(0.5));
