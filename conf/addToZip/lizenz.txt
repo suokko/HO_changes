@@ -1,0 +1,11 @@
+HO.jar and HO src
+---
+HO.jar and HO src ship with lgpl
+
+
+epv.dat
+---
+epv.dat is freeware, but not lgpl.
+You are not allowed to link or use any of them with any
+other programs than HO or HO-Plugins. Redistribution is
+prohibited. All rights belong to developer.
