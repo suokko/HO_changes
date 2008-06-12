@@ -16,27 +16,17 @@ public interface IMatchHighlight {
 
     //highlight-base-constants
 
-    /** TODO Missing Parameter Documentation */
-
     //Information
     public static final int HIGHLIGHT_INFORMATION = 0;
-
-    /** TODO Missing Parameter Documentation */
 
     //Success -> Goal
     public static final int HIGHLIGHT_ERFOLGREICH = 1;
 
-    /** TODO Missing Parameter Documentation */
-
     //Failure -> No Goal
     public static final int HIGHLIGHT_FEHLGESCHLAGEN = 2;
 
-    /** TODO Missing Parameter Documentation */
-
     //Special
     public static final int HIGHLIGHT_SPEZIAL = 3;
-
-    /** TODO Missing Parameter Documentation */
 
     //Cards
     public static final int HIGHLIGHT_KARTEN = 5;
@@ -44,172 +34,107 @@ public interface IMatchHighlight {
     //highlight-sub-constants
     //Informal events (HIGHLIGHT_INFORMATION only)
 
-    /** TODO Missing Parameter Documentation */
-
-    //3-4-3
+    //formation, e.g. 3-4-3
     public static final int HIGHLIGHT_SUB_FORMATION = 20;
-
-    /** TODO Missing Parameter Documentation */
 
     //List of players
     public static final int HIGHLIGHT_SUB_SPIELER_AUFLISTUNG = 21;
 
-    /** TODO Missing Parameter Documentation */
-
-    //Its a Derby
+    //Its a Derby (not in friendlies)
     public static final int HIGHLIGHT_SUB_DERBY = 25;
 
-    /** TODO Missing Parameter Documentation */
+    //Neutral Ground (not in friendlies)
+    public static final int HIGHLIGHT_SUB_NEUTRAL_GROUND= 26;
 
     //Rain
     public static final int HIGHLIGHT_SUB_REGEN = 30;
 
-    /** TODO Missing Parameter Documentation */
-
     //Clouded
     public static final int HIGHLIGHT_SUB_BEWOELKT = 31;
-
-    /** TODO Missing Parameter Documentation */
 
     //Fine
     public static final int HIGHLIGHT_SUB_SCHOEN = 32;
 
-    /** TODO Missing Parameter Documentation */
-
     //Sunny
     public static final int HIGHLIGHT_SUB_SONNIG = 33;
-
-    /** TODO Missing Parameter Documentation */
 
     //Ballcontrol
     public static final int HIGHLIGHT_SUB_BALLBESITZ = 40;
 
-    /** TODO Missing Parameter Documentation */
-
     //Best Player
     public static final int HIGHLIGHT_SUB_BESTER_SPIELER = 41;
-
-    /** TODO Missing Parameter Documentation */
 
     //Worst Player
     public static final int HIGHLIGHT_SUB_SCHLECHTESTER_SPIELER = 42;
 
-    /** TODO Missing Parameter Documentation */
-
     //Halftime ;)
     public static final int HIGHLIGHT_SUB_HALBZEIT = 45;
-
-    /** TODO Missing Parameter Documentation */
 
     //Hattrick
     public static final int HIGHLIGHT_SUB_HATTRICK = 46;
 
-    /** TODO Missing Parameter Documentation */
-
     //Equal Ballcontrol
     public static final int HIGHLIGHT_SUB_BALLBESITZ_AUSGEGLICHEN = 47;
-
-    /** TODO Missing Parameter Documentation */
 
     //Penalty Goal
     public static final int HIGHLIGHT_SUB_PENALTY_TOR = 56;
 
-    /** TODO Missing Parameter Documentation */
-
     //Penalty nervous Goal
     public static final int HIGHLIGHT_SUB_PENALTY_NERVOES_TOR = 57;
-
-    /** TODO Missing Parameter Documentation */
 
     //Penalty nervouse no Goal
     public static final int HIGHLIGHT_SUB_PENALTY_NERVOES_KEIN_TOR = 58;
 
-    /** TODO Missing Parameter Documentation */
-
     //Penalty Keeper get it
     public static final int HIGHLIGHT_SUB_PENALTY_TORHUETER_HAELT = 59;
-
-    /** TODO Missing Parameter Documentation */
 
     //Underestimated
     public static final int HIGHLIGHT_SUB_UNTERSCHAETZT = 60;
 
-    /** TODO Missing Parameter Documentation */
-
     //tactical problems
     public static final int HIGHLIGHT_SUB_TAKTISCHE_PROBLEME = 61;
-
-    /** TODO Missing Parameter Documentation */
 
     //keep lead
     public static final int HIGHLIGHT_SUB_FUEHRUNG_HALTEN = 62;
 
-    /** TODO Missing Parameter Documentation */
-
     //more concentrated
     public static final int HIGHLIGHT_SUB_KONZENTRIERTER = 63;
-
-    /** TODO Missing Parameter Documentation */
 
     //better organized
     public static final int HIGHLIGHT_SUB_BESSER_ORGANISIERT = 64;
 
-    /** TODO Missing Parameter Documentation */
-
     //missing experience
     public static final int HIGHLIGHT_SUB_FEHLENDE_ERFAHRUNG = 65;
-
-    /** TODO Missing Parameter Documentation */
 
     //pressing successfull
     public static final int HIGHLIGHT_SUB_PRESSING_ERFOLGREICH = 68;
 
-    /** TODO Missing Parameter Documentation */
-
     //extension
     public static final int HIGHLIGHT_SUB_VERLAENGERUNG = 70;
-
-    /** TODO Missing Parameter Documentation */
 
     //11m
     public static final int HIGHLIGHT_SUB_ELFMETERSCHIESSEN = 71;
 
-    /** TODO Missing Parameter Documentation */
-
     //won in extension
     public static final int HIGHLIGHT_SUB_SIEG_IN_VERLAENGERUNG = 72;
-
-    /** TODO Missing Parameter Documentation */
 
     //bruised
     public static final int HIGHLIGHT_SUB_PFLASTER = 90;
 
-    /** TODO Missing Parameter Documentation */
-
     //light injured
     public static final int HIGHLIGHT_SUB_VERLETZT_LEICHT = 91;
-
-    /** TODO Missing Parameter Documentation */
 
     //heavy injured
     public static final int HIGHLIGHT_SUB_VERLETZT_SCHWER = 92;
 
-    /** TODO Missing Parameter Documentation */
-
     //injured
     public static final int HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS = 93;
-
-    /** TODO Missing Parameter Documentation */
 
     //bruised
     public static final int HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG = 94;
 
-    /** TODO Missing Parameter Documentation */
-
     //injured
     public static final int HIGHLIGHT_SUB_VERLETZT = 95;
-
-    /** TODO Missing Parameter Documentation */
 
     //injured
     public static final int HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI = 96;
