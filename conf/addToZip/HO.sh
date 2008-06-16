@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Start script for Hattrick Organizer v0.33
+# Start script for Hattrick Organizer v0.331
 # Originally created by patta, RAGtime and others
-# Last Change (2008-06-09) by Flattermann (flattermannHO@gmail.com)
+# Last Change (2008-06-16) by Flattermann (flattermannHO@gmail.com)
 # 
 # List of changes: 
 #
@@ -210,8 +210,10 @@ help(){
 start(){
 	cd $HOHOME
         echo "Starting HO from $HOHOME..."  
-	
-        $JAVA -classpath $HODIR HOLauncher  
+
+#	HOLauncher is not used anymore - flattermann 2008-06-16
+#       $JAVA -classpath $HODIR HOLauncher  
+
   	$JAVA -Xmx$MAX_MEMORY -jar $HODIR/ho.jar
 
         # check database and print warning
