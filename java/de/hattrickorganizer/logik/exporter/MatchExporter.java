@@ -127,23 +127,42 @@ public class MatchExporter {
 			//Highlights prüfen auf Verletzung, Rote Karte, Verwirrung, Unterschätzung
 			for (int j = 0;(highlights != null) && (j < highlights.size()); j++) {
 				plugins.IMatchHighlight hlight = (IMatchHighlight) highlights.get(j);
-
-				if ((hlight.getTeamID() == HOMiniModel.instance().getBasics().getTeamId()) //Karten check
-					&& (((hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN)
-						&& ((hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
-							|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)
-							|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT))) //injury check
-						|| ((hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION)
-							&& ((hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
-								// Tactical Problems // Verwirrung
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME)
-								// Unterschaetzen
-								|| (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT))))) {
-					return false;
+				// Check Highlights for our team only
+				if (hlight.getTeamID() == HOMiniModel.instance().getBasics().getTeamId()) {
+					//Karten check
+					if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN
+						&& (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT)) {
+						return false;
+					}
+					//injury / tactical problems / overconfidence check
+					if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION
+							// Injured
+						&& (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER
+							// Bruised
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG
+							// Tactical Problems // Verwirrung
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME
+							// Overconfidence // Unterschaetzen
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT)) {
+						return false;
+					}
+					// Weather based SpecialEvents check (as this SE alters player ratings)
+					if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL
+						&& (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY)) {
+						return false;
+					}
 				}
 				
 			} //ende for highlight check

@@ -325,22 +325,58 @@ public interface IMatchHighlight {
 
     //Informal events (HIGHLIGHT_SPEZIAL only)
 
-    /** TODO Missing Parameter Documentation */
+    /**
+     * Negative weather SE for technical players on rainy days
+     */
+    public static final int HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY = 1;
+
+    /**
+     * Positive weather SE for powerful players on rainy days
+     */
+    public static final int HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY = 2;
+
+    /**
+     * Positve weather SE for technical players on sunny days
+     */
+    public static final int HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY = 3;
+
+    /**
+     * Negative weather SE for powerful players on sunny days
+     */
+    public static final int HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY = 4;
+
+    /**
+     * Negative weather SE for quick players on rainy days
+     */
+    public static final int HIGHLIGHT_SUB_PLAYER_QUICK_RAINY = 5;
+
+    /**
+     * Negative weather SE for quick players on sunny days
+     */
+    public static final int HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY = 6;
+
+    /**
+     * Negative weather SE for powerful players on sunny days
+     * @deprecated	use HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY instead
+     */
     public static final int HIGHLIGHT_SUB_SPIELER_KANN_SICH_NICHT_DURCHSETZEN = 4;
 
-    /** TODO Missing Parameter Documentation */
+    /**
+     * Negative weather SE for quick players on sunny days
+     * @deprecated	use HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY instead
+     */
     public static final int HIGHLIGHT_SUB_SPIELER_MUEDE = 6;
 
-    /** TODO Missing Parameter Documentation */
+    /** Tactic Pressing */
     public static final int HIGHLIGHT_SUB_SPIELT_PRESSING = 31;
 
-    /** TODO Missing Parameter Documentation */
+    /** Tactic Counter Attack */
     public static final int HIGHLIGHT_SUB_SPIELT_KONTER = 32;
 
-    /** TODO Missing Parameter Documentation */
+    /** Tactic Attack in the middle */
     public static final int HIGHLIGHT_SUB_SPIELT_DURCH_MITTE = 33;
 
-    /** TODO Missing Parameter Documentation */
+    /** Tactic Attack over wings */
     public static final int HIGHLIGHT_SUB_SPIELT_UEBER_FLUEGEL = 34;
 
     //Informal events (HIGHLIGHT_KARTEN only)
