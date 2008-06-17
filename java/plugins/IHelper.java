@@ -22,6 +22,12 @@ import java.util.Date;
 public interface IHelper {
     //~ Methods ------------------------------------------------------------------------------------
 
+	/**
+	 * Returns a match helper instance
+	 * @return	an instance of the match helper class 
+	 */
+	public IMatchHelper getMatchHelper();
+	
     /**
      * Returns a (Text)Color for a Highlight
      *

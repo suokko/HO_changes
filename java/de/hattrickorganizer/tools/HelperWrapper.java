@@ -23,10 +23,12 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import plugins.IMP3Player;
+import plugins.IMatchHelper;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.matches.MatchHelper;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.Matchdetails;
@@ -65,6 +67,14 @@ public class HelperWrapper implements plugins.IHelper {
 
         return m_clInstance;
     }
+
+	/**
+	 * Returns a match helper instance
+	 * @return	an instance of the match helper class 
+	 */
+	public IMatchHelper getMatchHelper() {
+		return MatchHelper.instance();
+	}
 
     /**
      * TODO Missing Method Documentation
