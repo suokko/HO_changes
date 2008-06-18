@@ -16,17 +16,22 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.LoginDialog;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
+import de.hattrickorganizer.logik.matchengine.engine.common.MatchData;
+import de.hattrickorganizer.logik.xml.XMLArenaParser;
 import de.hattrickorganizer.logik.xml.XMLMatchLineupParser;
 import de.hattrickorganizer.logik.xml.XMLMatchesParser;
 import de.hattrickorganizer.logik.xml.XMLSpielplanParser;
 import de.hattrickorganizer.logik.xml.xmlMatchArchivParser;
 import de.hattrickorganizer.logik.xml.xmlMatchdetailsParser;
+import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -811,6 +816,13 @@ public class OnlineWorker {
             details = parser.parseMachtdetailsFromString(matchDetails);
             waitDialog.setValue(40);
             details.setMatchreport(details.getMatchReport("" + matchID));
+            
+            String arenaString = MyConnector.instance().getArena(details.getArenaID());
+            waitDialog.setValue(50);
+            String regionIdAsString = (String)new XMLArenaParser().parseArenaFromString(arenaString).get("RegionID");
+            int regionId = Integer.parseInt(regionIdAsString);
+            
+            details.setRegionId(regionId);
         } catch (Exception e) {
             //Info
             de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()

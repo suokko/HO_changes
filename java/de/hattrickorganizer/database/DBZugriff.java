@@ -46,7 +46,7 @@ public class DBZugriff {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** TODO Missing Parameter Documentation */
-	private static final int DBVersion = 6;
+	private static final int DBVersion = 7;
 
 	/** TODO Missing Parameter Documentation 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -1633,6 +1633,8 @@ public class DBZugriff {
 						updateDBv5();
 					case 5 :
 						updateDBv6();
+					case 6 :
+						updateDBv7();
 
 						//case 2: updateDB_v3(); // For future versions!
 				}
@@ -1784,9 +1786,9 @@ public class DBZugriff {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
+	 * Update DB structure to v6
 	 *
-	 * @throws Exception TODO Missing Method Exception Documentation
+	 * @throws Exception
 	 */
 	private void updateDBv6() throws Exception {
 
@@ -1798,6 +1800,25 @@ public class DBZugriff {
 		// do version checking again before applying!
 		saveUserParameter("DBVersion", 6);
 	}
+	
+	/**
+	 * Update DB structure to v7
+	 *
+	 * @throws Exception
+	 */
+	private void updateDBv7() throws Exception {
+
+		// Adding arena/region ID
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE BASICS ADD COLUMN Region INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION ADD COLUMN ArenaID INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHDETAILS ADD COLUMN RegionID INTEGER");
+
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		saveUserParameter("DBVersion", 7);
+	}
+
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);

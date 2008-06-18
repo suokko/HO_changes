@@ -186,7 +186,7 @@ public class ConvertXml2Hrf {
             if (m_clLineUp != null) {
                 final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(MyConnector.instance()
                                                                                                            .getMatchdetails(m_clLineUp
-                                                                                                                            .getMatchID()));
+                                                                                                                  .getMatchID()));
 
                 if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdeatils.get("TeamID")
                                                                               .toString())) {
@@ -276,6 +276,7 @@ public class ConvertXml2Hrf {
     protected final void createArena() throws Exception {
         m_sHRFBuffer.append("[arena]" + "\n");
         m_sHRFBuffer.append("arenaname=" + m_htArena.get("ArenaName") + "\n");
+        m_sHRFBuffer.append("arenaid=" + m_htArena.get("ArenaID") + "\n");
         m_sHRFBuffer.append("antalStaplats=" + m_htArena.get("Terraces") + "\n");
         m_sHRFBuffer.append("antalSitt=" + m_htArena.get("Basic") + "\n");
         m_sHRFBuffer.append("antalTak=" + m_htArena.get("Roof") + "\n");
@@ -316,6 +317,8 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("ownerHomepage=" + m_htTeamdeatils.get("HomePage") + "\n");
         m_sHRFBuffer.append("countryID=" + m_htWorld.get("CountryID") + "\n");
         m_sHRFBuffer.append("leagueID=" + m_htTeamdeatils.get("LeagueID") + "\n");
+//        m_sHRFBuffer.append("arenaID=" + m_htArena.get("ArenaID") + "\n");
+        m_sHRFBuffer.append("regionID=" + m_htTeamdeatils.get("RegionID") + "\n");
     }
 
     /**

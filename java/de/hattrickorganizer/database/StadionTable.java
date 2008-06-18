@@ -16,7 +16,7 @@ public final class StadionTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[17];
+		columns = new ColumnDescriptor[18];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("StadionName",Types.VARCHAR,false,127);
 		columns[2]= new ColumnDescriptor("GesamtGr",Types.INTEGER,false);
@@ -34,6 +34,7 @@ public final class StadionTable extends AbstractTable {
 		columns[14]= new ColumnDescriptor("VerkaufteDach",Types.INTEGER,false);
 		columns[15]= new ColumnDescriptor("VerkaufteLogen",Types.INTEGER,false);
 		columns[16]= new ColumnDescriptor("AusbauKosten",Types.INTEGER,false);
+		columns[17]= new ColumnDescriptor("ArenaID",Types.INTEGER,false);
 	}
 	
 	protected String[] getCreateIndizeStatements() {
@@ -57,7 +58,7 @@ public final class StadionTable extends AbstractTable {
 			delete( awhereS, awhereV );
 			//insert vorbereiten
 			statement =
-				"INSERT INTO "+getTableName()+" ( HRF_ID, StadionName, GesamtGr, AnzSteh, AnzSitz , AnzDach , AnzLogen , AusbauSteh , AusbauSitz , AusbauDach , AusbauLogen , Ausbau , VerkaufteSteh , VerkaufteSitz , VerkaufteDach , VerkaufteLogen , AusbauKosten ) VALUES(";
+				"INSERT INTO "+getTableName()+" ( HRF_ID, StadionName, GesamtGr, AnzSteh, AnzSitz , AnzDach , AnzLogen , AusbauSteh , AusbauSitz , AusbauDach , AusbauLogen , Ausbau , VerkaufteSteh , VerkaufteSitz , VerkaufteDach , VerkaufteLogen , AusbauKosten , ArenaID ) VALUES(";
 			statement
 				+= (""
 					+ hrfId
@@ -93,6 +94,8 @@ public final class StadionTable extends AbstractTable {
 					+ "0"
 					+ ","
 					+ stadion.getAusbauKosten()
+					+ ","
+					+ stadion.getArenaId()
 					+ " )");
 			adapter.executeUpdate(statement);
 		}

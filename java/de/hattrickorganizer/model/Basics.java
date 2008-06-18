@@ -33,6 +33,9 @@ public final class Basics implements plugins.IBasics {
     /** TeamId */
     private int m_iTeamId;
 
+    /** Region Id */
+    private int m_iRegionId;
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -81,6 +84,11 @@ public final class Basics implements plugins.IBasics {
         } catch (Exception e) {
             m_iSpieltag = 0;
         }
+        try {
+            m_iRegionId = Integer.parseInt(properties.getProperty("regionid", "0"));
+        } catch (Exception e) {
+            m_iRegionId = 0;
+        }
     }
 
     /**
@@ -100,6 +108,7 @@ public final class Basics implements plugins.IBasics {
             m_iSeason = rs.getInt("Saison");
             m_iSpieltag = rs.getInt("Spieltag");
             m_clDatum = rs.getTimestamp("Datum");
+            m_iRegionId = rs.getInt("Region");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor Basics: " + e.toString());
         }
@@ -275,5 +284,22 @@ public final class Basics implements plugins.IBasics {
      */
     public java.lang.String getTeamName() {
         return m_sTeamName;
+    }
+    
+    /**
+     * Sets the Region ID
+     * 
+     * @param regionId	new value
+     */
+    public void setRegionId (int regionId) {
+    	this.m_iRegionId = regionId;
+    }
+    
+    /**
+     * Gets the Region ID
+     * @return	the region id
+     */
+    public int getRegionId () {
+    	return m_iRegionId;
     }
 }

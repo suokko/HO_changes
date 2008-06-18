@@ -97,19 +97,34 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return "http://www.hattrickorganizer.net";
 	}
 	
+	
 	/**
-	 * holt die Arena
+	 * Fetch our arena
 	 *
-	 * @return TODO Missing Return Method Documentation
+	 * @return 	arena xml
 	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
+	 * @throws IOException
 	 */
 	public String getArena() throws IOException {
-		final String url =
+		return getArena(-1);
+	}
+	
+	/**
+	 * Fetch a specific arena
+	 *
+	 * @param arenaId	id of the arena to fetch (-1 = our arena)
+	 * @return 	arena xml
+	 *
+	 * @throws IOException
+	 */
+	public String getArena(int arenaId) throws IOException {
+		String url =
 			"http://"
 				+ gui.UserParameter.instance().htip
 				+ "/Common/arenaDetails.asp?outputType=XML&actionType=view";
 
+		if (arenaId > 0)
+			url += "&arenaID="+arenaId;
 		return getPage(url, true);
 	}
 

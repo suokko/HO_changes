@@ -524,8 +524,13 @@ public class XMLExporter  {
 	private String getRegionID4Team(int teamID) {
 		if (teamID == HOMiniModel.instance().getBasics().getTeamId()) {
 			if (m_sUserRegionID.equals("-1")) {
-				//saugen
-				m_sUserRegionID = HOMiniModel.instance().getDownloadHelper().fetchRegionID(teamID);
+				if (HOMiniModel.instance().getBasics().getRegionId() > 0) {
+					// Since HO 1.401, the regionId exists in Basics
+					m_sUserRegionID = "" + HOMiniModel.instance().getBasics().getRegionId();
+				} else {
+					//saugen
+					m_sUserRegionID = HOMiniModel.instance().getDownloadHelper().fetchRegionID(teamID);
+				}
 				return m_sUserRegionID;
 			} else {
 				return m_sUserRegionID;
