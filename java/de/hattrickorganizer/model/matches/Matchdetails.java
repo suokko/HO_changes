@@ -145,6 +145,8 @@ public class Matchdetails implements plugins.IMatchDetails {
     /** TODO Missing Parameter Documentation */
     private int m_iZuschauer;
 
+    /** Region ID */
+    private int m_iRegionId;
     //~ Constructors -------------------------------------------------------------------------------
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -1604,5 +1606,21 @@ public class Matchdetails implements plugins.IMatchDetails {
         }
 
         return myPlayers;
+    }
+    
+    /**
+     * Set the region ID of the match's arena
+     * @param regionId
+     */
+    public void setRegionId (int regionId) {
+    	this.m_iRegionId = regionId;
+    }
+    
+    /**
+     * Get the region ID of this match's arena
+     * @return
+     */
+    public int getRegionId () {
+    	return m_iRegionId;
     }
 }

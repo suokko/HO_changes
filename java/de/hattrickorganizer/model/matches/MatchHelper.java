@@ -62,22 +62,16 @@ public class MatchHelper implements IMatchHelper {
 		 * =================
 		 * League/Cup/Qualification: 	Home, Away, AwayDerby are recognized correctly
 		 * 
-		 * Friendlies:					Only Home is recognized correctly (if the stadium name has not changed) 
-		 * 									-> for now, return NEUTRAL_GROUND for all other location types
-		 * 
-		 * 
-		 * TODO:
-		 * - Implement Stadium.getArenaId()
-		 * - Implement Basics.getRegionId()
-		 * - Implement getRegionForStadium(int arenaId) 
+		 * Friendlies:					Home, Away, AwayDerby are recognized correctly
+		 * 									(for downloads with HO >= 1.401,
+		 * 									for other downloads only HOME is recognized)
 		 */
 		int userTeamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		String userStadiumName = HOVerwaltung.instance().getModel().getStadium().getStadienname();
-		// FIXME: fetch our stadium Id as this would be much more reliable than the stadium name
-//		int userStadiumId = HOVerwaltung.instance().getModel().getStadium().getArenaId();
-		int userStadiumId = -1;
-		// FIXME: fetch our region Id
-//		int userRegion = HOVerwaltung.instance().getModel().getBasics().getRegionId();
+		int userStadiumId = HOVerwaltung.instance().getModel().getStadium().getArenaId();
+		// TODO: It would be better to use the user region at match date, because
+		// in the meantime the user may have changed his region
+		int userRegion = HOVerwaltung.instance().getModel().getBasics().getRegionId();
 
 		int location = UNKNOWN;
 
@@ -100,8 +94,11 @@ public class MatchHelper implements IMatchHelper {
    				|| matchType == IMatchLineup.INT_TESTSPIEL
    				|| matchType == IMatchLineup.INT_TESTCUPSPIEL) {
    			if (homeTeamId == userTeamId) {
+   				// TODO: For now, we check the arena name and the id
+   				// because old users don't have the arena id in the DB (new since 1.401)
+   				// We can remove the name compare later
    				if (details.getArenaName().equals(userStadiumName) 
-   						|| details.getArenaID() == userStadiumId) {
+   						|| (userStadiumId > 0 && details.getArenaID() == userStadiumId)) {
    					// our teamID and our stadium name/stadium Id -> home match
    					location = HOME_MATCH;
    				} else {
@@ -143,13 +140,18 @@ public class MatchHelper implements IMatchHelper {
    				/**
    				 * Friendy match (not in our stadium)
    				 */
-   				// TODO: Fetch region of stadium
-   				// For now, return NEUTRAL_GROUND to avoid false datasets in Feedback upload
-//   				int stadiumRegion = getRegionForStadium(details.getArenaID());
-//   				if (userRegion == stadiumRegion)
-//   					location = AWAY_DERBY;
-//   				else
-//   					location = AWAY_MATCH;
+   				int stadiumRegion = details.getRegionId();
+   				if (stadiumRegion > 0 && userRegion > 0) {
+   					// Stadium region & user Region valid
+   	   				if (userRegion == stadiumRegion)
+   	   					location = AWAY_DERBY;
+   	   				else
+   	   					location = AWAY_MATCH;
+   				} else {
+   					// Stadium region or user region invalid 
+   					// (old data, downloaded with HO<1.401)
+   					location = UNKNOWN;
+   				}
    			}
    		}
    		return (short)location;

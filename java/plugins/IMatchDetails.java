@@ -332,4 +332,10 @@ public interface IMatchDetails {
      * @return Value of property m_iZuschauer.
      */
     public int getZuschauer();
+
+    /**
+     * Get the region ID of this match's arena
+     * @return
+     */
+    public int getRegionId ();
 }

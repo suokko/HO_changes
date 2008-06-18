@@ -12,6 +12,9 @@ public class Stadium implements plugins.IStadium {
     /** Stadienname */
     private String m_sStadienname = "";
 
+    /** Stadium Id */
+    private int m_iStadiumId;
+
     /** Wird ausgebaut? */
     private boolean m_bAusbau;
 
@@ -60,6 +63,7 @@ public class Stadium implements plugins.IStadium {
      */
     public Stadium(java.util.Properties properties) {
         m_sStadienname = properties.getProperty("arenaname", "");
+        m_iStadiumId = Integer.parseInt(properties.getProperty("arenaid", "0"));
         m_iGesamtgroesse = Integer.parseInt(properties.getProperty("seattotal", "0"));
         m_iStehplaetze = Integer.parseInt(properties.getProperty("antalstaplats", "0"));
         m_iSitzplaetze = Integer.parseInt(properties.getProperty("antalsitt", "0"));
@@ -91,6 +95,7 @@ public class Stadium implements plugins.IStadium {
     public Stadium(java.sql.ResultSet rs) {
         try {
             m_sStadienname = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("StadionName"));
+            m_iStadiumId = rs.getInt("ArenaID");
             m_iGesamtgroesse = rs.getInt("GesamtGr");
             m_iStehplaetze = rs.getInt("AnzSteh");
             m_iSitzplaetze = rs.getInt("AnzSitz");
@@ -340,6 +345,21 @@ public class Stadium implements plugins.IStadium {
         return m_iUeberdachteSitzplaetze;
     }
 
+    /**
+     * Get the Arena ID
+     * @return	arenaId
+     */
+    public int getArenaId () {
+    	return m_iStadiumId;
+    }
+    
+    /**
+     * Set the Arena ID
+     * @param arenaId	the new value
+     */
+    public void setArenaId (int arenaId) {
+    	this.m_iStadiumId = arenaId;
+    }
     /**
      * berechnet die Maximalen EInahmen bei vollem HAus
      *

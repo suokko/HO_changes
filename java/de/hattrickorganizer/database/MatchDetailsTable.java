@@ -17,7 +17,7 @@ public final class MatchDetailsTable extends AbstractTable {
 	}
 	
 	protected void initColumns() {
-		columns = new ColumnDescriptor[34];
+		columns = new ColumnDescriptor[35];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("ArenaId",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("ArenaName",Types.VARCHAR,false,256);
@@ -52,6 +52,7 @@ public final class MatchDetailsTable extends AbstractTable {
 		columns[31]= new ColumnDescriptor("WetterId",Types.INTEGER,false);
 		columns[32]= new ColumnDescriptor("Zuschauer",Types.INTEGER,false);
 		columns[33]= new ColumnDescriptor("Matchreport",Types.VARCHAR,false,8196);
+		columns[34]= new ColumnDescriptor("RegionID",Types.INTEGER,false);
 	}
 	
 	protected String[] getCreateIndizeStatements() {
@@ -76,6 +77,7 @@ public final class MatchDetailsTable extends AbstractTable {
 			if (rs.first()) {
 				details.setArenaID(rs.getInt("ArenaId"));
 				details.setArenaName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("ArenaName")));
+				details.setRegionId(rs.getInt("RegionID"));
 				details.setFetchDatum(rs.getTimestamp("Fetchdatum"));
 				details.setGastId(rs.getInt("GastId"));
 				details.setGastName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
@@ -108,7 +110,6 @@ public final class MatchDetailsTable extends AbstractTable {
 				details.setWetterId(rs.getInt("WetterId"));
 				details.setZuschauer(rs.getInt("Zuschauer"));
 				details.setMatchreport(DBZugriff.deleteEscapeSequences(rs.getString("Matchreport")));
-
 				Vector vMatchHighlights = DBZugriff.instance().getMatchHighlights(matchId);
 				//Alle Highlights in die Details packen
 				details.setHighlights(vMatchHighlights);
@@ -142,7 +143,7 @@ public final class MatchDetailsTable extends AbstractTable {
 						+ "GastLeftAtt, GastLeftDef, GastMidAtt, GastMidDef, GastMidfield, GastRightAtt, GastRightDef, GastTacticSkill, GastTacticType, "
 						+ "HeimId, HeimName, HeimEinstellung, HeimTore, HeimLeftAtt, HeimLeftDef, HeimMidAtt, HeimMidDef, HeimMidfield, HeimRightAtt, HeimRightDef, "
 						+ "HeimTacticSkill, HeimTacticType, SpielDatum, WetterId, Zuschauer, "
-						+ "Matchreport"
+						+ "Matchreport, RegionID"
 						+ ") VALUES ("
 						+ details.getMatchID()
 						+ ", "
@@ -211,7 +212,8 @@ public final class MatchDetailsTable extends AbstractTable {
 						+ details.getZuschauer()
 						+ ", '"
 						+ DBZugriff.insertEscapeSequences(details.getMatchreport())
-						+ "' "
+						+ "', "
+						+ details.getRegionId()
 						+ ")";
 
 				adapter.executeUpdate(sql);

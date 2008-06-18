@@ -121,4 +121,10 @@ public interface IBasics {
      * @return Value of property m_sTeamName.
      */
     public java.lang.String getTeamName();
+    
+    /**
+     * Gets the Region ID
+     * @return	the region id
+     */
+    public int getRegionId ();
 }

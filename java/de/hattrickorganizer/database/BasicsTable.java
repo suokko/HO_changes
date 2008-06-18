@@ -17,7 +17,7 @@ public final class BasicsTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-        columns = new ColumnDescriptor[9];
+        columns = new ColumnDescriptor[10];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("Manager",Types.VARCHAR,false,127);
 		columns[2]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
@@ -27,6 +27,7 @@ public final class BasicsTable extends AbstractTable {
 		columns[6]= new ColumnDescriptor("Saison",Types.INTEGER,false);
 		columns[7]= new ColumnDescriptor("Spieltag",Types.INTEGER,false);
 		columns[8]= new ColumnDescriptor("Datum",Types.TIMESTAMP,false);
+		columns[9]= new ColumnDescriptor("Region",Types.INTEGER,false);
 	}
 
 	protected String[] getCreateIndizeStatements() {
@@ -51,7 +52,7 @@ public final class BasicsTable extends AbstractTable {
 			delete( awhereS, awhereV );
 
 			//insert vorbereiten
-			statement = "INSERT INTO "+getTableName()+" ( TeamID , Manager , TeamName , Land , Liga , Saison , Spieltag , HRF_ID, Datum ) VALUES(";
+			statement = "INSERT INTO "+getTableName()+" ( TeamID , Manager , TeamName , Land , Liga , Saison , Spieltag , HRF_ID, Datum, Region ) VALUES(";
 			statement
 				+= (""
 					+ basics.getTeamId()
@@ -71,7 +72,9 @@ public final class BasicsTable extends AbstractTable {
 					+ hrfId
 					+ ",'"
 					+ basics.getDatum().toString()
-					+ "' )");
+					+ "',"
+					+ basics.getRegionId()
+					+ " )");
 			adapter.executeUpdate(statement);
 		}
 	}

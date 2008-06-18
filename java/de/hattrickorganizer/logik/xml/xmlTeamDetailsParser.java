@@ -197,6 +197,12 @@ public class xmlTeamDetailsParser {
             root = (Element) root.getElementsByTagName("Arena").item(0);
             ele = (Element) root.getElementsByTagName("ArenaName").item(0);
             hash.put("ArenaName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+
+            //Root wechseln  //RegionId
+            root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
+            root = (Element) root.getElementsByTagName("Region").item(0);
+            ele = (Element) root.getElementsByTagName("RegionID").item(0);
+            hash.put("RegionID", (XMLManager.instance().getFirstChildNodeValue(ele)));
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
