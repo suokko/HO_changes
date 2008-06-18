@@ -1,9 +1,7 @@
 package de.hattrickorganizer.prediction;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 import plugins.ILineUp;
@@ -26,7 +24,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private short substimmung;
     private short taktikType;
     private short trainerType;
-    private static IRatingPredictionConfig config = null;
+    private static IRatingPredictionConfig config;
     private ILineUp lineup;
 
     private static final int THISSIDE = IRatingPredictionParameter.THISSIDE;
@@ -54,6 +52,15 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static final int EXPIERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
     private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
 
+    public RatingPredictionManager () {
+    	if (RatingPredictionManager.config == null)
+    		RatingPredictionManager.config = RatingPredictionConfig.getInstance();
+    }
+
+    public RatingPredictionManager (IRatingPredictionConfig config) {
+    	RatingPredictionManager.config = config;
+    }
+    
     public RatingPredictionManager(ILineUp lineup, int i, ITeam iteam, short trainerType, IRatingPredictionConfig config)
     {
         this.lineup = lineup;
@@ -135,8 +142,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
 			break;
     	}
     	double[] allWeights = getAllPlayerWeights(params, sectionName);
+//    	System.out.println ("calcPartRating: using sidetype="+sideType+", side2calc="+side2calc);
     	for (int i=0; i < allStk.length; i++) {
-//    		if (skillType == VERTEIDIGUNG)
+//    		if (skillType == SPIELAUFBAU)
 //    			System.out.println ("addingPlayer @"+i+": (skill "+skillType+") stk="+allStk[i] + " * weight="+ allWeights[i]+" = "+allStk[i] * allWeights[i]);
 			retVal += allStk[i] * allWeights[i];
     	}
@@ -144,7 +152,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return retVal;
     }
 
-    private double applyCommonProps (double inVal, IRatingPredictionParameter params, String sectionName) {
+    public double applyCommonProps (double inVal, IRatingPredictionParameter params, String sectionName) {
     	double retVal = inVal;
     	// TODO Reihenfolge ok?
         retVal *= params.getParam(sectionName, "multiplier", 1);
@@ -201,7 +209,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return retVal;
     }
     
-    private String getSkillName (int skill) {
+    private static String getSkillName (int skill) {
     	switch (skill) {
 		case TORWART:
 			return "goalkeeping";
@@ -222,7 +230,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
 		}
     }
 
-    private int getSkillByName (String skillName) {
+    private static int getSkillByName (String skillName) {
     	skillName = skillName.toLowerCase();
     	if (skillName.equals("goalkeeping"))
     		return TORWART;
@@ -242,7 +250,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		return -1;
     }
     
-    public int getSideByName (String sideName) {
+    private static int getSideByName (String sideName) {
     	sideName = sideName.toLowerCase();
     	if (sideName.equals("thisside"))
     		return THISSIDE;
@@ -256,7 +264,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		return -1;
     }
     
-    public int[] sectionNameToSkillAndSide (String sectionName) {
+    private static int[] sectionNameToSkillAndSide (String sectionName) {
     	// retArray[0] == skill
     	// retArray[1] == side
     	int[] retArray = new int[2];
@@ -320,32 +328,41 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public double[] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
     	double[] weights = new double[ISpielerPosition.NUM_POSITIONS];
 		weights[ISpielerPosition.TORWART] = params.getParam(sectionName, "keeper");
+		weights[ISpielerPosition.TORWART] += params.getParam(sectionName, "gk");	// alias for keeper
 		double modCD = params.getParam(sectionName, "allCDs", 1);
 		double modWB = params.getParam(sectionName, "allWBs", 1);
 		double modIM = params.getParam(sectionName, "allIMs", 1);
 		double modWI = params.getParam(sectionName, "allWIs", 1);
 		double modFW = params.getParam(sectionName, "allFWs", 1);
 		weights[ISpielerPosition.INNENVERTEIDIGER] = params.getParam(sectionName, "cd_norm") * modCD;
+		weights[ISpielerPosition.INNENVERTEIDIGER] += params.getParam(sectionName, "cd") * modCD;	// alias for cd_norm
 		weights[ISpielerPosition.INNENVERTEIDIGER_OFF] = params.getParam(sectionName, "cd_off") * modCD;
 		weights[ISpielerPosition.INNENVERTEIDIGER_AUS] = params.getParam(sectionName, "cd_tw") * modCD;
 		weights[ISpielerPosition.AUSSENVERTEIDIGER] = params.getParam(sectionName, "wb_norm") * modWB;
+		weights[ISpielerPosition.AUSSENVERTEIDIGER] += params.getParam(sectionName, "wb") * modWB;	// alias for wb_norm
 		weights[ISpielerPosition.AUSSENVERTEIDIGER_OFF] = params.getParam(sectionName, "wb_off") * modWB;
 		weights[ISpielerPosition.AUSSENVERTEIDIGER_DEF] = params.getParam(sectionName, "wb_def") * modWB;
 		weights[ISpielerPosition.AUSSENVERTEIDIGER_IN] = params.getParam(sectionName, "wb_tm") * modWB;
 		weights[ISpielerPosition.MITTELFELD] = params.getParam(sectionName, "im_norm") * modIM;
+		weights[ISpielerPosition.MITTELFELD] += params.getParam(sectionName, "im") * modIM;	// alias for im_norm
 		weights[ISpielerPosition.MITTELFELD_OFF] = params.getParam(sectionName, "im_off") * modIM;
 		weights[ISpielerPosition.MITTELFELD_DEF] = params.getParam(sectionName, "im_def") * modIM;
 		weights[ISpielerPosition.MITTELFELD_AUS] = params.getParam(sectionName, "im_tw") * modIM;
 		weights[ISpielerPosition.FLUEGELSPIEL] = params.getParam(sectionName, "wi_norm") * modWI;
+		weights[ISpielerPosition.FLUEGELSPIEL] += params.getParam(sectionName, "wi") * modWI;	// alias for wi_norm
 		weights[ISpielerPosition.FLUEGELSPIEL_OFF] = params.getParam(sectionName, "wi_off") * modWI;
 		weights[ISpielerPosition.FLUEGELSPIEL_DEF] = params.getParam(sectionName, "wi_def") * modWI;
 		weights[ISpielerPosition.FLUEGELSPIEL_IN] = params.getParam(sectionName, "wi_tm") * modWI;
 		weights[ISpielerPosition.STURM] = params.getParam(sectionName, "fw_norm") * modFW;
+		weights[ISpielerPosition.STURM] += params.getParam(sectionName, "fw") * modFW;	// alias for fw_norm
 		weights[ISpielerPosition.STURM_DEF] = params.getParam(sectionName, "fw_def") * modFW;
 		weights[ISpielerPosition.STURM_AUS] = params.getParam(sectionName, "fw_tw") * modFW;
 		weights[ISpielerPosition.POS_ZUS_INNENV] = params.getParam(sectionName, "extra_cd") * modCD;
 		weights[ISpielerPosition.POS_ZUS_MITTELFELD] = params.getParam(sectionName, "extra_im") * modIM;
 		weights[ISpielerPosition.POS_ZUS_STUERMER] = params.getParam(sectionName, "extra_fw") * modFW;
+		weights[ISpielerPosition.POS_ZUS_INNENV] += params.getParam(sectionName, "cd_xtra") * modCD;	// alias for extra_cd
+		weights[ISpielerPosition.POS_ZUS_MITTELFELD] += params.getParam(sectionName, "im_xtra") * modIM;	// alias for extra_im
+		weights[ISpielerPosition.POS_ZUS_STUERMER] += params.getParam(sectionName, "fw_xtra") * modFW;	// alias for extra_fw
     	return weights;
     }
     
@@ -463,11 +480,13 @@ public class RatingPredictionManager implements IRatingPredictionManager
 
     public double[] getAllPlayerStrength (int skillType, boolean useLeft, boolean useMiddle, boolean useRight) {
     	double[] retArray = new double[ISpielerPosition.NUM_POSITIONS];
+//    	System.out.println ("getAllPlayerStrength: st="+skillType+", l="+useLeft+", m="+useMiddle+", r="+useRight);
         for(int pos = 1; pos < 12; pos++)
         {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             byte taktik = lineup.getTactic4PositionID(pos);
             if(spieler != null) {
+//            	System.out.println ("getAllPlayerStrength."+pos+", id="+spieler.getSpielerID()+", taktik="+taktik);
             	// Check sides
             	if (!useLeft && isLeft(pos, taktik)
             			|| !useMiddle && isMiddle(pos, taktik)
@@ -555,7 +574,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return calcRatings(MIDFIELD);
     }
 
-    protected float calcPlayerStrength(ISpieler spieler, int skillType) {
+    public float calcPlayerStrength(ISpieler spieler, int skillType) {
+    	return calcPlayerStrength(spieler, skillType, true);
+    }
+
+    public float calcPlayerStrength(ISpieler spieler, int skillType, boolean useForm) {
         double retVal = 0.0F;
         try
         {
@@ -583,7 +606,10 @@ public class RatingPredictionManager implements IRatingPredictionManager
             	subSkill = 1;
             skill = skill + subSkill;
             retVal = calcPlayerStrength(config.getPlayerStrenghParameters(), 
-            		getSkillName(skillType), spieler.getKondition(), spieler.getErfahrung(), skill, spieler.getForm());
+            		getSkillName(skillType), spieler.getKondition(), spieler.getErfahrung(), skill, spieler.getForm(), useForm);
+//            System.out.println("calcPlayerStrength for "+spieler.getSpielerID()
+//            		+", st="+skillType+", s="+skill+", k="+spieler.getKondition()
+//            		+", xp="+spieler.getErfahrung()+", f="+spieler.getForm()+": "+retVal);
         }
         catch(Exception e) {
         	e.printStackTrace();
@@ -591,7 +617,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         return (float)retVal;    	
     }
 
-    private float getSubDeltaFromConfig (IRatingPredictionParameter params, String sectionName, int skill) {
+    private static float getSubDeltaFromConfig (IRatingPredictionParameter params, String sectionName, int skill) {
     	String useSection = sectionName;
     	if (!params.hasSection(sectionName))
     		useSection = IRatingPredictionParameter.GENERAL;
@@ -600,7 +626,8 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return delta;    	
     }
     
-    private double calcPlayerStrength (IRatingPredictionParameter params, String sectionName, double stamina, double xp, double skill, double form) {
+    public static double calcPlayerStrength (IRatingPredictionParameter params, 
+    		String sectionName, double stamina, double xp, double skill, double form, boolean useForm) {
     	double stk = 0;
     	String useSection = sectionName;
     	if (!params.hasSection(sectionName))
@@ -653,13 +680,14 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	stk = skill;
     	if (params.getParam(useSection, "resultMultiStamina", 0) > 0)
     		stk *= params.getParam(useSection, "resultMultiStamina", 0) * stamina;
-    	if (params.getParam(useSection, "resultMultiForm", 0) > 0)
+    	if (useForm && params.getParam(useSection, "resultMultiForm", 0) > 0)
     		stk *= params.getParam(useSection, "resultMultiForm", 0) * form;
     	if (params.getParam(useSection, "resultMultiXp", 0) > 0)
     		stk *= params.getParam(useSection, "resultMultiXp", 0) * xp;
 
    		stk += params.getParam(useSection, "resultAddStamina", 0) * stamina;
-   		stk += params.getParam(useSection, "resultAddForm", 0) * form;
+   		if (useForm)
+   			stk += params.getParam(useSection, "resultAddForm", 0) * form;
    		stk += params.getParam(useSection, "resultAddXp", 0) * xp;
     	return stk;
     }

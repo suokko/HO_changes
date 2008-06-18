@@ -10,12 +10,14 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
+import plugins.IRatingPredictionManager;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
+import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.PlayerHelper;
 
@@ -2474,85 +2476,62 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * berechnet die Effektive St�rke eines Spielers f�r �bergene  Positionsfaktoren, ohne
-     * Formber�cksichtigung
+     * Calculate the player strength on a specific lineup position 
+     * with or without form
      *
-     * @param fo TODO Missing Constructuor Parameter Documentation
-     * @param normalized Ratings must be normalized or not?
+     * @param fo 		FactorObject with the skill weights for this position 
+     * @param useForm	consider form?
      *
-     * @return TODO Missing Return Method Documentation
+     * @return 			the player strength on this position
      */
-    public float calcPosValue(FactorObject fo, boolean normalized) {
+    public float calcPosValue(FactorObject fo, boolean useForm) {
         if ((fo == null) || (fo.getSum() == 0.0f)) {
             return -1.0f;
         }
+    	final boolean normalized = false; 
+    	RatingPredictionManager rpm = new RatingPredictionManager();
 
-        final float koeffizient = (1.0f - ((float) m_iKondition / 8.0f));
+        float gkValue = fo.getTorwartScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_TORWART, useForm); 
 
-        float twValue = fo.getTorwartScaled(normalized) * (m_iTorwart
-                        + getSubskill4SkillWithOffset(SKILL_TORWART));
-        twValue -= (twValue * (koeffizient * FormulaFactors.instance().m_fTW_Kondi_Faktor));
+        float pmValue = fo.getSpielaufbauScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_SPIELAUFBAU, useForm); 
 
-        float spValue = (fo.getSpielaufbauScaled(normalized) * (m_iSpielaufbau
-                        + getSubskill4SkillWithOffset(SKILL_SPIELAUFBAU)));
-        spValue -= (spValue * (koeffizient * FormulaFactors.instance().m_fSP_Kondi_Faktor));
+        float deValue = fo.getVerteidigungScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_VERTEIDIGUNG, useForm); 
 
-        float veValue = (fo.getVerteidigungScaled(normalized) * (m_iVerteidigung
-                        + getSubskill4SkillWithOffset(SKILL_VERTEIDIGUNG)));
-        veValue -= (veValue * (koeffizient * FormulaFactors.instance().m_fVE_Kondi_Faktor));
+        float wiValue = fo.getFluegelspielScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_FLUEGEL, useForm); 
 
-        float flValue = (fo.getFluegelspielScaled(normalized) * (m_iFluegelspiel
-                        + getSubskill4SkillWithOffset(SKILL_FLUEGEL)));
-        flValue -= (flValue * (koeffizient * FormulaFactors.instance().m_fFL_Kondi_Faktor));
+        float psValue = fo.getPasspielScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm); 
 
-
-        float paValue = (fo.getPasspielScaled(normalized) * (m_iPasspiel
-                        + getSubskill4SkillWithOffset(SKILL_PASSSPIEL)));
-		// Fix for new Defensive Attacker position
+        // Fix for new Defensive Attacker position
 		if (fo.getPosition()==ISpielerPosition.STURM_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
-			paValue = paValue * 1.5f;
+			psValue = psValue * 1.5f;
 		}
-        paValue -= (paValue * (koeffizient * FormulaFactors.instance().m_fPS_Kondi_Faktor));
 
+        float spValue = fo.getStandardsScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_STANDARDS, useForm); 
 
+        float scValue = fo.getTorschussScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_TORSCHUSS, useForm); 
 
-        float stValue = (fo.getStandardsScaled(normalized) * (m_iStandards
-                        + getSubskill4SkillWithOffset(SKILL_STANDARDS)));
-        stValue -= (stValue * (koeffizient * FormulaFactors.instance().m_fST_Kondi_Faktor));
-
-        float toValue = (fo.getTorschussScaled(normalized) * (m_iTorschuss
-                        + getSubskill4SkillWithOffset(SKILL_TORSCHUSS)));
-        toValue -= (toValue * (koeffizient * FormulaFactors.instance().m_fTS_Kondi_Faktor));
-
-        return twValue + spValue + veValue + flValue + paValue + stValue + toValue;
+        return gkValue + pmValue + deValue + wiValue + psValue + spValue + scValue;
     }
 
     /**
-     * berechnet die St�rke eines Spieler f�r angegebene Position
+     * Calculate the player strength on a specific lineup position 
+     * with or without form
      *
-     * @param pos die Position
-     * @param mitForm gibt an ob Form ber�cksichtigt werden soll
+     * @param pos		position from ISpielerPosition (TORWART.. POS_ZUS_INNENV)
+     * @param useForm	consider form?
      *
-     * @return TODO Missing Return Method Documentation
+     * @return 			the player strength on this position
      */
-    public float calcPosValue(byte pos, boolean mitForm) {
+    public float calcPosValue(byte pos, boolean useForm) {
     	float es = -1.0f;
     	final FactorObject factor = FormulaFactors.instance().getPositionFactor(pos);
 
     	if(factor != null)
-    		es = calcPosValue(factor,false);
+    		es = calcPosValue(factor, useForm);
     	 else{
     		 //	For Coach or factor not found return 0
     		 return 0.0f;
     	 }
-
-
-        if ((es != -1.0f) && (mitForm)) {
-            es -= (es * calcFormFaktor());
-
-            //Erfahrung Bonus
-            es += getErfahrungsBonus(es);
-        }
 
         return de.hattrickorganizer.tools.Helper.round(es / 2.0f,
                                                        gui.UserParameter.instance().anzahlNachkommastellen);
