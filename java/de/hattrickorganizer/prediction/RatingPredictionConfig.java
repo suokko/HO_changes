@@ -186,10 +186,10 @@ public class RatingPredictionConfig
             	}
            		String temp[] = line.split("=");
            		if (temp.length == 2) {
-           			String key = temp[0];
-           			String value = "" + Double.parseDouble(temp[1]);
+           			String key = temp[0].trim();
+           			String value = temp[1].trim();
 //         			System.out.println ("Found new property: "+key+" -> "+value);
-            		curProperties.setProperty(key, ""+value);
+            		curProperties.setProperty(key, value);
             	}
             }
 //            System.out.println ("All Props: "+allProps);
