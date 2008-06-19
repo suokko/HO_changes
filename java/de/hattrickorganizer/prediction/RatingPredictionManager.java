@@ -17,16 +17,8 @@ import de.hattrickorganizer.tools.HOLogger;
 
 public class RatingPredictionManager implements IRatingPredictionManager
 {
-    private short heimspiel;
-    private short attitude;
-    private short selbstvertrauen;
-    private short stimmung;
-    private short substimmung;
-    private short taktikType;
-    private short trainerType;
-    private static IRatingPredictionConfig config;
-    private ILineUp lineup;
-
+    //~ Class constants ----------------------------------------------------------------------------
+	
     private static final int THISSIDE = IRatingPredictionParameter.THISSIDE;
     private static final int OTHERSIDE = IRatingPredictionParameter.OTHERSIDE;
     private static final int ALLSIDES = IRatingPredictionParameter.ALLSIDES;
@@ -51,6 +43,21 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static final int STANDARDS = ISpieler.SKILL_STANDARDS; // 8
     private static final int EXPIERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
     private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
+
+    //~ Class fields -------------------------------------------------------------------------------
+
+    // Initialize with default config
+    private static IRatingPredictionConfig config = RatingPredictionConfig.getInstance();
+
+    //~ Instance fields ----------------------------------------------------------------------------
+    private short heimspiel;
+    private short attitude;
+    private short selbstvertrauen;
+    private short stimmung;
+    private short substimmung;
+    private short taktikType;
+    private short trainerType;
+    private ILineUp lineup;
 
     public RatingPredictionManager () {
     	if (RatingPredictionManager.config == null)
@@ -325,7 +332,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
 
 
-    public double[] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
+    public static double[] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
     	double[] weights = new double[ISpielerPosition.NUM_POSITIONS];
 		weights[ISpielerPosition.TORWART] = params.getParam(sectionName, "keeper");
 		weights[ISpielerPosition.TORWART] += params.getParam(sectionName, "gk");	// alias for keeper
@@ -574,11 +581,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return calcRatings(MIDFIELD);
     }
 
-    public float calcPlayerStrength(ISpieler spieler, int skillType) {
+    public static float calcPlayerStrength(ISpieler spieler, int skillType) {
     	return calcPlayerStrength(spieler, skillType, true);
     }
 
-    public float calcPlayerStrength(ISpieler spieler, int skillType, boolean useForm) {
+    public static float calcPlayerStrength(ISpieler spieler, int skillType, boolean useForm) {
         double retVal = 0.0F;
         try
         {
@@ -600,12 +607,12 @@ public class RatingPredictionManager implements IRatingPredictionManager
             	/**
             	 * Try to guess the sub based on the skill level
             	 */
-              subSkill = getSubDeltaFromConfig (config.getPlayerStrenghParameters(), getSkillName(skillType), (int)skill);
+              subSkill = getSubDeltaFromConfig (config.getPlayerStrengthParameters(), getSkillName(skillType), (int)skill);
             // subSkill>1, this should not happen
             if (subSkill > 1)
             	subSkill = 1;
             skill = skill + subSkill;
-            retVal = calcPlayerStrength(config.getPlayerStrenghParameters(), 
+            retVal = calcPlayerStrength(config.getPlayerStrengthParameters(), 
             		getSkillName(skillType), spieler.getKondition(), spieler.getErfahrung(), skill, spieler.getForm(), useForm);
 //            System.out.println("calcPlayerStrength for "+spieler.getSpielerID()
 //            		+", st="+skillType+", s="+skill+", k="+spieler.getKondition()

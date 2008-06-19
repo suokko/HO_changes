@@ -228,7 +228,7 @@ public class RatingPredictionConfig
         return midfieldParam;
     }
     
-    public IRatingPredictionParameter getPlayerStrenghParameters()
+    public IRatingPredictionParameter getPlayerStrengthParameters()
     {
     	return playerStrengthParam;
     }

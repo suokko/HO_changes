@@ -20,6 +20,6 @@ public interface IRatingPredictionConfig {
 
 	public IRatingPredictionParameter getMidfieldParameters() ;
 
-	public IRatingPredictionParameter getPlayerStrenghParameters();
+	public IRatingPredictionParameter getPlayerStrengthParameters();
 
 }
