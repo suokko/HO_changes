@@ -8,9 +8,9 @@ package de.hattrickorganizer.model;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Vector;
 
-import plugins.IRatingPredictionManager;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
@@ -19,6 +19,7 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -28,6 +29,11 @@ import de.hattrickorganizer.tools.PlayerHelper;
  * @author thomas.werth
  */
 public final class Spieler implements plugins.ISpieler {
+    //~ Class fields -------------------------------------------------------------------------------
+
+	/** Cache for star ratings (Hashtable<String, Float>) */
+    private static Hashtable starRatingCache = new Hashtable();
+  
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Spielberechtigt */
@@ -2488,29 +2494,59 @@ public final class Spieler implements plugins.ISpieler {
         if ((fo == null) || (fo.getSum() == 0.0f)) {
             return -1.0f;
         }
+        
+        /**
+         * Create a key for the Hashtable cache
+         * We cache every star rating to speed up calculation 
+         * (calling RPM.calcPlayerStrength() is quite expensive and
+         * this method is used very often)
+         */
+        String key = fo.getPosition() + ":"
+        					+ Helper.round(getTorwart() + getSubskill4SkillWithOffset(SKILL_TORWART), 2) + "|"
+        					+ Helper.round(getSpielaufbau() + getSubskill4SkillWithOffset(SKILL_SPIELAUFBAU), 2) + "|"
+        					+ Helper.round(getVerteidigung() + getSubskill4SkillWithOffset(SKILL_VERTEIDIGUNG), 2) + "|"
+        					+ Helper.round(getFluegelspiel() + getSubskill4SkillWithOffset(SKILL_FLUEGEL), 2) + "|"
+        					+ Helper.round(getPasspiel() + getSubskill4SkillWithOffset(SKILL_PASSSPIEL), 2) + "|"
+        					+ Helper.round(getStandards() + getSubskill4SkillWithOffset(SKILL_STANDARDS), 2) + "|"
+        					+ Helper.round(getTorschuss() + getSubskill4SkillWithOffset(SKILL_TORSCHUSS), 2) + "|"
+        					+ getForm() + "|"
+        					+ getKondition() + "|"
+        					+ getErfahrung() + "|"
+        					// We need to add the specialty, because of Technical DefFW
+        					+ getSpezialitaet();
+        
+        // Check if the key already exists in cache
+        if (starRatingCache.containsKey(key)) {
+//        	System.out.println ("Using star rating from cache, key="+key+", tablesize="+starRatingCache.size());
+        	return ((Float)starRatingCache.get(key)).floatValue();
+        }
     	final boolean normalized = false; 
-    	RatingPredictionManager rpm = new RatingPredictionManager();
 
-        float gkValue = fo.getTorwartScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_TORWART, useForm); 
+        float gkValue = fo.getTorwartScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORWART, useForm); 
 
-        float pmValue = fo.getSpielaufbauScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_SPIELAUFBAU, useForm); 
+        float pmValue = fo.getSpielaufbauScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_SPIELAUFBAU, useForm); 
 
-        float deValue = fo.getVerteidigungScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_VERTEIDIGUNG, useForm); 
+        float deValue = fo.getVerteidigungScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_VERTEIDIGUNG, useForm); 
 
-        float wiValue = fo.getFluegelspielScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_FLUEGEL, useForm); 
+        float wiValue = fo.getFluegelspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_FLUEGEL, useForm); 
 
-        float psValue = fo.getPasspielScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm); 
+        float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm); 
 
         // Fix for new Defensive Attacker position
 		if (fo.getPosition()==ISpielerPosition.STURM_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
-			psValue = psValue * 1.5f;
+			psValue *= 1.5f;
 		}
 
-        float spValue = fo.getStandardsScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_STANDARDS, useForm); 
+        float spValue = fo.getStandardsScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_STANDARDS, useForm); 
 
-        float scValue = fo.getTorschussScaled(normalized) * rpm.calcPlayerStrength(this, SKILL_TORSCHUSS, useForm); 
+        float scValue = fo.getTorschussScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORSCHUSS, useForm); 
 
-        return gkValue + pmValue + deValue + wiValue + psValue + spValue + scValue;
+        float val = gkValue + pmValue + deValue + wiValue + psValue + spValue + scValue;
+        
+        // Put to cache
+        starRatingCache.put(key, new Float(val));
+//    	System.out.println ("Star rating put to cache, key="+key+", val="+val+", tablesize="+starRatingCache.size());
+        return val;
     }
 
     /**
