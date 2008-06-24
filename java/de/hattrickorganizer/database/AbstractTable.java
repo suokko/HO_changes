@@ -115,4 +115,17 @@ abstract class AbstractTable {
 		return adapter.executeQuery(sql.toString());
 	}
 	
+	/** 
+	 * Drop the current table
+	 */
+	protected void dropTable() {
+		adapter.executeUpdate("DROP TABLE IF EXISTS "+getTableName());
+	}
+	
+	/**
+	 * Truncate the current table (i.e. remove all rows)
+	 */
+	protected void truncateTable() {
+		adapter.executeQuery("DELETE * FROM "+getTableName());
+	}
 }

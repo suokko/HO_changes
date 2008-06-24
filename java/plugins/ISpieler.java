@@ -1182,13 +1182,6 @@ public interface ISpieler {
      */
     public int getWetterEffekt(int wetter);
 
-    /**
-     * Liefert den Faktor den die Form auf die Spielerstärke nimmt
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float calcFormFaktor();
-
     ////////////////////////////////////////////////////////////////////////////////
     //Helper
     ////////////////////////////////////////////////////////////////////////////////       

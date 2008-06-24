@@ -17,31 +17,28 @@ import de.hattrickorganizer.tools.HOLogger;
 public final class FactorObject {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** gibt den Typ der Position an die dieses Obj beschreibt */
+    /** The position that is described by this FactorObject */
     private byte m_bPosition = ISpielerPosition.UNBESTIMMT;
 
-    /** für Position TW einfluss von Eigenschaft TW */
+    /** Influence of Winger for this position */
     private float m_fFluegelspiel;
 
-    /** für Position TW einfluss von Eigenschaft TW */
-    private float m_fKondition;
-
-    /** für Position TW einfluss von Eigenschaft TW */
+    /** Influence of Passing for this position */
     private float m_fPasspiel;
 
-    /** für Position TW einfluss von Eigenschaft TW */
+    /** Influence of Playmaking for this position */
     private float m_fSpielaufbau;
 
-    /** für Position TW einfluss von Eigenschaft TW */
+    /** Influence of Set Pieces for this position */
     private float m_fStandards;
 
-    /** für Position W einfluss von Eigenschaft TW */
+    /** Influence of Scoring for this position */
     private float m_fTorschuss;
 
-    /** für Position TW einfluss von Eigenschaft TW */
-    private float m_fTorwart = 10.0f;
+    /** Influence of Goalkeeping for this position */
+    private float m_fTorwart;
 
-    /** für Position TW einfluss von Eigenschaft TW */
+    /** Influence of Defending for this position */
     private float m_fVerteidigung;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -57,11 +54,9 @@ public final class FactorObject {
      * @param abwehr TODO Missing Constructuor Parameter Documentation
      * @param torschuss TODO Missing Constructuor Parameter Documentation
      * @param standards TODO Missing Constructuor Parameter Documentation
-     * @param kondition TODO Missing Constructuor Parameter Documentation
      */
     public FactorObject(byte position, float torwart, float spielaufbau, float passpiel,
-                        float fluegel, float abwehr, float torschuss, float standards,
-                        float kondition) {
+                        float fluegel, float abwehr, float torschuss, float standards) {
         m_fTorschuss = torschuss;
         m_fTorwart = torwart;
         m_fStandards = standards;
@@ -69,7 +64,6 @@ public final class FactorObject {
         m_fPasspiel = passpiel;
         m_fVerteidigung = abwehr;
         m_fFluegelspiel = fluegel;
-        m_fKondition = kondition;
         m_bPosition = position;
     }
 
@@ -88,7 +82,6 @@ public final class FactorObject {
                 m_fPasspiel = rs.getFloat("Passpiel");
                 m_fVerteidigung = rs.getFloat("Verteidigung");
                 m_fFluegelspiel = rs.getFloat("Fluegel");
-                m_fKondition = rs.getFloat("Kondition");
                 m_bPosition = rs.getByte("HOPosition");
             }
         } catch (Exception e) {
@@ -117,24 +110,6 @@ public final class FactorObject {
     		return m_fFluegelspiel/getSum();
     	}
         return m_fFluegelspiel/10.0f;
-    }
-
-    /**
-     * Setter for property m_fKondition.
-     *
-     * @param m_fKondition New value of property m_fKondition.
-     */
-    public final void setKondition(float m_fKondition) {
-        this.m_fKondition = m_fKondition;
-    }
-
-    /**
-     * Getter for property m_fKondition.
-     *
-     * @return Value of property m_fKondition.
-     */
-    public final float getKondition() {
-        return m_fKondition;
     }
 
     /**
@@ -222,7 +197,7 @@ public final class FactorObject {
     //HelperFuncs//////
     final float getSum() {
         return (m_fTorwart + m_fStandards + m_fTorschuss + m_fVerteidigung + m_fFluegelspiel
-               + m_fPasspiel + m_fSpielaufbau + m_fKondition);
+               + m_fPasspiel + m_fSpielaufbau);
     }
 
     /**

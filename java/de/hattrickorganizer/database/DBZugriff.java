@@ -17,7 +17,6 @@ import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.Basics;
 import de.hattrickorganizer.model.FactorObject;
 import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.model.Liga;
@@ -136,7 +135,6 @@ public class DBZugriff {
 				UserConfigurationTable configTable = (UserConfigurationTable) tempInstance.getTable(UserConfigurationTable.TABLENAME);
 				configTable.store(UserParameter.instance());
 				configTable.store(HOParameter.instance());
-				configTable.store(FormulaFactors.instance());
 			} else {
 				//Check if there are any updates on the database to be done.
 				tempInstance.updateDB();
@@ -1239,7 +1237,6 @@ public class DBZugriff {
 	public void loadUserParameter() {
 		UserConfigurationTable table = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME);
 		table.load(UserParameter.instance());
-		table.load(FormulaFactors.instance());
 		table.load(HOParameter.instance());
 	}
 
@@ -1252,7 +1249,6 @@ public class DBZugriff {
 		UserConfigurationTable table =
 			(UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME);
 		table.store(UserParameter.instance());
-		table.store(FormulaFactors.instance());
 		table.store(HOParameter.instance());
 	}
 
@@ -1714,7 +1710,7 @@ public class DBZugriff {
 		UserConfigurationTable configTable = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME);
 		configTable.store(UserParameter.instance());
 		configTable.store(HOParameter.instance());
-		configTable.store(FormulaFactors.instance());
+//		configTable.store(FormulaFactors.instance());
 
 		m_clJDBCAdapter.executeUpdate("DROP TABLE UserParameter");
 		m_clJDBCAdapter.executeUpdate("DROP TABLE SpaltenReihenfolge");
@@ -1813,6 +1809,14 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION ADD COLUMN ArenaID INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHDETAILS ADD COLUMN RegionID INTEGER");
 
+		// Drop and recreate the table 
+		// (i.e. use defaults from defaults.xml)
+		AbstractTable faktorenTab = (AbstractTable)tables.get(FaktorenTable.TABLENAME);
+		if (faktorenTab != null) {
+			faktorenTab.dropTable();
+			faktorenTab.createTable();
+		}
+
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
 		// do version checking again before applying!
@@ -1826,7 +1830,7 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN "+newName+" "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET "+newName+"=TEMPCOLUMN");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN TEMPCOLUMN");
-	}
+}
 	/**
 	 * Alle \ entfernen
 	 *
