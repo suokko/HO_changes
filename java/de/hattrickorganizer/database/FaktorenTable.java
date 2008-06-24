@@ -17,16 +17,15 @@ public final class FaktorenTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[9];
+		columns = new ColumnDescriptor[8];
 		columns[0]= new ColumnDescriptor("HOPosition",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("Torwart",Types.REAL,false);
 		columns[2]= new ColumnDescriptor("Verteidigung",Types.REAL,false);
-		columns[3]= new ColumnDescriptor("Kondition",Types.REAL,false);
-		columns[4]= new ColumnDescriptor("Fluegel",Types.REAL,false);
-		columns[5]= new ColumnDescriptor("Passpiel",Types.REAL,false);
-		columns[6]= new ColumnDescriptor("Standards",Types.REAL,false);
-		columns[7]= new ColumnDescriptor("Torschuss",Types.REAL,false);
-		columns[8]= new ColumnDescriptor("Spielaufbau",Types.REAL,false);
+		columns[3]= new ColumnDescriptor("Fluegel",Types.REAL,false);
+		columns[4]= new ColumnDescriptor("Passpiel",Types.REAL,false);
+		columns[5]= new ColumnDescriptor("Standards",Types.REAL,false);
+		columns[6]= new ColumnDescriptor("Torschuss",Types.REAL,false);
+		columns[7]= new ColumnDescriptor("Spielaufbau",Types.REAL,false);
 		
 		
 	}
@@ -46,7 +45,7 @@ public final class FaktorenTable extends AbstractTable {
 			delete( awhereS, awhereV );
 
 			//insert vorbereiten
-			statement = "INSERT INTO "+getTableName()+" ( HOPosition, Torwart, Verteidigung, Kondition, Fluegel, Passpiel, Standards, Torschuss, Spielaufbau ) VALUES(";
+			statement = "INSERT INTO "+getTableName()+" ( HOPosition, Torwart, Verteidigung, Fluegel, Passpiel, Standards, Torschuss, Spielaufbau ) VALUES(";
 			statement
 				+= (""
 					+ fo.getPosition()
@@ -54,8 +53,6 @@ public final class FaktorenTable extends AbstractTable {
 					+ fo.getTorwart()
 					+ ","
 					+ fo.getVerteidigung()
-					+ ","
-					+ fo.getKondition()
 					+ ","
 					+ fo.getFluegelspiel()
 					+ ","

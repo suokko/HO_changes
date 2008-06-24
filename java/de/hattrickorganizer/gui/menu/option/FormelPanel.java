@@ -37,9 +37,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
     private JButton m_jbImport;
     private JButton m_jbResetToDefaults;
     private JComboBox m_jcbPosition;
-    private SliderPanel m_jpErfahrung;
     private SliderPanel m_jpFluegelspiel;
-    private SliderPanel m_jpForm;
     private SliderPanel m_jpPasspiel;
     private SliderPanel m_jpSpielaufbau;
     private SliderPanel m_jpStandard;
@@ -69,14 +67,6 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
             if (value == JOptionPane.YES_OPTION) {
                 //Alle Werte reseten
                 FormulaFactors.instance().importDefaults();
-
-                //Form und Erfahrung in GUI setzen ( Listener vorher entfernen
-                m_jpForm.removeChangeListener(this);
-                m_jpErfahrung.removeChangeListener(this);
-                m_jpForm.setValue(FormulaFactors.instance().getForm_Faktor());
-                m_jpErfahrung.setValue(FormulaFactors.instance().getErfahrungs_Faktor());
-                m_jpForm.addChangeListener(this);
-                m_jpErfahrung.addChangeListener(this);
 
                 //Alle anderen Werte in GUI setzen
                 refresh();
@@ -194,11 +184,9 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
                                                            m_jpFluegelspiel.getValue(),
                                                            m_jpVerteidigung.getValue(),
                                                            m_jpTorschuss.getValue(),
-                                                           m_jpStandard.getValue(), 0f);
+                                                           m_jpStandard.getValue());
 
         factors.setPositionFactor(factorObject.getPosition(),factorObject);
-        factors.setForm_Faktor(m_jpForm.getValue());
-        factors.setErfahrungs_Faktor(m_jpErfahrung.getValue());
     }
 
     /**
@@ -280,40 +268,12 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         layout.setConstraints(panel, constraints);
         add(panel);
 
-        //Form
-        m_jpForm = new SliderPanel(properties.getProperty("Form"),
-                                   100, 0, 100, 1.0f, 80);
-        m_jpForm.setValue(FormulaFactors.instance().getForm_Faktor());
-        m_jpForm.addChangeListener(this);
-        panel.add(m_jpForm);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_jpForm, constraints);
-        add(m_jpForm);
-
-        //Erfahrung
-        m_jpErfahrung = new SliderPanel(properties.getProperty("Erfahrung"),
-                                        100, 0, 100, 1.0f, 80);
-        m_jpErfahrung.setValue(FormulaFactors.instance().getErfahrungs_Faktor());
-        m_jpErfahrung.addChangeListener(this);
-        panel.add(m_jpErfahrung);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_jpErfahrung, constraints);
-        add(m_jpErfahrung);
-
         m_jbResetToDefaults = new JButton(properties.getProperty("FormelwertReset"));
         m_jbResetToDefaults.addActionListener(this);
 
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 4;
+        constraints.gridy = 2;
         constraints.gridwidth = 2;
         layout.setConstraints(m_jbResetToDefaults, constraints);
         add(m_jbResetToDefaults);
@@ -323,7 +283,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
 
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 5;
+        constraints.gridy = 3;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jbImport, constraints);
         add(m_jbImport);
@@ -333,7 +293,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
 
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 1;
-        constraints.gridy = 5;
+        constraints.gridy = 3;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jbExport, constraints);
         add(m_jbExport);

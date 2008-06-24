@@ -99,17 +99,6 @@ public class DBUserParameter {
                 parameter.matchLineupImport_Path = rs.getString("MatchLineupImp_Path");
                 parameter.deadlineFrist = rs.getInt("ScoutSleep");
 
-                //FormulaFaktoren
-                final FormulaFactors formulaFactors = FormulaFactors.instance();
-                formulaFactors.setForm_Faktor(rs.getFloat("FormFaktor"));
-                formulaFactors.setErfahrungs_Faktor(rs.getFloat("ErfahrungsFaktor"));
-                formulaFactors.m_fFL_Kondi_Faktor = rs.getFloat("WingCondiFaktor");
-                formulaFactors.m_fPS_Kondi_Faktor = rs.getFloat("PassingCondiFaktor");
-                formulaFactors.m_fSP_Kondi_Faktor = rs.getFloat("PlaymakingCondiFaktor");
-                formulaFactors.m_fST_Kondi_Faktor = rs.getFloat("StandardCondiFaktor");
-                formulaFactors.m_fTS_Kondi_Faktor = rs.getFloat("ScoringCondiFaktor");
-                formulaFactors.m_fTW_Kondi_Faktor = rs.getFloat("KeeperCondiFaktor");
-                formulaFactors.m_fVE_Kondi_Faktor = rs.getFloat("DefenseCondiFaktor");
                 parameter.ProxyAktiv = rs.getBoolean("ProxyAktiv");
                 parameter.ProxyHost = rs.getString("ProxyHost");
                 parameter.ProxyPort = rs.getString("ProxyPort");

@@ -779,15 +779,15 @@ public final class Spieler implements plugins.ISpieler {
     public float getErfahrungsBonus(float es) {
         float bonus = 0;
 
-        //Bonus = log  (Erfharung) zur Basis 10 * 2 * Userfaktor , 0.0 - 2.6 ca 0 bis 1.5 Sterne
-
         /*Modified by Catrone in order to avoid the non-existant value resulting in a player's negative evaluation*/
 		if ( m_iErfahrung == 0 )
 		{
 			return bonus; /*If experience is non-existent, the bonus is zero!*/
 		}
 
-        bonus = (float) ((Math.log(m_iErfahrung) / Math.log(10)) * 2.0f * FormulaFactors.instance().getErfahrungs_Faktor());
+		// Use hardcorded values here, 
+		// make sure to apply the same values as in prediction/*/playerStrength.dat
+		bonus = (float) (es * (0.0716 * Math.sqrt(Math.max(m_iErfahrung-0.5, 0)) - 1));
 
         return bonus;
     }
@@ -2113,22 +2113,6 @@ public final class Spieler implements plugins.ISpieler {
      */
     public int getWetterEffekt(int wetter) {
         return PlayerHelper.getWeatherEffect(wetter, m_iSpezialitaet);
-    }
-
-    /**
-     * Liefert den Faktor den die Form auf die Spielerst�rke nimmt
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float calcFormFaktor() {
-        return (1.0f - ((float) m_iForm / 8.0f)) * FormulaFactors.instance().getForm_Faktor();
-
-        //return f - f * (1.0F - f2 / 8F) * f1;//f = effektive Player st�rke ohne Form
-
-        /*
-         *double playersForm = 1;
-                           double y = A + B1 * playersForm + B2 * Math.pow( playersForm, 2 ) + B3 * Math.pow( playersForm, 3 ) + B4 * Math.pow( playersForm, 4 ) + B5 * Math.pow( playersForm, 5 );
-         */
     }
 
     /**

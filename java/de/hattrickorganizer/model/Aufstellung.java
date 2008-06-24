@@ -891,8 +891,9 @@ public  class Aufstellung implements plugins.ILineUp {
         int anzSpieler = 0;
 
         for (int i = 0; i < spieler.size(); i++) {
-            spez = ((Spieler) spieler.elementAt(i)).getSpezialitaet();
-            pos = getPositionBySpielerId(((Spieler) spieler.elementAt(i)).getSpielerID());
+        	ISpieler player = (ISpieler) spieler.elementAt(i);
+            spez = player.getSpezialitaet();
+            pos = getPositionBySpielerId(player.getSpielerID());
 
             //nur jene Ber�cksichtigen die auch aufgestellt sind
             if ((pos != null)
@@ -901,19 +902,19 @@ public  class Aufstellung implements plugins.ILineUp {
                 //Verteidigung
                 //durchsetzungsstark z�hlt doppelt
                 if (spez == 3) {
-                    defense += (2 * ((Spieler) spieler.elementAt(i)).getVerteidigung());
+                    defense += 2 * player.getVerteidigung();
                 } else {
-                    defense += ((Spieler) spieler.elementAt(i)).getVerteidigung();
+                    defense += player.getVerteidigung();
                 }
 
                 //Erfahrung
-                exp += ((Spieler) spieler.elementAt(i)).getErfahrungsBonus(0);
-
+                exp += player.getErfahrungsBonus(player.getVerteidigung());
+                
                 //Kondition
-                kondi += ((Spieler) spieler.elementAt(i)).getKondition();
+                kondi += player.getKondition();
 
                 //Form
-                form += ((Spieler) spieler.elementAt(i)).getForm();
+                form += player.getForm();
                 anzSpieler++;
             }
         }

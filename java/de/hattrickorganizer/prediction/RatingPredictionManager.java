@@ -389,7 +389,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return getAllPlayerStrength(skillType, false, true, false);
     }
 
-    private int getNumIMs () {
+    public int getNumIMs () {
     	int retVal = 0;
     	for(int pos = 1; pos < 12; pos++) {
     		byte taktik = lineup.getTactic4PositionID(pos);
@@ -406,7 +406,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return retVal;
     }
 
-    private int getNumFWs () {
+    public int getNumFWs () {
     	int retVal = 0;
         for(int pos = 1; pos < 12; pos++) {
         	byte taktik = lineup.getTactic4PositionID(pos);
@@ -423,7 +423,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return retVal;
     }
 
-    private int getNumCDs () {
+    public int getNumCDs () {
     	int retVal = 0;
     	for(int pos = 1; pos < 12; pos++) {
     		byte taktik = lineup.getTactic4PositionID(pos);
@@ -441,7 +441,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
     
 
-    private boolean isLeft (int pos, int taktik) {
+    public boolean isLeft (int pos, int taktik) {
     	if (isMiddle(pos, taktik))
     		return false;
     	else if (pos == ISpielerPosition.insideBack2 
@@ -454,7 +454,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
 			return false;
     }
 
-    private boolean isRight (int  pos, int taktik) {
+    public boolean isRight (int  pos, int taktik) {
     	if (isMiddle(pos, taktik))
     		return false;
     	else if (pos == ISpielerPosition.insideBack1 
@@ -467,7 +467,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
 			return false;
     }
     
-    private boolean isMiddle (int pos, int taktik) {
+    public boolean isMiddle (int pos, int taktik) {
     	if (taktik == ISpielerPosition.ZUS_INNENV 
 				|| taktik == ISpielerPosition.ZUS_MITTELFELD
 				|| taktik == ISpielerPosition.ZUS_STUERMER 

@@ -6,7 +6,6 @@
  */
 package de.hattrickorganizer.model;
 
-import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -23,7 +22,7 @@ import de.hattrickorganizer.tools.xml.XMLManager;
  *
  * @author thomas.werth
  */
-public class FormulaFactors extends Configuration {
+public class FormulaFactors {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** singelton */
@@ -33,20 +32,6 @@ public class FormulaFactors extends Configuration {
     protected static final int ANZ_FAKTOROBJEKTE = 19;
 
     //~ Instance fields ----------------------------------------------------------------------------
-    // skill factors
-    public float m_fFL_Kondi_Faktor = 0.25f; // wing
-    public float m_fPS_Kondi_Faktor =0;		 // passing
-    public float m_fSP_Kondi_Faktor = 0.50f; // playmaking
-    public float m_fST_Kondi_Faktor = 0.1f;	 // set pieces
-    public float m_fTS_Kondi_Faktor = 0.2f;  // scoring
-    public float m_fTW_Kondi_Faktor = 0.2f;  // goalkeeping
-    public float m_fVE_Kondi_Faktor = 0.2f;  // defense
-
-    // experience factor
-    public float m_fErfahrungs_Faktor = 0.45f;
-
-    // general form factor
-    public float m_fForm_Faktor = 0.65f;
 
     ////////////////////////////////AV//////////////////////////////////////////
     // wingback
@@ -148,50 +133,12 @@ public class FormulaFactors extends Configuration {
         return allObj;
     }
 
-
-    /**
-     * Setter for property m_fForm_Faktor.
-     *
-     * @param erfahrungs_Faktor New value of property m_fForm_Faktor.
-     */
-    public void setErfahrungs_Faktor(float erfahrungs_Faktor) {
-        this.m_fErfahrungs_Faktor = erfahrungs_Faktor;
-    }
-
-    /**
-     * Getter for property m_fForm_Faktor.
-     *
-     * @return Value of property m_fForm_Faktor.
-     */
-    public float getErfahrungs_Faktor() {
-        return m_fErfahrungs_Faktor;
-    }
-
-    /**
-     * Setter for property m_fForm_Faktor.
-     *
-     * @param m_fForm_Faktor New value of property m_fForm_Faktor.
-     */
-    public void setForm_Faktor(float m_fForm_Faktor) {
-        this.m_fForm_Faktor = m_fForm_Faktor;
-    }
-
-     /**
-     * Getter for property m_fForm_Faktor.
-     *
-     * @return Value of property m_fForm_Faktor.
-     */
-    public float getForm_Faktor() {
-        return m_fForm_Faktor;
-    }
-
     /**
      * Import star formulas from the default XML.
      */
     public void importDefaults() {
         //vorsichtshalber vorinitialisieren.
         init();
-        initKondition();
 
         //eigentliche Defaults lesen
         readFromXML("defaults.xml");
@@ -202,42 +149,26 @@ public class FormulaFactors extends Configuration {
      * Usually these values should never be used, as we read the default.xml afterwards.
      */
     public void init() {
-        //                                     position,									tw,   sa,   ps,   fl,   vt,   ts,   std,  kondi
-        m_clTorwart = new FactorObject(ISpielerPosition.TORWART,		      		 		10.0f,0.0f, 0.0f, 0.0f, 2.6f, 0.0f, 0.0f, 0.0f);
-        m_clInnenVerteidiger = new FactorObject(ISpielerPosition.INNENVERTEIDIGER,			0.0f, 3.0f, 0.5f, 0.0f, 9.0f, 0.0f, 0.0f, 0.0f);
-        m_clInnenVerteidiger_AUS = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_AUS,	0.0f, 1.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
-        m_clInnenVerteidiger_OFF = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_OFF,	0.0f, 5.0f, 0.5f, 0.0f, 6.0f, 0.0f, 0.0f, 0.0f);
-        m_clAussenVerteidiger_IN = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_IN,	0.0f, 1.0f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
-        m_clAussenVerteidiger_OFF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_OFF,0.0f, 1.5f, 1.5f, 4.0f, 6.0f, 0.0f, 0.0f, 0.0f);
-        m_clAussenVerteidiger_DEF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_DEF,0.0f, 0.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f, 0.0f);
-        m_clAussenVerteidiger = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER,		0.0f, 1.0f, 0.0f, 3.5f, 8.0f, 0.0f, 0.0f, 0.0f);
-        m_clFluegelspieler_OFF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_OFF,		0.0f, 3.0f, 2.5f, 7.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-        m_clFluegelspieler_DEF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_DEF,		0.0f, 3.5f, 2.0f, 5.0f, 4.0f, 0.0f, 0.0f, 0.0f);
-        m_clFluegelspieler_IN = new FactorObject(ISpielerPosition.FLUEGELSPIEL_IN,			0.0f, 6.0f, 2.0f, 4.0f, 2.0f, 0.0f, 0.0f, 0.0f);
-        m_clFluegelspieler = new FactorObject(ISpielerPosition.FLUEGELSPIEL,				0.0f, 3.5f, 2.5f, 7.0f, 1.5f, 0.0f, 0.0f, 0.0f);
-        m_clZentralesMittelfeld_OFF = new FactorObject(ISpielerPosition.MITTELFELD_OFF,		0.0f, 8.0f, 3.5f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f);
-        m_clZentralesMittelfeld_DEF = new FactorObject(ISpielerPosition.MITTELFELD_DEF,		0.0f, 8.0f, 2.0f, 0.0f, 3.5f, 0.0f, 0.0f, 0.0f);
-	    m_clZentralesMittelfeld_AUS = new FactorObject(ISpielerPosition.MITTELFELD_AUS,		0.0f, 6.0f, 2.0f, 5.0f, 2.0f, 0.0f, 0.0f, 0.0f);
-        m_clZentralesMittelfeld = new FactorObject(ISpielerPosition.MITTELFELD,				0.0f, 8.0f, 3.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f);
-        m_clSturm = new FactorObject(ISpielerPosition.STURM,								0.0f, 0.0f, 3.0f, 1.5f, 0.0f, 9.0f, 0.0f, 0.0f);
-        m_clSturm_DEF = new FactorObject(ISpielerPosition.STURM_DEF,						0.0f, 5.0f, 3.0f, 0.0f, 0.0f, 6.0f, 0.0f, 0.0f);
-        m_clSturm_AUS = new FactorObject(ISpielerPosition.STURM_AUS,						0.0f, 0.0f, 3.0f, 4.0f, 0.0f, 6.5f, 0.0f, 0.0f);
-        m_fForm_Faktor = 0.65f;
-        m_fErfahrungs_Faktor = 0.45f;
-    }
-
-    /**
-     * Initialize member for stamina settings with 'hardcoded' default values.
-     * Usually these values should never be used, as we read the default.xml afterwards.
-     */
-    public void initKondition() {
-        m_fSP_Kondi_Faktor = 0.50f;
-        m_fTW_Kondi_Faktor = 0.2f;
-        m_fVE_Kondi_Faktor = 0.2f;
-        m_fPS_Kondi_Faktor = 0.0f;
-        m_fTS_Kondi_Faktor = 0.2f;
-        m_fFL_Kondi_Faktor = 0.25f;
-        m_fST_Kondi_Faktor = 0.1f;
+        //                                     position,									tw,   sa,   ps,   fl,   vt,   ts,   std
+        m_clTorwart = new FactorObject(ISpielerPosition.TORWART,		      		 		10.0f,0.0f, 0.0f, 0.0f, 2.6f, 0.0f, 0.0f);
+        m_clInnenVerteidiger = new FactorObject(ISpielerPosition.INNENVERTEIDIGER,			0.0f, 3.0f, 0.5f, 0.0f, 9.0f, 0.0f, 0.0f);
+        m_clInnenVerteidiger_AUS = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_AUS,	0.0f, 1.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f);
+        m_clInnenVerteidiger_OFF = new FactorObject(ISpielerPosition.INNENVERTEIDIGER_OFF,	0.0f, 5.0f, 0.5f, 0.0f, 6.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger_IN = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_IN,	0.0f, 1.0f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f);
+        m_clAussenVerteidiger_OFF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_OFF,0.0f, 1.5f, 1.5f, 4.0f, 6.0f, 0.0f, 0.0f);
+        m_clAussenVerteidiger_DEF = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER_DEF,0.0f, 0.5f, 0.5f, 2.0f, 8.5f, 0.0f, 0.0f);
+        m_clAussenVerteidiger = new FactorObject(ISpielerPosition.AUSSENVERTEIDIGER,		0.0f, 1.0f, 0.0f, 3.5f, 8.0f, 0.0f, 0.0f);
+        m_clFluegelspieler_OFF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_OFF,		0.0f, 3.0f, 2.5f, 7.0f, 1.0f, 0.0f, 0.0f);
+        m_clFluegelspieler_DEF = new FactorObject(ISpielerPosition.FLUEGELSPIEL_DEF,		0.0f, 3.5f, 2.0f, 5.0f, 4.0f, 0.0f, 0.0f);
+        m_clFluegelspieler_IN = new FactorObject(ISpielerPosition.FLUEGELSPIEL_IN,			0.0f, 6.0f, 2.0f, 4.0f, 2.0f, 0.0f, 0.0f);
+        m_clFluegelspieler = new FactorObject(ISpielerPosition.FLUEGELSPIEL,				0.0f, 3.5f, 2.5f, 7.0f, 1.5f, 0.0f, 0.0f);
+        m_clZentralesMittelfeld_OFF = new FactorObject(ISpielerPosition.MITTELFELD_OFF,		0.0f, 8.0f, 3.5f, 0.0f, 2.0f, 0.0f, 0.0f);
+        m_clZentralesMittelfeld_DEF = new FactorObject(ISpielerPosition.MITTELFELD_DEF,		0.0f, 8.0f, 2.0f, 0.0f, 3.5f, 0.0f, 0.0f);
+	    m_clZentralesMittelfeld_AUS = new FactorObject(ISpielerPosition.MITTELFELD_AUS,		0.0f, 6.0f, 2.0f, 5.0f, 2.0f, 0.0f, 0.0f);
+        m_clZentralesMittelfeld = new FactorObject(ISpielerPosition.MITTELFELD,				0.0f, 8.0f, 3.0f, 0.0f, 3.0f, 0.0f, 0.0f);
+        m_clSturm = new FactorObject(ISpielerPosition.STURM,								0.0f, 0.0f, 3.0f, 1.5f, 0.0f, 9.0f, 0.0f);
+        m_clSturm_DEF = new FactorObject(ISpielerPosition.STURM_DEF,						0.0f, 5.0f, 3.0f, 0.0f, 0.0f, 6.0f, 0.0f);
+        m_clSturm_AUS = new FactorObject(ISpielerPosition.STURM_AUS,						0.0f, 0.0f, 3.0f, 4.0f, 0.0f, 6.5f, 0.0f);
     }
 
     /**
@@ -260,25 +191,6 @@ public class FormulaFactors extends Configuration {
 
         try {
             //Daten füllen
-            ele = (Element) root.getElementsByTagName("Form").item(0);
-            m_fForm_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Playmaking_Condition").item(0);
-            m_fSP_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Keeper_Condition").item(0);
-            m_fTW_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Defense_Condition").item(0);
-            m_fVE_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Winger_Condition").item(0);
-            m_fFL_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Passing_Condition").item(0);
-            m_fPS_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Expierience").item(0);
-            m_fErfahrungs_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Standard_Condition").item(0);
-            m_fST_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Scoring_Condition").item(0);
-            m_fTS_Kondi_Faktor = Float.parseFloat(manager.getFirstChildNodeValue(ele));
-
             m_clTorwart = readObject("KEEPER", root);
             m_clInnenVerteidiger = readObject("DEFENSE", root);
             m_clInnenVerteidiger_OFF = readObject("DEFENSE_O", root);
@@ -322,8 +234,6 @@ public class FormulaFactors extends Configuration {
             //Daten füllen
             ele = (Element) root.getElementsByTagName("Position").item(0);
             factorObject.setPosition(Byte.parseByte(manager.getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("condition").item(0);
-            factorObject.setKondition(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("defense").item(0);
             factorObject.setVerteidigung(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("passing").item(0);
@@ -371,47 +281,6 @@ public class FormulaFactors extends Configuration {
             doc = builder.newDocument();
             tmpEle = doc.createElement("FormulaFactors");
             doc.appendChild(tmpEle);
-            ele = doc.createElement("Form");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fForm_Faktor));
-            ele = doc.createElement("Expierience");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fErfahrungs_Faktor));
-
-            //child2
-            ele = doc.createElement("Playmaking_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fSP_Kondi_Faktor));
-
-            //child2
-            ele = doc.createElement("Keeper_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fTW_Kondi_Faktor));
-
-            //child2
-            ele = doc.createElement("Defense_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fVE_Kondi_Faktor));
-
-            //child2
-            ele = doc.createElement("Winger_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fFL_Kondi_Faktor));
-
-            //child2
-            ele = doc.createElement("Passing_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fPS_Kondi_Faktor));
-
-            //child2
-            ele = doc.createElement("Standard_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fST_Kondi_Faktor));
-
-            //child2
-            ele = doc.createElement("Scoring_Condition");
-            tmpEle.appendChild(ele);
-            ele.appendChild(doc.createTextNode("" + m_fTS_Kondi_Faktor));
 
             //Objekte schreiben
             writeFaktorObj(doc, m_clTorwart, tmpEle, "KEEPER");
@@ -477,13 +346,6 @@ public class FormulaFactors extends Configuration {
         ele = doc.createElement("standard");
         tmpEle.appendChild(ele);
         ele.appendChild(doc.createTextNode("" + obj.getStandards()));
-        ele = doc.createElement("condition");
-        tmpEle.appendChild(ele);
-        ele.appendChild(doc.createTextNode("" + obj.getKondition()));
-
-        // Insert a comment in front of the element node
-        final org.w3c.dom.Comment comment = doc.createComment("unused since HO! 1.25");
-        tmpEle.insertBefore(comment, ele);
     }
 
     /**
@@ -518,7 +380,7 @@ public class FormulaFactors extends Configuration {
 	        case ISpielerPosition.TRAINER:
         default:
             return null;
-    }
+    	}
     }
 
     /**
@@ -529,7 +391,7 @@ public class FormulaFactors extends Configuration {
      * @param factorObject
      */
     public void setPositionFactor(byte pos, FactorObject factorObject){
-    switch(pos){
+    	switch(pos){
         case ISpielerPosition.TORWART:
             m_clTorwart = factorObject;
             break;
@@ -605,31 +467,6 @@ public class FormulaFactors extends Configuration {
 		case ISpielerPosition.STURM_AUS:
 			m_clSturm_AUS = factorObject;
 			break;
+    	}
     }
-     }
-	public HashMap getValues() {
-		HashMap map = new HashMap();
-		map.put("m_fFL_Kondi_Faktor",String.valueOf(m_fFL_Kondi_Faktor));
-		map.put("m_fPS_Kondi_Faktor",String.valueOf(m_fPS_Kondi_Faktor));
-		map.put("m_fSP_Kondi_Faktor",String.valueOf(m_fSP_Kondi_Faktor));
-		map.put("m_fST_Kondi_Faktor",String.valueOf(m_fST_Kondi_Faktor));
-		map.put("m_fTS_Kondi_Faktor",String.valueOf(m_fTS_Kondi_Faktor));
-		map.put("m_fTW_Kondi_Faktor",String.valueOf(m_fTW_Kondi_Faktor));
-		map.put("m_fVE_Kondi_Faktor",String.valueOf(m_fVE_Kondi_Faktor));
-		map.put("m_fErfahrungs_Faktor",String.valueOf(m_fErfahrungs_Faktor));
-		map.put("m_fForm_Faktor",String.valueOf(m_fForm_Faktor));
-		return map;
-	}
-
-	public void setValues(HashMap values) {
-		m_fFL_Kondi_Faktor = getFloatValue(values,"m_fFL_Kondi_Faktor");
-		m_fPS_Kondi_Faktor = getFloatValue(values,"m_fPS_Kondi_Faktor");
-		m_fSP_Kondi_Faktor = getFloatValue(values,"m_fSP_Kondi_Faktor");
-		m_fST_Kondi_Faktor = getFloatValue(values,"m_fST_Kondi_Faktor");
-		m_fTS_Kondi_Faktor = getFloatValue(values,"m_fTS_Kondi_Faktor");
-		m_fTW_Kondi_Faktor = getFloatValue(values,"m_fTW_Kondi_Faktor");
-		m_fVE_Kondi_Faktor = getFloatValue(values,"m_fVE_Kondi_Faktor");
-		m_fErfahrungs_Faktor = getFloatValue(values,"m_fErfahrungs_Faktor");
-		m_fForm_Faktor = getFloatValue(values,"m_fForm_Faktor");
-	}
 }

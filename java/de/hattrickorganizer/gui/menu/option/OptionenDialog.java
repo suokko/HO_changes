@@ -22,7 +22,6 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
     private FarbPanel m_jpFarben;
     private FormelPanel m_jpFormeln;
     private RatingOffsetPanel m_jpRatingOffset;
-    private KonditionsPanel m_jpKondition;
     private SonstigeOptionenPanel m_jpSonstigeOptionen;
     private CheckOptionPanel hoConnectionOptions;
     private TabOptionenPanel m_jpTabOptionen;
@@ -157,12 +156,6 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
 		tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
 																 .getProperty("PredictionOffset"),
 						  new JScrollPane(m_jpRatingOffset));
-
-        //Kondition
-        m_jpKondition = new KonditionsPanel();
-        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Kondition"),
-                          new JScrollPane(m_jpKondition));
 
         //Training
         m_jpTrainingsOptionen = new TrainingsOptionenPanel();
