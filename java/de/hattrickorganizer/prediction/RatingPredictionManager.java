@@ -336,6 +336,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	double[] weights = new double[ISpielerPosition.NUM_POSITIONS];
 		weights[ISpielerPosition.TORWART] = params.getParam(sectionName, "keeper");
 		weights[ISpielerPosition.TORWART] += params.getParam(sectionName, "gk");	// alias for keeper
+		double extraMulti = params.getParam(IRatingPredictionParameter.GENERAL, "extraMulti", 0);
 		double modCD = params.getParam(sectionName, "allCDs", 1);
 		double modWB = params.getParam(sectionName, "allWBs", 1);
 		double modIM = params.getParam(sectionName, "allIMs", 1);
@@ -370,6 +371,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
 		weights[ISpielerPosition.POS_ZUS_INNENV] += params.getParam(sectionName, "cd_xtra") * modCD;	// alias for extra_cd
 		weights[ISpielerPosition.POS_ZUS_MITTELFELD] += params.getParam(sectionName, "im_xtra") * modIM;	// alias for extra_im
 		weights[ISpielerPosition.POS_ZUS_STUERMER] += params.getParam(sectionName, "fw_xtra") * modFW;	// alias for extra_fw
+		if (extraMulti > 0) {
+			weights[ISpielerPosition.POS_ZUS_INNENV] = weights[ISpielerPosition.INNENVERTEIDIGER] * extraMulti; // if extraMulti is defined, use extraMulti*CD
+			weights[ISpielerPosition.POS_ZUS_MITTELFELD] = weights[ISpielerPosition.MITTELFELD] * extraMulti; // if extraMulti is defined, use extraMulti*IM
+			weights[ISpielerPosition.POS_ZUS_STUERMER] = weights[ISpielerPosition.STURM] * extraMulti; // if extraMulti is defined, use extraMulti*FW
+		}
     	return weights;
     }
     
