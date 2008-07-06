@@ -452,14 +452,36 @@ final public class UserColumnFactory {
 				}
 			}; 
 			
-			playerAdditionalArray[2] =new PlayerColumn(30," ","Alter",20){
+			playerAdditionalArray[2] = new PlayerColumn(30, "age", 40){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
-					return new ColorLabelEntry(player.getAlterWithAgeDays(), player.getAlterWithAgeDaysAsString(),
-                            ColorLabelEntry.FG_STANDARD,
-                            ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
+					String ageString = player.getAlterWithAgeDaysAsString();
+					int birthdays = 0;
+					boolean playerExists;
+
+					if(playerCompare == null){
+						// Birthdays since last HRF
+						birthdays = (int) (Math.floor(player.getAlterWithAgeDays()) - player.getAlter());
+						playerExists = false;
+					} else {
+						// Birthdays since compare
+						birthdays = (int) (Math.floor(player.getAlterWithAgeDays()) - Math.floor(playerCompare.getAlterWithAgeDays()));
+						if (playerCompare.isOld())
+							// Player was not in our team at compare date
+							playerExists = false;
+						else
+							// Player was in our team at compare date
+							playerExists = true;
+					}
+					return new ColorLabelEntry(
+							birthdays,
+							ageString,
+							player.getAlterWithAgeDays(),
+							playerExists,
+							ColorLabelEntry.BG_STANDARD,
+							true);
 				}
-			}; 
-			
+			};
+
 			playerAdditionalArray[3] =new PlayerColumn(40,"BestePosition",100){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					

@@ -520,8 +520,7 @@ public final class Spieler implements plugins.ISpieler {
      * Calculates String for full age with days and offset
      *
      * @return String of age & agedays & offset combined,
-     * 			format is "YY.DDD" or
-     * 			"YY.DDD+1" (if player had his birthday since last HRF)
+     * 			format is "YY.DDD"
      */
     public String getAlterWithAgeDaysAsString() {
     	// format = yy.ddd
@@ -531,15 +530,11 @@ public final class Spieler implements plugins.ISpieler {
     	int years = getAlter();
     	int days = getAgeDays();
     	days += diff;
-    	boolean birthday = false;
     	while (days > 111) {
     		days -= 112;
     		years++;
-    		birthday = true;
     	}
     	String retVal = years + "." + days;
-    	if (birthday)
-    		retVal += "+1";
     	return retVal;
     }
 
