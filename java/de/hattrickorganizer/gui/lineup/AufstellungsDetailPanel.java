@@ -341,8 +341,11 @@ final class AufstellungsDetailPanel extends ImagePanel
             setEinstellung(aufstellung.getAttitude());
             setLocation(aufstellung.getHeimspiel());
 
-            m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(homodel.getAufstellung()
-                                                                                  .getAvgExpierence()));
+            m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(homodel.getAufstellung().getAvgExpierence()));
+            float avXp = homodel.getAufstellung().getAverageExperience();
+            m_jpDurchschnittErfahrung.setToolTipText(HOVerwaltung.instance().getResource().getProperty("Erfahrung")
+            		+ " (kopsterkepits): " + (avXp == -1f ? "need to set captain!" : PlayerHelper.getNameForSkill(avXp)));
+
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
@@ -780,7 +783,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
         add(m_jpErfahrung451.getComponent(false));
-       
+
         // Add all item listeners
         addItemListeners();
     }

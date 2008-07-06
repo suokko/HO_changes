@@ -349,6 +349,39 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
+     * Get the average experience of all players in lineup
+     * using the formula from kopsterkepits:
+     * teamxp = ((sum of teamxp + xp of captain)/12)*(1-(7-leadership of captain)*5%)
+     */
+    public final float getAverageExperience() {
+    	float value = 0;
+    	try {
+    		Spieler pl = null;
+    		Spieler captain = null;
+    		Vector players = HOVerwaltung.instance().getModel().getAllSpieler();
+
+    		for (int i = 0; (players != null) && (i < players.size()); i++) {
+    			pl = (Spieler) players.elementAt(i);
+    			if (m_clAssi.isSpielerInAnfangsElf(pl.getSpielerID(), m_vPositionen)) {
+    				value += pl.getErfahrung();
+    				if (m_iKapitaen == pl.getSpielerID()) {
+    					captain = pl;
+    				}
+    			}
+    		}
+    		if (captain != null) {
+    			value = ((float)(value + pl.getErfahrung())/12) * (1f-(float)(7-captain.getFuehrung())*0.05f);
+    		} else {
+    			HOLogger.instance().log(getClass(), "Can't calc average experience, captain not set.");
+    			value = -1f;
+    		}
+    	} catch (Exception e) {
+    		HOLogger.instance().error(getClass(), e);
+    	}
+        return value;
+    }
+
+    /**
      * errechnet anhand der aktuellen Aufstellung die besten Elfersch�tzen
      *
      * @return TODO Missing Return Method Documentation
@@ -909,7 +942,7 @@ public  class Aufstellung implements plugins.ILineUp {
 
                 //Erfahrung
                 exp += player.getErfahrungsBonus(player.getVerteidigung());
-                
+
                 //Kondition
                 kondi += player.getKondition();
 
