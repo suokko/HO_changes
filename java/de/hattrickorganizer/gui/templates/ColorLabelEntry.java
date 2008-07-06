@@ -174,6 +174,34 @@ public class ColorLabelEntry extends TableEntry {
         }
     }
 
+    /**
+     * ColorLabel mit Image zur Darstellung von Veränderungen (mit Text als String)
+     *
+     * @param changeVal 	Change value for the icon
+     * @param text 			text to show 
+     * @param sortVal 		value for sort
+     * @param aktuell		current or old data set
+     * @param background 	background color
+     * @param mitText 		show the text?
+     */
+    public ColorLabelEntry(int changeVal, String text, double sortVal, boolean aktuell, Color background,
+                           boolean mitText) {
+        if ((Math.abs(changeVal) != 0) || !mitText) {
+            m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell);
+        }
+
+        m_iAusrichtung = SwingConstants.RIGHT;
+        m_clBGColor = background;
+        m_dZahl = sortVal;
+    	
+        // Create Component first, then change the text accordingly [setValueAsText()]
+        createComponent();
+        
+        if (mitText)
+        	setText(text);
+        else
+        	setText("");
+    }
 
     /**
      * ColorLabel zu darstellen von Veränderungen

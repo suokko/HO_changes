@@ -4,7 +4,7 @@ Informations about the new HO! Feedback Plugin (since HO 1.410)
 HO! introduces in this release a plugin called Feedback.
 It sends information about rating prediction, training duration,
 and transfers prices to the HO! staff.
-These data will help a lot, to improve our algorithms!
+These data will help a lot, to improve our formulas!
 
 You can disable this feature in Options/Feedback
 
