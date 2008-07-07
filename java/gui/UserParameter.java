@@ -594,7 +594,7 @@ public final class UserParameter extends Configuration {
 	public float midfieldOffset = 0.0f;
 	public float leftAttackOffset = 0.0f;
 	public float middleAttackOffset = 0.0f;
-	public float rightAttackfOffset = 0.0f;
+	public float rightAttackOffset = 0.0f;
     //veraltet!!
     public int waehrungsID = 3;
 
@@ -786,7 +786,7 @@ public final class UserParameter extends Configuration {
 		map.put("midfieldOffset",String.valueOf(midfieldOffset));
 		map.put("leftAttackOffset",String.valueOf(leftAttackOffset));
 		map.put("middleAttackOffset",String.valueOf(middleAttackOffset));
-		map.put("rightAttackfOffset",String.valueOf(rightAttackfOffset));
+		map.put("rightAttackOffset",String.valueOf(rightAttackOffset));
 		map.put("waehrungsID",String.valueOf(waehrungsID));
 		map.put("simulatorMatches",String.valueOf(simulatorMatches));		
 		return map;
@@ -915,7 +915,7 @@ public final class UserParameter extends Configuration {
 		midfieldOffset = getFloatValue(values,"midfieldOffset");
 		leftAttackOffset = getFloatValue(values,"leftAttackOffset");
 		middleAttackOffset = getFloatValue(values,"middleAttackOffset");
-		rightAttackfOffset = getFloatValue(values,"rightAttackfOffset");			
+		rightAttackOffset = getFloatValue(values,"rightAttackOffset");			
 		DAUER_ALLGEMEIN = getFloatValue(values,"DAUER_ALLGEMEIN");
 		DAUER_CHANCENVERWERTUNG = getFloatValue(values,"DAUER_CHANCENVERWERTUNG");
 		DAUER_FLUEGELSPIEL = getFloatValue(values,"DAUER_FLUEGELSPIEL");
