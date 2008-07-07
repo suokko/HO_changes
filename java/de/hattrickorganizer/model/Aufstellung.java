@@ -972,7 +972,7 @@ public  class Aufstellung implements plugins.ILineUp {
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getRightAttackRatings());
 			if (value>1) {
-				value += UserParameter.instance().rightAttackfOffset;
+				value += UserParameter.instance().rightAttackOffset;
 			}
 			return value;
     	} else {

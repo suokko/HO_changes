@@ -126,6 +126,6 @@ abstract class AbstractTable {
 	 * Truncate the current table (i.e. remove all rows)
 	 */
 	protected void truncateTable() {
-		adapter.executeQuery("DELETE * FROM "+getTableName());
+		adapter.executeQuery("DELETE FROM "+getTableName());
 	}
 }

@@ -1904,25 +1904,19 @@ public class DBZugriff {
 		 * 
 		 * DO NOT use 'if-then-else' here, as this would ignores some updates! 
 		 */
-		if (lastConfigUpdate < 1.400) {
-			HOLogger.instance().log(getClass(), "Updating configuration to version 1.400...");
-			updateConfigTo1400();
+		if (lastConfigUpdate < 1.410) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.410...");
+			updateConfigTo1410();
 		}
-		
-		if (lastConfigUpdate < 1.401) {
-			HOLogger.instance().log(getClass(), "Updating configuration to version 1.401...");
-			updateConfigTo1401();
-		}
+
+//		if (lastConfigUpdate < 1.420) {
+//			HOLogger.instance().log(getClass(), "Updating configuration to version 1.420...");
+//			updateConfigTo1420();
+//		}
+
 	}
 
-	private void updateConfigTo1400 () {
-		// DUMMY
-
-		// always set the LastConfUpdate as last step
-		saveUserParameter("LastConfUpdate", 1.400);
-	}
-
-	private void updateConfigTo1401 () {
+	private void updateConfigTo1410 () {
 		// Reset Training Speed Parameters for New Training
 		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
 		saveUserParameter("DAUER_TORWART", 3.7);
@@ -1947,10 +1941,21 @@ public class DBZugriff {
 		saveUserParameter("midfieldOffset", 0.0);
 		saveUserParameter("leftAttackOffset", 0.0);
 		saveUserParameter("middleAttackOffset", 0.0);
-		saveUserParameter("rightAttackfOffset", 0.0);
+		saveUserParameter("rightAttackOffset", 0.0);
+
+		// Drop the feedback tables to force new feedback upload for beta testers
+		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
+		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
 
 		// always set the LastConfUpdate as last step
-		saveUserParameter("LastConfUpdate", 1.401);		
+		saveUserParameter("LastConfUpdate", 1.410);		
+	}
+
+	private void updateConfigTo1420 () {
+		// DUMMY
+
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.420);
 	}
 
 }

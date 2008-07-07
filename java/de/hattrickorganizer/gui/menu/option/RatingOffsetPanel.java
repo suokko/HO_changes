@@ -61,7 +61,7 @@ public final class RatingOffsetPanel
 			slider[6].getValue() / 100.0f;
 		UserParameter.instance().middleAttackOffset =
 			slider[5].getValue() / 100.0f;
-		UserParameter.instance().rightAttackfOffset =
+		UserParameter.instance().rightAttackOffset =
 			slider[4].getValue() / 100.0f;
 
 	}
@@ -74,7 +74,7 @@ public final class RatingOffsetPanel
         slider[1] = createSlider(UserParameter.instance().middleDefenceOffset,"Abwehrzentrum");
 		slider[2] = createSlider(UserParameter.instance().leftDefenceOffset,"linkeAbwehrseite");
         slider[3] = createSlider(UserParameter.instance().midfieldOffset,"MatchMittelfeld");
-		slider[4] = createSlider(UserParameter.instance().rightAttackfOffset,"rechteAngriffsseite");        
+		slider[4] = createSlider(UserParameter.instance().rightAttackOffset,"rechteAngriffsseite");        
         slider[5] = createSlider(UserParameter.instance().middleAttackOffset,"Angriffszentrum");
 		slider[6] = createSlider(UserParameter.instance().leftAttackOffset,"linkeAngriffsseite");
                
