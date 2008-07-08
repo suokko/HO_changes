@@ -60,7 +60,7 @@ public class ToolTipHeader extends JTableHeader {
             retStr = "";
         }
 
-        if (retStr.length() < 1) {
+        if (retStr == null || retStr.length() < 1) {
             retStr = super.getToolTipText(e);
         }
 
