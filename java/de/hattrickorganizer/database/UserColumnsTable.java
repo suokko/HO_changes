@@ -6,6 +6,7 @@ import java.sql.Types;
 
 import de.hattrickorganizer.gui.model.HOColumnModel;
 import de.hattrickorganizer.gui.model.UserColumn;
+import de.hattrickorganizer.gui.model.UserColumnFactory;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -13,11 +14,11 @@ public class UserColumnsTable extends AbstractTable {
 
 	/** tablename **/
 	public final static String TABLENAME = "USERCOLUMNS";
-	
+
 	protected UserColumnsTable(JDBCAdapter  adapter){
 		super(TABLENAME, adapter);
 	}
-	
+
 
 	protected void initColumns() {
 		columns = new ColumnDescriptor[4];
@@ -27,7 +28,7 @@ public class UserColumnsTable extends AbstractTable {
 		columns[3]= new ColumnDescriptor("COLUMN_WIDTH",Types.INTEGER,true);
 	}
 
-	
+
 	public void saveModel(HOColumnModel model){
 
 		adapter.executeUpdate("DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN "+(model.getId()*1000)+" AND "+((model.getId()+1)*1000));
@@ -48,6 +49,9 @@ public class UserColumnsTable extends AbstractTable {
 
 		UserColumn[] dbcolumns = model.getColumns();
 		for (int i = 0; i < dbcolumns.length; i++) {
+			if (model.getId()==2 && dbcolumns[i].getId() == UserColumnFactory.ID) {
+				dbcolumns[i].setDisplay(true); // force ID column
+			}
 			if(dbcolumns[i].isDisplay()){
 				values.append((model.getId()*1000)+dbcolumns[i].getId());
 				values.append(",");
@@ -62,7 +66,7 @@ public class UserColumnsTable extends AbstractTable {
 			} // if
 		}
 	}
-	
+
 	public void insertDefault(HOColumnModel model){
 
 		adapter.executeUpdate("DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN "+(model.getId()*1000)+" AND "+((model.getId()+1)*1000));
@@ -80,7 +84,7 @@ public class UserColumnsTable extends AbstractTable {
 		sql.append(",");
 		sql.append(columns[3].getColumnName());
 		sql.append(") VALUES (");
-		
+
 		UserColumn[] dbcolumns = model.getColumns();
 		for (int i = 0; i < dbcolumns.length; i++) {
 				dbcolumns[i].setIndex(i);
@@ -101,7 +105,7 @@ public class UserColumnsTable extends AbstractTable {
 		int modelIndex 	= 0;
 		int tableIndex 	= 0;
 		int width		= 10;
-		
+
 		final StringBuffer sql = new StringBuffer(100);
 		int count = 0;
 		sql.append("SELECT * ");
@@ -121,29 +125,29 @@ public class UserColumnsTable extends AbstractTable {
 		try {
 
 			while(rs.next()){
-			
+
 				modelIndex 	= rs.getInt(columns[1].getColumnName());
 				tableIndex 	= rs.getInt(columns[2].getColumnName());
 				width 		= rs.getInt(columns[3].getColumnName());
-				
+
 				dbcolumns[modelIndex].setIndex(tableIndex);
 				dbcolumns[modelIndex].setDisplay(true);
 				dbcolumns[modelIndex].setPreferredWidth(width);
-				
-				
+
+
 				count++;
 			}
-			
+
 			if(count == 0){
 				insertDefault( model );
 				loadModel( model );
 			}
 			rs.close();
-			
+
 		} catch (SQLException e) {
 			HOLogger.instance().log(getClass(),e);
 		}
 
 	}
-	
+
 }
