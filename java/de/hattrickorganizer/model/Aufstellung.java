@@ -350,7 +350,7 @@ public  class Aufstellung implements plugins.ILineUp {
 
     /**
      * Get the average experience of all players in lineup
-     * using the formula from kopsterkepits:
+     * using the formula from kopsterkespits:
      * teamxp = ((sum of teamxp + xp of captain)/12)*(1-(7-leadership of captain)*5%)
      */
     public final float getAverageExperience() {

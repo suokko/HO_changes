@@ -344,7 +344,7 @@ final class AufstellungsDetailPanel extends ImagePanel
             m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(homodel.getAufstellung().getAvgExpierence()));
             float avXp = homodel.getAufstellung().getAverageExperience();
             m_jpDurchschnittErfahrung.setToolTipText(HOVerwaltung.instance().getResource().getProperty("Erfahrung")
-            		+ " (kopsterkepits): " + (avXp == -1f ? "need to set captain!" : PlayerHelper.getNameForSkill(avXp)));
+            		+ " (kopsterkespits): " + (avXp == -1f ? "need to set captain!" : PlayerHelper.getNameForSkill(avXp)));
 
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
