@@ -14,11 +14,12 @@ Changelist HO! 1.410
 - Updated Serbian languages to version 3.5 (thx chokky)
 - Updated French language to version 3.5 - fixes also bugs at player skill parsing in the Transfer plugin (thx guitch)
 - Automatically enable options league- and team-schedule in download dialog
+- Added team XP formula from kopsterkespits (tooltip over average team XP)
 - Arena Sizer: use lower fan factors
 
 Plugin Updates:
 ---------------
-- Feedback plugin 0.3 (included in HO 1.410)
+- Feedback plugin 0.4 (included in HO 1.410)
 - Training Experience plugin 1.25 (included in HO 1.410)
 - TeamAnalyzer 2.67 (included in HO 1.410)
 - Flags plugin 3.19 (fix flags of Uman + Al Yaman, added Uganda + Maldives, use internal coolness calculation)
