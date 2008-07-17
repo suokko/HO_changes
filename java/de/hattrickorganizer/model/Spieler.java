@@ -2474,6 +2474,12 @@ public final class Spieler implements plugins.ISpieler {
             return -1.0f;
         }
         
+        // The stars formulas are changed by the user -> clear the cache
+        if (!starRatingCache.containsKey("lastChange") || ((Date)starRatingCache.get("lastChange")).before(FormulaFactors.getLastChange())) {
+//    		System.out.println ("Clearing stars cache");
+        	starRatingCache.clear();
+        	starRatingCache.put("lastChange", new Date());
+        }
         /**
          * Create a key for the Hashtable cache
          * We cache every star rating to speed up calculation 

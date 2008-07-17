@@ -162,7 +162,6 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public double applyCommonProps (double inVal, IRatingPredictionParameter params, String sectionName) {
     	double retVal = inVal;
     	// TODO Reihenfolge ok?
-        retVal *= params.getParam(sectionName, "multiplier", 1);
         retVal *= (1.0 + params.getParam(sectionName, "squareMod", 0) * retVal); // Avoid if possible! 
 
     	if (taktikType == Matchdetails.TAKTIK_WINGS)
@@ -210,6 +209,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         // neutral Trainer
    	       	retVal *= params.getParam(sectionName, "trainerNeutral", 1);
 
+        retVal *= params.getParam(sectionName, "multiplier", 1);
         retVal += params.getParam(sectionName, "delta", 0);
         
 //    	System.out.println ("applyCommonProps: section "+sectionName+", before="+inVal+", after="+retVal);
