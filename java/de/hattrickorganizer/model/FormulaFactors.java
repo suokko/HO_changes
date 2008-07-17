@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.model;
 
+import java.util.Date;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -31,6 +33,9 @@ public class FormulaFactors {
     /** Konstante wieviel PositionsObjekte es gibt */
     protected static final int ANZ_FAKTOROBJEKTE = 19;
 
+    /** Last change date */
+    private static Date lastChange = new Date();
+    
     //~ Instance fields ----------------------------------------------------------------------------
 
     ////////////////////////////////AV//////////////////////////////////////////
@@ -89,6 +94,7 @@ public class FormulaFactors {
      * Creates a new instance of FormulaFactors
      */
     private FormulaFactors() {
+    	resetLastChange();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -214,6 +220,7 @@ public class FormulaFactors {
             HOLogger.instance().log(getClass(),"FormulaFactor.redxmlException gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
         }
+        resetLastChange();
     }
 
     /**
@@ -468,5 +475,23 @@ public class FormulaFactors {
 			m_clSturm_AUS = factorObject;
 			break;
     	}
+    	resetLastChange();
     }
+
+    /**
+     * Get last change date
+     * 
+     * @return last change date
+     */
+	public static Date getLastChange() {
+		return lastChange;
+	}
+
+	/**
+	 * Reset last change date to now
+	 */
+	public static void resetLastChange() {
+//		System.out.println ("Resetting last change date in FormulaFactors");
+		lastChange = new Date();
+	}
 }

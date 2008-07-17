@@ -452,7 +452,7 @@ final public class UserColumnFactory {
 				}
 			}; 
 			
-			playerAdditionalArray[2] = new PlayerColumn(30, "age", 40){
+			playerAdditionalArray[2] = new PlayerColumn(30, "Alter", 40){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					String ageString = player.getAlterWithAgeDaysAsString();
 					int birthdays = 0;
