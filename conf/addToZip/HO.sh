@@ -6,10 +6,10 @@
 # 
 # List of changes: 
 #
-#	0.33	- don't copy rating.dat anymore (not needed for HO>=1.400)
-#       0.32    - optional separate configuration file
-#       0.31    - configurable java memory (-m or $MAX_MEMORY)
-# 	0.3	- Introduce the bourne shell as standard shell
+#	0.33    - don't copy rating.dat anymore (not needed for HO>=1.400)
+#	0.32    - optional separate configuration file
+#	0.31    - configurable java memory (-m or $MAX_MEMORY)
+#	0.3	- Introduce the bourne shell as standard shell
 #		- Make HO! multi-user capable
 #		- Several layout changes to the script
 #		- check database before doing backup
@@ -69,7 +69,7 @@ HODIR=`pwd`
 # 
 #HOHOME=~/.hattrickorganizer
 
-HOHOME=$HODIR
+HOHOME=${HODIR}
 
 # Where can I find java?
 # Default is just looking at $PATH
@@ -173,15 +173,15 @@ RESTORE=false
 
 # check at least top install directory
 
-if [ ! -d $HODIR ]
+if [ ! -d "${HODIR}" ]
 then
-  echo "INSTALL DIRECTORY NOT FOUND: $HODIR" >&2
+  echo "INSTALL DIRECTORY NOT FOUND: ${HODIR}" >&2
   exit 4
 fi
 
 # Which version of HO! is this?
 
-HOVERSION=`cat $HODIR/version.txt`
+HOVERSION=`cat "${HODIR}"/version.txt`
 
 # Output the help
 
@@ -208,16 +208,16 @@ help(){
 # Start HO!
 
 start(){
-	cd $HOHOME
-        echo "Starting HO from $HOHOME..."  
+	cd "${HOHOME}"
+        echo "Starting HO from ${HOHOME}..."  
 
 #	HOLauncher is not used anymore - flattermann 2008-06-16
 #       $JAVA -classpath $HODIR HOLauncher  
 
-  	$JAVA -Xmx$MAX_MEMORY -jar $HODIR/ho.jar
+  	$JAVA -Xmx$MAX_MEMORY -jar "${HODIR}/ho.jar"
 
         # check database and print warning
-	if [ `grep modified $DATABASEDIR/database.properties | \
+	if [ `grep modified "${DATABASEDIR}/database.properties" | \
 			cut -d= -f2` = "no" ] 
 	then
 		echo "Database OK!"      
@@ -234,10 +234,10 @@ start(){
 
 backup(){
 	# Create the backupdir if there's none
-  	if [ ! -d $BACKUPDIR ] 
+  	if [ ! -d "${BACKUPDIR}" ] 
 	then
-    	echo "Creating $BACKUPDIR" 
-	    mkdir -p $BACKUPDIR
+    	echo "Creating ${BACKUPDIR}" 
+	    mkdir -p ${BACKUPDIR}
   	fi
   	cd $BACKUPDIR
 	# Delete too old backup files
@@ -245,9 +245,9 @@ backup(){
 	do
             rm -f `ls -r | tail -n 1`
   	done
-  	cd $DATABASEDIR
+  	cd ${DATABASEDIR}
 	# THE BIG TRICK: ls gives false (status>0) if one of the files is missing!!! ;-)  
-  	if ls $BACKUPLIST &> /dev/null
+  	if ls ${BACKUPLIST} &> /dev/null
 	then
 	    # is database OK?    
             if [ `grep modified database.properties | cut -d= -f2` = "no" ]  
@@ -403,54 +403,55 @@ done
 
 # Check for java -version (if called without `force')
 
-`$CHECK`   && checkjava
+
+`$CHECK` && checkjava
 
 # Check if all needed directories exist
 
-if [ ! -d $HOHOME ]
+if [ ! -d "${HOHOME}" ]
 then
-	echo "creating $HOHOME"
-	mkdir $HOHOME
+	echo "creating ${HOHOME}"
+	mkdir ${HOHOME}
 fi
 
-if [ ! -d $PLUGINSDIR ]
+if [ ! -d "${PLUGINSDIR}" ]
 then
-        if [ ! -d $HODIR/hoplugins ]
+        if [ ! -d "${HODIR}"/hoplugins ]
         then
-          echo "creating $HODIR/hoplugins"
-          mkdir $HOHOME/hoplugins
+          echo "creating ${HODIR}/hoplugins"
+          mkdir ${HOHOME}/hoplugins
         else
   	  echo "copying $PLUGINSDIR"
-	  cp -r $HODIR/hoplugins $HOHOME
+	  cp -r ${HODIR}/hoplugins $HOHOME
         fi
 fi
 
-if [ ! -d $SPRACHDIR ]
+if [ ! -d "${SPRACHDIR}" ]
 then
-	echo "copying $SPRACHDIR"
-	cp -r $HODIR/sprache $HOHOME	
+	echo "copying ${SPRACHDIR}"
+	cp -r ${HODIR}/sprache ${HOHOME}	
 fi
 
 # copy needed parameter files if not already there
 
-#if [ ! -e $HOHOME/ratings.dat ]
+#if [ ! -e "${HOHOME}"/ratings.dat ]
 #then
-#   cp $HODIR/ratings.dat $HOHOME/ratings.dat
+#   cp ${HODIR}/ratings.dat ${HOHOME}/ratings.dat
 #fi
-if [ ! -e $HOHOME/epv.dat ]
+if [ ! -e "${HOHOME}"/epv.dat ]
 then
-   cp $HODIR/epv.dat $HOHOME/epv.dat
+   cp ${HODIR}/epv.dat ${HOHOME}/epv.dat
 fi
 
 
 # Perform backups or restore only if $DATABASEDIR exists
 
-if [ -d $DATABASEDIR ]
+if [ -d "${DATABASEDIR}" ]
 then
 	`$BACKUP`  && backup
 	`$RESTORE` && restore
 else
-	echo -e "No directory $DATABASEDIR found. \n This is your first HO!-Session, isn't it? Have fun!"
+	echo -e "No directory ${DATABASEDIR} found. \n This is your first HO!-Session, isn't it? Have fun!"
 fi
 
 # Start HO! (or the Launcher)
@@ -459,4 +460,4 @@ start
 
 # Exit this script
 
-exit 0 
+exit 0
