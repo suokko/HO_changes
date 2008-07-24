@@ -1,0 +1,46 @@
+[general] 	
+version=3.0
+delta=1
+multiplier=0.25
+trainerOff=0.9
+trainerDef=1.2
+trainerNeutral=1.05
+tacticAIM=0.87
+tacticCreative=0.94
+
+[goalkeeping]
+keeper=0.8
+
+[defending]
+keeper=0.25	# keeper
+
+[defending_middle]
+# Player in the middle (i.e. single player or replaced player)
+# only contributes half
+multiplier=0.5
+cd_norm=0.55	# central defender normal
+cd_off=0.41	# central defender offensive
+extra_cd=0.5	# extra central defender
+im_norm=0.25	# inner midfield norm
+im_off=0.15	# inner midfield offensive
+im_def=0.32	# inner midfield defensive
+extra_im=0.24	# extra inner midfield
+
+[defending_thisside]
+wb_norm=0.98	# wingback normal
+wb_off=0.88	# wingback offensive
+wb_def=1.08	# wingback defensive
+wb_tm=0.88		# wingback to middle
+cd_norm=0.55	# central defender normal
+cd_off=0.41	# central defender offensive
+cd_tw=0.88		# central defender to wing
+extra_cd=0.5	# extra central defender
+wi_norm=0.35	# winger normal
+wi_off=0.32	# winger offensive
+wi_def=0.39	# winger defensive
+wi_tm=0.32		# winger to middle
+im_norm=0.25	# inner midfield norm
+im_off=0.15	# inner midfield offensive
+im_def=0.32	# inner midfield defensive
+extra_im=0.24	# extra inner midfield
+im_tw=0.2		# inner midfield to wing

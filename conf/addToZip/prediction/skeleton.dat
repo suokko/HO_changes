@@ -20,6 +20,7 @@ teamspiritPower=0
 trainerOff=1		# val = val * trainerOff, if trainer is offensive
 trainerDef=1		# ...
 trainerNeutral=1
+extraMulti=1		# multiplier for extra positions (<=1)
 
 # SKILLNAME is one of: 	{goalkeeper, playmaking, passing, winger, scoring, defending}
 #

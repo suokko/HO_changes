@@ -1,0 +1,27 @@
+[general] 	
+version=3.0
+multiplier=1
+
+[skill]
+keeper=0	# keeper
+wb_norm=0	# wingback normal
+wb_off=0	# wingback offensive
+wb_def=0	# wingback defensive
+wb_tm=0		# wingback to middle
+cd_norm=0	# central defender normal
+cd_off=0	# central defender offensive
+cd_tw=0		# central defender to wing
+extra_cd=0	# extra central defender
+wi_norm=0	# winger normal
+wi_off=0	# winger offensive
+wi_def=0	# winger defensive
+wi_tm=0		# winger to middle
+im_norm=0	# inner midfield norm
+im_off=0	# inner midfield offensive
+im_def=0	# inner midfield defensive
+im_tw=0		# inner midfield to wing
+extra_im=0	# extra inner midfield
+fw_norm=0	# forward normal
+fw_def=0	# forward defensive
+fw_tw=0		# forward to wing
+extra_fw=0	# extra forward

@@ -1,0 +1,22 @@
+[general]
+# Schattenweber:
+# staminaFactor = SQRT ((stamina+7)/14)
+# formFactor = SQRT ((form-1)/14)
+# xpFactor = 1 + SQRT (xp-1) * 7/100
+staminaDelta=7.0
+formDelta=-1.0
+xpDelta=-1.0
+skillMin=0
+staminaMin=0
+formMin=0
+xpMin=0
+staminaMultiplier=0.071429 	# 1/14
+formMultiplier=0.1428571	# 1/7
+staminaPower=0.5		# Square Root
+formPower=0.5			# Square Root
+xpPower=0.5			# Square Root
+finalXpMultiplier=0.07
+finalXpDelta=1
+resultMultiStamina=1
+resultMultiForm=1
+resultMultiXp=1

@@ -1,0 +1,36 @@
+[general] 	
+version=3.0
+delta=1
+multiplier=0.25
+home=1.20
+pic=0.85
+mots=1.15
+tacticCounter=0.93
+
+# GM-Sule normalizes the TS to ~6.5 (=2.546^2)
+teamspiritPreMulti=0.154270611 	# 1/(2.546^2) (Original GM-Sule)
+teamspiritPower=0.5 		# SQRT (Original GM-Sule)
+
+[playmaking]
+keeper=0	# keeper
+wb_norm=0.1	# wingback normal
+wb_off=0.12	# wingback offensive
+wb_def=0.06	# wingback defensive
+wb_tm=0.1		# wingback to middle
+cd_norm=0.14	# central defender normal
+cd_off=0.21	# central defender offensive
+cd_tw=0.1		# central defender to wing
+extra_cd=0.12	# extra central defender
+wi_norm=0.28	# winger normal
+wi_off=0.19	# winger offensive
+wi_def=0.19	# winger defensive
+wi_tm=0.33	# winger to middle
+im_norm=0.55	# inner midfield norm
+im_off=0.53	# inner midfield offensive
+im_def=0.53	# inner midfield defensive
+im_tw=0.5		# inner midfield to wing
+extra_im=0.5	# extra inner midfield
+fw_norm=0	# forward normal
+fw_def=0.25	# forward defensive
+fw_tw=0		# forward to wing
+extra_fw=0	# extra forward

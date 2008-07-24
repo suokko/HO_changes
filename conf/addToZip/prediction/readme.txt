@@ -171,6 +171,9 @@ trainerNeutral=x	same for neutral trainer
 
 delta=x			rating = rating + x
 
+extraMulti=x		multiplier for extra players (extraIM, extraCD, extraFW)
+
+
 Player Weights (useable in all [SKILL] sections):
 
 Option			Function
@@ -209,6 +212,8 @@ extra_cd=x      	extra central defender
 extra_im=x      	extra inner midfield
 extra_fw=x      	extra forward
 
+Every position can have a .SPECIALTY appended, e.g. "fw_def.technical". 
+If so, the weight is applied to players with this specialty only.
 
 
 Example 1 (Midfield)
