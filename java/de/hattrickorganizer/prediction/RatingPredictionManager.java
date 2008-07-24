@@ -43,6 +43,15 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static final int STANDARDS = ISpieler.SKILL_STANDARDS; // 8
     private static final int EXPIERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
     private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
+    
+    public static final int SPEC_NONE = ISpieler.NO_SPECIALTY; // 0
+    public static final int SPEC_TECHNICAL = ISpieler.BALLZAUBERER; // 1
+    public static final int SPEC_QUICK = ISpieler.SCHNELL; // 2
+    public static final int SPEC_POWERFUL = ISpieler.DURCHSETZUGNSSTARK; // 3
+    public static final int SPEC_UNPREDICTABLE = ISpieler.UNBERECHENBAR; // 4
+    public static final int SPEC_HEADER = ISpieler.KOPFBALLSTARK; // 5
+    public static final int SPEC_ALL = ISpieler.NUM_SPECIALTIES; // 6
+    public static final int NUM_SPEC = ISpieler.NUM_SPECIALTIES+1; // 7
 
     //~ Class fields -------------------------------------------------------------------------------
 
@@ -127,7 +136,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		HOLogger.instance().debug(this.getClass(), "parseError: "+sectionName+" resolves to Skill "+skillType+", Side "+sideType);
     		return 0;
     	}
-    	double[] allStk;
+    	double[][] allStk;
     	switch (sideType) {
 		case THISSIDE:
 			if (side2calc == LEFT)
@@ -148,12 +157,23 @@ public class RatingPredictionManager implements IRatingPredictionManager
 			allStk = getAllPlayerStrength(skillType);
 			break;
     	}
-    	double[] allWeights = getAllPlayerWeights(params, sectionName);
+    	double[][] allWeights = getAllPlayerWeights(params, sectionName);
 //    	System.out.println ("calcPartRating: using sidetype="+sideType+", side2calc="+side2calc);
-    	for (int i=0; i < allStk.length; i++) {
-//    		if (skillType == SPIELAUFBAU)
-//    			System.out.println ("addingPlayer @"+i+": (skill "+skillType+") stk="+allStk[i] + " * weight="+ allWeights[i]+" = "+allStk[i] * allWeights[i]);
-			retVal += allStk[i] * allWeights[i];
+    	// FIXME
+    	for (int effPos=0; effPos < allStk.length; effPos++) {
+			double curAllSkillWeight = allWeights[effPos][SPEC_ALL];
+    		for (int spec=0; spec < SPEC_ALL; spec++) {
+    			double curStk = allStk[effPos][spec];
+    			double curWeight = allWeights[effPos][spec];
+//    			if (skillType == SPIELAUFBAU)
+//    				System.out.println ("addingPlayer @"+i+": (skill "+skillType+") stk="+allStk[i] + " * weight="+ allWeights[i]+" = "+allStk[i] * allWeights[i]);
+    			if (curStk > 0) {
+    				if (curWeight > 0)
+    					retVal += curStk * curWeight;
+    				else
+    					retVal += curStk * curAllSkillWeight;
+    			}
+    		}
     	}
     	retVal = applyCommonProps (retVal, params, sectionName);
     	return retVal;
@@ -216,6 +236,57 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return retVal;
     }
     
+    private static String getSpecialtyName (int specialty, boolean withDot) {
+    	String retVal = (withDot?".":"");
+    	switch (specialty) {
+		case SPEC_NONE:
+			retVal += "none";
+			break;
+		case SPEC_TECHNICAL:
+			retVal += "technical";
+			break;
+		case SPEC_QUICK:
+			retVal += "quick";
+			break;
+		case SPEC_POWERFUL:
+			retVal += "powerful";
+			break;
+		case SPEC_UNPREDICTABLE:
+			retVal += "unpredictable";
+			break;
+		case SPEC_HEADER:
+			retVal += "header";
+			break;
+		case SPEC_ALL:
+//			retVal += "all";
+			retVal = "";
+			break;
+		default:
+			return "";
+		}
+    	return retVal;
+    }
+
+    private static int getSpecialtyByName (String specialtyName) {
+    	specialtyName = specialtyName.toLowerCase();
+    	if (specialtyName.equals("none"))
+    		return SPEC_NONE;
+    	else if (specialtyName.equals("technical"))
+    		return SPEC_TECHNICAL;
+    	else if (specialtyName.equals("quick"))
+    		return SPEC_QUICK;
+    	else if (specialtyName.equals("powerful"))
+    		return SPEC_POWERFUL;
+    	else if (specialtyName.equals("unpredictable"))
+    		return SPEC_UNPREDICTABLE;
+    	else if (specialtyName.equals("header"))
+    		return SPEC_HEADER;
+    	else if (specialtyName.equals("all") || specialtyName.equals(""))
+    		return SPEC_ALL;
+    	else
+    		return -1;
+    }
+    
     private static String getSkillName (int skill) {
     	switch (skill) {
 		case TORWART:
@@ -256,7 +327,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	else
     		return -1;
     }
-    
+
     private static int getSideByName (String sideName) {
     	sideName = sideName.toLowerCase();
     	if (sideName.equals("thisside"))
@@ -332,66 +403,69 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
 
 
-    public static double[] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
-    	double[] weights = new double[ISpielerPosition.NUM_POSITIONS];
-		weights[ISpielerPosition.TORWART] = params.getParam(sectionName, "keeper");
-		weights[ISpielerPosition.TORWART] += params.getParam(sectionName, "gk");	// alias for keeper
+    public static double[][] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
+    	double[][] weights = new double[ISpielerPosition.NUM_POSITIONS][NUM_SPEC];
 		double extraMulti = params.getParam(IRatingPredictionParameter.GENERAL, "extraMulti", 0);
 		double modCD = params.getParam(sectionName, "allCDs", 1);
 		double modWB = params.getParam(sectionName, "allWBs", 1);
 		double modIM = params.getParam(sectionName, "allIMs", 1);
 		double modWI = params.getParam(sectionName, "allWIs", 1);
 		double modFW = params.getParam(sectionName, "allFWs", 1);
-		weights[ISpielerPosition.INNENVERTEIDIGER] = params.getParam(sectionName, "cd_norm") * modCD;
-		weights[ISpielerPosition.INNENVERTEIDIGER] += params.getParam(sectionName, "cd") * modCD;	// alias for cd_norm
-		weights[ISpielerPosition.INNENVERTEIDIGER_OFF] = params.getParam(sectionName, "cd_off") * modCD;
-		weights[ISpielerPosition.INNENVERTEIDIGER_AUS] = params.getParam(sectionName, "cd_tw") * modCD;
-		weights[ISpielerPosition.AUSSENVERTEIDIGER] = params.getParam(sectionName, "wb_norm") * modWB;
-		weights[ISpielerPosition.AUSSENVERTEIDIGER] += params.getParam(sectionName, "wb") * modWB;	// alias for wb_norm
-		weights[ISpielerPosition.AUSSENVERTEIDIGER_OFF] = params.getParam(sectionName, "wb_off") * modWB;
-		weights[ISpielerPosition.AUSSENVERTEIDIGER_DEF] = params.getParam(sectionName, "wb_def") * modWB;
-		weights[ISpielerPosition.AUSSENVERTEIDIGER_IN] = params.getParam(sectionName, "wb_tm") * modWB;
-		weights[ISpielerPosition.MITTELFELD] = params.getParam(sectionName, "im_norm") * modIM;
-		weights[ISpielerPosition.MITTELFELD] += params.getParam(sectionName, "im") * modIM;	// alias for im_norm
-		weights[ISpielerPosition.MITTELFELD_OFF] = params.getParam(sectionName, "im_off") * modIM;
-		weights[ISpielerPosition.MITTELFELD_DEF] = params.getParam(sectionName, "im_def") * modIM;
-		weights[ISpielerPosition.MITTELFELD_AUS] = params.getParam(sectionName, "im_tw") * modIM;
-		weights[ISpielerPosition.FLUEGELSPIEL] = params.getParam(sectionName, "wi_norm") * modWI;
-		weights[ISpielerPosition.FLUEGELSPIEL] += params.getParam(sectionName, "wi") * modWI;	// alias for wi_norm
-		weights[ISpielerPosition.FLUEGELSPIEL_OFF] = params.getParam(sectionName, "wi_off") * modWI;
-		weights[ISpielerPosition.FLUEGELSPIEL_DEF] = params.getParam(sectionName, "wi_def") * modWI;
-		weights[ISpielerPosition.FLUEGELSPIEL_IN] = params.getParam(sectionName, "wi_tm") * modWI;
-		weights[ISpielerPosition.STURM] = params.getParam(sectionName, "fw_norm") * modFW;
-		weights[ISpielerPosition.STURM] += params.getParam(sectionName, "fw") * modFW;	// alias for fw_norm
-		weights[ISpielerPosition.STURM_DEF] = params.getParam(sectionName, "fw_def") * modFW;
-		weights[ISpielerPosition.STURM_AUS] = params.getParam(sectionName, "fw_tw") * modFW;
-		weights[ISpielerPosition.POS_ZUS_INNENV] = params.getParam(sectionName, "extra_cd") * modCD;
-		weights[ISpielerPosition.POS_ZUS_MITTELFELD] = params.getParam(sectionName, "extra_im") * modIM;
-		weights[ISpielerPosition.POS_ZUS_STUERMER] = params.getParam(sectionName, "extra_fw") * modFW;
-		weights[ISpielerPosition.POS_ZUS_INNENV] += params.getParam(sectionName, "cd_xtra") * modCD;	// alias for extra_cd
-		weights[ISpielerPosition.POS_ZUS_MITTELFELD] += params.getParam(sectionName, "im_xtra") * modIM;	// alias for extra_im
-		weights[ISpielerPosition.POS_ZUS_STUERMER] += params.getParam(sectionName, "fw_xtra") * modFW;	// alias for extra_fw
-		if (extraMulti > 0) {
-			weights[ISpielerPosition.POS_ZUS_INNENV] = weights[ISpielerPosition.INNENVERTEIDIGER] * extraMulti; // if extraMulti is defined, use extraMulti*CD
-			weights[ISpielerPosition.POS_ZUS_MITTELFELD] = weights[ISpielerPosition.MITTELFELD] * extraMulti; // if extraMulti is defined, use extraMulti*IM
-			weights[ISpielerPosition.POS_ZUS_STUERMER] = weights[ISpielerPosition.STURM] * extraMulti; // if extraMulti is defined, use extraMulti*FW
-		}
+    	for (int specialty=0; specialty<NUM_SPEC; specialty++) {
+    		String specialtyName = getSpecialtyName(specialty, true);
+    		weights[ISpielerPosition.TORWART][specialty] = params.getParam(sectionName, "keeper" + specialtyName);
+    		weights[ISpielerPosition.TORWART][specialty] += params.getParam(sectionName, "gk" + specialtyName);	// alias for keeper
+    		weights[ISpielerPosition.INNENVERTEIDIGER][specialty] = params.getParam(sectionName, "cd_norm" + specialtyName) * modCD;
+    		weights[ISpielerPosition.INNENVERTEIDIGER][specialty] += params.getParam(sectionName, "cd" + specialtyName) * modCD;	// alias for cd_norm
+    		weights[ISpielerPosition.INNENVERTEIDIGER_OFF][specialty] = params.getParam(sectionName, "cd_off" + specialtyName) * modCD;
+    		weights[ISpielerPosition.INNENVERTEIDIGER_AUS][specialty] = params.getParam(sectionName, "cd_tw" + specialtyName) * modCD;
+    		weights[ISpielerPosition.AUSSENVERTEIDIGER][specialty] = params.getParam(sectionName, "wb_norm" + specialtyName) * modWB;
+    		weights[ISpielerPosition.AUSSENVERTEIDIGER][specialty] += params.getParam(sectionName, "wb" + specialtyName) * modWB;	// alias for wb_norm
+    		weights[ISpielerPosition.AUSSENVERTEIDIGER_OFF][specialty] = params.getParam(sectionName, "wb_off" + specialtyName) * modWB;
+    		weights[ISpielerPosition.AUSSENVERTEIDIGER_DEF][specialty] = params.getParam(sectionName, "wb_def" + specialtyName) * modWB;
+    		weights[ISpielerPosition.AUSSENVERTEIDIGER_IN][specialty] = params.getParam(sectionName, "wb_tm" + specialtyName) * modWB;
+    		weights[ISpielerPosition.MITTELFELD][specialty] = params.getParam(sectionName, "im_norm" + specialtyName) * modIM;
+    		weights[ISpielerPosition.MITTELFELD][specialty] += params.getParam(sectionName, "im" + specialtyName) * modIM;	// alias for im_norm
+    		weights[ISpielerPosition.MITTELFELD_OFF][specialty] = params.getParam(sectionName, "im_off" + specialtyName) * modIM;
+    		weights[ISpielerPosition.MITTELFELD_DEF][specialty] = params.getParam(sectionName, "im_def" + specialtyName) * modIM;
+    		weights[ISpielerPosition.MITTELFELD_AUS][specialty] = params.getParam(sectionName, "im_tw" + specialtyName) * modIM;
+    		weights[ISpielerPosition.FLUEGELSPIEL][specialty] = params.getParam(sectionName, "wi_norm" + specialtyName) * modWI;
+    		weights[ISpielerPosition.FLUEGELSPIEL][specialty] += params.getParam(sectionName, "wi" + specialtyName) * modWI;	// alias for wi_norm
+    		weights[ISpielerPosition.FLUEGELSPIEL_OFF][specialty] = params.getParam(sectionName, "wi_off" + specialtyName) * modWI;
+    		weights[ISpielerPosition.FLUEGELSPIEL_DEF][specialty] = params.getParam(sectionName, "wi_def" + specialtyName) * modWI;
+    		weights[ISpielerPosition.FLUEGELSPIEL_IN][specialty] = params.getParam(sectionName, "wi_tm" + specialtyName) * modWI;
+    		weights[ISpielerPosition.STURM][specialty] = params.getParam(sectionName, "fw_norm" + specialtyName) * modFW;
+    		weights[ISpielerPosition.STURM][specialty] += params.getParam(sectionName, "fw" + specialtyName) * modFW;	// alias for fw_norm
+    		weights[ISpielerPosition.STURM_DEF][specialty] = params.getParam(sectionName, "fw_def" + specialtyName) * modFW;
+    		weights[ISpielerPosition.STURM_AUS][specialty] = params.getParam(sectionName, "fw_tw" + specialtyName) * modFW;
+    		weights[ISpielerPosition.POS_ZUS_INNENV][specialty] = params.getParam(sectionName, "extra_cd" + specialtyName) * modCD;
+    		weights[ISpielerPosition.POS_ZUS_MITTELFELD][specialty] = params.getParam(sectionName, "extra_im" + specialtyName) * modIM;
+			weights[ISpielerPosition.POS_ZUS_STUERMER][specialty] = params.getParam(sectionName, "extra_fw" + specialtyName) * modFW;
+			weights[ISpielerPosition.POS_ZUS_INNENV][specialty] += params.getParam(sectionName, "cd_xtra" + specialtyName) * modCD;	// alias for extra_cd
+			weights[ISpielerPosition.POS_ZUS_MITTELFELD][specialty] += params.getParam(sectionName, "im_xtra" + specialtyName) * modIM;	// alias for extra_im
+			weights[ISpielerPosition.POS_ZUS_STUERMER][specialty] += params.getParam(sectionName, "fw_xtra" + specialtyName) * modFW;	// alias for extra_fw
+			if (extraMulti > 0) {
+				weights[ISpielerPosition.POS_ZUS_INNENV][specialty] = weights[ISpielerPosition.INNENVERTEIDIGER][specialty] * extraMulti; // if extraMulti is defined, use extraMulti*CD
+				weights[ISpielerPosition.POS_ZUS_MITTELFELD][specialty] = weights[ISpielerPosition.MITTELFELD][specialty] * extraMulti; // if extraMulti is defined, use extraMulti*IM
+				weights[ISpielerPosition.POS_ZUS_STUERMER][specialty] = weights[ISpielerPosition.STURM][specialty] * extraMulti; // if extraMulti is defined, use extraMulti*FW
+			}
+    	}
     	return weights;
     }
     
-    public double[] getAllPlayerStrength (int skillType) {
+    public double[][] getAllPlayerStrength (int skillType) {
     	return getAllPlayerStrength(skillType, true, true, true);
     }
 
-    public double[] getAllPlayerStrengthLeft (int skillType) {
+    public double[][] getAllPlayerStrengthLeft (int skillType) {
     	return getAllPlayerStrength(skillType, true, false, false);
     }
 
-    public double[] getAllPlayerStrengthRight (int skillType) {
+    public double[][] getAllPlayerStrengthRight (int skillType) {
     	return getAllPlayerStrength(skillType, false, false, true);
     }
 
-    public double[] getAllPlayerStrengthMiddle (int skillType) {
+    public double[][] getAllPlayerStrengthMiddle (int skillType) {
     	return getAllPlayerStrength(skillType, false, true, false);
     }
 
@@ -491,11 +565,10 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		return false;
     }
 
-    public double[] getAllPlayerStrength (int skillType, boolean useLeft, boolean useMiddle, boolean useRight) {
-    	double[] retArray = new double[ISpielerPosition.NUM_POSITIONS];
+    public double[][] getAllPlayerStrength (int skillType, boolean useLeft, boolean useMiddle, boolean useRight) {
+    	double[][] retArray = new double[ISpielerPosition.NUM_POSITIONS][ISpieler.NUM_SPECIALTIES];
 //    	System.out.println ("getAllPlayerStrength: st="+skillType+", l="+useLeft+", m="+useMiddle+", r="+useRight);
-        for(int pos = 1; pos < 12; pos++)
-        {
+        for(int pos = 1; pos < 12; pos++) {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             byte taktik = lineup.getTactic4PositionID(pos);
             if(spieler != null) {
@@ -505,77 +578,74 @@ public class RatingPredictionManager implements IRatingPredictionManager
             			|| !useMiddle && isMiddle(pos, taktik)
             			|| !useRight && isRight(pos, taktik)) {
             		continue;
-            	}
-            	// Extra CD
-            	else if (taktik == ISpielerPosition.ZUS_INNENV)
-            		retArray[ISpielerPosition.POS_ZUS_INNENV] += calcPlayerStrength(spieler, skillType);
-            	// Extra IM
-            	else if (taktik == ISpielerPosition.ZUS_MITTELFELD)
-            		retArray[ISpielerPosition.POS_ZUS_MITTELFELD] += calcPlayerStrength(spieler, skillType);
-            	// Extra FW
-            	else if (taktik == ISpielerPosition.ZUS_STUERMER)
-            		retArray[ISpielerPosition.POS_ZUS_STUERMER] += calcPlayerStrength(spieler, skillType);
+            	} else {
+            		int specialty = spieler.getSpezialitaet(); 
+            		// Extra CD
+            		if (taktik == ISpielerPosition.ZUS_INNENV)
+            			retArray[ISpielerPosition.POS_ZUS_INNENV][specialty] += calcPlayerStrength(spieler, skillType);
+            		// Extra IM
+            		else if (taktik == ISpielerPosition.ZUS_MITTELFELD)
+            			retArray[ISpielerPosition.POS_ZUS_MITTELFELD][specialty] += calcPlayerStrength(spieler, skillType);
+            		// Extra FW
+            		else if (taktik == ISpielerPosition.ZUS_STUERMER)
+            			retArray[ISpielerPosition.POS_ZUS_STUERMER][specialty] += calcPlayerStrength(spieler, skillType);
             	
-            	else switch (pos) {
-            	case ISpielerPosition.keeper:
-            		retArray[ISpielerPosition.TORWART] += calcPlayerStrength(spieler, skillType);
-            		break;
-            	case ISpielerPosition.insideBack1:
-            	case ISpielerPosition.insideBack2:
-            		if (taktik == ISpielerPosition.NORMAL)
-            			retArray[ISpielerPosition.INNENVERTEIDIGER] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.OFFENSIV)
-            			retArray[ISpielerPosition.INNENVERTEIDIGER_OFF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.NACH_AUSSEN)
-            			retArray[ISpielerPosition.INNENVERTEIDIGER_AUS] += calcPlayerStrength(spieler, skillType);
-            		break;
-            	case ISpielerPosition.rightBack:
-            	case ISpielerPosition.leftBack:
-            		if (taktik == ISpielerPosition.NORMAL)
-            			retArray[ISpielerPosition.AUSSENVERTEIDIGER] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.OFFENSIV)
-            			retArray[ISpielerPosition.AUSSENVERTEIDIGER_OFF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.DEFENSIV)
-            			retArray[ISpielerPosition.AUSSENVERTEIDIGER_DEF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.ZUR_MITTE)
-            			retArray[ISpielerPosition.AUSSENVERTEIDIGER_IN] += calcPlayerStrength(spieler, skillType);
-            		break;
-            	case ISpielerPosition.rightWinger:
-            	case ISpielerPosition.leftWinger:
-            		if (taktik == ISpielerPosition.NORMAL)
-            			retArray[ISpielerPosition.FLUEGELSPIEL] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.OFFENSIV)
-            			retArray[ISpielerPosition.FLUEGELSPIEL_OFF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.DEFENSIV)
-            			retArray[ISpielerPosition.FLUEGELSPIEL_DEF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.ZUR_MITTE)
-            			retArray[ISpielerPosition.FLUEGELSPIEL_IN] += calcPlayerStrength(spieler, skillType);
-            		break;
-            	case ISpielerPosition.insideMid1:
-            	case ISpielerPosition.insideMid2:
-            		if (taktik == ISpielerPosition.NORMAL)
-            			retArray[ISpielerPosition.MITTELFELD] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.OFFENSIV)
-            			retArray[ISpielerPosition.MITTELFELD_OFF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.DEFENSIV)
-            			retArray[ISpielerPosition.MITTELFELD_DEF] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.NACH_AUSSEN)
-            			retArray[ISpielerPosition.MITTELFELD_AUS] += calcPlayerStrength(spieler, skillType);
-            		break;
-            	case ISpielerPosition.forward1:
-            	case ISpielerPosition.forward2:
-            		if (taktik == ISpielerPosition.NORMAL)
-            			retArray[ISpielerPosition.STURM] += calcPlayerStrength(spieler, skillType);
-            		else if (taktik == ISpielerPosition.DEFENSIV) {
-            			// TODO flattermann:
-            			// PS bonus for def technical to parameter file
-            			if (spieler.getSpezialitaet() == ISpieler.BALLZAUBERER && skillType == PASSSPIEL)
-            				retArray[ISpielerPosition.STURM_DEF] += 1.5 * calcPlayerStrength(spieler, skillType);
-            			else
-            				retArray[ISpielerPosition.STURM_DEF] += calcPlayerStrength(spieler, skillType);
-            		} else if (taktik == ISpielerPosition.NACH_AUSSEN)
-            			retArray[ISpielerPosition.STURM_AUS] += calcPlayerStrength(spieler, skillType);
-            		break;
+            		else switch (pos) {
+            		case ISpielerPosition.keeper:
+            			retArray[ISpielerPosition.TORWART][specialty] += calcPlayerStrength(spieler, skillType);
+            			break;
+            		case ISpielerPosition.insideBack1:
+            		case ISpielerPosition.insideBack2:
+            			if (taktik == ISpielerPosition.NORMAL)
+            				retArray[ISpielerPosition.INNENVERTEIDIGER][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.OFFENSIV)
+            				retArray[ISpielerPosition.INNENVERTEIDIGER_OFF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.NACH_AUSSEN)
+            				retArray[ISpielerPosition.INNENVERTEIDIGER_AUS][specialty] += calcPlayerStrength(spieler, skillType);
+            			break;
+            		case ISpielerPosition.rightBack:
+            		case ISpielerPosition.leftBack:
+            			if (taktik == ISpielerPosition.NORMAL)
+            				retArray[ISpielerPosition.AUSSENVERTEIDIGER][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.OFFENSIV)
+            				retArray[ISpielerPosition.AUSSENVERTEIDIGER_OFF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.DEFENSIV)
+            				retArray[ISpielerPosition.AUSSENVERTEIDIGER_DEF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.ZUR_MITTE)
+            				retArray[ISpielerPosition.AUSSENVERTEIDIGER_IN][specialty] += calcPlayerStrength(spieler, skillType);
+            			break;
+            		case ISpielerPosition.rightWinger:
+            		case ISpielerPosition.leftWinger:
+            			if (taktik == ISpielerPosition.NORMAL)
+            				retArray[ISpielerPosition.FLUEGELSPIEL][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.OFFENSIV)
+            				retArray[ISpielerPosition.FLUEGELSPIEL_OFF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.DEFENSIV)
+            				retArray[ISpielerPosition.FLUEGELSPIEL_DEF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.ZUR_MITTE)
+            				retArray[ISpielerPosition.FLUEGELSPIEL_IN][specialty] += calcPlayerStrength(spieler, skillType);
+            			break;
+            		case ISpielerPosition.insideMid1:
+            		case ISpielerPosition.insideMid2:
+            			if (taktik == ISpielerPosition.NORMAL)
+            				retArray[ISpielerPosition.MITTELFELD][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.OFFENSIV)
+            				retArray[ISpielerPosition.MITTELFELD_OFF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.DEFENSIV)
+            				retArray[ISpielerPosition.MITTELFELD_DEF][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.NACH_AUSSEN)
+            				retArray[ISpielerPosition.MITTELFELD_AUS][specialty] += calcPlayerStrength(spieler, skillType);
+            			break;
+            		case ISpielerPosition.forward1:
+            		case ISpielerPosition.forward2:
+            			if (taktik == ISpielerPosition.NORMAL)
+            				retArray[ISpielerPosition.STURM][specialty] += calcPlayerStrength(spieler, skillType);
+            			else if (taktik == ISpielerPosition.DEFENSIV) {
+            				retArray[ISpielerPosition.STURM_DEF][specialty] += calcPlayerStrength(spieler, skillType);
+            			} else if (taktik == ISpielerPosition.NACH_AUSSEN)
+            				retArray[ISpielerPosition.STURM_AUS][specialty] += calcPlayerStrength(spieler, skillType);
+            			break;
+            		}
             	}
             }
         }

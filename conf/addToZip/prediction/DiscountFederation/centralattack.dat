@@ -1,0 +1,30 @@
+[general] 	
+version=3.0
+delta=1
+multiplier=0.25
+trainerOff=1.15
+trainerDef=0.9
+trainerNeutral=1.05
+#confidence=0.008
+
+[passing]
+wi_norm=0.1	# winger normal
+wi_off=0.18	# winger offensive
+wi_def=0.08	# winger defensive
+wi_tm=0.2		# winger to middle
+im_norm=0.2	# inner midfield norm
+im_off=0.25	# inner midfield offensive
+im_def=0.15	# inner midfield defensive
+extra_im=0.18	# extra inner midfield
+im_tw=0.17		# inner midfield to wing
+fw_norm=0.25	# forward normal
+fw_def=0.45	# forward defensive
+fw_def.technical=0.54	# forward defensive technical
+extra_fw=0.23	# extra forward
+fw_tw=0.2		# forward to wing
+
+[scoring]
+fw_norm=0.6	# forward normal
+fw_def=0.36	# forward defensive
+extra_fw=0.54	# extra forward
+fw_tw=0.45		# forward to wing
