@@ -211,8 +211,7 @@ start(){
 	cd "${HOHOME}"
         echo "Starting HO from ${HOHOME}..."  
 
-#	HOLauncher is not used anymore - flattermann 2008-06-16
-#       $JAVA -classpath $HODIR HOLauncher  
+        $JAVA -classpath "${HODIR}" HOLauncher  
 
   	$JAVA -Xmx$MAX_MEMORY -jar "${HODIR}/ho.jar"
 
