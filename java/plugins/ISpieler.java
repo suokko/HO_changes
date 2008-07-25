@@ -21,19 +21,25 @@ public interface ISpieler {
     //Konstanten
     //////////////////////////////////////////////////////////////////////////////// 
 
-    /** TODO Missing Parameter Documentation */
+	/** Number of specialties */
+	public static final int NUM_SPECIALTIES = 6;
+
+	/** No specialty */
+    public static final int NO_SPECIALTY = 0;
+
+    /** Specialty: Technical */
     public static final int BALLZAUBERER = 1;
 
-    /** TODO Missing Parameter Documentation */
+    /** Specialty: Quick */
     public static final int SCHNELL = 2;
 
-    /** TODO Missing Parameter Documentation */
+    /** Specialty: Powerful */
     public static final int DURCHSETZUGNSSTARK = 3;
 
-    /** TODO Missing Parameter Documentation */
+    /** Specialty: Unpredictable */
     public static final int UNBERECHENBAR = 4;
 
-    /** TODO Missing Parameter Documentation */
+    /** Specialty: Header */
     public static final int KOPFBALLSTARK = 5;
 
     //Wetter
