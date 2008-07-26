@@ -1,10 +1,10 @@
 The rating prediction is based on:
 
-centraldefense	HO internal optimization by flattermann
-sidedefense	HO internal optimization by flattermann
-midfield	GM-Sule & GM-Mjoelnir
-centralattack	HO internal optimization by flattermann
-sideattack	HO internal optimization by flattermann
+centraldefense	HO internal optimization by flattermann using the feedback plugin data
+sidedefense	HO internal optimization by flattermann using the feedback plugin data
+midfield	HO internal optimization by flattermann using the feedback plugin data
+centralattack	HO internal optimization by flattermann using the feedback plugin data
+sideattack	HO internal optimization by flattermann using the feedback plugin data
 playerstrength	Discound Fed, GM-Mjoelnir and others
 
 We would like to thank everybody who helped!
