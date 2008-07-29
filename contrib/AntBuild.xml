@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Ant Build file for HO by flattermann <flattermannHO@gmail.com>
+	
+	- created for personal use, but perhaps it may be useful for other, too -
+	 
+	This ant file expects the following file system structure:
+	
+	workspace.ho1						(Eclipse workspace directory)
+		+-> HO1								HO1 Main Project
+		|	+-> bin							Compiled .class files go here
+		|	+-> build						The full HO build with supplementary files is created here
+		|	+-> export-dmg					The MacOS Builds (DMG) are created here [please see note 1, below]
+		|	+-> export-zip					The ZIP-Builds are created here
+		|	+-> svn							
+		|	|	+-> java					The source code is here
+		|	|	+-> conf					Supplementary files
+		|	|	|	+-> addToJar			These files will be added to ho.jar
+		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
+		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
+		|	|	
+		|	+-> MANIFEST.MF					The manifest file for ho.jar
+		|	+-> AntBuild.xml				This file
+		|	
+	    +-> HO-Plugin-Commons				HO Plugin Project "Commons"
+	    |	+-> bin							Compiled .class files go here
+	    |	+-> cvs							The source code is here
+	    |	
+	    +-> HO-Plugin-Feedback				HO Plugin Project "Feedback"
+	    |	+-> bin							Compiled .class files go here
+	    |	+-> cvs							The source code is here
+	    |	
+	    +-> HO-Plugin-XYZ					HO Plugin Project "XYZ"
+	    	+-> bin							Compiled .class files go here
+	    	+-> cvs							The source code is here
+	    	
+	    	
+	Note 1: (How to create DMG-Builds with Linux)
+	- still missing, try to figure it out yourself ;-) or send a mail to flattermannHO@gmail.com -
+-->
+
+<project name="HO1-AntBuild" default="copy2build" basedir=".">
+	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1"/>
+	<property name="tmp-target" value="${tmp}/target"/>
+
+	<property name="build-dir" value="build"/>
+	
+	<property name="export-zip-dir" value="export-zip"/>
+	
+	<property name="export-dmg-basedir" value="export-dmg"/>
+	<property name="export-dmg-templatefile" value="${export-dmg-basedir}/HO.template.dmg"/>
+	<property name="export-dmg-targetfile" value="${export-dmg-basedir}/HO.dmg"/>
+	<property name="export-dmg-sourcedir" value="${export-dmg-basedir}/source"/>
+	<property name="export-dmg-backgrounddir" value="${export-dmg-basedir}/background"/>
+	<property name="export-dmg-targetdir" value="${export-dmg-basedir}/target"/>
+	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images"/>
+	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount"/>
+
+	<!-- ================================= 
+          target: makeAll              
+         ================================= -->
+    <target name="makeAll" description="Create ho.jar, HO.zip and HO.dmg">
+    	<antcall target="makeJar"/>
+    	<antcall target="makeZip"/>
+    	<antcall target="makeDmgImage"/>
+    </target>
+	
+	<!-- ================================= 
+          target: init              
+         ================================= -->
+    <target name="init" description="create tmp dirs and get HO Version">
+    	<mkdir dir="${tmp}"/>
+       	<loadfile property="hoversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
+    		<filterchain>
+    			<linecontains>
+    				<contains value=" VERSION "/>
+    			</linecontains>
+    			<replaceregex pattern=".*=\D*" replace=""/>
+    			<replaceregex pattern="\D*$" replace=""/>
+    			<striplinebreaks/>
+    		</filterchain>
+    	</loadfile>
+       	<loadfile property="modversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
+    		<filterchain>
+    			<linecontains>
+    				<contains value=" MODVERSION "/>
+    			</linecontains>
+    			<replaceregex pattern='.*=[^"]*"' replace=""/>
+    			<replaceregex pattern='"[^"]*$' replace=""/>
+    			<replaceregex pattern='build ' replace=""/>
+    			<replaceregex pattern='^' replace="-"/>
+    			<replaceregex pattern='^-$' replace=""/>
+    			<striplinebreaks/>
+    		</filterchain>
+    	</loadfile>
+       	<loadfile property="dev" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
+    		<filterchain>
+    			<linecontains>
+    				<contains value=" DEVELOPMENT "/>
+    			</linecontains>
+    			<replaceregex pattern='.*= ' replace=""/>
+    			<replaceregex pattern=';\w*$' replace=""/>
+    			<replaceregex pattern='true' replace="-BETA"/>
+    			<replaceregex pattern='false' replace=""/>
+    			<striplinebreaks/>
+    		</filterchain>
+    	</loadfile>
+    	<!-- if the file "svn/isPrivateBuild" exists, set ${private} to "-PRIVATE"... -->
+    	<condition property="private" value="-PRIVATE">
+    		<available file="svn/isPrivateBuild"/>
+    	</condition>
+    	<!-- ... else ${private} defaults to "" -->
+    	<condition property="private" value="">
+    		<not><isset property="private"/></not>
+    	</condition>
+    	<!-- ${modversion} defaults to "" -->
+    	<condition property="modversion" value="">
+    		<not><isset property="modversion"/></not>
+    	</condition>
+    	<!-- if ${dev} is set (i.e. development version), set ${debug} to "DEBUG"... -->
+    	<condition property="debug" value="DEBUG">
+			<isset property="dev"/>
+		</condition>
+    	<!-- ... else set ${debug} to ""... -->
+    	<condition property="debug" value="">
+			<not><isset property="debug"/></not>
+		</condition>
+    	<!-- ${dev} defaults to "" -->
+    	<condition property="dev" value="">
+    		<not><isset property="dev"/></not>
+    	</condition>
+    	<echo>HOVERSION=${hoversion}, DEV=${dev}, MODVERSION=${modversion}, PRIVATE=${private}, DEBUG=${debug}</echo>
+    </target>
+	
+	<!-- ================================= 
+          target: makeJar              
+         ================================= -->
+    <target name="makeJar" depends="init" description="Create JAR File">
+    	<mkdir dir="${tmp-target}"/>
+    	<copy todir="${tmp-target}" preservelastmodified="yes">
+    		<fileset dir="bin"/>
+    	</copy>
+    	<copy todir="${tmp-target}" preservelastmodified="yes">
+    		<fileset dir="svn/conf/addToJar"/>
+    	</copy>
+    	<jar manifest="MANIFEST.MF" destfile="${build-dir}/ho.jar" basedir="${tmp-target}"/>
+    </target>
+	
+	
+	<!-- ================================= 
+          target: copy2build              
+         ================================= -->
+    <target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
+    	<copy todir="${build-dir}" overwrite="true">
+    		<fileset dir="svn/conf/addToZip"/>
+    		<fileset file="${tmp-target}/HOLauncher.class"/>
+    	</copy>
+    	<!-- Add DEBUG option to ho.jar -->
+		<replaceregexp match="(-jar.*ho.jar.*$)" replace="\1 ${debug}" flags="i" byline="yes">
+			<fileset dir="${build-dir}" includes="HO.sh HO.bat"/>
+		</replaceregexp>
+    	<antcall target="copyPlugins"/>
+    </target>
+	
+	<!-- ================================= 
+          target: copyPlugins              
+         ================================= -->
+    <target name="copyPlugins" description="Copy hoplugins to builddir">
+    	<antcall target="copy-hoplugins-common"/>
+    	<antcall target="copy-hoplugins-evilcard"/>
+    	<antcall target="copy-hoplugins-feedback"/> 
+		<antcall target="copy-hoplugins-teamanalyzer"/>
+		<antcall target="copy-hoplugins-specialevents"/>
+		<antcall target="copy-hoplugins-trainingexperience"/>
+		<antcall target="copy-hoplugins-transfers"/>
+	</target>
+
+	<!-- ================================= 
+          target: copy-hoplugins-common              
+         ================================= -->
+	<target name="copy-hoplugins-common">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-Commons/bin/hoplugins"/>
+		</copy>
+	</target>
+	
+	<!-- ================================= 
+          target: copy-hoplugins-trainingexperience              
+         ================================= -->
+	<target name="copy-hoplugins-trainingexperience">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-TrainingExperience/bin/hoplugins"/>
+		</copy>
+	</target>
+	
+	<!-- ================================= 
+          target: copy-hoplugins-specialevents              
+         ================================= -->
+	<target name="copy-hoplugins-specialevents">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-SpecialEvents/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: copy-hoplugins-transfers              
+         ================================= -->
+	<target name="copy-hoplugins-transfers">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-Transfers/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: copy-hoplugins-teamanalyzer              
+         ================================= -->
+	<target name="copy-hoplugins-teamanalyzer">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-TeamAnalyzer/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: copy-hoplugins-evilcard              
+         ================================= -->
+	<target name="copy-hoplugins-evilcard">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-EvilCard/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: copy-hoplugins-feedback              
+         ================================= -->
+	<target name="copy-hoplugins-feedback">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-Feedback/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="Remove temp dir">
+		<echo>Removing temp files and dirs</echo>
+		<delete includeemptydirs="true" failonerror="false" verbose="true">
+			<fileset dir="${tmp}"/>
+			<fileset dir="${export-dmg-targetdir}"/>
+			<fileset dir="${build-dir}"/>
+		</delete>
+	</target>
+	
+	<!-- ================================= 
+          target: makeZip              
+         ================================= -->
+    <target name="makeZip" depends="init,makeJar,copy2build" description="Creates the full HO.zip">
+    	<mkdir dir="${export-zip-dir}"/>
+        <zip destfile="${export-zip-dir}/HO-${hoversion}${dev}${modversion}${private}.zip">
+        	<fileset dir="${build-dir}"/>
+        </zip>
+    </target>
+	
+	<!-- ================================= 
+          target: makeDmg              
+         ================================= -->
+    <target name="makeDmg" depends="init,makeJar,copy2build" description="Create OSX DMG dir">
+    	<property name="InfoSrc" value="${export-dmg-sourcedir}/Hattrick Organizer.app/Contents/Info.plist"/>
+    	<property name="InfoTarget" value="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Info.plist"/>
+
+    	<mkdir dir="${export-dmg-targetdir}"/>
+
+    	<copy todir="${export-dmg-targetdir}" preservelastmodified="yes">
+    		<fileset dir="${export-dmg-sourcedir}"/>
+    	</copy>
+    	<copy todir="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java" preservelastmodified="yes">
+    		<fileset dir="${build-dir}"/>
+    	</copy>
+    	<copy file="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java/changelog.txt"  
+    			tofile="${export-dmg-targetdir}/ChangeLog.txt" preservelastmodified="true"/>
+    	<echo>Setting HOVERSION=${hoversion} in ${InfoTarget}</echo>
+    	<copy file="${InfoSrc}" tofile="${InfoTarget}" overwrite="true">
+    		<filterchain>
+    			<replacestring from="HOVERSION" to="${hoversion}"/>
+    		</filterchain>
+    	</copy>
+    	<copy file="${export-dmg-backgrounddir}/Back${dev}.png"
+    			tofile="${export-dmg-targetdir}/.Back.png" preservelastmodified="true"/>
+    </target>
+	
+	<!-- ================================= 
+          target: makeDmgImage              
+         ================================= -->
+    <target name="makeDmgImage" depends="makeDmg" description="Creates the DMG image">
+    	<echo>Trying to unmount DMG, just to be sure</echo>
+    	<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true"/>
+    	<echo>Copying template DMG</echo>
+    	<copy file="${export-dmg-templatefile}" 
+    		tofile="${export-dmg-targetfile}" overwrite="true"/>
+    	<exec executable="${export-dmg-basedir}/mountDmg" resolveexecutable="true"/>
+    	<echo>Updating dmg image...</echo>
+    	<copy todir="${export-dmg-mountdir}" preservelastmodified="yes">
+    		<fileset dir="${export-dmg-targetdir}"/>
+    	</copy>
+    	<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true"/>
+    	<copy file="${export-dmg-targetfile}" 
+    		tofile="${export-dmg-imagedir}/HO-${hoversion}${dev}${modversion}${private}.dmg" 
+    		overwrite="true" verbose="true"/>
+    	<zip destfile="${export-dmg-imagedir}/HO-${hoversion}${dev}${modversion}${private}-MacOS-DMG.zip">
+    		<fileset file="${export-dmg-imagedir}/HO-${hoversion}${dev}${modversion}${private}.dmg"/>
+    	</zip>
+    </target>
+
+</project> 
