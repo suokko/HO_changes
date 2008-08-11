@@ -1904,9 +1904,9 @@ public class DBZugriff {
 		 * 
 		 * DO NOT use 'if-then-else' here, as this would ignores some updates! 
 		 */
-		if (lastConfigUpdate < 1.410) {
-			HOLogger.instance().log(getClass(), "Updating configuration to version 1.410...");
-			updateConfigTo1410();
+		if (lastConfigUpdate < 1.4101) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.410-1...");
+			updateConfigTo1410_1();
 		}
 
 //		if (lastConfigUpdate < 1.420) {
@@ -1916,7 +1916,7 @@ public class DBZugriff {
 
 	}
 
-	private void updateConfigTo1410 () {
+	private void updateConfigTo1410_1 () {
 		// Reset Training Speed Parameters for New Training
 		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
 		saveUserParameter("DAUER_TORWART", 3.7);
@@ -1925,7 +1925,7 @@ public class DBZugriff {
 		saveUserParameter("DAUER_PASSPIEL", 4.5);
 		saveUserParameter("DAUER_FLUEGELSPIEL", 3.8);
 		saveUserParameter("DAUER_CHANCENVERWERTUNG", 5.2);
-		saveUserParameter("DAUER_STANDARDS", 2.0);
+		saveUserParameter("DAUER_STANDARDS", 1.5);
 
 		saveUserParameter("AlterFaktor", 1.0);
 		saveUserParameter("TrainerFaktor", 1.0);
@@ -1948,7 +1948,7 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
 
 		// always set the LastConfUpdate as last step
-		saveUserParameter("LastConfUpdate", 1.410);		
+		saveUserParameter("LastConfUpdate", 1.4101);		
 	}
 
 	private void updateConfigTo1420 () {
