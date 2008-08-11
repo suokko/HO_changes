@@ -19,9 +19,13 @@ Changelist HO! 1.410
 
 Plugin Updates:
 ---------------
-- Feedback plugin 0.4 (included in HO 1.410)
+- Feedback plugin 0.42 (included in HO 1.410)
 - Training Experience plugin 1.25 (included in HO 1.410)
 - TeamAnalyzer 2.67 (included in HO 1.410)
 - Flags plugin 3.19 (fix flags of Uman + Al Yaman, added Uganda + Maldives, use internal coolness calculation)
 - EvilCard plugin 0.951 (fix exception)
 - SpecialEvents plugin 1.21 (fix exception)
+
+Special Notes:
+--------------
+Please start a full subskill recalculation (File / Calculate Subskills) after the installation to benefit of the new training speed calculation.

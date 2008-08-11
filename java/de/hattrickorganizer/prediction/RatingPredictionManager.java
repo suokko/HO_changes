@@ -161,17 +161,20 @@ public class RatingPredictionManager implements IRatingPredictionManager
 //    	System.out.println ("calcPartRating: using sidetype="+sideType+", side2calc="+side2calc);
     	// FIXME
     	for (int effPos=0; effPos < allStk.length; effPos++) {
-			double curAllSkillWeight = allWeights[effPos][SPEC_ALL];
+			double curAllSpecWeight = allWeights[effPos][SPEC_ALL];
     		for (int spec=0; spec < SPEC_ALL; spec++) {
     			double curStk = allStk[effPos][spec];
     			double curWeight = allWeights[effPos][spec];
-//    			if (skillType == SPIELAUFBAU)
-//    				System.out.println ("addingPlayer @"+i+": (skill "+skillType+") stk="+allStk[i] + " * weight="+ allWeights[i]+" = "+allStk[i] * allWeights[i]);
     			if (curStk > 0) {
-    				if (curWeight > 0)
+    				if (curWeight > 0) {
+//    	    			if (skillType == SPIELAUFBAU)
+//    	    				System.out.println ("addingPlayer (SPEC) @"+effPos+": (skill "+skillType+") stk="+curStk + " * weight="+ curWeight+" = "+curStk * curWeight);
     					retVal += curStk * curWeight;
-    				else
-    					retVal += curStk * curAllSkillWeight;
+    				} else {
+//    	    			if (skillType == SPIELAUFBAU)
+//    	    				System.out.println ("addingPlayer (ALL) @"+effPos+": (skill "+skillType+") stk="+curStk + " * weight="+ curAllSpecWeight +" = "+curStk * curAllSpecWeight);
+    					retVal += curStk * curAllSpecWeight;
+    				}
     			}
     		}
     	}
@@ -182,7 +185,8 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public double applyCommonProps (double inVal, IRatingPredictionParameter params, String sectionName) {
     	double retVal = inVal;
     	// TODO Reihenfolge ok?
-        retVal *= (1.0 + params.getParam(sectionName, "squareMod", 0) * retVal); // Avoid if possible! 
+        retVal += params.getParam(sectionName, "squareMod", 0) * Math.pow(retVal, 2); // Avoid if possible! 
+        retVal += params.getParam(sectionName, "cubeMod", 0) * Math.pow(retVal, 3); // Avoid even more! 
 
     	if (taktikType == Matchdetails.TAKTIK_WINGS)
     		retVal *= params.getParam(sectionName, "tacticAOW", 1);
