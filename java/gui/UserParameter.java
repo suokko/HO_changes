@@ -432,7 +432,7 @@ public final class UserParameter extends Configuration {
     public float DAUER_SPIELAUFBAU = 5.5f;
 
     /** TODO Missing Parameter Documentation */
-    public float DAUER_STANDARDS = 2.0f;
+    public float DAUER_STANDARDS = 1.5f;
 
     /** TODO Missing Parameter Documentation */
     public float DAUER_TORWART = 3.7f;

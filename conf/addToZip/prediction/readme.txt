@@ -143,8 +143,8 @@ General options (useable in every section, including [general] and [SKILL]):
 They will be applied in the following order:
 
 Option			Function
-multiplier=x		rating = rating * x
-squareMod=x		rating = rating + x*rating*rating 	# dirty hack! Should be 0, if possible
+squareMod=x		rating = rating + x*rating*rating 		# dirty hack! Should be 0, if possible
+cubeMod=x		rating = rating + x*rating*rating*rating 	# even dirtier hack! Should be 0, if possible
 
 tacticAIM=x		if Tactic==AIM then rating = rating * tacticAOM
 tacticAOW=x		if Tactic==AOW then rating = rating * tacticAOW
@@ -169,6 +169,7 @@ trainerOff=x		if your trainer is offensive then rating = rating * trainerOff
 trainerDef=x		same for defensive trainer
 trainerNeutral=x	same for neutral trainer
 
+multiplier=x		rating = rating * x
 delta=x			rating = rating + x
 
 extraMulti=x		multiplier for extra players (extraIM, extraCD, extraFW)
@@ -240,6 +241,6 @@ After that, everything is added up to the PlaymakingSum.
 
 In the end, the parameters from the [general] section are applied to this PlaymakingSum.
 I.e. 
+PlaymakingSum = PlaymakingSum + squareMod*PlaymakingSum^2
 PlaymakingSum = PlaymakingSum * multiplier
-PlaymakingSum = PlaymakingSum + (1+squareMod)*PlaymakingSum^2
 PlaymakingSum = PlaymakingSum + delta
