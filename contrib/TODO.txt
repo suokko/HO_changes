@@ -1,0 +1,12 @@
+LastChange: 13.08.2008 - flattermann
+
+- MacOS Prefs werden nicht gepeichert (teilw.)
+- MacOS OutOfHeapSpace (teilw.)
+- Regainer führen zu 0-Rating (RatingPredictionManager) [Regainer sind dem HO unbekannt -> hinzufügen!]
+- DiscountFederation-Prediction entfernen (Verwirrend)
+- Wozu "Idealposition zuerst" bei der Aufstellung? (Entfernen?)
+- Taktikstärke wird manchmal falsch angezeigt (beim Auswählen einer gespeicherten Aufstellung, siehe 11716734.41)
+
+- Taktikstärke ROOT-optimieren (!)
+- Prediction/Sterne ROOT-optimieren
+- TrainingSpeed ROOT-optimieren
