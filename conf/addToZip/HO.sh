@@ -3,8 +3,8 @@
 # Start script for Hattrick Organizer v0.331
 # Originally created by patta, RAGtime and others
 # Last Change (2008-06-16) by Flattermann (flattermannHO@gmail.com)
-# 
-# List of changes: 
+#
+# List of changes:
 #
 #	0.33    - don't copy rating.dat anymore (not needed for HO>=1.400)
 #	0.32    - optional separate configuration file
@@ -13,7 +13,7 @@
 #		- Make HO! multi-user capable
 #		- Several layout changes to the script
 #		- check database before doing backup
-#		- quit if java version is not returned (NO Sun java?)    
+#		- quit if java version is not returned (NO Sun java?)
 #
 
 ########################################################################
@@ -39,7 +39,7 @@
 #                                                                      #
 #                                                                      #
 #  Alternatively, as single user just start HO! from the HO directory  #
-#  via ./HO.sh without editing something!                              # 
+#  via ./HO.sh without editing something!                              #
 #                                                                      #
 ########################################################################
 # OPTIONAL user configuration file which may overwrite some
@@ -66,7 +66,7 @@ HODIR=`pwd`
 #HOHOME=$HODIR
 #
 # MULTI USER:
-# 
+#
 #HOHOME=~/.hattrickorganizer
 
 HOHOME=${HODIR}
@@ -92,6 +92,10 @@ MAX_BACKUPS=5
 
 MAX_MEMORY=256m
 
+# JDBC driver to use. Only if you use a remote DDBB
+# better write it in your HO.config
+#JDBC=/usr/share/java/mysql-3.1.11.jar
+
 #
 ### END of default user configuration! ###
 #
@@ -101,8 +105,8 @@ MAX_MEMORY=256m
 HOSHDIR="$(dirname "$0")"
 if [ -f "$HOSHDIR/$HOCONF" ]
 then
-# THIS FILE IS NOT PART OF HO PACKAGE AND WON'T BE OVERWRITTEN! 
-# SO YOU HAVE TO CREATE IT BY YOUR OWN BY COPYING THE LINES ABOVE 
+# THIS FILE IS NOT PART OF HO PACKAGE AND WON'T BE OVERWRITTEN!
+# SO YOU HAVE TO CREATE IT BY YOUR OWN BY COPYING THE LINES ABOVE
 # BETWEEN "### BEGIN" AND "### END" THAT YOU WANT TO CHANGE!!!
    echo "Reading HO configuration from user file $HOSHDIR/$HOCONF!"
    source "$HOSHDIR/$HOCONF"
@@ -118,15 +122,15 @@ fi
 HONAME=$0
 
 # Enter the directory where the database is stored
-#        
+#
 #DATABASEDIR=$HOHOME/db
 
 DATABASEDIR=$HOHOME/db
 
 # Enter the default backup-directory. It will be created
 # in $HOHOME/db if it doesn't exist. Default is 'backup'.
-#           
-#BACKUPDIR=$HOHOME/db/backup 
+#
+#BACKUPDIR=$HOHOME/db/backup
 
 BACKUPDIR=$HOHOME/db/backup
 
@@ -142,7 +146,7 @@ PLUGINSDIR=$HOHOME/hoplugins
 
 SPRACHDIR=$HOHOME/sprache
 
-            
+
 # required java version
 
 JAVAVERREQ=1.4.1
@@ -165,7 +169,7 @@ CHECK=true
 
 BACKUP=false
 
-# Restore by default? 
+# Restore by default?
 # IMPORTANT! This is just for initialisation!
 # If you set this to 'true' strange things will occure!
 
@@ -209,33 +213,41 @@ help(){
 
 start(){
 	cd "${HOHOME}"
-        echo "Starting HO from ${HOHOME}..."  
+    echo "Starting HO from ${HOHOME}..."
 
-        $JAVA -classpath "${HODIR}" HOLauncher  
+    $JAVA -classpath "${HODIR}" HOLauncher
 
-  	$JAVA -Xmx$MAX_MEMORY -jar "${HODIR}/ho.jar"
+	# check database and print warning
+	HO_PAR="-jar $HODIR/ho.jar"
+    if [ ! $JDBC = "" ]
+    then
+        echo "Using jdbc $JDBC..."
+        HO_PAR="-cp $HODIR/hsqldb.jar:jl1.0.jar:$HODIR/ho.jar:$JDBC de.hattrickorganizer.HO"
+    fi
 
-        # check database and print warning
+  	$JAVA -Xmx$MAX_MEMORY $HO_PAR
+
+
 	if [ `grep modified "${DATABASEDIR}/database.properties" | \
-			cut -d= -f2` = "no" ] 
+			cut -d= -f2` = "no" ]
 	then
-		echo "Database OK!"      
+		echo "Database OK!"
 	else
 		cat <<-EOF >&2
 			Database was not relased correctly!
 			Probably next time you will have problems starting HO...
 			... but you can restore a backup with switches -r or -rd. :-)
 		EOF
-	fi 
+	fi
 }
 
-# Backup 
+# Backup
 
 backup(){
 	# Create the backupdir if there's none
-  	if [ ! -d "${BACKUPDIR}" ] 
+  	if [ ! -d "${BACKUPDIR}" ]
 	then
-    	echo "Creating ${BACKUPDIR}" 
+    	echo "Creating ${BACKUPDIR}"
 	    mkdir -p ${BACKUPDIR}
   	fi
   	cd $BACKUPDIR
@@ -245,25 +257,25 @@ backup(){
             rm -f `ls -r | tail -n 1`
   	done
   	cd ${DATABASEDIR}
-	# THE BIG TRICK: ls gives false (status>0) if one of the files is missing!!! ;-)  
+	# THE BIG TRICK: ls gives false (status>0) if one of the files is missing!!! ;-)
   	if ls ${BACKUPLIST} &> /dev/null
 	then
-	    # is database OK?    
-            if [ `grep modified database.properties | cut -d= -f2` = "no" ]  
+	    # is database OK?
+            if [ `grep modified database.properties | cut -d= -f2` = "no" ]
 	    then
 		# f - is needed in case someone has set his $TAPE variable...
 		tar -cf - $BACKUPLIST | gzip > $BACKUPDIR/$PREFIX-$DATE.tgz
 		# ...and this is shorter, but won't work if there's no GNU tar! :-(
-		# tar -czf $BACKUPDIR/$PREFIX-$DATE.tgz $BACKUPLIST  
+		# tar -czf $BACKUPDIR/$PREFIX-$DATE.tgz $BACKUPLIST
 	    else
 		cat <<-EOF >&2
 			OLD database was not relased correctly! I will do no backup
-			BTW,... if you have problems starting HO, try switches -r or -rd 
+			BTW,... if you have problems starting HO, try switches -r or -rd
 		EOF
 	    fi
         else
 	    echo "Database files not found, so there is nothing to backup."
-        fi    
+        fi
 }
 
 # Restore
@@ -282,7 +294,7 @@ restore(){
 	else
 		if [ -r "$BACKUPDIR/$PREFIX-$RESTOREDATE.tgz" ]
 		then
-			gunzip -c "$BACKUPDIR/$PREFIX-$RESTOREDATE.tgz" | tar -xf - 
+			gunzip -c "$BACKUPDIR/$PREFIX-$RESTOREDATE.tgz" | tar -xf -
 			echo "Restored database from $BACKUPDIR/$PREFIX-$RESTOREDATE.tgz"
 		else
 			echo "Error reading backup file $BACKUPDIR/$PREFIX-$RESTOREDATE.tgz!" >&2
@@ -314,7 +326,7 @@ checkjava(){
 		[ $JAVAMIN -lt $JAVAMINREQ ] ) || \
 	    ( [ $JAVAMAJ -eq $JAVAMAJREQ ] && \
 		[ $JAVAMIN -eq $JAVAMINREQ ] && \
-		[ $JAVAMINMIN -lt $JAVAMINMINREQ ] ) ) 
+		[ $JAVAMINMIN -lt $JAVAMINMINREQ ] ) )
 	then
         cat <<-EOF >&2
 		  	The default Java version is too old!
@@ -331,7 +343,7 @@ checkjava(){
 until [ -z "$1" ]
 do
 	case "$1" in
-		-j|--java)   
+		-j|--java)
 			JAVA=$2;
 			if [ -z $JAVA ]
 			then
@@ -340,7 +352,7 @@ do
 			fi
 			shift
 			;;
-		-m|--memory)   
+		-m|--memory)
 			MAX_MEMORY=$2;
 			if [ -z $MAX_MEMORY ]
 			then
@@ -384,7 +396,7 @@ do
  				    echo -e "Available backups: \n`ls -1 $BACKUPDIR/$PREFIX-*.tgz`" >&2
 				else
                                     echo "Sorry, there's no Backup available!!!" >&2
-				fi    
+				fi
 				exit 1
 			fi
 			BACKUP=false;
@@ -428,7 +440,7 @@ fi
 if [ ! -d "${SPRACHDIR}" ]
 then
 	echo "copying ${SPRACHDIR}"
-	cp -r ${HODIR}/sprache ${HOHOME}	
+	cp -r ${HODIR}/sprache ${HOHOME}
 fi
 
 # copy needed parameter files if not already there
