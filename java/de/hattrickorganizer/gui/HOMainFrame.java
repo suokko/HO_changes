@@ -47,7 +47,6 @@ import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
 import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.ServerTeam;
 import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
@@ -60,13 +59,14 @@ import de.hattrickorganizer.tools.updater.UpdateController;
 /**
  * Das Hauptfenster
  */
-public final class HOMainFrame
-	extends JFrame
+public final class HOMainFrame extends JFrame
 	implements Refreshable, WindowListener, ActionListener, ChangeListener {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
+	private static final long serialVersionUID = -6333275250973872365L;
+
 	/** TODO Missing Parameter Documentation */
-	public static final double VERSION = 1.410d;
+	public static final double VERSION = 1.420d;
 
 	/** TODO Missing Parameter Documentation */
 	private static final boolean DEVELOPMENT = false;
