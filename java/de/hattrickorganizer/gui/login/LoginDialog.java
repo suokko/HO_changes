@@ -30,9 +30,10 @@ import de.hattrickorganizer.tools.updater.UpdateController;
 /**
  * LoginDialog Class
  */
-public class LoginDialog
-	extends JDialog
+public class LoginDialog extends JDialog
 	implements ActionListener, FocusListener, KeyListener, WindowListener {
+	private static final long serialVersionUID = -6418386086443217106L;
+
 	//~ Static fields/initializers -----------------------------------------------------------------
 
 	private static LoginWaitDialog loginWaitDialog;
@@ -71,7 +72,7 @@ public class LoginDialog
 		this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
 		initComponents();
 
-		//Um den Focus weiterzusetzen        
+		//Um den Focus weiterzusetzen
 		addWindowListener(this);
 		m_jpfPasswort.setText(gui.UserParameter.instance().LoginPWD);
 
@@ -246,7 +247,7 @@ public class LoginDialog
 		}
 	}
 
-	//------------------------------------------------------------    
+	//------------------------------------------------------------
 
 	/**
 	 * Login versuchen
@@ -275,10 +276,10 @@ public class LoginDialog
 			gui.UserParameter.instance().htip = MyConnector.instance().getHattrickIPAdress();
 
 			if (gui.UserParameter.instance().htip.equals("")) {
-				gui.UserParameter.instance().htip = "www.hattrick.org";
+				gui.UserParameter.instance().htip = MyConnector.getInitialHTConnectionUrl();
 			}
 		} catch (Exception e) {
-			gui.UserParameter.instance().htip = "www.hattrick.org";
+			gui.UserParameter.instance().htip = MyConnector.getInitialHTConnectionUrl();
 		}
 
 		try {
@@ -287,73 +288,28 @@ public class LoginDialog
 				if (MyConnector.instance().hasSecLogin()) {
 					if (!MyConnector.instance().login()) {
 						m_clMainFrame.getInfoPanel().setLangInfoText(
-							de
-								.hattrickorganizer
-								.model
-								.HOVerwaltung
-								.instance()
-								.getResource()
-								.getProperty(
-								"Downloadfehler")
+							de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
 								+ " : Error login Failed. Maybe wrong Password? Make sure that you use the securitycode, NOT the HT-Password! :"
 								+ gui.UserParameter.instance().htip,
 							de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 						de.hattrickorganizer.tools.Helper.showMessage(
 							this,
-							de
-								.hattrickorganizer
-								.model
-								.HOVerwaltung
-								.instance()
-								.getResource()
-								.getProperty(
-								"Downloadfehler")
+							de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
 								+ " : Error login Failed. Maybe wrong Password? Make sure that you use the securitycode, NOT the HT-Password! :"
 								+ gui.UserParameter.instance().htip,
-							de
-								.hattrickorganizer
-								.model
-								.HOVerwaltung
-								.instance()
-								.getResource()
-								.getProperty(
-								"Fehler"),
+							de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fehler"),
 							JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
 					//Info
 					m_clMainFrame.getInfoPanel().setLangInfoText(
-						de
-							.hattrickorganizer
-							.model
-							.HOVerwaltung
-							.instance()
-							.getResource()
-							.getProperty(
-							"Downloadfehler")
-							+ " : No Secure Password set :"
-							+ gui.UserParameter.instance().htip,
-						de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
+						de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
+							+ " : No Secure Password set or general connection problem:" + gui.UserParameter.instance().htip, de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 					de.hattrickorganizer.tools.Helper.showMessage(
 						this,
-						de
-							.hattrickorganizer
-							.model
-							.HOVerwaltung
-							.instance()
-							.getResource()
-							.getProperty(
-							"Downloadfehler")
-							+ " : No Secure Password set :"
-							+ gui.UserParameter.instance().htip,
-						de
-							.hattrickorganizer
-							.model
-							.HOVerwaltung
-							.instance()
-							.getResource()
-							.getProperty(
-							"Fehler"),
+						de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
+							+ " : No Secure Password set or general connection problem:"	+ gui.UserParameter.instance().htip,
+						de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fehler"),
 						JOptionPane.ERROR_MESSAGE);
 					LoginDialog.loginWaitDialog.setVisible(false);
 					return;
@@ -397,15 +353,15 @@ public class LoginDialog
 
 		//update prüfen
 		if (UserParameter.instance().updateCheck) {
-			UpdateController.check4update();	
+			UpdateController.check4update();
 		}
 		if (UserParameter.instance().userCheck) {
-			UpdateController.updateUsers();		
+			UpdateController.updateUsers();
 		}
 		if (UserParameter.instance().newsCheck) {
-			UpdateController.checkNews();				
+			UpdateController.checkNews();
 		}
-		
+
 
 	}
 

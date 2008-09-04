@@ -39,6 +39,10 @@ import de.hattrickorganizer.tools.xml.XMLManager;
 public class MyConnector implements plugins.IDownloadHelper {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
+	static final private int chppID = 55;
+	static final private String chppKey = "A4A07F3F-9613-495B-82DC-C5C49903A044";
+	static final private String htUrl = "www.hattrick.org";
+	//static final private String htUrl = "stage.hattrick.org";
 	/** TODO Missing Parameter Documentation */
 	public static String m_sIDENTIFIER =
 		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
@@ -218,7 +222,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getHattrickIPAdress() throws IOException {
-		final String surl = "http://www.hattrick.org/common/chppxml.axd?file=servers";
+		final String surl = "http://"+htUrl+"/common/chppxml.axd?file=servers";
 		final de.hattrickorganizer.logik.xml.XMLMenuParser worker =
 			new de.hattrickorganizer.logik.xml.XMLMenuParser();
 		final String page = getWebPage(surl, false);
@@ -942,9 +946,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String url =
 			"http://"
 				+ gui.UserParameter.instance().htip
-				+ "/Common/default.asp?actionType=checkSecurityCode&outputType=XML&loginname=";
+				+ "/common/chppxml.axd?file=login&actionType=checksecuritycode&chppID="+chppID
+				+ "&chppKey="+chppKey+"&loginname="+m_sUserName;
 		boolean checkOK = true;
-		url += m_sUserName;
 
 		try {
 			final Document doc = XMLManager.instance().parseString(getPage(url, false));
@@ -959,14 +963,16 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 			//get it's value
 			String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-			checkOK = checkOK && value.trim().equalsIgnoreCase("True");
+			checkOK = value.trim().equalsIgnoreCase("True");
 
 			//get specific sub element of team element
-			tmpEle = (Element) ele.getElementsByTagName("ActionSuccessful").item(0);
+			//tmpEle = (Element) ele.getElementsByTagName("ActionSuccessful").item(0);
+			//tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
 
+			//04.09.2008 aik: diabled the 2nd check, IsAuthenticated is always False upon initial check
 			//get it's value
-			value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-			checkOK = checkOK && value.trim().equalsIgnoreCase("True");
+			//value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+			//checkOK = checkOK && value.trim().equalsIgnoreCase("True");
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
 			checkOK = false;
@@ -978,12 +984,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	//HT-LOGIN / Logout
 	////////////////////////////////////////////////////////////////////////////////
 	public boolean login() throws IOException {
-		final String s = m_sUserName;
-		final String s1 = m_sUserPwd;
 		String page = "";
 		boolean loggedIn = false;
 
-		if ((s1 == null) || (s1.length() == 0)) {
+		if ((m_sUserPwd == null) || (m_sUserPwd.length() == 0)) {
 			throw new IOException("Password not set");
 		}
 
@@ -992,16 +996,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 
 		final HttpURLConnection httpurlconnection =
-			(HttpURLConnection) (new URL("http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/default.asp?loginname="
-				+ s
-				+ "&readonlypassword="
-				+ s1
-				+ "&actionType=login&loginType=CHPP&outputType=XML"))
-				.openConnection();
+			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip
+				+ "/common/chppxml.axd?file=login&actionType=login&loginname=" + m_sUserName
+				+ "&readonlypassword=" + m_sUserPwd + "&chppID=" + chppID + "&chppKey=" + chppKey)).openConnection();
 
-		//HttpURLConnection httpurlconnection = (HttpURLConnection)(new URL("http://" + gui.UserParameter.instance ().htip + "/Common/default.asp?loginname=" + s + "&password=" + s1 + "&actionType=login&loginType=CHPP")).openConnection();        //"normal§ Password
 		httpurlconnection.setRequestMethod("GET");
 
 		httpurlconnection.setRequestProperty("cookie", getCookieString());
@@ -1075,11 +1073,16 @@ public class MyConnector implements plugins.IDownloadHelper {
 				ele = doc.getDocumentElement();
 
 				//get specific sub element of root element
-				tmpEle = (Element) ele.getElementsByTagName("ActionSuccessful").item(0);
+				tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
 
 				//get it's value
 				String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
 				loggedIn = value.trim().equalsIgnoreCase("True");
+
+				tmpEle = (Element) ele.getElementsByTagName("LoginResult").item(0);
+				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+				loggedIn = loggedIn && "0".equals(value.trim());
+
 				tmpEle = (Element) ele.getElementsByTagName("UserID").item(0);
 
 				//get it's value
@@ -1122,7 +1125,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public void logout() throws IOException {
 		try {
 			getPage(
-				"http://" + gui.UserParameter.instance().htip + "/Common/default.asp?action=logout",
+				"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=login&action=logout",
 				true);
 			m_bAuthenticated = false;
 			m_sCookie = null;
@@ -1426,6 +1429,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 			final String epw = (new BASE64Encoder()).encode(pw.getBytes());
 			httpurlconnection.setRequestProperty("Proxy-Authorization", "Basic " + epw);
 		}
+	}
+
+	final public static String getInitialHTConnectionUrl() {
+		return htUrl;
 	}
 
 }
