@@ -22,7 +22,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import sun.misc.BASE64Encoder;
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.logik.xml.XMLExtensionParser;
 import de.hattrickorganizer.logik.xml.XMLNewsParser;
 import de.hattrickorganizer.model.Extension;
@@ -86,18 +85,19 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	public static String getResourceSite() {
-		if (HOMainFrame.isDevelopment()) {
-			return "http://www.homemail.it/organizer";
-		}
 		return getHOSite();
-			
+
 	}
-	
+
 	public static String getHOSite() {
 		return "http://www.hattrickorganizer.net";
 	}
-	
-	
+
+	public static String getPluginSite() {
+		return "http://plugins.hattrickorganizer.net";
+	}
+
+
 	/**
 	 * Fetch our arena
 	 *
@@ -108,7 +108,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getArena() throws IOException {
 		return getArena(-1);
 	}
-	
+
 	/**
 	 * Fetch a specific arena
 	 *
@@ -119,9 +119,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getArena(int arenaId) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/arenaDetails.asp?outputType=XML&actionType=view";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=arenadetails";
 
 		if (arenaId > 0)
 			url += "&arenaID="+arenaId;
@@ -163,7 +161,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		HttpURLConnection.setFollowRedirects(true);
 		httpurlconnection.connect();
 		extractCookie(httpurlconnection.getHeaderField("set-cookie"));
-				
+
 		httpurlconnection.disconnect();
 	}
 
@@ -186,7 +184,7 @@ public class MyConnector implements plugins.IDownloadHelper {
             if(token.indexOf("=")>0)
 			    cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
             else {
-                cookie.put(token, "");                
+                cookie.put(token, "");
             }
 		}
 	}
@@ -207,9 +205,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getEconomy() throws IOException {
 		final String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/economy.asp?outputType=XML&actionType=view";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=economy";
 
 		return getPage(url, true);
 	}
@@ -222,7 +218,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getHattrickIPAdress() throws IOException {
-		final String surl = "http://www.hattrick.org/common/menu.asp?outputType=XML";
+		final String surl = "http://www.hattrick.org/common/chppxml.axd?file=servers";
 		final de.hattrickorganizer.logik.xml.XMLMenuParser worker =
 			new de.hattrickorganizer.logik.xml.XMLMenuParser();
 		final String page = getWebPage(surl, false);
@@ -266,9 +262,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getLeagueDetails() throws IOException {
 		final String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/leagueDetails.asp?outputType=XML&actionType=view";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=leaguedetails";
 
 		return getPage(url, true);
 	}
@@ -285,9 +279,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getLeagueFixtures(int season, int ligaID) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/leagueFixtures.asp?outputType=XML&actionType=view";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=leaguefixtures";
 
 		if (season > 0) {
 			url += ("&season=" + season);
@@ -314,9 +306,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getMatchArchiv(int teamId, String firstDate, String lastDate)
 		throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/chppxml.axd?file=matchesarchive";
+			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchesarchive";
 
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
@@ -345,9 +335,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/chppxml.axd?file=matchlineup";
+			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchlineup";
 
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
@@ -371,11 +359,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/matchOrders.asp?outputType=XML&matchID=";
-
-		url += matchId;
+			"http://"+ gui.UserParameter.instance().htip + "/common/chppxml.axd?file=matchorders&matchID="+matchId+"&isYouth=false";
 
 		return getPage(url, true);
 	}
@@ -391,10 +375,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchdetails(int matchId) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/chppxml.axd?file=matchdetails";
-
+			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchdetails";
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
@@ -414,9 +395,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchesASP(int teamId, boolean forceRefresh) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/chppxml.axd?file=matches";
+			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matches";
 
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
@@ -459,12 +438,12 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if ( (page!=null) && (page.length()>1) ) {
 			return page;
 		}
-		
+
 		// Timeout on an Hattrick page
 		if (needLogin) {
 			login();
 			getCookie();
-			return getWebPage(surl, true);			
+			return getWebPage(surl, true);
 		}
 		return "";
 	}
@@ -478,9 +457,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getPlayersAsp() throws IOException {
 		final String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/players.asp?outputType=XML&actionType=view";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=players";
 
 		return getPage(url, true);
 	}
@@ -616,10 +593,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getTeamdetails(int teamId) throws IOException {
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/teamDetails.asp?outputType=XML&actionType=view";
-
+			"http://"+ gui.UserParameter.instance().htip + "/common/chppxml.axd?file=team";
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
@@ -636,9 +610,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getTraining() throws IOException {
 		final String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/training.asp?outputType=XML&actionType=view";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=training";
 
 		return getPage(url, true);
 	}
@@ -730,11 +702,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 
 		String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/playerDetails.asp?action=transfercompare&playerID=";
-
-		url += playerID;
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=playerdetails&playerID="+playerID;
 
 		return getPage(url, true);
 	}
@@ -806,10 +774,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getVerein() throws IOException {
 		final String url =
-			"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/Common/club.asp?outputType=XML&actionType=view";
-
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=club";
 		return getPage(url, true);
 	}
 
@@ -864,8 +829,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getWorldDetails() throws IOException {
 		final String url =
-			//"http://" + gui.UserParameter.instance().htip + "/Common/worldDetails.asp?outputType=XML&actionType=leagues";
-			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=worlddetails";
+			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=worlddetails";
 
 		return getPage(url, true);
 	}
@@ -876,7 +840,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public double getLatestVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getResourceSite()+"/downloads/version.htm", false);
+				getWebPage(MyConnector.getResourceSite()+"/version.htm", false);
 			double d = de.hattrickorganizer.gui.HOMainFrame.VERSION;
 
 			try {
@@ -894,8 +858,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			final String s =
 				getWebPage(MyConnector.getResourceSite()+"/downloads/epv.xml", false);
-															
-			return (new XMLExtensionParser()).parseExtension(s);	
+
+			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
 			return new Extension();
@@ -906,25 +870,25 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			final String s =
 				getWebPage(MyConnector.getResourceSite()+"/downloads/ratings.xml", false);
-															
-			return (new XMLExtensionParser()).parseExtension(s);	
+
+			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
 			return new Extension();
 		}
 	}
-	
+
 	public News getLatestNews() {
 		try {
 			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false);
 			XMLNewsParser parser = new XMLNewsParser();
-			return parser.parseNews(s);			
+			return parser.parseNews(s);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
 			return new News();
 		}
 	}
-	
+
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//Proxy
@@ -959,12 +923,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 						de.hattrickorganizer.gui.HOMainFrame.instance());
 				ld.setVisible(true);
 			}
-
-			xmlFile =
-				"http://"
-					+ gui.UserParameter.instance().htip
-					+ "/Common/teamDetails.asp?outputType=XML&actionType=view&teamID="
-					+ teamID;
+			xmlFile = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=team&teamID=" + teamID;
 			xmlFile = getPage(xmlFile, true);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
@@ -1044,9 +1003,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		//HttpURLConnection httpurlconnection = (HttpURLConnection)(new URL("http://" + gui.UserParameter.instance ().htip + "/Common/default.asp?loginname=" + s + "&password=" + s1 + "&actionType=login&loginType=CHPP")).openConnection();        //"normal§ Password
 		httpurlconnection.setRequestMethod("GET");
-		
+
 		httpurlconnection.setRequestProperty("cookie", getCookieString());
-		
+
 		infoHO(httpurlconnection);
 
 		HttpURLConnection.setFollowRedirects(true);
@@ -1058,7 +1017,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			//HOLogger.instance().log(getClass()," got a new Cookie: " + s2);
 			extractCookie(s2);
 			//m_sCookie = s2;
-			
+
 		}
 
 		final String encoding = httpurlconnection.getContentEncoding();
@@ -1150,7 +1109,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			cookieStringBuffer.append("=");
 			cookieStringBuffer.append((String) cookie.get(cookieName));
 			if (cookieNames.hasNext())
-				cookieStringBuffer.append(";");					
+				cookieStringBuffer.append(";");
 		}
 		return cookieStringBuffer.toString();
 	}
