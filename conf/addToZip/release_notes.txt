@@ -13,3 +13,4 @@ Plugin Updates:
 - Flags plugin 3.20 (adaptions to CHPP inteface changes)
 - Team of the Week 0.2 (adaptions to CHPP inteface changes)
 - EvilCard 0.952 (fix sorting by percentages, added Portuguese translation thx LderMax)
+- Int.Friendly Analyzer 0.95 (adapt to CHPP changes)
