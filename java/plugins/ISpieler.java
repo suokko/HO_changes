@@ -22,7 +22,7 @@ public interface ISpieler {
     //////////////////////////////////////////////////////////////////////////////// 
 
 	/** Number of specialties */
-	public static final int NUM_SPECIALTIES = 6;
+	public static final int NUM_SPECIALTIES = 7;
 
 	/** No specialty */
     public static final int NO_SPECIALTY = 0;
@@ -41,6 +41,9 @@ public interface ISpieler {
 
     /** Specialty: Header */
     public static final int KOPFBALLSTARK = 5;
+
+    /** Specialty: Regainer */
+    public static final int REGAINER = 6;
 
     //Wetter
 
