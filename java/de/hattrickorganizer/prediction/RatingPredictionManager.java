@@ -50,8 +50,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public static final int SPEC_POWERFUL = ISpieler.DURCHSETZUGNSSTARK; // 3
     public static final int SPEC_UNPREDICTABLE = ISpieler.UNBERECHENBAR; // 4
     public static final int SPEC_HEADER = ISpieler.KOPFBALLSTARK; // 5
-    public static final int SPEC_ALL = ISpieler.NUM_SPECIALTIES; // 6
-    public static final int NUM_SPEC = ISpieler.NUM_SPECIALTIES+1; // 7
+    public static final int SPEC_REGAINER = ISpieler.REGAINER; // 6
+    public static final int SPEC_ALL = ISpieler.NUM_SPECIALTIES; // 7
+    public static final int NUM_SPEC = ISpieler.NUM_SPECIALTIES+1; // 8
 
     //~ Class fields -------------------------------------------------------------------------------
 
@@ -583,7 +584,10 @@ public class RatingPredictionManager implements IRatingPredictionManager
             			|| !useRight && isRight(pos, taktik)) {
             		continue;
             	} else {
-            		int specialty = spieler.getSpezialitaet(); 
+            		int specialty = spieler.getSpezialitaet();
+            		// To avoid ArrayOutOfBound exception for unsupported/new specialties
+            		if (specialty < SPEC_NONE || specialty >= SPEC_ALL)
+            			specialty = SPEC_NONE;
             		// Extra CD
             		if (taktik == ISpielerPosition.ZUS_INNENV)
             			retArray[ISpielerPosition.POS_ZUS_INNENV][specialty] += calcPlayerStrength(spieler, skillType);
