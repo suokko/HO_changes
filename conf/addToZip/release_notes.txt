@@ -8,9 +8,9 @@ Changelist HO! 1.420
 
 Plugin Updates:
 ---------------
-- TeamAnalyzer 2.68 (included in HO 1.420, adaptions to CHPP inteface changes)
-- Transfers 0.972 (included in HO 1.420, adaptions to CHPP inteface changes)
-- Flags plugin 3.20 (adaptions to CHPP inteface changes)
-- Team of the Week 0.2 (adaptions to CHPP inteface changes)
+- TeamAnalyzer 2.68 (included in HO 1.420, adaptions to CHPP interface changes)
+- Transfers 0.972 (included in HO 1.420, adaptions to CHPP interface changes)
+- Flags plugin 3.21 (adaptions to CHPP interface changes, added coolness summary)
+- Team of the Week 0.2 (adaptions to CHPP interface changes)
 - EvilCard 0.952 (fix sorting by percentages, added Portuguese translation thx LderMax)
 - Int.Friendly Analyzer 0.95 (adapt to CHPP changes)
