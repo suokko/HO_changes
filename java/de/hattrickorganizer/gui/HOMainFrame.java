@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -249,6 +252,13 @@ public final class HOMainFrame extends JFrame
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
+		
+		// Log Operating System
+		HOLogger.instance().debug(getClass(), "Operating system found: "+System.getProperty("os.name"));
+		
+		// Catch Apple-Q for MacOS
+		if (System.getProperty("os.name").toLowerCase().indexOf("mac") != -1)
+			addMacOSListener();
 
 		initProxy();
 		initComponents();
@@ -259,6 +269,41 @@ public final class HOMainFrame extends JFrame
 
 	//~ Methods ------------------------------------------------------------------------------------
 
+	/**
+	 * This method creates a MacOS specific listener for the quit operation ("Command-Q")
+	 * 
+	 * We need to use reflections here, because the com.apple.eawt.* classes are Apple specific
+	 * 
+	 * @author flattermann <flattermannHO@gmail.com>
+	 */
+	private void addMacOSListener() {
+		HOLogger.instance().debug(getClass(), "Mac OS detected. Activating specific listeners...");
+		try {
+			// Create the Application
+			Class applicationClass = Class.forName("com.apple.eawt.Application");
+			Object appleApp = applicationClass.newInstance();
+
+			// Create the ApplicationListener
+			Class applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
+			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] { applicationListenerClass },
+				new InvocationHandler() {
+					public Object invoke (Object proxy, Method method, Object[] args) {
+						if (method.getName().equals("handleQuit")) {
+							HOLogger.instance().debug(getClass(), "ApplicationListener.handleQuit() fired! Quitting MacOS Application!");
+							beenden();
+						}
+						return null;
+					}
+			});
+			
+			// Register the ApplicationListener
+			Method addApplicationListenerMethod = applicationClass.getDeclaredMethod("addApplicationListener", new Class[] { applicationListenerClass });
+			addApplicationListenerMethod.invoke(appleApp, new Object[] { appleListener });
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private String getVersionString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.US);
 		nf.setMinimumFractionDigits(3);
@@ -715,6 +760,8 @@ public final class HOMainFrame extends JFrame
 	 * Beendet HO
 	 */
 	public void beenden() {
+		HOLogger.instance().debug(getClass(), "Shutting down HO!");
+		
 		//Keine Sicherheitsabfrage mehr
 		//int value = JOptionPane.showConfirmDialog( this, model.HOVerwaltung.instance ().getResource ().getProperty("BeendenMeldung"), model.HOVerwaltung.instance ().getResource ().getProperty("BeendenTitel"), JOptionPane.YES_NO_OPTION);
 		//        int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
