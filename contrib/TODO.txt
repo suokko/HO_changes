@@ -1,6 +1,5 @@
 LastChange: 13.09.2008 - flattermann
 
-- MacOS Prefs werden nicht gepeichert (teilw.) (Apfel-Q abfangen!)
 - MacOS OutOfHeapSpace (teilw.)
 
 - DiscountFederation-Prediction entfernen? (Verwirrend?)

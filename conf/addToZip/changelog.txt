@@ -5,6 +5,7 @@ Changelist HO! 1.420
 - adaptions to CHPP interface changes
 - language fix German team confidence translation
 - fixed a small bug in the implementation to kopsterkespits' team XP formula
+- fixed MacOS preferences problem (prefs not saved when using Command-Q)
 
 Plugin Updates:
 ---------------
