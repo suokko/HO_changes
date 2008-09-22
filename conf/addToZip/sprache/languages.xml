@@ -58,7 +58,7 @@
   <property>
     <datei>Portugues.properties</datei>
     <lang_id>11</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Romanian.properties</datei>
@@ -138,11 +138,16 @@
   <property>
     <datei>Srpski(lat).properties</datei>
     <lang_id>28</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Srpski.properties</datei>
     <lang_id>29</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
+  </property>
+  <property>
+    <datei>Hrvatski(Croatian).properties</datei>
+    <lang_id>30</lang_id>
+    <version>3.4</version>
   </property>
 </languages>

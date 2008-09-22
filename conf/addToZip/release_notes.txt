@@ -7,6 +7,11 @@ Changelist HO! 1.420
 - fixed a small bug in the implementation to kopsterkespits' team XP formula
 - fixed MacOS preferences problem (prefs not saved when using Command-Q)
 - fixed regainer problem (regainer in lineup leads to ArrayOutOfBounds-Exception in RatingPredictionManager)
+- Translation updates:
+	Srpski and Srpski(lat) v3.6 (thx chokky)
+	Portuguese v3.6 (thx Ldermax)
+	Turkish v3.6 (thx Yusuf)
+	new: Hrvatski (thx Dragan)
 
 Plugin Updates:
 ---------------
