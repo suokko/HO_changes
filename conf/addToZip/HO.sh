@@ -462,12 +462,14 @@ fi
 # If file does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
 if [[ ! -e "${HOHOME}/defaults.xml" || "${HODIR}/defaults.xml" -nt "${HOHOME}/defaults.xml" ]]
 then
+	echo "copying ${HOHOME}/defaults.xml"
 	cp "${HODIR}/defaults.xml" ${HOHOME}/defaults.xml
 fi
 
 # If file does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
 if [[ ! -e "${HOHOME}/epv.dat" || "${HODIR}/epv.dat" -nt "${HOHOME}/epv.dat" ]]
 then
+	echo "copying ${HOHOME}/epv.dat"
         cp "${HODIR}/epv.dat" ${HOHOME}/epv.dat
 fi
 
