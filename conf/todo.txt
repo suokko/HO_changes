@@ -1,0 +1,38 @@
+Bugfixes
+========
+P D Bug description
+------------------------------------------------------
+2 A Transferscout parser adds injuries, if a player is warned (red card)
+5 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
+3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
+1 ? HO misses training for player of either the friendly or the league match
+5 ? Adding a prediction offset for a certain skill can lead to a lower(!) star value
+2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
+2 ? Training speed is wrong in some rare cases: from 0.11 to 0.03 whithin a week without any reason
+    (same training type, no injury, no card, no 50% training position, same age)
+3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
+
+
+Enhancements
+============
+P D Task
+------------------------------------------------------
+2 ? Update calculation of special tactics after the latest playerstrength optimisations
+3 ? Add new market value data from the feedback plugin to HO
+5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
+4 ? Add a new config option for the default state of the "download matches/schedule) checkboxes on the download dialog
+5 ? Add player agreeability to TransferScout
+
+
+Features
+========
+P D Task
+------------------------------------------------------
+5 A Show weather SEs in match highlights
+
+
+
+Legend:
+=======
+ P = priority (1=very high, 5=low)
+ D = developer (A=aik, F=Flattermann :] )
