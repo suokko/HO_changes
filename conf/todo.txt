@@ -11,6 +11,7 @@ P D Bug description
 2 ? Training speed is wrong in some rare cases: from 0.11 to 0.03 whithin a week without any reason
     (same training type, no injury, no card, no 50% training position, same age)
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
+4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 
 
 Enhancements
