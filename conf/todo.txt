@@ -17,6 +17,9 @@ P D Bug description
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 3 F Fix HO.sh for linux (remove dependency to bash, accept whitespaces in path name)
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
+3 ? TA doesn't show up after successful installation
+3 ? IFA doesn't show up after successful installation
+
 
 Enhancements
 ============
@@ -27,7 +30,7 @@ P D Task
 3 F Update training speed prediction
 3 F Add new market value data from the feedback plugin to HO
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
-4 ? Add a new config option for the default state of the "download matches/schedule) checkboxes on the download dialog
+4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 5 ? Add player agreeability to TransferScout
 
 
@@ -36,7 +39,7 @@ Features
 P D Task
 ------------------------------------------------------
 5 A Show weather SEs in match highlights
-
+4 A HO! version for U3-USB stick
 
 
 Legend:
