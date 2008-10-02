@@ -16,32 +16,32 @@ class Neuron {
 	private double delta = 0;
 	private double multi = 1;
 //	private boolean applyFormula = true;
-	
+
 	private int applyFormula = SIGMOID;
-	private Layer activeLayer; 
-	
+	private Layer activeLayer;
+
 	private ArrayList synapses;
 
 	Neuron () {
 		synapses = new ArrayList();
 	}
-	
+
 	void setActiveLayer (Layer activeLayer) {
 		this.activeLayer = activeLayer;
 	}
-	
+
 	void setApplyFormula(int formula) {
 		this.applyFormula = formula;
 	}
-	
+
 	void setForcedInput (double input) {
 		this.forcedInput = input;
 	}
-	
+
 	void addSynapse (Synapse synapse) {
 		synapses.add(synapse);
 	}
-	
+
 	private double getInput () {
 		double retVal = weight;
 		for (int i=0; i < getSynapseCount(); i++) {
@@ -51,7 +51,7 @@ class Neuron {
 		}
 		return retVal;
 	}
-	
+
 	double calculate () {
 		double retVal = 0;
 		if (getSynapseCount() == 0) {
@@ -67,7 +67,7 @@ class Neuron {
 			retVal = sigmoid(input);
 			break;
 		case TANH:
-			retVal = Math.tanh(input);
+			retVal = tanh(input);
 			break;
 		case LINEAR:
 			// Use unchanged value
@@ -97,15 +97,21 @@ class Neuron {
 		}
 		return retVal * multi + delta;
 	}
-	
+
 	private double gauss(double val) {
 		return Math.exp(-val * val);
 	}
-	
+
 	private double sigmoid(double val) {
 		return (1/(1+Math.exp(-val)));
 	}
-	
+
+	private static final double tanh(double x) { // Math.tanh is available since JDK 1.5 only
+		double y= Math.exp(x);
+		y*= y;
+		return (y-1)/(y+1);
+	}
+
 	void setWeight (double weight) {
 		this.weight = weight;
 	}
@@ -126,7 +132,7 @@ class Neuron {
 		this.delta = delta;
 		this.multi = multi;
 	}
-	
+
 	public String toString () {
 		String retVal = "";
 		retVal += "[Neuron: ";
