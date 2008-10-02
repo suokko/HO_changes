@@ -38,6 +38,10 @@ public class EPVData implements Cloneable, IEPVData {
 	private int speciality;
 	private int week;
 	
+	private int aggressivity;
+	private int honesty;
+	private int popularity;
+	
 	private double maxSkill;
 
 
@@ -65,8 +69,13 @@ public class EPVData implements Cloneable, IEPVData {
 
         setExperience(s.getErfahrung());
         setLeadership(s.getFuehrung());
+        setAggressivity(s.getAgressivitaet());
+        setHonesty(s.getCharakter());
+        setPopularity(s.getAnsehen());
+        
         setPlayerId(s.getSpielerID());
 
+        normalizeSkill();
     }
     
 	public EPVData(IPlayerData s) {
@@ -85,8 +94,13 @@ public class EPVData implements Cloneable, IEPVData {
 
 		setExperience(s.getExperience());
 		setLeadership(s.getLeadership());
+        setAggressivity(s.getAggressivity());
+        setHonesty(s.getHonesty());
+        setPopularity(s.getPopularity());
+
 		setPlayerId(s.getPlayerId());
 
+		normalizeSkill();
 	}    
 
 
@@ -441,6 +455,30 @@ public class EPVData implements Cloneable, IEPVData {
 		week = i;
 	}
 
+	public int getAggressivity() {
+		return aggressivity;
+	}
+
+	public void setAggressivity(int aggressivity) {
+		this.aggressivity = aggressivity;
+	}
+
+	public int getHonesty() {
+		return honesty;
+	}
+
+	public void setHonesty(int honesty) {
+		this.honesty = honesty;
+	}
+
+	public int getPopularity() {
+		return popularity;
+	}
+
+	public void setPopularity(int popularity) {
+		this.popularity = popularity;
+	}
+
 	/**
 	 * toString methode: creates a String representation of the object
 	 * @return the String representation
@@ -499,16 +537,16 @@ public class EPVData implements Cloneable, IEPVData {
 	}
 
 
-//	public void normalizeSkill() {
-//		// Removed Disastrous since cause problems in calculation
-//		if (wing<2) { wing = 2; }
-//		if (passing<2) { passing = 2; }
-//		if (playMaking<2) { playMaking = 2; }
-//		if (defense<2) { defense = 2; }
-//		if (setPieces<2) { setPieces = 2; }
-//		if (attack<2) { attack = 2; }						
-//		if (goalKeeping<2) { goalKeeping = 2; }
-//		if (stamina<2) { stamina = 2; }				
-//	}
+	public void normalizeSkill() {
+		// Removed Disastrous since cause problems in calculation
+		if (wing<2) { wing = 2; }
+		if (passing<2) { passing = 2; }
+		if (playMaking<2) { playMaking = 2; }
+		if (defense<2) { defense = 2; }
+		if (setPieces<2) { setPieces = 2; }
+		if (attack<2) { attack = 2; }						
+		if (goalKeeping<2) { goalKeeping = 2; }
+		if (stamina<2) { stamina = 2; }				
+	}
 
 }

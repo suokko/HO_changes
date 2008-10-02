@@ -120,5 +120,26 @@ public interface IPlayerData {
      * @return TODO Missing Return Method Documentation
      */
     public abstract double getWing();
-         
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public abstract int getAggressivity();
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public abstract int getHonesty();
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public abstract int getPopularity();
+
 }
