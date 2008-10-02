@@ -7,12 +7,14 @@ P D Bug description
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 1 ? HO misses training for player of either the friendly or the league match
 5 ? Adding a prediction offset for a certain skill can lead to a lower(!) star value
-    Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5... 
-            If such a player gets training or a manual offset < 0.5, the star value decreases... 
+    Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...
+            If such a player gets training or a manual offset < 0.5, the star value decreases...
             Perhaps we should change that...
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
 2 ? Training speed is wrong in some rare cases: from 0.11 to 0.03 whithin a week without any reason
     (same training type, no injury, no card, no 50% training position, same age)
+    Reason: player would have reached subskill >1 which gets reduced to 0.94 by HO
+    		Perhaps we should change that too ^^
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 3 F Fix HO.sh for linux (remove dependency to bash, accept whitespaces in path name)
@@ -40,6 +42,7 @@ P D Task
 ------------------------------------------------------
 5 A Show weather SEs in match highlights
 4 A HO! version for U3-USB stick
+5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
 
 
 Legend:
