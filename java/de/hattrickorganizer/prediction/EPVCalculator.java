@@ -14,7 +14,7 @@ public class EPVCalculator
     private static String networkStructure = "@age,@fo,@xp,@lead,@st,@gk,@pm,@ps,@wi,@de,@sc,@sp,@spec,@agg,@pop,@hon,@week:20:20:price";
     private static String weightsFilename = "prediction/epvWeights.mlp";
     private Net neuronalNetwork;
-    
+
     public static EPVCalculator getInstance() {
         if(epvCalculator == null)
             epvCalculator = new EPVCalculator();
@@ -30,7 +30,7 @@ public class EPVCalculator
     	double age = ((Double)inputMap.get("age")).doubleValue();
     	inputMap.put("age", new Double(age-17));
     }
-    
+
     public final double getPrice (IEPVData iepvdata, int week, double currencyRate) {
     	Map inputMap = new HashMap();
 //        "@age,@fo,@xp,@lead,@st,@gk,@pm,@ps,@wi,@de,@sc,@sp,@spec,@agg,@pop,@hon,@week:20:20:price";
@@ -51,9 +51,9 @@ public class EPVCalculator
     	inputMap.put("pop", new Double(iepvdata.getPopularity()));
     	inputMap.put("hon", new Double(iepvdata.getHonesty()));
     	inputMap.put("week", new Double(week));
-    	
+
     	normalize (inputMap); // Normalize
-    	
+
     	double val = neuronalNetwork.calculate("price", inputMap);
     	double price = Math.pow(10, val*8);
     	// Round to thousands (in euro/dollar)
@@ -61,7 +61,7 @@ public class EPVCalculator
     	if (price < 1000)
     		price = 1000;
     	// TODO currencyRate ok?
-    	return (price * 10/currencyRate)
+    	return (price * 10/currencyRate);
     }
 
 }
