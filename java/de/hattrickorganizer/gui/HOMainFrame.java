@@ -69,7 +69,7 @@ public final class HOMainFrame extends JFrame
 	private static final long serialVersionUID = -6333275250973872365L;
 
 	/** TODO Missing Parameter Documentation */
-	public static final double VERSION = 1.420d;
+	public static final double VERSION = 1.421d;
 
 	/** TODO Missing Parameter Documentation */
 	private static final boolean DEVELOPMENT = false;
@@ -252,10 +252,10 @@ public final class HOMainFrame extends JFrame
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
-		
+
 		// Log Operating System
 		HOLogger.instance().debug(getClass(), "Operating system found: "+System.getProperty("os.name"));
-		
+
 		// Catch Apple-Q for MacOS
 		if (System.getProperty("os.name").toLowerCase().indexOf("mac") != -1)
 			addMacOSListener();
@@ -271,9 +271,9 @@ public final class HOMainFrame extends JFrame
 
 	/**
 	 * This method creates a MacOS specific listener for the quit operation ("Command-Q")
-	 * 
+	 *
 	 * We need to use reflections here, because the com.apple.eawt.* classes are Apple specific
-	 * 
+	 *
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void addMacOSListener() {
@@ -295,7 +295,7 @@ public final class HOMainFrame extends JFrame
 						return null;
 					}
 			});
-			
+
 			// Register the ApplicationListener
 			Method addApplicationListenerMethod = applicationClass.getDeclaredMethod("addApplicationListener", new Class[] { applicationListenerClass });
 			addApplicationListenerMethod.invoke(appleApp, new Object[] { appleListener });
@@ -303,7 +303,7 @@ public final class HOMainFrame extends JFrame
 			e.printStackTrace();
 		}
 	}
-	
+
 	private String getVersionString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.US);
 		nf.setMinimumFractionDigits(3);
@@ -761,7 +761,7 @@ public final class HOMainFrame extends JFrame
 	 */
 	public void beenden() {
 		HOLogger.instance().debug(getClass(), "Shutting down HO!");
-		
+
 		//Keine Sicherheitsabfrage mehr
 		//int value = JOptionPane.showConfirmDialog( this, model.HOVerwaltung.instance ().getResource ().getProperty("BeendenMeldung"), model.HOVerwaltung.instance ().getResource ().getProperty("BeendenTitel"), JOptionPane.YES_NO_OPTION);
 		//        int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
