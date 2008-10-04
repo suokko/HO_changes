@@ -2160,7 +2160,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                     2);
 
             if (m_dSubTorwart >= 1.0d) {
-                m_dSubTorwart = 0.94d;
+                m_dSubTorwart = 0.99d;
 
                 //                m_dTrainingsOffsetTorwart   =   0.0d;
             }
@@ -2179,7 +2179,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                          2);
 
             if (m_dSubVerteidigung >= 1.0d) {
-                m_dSubVerteidigung = 0.94d;
+                m_dSubVerteidigung = 0.99d;
 
                 //                m_dTrainingsOffsetVerteidigung   =   0.0d;
             }
@@ -2198,7 +2198,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                         2);
 
             if (m_dSubSpielaufbau >= 1.0d) {
-                m_dSubSpielaufbau = 0.94d;
+                m_dSubSpielaufbau = 0.99d;
 
                 //                m_dTrainingsOffsetSpielaufbau   =   0.0d;
             }
@@ -2217,7 +2217,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                      2);
 
             if (m_dSubPasspiel >= 1.0d) {
-                m_dSubPasspiel = 0.94d;
+                m_dSubPasspiel = 0.99d;
 
                 //                m_dTrainingsOffsetPasspiel   =   0.0d;
             }
@@ -2236,7 +2236,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                          2);
 
             if (m_dSubFluegelspiel >= 1.0d) {
-                m_dSubFluegelspiel = 0.94d;
+                m_dSubFluegelspiel = 0.99d;
 
                 //                m_dTrainingsOffsetFluegelspiel   =   0.0d;
             }
@@ -2255,7 +2255,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                       2);
 
             if (m_dSubTorschuss >= 1.0d) {
-                m_dSubTorschuss = 0.94d;
+                m_dSubTorschuss = 0.99d;
 
                 //                m_dTrainingsOffsetTorschuss   =   0.0d;
             }
@@ -2274,7 +2274,7 @@ public final class Spieler implements plugins.ISpieler {
                                                                       2);
 
             if (m_dSubStandards >= 1.0d) {
-                m_dSubStandards = 0.94d;
+                m_dSubStandards = 0.99d;
 
                 //                m_dTrainingsOffsetStandards   =   0.0d;
             }
@@ -2321,7 +2321,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubTorwart = m_dSubTorwart + old.getSubskill4Pos(SKILL_TORWART);
 
             if (m_dSubTorwart >= 1.0d) {
-                m_dSubTorwart = 0.94d;
+                m_dSubTorwart = 0.99d;
             }
         } else {
             m_dSubTorwart = 0.0d;
@@ -2339,7 +2339,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubVerteidigung = m_dSubVerteidigung + old.getSubskill4Pos(SKILL_VERTEIDIGUNG);
 
             if (m_dSubVerteidigung >= 1.0d) {
-                m_dSubVerteidigung = 0.94d;
+                m_dSubVerteidigung = 0.99d;
             }
         } else {
             m_dSubVerteidigung = 0.0d;
@@ -2357,7 +2357,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubSpielaufbau = m_dSubSpielaufbau + old.getSubskill4Pos(SKILL_SPIELAUFBAU);
 
             if (m_dSubSpielaufbau >= 1.0d) {
-                m_dSubSpielaufbau = 0.94d;
+                m_dSubSpielaufbau = 0.99d;
 
                 //				  m_dTrainingsOffsetSpielaufbau   =   0.0d;
             }
@@ -2377,7 +2377,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubPasspiel = m_dSubPasspiel + old.getSubskill4Pos(SKILL_PASSSPIEL);
 
             if (m_dSubPasspiel >= 1.0d) {
-                m_dSubPasspiel = 0.94d;
+                m_dSubPasspiel = 0.99d;
 
                 //				  m_dTrainingsOffsetPasspiel   =   0.0d;
             }
@@ -2397,7 +2397,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubFluegelspiel = m_dSubFluegelspiel + old.getSubskill4Pos(SKILL_FLUEGEL);
 
             if (m_dSubFluegelspiel >= 1.0d) {
-                m_dSubFluegelspiel = 0.94d;
+                m_dSubFluegelspiel = 0.99d;
 
                 //				  m_dTrainingsOffsetFluegelspiel   =   0.0d;
             }
@@ -2417,7 +2417,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubTorschuss = m_dSubTorschuss + old.getSubskill4Pos(SKILL_TORSCHUSS);
 
             if (m_dSubTorschuss >= 1.0d) {
-                m_dSubTorschuss = 0.94d;
+                m_dSubTorschuss = 0.99d;
 
                 //				  m_dTrainingsOffsetTorschuss   =   0.0d;
             }
@@ -2437,7 +2437,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dSubStandards = m_dSubStandards + old.getSubskill4Pos(SKILL_STANDARDS);
 
             if (m_dSubStandards >= 1.0d) {
-                m_dSubStandards = 0.94d;
+                m_dSubStandards = 0.99d;
 
                 //				  m_dTrainingsOffsetStandards   =   0.0d;
             }
@@ -2652,11 +2652,11 @@ public final class Spieler implements plugins.ISpieler {
     protected static double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
                                int intensitaet, int staminaTrainingPart, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
-    	double ageFactor = Math.pow(1.04, age-17) * gui.UserParameter.instance().AlterFaktor;
+    	double ageFactor = Math.pow(1.0404, age-17) * gui.UserParameter.instance().AlterFaktor;
 //    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
-    	double skillFactor = 3.25*Math.pow((curSkill+1d)/20, 3) - 6*Math.pow((curSkill+1d)/20, 2) + 5*(curSkill+1d)/20 - 0.15d;
-    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5))*0.1) * gui.UserParameter.instance().TrainerFaktor;
-    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10))*0.2) * gui.UserParameter.instance().CoTrainerFaktor;
+    	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
+    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * gui.UserParameter.instance().TrainerFaktor;
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * gui.UserParameter.instance().CoTrainerFaktor;
     	double tiFactor = (1 / (intensitaet/100d)) * gui.UserParameter.instance().IntensitaetFaktor;
     	double staminaFactor = 1 / (1 - staminaTrainingPart/100d);
     	double trainLength = baseLength * ageFactor * skillFactor * trainerFactor * coFactor * tiFactor * staminaFactor;
