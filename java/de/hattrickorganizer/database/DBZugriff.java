@@ -1909,39 +1909,16 @@ public class DBZugriff {
 			updateConfigTo1410_1();
 		}
 
-//		if (lastConfigUpdate < 1.420) {
-//			HOLogger.instance().log(getClass(), "Updating configuration to version 1.420...");
-//			updateConfigTo1420();
-//		}
+		if (lastConfigUpdate < 1.420) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.420...");
+			updateConfigTo1420();
+		}
 
 	}
 
 	private void updateConfigTo1410_1 () {
-		// Reset Training Speed Parameters for New Training
-		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
-		saveUserParameter("DAUER_TORWART", 3.7);
-		saveUserParameter("DAUER_VERTEIDIGUNG", 6.1);
-		saveUserParameter("DAUER_SPIELAUFBAU", 5.5);
-		saveUserParameter("DAUER_PASSPIEL", 4.5);
-		saveUserParameter("DAUER_FLUEGELSPIEL", 3.8);
-		saveUserParameter("DAUER_CHANCENVERWERTUNG", 5.2);
-		saveUserParameter("DAUER_STANDARDS", 1.5);
-
-		saveUserParameter("AlterFaktor", 1.0);
-		saveUserParameter("TrainerFaktor", 1.0);
-		saveUserParameter("CoTrainerFaktor", 1.0);
-		saveUserParameter("IntensitaetFaktor", 1.0);
-		
-		// Reset Rating offsets for Rating Prediction
-		// because of changes in the prediction files
-		HOLogger.instance().info(this.getClass(), "Resetting rating prediction offsets");
-		saveUserParameter("leftDefenceOffset", 0.0);
-		saveUserParameter("middleDefenceOffset", 0.0);
-		saveUserParameter("rightDefenceOffset", 0.0);
-		saveUserParameter("midfieldOffset", 0.0);
-		saveUserParameter("leftAttackOffset", 0.0);
-		saveUserParameter("middleAttackOffset", 0.0);
-		saveUserParameter("rightAttackOffset", 0.0);
+		resetTrainingParameters();
+		resetPredictionOffsets();
 
 		// Drop the feedback tables to force new feedback upload for beta testers
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
@@ -1952,10 +1929,41 @@ public class DBZugriff {
 	}
 
 	private void updateConfigTo1420 () {
-		// DUMMY
+		resetTrainingParameters();
+		resetPredictionOffsets();
 
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.420);
+	}
+
+	private void resetTrainingParameters () {
+		// Reset Training Speed Parameters for New Training
+		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
+		saveUserParameter("DAUER_TORWART", 3.0206);
+		saveUserParameter("DAUER_VERTEIDIGUNG", 5.4824);
+		saveUserParameter("DAUER_SPIELAUFBAU", 4.6613);
+		saveUserParameter("DAUER_PASSPIEL", 4.2989);
+		saveUserParameter("DAUER_FLUEGELSPIEL", 3.2341);
+		saveUserParameter("DAUER_CHANCENVERWERTUNG", 4.8536);
+		saveUserParameter("DAUER_STANDARDS", 0.9938);
+
+		saveUserParameter("AlterFaktor", 1.0);
+		saveUserParameter("TrainerFaktor", 1.0);
+		saveUserParameter("CoTrainerFaktor", 1.0);
+		saveUserParameter("IntensitaetFaktor", 1.0);
+	}
+
+	private void resetPredictionOffsets () {
+		// Reset Rating offsets for Rating Prediction
+		// because of changes in the prediction files
+		HOLogger.instance().info(this.getClass(), "Resetting rating prediction offsets");
+		saveUserParameter("leftDefenceOffset", 0.0);
+		saveUserParameter("middleDefenceOffset", 0.0);
+		saveUserParameter("rightDefenceOffset", 0.0);
+		saveUserParameter("midfieldOffset", 0.0);
+		saveUserParameter("leftAttackOffset", 0.0);
+		saveUserParameter("middleAttackOffset", 0.0);
+		saveUserParameter("rightAttackOffset", 0.0);
 	}
 
 }
