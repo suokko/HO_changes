@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -140,7 +141,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
                         de.hattrickorganizer.logik.MatchUpdater.updateMatch(de.hattrickorganizer.model.HOMiniModel
                                                                             .instance(),
-                                                                            
+
                         //Draghetto set value
                         matchdata[0]);
                     }
@@ -213,7 +214,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
             }
             //Match noch nicht in der Datenbank
             else {
-                //                int              teamid    = model.HOVerwaltung.instance().getModel().getBasics().getTeamId();        
+                //                int              teamid    = model.HOVerwaltung.instance().getModel().getBasics().getTeamId();
                 //                //Login PWD nur in der Debugversion
                 //                String args[]   =   model.HOVerwaltung.instance ().getArgs ();
                 //                //Debug?
@@ -277,7 +278,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
      */
     private void fillLabels() {
         int spieltag = m_iSpieltag;
-        java.util.Vector paarungen = null;
+        Vector paarungen = null;
         final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getBasics()
                                                                   .getTeamId();
 
@@ -302,7 +303,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "letzte" ) + " " + model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) ) );            
+            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "letzte" ) + " " + model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) ) );
         }
         //Nächste Spieltag
         else if (spieltag == NAECHSTER_SPIELTAG) {
@@ -315,7 +316,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "naechste" ) + " " + model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) ) );            
+            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "naechste" ) + " " + model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) ) );
         }
         //Absoluter Spieltag
         else {
@@ -328,17 +329,19 @@ final class SpieltagPanel extends JPanel implements ActionListener {
                                                                    .getProperty("Spieltag") + " "
                             + spieltag;
 
-        try {
-            bordertext += ("  ( "
-            + java.text.DateFormat.getDateTimeInstance().format(((Paarung) paarungen.get(0))
-                                                                .getDatum()) + " )");
-        } catch (Exception e) {
-            bordertext += ("  ( " + ((Paarung) paarungen.get(0)).getStringDate() + " )");
+        if (paarungen != null && paarungen.size()>0) {
+        	try {
+        		bordertext += ("  ( "
+        				+ java.text.DateFormat.getDateTimeInstance().format(((Paarung) paarungen.get(0))
+        						.getDatum()) + " )");
+        	} catch (Exception e) {
+        		bordertext += ("  ( " + ((Paarung) paarungen.get(0)).getStringDate() + " )");
+        	}
         }
 
         setBorder(BorderFactory.createTitledBorder(bordertext));
 
-        //Panel aktualisieren, wenn Paarungen gefunden        
+        //Panel aktualisieren, wenn Paarungen gefunden
         if ((paarungen != null) && (paarungen.size() == 4)) {
             resetMarkierung();
 

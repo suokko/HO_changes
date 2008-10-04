@@ -17,6 +17,7 @@ import de.hattrickorganizer.model.lineup.LigaTabelle;
 import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
 import de.hattrickorganizer.model.lineup.TabellenVerlaufEintrag;
 import de.hattrickorganizer.model.lineup.Tabellenverlauf;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
 
 
@@ -199,7 +200,7 @@ public class Spielplan implements plugins.ISpielplan {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Liga Tabelle
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
     public final ILigaTabelle getTabelle() {
         if (m_clTabelle == null) {
             m_clTabelle = berechneTabelle(14);
@@ -210,7 +211,7 @@ public class Spielplan implements plugins.ISpielplan {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Tabellenverlauf
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property m_clVerlauf.
@@ -366,7 +367,7 @@ public class Spielplan implements plugins.ISpielplan {
         eintrag.setTeamName(name);
 
         for (int i = 0; (i < spiele.length) && (i < maxSpieltag); i++) {
-            //Spiel schon gespielt             
+            //Spiel schon gespielt
             if (spiele[i].getToreHeim() > -1) {
                 //Anz Spiel erhöhen
                 anzSpiele++;
@@ -476,12 +477,12 @@ public class Spielplan implements plugins.ISpielplan {
         final Tabellenverlauf verlauf = new Tabellenverlauf();
         TabellenVerlaufEintrag[] eintraege = null;
 
-        spieltag = ((LigaTabellenEintrag) getTabelle().getEintraege().elementAt(0)).getAnzSpiele();
-        tabelle = new LigaTabelle[spieltag];
-
         try {
+        	spieltag = ((LigaTabellenEintrag) getTabelle().getEintraege().elementAt(0)).getAnzSpiele();
+            tabelle = new LigaTabelle[spieltag];
+
             for (int i = spieltag; i > 0; i--) {
-                //i-1 wegen Array 
+                //i-1 wegen Array
                 tabelle[i - 1] = berechneTabelle(i);
             }
 
@@ -521,6 +522,7 @@ public class Spielplan implements plugins.ISpielplan {
             verlauf.setEintraege(eintraege);
             return verlauf;
         } catch (Exception e) {
+        	HOLogger.instance().error(getClass(), "Error(generateTabellenVerlauf):" + e);
             return new Tabellenverlauf();
         }
     }
