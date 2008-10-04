@@ -1,6 +1,8 @@
 // %2418151228:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import hoplugins.commons.utils.HTCalendar;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -9,11 +11,15 @@ import java.util.Locale;
 import java.util.Map;
 
 import plugins.ISpieler;
+import plugins.ITrainingWeek;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.EPV;
 import de.hattrickorganizer.logik.HOFriendlyManager;
+import de.hattrickorganizer.logik.TrainingsManager;
+import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**
@@ -448,6 +454,7 @@ public class HOModel {
                 ISpieler old = (ISpieler) players.get("" + player.getSpielerID());
 
                 if (old == null) {
+                	if (TrainingsManager.TRAININGDEBUG) HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
                     old = new Spieler();
                     old.setSpielerID(-1);
                 }
@@ -464,7 +471,7 @@ public class HOModel {
                         player.calcFullSubskills(old, m_clVerein.getCoTrainer(),
                                                  m_clVerein.getTorwartTrainer(),
                                                  getTrainer().getTrainer(),
-                                                 m_clTeam.getTrainingslevel(), 
+                                                 m_clTeam.getTrainingslevel(),
                                                  m_clTeam.getStaminaTrainingPart(),
                                                  calcDate);
                         break;
@@ -475,7 +482,7 @@ public class HOModel {
                         player.calcIncrementalSubskills(old, m_clVerein.getCoTrainer(),
                                                         m_clVerein.getTorwartTrainer(),
                                                         getTrainer().getTrainer(),
-                                                        m_clTeam.getTrainingslevel(), 
+                                                        m_clTeam.getTrainingslevel(),
                                                         m_clTeam.getStaminaTrainingPart(),
                                                         m_iID);
                         break;
@@ -484,6 +491,31 @@ public class HOModel {
                     default:
                         break;
                 }
+
+				if (TrainingsManager.TRAININGDEBUG) {
+	                /**
+	                 * Start of debug
+	                 */
+	                HTCalendar htcP;
+	                String htcPs = "";
+	                if (previousTrainingDate != null) {
+	                	htcP = new HTCalendar(previousTrainingDate);
+	                	htcPs = " ("+htcP.getHTSeason()+"."+htcP.getHTWeek()+")";
+	                }
+	                HTCalendar htcA = new HTCalendar(actualTrainingDate);
+	            	String htcAs = " ("+htcA.getHTSeason()+"."+htcA.getHTWeek()+")";
+	                HTCalendar htcC = new HTCalendar(calcDate);
+	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
+
+	                HOLogger.instance().debug(HOModel.class, "TrainingType="+trainingType+", trArt="+TrainingsWeekManager.instance().getTrainingWeek(m_iID).getTyp()+", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs+", act="+actualTrainingDate.toLocaleString() +htcAs+", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toLocaleString()+htcPs)+" ("+previousHrfId+")");
+
+	                if (trainingType > 0)
+	                	logPlayerProgress (old, player);
+
+	                /**
+	                 * End of debug
+	                 */
+				}
 
                 if (player.getSpielerID() == 40591141) {
                     HOLogger.instance().log(getClass(),m_iID + " " + trainingType);
@@ -508,6 +540,67 @@ public class HOModel {
                                                                        m_clBasics.getDatum());
     }
 
+    private void logPlayerProgress (ISpieler before, ISpieler after) {
+    	int playerID = after.getSpielerID();
+    	String playerName = after.getName();
+    	ITrainingWeek train = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
+    	int trLevel = train.getIntensitaet();
+    	int trArt = train.getTyp();
+    	String trArtString = HelperWrapper.instance().getNameForTraining(trArt);
+    	int trStPart = train.getStaminaTrainingPart();
+    	int age = after.getAlter();
+    	int skill = -1;
+		int beforeSkill = 0;
+		int afterSkill = 0;
+    	switch (trArt) {
+    	case ISpieler.TA_EXTERNALATTACK:
+    	case ISpieler.FLUEGELSPIEL:
+    		skill = ISpieler.SKILL_FLUEGEL;
+    		break;
+    	case ISpieler.STANDARDS:
+    		skill = ISpieler.SKILL_STANDARDS;
+    		break;
+    	case ISpieler.TA_ABWEHRVERHALTEN:
+    	case ISpieler.VERTEIDIGUNG:
+    		skill = ISpieler.SKILL_VERTEIDIGUNG;
+    		break;
+    	case ISpieler.CHANCENVERWERTUNG:
+    	case ISpieler.SCHUSSTRAINING:
+    		skill = ISpieler.SKILL_TORSCHUSS;
+    		break;
+    	case ISpieler.PASSPIEL:
+    	case ISpieler.TA_STEILPAESSE:
+    		skill = ISpieler.SKILL_PASSSPIEL;
+    		break;
+    	case ISpieler.SPIELAUFBAU:
+    		skill = ISpieler.SKILL_SPIELAUFBAU;
+    		break;
+    	case ISpieler.TORWART:
+    		skill = ISpieler.SKILL_TORWART;
+    		break;
+    	case ISpieler.KONDITION:
+    		skill = ISpieler.SKILL_KONDITION;
+    		break;
+		}
+    	if (skill >= 0) {
+    		beforeSkill = before.getValue4Skill4(skill);
+    		afterSkill = after.getValue4Skill4(skill);
+    		int beforeStamina = before.getKondition();
+    		int afterStamina = after.getKondition();
+    		double beforeSub = before.getSubskill4Pos(skill);
+    		double afterSub = after.getSubskill4Pos(skill);
+
+
+    		HOLogger.instance().info(getClass(), "TrLog:" + m_iID + "|"
+    				+ m_clBasics.getSeason() + "|" + m_clBasics.getSpieltag() + "|"
+    				+ playerID + "|" + playerName + "|" + age + "|"
+    				+ trArt + "|" + trArtString + "|" + trLevel + "|" + trStPart + "|"
+    				+ beforeStamina + "|" + afterStamina + "|"
+    				+ beforeSkill + "|" + de.hattrickorganizer.tools.Helper.round(beforeSub, 2) + "|"
+    				+ afterSkill + "|" + de.hattrickorganizer.tools.Helper.round(afterSub, 2)
+    				);
+    	}
+    }
     /**
      * TODO Missing Method Documentation
      */
