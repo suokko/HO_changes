@@ -4,6 +4,12 @@ P D Bug description
 ------------------------------------------------------
 2 A Transferscout parser adds injuries, if a player is warned (red card)
 5 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
+    Reason: StackOverflowError (we don't know the exact code point, yet)
+            Exception in thread "AWT-EventQueue-0" java.lang.StackOverflowError
+                 at sun.awt.image.ImageWatched$WeakLink.isWatcher(ImageWatched.java:84)
+                 ...
+                 at sun.awt.image.ImageWatched$WeakLink.isWatcher(ImageWatched.java:84)
+                 (message repeats several thousand times...)
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 1 ? HO misses training for player of either the friendly or the league match
 5 ? Adding a prediction offset for a certain skill can lead to a lower(!) star value
@@ -11,16 +17,17 @@ P D Bug description
             If such a player gets training or a manual offset < 0.5, the star value decreases...
             Perhaps we should change that...
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
-2 ? Training speed is wrong in some rare cases: from 0.11 to 0.03 whithin a week without any reason
-    (same training type, no injury, no card, no 50% training position, same age)
-    Reason: player would have reached subskill >1 which gets reduced to 0.94 by HO
-    		Perhaps we should change that too ^^
+3 ? Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
+    What shall we do, if the user sets the fraction digits to 1? 
+    A subskill >0.94 will be shown as pseudo skillup...
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 3 F Fix HO.sh for linux (remove dependency to bash, accept whitespaces in path name)
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 3 ? TA doesn't show up after successful installation
 3 ? IFA doesn't show up after successful installation
+5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
+4 ? Add string and icon for regainer
 
 
 Enhancements
@@ -28,8 +35,6 @@ Enhancements
 P D Task
 ------------------------------------------------------
 2 F Update calculation of special tactics after the latest playerstrength optimisations
-3 F Update rating prediction
-3 F Update training speed prediction
 3 F Add new market value data from the feedback plugin to HO
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
