@@ -1732,6 +1732,8 @@ public final class HOMainFrame extends JFrame
 				HOLogger.instance().setLogLevel(HOLogger.DEBUG);
 			} else if (debugLvl.equalsIgnoreCase("WARNING")) {
 				HOLogger.instance().setLogLevel(HOLogger.WARNING);
+			} else if (debugLvl.equalsIgnoreCase("ERROR")) {
+				HOLogger.instance().setLogLevel(HOLogger.ERROR);
 			}
 		}
 
