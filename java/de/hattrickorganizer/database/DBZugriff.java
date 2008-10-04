@@ -1931,6 +1931,7 @@ public class DBZugriff {
 	private void updateConfigTo1420 () {
 		resetTrainingParameters();
 		resetPredictionOffsets();
+		saveUserParameter("anzahlNachkommastellen", 2);
 
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.420);

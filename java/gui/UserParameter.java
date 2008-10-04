@@ -448,7 +448,7 @@ public final class UserParameter extends Configuration {
     //Anzahl Nachkommastellen
 
     /** TODO Missing Parameter Documentation */
-    public int anzahlNachkommastellen = 1;
+    public int anzahlNachkommastellen = 2;
 
     /** TODO Missing Parameter Documentation */
     public int aufstellungsAssistentPanel_reihenfolge = ILineUp.AW_MF_ST;
