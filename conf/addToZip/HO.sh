@@ -1,11 +1,12 @@
 #!/bin/sh
 #
-# Start script for Hattrick Organizer v0.34
+# Start script for Hattrick Organizer v0.35
 # Originally created by patta, RAGtime and others
-# Last Change (2008-09-22) by Flattermann (flattermannHO@gmail.com)
+# Last Change (2008-10-05) by Flattermann (flattermannHO@gmail.com)
 #
 # List of changes:
 #
+#       0.35    - removing dependencies from bash as system shell
 #       0.34    - copy prediction directory (for HO>=1.410)
 #	0.33    - don't copy rating.dat anymore (not needed for HO>=1.400)
 #	0.32    - optional separate configuration file
@@ -226,7 +227,7 @@ start(){
 
 	# check database and print warning
 	HO_PAR="-jar $HODIR/ho.jar" 
-    if [ ! $JDBC = "" ]
+    if [ ! "x$JDBC" = "x" ]
     then
         echo "Using jdbc $JDBC..."
         HO_PAR="-cp $HODIR/hsqldb.jar:jl1.0.jar:$HODIR/ho.jar:$JDBC de.hattrickorganizer.HO"
@@ -426,16 +427,16 @@ done
 
 # Check if all needed directories exist
 
-if [[ ! -d "${HOHOME}" ]]
+if [ ! -d "${HOHOME}" ]
 then
 	echo "creating ${HOHOME}"
 	mkdir "${HOHOME}"
 fi
 
 # If directory does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-if [[ ! -d "${PLUGINSDIR}" || -d "${HODIR}/hoplugins" && "${HODIR}/hoplugins" -nt "${HOHOME}/hoplugins" ]]
+if [ ! -d "${PLUGINSDIR}" -o -d "${HODIR}/hoplugins" -a "${HODIR}/hoplugins" -nt "${HOHOME}/hoplugins" ]
 then
-        if [[ ! -d "${HODIR}/hoplugins" ]]
+        if [ ! -d "${HODIR}/hoplugins" ]
         then
           echo "creating ${HOHOME}/hoplugins"
           mkdir "${HOHOME}/hoplugins"
@@ -446,28 +447,28 @@ then
 fi
 
 # If directory does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-if [[ ! -d "${SPRACHDIR}" || "${HODIR}/sprache" -nt "${SPRACHDIR}" ]]
+if [ ! -d "${SPRACHDIR}" -o "${HODIR}/sprache" -nt "${SPRACHDIR}" ]
 then
 	echo "copying ${SPRACHDIR}"
 	cp -r "${HODIR}/sprache" ${HOHOME}
 fi
 
 # If directory does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-if [[ ! -d "${PREDICTIONDIR}" || "${HODIR}/prediction" -nt "${PREDICTIONDIR}" ]]
+if [ ! -d "${PREDICTIONDIR}" -o "${HODIR}/prediction" -nt "${PREDICTIONDIR}" ]
 then
         echo "copying ${PREDICTIONDIR}"
         cp -r "${HODIR}/prediction" ${HOHOME}
 fi
 
 # If file does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-if [[ ! -e "${HOHOME}/defaults.xml" || "${HODIR}/defaults.xml" -nt "${HOHOME}/defaults.xml" ]]
+if [ ! -e "${HOHOME}/defaults.xml" -o "${HODIR}/defaults.xml" -nt "${HOHOME}/defaults.xml" ]
 then
 	echo "copying ${HOHOME}/defaults.xml"
 	cp "${HODIR}/defaults.xml" ${HOHOME}/defaults.xml
 fi
 
 # If file does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-if [[ ! -e "${HOHOME}/epv.dat" || "${HODIR}/epv.dat" -nt "${HOHOME}/epv.dat" ]]
+if [ ! -e "${HOHOME}/epv.dat" -o "${HODIR}/epv.dat" -nt "${HOHOME}/epv.dat" ]
 then
 	echo "copying ${HOHOME}/epv.dat"
         cp "${HODIR}/epv.dat" ${HOHOME}/epv.dat
@@ -476,7 +477,7 @@ fi
 
 # Perform backups or restore only if $DATABASEDIR exists
 
-if [[ -d "${DATABASEDIR}" ]]
+if [ -d "${DATABASEDIR}" ]
 then
 	`$BACKUP`  && backup
 	`$RESTORE` && restore
