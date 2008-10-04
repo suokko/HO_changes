@@ -34,7 +34,7 @@ public class HOLogger {
 
     /** TODO Missing Parameter Documentation */
     FileWriter logWriter = null;
-    private int logLevel = ERROR;
+    private int logLevel = DEBUG;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -118,7 +118,7 @@ public class HOLogger {
     public void debug(Class caller, Object obj) {
     	logMessage(caller, obj.toString(), DEBUG);
     }
-    
+
     /**
      * TODO Missing Method Documentation
      *
@@ -166,10 +166,10 @@ public class HOLogger {
         }
 
 		System.out.println(msg + text);
-		
+
         try {
 			Date d = new Date();
-			String txt = (sdf.format(d) + msg + caller.getName() + ": " + text + "\r\n");        	
+			String txt = (sdf.format(d) + msg + caller.getName() + ": " + text + "\r\n");
             logWriter.write(txt);
             logWriter.flush();
         } catch (IOException e) {
