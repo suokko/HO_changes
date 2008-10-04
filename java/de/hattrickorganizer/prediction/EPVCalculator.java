@@ -23,7 +23,7 @@ public class EPVCalculator
 
     private EPVCalculator () {
     	neuronalNetwork = new Net(networkStructure, weightsFilename);
-    	System.out.println(neuronalNetwork.toString());
+//    	System.out.println(neuronalNetwork.toString());
     }
 
     private void normalize (Map inputMap) {
