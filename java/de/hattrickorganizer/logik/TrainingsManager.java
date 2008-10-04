@@ -2,6 +2,7 @@
 package de.hattrickorganizer.logik;
 
 import gui.UserParameter;
+import hoplugins.commons.utils.HTCalendar;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,6 +50,7 @@ public class TrainingsManager implements ITrainingsManager {
     private Map matchMap;
 
     private TrainingsWeekManager weekManager;
+    static final public boolean TRAININGDEBUG = false;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -164,7 +166,7 @@ public class TrainingsManager implements ITrainingsManager {
 
         ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
 
-//        System.out.println ("Start calcFullTraining for "+spieler.getName()+", output="+output);
+        if (TRAININGDEBUG) System.out.println ("Start calcFullTraining for "+spieler.getName()+", output="+output);
 
         //alle Trainings durchlaufen
         //run through all trainings
@@ -180,7 +182,7 @@ public class TrainingsManager implements ITrainingsManager {
             }
 
             final Calendar trainingDate = train.getTrainingDate();
-            
+
             // if (trainingDate > timestamp) then ignore training and quit, because all following trainings would be after the timestamp too
             if (trainingDate.getTimeInMillis() >= timestamp.getTime()) {
                 return output;
@@ -188,9 +190,9 @@ public class TrainingsManager implements ITrainingsManager {
 
             curTraining = (TrainingPerPlayer)calculateWeeklyTrainingForPlayer(spieler, train, timestamp);
             output.addValues(curTraining);
-//            System.out.println ("Mid calcFullTraining for "+spieler.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
+            if (TRAININGDEBUG)System.out.println ("Mid calcFullTraining for "+spieler.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
         }
-//        System.out.println ("End calcFullTraining for "+spieler.getName()+", output="+output);
+        if (TRAININGDEBUG)System.out.println ("End calcFullTraining for "+spieler.getName()+", output="+output);
         return output;
     }
 
@@ -209,7 +211,7 @@ public class TrainingsManager implements ITrainingsManager {
             ITrainingWeek train) {
     	return calculateWeeklyTrainingForPlayer(inputSpieler, train, null);
     }
-    
+
     /**
      * liefert die komplette Trainings in jedem skill eines Spielers calculates Training for given
      * Player for each skill
@@ -230,9 +232,23 @@ public class TrainingsManager implements ITrainingsManager {
         ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
         if (timestamp != null)
         	output.setTimestamp(timestamp);
-//        System.out.println ("Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((zeitpunkt!=null)?zeitpunkt.toString():"")+", trainDate="+train.getTrainingDate().getTime().toLocaleString());
-        
-        if (train == null || train.getTyp() == -1) {
+
+        if (TRAININGDEBUG) {
+        	//HTCalendarFactory.createTrainingCalendar(HOMiniModel, date)
+        	HTCalendar htc1 = new HTCalendar();
+        	HTCalendar htc2 = new HTCalendar();
+        	String c1s = "";
+        	String c2s = "";
+        	if (timestamp != null) {
+        		htc1.setTime(timestamp);
+        		c1s = " ("+htc1.getHTSeason()+"."+htc1.getHTWeek()+")";
+        	}
+        	htc2.setTime(train.getTrainingDate());
+        	c2s = " ("+htc2.getHTSeason()+"."+htc2.getHTWeek()+")";
+
+        	System.out.println ("Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")+", trainDate="+train.getTrainingDate().getTime().toLocaleString()+c2s);
+        }
+        if (train == null || train.getTyp() < 0) {
             return output;
         }
 
@@ -253,9 +269,9 @@ public class TrainingsManager implements ITrainingsManager {
                 	// Player has played -> check how long he was on the field
                 	// (i.e. if he got a red card or injured)
                     int minutesPlayed = getMinutesPlayed (matchId, playerID);
-//                    HOLogger.instance().debug(getClass(), "Match "+matchId+": "
-//                    		+"Player "+spieler.getName()+" ("+playerID+")"
-//                    		+" played "+minutesPlayed+"mins at pos "+playerPos);
+					if (TRAININGDEBUG) HOLogger.instance().debug(getClass(), "Match "+matchId+": "
+                    		+"Player "+spieler.getName()+" ("+playerID+")"
+                    		+" played "+minutesPlayed+"mins at pos "+playerPos);
                     trainPoints.addTrainingMatch (minutesPlayed, playerPos);
                 }
             }
@@ -264,7 +280,7 @@ public class TrainingsManager implements ITrainingsManager {
             HOLogger.instance().log(getClass(),e);
         }
 
-//        System.out.println ("End calcWeeklyTraining for "+spieler.getName()+", "+train+", output="+output);
+        if (TRAININGDEBUG) System.out.println ("End calcWeeklyTraining for "+spieler.getName()+", "+train+", output="+output);
         return output;
     }
 
@@ -289,7 +305,7 @@ public class TrainingsManager implements ITrainingsManager {
     //----------------------------------- Utility Methods ----------------------------------------------------------
 
     /**
-     * Returns the base points a player gets for this training type 
+     * Returns the base points a player gets for this training type
      * in a full match at this position
      * @param trainType 	training type
      * @param position		player position id
@@ -299,7 +315,7 @@ public class TrainingsManager implements ITrainingsManager {
     	TrainingPoint point = new TrainingPoint();
         return (point.getTrainingPoint(trainType, new Integer (position)).doubleValue());
     }
-    
+
     /**
      * Calculates how long the player was on the field in the specified match
      * @param matchId	the match to check
@@ -312,7 +328,7 @@ public class TrainingsManager implements ITrainingsManager {
     	int posId = getMatchPosition(matchId, playerId);
     	// Player was not on the field -> 0 minutes
 		// OR
-		// No Matchdetails found, probably not downloaded... 
+		// No Matchdetails found, probably not downloaded...
 		// Let's expect the worst and assume that the player
 		// did not play (-> 0 minutes)
     	if (posId == PLAYERSTATUS_NOT_IN_LINEUP ||
@@ -357,7 +373,7 @@ public class TrainingsManager implements ITrainingsManager {
        				break;
        			/**
        			 * Check for Red Cards
-       			 * 
+       			 *
        			 * Unfortunately, this does not work very well, because players with a red card
        			 * are not transmitted in lineup from Hattrick. Therefore, we don't know
        			 * on which position the player played. :(
@@ -388,7 +404,7 @@ public class TrainingsManager implements ITrainingsManager {
 
     /**
      * Creates a list of matches for the specified training
-     * 
+     *
      * @param trainingDate	use this trainingDate
      * @return	list of matchIds (type Integer)
      */
@@ -429,7 +445,7 @@ public class TrainingsManager implements ITrainingsManager {
     		return PLAYERSTATUS_NO_MATCHDATA;
        	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
     	if (details == null)
-    		// No Matchdetails found, probably not downloaded... 
+    		// No Matchdetails found, probably not downloaded...
     		return PLAYERSTATUS_NO_MATCHDETAILS;
     	Integer posId = (Integer)matchData.get(new Integer(playerId));
     	// Player not in lineup
@@ -452,7 +468,7 @@ public class TrainingsManager implements ITrainingsManager {
     	}
     	return PLAYERSTATUS_OK;
     }
-    
+
     /**
      * Returns the positionId for a player in a specific match
      * If he is not in the lineup, return the player status (PLAYERSTATUS_*)
@@ -464,19 +480,19 @@ public class TrainingsManager implements ITrainingsManager {
     	int playerStatus = getPlayerStatus(matchId, playerId);
     	if (playerStatus == PLAYERSTATUS_OK) {
         	Map matchData = getMatchLineup(matchId);
-        	Integer posId = (Integer)matchData.get(new Integer(playerId));    		
+        	Integer posId = (Integer)matchData.get(new Integer(playerId));
         	return posId.intValue();
     	} else {
     		return playerStatus;
     	}
     }
-    
+
     /**
      * Fetches the MatchLineup from the cache (matchMap) or - if not in cache - from the database
      * Key = playerId as Integer
      * Value = posId as Integer
      * @param matchId	match id
-     * @return	Map	(playerId -> posId) of a match lineup  
+     * @return	Map	(playerId -> posId) of a match lineup
      */
     private Map getMatchLineup(int matchId) {
         Map matchData = (Map) this.matchMap.get("" + matchId);
