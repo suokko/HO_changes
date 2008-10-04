@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import de.hattrickorganizer.model.HOVerwaltung;
+
 
 /**
  * Parses a player out of a text copied from HT. Tries also to give error informations but this may
@@ -23,6 +25,7 @@ public class PlayerConverter {
     private List specialities;
     private List specialitiesvalues;
     private int error;
+    final HOVerwaltung homodel = HOVerwaltung.instance();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -30,9 +33,6 @@ public class PlayerConverter {
      * We prepare our skill and specialities and sort them
      */
     public PlayerConverter() {
-        final de.hattrickorganizer.model.HOVerwaltung homodel = de.hattrickorganizer.model.HOVerwaltung
-                                                                .instance();
-
         // Get all skills for active language
         // This should be the same language as in Hattrick
         skills = new ArrayList();
@@ -93,10 +93,11 @@ public class PlayerConverter {
         specialities.add(homodel.getResource().getProperty("sp_Powerful").toLowerCase());
         specialities.add(homodel.getResource().getProperty("sp_Unpredictable").toLowerCase());
         specialities.add(homodel.getResource().getProperty("sp_Head").toLowerCase());
+        specialities.add(homodel.getResource().getProperty("sp_Regainer").toLowerCase());
 
         specialitiesvalues = new ArrayList();
 
-        for (int k = 0; k < 5; k++) {
+        for (int k = 0; k < 6; k++) {
             specialitiesvalues.add(new Integer(k));
         }
 
@@ -373,17 +374,27 @@ public class PlayerConverter {
                                                   .trim()).intValue());
             tmp = tmp.substring(tmp.indexOf(")")).trim();
 
+            // Get injury
             String injury = "";
-
             for (int j = 0; j < tmp.length(); j++) {
-                if ((tmp.charAt(j) >= '0') && (tmp.charAt(j) <= '9')) {
-                    injury = injury + tmp.charAt(j);
-                }
+            	if ((tmp.charAt(j) >= '0') && (tmp.charAt(j) <= '9') && (tmp.charAt(j-1) != '[')) {
+            		injury = String.valueOf(tmp.charAt(j));
+            		break;
+            	}
             }
 
             if (!injury.equals("")) {
                 player.setInjury(Integer.valueOf(injury).intValue());
             }
+
+            // check bookings
+            try {
+	            int b1 = tmp.indexOf("[");
+	            int b2 = tmp.indexOf("]");
+	            if (b1 > 1 && b2 > 1 && tmp.indexOf("[", b1+1) > -1) {
+	            	player.setBooked(tmp.substring(b1+1, b2));
+	            }
+            } catch (Exception e) { /* ignore */ }
 
             // Get age from line 2
             tmp = lines.get(1).toString();
