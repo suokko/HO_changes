@@ -1,6 +1,8 @@
 // %3800124443:de.hattrickorganizer.gui.transferscout%
 package de.hattrickorganizer.gui.transferscout;
 
+import de.hattrickorganizer.tools.PlayerHelper;
+
 /**
  * Player used for PlayerConverter (TransferScout)
  *
@@ -30,6 +32,7 @@ public class Player {
     private int stamina;
     private int tsi;
     private int wing;
+    private String booked = null;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -76,7 +79,7 @@ public class Player {
     public final int getAgeDays() {
         return ageDays;
     }
-    
+
     /**
      * Setter for attack
      *
@@ -212,16 +215,20 @@ public class Player {
         String info = "";
 
         if (getLeadership() > 0) {
-            final de.hattrickorganizer.tools.PlayerHelper ph = new de.hattrickorganizer.tools.PlayerHelper();
             info = info
                    + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fuehrung")
-                   + ": " + ph.getNameForSkill(getLeadership()) + "\r\n";
+                   + ": " + PlayerHelper.getNameForSkill(getLeadership()) + "\r\n";
         }
 
         if (getInjury() > 0) {
             final String tmp = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                       .getProperty("scout_injury");
             info = info + tmp.replaceAll("%weeks%", String.valueOf(getInjury())) + "\r\n";
+        }
+
+        // add warnings info text (yellow / red card)
+        if (getBooked() != null && getBooked().length()>0) {
+            info += getBooked() + "\r\n";
         }
 
         return info;
@@ -442,6 +449,21 @@ public class Player {
     public final int getWing() {
         return wing;
     }
+
+    /**
+     * Setter for the booked infos.
+     */
+    public final void setBooked(String booked) {
+    	this.booked = booked;
+    }
+
+    /**
+     * Getter for the booked infos.
+     */
+    public final String getBooked() {
+    	return this.booked;
+    }
+
 
     /**
      * Creates a string representation of the object
