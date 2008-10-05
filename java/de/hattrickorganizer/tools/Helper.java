@@ -243,28 +243,14 @@ public class Helper extends LanguageFiles {
 
     /** Speciality */
     public static final CBItem[] EINSTUFUNG_SPECIALITY = {
-                                                             new CBItem("", 0),
-                                                             new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                               .getResource()
-                                                                                                               .getProperty("sp_Technical"),
-                                                                        1),
-                                                             new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                               .getResource()
-                                                                                                               .getProperty("sp_Quick"),
-                                                                        2),
-                                                             new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                               .getResource()
-                                                                                                               .getProperty("sp_Powerful"),
-                                                                        3),
-                                                             new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                               .getResource()
-                                                                                                               .getProperty("sp_Unpredictable"),
-                                                                        4),
-                                                             new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                               .getResource()
-                                                                                                               .getProperty("sp_Head"),
-                                                                        5)
-                                                         };
+    	new CBItem("", 0),
+    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Technical"), 1),
+    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Quick"),2),
+    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Powerful"), 3),
+    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Unpredictable"), 4),
+    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Head"), 5),
+    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Regainer"), 6)
+    };
 
     /** Spielerpositionen */
     public static final CBItem[] SPIELERPOSITIONEN = {
@@ -1041,7 +1027,7 @@ public class Helper extends LanguageFiles {
         final Integer keywert = new Integer(wert);
 
         if (wert <= 0) {
-            icon = EMPTYIMAGE;	
+            icon = EMPTYIMAGE;
         } else {
             // Nicht im Cache
             if (!m_clSpezialitaetCache.containsKey(keywert)) {
