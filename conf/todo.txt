@@ -2,7 +2,6 @@ Bugfixes
 ========
 P D Bug description
 ------------------------------------------------------
-2 A Transferscout parser adds injuries, if a player is warned (red card)
 5 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
     Reason: StackOverflowError (we don't know the exact code point, yet)
             Exception in thread "AWT-EventQueue-0" java.lang.StackOverflowError
@@ -12,16 +11,22 @@ P D Bug description
                  (message repeats several thousand times...)
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 1 ? HO misses training for player of either the friendly or the league match
+	Reason (probably): if the user downloads data right after a match seems finished,
+			it was actually not really finished on HT (no cards/goals visible at players,...).
+			HO got no valid XML (in progress), but the match short info incl. the result was available.
+			HO seems not to load this matchs data upon the next connection in such cases and
+			it will be missing at the training calculation.
 5 ? Adding a prediction offset for a certain skill can lead to a lower(!) star value
     Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...
             If such a player gets training or a manual offset < 0.5, the star value decreases...
             Perhaps we should change that...
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
 3 ? Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
-    What shall we do, if the user sets the fraction digits to 1? 
+    What shall we do, if the user sets the fraction digits to 1?
     A subskill >0.94 will be shown as pseudo skillup...
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
+	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
 3 F Fix HO.sh for linux (remove dependency to bash, accept whitespaces in path name)
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 3 ? TA doesn't show up after successful installation
@@ -48,6 +53,20 @@ P D Task
 5 A Show weather SEs in match highlights
 4 A HO! version for U3-USB stick
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
+4 A Add connection test utility
+
+
+
+Fixed
+=====
+P D Task
+------------------------------------------------------
+2 F Training speed is wrong in some rare cases: from 0.11 to 0.03 whithin a week without any reason
+    (same training type, no injury, no card, no 50% training position, same age)
+    Reason: player would have reached subskill >1 which gets reduced to 0.94 by HO
+    		Perhaps we should change that too ^^
+2 A Transferscout parser adds injuries, if a player is warned (red card)
+
 
 
 Legend:
