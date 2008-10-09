@@ -17,6 +17,7 @@ public class EPVData implements Cloneable, IEPVData {
 	private int playerId;	
 
 	private int age;
+	private int ageDays;
 	
 	private int form;
 	private int TSI;
@@ -55,6 +56,7 @@ public class EPVData implements Cloneable, IEPVData {
     public EPVData(ISpieler s) {
         setPlayerName(s.getName());
         setAge(s.getAlter());
+        setAgeDays(s.getAgeDays());
         setTSI(s.getMarkwert());
         setForm(s.getForm());
         setStamina(s.getKondition() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_KONDITION));
@@ -81,6 +83,7 @@ public class EPVData implements Cloneable, IEPVData {
 	public EPVData(IPlayerData s) {
 		setPlayerName(s.getPlayerName());
 		setAge(s.getAge());
+		setAgeDays(s.getAgeDays());
 		setTSI(s.getTSI());
 		setForm(s.getForm());
 		setStamina(s.getStamina());
@@ -122,6 +125,14 @@ public class EPVData implements Cloneable, IEPVData {
 		return age;
 	}
 
+	public int getAgeDays() {
+		return ageDays;
+	}
+
+	public void setAgeDays(int ageDays) {
+		this.ageDays = ageDays;
+	}
+	
 	/**
 	 * TODO Missing Method Documentation
 	 *
