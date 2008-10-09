@@ -21,6 +21,13 @@ public interface IPlayerData {
      *
      * @return TODO Missing Return Method Documentation
      */
+    public abstract int getAgeDays();
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
     public abstract double getAttack();
 
     /**

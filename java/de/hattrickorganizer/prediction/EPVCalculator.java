@@ -15,15 +15,15 @@ public class EPVCalculator
     private static String weightsFilename = "prediction/epvWeights.mlp";
     private Net neuronalNetwork;
 
-    public static EPVCalculator getInstance() {
-        if(epvCalculator == null)
-            epvCalculator = new EPVCalculator();
-        return epvCalculator;
-    }
-
     private EPVCalculator () {
     	neuronalNetwork = new Net(networkStructure, weightsFilename);
 //    	System.out.println(neuronalNetwork.toString());
+    }
+
+    public static EPVCalculator getInstance() {
+        if (epvCalculator == null)
+            epvCalculator = new EPVCalculator();
+        return epvCalculator;
     }
 
     private void normalize (Map inputMap) {
@@ -34,7 +34,7 @@ public class EPVCalculator
     public final double getPrice (IEPVData iepvdata, int week, double currencyRate) {
     	Map inputMap = new HashMap();
 //        "@age,@fo,@xp,@lead,@st,@gk,@pm,@ps,@wi,@de,@sc,@sp,@spec,@agg,@pop,@hon,@week:20:20:price";
-    	inputMap.put("age", new Double(iepvdata.getAge()));
+    	inputMap.put("age", new Double(iepvdata.getAge() + iepvdata.getAgeDays()/112d));
     	inputMap.put("fo", new Double(iepvdata.getForm()));
     	inputMap.put("xp", new Double(iepvdata.getExperience()));
     	inputMap.put("lead", new Double(iepvdata.getLeadership()));
