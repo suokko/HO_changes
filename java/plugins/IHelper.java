@@ -8,10 +8,13 @@ package plugins;
 
 import java.awt.Component;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import de.hattrickorganizer.tools.HTCalendar;
 
 
 /**
@@ -552,4 +555,190 @@ public interface IHelper {
      * @return version type
      */
     public boolean isDevVersion();
+
+    // ================== HT-Calendar helper methods ==================
+    
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
+     * over to the next week.
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createEconomyCalendar();
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
+     * over to the next week.
+     *
+     * @param model HO data model
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createEconomyCalendar(IHOMiniModel model);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
+     * over to the next week.
+     *
+     * @param date Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createEconomyCalendar(Date date);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
+     * over to the next week.
+     *
+     * @param timestamp Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createEconomyCalendar(Timestamp timestamp);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
+     * over to the next week.
+     *
+     * @param model HO data model
+     * @param date Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createEconomyCalendar(IHOMiniModel model, Date date);
+
+    /**
+     * Creates a HTCalendar to calculate global (Swedish) values.
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createGlobalCalendar();
+
+    /**
+     * Creates a HTCalendar to calculate global (Swedish) values  and presets it with he specified
+     * date a date.
+     *
+     * @param date Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createGlobalCalendar(Date date);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the training date to
+     * flip over to the next week.
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createTrainingCalendar();
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the training date to
+     * flip over to the next week.
+     *
+     * @param model HO data model
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createTrainingCalendar(IHOMiniModel model);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the training date to
+     * flip over to the next week.
+     *
+     * @param date Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createTrainingCalendar(Date date);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the training date to
+     * flip over to the next week.
+     *
+     * @param timestamp Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createTrainingCalendar(Timestamp timestamp);
+
+    /**
+     * Creates a HTCalendar to calculate local values for a league,  using the training date to
+     * flip over to the next week.
+     *
+     * @param model HO data model
+     * @param date Date to set the calendar
+     *
+     * @return a HTCalendar.
+     */
+    public IHTCalendar createTrainingCalendar(IHOMiniModel model, Date date);
+
+	/**
+	 * Get HT-Season of a given date (using the economy calendar)
+	 * 
+	 * @param date					the date to convert
+	 * @return	HT-Season
+	 */
+	public int getHTSeason (Date date);
+	
+	/**
+	 * Get HT-Season of a given date
+	 * 
+	 * @param date					the date to convert
+	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
+	 * @return	HT-Season
+	 */
+	public int getHTSeason (Date date, boolean useTrainingCalendar);
+	
+	/**
+	 * Get HT-Week of a given date (using the economy calendar)
+	 * 
+	 * @param date					the date to convert
+	 * @return	HT-Week
+	 */
+	public int getHTWeek (Date date);
+	
+	/**
+	 * Get HT-Week of a given date
+	 * 
+	 * @param date					the date to convert
+	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
+	 * @return	HT-Week
+	 */
+	public int getHTWeek (Date date, boolean useTrainingCalendar);
+
+	/**
+	 * Get HT-Season of a given date (using the economy calendar)
+	 * 
+	 * @param timestamp				the date to convert
+	 * @return	HT-Season
+	 */
+	public int getHTSeason (Timestamp timestamp);
+	
+	/**
+	 * Get HT-Season of a given date
+	 * 
+	 * @param timestamp				the date to convert
+	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
+	 * @return	HT-Season
+	 */
+	public int getHTSeason (Timestamp timestamp, boolean useTrainingCalendar);
+	
+	/**
+	 * Get HT-Week of a given date (using the economy calendar)
+	 * 
+	 * @param timestamp				the date to convert
+	 * @return	HT-Week
+	 */
+	public int getHTWeek (Timestamp timestamp);
+	
+	/**
+	 * Get HT-Week of a given date
+	 * 
+	 * @param timestamp				the date to convert
+	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
+	 * @return	HT-Week
+	 */
+	public int getHTWeek (Timestamp timestamp, boolean useTrainingCalendar);
+
 }
