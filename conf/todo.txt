@@ -12,6 +12,7 @@ P D Bug description
 			it will be missing at the training calculation.
 2 F Subskills are gone after a correct HO update (while keeping the DB) for some users
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
+	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
     We need an affected DB to further examine the problem
@@ -35,6 +36,7 @@ P D Bug description
     Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...
             If such a player gets training or a manual offset < 0.5, the star value decreases...
             Perhaps we should change that...
+5 A IFA-Plugin: some generated logos get a black background instead of the correct one
 
 
 Enhancements
@@ -54,7 +56,7 @@ Features
 ========
 P D Task
 ------------------------------------------------------
-4 ? Reactivate auto update function (adjust SF links!)
+4 A Reactivate auto update function (adjust SF links!)
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
