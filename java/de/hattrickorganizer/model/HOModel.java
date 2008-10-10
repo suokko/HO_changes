@@ -1,8 +1,6 @@
 // %2418151228:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
-import hoplugins.commons.utils.HTCalendar;
-
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -10,6 +8,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
+import plugins.IHTCalendar;
+import plugins.IHelper;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
 import de.hattrickorganizer.database.DBZugriff;
@@ -454,7 +454,8 @@ public class HOModel {
                 ISpieler old = (ISpieler) players.get("" + player.getSpielerID());
 
                 if (old == null) {
-                	if (TrainingsManager.TRAININGDEBUG) HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
+                	if (TrainingsManager.TRAININGDEBUG) 
+                		HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
                     old = new Spieler();
                     old.setSpielerID(-1);
                 }
@@ -496,18 +497,25 @@ public class HOModel {
 	                /**
 	                 * Start of debug
 	                 */
-	                HTCalendar htcP;
+					IHelper helper = HelperWrapper.instance();
+					IHTCalendar htcP;
 	                String htcPs = "";
 	                if (previousTrainingDate != null) {
-	                	htcP = new HTCalendar(previousTrainingDate);
+	                	htcP = helper.createTrainingCalendar(previousTrainingDate);
 	                	htcPs = " ("+htcP.getHTSeason()+"."+htcP.getHTWeek()+")";
 	                }
-	                HTCalendar htcA = new HTCalendar(actualTrainingDate);
+	                IHTCalendar htcA = helper.createTrainingCalendar(actualTrainingDate);
 	            	String htcAs = " ("+htcA.getHTSeason()+"."+htcA.getHTWeek()+")";
-	                HTCalendar htcC = new HTCalendar(calcDate);
+	                IHTCalendar htcC = helper.createTrainingCalendar(calcDate); 
 	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
 
-	                HOLogger.instance().debug(HOModel.class, "TrainingType="+trainingType+", trArt="+TrainingsWeekManager.instance().getTrainingWeek(m_iID).getTyp()+", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs+", act="+actualTrainingDate.toLocaleString() +htcAs+", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toLocaleString()+htcPs)+" ("+previousHrfId+")");
+	            	ITrainingWeek trWeek = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
+	                HOLogger.instance().debug(HOModel.class, 
+	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTyp())
+	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs
+	                			+ ", act="+actualTrainingDate.toLocaleString() +htcAs
+	                			+ ", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toLocaleString()+htcPs)
+	                			+ " ("+previousHrfId+")");
 
 	                if (trainingType > 0)
 	                	logPlayerProgress (old, player);

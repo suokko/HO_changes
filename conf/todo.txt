@@ -24,8 +24,6 @@ P D Bug description
                  (message repeats several thousand times...)
 3 ? TA doesn't show up after successful installation
 3 ? IFA doesn't show up after successful installation
-3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
-    (this breaks the build process for new dev environments)
 4 F Apply some GUI changes to make subskill > 0.94 look better with fraction digits<2
 4 ? Add string and icon for regainer
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
@@ -46,6 +44,7 @@ P D Task
 ------------------------------------------------------
 2 F Update calculation of special tactics after the latest playerstrength optimisations
 3 F Optimize EPV
+3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
@@ -72,6 +71,8 @@ P D Task
     		Perhaps we should change that too ^^
 2 A Transferscout parser adds injuries, if a player is warned (red card)
 3 F Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
+3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
+    (this breaks the build process for new dev environments)
 
 
 Legend:

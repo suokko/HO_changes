@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Window;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -2528,4 +2529,15 @@ public class Helper extends LanguageFiles {
 		return numFormat;
 
 	}
+	
+	/**
+	 * Get htseason/htweek of a given date
+	 * 
+	 * @param date	the date to convert
+	 * @return	int array, [0]=htseason, [1]=htweek
+	 */
+	public static int[] getHTDate (Date date) {
+		return null;
+	}
+
 }

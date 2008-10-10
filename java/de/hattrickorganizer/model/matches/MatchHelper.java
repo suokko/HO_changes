@@ -1,7 +1,5 @@
 package de.hattrickorganizer.model.matches;
 
-import hoplugins.Commons;
-
 import java.util.Vector;
 
 import plugins.IMatchDetails;
@@ -43,7 +41,7 @@ public class MatchHelper implements IMatchHelper {
 	 * @param matchId	match Id
 	 */
 	public short getLocation(int matchId) {
-		IMatchLineup ml = Commons.getModel().getMatchLineup(matchId);
+		IMatchLineup ml = HOMiniModel.instance().getMatchLineup(matchId);
 		return getLocation(ml.getHeimId(), ml.getGastId(), matchId, ml.getMatchTyp());
 	}
 

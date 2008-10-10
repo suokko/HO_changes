@@ -1,7 +1,5 @@
 package de.hattrickorganizer.gui.model;
 
-import hoplugins.commons.utils.HTCalendar;
-
 import java.awt.Color;
 
 import javax.swing.SwingConstants;
@@ -24,6 +22,7 @@ import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 /**
@@ -652,8 +651,8 @@ final public class UserColumnFactory {
 					
 					}
 					IEPVData comparedata = HOVerwaltung.instance().getModel().getEPV().getEPVData(playerCompare);
-					HTCalendar htcal = new HTCalendar(playerCompare.getHrfDate());
-					double compareepv = HOVerwaltung.instance().getModel().getEPV().getPrice(comparedata, htcal.getHTWeek());
+					int htweek = HelperWrapper.instance().getHTWeek(playerCompare.getHrfDate());
+					double compareepv = HOVerwaltung.instance().getModel().getEPV().getPrice(comparedata, htweek);
 					return new DoppelLabelEntry(new ColorLabelEntry(price,
                             text,
                             ColorLabelEntry.FG_STANDARD,

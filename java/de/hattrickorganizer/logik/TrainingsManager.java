@@ -2,7 +2,6 @@
 package de.hattrickorganizer.logik;
 
 import gui.UserParameter;
-import hoplugins.commons.utils.HTCalendar;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +17,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import plugins.IHOMiniModel;
+import plugins.IHTCalendar;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.ISpieler;
@@ -30,6 +30,7 @@ import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.TrainingPerPlayer;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**
@@ -166,7 +167,8 @@ public class TrainingsManager implements ITrainingsManager {
 
         ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
 
-        if (TRAININGDEBUG) System.out.println ("Start calcFullTraining for "+spieler.getName()+", output="+output);
+        if (TRAININGDEBUG) 
+        	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+spieler.getName()+", output="+output);
 
         //alle Trainings durchlaufen
         //run through all trainings
@@ -190,9 +192,11 @@ public class TrainingsManager implements ITrainingsManager {
 
             curTraining = (TrainingPerPlayer)calculateWeeklyTrainingForPlayer(spieler, train, timestamp);
             output.addValues(curTraining);
-            if (TRAININGDEBUG)System.out.println ("Mid calcFullTraining for "+spieler.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
+            if (TRAININGDEBUG)
+            	HOLogger.instance().debug(getClass(), "Mid calcFullTraining for "+spieler.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
         }
-        if (TRAININGDEBUG)System.out.println ("End calcFullTraining for "+spieler.getName()+", output="+output);
+        if (TRAININGDEBUG)
+        	HOLogger.instance().debug(getClass(), "End calcFullTraining for "+spieler.getName()+", output="+output);
         return output;
     }
 
@@ -234,9 +238,8 @@ public class TrainingsManager implements ITrainingsManager {
         	output.setTimestamp(timestamp);
 
         if (TRAININGDEBUG) {
-        	//HTCalendarFactory.createTrainingCalendar(HOMiniModel, date)
-        	HTCalendar htc1 = new HTCalendar();
-        	HTCalendar htc2 = new HTCalendar();
+        	IHTCalendar htc1 = HelperWrapper.instance().createTrainingCalendar();
+        	IHTCalendar htc2 = HelperWrapper.instance().createTrainingCalendar();
         	String c1s = "";
         	String c2s = "";
         	if (timestamp != null) {
@@ -246,7 +249,9 @@ public class TrainingsManager implements ITrainingsManager {
         	htc2.setTime(train.getTrainingDate());
         	c2s = " ("+htc2.getHTSeason()+"."+htc2.getHTWeek()+")";
 
-        	System.out.println ("Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")+", trainDate="+train.getTrainingDate().getTime().toLocaleString()+c2s);
+        	HOLogger.instance().debug(getClass(), 
+        			"Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")
+        			+ ", trainDate="+train.getTrainingDate().getTime().toLocaleString()+c2s);
         }
         if (train == null || train.getTyp() < 0) {
             return output;
@@ -280,7 +285,9 @@ public class TrainingsManager implements ITrainingsManager {
             HOLogger.instance().log(getClass(),e);
         }
 
-        if (TRAININGDEBUG) System.out.println ("End calcWeeklyTraining for "+spieler.getName()+", "+train+", output="+output);
+        if (TRAININGDEBUG) 
+        	HOLogger.instance().debug(getClass(), 
+        			"End calcWeeklyTraining for "+spieler.getName()+", "+train+", output="+output);
         return output;
     }
 
