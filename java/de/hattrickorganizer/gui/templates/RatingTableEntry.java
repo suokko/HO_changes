@@ -234,39 +234,38 @@ public class RatingTableEntry extends TableEntry {
         m_clComponent.repaint();
     }
     
-    private void setStars(JComponent panel,float f){
-    	final boolean groesser10 = f > 10;
-    	
-    	if (f == 0d) {
-            JLabel jlabel;
-            jlabel = new JLabel(Helper.NOIMAGEICON);
-            jlabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-            panel.add(jlabel);
-        } 
-    	
-    	for (;  f >= 50D; f = (float) ( f - 50D)) {
-            addLabel(panel,FULL50STARIMAGEICON,FULLGREY50STARIMAGEICON);
-       }
+    private void setStars(JComponent panel, float f) {
+		if (f == 0) {
+			JLabel jlabel;
+			jlabel = new JLabel(Helper.NOIMAGEICON);
+			jlabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			panel.add(jlabel);
+		}
 
-       for (;  f >= 10D; f = (float) ( f - 10D)) {
-            addLabel(panel,FULL10STARIMAGEICON,FULLGREY10STARIMAGEICON);
-       }
+		while (f >= 50) {
+			addLabel(panel, FULL50STARIMAGEICON, FULLGREY50STARIMAGEICON);
+			f -= 50;
+		}
 
-       //5er nur zeigen, wenn insgesamt mehr als 10 Sterne vorhanden sind
-       if (groesser10) {
-           for (;  f >= 5D; f = (float) ( f - 5D)) {
-           	addLabel(panel,FULL5STARIMAGEICON,FULLGREY5STARIMAGEICON);
-            }
-       }
+		while (f >= 10) {
+			addLabel(panel, FULL10STARIMAGEICON, FULLGREY10STARIMAGEICON);
+			f -= 10;
+		}
 
-       for (;  f > 0.5D; f = (float) ( f - 1.0D)) {
-           addLabel(panel,FULLSTARIMAGEICON,FULLGREYSTARIMAGEICON);
-        }
+		while (f >= 5) {
+			addLabel(panel, FULL5STARIMAGEICON, FULLGREY5STARIMAGEICON);
+			f -= 5;
+		}
 
-       if ( f == 0.5D) {
-       	addLabel(panel,HALFSTARIMAGEICON,HALFGREYSTARIMAGEICON);
-       }
-    }
+		while (f >= 1) {
+			addLabel(panel, FULLSTARIMAGEICON, FULLGREYSTARIMAGEICON);
+			f -= 1;
+		}
+
+		if (f == 0.5) {
+			addLabel(panel, HALFSTARIMAGEICON, HALFGREYSTARIMAGEICON);
+		}
+	}
     
     private void initStarsIcons(){
     	if ((FULLSTARIMAGEICON == null) || (HALFSTARIMAGEICON == null)) {
