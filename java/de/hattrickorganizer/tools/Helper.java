@@ -2529,15 +2529,4 @@ public class Helper extends LanguageFiles {
 		return numFormat;
 
 	}
-	
-	/**
-	 * Get htseason/htweek of a given date
-	 * 
-	 * @param date	the date to convert
-	 * @return	int array, [0]=htseason, [1]=htweek
-	 */
-	public static int[] getHTDate (Date date) {
-		return null;
-	}
-
 }
