@@ -29,10 +29,9 @@ P D Bug description
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
 4 F Fix HO.sh for linux (accept whitespaces in path name)
-5 F Add a debug level option to HO.sh or - even better - to HO's config options
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
-5 ? Adding a prediction offset for a certain skill can lead to a lower(!) star value
+5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
     Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...
             If such a player gets training or a manual offset < 0.5, the star value decreases...
             Perhaps we should change that...
@@ -48,17 +47,20 @@ P D Task
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
+5 F Add a debug level option to HO.sh or - even better - to HO's config options
 
 
 Features
 ========
 P D Task
 ------------------------------------------------------
+4 ? Reactivate auto update function (adjust SF links!)
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
 5 A Show weather SEs in match highlights
 5 F Add a player export function (CSV)
+5 ? Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
 
 
 Fixed/Resolved
