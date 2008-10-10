@@ -241,7 +241,7 @@ public final class HOMainFrame extends JFrame
 	 * Singelton
 	 */
 	private HOMainFrame() {
-		// Log Operating System
+		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 		RefreshManager.instance().registerRefreshable(this);
 
