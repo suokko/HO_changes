@@ -12,7 +12,6 @@ import javax.swing.JTextArea;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
 /**
@@ -28,6 +27,7 @@ public class ConnTest {
 	final static private String URL_SERVERS = "http://www.hattrick.org/common/chppxml.axd?file=servers";
 	final static private String URL_HT = "http://plugins.hattrickorganizer.net/version.htm";
 	final static private int steps = 3;
+	final static public float VERSION = 0.1f;
 
 	/**
 	 * Constructor.
@@ -44,11 +44,26 @@ public class ConnTest {
 		log.append("Starting "+steps+" tests..." + LS);
 		new Thread() {
 			public void run() {
+				printSystemInfos(log);
 				testNormalUrl(log);
 				testHtStartUrl(log);
+				testHtLogin(log);
 				log.append("Finished!" + LS);
 			}
 		}.start();
+	}
+
+	/**
+	 * Test connection the login at HT.
+	 */
+	static private void testHtLogin(JTextArea log) {
+		try {
+			log.append("Step 3/"+steps+" - testing login at Hattrick..." + LS);
+			log.append("Still TODO" + LS);
+		} catch (Exception e) {
+			log.append("ERROR!" + LS);
+			if (log != null) log.append("Error details: " + e + LS);
+		}
 	}
 
 	/**
@@ -118,6 +133,23 @@ public class ConnTest {
 		} catch (Exception e) {
 			log.append("ERROR!" + LS);
 			if (log != null) log.append("Error: " + e);
+		}
+	}
+
+	/**
+	 * Add some system infos.
+	 */
+	static private void printSystemInfos(JTextArea log) {
+		try {
+			log.append("System Information" + LS);
+			Properties p = System.getProperties();
+			log.append("Java version: " + p.getProperty("java.version") + " ("+p.getProperty("java.vendor")+")"+ LS);
+			log.append("Java home: " + p.getProperty("java.home") + "\nUser dir: " + p.getProperty("user.dir") + LS);
+			log.append("OS: " + p.getProperty("os.name") + " " + p.getProperty("os.version") + " (" + p.getProperty("os.arch") + ")" + LS);
+			log.append(LS);
+		} catch (Exception e) {
+			log.append("ERROR!" + LS);
+			if (log != null) log.append("Error details: " + e + LS);
 		}
 	}
 
