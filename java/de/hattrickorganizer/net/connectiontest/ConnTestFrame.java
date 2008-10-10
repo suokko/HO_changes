@@ -77,7 +77,7 @@ public class ConnTestFrame extends JFrame {
 
 	private JPanel createTopPanel() {
 		JPanel tmpPanel = new JPanel();
-		JLabel label = new JLabel("HO! connection Test");
+		JLabel label = new JLabel("HO! Connection Test (version " + ConnTest.VERSION + ")");
 		label.setFont(label.getFont().deriveFont(label.getFont().getSize2D()+3f));
 		tmpPanel.add(label);
         return tmpPanel;
