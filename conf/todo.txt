@@ -51,6 +51,11 @@ P D Task
 3 F Optimize EPV
 3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
+4 ? Add brown stars (player performance at the end of the game) to HO
+	a. Download them from HT (CHPP in the new season [Germany, S. 37] should make this possible)
+	b. Put them it the HO-DB
+	c. Show them to the user
+	d. Predict yellow/brown stars separately (?)
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
