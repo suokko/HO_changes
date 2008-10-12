@@ -10,19 +10,23 @@ P D Bug description
 			HO got no valid XML (in progress), but the match short info incl. the result was available.
 			HO seems not to load this matchs data upon the next connection in such cases and
 			it will be missing at the training calculation.
-2 F Subskills are gone after a correct HO update (while keeping the DB) for some users
+2 F Subskills are gone after a correct HO update (while keeping the DB) or a SubSkill-Recalc for some users
+	Reason (probably): The problem seems to exist only, if some training weeks are missing in the DB
+			(i.e. the user forgot to download the .HRF of some weeks)
+			Maybe a problem of TrainingsManager.calculateFullTrainingForPlayer() because
+			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
 	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
-    We need an affected DB to further examine the problem
+	We need an affected DB to further examine the problem
 3 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
-    Reason: StackOverflowError (we don't know the exact code point, yet)
-            Exception in thread "AWT-EventQueue-0" java.lang.StackOverflowError
-                 at sun.awt.image.ImageWatched$WeakLink.isWatcher(ImageWatched.java:84)
-                 ...
-                 at sun.awt.image.ImageWatched$WeakLink.isWatcher(ImageWatched.java:84)
-                 (message repeats several thousand times...)
+	Reason: StackOverflowError (we don't know the exact code point, yet)
+			Exception in thread "AWT-EventQueue-0" java.lang.StackOverflowError
+			at sun.awt.image.ImageWatched$WeakLink.isWatcher(ImageWatched.java:84)
+			...
+			at sun.awt.image.ImageWatched$WeakLink.isWatcher(ImageWatched.java:84)
+			(message repeats several thousand times...)
 3 ? TA doesn't show up after successful installation
 3 ? IFA doesn't show up after successful installation
 4 F Apply some GUI changes to make subskill > 0.94 look better with fraction digits<2
@@ -33,9 +37,9 @@ P D Bug description
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
 5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
-    Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...
-            If such a player gets training or a manual offset < 0.5, the star value decreases...
-            Perhaps we should change that...
+	Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...
+			If such a player gets training or a manual offset < 0.5, the star value decreases...
+			Perhaps we should change that...
 5 A IFA-Plugin: some generated logos get a black background instead of the correct one
 
 
@@ -50,6 +54,7 @@ P D Task
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
+5 F Update ExperienceViewer-Plugin and Spieler.getErfahrungBonus()
 
 
 Features
@@ -70,13 +75,13 @@ Fixed/Resolved
 P D Task
 ------------------------------------------------------
 2 F Training speed is wrong in some rare cases: from 0.11 to 0.03 whithin a week without any reason
-    (same training type, no injury, no card, no 50% training position, same age)
-    Reason: player would have reached subskill >1 which gets reduced to 0.94 by HO
-    		Perhaps we should change that too ^^
+	(same training type, no injury, no card, no 50% training position, same age)
+	Reason: player would have reached subskill >1 which gets reduced to 0.94 by HO
+		Perhaps we should change that too ^^
 2 A Transferscout parser adds injuries, if a player is warned (red card)
 3 F Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
-    (this breaks the build process for new dev environments)
+	(this breaks the build process for new dev environments)
 
 
 Legend:
