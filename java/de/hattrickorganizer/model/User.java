@@ -134,6 +134,11 @@ public class User {
 			users.add(new User());
 			save();
 		}
+		// add default user, if there was none loaded (e.g. corrupt user.xml)
+		if (users.size()<1) {
+			users.add(new User());
+			save();
+		}
 	}
 
 	/**
