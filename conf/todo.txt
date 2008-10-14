@@ -75,6 +75,8 @@ P D Task
 5 A Show weather SEs in match highlights
 5 F Add a player export function (CSV)
 5 ? Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
+5 F Create a windows installer package to improve n00b compatibility ;-)
+	I will check out NSIS (it has an eclipse plugin, is opensource and can be built with Linux)
 
 
 Fixed/Resolved
