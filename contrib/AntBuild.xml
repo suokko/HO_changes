@@ -13,15 +13,19 @@
 		|	+-> build						The full HO build with supplementary files is created here
 		|	+-> export-dmg					The MacOS Builds (DMG) are created here [please see note 1, below]
 		|	+-> export-zip					The ZIP-Builds are created here
+		|	+-> export-w32installer			The Win32-Installer (NSIS) are created here
+		|	+-> java.dist					The Win32-JRE to be distributed with the Installer needs to be placed here
 		|	+-> svn							
 		|	|	+-> java					The source code is here
 		|	|	+-> conf					Supplementary files
 		|	|	|	+-> addToJar			These files will be added to ho.jar
 		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
+		|	|	|	+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation
 		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
 		|	|	
 		|	+-> MANIFEST.MF					The manifest file for ho.jar
 		|	+-> AntBuild.xml				This file
+		|	+-> AntBuild-CopyPluginConf.xml	Ant file that copies the cvs/conf/*.* to the bin dir (for plugins)
 		|	
 	    +-> HO-Plugin-Commons				HO Plugin Project "Commons"
 	    |	+-> bin							Compiled .class files go here
@@ -57,6 +61,12 @@
 	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images"/>
 	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount"/>
 
+	<property name="nsis-ScriptName" value="svn/conf/makeWinInstaller.nsi"/>
+	<property name="nsis-export-dir" value="export-w32installer"/>
+	<property name="nsis-JRE-DistPath" value="java.dist"/>
+	<property name="nsis-JRE-Version" value="6u7"/>
+	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p.exe"/>
+
 	<!-- ================================= 
           target: makeAll              
          ================================= -->
@@ -64,13 +74,14 @@
     	<antcall target="makeJar"/>
     	<antcall target="makeZip"/>
     	<antcall target="makeDmgImage"/>
+    	<antcall target="makeNSIS"/>
     </target>
 	
 	<!-- ================================= 
           target: init              
          ================================= -->
     <target name="init" description="create tmp dirs and get HO Version">
-    	<mkdir dir="${tmp}"/>
+    	<mkdir dir="${tmp-target}"/>
        	<loadfile property="hoversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
     		<filterchain>
     			<linecontains>
@@ -78,6 +89,7 @@
     			</linecontains>
     			<replaceregex pattern=".*=\D*" replace=""/>
     			<replaceregex pattern="\D*$" replace=""/>
+    			<replaceregex pattern="\." replace="" />
     			<striplinebreaks/>
     		</filterchain>
     	</loadfile>
@@ -89,8 +101,8 @@
     			<replaceregex pattern='.*=[^"]*"' replace=""/>
     			<replaceregex pattern='"[^"]*$' replace=""/>
     			<replaceregex pattern='build ' replace=""/>
-    			<replaceregex pattern='^' replace="-"/>
-    			<replaceregex pattern='^-$' replace=""/>
+    			<replaceregex pattern='^' replace="_"/>
+    			<replaceregex pattern='^_$' replace=""/>
     			<striplinebreaks/>
     		</filterchain>
     	</loadfile>
@@ -101,13 +113,13 @@
     			</linecontains>
     			<replaceregex pattern='.*= ' replace=""/>
     			<replaceregex pattern=';\w*$' replace=""/>
-    			<replaceregex pattern='true' replace="-BETA"/>
+    			<replaceregex pattern='true' replace="_BETA"/>
     			<replaceregex pattern='false' replace=""/>
     			<striplinebreaks/>
     		</filterchain>
     	</loadfile>
     	<!-- if the file "svn/isPrivateBuild" exists, set ${private} to "-PRIVATE"... -->
-    	<condition property="private" value="-PRIVATE">
+    	<condition property="private" value="_PRIVATE">
     		<available file="svn/isPrivateBuild"/>
     	</condition>
     	<!-- ... else ${private} defaults to "" -->
@@ -130,6 +142,7 @@
     	<condition property="dev" value="">
     		<not><isset property="dev"/></not>
     	</condition>
+    	<property name="hofullversion" value="${hoversion}${dev}${modversion}${private}"/>
     	<echo>HOVERSION=${hoversion}, DEV=${dev}, MODVERSION=${modversion}, PRIVATE=${private}, DEBUG=${debug}</echo>
     </target>
 	
@@ -152,6 +165,7 @@
           target: copy2build              
          ================================= -->
     <target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
+    	<mkdir dir="${build-dir}"/>
     	<copy todir="${build-dir}" overwrite="true">
     		<fileset dir="svn/conf/addToZip"/>
     		<fileset file="${tmp-target}/HOLauncher.class"/>
@@ -169,6 +183,7 @@
     <target name="copyPlugins" description="Copy hoplugins to builddir">
     	<antcall target="copy-hoplugins-common"/>
     	<antcall target="copy-hoplugins-evilcard"/>
+    	<antcall target="copy-hoplugins-experienceviewer"/>
     	<antcall target="copy-hoplugins-feedback"/> 
 		<antcall target="copy-hoplugins-teamanalyzer"/>
 		<antcall target="copy-hoplugins-specialevents"/>
@@ -231,6 +246,15 @@
 	</target>
 
 	<!-- ================================= 
+          target: copy-hoplugins-experienceviewer              
+         ================================= -->
+	<target name="copy-hoplugins-experienceviewer">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-ExperienceViewer/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
           target: copy-hoplugins-feedback              
          ================================= -->
 	<target name="copy-hoplugins-feedback">
@@ -249,6 +273,9 @@
 			<fileset dir="${export-dmg-targetdir}"/>
 			<fileset dir="${build-dir}"/>
 		</delete>
+		<mkdir dir="${tmp-target}"/>
+		<mkdir dir="${export-dmg-targetdir}"/>
+		<mkdir dir="${build-dir}"/>
 	</target>
 	
 	<!-- ================================= 
@@ -256,7 +283,7 @@
          ================================= -->
     <target name="makeZip" depends="init,makeJar,copy2build" description="Creates the full HO.zip">
     	<mkdir dir="${export-zip-dir}"/>
-        <zip destfile="${export-zip-dir}/HO-${hoversion}${dev}${modversion}${private}.zip">
+        <zip destfile="${export-zip-dir}/HO_${hoversion}${dev}${modversion}${private}.zip">
         	<fileset dir="${build-dir}"/>
         </zip>
     </target>
@@ -304,11 +331,36 @@
     	</copy>
     	<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true"/>
     	<copy file="${export-dmg-targetfile}" 
-    		tofile="${export-dmg-imagedir}/HO-${hoversion}${dev}${modversion}${private}.dmg" 
+    		tofile="${export-dmg-imagedir}/HO_${hoversion}${dev}${modversion}${private}.dmg" 
     		overwrite="true" verbose="true"/>
-    	<zip destfile="${export-dmg-imagedir}/HO-${hoversion}${dev}${modversion}${private}-MacOS-DMG.zip">
-    		<fileset file="${export-dmg-imagedir}/HO-${hoversion}${dev}${modversion}${private}.dmg"/>
+    	<zip destfile="${export-dmg-imagedir}/HO_${hoversion}${dev}${modversion}${private}_MacOS_DMG.zip">
+    		<fileset file="${export-dmg-imagedir}/HO_${hoversion}${dev}${modversion}${private}.dmg"/>
     	</zip>
     </target>
 
+	<!-- ================================= 
+          target: makeNSIS
+         ================================= -->
+	<target name="makeNSIS" depends="init,makeJar,copy2build" description="Create Win32-Installer using NSIS">
+		<mkdir dir="${nsis-export-dir}"/>
+		<property name="nsis-installerName" 
+			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer.exe"/>
+		<property name="nsis-installerNameWithJRE" 
+			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer_(with_JRE-${nsis-JRE-Version}).exe"/>
+		
+		<property name="nsis-default-args" 
+			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}'"/>
+		
+		<!-- Create Installer for HO only -->
+		<echo>Creating win32 installer at ${nsis-installerName} using NSIS...</echo>
+    	<exec executable="makensis" resolveexecutable="true">
+    		<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-ScriptName}"/>
+    	</exec>
+
+		<!-- Create Installer for HO bundled with JRE -->
+		<echo>Creating win32 installer at ${nsis-installerNameWithJRE} with JRE ${nsis-JRE-Version} using NSIS...</echo>
+    	<exec executable="makensis" resolveexecutable="true">
+			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-ScriptName}"/>
+       	</exec>
+	</target>
 </project> 
