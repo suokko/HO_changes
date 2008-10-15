@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="hoplugins" default="copyconf2build">
+	<property name="build-dir" value="${basedir}/bin"/>
+	<property name="cvsconf-dir" value="${basedir}/cvs/conf"/>
+	
+	<!-- ================================= 
+          target: copyconf2build              
+         ================================= -->
+	<target name="copyconf2build">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="true">
+			<fileset dir="${cvsconf-dir}/hoplugins"/>
+		</copy>
+	</target>
+</project> 
