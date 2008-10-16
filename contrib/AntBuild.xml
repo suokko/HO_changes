@@ -20,7 +20,9 @@
 		|	|	+-> conf					Supplementary files
 		|	|	|	+-> addToJar			These files will be added to ho.jar
 		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
-		|	|	|	+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation
+		|   |   |   +-> nsis				NSIS directory for Win32 installer creation
+		|	|	|		+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation
+		|	|	|		+-> localLang		Local language files for NSIS
 		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
 		|	|	
 		|	+-> MANIFEST.MF					The manifest file for ho.jar
@@ -61,7 +63,9 @@
 	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images"/>
 	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount"/>
 
-	<property name="nsis-ScriptName" value="svn/conf/makeWinInstaller.nsi"/>
+	<property name="nsis-directory" value="svn/conf/nsis"/>
+	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi"/>
+	<property name="nsis-localLangPath" value="${nsis-directory}/localLang"/>
 	<property name="nsis-export-dir" value="export-w32installer"/>
 	<property name="nsis-JRE-DistPath" value="java.dist"/>
 	<property name="nsis-JRE-Version" value="6u7"/>
@@ -349,18 +353,18 @@
 			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer_(with_JRE-${nsis-JRE-Version}).exe"/>
 		
 		<property name="nsis-default-args" 
-			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}'"/>
+			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}' -DLOCALLANGPATH='${nsis-localLangPath}'"/>
 		
 		<!-- Create Installer for HO only -->
 		<echo>Creating win32 installer at ${nsis-installerName} using NSIS...</echo>
     	<exec executable="makensis" resolveexecutable="true">
-    		<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-ScriptName}"/>
+    		<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}"/>
     	</exec>
 
 		<!-- Create Installer for HO bundled with JRE -->
 		<echo>Creating win32 installer at ${nsis-installerNameWithJRE} with JRE ${nsis-JRE-Version} using NSIS...</echo>
     	<exec executable="makensis" resolveexecutable="true">
-			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-ScriptName}"/>
+			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-scriptName}"/>
        	</exec>
 	</target>
 </project> 
