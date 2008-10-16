@@ -75,8 +75,6 @@ P D Task
 5 A Show weather SEs in match highlights
 5 F Add a player export function (CSV)
 5 ? Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
-5 F Create a windows installer package to improve n00b compatibility ;-)
-	I will check out NSIS (it has an eclipse plugin, is opensource and can be built with Linux)
 
 
 Fixed/Resolved
@@ -91,6 +89,8 @@ P D Task
 3 F Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
 	(this breaks the build process for new dev environments)
+5 F Create a windows installer package to improve n00b compatibility ;-)
+	I will check out NSIS (it has an eclipse plugin, is opensource and can be built with Linux)
 
 
 Legend:
