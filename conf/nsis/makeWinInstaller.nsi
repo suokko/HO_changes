@@ -15,8 +15,10 @@
 	!error "HOVERSION not defined"
 !endif
 
-!ifndef LOCALLANGPATH
-	!error "LOCALLANGPATH not defined"
+!ifndef CONFPATH
+	!error "CONFPATH not defined"
+!else
+	!define LOCALLANGPATH "${CONFPATH}/localLang"
 !endif
 
 !ifdef WITHJRE
@@ -63,7 +65,7 @@ VIProductVersion "$HOVERSION"
 
 !insertmacro MUI_PAGE_WELCOME
 !define MUI_LICENSEPAGE_CHECKBOX
-!insertmacro MUI_PAGE_LICENSE "${BUILDDIR}/HO_lgpl.txt"
+!insertmacro MUI_PAGE_LICENSE "${CONFPATH}/HO_lgpl_utf16le.txt"
 
 ; Show componentspage only WITHJRE
 !define MUI_COMPONENTSPAGE_NODESC
@@ -85,22 +87,25 @@ VIProductVersion "$HOVERSION"
 
 ############## Language Macros ##############
 
+# Newline in language files
+!define NL "$\r$\n"
+
 !macro LANG_LOAD LANGLOAD
 	!insertmacro MUI_LANGUAGE "${LANGLOAD}"
-	!verbose off
-	!include "${LOCALLANGPATH}/${LANGLOAD}.nsh"
-	!verbose on
-	!ifdef THISLANG
-		  !undef THISLANG
+	!include "${LOCALLANGPATH}\${LANGLOAD}.txt"
+	!ifndef THISLANG
+		!error "THISLANG is undefined in ${LOCALLANGPATH}\${LANGLOAD}.txt"
+	!else
+		!undef THISLANG
 	!endif
 !macroend
  
 !macro LANG_STRING NAME VALUE
-  LangString "${NAME}" "${LANG_${THISLANG}}" "${VALUE}"
+	LangString "${NAME}" "${LANG_${THISLANG}}" "${VALUE}"
 !macroend
  
 !macro LANG_UNSTRING NAME VALUE
-  !insertmacro LANG_STRING "un.${NAME}" "${VALUE}"
+	!insertmacro LANG_STRING "un.${NAME}" "${VALUE}"
 !macroend
 
 ################# Languages #################
@@ -124,13 +129,14 @@ VIProductVersion "$HOVERSION"
 !insertmacro LANG_LOAD "Finnish"
 !insertmacro LANG_LOAD "French"
 !insertmacro LANG_LOAD "Galician"
+!insertmacro LANG_LOAD "Georgian"
 !insertmacro LANG_LOAD "German"
 !insertmacro LANG_LOAD "Greek"
 !insertmacro LANG_LOAD "Hebrew"
 !insertmacro LANG_LOAD "Hungarian"
 !insertmacro LANG_LOAD "Icelandic"
 !insertmacro LANG_LOAD "Indonesian"
-!insertmacro LANG_LOAD "Irish"
+#!insertmacro LANG_LOAD "Irish" # Broken at the moment
 !insertmacro LANG_LOAD "Italian"
 !insertmacro LANG_LOAD "Japanese"
 !insertmacro LANG_LOAD "Korean"
@@ -143,6 +149,7 @@ VIProductVersion "$HOVERSION"
 !insertmacro LANG_LOAD "Mongolian"
 !insertmacro LANG_LOAD "Norwegian"
 !insertmacro LANG_LOAD "NorwegianNynorsk"
+!insertmacro LANG_LOAD "Pashto"
 !insertmacro LANG_LOAD "Polish"
 !insertmacro LANG_LOAD "PortugueseBR"
 !insertmacro LANG_LOAD "Portuguese"
@@ -161,6 +168,7 @@ VIProductVersion "$HOVERSION"
 !insertmacro LANG_LOAD "Turkish"
 !insertmacro LANG_LOAD "Ukrainian"
 !insertmacro LANG_LOAD "Uzbek"
+!insertmacro LANG_LOAD "Vietnamese"
 !insertmacro LANG_LOAD "Welsh"
 
 
@@ -195,11 +203,13 @@ SectionEnd
 !endif
 
 Section "Hattrick Organizer ${HOVERSION}" SEC_HO
-    SectionIn 1 2 RO 
+    SectionIn 1 2 RO
 	WriteRegStr HKLM ${HOREGKEY} "InstallLocation" $INSTDIR
 	SetOutPath "$INSTDIR"
 	File /r "${BUILDDIR}\*.*"
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
+	# Setting file permission -> Full access to all authenticated users [aka BuildinUsers] (important for Windows Vista)
+	AccessControl::GrantOnFile "$INSTDIR" "(BU)" "FullAccess"
 SectionEnd
 
 Section "$(CREATE_DESKTOP)" SEC_DESKTOP
