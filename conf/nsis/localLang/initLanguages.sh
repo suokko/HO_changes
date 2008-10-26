@@ -6,4 +6,8 @@ echo
 echo "Press ENTER to start or CTRL-C to abort"
 echo
 read
-cat languages | grep -v English | xargs -n1 -IXXXX sed -e s#English#XXXX## English.nsh -e wXXXX.nsh > /dev/null
+TEMPFILE=`mktemp`
+for curLang in `cat languages`; do
+	echo "Creating language template for ${curLang}"
+	cat Skeleton.txt | recode utf16le..utf8 | sed -e s#Skeleton#${curLang}## | recode utf8..utf16le > ${curLang}.txt
+done
