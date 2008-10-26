@@ -43,20 +43,23 @@ public class HOLogger {
      */
     private HOLogger() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String dirName = "logs";
         String fileName = "HO-" + dateFormat.format(new Date()) + ".log";
-        File dir = new File("logs");
-        dir.mkdirs();
-
-        File logFile = new File(dir, fileName);
-
-        if (logFile.exists()) {
-            logFile.delete();
-        }
-
         try {
+        	File dir = new File(dirName);
+        	dir.mkdirs();
+
+        	File logFile = new File(dir, fileName);
+
+        	if (logFile.exists()) {
+        		logFile.delete();
+        	}
+
             logWriter = new FileWriter(logFile);
-        } catch (IOException e) {
-            HOLogger.instance().log(getClass(), e);
+        } catch (Exception e) {
+        	String msg = "Unable to create logfile: " + dirName + "/" + fileName;
+            System.err.println (msg);
+            e.printStackTrace();
         }
     }
 
@@ -167,14 +170,16 @@ public class HOLogger {
 
 		System.out.println(msg + text);
 
-        try {
-			Date d = new Date();
-			String txt = (sdf.format(d) + msg + caller.getName() + ": " + text + "\r\n");
-            logWriter.write(txt);
-            logWriter.flush();
-        } catch (IOException e) {
-            HOLogger.instance().log(getClass(), e);
-        }
+		if (logWriter != null) {
+			try {
+				Date d = new Date();
+				String txt = (sdf.format(d) + msg + caller.getName() + ": " + text + "\r\n");
+				logWriter.write(txt);
+				logWriter.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     /**
@@ -187,7 +192,8 @@ public class HOLogger {
 
         try {
             logWriter.close();
-        } catch (IOException ex) {
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
     }
 }
