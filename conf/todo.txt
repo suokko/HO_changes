@@ -62,6 +62,8 @@ P D Task
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
 5 F Update ExperienceViewer-Plugin and Spieler.getErfahrungBonus()
+5 ? Add an individual player training block (i.e. don't count skill training for a specific player)
+	(with start date, so that recalc subskills does still work for older trainings)
 
 
 Features
@@ -90,7 +92,7 @@ P D Task
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
 	(this breaks the build process for new dev environments)
 5 F Create a windows installer package to improve n00b compatibility ;-)
-	I will check out NSIS (it has an eclipse plugin, is opensource and can be built with Linux)
+	We are using NSIS unicode for a windows installer now, yeah! :-)
 
 
 Legend:
