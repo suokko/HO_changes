@@ -765,13 +765,13 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * liefert den ErfaHRUNGSbonus
+     * get the experience bonus
      *
-     * @param es Effektive Bezugs St�rke
+     * @param experience effective experience to calculate the bonus
      *
-     * @return 0 - 2.6 float
+     * @return experience bonus in percent
      */
-    public float getErfahrungsBonus(float es) {
+    public float getErfahrungsBonus(float experience) {
         float bonus = 0;
 
         /*Modified by Catrone in order to avoid the non-existant value resulting in a player's negative evaluation*/
@@ -782,7 +782,9 @@ public final class Spieler implements plugins.ISpieler {
 
 		// Use hardcorded values here, 
 		// make sure to apply the same values as in prediction/*/playerStrength.dat
-		bonus = (float) (es * (0.0716 * Math.sqrt(Math.max(m_iErfahrung-0.5, 0)) - 1));
+		// 
+		// We return the experience bonus in percent (0% = no bonus, 100% = doubled player strength...) 
+		bonus = (float) (0.0716 * Math.sqrt(Math.max(experience-0.5, 0)));
 
         return bonus;
     }
