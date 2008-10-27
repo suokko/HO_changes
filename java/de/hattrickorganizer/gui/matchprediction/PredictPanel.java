@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import de.hattrickorganizer.tools.HOLogger;
+
 import plugins.IMatchResult;
 
 
@@ -23,7 +25,8 @@ import plugins.IMatchResult;
  * @author TODO Author Name
  */
 public class PredictPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
+	private static final long serialVersionUID = -9143223883848733076L;
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private JLabel m_jlGesamtChancenGuest;
     private JLabel m_jlGesamtChancenHome;
@@ -80,7 +83,7 @@ public class PredictPanel extends JPanel {
      * @param teamname TODO Missing Method Parameter Documentation
      */
     public final void setGuestTeamName(String teamname) {
-        m_jlGuestTeam.setText(teamname);
+    	m_jlGuestTeam.setText(getShortenedTeamName(teamname));
     }
 
     /**
@@ -89,7 +92,31 @@ public class PredictPanel extends JPanel {
      * @param teamname TODO Missing Method Parameter Documentation
      */
     public final void setHomeTeamName(String teamname) {
-        m_jlHomeTeam.setText(teamname);
+    	m_jlHomeTeam.setText(getShortenedTeamName(teamname));
+    }
+
+    /**
+     * Get the shortened team name string, if it exceeds a certain length.
+     * Keep team ID intact.
+     */
+    private String getShortenedTeamName(String in) {
+	    try {
+	    	if (in != null) {
+	    		int pos = in.lastIndexOf("(");
+	    		String id = "";
+	    		String team = in;
+	    		if (pos > -1) {
+	    			id = in.substring(pos).trim();
+	    			team = in.substring(0, pos-1).trim();
+	    		}
+	    		if (team.length() > 25) {
+	    			return team.substring(0, 24) + ". " + id;
+	    		}
+	    	}
+	    } catch (Exception e) {
+	    	HOLogger.instance().log(getClass(), "Error parsing team name (" + in + "): " + e);
+	    }
+    	return in;
     }
 
     /**
@@ -107,7 +134,7 @@ public class PredictPanel extends JPanel {
      * @param GuestSuccess TODO Missing Method Parameter Documentation
      * @param GuestFailed TODO Missing Method Parameter Documentation
      */
-	public final void refresh(IMatchResult mr) {    
+	public final void refresh(IMatchResult mr) {
 
         m_jlGewonnen.setText(mr.getHomeWin() + "");
         m_jlUnendschieden.setText(mr.getDraw() + "");
