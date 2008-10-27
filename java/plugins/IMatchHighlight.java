@@ -246,6 +246,8 @@ public interface IMatchHighlight {
     /** TODO Missing Parameter Documentation */
     public static final int HIGHLIGHT_SUB_ELFMETER_7 = 74;
 
+    public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_7 = 75;
+
     /** TODO Missing Parameter Documentation */
     public static final int HIGHLIGHT_SUB_FREISTOSS_8 = 80;
 
@@ -260,6 +262,8 @@ public interface IMatchHighlight {
 
     /** TODO Missing Parameter Documentation */
     public static final int HIGHLIGHT_SUB_ELFMETER_8 = 84;
+
+    public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_8 = 85;
 
     //Special events (HIGHLIGHT_ERFOLGREICH and HIGHLIGHT_FEHLGESCHLAGEN only)
 
@@ -407,7 +411,7 @@ public interface IMatchHighlight {
 
     /** walkover - home team wins */
     public static final int HIGHLIGHT_SUB_WALKOVER_AWAYTEAM_WINS = 2;
-    
+
     //~ Methods ------------------------------------------------------------------------------------
 
     /**

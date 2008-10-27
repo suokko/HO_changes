@@ -51,6 +51,7 @@ P D Task
 ------------------------------------------------------
 2 F Update calculation of special tactics after the latest playerstrength optimisations
 3 F Optimize EPV
+3 A Add indirect freekicks to match highlights
 3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 4 ? Add brown stars (player performance at the end of the game) to HO
