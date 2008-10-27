@@ -7,7 +7,6 @@ import java.awt.Image;
 import java.awt.Window;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -37,97 +36,103 @@ public class Helper extends LanguageFiles {
     /** Componente zum Grafikenladen */
     public static de.hattrickorganizer.gui.templates.ImagePanel LADECOMPONENTE = new de.hattrickorganizer.gui.templates.ImagePanel();
 
-    /** TODO Missing Parameter Documentation */
+    /** yellow star */
     public static javax.swing.ImageIcon YELLOWSTARIMAGEICON;
 
-    /** TODO Missing Parameter Documentation */
+    /** grey star */
     public static javax.swing.ImageIcon GREYSTARIMAGEICON;
 
-    /** TODO Missing Parameter Documentation */
+    /** no icon */
     public static javax.swing.ImageIcon NOIMAGEICON;
 
-    /** TODO Missing Parameter Documentation */
+    /** no match icon */
     public static javax.swing.ImageIcon NOMATCHICON;
 
-    /** TODO Missing Parameter Documentation */
+    /** donload icon */
     public static javax.swing.ImageIcon DOWNLOADMATCHICON;
 
-    /** TODO Missing Parameter Documentation */
+    /** show match icon */
     public static javax.swing.ImageIcon SHOWMATCHICON;
 
-    /** TODO Missing Parameter Documentation */
+    /** red card */
     public static ImageIcon ROTEKARTE;
 
-    /** TODO Missing Parameter Documentation */
+    /** yellow card */
     public static ImageIcon GELBEKARTE;
 
-    /** TODO Missing Parameter Documentation */
+    /** double yellow */
     public static ImageIcon DOPPELGELB;
 
-    /** TODO Missing Parameter Documentation */
+    /** bruised */
     public static ImageIcon ANGESCHLAGEN;
 
-    /** TODO Missing Parameter Documentation */
+    /** bruised small */
     private static ImageIcon ANGESCHLAGEN_KLEIN;
 
-    /** TODO Missing Parameter Documentation */
+    /** injured */
     public static ImageIcon VERLETZT;
 
-    /** TODO Missing Parameter Documentation */
+    /** injured small */
     private static ImageIcon VERLETZT_KLEIN;
 
-    /** TODO Missing Parameter Documentation */
+    /** default - goal */
     public static ImageIcon TOR;
 
-    /** TODO Missing Parameter Documentation */
+    /** goal - direct free kick */
     private static ImageIcon TOR_FREISTOSS;
 
-    /** TODO Missing Parameter Documentation */
+    /** goal through the middle */
     private static ImageIcon TOR_MITTE;
 
-    /** TODO Missing Parameter Documentation */
+    /** goal over the left side */
     private static ImageIcon TOR_LINKS;
 
-    /** TODO Missing Parameter Documentation */
+    /** goal over the right side */
     private static ImageIcon TOR_RECHTS;
 
-    /** TODO Missing Parameter Documentation */
+    /** penalty goal */
     private static ImageIcon TOR_ELFMETER;
 
-    /** TODO Missing Parameter Documentation */
+    /** goal - indirect free kick */
+    private static ImageIcon TOR_INDIRECT_FREEKICK;
+
+    /** Special event goal */
     private static ImageIcon TOR_SPECIAL;
 
-    /** TODO Missing Parameter Documentation */
+    /** counter attack goal */
     private static ImageIcon TOR_COUNTER;
 
-    /** TODO Missing Parameter Documentation */
+    /** default - no goal */
     public static ImageIcon KEINTOR;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - direct free kick */
     private static ImageIcon KEINTOR_FREISTOSS;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - though the middle */
     private static ImageIcon KEINTOR_MITTE;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - left */
     private static ImageIcon KEINTOR_LINKS;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - right */
     private static ImageIcon KEINTOR_RECHTS;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - penalty */
     private static ImageIcon KEINTOR_ELFMETER;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - indirect free kick */
+    private static ImageIcon KEINTOR_INDIRECT_FREEKICK;
+
+    /** no goal - SE */
     private static ImageIcon KEINTOR_SPECIAL;
 
-    /** TODO Missing Parameter Documentation */
+    /** no goal - CA */
     private static ImageIcon KEINTOR_COUNTER;
 
-    /** TODO Missing Parameter Documentation */
+    /** gear wheel */
     public static ImageIcon ZAHNRAD;
 
-    /** TODO Missing Parameter Documentation */
+    /** manual */
     public static ImageIcon MANUELL;
 
     /** Gesamteinstufung */
@@ -522,6 +527,10 @@ public class Helper extends LanguageFiles {
                                                                                                       0))
                                                                       .getScaledInstance(16, 10,
                                                                                          Image.SCALE_SMOOTH));
+        TOR_INDIRECT_FREEKICK = new ImageIcon(Helper.makeColorTransparent(
+        		Helper.loadImage("gui/bilder/Fussball_FreistossIndirekt.png"), new Color(255, 0,0))
+        		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+
         TOR_SPECIAL = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Fussball_Spezial.png"),
                                                                                            new Color(255,
                                                                                                      0,
@@ -573,6 +582,10 @@ public class Helper extends LanguageFiles {
                                                                           .getScaledInstance(16,
                                                                                              10,
                                                                                              Image.SCALE_SMOOTH));
+        KEINTOR_INDIRECT_FREEKICK = new ImageIcon(Helper.makeColorTransparent(
+        		Helper.loadImage("gui/bilder/KeinFussball_FreistossIndirekt.png"), new Color(255, 0,0))
+        		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+
         KEINTOR_SPECIAL = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/KeinFussball_Spezial.png"),
                                                                                                new Color(255,
                                                                                                          0,
@@ -1138,6 +1151,12 @@ public class Helper extends LanguageFiles {
                     break;
                 }
 
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8: {
+                	icon = TOR_INDIRECT_FREEKICK;
+                	break;
+                }
+
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
@@ -1229,6 +1248,12 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8: {
                     icon = KEINTOR_ELFMETER;
                     break;
+                }
+
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8: {
+                	icon = KEINTOR_INDIRECT_FREEKICK;
+                	break;
                 }
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
@@ -1784,6 +1809,10 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
                     return properties.getProperty("highlight_penalty");
 
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+                	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
+
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
@@ -1862,6 +1891,10 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
                     return properties.getProperty("highlight_penalty");
+
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+                	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
