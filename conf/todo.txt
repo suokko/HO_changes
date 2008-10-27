@@ -17,7 +17,6 @@ P D Bug description
 			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
 	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
-3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 	We need an affected DB to further examine the problem
 3 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
@@ -52,6 +51,7 @@ P D Task
 2 F Update calculation of special tactics after the latest playerstrength optimisations
 3 F Optimize EPV
 3 A Add indirect freekicks to match highlights
+		Status: implementation needs to be tested (do we handle all events?)
 3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 4 ? Add brown stars (player performance at the end of the game) to HO
@@ -65,6 +65,7 @@ P D Task
 5 F Update ExperienceViewer-Plugin and Spieler.getErfahrungBonus()
 5 ? Add an individual player training block (i.e. don't count skill training for a specific player)
 	(with start date, so that recalc subskills does still work for older trainings)
+5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
 
 
 Features
@@ -92,6 +93,7 @@ P D Task
 3 F Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
 	(this breaks the build process for new dev environments)
+3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
 
