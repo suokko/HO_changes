@@ -44,7 +44,7 @@ public class MatchExporter {
 	 * @return List of ExportMatchData objects
 	 */
 	public static List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {		
-		HOLogger.instance().log(MatchExporter.class, "Collecting Data");		
+		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
 		List export = new ArrayList();
 
 		IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(HOMiniModel.instance().getBasics().getTeamId());
@@ -109,11 +109,13 @@ public class MatchExporter {
 
 	private static boolean isValidMatch(IMatchKurzInfo info, IMatchDetails details, Date startingDate) {
 		if ((info.getMatchStatus() != IMatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
+			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": not finished");
 			return false;
 		}
 		// Check for WO
 		if (details.getHomeMidfield() == 1 &&
 			details.getGuestMidfield() == 1) {
+			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Walk over");
 			return false;
 		}
 		Vector highlights = details.getHighlights();
@@ -121,6 +123,7 @@ public class MatchExporter {
 		if ((info.getMatchDateAsTimestamp().before(startingDate)) //Zu alt !!!
 		|| (DBZugriff.instance().getHrfIDSameTraining(info.getMatchDateAsTimestamp()) == -1)) //Kein HRF gefunden
 			{
+			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": No HRF found");
 			return false;
 		} else //Datum i.O. weitere checks fahren
 			{
@@ -134,24 +137,30 @@ public class MatchExporter {
 						&& (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ
 							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR
 							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT)) {
+						HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Got a red card");
 						return false;
 					}
 					//injury / tactical problems / overconfidence check
-					if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION
-							// Injured
-						&& (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER
-							// Bruised
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG
+					if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+						if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT
+								|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS
+								|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI
+								|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT
+								|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER
+								// Bruised
+								|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER
+								|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG) {
+							HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Injured or bruised player");
+							return false;							
+						} else if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME) {								
 							// Tactical Problems // Verwirrung
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME
+							HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Tactical problems");
+							return false;							
+						} else if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT) { 
 							// Overconfidence // Unterschaetzen
-							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT)) {
-						return false;
+							HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Overconfidence");
+							return false;
+						}
 					}
 					// Weather based SpecialEvents check (as this SE alters player ratings)
 					if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL
@@ -161,12 +170,14 @@ public class MatchExporter {
 							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY
 							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
 							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY)) {
+						HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Weather SE");
 						return false;
 					}
 				}
 				
 			} //ende for highlight check
 		}
+//		HOLogger.instance().debug(MatchExporter.class, "Exporting match " + info.getMatchID());
 		return true;
 
 	}
