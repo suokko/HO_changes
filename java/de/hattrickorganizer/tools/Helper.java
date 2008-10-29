@@ -135,6 +135,12 @@ public class Helper extends LanguageFiles {
     /** manual */
     public static ImageIcon MANUELL;
 
+    /** weather SEs */
+    public static ImageIcon WEATHER_SE_RAIN_POS;
+    public static ImageIcon WEATHER_SE_RAIN_NEG;
+    public static ImageIcon WEATHER_SE_SUN_POS;
+    public static ImageIcon WEATHER_SE_SUN_NEG;
+
     /** Gesamteinstufung */
     public static final CBItem[] EINSTUFUNG = {
 										    	 new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden),
@@ -319,13 +325,13 @@ public class Helper extends LanguageFiles {
                                                                     ISpielerPosition.STURM_AUS)
                                                      };
 
-    /** TODO Missing Parameter Documentation */
+    /** team categories */
     public static final String[] TEAMSMILIES = {
                                                    "", "A-Team.png", "B-Team.png", "C-Team.png",
                                                    "D-Team.png", "E-Team.png"
                                                };
 
-    /** TODO Missing Parameter Documentation */
+    /** smilies */
     public static final String[] MANUELLSMILIES = {
                                                       "", "1bigsmile.png", "2smile.png",
                                                       "3normal.png", "4sad.png", "5verysad.png",
@@ -333,79 +339,79 @@ public class Helper extends LanguageFiles {
                                                       "9coach.png"
                                                   };
 
-    /** TODO Missing Parameter Documentation */
+    /** weather combo boxes */
     public static final CBItem[] WETTER = {
                                               new CBItem("", 1), new CBItem("", 2),
                                               new CBItem("", 3), new CBItem("", 4)
                                           };
 
-    /** Trickotfarben */
+    /** shirt colors */
     public static java.awt.Color TRICKOT_TORWART = java.awt.Color.black;
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - CD */
     public static java.awt.Color TRICKOT_INNENVERTEIDIGER = new java.awt.Color(0, 0, 220);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - WB */
     public static java.awt.Color TRICKOT_AUSSENVERTEIDIGER = new java.awt.Color(0, 220, 0);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - inner mid */
     public static java.awt.Color TRICKOT_MITTELFELD = new java.awt.Color(220, 220, 0);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - winger */
     public static java.awt.Color TRICKOT_FLUEGEL = new java.awt.Color(220, 140, 0);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - striker */
     public static java.awt.Color TRICKOT_STURM = new java.awt.Color(220, 0, 0);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - spare keeper */
     public static java.awt.Color TRICKOT_RESERVE_TORWART = new java.awt.Color(200, 200, 200);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - spare CD */
     public static java.awt.Color TRICKOT_RESERVE_INNENVERTEIDIGER = new java.awt.Color(200, 200, 255);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - spare inner */
     public static java.awt.Color TRICKOT_RESERVE_MITTELFELD = new java.awt.Color(255, 255, 180);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - spare winger */
     public static java.awt.Color TRICKOT_RESERVE_FLUEGEL = new java.awt.Color(255, 225, 180);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - spare striker */
     public static java.awt.Color TRICKOT_RESERVE_STURM = new java.awt.Color(255, 200, 200);
 
-    /** TODO Missing Parameter Documentation */
+    /** shirt - none */
     public static java.awt.Color TRICKOT_NONE = new java.awt.Color(230, 230, 230);
 
     /** Images */
     public static ExtendedImageIcon EMPTYIMAGE;
 
-    /** TODO Missing Parameter Documentation */
+    /** bad weather */
     public static javax.swing.ImageIcon WETTERSCHLECHT;
 
-    /** TODO Missing Parameter Documentation */
+    /** good weather */
     public static javax.swing.ImageIcon WETTERGUT;
 
-    /** TODO Missing Parameter Documentation */
+    /** sunny */
     public static javax.swing.ImageIcon SONNIG;
 
-    /** TODO Missing Parameter Documentation */
+    /** clouds */
     public static javax.swing.ImageIcon WOLKIG;
 
-    /** TODO Missing Parameter Documentation */
+    /** partial clouded */
     public static javax.swing.ImageIcon BEWOELKT;
 
-    /** TODO Missing Parameter Documentation */
+    /** rain */
     public static javax.swing.ImageIcon REGEN;
 
     //14px
 
-    /** TODO Missing Parameter Documentation */
+    /** empty 14px */
     public static javax.swing.ImageIcon LEER = new javax.swing.ImageIcon(new java.awt.image.BufferedImage(14,
                                                                                                           14,
                                                                                                           java.awt.image.BufferedImage.TYPE_INT_ARGB));
 
     //8px
 
-    /** TODO Missing Parameter Documentation */
+    /** empty small 8px */
     public static javax.swing.ImageIcon MINILEER = new javax.swing.ImageIcon(new java.awt.image.BufferedImage(8,
                                                                                                               8,
                                                                                                               java.awt.image.BufferedImage.TYPE_INT_ARGB));
@@ -415,13 +421,13 @@ public class Helper extends LanguageFiles {
     /** wird für das Parsen in parseFloat benötigt */
     public static DecimalFormat INTEGERFORMAT = new java.text.DecimalFormat("#0");
 
-    /** TODO Missing Parameter Documentation */
+    /** decimal format - 1 fraction digit */
     public static DecimalFormat DEFAULTDEZIMALFORMAT = new java.text.DecimalFormat("#0.0");
 
-    /** TODO Missing Parameter Documentation */
+    /** decimal format - 2 fraction digits */
     public static DecimalFormat DEZIMALFORMAT_2STELLEN = new java.text.DecimalFormat("#0.00");
 
-    /** TODO Missing Parameter Documentation */
+    /** decimal format - 3 fraction digits */
     public static DecimalFormat DEZIMALFORMAT_3STELLEN = new java.text.DecimalFormat("#0.000");
 
     /** Schon eine Meldung angezeigt? */
@@ -604,9 +610,16 @@ public class Helper extends LanguageFiles {
                                                                                                  255,
                                                                                                  255)));
         MANUELL = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Manuell.png"),
-                                                                                       new Color(255,
-                                                                                                 255,
-                                                                                                 255)));
+        		new Color(255, 255, 255)));
+
+        WEATHER_SE_RAIN_POS = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_rain_positive.png"),
+                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        WEATHER_SE_RAIN_NEG = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_rain_negative.png"),
+                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        WEATHER_SE_SUN_POS = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_sun_positive.png"),
+                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        WEATHER_SE_SUN_NEG = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_sun_negative.png"),
+                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -1298,9 +1311,37 @@ public class Helper extends LanguageFiles {
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
                 icon = VERLETZT_KLEIN;
             }
+        } else if (typ == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
+        	switch (subtyp) {
+        	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY: 	// +
+        		icon = WEATHER_SE_RAIN_POS; break;
+        	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY: 	// +
+        		icon = WEATHER_SE_SUN_POS; break;
+        	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY: 	// -
+        	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY:		// -
+        		icon = WEATHER_SE_SUN_NEG; break;
+        	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY:		// -
+        	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY: 	// -
+        		icon = WEATHER_SE_RAIN_NEG; break;
+        	default:
+        		icon = null;
+        	}
         }
 
         return icon;
+    }
+
+    /**
+     * Check, if the highlight is a weather SE highlight.
+     */
+    public static boolean isWeatherSEHighlight(int typ, int subtyp) {
+    	return (typ == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
+    			(subtyp == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY ||
+    			subtyp == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY ||
+    			subtyp == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY ||
+    			subtyp == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY ||
+    			subtyp == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY ||
+    			subtyp == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY));
     }
 
     /**
@@ -1670,11 +1711,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the icon for a certain weather effect.
      */
     public static javax.swing.ImageIcon getImageIcon4WetterEffekt(int wert) {
         javax.swing.ImageIcon icon = null;

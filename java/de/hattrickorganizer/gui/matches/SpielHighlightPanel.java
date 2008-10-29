@@ -19,15 +19,17 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
+import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Zeigt die Stärken eines Matches an
+ * Zeigt die Stärken eines Matches an.
  */
 public class SpielHighlightPanel extends ImagePanel {
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
+	private static final long serialVersionUID = -6491501224900464573L;
+	/** default foreground color own team */
     public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -41,7 +43,7 @@ public class SpielHighlightPanel extends ImagePanel {
     private JLabel m_clHeimTeamName = new JLabel();
     private JLabel m_clHeimTeamTore = new JLabel();
     private JPanel panel = new JPanel(layout);
-    private MatchKurzInfo m_clMatchKurzInfo;
+//    private MatchKurzInfo m_clMatchKurzInfo;
     private Vector m_vHighlightLabels = new Vector();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -56,7 +58,7 @@ public class SpielHighlightPanel extends ImagePanel {
     /**
      * Creates a new SpielHighlightPanel object.
      *
-     * @param print TODO Missing Constructuor Parameter Documentation
+     * @param print if true: use printer version (no colored background)
      */
     public SpielHighlightPanel(boolean print) {
         super(print);
@@ -189,7 +191,7 @@ public class SpielHighlightPanel extends ImagePanel {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
+     * Clear all highlights.
      */
     public final void clear() {
         //Alle Highlights löschen
@@ -206,14 +208,11 @@ public class SpielHighlightPanel extends ImagePanel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param info TODO Missing Method Parameter Documentation
+     * Refresh the highlights from the short info.
      */
     public final void refresh(MatchKurzInfo info) {
         clear();
-
-        m_clMatchKurzInfo = info;
+        //m_clMatchKurzInfo = info;
 
         final Matchdetails details = de.hattrickorganizer.database.DBZugriff.instance()
                                                                             .getMatchDetails(info
@@ -257,8 +256,7 @@ public class SpielHighlightPanel extends ImagePanel {
                 final MatchHighlight highlight = (MatchHighlight) vMatchHighlights.get(i);
 
                 //Label vorbereiten
-                final ImageIcon icon = de.hattrickorganizer.tools.Helper
-                                       .getImageIcon4SpielHighlight(highlight.getHighlightTyp(),
+                final ImageIcon icon = Helper.getImageIcon4SpielHighlight(highlight.getHighlightTyp(),
                                                                     highlight.getHighlightSubTyp());
 
                 //Soll Highlight auch angezeigt werden? (Nur wenn Grafik vorhanden ist)
@@ -272,14 +270,15 @@ public class SpielHighlightPanel extends ImagePanel {
 
                     spielername += (" (" + highlight.getMinute() + ".)");
                     playerlabel = new JLabel(spielername, icon, JLabel.LEFT);
-                    playerlabel.setForeground(de.hattrickorganizer.tools.Helper
-                                              .getColor4SpielHighlight(highlight.getHighlightTyp(),
+                    playerlabel.setForeground(Helper.getColor4SpielHighlight(highlight.getHighlightTyp(),
                                                                        highlight.getHighlightSubTyp()));
-                    playerlabel.setToolTipText(de.hattrickorganizer.tools.Helper
-                                               .getTooltiptext4SpielHighlight(highlight
-                                                                              .getHighlightTyp(),
-                                                                              highlight
-                                                                              .getHighlightSubTyp()));
+                    if (Helper.isWeatherSEHighlight(highlight.getHighlightTyp(),
+                                                                               highlight.getHighlightSubTyp())) {
+                    	playerlabel.setToolTipText(removeHtml(highlight.getEventText()));
+                    } else {
+                    	playerlabel.setToolTipText(Helper.getTooltiptext4SpielHighlight(highlight.getHighlightTyp(),
+                                                                              highlight.getHighlightSubTyp()));
+                    }
 
                     //Steht Müll drin!
                     if (highlight.getHighlightTyp() == MatchHighlight.HIGHLIGHT_ERFOLGREICH) {
@@ -331,14 +330,14 @@ public class SpielHighlightPanel extends ImagePanel {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {
-                m_clHeimTeamName.setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() < info.getGastTore()) {
                 m_clHeimTeamName.setIcon(null);
-                m_clGastTeamName.setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
+                m_clGastTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
             } else {
-                m_clHeimTeamName.setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
-                m_clGastTeamName.setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(Helper.GREYSTARIMAGEICON);
+                m_clGastTeamName.setIcon(Helper.GREYSTARIMAGEICON);
             }
         } //Ende Finished
 
@@ -358,5 +357,25 @@ public class SpielHighlightPanel extends ImagePanel {
         }
 
         repaint();
+    }
+
+    /**
+     * Strip HTML from text.
+     * TODO: a regex guru should make a performant version ;)
+     */
+    private String removeHtml(String in) {
+    	if (in == null) return in;
+    	try {
+	    	int p1 = in.indexOf("<");
+	    	int p2 = in.indexOf(">");
+	    	while (p1 > -1 && p2 > -1) {
+	    		in = in.replaceAll(in.substring(p1, p2+1), "");
+	    		p1 = in.indexOf("<");
+	    		p2 = in.indexOf(">");
+	    	}
+    	} catch (Exception e) {
+    		HOLogger.instance().debug(getClass(), "Error parsing highlight text " + in + "\n" + e);
+    	}
+    	return in;
     }
 }
