@@ -76,7 +76,6 @@ P D Task
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
-5 A Show weather SEs in match highlights
 5 F Add a player export function (CSV)
 5 ? Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
 
@@ -96,6 +95,7 @@ P D Task
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
+5 A Show weather SEs in match highlights
 
 
 Legend:
