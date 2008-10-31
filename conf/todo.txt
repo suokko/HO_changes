@@ -28,7 +28,6 @@ P D Bug description
 			(message repeats several thousand times...)
 3 ? TA doesn't show up after successful installation
 3 ? IFA doesn't show up after successful installation
-3 ? since HO 1.421 an off.IM contributes less to the side attack than an normal IM
 3 A Large memory consumption at the training update crashes / blocks some HO installations
     	Removing old matches and giving HO more heap memory 'solves' this issue
 4 F Apply some GUI changes to make subskill > 0.94 look better with fraction digits<2
@@ -38,6 +37,8 @@ P D Bug description
 4 F Fix HO.sh for linux (accept whitespaces in path name)
 4 ? Attack rating prediction of normal/off midfielder looks odd.
     An CM produces less attack rating when playing offensive than playing normal.
+4 ? Players training progress in the TrainingExperience tab seems wrong
+		the bar charts don't match to the subskills on the player overview
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
 5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
