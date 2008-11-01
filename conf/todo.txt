@@ -35,9 +35,15 @@ P D Bug description
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
 4 F Fix HO.sh for linux (accept whitespaces in path name)
-4 ? Attack rating prediction of normal/off midfielder looks odd.
-    An CM produces less attack rating when playing offensive than playing normal.
-4 ? Players training progress in the TrainingExperience tab seems wrong
+4 F Attack rating prediction of normal/off midfielder looks odd.
+	An IM produces less attack rating when playing offensive than playing normal.
+	Flattermann says:
+	I know that it's stange to see
+	SideAttack/Passing:IM_norm>=IM_off
+	but that's the ROOT optimization result. I will double check it and talk to our
+	"rating expert" GM-Mjoelnir to get his opinion.
+	Maybe IM_norm==IM_off?
+4 F Players training progress in the TrainingExperience tab seems wrong
 		the bar charts don't match to the subskills on the player overview
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
