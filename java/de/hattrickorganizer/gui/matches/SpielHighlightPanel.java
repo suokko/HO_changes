@@ -19,7 +19,6 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -361,21 +360,11 @@ public class SpielHighlightPanel extends ImagePanel {
 
     /**
      * Strip HTML from text.
-     * TODO: a regex guru should make a performant version ;)
      */
     private String removeHtml(String in) {
-    	if (in == null) return in;
-    	try {
-	    	int p1 = in.indexOf("<");
-	    	int p2 = in.indexOf(">");
-	    	while (p1 > -1 && p2 > -1) {
-	    		in = in.replaceAll(in.substring(p1, p2+1), "");
-	    		p1 = in.indexOf("<");
-	    		p2 = in.indexOf(">");
-	    	}
-    	} catch (Exception e) {
-    		HOLogger.instance().debug(getClass(), "Error parsing highlight text " + in + "\n" + e);
-    	}
-    	return in;
+    	if (in == null) 
+    		return in;
+    	else
+    		return in.replaceAll("<.*?>", "");
     }
 }
