@@ -30,14 +30,15 @@
 	!endif
 !endif
 
-!define HOREGKEY "Software\HattrickOrganizer"
-
 
 ################## General ################## 
 
+!define HO_REGKEY "Software\HattrickOrganizer"
+!define HO_UNINSTALL_REGKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hattrick Organizer"
+
 InstallDir "$PROGRAMFILES\HattrickOrganizer"
 ;Get installation folder from registry if available
-InstallDirRegKey HKLM ${HOREGKEY} "InstallLocation"
+InstallDirRegKey HKLM ${HO_REGKEY} "InstallLocation"
 
 Name "Hattrick Organizer"
 RequestExecutionLevel admin
@@ -57,7 +58,7 @@ VIProductVersion "$HOVERSION"
 ##### Remember the installer language #######
 
 !define MUI_LANGDLL_REGISTRY_ROOT HKLM
-!define MUI_LANGDLL_REGISTRY_KEY ${HOREGKEY} 
+!define MUI_LANGDLL_REGISTRY_KEY ${HO_REGKEY} 
 !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 
@@ -85,6 +86,7 @@ VIProductVersion "$HOVERSION"
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
+
 ############## Language Macros ##############
 
 # Newline in language files
@@ -92,12 +94,9 @@ VIProductVersion "$HOVERSION"
 
 !macro LANG_LOAD LANGLOAD
 	!insertmacro MUI_LANGUAGE "${LANGLOAD}"
+	!define THISLANG "${LANGLOAD}"
 	!include "${LOCALLANGPATH}\${LANGLOAD}.txt"
-	!ifndef THISLANG
-		!error "THISLANG is undefined in ${LOCALLANGPATH}\${LANGLOAD}.txt"
-	!else
-		!undef THISLANG
-	!endif
+	!undef THISLANG
 !macroend
  
 !macro LANG_STRING NAME VALUE
@@ -107,6 +106,7 @@ VIProductVersion "$HOVERSION"
 !macro LANG_UNSTRING NAME VALUE
 	!insertmacro LANG_STRING "un.${NAME}" "${VALUE}"
 !macroend
+
 
 ################# Languages #################
 
@@ -179,6 +179,7 @@ VIProductVersion "$HOVERSION"
   
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
+
 ####### Installer Functions/Sections ########
 
 Function .onInit
@@ -186,14 +187,14 @@ Function .onInit
 FunctionEnd
 
 !ifdef WITHJRE	
-	InstType "Full (with Java Runtime Environment)"
+	InstType "$(INST_TYPE_FULL_WITH_JRE)"
 !else
-	InstType "Full"
+	InstType "$(INST_TYPE_FULL)"
 !endif
-InstType "Minimal"
+InstType "$(INST_TYPE_MINIMAL)"
 
 !ifdef WITHJRE	
-Section "Java Runtime Environment ${WITHJRE}" SEC_JRE
+Section "$(JRE) ${WITHJRE}" SEC_JRE
 	SectionIn 1 
 	SetOutPath "$INSTDIR"
 	File "${JREPATH}\${JREFILE}"
@@ -204,12 +205,15 @@ SectionEnd
 
 Section "Hattrick Organizer ${HOVERSION}" SEC_HO
     SectionIn 1 2 RO
-	WriteRegStr HKLM ${HOREGKEY} "InstallLocation" $INSTDIR
+	WriteRegStr HKLM ${HO_REGKEY} "InstallLocation" $INSTDIR
 	SetOutPath "$INSTDIR"
 	File /r "${BUILDDIR}\*.*"
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
 	# Setting file permission -> Full access to all authenticated users [aka BuildinUsers] (important for Windows Vista)
 	AccessControl::GrantOnFile "$INSTDIR" "(BU)" "FullAccess"
+	# Write registry key for Add/Remove Programs in ControlPanel
+	WriteRegStr HKLM "${HO_UNINSTALL_REGKEY}" "DisplayName" "Hattrick Organizer (remove only)"
+	WriteRegStr HKLM "${HO_UNINSTALL_REGKEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 Section "$(CREATE_DESKTOP)" SEC_DESKTOP
@@ -226,6 +230,7 @@ Section "$(CREATE_STARTMENU)" SEC_STARTMENU
 	CreateShortCut "$SMPROGRAMS\Hattrick Organizer\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 SectionEnd
 
+
 ###### Uninstaller Functions/Sections #######
 
 Function un.onInit
@@ -241,5 +246,6 @@ Section Uninstall SEC_UNINST
 	SetShellVarContext all
 	RMDir /r "$SMPROGRAMS\Hattrick Organizer"
 	Delete "$DESKTOP\Hattrick Organizer.lnk"
-	DeleteRegKey HKLM ${HOREGKEY}
+	DeleteRegKey HKLM "${HO_REGKEY}"
+	DeleteRegKey HKLM "${HO_UNINSTALL_REGKEY}"
 SectionEnd
