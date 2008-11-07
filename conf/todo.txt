@@ -63,7 +63,6 @@ P D Task
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
-5 F Update ExperienceViewer-Plugin and Spieler.getErfahrungBonus()
 5 ? Add an individual player training block (i.e. don't count skill training for a specific player)
 	(with start date, so that recalc subskills does still work for older trainings)
 5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
@@ -102,6 +101,7 @@ P D Task
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
 5 A Show weather SEs in match highlights
+5 F Update ExperienceViewer-Plugin (0.51) and Spieler.getErfahrungBonus()
 
 
 Legend:
