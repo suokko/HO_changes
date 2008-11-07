@@ -113,8 +113,8 @@ public class MatchExporter {
 			return false;
 		}
 		// Check for WO
-		if (details.getHomeMidfield() == 1 &&
-			details.getGuestMidfield() == 1) {
+		if (details.getHomeMidfield() <= 1 &&
+			details.getGuestMidfield() <= 1) {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Walk over");
 			return false;
 		}
