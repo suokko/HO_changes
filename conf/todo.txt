@@ -43,6 +43,9 @@ P D Bug description
 			Perhaps we should change that...
 5 A IFA-Plugin: some generated logos get a black background instead of the correct one
 5 ? Transferscout cannot parse players with special characters (e.g. from China or Cambodia)
+5 A Teamanalyzer: it's not possible to start the simulation, if the tactic level is above divine
+5 ? Transfers: the level of some skills is not visible, if the skill name is long,
+		Example: German "Chancenverwertu.." instead of English "Scoring (12)"
 
 
 Enhancements
