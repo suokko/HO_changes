@@ -771,6 +771,8 @@ public final class HOMainFrame extends JFrame
 		//aktuelle UserParameter speichern
 		saveUserParameter();
 
+		HOLogger.instance().debug(getClass(), "UserParameters saved");
+
 		//Scoutliste speichern
 		m_jpTransferScout.saveScoutListe();
 
@@ -789,6 +791,7 @@ public final class HOMainFrame extends JFrame
 		} catch (Exception e) {
 		}
 
+		HOLogger.instance().debug(getClass(), "Shutdown complete!");
 		//Dispose führt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
 		try {
 			dispose();
