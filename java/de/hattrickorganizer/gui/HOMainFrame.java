@@ -68,12 +68,28 @@ public final class HOMainFrame extends JFrame
 
 	private static final long serialVersionUID = -6333275250973872365L;
 
-	/** TODO Missing Parameter Documentation */
+	/**
+	 * Release Notes:
+	 * ==============
+	 * The first SVN commit AFTER a release should include 
+	 *      an increased VERSION number with DEVELOPMENT set to true
+	 * The last SVN commit BEFORE a release should set DEVELOPMENT to false
+	 *      and set WARN_DATE to 12 (?) months after the release date 
+	 */
+	
+	/** HO Version */
 	public static final double VERSION = 1.422d;
 
-	/** TODO Missing Parameter Documentation */
+	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;
 
+	/** 
+	 * After that date, the user gets a nag screen if he starts his old HO version, 
+	 * set to empty string for no warning 
+	 * (DEVELOPMENT versions do not show the nag screen) 
+	 */
+	private static final String WARN_DATE = "2008-12-31 00:00:00.0";
+	
 	/** TODO Missing Parameter Documentation */
 	public static final int SPRACHVERSION = 2;
 	private static HOMainFrame m_clHOMainFrame;
@@ -1792,6 +1808,20 @@ public final class HOMainFrame extends JFrame
 		} catch (Exception e) {
 		}
 
+		// Check if this HO version is (soft) expired
+		if (!DEVELOPMENT && WARN_DATE != null && WARN_DATE.length() > 0) {
+			final java.sql.Timestamp datum = new java.sql.Timestamp(System.currentTimeMillis());
+
+			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
+				javax.swing.JOptionPane.showMessageDialog(
+					null,
+					"Your HO version is very old!\nPlease download a new version at "+ MyConnector.getHOSite(),
+					"Update strongly recommended",
+					javax.swing.JOptionPane.WARNING_MESSAGE);
+			}			
+		}
+		
+		// Check if this HO version is (hard) expired
 		if (LIMITED) {
 			final java.sql.Timestamp datum = new java.sql.Timestamp(System.currentTimeMillis());
 
