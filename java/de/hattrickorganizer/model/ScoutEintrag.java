@@ -47,7 +47,7 @@ public class ScoutEintrag {
     protected int m_iKondition = 0;
 
     /** Marktwert */
-    protected int m_iMarktwert = 1000;
+    protected int m_iTSI = 1000;
 
     /** Passpiel */
     protected int m_iPasspiel = 0;
@@ -95,7 +95,7 @@ public class ScoutEintrag {
             m_sName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Name"));
             m_iAlter = rs.getInt("Age");
             m_iAgeDays = rs.getInt("AgeDays");
-            m_iMarktwert = rs.getInt("Marktwert");
+            m_iTSI = rs.getInt("Marktwert");
             m_iSpeciality = rs.getInt("Speciality");
             m_iKondition = rs.getInt("Kondition");
             m_iErfahrung = rs.getInt("Erfahrung");
@@ -289,10 +289,10 @@ public class ScoutEintrag {
     /**
      * Setter for property m_iMarktwert.
      *
-     * @param m_iMarktwert New value of property m_iMarktwert.
+     * @param m_iTSI New value of property m_iMarktwert.
      */
-    public final void setMarktwert(int m_iMarktwert) {
-        this.m_iMarktwert = m_iMarktwert;
+    public final void setTSI(int m_iTSI) {
+        this.m_iTSI = m_iTSI;
     }
 
     /**
@@ -300,8 +300,8 @@ public class ScoutEintrag {
      *
      * @return Value of property m_iMarktwert.
      */
-    public final int getMarktwert() {
-        return m_iMarktwert;
+    public final int getTSI() {
+        return m_iTSI;
     }
 
     /**
@@ -513,7 +513,7 @@ public class ScoutEintrag {
         eintrag.setName(new String(getName()));
         eintrag.setAlter(getAlter());
         eintrag.setAgeDays(getAgeDays());
-        eintrag.setMarktwert(getMarktwert());
+        eintrag.setTSI(getTSI());
         eintrag.setSpeciality(getSpeciality());
         eintrag.setErfahrung(getErfahrung());
         eintrag.setForm(getForm());

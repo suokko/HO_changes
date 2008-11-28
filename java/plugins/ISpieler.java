@@ -634,18 +634,41 @@ public interface ISpieler {
     public java.lang.String getManuellerSmilie();
 
     /**
-     * Setter for property m_iMarkwert.
+     * Sets the TSI (aka Marktwert)
      *
-     * @param m_iMarkwert New value of property m_iMarkwert.
+     * @param m_iTSI New value of property m_iMarkwert.
+     * @deprecated Use setTSI()
      */
-    public void setMarkwert(int m_iMarkwert);
+    public void setMarkwert(int m_iTSI);
 
     /**
-     * Getter for property m_iMarkwert.
+     * Returns the TSI (aka Marktwert)
+     *
+     * @return Value of property m_iMarkwert.
+     * @deprecated use getTSI()
+     */
+    public int getMarkwert();
+
+    /**
+     * Sets the TSI
+     *
+     * @param m_iTSI New value of property m_iMarkwert.
+     */
+    public void setTSI(int m_iTSI);
+
+    /**
+     * Returns the TSI
      *
      * @return Value of property m_iMarkwert.
      */
-    public int getMarkwert();
+    public int getTSI();
+    
+    /**
+     * Returns the estimated value of this player (EPV)
+     * 
+     * @return EPV
+     */
+    public double getEPV();
 
     /**
      * Setter for property m_sName.

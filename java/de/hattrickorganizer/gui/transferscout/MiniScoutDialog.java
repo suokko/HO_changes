@@ -288,7 +288,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         entry.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
         entry.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
         entry.setPrice(Integer.parseInt(jtfPrice.getText()));
-        entry.setMarktwert(Integer.parseInt(jtfTSI.getText()));
+        entry.setTSI(Integer.parseInt(jtfTSI.getText()));
         entry.setSpeciality(((CBItem) jcbSpeciality.getSelectedItem()).getId());
         entry.setErfahrung(((CBItem) jcbExperience.getSelectedItem()).getId());
         entry.setForm(((CBItem) jcbForm.getSelectedItem()).getId());

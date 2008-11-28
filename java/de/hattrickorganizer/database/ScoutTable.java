@@ -78,7 +78,7 @@ public final class ScoutTable extends AbstractTable {
 						+ ","
 						+ scout.getAgeDays()
 						+ ","
-						+ scout.getMarktwert()
+						+ scout.getTSI()
 						+ ","
 						+ scout.getKondition()
 						+ ","

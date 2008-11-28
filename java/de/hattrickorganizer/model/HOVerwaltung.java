@@ -67,23 +67,32 @@ public class HOVerwaltung {
     //-----------------Hilfsmethoden---------------------------------------------
 
     /**
-     * Gibt den Durchschnittlichen Mannschaftswert zurück
+     * Returns the average TSI
      *
-     * @return TODO Missing Return Method Documentation
+     * @return average TSI
      */
-    public float getDurchschnittlichenMannschaftswert() {
-        float summe = 0;
-        final Vector vSpieler = getModel().getAllSpieler();
+    public float getAvgTSI() {
+        int numPlayers = getModel().getAllSpieler().size();
+        //Trainer abziehen // without trainer
+        if (numPlayers <= 1)
+        	return 0;
+        else
+        	return de.hattrickorganizer.tools.Helper.round(getSumTSI() / (numPlayers - 1));
+    }
 
-        for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
-            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
-                summe += ((Spieler) vSpieler.get(i)).getMarkwert();
-            }
-        }
-
-        //Trainer abziehen
-        return de.hattrickorganizer.tools.Helper.round(summe / (vSpieler.size() - 1));
+    /**
+     * Gibt den Durchschnittlichen Mannschaftswert zurück
+     * Returns the average estimated market value (EPV)
+     *
+     * @return average EPV
+     */
+    public float getAvgEPV() {
+        int numPlayers = getModel().getAllSpieler().size();
+        //Trainer abziehen // without trainer
+        if (numPlayers <= 1)
+        	return 0;
+        else
+        	return de.hattrickorganizer.tools.Helper.round(getSumEPV() / (numPlayers - 1));
     }
 
     /**
@@ -151,21 +160,42 @@ public class HOVerwaltung {
 
     /**
      * Gibt den gesamtmarktwert zurück
+     * Returns the TSI sum
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getGesamtMannschaftswert() {
+    public float getSumTSI() {
         float summe = 0;
         final Vector vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
-                summe += ((Spieler) vSpieler.get(i)).getMarkwert();
+                summe += ((Spieler) vSpieler.get(i)).getTSI();
             }
         }
 
         return summe;
+    }
+
+    /**
+     * Gibt den gesamtmarktwert zurück
+     * Returns the sum of all estimated player values (EPV)
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public float getSumEPV() {
+        double summe = 0;
+        final Vector vSpieler = getModel().getAllSpieler();
+
+        for (int i = 0; i < vSpieler.size(); i++) {
+            //Trainer nicht berücksichtigen
+            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
+                summe += ((Spieler) vSpieler.get(i)).getEPV();
+            }
+        }
+
+        return (float)summe;
     }
 
     /**

@@ -442,7 +442,7 @@ public class HOMiniModel implements IHOMiniModel {
 		tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
 		tempSpieler.setSpielerID(data.getPlayerId());
 		tempSpieler.setName(data.getPlayerName());
-		tempSpieler.setMarkwert(data.getTSI());
+		tempSpieler.setTSI(data.getTSI());
 		tempSpieler.setSpezialitaet(data.getSpeciality());
 		tempSpieler.setAlter(data.getAge());
 		tempSpieler.setErfahrung(data.getExperience());
