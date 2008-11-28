@@ -185,7 +185,7 @@ public class PlayerCreator extends XMLCreator {
 		skill.appendChild(createNode(doc,"stamina", (player.getKondition() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_KONDITION))+""));
 		skill.appendChild(createNode(doc,"form", player.getForm()+""));
 		skill.appendChild(createNode(doc,"experience", player.getErfahrung()+""));
-		skill.appendChild(createNode(doc,"tsi", player.getMarkwert()+""));
+		skill.appendChild(createNode(doc,"tsi", player.getTSI()+""));
 		
 		if (extended) {
 			Element skillups = doc.createElement("skillups");

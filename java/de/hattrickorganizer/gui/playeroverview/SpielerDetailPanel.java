@@ -446,7 +446,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
 
         final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
 		final String gehalttext = Helper.getNumberFormat(true, 0).format(gehalt);
-		final String tsitext = Helper.getNumberFormat(false, 0).format(m_clSpieler.getMarkwert());
+		final String tsitext = Helper.getNumberFormat(false, 0).format(m_clSpieler.getTSI());
         if (m_clVergleichsSpieler == null) {
             String bonus = "";
 
@@ -526,8 +526,8 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             m_jpGehalt.getLinks().setText(gehalttext + bonus);
             m_jpGehalt.getRechts().setSpezialNumber(gehalt - gehalt2, true);
             m_jpMartwert.getLinks().setText(tsitext);
-            m_jpMartwert.getRechts().setSpezialNumber(m_clSpieler.getMarkwert()
-                                                      - m_clVergleichsSpieler.getMarkwert(), false);
+            m_jpMartwert.getRechts().setSpezialNumber(m_clSpieler.getTSI()
+                                                      - m_clVergleichsSpieler.getTSI(), false);
             m_jpForm.setText(PlayerHelper.getNameForSkill(m_clSpieler.getForm()) + "");
             m_jpForm2.setGrafischeVeraenderungswert(m_clSpieler.getForm()
                                                     - m_clVergleichsSpieler.getForm(),

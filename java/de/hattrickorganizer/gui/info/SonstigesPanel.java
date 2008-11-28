@@ -24,7 +24,8 @@ import javax.swing.SwingConstants;
 final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private final ColorLabelEntry m_jpAnzahlSpieler = new ColorLabelEntry("",
+	private static final long serialVersionUID = -6838769293704726932L;
+	private final ColorLabelEntry m_jpAnzahlSpieler = new ColorLabelEntry("",
                                                                     ColorLabelEntry.FG_STANDARD,
                                                                     ColorLabelEntry.BG_STANDARD,
                                                                     SwingConstants.LEFT);
@@ -37,20 +38,28 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
     private final ColorLabelEntry m_jpDForm = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                             ColorLabelEntry.BG_STANDARD,
                                                             SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpDMannschaftswert = new ColorLabelEntry("",
+    private final ColorLabelEntry m_jpAvgEPV = new ColorLabelEntry("",
                                                                        ColorLabelEntry.FG_STANDARD,
                                                                        ColorLabelEntry.BG_STANDARD,
                                                                        SwingConstants.LEFT);
+    private final ColorLabelEntry m_jpAvgTSI = new ColorLabelEntry("",
+            														ColorLabelEntry.FG_STANDARD,
+            														ColorLabelEntry.BG_STANDARD,
+            														SwingConstants.LEFT);
     private final ColorLabelEntry m_jpFans = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                            ColorLabelEntry.BG_STANDARD,
                                                            SwingConstants.LEFT);
     private final ColorLabelEntry m_jpFansAnzahl = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                  ColorLabelEntry.BG_STANDARD,
                                                                  SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpGesamtMannschaftwert = new ColorLabelEntry("",
+    private final ColorLabelEntry m_jpSumEPV = new ColorLabelEntry("",
                                                                            ColorLabelEntry.FG_STANDARD,
                                                                            ColorLabelEntry.BG_STANDARD,
                                                                            SwingConstants.LEFT);
+    private final ColorLabelEntry m_jpSumTSI = new ColorLabelEntry("",
+    																ColorLabelEntry.FG_STANDARD,
+    																ColorLabelEntry.BG_STANDARD,
+    																SwingConstants.LEFT);
     private final ColorLabelEntry m_jpJugend = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                              ColorLabelEntry.BG_STANDARD,
                                                              SwingConstants.LEFT);
@@ -106,9 +115,10 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         m_jpUngeschlagen.setText(verein.getUngeschlagen() + "");
         m_jpSiegeInFolge.setText(verein.getSiege() + "");
         m_jpAnzahlSpieler.setText(HOVerwaltung.instance().getModel().getAllSpieler().size() + "");
-        m_jpDMannschaftswert.setText(HOVerwaltung.instance().getDurchschnittlichenMannschaftswert()
-                                     + "");
-        m_jpGesamtMannschaftwert.setText(HOVerwaltung.instance().getGesamtMannschaftswert() + "");
+        m_jpAvgTSI.setText(HOVerwaltung.instance().getAvgTSI() + "");
+        m_jpSumTSI.setText(HOVerwaltung.instance().getSumTSI() + "");
+        m_jpAvgEPV.setSpezialNumber(HOVerwaltung.instance().getAvgEPV(), true);
+        m_jpSumEPV.setSpezialNumber(HOVerwaltung.instance().getSumEPV(), true);
         m_jpDAlter.setText(HOVerwaltung.instance().getDurchschnittsAlter() + "");
         m_jpDForm.setText(HOVerwaltung.instance().getDurchschnittsForm() + "");
         m_jpDErfahrung.setText(HOVerwaltung.instance().getDurchschnittsErfahrung() + "");
@@ -239,7 +249,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpAnzahlSpieler.getComponent(false), constraints);
         add(m_jpAnzahlSpieler.getComponent(false));
 
-        label = new JLabel(properties.getProperty("DurchschnittMannschaftswert"));
+        label = new JLabel(properties.getProperty("AverageTSI"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 8;
@@ -251,10 +261,10 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         constraints.gridx = 1;
         constraints.gridy = 8;
         constraints.gridwidth = 1;
-        layout.setConstraints(m_jpDMannschaftswert.getComponent(false), constraints);
-        add(m_jpDMannschaftswert.getComponent(false));
+        layout.setConstraints(m_jpAvgTSI.getComponent(false), constraints);
+        add(m_jpAvgTSI.getComponent(false));
 
-        label = new JLabel(properties.getProperty("GesamtMannschaftswert"));
+        label = new JLabel(properties.getProperty("TotalTSI"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 9;
@@ -266,20 +276,50 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         constraints.gridx = 1;
         constraints.gridy = 9;
         constraints.gridwidth = 1;
-        layout.setConstraints(m_jpGesamtMannschaftwert.getComponent(false), constraints);
-        add(m_jpGesamtMannschaftwert.getComponent(false));
+        layout.setConstraints(m_jpSumTSI.getComponent(false), constraints);
+        add(m_jpSumTSI.getComponent(false));
+
+        label = new JLabel(properties.getProperty("AverageEPV"));
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.gridx = 0;
+        constraints.gridy = 10;
+        constraints.gridwidth = 1;
+        layout.setConstraints(label, constraints);
+        add(label);
+
+        constraints.anchor = GridBagConstraints.EAST;
+        constraints.gridx = 1;
+        constraints.gridy = 10;
+        constraints.gridwidth = 1;
+        layout.setConstraints(m_jpAvgEPV.getComponent(false), constraints);
+        add(m_jpAvgEPV.getComponent(false));
+
+        label = new JLabel(properties.getProperty("TotalEPV"));
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.gridx = 0;
+        constraints.gridy = 11;
+        constraints.gridwidth = 1;
+        layout.setConstraints(label, constraints);
+        add(label);
+
+        constraints.anchor = GridBagConstraints.EAST;
+        constraints.gridx = 1;
+        constraints.gridy = 11;
+        constraints.gridwidth = 1;
+        layout.setConstraints(m_jpSumEPV.getComponent(false), constraints);
+        add(m_jpSumEPV.getComponent(false));
 
         label = new JLabel(properties.getProperty("DurchschnittForm"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 10;
+        constraints.gridy = 12;
         constraints.gridwidth = 1;
         layout.setConstraints(label, constraints);
         add(label);
 
         constraints.anchor = GridBagConstraints.EAST;
         constraints.gridx = 1;
-        constraints.gridy = 10;
+        constraints.gridy = 12;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jpDForm.getComponent(false), constraints);
         add(m_jpDForm.getComponent(false));
@@ -287,14 +327,14 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         label = new JLabel(properties.getProperty("DurchschnittErfahrung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 11;
+        constraints.gridy = 13;
         constraints.gridwidth = 1;
         layout.setConstraints(label, constraints);
         add(label);
 
         constraints.anchor = GridBagConstraints.EAST;
         constraints.gridx = 1;
-        constraints.gridy = 11;
+        constraints.gridy = 13;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jpDErfahrung.getComponent(false), constraints);
         add(m_jpDErfahrung.getComponent(false));
@@ -302,14 +342,14 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         label = new JLabel(properties.getProperty("DurchschnittAlter"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 12;
+        constraints.gridy = 14;
         constraints.gridwidth = 1;
         layout.setConstraints(label, constraints);
         add(label);
 
         constraints.anchor = GridBagConstraints.EAST;
         constraints.gridx = 1;
-        constraints.gridy = 12;
+        constraints.gridy = 14;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jpDAlter.getComponent(false), constraints);
         add(m_jpDAlter.getComponent(false));

@@ -587,10 +587,10 @@ final public class UserColumnFactory {
 			}; 
 			playerAdditionalArray[8] = new PlayerColumn(430,"TSI",0){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
-					final String text = Helper.getNumberFormat(false, 0).format(player.getMarkwert());
+					final String text = Helper.getNumberFormat(false, 0).format(player.getTSI());
 					if(playerCompare == null){
 						return new DoppelLabelEntry(new ColorLabelEntry(player
-                            .getMarkwert(),
+                            .getTSI(),
                             text,
                             ColorLabelEntry.FG_STANDARD,
                             ColorLabelEntry.BG_STANDARD,
@@ -603,13 +603,13 @@ final public class UserColumnFactory {
 					
 					
 					return new DoppelLabelEntry(new ColorLabelEntry(player
-                            .getMarkwert(),
+                            .getTSI(),
                             text,
                             ColorLabelEntry.FG_STANDARD,
                             ColorLabelEntry.BG_STANDARD,
                             SwingConstants.RIGHT),
-                            new ColorLabelEntry(player.getMarkwert()
-                                   - playerCompare.getMarkwert(), ColorLabelEntry.BG_STANDARD,
+                            new ColorLabelEntry(player.getTSI()
+                                   - playerCompare.getTSI(), ColorLabelEntry.BG_STANDARD,
                                    false, false, 0));
 				}
 				public void setSize(TableColumn column){

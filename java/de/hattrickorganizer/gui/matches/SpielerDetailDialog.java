@@ -419,7 +419,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
             m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
             m_jpGehalt.getRechts().clear();
-            m_jpMartwert.getLinks().setText(m_clSpieler.getMarkwert() + "");
+            m_jpMartwert.getLinks().setText(m_clSpieler.getTSI() + "");
             m_jpMartwert.getRechts().clear();
             m_jpForm.setText(PlayerHelper.getNameForSkill(m_clSpieler.getForm()) + "");
             m_jpForm2.clear();
@@ -487,9 +487,9 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
             m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
             m_jpGehalt.getRechts().setSpezialNumber((gehalt2 - gehalt), true);
-            m_jpMartwert.getLinks().setText(m_clSpieler.getMarkwert() + "");
-            m_jpMartwert.getRechts().setSpezialNumber((m_clVergleichsSpieler.getMarkwert()
-                                                      - m_clSpieler.getMarkwert()), false);
+            m_jpMartwert.getLinks().setText(m_clSpieler.getTSI() + "");
+            m_jpMartwert.getRechts().setSpezialNumber((m_clVergleichsSpieler.getTSI()
+                                                      - m_clSpieler.getTSI()), false);
             m_jpForm.setText(PlayerHelper.getNameForSkill(m_clSpieler.getForm()) + "");
             m_jpForm2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getForm()
                                                     - m_clSpieler.getForm(), !m_clSpieler.isOld(),

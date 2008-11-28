@@ -108,7 +108,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
     private JTextArea jtaNotizen = new JTextArea();
     private JTextField jtfAlter = new JTextField("17.0");
-    private JTextField jtfMarktwert = new JTextField("1000");
+    private JTextField jtfTSI = new JTextField("1000");
     private JTextField jtfPrice = new JTextField("0");
 	private JLabel jtfEPV = new JLabel("",JLabel.RIGHT);
     private ScoutEintrag clScoutEintrag;
@@ -207,7 +207,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 tempSpieler.setName(jtfName.getText());
             }
 
-            tempSpieler.setMarkwert(Integer.parseInt(jtfMarktwert.getText()));
+            tempSpieler.setTSI(Integer.parseInt(jtfTSI.getText()));
             tempSpieler.setSpezialitaet(((CBItem) jcbSpeciality.getSelectedItem()).getId());
             tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
             tempSpieler.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
@@ -230,7 +230,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             clScoutEintrag.setPrice(Integer.parseInt(jtfPrice.getText()));
             clScoutEintrag.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
             clScoutEintrag.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
-            clScoutEintrag.setMarktwert(Integer.parseInt(jtfMarktwert.getText()));
+            clScoutEintrag.setTSI(Integer.parseInt(jtfTSI.getText()));
             clScoutEintrag.setName(jtfName.getText());
             clScoutEintrag.setInfo(jtaNotizen.getText());
             clScoutEintrag.setDeadline(new java.sql.Timestamp(clSpinnerModel.getDate().getTime()));
@@ -265,7 +265,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
         if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfMarktwert, false)
+                                                           .instance(), jtfTSI, false)
             || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
                                                            .instance(), jtfPlayerID, false)
             || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
@@ -327,7 +327,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtfName.setText(clScoutEintrag.getName());
         jtfPrice.setText(clScoutEintrag.getPrice() + "");
         jtfAlter.setText(clScoutEintrag.getAlter() + "." + clScoutEintrag.getAgeDays());
-        jtfMarktwert.setText(clScoutEintrag.getMarktwert() + "");
+        jtfTSI.setText(clScoutEintrag.getTSI() + "");
         jtaNotizen.setText(clScoutEintrag.getInfo());
         jcbSpeciality.removeItemListener(this);
         jcbErfahrung.removeItemListener(this);
@@ -572,7 +572,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 jtfName.setText(player.getPlayerName());
                 jtfAlter.setText(player.getAge() + "." + player.getAgeDays());
                 jtfPrice.setText(player.getPrice() + "");
-                jtfMarktwert.setText(player.getTSI() + "");
+                jtfTSI.setText(player.getTSI() + "");
                 jtaNotizen.setText(player.getInfo());
 
                 jcbSpeciality.removeItemListener(this);
@@ -688,9 +688,9 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         label = new JLabel("TSI");
         panel.add(label);
-        jtfMarktwert.setHorizontalAlignment(JLabel.RIGHT);
-        jtfMarktwert.addFocusListener(this);
-        panel.add(jtfMarktwert);
+        jtfTSI.setHorizontalAlignment(JLabel.RIGHT);
+        jtfTSI.addFocusListener(this);
+        panel.add(jtfTSI);
 
         label = new JLabel(properties.getProperty("scout_price"));
         panel.add(label);

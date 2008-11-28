@@ -565,7 +565,7 @@ public class TransferTableModel extends AbstractTableModel {
                                                  ColorLabelEntry.BG_STANDARD, JLabel.CENTER);
 
             //Marktwert
-            m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getMarktwert(),
+            m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getTSI(),
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, JLabel.RIGHT);
 

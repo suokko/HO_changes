@@ -403,7 +403,7 @@ public class XMLExporter  {
 					ele.appendChild(doc.createTextNode("" + playerData.getAgeDays()));
 					ele = doc.createElement("TSI");
 					tmpEle.appendChild(ele);
-					ele.appendChild(doc.createTextNode("" + playerData.getMarkwert()));
+					ele.appendChild(doc.createTextNode("" + playerData.getTSI()));
 					ele = doc.createElement("Form");
 					tmpEle.appendChild(ele);
 					ele.appendChild(doc.createTextNode("" + playerData.getForm()));

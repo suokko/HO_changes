@@ -92,7 +92,7 @@ public class XMLPlayerParser {
         }
 
         tmp = (Element) ele.getElementsByTagName("TSI").item(0);
-        player.setMarkwert(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
+        player.setTSI(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("PlayerForm").item(0);
         player.setForm(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Age").item(0);

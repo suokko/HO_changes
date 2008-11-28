@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import plugins.IEPVData;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
@@ -152,7 +153,7 @@ public final class Spieler implements plugins.ISpieler {
     private int m_iLastBewertung = -1;
 
     /** Markwert */
-    private int m_iMarkwert;
+    private int m_iTSI;
 
     /** bonus in Prozent */
 
@@ -269,13 +270,13 @@ public final class Spieler implements plugins.ISpieler {
             m_iFuehrung = rs.getInt("Fuehrung");
             m_iGehalt = rs.getInt("Gehalt");
             m_iNationalitaet = rs.getInt("Land");
-            m_iMarkwert = rs.getInt("Marktwert");
+            m_iTSI = rs.getInt("Marktwert");
 
             //TSI, alles vorher durch 1000 teilen
             m_clhrfDate = rs.getTimestamp("Datum");
 
             if (m_clhrfDate.before(de.hattrickorganizer.database.DBZugriff.TSIDATE)) {
-                m_iMarkwert /= 1000d;
+                m_iTSI /= 1000d;
             }
 
             //Subskills
@@ -352,13 +353,13 @@ public final class Spieler implements plugins.ISpieler {
         m_iFuehrung = Integer.parseInt(properties.getProperty("led", "0"));
         m_iGehalt = Integer.parseInt(properties.getProperty("sal", "0"));
         m_iNationalitaet = Integer.parseInt(properties.getProperty("countryid", "0"));
-        m_iMarkwert = Integer.parseInt(properties.getProperty("mkt", "0"));
+        m_iTSI = Integer.parseInt(properties.getProperty("mkt", "0"));
 
         //TSI, alles vorher durch 1000 teilen
         m_clhrfDate = hrfdate;
 
         if (hrfdate.before(de.hattrickorganizer.database.DBZugriff.TSIDATE)) {
-            m_iMarkwert /= 1000d;
+            m_iTSI /= 1000d;
         }
 
         m_iGelbeKarten = Integer.parseInt(properties.getProperty("warnings", "0"));
@@ -1082,23 +1083,53 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Setter for property m_iMarkwert.
+     * Sets the TSI (aka Marktwert)
      *
-     * @param m_iMarkwert New value of property m_iMarkwert.
+     * @param m_iTSI New value of property m_iMarkwert.
+     * @deprecated Use setTSI()
      */
-    public void setMarkwert(int m_iMarkwert) {
-        this.m_iMarkwert = m_iMarkwert;
+    public void setMarkwert(int m_iTSI) {
+        this.m_iTSI = m_iTSI;
     }
 
     /**
-     * Getter for property m_iMarkwert.
+     * Returns the TSI (aka Marktwert)
+     *
+     * @return Value of property m_iMarkwert.
+     * @deprecated use getTSI()
+     */
+    public int getMarkwert() {
+        return m_iTSI;
+    }
+
+    /**
+     * Sets the TSI
+     *
+     * @param m_iTSI New value of property m_iMarkwert.
+     */
+    public void setTSI(int m_iTSI) {
+        this.m_iTSI = m_iTSI;
+    }
+
+    /**
+     * Returns the TSI
      *
      * @return Value of property m_iMarkwert.
      */
-    public int getMarkwert() {
-        return m_iMarkwert;
+    public int getTSI() {
+        return m_iTSI;
     }
 
+    /**
+     * Returns the estimated value of this player (EPV)
+     * 
+     * @return EPV
+     */
+    public double getEPV() {
+		IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(this);
+		return HOVerwaltung.instance().getModel().getEPV().getPrice(data);
+    }
+    
     /**
      * Setter for property m_sName.
      *
@@ -1219,11 +1250,11 @@ public final class Spieler implements plugins.ISpieler {
     public int getSaveMarktwert() {
         if (m_clhrfDate.before(de.hattrickorganizer.database.DBZugriff.TSIDATE)) {
             //Echter Marktwert
-            return m_iMarkwert * 1000;
+            return m_iTSI * 1000;
         }
 
         //TSI
-        return m_iMarkwert;
+        return m_iTSI;
     }
 
     /**

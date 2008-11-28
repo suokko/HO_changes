@@ -57,7 +57,7 @@ public class EPVData implements Cloneable, IEPVData {
         setPlayerName(s.getName());
         setAge(s.getAlter());
         setAgeDays(s.getAgeDays());
-        setTSI(s.getMarkwert());
+        setTSI(s.getTSI());
         setForm(s.getForm());
         setStamina(s.getKondition() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_KONDITION));
         setGoalKeeping(s.getTorwart() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART));

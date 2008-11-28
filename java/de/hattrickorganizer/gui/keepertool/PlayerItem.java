@@ -27,7 +27,7 @@ public class PlayerItem {
      * @param spieler the roster player to include in the Combo
      */
     public PlayerItem(ISpieler spieler) {
-        tsi = spieler.getMarkwert();
+        tsi = spieler.getTSI();
         form = spieler.getForm();
         id = spieler.getSpielerID();
         name = spieler.getName();
@@ -39,7 +39,7 @@ public class PlayerItem {
      * @param spieler the scouted player to include in the combo
      */
     public PlayerItem(ScoutEintrag spieler) {
-        tsi = spieler.getMarktwert();
+        tsi = spieler.getTSI();
         form = spieler.getForm();
         id = 0;
         name = spieler.getName();
