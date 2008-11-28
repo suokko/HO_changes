@@ -69,10 +69,10 @@ public final class HOMainFrame extends JFrame
 	private static final long serialVersionUID = -6333275250973872365L;
 
 	/** TODO Missing Parameter Documentation */
-	public static final double VERSION = 1.421d;
+	public static final double VERSION = 1.422d;
 
 	/** TODO Missing Parameter Documentation */
-	private static final boolean DEVELOPMENT = false;
+	private static final boolean DEVELOPMENT = true;
 
 	/** TODO Missing Parameter Documentation */
 	public static final int SPRACHVERSION = 2;
