@@ -768,24 +768,26 @@ public final class Spieler implements plugins.ISpieler {
     /**
      * get the experience bonus
      *
-     * @param experience effective experience to calculate the bonus
+     * @param experience effective experience to calculate the bonus, use the xp from the player if set to 0
      *
      * @return experience bonus in percent
      */
     public float getErfahrungsBonus(float experience) {
-        float bonus = 0;
+        if (experience <= 0)
+        	// take xp from player (use medium xp sub, i.e. add 0.5)
+        	experience = m_iErfahrung + 0.5f;
 
-        /*Modified by Catrone in order to avoid the non-existant value resulting in a player's negative evaluation*/
-		if ( m_iErfahrung == 0 )
-		{
-			return bonus; /*If experience is non-existent, the bonus is zero!*/
-		}
+        // normalize xp [1,20] -> [0,19]
+        experience -= 1;
+        
+		if ( experience <= 0 )
+			return 0; /*If experience is non-existent, the bonus is zero!*/
 
 		// Use hardcorded values here, 
 		// make sure to apply the same values as in prediction/*/playerStrength.dat
 		// 
 		// We return the experience bonus in percent (0% = no bonus, 100% = doubled player strength...) 
-		bonus = (float) (0.0716 * Math.sqrt(Math.max(experience-0.5, 0)));
+		float bonus = (float) (0.0716 * Math.sqrt(experience));
 
         return bonus;
     }

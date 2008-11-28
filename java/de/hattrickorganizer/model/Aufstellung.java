@@ -941,6 +941,7 @@ public  class Aufstellung implements plugins.ILineUp {
                 }
 
                 //Erfahrung
+                // FIXME
                 exp += player.getErfahrungsBonus(player.getVerteidigung());
 
                 //Kondition
