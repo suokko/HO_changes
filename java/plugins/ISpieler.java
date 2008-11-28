@@ -443,13 +443,13 @@ public interface ISpieler {
     public int getErfahrung();
 
     /**
-     * liefert den ErfaHRUNGSbonus
+     * get the experience bonus
      *
-     * @param es Effektive Bezugs Stärke
+     * @param experience effective experience to calculate the bonus, use the xp from the player if set to 0
      *
-     * @return 0 - 2.6 float
+     * @return experience bonus in percent
      */
-    public float getErfahrungsBonus(float es);
+    public float getErfahrungsBonus(float experience);
 
     /**
      * Setter for property m_iFluegelspiel.
