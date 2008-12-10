@@ -59,13 +59,13 @@ public class MatchPlayerRetriever {
         final Date date = matchDetails.getSpielDatum();
         Timestamp time = new Timestamp(date.getTime());
 		int hrfID = 0;
-		
+
 		// Try to get HRF after match date
         String query = "SELECT HRF_ID FROM HRF WHERE Datum>'" + time.toString() + "' ORDER BY Datum asc";
         ResultSet rs = model.getAdapter().executeQuery(query);
 
 		try {
-			if (rs != null) { 
+			if (rs != null) {
 				if (rs.first()) {
 					hrfID = rs.getInt("HRF_ID");
 				}
@@ -276,10 +276,10 @@ public class MatchPlayerRetriever {
     private MatchPosition getSentOffPLayer(int matchId, MatchPosition[] lineup, int position,
                                            ITeamLineup startingLineup, Map playerIds) {
         final MatchPosition matchPosition = lineup[position];
-        
+
         if (matchPosition == null) return null;
 
-        // Get list of playerID from comment		        
+        // Get list of playerID from comment
         final String query = "select SPIELERID from MATCHHIGHLIGHTS WHERE MATCHID = " + matchId
                              + " and TEAMID = " + model.getBasics().getTeamId()
                              + " AND TYP=5 AND SUBTYP > 11";
@@ -442,31 +442,31 @@ public class MatchPlayerRetriever {
 
                 // Cycle thru all the players that ended the match / + red cards already included
                 for (int index = 0; index < 11; index++) {
-                    // if player played in the same area as the injured player
-                    if (area == getAreaOfPosition(matchPosition[index].getPosition())) {
-                        boolean isFound = false;
-                        final Iterator it = startingLineup.iterator();
+                	// if player played in the same area as the injured player
+                	if (matchPosition[index] != null && area == getAreaOfPosition(matchPosition[index].getPosition())) {
+                		boolean isFound = false;
+                		final Iterator it = startingLineup.iterator();
 
-                        // search for him in the starting lineup
-                        while (it.hasNext()) {
-                            final String tmpId = (String) it.next();
+                		// search for him in the starting lineup
+                		while (it.hasNext()) {
+                			final String tmpId = (String) it.next();
 
-                            if (tmpId.equalsIgnoreCase("" + matchPosition[index].getPlayerID())) {
-                                isFound = true;
-                            }
-                        }
+                			if (tmpId.equalsIgnoreCase("" + matchPosition[index].getPlayerID())) {
+                				isFound = true;
+                			}
+                		}
 
-                        // if not found he is the one who replaced the injured
-                        if (!isFound) {
-                            // Set the injured player position to the same as the one who replaced him
-                            matchPosition[i].setPosition(matchPosition[index].getPosition());
+                		// if not found he is the one who replaced the injured
+                		if (!isFound) {
+                			// Set the injured player position to the same as the one who replaced him
+                			matchPosition[i].setPosition(matchPosition[index].getPosition());
 
-                            // update players and stop searching
-                            players.add(matchPosition[i]);
+                			// update players and stop searching
+                			players.add(matchPosition[i]);
 
-                            break;
-                        }
-                    }
+                			break;
+                		}
+                	}
                 }
             }
         }
