@@ -9,6 +9,8 @@ Changelist HO! 1.422
 - stars are now aggregated in groups of 5 stars instead of using single stars
 - updated rating prediction
 - updated epv
+- fix player coloring in match reports after HT redesign
+- prevent NPE in match details parser (caused by injury)
 
 
 Changelist HO! 1.421
