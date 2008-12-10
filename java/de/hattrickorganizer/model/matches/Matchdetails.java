@@ -1412,14 +1412,14 @@ public class Matchdetails implements plugins.IMatchDetails {
                             boolean replaceend = false;
 
                             if (eventtext.indexOf(String.valueOf(subjectplayerid)) >= 0) {
-                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/Players/PlayerDetails\\.aspx\\?PlayerID="
-                                                                 + subjectplayerid + ".*?>",
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?playerId="
+                                                                         + subjectplayerid + ".*?>",
                                                                  "<FONT COLOR=" + subplayerColor + "#><B>");
                                 replaceend = true;
                             }
 
                             if (eventtext.indexOf(String.valueOf(objectplayerid)) >= 0) {
-                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/Players/PlayerDetails\\.aspx\\?PlayerID="
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?playerId="
                                                                  + objectplayerid + ".*?>",
                                                                  "<FONT COLOR=" + objplayerColor + "#><B>");
                                 replaceend = true;
@@ -1528,14 +1528,14 @@ public class Matchdetails implements plugins.IMatchDetails {
                             boolean replaceend = false;
 
                             if (eventtext.indexOf(String.valueOf(tmp.getSpielerID())) >= 0) {
-                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/Players/PlayerDetails\\.aspx\\?PlayerID="
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?PlayerID="
                                                                  + tmp.getSpielerID() + ".*?>",
                                                                  "<FONT COLOR=" + subplayerColor + "#><B>");
                                 replaceend = true;
                             }
 
                             if (eventtext.indexOf(String.valueOf(tmp.getGehilfeID())) >= 0) {
-                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Common/Players/PlayerDetails\\.aspx\\?PlayerID="
+                                eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?playerId="
                                                                  + tmp.getGehilfeID() + ".*?>",
                                                                  "<FONT COLOR=" + objplayerColor + "#><B>");
                                 replaceend = true;
@@ -1607,7 +1607,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
         return myPlayers;
     }
-    
+
     /**
      * Set the region ID of the match's arena
      * @param regionId
@@ -1615,7 +1615,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     public void setRegionId (int regionId) {
     	this.m_iRegionId = regionId;
     }
-    
+
     /**
      * Get the region ID of this match's arena
      * @return
