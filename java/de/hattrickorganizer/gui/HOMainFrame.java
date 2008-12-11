@@ -71,25 +71,25 @@ public final class HOMainFrame extends JFrame
 	/**
 	 * Release Notes:
 	 * ==============
-	 * The first SVN commit AFTER a release should include 
+	 * The first SVN commit AFTER a release should include
 	 *      an increased VERSION number with DEVELOPMENT set to true
 	 * The last SVN commit BEFORE a release should set DEVELOPMENT to false
-	 *      and set WARN_DATE to 12 (?) months after the release date 
+	 *      and set WARN_DATE to 12 (?) months after the release date
 	 */
-	
+
 	/** HO Version */
 	public static final double VERSION = 1.422d;
 
 	/** Is this a development version? */
-	private static final boolean DEVELOPMENT = true;
+	private static final boolean DEVELOPMENT = false;
 
-	/** 
-	 * After that date, the user gets a nag screen if he starts his old HO version, 
-	 * set to empty string for no warning 
-	 * (DEVELOPMENT versions do not show the nag screen) 
+	/**
+	 * After that date, the user gets a nag screen if he starts his old HO version,
+	 * set to empty string for no warning
+	 * (DEVELOPMENT versions do not show the nag screen)
 	 */
-	private static final String WARN_DATE = "2008-12-31 00:00:00.0";
-	
+	private static final String WARN_DATE = "2009-12-11 00:00:00.0";
+
 	/** TODO Missing Parameter Documentation */
 	public static final int SPRACHVERSION = 2;
 	private static HOMainFrame m_clHOMainFrame;
@@ -1818,9 +1818,9 @@ public final class HOMainFrame extends JFrame
 					"Your HO version is very old!\nPlease download a new version at "+ MyConnector.getHOSite(),
 					"Update strongly recommended",
 					javax.swing.JOptionPane.WARNING_MESSAGE);
-			}			
+			}
 		}
-		
+
 		// Check if this HO version is (hard) expired
 		if (LIMITED) {
 			final java.sql.Timestamp datum = new java.sql.Timestamp(System.currentTimeMillis());
