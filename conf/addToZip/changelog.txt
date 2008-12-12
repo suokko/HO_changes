@@ -1,5 +1,10 @@
 Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.423
+====================
+- to be announced -
+
+
 Changelist HO! 1.422
 ====================
 - added Windows installer version (thx Flattermann and all translators!)
