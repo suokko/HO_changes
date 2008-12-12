@@ -20,9 +20,11 @@
 		|	|	+-> conf					Supplementary files
 		|	|	|	+-> addToJar			These files will be added to ho.jar
 		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
-		|   |   |   +-> nsis				NSIS directory for Win32 installer creation
-		|	|	|		+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation
+		|	|	|	+-> nsis				NSIS directory for Win32 installer creation
+		|	|	|		+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation [please see note 2, below]
 		|	|	|		+-> localLang		Local language files for NSIS
+		|	|	+-> contrib
+		|	|		+-> libs				This is the place for supplemental libs like ant-contrib-*.jar
 		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
 		|	|	
 		|	+-> MANIFEST.MF					The manifest file for ho.jar
@@ -44,6 +46,15 @@
 	    	
 	Note 1: (How to create DMG-Builds with Linux)
 	- still missing, try to figure it out yourself ;-) or send a mail to flattermannHO@gmail.com -
+	
+	Note 2: NSIS Win32-Installer
+	- To build the Win32 Installer, you need the NSIS *Unicode* from http://www.scratchpaper.com/,
+		because the NSIS main trunk does not support unicode, yet.
+		Unfortunately, the unicode source only builds under Windows, therefore a linux build does not exist.
+		For Linux, please install Wine and run the makensis.exe using wine.
+	- You need the additional NSIS plugin "AccessControl" 
+		Download it from http://nsis.sourceforge.net/AccessControl_plug-in and unpack the AccessControl.dll
+		into your NSIS plugin directory
 -->
 
 <project name="HO1-AntBuild" default="copy2build" basedir=".">
@@ -63,13 +74,29 @@
 	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images"/>
 	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount"/>
 
+	<!-- 
+		NSIS Properties:
+		We use the unicode version of NSIS. Unfortunately, it does not compile for linux, 
+		therefore we need to emulate a windows environment using wine for linux
+		
+		windows: nsis-command = "c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
+		linux:   nsis-command = "wine c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
+	-->
+	<property name="nsis-command" value="wine c:/Programme/NSIS/Unicode/makensis.exe"/>
 	<property name="nsis-directory" value="svn/conf/nsis"/>
 	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi"/>
-	<property name="nsis-localLangPath" value="${nsis-directory}/localLang"/>
+	<property name="nsis-confPath" value="${nsis-directory}"/>
 	<property name="nsis-export-dir" value="export-w32installer"/>
 	<property name="nsis-JRE-DistPath" value="java.dist"/>
-	<property name="nsis-JRE-Version" value="6u7"/>
-	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p.exe"/>
+	<property name="nsis-JRE-Version" value="6u11"/>
+	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p-s.exe"/>
+
+	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	  <classpath>
+	    <pathelement location="svn/contrib/libs/ant-contrib-1.0b3.jar"/>
+	  </classpath>
+	</taskdef>
 
 	<!-- ================================= 
           target: makeAll              
@@ -85,11 +112,13 @@
           target: init              
          ================================= -->
     <target name="init" description="create tmp dirs and get HO Version">
-    	<mkdir dir="${tmp-target}"/>
+		<mkdir dir="${tmp-target}"/>
+		<mkdir dir="${export-dmg-targetdir}"/>
+		<mkdir dir="${build-dir}"/>
        	<loadfile property="hoversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
     		<filterchain>
     			<linecontains>
-    				<contains value=" VERSION "/>
+    				<contains value=" VERSION ="/>
     			</linecontains>
     			<replaceregex pattern=".*=\D*" replace=""/>
     			<replaceregex pattern="\D*$" replace=""/>
@@ -100,7 +129,7 @@
        	<loadfile property="modversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
     		<filterchain>
     			<linecontains>
-    				<contains value=" MODVERSION "/>
+    				<contains value=" MODVERSION ="/>
     			</linecontains>
     			<replaceregex pattern='.*=[^"]*"' replace=""/>
     			<replaceregex pattern='"[^"]*$' replace=""/>
@@ -113,7 +142,7 @@
        	<loadfile property="dev" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
     		<filterchain>
     			<linecontains>
-    				<contains value=" DEVELOPMENT "/>
+    				<contains value=" DEVELOPMENT ="/>
     			</linecontains>
     			<replaceregex pattern='.*= ' replace=""/>
     			<replaceregex pattern=';\w*$' replace=""/>
@@ -175,9 +204,11 @@
     		<fileset file="${tmp-target}/HOLauncher.class"/>
     	</copy>
     	<!-- Add DEBUG option to ho.jar -->
+<!--
 		<replaceregexp match="(-jar.*ho.jar.*$)" replace="\1 ${debug}" flags="i" byline="yes">
 			<fileset dir="${build-dir}" includes="HO.sh HO.bat"/>
 		</replaceregexp>
+-->
     	<antcall target="copyPlugins"/>
     </target>
 	
@@ -186,13 +217,37 @@
          ================================= -->
     <target name="copyPlugins" description="Copy hoplugins to builddir">
     	<antcall target="copy-hoplugins-common"/>
-    	<antcall target="copy-hoplugins-evilcard"/>
-    	<antcall target="copy-hoplugins-experienceviewer"/>
     	<antcall target="copy-hoplugins-feedback"/> 
 		<antcall target="copy-hoplugins-teamanalyzer"/>
-		<antcall target="copy-hoplugins-specialevents"/>
 		<antcall target="copy-hoplugins-trainingexperience"/>
 		<antcall target="copy-hoplugins-transfers"/>
+    	
+    	<!-- Add additional plugins if we build a DEV or PRIVATE build -->
+    	<if>
+   			<and>
+   				<equals arg1="${dev}" arg2=""/>
+   				<equals arg1="${private}" arg2=""/>
+   			</and>
+    		<then>
+    			<echo>This is a release build, using default plugins only</echo>
+    		</then>
+    		<else>
+    			<echo>This is a private or dev build, adding more plugins</echo>
+    			<antcall target="copyPlugins-contrib"/>
+    		</else>
+    	</if>
+	</target>
+    	
+	<!-- ================================= 
+          target: copyPlugins-contrib              
+         ================================= -->
+    <target name="copyPlugins-contrib" description="Copy more hoplugins to builddir (not included in standard release)">    
+    	<antcall target="copy-hoplugins-evilcard"/>
+    	<antcall target="copy-hoplugins-experienceviewer"/>
+		<antcall target="copy-hoplugins-specialevents"/>
+    	<!-- Skip these plugins:
+		<antcall target="copy-hoplugins-tsforecast"/>
+		-->
 	</target>
 
 	<!-- ================================= 
@@ -268,6 +323,15 @@
 	</target>
 
 	<!-- ================================= 
+          target: copy-hoplugins-tsforecast              
+         ================================= -->
+	<target name="copy-hoplugins-tsforecast">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-TSForecast/bin/hoplugins"/>
+		</copy>
+	</target>
+
+	<!-- ================================= 
           target: clean              
          ================================= -->
 	<target name="clean" description="Remove temp dir">
@@ -277,9 +341,6 @@
 			<fileset dir="${export-dmg-targetdir}"/>
 			<fileset dir="${build-dir}"/>
 		</delete>
-		<mkdir dir="${tmp-target}"/>
-		<mkdir dir="${export-dmg-targetdir}"/>
-		<mkdir dir="${build-dir}"/>
 	</target>
 	
 	<!-- ================================= 
@@ -301,7 +362,7 @@
 
     	<mkdir dir="${export-dmg-targetdir}"/>
 
-    	<copy todir="${export-dmg-targetdir}" preservelastmodified="yes">
+    	<copy todir="${export-dmg-targetdir}" preservelastmodified= 	"yes">
     		<fileset dir="${export-dmg-sourcedir}"/>
     	</copy>
     	<copy todir="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java" preservelastmodified="yes">
@@ -353,18 +414,26 @@
 			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer_(with_JRE-${nsis-JRE-Version}).exe"/>
 		
 		<property name="nsis-default-args" 
-			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}' -DLOCALLANGPATH='${nsis-localLangPath}'"/>
+			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${nsis-confPath}'"/>
 		
 		<!-- Create Installer for HO only -->
 		<echo>Creating win32 installer at ${nsis-installerName} using NSIS...</echo>
-    	<exec executable="makensis" resolveexecutable="true">
+    	<exec command="${nsis-command}">
     		<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}"/>
     	</exec>
 
 		<!-- Create Installer for HO bundled with JRE -->
 		<echo>Creating win32 installer at ${nsis-installerNameWithJRE} with JRE ${nsis-JRE-Version} using NSIS...</echo>
-    	<exec executable="makensis" resolveexecutable="true">
+    	<exec command="${nsis-command}">
 			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-scriptName}"/>
        	</exec>
+		
+		<!-- Create ZIP files for esnips.com (executables are not allowed) -->
+		<zip destfile="${nsis-installerName}.zip">
+			<fileset file="${nsis-installerName}"/>
+		</zip>
+		<zip destfile="${nsis-installerNameWithJRE}.zip">
+			<fileset file="${nsis-installerNameWithJRE}"/>
+		</zip>
 	</target>
 </project> 
