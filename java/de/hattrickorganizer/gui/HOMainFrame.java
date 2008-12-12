@@ -73,15 +73,17 @@ public final class HOMainFrame extends JFrame
 	 * ==============
 	 * The first SVN commit AFTER a release should include
 	 *      an increased VERSION number with DEVELOPMENT set to true
+	 *      an updated VERSION number in conf/addToZip/version.txt
+	 *      new headers in conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt
 	 * The last SVN commit BEFORE a release should set DEVELOPMENT to false
 	 *      and set WARN_DATE to 12 (?) months after the release date
 	 */
 
 	/** HO Version */
-	public static final double VERSION = 1.422d;
+	public static final double VERSION = 1.423d;
 
 	/** Is this a development version? */
-	private static final boolean DEVELOPMENT = false;
+	private static final boolean DEVELOPMENT = true;
 
 	/**
 	 * After that date, the user gets a nag screen if he starts his old HO version,
