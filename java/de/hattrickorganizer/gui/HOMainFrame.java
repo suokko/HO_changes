@@ -5,6 +5,7 @@ import gui.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -29,8 +30,10 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.FontUIResource;
 
 import plugins.ISpieler;
+import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
 import de.hattrickorganizer.gui.exporter.XMLExporter;
@@ -90,7 +93,7 @@ public final class HOMainFrame extends JFrame
 	 * set to empty string for no warning
 	 * (DEVELOPMENT versions do not show the nag screen)
 	 */
-	private static final String WARN_DATE = "2009-12-11 00:00:00.0";
+	private static final String WARN_DATE = "2010-01-04 00:00:00.0";
 
 	/** TODO Missing Parameter Documentation */
 	public static final int SPRACHVERSION = 2;
@@ -1873,6 +1876,16 @@ public final class HOMainFrame extends JFrame
 		//Check -> Sprachdatei in Ordnung?
 		interuptionsWindow.setInfoText("Check Languagefiles");
 		checkSprachFile(UserParameter.instance().sprachDatei);
+
+		//font switch, because the default font doesn't support Georgian characters
+		try {
+			if ("Georgian".equals(UserParameter.instance().sprachDatei)) {
+				FontUIResource fr = new FontUIResource("Sylfaen", Font.PLAIN, 12);
+				HO.setUIFont(fr);
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(HOMainFrame.class, "Error switching fonts: " + e);
+		}
 
 		final ClassLoader loader =
 			new de.hattrickorganizer.gui.templates.ImagePanel().getClass().getClassLoader();
