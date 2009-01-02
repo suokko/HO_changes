@@ -150,4 +150,9 @@
     <lang_id>30</lang_id>
     <version>3.4</version>
   </property>
+  <property>
+    <datei>Georgian.properties</datei>
+    <lang_id>31</lang_id>
+    <version>3.5</version>
+  </property>
 </languages>
