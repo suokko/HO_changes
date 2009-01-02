@@ -844,7 +844,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public double getLatestVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getResourceSite()+"/version.htm", false);
+				getWebPage(MyConnector.getPluginSite()+"/version.htm", false);
 			double d = de.hattrickorganizer.gui.HOMainFrame.VERSION;
 
 			try {
