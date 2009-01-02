@@ -74,7 +74,7 @@ public class HelperWrapper implements plugins.IHelper {
 
 	/**
 	 * Returns a match helper instance
-	 * @return	an instance of the match helper class 
+	 * @return	an instance of the match helper class
 	 */
 	public IMatchHelper getMatchHelper() {
 		return MatchHelper.instance();
@@ -287,7 +287,7 @@ public class HelperWrapper implements plugins.IHelper {
             }
         }
 
-        // TrainingDate is one week behind		
+        // TrainingDate is one week behind
         if (diff > (24 * 7 * 3600 * 1000)) {
             final int day = trDate.get(Calendar.DAY_OF_WEEK);
 
@@ -311,6 +311,7 @@ public class HelperWrapper implements plugins.IHelper {
 
         final Calendar c = Calendar.getInstance(Locale.UK);
         c.setFirstDayOfWeek(Calendar.SUNDAY);
+        c.setMinimalDaysInFirstWeek(1);
         c.setTime(trDate.getTime());
         return c;
     }
@@ -864,13 +865,13 @@ public class HelperWrapper implements plugins.IHelper {
 				public void keyReleased(KeyEvent event) {
 					event.consume();
 				}
-				
+
 			});
 			urlField.setSelectionColor(Color.GRAY);
 			urlField.setBackground(UIManager.getColor("Label.background"));
 			urlField.setBorder(null);
 			panel.add(urlField);
-			
+
 			JOptionPane.showMessageDialog(
 					HOMainFrame.instance().getOwner(),
 					panel,
@@ -918,7 +919,7 @@ public class HelperWrapper implements plugins.IHelper {
     {
     	return new de.hattrickorganizer.gui.utils.MP3PlayerWrapper();
     }
-    
+
     /**
      * TODO Missing Method Documentation
      *
@@ -971,7 +972,7 @@ public class HelperWrapper implements plugins.IHelper {
      */
     public IHTCalendar createEconomyCalendar(Date date) {
     	return HTCalendarFactory.createEconomyCalendar(HOMiniModel.instance(), date);
-    	
+
     }
 
     /**
@@ -984,7 +985,7 @@ public class HelperWrapper implements plugins.IHelper {
      */
     public IHTCalendar createEconomyCalendar(Timestamp timestamp) {
     	return createEconomyCalendar(new Date(timestamp.getTime()));
-    	
+
     }
 /**
      * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
@@ -997,7 +998,7 @@ public class HelperWrapper implements plugins.IHelper {
      */
     public IHTCalendar createEconomyCalendar(IHOMiniModel model, Date date) {
     	return HTCalendarFactory.createEconomyCalendar(model, date);
-    	
+
     }
 
     /**
@@ -1082,17 +1083,17 @@ public class HelperWrapper implements plugins.IHelper {
 
 	/**
 	 * Get HT-Season of a given date (using the economy calendar)
-	 * 
+	 *
 	 * @param date					the date to convert
 	 * @return	HT-Season
 	 */
 	public int getHTSeason (Date date) {
 		return getHTSeason(date, false);
 	}
-	
+
 	/**
 	 * Get HT-Season of a given date
-	 * 
+	 *
 	 * @param date					the date to convert
 	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
 	 * @return	HT-Season
@@ -1108,20 +1109,20 @@ public class HelperWrapper implements plugins.IHelper {
 		else
 			return -1;
 	}
-	
+
 	/**
 	 * Get HT-Week of a given date (using the economy calendar)
-	 * 
+	 *
 	 * @param date					the date to convert
 	 * @return	HT-Week
 	 */
 	public int getHTWeek (Date date) {
 		return getHTWeek(date, false);
 	}
-	
+
 	/**
 	 * Get HT-Week of a given date
-	 * 
+	 *
 	 * @param date					the date to convert
 	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
 	 * @return	HT-Week
@@ -1137,20 +1138,20 @@ public class HelperWrapper implements plugins.IHelper {
 		else
 			return -1;
 	}
-	
+
 	/**
 	 * Get HT-Season of a given date (using the economy calendar)
-	 * 
+	 *
 	 * @param timestamp				the date to convert
 	 * @return	HT-Season
 	 */
 	public int getHTSeason (Timestamp timestamp) {
 		return getHTSeason(new Date(timestamp.getTime()));
 	}
-	
+
 	/**
 	 * Get HT-Season of a given date
-	 * 
+	 *
 	 * @param timestamp				the date to convert
 	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
 	 * @return	HT-Season
@@ -1158,20 +1159,20 @@ public class HelperWrapper implements plugins.IHelper {
 	public int getHTSeason (Timestamp timestamp, boolean useTrainingCalendar) {
 		return getHTSeason(new Date(timestamp.getTime()), useTrainingCalendar);
 	}
-	
+
 	/**
 	 * Get HT-Week of a given date (using the economy calendar)
-	 * 
+	 *
 	 * @param timestamp				the date to convert
 	 * @return	HT-Week
 	 */
 	public int getHTWeek (Timestamp timestamp) {
 		return getHTWeek(new Date(timestamp.getTime()));
 	}
-	
+
 	/**
 	 * Get HT-Week of a given date
-	 * 
+	 *
 	 * @param timestamp				the date to convert
 	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
 	 * @return	HT-Week

@@ -47,7 +47,7 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
         this.intensity = intensity;
         this.staminaTrainingPart = staminaTrainingPart;
     }
-    
+
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -206,37 +206,38 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
 
 	/**
 	 * calculate the training date for this week/year
-	 * 
-	 * @return	training date  
+	 *
+	 * @return	training date
 	 */
 	public Calendar getTrainingDate () {
 		// Kalenderwerte setzen
 		// set calendar values
 		final Calendar cal = Calendar.getInstance(Locale.UK);
-		
-		/** 
-		 * Start of Week is Sunday, because all Trainings in all Countries 
+
+		/**
+		 * Start of Week is Sunday, because all Trainings in all Countries
 		 * are before Sunday (actually the are on Thursday and Friday)
 		 */
 		cal.setFirstDayOfWeek(Calendar.SUNDAY);
+		cal.setMinimalDaysInFirstWeek(1);
 		/**
 		 * Set year and week from instance fields
 		 */
 		cal.set(Calendar.YEAR, getYear());
 		cal.set(Calendar.WEEK_OF_YEAR, getWeek());
 		/**
-		 * Set day of the week to saturday, so that the 
+		 * Set day of the week to saturday, so that the
 		 * calculated training date is in this week
 		 * (remember that a week starts at sunday as stated above)
 		 */
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 
-		/** 
+		/**
 		 * get last training date BEFORE this date
 		 * Because our calendar date is a saturday and
-		 * the trainings are on thursday and friday, 
-		 * the training date is is in the same week  
-		 */ 
+		 * the trainings are on thursday and friday,
+		 * the training date is is in the same week
+		 */
         Calendar trainingDate = HelperWrapper.instance().getLastTrainingDate(cal.getTime(),
         				HOMiniModel.instance().getXtraDaten().getTrainingDate());
 
