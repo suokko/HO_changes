@@ -2,4 +2,9 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 
 Changelist HO! 1.423
 ====================
-- to be announced -
+- fix problem with training subskill calculation on the first update 2009
+
+- Translation updates:
+	- added Georgian as new HO language (thx Temur for his very quick translation)
+	- updated Serbian translation (thx chokky - again!)
+	- updated Swedish (thx mikaelmd)
