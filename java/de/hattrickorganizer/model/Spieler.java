@@ -34,7 +34,7 @@ public final class Spieler implements plugins.ISpieler {
 
 	/** Cache for star ratings (Hashtable<String, Float>) */
     private static Hashtable starRatingCache = new Hashtable();
-  
+
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Spielberechtigt */
@@ -696,11 +696,11 @@ public final class Spieler implements plugins.ISpieler {
                                 int intensitaet, int staminaTrainingPart) {
         switch (trTyp) {
             case TORWART:
-                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter, 
+                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter,
                                     twTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
 
             case ALLGEMEIN:
-                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter, 
+                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter,
                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getForm());
 
             case KONDITION:
@@ -723,16 +723,16 @@ public final class Spieler implements plugins.ISpieler {
                                      coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
             case PASSPIEL:
-				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter, 
+				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter,
 								coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
-            
+
             case TA_STEILPAESSE:
-                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter, 
+                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter,
                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case STANDARDS:
                 return calcTraining(gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,
-                					coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());           
+                					coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());
 
             case TA_ABWEHRVERHALTEN:
                 return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG * 2, m_iAlter,
@@ -741,7 +741,7 @@ public final class Spieler implements plugins.ISpieler {
 			case TA_EXTERNALATTACK:
 				return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL*100d/60d, m_iAlter,
 								 coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
-								         
+
             default:
                 return -1;
         }
@@ -779,14 +779,14 @@ public final class Spieler implements plugins.ISpieler {
 
         // normalize xp [1,20] -> [0,19]
         experience -= 1;
-        
+
 		if ( experience <= 0 )
 			return 0; /*If experience is non-existent, the bonus is zero!*/
 
-		// Use hardcorded values here, 
+		// Use hardcorded values here,
 		// make sure to apply the same values as in prediction/*/playerStrength.dat
-		// 
-		// We return the experience bonus in percent (0% = no bonus, 100% = doubled player strength...) 
+		//
+		// We return the experience bonus in percent (0% = no bonus, 100% = doubled player strength...)
 		float bonus = (float) (0.0716 * Math.sqrt(experience));
 
         return bonus;
@@ -1124,14 +1124,14 @@ public final class Spieler implements plugins.ISpieler {
 
     /**
      * Returns the estimated value of this player (EPV)
-     * 
+     *
      * @return EPV
      */
     public double getEPV() {
 		IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(this);
 		return HOVerwaltung.instance().getModel().getEPV().getPrice(data);
     }
-    
+
     /**
      * Setter for property m_sName.
      *
@@ -2023,7 +2023,7 @@ public final class Spieler implements plugins.ISpieler {
 
             case SKILL_LEADERSHIP:
                 return m_iFuehrung;
-            
+
             default:
                 return 0;
         }
@@ -2337,13 +2337,8 @@ public final class Spieler implements plugins.ISpieler {
 //        		+", tr="+trainerlevel+", ti="+intensitaet+", ss="+staminaTrainingPart
 //        		+", hrf="+hrfID);
     	final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
-        final plugins.ITrainingPerPlayer trainingPerPlayer = de.hattrickorganizer.logik.TrainingsManager.instance()
-                                                                                                        .calculateWeeklyTrainingForPlayer(this,
-                                                                                                                                          trainingWeek);
-
-        if (old.getSpielerID() == 40591141) {
-            HOLogger.instance().log(getClass(),trainingPerPlayer + " " + hrfID + " " + trainingWeek);
-        }
+        final plugins.ITrainingPerPlayer trainingPerPlayer =
+        	de.hattrickorganizer.logik.TrainingsManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
 
         if (!check4SkillUp(SKILL_TORWART, old)) {
             m_dSubTorwart = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TORWART,
@@ -2496,10 +2491,10 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Calculate the player strength on a specific lineup position 
+     * Calculate the player strength on a specific lineup position
      * with or without form
      *
-     * @param fo 		FactorObject with the skill weights for this position 
+     * @param fo 		FactorObject with the skill weights for this position
      * @param useForm	consider form?
      *
      * @return 			the player strength on this position
@@ -2508,7 +2503,7 @@ public final class Spieler implements plugins.ISpieler {
         if ((fo == null) || (fo.getSum() == 0.0f)) {
             return -1.0f;
         }
-        
+
         // The stars formulas are changed by the user -> clear the cache
         if (!starRatingCache.containsKey("lastChange") || ((Date)starRatingCache.get("lastChange")).before(FormulaFactors.getLastChange())) {
 //    		System.out.println ("Clearing stars cache");
@@ -2517,7 +2512,7 @@ public final class Spieler implements plugins.ISpieler {
         }
         /**
          * Create a key for the Hashtable cache
-         * We cache every star rating to speed up calculation 
+         * We cache every star rating to speed up calculation
          * (calling RPM.calcPlayerStrength() is quite expensive and
          * this method is used very often)
          */
@@ -2534,35 +2529,35 @@ public final class Spieler implements plugins.ISpieler {
         					+ getErfahrung() + "|"
         					// We need to add the specialty, because of Technical DefFW
         					+ getSpezialitaet();
-        
+
         // Check if the key already exists in cache
         if (starRatingCache.containsKey(key)) {
 //        	System.out.println ("Using star rating from cache, key="+key+", tablesize="+starRatingCache.size());
         	return ((Float)starRatingCache.get(key)).floatValue();
         }
-    	final boolean normalized = false; 
+    	final boolean normalized = false;
 
-        float gkValue = fo.getTorwartScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORWART, useForm); 
+        float gkValue = fo.getTorwartScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORWART, useForm);
 
-        float pmValue = fo.getSpielaufbauScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_SPIELAUFBAU, useForm); 
+        float pmValue = fo.getSpielaufbauScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_SPIELAUFBAU, useForm);
 
-        float deValue = fo.getVerteidigungScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_VERTEIDIGUNG, useForm); 
+        float deValue = fo.getVerteidigungScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_VERTEIDIGUNG, useForm);
 
-        float wiValue = fo.getFluegelspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_FLUEGEL, useForm); 
+        float wiValue = fo.getFluegelspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_FLUEGEL, useForm);
 
-        float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm); 
+        float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm);
 
         // Fix for new Defensive Attacker position
 		if (fo.getPosition()==ISpielerPosition.STURM_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
 			psValue *= 1.5f;
 		}
 
-        float spValue = fo.getStandardsScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_STANDARDS, useForm); 
+        float spValue = fo.getStandardsScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_STANDARDS, useForm);
 
-        float scValue = fo.getTorschussScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORSCHUSS, useForm); 
+        float scValue = fo.getTorschussScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORSCHUSS, useForm);
 
         float val = gkValue + pmValue + deValue + wiValue + psValue + spValue + scValue;
-        
+
         // Put to cache
         starRatingCache.put(key, new Float(val));
 //    	System.out.println ("Star rating put to cache, key="+key+", val="+val+", tablesize="+starRatingCache.size());
@@ -2570,7 +2565,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Calculate the player strength on a specific lineup position 
+     * Calculate the player strength on a specific lineup position
      * with or without form
      *
      * @param pos		position from ISpielerPosition (TORWART.. POS_ZUS_INNENV)
@@ -2671,10 +2666,10 @@ public final class Spieler implements plugins.ISpieler {
 
     /**
      * internal calculation of training duration
-     * 
-     * @param baseLength base length 
-     * 		(i.e. the normalized length for a skillup for a 17Y trainee, 
-     * 		solid coach, 10 co, 100% TI, 0% Stamina) 
+     *
+     * @param baseLength base length
+     * 		(i.e. the normalized length for a skillup for a 17Y trainee,
+     * 		solid coach, 10 co, 100% TI, 0% Stamina)
      * @param age player's age
      * @param trTyp training type
      * @param cotrainer number of assistants
