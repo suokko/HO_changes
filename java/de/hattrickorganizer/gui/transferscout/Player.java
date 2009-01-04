@@ -477,6 +477,7 @@ public class Player {
         buffer.append(", playerId = " + playerId);
         buffer.append(", speciality = " + speciality);
         buffer.append(", TSI = " + tsi);
+        buffer.append(", Age = " + age +"."+ageDays);
         buffer.append(", expiryDate = " + expiryDate + " " + expiryTime);
         buffer.append(", experience = " + experience);
         buffer.append(", form = " + form);

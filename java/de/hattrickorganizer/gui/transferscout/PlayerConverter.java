@@ -148,7 +148,6 @@ public class PlayerConverter {
         error = 0;
 
         final Player player = new Player();
-		String teamname = "";
 
         // Init some helper variables
         String mytext = text;
@@ -178,230 +177,46 @@ public class PlayerConverter {
             // Delete empty lines from input
             String txt = text;
 
+            boolean startFound = false;
             while ((p = txt.indexOf(feed)) >= 0) {
                 tmp = txt.substring(0, p).trim();
 
-                if (!tmp.equals("")) {
+                if (tmp.indexOf("»") > 0) {
+                	startFound = true;
+                }
+
+                if (!tmp.equals("") && startFound) {
                     lines.add(tmp);
                 }
 
                 txt = txt.substring(p + 1);
             }
 
-            // Extract age-line and name-line
-            p = 0;
+            //debugPrintLines(lines);
 
-            while (p < lines.size()) {
-                // Search for line containing a skill value and a number
-                tmp = lines.get(p).toString();
-
-                boolean broken = false;
-                int k = 0;
-
-                while (k < tmp.length()) {
-                    if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
-                        broken = true;
-                        break;
-                    }
-
-                    k++;
-                }
-
-                // We found a number. Check for a skill now
-                if (broken) {
-                    broken = false;
-                    k = skills.size() - 1;
-
-                    while (k >= 0) {
-                        if (tmp.indexOf(skills.get(k).toString()) >= 0) {
-                            p--;
-                            tmp = lines.get(p).toString();
-
-                            while (p > 0) {
-                                p--;
-                                lines.remove(p);
-                            }
-
-                            broken = true;
-                            break;
-                        }
-
-                        k--;
-                    }
-
-                    if (broken) {
-                        if (tmp.indexOf("(")>-1 && tmp.indexOf(")")>-1) {
-                            break;
-                        } else {
-                            p++;
-                        }
-                    }
-                }
-
-                p++;
-            }
-
-            // Extract TSI-line
-            p = 2;
-
-            while (p < lines.size()) {
-                //Search for TSI-line (ending in numbers)
-                tmp = lines.get(p).toString();
-
-                if ((tmp.charAt(tmp.length() - 1) >= '0') && (tmp.charAt(tmp.length() - 1) <= '9') ) {
-                	if (tmp.length()>9 && tmp.substring(tmp.length()-9, tmp.length()).indexOf(".")>-1) {
-                		p++;
-                		continue;
-                	}
-					String teamline = lines.get(p + 2).toString();
-					teamname = teamline.split(":")[1].trim();
-                    while (p > 2) {
-                        p--;
-                        lines.remove(p);
-                    }
-
-                    break;
-                }
-
-                p++;
-            }
-
-            // Search for actual year (expires) and also next year
-            // (end of year problem)
-            p = 8;
-
-            final Date d = new Date();
-            SimpleDateFormat f = new SimpleDateFormat("yyyy");
-            final String year = f.format(d);
-            final int y = Integer.valueOf(year).intValue() + 1;
-            final String year2 = String.valueOf(y);
-
-            while (p < lines.size()) {
-                // Delete all rows not containing our year
-                tmp = lines.get(p).toString();
-
-                if ((tmp.indexOf(year) >= 0) || (tmp.indexOf(year2) >= 0)) {
-                    while (p > 3) {
-                        p--;
-                        lines.remove(p);
-                    }
-
-                    break;
-                }
-
-                p++;
-            }
-
-            p = 5;
-            lines.remove(p);
-            p = 6;
-            while (p < lines.size()) {
-                lines.remove(p);
-            }
-
-            // Extract minimal bid
-            tmp = lines.get(4).toString();
-            int n = 0;
-            int k = 0;
-            String bid = "";
-            while (k < tmp.length()) {
-                if ((tmp.charAt(k) < '0') || (tmp.charAt(k) > '9')) {
-                    n++;
-                } else {
-                    tmp = tmp.substring(n);
-                    break;
-                }
-
-                k++;
-            }
-            k = 0;
-            while (k < tmp.length()) {
-                if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
-                    bid += tmp.charAt(k);
-                }
-
-                k++;
-            }
-
-            // Extract current bid if any
-            tmp = lines.get(lines.size() - 1).toString();
-            n = 0;
-            k = 0;
-            String curbid = "";
-            while (k < tmp.length()) {
-                if ((tmp.charAt(k) < '0') || (tmp.charAt(k) > '9')) {
-                    n++;
-                } else {
-                    tmp = tmp.substring(n);
-                    break;
-                }
-
-                k++;
-            }
-            k = 0;
-            while (k < tmp.length()) {
-                if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
-                    curbid += tmp.charAt(k);
-                }
-
-                k++;
-            }
-
-            if (lines.size() >= 6) {
-                if (!curbid.equals("")) {
-                    if (Integer.valueOf(curbid).intValue() >= Integer.valueOf(bid).intValue()) {
-                        lines.remove(4);
-                    } else {
-                        lines.remove(5);
-                    }
-                } else {
-                        lines.remove(5);
-                }
-            }
-
-            //
-            // We have now prepared our input to our needs
-            // Let's extract the values now
-            //
-            if (lines.size() != 5) {
-                error = 2;
-            }
-
-            // Get name and ID from line 1
+            //-- get name and store club name
             tmp = lines.get(0).toString();
-            player.setPlayerName(tmp.substring(0, tmp.indexOf("(")).trim());
-            player.setPlayerID(Integer.valueOf(tmp.substring(tmp.indexOf("(") + 1, tmp.indexOf(")"))
-                                                  .trim()).intValue());
-            tmp = tmp.substring(tmp.indexOf(")")).trim();
+            player.setPlayerName(tmp.substring(tmp.indexOf("»")+1).trim());
+            String teamname = tmp.substring(0, tmp.indexOf("»")).trim();
 
-            // Get injury
-            String injury = "";
-            for (int j = 0; j < tmp.length(); j++) {
-            	if ((tmp.charAt(j) >= '0') && (tmp.charAt(j) <= '9') && (tmp.charAt(j-1) != '[')) {
-            		injury = String.valueOf(tmp.charAt(j));
+            //-- get playerid
+            int found_at_line = -1;
+            for (int m = 0; m<10; m++) {
+            	tmp = lines.get(m).toString();
+            	//previous 2/4 next 4/4  Bai Ting Wei (129075165)
+            	if (tmp.indexOf("previous") > -1 && tmp.indexOf("next") > -1 && tmp.indexOf("(") > -1 && tmp.indexOf(")") > -1) {
+            		player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()));
+            		found_at_line = m;
             		break;
             	}
             }
 
-            if (!injury.equals("")) {
-                player.setInjury(Integer.valueOf(injury).intValue());
-            }
-
-            // check bookings
-            try {
-	            int b1 = tmp.indexOf("[");
-	            int b2 = tmp.indexOf("]");
-	            if (b1 > 1 && b2 > 1 && tmp.indexOf("[", b1+1) > -1) {
-	            	player.setBooked(tmp.substring(b1+1, b2));
-	            }
-            } catch (Exception e) { /* ignore */ }
-
-            // Get age from line 2
-            tmp = lines.get(1).toString();
+            //-- get age
+            tmp = lines.get(found_at_line + 1).toString();
 
             String age = "";
             p = 0;
-            n = 0;
+            int n = 0;
 
             while (p < tmp.length()) {
                 if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
@@ -432,8 +247,7 @@ public class PlayerConverter {
                 error = 2;
             }
 
-            // Get ageDays from line 2
-            tmp = lines.get(1).toString();
+            //-- get ageDays
             int ageIndex = tmp.indexOf(age) + age.length();
             tmp = tmp.substring(ageIndex);
 
@@ -470,9 +284,49 @@ public class PlayerConverter {
                 error = 2;
             }
 
-            // Get tsi from line 3
-            tmp = lines.get(2).toString();
+            // clean lines till here
+            if (found_at_line > 0) {
+            	for (int m=0; m<=(found_at_line+1); m++) {
+            		lines.remove(0);
+            	}
+            }
+            // remove club line and all lines until the time info (e.g. "since 06.04.2008")
+            boolean teamfound = false;
+            boolean datefound = false;
+            for (int m = 0; m<12; m++) {
+            	tmp = lines.get(m).toString();
+            	if (tmp.indexOf(teamname)>-1) {
+            		teamfound = true;
+            	}
+            	if (teamfound && !datefound) {
+            		lines.remove(m);
+            		m--;
+            	}
+            	if (teamfound && tmp.indexOf("(")>-1 && tmp.indexOf(")")>-1) {
+            		datefound = true;
+            		break;
+            	}
+            }
 
+            // Extract TSI-line
+            p = 2;
+
+            while (p < lines.size()) {
+                //Search for TSI-line (ending in numbers)
+                tmp = lines.get(p).toString();
+
+                if ((tmp.charAt(tmp.length() - 1) >= '0') && (tmp.charAt(tmp.length() - 1) <= '9') ) {
+                	if (tmp.length()>9 && tmp.substring(tmp.length()-9, tmp.length()).indexOf(".")>-1) {
+                		p++;
+                		continue;
+                	}
+                	found_at_line = p;
+                    break;
+                }
+
+                p++;
+            }
+            //-- get tsi
             String tsi = "";
             p = 0;
 
@@ -490,183 +344,127 @@ public class PlayerConverter {
                 error = 2;
             }
 
-            // Get expire time from line 4
-            tmp = lines.get(3).toString();
+            //-- check bookings
+            tmp = lines.get(found_at_line+2).toString();
+            try {
+            	if (tmp.indexOf(":") > -1 && tmp.indexOf("0") == -1) {
+            		player.setBooked(tmp);
+            	}
+            } catch (Exception e) { /* ignore */ }
 
-            String exp = "";
+
+            //-- Get injury
+            tmp = lines.get(found_at_line+3).toString();
+            try {
+            	String injury = "";
+            	for (int j = 0; j < tmp.length(); j++) {
+            		if ((tmp.charAt(j) >= '0') && (tmp.charAt(j) <= '9') && (tmp.charAt(j-1) != '[')) {
+            			injury = String.valueOf(tmp.charAt(j));
+            			break;
+            		}
+            	}
+
+            	if (!injury.equals("")) {
+            		player.setInjury(Integer.valueOf(injury).intValue());
+            	}
+            } catch (Exception e) { /* ignore */ }
+
+            // Search for actual year (expires) and also next year
+            // (end of year problem)
+            final Date d = new Date();
+            SimpleDateFormat f = new SimpleDateFormat("yyyy");
+            final String year = f.format(d);
+            final String year2 = String.valueOf((Integer.parseInt(year)+1));
+
             p = 0;
-            k = 0;
+            for (int m = 6; m < 8; m++) {
+            	// Delete all rows not containing our year
+            	tmp = lines.get(m).toString();
 
-            while (p < tmp.length()) {
-                if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
-                    k++;
+            	if (p > 10) { // already 10 lines deleted - there must be something wrong, break
+            		break;
+            	}
+
+            	if ((tmp.indexOf(year) > -1) || (tmp.indexOf(year2) > -1)) {
+            		found_at_line = m;
+            		break;
+            	} else {
+            		lines.remove(m);
+            		m--;
+            		p++;
+            	}
+            }
+            String exp = getDeadlineString(tmp);
+
+            // Extract minimal bid
+            tmp = lines.get(found_at_line+1).toString();
+            n = 0;
+            int k = 0;
+            String bid = "";
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) < '0') || (tmp.charAt(k) > '9')) {
+                    n++;
                 } else {
-                    tmp = tmp.substring(k);
+                    tmp = tmp.substring(n);
                     break;
                 }
 
-                p++;
+                k++;
+            }
+            k = 0;
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
+                    bid += tmp.charAt(k);
+                }
+
+                k++;
             }
 
-            p = 0;
+            // Extract current bid if any
+            tmp = lines.get(found_at_line + 2).toString();
+            n = 0;
             k = 0;
-
-            String part1 = "";
-
-            while (p < tmp.length()) {
-                if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
-                    k++;
+            String curbid = "";
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) < '0') || (tmp.charAt(k) > '9')) {
+                    n++;
                 } else {
-                    part1 = tmp.substring(0, k);
-
-                    if (part1.length() < 2) {
-                        part1 = "0" + part1;
-                    }
-
-                    tmp = tmp.substring(k + 1);
+                    tmp = tmp.substring(n);
                     break;
                 }
 
-                p++;
+                k++;
             }
-
-            p = 0;
             k = 0;
-
-            String part2 = "";
-
-            while (p < tmp.length()) {
-                if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
-                    k++;
-                } else {
-                    part2 = tmp.substring(0, k);
-
-                    if (part2.length() < 2) {
-                        part2 = "0" + part2;
-                    }
-
-                    tmp = tmp.substring(k + 1);
-                    break;
+            while (k < tmp.length()) {
+                if ((tmp.charAt(k) >= '0') && (tmp.charAt(k) <= '9')) {
+                    curbid += tmp.charAt(k);
+                } else if ((tmp.charAt(k) != ' ') && curbid.length()>0) { // avoid to add numbers from bidding team names
+                	break;
                 }
 
-                p++;
+                k++;
             }
 
-            p = 0;
-            k = 0;
+            player.setPrice(getPrice(bid, curbid));
 
-            String part3 = "";
-
-            while (p < tmp.length()) {
-                if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
-                    k++;
-                } else {
-                    part3 = tmp.substring(0, k);
-
-                    if (part3.length() < 2) {
-                        part3 = "0" + part3;
-                    }
-
-                    tmp = tmp.substring(k + 1);
-                    break;
-                }
-
-                p++;
-            }
-
-            p = 0;
-
-            String part4 = "";
-
-            while (p < tmp.length()) {
-                if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
-                    part4 = part4 + tmp.charAt(p);
-                }
-
-                p++;
-            }
-
-            final Calendar c = Calendar.getInstance();
-            f = new SimpleDateFormat("ddMMyyyy");
-
-            final Date d1 = c.getTime();
-            final String date1 = f.format(d1);
-            c.add(Calendar.DATE, 1);
-
-            final Date d2 = c.getTime();
-            final String date2 = f.format(d2);
-            c.add(Calendar.DATE, 1);
-
-            final Date d3 = c.getTime();
-            final String date3 = f.format(d3);
-
-            String date = part1 + part2 + part3;
-
-            if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
-                exp = date + part4;
-            } else {
-                date = part1 + part3 + part2;
-
-                if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
-                    exp = date + part4;
-                } else {
-                    date = part2 + part1 + part3;
-
-                    if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
-                        exp = date + part4;
-                    } else {
-                        date = part2 + part3 + part1;
-
-                        if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
-                            exp = date + part4;
-                        } else {
-                            date = part3 + part1 + part2;
-
-                            if ((date1.equals(date))
-                                || (date2.equals(date))
-                                || (date3.equals(date))) {
-                                exp = date + part4;
-                            } else {
-                                date = part3 + part2 + part1;
-
-                                if ((date1.equals(date))
-                                    || (date2.equals(date))
-                                    || (date3.equals(date))) {
-                                    exp = date + part4;
-                                } else {
-                                    exp = part1 + part2 + part3 + part4;
-
-                                    if (error == 0) {
-                                        error = 1;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //--------------------------------------------
 
             // exp is of format: ddmmyyyyhhmm
-            player.setExpiryDate(exp.substring(0, 2) + "." + exp.substring(2, 4) + "."
-                                 + exp.substring(6, 8));
-            player.setExpiryTime(exp.substring(8, 10) + ":" + exp.substring(10, 12));
-
-            // Get price from line 5
-            tmp = lines.get(4).toString();
-
-            String price = "";
-
-            for (int j = 0; j < tmp.length(); j++) {
-                if ((tmp.charAt(j) >= '0') && (tmp.charAt(j) <= '9')) {
-                    price = price + tmp.charAt(j);
+            try {
+				player.setExpiryDate(exp.substring(0, 2) + "." + exp.substring(2, 4) + "."
+				                     + exp.substring(6, 8));
+				player.setExpiryTime(exp.substring(8, 10) + ":" + exp.substring(10, 12));
+			} catch (RuntimeException e) {
+				// error getting deadline - just set current date
+				f = new SimpleDateFormat("dd.MM.yyyy");
+				player.setExpiryDate(f.format(new Date()));
+				f = new SimpleDateFormat("HH:mm");
+				player.setExpiryTime(f.format(new Date()));
+				if (error == 0) {
+                    error = 1;
                 }
-            }
-
-            if (!price.equals("")) {
-                player.setPrice(Integer.valueOf(price).intValue());
-            } else {
-                error = 2;
-            }
+			}
 
             // truncate text from player name to date (year)
             final String name = player.getPlayerName();
@@ -675,18 +473,6 @@ public class PlayerConverter {
             }
             if ((p = mytext.indexOf(name)) >= 0) {
                 mytext = mytext.substring(p);
-            }
-
-            tmp = "";
-            while (price.length() > 3) {
-                tmp = (price.substring(price.length() - 3) + " " + tmp).trim();
-                price = price.substring(0, price.length() - 3);
-            }
-            if (tmp.length() > 0) {
-                price = price + " " + tmp;
-            }
-            if (mytext.indexOf(price) >= 0) {
-                mytext = mytext.substring(0, mytext.lastIndexOf(price));
             }
 
             char[] cs = new char[teamname.length()];
@@ -759,44 +545,19 @@ public class PlayerConverter {
                 p--;
             }
 
-            player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0))
-                                                       .get(2)).intValue())).intValue());
-            player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1))
-                                                             .get(2)).intValue())).intValue());
-            player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2))
-                                                             .get(2)).intValue())).intValue());
-            player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                                 .size()
-                                                                                                 - 8))
-                                                          .get(2)).intValue())).intValue());
-            player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills
-                                                                         .get(foundskills.size()
-                                                                              - 7)).get(2))
-                                                             .intValue())).intValue());
-            player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                                    .size()
-                                                                                                    - 6))
-                                                             .get(2)).intValue())).intValue());
-            player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                                 .size()
-                                                                                                 - 5))
-                                                          .get(2)).intValue())).intValue());
-            player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                              .size()
-                                                                                              - 4))
-                                                       .get(2)).intValue())).intValue());
-            player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                                 .size()
-                                                                                                 - 3))
-                                                          .get(2)).intValue())).intValue());
-            player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                                .size()
-                                                                                                - 2))
-                                                         .get(2)).intValue())).intValue());
-            player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(foundskills
-                                                                                                   .size()
-                                                                                                   - 1))
-                                                            .get(2)).intValue())).intValue());
+            // player skills (long default format)
+            player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0)).get(2)).intValue())).intValue());
+            player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1)).get(2)).intValue())).intValue());
+            player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2)).get(2)).intValue())).intValue());
+            player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(3)).get(2)).intValue())).intValue());
+
+            player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(4)).get(2)).intValue())).intValue());
+            player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(5)).get(2)).intValue())).intValue());
+            player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(6)).get(2)).intValue())).intValue());
+            player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(7)).get(2)).intValue())).intValue());
+            player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(8)).get(2)).intValue())).intValue());
+            player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(9)).get(2)).intValue())).intValue());
+            player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(10)).get(2)).intValue())).intValue());
 
             // We can search the speciality in text now
             p = specialities.size() - 1;
@@ -853,14 +614,176 @@ public class PlayerConverter {
             }
 
             if (foundspecialities.size() > 0) {
-                player.setSpeciality(((Integer) specialitiesvalues.get(((Integer) ((ArrayList) foundspecialities
-                                                                                   .get(0)).get(2))
-                                                                       .intValue())).intValue() + 1);
+                player.setSpeciality(((Integer) specialitiesvalues.get(((Integer) ((ArrayList) foundspecialities.get(0)).get(2)).intValue())).intValue() + 1);
             } else {
                 player.setSpeciality(0);
             }
         }
 
         return player;
+    }
+
+    public static int getPrice(String bid, String curbid) {
+    	int price = 0;
+    	try {
+    		price = Integer.parseInt(bid);
+    		if (curbid.length()>0 && Integer.parseInt(curbid) >= Integer.parseInt(bid)) {
+    			price = Integer.parseInt(curbid);
+    		}
+    	} catch (Exception e) { /* nothing */ }
+    	return price;
+    }
+
+    public static String getDeadlineString(String tmp) {
+        // get deadline
+        String exp = "";
+        int p = 0;
+        int k = 0;
+
+        while (p < tmp.length()) {
+            if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
+                k++;
+            } else {
+                tmp = tmp.substring(k);
+                break;
+            }
+
+            p++;
+        }
+
+        p = 0;
+        k = 0;
+
+        String part1 = "";
+
+        while (p < tmp.length()) {
+            if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+                k++;
+            } else {
+                part1 = tmp.substring(0, k);
+
+                if (part1.length() < 2) {
+                    part1 = "0" + part1;
+                }
+
+                tmp = tmp.substring(k + 1);
+                break;
+            }
+
+            p++;
+        }
+
+        p = 0;
+        k = 0;
+
+        String part2 = "";
+
+        while (p < tmp.length()) {
+            if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+                k++;
+            } else {
+                part2 = tmp.substring(0, k);
+
+                if (part2.length() < 2) {
+                    part2 = "0" + part2;
+                }
+
+                tmp = tmp.substring(k + 1);
+                break;
+            }
+
+            p++;
+        }
+
+        p = 0;
+        k = 0;
+
+        String part3 = "";
+
+        while (p < tmp.length()) {
+            if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+                k++;
+            } else {
+                part3 = tmp.substring(0, k);
+
+                if (part3.length() < 2) {
+                    part3 = "0" + part3;
+                }
+
+                tmp = tmp.substring(k + 1);
+                break;
+            }
+
+            p++;
+        }
+
+        p = 0;
+
+        String part4 = "";
+
+        while (p < tmp.length()) {
+            if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+                part4 = part4 + tmp.charAt(p);
+            }
+
+            p++;
+        }
+
+        final Calendar c = Calendar.getInstance();
+        SimpleDateFormat f = new SimpleDateFormat("ddMMyyyy");
+
+        final Date d1 = c.getTime();
+        final String date1 = f.format(d1);
+        c.add(Calendar.DATE, 1);
+
+        final Date d2 = c.getTime();
+        final String date2 = f.format(d2);
+        c.add(Calendar.DATE, 1);
+
+        final Date d3 = c.getTime();
+        final String date3 = f.format(d3);
+
+        String date = part1 + part2 + part3;
+
+        if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
+            exp = date + part4;
+        } else {
+            date = part1 + part3 + part2;
+
+            if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
+                exp = date + part4;
+            } else {
+                date = part2 + part1 + part3;
+
+                if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
+                    exp = date + part4;
+                } else {
+                    date = part2 + part3 + part1;
+
+                    if ((date1.equals(date)) || (date2.equals(date)) || (date3.equals(date))) {
+                        exp = date + part4;
+                    } else {
+                        date = part3 + part1 + part2;
+
+                        if ((date1.equals(date))
+                            || (date2.equals(date))
+                            || (date3.equals(date))) {
+                            exp = date + part4;
+                        } else {
+                            date = part3 + part2 + part1;
+
+                            if ((date1.equals(date))
+                                || (date2.equals(date))
+                                || (date3.equals(date))) {
+                                exp = date + part4;
+                            } else {
+                                exp = part1 + part2 + part3 + part4;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return exp;
     }
 }
