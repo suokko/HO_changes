@@ -6,6 +6,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
@@ -90,6 +93,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JButton jbUebernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                        .getResource()
                                                                                        .getProperty("Uebernehmen"));
+    //private JButton jbClipBoard = new JButton("From Clipboard");
     private JComboBox jcbErfahrung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbFluegel = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbForm = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_FORM);
@@ -196,7 +200,9 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(jbUebernehmen)) {
             copyPaste();
-        } else if (actionEvent.getSource().equals(jbAddTempSpieler)) {
+        //} else if (actionEvent.getSource().equals(jbClipBoard)) {
+        //	copyFromClipBoard();
+    	} else if (actionEvent.getSource().equals(jbAddTempSpieler)) {
             final Spieler tempSpieler = new Spieler();
             tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
             tempSpieler.setSpielerID(getNextTempSpielerID());
@@ -557,6 +563,29 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         }
     }
 
+    private void copyFromClipBoard() {
+    	try {
+			Clipboard clipboard = getToolkit().getSystemClipboard ();
+			Transferable trans = clipboard.getContents(this);
+			DataFlavor[] dfs = trans.getTransferDataFlavors();
+			for (int m=0; m<dfs.length; m++) {
+				System.out.println(dfs[m].getHumanPresentableName() + " / " + dfs[m].getMimeType() + " - " + dfs[m].getPrimaryType() + " - " + dfs[m].getSubType());
+				if ((trans != null) && (trans.isDataFlavorSupported (dfs[m]))) {
+					String tempString = "" + trans.getTransferData(dfs[m]); //DataFlavor.stringFlavor);
+					System.out.println(tempString);
+					System.out.println("---------------------------------------------------------------------------");
+				}
+			}
+//			if ((trans != null) && (trans.isDataFlavorSupported (DataFlavor.stringFlavor))) {
+//				String tempString;
+//				tempString = (String) trans.getTransferData(DataFlavor.stringFlavor);
+//				System.out.println(tempString);
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+
     /**
      * Calls playerconverter and fills boxes to the corresponding values
      */
@@ -789,8 +818,10 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtaCopyPaste.setToolTipText(properties.getProperty("tt_Transferscout_CopyPaste"));
         panel.add(new JScrollPane(jtaCopyPaste), BorderLayout.NORTH);
         jbUebernehmen.addActionListener(this);
+        //jbClipBoard.addActionListener(this);
         layout.setConstraints(jbUebernehmen, constraints);
         panel.add(jbUebernehmen, BorderLayout.CENTER);
+        //panel.add(jbClipBoard, BorderLayout.CENTER);
         panel.add(jlStatus, BorderLayout.SOUTH);
 
         constraints.fill = GridBagConstraints.BOTH;
