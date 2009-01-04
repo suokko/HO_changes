@@ -3,6 +3,8 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 Changelist HO! 1.423
 ====================
 - fix problem with training subskill calculation on the first update 2009
+- adapt transfer scouts player parser for the new design
+	(tested only with the default (long) style at the moment)
 
 - Translation updates:
 	- added Georgian as new HO language (thx Temur for his very quick translation)
