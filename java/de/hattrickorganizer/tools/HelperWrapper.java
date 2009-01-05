@@ -48,6 +48,7 @@ public class HelperWrapper implements plugins.IHelper {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static HelperWrapper m_clInstance;
+    final static long WEEK = 24 * 7 * 3600 * 1000L;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -244,12 +245,12 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Calculate the last valid training date for a certain date (skillupDate)
      *
-     * @param skillupDate TODO Missing Method Parameter Documentation
-     * @param refTrainingDate TODO Missing Method Parameter Documentation
+     * @param skillupDate the skillupdate or HRF date
+     * @param refTrainingDate a reference containing a valid training time and day of week
      *
-     * @return TODO Missing Return Method Documentation
+     * @return the last valid training date for the given 'skillupDate'
      */
     public Calendar getLastTrainingDate(Date skillupDate, Date refTrainingDate) {
         // Calendar for TrainingDate
@@ -262,10 +263,14 @@ public class HelperWrapper implements plugins.IHelper {
 
         trDate.setTime(refTrainingDate);
         trDate.setFirstDayOfWeek(Calendar.SUNDAY);
+        trDate.setLenient(true);
+        trDate.setMinimalDaysInFirstWeek(1);
 
         // Calendar for Skillup Date
         final Calendar suDate = Calendar.getInstance(Locale.US);
         suDate.setFirstDayOfWeek(Calendar.SUNDAY);
+        suDate.setMinimalDaysInFirstWeek(1);
+        suDate.setLenient(true);
         suDate.setTime(skillupDate);
 
         // Move TrainingDate back to skillup week
@@ -273,40 +278,17 @@ public class HelperWrapper implements plugins.IHelper {
         trDate.set(Calendar.WEEK_OF_YEAR, suDate.get(Calendar.WEEK_OF_YEAR));
 
         // Check that is fine
-        final long diff = suDate.getTimeInMillis() - trDate.getTimeInMillis();
+        long diff = suDate.getTimeInMillis() - trDate.getTimeInMillis();
 
-        // Handle dates that are in the last week of year
-        final Calendar tmp = (Calendar) trDate.clone();
-        tmp.add(Calendar.WEEK_OF_YEAR, 1);
-
-        if (tmp.getTime().before(skillupDate)) {
-            trDate.add(Calendar.WEEK_OF_YEAR, -1);
-
-            if (trDate.get(Calendar.DAY_OF_WEEK) > suDate.get(Calendar.DAY_OF_WEEK)) {
-                trDate.add(Calendar.WEEK_OF_YEAR, -1);
-            }
+        // training date must be within one week (handle end of year)
+        while (diff > WEEK) {
+        	trDate.add(Calendar.WEEK_OF_YEAR, +1);
+        	diff = suDate.getTimeInMillis() - trDate.getTimeInMillis();
         }
 
-        // TrainingDate is one week behind
-        if (diff > (24 * 7 * 3600 * 1000)) {
-            final int day = trDate.get(Calendar.DAY_OF_WEEK);
-
-            // HACK to fix problem with Calendar across end of year!
-            trDate.add(Calendar.WEEK_OF_YEAR, +1);
-
-            if (trDate.getTime().before(skillupDate)) {
-                trDate.set(Calendar.YEAR, trDate.get(Calendar.YEAR) + 1);
-                trDate.set(Calendar.DAY_OF_WEEK, day);
-            }
-        }
-
-        //	TrainingDate is one week ahead
-        if (diff < 0) {
-            trDate.add(Calendar.WEEK_OF_YEAR, -1);
-
-            if (trDate.getTime().after(skillupDate)) {
-                trDate.set(Calendar.YEAR, trDate.get(Calendar.YEAR) - 1);
-            }
+        // training date must not be after skillup date
+        while (diff != 0 && trDate.after(suDate)) {
+        	trDate.add(Calendar.WEEK_OF_YEAR, -1);
         }
 
         final Calendar c = Calendar.getInstance(Locale.UK);
