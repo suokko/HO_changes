@@ -36,7 +36,9 @@
 !define HO_REGKEY "Software\HattrickOrganizer"
 !define HO_UNINSTALL_REGKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hattrick Organizer"
 
-InstallDir "$PROGRAMFILES\HattrickOrganizer"
+;InstallDir "$PROGRAMFILES\HattrickOrganizer"
+; For now, we default to C:\HattrickOrganizer until we have fixed the Vista issues
+InstallDir "C:\HattrickOrganizer"
 ;Get installation folder from registry if available
 InstallDirRegKey HKLM ${HO_REGKEY} "InstallLocation"
 
@@ -73,7 +75,7 @@ VIProductVersion "$HOVERSION"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
-!define MUI_FINISHPAGE_RUN "$INSTDIR\HO.bat"
+;!define MUI_FINISHPAGE_RUN "$INSTDIR\HO.bat"
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\changelog.txt"
 !define MUI_FINISHPAGE_LINK "Hattrick Organizer Homepage"
 !define MUI_FINISHPAGE_LINK_LOCATION "http://www.hattrickorganizer.net"
@@ -209,8 +211,10 @@ Section "Hattrick Organizer ${HOVERSION}" SEC_HO
 	SetOutPath "$INSTDIR"
 	File /r "${BUILDDIR}\*.*"
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
-	# Setting file permission -> Full access to all authenticated users [aka BuildinUsers] (important for Windows Vista)
-	AccessControl::GrantOnFile "$INSTDIR" "(BU)" "FullAccess"
+	# Setting file permission -> Full access to all authenticated users by SID (important for Windows Vista)
+	# See http://support.microsoft.com/?scid=kb%3Ben-us%3B243330&x=11&y=11 for a list of well-known SIDs
+	AccessControl::GrantOnFile "$INSTDIR" "(S-1-5-11)" "FullAccess"
+
 	# Write registry key for Add/Remove Programs in ControlPanel
 	WriteRegStr HKLM "${HO_UNINSTALL_REGKEY}" "DisplayName" "Hattrick Organizer (remove only)"
 	WriteRegStr HKLM "${HO_UNINSTALL_REGKEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
