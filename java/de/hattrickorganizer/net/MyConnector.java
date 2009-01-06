@@ -877,7 +877,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
+			HOLogger.instance().log(getClass(),"Kein Connect zum update(ratings): " + e);
 			return new Extension();
 		}
 	}
@@ -888,7 +888,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
+			HOLogger.instance().log(getClass(),"Kein Connect zum update(news): " + e);
 			return new News();
 		}
 	}
