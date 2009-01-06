@@ -1953,8 +1953,6 @@ public class DBZugriff {
 	}
 
 	private void updateConfigTo1424 () {
-		resetTrainingParameters();
-		resetPredictionOffsets();
 		saveUserParameter("updateCheck", "true");
 		saveUserParameter("newsCheck", "true");
 
