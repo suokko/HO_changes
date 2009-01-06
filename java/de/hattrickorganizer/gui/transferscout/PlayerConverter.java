@@ -547,19 +547,41 @@ public class PlayerConverter {
                 p--;
             }
 
-            // player skills (long default format)
-            player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0)).get(2)).intValue())).intValue());
-            player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1)).get(2)).intValue())).intValue());
-            player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2)).get(2)).intValue())).intValue());
-            player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(3)).get(2)).intValue())).intValue());
+            // check format
+            try {
+				p = mytext.indexOf("/20");
+				if (p > -1 && mytext.indexOf("/20", p+5) > -1 && foundskills.size() >= 11) {
+					// player skills (long default format with bars)
+				    player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0)).get(2)).intValue())).intValue());
+				    player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1)).get(2)).intValue())).intValue());
+				    player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2)).get(2)).intValue())).intValue());
+				    player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(3)).get(2)).intValue())).intValue());
 
-            player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(4)).get(2)).intValue())).intValue());
-            player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(5)).get(2)).intValue())).intValue());
-            player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(6)).get(2)).intValue())).intValue());
-            player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(7)).get(2)).intValue())).intValue());
-            player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(8)).get(2)).intValue())).intValue());
-            player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(9)).get(2)).intValue())).intValue());
-            player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(10)).get(2)).intValue())).intValue());
+				    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(4)).get(2)).intValue())).intValue());
+				    player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(5)).get(2)).intValue())).intValue());
+				    player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(6)).get(2)).intValue())).intValue());
+				    player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(7)).get(2)).intValue())).intValue());
+				    player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(8)).get(2)).intValue())).intValue());
+				    player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(9)).get(2)).intValue())).intValue());
+				    player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(10)).get(2)).intValue())).intValue());
+				} else if (foundskills.size() >= 12) {
+					// player skills (2er format without bars)
+				    player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0)).get(2)).intValue())).intValue());
+				    player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1)).get(2)).intValue())).intValue());
+				    player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2)).get(2)).intValue())).intValue());
+				    player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(3)).get(2)).intValue())).intValue());
+
+				    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(5)).get(2)).intValue())).intValue());
+				    player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(9)).get(2)).intValue())).intValue());
+				    player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(6)).get(2)).intValue())).intValue());
+				    player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(8)).get(2)).intValue())).intValue());
+				    player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(7)).get(2)).intValue())).intValue());
+				    player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(10)).get(2)).intValue())).intValue());
+				    player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(11)).get(2)).intValue())).intValue());
+				}
+			} catch (RuntimeException e) {
+				error = 2;
+			}
 
             // We can search the speciality in text now
             p = specialities.size() - 1;
