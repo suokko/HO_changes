@@ -192,8 +192,6 @@ public class PlayerConverter {
                 txt = txt.substring(p + 1);
             }
 
-            //debugPrintLines(lines);
-
             //-- get name and store club name
             tmp = lines.get(0).toString();
             player.setPlayerName(tmp.substring(tmp.indexOf("»")+1).trim());
@@ -203,12 +201,16 @@ public class PlayerConverter {
             int found_at_line = -1;
             for (int m = 0; m<10; m++) {
             	tmp = lines.get(m).toString();
-            	//previous 2/4 next 4/4  Bai Ting Wei (129075165)
-            	if (tmp.indexOf("previous") > -1 && tmp.indexOf("next") > -1 && tmp.indexOf("(") > -1 && tmp.indexOf(")") > -1) {
-            		player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()));
-            		found_at_line = m;
-            		break;
-            	}
+
+            	try {
+					if (tmp.indexOf("(") > -1 && tmp.indexOf(")") > -1 && Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()) > 100000) {
+						player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()));
+						found_at_line = m;
+						break;
+					}
+				} catch (Exception e) {
+					continue;
+				}
             }
 
             //-- get age
