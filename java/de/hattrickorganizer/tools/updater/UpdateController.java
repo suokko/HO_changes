@@ -331,9 +331,9 @@ public final class UpdateController {
 //					"Open page?",
 //					JOptionPane.YES_NO_OPTION);
 //			if (update == JOptionPane.YES_OPTION) {
-//				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
-//			}			
-		}			
+//				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");
+//			}
+		}
 	}
 
 	public static void updateHO(double version) {
@@ -347,13 +347,13 @@ public final class UpdateController {
 			.download(
 			"http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip",
 			tmp)) {
-			wait.setVisible(false);								
+			wait.setVisible(false);
 			return;
 		}
 			wait.setVisible(false);
 		try {
 			ZipHelper zip = new ZipHelper("update.zip");
-			String dir = System.getProperty("user.dir");						
+			String dir = System.getProperty("user.dir");
 			zip.extractFile("HO.bat",dir);
 			zip.extractFile("HO.sh",dir);
 			zip.extractFile("HOLauncher.class",dir);
@@ -363,8 +363,8 @@ public final class UpdateController {
 		}
 		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
 									  JOptionPane.INFORMATION_MESSAGE);
-		
-		HOMainFrame.instance().beenden();	
+
+		HOMainFrame.instance().beenden();
 	}
 
 	public static void check4EPVUpdate() {
@@ -382,7 +382,7 @@ public final class UpdateController {
 			if (update == JOptionPane.YES_OPTION) {
 				updateEPV(data.getRelease());
 			}
-		}			
+		}
 	}
 
 	/**
@@ -408,32 +408,29 @@ public final class UpdateController {
 					actual,
 					total);
 			} catch (RuntimeException e1) {
-				HOLogger.instance().log(UpdateController.class,e1);
+				HOLogger.instance().log(UpdateController.class, "Error updating users: " + e1);
 			}
 
 		} catch (Exception e) {
-			HOLogger.instance().log(UpdateController.class,"Kein Connect zum update" + e);
+			HOLogger.instance().log(UpdateController.class,"Kein Connect zum update: " + e);
 		}
-	}	
-	
+	}
+
 	public static void updateEPV(float release) {
-		File tmp = new File("tmp.dat");				
+		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
 		wait.setVisible(true);
-		if (!UpdateHelper
-			.instance()
-			.download(
-				MyConnector.getResourceSite()+"/downloads/epvWeights.mlp",
-				tmp)) {
+		if (!UpdateHelper.instance().download(
+				MyConnector.getResourceSite()+"/downloads/epvWeights.mlp", tmp)) {
 			wait.setVisible(false);
-			tmp.delete();					
+			tmp.delete();
 			return;
 		}
 		File target = new File("prediction/epvWeights.mlp");
 		target.delete();
-		tmp.renameTo(target);	
-		HOParameter.instance().EpvRelease = release;	
-		wait.setVisible(false);			
+		tmp.renameTo(target);
+		HOParameter.instance().EpvRelease = release;
+		wait.setVisible(false);
 		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
 									  JOptionPane.INFORMATION_MESSAGE);
 
@@ -455,28 +452,26 @@ public final class UpdateController {
 			}
 		}
 	}
-	
+
 	public static void updateRatings(float release) {
-		File tmp = new File("tmp.dat");				
+		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
 		wait.setVisible(true);
-		if (!UpdateHelper
-			.instance()
-			.download(
-				MyConnector.getResourceSite()+"/downloads/prediction.zip",
-				tmp)) {
+		if (!UpdateHelper.instance().download(
+				MyConnector.getResourceSite()+"/downloads/prediction.zip", tmp)) {
 			wait.setVisible(false);
-			tmp.delete();					
+			tmp.delete();
 			return;
 		}
 		try {
 	        ZipHelper zip = new ZipHelper(tmp);
+	        HOLogger.instance().log(UpdateController.class, "Unzip " + tmp + " to: " + (System.getProperty("user.dir") + File.separator + "prediction"));
 	        zip.unzip(System.getProperty("user.dir") + File.separator + "prediction");
 	        tmp.delete();
 //			File target = new File("ratings.dat");
 //			target.delete();
-//			tmp.renameTo(target);	
-			HOParameter.instance().RatingsRelease = release;								
+//			tmp.renameTo(target);
+			HOParameter.instance().RatingsRelease = release;
 		} catch (Exception e) {
 			HOLogger.instance().log(UpdateController.class,"Rating update unzip: " + e);
 		}
@@ -485,7 +480,7 @@ public final class UpdateController {
 									  JOptionPane.INFORMATION_MESSAGE);
 
 	}
-	
+
 	public static void checkNews() {
 		News news = MyConnector.instance().getLatestNews();
 		if (news.getId() > HOParameter.instance().lastNews) {
@@ -510,9 +505,9 @@ public final class UpdateController {
 //										"Open page?",
 //										JOptionPane.YES_NO_OPTION);
 //								if (update == JOptionPane.YES_OPTION) {
-//									HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
+//									HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");
 //								}
-								
+
 							}
 							break;
 						}
@@ -573,9 +568,9 @@ public final class UpdateController {
 							// Unsupported Message Type
 						}
 				}
-				
+
 			}
 		}
-	}	
-	
+	}
+
 }
