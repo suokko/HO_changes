@@ -54,6 +54,8 @@ P D Task
 ------------------------------------------------------
 2 F Update calculation of special tactics after the latest playerstrength optimisations
 3 F Optimize EPV
+3 ? Training calculation is VERY slow, we need to speed this up if possible
+	I think re-implemeting the whole training calculation would make the most sense :-/
 3 A Add indirect freekicks to match highlights
 		Status: implementation needs to be tested (do we handle all events?)
 3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
