@@ -313,25 +313,26 @@ public final class UpdateController {
 	public static void check4update() {
 		double version = MyConnector.instance().getLatestVersion();
 		if (version > HOMainFrame.VERSION) {
-			//Infro anzeigen das es ein Update gibt
-//			int update =
-//				JOptionPane.showConfirmDialog(
-//					HOMainFrame.instance(),
-//					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-//					HOVerwaltung.instance().getResource().getProperty("update")+"?",
-//					JOptionPane.YES_NO_OPTION);
-//
-//			if (update == JOptionPane.YES_OPTION) {
-//				updateHO(version);
-//			}
-			int update = JOptionPane.showConfirmDialog(
+			// Info anzeigen, dass es ein Update gibt
+			// Show update info
+			int update =
+				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
 					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-					"Open page?",
+					HOVerwaltung.instance().getResource().getProperty("update")+"?",
 					JOptionPane.YES_NO_OPTION);
+
 			if (update == JOptionPane.YES_OPTION) {
-				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
-			}			
+				updateHO(version);
+			}
+//			int update = JOptionPane.showConfirmDialog(
+//					HOMainFrame.instance(),
+//					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+//					"Open page?",
+//					JOptionPane.YES_NO_OPTION);
+//			if (update == JOptionPane.YES_OPTION) {
+//				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
+//			}			
 		}			
 	}
 
@@ -344,7 +345,7 @@ public final class UpdateController {
 		if (!UpdateHelper
 			.instance()
 			.download(
-			"http://prdownloads.sourceforge.net/ho1/HO_" + ver + ".zip?download",
+			"http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip",
 			tmp)) {
 			wait.setVisible(false);								
 			return;
@@ -369,7 +370,8 @@ public final class UpdateController {
 	public static void check4EPVUpdate() {
 		Extension data = MyConnector.instance().getEpvVersion();
 		if (HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().EpvRelease) {
-			//Infro anzeigen das es ein Update gibt
+			// Info anzeigen, dass es ein Update gibt
+			// Show update info
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
@@ -421,13 +423,13 @@ public final class UpdateController {
 		if (!UpdateHelper
 			.instance()
 			.download(
-				MyConnector.getResourceSite()+"/downloads/epv.dat",
+				MyConnector.getResourceSite()+"/downloads/epvWeights.mlp",
 				tmp)) {
 			wait.setVisible(false);
 			tmp.delete();					
 			return;
 		}
-		File target = new File("epv.dat");
+		File target = new File("prediction/epvWeights.mlp");
 		target.delete();
 		tmp.renameTo(target);	
 		HOParameter.instance().EpvRelease = release;	
@@ -461,16 +463,23 @@ public final class UpdateController {
 		if (!UpdateHelper
 			.instance()
 			.download(
-				MyConnector.getResourceSite()+"/downloads/ratings.dat",
+				MyConnector.getResourceSite()+"/downloads/prediction.zip",
 				tmp)) {
 			wait.setVisible(false);
 			tmp.delete();					
 			return;
 		}
-		File target = new File("ratings.dat");
-		target.delete();
-		tmp.renameTo(target);	
-		HOParameter.instance().RatingsRelease = release;					
+		try {
+	        ZipHelper zip = new ZipHelper(tmp);
+	        zip.unzip(System.getProperty("user.dir") + File.separator + "prediction");
+	        tmp.delete();
+//			File target = new File("ratings.dat");
+//			target.delete();
+//			tmp.renameTo(target);	
+			HOParameter.instance().RatingsRelease = release;								
+		} catch (Exception e) {
+			HOLogger.instance().log(UpdateController.class,"Rating update unzip: " + e);
+		}
 		wait.setVisible(false);
 		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
 									  JOptionPane.INFORMATION_MESSAGE);
@@ -486,23 +495,23 @@ public final class UpdateController {
 					case News.HO :
 						{
 							if (!UserParameter.instance().updateCheck && news.getVersion()>HOMainFrame.VERSION) {
-//								int update =
-//									JOptionPane.showConfirmDialog(
-//										HOMainFrame.instance(),
-//										HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-//										HOVerwaltung.instance().getResource().getProperty("update") + "?",
-//										JOptionPane.YES_NO_OPTION);
-//								if (update == JOptionPane.YES_OPTION) {
-//									UpdateController.updateHO(news.getVersion());
-//								}
-								int update = JOptionPane.showConfirmDialog(
+								int update =
+									JOptionPane.showConfirmDialog(
 										HOMainFrame.instance(),
-										"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-										"Open page?",
+										HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+										HOVerwaltung.instance().getResource().getProperty("update") + "?",
 										JOptionPane.YES_NO_OPTION);
 								if (update == JOptionPane.YES_OPTION) {
-									HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
+									UpdateController.updateHO(news.getVersion());
 								}
+//								int update = JOptionPane.showConfirmDialog(
+//										HOMainFrame.instance(),
+//										"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+//										"Open page?",
+//										JOptionPane.YES_NO_OPTION);
+//								if (update == JOptionPane.YES_OPTION) {
+//									HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");				
+//								}
 								
 							}
 							break;

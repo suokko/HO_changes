@@ -1574,7 +1574,7 @@ public class DBZugriff {
 	 * @param value 		the target value
 	 */
 	private void saveUserParameter(String fieldName, int value) {
-		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName,value + "");
+		saveUserParameter(fieldName, "" + value);
 	}
 
 	/**
@@ -1584,7 +1584,17 @@ public class DBZugriff {
 	 * @param value 		the target value
 	 */
 	private void saveUserParameter(String fieldName, double value) {
-		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName,value + "");
+		saveUserParameter(fieldName, "" + value);
+	}
+
+	/**
+	 * Set a single UserParameter in the DB
+	 *
+	 * @param fieldName 	the name of the parameter to set
+	 * @param value 		the target value
+	 */
+	private void saveUserParameter(String fieldName, String value) {
+		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName, value);
 	}
 
 	public void saveHOColumnModel(HOColumnModel model) {
@@ -1914,6 +1924,11 @@ public class DBZugriff {
 			updateConfigTo1420();
 		}
 
+		if (lastConfigUpdate < 1.424) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.424...");
+			updateConfigTo1424();
+		}
+
 	}
 
 	private void updateConfigTo1410_1 () {
@@ -1935,6 +1950,16 @@ public class DBZugriff {
 
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.420);
+	}
+
+	private void updateConfigTo1424 () {
+		resetTrainingParameters();
+		resetPredictionOffsets();
+		saveUserParameter("updateCheck", "true");
+		saveUserParameter("newsCheck", "true");
+
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.424);
 	}
 
 	private void resetTrainingParameters () {
