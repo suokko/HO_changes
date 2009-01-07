@@ -318,7 +318,8 @@ public final class UpdateController {
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
-					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+					HOVerwaltung.instance().getResource().getProperty("updateMSG") + "\n" 
+						+ HOVerwaltung.instance().getResource().getProperty("update") + "?",
 					HOVerwaltung.instance().getResource().getProperty("update")+"?",
 					JOptionPane.YES_NO_OPTION);
 
