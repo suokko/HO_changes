@@ -16,22 +16,18 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.LoginDialog;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
-import de.hattrickorganizer.logik.matchengine.engine.common.MatchData;
 import de.hattrickorganizer.logik.xml.XMLArenaParser;
 import de.hattrickorganizer.logik.xml.XMLMatchLineupParser;
 import de.hattrickorganizer.logik.xml.XMLMatchesParser;
 import de.hattrickorganizer.logik.xml.XMLSpielplanParser;
 import de.hattrickorganizer.logik.xml.xmlMatchArchivParser;
 import de.hattrickorganizer.logik.xml.xmlMatchdetailsParser;
-import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -582,7 +578,7 @@ public class OnlineWorker {
 
         //Ab in die DB packen
         if (matches != null) {
-            de.hattrickorganizer.database.DBZugriff.instance().storeMatchKurzInfos(matches);
+            DBZugriff.instance().storeMatchKurzInfos(matches);
         }
 
         waitDialog.setValue(100);
@@ -591,19 +587,21 @@ public class OnlineWorker {
         //Automatisch alle MatchLineups runterladen
         for (int i = 0; (matches != null) && (i < matches.length); i++) {
             //Match noch nicht in der DB
-            if ((de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(matches[i]
-                                                                                     .getMatchID()))
-                && (!de.hattrickorganizer.database.DBZugriff.instance().isMatchLineupVorhanden(matches[i]
-                                                                                               .getMatchID()))
-                && (matches[i].getMatchStatus() == MatchKurzInfo.FINISHED)) {
-                getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
-                               matches[i].getGastID());
-                getMatchDetails(matches[i].getMatchID());
-                de.hattrickorganizer.logik.MatchUpdater.updateMatch(de.hattrickorganizer.model.HOMiniModel
-                                                                    .instance(),
-                                                                    
-                //Dragettho werte setzen
-                matches[i].getMatchID());
+        	int curMatchId = matches[i].getMatchID();
+        	Matchdetails curDetails = DBZugriff.instance().getMatchDetails(curMatchId); 
+            if (DBZugriff.instance().isMatchVorhanden(curMatchId)
+            		&& matches[i].getMatchStatus() == MatchKurzInfo.FINISHED
+            		&& (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId) ||
+            				curDetails == null ||
+            				curDetails.getMatchreport() == null ||
+            				curDetails.getMatchreport().trim().length() == 0
+            				)
+                ) {
+                getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
+                getMatchDetails(curMatchId);
+                de.hattrickorganizer.logik.MatchUpdater.updateMatch(
+                		de.hattrickorganizer.model.HOMiniModel.instance(),
+                		matches[i].getMatchID());
             }
         }
 
@@ -678,7 +676,7 @@ public class OnlineWorker {
 
         //lineup1 Ab in die DB packen
         if (lineUp1 != null) {
-            de.hattrickorganizer.database.DBZugriff.instance().storeMatchLineup(lineUp1);
+            DBZugriff.instance().storeMatchLineup(lineUp1);
         }
 
         waitDialog.setVisible(false);
@@ -943,32 +941,38 @@ public class OnlineWorker {
 	 * Holt für alle Kurzinfos die Lineups, wenn diese noch nicht vorhanden sind
 	 */
 	public void getAllLineups() {
-		final MatchKurzInfo[] infos = de.hattrickorganizer.database.DBZugriff.instance()
+		final MatchKurzInfo[] infos = DBZugriff.instance()
 																			 .getMatchesKurzInfo(-1);
-
+		String haveLineups = "";
+		
 		for (int i = 0; i < infos.length; i++) {
-			if (!de.hattrickorganizer.database.DBZugriff.instance().isMatchLineupVorhanden(infos[i]
-																						   .getMatchID())) {
+			int curMatchId = infos[i].getMatchID();
+			if (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId)) {
 				//Prüfen, ob Lineup schon gezogen werden kann!
 				if (infos[i].getMatchDateAsTimestamp().before(new java.sql.Timestamp(System
 																					 .currentTimeMillis()))) {
-					HOLogger.instance().log(getClass(),"Get Lineup : " + infos[i].getMatchID());
+					HOLogger.instance().log(getClass(),"Get Lineup : " + curMatchId);
 
 					//Nur weiter, wenn das Lineup gezogen wurde
 					if (de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker()
-															.getMatchlineup(infos[i].getMatchID(),
+															.getMatchlineup(curMatchId,
 																			infos[i].getHeimID(),
 																			infos[i].getGastID())) {
 						de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker()
-															.getMatchDetails(infos[i].getMatchID());
+															.getMatchDetails(curMatchId);
 					}
 				} else {
-					HOLogger.instance().log(getClass(),"Not Played : " + infos[i].getMatchID());
+					HOLogger.instance().log(getClass(),"Not Played : " + curMatchId);
 				}
 			} else {
-				HOLogger.instance().log(getClass(),"Have Lineup : " + infos[i].getMatchID());
+				// Match lineup already available
+				if (haveLineups.length() > 0)
+					haveLineups += ", ";
+				haveLineups += curMatchId;
 			}
 		}
+		if (haveLineups.length() > 0)
+			HOLogger.instance().log(getClass(),"Have Lineups : " + haveLineups);
 	}
 
     /////////////////////////////////////////////////////////////////////////////////
