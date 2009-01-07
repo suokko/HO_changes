@@ -42,7 +42,7 @@ public class HOLogger {
      * Creates a new instance of Logger
      */
     private HOLogger() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dirName = "logs";
         String fileName = "HO-" + dateFormat.format(new Date()) + ".log";
         try {
