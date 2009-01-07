@@ -120,10 +120,11 @@ public class MatchExporter {
 		}
 		Vector highlights = details.getHighlights();
 		//Aussortieren starten...
-		if ((info.getMatchDateAsTimestamp().before(startingDate)) //Zu alt !!!
-		|| (DBZugriff.instance().getHrfIDSameTraining(info.getMatchDateAsTimestamp()) == -1)) //Kein HRF gefunden
+		if (info.getMatchDateAsTimestamp().before(startingDate)) { //Zu alt !!!
+			return false;
+		} else if (DBZugriff.instance().getHrfIDSameTraining(info.getMatchDateAsTimestamp()) == -1) //Kein HRF gefunden
 			{
-			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": No HRF found");
+			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": No matching HRF found");
 			return false;
 		} else //Datum i.O. weitere checks fahren
 			{
