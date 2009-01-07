@@ -147,7 +147,7 @@ public class FormulaFactors {
         init();
 
         //eigentliche Defaults lesen
-        readFromXML("defaults.xml");
+        readFromXML("prediction/defaults.xml");
     }
 
     /**
