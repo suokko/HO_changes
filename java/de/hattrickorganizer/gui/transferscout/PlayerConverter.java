@@ -199,12 +199,23 @@ public class PlayerConverter {
 
             //-- get playerid
             int found_at_line = -1;
+            int n = 0;
             for (int m = 0; m<10; m++) {
             	tmp = lines.get(m).toString();
 
             	try {
-					if (tmp.indexOf("(") > -1 && tmp.indexOf(")") > -1 && Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()) > 100000) {
+					if ((p = tmp.indexOf("(")) > -1 && (n = tmp.indexOf(")")) > -1 && Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()) > 100000) {
 						player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()));
+						found_at_line = m;
+						break;
+					}
+            	} catch (Exception e) {
+					if (p < 0) continue;
+				}
+            	try {
+					// handle categories: Player Name (TW) (123456789)
+					if (tmp.indexOf("(", p+1) > -1 && tmp.indexOf(")", n+1) > -1 && Integer.parseInt(tmp.substring(tmp.indexOf("(", p+1)+1, tmp.indexOf(")", n+1)).trim()) > 100000) {
+						player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(", p+1)+1, tmp.indexOf(")", n+1)).trim()));
 						found_at_line = m;
 						break;
 					}
@@ -218,7 +229,7 @@ public class PlayerConverter {
 
             String age = "";
             p = 0;
-            int n = 0;
+            n = 0;
 
             while (p < tmp.length()) {
                 if ((tmp.charAt(p) < '0') || (tmp.charAt(p) > '9')) {
@@ -521,7 +532,7 @@ public class PlayerConverter {
                 }
             }
 
-            if ((foundskills.size() != 11) && (error == 0)) {
+            if ((foundskills.size() < 11) && (error == 0)) {
                 error = 1;
             }
 
