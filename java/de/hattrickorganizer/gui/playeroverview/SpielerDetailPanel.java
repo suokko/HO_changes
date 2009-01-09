@@ -201,6 +201,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     private final JButton m_jbAnalyse2 = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoAnalyseBottom.png")));
     private final JButton m_jbOffsets = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/offset.png")));
     private final JButton m_jbStatistik = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoStatistik.png")));
+    private final JButton m_jbTrainingBlock = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Locked.gif"))); // TODO icon
     private final JButton m_jbTransvergleich = new JButton(new ImageIcon(Helper.makeColorTransparent(Helper
                                                                                          .loadImage("gui/bilder/smilies/8dollar.png"),
                                                                                          new java.awt.Color(209,
@@ -318,6 +319,9 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         } else if (actionevent.getSource().equals(m_jbOffsets)) {
             new SpielerOffsetDialog(HOMainFrame.instance(), m_clSpieler)
             .setVisible(true);
+        } else if (actionevent.getSource().equals(m_jbTrainingBlock)) {
+        	new SpielerTrainingBlockDialog(HOMainFrame.instance(), m_clSpieler)
+        	.setVisible(true);
         }
     }
 
@@ -670,6 +674,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         m_jbAnalyse1.setEnabled(true);
         m_jbAnalyse2.setEnabled(true);
         m_jbOffsets.setEnabled(true);
+        m_jbTrainingBlock.setEnabled(true);
     }
 
     private void showNormal(DoppelLabelEntry labelEntry,byte playerPosition){
@@ -1018,6 +1023,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         initButton(m_jbAnalyse1,properties.getProperty("tt_Spieler_analyse1"),buttonpanel);
         initButton(m_jbAnalyse2,properties.getProperty("tt_Spieler_analyse2"),buttonpanel);
         initButton(m_jbOffsets,properties.getProperty("tt_Spieler_offset"),buttonpanel);
+        initButton(m_jbTrainingBlock,properties.getProperty("TrainingBlock"),buttonpanel);
 
         setPosition(constraints,8,15);
         constraints.weightx = 1.0;
@@ -1224,6 +1230,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         m_jbAnalyse1.setEnabled(false);
         m_jbAnalyse2.setEnabled(false);
         m_jbOffsets.setEnabled(false);
+        m_jbTrainingBlock.setEnabled(false);
     }
 
     /**

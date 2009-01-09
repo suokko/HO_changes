@@ -45,7 +45,7 @@ public class DBZugriff {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** TODO Missing Parameter Documentation */
-	private static final int DBVersion = 7;
+	private static final int DBVersion = 8;
 
 	/** TODO Missing Parameter Documentation 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -328,6 +328,19 @@ public class DBZugriff {
 	}
 
 	/**
+	 * get a player from a specific HRF
+	 *
+	 * @param hrfID hrd id
+	 * @param playerId player id
+	 * 
+	 *
+	 * @return player
+	 */
+	public Spieler getSpielerFromHrf(int hrfID, int playerId) {
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerFromHrf(hrfID, playerId);
+	}
+
+	/**
 	 * Gibt einen Spieler zurück mit den Daten kurz vor dem Timestamp
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
@@ -392,6 +405,16 @@ public class DBZugriff {
 		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, spieler, date);
 	}
 
+	/**
+	 * saves one player to the DB
+	 *
+	 * @param hrfId		hrf id
+	 * @param player	the player to be saved
+	 * @param date		date to save
+	 */
+	public void saveSpieler(int hrfId, Spieler player, Timestamp date) {
+		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, player, date);
+	}
 	// ------------------------------- LigaTable -------------------------------------------------
 
 	/**
@@ -1641,6 +1664,8 @@ public class DBZugriff {
 						updateDBv6();
 					case 6 :
 						updateDBv7();
+					case 7 :
+						updateDBv8();
 
 						//case 2: updateDB_v3(); // For future versions!
 				}
@@ -1783,7 +1808,7 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN STAMINATRAININGPART INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE TRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE FUTURETRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE FUTURETRAINING SET STAMINATRAININGPART=5");
+		m_clJDBCAdapter.executeUpdate("UPDATE FUTURETRAINING SET STAMINATRAININGPART=5 WHERE STAMINATRAININGPART IS NULL");
 
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
@@ -1833,6 +1858,16 @@ public class DBZugriff {
 		saveUserParameter("DBVersion", 7);
 	}
 
+	/**
+	 * Update DB structure to v8
+	 *
+	 * @throws Exception
+	 */
+	private void updateDBv8() throws Exception {
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE Spieler ADD COLUMN TrainingBlock BOOLEAN");
+		m_clJDBCAdapter.executeUpdate("UPDATE Spieler SET TrainingBlock=false WHERE TrainingBlock IS null");
+	}
+	
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
@@ -1953,6 +1988,8 @@ public class DBZugriff {
 	}
 
 	private void updateConfigTo1424 () {
+		resetTrainingParameters (); // Reset training parameters (just to be sure)
+		
 		saveUserParameter("updateCheck", "true");
 		saveUserParameter("newsCheck", "true");
 

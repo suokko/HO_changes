@@ -19,7 +19,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	protected void initColumns() {
-		columns = new ColumnDescriptor[57];
+		columns = new ColumnDescriptor[58];
 		columns[0] = new ColumnDescriptor("HRF_ID", Types.INTEGER, false);
 		columns[1] = new ColumnDescriptor("Datum", Types.TIMESTAMP, false);
 		columns[2] = new ColumnDescriptor("GelbeKarten", Types.INTEGER, false);
@@ -77,6 +77,7 @@ public final class SpielerTable extends AbstractTable {
 		columns[54] = new ColumnDescriptor("Caps", Types.INTEGER, false);
 		columns[55] = new ColumnDescriptor("CapsU20", Types.INTEGER, false);
 		columns[56] = new ColumnDescriptor("AgeDays", Types.INTEGER, false);
+		columns[57] = new ColumnDescriptor("TrainingBlock", Types.BOOLEAN, false);
 
 	}
 
@@ -87,27 +88,22 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	/**
-	 * speichert die Spieler
+	 * saves one player to the DB
 	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param spieler TODO Missing Constructuor Parameter Documentation
-	 * @param date TODO Missing Constructuor Parameter Documentation
+	 * @param hrfId		hrf id
+	 * @param player	the player to be saved
 	 */
-	public void saveSpieler(int hrfId, Vector spieler, Timestamp date) {
-		String statement = null;
-		final String[] awhereS = { "HRF_ID" };
-		final String[] awhereV = { "" + hrfId };
-		Spieler player = null;
 
-		if (spieler != null) {
-			//erst Vorhandene Aufstellung löschen
+	protected void saveSpieler(int hrfId, Spieler player, Timestamp date) {
+		String statement = null;
+		final String[] awhereS = { "HRF_ID", "SpielerId" };
+		final String[] awhereV = { "" + hrfId, "" + player.getSpielerID()};
+		if (player != null) {
+			// Delete old values
 			delete(awhereS, awhereV);
 
-			for (int i = 0; i < spieler.size(); i++) {
-				player = (Spieler) spieler.elementAt(i);
-
-				//insert vorbereiten
-				statement =
+			//insert vorbereiten
+			statement =
 					"INSERT into "+getTableName()+" ( GelbeKarten , SpielerID , Name , Age , AgeDays , "
 						+ "Kondition , Form , Torwart , Verteidigung , Spielaufbau , Fluegel , "
 						+ "Torschuss , Passpiel , Standards , SubTorwart , SubVerteidigung , "
@@ -118,7 +114,7 @@ public final class SpielerTable extends AbstractTable {
 						+ "iAgressivitaet , sAgressivitaet , Fuehrung , Erfahrung , Gehalt , "
 						+ "Bonus , Land , Marktwert , Verletzt , ToreFreund , ToreLiga , TorePokal , "
 						+ "ToreGesamt , Hattrick , Bewertung , TrainerTyp, Trainer, HRF_ID, Datum, "
-						+ "PlayerNumber, TransferListed,  Caps, CapsU20 ) VALUES(";
+						+ "PlayerNumber, TransferListed,  Caps, CapsU20, TrainingBlock ) VALUES(";
 				statement
 					+= (""
 						+ player.getGelbeKarten()
@@ -234,12 +230,71 @@ public final class SpielerTable extends AbstractTable {
 						+ player.getLaenderspiele()
 						+ ","
 						+ player.getU20Laenderspiele()
+						+ ","
+						+ player.hasTrainingBlock()
 						+ " )");
 				adapter.executeUpdate(statement);
+			}
+	}
+	
+	/**
+	 * speichert die Spieler
+	 *
+	 * @param hrfId TODO Missing Constructuor Parameter Documentation
+	 * @param spieler TODO Missing Constructuor Parameter Documentation
+	 * @param date TODO Missing Constructuor Parameter Documentation
+	 */
+	public void saveSpieler(int hrfId, Vector spieler, Timestamp date) {
+		String statement = null;
+		final String[] awhereS = { "HRF_ID" };
+		final String[] awhereV = { "" + hrfId };
+		Spieler player = null;
+
+		if (spieler != null) {
+			// Delete old values
+			delete(awhereS, awhereV);
+
+			for (int i = 0; i < spieler.size(); i++) {
+				player = (Spieler) spieler.elementAt(i);
+				
+				saveSpieler (hrfId, player, date);
 			}
 		}
 	}
 
+	/**
+	 * get a player from a specific HRF
+	 *
+	 * @param hrfID hrd id
+	 * @param playerId player id
+	 * 
+	 *
+	 * @return player
+	 */
+	protected Spieler getSpielerFromHrf(int hrfID, int playerId) {
+		ResultSet rs = null;
+		Spieler player = null;
+		String sql = null;
+
+		sql = "SELECT * from "+getTableName()+" WHERE HRF_ID = " + hrfID + " AND SpielerId="+playerId;
+		rs = adapter.executeQuery(sql);
+
+		try {
+			if (rs != null) {
+				rs.beforeFirst();
+
+				if (rs.next()) {
+					player = new Spieler(rs);
+					return player;
+				}
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(),"DatenbankZugriff.getSpielerFromHrf: " + e);
+		}
+
+		return null;		
+	}
+	
 	/**
 	 * lädt die Spieler zum angegeben HRF file ein
 	 *

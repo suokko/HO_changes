@@ -1239,4 +1239,16 @@ public interface ISpieler {
     //equals
     /////////////////////////////////////////////////////////////////////////////////
     public boolean equals(Object obj);
+    
+    /**
+     * Does this player have a training block?
+     * @return training block
+     */
+    public boolean hasTrainingBlock ();
+    
+    /**
+     * Set the training block of this player (true/false)
+     * @param isBlocked	new value
+     */
+    public void setTrainingBlock (boolean isBlocked);
 }
