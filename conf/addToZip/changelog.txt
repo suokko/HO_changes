@@ -5,7 +5,12 @@ Changelist HO! 1.424
 - fix problem with "-1" trainings and missing stats
 - changed the 5 star symbol a bit (more contrast)
 - updated EPV
-- reactivating HO auto update                                            
+- reactivated HO auto update
+- added training block function
+
+Plugin Updates:
+---------------
+- TeamAnalyzer 2.69 (included in HO 1.424, added new "diff%" column to rating comparison)
 
 
 Changelist HO! 1.423

@@ -225,6 +225,9 @@ public final class Spieler implements plugins.ISpieler {
 
     /** Verteidigung */
     private int m_iVerteidigung = 1;
+    
+    /** Training block */
+    private boolean m_bTrainingBlock = false;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -312,6 +315,9 @@ public final class Spieler implements plugins.ISpieler {
             m_iTransferlisted = rs.getInt("TransferListed");
             m_iLaenderspiele = rs.getInt("Caps");
             m_iU20Laenderspiele = rs.getInt("CapsU20");
+            
+            // Training block
+            m_bTrainingBlock = rs.getBoolean("TrainingBlock");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
         }
@@ -412,6 +418,10 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetFluegelspiel = oldSpieler.getTrainingsOffsetFluegelspiel();
             m_dTrainingsOffsetTorschuss = oldSpieler.getTrainingsOffsetTorschuss();
             m_dTrainingsOffsetStandards = oldSpieler.getTrainingsOffsetStandards();
+
+            // Training block
+            m_bTrainingBlock = oldSpieler.hasTrainingBlock();
+
         }
     }
 
@@ -2707,4 +2717,21 @@ public final class Spieler implements plugins.ISpieler {
     protected boolean check4SkillUp(int skill, ISpieler oldPlayer) {
         return PlayerHelper.check4SkillUp(skill, oldPlayer, this);
     }
+    
+    /**
+     * Does this player have a training block?
+     * @return training block
+     */
+    public boolean hasTrainingBlock () {
+    	return m_bTrainingBlock;
+    }
+    
+    /**
+     * Set the training block of this player (true/false)
+     * @param isBlocked	new value
+     */
+    public void setTrainingBlock (boolean isBlocked) {
+    	this.m_bTrainingBlock = isBlocked;
+    }
+
 }

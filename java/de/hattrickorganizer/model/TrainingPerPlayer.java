@@ -12,6 +12,8 @@ import plugins.ITeam;
 import plugins.ITrainingPerPlayer;
 import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
+import de.hattrickorganizer.logik.TrainingsManager;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 
 
@@ -312,22 +314,47 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 	 * @return
 	 */
 	private boolean isAfterSkillup (Calendar trainingDate, int skillType) {
-		if (getTimestamp() == null)
-			return true;
+		if (getTimestamp() == null) {
+			if (TrainingsManager.TRAININGDEBUG) {
+				HOLogger.instance().debug(getClass(), 
+						"isAfterSkillup: traindate NULL (" + skillType + ") is always after skillup");
+			}
+			return true;			
+		}
 		Date skillupTime = getLastSkillupDate(skillType, getTimestamp());
-		if (trainingDate.getTimeInMillis() > skillupTime.getTime())
-			return true;
-		else
+		if (trainingDate.getTimeInMillis() > skillupTime.getTime()) {
+			if (TrainingsManager.TRAININGDEBUG) {
+				HOLogger.instance().debug(getClass(), 
+						"isAfterSkillup: traindate "+trainingDate.getTime().toLocaleString() 
+						+ " (" + skillType + ") is after skillup");
+			}
+			return true;	
+		} else {
+			if (TrainingsManager.TRAININGDEBUG) {
+				HOLogger.instance().debug(getClass(), 
+						"isAfterSkillup: traindate "+trainingDate.getTime().toLocaleString() 
+						+ " (" + skillType + ") is NOT after skillup");
+			}
 			return false;
+		}
 	}
 	
     /**
      * Updates the training results
      */
     private void calculateTrainingResults(ITrainingWeek train) {
+		Calendar trainingDate = train.getTrainingDate();
+    	if (spieler.hasTrainingBlock()) {
+    		// Do nothing if the player has a training block
+			if (TrainingsManager.TRAININGDEBUG) {
+				HOLogger.instance().debug(getClass(), 
+						"Ignoring train results for player " + spieler.getName() + " (" + spieler.getSpielerID() + ") at "
+						+ trainingDate.getTime().toLocaleString() + " because of TrainingBlock!"); 
+			}    		
+    		return;
+    	}
     	double d = trainPoint.calcTrainingPoints(false);
     	int trainType = train.getTyp();
-		Calendar trainingDate = train.getTrainingDate();
     	switch (trainType) {
 		case ITeam.TA_SPIELAUFBAU:
 	        //Spielaufbau // playmaking
