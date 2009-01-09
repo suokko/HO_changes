@@ -31,9 +31,9 @@ P D Bug description
 3 A Large memory consumption at the training update crashes / blocks some HO installations
     	Removing old matches and giving HO more heap memory 'solves' this issue
 4 ? Add string and icon for regainer
-4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
-	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
 4 F Fix HO.sh for linux (accept whitespaces in path name)
+4 A If the first download after a stadium expansion includes also a new match, the old
+    stadium size is shown in statistics. One can get >100% usage then.
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
 5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
@@ -55,8 +55,6 @@ P D Task
 3 F Optimize EPV
 3 ? Training calculation is VERY slow, we need to speed this up if possible
 	I think re-implemeting the whole training calculation would make the most sense :-/
-3 A Add indirect freekicks to match highlights
-		Status: implementation needs to be tested (do we handle all events?)
 3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
 4 ? Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 4 ? Add brown stars (player performance at the end of the game) to HO
@@ -93,6 +91,8 @@ P D Task
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
 	(this breaks the build process for new dev environments)
 3 A A long teamname confuses the layout of the simulation window (TA) so that many values become unreadable
+3 A Add indirect freekicks to match highlights
+		Status: implementation needs to be tested (do we handle all events?)
 4 F Attack rating prediction of normal/off midfielder looks odd.
 	An IM produces less attack rating when playing offensive than playing normal.
 	Fixed by the new optimization.
@@ -100,6 +100,9 @@ P D Task
 		the bar charts don't match to the subskills on the player overview
 4 F Apply some GUI changes to make subskill > 0.94 look better with fraction digits<2
 4 A Reactivate auto update function (adjust SF links!)
+4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
+	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
+	09.01.2009: Fixed according to HT-Thomas (it was an HT bug anyway)
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
 5 A Show weather SEs in match highlights
