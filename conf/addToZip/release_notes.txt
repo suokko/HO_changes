@@ -11,6 +11,7 @@ Changelist HO! 1.424
 Plugin Updates:
 ---------------
 - TeamAnalyzer 2.69 (included in HO 1.424, added new "diff%" column to rating comparison)
+- Feedback 0.421 (included in HO 1.424)
 
 
 Changelist HO! 1.423
