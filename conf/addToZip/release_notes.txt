@@ -3,10 +3,11 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 Changelist HO! 1.424
 ====================
 - fix problem with "-1" trainings and missing stats
-- changed the 5 star symbol a bit (more contrast)
+- changed the 5,10 and 50 star symbol a bit (more contrast)
 - updated EPV
 - reactivated HO auto update
 - added training block function
+- enhance transfer scout player parser
 
 Plugin Updates:
 ---------------
