@@ -30,7 +30,6 @@ P D Bug description
 3 ? IFA doesn't show up after successful installation
 3 A Large memory consumption at the training update crashes / blocks some HO installations
     	Removing old matches and giving HO more heap memory 'solves' this issue
-4 F Apply some GUI changes to make subskill > 0.94 look better with fraction digits<2
 4 ? Add string and icon for regainer
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
@@ -68,8 +67,6 @@ P D Task
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
-5 ? Add an individual player training block (i.e. don't count skill training for a specific player)
-	(with start date, so that recalc subskills does still work for older trainings)
 5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
 
 
@@ -77,12 +74,10 @@ Features
 ========
 P D Task
 ------------------------------------------------------
-4 A Reactivate auto update function (adjust SF links!)
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
 5 F Add a player export function (CSV)
-5 ? Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
 
 
 Fixed/Resolved
@@ -103,10 +98,15 @@ P D Task
 	Fixed by the new optimization.
 4 F Players training progress in the TrainingExperience tab seems wrong
 		the bar charts don't match to the subskills on the player overview
+4 F Apply some GUI changes to make subskill > 0.94 look better with fraction digits<2
+4 A Reactivate auto update function (adjust SF links!)
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
 5 A Show weather SEs in match highlights
 5 F Update ExperienceViewer-Plugin (0.51) and Spieler.getErfahrungBonus()
+5 F Add an individual player training block (i.e. don't count skill training for a specific player)
+	(with start date, so that recalc subskills does still work for older trainings)
+5 F Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
 
 
 Legend:
