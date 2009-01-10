@@ -75,7 +75,6 @@ P D Task
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
-5 F Add a player export function (CSV)
 
 
 Fixed/Resolved
@@ -110,6 +109,7 @@ P D Task
 5 F Add an individual player training block (i.e. don't count skill training for a specific player)
 	(with start date, so that recalc subskills does still work for older trainings)
 5 F Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
+5 F Add a player export function (CSV)
 
 
 Legend:
