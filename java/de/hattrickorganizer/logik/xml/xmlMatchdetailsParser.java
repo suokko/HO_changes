@@ -6,11 +6,17 @@
  */
 package de.hattrickorganizer.logik.xml;
 
+import java.util.Vector;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.IMatchHighlight;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.matches.MatchHighlight;
+import de.hattrickorganizer.model.matches.MatchLineup;
+import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
@@ -82,19 +88,442 @@ public class xmlMatchdetailsParser {
         Matchdetails md = null;
 
         if (doc != null) {
-            md = new Matchdetails();
+        	try {
+                md = new Matchdetails();
 
-            readGeneral(doc, md);
-            readArena(doc, md);
-            readGuestTeam(doc, md);
-            readHomeTeam(doc, md);
-
-            //read matchhighlights
-            //            readGoals( doc, md );
-            //            readCards( doc, md );
+                readGeneral(doc, md);
+                // Match lineup needs to be available, if not -> cancel
+                if (!DBZugriff.instance().isMatchLineupVorhanden(md.getMatchID())) {
+                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser: Cannot parse match details, lineup MUST be available first!");
+                	return null;
+                }
+                readArena(doc, md);
+                readGuestTeam(doc, md);
+                readHomeTeam(doc, md);
+                readHighlights(doc, md);
+                parseMatchReport(md);
+                //read matchhighlights
+                //            readGoals( doc, md );
+                //            readCards( doc, md );				
+			} catch (Exception e) {
+	            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.createMatchDetails Exception gefangen: " + e);
+	            return null;
+			}
         }
 
         return md;
+    }
+
+    /**
+     * read the match highlights from XML
+     *
+     * @param doc 	XML document
+     * @param md	match details
+     *
+     */
+    private final void readHighlights(Document doc, Matchdetails md) {
+        final Vector myHighlights = new Vector();
+        final Vector broken = new Vector();
+        final MatchLineup lineup = DBZugriff.instance().getMatchLineup(md.getMatchID());
+        Element ele = null;
+        Element eventList = null;
+        Element root = null;
+
+        try {
+            //get Root element
+            root = doc.getDocumentElement();
+            root = (Element) root.getElementsByTagName("Match").item(0);
+            //get both teams
+            ele = (Element) root.getElementsByTagName("HomeTeam").item(0);
+            final String homeTeamID = XMLManager.instance().getFirstChildNodeValue((Element) ele.getElementsByTagName("HomeTeamID")
+                                                                                                        .item(0));
+//            ele = (Element) root.getElementsByTagName("AwayTeam").item(0);
+//            final String awayTeamID = XMLManager.instance().getFirstChildNodeValue((Element) ele.getElementsByTagName("AwayTeamID")
+//                                                                                                        .item(0));
+            
+            final Vector homeTeamPlayers = parseLineup (lineup.getHeim().getAufstellung());
+            final Vector awayTeamPlayers = parseLineup (lineup.getGast().getAufstellung());
+
+            //now go through the eventlist and add everything together
+            eventList = (Element) root.getElementsByTagName("EventList").item(0);
+
+            int homeGoals = 0;
+            int awayGoals = 0;
+            int n = 0;
+
+            while (n < eventList.getElementsByTagName("Event").getLength()) {
+            	root = (Element) eventList.getElementsByTagName("Event").item(n);
+
+            	//get values from xml
+            	final int minute = (Integer.valueOf(XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("Minute")
+            					.item(0))))
+            					.intValue();
+            	final int subjectplayerid = (Integer.valueOf(XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("SubjectPlayerID")
+            					.item(0))))
+            					.intValue();
+            	final int subjectteamid = (Integer.valueOf(XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("SubjectTeamID")
+            					.item(0))))
+            					.intValue();
+            	final int objectplayerid = (Integer.valueOf(XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("ObjectPlayerID")
+            					.item(0))))
+            					.intValue();
+            	final String eventkey = (XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventKey")
+            					.item(0)))
+            					.split("_")[0];
+            	String eventtext = XMLManager.instance().getFirstChildNodeValue((Element) root.getElementsByTagName("EventText")
+            			.item(0));
+            	eventtext = eventtext.replaceAll("&lt;", "<");
+            	eventtext = eventtext.replaceAll("&gt;", ">");
+            	eventtext = eventtext.replaceAll("/>", ">");
+            	eventtext = eventtext.replaceAll("&quot;", "\"");
+            	eventtext = eventtext.replaceAll("&amp;", "&");
+
+            	final int highlighttyp = (Integer.valueOf(eventkey)).intValue() / 100;
+            	final int highlightsubtyp = (Integer.valueOf(eventkey)).intValue()
+            	- (((Integer.valueOf(eventkey)).intValue() / 100) * 100);
+
+            	//determine new score
+            	if (highlighttyp == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
+            		if (String.valueOf(subjectteamid).equals(homeTeamID)) {
+            			homeGoals++;
+            		} else {
+            			awayGoals++;
+            		}
+            	}
+
+            	//get names for players
+            	String subjectplayername = "";
+            	String objectplayername = "";
+            	boolean subHome = true;
+            	boolean objHome = true;
+
+            	if (minute > 0) {
+            		int i = 0;
+
+            		while (i < homeTeamPlayers.size()) {
+            			if ((!subjectplayername.equals(""))
+            					&& (!objectplayername.equals(""))) {
+            				break;
+            			}
+
+            			final Vector tmpPlayer = (Vector) homeTeamPlayers.get(i);
+
+            			if (tmpPlayer.get(0).toString().equals(String.valueOf(subjectplayerid))) {
+            				subjectplayername = tmpPlayer.get(1).toString();
+            			}
+
+            			if (tmpPlayer.get(0).toString().equals(String.valueOf(objectplayerid))) {
+            				objectplayername = tmpPlayer.get(1).toString();
+            			}
+
+            			i++;
+            		}
+
+            		i = 0;
+
+            		while (i < awayTeamPlayers.size()) {
+            			if ((!subjectplayername.equals(""))
+            					&& (!objectplayername.equals(""))) {
+            				break;
+            			}
+
+            			final Vector tmpPlayer = (Vector) awayTeamPlayers.get(i);
+
+            			if (tmpPlayer.get(0).toString().equals(String.valueOf(subjectplayerid))) {
+            				subjectplayername = tmpPlayer.get(1).toString();
+            				subHome = false;
+            			}
+
+            			if (tmpPlayer.get(0).toString().equals(String.valueOf(objectplayerid))) {
+            				objectplayername = tmpPlayer.get(1).toString();
+            				objHome = false;
+            			}
+
+            			i++;
+            		}
+            	}
+
+            	//add single player
+            	if (minute > 0) {
+            		switch ((highlighttyp * 100) + highlightsubtyp) {
+            		case 40:
+            		case 45:
+            		case 47:
+            		case 60:
+            		case 61:
+            		case 62:
+            		case 63:
+            		case 64:
+            		case 65:
+            		case 68:
+            		case 70:
+            		case 71:
+            		case 72:
+            		case 331:
+            		case 332:
+            		case 333:
+            		case 334:
+            		case 599:
+            			break;
+
+            		default:
+
+            			if (subjectplayername.equals("") && (subjectplayerid != 0)) {
+            				if (eventtext.indexOf(String.valueOf(subjectplayerid)) >= 0) {
+            					String plname = eventtext.substring(eventtext.indexOf(String
+            							.valueOf(subjectplayerid)));
+            					plname = plname.substring(plname.indexOf(">") + 1);
+            					plname = plname.substring(0, plname.indexOf("<"));
+            					subjectplayername = plname;
+
+            					final Vector tmpplay = new Vector();
+            					tmpplay.add(String.valueOf(subjectplayerid));
+            					tmpplay.add(plname);
+
+            					if (homeTeamID.equals(String.valueOf(subjectteamid))) {
+            						homeTeamPlayers.add(tmpplay);
+            					} else {
+            						awayTeamPlayers.add(tmpplay);
+            						subHome = false;
+            					}
+            				} else {
+            					subjectplayername = String.valueOf(subjectplayerid);
+            					broken.add(new Integer(myHighlights.size()));
+            				}
+            			}
+
+            		if (objectplayername.equals("") && (objectplayerid != 0)) {
+            			if (eventtext.indexOf(String.valueOf(objectplayerid)) >= 0) {
+            				String plname = eventtext.substring(eventtext.indexOf(String
+            						.valueOf(objectplayerid)));
+            				plname = plname.substring(plname.indexOf(">") + 1);
+            				plname = plname.substring(0, plname.indexOf("<"));
+            				objectplayername = plname;
+
+            				final Vector tmpplay = new Vector();
+            				tmpplay.add(String.valueOf(objectplayerid));
+            				tmpplay.add(plname);
+
+            				//there is no easy solution to find out for which team this
+            				//players is playing. it's more possible that he's playing
+            				//in home team, so we go like this
+            				homeTeamPlayers.add(tmpplay);
+            			} else {
+            				objectplayername = String.valueOf(objectplayerid);
+            				broken.add(new Integer(myHighlights.size()));
+            			}
+            		}
+            		}
+            	}
+
+            	//modify eventtext
+            	if (!subjectplayername.equals("")) {
+            		String subplayerColor = "#000000";
+
+            		if (subHome) {
+            			subplayerColor = "#000099";
+            		} else {
+            			subplayerColor = "#990000";
+            		}
+
+            		String objplayerColor = "#000000";
+
+            		if (objHome) {
+            			objplayerColor = "#000099";
+            		} else {
+            			objplayerColor = "#990000";
+            		}
+
+            		boolean replaceend = false;
+
+            		if (eventtext.indexOf(String.valueOf(subjectplayerid)) >= 0) {
+            			eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?playerId="
+            					+ subjectplayerid + ".*?>",
+            					"<FONT COLOR=" + subplayerColor + "#><B>");
+            			replaceend = true;
+            		}
+
+            		if (eventtext.indexOf(String.valueOf(objectplayerid)) >= 0) {
+            			eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?playerId="
+            					+ objectplayerid + ".*?>",
+            					"<FONT COLOR=" + objplayerColor + "#><B>");
+            			replaceend = true;
+            		}
+
+            		if (replaceend) {
+            			eventtext = eventtext.replaceAll("(?i)</A>", "</B></FONT>");
+            		}
+            	}
+
+            	//generate MatchHighlight and add to list
+            	final MatchHighlight myHighlight = new MatchHighlight();
+            	myHighlight.setHighlightTyp(highlighttyp);
+            	myHighlight.setHighlightSubTyp(highlightsubtyp);
+            	myHighlight.setMinute(minute);
+            	myHighlight.setHeimTore(homeGoals);
+            	myHighlight.setGastTore(awayGoals);
+            	myHighlight.setSpielerID(subjectplayerid);
+            	myHighlight.setSpielerName(subjectplayername);
+            	myHighlight.setSpielerHeim(subHome);
+            	myHighlight.setTeamID(subjectteamid);
+            	myHighlight.setGehilfeID(objectplayerid);
+            	myHighlight.setGehilfeName(objectplayername);
+            	myHighlight.setGehilfeHeim(objHome);
+            	myHighlight.setEventText(eventtext);
+            	myHighlights.add(myHighlight);
+
+            	//break if end of match (due to some corrupt xmls)
+            	if ((highlighttyp == IMatchHighlight.HIGHLIGHT_KARTEN)
+            			&& (highlightsubtyp == IMatchHighlight.HIGHLIGHT_SUB_SPIELENDE)) {
+            		break;
+            	}
+
+            	n++;
+            }
+
+            // check for redcarded highlights
+            for (int i = 0; i < broken.size(); i++) {
+            	final int tmpid = ((Integer) broken.get(i)).intValue();
+            	final MatchHighlight tmp = (MatchHighlight) myHighlights.get(tmpid);
+
+            	String subjectplayername = "";
+            	String objectplayername = "";
+            	boolean subHome = true;
+            	boolean objHome = true;
+            	int j = 0;
+
+            	while (j < homeTeamPlayers.size()) {
+            		if ((!subjectplayername.equals("")) && (!objectplayername.equals(""))) {
+            			break;
+            		}
+
+            		final Vector tmpPlayer = (Vector) homeTeamPlayers.get(j);
+
+            		if (tmpPlayer.get(0).toString().equals(String.valueOf(tmp.getSpielerID()))) {
+            			subjectplayername = tmpPlayer.get(1).toString();
+            		}
+
+            		if (tmpPlayer.get(0).toString().equals(String.valueOf(tmp.getGehilfeID()))) {
+            			objectplayername = tmpPlayer.get(1).toString();
+            		}
+
+            		j++;
+            	}
+
+            	j = 0;
+
+            	while (j < awayTeamPlayers.size()) {
+            		if ((!subjectplayername.equals("")) && (!objectplayername.equals(""))) {
+            			break;
+            		}
+
+            		final Vector tmpPlayer = (Vector) awayTeamPlayers.get(j);
+
+            		if (tmpPlayer.get(0).toString().equals(String.valueOf(tmp.getSpielerID()))) {
+            			subjectplayername = tmpPlayer.get(1).toString();
+            			subHome = false;
+            		}
+
+            		if (tmpPlayer.get(0).toString().equals(String.valueOf(tmp.getGehilfeID()))) {
+            			objectplayername = tmpPlayer.get(1).toString();
+            			objHome = false;
+            		}
+
+            		j++;
+            	}
+
+            	if (!subjectplayername.equals("")) {
+            		String subplayerColor = "#000000";
+
+            		if (subHome) {
+            			subplayerColor = "#009900";
+            		} else {
+            			subplayerColor = "#990000";
+            		}
+
+            		String objplayerColor = "#000000";
+
+            		if (objHome) {
+            			objplayerColor = "#009900";
+            		} else {
+            			objplayerColor = "#990000";
+            		}
+
+            		String eventtext = tmp.getEventText();
+            		boolean replaceend = false;
+
+            		if (eventtext.indexOf(String.valueOf(tmp.getSpielerID())) >= 0) {
+            			eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?PlayerID="
+            					+ tmp.getSpielerID() + ".*?>",
+            					"<FONT COLOR=" + subplayerColor + "#><B>");
+            			replaceend = true;
+            		}
+
+            		if (eventtext.indexOf(String.valueOf(tmp.getGehilfeID())) >= 0) {
+            			eventtext = eventtext.replaceAll("(?i)<A HREF=\"/Club/Players/Player\\.aspx\\?playerId="
+            					+ tmp.getGehilfeID() + ".*?>",
+            					"<FONT COLOR=" + objplayerColor + "#><B>");
+            			replaceend = true;
+            		}
+
+            		if (replaceend) {
+            			eventtext = eventtext.replaceAll("(?i)</A>", "</B></FONT>");
+            		}
+
+            		tmp.setSpielerName(subjectplayername);
+            		tmp.setSpielerHeim(subHome);
+            		tmp.setGehilfeName(objectplayername);
+            		tmp.setGehilfeHeim(objHome);
+            		tmp.setEventText(eventtext);
+            	}
+            }
+            md.setHighlights(myHighlights);
+        } catch (Exception e) {
+        	HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readHighlights Exception gefangen: " + e);
+        	md = null;
+        }
+    }
+
+    /**
+     * convert the existing team lineup into a Vector of Vectors (of playerId, playerName)
+     *
+     * @param lineup (of MatchLineupPlayer)		team lineup
+     */
+    private final Vector parseLineup (Vector lineup) {
+    	Vector players = new Vector();
+        MatchLineupPlayer player = null;
+
+        for (int i = 0; (lineup != null) && (i < lineup.size()); i++) {
+            player = (MatchLineupPlayer) lineup.elementAt(i);
+            final Vector tmpPlayer = new Vector();
+            tmpPlayer.add("" + player.getSpielerId());
+            tmpPlayer.add(player.getSpielerName());
+            players.add(tmpPlayer);
+        }
+    	return players;
+    }
+    
+    /**
+     * parse match report from previously parsed highlights
+     *
+     * @param md	match details
+     */
+    public final void parseMatchReport(Matchdetails md) {
+        Vector highlights = md.getHighlights();
+
+        final StringBuffer report = new StringBuffer();
+
+        for (int k = 0; k < highlights.size(); k++) {
+            final MatchHighlight tmp = (MatchHighlight) highlights.get(k);
+            report.append(tmp.getEventText()+" ");
+        }
+
+        md.setMatchreport(report.toString());
     }
 
     /**
