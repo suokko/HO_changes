@@ -270,7 +270,9 @@ public final class HOMainFrame extends JFrame
 
 		// Log Operating System
 		HOLogger.instance().info(getClass(), "Operating system found: " 
-				+ System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")");
+				+ System.getProperty("os.name") 
+				+ " on " + System.getProperty("os.arch") 
+				+ " (" + System.getProperty("os.version") + ")");
 
 		// Log Java version
 		HOLogger.instance().info(getClass(), "Using java: " 
