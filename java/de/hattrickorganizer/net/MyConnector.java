@@ -383,6 +383,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
+		url += "&matchEvents=true";
 
 		return getPage(url, true);
 	}

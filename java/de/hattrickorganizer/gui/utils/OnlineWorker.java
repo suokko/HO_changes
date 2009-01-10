@@ -463,11 +463,9 @@ public class OnlineWorker {
                 getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
                                matches[i].getGastID());
                 getMatchDetails(matches[i].getMatchID());
-                de.hattrickorganizer.logik.MatchUpdater.updateMatch(de.hattrickorganizer.model.HOMiniModel
-                                                                    .instance(),
-                                                                    
-                //Dragettho werte setzen
-                matches[i].getMatchID());
+                de.hattrickorganizer.logik.MatchUpdater.
+                	updateMatch(de.hattrickorganizer.model.HOMiniModel
+                			.instance(), matches[i].getMatchID());
             }
         }
 
@@ -586,9 +584,10 @@ public class OnlineWorker {
 
         //Automatisch alle MatchLineups runterladen
         for (int i = 0; (matches != null) && (i < matches.length); i++) {
-            //Match noch nicht in der DB
         	int curMatchId = matches[i].getMatchID();
         	Matchdetails curDetails = DBZugriff.instance().getMatchDetails(curMatchId); 
+            //Match noch nicht in der DB
+        	
             if (DBZugriff.instance().isMatchVorhanden(curMatchId)
             		&& matches[i].getMatchStatus() == MatchKurzInfo.FINISHED
             		&& (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId) ||
@@ -597,8 +596,9 @@ public class OnlineWorker {
             				curDetails.getMatchreport().trim().length() == 0
             				)
                 ) {
-                getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
-                getMatchDetails(curMatchId);
+                boolean retLineup = getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
+                boolean retDetails = getMatchDetails(curMatchId);
+                HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails);
                 de.hattrickorganizer.logik.MatchUpdater.updateMatch(
                 		de.hattrickorganizer.model.HOMiniModel.instance(),
                 		matches[i].getMatchID());
@@ -810,11 +810,13 @@ public class OnlineWorker {
             waitDialog.setValue(20);
 
             final xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
-
+            
             details = parser.parseMachtdetailsFromString(matchDetails);
             waitDialog.setValue(40);
-            details.setMatchreport(details.getMatchReport("" + matchID));
-            
+            if (details == null) {
+            	HOLogger.instance().warning(getClass(), "Unable to fetch details for match " + matchID);            	
+            	return null;
+            }
             String arenaString = MyConnector.instance().getArena(details.getArenaID());
             waitDialog.setValue(50);
             String regionIdAsString = (String)new XMLArenaParser().parseArenaFromString(arenaString).get("RegionID");
