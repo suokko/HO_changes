@@ -36,6 +36,7 @@ import plugins.ISpieler;
 import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
+import de.hattrickorganizer.gui.exporter.CsvPlayerExport;
 import de.hattrickorganizer.gui.exporter.XMLExporter;
 import de.hattrickorganizer.gui.info.InformationsPanel;
 import de.hattrickorganizer.gui.injury.InjuryDialog;
@@ -212,6 +213,8 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiNotepad =
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Notizen"));
 	private final JMenuItem m_jmiExporter = new JMenuItem("XML Exporter");
+	private final JMenuItem m_jmiCsvPlayerExporter =
+		new JMenuItem("CSV PlayerExport"); // TODO L10N
 
 	private final JMenuItem m_jmiLanguages =
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Sprachdatei"));
@@ -264,6 +267,15 @@ public final class HOMainFrame extends JFrame
 	private HOMainFrame() {
 		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
+
+		// Log Operating System
+		HOLogger.instance().info(getClass(), "Operating system found: " 
+				+ System.getProperty("os.name"));
+
+		// Log Java version
+		HOLogger.instance().info(getClass(), "Using java: " 
+				+ System.getProperty("java.version") + " ("+ System.getProperty("java.vendor") + ")");
+
 		RefreshManager.instance().registerRefreshable(this);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -276,8 +288,6 @@ public final class HOMainFrame extends JFrame
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 
-		// Log Operating System
-		HOLogger.instance().debug(getClass(), "Operating system found: "+System.getProperty("os.name"));
 
 		// Catch Apple-Q for MacOS
 		if (System.getProperty("os.name").toLowerCase().indexOf("mac") != -1)
@@ -729,6 +739,9 @@ public final class HOMainFrame extends JFrame
 		} else if (source.equals(m_jmiExporter)) {
 			XMLExporter exporter = new XMLExporter();
 			exporter.doExport();
+		} else if (source.equals(m_jmiCsvPlayerExporter)) {
+			CsvPlayerExport csvExporter = new CsvPlayerExport();
+			csvExporter.showSaveDialog();
 		} else if (source.equals(m_jmiInjuryCalculator)) {
 			injuryTool.reload();
 			injuryTool.setVisible(true);
@@ -1146,6 +1159,9 @@ public final class HOMainFrame extends JFrame
 
 		m_jmiExporter.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiExporter);
+
+		m_jmiCsvPlayerExporter.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiCsvPlayerExporter);
 
 		m_jmiNotepad.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiNotepad);
