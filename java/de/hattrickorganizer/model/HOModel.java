@@ -454,7 +454,7 @@ public class HOModel {
                 ISpieler old = (ISpieler) players.get("" + player.getSpielerID());
 
                 if (old == null) {
-                	if (TrainingsManager.TRAININGDEBUG) 
+                	if (TrainingsManager.TRAININGDEBUG)
                 		HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
                     old = new Spieler();
                     old.setSpielerID(-1);
@@ -506,11 +506,11 @@ public class HOModel {
 	                }
 	                IHTCalendar htcA = helper.createTrainingCalendar(actualTrainingDate);
 	            	String htcAs = " ("+htcA.getHTSeason()+"."+htcA.getHTWeek()+")";
-	                IHTCalendar htcC = helper.createTrainingCalendar(calcDate); 
+	                IHTCalendar htcC = helper.createTrainingCalendar(calcDate);
 	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
 
 	            	ITrainingWeek trWeek = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
-	                HOLogger.instance().debug(HOModel.class, 
+	                HOLogger.instance().debug(HOModel.class,
 	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTyp())
 	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs
 	                			+ ", act="+actualTrainingDate.toLocaleString() +htcAs
@@ -524,19 +524,6 @@ public class HOModel {
 	                 * End of debug
 	                 */
 				}
-
-                if (player.getSpielerID() == 40591141) {
-                    HOLogger.instance().log(getClass(),m_iID + " " + trainingType);
-                    HOLogger.instance().log(getClass(),player.getSubskill4Pos(ISpieler.SKILL_TORWART) + " "
-                                       + player.getTrainingsOffsetVerteidigung());
-
-                    final ISpieler sp = (ISpieler) players.get("" + player.getSpielerID());
-
-                    if (sp != null) {
-                        HOLogger.instance().log(getClass(),sp.getSubskill4Pos(ISpieler.SKILL_TORWART) + " "
-                                           + sp.getTrainingsOffsetVerteidigung());
-                    }
-                }
             } catch (Exception e) {
                 HOLogger.instance().log(getClass(),e);
                 HOLogger.instance().log(getClass(),"Model calcSubskill: " + e);
@@ -544,8 +531,7 @@ public class HOModel {
         }
 
         //Spieler
-        de.hattrickorganizer.database.DBZugriff.instance().saveSpieler(m_iID, m_vSpieler,
-                                                                       m_clBasics.getDatum());
+        DBZugriff.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
     }
 
     private void logPlayerProgress (ISpieler before, ISpieler after) {
