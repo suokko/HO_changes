@@ -201,12 +201,9 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     private final JButton m_jbAnalyse2 = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoAnalyseBottom.png")));
     private final JButton m_jbOffsets = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/offset.png")));
     private final JButton m_jbStatistik = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoStatistik.png")));
-    private final JButton m_jbTrainingBlock = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Locked.gif"))); // TODO icon
+    private final JButton m_jbTrainingBlock = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/trainingblock.png")));
     private final JButton m_jbTransvergleich = new JButton(new ImageIcon(Helper.makeColorTransparent(Helper
-                                                                                         .loadImage("gui/bilder/smilies/8dollar.png"),
-                                                                                         new java.awt.Color(209,
-                                                                                                            41,
-                                                                                                            144))));
+    			.loadImage("gui/bilder/smilies/8dollar.png"), new Color(209,41,144))));
     private final JComboBox m_jcbManuellerSmilie = new JComboBox(Helper.MANUELLSMILIES);
     private final JComboBox m_jcbTeamInfoSmilie = new JComboBox(Helper.TEAMSMILIES);
     private final JComboBox m_jcbUserPos = new JComboBox(de.hattrickorganizer.model.SpielerPosition.POSITIONEN);
