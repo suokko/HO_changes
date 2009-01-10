@@ -94,14 +94,14 @@ public class xmlMatchdetailsParser {
                 readGeneral(doc, md);
                 // Match lineup needs to be available, if not -> cancel
                 if (!DBZugriff.instance().isMatchLineupVorhanden(md.getMatchID())) {
-                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser: Cannot parse match details, lineup MUST be available first!");
-                	return null;
+                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser: Cannot parse matchreport from matchdetails, lineup MUST be available first!");
+                } else {
+                    readHighlights(doc, md);
+                    parseMatchReport(md);
                 }
                 readArena(doc, md);
                 readGuestTeam(doc, md);
                 readHomeTeam(doc, md);
-                readHighlights(doc, md);
-                parseMatchReport(md);
                 //read matchhighlights
                 //            readGoals( doc, md );
                 //            readCards( doc, md );				
