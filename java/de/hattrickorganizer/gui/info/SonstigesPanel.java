@@ -1,21 +1,23 @@
 // %2020218070:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.PlayerHelper;
-
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.DecimalFormat;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.model.Finanzen;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Verein;
+import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
@@ -104,10 +106,11 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
      * TODO Missing Method Documentation
      */
     private void setLabels() {
-        final de.hattrickorganizer.model.Verein verein = HOVerwaltung.instance().getModel()
-                                                                     .getVerein();
-        final de.hattrickorganizer.model.Finanzen finanzen = HOVerwaltung.instance().getModel()
-                                                                         .getFinanzen();
+        final Verein verein = HOVerwaltung.instance().getModel().getVerein();
+        final Finanzen finanzen = HOVerwaltung.instance().getModel().getFinanzen();
+
+        DecimalFormat df = new DecimalFormat("###,###,###,##0");
+
         m_jpJugend.setText(PlayerHelper.getNameForSkill(verein.getJugend()));
         m_jpFansAnzahl.setText(verein.getFans() + "");
         m_jpFans.setText(Finanzen.getNameForLevelFans(finanzen.getSupporter()));
@@ -115,10 +118,10 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         m_jpUngeschlagen.setText(verein.getUngeschlagen() + "");
         m_jpSiegeInFolge.setText(verein.getSiege() + "");
         m_jpAnzahlSpieler.setText(HOVerwaltung.instance().getModel().getAllSpieler().size() + "");
-        m_jpAvgTSI.setText(HOVerwaltung.instance().getAvgTSI() + "");
-        m_jpSumTSI.setText(HOVerwaltung.instance().getSumTSI() + "");
-        m_jpAvgEPV.setSpezialNumber(HOVerwaltung.instance().getAvgEPV(), true);
-        m_jpSumEPV.setSpezialNumber(HOVerwaltung.instance().getSumEPV(), true);
+        m_jpAvgTSI.setText(df.format(HOVerwaltung.instance().getAvgTSI()));
+        m_jpSumTSI.setText(df.format(HOVerwaltung.instance().getSumTSI()));
+        m_jpAvgEPV.setSpezialNumber(Math.round(HOVerwaltung.instance().getAvgEPV()), true);
+        m_jpSumEPV.setSpezialNumber(Math.round(HOVerwaltung.instance().getSumEPV()), true);
         m_jpDAlter.setText(HOVerwaltung.instance().getDurchschnittsAlter() + "");
         m_jpDForm.setText(HOVerwaltung.instance().getDurchschnittsForm() + "");
         m_jpDErfahrung.setText(HOVerwaltung.instance().getDurchschnittsErfahrung() + "");
