@@ -11,6 +11,9 @@ Changelist HO! 1.424
 - added CSV player export
 - changed the download process of the match highlights (big thx to GM-Mjoelnir!)
 	(we are very hopeful that the problem with the missing match reports is fixed now)
+- Language updates:
+	- small fix in the French translation (thx Bruno)
+	- update Serbian language files (thx Chokky)
 
 Plugin Updates:
 ---------------
