@@ -14,8 +14,7 @@ Changelist HO! 1.424
 - changed HO.sh to allow spaces in path name ($HODIR and $HOHOME)
 - Language updates:
 	- small fix in the French translation (thx Bruno)
-	- update Serbian language files (thx Chokky)
-
+	- updates for several languages (thx -_duke_-, Chokky, LderMax, mikaelmd, Off_Line, Temur)
 
 Plugin Updates:
 ---------------
