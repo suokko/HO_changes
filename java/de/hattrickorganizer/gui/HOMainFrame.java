@@ -87,7 +87,7 @@ public final class HOMainFrame extends JFrame
 	public static final double VERSION = 1.424d;
 
 	/** Is this a development version? */
-	private static final boolean DEVELOPMENT = true;
+	private static final boolean DEVELOPMENT = false;
 
 	/**
 	 * After that date, the user gets a nag screen if he starts his old HO version,
@@ -269,13 +269,13 @@ public final class HOMainFrame extends JFrame
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 
 		// Log Operating System
-		HOLogger.instance().info(getClass(), "Operating system found: " 
-				+ System.getProperty("os.name") 
-				+ " on " + System.getProperty("os.arch") 
+		HOLogger.instance().info(getClass(), "Operating system found: "
+				+ System.getProperty("os.name")
+				+ " on " + System.getProperty("os.arch")
 				+ " (" + System.getProperty("os.version") + ")");
 
 		// Log Java version
-		HOLogger.instance().info(getClass(), "Using java: " 
+		HOLogger.instance().info(getClass(), "Using java: "
 				+ System.getProperty("java.version") + " ("+ System.getProperty("java.vendor") + ")");
 
 		RefreshManager.instance().registerRefreshable(this);
