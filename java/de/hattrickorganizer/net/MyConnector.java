@@ -89,8 +89,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	public static String getResourceSite() {
-		return getHOSite();
-
+		return getPluginSite();
 	}
 
 	public static String getHOSite() {
