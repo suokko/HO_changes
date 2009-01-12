@@ -854,7 +854,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			}
 			return d;
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
+			HOLogger.instance().log(getClass(),"Unable to connect to the update server (HO): " + e);
 			return de.hattrickorganizer.gui.HOMainFrame.VERSION;
 		}
 	}
@@ -866,7 +866,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Kein Connect zum update" + e);
+			HOLogger.instance().log(getClass(),"Unable to connect to the update server (EPV): " + e);
 			return new Extension();
 		}
 	}
@@ -878,7 +878,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Kein Connect zum update(ratings): " + e);
+			HOLogger.instance().log(getClass(),"Unable to connect to the update server (Ratings): " + e);
 			return new Extension();
 		}
 	}
@@ -889,7 +889,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Kein Connect zum update(news): " + e);
+			HOLogger.instance().log(getClass(),"Unable to connect to the update server (News): " + e);
 			return new News();
 		}
 	}
