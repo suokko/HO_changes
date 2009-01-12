@@ -31,7 +31,6 @@ P D Bug description
 3 A Large memory consumption at the training update crashes / blocks some HO installations
     	Removing old matches and giving HO more heap memory 'solves' this issue
 4 ? Add string and icon for regainer
-4 F Fix HO.sh for linux (accept whitespaces in path name)
 4 A If the first download after a stadium expansion includes also a new match, the old
     stadium size is shown in statistics. One can get >100% usage then.
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
@@ -102,6 +101,7 @@ P D Task
 4 A The old youth school is excellent and in HO, in Misc tab there is passable youth school
 	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
 	09.01.2009: Fixed according to HT-Thomas (it was an HT bug anyway)
+4 F Fix HO.sh for linux (accept whitespaces in path name)
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
 5 A Show weather SEs in match highlights

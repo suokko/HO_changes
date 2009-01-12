@@ -1,11 +1,12 @@
 #!/bin/sh
 #
-# Start script for Hattrick Organizer v0.35
-# Originally created by patta, RAGtime and others
-# Last Change (2008-10-05) by Flattermann (flattermannHO@gmail.com)
+# Start script for Hattrick Organizer v0.36
+# Created by patta, RAGtime, flattermann and others
+# Last Change (2009-01-12) by flattermann (HO@flattermann.net)
 #
 # List of changes:
 #
+#	0.36	- allow spaces in path names, some enhancement
 #       0.35    - removing dependencies from bash as system shell
 #       0.34    - copy prediction directory (for HO>=1.410)
 #	0.33    - don't copy rating.dat anymore (not needed for HO>=1.400)
@@ -52,12 +53,12 @@ HOCONF=HO.config
 ### BEGIN of default user configuration! ###
 #
 
-# Enter HO!'s directory. Default is the current directory.
-# In multi user mode this can be any directory (full path!).
+# Enter HO!'s directory. Default is the directory that contains HO.sh.
+# In multi user mode this can be any directory.
 #
-#HODIR=`pwd`
+#HODIR="$(dirname "$0")"
 
-HODIR=`pwd`
+HODIR="$(dirname "$0")"
 
 # Next comes HO!'s directory to store its user data.
 # This directory must be writable by the user,
@@ -65,13 +66,14 @@ HODIR=`pwd`
 #
 # SINGLE USER:
 #
-#HOHOME=${HODIR}
+#HOHOME="${HODIR}"
 #
 # MULTI USER:
+# (use an absolute path here)
 #
-#HOHOME=~/.hattrickorganizer
+#HOHOME="~/.hattrickorganizer"
 
-HOHOME=${HODIR}
+HOHOME="${HODIR}"
 
 # Where can I find java?
 # Default is just looking at $PATH
@@ -88,11 +90,11 @@ JAVA=`which java`
 MAX_BACKUPS=5
 
 # Enter the maximum amount of memory available to the java VM.
-# Default is 256 MegaBytes!
+# Default is 512 MegaBytes!
 #
-#MAX_MEMORY=256m
+#MAX_MEMORY=512m
 
-MAX_MEMORY=256m
+MAX_MEMORY=512m
 
 # JDBC driver to use. Only if you use a remote DDBB
 # better write it in your HO.config
@@ -123,36 +125,58 @@ fi
 
 HONAME=$0
 
+# Substitute shell expressions, like ~user
+#
+HODIR="`eval echo $HODIR`"
+HOHOME="`eval echo $HOHOME`"
+
+# Create $HOHOME for multi user environment
+#
+if [ ! "$HODIR" = "$HOHOME" -a ! -e "$HOHOME" ]; then
+	echo "Creating new HO user directory in $HOHOME"
+	mkdir -p "$HOHOME"
+	if [ ! -d "$HOHOME" ]; then
+		echo "Unable to create HO user directory $HOHOME"
+		echo "Aborting..."
+		exit 1
+	fi
+fi
+
+# Convert relative to absolute path
+#
+HODIR=$(cd "$HODIR" && pwd) 
+HOHOME=$(cd "$HOHOME" && pwd) 
+
 # Enter the directory where the database is stored
 #
-#DATABASEDIR=$HOHOME/db
+#DATABASEDIR="$HOHOME/db"
 
-DATABASEDIR=$HOHOME/db
+DATABASEDIR="$HOHOME/db"
 
 # Enter the default backup-directory. It will be created
 # in $HOHOME/db if it doesn't exist. Default is 'backup'.
 #
-#BACKUPDIR=$HOHOME/db/backup
+#BACKUPDIR="$HOHOME/db/backup"
 
-BACKUPDIR=$HOHOME/db/backup
+BACKUPDIR="$HOHOME/db/backup"
 
 # Enter the directory where the HO! plugins reside
 #
-#PLUGINSDIR=$HOHOME/hoplugins
+#PLUGINSDIR="$HOHOME/hoplugins"
 
-PLUGINSDIR=$HOHOME/hoplugins
+PLUGINSDIR="$HOHOME/hoplugins"
 
 # Enter the directory where the language files are
 #
-#SPRACHDIR=$HOHOME/sprache
+#SPRACHDIR="$HOHOME/sprache"
 
-SPRACHDIR=$HOHOME/sprache
+SPRACHDIR="$HOHOME/sprache"
 
 # Enter the directory where the prediction files are
 #
-#PREDICTIONDIR=$HOHOME/prediction
+#PREDICTIONDIR="$HOHOME/prediction"
 
-PREDICTIONDIR=$HOHOME/prediction
+PREDICTIONDIR="$HOHOME/prediction"
 
 
 # required java version
@@ -221,23 +245,43 @@ help(){
 
 start(){
 	cd "${HOHOME}"
-    echo "Starting HO from ${HOHOME}..."
+	echo "Starting HO from ${HOHOME}..."
 
-    $JAVA -classpath "${HODIR}" HOLauncher
+	# Start HOLauncher for update check only in single user mode
+	if [ "$HOHOME" = "$HODIR" ]; then
+		eval "$JAVA -cp \"${HODIR}\" HOLauncher"
+	else
+		if [ -e "$HOHOME/update.zip" ]; then
+			echo
+			echo "WARNING!"
+			echo "Cannot auto-update in multi user mode!"
+			echo
+			echo "Please manually unpack (as root) the file"
+			echo "$HOHOME/update.zip"
+			echo "to your HO directory"
+			echo "$HODIR"
+			echo
+			echo "After that, remove the file"
+			echo "$HOHOME/update.zip"
+			echo
+			echo "Press ENTER to start HO or CTRL-C to abort"
+			read
+		fi
+	fi
 
 	# check database and print warning
-	HO_PAR="-jar $HODIR/ho.jar" 
-    if [ ! "x$JDBC" = "x" ]
-    then
-        echo "Using jdbc $JDBC..."
-        HO_PAR="-cp $HODIR/hsqldb.jar:jl1.0.jar:$HODIR/ho.jar:$JDBC de.hattrickorganizer.HO"
-    fi
+	HO_PAR="-jar \"${HODIR}/ho.jar\""
+	if [ ! "x${JDBC}" = "x" ]
+	then
+	        echo "Using jdbc ${JDBC}..."
+		HO_PAR="-cp ${JDBC} ${HO_PAR}"
+	fi
 
-  	$JAVA -Xmx$MAX_MEMORY $HO_PAR
+  	eval "$JAVA -Xmx$MAX_MEMORY ${HO_PAR}"
 
 
-	if [ `grep modified "${DATABASEDIR}/database.properties" | \
-			cut -d= -f2` = "no" ]
+	if [ _`grep modified "${DATABASEDIR}/database.properties" | \
+			cut -d= -f2` = "_no" ]
 	then
 		echo "Database OK!"
 	else
@@ -256,15 +300,15 @@ backup(){
   	if [ ! -d "${BACKUPDIR}" ]
 	then
     	echo "Creating ${BACKUPDIR}"
-	    mkdir -p ${BACKUPDIR}
+	    mkdir -p "${BACKUPDIR}"
   	fi
-  	cd $BACKUPDIR
+  	cd "$BACKUPDIR"
 	# Delete too old backup files
   	while [ "`ls -r | wc -l`" -gt $MAX_BACKUPS ]
 	do
             rm -f `ls -r | tail -n 1`
   	done
-  	cd ${DATABASEDIR}
+  	cd "${DATABASEDIR}"
 	# THE BIG TRICK: ls gives false (status>0) if one of the files is missing!!! ;-)
   	if ls ${BACKUPLIST} &> /dev/null
 	then
@@ -272,9 +316,9 @@ backup(){
             if [ `grep modified database.properties | cut -d= -f2` = "no" ]
 	    then
 		# f - is needed in case someone has set his $TAPE variable...
-		tar -cf - $BACKUPLIST | gzip > $BACKUPDIR/$PREFIX-$DATE.tgz
+		tar -cf - $BACKUPLIST | gzip > "$BACKUPDIR"/$PREFIX-$DATE.tgz
 		# ...and this is shorter, but won't work if there's no GNU tar! :-(
-		# tar -czf $BACKUPDIR/$PREFIX-$DATE.tgz $BACKUPLIST
+		# tar -czf "$BACKUPDIR"/$PREFIX-$DATE.tgz $BACKUPLIST
 	    else
 		cat <<-EOF >&2
 			OLD database was not relased correctly! I will do no backup
@@ -289,12 +333,12 @@ backup(){
 # Restore
 
 restore(){
-	cd $DATABASEDIR
-	if [ -z $RESTOREDATE ]
+	cd "$DATABASEDIR"
+	if [ -z "$RESTOREDATE" ]
 	then
-		if ls $BACKUPDIR/$PREFIX*.tgz &> /dev/null
+		if ls "$BACKUPDIR"/$PREFIX*.tgz &> /dev/null
 		then
-		    gunzip -c `ls $BACKUPDIR/$PREFIX*.tgz | tail -n 1` | tar -xf -
+		    gunzip -c `ls "$BACKUPDIR"/$PREFIX*.tgz | tail -n 1` | tar -xf -
 		else
 		    echo "No backup file(s) found!" >&2
 		    exit 2
@@ -399,9 +443,9 @@ do
 			if [ -z $RESTOREDATE ]
 			then
 				echo "Option rd or restoredate needs a date as parameter!" >&2
-				if ls $BACKUPDIR/$PREFIX-*.tgz &> /dev/null
+				if ls "$BACKUPDIR"/$PREFIX-*.tgz &> /dev/null
 				then
- 				    echo -e "Available backups: \n`ls -1 $BACKUPDIR/$PREFIX-*.tgz`" >&2
+ 				    echo -e "Available backups: \n`ls -1 "$BACKUPDIR"/$PREFIX-*.tgz`" >&2
 				else
                                     echo "Sorry, there's no Backup available!!!" >&2
 				fi
@@ -430,7 +474,7 @@ done
 if [ ! -d "${HOHOME}" ]
 then
 	echo "creating ${HOHOME}"
-	mkdir "${HOHOME}"
+	mkdir -p "${HOHOME}"
 fi
 
 # If directory does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
@@ -439,10 +483,10 @@ then
         if [ ! -d "${HODIR}/hoplugins" ]
         then
           echo "creating ${HOHOME}/hoplugins"
-          mkdir "${HOHOME}/hoplugins"
+          mkdir -p "${HOHOME}/hoplugins"
         else
   	  echo "copying $PLUGINSDIR"
-	  cp -r "${HODIR}/hoplugins" ${HOHOME}
+	  cp -r "${HODIR}/hoplugins" "${HOHOME}"
         fi
 fi
 
@@ -450,32 +494,15 @@ fi
 if [ ! -d "${SPRACHDIR}" -o "${HODIR}/sprache" -nt "${SPRACHDIR}" ]
 then
 	echo "copying ${SPRACHDIR}"
-	cp -r "${HODIR}/sprache" ${HOHOME}
+	cp -r "${HODIR}/sprache" "${HOHOME}"
 fi
 
 # If directory does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
 if [ ! -d "${PREDICTIONDIR}" -o "${HODIR}/prediction" -nt "${PREDICTIONDIR}" ]
 then
         echo "copying ${PREDICTIONDIR}"
-        cp -r "${HODIR}/prediction" ${HOHOME}
+        cp -r "${HODIR}/prediction" "${HOHOME}"
 fi
-
-# If file does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-# 2009-01-09 Removed by flattermann (file is now called prediction/defaults.xml)
-#if [ ! -e "${HOHOME}/defaults.xml" -o "${HODIR}/defaults.xml" -nt "${HOHOME}/defaults.xml" ]
-#then
-#	echo "copying ${HOHOME}/defaults.xml"
-#	cp "${HODIR}/defaults.xml" ${HOHOME}/defaults.xml
-#fi
-
-# If file does not exists in $HOHOME or the one in $HODIR is newer -> Copy from $HODIR to $HOHOME
-# 2009-01-09 Removed by flattermann (file is now called prediction/epvWeights.mlp)
-#if [ ! -e "${HOHOME}/epv.dat" -o "${HODIR}/epv.dat" -nt "${HOHOME}/epv.dat" ]
-#then
-#	echo "copying ${HOHOME}/epv.dat"
-#        cp "${HODIR}/epv.dat" ${HOHOME}/epv.dat
-#fi
-
 
 # Perform backups or restore only if $DATABASEDIR exists
 
