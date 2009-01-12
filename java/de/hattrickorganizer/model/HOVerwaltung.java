@@ -8,6 +8,7 @@ package de.hattrickorganizer.model;
 
 import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Vector;
 
 import de.hattrickorganizer.gui.model.CBItem;
@@ -250,19 +251,19 @@ public class HOVerwaltung {
            pfad = pfad.replaceAll ( "file:",  "" );
            //! Aus Pfad entfernen
            pfad = pfad.replaceAll ( "!", "" );
-        
-        
+
+
            java.io.File sprachdatei = new java.io.File( pfad );
            HOLogger.instance().log(getClass(), "Sprachpfad " + pfad );
-        
+
            if ( ! sprachdatei.exists () )
            {
                pfad = pfad.substring ( pfad.indexOf ( "sprache" ), pfad.length () );
                sprachdatei = new java.io.File( pfad );
                HOLogger.instance().log(getClass(), "2. Sprachpfad " + pfad );
            }
-        
-        
+
+
            if ( sprachdatei.exists () )
            {
          */
@@ -310,6 +311,8 @@ public class HOVerwaltung {
      * @param hrfDate TODO Missing Method Parameter Documentation
      */
     public void recalcSubskills(boolean showWait, Timestamp hrfDate) {
+    	HOLogger.instance().log(getClass(), "Start full subskill calculation. " + new Date());
+    	long start = System.currentTimeMillis();
         if (hrfDate == null) {
             hrfDate = new Timestamp(0);
         }
@@ -325,16 +328,19 @@ public class HOVerwaltung {
         final java.util.Vector hrfListe = new Vector();
         hrfListe.addAll(de.hattrickorganizer.database.DBZugriff.instance().getCBItemHRFListe(hrfDate));
         Collections.reverse(hrfListe);
-
+        long s1, s2, lSum=0, mSum=0;
+        HOLogger.instance().log(getClass(), "Subskill calculation prepared. " + new Date());
         for (int i = 0; i < hrfListe.size(); i++) {
             try {
                 if (showWait) {
                     waitDialog.setValue((int) (((double) i * 100d) / (double) hrfListe.size()));
                 }
-
-                final CBItem hrfItem = (de.hattrickorganizer.gui.model.CBItem) hrfListe.get(i);
-                final HOModel model = this.loadModel(hrfItem.getId());
+                s1 = System.currentTimeMillis();
+                final HOModel model = this.loadModel(((CBItem) hrfListe.get(i)).getId());
+                lSum += (System.currentTimeMillis()-s1);
+                s2 = System.currentTimeMillis();
                 model.calcSubskills();
+                mSum += (System.currentTimeMillis()-s2);
             } catch (Exception e) {
                 HOLogger.instance().log(getClass(),"recalcSubskills : ");
                 HOLogger.instance().log(getClass(),e);
@@ -345,10 +351,12 @@ public class HOVerwaltung {
             waitDialog.setVisible(false);
         }
 
-        //Erneut laden, da sich die Subskills geändert haben        
+        //Erneut laden, da sich die Subskills geändert haben
         loadLatestHoModel();
 
         de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+        HOLogger.instance().log(getClass(), "Subskill calculation done. " + new Date() +
+        		" - took " + (System.currentTimeMillis() - start) + "ms (" + (System.currentTimeMillis() - start)/1000L + " sec), lSum=" + lSum + ", mSum=" + mSum);
     }
 
     /**
