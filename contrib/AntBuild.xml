@@ -190,7 +190,7 @@
     	<copy todir="${tmp-target}" preservelastmodified="yes">
     		<fileset dir="svn/conf/addToJar"/>
     	</copy>
-    	<jar manifest="MANIFEST.MF" destfile="${build-dir}/ho.jar" basedir="${tmp-target}"/>
+    	<jar manifest="svn/conf/MANIFEST.MF" destfile="${build-dir}/ho.jar" basedir="${tmp-target}"/>
     </target>
 	
 	
@@ -246,6 +246,7 @@
     	<antcall target="copy-hoplugins-experienceviewer"/>
 		<antcall target="copy-hoplugins-specialevents"/>
     	<!-- Skip these plugins:
+		<antcall target="copy-hoplugins-nationalteams"/>
 		<antcall target="copy-hoplugins-tsforecast"/>
 		-->
 	</target>
@@ -267,7 +268,16 @@
 			<fileset dir="${basedir}/../HO-Plugin-TrainingExperience/bin/hoplugins"/>
 		</copy>
 	</target>
-	
+
+	<!-- ================================= 
+          target: copy-hoplugins-nationalteams              
+         ================================= -->
+	<target name="copy-hoplugins-nationalteams">
+		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../HO-Plugin-NationalTeams/bin/hoplugins"/>
+		</copy>
+	</target>
+
 	<!-- ================================= 
           target: copy-hoplugins-specialevents              
          ================================= -->
@@ -411,7 +421,7 @@
 		<property name="nsis-installerName" 
 			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer.exe"/>
 		<property name="nsis-installerNameWithJRE" 
-			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer_(with_JRE-${nsis-JRE-Version}).exe"/>
+			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer_with_JRE-${nsis-JRE-Version}.exe"/>
 		
 		<property name="nsis-default-args" 
 			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${nsis-confPath}'"/>
