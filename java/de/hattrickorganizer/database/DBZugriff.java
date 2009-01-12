@@ -1866,6 +1866,10 @@ public class DBZugriff {
 	private void updateDBv8() throws Exception {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE Spieler ADD COLUMN TrainingBlock BOOLEAN");
 		m_clJDBCAdapter.executeUpdate("UPDATE Spieler SET TrainingBlock=false WHERE TrainingBlock IS null");
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		saveUserParameter("DBVersion", 8);
 	}
 	
 	private void changeColumnType(String table,String oldName, String newName, String type) {
