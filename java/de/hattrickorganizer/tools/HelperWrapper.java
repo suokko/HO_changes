@@ -17,6 +17,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,8 +32,16 @@ import plugins.IMatchHelper;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.menu.HRFImport;
+import de.hattrickorganizer.gui.transferscout.Player;
+import de.hattrickorganizer.gui.transferscout.PlayerConverter;
+import de.hattrickorganizer.gui.transferscout.TransferEingabePanel;
+import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.SpielerPosition;
+import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.MatchHelper;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
@@ -126,7 +136,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImage4Position(int posid, byte taktik) {
+    public ImageIcon getImage4Position(int posid, byte taktik) {
         return Helper.getImage4Position(posid, taktik, 0);
     }
 
@@ -137,7 +147,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Country(int country) {
+    public ImageIcon getImageIcon4Country(int country) {
         return Helper.getImageIcon4Country(country);
     }
 
@@ -148,7 +158,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Spezialitaet(int wert) {
+    public ImageIcon getImageIcon4Spezialitaet(int wert) {
         return Helper.getImageIcon4Spezialitaet(wert);
     }
 
@@ -160,7 +170,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
+    public ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
         return Helper.getImageIcon4SpielHighlight(typ, subtyp);
     }
 
@@ -171,7 +181,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Spieltyp(int spieltyp) {
+    public ImageIcon getImageIcon4Spieltyp(int spieltyp) {
         return Helper.getImageIcon4Spieltyp(spieltyp);
     }
 
@@ -182,7 +192,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Veraenderung(int wert) {
+    public ImageIcon getImageIcon4Veraenderung(int wert) {
         return Helper.getImageIcon4Veraenderung(wert);
     }
 
@@ -193,7 +203,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Wetter(int wert) {
+    public ImageIcon getImageIcon4Wetter(int wert) {
         return Helper.getImageIcon4Wetter(wert);
     }
 
@@ -204,7 +214,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4WetterEffekt(int wert) {
+    public ImageIcon getImageIcon4WetterEffekt(int wert) {
         return Helper.getImageIcon4WetterEffekt(wert);
     }
 
@@ -214,7 +224,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public int getLanguageID() {
-        final String id = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
+        final String id = HOVerwaltung.instance().getResource()
                                                                  .getProperty("LanguageID", "-1");
 
         try {
@@ -341,7 +351,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForConfidence(int value) {
-        return de.hattrickorganizer.model.Team.getNameForSelbstvertrauen(value);
+        return Team.getNameForSelbstvertrauen(value);
     }
 
     /**
@@ -363,7 +373,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForMatchTyp(int typ) {
-        return de.hattrickorganizer.model.matches.MatchLineup.getName4MatchTyp(typ);
+        return MatchLineup.getName4MatchTyp(typ);
     }
 
     /**
@@ -374,7 +384,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForPosition(byte value) {
-        return de.hattrickorganizer.model.SpielerPosition.getNameForPosition(value);
+        return SpielerPosition.getNameForPosition(value);
     }
 
     /**
@@ -408,7 +418,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForTaktik(int typ) {
-        return de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(typ);
+        return Matchdetails.getNameForTaktik(typ);
     }
 
     /**
@@ -419,7 +429,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForTeamorder(int typ) {
-        return de.hattrickorganizer.model.matches.Matchdetails.getNameForEinstellung(typ);
+        return Matchdetails.getNameForEinstellung(typ);
     }
 
     /**
@@ -430,7 +440,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForTeamspirit(int value) {
-        return de.hattrickorganizer.model.Team.getNameForStimmung(value);
+        return Team.getNameForStimmung(value);
     }
 
     /**
@@ -441,7 +451,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public String getNameForTraining(int value) {
-        return de.hattrickorganizer.model.Team.getNameForTraining(value);
+        return Team.getNameForTraining(value);
     }
 
     /**
@@ -450,7 +460,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public java.util.Vector getPlugins() {
-        return de.hattrickorganizer.gui.HOMainFrame.getPlugins();
+        return HOMainFrame.getPlugins();
     }
 
     /**
@@ -523,10 +533,10 @@ public class HelperWrapper implements plugins.IHelper {
      * @param spieler TODO Missing Method Parameter Documentation
      */
     public void addTempSpieler(plugins.ISpieler spieler) {
-        final de.hattrickorganizer.model.Spieler tempSpieler = new de.hattrickorganizer.model.Spieler();
+        final Spieler tempSpieler = new Spieler();
 
         tempSpieler.setNationalitaet(spieler.getNationalitaet());
-        tempSpieler.setSpielerID(de.hattrickorganizer.gui.transferscout.TransferEingabePanel
+        tempSpieler.setSpielerID(TransferEingabePanel
                                  .getNextTempSpielerID());
         tempSpieler.setName(spieler.getName());
         tempSpieler.setAlter(spieler.getAlter());
@@ -542,7 +552,7 @@ public class HelperWrapper implements plugins.IHelper {
         tempSpieler.setStandards(spieler.getStandards());
         tempSpieler.setSpielaufbau(spieler.getSpielaufbau());
 
-        de.hattrickorganizer.model.HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
+        HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
         de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
     }
 
@@ -584,7 +594,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.DefaultComboBoxModel createListModel(java.util.Vector vector) {
+    public DefaultComboBoxModel createListModel(java.util.Vector vector) {
         return Helper.createListModel(vector);
     }
 
@@ -598,14 +608,11 @@ public class HelperWrapper implements plugins.IHelper {
      * @throws Exception TODO Missing Method Exception Documentation
      */
     public plugins.ISpieler createSpielerFromText(String text) throws Exception {
-        final de.hattrickorganizer.gui.transferscout.Player player = new de.hattrickorganizer.gui.transferscout.PlayerConverter()
-                                                                     .build(text);
+        final Player player = new PlayerConverter().build(text);
 
-        final de.hattrickorganizer.model.Spieler tempSpieler = new de.hattrickorganizer.model.Spieler();
-        tempSpieler.setNationalitaet(de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                            .getBasics().getLand());
-        tempSpieler.setSpielerID(de.hattrickorganizer.gui.transferscout.TransferEingabePanel
-                                 .getNextTempSpielerID());
+        final Spieler tempSpieler = new Spieler();
+        tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
+        tempSpieler.setSpielerID(TransferEingabePanel.getNextTempSpielerID());
 
         if (player.getPlayerName().trim().equals("")) {
             tempSpieler.setName("Temp " + Math.abs(tempSpieler.getSpielerID()));
@@ -660,22 +667,33 @@ public class HelperWrapper implements plugins.IHelper {
      */
     public boolean downloadMatchData(int matchID) {
         //Spiel nicht vorhanden, dann erst runterladen!
-        if (!de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(matchID)) {
+        if (!DBZugriff.instance().isMatchVorhanden(matchID)) {
             try {
                 //details
-                if (de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker()
+                if (HOMainFrame.instance().getOnlineWorker()
                                                         .getMatchDetails(matchID)) {
-                    final Matchdetails details = de.hattrickorganizer.database.DBZugriff.instance()
+                    Matchdetails details = DBZugriff.instance()
                                                                                         .getMatchDetails(matchID);
 
                     //Lineups
-                    de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker()
+                    HOMainFrame.instance().getOnlineWorker()
                                                         .getMatchlineup(matchID,
                                                                         details.getHeimId(),
                                                                         details.getGastId());
 
+                    //Workaround
+                    // Lineups *must* be available before the match highlights / report 
+                    // can be parsed in getMatchDetails()
+                    // If these informations are still missing, we re-fetch them now
+                    if (details == null || details.getMatchreport() == null || details.getMatchreport().trim().length() == 0) {
+                    	// Fetch matchDetails again
+                    	HOLogger.instance().debug(getClass(), "Fetching missing match highlights / report");
+                    	HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchID);
+                    	details = DBZugriff.instance().getMatchDetails(matchID);
+                    }
+                    
                     //MatchKurzInfo muss hier erstellt werden!!
-                    final MatchLineup lineup = de.hattrickorganizer.database.DBZugriff.instance()
+                    final MatchLineup lineup = DBZugriff.instance()
                                                                                       .getMatchLineup(matchID);
 
                     if (lineup != null) {
@@ -695,11 +713,10 @@ public class HelperWrapper implements plugins.IHelper {
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};
-                        de.hattrickorganizer.database.DBZugriff.instance().storeMatchKurzInfos(infos);
+                        DBZugriff.instance().storeMatchKurzInfos(infos);
                     }
 
-                    de.hattrickorganizer.logik.MatchUpdater.updateMatch(de.hattrickorganizer.model.HOMiniModel
-                                                                        .instance(), matchID);
+                    MatchUpdater.updateMatch(HOMiniModel.instance(), matchID);
                 } else {
                     return false;
                 }
@@ -733,7 +750,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public boolean existsMatchInDB(int matchID) {
-        return de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(matchID);
+        return DBZugriff.instance().isMatchVorhanden(matchID);
     }
 
     /**
@@ -763,7 +780,7 @@ public class HelperWrapper implements plugins.IHelper {
      * TODO Missing Method Documentation
      */
     public void importHRF() {
-        new de.hattrickorganizer.gui.menu.HRFImport(de.hattrickorganizer.gui.HOMainFrame.instance());
+        new HRFImport(HOMainFrame.instance());
     }
 
     /**
