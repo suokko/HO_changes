@@ -2,7 +2,8 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 
 Changelist HO! 1.425
 ====================
-- tbd -
+- fixed problem of missing match highlights / reports when downloading games with the team analyzer
+
 
 Changelist HO! 1.424
 ====================
