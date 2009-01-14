@@ -3,7 +3,12 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 Changelist HO! 1.425
 ====================
 - fixed problem of missing match highlights / reports when downloading games with the team analyzer
+- fixed problem starting match simulation when own tactic strength is higher than divine
+- fixed problems in the transferscout player parser when using IE and the bar style
 
+- Language updates:
+	- improve French translation (thx Bruno)
+	- fixed Czech skill names
 
 Changelist HO! 1.424
 ====================
