@@ -47,6 +47,8 @@ public interface IMatchDetails {
     public static final int TAKTIK_WINGS = 4;
     /** Play creatively */
     public static final int TAKTIK_CREATIVE = 7;
+    /** Long shots */
+    public static final int TAKTIK_LONGSHOTS = 8;
 
     /** away match */
     public static final short LOCATION_AWAY = 0;

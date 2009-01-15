@@ -212,7 +212,10 @@ public class Matchdetails implements plugins.IMatchDetails {
 
             case TAKTIK_CREATIVE:
                 return properties.getProperty("tt_creative");
-
+            
+            case TAKTIK_LONGSHOTS:
+            	return properties.getProperty("Tactic.LongShots");
+                
             default:
                 return properties.getProperty("Unbestimmt");
         }
