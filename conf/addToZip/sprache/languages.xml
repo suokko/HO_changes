@@ -23,7 +23,7 @@
   <property>
     <datei>Czech.properties</datei>
     <lang_id>4</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Danish.properties</datei>
@@ -73,7 +73,7 @@
   <property>
     <datei>Svenska.properties</datei>
     <lang_id>14</lang_id>
-    <version>3.5</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>Finnish.properties</datei>
@@ -133,7 +133,7 @@
   <property>
     <datei>Galego.properties</datei>
     <lang_id>27</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Srpski(lat).properties</datei>
