@@ -84,6 +84,11 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
             tactIndex = 5;
         }
 
+        // LongShots is 8 and not 6.. Why? I don't know, either. :-)
+        if (tactIndex == IMatchDetails.TAKTIK_LONGSHOTS) {
+            tactIndex = 6;
+        }
+
         values[row][0].setSelectedIndex(tactIndex);
         values[row][0].addItemListener(this);
         taktikpanel.add(values[row][0]);
@@ -267,5 +272,7 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
                                    IMatchDetails.TAKTIK_WINGS));
         tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE),
                                    IMatchDetails.TAKTIK_CREATIVE));
+        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS),
+                                   IMatchDetails.TAKTIK_LONGSHOTS));
     }
 }

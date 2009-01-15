@@ -193,7 +193,9 @@ final class AufstellungsDetailPanel extends ImagePanel
                                   new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS),
                                              IMatchDetails.TAKTIK_WINGS),
                                   new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE),
-                                             IMatchDetails.TAKTIK_CREATIVE)
+                                             IMatchDetails.TAKTIK_CREATIVE),
+                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS),
+                                             IMatchDetails.TAKTIK_LONGSHOTS)
                               };
     private JComboBox m_jcbTaktik = new JComboBox(TAKTIK);
 
