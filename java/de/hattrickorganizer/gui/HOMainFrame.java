@@ -1782,7 +1782,9 @@ public final class HOMainFrame extends JFrame
 		}
 
 		// Set HOE file
-		FileExtensionManager.createDirFile();
+		// This creates a file called ho.dir in $home
+		// Do we really need this? Removed by flattermann 2009-01-18
+//		FileExtensionManager.createDirFile();
 
 		// Usermanagement Login-Dialog
 		try {
