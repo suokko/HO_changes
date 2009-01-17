@@ -181,46 +181,59 @@ public  class Aufstellung implements plugins.ILineUp {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * errechnet die Gesamt AW St�rke
+     * get the tactic level for AiM/AoW
      *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * @return tactic level
      */
-    public final float getAWTeamStk(Vector spieler, boolean mitForm) {
-        float stk = 0.0f;
-        stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER, mitForm);
-        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_OFF, mitForm);
-        stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER_OFF, mitForm);
-        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER, mitForm);
-        stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER_AUS, mitForm);
-        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_IN, mitForm);
-        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_DEF, mitForm);
-
-        return de.hattrickorganizer.tools.Helper.round(stk, 1);
-    }
-
-    /**
-     * ermittelt die Gesamt KonterStk der aufgestellten Spieler
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getAttackSTK() {
-        return getAttackSTK(null);
-    }
-
-    /**
-     * ermittelt die Gesamt KonterStk der aufgestellten Spieler
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getAttackSTK(Vector spieler) {
-
+    public final float getTacticLevelAimAow() {
         return Math.max(1,
-                        new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() ).getAow_AimRatings());
+                new RatingPredictionManager(this, 
+                		HOVerwaltung.instance().getModel().getTeam(), 
+                		(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), 
+                		RatingPredictionConfig.getInstance() )
+        		.getTacticLevelAowAim());
+    }
+
+    /**
+     * get the tactic level for counter
+     *
+     * @return tactic level
+     */
+    public final float getTacticLevelCounter() {
+        return Math.max(1,
+        		new RatingPredictionManager(this, 
+        				HOVerwaltung.instance().getModel().getTeam(), 
+        				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), 
+        				RatingPredictionConfig.getInstance() )
+        		.getTacticLevelCounter() );
+    }
+
+    /**
+     * get the tactic level for pressing
+     *
+     * @return tactic level
+     */
+    public final float getTacticLevelPressing() {
+        return Math.max(1,
+        		new RatingPredictionManager(this, 
+        				HOVerwaltung.instance().getModel().getTeam(), 
+        				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), 
+        				RatingPredictionConfig.getInstance() )
+        		.getTacticLevelPressing() );
+    }
+
+    /**
+     * get the tactic level for Long Shots
+     *
+     * @return tactic level
+     */
+    public final float getTacticLevelLongShots() {
+        return Math.max(1,
+                new RatingPredictionManager(this, 
+                		HOVerwaltung.instance().getModel().getTeam(), 
+                		(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), 
+                		RatingPredictionConfig.getInstance() )
+        		.getTacticLevelLongShots());
     }
 
     //    /**
@@ -247,6 +260,27 @@ public  class Aufstellung implements plugins.ILineUp {
     //    		strength++;
     //    	return strength;
     //    }
+
+    /**
+     * errechnet die Gesamt AW St�rke
+     *
+     * @param spieler TODO Missing Constructuor Parameter Documentation
+     * @param mitForm TODO Missing Constructuor Parameter Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public final float getAWTeamStk(Vector spieler, boolean mitForm) {
+        float stk = 0.0f;
+        stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER, mitForm);
+        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_OFF, mitForm);
+        stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER_OFF, mitForm);
+        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER, mitForm);
+        stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER_AUS, mitForm);
+        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_IN, mitForm);
+        stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_DEF, mitForm);
+
+        return de.hattrickorganizer.tools.Helper.round(stk, 1);
+    }
 
     /**
      * Setter for property m_iAttitude.
@@ -505,27 +539,6 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * ermittelt die Gesamt KonterStk der aufgestellten Spieler
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getKonterSTK() {
-        return getKonterSTK(null /* HOVerwaltung.instance ().getModel ().getAllSpieler ()*/);
-    }
-
-    /**
-     * ermittelt die Gesamt KonterStk der aufgestellten Spieler
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getKonterSTK(Vector spieler) {
-        return Math.max(1,
-        		new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() ).getKonterRatings() );
-    }
-
-    /**
      * Predicts LeftAttack-Rating
      *
      * @return TODO Missing Return Method Documentation
@@ -614,15 +627,15 @@ public  class Aufstellung implements plugins.ILineUp {
 
 		// AiM or AoW or CA?
 		if (getTacticType() == plugins.IMatchDetails.TAKTIK_MIDDLE) {
-			AiM = (float) HTfloat2int(getAttackSTK());
+			AiM = (float) HTfloat2int(getTacticLevelAimAow());
 			KZG = ZG + (((0.2f * (AiM - 1.0f)) / 19.0f) + 0.2f);
 			KK = 0.0f;
 		} else if (getTacticType() == plugins.IMatchDetails.TAKTIK_WINGS) {
-			AoW = (float) HTfloat2int(getAttackSTK());
+			AoW = (float) HTfloat2int(getTacticLevelAimAow());
 			KZG = ZG - (((0.2f * (AoW - 1.0f)) / 19.0f) + 0.2f);
 			KK = 0.0f;
 		} else if (getTacticType() == plugins.IMatchDetails.TAKTIK_KONTER) {
-			CA = (float) HTfloat2int(getKonterSTK());
+			CA = (float) HTfloat2int(getTacticLevelCounter());
 			KK = KG * 2.0f * (CA / (CA + 20.0f));
 			KZG = ZG;
 		} else {
@@ -896,72 +909,6 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * ermittelt die Gesamt PressingStk der aufgestellten Spieler original Formel von Pressing
-     * Spezialist
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getPressingSTK() {
-        return getPressingSTK(HOVerwaltung.instance().getModel().getAllSpieler());
-    }
-
-    /**
-     * ermittelt die Gesamt PressingStk der aufgestellten Spieler original Formel von Pressing
-     * Spezialist
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getPressingSTK(Vector spieler) {
-        float pressing = 0.0f;
-        SpielerPosition pos = null;
-        int spez = -1;
-        float defense = 0.0f;
-        float kondi = 0.0f;
-        float form = 0.0f;
-        float exp = 0.0f;
-        int anzSpieler = 0;
-
-        for (int i = 0; i < spieler.size(); i++) {
-        	ISpieler player = (ISpieler) spieler.elementAt(i);
-            spez = player.getSpezialitaet();
-            pos = getPositionBySpielerId(player.getSpielerID());
-
-            //nur jene Ber�cksichtigen die auch aufgestellt sind
-            if ((pos != null)
-                && (pos.getId() < ISpielerPosition.beginnReservere)
-                && (pos.getPosition() != ISpielerPosition.TORWART)) {
-                //Verteidigung
-                //durchsetzungsstark z�hlt doppelt
-                if (spez == 3) {
-                    defense += 2 * player.getVerteidigung();
-                } else {
-                    defense += player.getVerteidigung();
-                }
-
-                //Erfahrung
-                // FIXME
-                exp += player.getErfahrungsBonus(player.getVerteidigung());
-
-                //Kondition
-                kondi += player.getKondition();
-
-                //Form
-                form += player.getForm();
-                anzSpieler++;
-            }
-        }
-
-        //pressing = gesamtDefense/8 * Avg Kondi / 7 * Avg Form / 11 +
-        pressing = ((defense / 8.0f) * ((kondi / (float) anzSpieler) / 7.0f) * ((form / (float) anzSpieler) / 11))
-                   + ((exp / (float) anzSpieler) / 10);
-
-        //pressing = Math.round ( pressing );
-        return pressing;
-    }
-
-    /**
      * Predicts Right-Attack-Rating
      *
      * @return TODO Missing Return Method Documentation
@@ -1156,19 +1103,20 @@ public  class Aufstellung implements plugins.ILineUp {
 
         switch (type) {
             case plugins.IMatchDetails.TAKTIK_PRESSING:
-                value = getPressingSTK();
+                value = getTacticLevelPressing();
                 break;
 
             case plugins.IMatchDetails.TAKTIK_KONTER:
-                value = getKonterSTK();
+                value = getTacticLevelCounter();
                 break;
 
             case plugins.IMatchDetails.TAKTIK_MIDDLE:
-                value = getAttackSTK();
+            case plugins.IMatchDetails.TAKTIK_WINGS:
+                value = getTacticLevelAimAow();
                 break;
 
-            case plugins.IMatchDetails.TAKTIK_WINGS:
-                value = getAttackSTK();
+            case plugins.IMatchDetails.TAKTIK_LONGSHOTS:
+                value = getTacticLevelLongShots();
                 break;
         }
 

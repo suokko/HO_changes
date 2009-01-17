@@ -13,9 +13,6 @@ import plugins.IRatingPredictionConfig;
 import plugins.IRatingPredictionParameter;
 import de.hattrickorganizer.tools.HOLogger;
 
-// Referenced classes of package prediction:
-//            HOEncrypter, RatingPredictionParameter, ZipHelper
-
 public class RatingPredictionConfig
     implements IRatingPredictionConfig
 {
@@ -30,6 +27,7 @@ public class RatingPredictionConfig
     private RatingPredictionParameter sideAttackParam;
     private RatingPredictionParameter centralAttackParam;
     private RatingPredictionParameter playerStrengthParam;
+    private RatingPredictionParameter tacticsParam;
     
     private String predictionName;
     private static String[] allPredictionNames = null;
@@ -157,6 +155,8 @@ public class RatingPredictionConfig
     			+ File.separatorChar + "centralattack.dat");
        	playerStrengthParam = parsePredictionProperties(predictionName 
     			+ File.separatorChar + "playerstrength.dat");
+       	tacticsParam = parsePredictionProperties(predictionName 
+    			+ File.separatorChar + "tactics.dat");
     }
 
     private static RatingPredictionParameter parsePredictionProperties (String filename)
@@ -232,4 +232,10 @@ public class RatingPredictionConfig
     {
     	return playerStrengthParam;
     }
+    
+    public IRatingPredictionParameter getTacticsParameters()
+    {
+    	return tacticsParam;
+    }
+
 }

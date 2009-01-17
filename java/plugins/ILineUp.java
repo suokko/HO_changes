@@ -72,6 +72,34 @@ public interface ILineUp {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
+     * get the tactic level for AiM/AoW
+     *
+     * @return tactic level
+     */
+    public float getTacticLevelAimAow();
+
+    /**
+     * get the tactic level for counter
+     *
+     * @return tactic level
+     */
+    public float getTacticLevelCounter();
+
+    /**
+     * get the tactic level for pressing
+     *
+     * @return tactic level
+     */
+    public float getTacticLevelPressing();
+
+    /**
+     * get the tactic level for Long Shots
+     *
+     * @return tactic level
+     */
+    public float getTacticLevelLongShots();
+    
+    /**
      * get Value for Defense
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
@@ -80,24 +108,6 @@ public interface ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public float getAWTeamStk(Vector spieler, boolean mitForm);
-
-    /**
-     * get Value for AttackOnWings/Middle
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float getAttackSTK();
-
-    /**
-     * get Value for AttackOnWings/Middle
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @deprecated : no more support for supplied player vector
-     */
-    public float getAttackSTK(Vector spieler);
 
     /**
      * Setter for property m_iAttitude.
@@ -238,24 +248,6 @@ public interface ILineUp {
     public int getKicker();
 
     /**
-     * get Value for CounterAttack
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float getKonterSTK();
-
-    /**
-     * get Value for CounterAttack
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @deprecated : no more support for supplied player vector
-     */
-    public float getKonterSTK(Vector spieler);
-
-    /**
      * Predicts LeftAttack-Rating
      *
      * @return TODO Missing Return Method Documentation
@@ -305,24 +297,6 @@ public interface ILineUp {
      * @return TODO Missing Return Method Documentation
      */
     public plugins.ISpieler getPlayerByPositionID(int positionsid);
-
-    /**
-     * get Value for Pressing
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float getPressingSTK();
-
-    /**
-     * get Value for Pressing
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @deprecated : no more support for supplied player vector
-     */
-    public float getPressingSTK(Vector spieler);
 
     /**
      * Predicts Right-Attack-Rating

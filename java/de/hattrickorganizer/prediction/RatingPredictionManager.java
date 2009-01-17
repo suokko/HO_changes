@@ -32,16 +32,16 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static final int SIDEATTACK = 3; 
     private static final int CENTRALATTACK = 4; 
 
-    private static final int TORWART = ISpieler.SKILL_TORWART; // 0
-    private static final int VERTEIDIGUNG = ISpieler.SKILL_VERTEIDIGUNG; // 1
-    private static final int FLUEGEL = ISpieler.SKILL_FLUEGEL; // 2
-    private static final int SPIELAUFBAU = ISpieler.SKILL_SPIELAUFBAU; // 3
-    private static final int TORSCHUSS = ISpieler.SKILL_TORSCHUSS; // 4
-    private static final int PASSSPIEL = ISpieler.SKILL_PASSSPIEL; // 5
-    private static final int KONDITION = ISpieler.SKILL_KONDITION; // 6
+    private static final int GOALKEEPING = ISpieler.SKILL_TORWART; // 0
+    private static final int DEFENDING = ISpieler.SKILL_VERTEIDIGUNG; // 1
+    private static final int WINGER = ISpieler.SKILL_FLUEGEL; // 2
+    private static final int PLAYMAKING = ISpieler.SKILL_SPIELAUFBAU; // 3
+    private static final int SCORING = ISpieler.SKILL_TORSCHUSS; // 4
+    private static final int PASSING = ISpieler.SKILL_PASSSPIEL; // 5
+    private static final int STAMINA = ISpieler.SKILL_KONDITION; // 6
     private static final int FORM = ISpieler.SKILL_FORM; // 7
-    private static final int STANDARDS = ISpieler.SKILL_STANDARDS; // 8
-    private static final int EXPIERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
+    private static final int SETPIECES = ISpieler.SKILL_STANDARDS; // 8
+    private static final int EXPERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
     private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
     
     public static final int SPEC_NONE = ISpieler.NO_SPECIALTY; // 0
@@ -199,6 +199,8 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		retVal *= params.getParam(sectionName, "tacticCreative", 1);
     	else if (taktikType == Matchdetails.TAKTIK_PRESSING)
     		retVal *= params.getParam(sectionName, "tacticPressing", 1);
+    	else if (taktikType == Matchdetails.TAKTIK_LONGSHOTS)
+    		retVal *= params.getParam(sectionName, "tacticLongshots", 1);
 
         double teamspirit = (double)stimmung + ((double)substimmung / 5);
         // Alternative 1: TS linear
@@ -262,6 +264,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
 		case SPEC_HEADER:
 			retVal += "header";
 			break;
+		case SPEC_REGAINER:
+			retVal += "regainer";
+			break;
 		case SPEC_ALL:
 //			retVal += "all";
 			retVal = "";
@@ -286,6 +291,8 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		return SPEC_UNPREDICTABLE;
     	else if (specialtyName.equals("header"))
     		return SPEC_HEADER;
+    	else if (specialtyName.equals("regainer"))
+    		return SPEC_REGAINER;
     	else if (specialtyName.equals("all") || specialtyName.equals(""))
     		return SPEC_ALL;
     	else
@@ -294,19 +301,19 @@ public class RatingPredictionManager implements IRatingPredictionManager
     
     private static String getSkillName (int skill) {
     	switch (skill) {
-		case TORWART:
+		case GOALKEEPING:
 			return "goalkeeping";
-		case VERTEIDIGUNG:
+		case DEFENDING:
 			return "defending";
-		case FLUEGEL:
+		case WINGER:
 			return "winger";
-		case SPIELAUFBAU:
+		case PLAYMAKING:
 			return "playmaking";
-		case TORSCHUSS:
+		case SCORING:
 			return "scoring";
-		case PASSSPIEL:
+		case PASSING:
 			return "passing";
-		case STANDARDS:
+		case SETPIECES:
 			return "setpieces";
 		default:
 			return "";
@@ -316,19 +323,19 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static int getSkillByName (String skillName) {
     	skillName = skillName.toLowerCase();
     	if (skillName.equals("goalkeeping"))
-    		return TORWART;
+    		return GOALKEEPING;
     	else if (skillName.equals("defending"))
-    		return VERTEIDIGUNG;
+    		return DEFENDING;
     	else if (skillName.equals("winger"))
-    		return FLUEGEL;
+    		return WINGER;
     	else if (skillName.equals("playmaking"))
-    		return SPIELAUFBAU;
+    		return PLAYMAKING;
     	else if (skillName.equals("scoring"))
-    		return TORSCHUSS;
+    		return SCORING;
     	else if (skillName.equals("passing"))
-    		return PASSSPIEL;
+    		return PASSING;
     	else if (skillName.equals("setpieces"))
-    		return STANDARDS;
+    		return SETPIECES;
     	else
     		return -1;
     }
@@ -805,64 +812,144 @@ public class RatingPredictionManager implements IRatingPredictionManager
 
     /************************************************************************* 
      * 
-     * Tactic Rating Functions
+     * TacticLevel Functions
      * (AIW, AOW, Counter...)
      * 
      *************************************************************************/
     
-    public float getAow_AimRatings()
+    /**
+     * get the tactic level for AiM / AoW
+     *
+     * @return tactic level
+     */
+    public float getTacticLevelAowAim()
     {
-        float stkSum = 0.0F;
-        float stkSum4Zusatz = 0.0F;
+    	IRatingPredictionParameter params = config.getTacticsParameters();
+    	double retVal = 0;
+    	float passing = 0;
         for(int i = 2; i < 12; i++)
         {
             ISpieler ispieler = lineup.getPlayerByPositionID(i);
             byte taktik = lineup.getTactic4PositionID(i);
-            if(ispieler != null)
+            if(ispieler != null) {
+            	passing =  calcPlayerStrength(ispieler, PASSING);
             	// Zus. MF/IV/ST
                 if(taktik == 7 || taktik == 6 || taktik == 5)
-                    stkSum4Zusatz += calcPlayerStrength(ispieler, PASSSPIEL);
-                else
-                    stkSum += calcPlayerStrength(ispieler, PASSSPIEL);
+                    passing *= params.getParam("extraMulti", 1.0);
+                retVal += passing;
+            }
         }
 
-        return 0.20113F * (stkSum + 1.0275F * stkSum4Zusatz) + 1.3532F;
-        // Why does the Extra player have a higher impact???
-        // Alternative:
-        // return 0.20113F * (stkSum * 1.0275F + stkSum4Zusatz) + 1.3532F;
+        retVal *= params.getParam("aim_aow", "postMulti", 1.0);
+    	retVal = applyCommonProps (retVal, params, "aim_aow");
+    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	return (float)retVal;
     }
 
-    public float getKonterRatings()
+    /**
+     * get the tactic level for counter
+     *
+     * @return tactic level
+     */
+    public float getTacticLevelCounter()
     {
         float deDefender = 0.0F;
-        float deExtraCD = 0.0F;
         float psDefender = 0.0F;
-        float psExtraCD = 0.0F;
+    	IRatingPredictionParameter params = config.getTacticsParameters();
+    	double retVal = 0;
         for(int pos = 2; pos < 12; pos++)
         {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             byte taktik = lineup.getTactic4PositionID(pos);
-            if(spieler != null)
-            {
+            if(spieler != null) {
             	// CD/WB (NOT extra CD)
                 if(pos >= 2 && pos <= 5 && taktik < 5)
                 {
-                    deDefender += calcPlayerStrength(spieler, VERTEIDIGUNG);
-                    psDefender += calcPlayerStrength(spieler, PASSSPIEL);
+                    deDefender += calcPlayerStrength(spieler, DEFENDING);
+                    psDefender += calcPlayerStrength(spieler, PASSING);
                 }
                 // extra CD
-                if(taktik == 7)
+                if(taktik == 7) 
                 {
-                    deExtraCD += calcPlayerStrength(spieler, VERTEIDIGUNG);
-                    psExtraCD += calcPlayerStrength(spieler, PASSSPIEL);
+                    deDefender += params.getParam("extraMulti", 1.0) * calcPlayerStrength(spieler, DEFENDING);
+                    psDefender += params.getParam("extraMulti", 1.0) * calcPlayerStrength(spieler, PASSING);
                 }
             }
         }
 
-        return 0.11558F * (deDefender + 1.2267F * deExtraCD + 2.0F * (psDefender + 1.2267F * psExtraCD)) + 1.1799F;
-        // Why does the Extra player have a higher impact???
-        // Alternative:
-        // return 0.11558F * (deDefender * 1.2267F + deExtraCD + 2.0F * (psDefender * 1.2267F + psExtraCD)) + 1.1799F;
+        deDefender *= params.getParam("counter", "multiDe", 1.0);
+        psDefender *= params.getParam("counter", "multiPs", 1.0);
+        
+        retVal += deDefender + psDefender;
+        
+        retVal *= params.getParam("counter", "postMulti", 1.0);
+    	retVal = applyCommonProps (retVal, params, "counter");
+    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	return (float)retVal;
     }
 
+    /**
+     * get the tactic level for pressing
+     *
+     * @return tactic level
+     */
+    public final float getTacticLevelPressing() {
+    	IRatingPredictionParameter params = config.getTacticsParameters();
+    	double retVal = 0;
+        for(int pos = 2; pos < 12; pos++)
+        {
+            float defense = 0.0F;
+            ISpieler spieler = lineup.getPlayerByPositionID(pos);
+            byte taktik = lineup.getTactic4PositionID(pos);
+            if(spieler != null) {
+            	defense = calcPlayerStrength(spieler, DEFENDING);
+            	// Zus. MF/IV/ST
+                if(taktik == 7 || taktik == 6 || taktik == 5) {
+                    defense *= params.getParam("extraMulti", 1.0); 
+                }
+                if (spieler.getSpezialitaet() == ISpieler.DURCHSETZUGNSSTARK) {
+                	defense *= 2;
+                }
+                retVal += defense;
+            }
+        }
+
+        retVal *= params.getParam("pressing", "postMulti", 1.0);
+    	retVal = applyCommonProps (retVal, params, "pressing");
+    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	return (float)retVal;
+    }
+
+    /**
+     * get the tactic level for long shots
+     *
+     * @return tactic level
+     */
+    public final float getTacticLevelLongShots() {
+       	IRatingPredictionParameter params = config.getTacticsParameters();
+    	double retVal = 0;
+        for(int pos = 2; pos < 12; pos++)
+        {
+            float scoring = 0.0F;
+            float setpieces = 0.0F;
+            ISpieler spieler = lineup.getPlayerByPositionID(pos);
+            byte taktik = lineup.getTactic4PositionID(pos);
+            if(spieler != null) {
+            	scoring = 3*calcPlayerStrength(spieler, SCORING);
+            	setpieces = calcPlayerStrength(spieler, SETPIECES);
+            	// Zus. MF/IV/ST
+                if(taktik == 7 || taktik == 6 || taktik == 5) {
+                    scoring *= params.getParam("extraMulti", 1.0); 
+                    setpieces *= params.getParam("extraMulti", 1.0); 
+                }
+                retVal += scoring;
+                retVal += setpieces;
+            }
+        }
+        
+        retVal *= params.getParam("longshots", "postMulti", 1.0);
+    	retVal = applyCommonProps (retVal, params, "longshots");
+    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	return (float)retVal;
+    }
 }

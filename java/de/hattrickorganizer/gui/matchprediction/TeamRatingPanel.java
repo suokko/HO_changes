@@ -25,9 +25,9 @@ import de.hattrickorganizer.tools.PlayerHelper;
  * @author TODO Author Name
  */
 public class TeamRatingPanel extends JPanel implements ItemListener {
+	private static final long serialVersionUID = -6238120571629957579L;
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private GridBagConstraints m_clConstraints;
+	private GridBagConstraints m_clConstraints;
     private GridBagLayout m_clLayout;
     private List levels;
     private List subLevels;

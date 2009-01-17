@@ -21,5 +21,7 @@ public interface IRatingPredictionConfig {
 	public IRatingPredictionParameter getMidfieldParameters() ;
 
 	public IRatingPredictionParameter getPlayerStrengthParameters();
+	
+    public IRatingPredictionParameter getTacticsParameters();
 
 }

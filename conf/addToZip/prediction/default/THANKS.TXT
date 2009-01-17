@@ -6,5 +6,6 @@ midfield	HO internal optimization
 centralattack	HO internal optimization
 sideattack	HO internal optimization
 playerstrength	Discound Fed, GM-Mjoelnir and others
+tactics		HO internal optimization
 
 We would like to thank everybody who helped!
