@@ -518,36 +518,16 @@ final class AufstellungsDetailPanel extends ImagePanel
 
         switch (getTaktik()) {
             case IMatchDetails.TAKTIK_NORMAL:
+            // Play creatively has no tactic level
+            case IMatchDetails.TAKTIK_CREATIVE:
                 return HOVerwaltung.instance().getResource().getProperty("Normal");
 
             case IMatchDetails.TAKTIK_PRESSING:
-                return PlayerHelper.getNameForSkill(aufstellung.getPressingSTK(HOVerwaltung.instance()
-                                                                                           .getModel()
-                                                                                           .getAllSpieler())
-                                                    + 0.5f);
-
             case IMatchDetails.TAKTIK_KONTER:
-                return PlayerHelper.getNameForSkill(aufstellung.getKonterSTK(HOVerwaltung.instance()
-                                                                                         .getModel()
-                                                                                         .getAllSpieler())
-                                                    + 0.5f);
-
             case IMatchDetails.TAKTIK_MIDDLE:
-                return PlayerHelper.getNameForSkill(aufstellung.getAttackSTK(HOVerwaltung.instance()
-                                                                                         .getModel()
-                                                                                         .getAllSpieler())
-                                                    + 0.5f);
-
             case IMatchDetails.TAKTIK_WINGS:
-                return PlayerHelper.getNameForSkill(aufstellung.getAttackSTK(HOVerwaltung.instance()
-                                                                                         .getModel()
-                                                                                         .getAllSpieler())
-                                                    + 0.5f);
-
-            case IMatchDetails.TAKTIK_CREATIVE:
-
-                //return "HO "+aufstellung.getCreativeSTK(HOVerwaltung.instance().getModel().getAllSpieler());
-                return HOVerwaltung.instance().getResource().getProperty("katastrophal");
+            case IMatchDetails.TAKTIK_LONGSHOTS:
+                return PlayerHelper.getNameForSkill(aufstellung.getTacticLevel(getTaktik()));
 
             default:
                 return HOVerwaltung.instance().getResource().getProperty("Unbestimmt");

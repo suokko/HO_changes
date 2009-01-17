@@ -6,6 +6,8 @@ Changelist HO! 1.425
 - fixed problem starting match simulation when own tactic strength is higher than divine
 - fixed problems in the transferscout player parser when using IE and the bar style
 - added new tactic: Long shots
+- updated rating prediction         
+- updated tactic level prediction
 
 - Language updates:
 	- improve French translation (thx Bruno)
