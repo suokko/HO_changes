@@ -44,6 +44,8 @@ P D Bug description
 5 A Teamanalyzer: it's not possible to start the simulation, if the tactic level is above divine
 5 ? Transfers: the level of some skills is not visible, if the skill name is long,
 		Example: German "Chancenverwertu.." instead of English "Scoring (12)"
+5 ? MySQL error messages, as reported here:
+		http://forum.hattrickorganizer.net/index.php?page=Thread&postID=4896#post4896
 
 
 Enhancements
@@ -65,6 +67,8 @@ P D Task
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
 5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
+5 ? User request: add predicted rating effects to the skilltester. Add a combobox, where the position (i.e. WBdef)
+	gets selected and the HO shows values like "side def +1.13", "central def +0.56", "midfield +0.05" etc.
 
 
 Features
