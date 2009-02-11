@@ -53,7 +53,7 @@ public class MatchUpdater {
                     final int pos = rs.getInt("PositionCode");
 
                     if (pos == -1) {
-                        if (role < 12) {
+                        if (role > 0 && role < 12) {
                             final MatchPosition position = (MatchPosition) matchPlayers.get(role
                                                                                             - 1);
                             updates.add("UPDATE MATCHLINEUPPLAYER SET SPIELERID="
