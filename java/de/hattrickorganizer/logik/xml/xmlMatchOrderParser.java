@@ -97,7 +97,9 @@ public class xmlMatchOrderParser {
         }
 
         tmp = (Element) ele.getElementsByTagName("RoleID").item(0);
-        roleID = Integer.parseInt(XMLManager.instance().getFirstChildNodeValue(tmp));
+        if (tmp != null) {
+        	roleID = Integer.parseInt(XMLManager.instance().getFirstChildNodeValue(tmp));
+        }
 
         tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
         name = XMLManager.instance().getFirstChildNodeValue(tmp);
