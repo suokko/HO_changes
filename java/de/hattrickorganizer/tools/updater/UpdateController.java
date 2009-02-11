@@ -439,7 +439,7 @@ public final class UpdateController {
 
 	public static void check4RatingsUpdate() {
 		Extension data = MyConnector.instance().getRatingsVersion();
-		HOLogger.instance().log(UpdateController.class, "Check: " + HOMainFrame.VERSION + ">=" + data.getMinimumHOVersion() + " && " + data.getRelease() +" > " + HOParameter.instance().RatingsRelease);
+		HOLogger.instance().log(UpdateController.class, "Check: " + HOMainFrame.VERSION + ">=" + (data != null ? data.getMinimumHOVersion() : -1f) + " && " + (data != null ? data.getRelease(): -1f) +" > " + HOParameter.instance().RatingsRelease);
 		if (HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().RatingsRelease) {
 			//Infro anzeigen das es ein Update gibt
 			int update =
