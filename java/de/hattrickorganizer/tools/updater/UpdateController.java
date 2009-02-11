@@ -318,7 +318,7 @@ public final class UpdateController {
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
-					HOVerwaltung.instance().getResource().getProperty("updateMSG") + "\n" 
+					HOVerwaltung.instance().getResource().getProperty("updateMSG") + "\n"
 						+ HOVerwaltung.instance().getResource().getProperty("update") + "?",
 					HOVerwaltung.instance().getResource().getProperty("update")+"?",
 					JOptionPane.YES_NO_OPTION);
@@ -439,6 +439,7 @@ public final class UpdateController {
 
 	public static void check4RatingsUpdate() {
 		Extension data = MyConnector.instance().getRatingsVersion();
+		HOLogger.instance().log(UpdateController.class, "Check: " + HOMainFrame.VERSION + ">=" + data.getMinimumHOVersion() + " && " + data.getRelease() +" > " + HOParameter.instance().RatingsRelease);
 		if (HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().RatingsRelease) {
 			//Infro anzeigen das es ein Update gibt
 			int update =
