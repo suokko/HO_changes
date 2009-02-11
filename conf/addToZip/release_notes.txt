@@ -1,5 +1,3 @@
-Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
-
 Changelist HO! 1.425
 ====================
 - fixed problem of missing match highlights / reports when downloading games with the team analyzer
@@ -8,7 +6,9 @@ Changelist HO! 1.425
 - added new tactic: Long shots
 - updated rating prediction
 - updated tactic level prediction
+- fixed several problems with HT suddenly adding players without RoleID to XML data
 
 - Language updates:
+	- add Slovenian as new HO language (big thx to odemodet!)
 	- improve French translation (thx Bruno)
 	- fixed Czech skill names
