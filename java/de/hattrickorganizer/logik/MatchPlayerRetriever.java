@@ -210,17 +210,24 @@ public class MatchPlayerRetriever {
         try {
             while (rs.next()) {
                 MatchPosition position = new MatchPosition();
-
+                int rid = -2;
                 try {
-                    pos[rs.getInt("ROLEID") - 1] = position;
-                    position.setPlayerID(rs.getInt("SPIELERID"));
-                    position.setName(rs.getString("NAME"));
-                    position.setPosition(model.getHelper().getPosition(rs.getInt("HOPOSCODE")));
-                } catch (SQLException e1) {
-                    HOLogger.instance().log(getClass(),e1);
+                	rid = rs.getInt("ROLEID");
+                	if(rid > 0 && rid < 22) {
+                		pos[rid - 1] = position;
+                		position.setPlayerID(rs.getInt("SPIELERID"));
+                		position.setName(rs.getString("NAME"));
+                		position.setPosition(model.getHelper().getPosition(rs.getInt("HOPOSCODE")));
+                	} else {
+                		HOLogger.instance().debug(getClass(), "Problem in match: " + matchId + ", unknown RoleID " + rid);
+                	}
+                } catch (Exception e1) {
+                    HOLogger.instance().log(getClass(), "Error. MatchID: " + matchId);
+                    HOLogger.instance().log(getClass(), e1);
                 }
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
+        	HOLogger.instance().log(getClass(), "Error! MatchID: " + matchId);
             HOLogger.instance().log(getClass(),e);
         } finally {
             try {
@@ -466,6 +473,35 @@ public class MatchPlayerRetriever {
 
                 			break;
                 		}
+//                	} else if (matchPosition[index] != null) {
+//                		HOLogger.instance().log(getClass(), "matchPosition["+index+"] is null, matchId:" + matchId + " i: " + i + ", subsid: " + subsid + ", area: " + area);
+//                		HOLogger.instance().log(getClass(), "------------");
+//                		for (int m=0; m<matchPosition.length; m++) {
+//                			MatchPosition mp = matchPosition[m];
+//                			HOLogger.instance().log(getClass(), (mp == null ? "MP Null!" : "MP posi: " + mp.getPosition() + ", pid: " + mp.getPlayerID() + ", " + mp.getName()));
+//                		}
+//                		HOLogger.instance().log(getClass(), "------------");
+//                		for (Iterator it=players.iterator(); it.hasNext(); ) {
+//                			MatchPosition mp = (MatchPosition)it.next();
+//                			HOLogger.instance().log(getClass(), (mp == null ? "PlayerMP Null!" : "Players posi: " +mp.getPosition() + ", pid: " + mp.getPlayerID() + ", " + mp.getName()));
+//                		}
+//                		HOLogger.instance().log(getClass(), "------------");
+//                		List pls = matchLineup.getArea(ITeamLineup.KEEPER);
+//                		for (Iterator it=pls.iterator(); it.hasNext(); ) {
+//                			HOLogger.instance().log(getClass(), "Keeper ids: " + it.next());
+//                		}
+//                		pls = matchLineup.getArea(ITeamLineup.DEFENCE);
+//                		for (Iterator it=pls.iterator(); it.hasNext(); ) {
+//                			HOLogger.instance().log(getClass(), "Defender ids: " + it.next());
+//                		}
+//                		pls = matchLineup.getArea(ITeamLineup.MIDFIELD);
+//                		for (Iterator it=pls.iterator(); it.hasNext(); ) {
+//                			HOLogger.instance().log(getClass(), "Midfielder ids: " + it.next());
+//                		}
+//                		pls = matchLineup.getArea(ITeamLineup.ATTACK);
+//                		for (Iterator it=pls.iterator(); it.hasNext(); ) {
+//                			HOLogger.instance().log(getClass(), "Striker ids: " + it.next());
+//                		}
                 	}
                 }
             }
