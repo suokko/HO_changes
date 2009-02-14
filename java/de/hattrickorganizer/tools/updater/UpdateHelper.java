@@ -126,7 +126,7 @@ public class UpdateHelper {
                 showDialog = true;
             }
 
-            InputStream in = MyConnector.instance().getFileFromWeb(urlName, showDialog);
+            InputStream in = MyConnector.instance().getFileFromWeb(urlName, showDialog, true);
             BufferedOutputStream out = new BufferedOutputStream(outStream);
 
             while (true) {

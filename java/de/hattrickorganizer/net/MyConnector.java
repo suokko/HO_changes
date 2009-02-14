@@ -17,6 +17,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
+
+import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -782,6 +787,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return getPage(url, true);
 	}
 
+	public String getWebPage(String surl, boolean needCookie) throws IOException {
+		return getWebPage(surl, needCookie, true); // show connect error
+	}
+
 	/**
 	 * TODO Missing Method Documentation
 	 *
@@ -792,10 +801,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @throws IOException TODO Missing Method Exception Documentation
 	 */
-	public String getWebPage(String surl, boolean needCookie) throws IOException {
+	public String getWebPage(String surl, boolean needCookie, boolean showError) throws IOException {
 		//int i;
 		//char ac[] = new char[20000];
-		final InputStream resultingInputStream = getWebFile(surl, needCookie);
+		final InputStream resultingInputStream = getWebFile(surl, needCookie, showError);
 
 		if (resultingInputStream != null) {
 			final BufferedReader bufferedreader =
@@ -844,7 +853,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public double getLatestVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getPluginSite()+"/version.htm", false);
+				getWebPage(MyConnector.getPluginSite()+"/version.htm", false, false);
 			double d = de.hattrickorganizer.gui.HOMainFrame.VERSION;
 
 			try {
@@ -884,7 +893,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	public News getLatestNews() {
 		try {
-			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false);
+			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false, false);
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
@@ -1138,6 +1147,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 	}
 
+	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
+		return getFileFromWeb(url, displaysettingsScreen, false);
+	}
+
 	/**
 	 * TODO Missing Method Documentation
 	 *
@@ -1148,7 +1161,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @throws IOException TODO Missing Method Exception Documentation
 	 */
-	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen)
+	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen, boolean showErrorMessage)
 		throws IOException {
 		if (displaysettingsScreen) {
 			//Show Screen
@@ -1158,7 +1171,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebFile(url, false);
+		return getWebFile(url, false, showErrorMessage);
 	}
 
 	/**
@@ -1349,12 +1362,13 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @throws IOException TODO Missing Method Exception Documentation
 	 */
-	private InputStream getWebFile(String surl, boolean needCookie) throws IOException {
+	private InputStream getWebFile(String surl, boolean needCookie, boolean showErrorMessage) throws IOException {
 		final URL url = new URL(surl);
 		final HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
-
 		httpurlconnection.setRequestMethod("GET");
 		infoHO(httpurlconnection);
+//		httpurlconnection.setConnectTimeout(timeOut); // needs Java5
+//		httpurlconnection.setReadTimeout(timeOut); // needs Java5
 
 		if (needCookie) {
 			httpurlconnection.setRequestProperty("cookie", getCookieString());
@@ -1364,11 +1378,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 			httpurlconnection.connect();
 		} catch (Exception sox) {
 			HOLogger.instance().log(getClass(),sox);
-			javax.swing.JOptionPane.showMessageDialog(
-				null,
-				surl,
-				"error",
-				javax.swing.JOptionPane.ERROR_MESSAGE);
+			if (showErrorMessage) {
+				JOptionPane.showMessageDialog( null, surl, "error", JOptionPane.ERROR_MESSAGE);
+			}
 			return null;
 		}
 
@@ -1387,14 +1399,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 		//create the appropriate stream wrapper based on
 		//the encoding type
 		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-			resultingInputStream =
-				new java.util.zip.GZIPInputStream(httpurlconnection.getInputStream());
+			resultingInputStream = new GZIPInputStream(httpurlconnection.getInputStream());
 			HOLogger.instance().log(getClass()," Read GZIP.");
 		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
 			resultingInputStream =
-				new java.util.zip.InflaterInputStream(
-					httpurlconnection.getInputStream(),
-					new java.util.zip.Inflater(true));
+				new InflaterInputStream(httpurlconnection.getInputStream(),	new Inflater(true));
 			HOLogger.instance().log(getClass()," Read Deflated.");
 		} else {
 			resultingInputStream = httpurlconnection.getInputStream();
@@ -1412,9 +1421,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		//        {
 		httpurlconnection.setRequestProperty("accept-language", "de");
 		httpurlconnection.setRequestProperty("connection", "Keep-Alive");
-		httpurlconnection.setRequestProperty(
-			"accept",
-			"image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
+		httpurlconnection.setRequestProperty("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
 
 		//httpurlconnection.setRequestProperty("accept-encoding", "compress, gzip");
 		httpurlconnection.setRequestProperty("accept-encoding", "gzip, deflate");
