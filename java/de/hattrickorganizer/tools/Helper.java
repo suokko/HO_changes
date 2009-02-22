@@ -1857,6 +1857,9 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
                 	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
 
+                case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
+                	return properties.getProperty("Tactic.LongShots");
+
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
