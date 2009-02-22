@@ -9,9 +9,11 @@ Changelist HO! 1.425
 - updated rating prediction
 - updated tactic level prediction
 - fixed several problems with HT suddenly adding players without RoleID to XML data
+- handle long shot events in match highlights
 
 - Language updates:
 	- add Slovenian as new HO language (big thx to odemodet!)
+	- huge update of the Bulgarian translation (thx stiflar)
 	- improve French translation (thx Bruno)
 	- fixed Czech skill names
 
