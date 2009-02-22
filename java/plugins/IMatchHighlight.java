@@ -264,6 +264,8 @@ public interface IMatchHighlight {
     public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_7 = 85;
     public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_8 = 86;
 
+    public static final int HIGHLIGHT_SUB_LONGHSHOT_1 = 87;
+
     //Special events (HIGHLIGHT_ERFOLGREICH and HIGHLIGHT_FEHLGESCHLAGEN only)
 
     /** TODO Missing Parameter Documentation */
