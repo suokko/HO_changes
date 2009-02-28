@@ -11,6 +11,7 @@
 		+-> HO1								HO1 Main Project
 		|	+-> bin							Compiled .class files go here
 		|	+-> build						The full HO build with supplementary files is created here
+		|	+-> debug						A copy of the HO build dir is created here (for the Eclipse debugger)
 		|	+-> export-dmg					The MacOS Builds (DMG) are created here [please see note 1, below]
 		|	+-> export-zip					The ZIP-Builds are created here
 		|	+-> export-w32installer			The Win32-Installer (NSIS) are created here
@@ -45,7 +46,7 @@
 	    	
 	    	
 	Note 1: (How to create DMG-Builds with Linux)
-	- still missing, try to figure it out yourself ;-) or send a mail to flattermannHO@gmail.com -
+	- still missing, try to figure it out yourself ;-) or send a mail to HO@flattermann.net -
 	
 	Note 2: NSIS Win32-Installer
 	- To build the Win32 Installer, you need the NSIS *Unicode* from http://www.scratchpaper.com/,
@@ -62,6 +63,7 @@
 	<property name="tmp-target" value="${tmp}/target"/>
 
 	<property name="build-dir" value="build"/>
+	<property name="debug-dir" value="debug"/>
 	
 	<property name="export-zip-dir" value="export-zip"/>
 	
@@ -210,8 +212,19 @@
 		</replaceregexp>
 -->
     	<antcall target="copyPlugins"/>
+    	<antcall target="copyBuild2debug"/>
     </target>
-	
+
+	<!-- ================================= 
+          target: copyBuild2debug              
+         ================================= -->
+    <target name="copyBuild2debug" description="Copy build dir to debug">
+    	<mkdir dir="${debug-dir}"/>
+    	<copy todir="${debug-dir}" overwrite="true">
+    		<fileset dir="${build-dir}"/>
+    	</copy>
+    </target>
+
 	<!-- ================================= 
           target: copyPlugins              
          ================================= -->
