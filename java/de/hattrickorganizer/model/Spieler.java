@@ -2559,7 +2559,7 @@ public final class Spieler implements plugins.ISpieler {
 
         // Fix for new Defensive Attacker position
 		if (fo.getPosition()==ISpielerPosition.STURM_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
-			psValue *= 1.25f;
+			psValue *= 1.30f;
 		}
 
         float spValue = fo.getStandardsScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_STANDARDS, useForm);
