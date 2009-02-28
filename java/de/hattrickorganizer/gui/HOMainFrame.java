@@ -812,11 +812,17 @@ public final class HOMainFrame extends JFrame
 		//Scoutliste speichern
 		m_jpTransferScout.saveScoutListe();
 
+		HOLogger.instance().debug(getClass(), "ScoutList saved");
+
 		//Faktoren saven
 		FormulaFactors.instance().save();
 
+		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
+
 		//Disconnect
 		de.hattrickorganizer.database.DBZugriff.instance().disconnect();
+
+		HOLogger.instance().debug(getClass(), "Disconnected");
 
 		//Ausloggen
 		try {
