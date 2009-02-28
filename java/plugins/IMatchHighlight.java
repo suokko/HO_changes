@@ -412,6 +412,13 @@ public interface IMatchHighlight {
 
     /** walkover - home team wins */
     public static final int HIGHLIGHT_SUB_WALKOVER_AWAYTEAM_WINS = 2;
+    
+    /** indirect free kicks ratings (will be removed in the future)
+     * SubjectTeamID   = Team ID
+     * SubjectPlayerID = IFK_Attack
+     * ObjectPlayerID  = IFK_Defense
+     */
+    public static final int HIGHLIGHT_SUB_IFK_RATINGS = 50;
 
     //~ Methods ------------------------------------------------------------------------------------
 
