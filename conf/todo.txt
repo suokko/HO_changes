@@ -71,6 +71,7 @@ P D Task
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
 5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
+5 A Add tool to automatically create HRF files with data from National Team players (for NTs only)
 5 ? User request: add predicted rating effects to the skilltester. Add a combobox, where the position (i.e. WBdef)
 	gets selected and the HO shows values like "side def +1.13", "central def +0.56", "midfield +0.05" etc.
 5 ? TrainingExperience: add players age (inc. days) and market value at skillup time as tooltip to the prediction tab
