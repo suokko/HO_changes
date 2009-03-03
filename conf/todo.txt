@@ -17,6 +17,8 @@ P D Bug description
 			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
 2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
 	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
+2 ? Fix training length calculation on substitute players
+			Currently the necessary data are not in the XMLs (and not annouces either)
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 	We need an affected DB to further examine the problem
 3 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
@@ -63,12 +65,18 @@ P D Task
 	b. Put them it the HO-DB
 	c. Show them to the user
 	d. Predict yellow/brown stars separately (?)
+4 ? Add tactic strength prediction for Longshots
+4 A Add handling and match event symbol for Longshots even 188/288 (combined with pressing?)
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
 5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
 5 ? User request: add predicted rating effects to the skilltester. Add a combobox, where the position (i.e. WBdef)
 	gets selected and the HO shows values like "side def +1.13", "central def +0.56", "midfield +0.05" etc.
+5 ? TrainingExperience: add players age (inc. days) and market value at skillup time as tooltip to the prediction tab
+5 ? Add stats (HT, Loddar, Squad, etc.) to the matches view
+5 ? Add button to start the match simulation from the matches tab (with ratings and special tactic from this 'old' match)
+5 ? Show opponent statistics (probably at TeamAnalyzer): HT, Loddar, average form, injured players, TSI sum/average
 
 
 Features
@@ -106,6 +114,7 @@ P D Task
 	Reason: bug from HT, many/all old youth systems are level 6 now. Notified CHPPs.
 	09.01.2009: Fixed according to HT-Thomas (it was an HT bug anyway)
 4 F Fix HO.sh for linux (accept whitespaces in path name)
+5 A Add handling and match event symbol for Longshots even 187/287
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
 5 A Show weather SEs in match highlights
