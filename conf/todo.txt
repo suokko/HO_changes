@@ -71,13 +71,16 @@ P D Task
 5 ? Add player agreeability to TransferScout
 5 F Add a debug level option to HO.sh or - even better - to HO's config options
 5 A Add some more parameters to the XML exporter plugin (export matches with injured players etc.)
-5 A Add tool to automatically create HRF files with data from National Team players (for NTs only)
 5 ? User request: add predicted rating effects to the skilltester. Add a combobox, where the position (i.e. WBdef)
 	gets selected and the HO shows values like "side def +1.13", "central def +0.56", "midfield +0.05" etc.
 5 ? TrainingExperience: add players age (inc. days) and market value at skillup time as tooltip to the prediction tab
 5 ? Add stats (HT, Loddar, Squad, etc.) to the matches view
 5 ? Add button to start the match simulation from the matches tab (with ratings and special tactic from this 'old' match)
 5 ? Show opponent statistics (probably at TeamAnalyzer): HT, Loddar, average form, injured players, TSI sum/average
+5 ? Transferscout: add button to remove all player with one single klick
+5 ? Enhance visualization in Georgian mode: use another font + use Georgian font in dialog titles
+5 ? Add symbol to players view and TrainingExperience view, if there is an active training block (individual instruction) set
+5 ? Add palyers agreeability to TransferScout
 
 
 Features
@@ -87,7 +90,7 @@ P D Task
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
-
+5 A Add tool to automatically create HRF files with data from National Team players (for NTs only)
 
 Fixed/Resolved
 ==============
