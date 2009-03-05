@@ -15,7 +15,7 @@ P D Bug description
 			(i.e. the user forgot to download the .HRF of some weeks)
 			Maybe a problem of TrainingsManager.calculateFullTrainingForPlayer() because
 			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
-2 ? Tactic strength is wrong after loading a lineup with a configured tactic type
+2 D Tactic strength is wrong after loading a lineup with a configured tactic type
 	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
 2 ? Fix training length calculation on substitute players
 			Currently the necessary data are not in the XMLs (and not annouces either)
@@ -132,4 +132,4 @@ P D Task
 Legend:
 =======
  P = priority (1=very high, 5=low)
- D = developer (A=aik, F=Flattermann :] )
+ D = developer (A=aik, F=Flattermann, D=dable :] )
