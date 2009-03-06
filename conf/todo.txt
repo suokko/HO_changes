@@ -15,8 +15,6 @@ P D Bug description
 			(i.e. the user forgot to download the .HRF of some weeks)
 			Maybe a problem of TrainingsManager.calculateFullTrainingForPlayer() because
 			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
-2 D Tactic strength is wrong after loading a lineup with a configured tactic type
-	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
 2 ? Fix training length calculation on substitute players
 			Currently the necessary data are not in the XMLs (and not annouces either)
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
@@ -101,6 +99,8 @@ P D Task
 	Reason: player would have reached subskill >1 which gets reduced to 0.94 by HO
 		Perhaps we should change that too ^^
 2 A Transferscout parser adds injuries, if a player is warned (red card)
+2 D Tactic strength is wrong after loading a lineup with a configured tactic type
+	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
 3 F Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
 	(this breaks the build process for new dev environments)

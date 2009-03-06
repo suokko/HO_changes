@@ -332,14 +332,16 @@ final class AufstellungsDetailPanel extends ImagePanel
             m_jpLoddarstat.setText(de.hattrickorganizer.tools.Helper.round(aufstellung
                                                                            .getLoddarStats(), 2)
                                    + "");
-            m_jpHatstat.setText(aufstellung.getHATStats() + "");
-            m_jpTaktikStaerke.setText(getTaktikString());
+            m_jpHatstat.setText(aufstellung.getHATStats() + "");            
 
             setStimmung(homodel.getTeam().getStimmungAsInt(),homodel.getTeam().getSubStimmung());
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
             setTrainerType(homodel.getTrainer().getTrainerTyp());
             setPredictionType(RatingPredictionConfig.getInstancePredictionType());
+           
             setTaktik(aufstellung.getTacticType());
+            m_jpTaktikStaerke.setText(getTaktikString());
+            
             setEinstellung(aufstellung.getAttitude());
             setLocation(aufstellung.getHeimspiel());
 
@@ -516,7 +518,9 @@ final class AufstellungsDetailPanel extends ImagePanel
     private String getTaktikString() {
         final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
-        switch (getTaktik()) {
+        //getTaktik liefert Taktik aus ComboBox, wir wollen Taktik aus aufstellung!
+        //switch (getTaktik()) {
+        switch (aufstellung.getTacticType()) {
             case IMatchDetails.TAKTIK_NORMAL:
             // Play creatively has no tactic level
             case IMatchDetails.TAKTIK_CREATIVE:
