@@ -8,6 +8,7 @@ Changelist HO! 1.425
 - updated tactic level prediction
 - fixed several problems with HT suddenly adding players without RoleID to XML data
 - handle long shot events in match highlights
+- show correct tactic strength after loading an stored lineup
 
 - Language updates:
 	- add Slovenian as new HO language (big thx to odemodet!)
