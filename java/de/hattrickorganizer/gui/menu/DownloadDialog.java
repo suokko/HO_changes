@@ -46,11 +46,11 @@ public class DownloadDialog extends JDialog implements ActionListener {
     private JCheckBox m_jchEigenenSpiele = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                                 .getResource()
                                                                                                 .getProperty("AktuellerSpielplanDownload"),
-                                                         true);
+                                                         gui.UserParameter.instance().currentMatchlist);
     private JCheckBox m_jchHRF = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                       .getResource()
                                                                                       .getProperty("HRFDownload"),
-                                               true);
+                                               gui.UserParameter.instance().xmlDownload);
     private JCheckBox m_jchMatchArchiv = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                               .getResource()
                                                                                               .getProperty("Matcharchiv"),
@@ -58,7 +58,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
     private JCheckBox m_jchSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                             .getResource()
                                                                                             .getProperty("FixturesDownload"),
-                                                     true);
+                                                     gui.UserParameter.instance().fixtures);
     private JList m_jlAlterSeasons = new JList();
     private SpinnerDateModel m_clSpinnerModel = new SpinnerDateModel();
     private JSpinner m_jsSpinner = new JSpinner(m_clSpinnerModel);
@@ -122,7 +122,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
         final JPanel normalDownloadPanel = new ImagePanel(new GridLayout(3, 1, 4, 4));
         normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                                               .getResource()
-                                                                                                              .getProperty("Aktuell")));
+                                                                                                              .getProperty("Download")));
 
         m_jchHRF.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                        .getProperty("tt_Download_XML"));
