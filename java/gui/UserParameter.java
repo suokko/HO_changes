@@ -144,6 +144,15 @@ public final class UserParameter extends Configuration {
 
     /** option parameter */
     public boolean showHRFSaveDialog = true;
+    
+    //Download Options
+    /** XML Download checked in Download Dialog? */
+    public boolean xmlDownload = true;
+    /** Fixtures Download checked in Download Dialog? */
+    public boolean fixtures = true;
+    /** Current Matchlist Download checked in Download Dialog? */
+    public boolean currentMatchlist = true;
+    
 
     //Die Spieleranalyse wird vertikal untereinander gepackt oder nicht
 
@@ -652,6 +661,9 @@ public final class UserParameter extends Configuration {
 		map.put("aufstellungsAssistentPanel_notLast",String.valueOf(aufstellungsAssistentPanel_notLast));
 		map.put("aufstellungsAssistentPanel_verletzt",String.valueOf(aufstellungsAssistentPanel_verletzt));
 		map.put("einzelnePositionenAnzeigen",String.valueOf(einzelnePositionenAnzeigen));
+		map.put("xmlDownload",String.valueOf(xmlDownload));
+		map.put("fixtures",String.valueOf(fixtures));
+		map.put("currentMatchlist",String.valueOf(currentMatchlist));		
 		map.put("logoutOnExit",String.valueOf(logoutOnExit));
 		map.put("showHRFSaveDialog",String.valueOf(showHRFSaveDialog));
 		map.put("spieleranalyseVertikal",String.valueOf(spieleranalyseVertikal));
@@ -823,6 +835,9 @@ public final class UserParameter extends Configuration {
 		aufstellungsAssistentPanel_notLast = getBooleanValue(values,"aufstellungsAssistentPanel_notLast");
 		aufstellungsAssistentPanel_verletzt = getBooleanValue(values,"aufstellungsAssistentPanel_verletzt");
 		einzelnePositionenAnzeigen = getBooleanValue(values,"einzelnePositionenAnzeigen");
+		xmlDownload = getBooleanValue(values,"xmlDownload");
+		fixtures = getBooleanValue(values,"fixtures");
+		currentMatchlist = getBooleanValue(values,"currentMatchlist");
 		logoutOnExit = getBooleanValue(values,"logoutOnExit");
 		showHRFSaveDialog = getBooleanValue(values,"showHRFSaveDialog");
 		spieleranalyseVertikal = getBooleanValue(values,"spieleranalyseVertikal");

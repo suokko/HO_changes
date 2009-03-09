@@ -3,20 +3,24 @@ package de.hattrickorganizer.gui.menu.option;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.*;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JButton;
 
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
 /**
  * Ein Dialog mit allen Optionen für HO
  */
-public class OptionenDialog extends JDialog implements java.awt.event.WindowListener {
+public class OptionenDialog extends JDialog implements WindowListener/*, ActionListener */{
     //~ Instance fields ----------------------------------------------------------------------------
 
     private FarbPanel m_jpFarben;
@@ -28,6 +32,10 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
     private TrainingsOptionenPanel m_jpTrainingsOptionen;
     private UserPanel m_jpUserOptionen;
     private UserColumnsPanel m_jpUserColumns;
+    private DownloadPanel m_jpDownloadPanel;
+    //private JButton m_jbSave = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Speichern"));
+    //private JButton m_jbCancel = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Abbrechen"));
+    //private ImagePanel m_jpButtonPanel = new ImagePanel();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -71,10 +79,10 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
             || m_jpUserColumns.needRestart()
             || m_jpTabOptionen.somethingChanged()) {
             de.hattrickorganizer.tools.Helper.showMessage(this,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("NeustartErforderlich"),
-                                                          "", JOptionPane.INFORMATION_MESSAGE);
+					                                          de.hattrickorganizer.model.HOVerwaltung.instance()
+					                                                                                 .getResource()
+					                                                                                 .getProperty("NeustartErforderlich"),
+					                                          "", JOptionPane.INFORMATION_MESSAGE);
         }
 
         final de.hattrickorganizer.gui.login.LoginWaitDialog waitdialog = new de.hattrickorganizer.gui.login.LoginWaitDialog(de.hattrickorganizer.gui.HOMainFrame
@@ -170,6 +178,12 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
 		hoConnectionOptions = new CheckOptionPanel();
 		tabbedPane.addTab("HO Check",new JScrollPane(hoConnectionOptions));
 		
+		//Download
+        m_jpDownloadPanel = new DownloadPanel();
+        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
+                                                                 .getProperty("Download"),
+                          new JScrollPane(m_jpDownloadPanel));
+		
 //		 HO Check		
 		m_jpUserColumns = new UserColumnsPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("columns"),new JScrollPane(m_jpUserColumns));
@@ -188,6 +202,16 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
         }
 
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        
+        //Add Buttons
+        //m_jpButtonPanel.add(m_jbSave);
+        //m_jbSave.setFont(m_jbSave.getFont().deriveFont(Font.BOLD));
+        //m_jpButtonPanel.add(m_jbCancel);
+        
+        //m_jbSave.addActionListener(this);
+        //m_jbCancel.addActionListener(this);
+        
+        //getContentPane().add(m_jpButtonPanel,BorderLayout.SOUTH);
 
         if (de.hattrickorganizer.gui.HOMainFrame.instance().getToolkit().getScreenSize().height >= 700) {
             setSize(new java.awt.Dimension(450, 700));
@@ -210,4 +234,33 @@ public class OptionenDialog extends JDialog implements java.awt.event.WindowList
 
         this.setResizable(false);
     }
+
+/*	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(m_jbSave)) {
+			if (m_jpSonstigeOptionen.restartErforderlich()
+		            || m_jpFarben.needRestart()
+		            || m_jpUserColumns.needRestart()
+		            || m_jpTabOptionen.somethingChanged()) {
+		            de.hattrickorganizer.tools.Helper.showMessage(this,
+							                                          de.hattrickorganizer.model.HOVerwaltung.instance()
+							                                                                                 .getResource()
+							                                                                                 .getProperty("NeustartErforderlich"),
+							                                          "", JOptionPane.INFORMATION_MESSAGE);
+		        }
+
+		        final de.hattrickorganizer.gui.login.LoginWaitDialog waitdialog = new de.hattrickorganizer.gui.login.LoginWaitDialog(de.hattrickorganizer.gui.HOMainFrame
+		                                                                                                                             .instance());
+		        waitdialog.setVisible(true);
+
+		        de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+
+		        waitdialog.setVisible(false);
+		        
+		        
+		}
+		setVisible(false);
+				
+		
+	}*/
 }
