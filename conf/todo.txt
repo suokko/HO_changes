@@ -46,6 +46,13 @@ P D Bug description
 		Example: German "Chancenverwertu.." instead of English "Scoring (12)"
 5 ? MySQL error messages, as reported here:
 		http://forum.hattrickorganizer.net/index.php?page=Thread&postID=4896#post4896
+5 ? Saving lineup allows to use the reserved words "last lineup". This should not be possible, because
+		you can't delete this lineup afterwards (here the check works). German howto reproduce the bug:
+			- ich habe eine Aufstellung eingestellt und wollte diese speichern.
+			- Also habe ich auf "Aufstellung speichern" geklickt.
+			- Es war "Letzte Aufstellung" gewählt, dieser Name wurde auch vorgeschlagen.
+			- Und dann habe ich einfach "OK" geklickt.
+
 
 
 Enhancements
