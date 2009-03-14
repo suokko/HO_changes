@@ -3,6 +3,7 @@ package de.hattrickorganizer.tools.xml;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +15,11 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import plugins.IMatchLineup;
+
+import de.hattrickorganizer.logik.xml.XMLMatchLineupParser;
+import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
+import de.hattrickorganizer.logik.xml.xmlWorldDetailsParser;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -105,7 +111,7 @@ public class XMLManager implements plugins.IXMLParser {
         Document doc = null;
 
         try {
-            //Validierung, Namensräume einschalten 
+            //Validierung, Namensräume einschalten
             //factory.setValidating ( false );
             //factory.setNamespaceAware ( true );
             builder = factory.newDocumentBuilder();
@@ -132,7 +138,7 @@ public class XMLManager implements plugins.IXMLParser {
         Document doc = null;
 
         try {
-            //Validierung, Namensräume einschalten 
+            //Validierung, Namensräume einschalten
             //factory.setValidating ( false );
             //factory.setNamespaceAware ( true );
             builder = factory.newDocumentBuilder();
@@ -172,7 +178,7 @@ public class XMLManager implements plugins.IXMLParser {
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = null;
 
-            //Validierung, Namensräume einschalten 
+            //Validierung, Namensräume einschalten
             //factory.setValidating ( false );
             //factory.setNamespaceAware ( true );
             builder = factory.newDocumentBuilder();
@@ -201,7 +207,7 @@ public class XMLManager implements plugins.IXMLParser {
         StreamResult result = null;
 
         try {
-            //You can do any modification to the document here        
+            //You can do any modification to the document here
             serializer = TransformerFactory.newInstance().newTransformer();
             source = new DOMSource(doc);
             datei = new File(dateiname);
@@ -247,7 +253,7 @@ public class XMLManager implements plugins.IXMLParser {
 
         HOLogger.instance().log(getClass(),"Titel: " + titel);
     }
-    
+
 	/**
 	 * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
 	 * vorhanden
@@ -262,7 +268,7 @@ public class XMLManager implements plugins.IXMLParser {
 		StreamResult result = null;
 		String xml = "";
 		try {
-			//You can do any modification to the document here        
+			//You can do any modification to the document here
 			serializer = TransformerFactory.newInstance().newTransformer();
 			source = new DOMSource(doc);
 			StringWriter sw = new StringWriter();
@@ -275,5 +281,25 @@ public class XMLManager implements plugins.IXMLParser {
 		}
 		return xml;
 	}
-    
+
+	/**
+	 * Parse the teamDetails from the given xml string.
+	 */
+	public Hashtable parseTeamDetails(String teamDetails) {
+		return new xmlTeamDetailsParser().parseTeamdetails(teamDetails);
+	}
+
+	/**
+	 * Parse the worldDetails from the given xml string.
+	 */
+	public Hashtable parseWorldDetails(String worldDetails, String leagueID) {
+		return new xmlWorldDetailsParser().parseWorldDetailsFromString(worldDetails, leagueID);
+	}
+
+	/**
+	 * Parse the match lineup from the given xml string.
+	 */
+	public IMatchLineup parseMatchLineup(String lineup) {
+		return new XMLMatchLineupParser().parseMatchLineupFromString(lineup);
+	}
 }
