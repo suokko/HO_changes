@@ -52,7 +52,7 @@ P D Bug description
 			- Also habe ich auf "Aufstellung speichern" geklickt.
 			- Es war "Letzte Aufstellung" gewählt, dieser Name wurde auch vorgeschlagen.
 			- Und dann habe ich einfach "OK" geklickt.
-
+5 ? Wrong formation in Matches overview plugin, e.g. "3-3-3" instead of "3-4-3"
 
 
 Enhancements
