@@ -6,6 +6,8 @@
  */
 package plugins;
 
+import java.util.Hashtable;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -67,4 +69,19 @@ public interface IXMLParser {
      * @param dateiname TODO Missing Constructuor Parameter Documentation
      */
     public void writeXML(Document doc, String dateiname);
+
+    /**
+     * Parse the teamDetails from the given xml string.
+     */
+    public Hashtable parseTeamDetails(String teamDetailString);
+
+    /**
+	 * Parse the worldDetails from the given xml string.
+	 */
+	public Hashtable parseWorldDetails(String worldDetails, String leagueID);
+
+	/**
+	 * Parse the match lineup from the given xml string.
+	 */
+	public IMatchLineup parseMatchLineup(String lineup);
 }
