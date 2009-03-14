@@ -10,7 +10,7 @@ public interface ITeam {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Konstanten
-    //////////////////////////////////////////////////////////////////////////////// 
+    ////////////////////////////////////////////////////////////////////////////////
     //Stimmung
 
     /** TODO Missing Parameter Documentation */
@@ -247,7 +247,7 @@ public interface ITeam {
      * @return Value of property m_sStimmung.
      */
     public java.lang.String getStimmung();
-    
+
     public int getSubStimmung();
 
     /**
@@ -303,7 +303,7 @@ public interface ITeam {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Accessor
-    ////////////////////////////////////////////////////////////////////////////////     
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property m_iTrainingslevel.
@@ -311,7 +311,20 @@ public interface ITeam {
      * @return Value of property m_iTrainingslevel.
      */
     public int getTrainingslevel();
-    
+
+    /**
+     * Get stamina share in percent.
+     */
     public int getStaminaTrainingPart();
-    
+
+    /**
+     * Get the i18n string for a self confidence level.
+     */
+    public String getNameForSelfConfidence(int level);
+
+    /**
+     * Get the i18n string for a team spirit level.
+     */
+    public String getNameForTeamSpirit(int level);
+
 }
