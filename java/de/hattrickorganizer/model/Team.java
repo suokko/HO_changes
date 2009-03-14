@@ -41,7 +41,7 @@ public final class Team implements plugins.ITeam {
 
     /** Stimmung */
     private int m_iStimmungInt;
-    
+
     private int subStimmung;
 
     /** TrainingsArt */
@@ -49,7 +49,7 @@ public final class Team implements plugins.ITeam {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Member
-    ////////////////////////////////////////////////////////////////////////////////     
+    ////////////////////////////////////////////////////////////////////////////////
 
     /** Trainingsintensit�t */
     private int m_iTrainingslevel;
@@ -60,7 +60,7 @@ public final class Team implements plugins.ITeam {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Konstruktor
-    ////////////////////////////////////////////////////////////////////////////////       
+    ////////////////////////////////////////////////////////////////////////////////
     public Team(java.util.Properties properties) throws Exception {
         m_iTrainingslevel = Integer.parseInt(properties.getProperty("trlevel", "0"));
         m_iStaminaTrainingPart = Integer.parseInt(properties.getProperty("staminatrainingpart", "0"));
@@ -101,10 +101,18 @@ public final class Team implements plugins.ITeam {
         m_iErfahrung343 = rs.getInt("iErfahrung343");
         m_iErfahrung541 = rs.getInt("iErfahrung541");
         m_iTrainingsArt = rs.getInt("TrainingsArt");
-		subStimmung = 2;        
+		subStimmung = 2;
     }
 
     //~ Methods ------------------------------------------------------------------------------------
+
+    public String getNameForSelfConfidence(int level) {
+    	return getNameForSelbstvertrauen(level);
+    }
+
+    public String getNameForTeamSpirit(int level) {
+    	return getNameForStimmung(level);
+    }
 
     /**
      * Gibt den Namen zu einer Bewertungzur�ck
@@ -205,7 +213,7 @@ public final class Team implements plugins.ITeam {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Static
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Gibt den Namen zu einer Bewertungzur�ck
@@ -470,7 +478,7 @@ public final class Team implements plugins.ITeam {
     public int getTrainingsArtAsInt() {
         return m_iTrainingsArt;
     }
-    
+
     /**
      * Setter for property m_iTrainingslevel.
      *
@@ -486,7 +494,7 @@ public final class Team implements plugins.ITeam {
 
     ////////////////////////////////////////////////////////////////////////////////
     //Accessor
-    ////////////////////////////////////////////////////////////////////////////////     
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property m_iTrainingslevel.
