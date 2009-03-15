@@ -6,7 +6,9 @@ import java.util.HashMap;
 
 import plugins.ILineUp;
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.Configuration;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
 
 
@@ -17,6 +19,7 @@ public final class UserParameter extends Configuration {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static UserParameter m_clUserParameter;
+    private static UserParameter m_clTemp;
 
     //------Konstanten-----------------------------------------------
 
@@ -629,6 +632,27 @@ public final class UserParameter extends Configuration {
         }
 
         return m_clUserParameter;
+    }
+    
+    public static UserParameter temp() {
+    	if (m_clUserParameter == null)
+          instance();
+        if (m_clTemp == null) {
+        	m_clTemp = new UserParameter();
+        	m_clTemp.setValues(m_clUserParameter.getValues());        	
+        }
+        return m_clTemp;
+    }
+    
+    public static void saveTempParameter() {
+    	if (m_clTemp != null) {
+    		m_clUserParameter.setValues(m_clTemp.getValues());
+    		deleteTempParameter();
+    	}
+    }
+    
+    public static void deleteTempParameter() {
+    	m_clTemp = null;
     }
 
 	public HashMap getValues() {
