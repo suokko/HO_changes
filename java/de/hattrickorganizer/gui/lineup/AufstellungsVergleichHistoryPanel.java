@@ -184,7 +184,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
         } else if (actionEvent.getSource().equals(m_jbAufstellungSpeichern)) {
             String aufstellungsname = "";
 
-            if (m_jlAufstellungen.getSelectedIndex() > 0) {
+            if (m_jlAufstellungen.getSelectedIndex() > 1) {
                 aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue())
                                    .getText();
             }
