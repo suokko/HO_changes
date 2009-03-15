@@ -49,19 +49,19 @@ public final class RatingOffsetPanel
 	 * @param changeEvent TODO Missing Method Parameter Documentation
 	 */
 	public final void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
-		UserParameter.instance().leftDefenceOffset =
+		UserParameter.temp().leftDefenceOffset =
 			slider[2].getValue() / 100.0f;
-		UserParameter.instance().middleDefenceOffset =
+		UserParameter.temp().middleDefenceOffset =
 			slider[1].getValue() / 100.0f;
-		UserParameter.instance().rightDefenceOffset =
+		UserParameter.temp().rightDefenceOffset =
 			slider[0].getValue() / 100.0f;
-		UserParameter.instance().midfieldOffset =
+		UserParameter.temp().midfieldOffset =
 			slider[3].getValue() / 100.0f;
-		UserParameter.instance().leftAttackOffset =
+		UserParameter.temp().leftAttackOffset =
 			slider[6].getValue() / 100.0f;
-		UserParameter.instance().middleAttackOffset =
+		UserParameter.temp().middleAttackOffset =
 			slider[5].getValue() / 100.0f;
-		UserParameter.instance().rightAttackOffset =
+		UserParameter.temp().rightAttackOffset =
 			slider[4].getValue() / 100.0f;
 
 	}
@@ -70,13 +70,13 @@ public final class RatingOffsetPanel
 	 * TODO Missing Method Documentation
 +	 */
 	private void initComponents() {        
-		slider[0] = createSlider(UserParameter.instance().rightDefenceOffset,"rechteAbwehrseite");
-        slider[1] = createSlider(UserParameter.instance().middleDefenceOffset,"Abwehrzentrum");
-		slider[2] = createSlider(UserParameter.instance().leftDefenceOffset,"linkeAbwehrseite");
-        slider[3] = createSlider(UserParameter.instance().midfieldOffset,"MatchMittelfeld");
-		slider[4] = createSlider(UserParameter.instance().rightAttackOffset,"rechteAngriffsseite");        
-        slider[5] = createSlider(UserParameter.instance().middleAttackOffset,"Angriffszentrum");
-		slider[6] = createSlider(UserParameter.instance().leftAttackOffset,"linkeAngriffsseite");
+		slider[0] = createSlider(UserParameter.temp().rightDefenceOffset,"rechteAbwehrseite");
+        slider[1] = createSlider(UserParameter.temp().middleDefenceOffset,"Abwehrzentrum");
+		slider[2] = createSlider(UserParameter.temp().leftDefenceOffset,"linkeAbwehrseite");
+        slider[3] = createSlider(UserParameter.temp().midfieldOffset,"MatchMittelfeld");
+		slider[4] = createSlider(UserParameter.temp().rightAttackOffset,"rechteAngriffsseite");        
+        slider[5] = createSlider(UserParameter.temp().middleAttackOffset,"Angriffszentrum");
+		slider[6] = createSlider(UserParameter.temp().leftAttackOffset,"linkeAngriffsseite");
                
 
         err[0] = new JLabel();
@@ -234,7 +234,7 @@ public final class RatingOffsetPanel
 				slider[i].setValue((int) (100 * offset[i][0]));
 				double value = offset[i][1];
 				if (value>0) {				
-					if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
+					if (gui.UserParameter.temp().anzahlNachkommastellen == 1) {
 						err[i].setText(Helper.DEFAULTDEZIMALFORMAT.format(value));
 					} else {
 						err[i].setText(Helper.DEZIMALFORMAT_2STELLEN.format(value));

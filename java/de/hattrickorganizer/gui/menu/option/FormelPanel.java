@@ -77,10 +77,10 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
             fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
             fileChooser.setDialogTitle(HOVerwaltung.instance().getResource().getProperty("FormelwertImport"));
 
-            final java.io.File pfad = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath);
+            final java.io.File pfad = new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath);
 
             if (pfad.exists() && pfad.isDirectory()) {
-                fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath));
+                fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath));
             }
 
             final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
@@ -100,10 +100,10 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
             fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
             fileChooser.setDialogTitle(HOVerwaltung.instance().getResource().getProperty("FormelwertExport"));
 
-            final java.io.File pfad = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath);
+            final java.io.File pfad = new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath);
 
             if (pfad.exists() && pfad.isDirectory()) {
-                fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath));
+                fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath));
             }
 
             final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();

@@ -40,9 +40,9 @@ public final class DownloadPanel extends ImagePanel
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {        
-        gui.UserParameter.instance().xmlDownload = m_jchXMLDownload.isSelected();
-        gui.UserParameter.instance().fixtures = m_jchFixtures.isSelected();
-        gui.UserParameter.instance().currentMatchlist = m_jchCurrentMatchlist.isSelected();
+        gui.UserParameter.temp().xmlDownload = m_jchXMLDownload.isSelected();
+        gui.UserParameter.temp().fixtures = m_jchFixtures.isSelected();
+        gui.UserParameter.temp().currentMatchlist = m_jchCurrentMatchlist.isSelected();
     }
 
 	public void stateChanged(ChangeEvent arg0) {
@@ -61,7 +61,7 @@ public final class DownloadPanel extends ImagePanel
 		m_jchXMLDownload.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
 																		  .getProperty("tt_Download_XML"));
 		m_jchXMLDownload.setOpaque(false);
-		m_jchXMLDownload.setSelected(gui.UserParameter.instance().xmlDownload);
+		m_jchXMLDownload.setSelected(gui.UserParameter.temp().xmlDownload);
 		m_jchXMLDownload.addItemListener(this);
 		add(m_jchXMLDownload);
 
@@ -70,7 +70,7 @@ public final class DownloadPanel extends ImagePanel
 		m_jchCurrentMatchlist.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
 																		  .getProperty("tt_Download_AktuellerSpielplan"));
 		m_jchCurrentMatchlist.setOpaque(false);
-		m_jchCurrentMatchlist.setSelected(gui.UserParameter.instance().currentMatchlist);
+		m_jchCurrentMatchlist.setSelected(gui.UserParameter.temp().currentMatchlist);
 		m_jchCurrentMatchlist.addItemListener(this);
 		add(m_jchCurrentMatchlist);
 
@@ -80,7 +80,7 @@ public final class DownloadPanel extends ImagePanel
         m_jchFixtures.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                           .getProperty("tt_Download_Ligatabelle"));
         m_jchFixtures.setOpaque(false);
-        m_jchFixtures.setSelected(gui.UserParameter.instance().fixtures);
+        m_jchFixtures.setSelected(gui.UserParameter.temp().fixtures);
         m_jchFixtures.addItemListener(this);
         add(m_jchFixtures);
 
