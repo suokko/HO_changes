@@ -88,6 +88,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
         final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
         waitdialog.setVisible(true);
+        gui.UserParameter.saveTempParameter();
         RefreshManager.instance().doReInit();
         waitdialog.setVisible(false);
     }
@@ -231,8 +232,12 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
 		        final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
 		        waitdialog.setVisible(true);
+		        gui.UserParameter.saveTempParameter();
 		        de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
 		        waitdialog.setVisible(false);
+		}
+		else if (e.getSource().equals(m_jbCancel)) {
+			gui.UserParameter.deleteTempParameter();
 		}
 		setVisible(false);
 	}

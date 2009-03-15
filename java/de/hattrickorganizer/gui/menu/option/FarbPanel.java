@@ -48,10 +48,10 @@ final class FarbPanel extends ImagePanel implements ActionListener {
                                                    de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                           .getResource()
                                                                                           .getProperty("Angeschlagen"),
-                                                   gui.UserParameter.instance().FG_ANGESCHLAGEN);
+                                                   gui.UserParameter.temp().FG_ANGESCHLAGEN);
 
             if (color != null) {
-                gui.UserParameter.instance().FG_ANGESCHLAGEN = color;
+                gui.UserParameter.temp().FG_ANGESCHLAGEN = color;
                 m_bNeedRestart = true;
                 refresh();
             }
@@ -60,10 +60,10 @@ final class FarbPanel extends ImagePanel implements ActionListener {
                                                    de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                           .getResource()
                                                                                           .getProperty("Verletzt"),
-                                                   gui.UserParameter.instance().FG_VERLETZT);
+                                                   gui.UserParameter.temp().FG_VERLETZT);
 
             if (color != null) {
-                gui.UserParameter.instance().FG_VERLETZT = color;
+                gui.UserParameter.temp().FG_VERLETZT = color;
                 m_bNeedRestart = true;
                 refresh();
             }
@@ -72,10 +72,10 @@ final class FarbPanel extends ImagePanel implements ActionListener {
                                                    de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                           .getResource()
                                                                                           .getProperty("Verwarnt"),
-                                                   gui.UserParameter.instance().FG_ZWEIKARTEN);
+                                                   gui.UserParameter.temp().FG_ZWEIKARTEN);
 
             if (color != null) {
-                gui.UserParameter.instance().FG_ZWEIKARTEN = color;
+                gui.UserParameter.temp().FG_ZWEIKARTEN = color;
                 m_bNeedRestart = true;
                 refresh();
             }
@@ -84,10 +84,10 @@ final class FarbPanel extends ImagePanel implements ActionListener {
                                                    de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                           .getResource()
                                                                                           .getProperty("Gesperrt"),
-                                                   gui.UserParameter.instance().FG_GESPERRT);
+                                                   gui.UserParameter.temp().FG_GESPERRT);
 
             if (color != null) {
-                gui.UserParameter.instance().FG_GESPERRT = color;
+                gui.UserParameter.temp().FG_GESPERRT = color;
                 m_bNeedRestart = true;
                 refresh();
             }
@@ -96,10 +96,10 @@ final class FarbPanel extends ImagePanel implements ActionListener {
                                                    de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                           .getResource()
                                                                                           .getProperty("Transfermarkt"),
-                                                   gui.UserParameter.instance().FG_TRANSFERMARKT);
+                                                   gui.UserParameter.temp().FG_TRANSFERMARKT);
 
             if (color != null) {
-                gui.UserParameter.instance().FG_TRANSFERMARKT = color;
+                gui.UserParameter.temp().FG_TRANSFERMARKT = color;
                 m_bNeedRestart = true;
                 refresh();
             }
@@ -117,11 +117,11 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
     //---------------Hilfsmethoden--------------------------------------
     public final void refresh() {
-        m_jbAngeschlagen.setBackground(gui.UserParameter.instance().FG_ANGESCHLAGEN);
-        m_jbVerletzt.setBackground(gui.UserParameter.instance().FG_VERLETZT);
-        m_jbZweiKarten.setBackground(gui.UserParameter.instance().FG_ZWEIKARTEN);
-        m_jbGesperrt.setBackground(gui.UserParameter.instance().FG_GESPERRT);
-        m_jbTransfermarkt.setBackground(gui.UserParameter.instance().FG_TRANSFERMARKT);
+        m_jbAngeschlagen.setBackground(gui.UserParameter.temp().FG_ANGESCHLAGEN);
+        m_jbVerletzt.setBackground(gui.UserParameter.temp().FG_VERLETZT);
+        m_jbZweiKarten.setBackground(gui.UserParameter.temp().FG_ZWEIKARTEN);
+        m_jbGesperrt.setBackground(gui.UserParameter.temp().FG_GESPERRT);
+        m_jbTransfermarkt.setBackground(gui.UserParameter.temp().FG_TRANSFERMARKT);
     }
 
     /**
@@ -149,7 +149,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(label);
 
         m_jbAngeschlagen = new JButton();
-        m_jbAngeschlagen.setBackground(gui.UserParameter.instance().FG_ANGESCHLAGEN);
+        m_jbAngeschlagen.setBackground(gui.UserParameter.temp().FG_ANGESCHLAGEN);
         m_jbAngeschlagen.addActionListener(this);
         panel.add(m_jbAngeschlagen);
 
@@ -159,7 +159,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(label);
 
         m_jbVerletzt = new JButton();
-        m_jbVerletzt.setBackground(gui.UserParameter.instance().FG_VERLETZT);
+        m_jbVerletzt.setBackground(gui.UserParameter.temp().FG_VERLETZT);
         m_jbVerletzt.addActionListener(this);
         panel.add(m_jbVerletzt);
 
@@ -169,7 +169,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(label);
 
         m_jbZweiKarten = new JButton();
-        m_jbZweiKarten.setBackground(gui.UserParameter.instance().FG_ZWEIKARTEN);
+        m_jbZweiKarten.setBackground(gui.UserParameter.temp().FG_ZWEIKARTEN);
         m_jbZweiKarten.addActionListener(this);
         panel.add(m_jbZweiKarten);
 
@@ -179,7 +179,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(label);
 
         m_jbGesperrt = new JButton();
-        m_jbGesperrt.setBackground(gui.UserParameter.instance().FG_GESPERRT);
+        m_jbGesperrt.setBackground(gui.UserParameter.temp().FG_GESPERRT);
         m_jbGesperrt.addActionListener(this);
         panel.add(m_jbGesperrt);
 
@@ -189,7 +189,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(label);
 
         m_jbTransfermarkt = new JButton();
-        m_jbTransfermarkt.setBackground(gui.UserParameter.instance().FG_TRANSFERMARKT);
+        m_jbTransfermarkt.setBackground(gui.UserParameter.temp().FG_TRANSFERMARKT);
         m_jbTransfermarkt.addActionListener(this);
         panel.add(m_jbTransfermarkt);
 

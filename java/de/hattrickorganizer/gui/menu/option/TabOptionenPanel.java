@@ -47,15 +47,15 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_bSomethingChanged = true;
 
         //Kein Selected Event!
-        gui.UserParameter.instance().tempTabSpieleruebersicht = !m_jchSpieleruebersicht.isSelected();
-        gui.UserParameter.instance().tempTabAufstellung = !m_jchAufstellung.isSelected();
-        gui.UserParameter.instance().tempTabLigatabelle = !m_jchLigatabelle.isSelected();
-        gui.UserParameter.instance().tempTabSpiele = !m_jchSpiele.isSelected();
-        gui.UserParameter.instance().tempTabSpieleranalyse = !m_jchSpielerAnalyse.isSelected();
-        gui.UserParameter.instance().tempTabStatistik = !m_jchStatistik.isSelected();
-        gui.UserParameter.instance().tempTabTransferscout = !m_jchTransferscout.isSelected();
-        gui.UserParameter.instance().tempTabArenasizer = !m_jchArenasizer.isSelected();
-        gui.UserParameter.instance().tempTabInformation = !m_jchInformation.isSelected();
+        gui.UserParameter.temp().tempTabSpieleruebersicht = !m_jchSpieleruebersicht.isSelected();
+        gui.UserParameter.temp().tempTabAufstellung = !m_jchAufstellung.isSelected();
+        gui.UserParameter.temp().tempTabLigatabelle = !m_jchLigatabelle.isSelected();
+        gui.UserParameter.temp().tempTabSpiele = !m_jchSpiele.isSelected();
+        gui.UserParameter.temp().tempTabSpieleranalyse = !m_jchSpielerAnalyse.isSelected();
+        gui.UserParameter.temp().tempTabStatistik = !m_jchStatistik.isSelected();
+        gui.UserParameter.temp().tempTabTransferscout = !m_jchTransferscout.isSelected();
+        gui.UserParameter.temp().tempTabArenasizer = !m_jchArenasizer.isSelected();
+        gui.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
     }
 
     /**
@@ -74,7 +74,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         setLayout(new GridLayout(9, 1, 4, 4));
 
         //        m_jcbHTIP= new ComboBoxPanel( model.HOVerwaltung.instance ().getResource ().getProperty( "Hattrick" ), HT_IP_ADRESSEN, 120 );
-        //        m_jcbHTIP.setSelectedItem ( gui.UserParameter.instance ().htip );
+        //        m_jcbHTIP.setSelectedItem ( gui.UserParameter.temp ().htip );
         //        m_jcbHTIP.addItemListener ( this );
         //        add( m_jcbHTIP );
         m_jchSpieleruebersicht = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
@@ -84,7 +84,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                                      .getResource()
                                                                                      .getProperty("tt_Optionen_TabManagement"));
         m_jchSpieleruebersicht.setOpaque(false);
-        m_jchSpieleruebersicht.setSelected(!gui.UserParameter.instance().tempTabSpieleruebersicht);
+        m_jchSpieleruebersicht.setSelected(!gui.UserParameter.temp().tempTabSpieleruebersicht);
         m_jchSpieleruebersicht.addItemListener(this);
         add(m_jchSpieleruebersicht);
 
@@ -95,7 +95,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                                .getResource()
                                                                                .getProperty("tt_Optionen_TabManagement"));
         m_jchAufstellung.setOpaque(false);
-        m_jchAufstellung.setSelected(!gui.UserParameter.instance().tempTabAufstellung);
+        m_jchAufstellung.setSelected(!gui.UserParameter.temp().tempTabAufstellung);
         m_jchAufstellung.addItemListener(this);
         add(m_jchAufstellung);
 
@@ -106,7 +106,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                                .getResource()
                                                                                .getProperty("tt_Optionen_TabManagement"));
         m_jchLigatabelle.setOpaque(false);
-        m_jchLigatabelle.setSelected(!gui.UserParameter.instance().tempTabLigatabelle);
+        m_jchLigatabelle.setSelected(!gui.UserParameter.temp().tempTabLigatabelle);
         m_jchLigatabelle.addItemListener(this);
         add(m_jchLigatabelle);
 
@@ -115,7 +115,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchSpiele.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                           .getProperty("tt_Optionen_TabManagement"));
         m_jchSpiele.setOpaque(false);
-        m_jchSpiele.setSelected(!gui.UserParameter.instance().tempTabSpiele);
+        m_jchSpiele.setSelected(!gui.UserParameter.temp().tempTabSpiele);
         m_jchSpiele.addItemListener(this);
         add(m_jchSpiele);
 
@@ -126,7 +126,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                                   .getResource()
                                                                                   .getProperty("tt_Optionen_TabManagement"));
         m_jchSpielerAnalyse.setOpaque(false);
-        m_jchSpielerAnalyse.setSelected(!gui.UserParameter.instance().tempTabSpieleranalyse);
+        m_jchSpielerAnalyse.setSelected(!gui.UserParameter.temp().tempTabSpieleranalyse);
         m_jchSpielerAnalyse.addItemListener(this);
         add(m_jchSpielerAnalyse);
 
@@ -137,7 +137,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                              .getResource()
                                                                              .getProperty("tt_Optionen_TabManagement"));
         m_jchStatistik.setOpaque(false);
-        m_jchStatistik.setSelected(!gui.UserParameter.instance().tempTabStatistik);
+        m_jchStatistik.setSelected(!gui.UserParameter.temp().tempTabStatistik);
         m_jchStatistik.addItemListener(this);
         add(m_jchStatistik);
 
@@ -148,7 +148,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                                  .getResource()
                                                                                  .getProperty("tt_Optionen_TabManagement"));
         m_jchTransferscout.setOpaque(false);
-        m_jchTransferscout.setSelected(!gui.UserParameter.instance().tempTabTransferscout);
+        m_jchTransferscout.setSelected(!gui.UserParameter.temp().tempTabTransferscout);
         m_jchTransferscout.addItemListener(this);
         add(m_jchTransferscout);
 
@@ -159,7 +159,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                               .getResource()
                                                                               .getProperty("tt_Optionen_TabManagement"));
         m_jchArenasizer.setOpaque(false);
-        m_jchArenasizer.setSelected(!gui.UserParameter.instance().tempTabArenasizer);
+        m_jchArenasizer.setSelected(!gui.UserParameter.temp().tempTabArenasizer);
         m_jchArenasizer.addItemListener(this);
         add(m_jchArenasizer);
 
@@ -170,7 +170,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
                                                                                .getResource()
                                                                                .getProperty("tt_Optionen_TabManagement"));
         m_jchInformation.setOpaque(false);
-        m_jchInformation.setSelected(!gui.UserParameter.instance().tempTabInformation);
+        m_jchInformation.setSelected(!gui.UserParameter.temp().tempTabInformation);
         m_jchInformation.addItemListener(this);
         add(m_jchInformation);
     }

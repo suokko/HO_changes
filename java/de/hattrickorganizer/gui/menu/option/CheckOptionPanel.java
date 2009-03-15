@@ -42,11 +42,11 @@ public final class CheckOptionPanel extends ImagePanel
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {        
-        gui.UserParameter.instance().newsCheck = m_jchHONews.isSelected();
-        gui.UserParameter.instance().updateCheck = m_jchUpdateCheck.isSelected();
-        gui.UserParameter.instance().logoutOnExit = m_jchLogout.isSelected();
-        gui.UserParameter.instance().showHRFSaveDialog = m_jchShowSaveDialog.isSelected();
-        gui.UserParameter.instance().userCheck = m_jchHOUsers.isSelected();
+        gui.UserParameter.temp().newsCheck = m_jchHONews.isSelected();
+        gui.UserParameter.temp().updateCheck = m_jchUpdateCheck.isSelected();
+        gui.UserParameter.temp().logoutOnExit = m_jchLogout.isSelected();
+        gui.UserParameter.temp().showHRFSaveDialog = m_jchShowSaveDialog.isSelected();
+        gui.UserParameter.temp().userCheck = m_jchHOUsers.isSelected();
     }
 
 	public void stateChanged(ChangeEvent arg0) {
@@ -65,7 +65,7 @@ public final class CheckOptionPanel extends ImagePanel
 		m_jchHONews.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
 																		  .getProperty("tt_Optionen_NewsCheck"));
 		m_jchHONews.setOpaque(false);
-		m_jchHONews.setSelected(gui.UserParameter.instance().newsCheck);
+		m_jchHONews.setSelected(gui.UserParameter.temp().newsCheck);
 		m_jchHONews.addItemListener(this);
 		add(m_jchHONews);
 
@@ -74,7 +74,7 @@ public final class CheckOptionPanel extends ImagePanel
 		m_jchHOUsers.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
 																		  .getProperty("tt_Optionen_UsersCheck"));
 		m_jchHOUsers.setOpaque(false);
-		m_jchHOUsers.setSelected(gui.UserParameter.instance().userCheck);
+		m_jchHOUsers.setSelected(gui.UserParameter.temp().userCheck);
 		m_jchHOUsers.addItemListener(this);
 		add(m_jchHOUsers);
 
@@ -86,7 +86,7 @@ public final class CheckOptionPanel extends ImagePanel
                                                                                .getResource()
                                                                                .getProperty("tt_Optionen_UpdateCheck"));
         m_jchUpdateCheck.setOpaque(false);
-        m_jchUpdateCheck.setSelected(gui.UserParameter.instance().updateCheck);
+        m_jchUpdateCheck.setSelected(gui.UserParameter.temp().updateCheck);
         m_jchUpdateCheck.addItemListener(this);
         add(m_jchUpdateCheck);
 
@@ -95,7 +95,7 @@ public final class CheckOptionPanel extends ImagePanel
         m_jchLogout.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                           .getProperty("tt_Optionen_Logout_beim_Beenden"));
         m_jchLogout.setOpaque(false);
-        m_jchLogout.setSelected(gui.UserParameter.instance().logoutOnExit);
+        m_jchLogout.setSelected(gui.UserParameter.temp().logoutOnExit);
         m_jchLogout.addItemListener(this);
         add(m_jchLogout);
 
@@ -106,7 +106,7 @@ public final class CheckOptionPanel extends ImagePanel
                                                                                   .getResource()
                                                                                   .getProperty("tt_Optionen_Show_SaveHRF_Dialog"));
         m_jchShowSaveDialog.setOpaque(false);
-        m_jchShowSaveDialog.setSelected(gui.UserParameter.instance().showHRFSaveDialog);
+        m_jchShowSaveDialog.setSelected(gui.UserParameter.temp().showHRFSaveDialog);
         m_jchShowSaveDialog.addItemListener(this);
         add(m_jchShowSaveDialog);
         for(int i = 0; i < 5; i++) {

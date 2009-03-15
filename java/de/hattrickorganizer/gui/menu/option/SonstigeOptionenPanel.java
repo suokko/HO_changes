@@ -218,11 +218,11 @@ public final class SonstigeOptionenPanel extends ImagePanel
     private SliderPanel m_jslSchriftgroesse;
     private SliderPanel m_jslWetterEffekt;
 	private SliderPanel m_jslFutureWeeks;
-    private String m_sAlteSprachdatei = gui.UserParameter.instance().sprachDatei;
-    private boolean m_bZahleFuerSkill = gui.UserParameter.instance().zahlenFuerSkill;
-    private int m_iAlteSchriftgroesse = gui.UserParameter.instance().schriftGroesse;
-	private int m_iFutureWeeks = gui.UserParameter.instance().futureWeeks;
-    private int m_iOldTimeZone = gui.UserParameter.instance().TimeZoneDifference;
+    private String m_sAlteSprachdatei = gui.UserParameter.temp().sprachDatei;
+    private boolean m_bZahleFuerSkill = gui.UserParameter.temp().zahlenFuerSkill;
+    private int m_iAlteSchriftgroesse = gui.UserParameter.temp().schriftGroesse;
+	private int m_iFutureWeeks = gui.UserParameter.temp().futureWeeks;
+    private int m_iOldTimeZone = gui.UserParameter.temp().TimeZoneDifference;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -254,22 +254,22 @@ public final class SonstigeOptionenPanel extends ImagePanel
      */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         //Kein Selected Event!
-        gui.UserParameter.instance().zahlenFuerSkill = m_jchZahlenBewertung.isSelected();
- //       gui.UserParameter.instance().einzelnePositionenAnzeigen = m_jchEinzelnePositionen
+        gui.UserParameter.temp().zahlenFuerSkill = m_jchZahlenBewertung.isSelected();
+ //       gui.UserParameter.temp().einzelnePositionenAnzeigen = m_jchEinzelnePositionen
  //                                                                 .isSelected();
 
         if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //gui.UserParameter.instance ().htip          = ( (String) m_jcbHTIP.getSelectedItem () );
-            gui.UserParameter.instance().faktorGeld = ((de.hattrickorganizer.gui.model.GeldFaktorCBItem) m_jcbWaehrung
+            //gui.UserParameter.temp ().htip          = ( (String) m_jcbHTIP.getSelectedItem () );
+            gui.UserParameter.temp().faktorGeld = ((de.hattrickorganizer.gui.model.GeldFaktorCBItem) m_jcbWaehrung
                                                        .getSelectedItem()).getFaktor();
 
-            //gui.UserParameter.instance ().waehrungsID   = ( (gui.model.GeldFaktorCBItem)m_jcbWaehrung.getSelectedItem () ).getId ();
-            gui.UserParameter.instance().TimeZoneDifference = ((de.hattrickorganizer.gui.model.CBItem) m_jcbTimeZoneDifference
+            //gui.UserParameter.temp ().waehrungsID   = ( (gui.model.GeldFaktorCBItem)m_jcbWaehrung.getSelectedItem () ).getId ();
+            gui.UserParameter.temp().TimeZoneDifference = ((de.hattrickorganizer.gui.model.CBItem) m_jcbTimeZoneDifference
                                                                .getSelectedItem()).getId();
-            gui.UserParameter.instance().anzahlNachkommastellen = ((de.hattrickorganizer.gui.model.CBItem) m_jcbNachkomma
+            gui.UserParameter.temp().anzahlNachkommastellen = ((de.hattrickorganizer.gui.model.CBItem) m_jcbNachkomma
                                                                    .getSelectedItem()).getId();
-            gui.UserParameter.instance().sprachDatei = ((String) m_jcbSprachdatei.getSelectedItem());
-            gui.UserParameter.instance().standardsortierung = ((de.hattrickorganizer.gui.model.CBItem) m_jcbSortierung
+            gui.UserParameter.temp().sprachDatei = ((String) m_jcbSprachdatei.getSelectedItem());
+            gui.UserParameter.temp().standardsortierung = ((de.hattrickorganizer.gui.model.CBItem) m_jcbSortierung
                                                                .getSelectedItem()).getId();
         }
     }
@@ -303,11 +303,11 @@ public final class SonstigeOptionenPanel extends ImagePanel
      * @param changeEvent TODO Missing Method Parameter Documentation
      */
     public final void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
-        gui.UserParameter.instance().deadlineFrist = (int) m_jslDeadline.getValue();
-        gui.UserParameter.instance().MinIdealPosStk = m_jslMinStaerke.getValue();
-        gui.UserParameter.instance().WetterEffektBonus = m_jslWetterEffekt.getValue();
-		gui.UserParameter.instance().futureWeeks = (int) m_jslFutureWeeks.getValue();		
-        gui.UserParameter.instance().schriftGroesse = (int) m_jslSchriftgroesse.getValue();
+        gui.UserParameter.temp().deadlineFrist = (int) m_jslDeadline.getValue();
+        gui.UserParameter.temp().MinIdealPosStk = m_jslMinStaerke.getValue();
+        gui.UserParameter.temp().WetterEffektBonus = m_jslWetterEffekt.getValue();
+		gui.UserParameter.temp().futureWeeks = (int) m_jslFutureWeeks.getValue();		
+        gui.UserParameter.temp().schriftGroesse = (int) m_jslSchriftgroesse.getValue();
     }
 
     /**
@@ -317,7 +317,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         setLayout(new GridLayout(10, 1, 4, 4));
 
         //        m_jcbHTIP= new ComboBoxPanel( model.HOVerwaltung.instance ().getResource ().getProperty( "Hattrick" ), HT_IP_ADRESSEN, 120 );
-        //        m_jcbHTIP.setSelectedItem ( gui.UserParameter.instance ().htip );
+        //        m_jcbHTIP.setSelectedItem ( gui.UserParameter.temp ().htip );
         //        m_jcbHTIP.addItemListener ( this );
         //        add( m_jcbHTIP );
         m_jslDeadline = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
@@ -326,7 +326,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                         60, 0, 1f / 60000f, 1.0f, 120);
         m_jslDeadline.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                             .getProperty("tt_Optionen_TransferWecker"));
-        m_jslDeadline.setValue((float) gui.UserParameter.instance().deadlineFrist);
+        m_jslDeadline.setValue((float) gui.UserParameter.temp().deadlineFrist);
         m_jslDeadline.addChangeListener(this);
         add(m_jslDeadline);
 
@@ -337,7 +337,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jslMinStaerke.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                               .getResource()
                                                                               .getProperty("tt_Optionen_MinStaerkeIdealPos"));
-        m_jslMinStaerke.setValue(gui.UserParameter.instance().MinIdealPosStk);
+        m_jslMinStaerke.setValue(gui.UserParameter.temp().MinIdealPosStk);
         m_jslMinStaerke.addChangeListener(this);
         add(m_jslMinStaerke);
 
@@ -348,7 +348,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jslWetterEffekt.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                 .getResource()
                                                                                 .getProperty("tt_Optionen_Wettereffekt"));
-        m_jslWetterEffekt.setValue(gui.UserParameter.instance().WetterEffektBonus);
+        m_jslWetterEffekt.setValue(gui.UserParameter.temp().WetterEffektBonus);
         m_jslWetterEffekt.addChangeListener(this);
         add(m_jslWetterEffekt);
 
@@ -359,7 +359,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
 		m_jslFutureWeeks.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
 																				.getResource()
 																				.getProperty("tt_Optionen_futureWeeks"));
-		m_jslFutureWeeks.setValue(gui.UserParameter.instance().futureWeeks);
+		m_jslFutureWeeks.setValue(gui.UserParameter.temp().futureWeeks);
 		m_jslFutureWeeks.addChangeListener(this);
 		add(m_jslFutureWeeks);
 
@@ -370,7 +370,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jslSchriftgroesse.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                   .getResource()
                                                                                   .getProperty("tt_Optionen_Schriftgroesse"));
-        m_jslSchriftgroesse.setValue(gui.UserParameter.instance().schriftGroesse);
+        m_jslSchriftgroesse.setValue(gui.UserParameter.temp().schriftGroesse);
         m_jslSchriftgroesse.addChangeListener(this);
         add(m_jslSchriftgroesse);
 
@@ -388,7 +388,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jcbSprachdatei.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                .getResource()
                                                                                .getProperty("tt_Optionen_Sprachdatei"));
-        m_jcbSprachdatei.setSelectedItem(gui.UserParameter.instance().sprachDatei);
+        m_jcbSprachdatei.setSelectedItem(gui.UserParameter.temp().sprachDatei);
         m_jcbSprachdatei.addItemListener(this);
         add(m_jcbSprachdatei);
 
@@ -399,7 +399,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jcbTimeZoneDifference.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                       .getResource()
                                                                                       .getProperty("tt_Options_TimeZone"));
-        m_jcbTimeZoneDifference.setSelectedId(gui.UserParameter.instance().TimeZoneDifference);
+        m_jcbTimeZoneDifference.setSelectedId(gui.UserParameter.temp().TimeZoneDifference);
         m_jcbTimeZoneDifference.addItemListener(this);
         add(m_jcbTimeZoneDifference);
 
@@ -408,7 +408,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                                                                  .getResource()
                                                                                  .getProperty("Waehrungsfaktor"),
                                           WAEHRUNGEN, 120);
-        m_jcbWaehrung.setSelectedId(gui.UserParameter.instance().waehrungsID);
+        m_jcbWaehrung.setSelectedId(gui.UserParameter.temp().waehrungsID);
         m_jcbWaehrung.addItemListener(this);
 
         //        add( m_jcbWaehrung );
@@ -419,7 +419,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jcbSortierung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                               .getResource()
                                                                               .getProperty("tt_Optionen_Defaultsortierung"));
-        m_jcbSortierung.setSelectedId(gui.UserParameter.instance().standardsortierung);
+        m_jcbSortierung.setSelectedId(gui.UserParameter.temp().standardsortierung);
         m_jcbSortierung.addItemListener(this);
         add(m_jcbSortierung);
 
@@ -430,7 +430,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jcbNachkomma.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                              .getResource()
                                                                              .getProperty("tt_Optionen_Nachkommastellen"));
-        m_jcbNachkomma.setSelectedId(gui.UserParameter.instance().anzahlNachkommastellen);
+        m_jcbNachkomma.setSelectedId(gui.UserParameter.temp().anzahlNachkommastellen);
         m_jcbNachkomma.addItemListener(this);
         add(m_jcbNachkomma);
 
@@ -442,7 +442,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                                                                       .getResource()
                                                                                       .getProperty("tt_Optionen_EinzelneTabellenPositionen"));
         m_jchEinzelnePositionen.setOpaque(false);
-        m_jchEinzelnePositionen.setSelected(gui.UserParameter.instance().einzelnePositionenAnzeigen);
+        m_jchEinzelnePositionen.setSelected(gui.UserParameter.temp().einzelnePositionenAnzeigen);
         m_jchEinzelnePositionen.addItemListener(this);
         add(m_jchEinzelnePositionen);
 */
@@ -458,7 +458,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                                                                    .getResource()
                                                                                    .getProperty("tt_Optionen_SkillZahlen"));
         m_jchZahlenBewertung.setOpaque(false);
-        m_jchZahlenBewertung.setSelected(gui.UserParameter.instance().zahlenFuerSkill);
+        m_jchZahlenBewertung.setSelected(gui.UserParameter.temp().zahlenFuerSkill);
         m_jchZahlenBewertung.addItemListener(this);
         add(m_jchZahlenBewertung);
 
