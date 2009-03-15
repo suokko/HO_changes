@@ -46,12 +46,6 @@ P D Bug description
 		Example: German "Chancenverwertu.." instead of English "Scoring (12)"
 5 ? MySQL error messages, as reported here:
 		http://forum.hattrickorganizer.net/index.php?page=Thread&postID=4896#post4896
-5 ? Saving lineup allows to use the reserved words "last lineup". This should not be possible, because
-		you can't delete this lineup afterwards (here the check works). German howto reproduce the bug:
-			- ich habe eine Aufstellung eingestellt und wollte diese speichern.
-			- Also habe ich auf "Aufstellung speichern" geklickt.
-			- Es war "Letzte Aufstellung" gewählt, dieser Name wurde auch vorgeschlagen.
-			- Und dann habe ich einfach "OK" geklickt.
 5 ? Wrong formation in Matches overview plugin, e.g. "3-3-3" instead of "3-4-3"
 
 
@@ -81,10 +75,10 @@ P D Task
 5 ? Add stats (HT, Loddar, Squad, etc.) to the matches view
 5 ? Add button to start the match simulation from the matches tab (with ratings and special tactic from this 'old' match)
 5 ? Show opponent statistics (probably at TeamAnalyzer): HT, Loddar, average form, injured players, TSI sum/average
-5 ? Transferscout: add button to remove all player with one single klick
+5 D Transferscout: add button to remove all player with one single klick
 5 ? Enhance visualization in Georgian mode: use another font + use Georgian font in dialog titles
 5 ? Add symbol to players view and TrainingExperience view, if there is an active training block (individual instruction) set
-5 ? Add palyers agreeability to TransferScout
+
 
 
 Features
@@ -135,6 +129,7 @@ P D Task
 5 F Add a soft time limit to HO (show a notice if the HO version is older than x months, but start HO anyway)
 5 F Add a player export function (CSV)
 5 A Teamanalyzer: it's not possible to start the simulation, if the tactic level is above divine
+5 D Fixed: Saving lineup allows to use the reserved words "last lineup"
 
 
 Legend:

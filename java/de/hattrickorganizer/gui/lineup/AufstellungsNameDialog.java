@@ -166,6 +166,8 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
         //nicht Aktuelle Aufstellung
         aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
                                                                      .getProperty("AktuelleAufstellung"));
+        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
+                                                                     .getProperty("LetzteAufstellung"));
 
         //nicht HO!
         aufstellungsNamen.add(Aufstellung.DEFAULT_NAME);
