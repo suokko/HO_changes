@@ -14,6 +14,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.OptionManager;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
@@ -77,20 +78,24 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
      * @param windowEvent TODO Missing Method Parameter Documentation
      */
     public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        if (m_jpSonstigeOptionen.restartErforderlich()
-            || m_jpFarben.needRestart()
-            || m_jpUserColumns.needRestart()
-            || m_jpTabOptionen.somethingChanged()) {
-            de.hattrickorganizer.tools.Helper.showMessage(this,
-            		HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"),
-            		"", JOptionPane.INFORMATION_MESSAGE);
-        }
+    	
+    	gui.UserParameter.saveTempParameter();
 
-        final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
-        waitdialog.setVisible(true);
-        gui.UserParameter.saveTempParameter();
-        RefreshManager.instance().doReInit();
-        waitdialog.setVisible(false);
+		if (OptionManager.instance().isRestartNeeded()) {
+	            Helper.showMessage(this, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"),
+	            		"", JOptionPane.INFORMATION_MESSAGE);
+	    }
+		
+		if (OptionManager.instance().isReInitNeeded()) {
+			final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
+	        waitdialog.setVisible(true);		        
+	        RefreshManager.instance().doReInit();
+	        waitdialog.setVisible(false);
+		}
+				       
+
+		OptionManager.deleteInstance();
+		setVisible(false);
     }
 
     /**
@@ -222,23 +227,23 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(m_jbSave)) {
-			if (m_jpSonstigeOptionen.restartErforderlich()
-		            || m_jpFarben.needRestart()
-		            || m_jpUserColumns.needRestart()
-		            || m_jpTabOptionen.somethingChanged()) {
+			gui.UserParameter.saveTempParameter();
+			if (OptionManager.instance().isRestartNeeded()) {
 		            Helper.showMessage(this, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"),
 		            		"", JOptionPane.INFORMATION_MESSAGE);
-		        }
-
-		        final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
-		        waitdialog.setVisible(true);
-		        gui.UserParameter.saveTempParameter();
-		        de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+		    }
+			if (OptionManager.instance().isReInitNeeded()) {
+				final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
+		        waitdialog.setVisible(true);		        
+		        RefreshManager.instance().doReInit();
 		        waitdialog.setVisible(false);
+			}
+					       
 		}
 		else if (e.getSource().equals(m_jbCancel)) {
 			gui.UserParameter.deleteTempParameter();
 		}
+		OptionManager.deleteInstance();
 		setVisible(false);
 	}
 }

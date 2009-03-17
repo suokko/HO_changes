@@ -20,6 +20,7 @@ import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.OptionManager;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.TableEditor;
 import de.hattrickorganizer.tools.updater.TableModel;
@@ -37,7 +38,6 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 	private JTable table 				= null;
 	private final String [] columnNames = new String[]{" ", HOVerwaltung.instance().getResource().getProperty("column")};
 	private final ImageIcon lockedImage 	= new ImageIcon(Helper.loadImage("gui/bilder/Locked.gif"));
-	private boolean m_bNeedRestart;
 	protected UserColumnsPanel(){
 		initComponents();
 	}
@@ -153,17 +153,9 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 		
 		if(arg0.getSource() instanceof JCheckBox){
 			((UserColumn)table.getValueAt(table.getSelectedRow(),1)).setDisplay(((JCheckBox)arg0.getSource()).isSelected());
-			m_bNeedRestart = true;
+			OptionManager.instance().setRestartNeeded();
 		}
 		
 	}
 	
-	/**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean needRestart() {
-        return m_bNeedRestart;
-    }
 }

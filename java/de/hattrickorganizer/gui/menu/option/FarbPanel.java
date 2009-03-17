@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.menu.option;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -28,7 +29,6 @@ final class FarbPanel extends ImagePanel implements ActionListener {
     private JButton m_jbTransfermarkt;
     private JButton m_jbVerletzt;
     private JButton m_jbZweiKarten;
-    private boolean m_bNeedRestart;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
             if (color != null) {
                 gui.UserParameter.temp().FG_ANGESCHLAGEN = color;
-                m_bNeedRestart = true;
+                OptionManager.instance().setReInitNeeded();
                 refresh();
             }
         } else if (actionEvent.getSource().equals(m_jbVerletzt)) {
@@ -64,7 +64,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
             if (color != null) {
                 gui.UserParameter.temp().FG_VERLETZT = color;
-                m_bNeedRestart = true;
+                OptionManager.instance().setReInitNeeded();
                 refresh();
             }
         } else if (actionEvent.getSource().equals(m_jbZweiKarten)) {
@@ -76,7 +76,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
             if (color != null) {
                 gui.UserParameter.temp().FG_ZWEIKARTEN = color;
-                m_bNeedRestart = true;
+                OptionManager.instance().setReInitNeeded();
                 refresh();
             }
         } else if (actionEvent.getSource().equals(m_jbGesperrt)) {
@@ -88,7 +88,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
             if (color != null) {
                 gui.UserParameter.temp().FG_GESPERRT = color;
-                m_bNeedRestart = true;
+                OptionManager.instance().setReInitNeeded();
                 refresh();
             }
         } else if (actionEvent.getSource().equals(m_jbTransfermarkt)) {
@@ -100,19 +100,10 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
             if (color != null) {
                 gui.UserParameter.temp().FG_TRANSFERMARKT = color;
-                m_bNeedRestart = true;
+                OptionManager.instance().setReInitNeeded();
                 refresh();
             }
         }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean needRestart() {
-        return m_bNeedRestart;
     }
 
     //---------------Hilfsmethoden--------------------------------------

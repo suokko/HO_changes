@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.menu.option;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.GridLayout;
 
@@ -25,7 +26,6 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
     private JCheckBox m_jchSpieleruebersicht;
     private JCheckBox m_jchStatistik;
     private JCheckBox m_jchTransferscout;
-    private boolean m_bSomethingChanged;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -44,9 +44,14 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
-        m_bSomethingChanged = true;
+    	
+    	// New Tab can not be shown immediately
+    	if (itemEvent.getStateChange()== itemEvent.SELECTED)
+    		OptionManager.instance().setRestartNeeded();
+    	// ReInit deletes the deselected Tab
+    	if (itemEvent.getStateChange()== itemEvent.DESELECTED)
+    		OptionManager.instance().setReInitNeeded();
 
-        //Kein Selected Event!
         gui.UserParameter.temp().tempTabSpieleruebersicht = !m_jchSpieleruebersicht.isSelected();
         gui.UserParameter.temp().tempTabAufstellung = !m_jchAufstellung.isSelected();
         gui.UserParameter.temp().tempTabLigatabelle = !m_jchLigatabelle.isSelected();
@@ -56,15 +61,6 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         gui.UserParameter.temp().tempTabTransferscout = !m_jchTransferscout.isSelected();
         gui.UserParameter.temp().tempTabArenasizer = !m_jchArenasizer.isSelected();
         gui.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean somethingChanged() {
-        return m_bSomethingChanged;
     }
 
     /**
