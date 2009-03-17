@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.menu.option;
 
 import de.hattrickorganizer.gui.model.GeldFaktorCBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.OptionManager;
 import de.hattrickorganizer.tools.LanguageFiles;
 
 import java.awt.GridLayout;
@@ -270,31 +271,13 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                                                    .getSelectedItem()).getId();
             gui.UserParameter.temp().sprachDatei = ((String) m_jcbSprachdatei.getSelectedItem());
             gui.UserParameter.temp().standardsortierung = ((de.hattrickorganizer.gui.model.CBItem) m_jcbSortierung
-                                                               .getSelectedItem()).getId();
+                                                               .getSelectedItem()).getId();            
         }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean restartErforderlich() {
-        try {
-            if (!(m_sAlteSprachdatei).equals((String) m_jcbSprachdatei.getSelectedItem())
-                || ((int) m_jslSchriftgroesse.getValue() != m_iAlteSchriftgroesse)
-                || (m_iOldTimeZone != ((de.hattrickorganizer.gui.model.CBItem) m_jcbTimeZoneDifference
-                                       .getSelectedItem()).getId())
-                || (m_bZahleFuerSkill != m_jchZahlenBewertung.isSelected())
-				|| ((int) m_jslFutureWeeks.getValue() != m_iFutureWeeks)) {
-                return true;
-            }
-        } catch (Exception e) {
-            //Doof aber Ignoriert!
-            return true;
-        }
-
-        return false;
+        if ((!gui.UserParameter.temp().sprachDatei.equals(gui.UserParameter.instance().sprachDatei) )
+            || (gui.UserParameter.temp().TimeZoneDifference != gui.UserParameter.instance().TimeZoneDifference))
+        	  OptionManager.instance().setRestartNeeded();
+        if (gui.UserParameter.temp().zahlenFuerSkill != gui.UserParameter.instance().zahlenFuerSkill)
+        	OptionManager.instance().setReInitNeeded();
     }
 
     /**
@@ -308,6 +291,13 @@ public final class SonstigeOptionenPanel extends ImagePanel
         gui.UserParameter.temp().WetterEffektBonus = m_jslWetterEffekt.getValue();
 		gui.UserParameter.temp().futureWeeks = (int) m_jslFutureWeeks.getValue();		
         gui.UserParameter.temp().schriftGroesse = (int) m_jslSchriftgroesse.getValue();
+        
+        if ((gui.UserParameter.temp().schriftGroesse != gui.UserParameter.instance().schriftGroesse)
+			|| (gui.UserParameter.temp().futureWeeks != gui.UserParameter.instance().futureWeeks)) {
+        	  OptionManager.instance().setRestartNeeded();
+        }
+            
+        
     }
 
     /**
