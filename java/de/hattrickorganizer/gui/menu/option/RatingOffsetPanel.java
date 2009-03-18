@@ -16,6 +16,7 @@ import javax.swing.event.ChangeListener;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.logik.RatingOptimizer;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.OptionManager;
 import de.hattrickorganizer.tools.Helper;
 
 /**
@@ -63,7 +64,8 @@ public final class RatingOffsetPanel
 			slider[5].getValue() / 100.0f;
 		UserParameter.temp().rightAttackOffset =
 			slider[4].getValue() / 100.0f;
-
+		
+		OptionManager.instance().setReInitNeeded();
 	}
 
 	/**
