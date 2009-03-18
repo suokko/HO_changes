@@ -556,7 +556,7 @@ final public class UserColumnFactory {
 			
 
 			
-			playerAdditionalArray[7] = new PlayerColumn(420,"Gehalt",10){
+			playerAdditionalArray[7] = new PlayerColumn(420,"Gehalt",100){
 			public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 				final String bonus = "";
 				final int gehalt = (int) (player.getGehalt() / gui.UserParameter.instance().faktorGeld);
@@ -631,7 +631,7 @@ final public class UserColumnFactory {
 				
 			};
 			
-			playerAdditionalArray[10] = new PlayerColumn(436,"Marktwert",10){
+			playerAdditionalArray[10] = new PlayerColumn(436,"Marktwert",140){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
 					double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
