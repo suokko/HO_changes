@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.menu.option;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.GridLayout;
 
@@ -55,6 +56,8 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
         gui.UserParameter.temp().TrainerFaktor = m_jslTrainerFaktor.getValue();
         gui.UserParameter.temp().CoTrainerFaktor = m_jslCoTrainerFaktor.getValue();
         gui.UserParameter.temp().IntensitaetFaktor = m_jslIntensitaetFaktor.getValue();
+        
+        OptionManager.instance().setReInitNeeded();
     }
 
     /**

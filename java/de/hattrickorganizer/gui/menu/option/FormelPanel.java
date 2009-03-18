@@ -6,6 +6,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.FactorObject;
 import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -187,6 +188,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
                                                            m_jpStandard.getValue());
 
         factors.setPositionFactor(factorObject.getPosition(),factorObject);
+        OptionManager.instance().setReInitNeeded();
     }
 
     /**
