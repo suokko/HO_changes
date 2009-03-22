@@ -17,6 +17,7 @@ P D Bug description
 			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
 2 ? Fix training length calculation on substitute players
 			Currently the necessary data are not in the XMLs (and not annouces either)
+2 ? Hattrack data is not downloaded properly when the HO homepage is down and HO check is activated
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 	We need an affected DB to further examine the problem
 3 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
@@ -33,7 +34,6 @@ P D Bug description
 4 ? Add string and icon for regainer
 4 A If the first download after a stadium expansion includes also a new match, the old
     stadium size is shown in statistics. One can get >100% usage then.
-4 D Squad Overview: Columns 'salary' and 'market value' are too small after db is generated
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
 5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
@@ -119,6 +119,7 @@ P D Task
 	09.01.2009: Fixed according to HT-Thomas (it was an HT bug anyway)
 4 F Fix HO.sh for linux (accept whitespaces in path name)
 4 D Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
+4 D Squad Overview: Columns 'salary' and 'market value' were too small after db is generated
 5 A Add handling and match event symbol for Longshots even 187/287
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
