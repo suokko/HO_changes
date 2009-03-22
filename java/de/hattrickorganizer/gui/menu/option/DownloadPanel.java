@@ -18,6 +18,7 @@ public final class DownloadPanel extends ImagePanel
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 
+	private static final long serialVersionUID = 1L;
 	private JCheckBox m_jchXMLDownload;
 	private JCheckBox m_jchCurrentMatchlist;    
     private JCheckBox m_jchFixtures;

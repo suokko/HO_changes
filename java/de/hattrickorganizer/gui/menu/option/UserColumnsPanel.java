@@ -34,6 +34,7 @@ import de.hattrickorganizer.tools.updater.UpdaterCellRenderer;
  */
 public class UserColumnsPanel extends JPanel implements ActionListener{
 
+	private static final long serialVersionUID = 1L;
 	private JComboBox m_jcbColumnModel 	= null;
 	private JTable table 				= null;
 	private final String [] columnNames = new String[]{" ", HOVerwaltung.instance().getResource().getProperty("column")};

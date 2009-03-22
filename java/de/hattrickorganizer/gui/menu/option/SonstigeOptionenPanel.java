@@ -19,7 +19,9 @@ public final class SonstigeOptionenPanel extends ImagePanel
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	private static final long serialVersionUID = 1L;
+
+	/** TODO Missing Parameter Documentation */
     public static de.hattrickorganizer.gui.model.GeldFaktorCBItem[] WAEHRUNGEN = {
                                                                                      new GeldFaktorCBItem("Sverige kr",1f,1),
                                                                                      new GeldFaktorCBItem("Great Britain £",15f,2),
@@ -219,11 +221,6 @@ public final class SonstigeOptionenPanel extends ImagePanel
     private SliderPanel m_jslSchriftgroesse;
     private SliderPanel m_jslWetterEffekt;
 	private SliderPanel m_jslFutureWeeks;
-    private String m_sAlteSprachdatei = gui.UserParameter.temp().sprachDatei;
-    private boolean m_bZahleFuerSkill = gui.UserParameter.temp().zahlenFuerSkill;
-    private int m_iAlteSchriftgroesse = gui.UserParameter.temp().schriftGroesse;
-	private int m_iFutureWeeks = gui.UserParameter.temp().futureWeeks;
-    private int m_iOldTimeZone = gui.UserParameter.temp().TimeZoneDifference;
 
     //~ Constructors -------------------------------------------------------------------------------
 

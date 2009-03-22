@@ -18,6 +18,7 @@ public final class CheckOptionPanel extends ImagePanel
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 
+	private static final long serialVersionUID = 1L;
 	private JCheckBox m_jchHONews;
 	private JCheckBox m_jchHOUsers;    
     private JCheckBox m_jchLogout;

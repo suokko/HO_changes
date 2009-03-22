@@ -25,14 +25,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeListener;
 
-import plugins.ISpielerPosition;
 
 
 /**
  * Panel zum editieren der Formelwerte der Spielerstärkenberechnung
  */
 final class FormelPanel extends ImagePanel implements ActionListener, ItemListener, ChangeListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = 1L;
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private JButton m_jbExport;
     private JButton m_jbImport;

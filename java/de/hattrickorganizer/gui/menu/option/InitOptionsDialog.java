@@ -16,7 +16,9 @@ import javax.swing.JPanel;
  * OLD! Initaloptionen
  */
 public final class InitOptionsDialog extends JDialog implements java.awt.event.ActionListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = 1L;
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private JButton m_jbOK;
     private JComboBox m_jcbSprachdatei;
@@ -62,8 +64,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
 
         optionspanel.add(new JLabel("Languagefile"));
 
-        final de.hattrickorganizer.tools.LanguageFiles lf = new de.hattrickorganizer.tools.LanguageFiles();
-        final String[] sprachdateien = lf.getSprachDateien();
+        final String[] sprachdateien = de.hattrickorganizer.tools.LanguageFiles.getSprachDateien();
 
         try {
             java.util.Arrays.sort(sprachdateien);

@@ -24,7 +24,8 @@ import javax.swing.JPanel;
 final class FarbPanel extends ImagePanel implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbAngeschlagen;
+	private static final long serialVersionUID = 1L;
+	private JButton m_jbAngeschlagen;
     private JButton m_jbGesperrt;
     private JButton m_jbTransfermarkt;
     private JButton m_jbVerletzt;
