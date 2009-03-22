@@ -27,9 +27,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Thorsten Dietz
  */
 public class UserPanel extends ImagePanel implements ActionListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+    //~ Static / Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbDeleteUser = null;
+	private static final long serialVersionUID = 1L;
+	private JButton m_jbDeleteUser = null;
     private JButton m_jbNewUser = null;
     private JButton m_jbSaveUser = null;
     private JTable table;
@@ -64,13 +65,13 @@ public class UserPanel extends ImagePanel implements ActionListener {
         }
 
         if (e.getSource() == m_jbDeleteUser) {
-            ArrayList users = User.getAllUser();
+            ArrayList<User> users = User.getAllUser();
             users.remove(table.getSelectedRow());
             refresh();
         }
 
        	if(e.getSource() == m_jbSaveUser){
-    			ArrayList users = User.getAllUser();
+    			ArrayList<User> users = User.getAllUser();
     			
     			for (int i = 0; i < table.getRowCount(); i++) {
     				User user = (User)users.get(i);

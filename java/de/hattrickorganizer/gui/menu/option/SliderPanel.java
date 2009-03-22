@@ -19,9 +19,10 @@ import javax.swing.event.ChangeListener;
  * Panel mit Slider und Textfield
  */
 public final class SliderPanel extends ImagePanel implements ChangeListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+    //~ Static / Instance fields ----------------------------------------------------------------------------
 
-    private JLabel m_jlLabel;
+	private static final long serialVersionUID = 1L;
+	private JLabel m_jlLabel;
     private JSlider m_jslSlider;
     private JTextField m_jtfTextfield;
     private float m_fFaktor = 1;

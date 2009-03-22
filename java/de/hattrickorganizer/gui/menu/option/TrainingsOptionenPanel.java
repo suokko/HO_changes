@@ -13,9 +13,10 @@ import javax.swing.JLabel;
  * Optionen für das Training
  */
 final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.event.ChangeListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+    //~ Static / Instance fields ----------------------------------------------------------------------------
 
-    private SliderPanel m_jslAlterFaktor;
+	private static final long serialVersionUID = 1L;
+	private SliderPanel m_jslAlterFaktor;
     private SliderPanel m_jslCoTrainerFaktor;
     private SliderPanel m_jslIntensitaetFaktor;
     private SliderPanel m_jslTrainerFaktor;

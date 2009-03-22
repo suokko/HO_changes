@@ -19,7 +19,8 @@ import javax.swing.JLabel;
 class ComboBoxPanel extends ImagePanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox m_jcbComboBox;
+	private static final long serialVersionUID = 1L;
+	private JComboBox m_jcbComboBox;
     private JLabel m_jlLabel;
     private int m_iTextbreite = 80;
 

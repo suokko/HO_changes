@@ -5,6 +5,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
 
 import javax.swing.JCheckBox;
 
@@ -15,7 +16,8 @@ import javax.swing.JCheckBox;
 final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JCheckBox m_jchArenasizer;
+	private static final long serialVersionUID = 1L;
+	private JCheckBox m_jchArenasizer;
     private JCheckBox m_jchAufstellung;
     private JCheckBox m_jchInformation;
     private JCheckBox m_jchLigatabelle;
@@ -43,13 +45,13 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
      *
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
+    public final void itemStateChanged(ItemEvent itemEvent) {
     	
     	// New Tab can not be shown immediately
-    	if (itemEvent.getStateChange()== itemEvent.SELECTED)
+    	if (itemEvent.getStateChange()== ItemEvent.SELECTED)
     		OptionManager.instance().setRestartNeeded();
     	// ReInit deletes the deselected Tab
-    	if (itemEvent.getStateChange()== itemEvent.DESELECTED)
+    	if (itemEvent.getStateChange()== ItemEvent.DESELECTED)
     		OptionManager.instance().setReInitNeeded();
 
         gui.UserParameter.temp().tempTabSpieleruebersicht = !m_jchSpieleruebersicht.isSelected();

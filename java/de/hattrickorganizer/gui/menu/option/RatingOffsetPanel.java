@@ -27,6 +27,7 @@ public final class RatingOffsetPanel
 	implements ChangeListener, ActionListener {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
+	private static final long serialVersionUID = 1L;
 	private SliderPanel[] slider = new SliderPanel[7];
 	private SliderPanel numberMatches;
 	private JLabel[] err = new JLabel[7];
