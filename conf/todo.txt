@@ -17,7 +17,10 @@ P D Bug description
 			TrainingsManager.calculateWeeklyTrainingForPlayer() works fine...
 2 ? Fix training length calculation on substitute players
 			Currently the necessary data are not in the XMLs (and not annouces either)
-2 ? Hattrack data is not downloaded properly when the HO homepage is down and HO check is activated
+2 ? Hattrick data is not downloaded properly when the HO homepage is down and HO check is activated
+	Note(by aik): we can easily fix this by using timeouts at the URLConnection there (i implemented it once),
+			but this is only possible since JDK 1.5 - our current code is JDK 1.4 compatible. Either
+			we move to >1.5 or we need to build something like an own timout checker thread.
 3 A NPE in Aufstellung.getLeftAttackRating():535, maybe because of special lineups (like 4-4-1)
 	We need an affected DB to further examine the problem
 3 ? Klicking through many different matches (50+) in the "Matches" tab slows down HO til it becomes unusable
