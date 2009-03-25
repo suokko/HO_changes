@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Vector;
 
 import javax.swing.InputMap;
 import javax.swing.JComboBox;
@@ -105,7 +106,7 @@ public final class HOMainFrame extends JFrame
 
 	/** TODO Missing Parameter Documentation */
 	private static final String LIMITED_DATE = "2004-09-01 00:00:00.0";
-	private static java.util.Vector m_vPlugins = new java.util.Vector();
+	private static Vector m_vPlugins = new Vector();
 
 	//---------Konstanten----------------------
 
@@ -421,7 +422,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public static java.util.Vector getPlugins() {
+	public static Vector getPlugins() {
 		return m_vPlugins;
 	}
 
@@ -1421,23 +1422,19 @@ public final class HOMainFrame extends JFrame
 							//Plugin im Vector gespeichert
 							m_vPlugins.add(modul);
 							HOLogger.instance().log(
-								HOMainFrame.class,
-								" Starte " + files[i].getName() + "  (init MiniModel)");
+								HOMainFrame.class, " Starte " + files[i].getName() + "  (init MiniModel)");
 							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
 							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
 
 							HOLogger.instance().log(
-								HOMainFrame.class,
-								"+ " + files[i].getName() + " gestartet als lib");
+								HOMainFrame.class, "+ " + files[i].getName() + " gestartet als lib");
 						} else {
 							HOLogger.instance().log(
-								HOMainFrame.class,
-								"- " + files[i].getName() + " nicht von ILib abgeleitet");
+								HOMainFrame.class, "- " + files[i].getName() + " nicht von ILib abgeleitet");
 						}
 					} else {
 						HOLogger.instance().log(
-							HOMainFrame.class,
-							"- " + files[i].getName() + " ist Interface");
+							HOMainFrame.class, "- " + files[i].getName() + " ist Interface");
 					}
 				} catch (Throwable e2) {
 					HOLogger.instance().log(

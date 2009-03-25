@@ -58,7 +58,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
 	private String m_sCookie;
-	private Map cookie = new HashMap();
+	private Map<String, String> cookie = new HashMap<String, String>();
 	private String m_sProxyHost = "";
 	private String m_sProxyPort = "";
 	private String m_sUserName = "";
@@ -142,7 +142,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public void setAuthenticated(boolean value) {
 		m_bAuthenticated = value;
 		m_sCookie = null;
-		cookie = new HashMap();
+		cookie = new HashMap<String, String>();
 	}
 
 	/**
@@ -788,7 +788,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	public String getWebPage(String surl, boolean needCookie) throws IOException {
-		return getWebPage(surl, needCookie, true); // show connect error
+		return getWebPage(surl, needCookie, true, false); // show connect error
 	}
 
 	/**
@@ -801,10 +801,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @throws IOException TODO Missing Method Exception Documentation
 	 */
-	public String getWebPage(String surl, boolean needCookie, boolean showError) throws IOException {
-		//int i;
-		//char ac[] = new char[20000];
-		final InputStream resultingInputStream = getWebFile(surl, needCookie, showError);
+	public String getWebPage(String surl, boolean needCookie, boolean showError, boolean shortTimeOut) throws IOException {
+		final InputStream resultingInputStream = getWebFile(surl, needCookie, showError, shortTimeOut);
 
 		if (resultingInputStream != null) {
 			final BufferedReader bufferedreader =
@@ -823,10 +821,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 					s2.append(line);
 				}
 			}
-
 			bufferedreader.close();
 
-			//            httpurlconnection.disconnect();    //UrlConnection kennt kein disconnect!
 			return s2.toString();
 		} else {
 			return "";
@@ -853,7 +849,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public double getLatestVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getPluginSite()+"/version.htm", false, false);
+				getWebPage(MyConnector.getPluginSite()+"/version.htm", false, false, true);
 			double d = de.hattrickorganizer.gui.HOMainFrame.VERSION;
 
 			try {
@@ -893,7 +889,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	public News getLatestNews() {
 		try {
-			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false, false);
+			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false, false, true);
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
@@ -1114,9 +1110,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	private String getCookieString() {
 		StringBuffer cookieStringBuffer = new StringBuffer();
-		Iterator cookieNames = cookie.keySet().iterator();
+		Iterator<String> cookieNames = cookie.keySet().iterator();
 		while (cookieNames.hasNext()) {
-			String cookieName = (String) cookieNames.next();
+			String cookieName = cookieNames.next();
 			cookieStringBuffer.append(cookieName);
 			cookieStringBuffer.append("=");
 			cookieStringBuffer.append((String) cookie.get(cookieName));
@@ -1138,11 +1134,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 				true);
 			m_bAuthenticated = false;
 			m_sCookie = null;
-			cookie = new HashMap();
+			cookie = new HashMap<String, String>();
 		} catch (IOException ioexception) {
 			m_bAuthenticated = false;
 			m_sCookie = null;
-			cookie = new HashMap();
+			cookie = new HashMap<String, String>();
 			throw ioexception;
 		}
 	}
@@ -1171,7 +1167,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebFile(url, false, showErrorMessage);
+		return getWebFile(url, false, showErrorMessage, false);
 	}
 
 	/**
@@ -1353,28 +1349,26 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param surl TODO Missing Method Parameter Documentation
-	 * @param needCookie TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Get a web page using a URLconnection.
 	 */
-	private InputStream getWebFile(String surl, boolean needCookie, boolean showErrorMessage) throws IOException {
+	private InputStream getWebFile(String surl, boolean needCookie, boolean showErrorMessage, boolean shortTimeOut) throws IOException {
 		final URL url = new URL(surl);
 		final HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
 		httpurlconnection.setRequestMethod("GET");
 		infoHO(httpurlconnection);
-//		httpurlconnection.setConnectTimeout(timeOut); // needs Java5
-//		httpurlconnection.setReadTimeout(timeOut); // needs Java5
 
 		if (needCookie) {
 			httpurlconnection.setRequestProperty("cookie", getCookieString());
 		}
 
 		try {
+			if (shortTimeOut) {
+				httpurlconnection.setConnectTimeout(7500);
+				httpurlconnection.setReadTimeout(8500);
+			} else {
+				httpurlconnection.setConnectTimeout(45000);
+				httpurlconnection.setReadTimeout(60000);
+			}
 			httpurlconnection.connect();
 		} catch (Exception sox) {
 			HOLogger.instance().log(getClass(),sox);
@@ -1442,4 +1436,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return htUrl;
 	}
 
+	final public int getUserID() {
+		return m_iUserID;
+	}
 }

@@ -392,7 +392,7 @@ public final class UpdateController {
 	public static void updateUsers() {
 		try {
 			final String s =
-				MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/users.html", false, false);
+				MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/users.html", false, false, true);
 
 			final Properties pr = new Properties();
 			pr.load(new ByteArrayInputStream(s.getBytes()));
