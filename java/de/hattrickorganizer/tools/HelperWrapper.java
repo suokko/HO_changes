@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -459,7 +460,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getPlugins() {
+    public Vector getPlugins() {
         return HOMainFrame.getPlugins();
     }
 
@@ -682,7 +683,7 @@ public class HelperWrapper implements plugins.IHelper {
                                                                         details.getGastId());
 
                     //Workaround
-                    // Lineups *must* be available before the match highlights / report 
+                    // Lineups *must* be available before the match highlights / report
                     // can be parsed in getMatchDetails()
                     // If these informations are still missing, we re-fetch them now
                     if (details == null || details.getMatchreport() == null || details.getMatchreport().trim().length() == 0) {
@@ -691,7 +692,7 @@ public class HelperWrapper implements plugins.IHelper {
                     	HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchID);
                     	details = DBZugriff.instance().getMatchDetails(matchID);
                     }
-                    
+
                     //MatchKurzInfo muss hier erstellt werden!!
                     final MatchLineup lineup = DBZugriff.instance()
                                                                                       .getMatchLineup(matchID);
