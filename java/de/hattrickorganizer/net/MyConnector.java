@@ -58,7 +58,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
 	private String m_sCookie;
-	private Map cookie = new HashMap();
+	private Map<String, String> cookie = new HashMap<String, String>();
 	private String m_sProxyHost = "";
 	private String m_sProxyPort = "";
 	private String m_sUserName = "";
@@ -142,7 +142,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public void setAuthenticated(boolean value) {
 		m_bAuthenticated = value;
 		m_sCookie = null;
-		cookie = new HashMap();
+		cookie = new HashMap<String, String>();
 	}
 
 	/**
@@ -1110,9 +1110,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	private String getCookieString() {
 		StringBuffer cookieStringBuffer = new StringBuffer();
-		Iterator cookieNames = cookie.keySet().iterator();
+		Iterator<String> cookieNames = cookie.keySet().iterator();
 		while (cookieNames.hasNext()) {
-			String cookieName = (String)cookieNames.next();
+			String cookieName = cookieNames.next();
 			cookieStringBuffer.append(cookieName);
 			cookieStringBuffer.append("=");
 			cookieStringBuffer.append((String) cookie.get(cookieName));
@@ -1134,11 +1134,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 				true);
 			m_bAuthenticated = false;
 			m_sCookie = null;
-			cookie = new HashMap();
+			cookie = new HashMap<String, String>();
 		} catch (IOException ioexception) {
 			m_bAuthenticated = false;
 			m_sCookie = null;
-			cookie = new HashMap();
+			cookie = new HashMap<String, String>();
 			throw ioexception;
 		}
 	}

@@ -65,13 +65,13 @@ public class UserPanel extends ImagePanel implements ActionListener {
         }
 
         if (e.getSource() == m_jbDeleteUser) {
-            ArrayList users = User.getAllUser();
+            ArrayList<User> users = User.getAllUser();
             users.remove(table.getSelectedRow());
             refresh();
         }
 
        	if(e.getSource() == m_jbSaveUser){
-    			ArrayList users = User.getAllUser();
+    			ArrayList<User> users = User.getAllUser();
     			
     			for (int i = 0; i < table.getRowCount(); i++) {
     				User user = (User)users.get(i);
