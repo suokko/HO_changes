@@ -19,6 +19,10 @@ Changelist HO! 1.425
 	- improve French translation (thx Bruno)
 	- fixed Czech skill names
 
+Plugin Updates:
+---------------
+- SpecialEvents 1.22 (added weather SEs and counters)
+
 
 Changelist HO! 1.424
 ====================
