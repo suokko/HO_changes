@@ -21,7 +21,7 @@ Changelist HO! 1.425
 
 Plugin Updates:
 ---------------
-- SpecialEvents 1.22 (added weather SEs and counters)
+- SpecialEvents 1.22 (added weather SEs, counters, set pieces...)
 
 
 Changelist HO! 1.424
