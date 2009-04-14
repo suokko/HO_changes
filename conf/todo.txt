@@ -56,8 +56,6 @@ Enhancements
 ============
 P D Task
 ------------------------------------------------------
-2 F Update calculation of special tactics after the latest playerstrength optimisations
-3 F Optimize EPV
 3 ? Training calculation is VERY slow, we need to speed this up if possible
 	I think re-implemeting the whole training calculation would make the most sense :-/
 3 ? Use a less intrusive wait window / progress bar (do not force the window in front of all other windows)
@@ -66,7 +64,7 @@ P D Task
 	b. Put them it the HO-DB
 	c. Show them to the user
 	d. Predict yellow/brown stars separately (?)
-4 ? Add tactic strength prediction for Longshots
+4 F Add (better) tactic strength prediction for Longshots
 4 A Add handling and match event symbol for Longshots even 188/288 (combined with pressing?)
 5 ? Automatically set the "Away derby" option in the lineup tab, if the next match is such a game
 5 ? Add player agreeability to TransferScout
@@ -83,15 +81,16 @@ P D Task
 5 ? Add symbol to players view and TrainingExperience view, if there is an active training block (individual instruction) set
 
 
-
 Features
 ========
 P D Task
 ------------------------------------------------------
+4 F Implement a SpeedUpTool that automatically removes old HRFs and matches (configurable)
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
 5 A Add tool to automatically create HRF files with data from National Team players (for NTs only)
+
 
 Fixed/Resolved
 ==============
@@ -104,6 +103,8 @@ P D Task
 2 A Transferscout parser adds injuries, if a player is warned (red card)
 2 D Tactic strength is wrong after loading a lineup with a configured tactic type
 	Same problem exists after starting HO, when a lineup with a tactic is set or loaded from HT.
+2 F Update calculation of special tactics after the latest playerstrength optimisations
+3 F Optimize EPV
 3 F Set 2 fraction digits by default (because we have set maxSubskill from 0.94 to 0.99 now)
 3 F Remove dependency of HO1 project to hoplugins.Commons - HO itself should not depend on any plugin
 	(this breaks the build process for new dev environments)
