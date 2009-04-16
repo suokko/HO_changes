@@ -9,6 +9,8 @@ Changelist HO! 1.425
 - fixed several problems with HT suddenly adding players without RoleID to XML data
 - handle long shot events in match highlights
 - show correct tactic strength after loading an stored lineup
+- Added a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
+- added a database cleanup tool that removes old matches / HRFs
 
 - Language updates:
 	- add Slovenian as new HO language (big thx to odemodet!)
