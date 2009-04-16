@@ -85,7 +85,6 @@ Features
 ========
 P D Task
 ------------------------------------------------------
-4 F Implement a SpeedUpTool that automatically removes old HRFs and matches (configurable)
 4 A HO! version for U3-USB stick
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
@@ -124,6 +123,7 @@ P D Task
 4 F Fix HO.sh for linux (accept whitespaces in path name)
 4 D Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 4 D Squad Overview: Columns 'salary' and 'market value' were too small after db is generated
+4 F Implement a SpeedUpTool that automatically removes old HRFs and matches (configurable)
 5 A Add handling and match event symbol for Longshots even 187/287
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)

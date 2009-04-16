@@ -37,6 +37,7 @@ import plugins.ISpieler;
 import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
+import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
 import de.hattrickorganizer.gui.exporter.CsvPlayerExport;
 import de.hattrickorganizer.gui.exporter.XMLExporter;
 import de.hattrickorganizer.gui.info.InformationsPanel;
@@ -216,6 +217,8 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiExporter = new JMenuItem("XML Exporter");
 	private final JMenuItem m_jmiCsvPlayerExporter =
 		new JMenuItem("CSV PlayerExport"); // TODO L10N
+	private final JMenuItem m_jmiDbCleanupTool=
+		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("dbcleanup"));
 
 	private final JMenuItem m_jmiLanguages =
 		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Sprachdatei"));
@@ -745,6 +748,9 @@ public final class HOMainFrame extends JFrame
 		} else if (source.equals(m_jmiCsvPlayerExporter)) {
 			CsvPlayerExport csvExporter = new CsvPlayerExport();
 			csvExporter.showSaveDialog();
+		} else if (source.equals(m_jmiDbCleanupTool)) {
+			DBCleanupTool dbCleanupTool = new DBCleanupTool();
+			dbCleanupTool.showDialog(this);
 		} else if (source.equals(m_jmiInjuryCalculator)) {
 			injuryTool.reload();
 			injuryTool.setVisible(true);
@@ -1174,6 +1180,9 @@ public final class HOMainFrame extends JFrame
 
 		m_jmiNotepad.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiNotepad);
+
+		m_jmiDbCleanupTool.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiDbCleanupTool);
 
 		m_jmMenuBar.add(m_jmToolsMenu);
 
