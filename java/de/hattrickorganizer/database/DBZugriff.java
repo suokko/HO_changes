@@ -19,6 +19,7 @@ import de.hattrickorganizer.model.FactorObject;
 import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOParameter;
+import de.hattrickorganizer.model.HRF;
 import de.hattrickorganizer.model.Liga;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.Stadium;
@@ -723,6 +724,25 @@ public class DBZugriff {
 
 	//	------------------------------- HRFTable -------------------------------------------------
 
+	/**
+	 * Get a list of all HRFs
+	 * @param minId	minimum HRF id (<0 for all)
+	 * @param maxId maximum HRF id (<0 for all)
+	 * @param asc order ascending (descending otherwise)
+	 * 
+	 * @return all matching HRFs
+	 */
+	public HRF[] getAllHRFs (int minId, int maxId, boolean asc) {
+		return ((HRFTable) getTable(HRFTable.TABLENAME)).getAllHRFs(minId, maxId, asc);
+	}
+	
+	/**
+	 * get HRF by Id
+	 */
+	public HRF getHrf (int hrfId) {
+		return ((HRFTable) getTable(HRFTable.TABLENAME)).getHRF(hrfId);
+	}
+	
 	/**
 	 * liefert die aktuelle Id des neuesten HRF-Files
 	 *

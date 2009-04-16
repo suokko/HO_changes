@@ -3,6 +3,7 @@ package de.hattrickorganizer.database;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Vector;
 
 import de.hattrickorganizer.model.HRF;
 import de.hattrickorganizer.tools.HOLogger;
@@ -245,7 +246,7 @@ public final class HRFTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	private HRF getHRF(int hrfID) {
+	public HRF getHRF(int hrfID) {
 		ResultSet rs = null;
 		HRF hrf = null;
 
@@ -264,4 +265,43 @@ public final class HRFTable extends AbstractTable {
 		return hrf;
 	}
 
+	/**
+	 * Get a list of all HRFs
+	 * @param minId	minimum HRF id (<0 for all)
+	 * @param maxId maximum HRF id (<0 for all)
+	 * @param asc order ascending (descending otherwise)
+	 * 
+	 * @return all matching HRFs
+	 */
+	public HRF[] getAllHRFs (int minId, int maxId, boolean asc) {
+		Vector<HRF> liste = new Vector<HRF>();
+		ResultSet rs = null;
+		String sql = null;
+		sql = "SELECT * FROM "+getTableName();
+		sql += " WHERE 1=1";
+		if (minId >= 0)
+			sql += " AND HRF_ID >=" + minId;
+		if (maxId >= 0)
+			sql += " AND HRF_ID <=" + maxId;
+		if (asc)
+			sql += " ORDER BY Datum ASC";
+		else
+			sql += " ORDER BY Datum DESC";
+		rs = adapter.executeQuery(sql);
+
+		try {
+			if (rs != null) {
+				while (rs.next()) {
+					HRF curHrf = new HRF(rs);
+					liste.add(curHrf);
+				}
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(),"DatenbankZugriff.getAllHRFs: " + e);
+		}
+		
+		// Convert to array
+		HRF[] allHrfs = liste.toArray(new HRF[0]);
+		return allHrfs;
+	}
 }

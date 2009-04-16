@@ -296,27 +296,11 @@ public class MatchKurzInfo implements plugins.IMatchKurzInfo {
      * Getter for property m_lDatum.
      *
      * @return Value of property m_lDatum.
+     * 
+     * @deprecated use getMatchDateAsTimestamp()
      */
     public final java.sql.Timestamp getTimestampMatchDate() {
-        try {
-            //Hattrick
-            final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                                                                           java.util.Locale.GERMANY);
-
-            return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
-        } catch (Exception e) {
-            try {
-                //Hattrick
-                final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd",
-                                                                                               java.util.Locale.GERMANY);
-
-                return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
-            } catch (Exception ex) {
-                HOLogger.instance().log(getClass(),ex);
-            }
-        }
-
-        return null;
+    	return getMatchDateAsTimestamp();
     }
 
     //--------------------------------------------------------------    
