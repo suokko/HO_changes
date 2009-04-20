@@ -8,16 +8,20 @@ import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import plugins.IMatchHighlight;
 import plugins.IMatchLineup;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
@@ -263,12 +267,12 @@ public class Helper extends LanguageFiles {
     /** Speciality */
     public static final CBItem[] EINSTUFUNG_SPECIALITY = {
     	new CBItem("", 0),
-    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Technical"), 1),
-    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Quick"),2),
-    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Powerful"), 3),
-    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Unpredictable"), 4),
-    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Head"), 5),
-    	new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("sp_Regainer"), 6)
+    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Technical"), 1),
+    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Quick"),2),
+    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Powerful"), 3),
+    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Unpredictable"), 4),
+    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Head"), 5),
+    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Regainer"), 6)
     };
 
     /** Spielerpositionen */
@@ -435,32 +439,32 @@ public class Helper extends LanguageFiles {
     public static boolean paneShown;
 
     /** Hashtable mit Veränderungspfeilgrafiken nach Integer als Key */
-    private static java.util.Hashtable m_clPfeilCache = new java.util.Hashtable();
-    private static java.util.Hashtable m_clPfeilLightCache = new java.util.Hashtable();
+    private static Hashtable m_clPfeilCache = new Hashtable();
+    private static Hashtable m_clPfeilLightCache = new Hashtable();
 
     /** Hashtable mit Trikotnummern nach Integer als Key */
-    private static java.util.Hashtable m_clTrickotnummerCache = new java.util.Hashtable();
+    private static Hashtable m_clTrickotnummerCache = new Hashtable();
 
     /** Cache für Bilder */
-    private static java.util.HashMap m_clBilderCache = new java.util.HashMap();
+    private static HashMap m_clBilderCache = new HashMap();
 
     /** Cache für Transparent gemachte Bilder */
-    private static java.util.HashMap m_clTransparentsCache = new java.util.HashMap();
+    private static HashMap m_clTransparentsCache = new HashMap();
 
     /** Cache für Trickots */
-    private static java.util.HashMap m_clTrickotCache = new java.util.HashMap();
+    private static HashMap m_clTrickotCache = new HashMap();
 
     /** Cache für Spezialitäten */
-    private static java.util.HashMap m_clSpezialitaetCache = new java.util.HashMap();
+    private static HashMap m_clSpezialitaetCache = new HashMap();
 
     /** Cache für Gruppen */
-    private static java.util.HashMap m_clGruppenCache = new java.util.HashMap();
+    private static HashMap m_clGruppenCache = new HashMap();
 
     /** Cache für MiniGruppen */
-    private static java.util.HashMap m_clMiniGruppenCache = new java.util.HashMap();
+    private static HashMap m_clMiniGruppenCache = new HashMap();
 
     /** Cache für Spieltypen */
-    private static java.util.HashMap m_clSpieltypCache = new java.util.HashMap();
+    private static HashMap m_clSpieltypCache = new HashMap();
 
     //Initialisierung
     static {
@@ -1904,30 +1908,24 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param matchID TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Check, if the given match id belongs to the current HO user.
      */
     public static boolean isUserMatch(String matchID) {
         try {
             if (!de.hattrickorganizer.net.MyConnector.instance().isAuthenticated()) {
-                final de.hattrickorganizer.gui.login.LoginDialog ld = new de.hattrickorganizer.gui.login.LoginDialog(de.hattrickorganizer.gui.HOMainFrame
-                                                                                                                     .instance());
+                final de.hattrickorganizer.gui.login.LoginDialog ld =
+                	new de.hattrickorganizer.gui.login.LoginDialog(HOMainFrame.instance());
                 ld.setVisible(true);
             }
 
-            final String input = de.hattrickorganizer.net.MyConnector.instance().getMatchdetails(Integer
-                                                                                                 .parseInt(matchID));
-
+            final String input = de.hattrickorganizer.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID));
             final de.hattrickorganizer.model.matches.Matchdetails mdetails = new de.hattrickorganizer.logik.xml.xmlMatchdetailsParser()
                                                                              .parseMachtdetailsFromString(input);
-            final int teamID = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                      .getBasics().getTeamId();
+            final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
             return ((mdetails.getHeimId() == teamID) || (mdetails.getGastId() == teamID));
         } catch (Exception e) {
+        	HOLogger.instance().warning(Helper.class, "Err: " + e);
         }
 
         return false;
@@ -2315,8 +2313,7 @@ public class Helper extends LanguageFiles {
             final int temp = Integer.parseInt(field.getText());
 
             if (!negativErlaubt && (temp < 0)) {
-                message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("negativVerboten");
+                message = HOVerwaltung.instance().getResource().getProperty("negativVerboten");
                 throw new NumberFormatException();
             }
 
@@ -2324,14 +2321,11 @@ public class Helper extends LanguageFiles {
             return true;
         } catch (NumberFormatException nfe) {
             if (message.equals("")) {
-                message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("keineZahl");
+                message = HOVerwaltung.instance().getResource().getProperty("keineZahl");
             }
 
             showMessage(parent, message,
-                        de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                               .getProperty("Fehler"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        HOVerwaltung.instance().getResource().getProperty("Fehler"), JOptionPane.ERROR_MESSAGE);
 
             field.setText(String.valueOf(0));
             return false;
@@ -2525,6 +2519,5 @@ public class Helper extends LanguageFiles {
 		numFormat.setMinimumFractionDigits(nachkommastellen);
 		numFormat.setMaximumFractionDigits(nachkommastellen);
 		return numFormat;
-
 	}
 }
