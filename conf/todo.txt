@@ -35,8 +35,6 @@ P D Bug description
 3 A Large memory consumption at the training update crashes / blocks some HO installations
     	Removing old matches and giving HO more heap memory 'solves' this issue
 4 ? Add string and icon for regainer
-4 A If the first download after a stadium expansion includes also a new match, the old
-    stadium size is shown in statistics. One can get >100% usage then.
 5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
 5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
@@ -124,6 +122,8 @@ P D Task
 4 D Add a new config option for the default state of the "download matches/schedule" checkboxes on the download dialog
 4 D Squad Overview: Columns 'salary' and 'market value' were too small after db is generated
 4 F Implement a SpeedUpTool that automatically removes old HRFs and matches (configurable)
+4 A If the first download after a stadium expansion includes also a new match, the old
+    stadium size is shown in statistics. One can get >100% usage then.
 5 A Add handling and match event symbol for Longshots even 187/287
 5 F Create a windows installer package to improve n00b compatibility ;-)
 	We are using NSIS unicode for a windows installer now, yeah! :-)
