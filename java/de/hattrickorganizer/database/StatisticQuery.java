@@ -32,7 +32,7 @@ public class StatisticQuery {
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
-		final Vector vWerte = new Vector();
+		final Vector<double[]> vWerte = new Vector<double[]>();
 
 		ResultSet rs =
 			DBZugriff.instance().getAdapter().executeQuery("SELECT * FROM SPIELER WHERE SpielerID=" + spielerId + " AND HRF_ID IN (" + getInClause(anzahlHRF, trainings) + ") ORDER BY Datum DESC");
@@ -122,7 +122,7 @@ public class StatisticQuery {
 		ArenaStatistikModel arenamodel = null;
 		String sql = null;
 		ResultSet rs = null;
-		final Vector liste = new Vector();
+		final Vector<ArenaStatistikModel> liste = new Vector<ArenaStatistikModel>();
 		final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		int maxFans = 0;
 		int maxArenaGroesse = 0;
@@ -184,11 +184,10 @@ public class StatisticQuery {
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(StatisticQuery.class, "DB.getArenaStatistikModel 1 Error" + e);
-
 			//HOLogger.instance().log(MarketQuery.class,e);
 		}
 
-		arenamodels = new de.hattrickorganizer.gui.model.ArenaStatistikModel[liste.size()];
+		arenamodels = new ArenaStatistikModel[liste.size()];
 		MyHelper.copyVector2Array(liste, arenamodels);
 
 		// Jetzt noch die Arenadate für die Zeit holen
@@ -198,55 +197,64 @@ public class StatisticQuery {
 			try {
 				//Zuschauer
 				sql = "SELECT Zuschauer, WetterId FROM " + MatchDetailsTable.TABLENAME + " WHERE MatchID=" + arenamodels[i].getMatchID();
-				;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
 
 				if (rs.first()) {
 					arenamodels[i].setZuschaueranzahl(rs.getInt("Zuschauer"));
 					arenamodels[i].setWetter(rs.getInt("WetterId"));
 				}
+				rs.close();
 
 				//Stadiongrösse
 				sql = "SELECT GesamtGr FROM " + StadionTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
-
 				if (rs.first()) {
 					arenamodels[i].setArenaGroesse(rs.getInt("GesamtGr"));
 					maxArenaGroesse = Math.max(arenamodels[i].getArenaGroesse(), maxArenaGroesse);
 				}
+				rs.close();
+
+				// fix bug when visitors exceed the stadiumsize
+				if (arenamodels[i].getZuschaueranzahl() > arenamodels[i].getArenaGroesse()) {
+					rs = DBZugriff.instance().getAdapter().executeQuery("SELECT GesamtGr FROM " + StadionTable.TABLENAME + " WHERE HRF_ID=" + (hrfid+1));
+					if (rs.next()) {
+						arenamodels[i].setArenaGroesse(rs.getInt("GesamtGr"));
+						maxArenaGroesse = Math.max(arenamodels[i].getArenaGroesse(), maxArenaGroesse);
+					}
+				}
+				rs.close();
 
 				//Fananzahl
 				sql = "SELECT Fans FROM " + VereinTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
-
 				if (rs.first()) {
 					arenamodels[i].setFans(rs.getInt("Fans"));
 					maxFans = Math.max(arenamodels[i].getFans(), maxFans);
 				}
+				rs.close();
 
 				//Fanzufriedenheit
 				sql = "SELECT Supporter FROM " + FinanzenTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
-
 				if (rs.first()) {
 					arenamodels[i].setFanZufriedenheit(rs.getInt("Supporter"));
 				}
+				rs.close();
 
 				//Ligaplatz
 				sql = "SELECT Platz FROM " + LigaTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
-
 				if (rs.first()) {
 					arenamodels[i].setLigaPlatz(rs.getInt("Platz"));
 				}
+				rs.close();
 			} catch (Exception e) {
 				HOLogger.instance().log(StatisticQuery.class, "DB.getArenaStatistikModel 2 Error" + e);
-
 				//HOLogger.instance().log(MarketQuery.class,e);
 			}
 		}
 
-		tablemodel = new de.hattrickorganizer.gui.model.ArenaStatistikTableModel(arenamodels, maxArenaGroesse, maxFans);
+		tablemodel = new ArenaStatistikTableModel(arenamodels, maxArenaGroesse, maxFans);
 
 		return tablemodel;
 	}
@@ -265,7 +273,7 @@ public class StatisticQuery {
 
 		//int minid = model.HOVerwaltung.instance ().getModel ().getID () - anzahlHRF;
 		double[][] returnWerte = new double[0][0];
-		final Vector vWerte = new Vector();
+		final Vector<double[]> vWerte = new Vector<double[]>();
 
 		//ResultSet  rs = DBZugriff.instance().getAdapter().executeQuery( "SELECT * FROM Spieler WHERE HRF_ID>" + minid  + " AND Trainer=0 ORDER BY HRF_ID" );// Geht nicht -> + " ORDER BY SpielerID DESC" );
 		String statement = "SELECT * FROM SPIELER";
@@ -390,7 +398,7 @@ public class StatisticQuery {
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
-		Vector vWerte = new Vector();
+		Vector<double[]> vWerte = new Vector<double[]>();
 
 		try {
 			//aktuelle Werte hinzufügen
@@ -454,7 +462,7 @@ public class StatisticQuery {
 				vWerte.add(tempwerte);
 			}
 
-			Vector temp = new Vector();
+			Vector<double[]> temp = new Vector<double[]>();
 
 			for (int i = 0; i < vWerte.size(); i++) {
 				final double[] werte = (double[]) vWerte.get(i);
@@ -497,11 +505,6 @@ public class StatisticQuery {
 
 	/**
 	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param anzahlHRF TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
 		Vector trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
@@ -509,7 +512,7 @@ public class StatisticQuery {
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
-		final Vector vWerte = new Vector();
+		final Vector<double[]> vWerte = new Vector<double[]>();
 
 		ResultSet rs =
 			DBZugriff.instance().getAdapter().executeQuery("SELECT * FROM SPIELER WHERE SpielerID=" + spielerId + " AND HRF_ID IN (" + getInClause(anzahlHRF, trainings) + ") ORDER BY Datum DESC");
@@ -553,10 +556,6 @@ public class StatisticQuery {
 
 	/**
 	 * TODO Missing Method Documentation
-	 *
-	 * @param anzahlHRF TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	private static double[][] getMarktwert4Statistik(int anzahlHRF) {
 
@@ -564,7 +563,7 @@ public class StatisticQuery {
 		final int anzahlSpalten = 2;
 
 		double[][] returnWerte = new double[0][0];
-		final Vector vWerte = new Vector();
+		final Vector<double[]> vWerte = new Vector<double[]>();
 
 		final ResultSet rs =
 			DBZugriff.instance().getAdapter().executeQuery(
