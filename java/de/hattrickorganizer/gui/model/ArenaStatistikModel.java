@@ -1,6 +1,9 @@
 // %3080703537:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
@@ -208,25 +211,20 @@ public class ArenaStatistikModel {
      *
      * @return Value of property m_lDatum.
      */
-    public final java.sql.Timestamp getMatchDateAsTimestamp() {
+    public final Timestamp getMatchDateAsTimestamp() {
         try {
             //Hattrick
-            final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                                                                           java.util.Locale.GERMANY);
-
-            return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
+            final java.text.SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.GERMANY);
+            return new Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
         } catch (Exception e) {
             try {
                 //Hattrick
-                final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd",
-                                                                                               java.util.Locale.GERMANY);
-
-                return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
+                final SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.GERMANY);
+                return new Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
             } catch (Exception ex) {
                 HOLogger.instance().log(getClass(),ex);
             }
         }
-
         return null;
     }
 
@@ -289,25 +287,20 @@ public class ArenaStatistikModel {
      *
      * @return Value of property m_lDatum.
      */
-    public final java.sql.Timestamp getTimestampMatchDate() {
+    public final Timestamp getTimestampMatchDate() {
         try {
             //Hattrick
-            final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                                                                           java.util.Locale.GERMANY);
-
-            return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
+            final SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.GERMANY);
+            return new Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
         } catch (Exception e) {
             try {
                 //Hattrick
-                final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd",
-                                                                                               java.util.Locale.GERMANY);
-
-                return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
+                final SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.GERMANY);
+                return new Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
             } catch (Exception ex) {
                 HOLogger.instance().log(getClass(),ex);
             }
         }
-
         return null;
     }
 
@@ -347,7 +340,7 @@ public class ArenaStatistikModel {
         return m_iZuschaueranzahl;
     }
 
-    //--------------------------------------------------------------    
+    //--------------------------------------------------------------
     public final int compareTo(Object obj) {
         if (obj instanceof ArenaStatistikModel) {
             final ArenaStatistikModel info = (ArenaStatistikModel) obj;
