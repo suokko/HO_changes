@@ -1,50 +1,56 @@
 // %1341813328:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import java.awt.Color;
+import java.text.NumberFormat;
+
+import javax.swing.JProgressBar;
+
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+
 /**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
+ * Progress bar as table cell.
  */
 public class ProgressbarTableEntry extends TableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private java.awt.Color m_clBGColor = java.awt.Color.WHITE;
-    private java.awt.Color m_clFGColor = java.awt.Color.BLUE;
-    private javax.swing.JProgressBar m_clProgressbar;
+    private Color m_clBGColor = Color.WHITE;
+    private Color m_clFGColor = Color.BLUE;
+    private JProgressBar m_clProgressbar;
     private String m_sAddText = "";
     private double m_dFaktor4Label = 1;
     private int m_iAktuellerWert;
     private int m_iMaxWert;
     private int m_iMinWert;
-    private int m_iNachkommastellen;
+    private NumberFormat nf;
 
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new ProgressbarTableEntry object.
      *
-     * @param aktuellerwert TODO Missing Constructuor Parameter Documentation
-     * @param minwert TODO Missing Constructuor Parameter Documentation
-     * @param maxwert TODO Missing Constructuor Parameter Documentation
-     * @param nachkommastellen TODO Missing Constructuor Parameter Documentation
-     * @param faktor4Label TODO Missing Constructuor Parameter Documentation
-     * @param bgcolor TODO Missing Constructuor Parameter Documentation
-     * @param fgcolor TODO Missing Constructuor Parameter Documentation
-     * @param addText TODO Missing Constructuor Parameter Documentation
+     * @param aktuellerwert current value
+     * @param minwert minimum value
+     * @param maxwert maximum value
+     * @param fractionDigits fraction digits
+     * @param faktor4Label factor
+     * @param bgcolor background color
+     * @param fgcolor foreground color
+     * @param addText additional label text
      */
-    public ProgressbarTableEntry(int aktuellerwert, int minwert, int maxwert, int nachkommastellen,
-                                 double faktor4Label, java.awt.Color bgcolor,
-                                 java.awt.Color fgcolor, String addText) {
+    public ProgressbarTableEntry(int aktuellerwert, int minwert, int maxwert, int fractionDigits,
+                                 double faktor4Label, Color bgcolor,
+                                 Color fgcolor, String addText) {
         m_iAktuellerWert = aktuellerwert;
         m_iMaxWert = maxwert;
         m_iMinWert = minwert;
-        m_iNachkommastellen = nachkommastellen;
+        nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(fractionDigits);
+        nf.setMaximumFractionDigits(fractionDigits);
         m_dFaktor4Label = faktor4Label;
         m_clBGColor = bgcolor;
         m_clFGColor = fgcolor;
         m_sAddText = addText;
-
         createComponent();
     }
 
@@ -93,7 +99,7 @@ public class ProgressbarTableEntry extends TableEntry {
      *
      * @param m_clBGColor New value of property m_clBGColor.
      */
-    public final void setBGColor(java.awt.Color m_clBGColor) {
+    public final void setBGColor(Color m_clBGColor) {
         this.m_clBGColor = m_clBGColor;
         updateComponent();
     }
@@ -103,21 +109,17 @@ public class ProgressbarTableEntry extends TableEntry {
      *
      * @return Value of property m_clBGColor.
      */
-    public final java.awt.Color getBGColor() {
+    public final Color getBGColor() {
         return m_clBGColor;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param isSelected TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Implement getComponent().
      */
     public final javax.swing.JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clProgressbar.setOpaque(true);
-            m_clProgressbar.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+            m_clProgressbar.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
             m_clProgressbar.setOpaque(true);
             m_clProgressbar.setBackground(m_clBGColor);
@@ -131,7 +133,7 @@ public class ProgressbarTableEntry extends TableEntry {
      *
      * @param m_clFGColor New value of property m_clFGColor.
      */
-    public final void setFGColor(java.awt.Color m_clFGColor) {
+    public final void setFGColor(Color m_clFGColor) {
         this.m_clFGColor = m_clFGColor;
         updateComponent();
     }
@@ -141,7 +143,7 @@ public class ProgressbarTableEntry extends TableEntry {
      *
      * @return Value of property m_clFGColor.
      */
-    public final java.awt.Color getFGColor() {
+    public final Color getFGColor() {
         return m_clFGColor;
     }
 
@@ -205,24 +207,16 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Setter for property m_iNachkommastellen.
      *
-     * @param m_iNachkommastellen New value of property m_iNachkommastellen.
+     * @param fractionDigits New value of property m_iNachkommastellen.
      */
-    public final void setNachkommastellen(int m_iNachkommastellen) {
-        this.m_iNachkommastellen = m_iNachkommastellen;
+    public final void setNachkommastellen(int fractionDigits) {
+        nf.setMinimumFractionDigits(fractionDigits);
+    	nf.setMaximumFractionDigits(fractionDigits);
         updateComponent();
     }
 
     /**
-     * Getter for property m_iNachkommastellen.
-     *
-     * @return Value of property m_iNachkommastellen.
-     */
-    public final int getNachkommastellen() {
-        return m_iNachkommastellen;
-    }
-
-    /**
-     * TODO Missing Method Documentation
+     * Clear value.
      */
     public final void clear() {
         m_clProgressbar.setString("");
@@ -230,11 +224,7 @@ public class ProgressbarTableEntry extends TableEntry {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param o TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Implement compareTo() for sorting.
      */
     public final int compareTo(Object o) {
         if (o instanceof ProgressbarTableEntry) {
@@ -253,16 +243,16 @@ public class ProgressbarTableEntry extends TableEntry {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Create the component and set the text.
      */
     public final void createComponent() {
-        m_clProgressbar = new javax.swing.JProgressBar();
+        m_clProgressbar = new JProgressBar();
         m_clProgressbar.setStringPainted(true);
         updateComponent();
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Update label text.
      */
     public final void updateComponent() {
         m_clProgressbar.setMinimum(m_iMinWert);
@@ -270,10 +260,6 @@ public class ProgressbarTableEntry extends TableEntry {
         m_clProgressbar.setValue(m_iAktuellerWert);
         m_clProgressbar.setBackground(m_clBGColor);
         m_clProgressbar.setForeground(m_clFGColor);
-
-        //m_clProgressbar.
-        m_clProgressbar.setString(de.hattrickorganizer.tools.Helper.round((m_iAktuellerWert * m_dFaktor4Label),
-                                                                          m_iNachkommastellen)
-                                  + m_sAddText);
+        m_clProgressbar.setString(nf.format(m_iAktuellerWert * m_dFaktor4Label) + m_sAddText);
     }
 }
