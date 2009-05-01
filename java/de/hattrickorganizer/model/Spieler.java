@@ -225,7 +225,7 @@ public final class Spieler implements plugins.ISpieler {
 
     /** Verteidigung */
     private int m_iVerteidigung = 1;
-    
+
     /** Training block */
     private boolean m_bTrainingBlock = false;
 
@@ -249,7 +249,7 @@ public final class Spieler implements plugins.ISpieler {
     public Spieler(java.sql.ResultSet rs) {
         try {
             m_iSpielerID = rs.getInt("SpielerID");
-            m_sName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Name"));
+            m_sName = DBZugriff.deleteEscapeSequences(rs.getString("Name"));
             m_iAlter = rs.getInt("Age");
             m_iAgeDays = rs.getInt("AgeDays");
             m_iKondition = rs.getInt("Kondition");
@@ -262,13 +262,13 @@ public final class Spieler implements plugins.ISpieler {
             m_iTorschuss = rs.getInt("Torschuss");
             m_iStandards = rs.getInt("Standards");
             m_iSpezialitaet = rs.getInt("iSpezialitaet");
-            m_sSpezialitaet = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sSpezialitaet"));
+            m_sSpezialitaet = DBZugriff.deleteEscapeSequences(rs.getString("sSpezialitaet"));
             m_iCharakter = rs.getInt("iCharakter");
-            m_sCharakter = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sCharakter"));
+            m_sCharakter = DBZugriff.deleteEscapeSequences(rs.getString("sCharakter"));
             m_iAnsehen = rs.getInt("iAnsehen");
-            m_sAnsehen = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sAnsehen"));
+            m_sAnsehen = DBZugriff.deleteEscapeSequences(rs.getString("sAnsehen"));
             m_iAgressivitaet = rs.getInt("iAgressivitaet");
-            m_sAgressivitaet = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("sAgressivitaet"));
+            m_sAgressivitaet = DBZugriff.deleteEscapeSequences(rs.getString("sAgressivitaet"));
             m_iErfahrung = rs.getInt("Erfahrung");
             m_iFuehrung = rs.getInt("Fuehrung");
             m_iGehalt = rs.getInt("Gehalt");
@@ -278,7 +278,7 @@ public final class Spieler implements plugins.ISpieler {
             //TSI, alles vorher durch 1000 teilen
             m_clhrfDate = rs.getTimestamp("Datum");
 
-            if (m_clhrfDate.before(de.hattrickorganizer.database.DBZugriff.TSIDATE)) {
+            if (m_clhrfDate.before(DBZugriff.TSIDATE)) {
                 m_iTSI /= 1000d;
             }
 
@@ -315,7 +315,7 @@ public final class Spieler implements plugins.ISpieler {
             m_iTransferlisted = rs.getInt("TransferListed");
             m_iLaenderspiele = rs.getInt("Caps");
             m_iU20Laenderspiele = rs.getInt("CapsU20");
-            
+
             // Training block
             m_bTrainingBlock = rs.getBoolean("TrainingBlock");
         } catch (Exception e) {
@@ -364,7 +364,7 @@ public final class Spieler implements plugins.ISpieler {
         //TSI, alles vorher durch 1000 teilen
         m_clhrfDate = hrfdate;
 
-        if (hrfdate.before(de.hattrickorganizer.database.DBZugriff.TSIDATE)) {
+        if (hrfdate.before(DBZugriff.TSIDATE)) {
             m_iTSI /= 1000d;
         }
 
@@ -1052,8 +1052,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public int getLetzteBewertung() {
         if (m_iLastBewertung < 0) {
-            m_iLastBewertung = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                      .getLetzteBewertung4Spieler(m_iSpielerID);
+            m_iLastBewertung = DBZugriff.instance().getLetzteBewertung4Spieler(m_iSpielerID);
         }
 
         return m_iLastBewertung;
@@ -1070,8 +1069,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         m_sManuellerSmilie = manuellerSmilie;
-        de.hattrickorganizer.database.DBZugriff.instance().saveManuellerSmilie(m_iSpielerID,
-                                                                               manuellerSmilie);
+        DBZugriff.instance().saveManuellerSmilie(m_iSpielerID, manuellerSmilie);
     }
 
     /**
@@ -1081,8 +1079,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public java.lang.String getManuellerSmilie() {
         if (m_sManuellerSmilie == null) {
-            m_sManuellerSmilie = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                        .getManuellerSmilie(m_iSpielerID);
+            m_sManuellerSmilie = DBZugriff.instance().getManuellerSmilie(m_iSpielerID);
 
             //Steht null in der DB?
             if (m_sManuellerSmilie == null) {
@@ -1157,7 +1154,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return Value of property m_sName.
      */
     public java.lang.String getName() {
-        return de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(m_sName);
+        return DBZugriff.deleteEscapeSequences(m_sName);
     }
 
     /**
@@ -1201,7 +1198,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         m_sNotiz = notiz;
-        de.hattrickorganizer.database.DBZugriff.instance().saveSpielerNotiz(m_iSpielerID, notiz);
+        DBZugriff.instance().saveSpielerNotiz(m_iSpielerID, notiz);
     }
 
     /**
@@ -1211,7 +1208,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public String getNotiz() {
         if (m_sNotiz == null) {
-            m_sNotiz = de.hattrickorganizer.database.DBZugriff.instance().getSpielerNotiz(m_iSpielerID);
+            m_sNotiz = DBZugriff.instance().getSpielerNotiz(m_iSpielerID);
         }
 
         //database.DBZugriff.instance ().getSpielerNotiz ( m_iSpielerID );
@@ -1260,7 +1257,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return TODO Missing Return Method Documentation
      */
     public int getSaveMarktwert() {
-        if (m_clhrfDate.before(de.hattrickorganizer.database.DBZugriff.TSIDATE)) {
+        if (m_clhrfDate == null || m_clhrfDate.before(DBZugriff.TSIDATE)) {
             //Echter Marktwert
             return m_iTSI * 1000;
         }
@@ -1395,7 +1392,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void setSpielberechtigt(boolean flag) {
         m_bSpielberechtigt = Boolean.valueOf(flag);
-        de.hattrickorganizer.database.DBZugriff.instance().saveSpielerSpielberechtigt(m_iSpielerID,
+        DBZugriff.instance().saveSpielerSpielberechtigt(m_iSpielerID,
                                                                                       flag);
     }
 
@@ -1407,8 +1404,7 @@ public final class Spieler implements plugins.ISpieler {
     public boolean isSpielberechtigt() {
         //Nur pr�fen, wenn nicht Spielberechtigt: Reduziert Zugriffe!
         if (m_bSpielberechtigt == null) {
-            m_bSpielberechtigt = Boolean.valueOf(de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                        .getSpielerSpielberechtigt(m_iSpielerID));
+            m_bSpielberechtigt = Boolean.valueOf(DBZugriff.instance().getSpielerSpielberechtigt(m_iSpielerID));
         }
 
         return m_bSpielberechtigt.booleanValue();
@@ -1560,8 +1556,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         m_sTeamInfoSmilie = teamInfoSmilie;
-        de.hattrickorganizer.database.DBZugriff.instance().saveTeamInfoSmilie(m_iSpielerID,
-                                                                              teamInfoSmilie);
+        DBZugriff.instance().saveTeamInfoSmilie(m_iSpielerID, teamInfoSmilie);
     }
 
     /**
@@ -1571,8 +1566,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public java.lang.String getTeamInfoSmilie() {
         if (m_sTeamInfoSmilie == null) {
-            m_sTeamInfoSmilie = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                       .getTeamInfoSmilie(m_iSpielerID);
+            m_sTeamInfoSmilie = DBZugriff.instance().getTeamInfoSmilie(m_iSpielerID);
 
             //Steht null in der DB?
             if (m_sTeamInfoSmilie == null) {
@@ -1591,8 +1585,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public Timestamp getTimestamp4FirstPlayerHRF() {
         if (m_tsTime4FirstHRF == null) {
-            m_tsTime4FirstHRF = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                       .getTimestamp4FirstPlayerHRF(m_iSpielerID);
+            m_tsTime4FirstHRF = DBZugriff.instance().getTimestamp4FirstPlayerHRF(m_iSpielerID);
         }
 
         return m_tsTime4FirstHRF;
@@ -1973,8 +1966,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void setUserPosFlag(byte flag) {
         m_bUserPosFlag = flag;
-        de.hattrickorganizer.database.DBZugriff.instance().saveSpielerUserPosFlag(m_iSpielerID,
-                                                                                  m_bUserPosFlag);
+        DBZugriff.instance().saveSpielerUserPosFlag(m_iSpielerID, m_bUserPosFlag);
     }
 
     /**
@@ -1984,8 +1976,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public byte getUserPosFlag() {
         if (m_bUserPosFlag < SpielerPosition.UNBESTIMMT) {
-            m_bUserPosFlag = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                    .getSpielerUserPosFlag(m_iSpielerID);
+            m_bUserPosFlag = DBZugriff.instance().getSpielerUserPosFlag(m_iSpielerID);
         }
 
         //database.DBZugriff.instance ().getSpielerNotiz ( m_iSpielerID );
@@ -2167,9 +2158,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void calcFullSubskills(java.sql.Timestamp hrftimestamp, int coTrainer, int twTrainer,
                                   int trainerlevel, int intensitaet, int staminaTrainingPart) {
-        final Spieler oldspieler = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                          .getSpielerBeforeDate(hrftimestamp,
-                                                                                                getSpielerID());
+        final Spieler oldspieler = DBZugriff.instance().getSpielerBeforeDate(hrftimestamp, getSpielerID());
         calcFullSubskills(oldspieler, coTrainer, twTrainer, trainerlevel, intensitaet, staminaTrainingPart, hrftimestamp);
     }
 
@@ -2188,10 +2177,7 @@ public final class Spieler implements plugins.ISpieler {
     public void calcFullSubskills(ISpieler old, int coTrainer, int twTrainer, int trainerlevel,
                                   int intensitaet, int staminaTrainingPart, Timestamp hrftimestamp) {
         final plugins.ITrainingPerPlayer trainingPerPlayer = de.hattrickorganizer.logik.TrainingsManager.instance()
-                                                                                                        .calculateFullTrainingForPlayer(this,
-                                                                                                                                        de.hattrickorganizer.logik.TrainingsManager.instance()
-                                                                                                                                                                                   .getTrainingsVector(),
-                                                                                                                                        hrftimestamp);
+        		.calculateFullTrainingForPlayer(this, de.hattrickorganizer.logik.TrainingsManager.instance().getTrainingsVector(), hrftimestamp);
 
         //TODO Training pro Woche berechenen
         //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
@@ -2717,7 +2703,7 @@ public final class Spieler implements plugins.ISpieler {
     protected boolean check4SkillUp(int skill, ISpieler oldPlayer) {
         return PlayerHelper.check4SkillUp(skill, oldPlayer, this);
     }
-    
+
     /**
      * Does this player have a training block?
      * @return training block
@@ -2725,7 +2711,7 @@ public final class Spieler implements plugins.ISpieler {
     public boolean hasTrainingBlock () {
     	return m_bTrainingBlock;
     }
-    
+
     /**
      * Set the training block of this player (true/false)
      * @param isBlocked	new value
