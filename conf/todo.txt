@@ -78,6 +78,9 @@ P D Task
 5 D Transferscout: add button to remove all player with one single klick
 5 ? Enhance visualization in Georgian mode: use another font + use Georgian font in dialog titles
 5 ? Add symbol to players view and TrainingExperience view, if there is an active training block (individual instruction) set
+5 ? Improve healing tool prediction
+5 ? Improve visuability of 5-, 10- and 50-stars
+5 ? Save (and restore) user defined table order in TrainingExperience plugin
 
 
 Features
@@ -88,6 +91,7 @@ P D Task
 4 A Add connection test utility
 5 ? Add optional(!) delayed training popup (like Hattrick Buddy)
 5 A Add tool to automatically create HRF files with data from National Team players (for NTs only)
+4 ? Show seat distribution in stadium stats
 
 
 Fixed/Resolved
