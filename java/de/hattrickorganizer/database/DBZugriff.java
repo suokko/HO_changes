@@ -22,6 +22,7 @@ import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.model.HRF;
 import de.hattrickorganizer.model.Liga;
 import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.User;
@@ -301,7 +302,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getAllSpieler() {
+	public Vector<Spieler> getAllSpieler() {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getAllSpieler();
 	}
 
@@ -324,7 +325,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getSpieler(int hrfID) {
+	public Vector<Spieler> getSpieler(int hrfID) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpieler(hrfID);
 	}
 
@@ -1122,7 +1123,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getSystemPositionen(int hrfID, String sysName) {
+	public Vector<SpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		return ((PositionenTable) getTable(PositionenTable.TABLENAME)).getSystemPositionen(
 			hrfID,
 			sysName);
@@ -1135,7 +1136,7 @@ public class DBZugriff {
 	 * @param positionen TODO Missing Constructuor Parameter Documentation
 	 * @param sysName TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSystemPositionen(int hrfId, Vector positionen, String sysName) {
+	public void saveSystemPositionen(int hrfId, Vector<SpielerPosition> positionen, String sysName) {
 		((PositionenTable) getTable(PositionenTable.TABLENAME)).saveSystemPositionen(
 			hrfId,
 			positionen,

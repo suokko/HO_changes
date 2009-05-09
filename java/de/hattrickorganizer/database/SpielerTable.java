@@ -244,8 +244,8 @@ public final class SpielerTable extends AbstractTable {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSpieler(int hrfId, Vector spieler, Timestamp date) {
-		String statement = null;
+	public void saveSpieler(int hrfId, Vector<Spieler> spieler, Timestamp date) {
+//		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
 		Spieler player = null;
@@ -302,11 +302,11 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected Vector getSpieler(int hrfID) {
+	protected Vector<Spieler> getSpieler(int hrfID) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
-		final Vector ret = new Vector();
+		final Vector<Spieler> ret = new Vector<Spieler>();
 
 		sql = "SELECT * from "+getTableName()+" WHERE HRF_ID = " + hrfID;
 		rs = adapter.executeQuery(sql);
@@ -334,18 +334,18 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getAllSpieler() {
+	public Vector<Spieler> getAllSpieler() {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
-		final Vector ret = new Vector();
+		final Vector<Spieler> ret = new Vector<Spieler>();
 
 		sql = "SELECT DISTINCT SpielerID from "+getTableName()+"";
 		rs = adapter.executeQuery(sql);
 
 		try {
 			if (rs != null) {
-				final Vector idVector = new Vector();
+				final Vector<Integer> idVector = new Vector<Integer>();
 				rs.beforeFirst();
 
 				while (rs.next()) {

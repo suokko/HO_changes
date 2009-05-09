@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
 import java.util.Properties;
+import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -27,6 +28,7 @@ import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.tools.PlayerHelper;
@@ -253,7 +255,7 @@ final class AufstellungsDetailPanel extends ImagePanel
     private void setLabels() {
         if (HOVerwaltung.instance().getModel().getTeam() != null) {
             final HOModel homodel = HOVerwaltung.instance().getModel();
-            final java.util.Vector allSpieler = homodel.getAllSpieler();
+            final Vector<Spieler> allSpieler = homodel.getAllSpieler();
             final Aufstellung aufstellung = homodel.getAufstellung();
 
             //AufstellungCBItem   avergleich  = AufstellungsVergleichHistoryPanel.getVergleichsAufstellung ();
@@ -345,10 +347,10 @@ final class AufstellungsDetailPanel extends ImagePanel
             setEinstellung(aufstellung.getAttitude());
             setLocation(aufstellung.getHeimspiel());
 
-            m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(homodel.getAufstellung().getAvgExpierence()));
             float avXp = homodel.getAufstellung().getAverageExperience();
-            m_jpDurchschnittErfahrung.setToolTipText(HOVerwaltung.instance().getResource().getProperty("Erfahrung")
-            		+ " (kopsterkespits): " + (avXp == -1f ? "need to set captain!" : PlayerHelper.getNameForSkill(avXp)));
+            m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(avXp));
+            m_jpDurchschnittErfahrung.setToolTipText(
+            		(avXp < 0 ? "Need to set team captain!" : "TeamXP formula by kopsterkespits")); // TODO L10N
 
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));

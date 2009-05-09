@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Vector;
 
 import plugins.IHTCalendar;
 import plugins.IHelper;
@@ -39,8 +40,8 @@ public class HOModel {
     private Spielplan m_clSpielplan;
     private Stadium m_clStadium;
     private Team m_clTeam;
-    private java.util.Vector m_vOldSpieler = new java.util.Vector();
-    private java.util.Vector m_vSpieler = new java.util.Vector();
+    private Vector<Spieler> m_vOldSpieler = new Vector<Spieler>();
+    private Vector<Spieler> m_vSpieler = new Vector<Spieler>();
     private Verein m_clVerein;
     private XtraData m_clXtraDaten;
     private int m_iID = -1;
@@ -64,7 +65,7 @@ public class HOModel {
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAllOldSpieler(java.util.Vector spielerVector) {
+    public final void setAllOldSpieler(Vector<Spieler> spielerVector) {
         for (int i = 0; i < spielerVector.size(); i++) {
             //Auf alt setzen, die neuen werden gleich entfernt
             ((Spieler) spielerVector.get(i)).setOld(true);
@@ -89,7 +90,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final java.util.Vector getAllOldSpieler() {
+    public final Vector<Spieler> getAllOldSpieler() {
         return m_vOldSpieler;
     }
 
@@ -100,7 +101,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final java.util.Vector getAllSpieler() {
+    public final Vector<Spieler> getAllSpieler() {
         return m_vSpieler;
     }
 
@@ -245,7 +246,7 @@ public class HOModel {
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
-    public final void setSpieler(java.util.Vector spielerVector) {
+    public final void setSpieler(Vector<Spieler> spielerVector) {
         m_vSpieler = spielerVector;
     }
 
@@ -399,7 +400,7 @@ public class HOModel {
      * berechnet die Subskills zu allen Spielern players calc subskill func
      */
     public final void calcSubskills() {
-        final java.util.Vector vSpieler = getAllSpieler();
+        final Vector<Spieler> vSpieler = getAllSpieler();
         final java.sql.Timestamp calcDate = m_clBasics.getDatum();
 
         /*
@@ -440,9 +441,9 @@ public class HOModel {
             }
         }
 
-        final Map players = new HashMap();
+        final Map<String,ISpieler> players = new HashMap<String,ISpieler>();
 
-        for (Iterator iter = DBZugriff.instance().getSpieler(previousHrfId).iterator();
+        for (Iterator<Spieler> iter = DBZugriff.instance().getSpieler(previousHrfId).iterator();
              iter.hasNext();) {
             final ISpieler element = (ISpieler) iter.next();
             players.put(element.getSpielerID() + "", element);
