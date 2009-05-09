@@ -45,7 +45,7 @@ public  class Aufstellung implements plugins.ILineUp {
     private Aufstellungsassistent m_clAssi = new Aufstellungsassistent();
 
     /** h�lt die Positionen */
-    private Vector m_vPositionen = new Vector();
+    private Vector<SpielerPosition> m_vPositionen = new Vector<SpielerPosition>();
 
     /** Attitude */
     private int m_iAttitude;
@@ -269,7 +269,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getAWTeamStk(Vector spieler, boolean mitForm) {
+    public final float getAWTeamStk(Vector<Spieler> spieler, boolean mitForm) {
         float stk = 0.0f;
         stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_OFF, mitForm);
@@ -305,7 +305,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAutoKapitaen(Vector spieler) {
+    public final void setAutoKapitaen(Vector<Spieler> spieler) {
         Spieler player = null;
         float maxValue = -1;
 
@@ -330,7 +330,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAutoKicker(Vector spieler) {
+    public final void setAutoKicker(Vector<Spieler> spieler) {
         int maxStandard = -1;
         int form = -1;
         Spieler player = null;
@@ -357,32 +357,6 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * returns average Expierence of all players in lineup
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final float getAvgExpierence() {
-        Vector spieler;
-        Spieler player = null;
-        float value = 0;
-        int numPlayers = 0;
-
-        spieler = HOVerwaltung.instance().getModel().getAllSpieler();
-
-        for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-            player = (Spieler) spieler.elementAt(i);
-
-            if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
-                value += player.getErfahrung();
-                ++numPlayers;
-            }
-        }
-
-        value /= numPlayers;
-        return value;
-    }
-
-    /**
      * Get the average experience of all players in lineup
      * using the formula from kopsterkespits:
      * teamxp = ((sum of teamxp + xp of captain)/12)*(1-(7-leadership of captain)*5%)
@@ -392,7 +366,7 @@ public  class Aufstellung implements plugins.ILineUp {
     	try {
     		Spieler pl = null;
     		Spieler captain = null;
-    		Vector players = HOVerwaltung.instance().getModel().getAllSpieler();
+    		Vector<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
 
     		for (int i = 0; (players != null) && (i < players.size()); i++) {
     			pl = (Spieler) players.elementAt(i);
@@ -473,7 +447,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getGesamtStaerke(Vector spieler, boolean mitForm) {
+    public final float getGesamtStaerke(Vector<Spieler> spieler, boolean mitForm) {
         return de.hattrickorganizer.tools.Helper.round(getTWTeamStk(spieler, mitForm)
                                                        + getAWTeamStk(spieler, mitForm)
                                                        + getMFTeamStk(spieler, mitForm)
@@ -689,7 +663,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getMFTeamStk(Vector spieler, boolean mitForm) {
+    public final float getMFTeamStk(Vector<Spieler> spieler, boolean mitForm) {
         float stk = 0.0f;
         stk += calcTeamStk(spieler, ISpielerPosition.MITTELFELD, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.FLUEGELSPIEL, mitForm);
@@ -889,7 +863,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param m_vPositionen New value of property m_vPositionen.
      */
-    public final void setPositionen(java.util.Vector m_vPositionen) {
+    public final void setPositionen(java.util.Vector<SpielerPosition> m_vPositionen) {
         this.m_vPositionen = m_vPositionen;
 
         //m_clAssi.setPositionen ( m_vPositionen );
@@ -904,7 +878,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return Value of property m_vPositionen.
      */
-    public final java.util.Vector getPositionen() {
+    public final java.util.Vector<SpielerPosition> getPositionen() {
         return m_vPositionen;
     }
 
@@ -956,7 +930,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getSTTeamStk(Vector spieler, boolean mitForm) {
+    public final float getSTTeamStk(Vector<Spieler> spieler, boolean mitForm) {
         float stk = 0.0f;
         stk += calcTeamStk(spieler, ISpielerPosition.STURM, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.STURM_DEF, mitForm);
@@ -1076,7 +1050,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getTWTeamStk(Vector spieler, boolean mitForm) {
+    public final float getTWTeamStk(Vector<Spieler> spieler, boolean mitForm) {
         return calcTeamStk(spieler, ISpielerPosition.TORWART, mitForm);
     }
 
@@ -1229,7 +1203,7 @@ public  class Aufstellung implements plugins.ILineUp {
      * @param wetterBonus TODO Missing Constructuor Parameter Documentation
      * @param wetter TODO Missing Constructuor Parameter Documentation
      */
-    public final void doAufstellung(Vector spieler, byte reihenfolge, boolean mitForm,
+    public final void doAufstellung(Vector<Spieler> spieler, byte reihenfolge, boolean mitForm,
                                     boolean idealPosFirst, boolean ignoreVerletzung,
                                     boolean ignoreSperren, float wetterBonus, int wetter) {
         m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst,
@@ -1415,7 +1389,7 @@ public  class Aufstellung implements plugins.ILineUp {
      * TODO Missing Method Documentation
      */
     public final void flipSide() {
-        Vector tmp = new Vector(m_vPositionen);
+        Vector<SpielerPosition> tmp = new Vector<SpielerPosition>(m_vPositionen);
         m_vPositionen.removeAllElements();
         m_vPositionen.add(tmp.get(0));
         m_vPositionen.add(swap(tmp.get(1), tmp.get(4)));
@@ -1498,7 +1472,7 @@ public  class Aufstellung implements plugins.ILineUp {
      */
     public final void resetReserveBank() {
         //Nur Reservespieler
-        final Vector vReserve = new Vector();
+        final Vector<SpielerPosition> vReserve = new Vector<SpielerPosition>();
 
         for (int i = 0; i < m_vPositionen.size(); i++) {
             if (((SpielerPosition) m_vPositionen.get(i)).getId() >= ISpielerPosition.beginnReservere) {
@@ -1621,7 +1595,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcPlayerStk(Vector spieler, int spielerId, byte position, boolean mitForm) {
+    private float calcPlayerStk(Vector<Spieler> spieler, int spielerId, byte position, boolean mitForm) {
         Spieler player = null;
 
         for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
@@ -1644,7 +1618,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcTeamStk(Vector spieler, byte position, boolean mitForm) {
+    private float calcTeamStk(Vector<Spieler> spieler, byte position, boolean mitForm) {
         float stk = 0.0f;
         de.hattrickorganizer.model.SpielerPosition pos = null;
 
@@ -1711,7 +1685,7 @@ public  class Aufstellung implements plugins.ILineUp {
         if (m_vPositionen != null) {
             m_vPositionen.removeAllElements();
         } else {
-            m_vPositionen = new Vector();
+            m_vPositionen = new Vector<SpielerPosition>();
         }
 
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
@@ -1744,7 +1718,7 @@ public  class Aufstellung implements plugins.ILineUp {
         if (m_vPositionen != null) {
             m_vPositionen.removeAllElements();
         } else {
-            m_vPositionen = new Vector();
+            m_vPositionen = new Vector<SpielerPosition>();
         }
 
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
