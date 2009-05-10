@@ -1219,13 +1219,6 @@ public interface ISpieler {
     ////////////////////////////////////////////////////////////////////////////////       
 
     /**
-     * liefert den Kapitänswert für den Spieler
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float calcKapitaensValue();
-
-    /**
      * berechnet die Stärke eines Spieler für angegebene Position
      *
      * @param pos die Position

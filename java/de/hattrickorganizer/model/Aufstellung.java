@@ -317,9 +317,11 @@ public  class Aufstellung implements plugins.ILineUp {
             player = (Spieler) spieler.elementAt(i);
 
             if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
-                if (maxValue < player.calcKapitaensValue()) {
-                    maxValue = player.calcKapitaensValue();
-                    m_iKapitaen = player.getSpielerID();
+            	int curPlayerId = player.getSpielerID();
+            	float curCaptainsValue = HOVerwaltung.instance().getModel().getAufstellung().getAverageExperience(curPlayerId);
+                if (maxValue < curCaptainsValue) {
+                    maxValue = curCaptainsValue;
+                    m_iKapitaen = curPlayerId;
                 }
             }
         }
@@ -362,6 +364,14 @@ public  class Aufstellung implements plugins.ILineUp {
      * teamxp = ((sum of teamxp + xp of captain)/12)*(1-(7-leadership of captain)*5%)
      */
     public final float getAverageExperience() {
+    	return getAverageExperience(0);
+    }
+    /**
+     * Get the average experience of all players in lineup using a specific captain
+     * 
+     * @param captainsId use this player as captain (<= 0 for current captain)
+     */
+    public final float getAverageExperience(int captainsId) {
     	float value = 0;
     	try {
     		Spieler pl = null;
@@ -372,7 +382,11 @@ public  class Aufstellung implements plugins.ILineUp {
     			pl = (Spieler) players.elementAt(i);
     			if (m_clAssi.isSpielerInAnfangsElf(pl.getSpielerID(), m_vPositionen)) {
     				value += pl.getErfahrung();
-    				if (m_iKapitaen == pl.getSpielerID()) {
+    				if (captainsId > 0) {
+    					if (captainsId == pl.getSpielerID()) {
+        					captain = pl;
+    					}
+    				} else if (m_iKapitaen == pl.getSpielerID()) {
     					captain = pl;
     				}
     			}
