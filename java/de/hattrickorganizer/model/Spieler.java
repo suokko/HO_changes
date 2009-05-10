@@ -2478,15 +2478,6 @@ public final class Spieler implements plugins.ISpieler {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * liefert den Kapit�nswert f�r den Spieler
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float calcKapitaensValue() {
-        return ((getFuehrung() * 0.7f) + (getErfahrung() * 0.3f));
-    }
-
-    /**
      * Calculate the player strength on a specific lineup position
      * with or without form
      *

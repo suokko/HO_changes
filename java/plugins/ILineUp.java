@@ -145,6 +145,13 @@ public interface ILineUp {
      * teamxp = ((sum of teamxp + xp of captain)/12)*(1-(7-leadership of captain)*5%)
      */
     public float getAverageExperience();
+    
+    /**
+     * Get the average experience of all players in lineup using a specific captain
+     * 
+     * @param captainsId use this player as captain (<= 0 for current captain)
+     */
+    public float getAverageExperience(int captainsId);
 
     /**
      * get PlayerId for best penalty shooter in lineup

@@ -23,6 +23,7 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -631,7 +632,9 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
                 return item;
             } else if (m_iPositionsID == SPIELFUEHRER) {
                 item.setValues(spieler.getName(),
-                               Helper.round(spieler.calcKapitaensValue()),
+                               Helper.round(
+                            		   HOVerwaltung.instance().getModel().getAufstellung().getAverageExperience(spieler.getSpielerID()), 
+                            		   gui.UserParameter.instance().anzahlNachkommastellen),
                                spieler);
                 return item;
             } else {
