@@ -1,6 +1,7 @@
 package de.hattrickorganizer.prediction;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -17,7 +18,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 public class RatingPredictionManager implements IRatingPredictionManager
 {
-    //~ Class constants ----------------------------------------------------------------------------
+	//~ Class constants ----------------------------------------------------------------------------
 	
     private static final int THISSIDE = IRatingPredictionParameter.THISSIDE;
     private static final int OTHERSIDE = IRatingPredictionParameter.OTHERSIDE;
@@ -58,7 +59,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
 
     // Initialize with default config
     private static IRatingPredictionConfig config = RatingPredictionConfig.getInstance();
+	
+    /** Cache for player strength (Hashtable<String, Float>) */
+    private static Hashtable<String, Double> playerStrengthCache = new Hashtable<String, Double>();
 
+    
     //~ Instance fields ----------------------------------------------------------------------------
     private short heimspiel;
     private short attitude;
@@ -95,6 +100,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
     
     private float calcRatings (int type, int side2calc) {
+//    	long startTime = new Date().getTime();
     	IRatingPredictionParameter params;
     	switch (type) {
 		case SIDEDEFENSE:
@@ -126,6 +132,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	}
     	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
 //    	HOLogger.instance().debug(this.getClass(), "Prediction ["+config.getPredictionName()+"] FullRating for type "+type+" is "+retVal);    	
+//    	long endTime = new Date().getTime();
+//    	HOLogger.instance().debug(RatingPredictionManager.class, "calcRatings (T=" + type + ",S=" + side2calc + ")"
+//    			+ " took " + (endTime-startTime) + "ms");
     	return (float)retVal;
     }
 
@@ -726,6 +735,19 @@ public class RatingPredictionManager implements IRatingPredictionManager
     
     public static double calcPlayerStrength (IRatingPredictionParameter params, 
     		String sectionName, double stamina, double xp, double skill, double form, boolean useForm) {
+//    	long startTime = new Date().getTime();
+    	// If config changed, we have to clear the cache
+    	if (!playerStrengthCache.containsKey("lastRebuild") 
+    			|| playerStrengthCache.get("lastRebuild") < config.getLastParse() ) {
+    		HOLogger.instance().debug(RatingPredictionManager.class, "RPM tainted, clearing cache!");
+    		playerStrengthCache.clear();
+    		playerStrengthCache.put ("lastRebuild", new Double(new Date().getTime()));
+    	}
+    	String key = params.toString() + "|" + sectionName + "|" + stamina + "|" + xp + "|" + skill + "|" + form + "|" + useForm;
+    	if (playerStrengthCache.containsKey(key)) {
+//    		HOLogger.instance().debug(RatingPredictionManager.class, "Using from cache: " + key);
+    		return playerStrengthCache.get(key);
+    	}
     	double stk = 0;
     	String useSection = sectionName;
     	if (!params.hasSection(sectionName))
@@ -787,6 +809,13 @@ public class RatingPredictionManager implements IRatingPredictionManager
    		if (useForm)
    			stk += params.getParam(useSection, "resultAddForm", 0) * form;
    		stk += params.getParam(useSection, "resultAddXp", 0) * xp;
+   		
+//		HOLogger.instance().debug(RatingPredictionManager.class, "Adding to cache: " + key + "=" + stk);
+   		playerStrengthCache.put(key, new Double(stk));
+   		
+//    	long endTime = new Date().getTime();
+//    	HOLogger.instance().debug(RatingPredictionManager.class, "calcPlayerStrength (" 
+//    			+ "SN=" + sectionName + ",ST" + stamina + ",XP" + xp + ",SK" + skill + ",FO" + form + ",uF" + useForm+ ") took " + (endTime-startTime) + "ms");
     	return stk;
     }
 

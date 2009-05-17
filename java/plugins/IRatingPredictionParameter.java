@@ -20,4 +20,10 @@ public interface IRatingPredictionParameter
     public double getParam (String key, double defVal);
     public double getParam (String section, String key);
     public double getParam (String section, String key, double defVal);
+
+    /**
+     * Get the date of the last file parse
+     * @return
+     */
+    public long getLastParse ();
 }
