@@ -1091,8 +1091,8 @@ public class Helper extends LanguageFiles {
                     break;
                 }
 
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8: {
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2: {
                 	icon = TOR_INDIRECT_FREEKICK;
                 	break;
                 }
@@ -1195,8 +1195,8 @@ public class Helper extends LanguageFiles {
                     break;
                 }
 
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8: {
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2: {
                 	icon = KEINTOR_INDIRECT_FREEKICK;
                 	break;
                 }
@@ -1771,8 +1771,8 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
                     return properties.getProperty("highlight_penalty");
 
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
                 	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
@@ -1857,8 +1857,8 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
                     return properties.getProperty("highlight_penalty");
 
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+                case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
                 	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
