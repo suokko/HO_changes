@@ -414,6 +414,9 @@ public interface IMatchHighlight {
     /** Tactic Creative */
     public static final int HIGHLIGHT_SUB_TACTIC_CREATIVE = 35;
 
+    /** Tactic Long shots */
+    public static final int HIGHLIGHT_SUB_TACTIC_LONGSHOTS = 36;
+
     /* Substitutions */
     /** Substitution at deficit */
     public static final int HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT = 50;
