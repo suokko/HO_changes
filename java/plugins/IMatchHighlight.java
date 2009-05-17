@@ -457,6 +457,9 @@ public interface IMatchHighlight {
     /** full time, end of game */
     public static final int HIGHLIGHT_SUB_SPIELENDE = 99;
 
+    /** walkover - draw */
+    public static final int HIGHLIGHT_SUB_WALKOVER_DRAW = 0;
+
     /** walkover - home team wins */
     public static final int HIGHLIGHT_SUB_WALKOVER_HOMETEAM_WINS = 1;
 
