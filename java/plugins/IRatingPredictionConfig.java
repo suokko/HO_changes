@@ -24,4 +24,9 @@ public interface IRatingPredictionConfig {
 	
     public IRatingPredictionParameter getTacticsParameters();
 
+    /**
+     * Get the date of the last file parse
+     * @return
+     */
+    public long getLastParse ();
 }

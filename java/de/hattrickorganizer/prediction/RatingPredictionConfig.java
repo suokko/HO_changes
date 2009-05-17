@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
-import java.util.Properties;
 
 import plugins.IRatingPredictionConfig;
 import plugins.IRatingPredictionParameter;
@@ -16,18 +14,21 @@ import de.hattrickorganizer.tools.HOLogger;
 public class RatingPredictionConfig
     implements IRatingPredictionConfig
 {
-	private static Date lastParse = new Date();
-	private static double parseInterval = 5000; // in millisecs
+	/* We check for changed rating parameter files regularily */
+	private static long lastCheck = new Date().getTime();
+	private static long checkInterval = 5000; // in millisecs
+
+	private static long lastParse;
 	
     private static RatingPredictionConfig config = null;
     
-    private RatingPredictionParameter sideDefenseParam;
-    private RatingPredictionParameter centralDefenseParam;
-    private RatingPredictionParameter midfieldParam;
-    private RatingPredictionParameter sideAttackParam;
-    private RatingPredictionParameter centralAttackParam;
-    private RatingPredictionParameter playerStrengthParam;
-    private RatingPredictionParameter tacticsParam;
+    private RatingPredictionParameter sideDefenseParam = new RatingPredictionParameter ();
+    private RatingPredictionParameter centralDefenseParam = new RatingPredictionParameter ();
+    private RatingPredictionParameter midfieldParam = new RatingPredictionParameter ();
+    private RatingPredictionParameter sideAttackParam = new RatingPredictionParameter ();
+    private RatingPredictionParameter centralAttackParam = new RatingPredictionParameter ();
+    private RatingPredictionParameter playerStrengthParam = new RatingPredictionParameter ();
+    private RatingPredictionParameter tacticsParam = new RatingPredictionParameter ();
     
     private String predictionName;
     private static String[] allPredictionNames = null;
@@ -36,10 +37,7 @@ public class RatingPredictionConfig
     private static final String predConfigFile = predDir + File.separatorChar + "predictionTypes.conf";
     
 
-    private RatingPredictionConfig(String predictionName)
-    {
-    	this.predictionName = predictionName;
-    	initArrays();
+    private RatingPredictionConfig() {
     }
 
     public static IRatingPredictionConfig getInstance()
@@ -62,11 +60,13 @@ public class RatingPredictionConfig
     
     public static IRatingPredictionConfig getInstance(String predictionName)
     {
-    	Date now = new Date();
-        if(config == null || !config.getPredictionName().equalsIgnoreCase(predictionName) ||
-        		now.getTime() > lastParse.getTime() + parseInterval) {
-    		config = new RatingPredictionConfig(predictionName);
-    		lastParse = now;
+    	if (config == null) {
+        	config = new RatingPredictionConfig();
+        }
+    	long now = new Date().getTime();
+    	if (!predictionName.equals(config.getPredictionName()) || now > lastCheck + checkInterval) {
+        	config.initArrays(predictionName);
+    		lastCheck = now;
         }
        	return config;
     }
@@ -75,7 +75,7 @@ public class RatingPredictionConfig
     	if (allPredictionNames != null)
     		return allPredictionNames;
     	else {
-    		ArrayList list = new ArrayList();
+    		ArrayList<String> list = new ArrayList<String>();
     		try {
     			BufferedReader br = new BufferedReader(new FileReader(predConfigFile));
     			while (br.ready()) {
@@ -141,66 +141,27 @@ public class RatingPredictionConfig
     	return predictionName;
     }
     
-    private void initArrays() {
-		HOLogger.instance().debug(this.getClass(), "(Re-)initializing prediction parameter arrays for type "+getPredictionName());
-    	sideDefenseParam = parsePredictionProperties(predictionName 
-    			+ File.separatorChar + "sidedefense.dat");
-    	centralDefenseParam = parsePredictionProperties(predictionName 
-    			+ File.separatorChar + "centraldefense.dat");
-    	midfieldParam = parsePredictionProperties (predictionName 
-    			+ File.separatorChar + "midfield.dat");
-    	sideAttackParam = parsePredictionProperties (predictionName 
-    			+ File.separatorChar + "sideattack.dat");
-    	centralAttackParam = parsePredictionProperties(predictionName 
-    			+ File.separatorChar + "centralattack.dat");
-       	playerStrengthParam = parsePredictionProperties(predictionName 
-    			+ File.separatorChar + "playerstrength.dat");
-       	tacticsParam = parsePredictionProperties(predictionName 
-    			+ File.separatorChar + "tactics.dat");
-    }
-
-    private static RatingPredictionParameter parsePredictionProperties (String filename)
-    {
-		String fullFilename = predDir + File.separatorChar + filename;
-    	try {
-    		Hashtable allProps = new Hashtable();
-//    		System.out.println ("Using prediction file: "+fullFilename);
-    		BufferedReader br = new BufferedReader(new FileReader(fullFilename));
-            String line = null;
-            Properties curProperties = null;
-            while((line = br.readLine()) != null) {
-            	line = line.toLowerCase();
-            	// # begins a Comment
-            	line = line.replaceFirst ("#.*", "");
-            	// Trim
-            	line = line.trim();
-            	if (line.startsWith("[")) {
-            		// new Section
-            		String sectionName = line.replaceFirst ("^\\[(.*)\\].*", "$1");
-            		if (allProps.containsKey(sectionName)) {
-            			curProperties = (Properties)allProps.get(sectionName);
-            		} else {
-            			curProperties = new Properties();
-            			allProps.put(sectionName, curProperties);
-            		}
-            	}
-           		String temp[] = line.split("=");
-           		if (temp.length == 2) {
-           			String key = temp[0].trim();
-           			String value = temp[1].trim();
-//         			System.out.println ("Found new property: "+key+" -> "+value);
-            		curProperties.setProperty(key, value);
-            	}
-            }
-//            System.out.println ("All Props: "+allProps);
-            return new RatingPredictionParameter(allProps);
-		} catch (FileNotFoundException e) {
-			HOLogger.instance().error(RatingPredictionConfig.class, "File not found: "+fullFilename);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-        return new RatingPredictionParameter(new Hashtable());
+    private void initArrays (String predictionName) {
+    	this.predictionName = predictionName;
+//		HOLogger.instance().debug(this.getClass(), "Checking for changed prediction files for type "+predictionName);
+		String prefix = predDir + File.separatorChar + predictionName + File.separatorChar;
+    	sideDefenseParam.readFromFile(prefix + "sidedefense.dat");
+    	centralDefenseParam.readFromFile(prefix + "centraldefense.dat");
+    	midfieldParam.readFromFile(prefix + "midfield.dat");
+    	sideAttackParam.readFromFile(prefix + "sideattack.dat");
+    	centralAttackParam.readFromFile(prefix + "centralattack.dat");
+    	playerStrengthParam.readFromFile(prefix + "playerstrength.dat");
+    	tacticsParam.readFromFile(prefix + "tactics.dat");
+    	
+    	// Check all params for re-parsed files
+    	IRatingPredictionParameter allParams [] = 
+    		{sideDefenseParam, centralDefenseParam, midfieldParam, 
+    			sideAttackParam, centralAttackParam, playerStrengthParam, tacticsParam};
+    	
+    	for (IRatingPredictionParameter curParam : allParams) {
+        	if (curParam.getLastParse() > lastParse)
+        		lastParse = curParam.getLastParse();    		
+    	}
     }
 
       public IRatingPredictionParameter getCentralAttackParameters()
@@ -237,5 +198,12 @@ public class RatingPredictionConfig
     {
     	return tacticsParam;
     }
-
+    
+    /**
+     * Get the date of the last file parse
+     * @return
+     */
+    public long getLastParse () {
+    	return lastParse;
+    }
 }
