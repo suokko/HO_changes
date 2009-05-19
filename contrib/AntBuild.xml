@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	Ant Build file for HO by flattermann <flattermannHO@gmail.com>
+	Ant Build file for HO by flattermann <HO@flattermann.net>
 	
 	- created for personal use, but perhaps it may be useful for other, too -
 	 
@@ -16,33 +16,33 @@
 		|	+-> export-zip					The ZIP-Builds are created here
 		|	+-> export-w32installer			The Win32-Installer (NSIS) are created here
 		|	+-> java.dist					The Win32-JRE to be distributed with the Installer needs to be placed here
-		|	+-> svn							
+		|	+-> src							
 		|	|	+-> java					The source code is here
 		|	|	+-> conf					Supplementary files
 		|	|	|	+-> addToJar			These files will be added to ho.jar
 		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
 		|	|	|	+-> nsis				NSIS directory for Win32 installer creation
-		|	|	|		+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation [please see note 2, below]
-		|	|	|		+-> localLang		Local language files for NSIS
+		|	|	|	|	+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation [please see note 2, below]
+		|	|	|	|	+-> localLang		Local language files for NSIS
+		|	|	|	+-> MANIFEST.MF			The manifest file for ho.jar
 		|	|	+-> contrib
 		|	|		+-> libs				This is the place for supplemental libs like ant-contrib-*.jar
 		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
 		|	|	
-		|	+-> MANIFEST.MF					The manifest file for ho.jar
 		|	+-> AntBuild.xml				This file
 		|	+-> AntBuild-CopyPluginConf.xml	Ant file that copies the cvs/conf/*.* to the bin dir (for plugins)
 		|	
-	    +-> HO-Plugin-Commons				HO Plugin Project "Commons"
-	    |	+-> bin							Compiled .class files go here
-	    |	+-> cvs							The source code is here
-	    |	
-	    +-> HO-Plugin-Feedback				HO Plugin Project "Feedback"
-	    |	+-> bin							Compiled .class files go here
-	    |	+-> cvs							The source code is here
-	    |	
-	    +-> HO-Plugin-XYZ					HO Plugin Project "XYZ"
-	    	+-> bin							Compiled .class files go here
-	    	+-> cvs							The source code is here
+		+-> HO-Plugin-Commons				HO Plugin Project "Commons"
+		|	+-> bin							Compiled .class files go here
+		|	+-> src							The source code is here
+		|	
+		+-> HO-Plugin-Feedback				HO Plugin Project "Feedback"
+		|	+-> bin							Compiled .class files go here
+		|	+-> src							The source code is here
+		|	
+		+-> HO-Plugin-XYZ					HO Plugin Project "XYZ"
+			+-> bin							Compiled .class files go here
+			+-> src							The source code is here
 	    	
 	    	
 	Note 1: (How to create DMG-Builds with Linux)
@@ -59,22 +59,24 @@
 -->
 
 <project name="HO1-AntBuild" default="copy2build" basedir=".">
-	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1"/>
-	<property name="tmp-target" value="${tmp}/target"/>
+	<property name="svn-dir" value="src" />
 
-	<property name="build-dir" value="build"/>
-	<property name="debug-dir" value="debug"/>
-	
-	<property name="export-zip-dir" value="export-zip"/>
-	
-	<property name="export-dmg-basedir" value="export-dmg"/>
-	<property name="export-dmg-templatefile" value="${export-dmg-basedir}/HO.template.dmg"/>
-	<property name="export-dmg-targetfile" value="${export-dmg-basedir}/HO.dmg"/>
-	<property name="export-dmg-sourcedir" value="${export-dmg-basedir}/source"/>
-	<property name="export-dmg-backgrounddir" value="${export-dmg-basedir}/background"/>
-	<property name="export-dmg-targetdir" value="${export-dmg-basedir}/target"/>
-	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images"/>
-	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount"/>
+	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1" />
+	<property name="tmp-target" value="${tmp}/target" />
+
+	<property name="build-dir" value="build" />
+	<property name="debug-dir" value="debug" />
+
+	<property name="export-zip-dir" value="export-zip" />
+
+	<property name="export-dmg-basedir" value="export-dmg" />
+	<property name="export-dmg-templatefile" value="${export-dmg-basedir}/HO.template.dmg" />
+	<property name="export-dmg-targetfile" value="${export-dmg-basedir}/HO.dmg" />
+	<property name="export-dmg-sourcedir" value="${export-dmg-basedir}/source" />
+	<property name="export-dmg-backgrounddir" value="${export-dmg-basedir}/background" />
+	<property name="export-dmg-targetdir" value="${export-dmg-basedir}/target" />
+	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images" />
+	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount" />
 
 	<!-- 
 		NSIS Properties:
@@ -84,181 +86,218 @@
 		windows: nsis-command = "c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
 		linux:   nsis-command = "wine c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
 	-->
-	<property name="nsis-command" value="wine c:/Programme/NSIS/Unicode/makensis.exe"/>
-	<property name="nsis-directory" value="svn/conf/nsis"/>
-	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi"/>
-	<property name="nsis-confPath" value="${nsis-directory}"/>
-	<property name="nsis-export-dir" value="export-w32installer"/>
-	<property name="nsis-JRE-DistPath" value="java.dist"/>
-	<property name="nsis-JRE-Version" value="6u11"/>
-	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p-s.exe"/>
+	<property name="nsis-command" value="wine c:/Programme/NSIS/Unicode/makensis.exe" />
+	<property name="nsis-directory" value="${svn-dir}/conf/nsis" />
+	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi" />
+	<property name="nsis-confPath" value="${nsis-directory}" />
+	<property name="nsis-export-dir" value="export-w32installer" />
+	<property name="nsis-JRE-DistPath" value="java.dist" />
+	<property name="nsis-JRE-Version" value="6u11" />
+	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p-s.exe" />
+
+	<!--
+		If svn is not in your path, please adjust the following property
+		(i.e. add the path like "/usr/bin/svn")
+	-->
+	<property name="svn-command" value="svn" />
 
 	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-	  <classpath>
-	    <pathelement location="svn/contrib/libs/ant-contrib-1.0b3.jar"/>
-	  </classpath>
+		<classpath>
+			<pathelement location="${svn-dir}/contrib/libs/ant-contrib-1.0b3.jar" />
+		</classpath>
 	</taskdef>
 
 	<!-- ================================= 
           target: makeAll              
          ================================= -->
-    <target name="makeAll" description="Create ho.jar, HO.zip and HO.dmg">
-    	<antcall target="makeJar"/>
-    	<antcall target="makeZip"/>
-    	<antcall target="makeDmgImage"/>
-    	<antcall target="makeNSIS"/>
-    </target>
-	
+	<target name="makeAll" description="Create ho.jar, HO.zip and HO.dmg">
+		<antcall target="makeJar" />
+		<antcall target="makeZip" />
+		<antcall target="makeDmgImage" />
+		<antcall target="makeNSIS" />
+	</target>
+
 	<!-- ================================= 
           target: init              
          ================================= -->
-    <target name="init" description="create tmp dirs and get HO Version">
-		<mkdir dir="${tmp-target}"/>
-		<mkdir dir="${export-dmg-targetdir}"/>
-		<mkdir dir="${build-dir}"/>
-       	<loadfile property="hoversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
-    		<filterchain>
-    			<linecontains>
-    				<contains value=" VERSION ="/>
-    			</linecontains>
-    			<replaceregex pattern=".*=\D*" replace=""/>
-    			<replaceregex pattern="\D*$" replace=""/>
-    			<replaceregex pattern="\." replace="" />
-    			<striplinebreaks/>
-    		</filterchain>
-    	</loadfile>
-       	<loadfile property="modversion" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
-    		<filterchain>
-    			<linecontains>
-    				<contains value=" MODVERSION ="/>
-    			</linecontains>
-    			<replaceregex pattern='.*=[^"]*"' replace=""/>
-    			<replaceregex pattern='"[^"]*$' replace=""/>
-    			<replaceregex pattern='build ' replace=""/>
-    			<replaceregex pattern='^' replace="_"/>
-    			<replaceregex pattern='^_$' replace=""/>
-    			<striplinebreaks/>
-    		</filterchain>
-    	</loadfile>
-       	<loadfile property="dev" srcfile="svn/java/de/hattrickorganizer/gui/HOMainFrame.java">
-    		<filterchain>
-    			<linecontains>
-    				<contains value=" DEVELOPMENT ="/>
-    			</linecontains>
-    			<replaceregex pattern='.*= ' replace=""/>
-    			<replaceregex pattern=';\w*$' replace=""/>
-    			<replaceregex pattern='true' replace="_BETA"/>
-    			<replaceregex pattern='false' replace=""/>
-    			<striplinebreaks/>
-    		</filterchain>
-    	</loadfile>
-    	<!-- if the file "svn/isPrivateBuild" exists, set ${private} to "-PRIVATE"... -->
-    	<condition property="private" value="_PRIVATE">
-    		<available file="svn/isPrivateBuild"/>
-    	</condition>
-    	<!-- ... else ${private} defaults to "" -->
-    	<condition property="private" value="">
-    		<not><isset property="private"/></not>
-    	</condition>
-    	<!-- ${modversion} defaults to "" -->
-    	<condition property="modversion" value="">
-    		<not><isset property="modversion"/></not>
-    	</condition>
-    	<!-- if ${dev} is set (i.e. development version), set ${debug} to "DEBUG"... -->
-    	<condition property="debug" value="DEBUG">
-			<isset property="dev"/>
+	<target name="init" description="create tmp dirs and get HO Version">
+		<mkdir dir="${tmp-target}" />
+		<mkdir dir="${export-dmg-targetdir}" />
+		<mkdir dir="${build-dir}" />
+		<mkdir dir="${debug-dir}" />
+		<loadfile property="hoversion" srcfile="${svn-dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+			<filterchain>
+				<linecontains>
+					<contains value=" VERSION =" />
+				</linecontains>
+				<replaceregex pattern=".*=\D*" replace="" />
+				<replaceregex pattern="\D*$" replace="" />
+				<replaceregex pattern="\." replace="" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<loadfile property="dev" srcfile="${svn-dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+			<filterchain>
+				<linecontains>
+					<contains value=" DEVELOPMENT =" />
+				</linecontains>
+				<replaceregex pattern='.*= ' replace="" />
+				<replaceregex pattern=';\w*$' replace="" />
+				<replaceregex pattern='true' replace="_BETA" />
+				<replaceregex pattern='false' replace="" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<!-- if the file "svn/isPrivateBuild" exists, set ${private} to "-PRIVATE"... -->
+		<condition property="private" value="_PRIVATE">
+			<available file="${svn-dir}/isPrivateBuild" />
 		</condition>
-    	<!-- ... else set ${debug} to ""... -->
-    	<condition property="debug" value="">
-			<not><isset property="debug"/></not>
+		<!-- ... else ${private} defaults to "" -->
+		<condition property="private" value="">
+			<not>
+				<isset property="private" />
+			</not>
 		</condition>
-    	<!-- ${dev} defaults to "" -->
-    	<condition property="dev" value="">
-    		<not><isset property="dev"/></not>
-    	</condition>
-    	<property name="hofullversion" value="${hoversion}${dev}${modversion}${private}"/>
-    	<echo>HOVERSION=${hoversion}, DEV=${dev}, MODVERSION=${modversion}, PRIVATE=${private}, DEBUG=${debug}</echo>
-    </target>
-	
+		<!-- if ${dev} is set (i.e. development version), set ${debug} to "DEBUG"... -->
+		<condition property="debug" value="DEBUG">
+			<isset property="dev" />
+		</condition>
+		<!-- ... else set ${debug} to ""... -->
+		<condition property="debug" value="">
+			<not>
+				<isset property="debug" />
+			</not>
+		</condition>
+		<!-- ${dev} defaults to "" -->
+		<condition property="dev" value="">
+			<not>
+				<isset property="dev" />
+			</not>
+		</condition>
+		<!-- get current SVN version / release -->
+		<exec executable="${svn-command}" dir="${svn-dir}" failifexecutionfails="false" logerror="true">
+			<arg value="info" />
+			<redirector outputproperty="svninfo">
+				<outputfilterchain>
+					<containsregex pattern="^Revision" />
+					<replaceregex pattern="^Revision\D*(\d*)" replace="_r\1" />
+				</outputfilterchain>
+			</redirector>
+		</exec>
+		<!-- ${svninfo} defaults to "" -->
+		<condition property="svninfo" value="">
+			<not>
+				<isset property="svninfo" />
+			</not>
+		</condition>
+		<tstamp>
+			<format property="curDate" pattern="yyyyMMdd" />
+		</tstamp>
+
+		<property name="buildinfo" value="${dev}${svninfo}_${curDate}${private}" />
+
+		<!-- For dev and private builds, include more informations in ${hofullversion} -->
+		<if>
+			<and>
+				<equals arg1="${dev}" arg2="" />
+				<equals arg1="${private}" arg2="" />
+			</and>
+			<then>
+				<property name="hofullversion" value="${hoversion}" />
+			</then>
+			<else>
+				<property name="hofullversion" value="${hoversion}${buildinfo}" />
+			</else>
+		</if>
+
+		<echo>HOVERSION=${hoversion}, DEV=${dev}, SVNREV=${svninfo}, CURDATE=${curDate}, PRIVATE=${private}, DEBUG=${debug}</echo>
+		<echo>HOFULLVERSION=${hofullversion} (used in file names)</echo>
+	</target>
+
 	<!-- ================================= 
           target: makeJar              
          ================================= -->
-    <target name="makeJar" depends="init" description="Create JAR File">
-    	<mkdir dir="${tmp-target}"/>
-    	<copy todir="${tmp-target}" preservelastmodified="yes">
-    		<fileset dir="bin"/>
-    	</copy>
-    	<copy todir="${tmp-target}" preservelastmodified="yes">
-    		<fileset dir="svn/conf/addToJar"/>
-    	</copy>
-    	<jar manifest="svn/conf/MANIFEST.MF" destfile="${build-dir}/ho.jar" basedir="${tmp-target}"/>
-    </target>
-	
-	
+	<target name="makeJar" depends="init" description="Create JAR File">
+		<mkdir dir="${tmp-target}" />
+		<copy todir="${tmp-target}" preservelastmodified="yes">
+			<fileset dir="bin" />
+		</copy>
+		<copy todir="${tmp-target}" preservelastmodified="yes">
+			<fileset dir="${svn-dir}/conf/addToJar" />
+		</copy>
+		<jar manifest="${svn-dir}/conf/MANIFEST.MF" destfile="${build-dir}/ho.jar" basedir="${tmp-target}" />
+	</target>
+
+
 	<!-- ================================= 
           target: copy2build              
          ================================= -->
-    <target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
-    	<mkdir dir="${build-dir}"/>
-    	<copy todir="${build-dir}" overwrite="true">
-    		<fileset dir="svn/conf/addToZip"/>
-    		<fileset file="${tmp-target}/HOLauncher.class"/>
-    	</copy>
-    	<!-- Add DEBUG option to ho.jar -->
-<!--
+	<target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
+		<mkdir dir="${build-dir}" />
+		<copy todir="${build-dir}" overwrite="true">
+			<fileset dir="${svn-dir}/conf/addToZip" />
+			<fileset file="${tmp-target}/HOLauncher.class" />
+		</copy>
+		<!-- Add DEBUG option to ho.jar -->
+		<!--
 		<replaceregexp match="(-jar.*ho.jar.*$)" replace="\1 ${debug}" flags="i" byline="yes">
 			<fileset dir="${build-dir}" includes="HO.sh HO.bat"/>
 		</replaceregexp>
 -->
-    	<antcall target="copyPlugins"/>
-    	<antcall target="copyBuild2debug"/>
-    </target>
+		<antcall target="copyPlugins" />
+		<antcall target="copyBuild2debug" />
+	</target>
 
 	<!-- ================================= 
           target: copyBuild2debug              
          ================================= -->
-    <target name="copyBuild2debug" description="Copy build dir to debug">
-    	<mkdir dir="${debug-dir}"/>
-    	<copy todir="${debug-dir}" overwrite="true">
-    		<fileset dir="${build-dir}"/>
-    	</copy>
-    </target>
+	<target name="copyBuild2debug" description="Copy build dir to debug">
+		<mkdir dir="${debug-dir}" />
+		<copy todir="${debug-dir}" overwrite="true">
+			<fileset dir="${build-dir}" />
+		</copy>
+	</target>
 
 	<!-- ================================= 
           target: copyPlugins              
          ================================= -->
-    <target name="copyPlugins" description="Copy hoplugins to builddir">
-    	<antcall target="copy-hoplugins-common"/>
-    	<antcall target="copy-hoplugins-feedback"/> 
-		<antcall target="copy-hoplugins-teamanalyzer"/>
-		<antcall target="copy-hoplugins-trainingexperience"/>
-		<antcall target="copy-hoplugins-transfers"/>
-    	
-    	<!-- Add additional plugins if we build a DEV or PRIVATE build -->
-    	<if>
-   			<and>
-   				<equals arg1="${dev}" arg2=""/>
-   				<equals arg1="${private}" arg2=""/>
-   			</and>
-    		<then>
-    			<echo>This is a release build, using default plugins only</echo>
-    		</then>
-    		<else>
-    			<echo>This is a private or dev build, adding more plugins</echo>
-    			<antcall target="copyPlugins-contrib"/>
-    		</else>
-    	</if>
+	<target name="copyPlugins" description="Copy hoplugins to builddir">
+		<!-- 
+    		These default plugins are always build for a HO release
+    		Of course, you can comment them out if you want to skip
+    		some or all of them
+    	-->
+		<antcall target="copy-hoplugins-common" />
+		<antcall target="copy-hoplugins-feedback" />
+		<antcall target="copy-hoplugins-teamanalyzer" />
+		<antcall target="copy-hoplugins-trainingexperience" />
+		<antcall target="copy-hoplugins-transfers" />
+
+		<!-- Add additional plugins if we build a DEV or PRIVATE build -->
+		<if>
+			<and>
+				<equals arg1="${dev}" arg2="" />
+				<equals arg1="${private}" arg2="" />
+			</and>
+			<then>
+				<echo>This is a release build, using default plugins only</echo>
+			</then>
+			<else>
+				<echo>This is a private or dev build, adding more plugins</echo>
+				<antcall target="copyPlugins-contrib" />
+			</else>
+		</if>
 	</target>
-    	
+
 	<!-- ================================= 
           target: copyPlugins-contrib              
          ================================= -->
-    <target name="copyPlugins-contrib" description="Copy more hoplugins to builddir (not included in standard release)">    
-    	<antcall target="copy-hoplugins-evilcard"/>
-    	<antcall target="copy-hoplugins-experienceviewer"/>
-		<antcall target="copy-hoplugins-specialevents"/>
-    	<!-- Skip these plugins:
+	<target name="copyPlugins-contrib" description="Copy more hoplugins to builddir (not included in standard release)">
+		<antcall target="copy-hoplugins-evilcard" />
+		<antcall target="copy-hoplugins-experienceviewer" />
+		<antcall target="copy-hoplugins-specialevents" />
+		<!-- Skip these plugins:
 		<antcall target="copy-hoplugins-nationalteams"/>
 		<antcall target="copy-hoplugins-tsforecast"/>
 		-->
@@ -269,16 +308,16 @@
          ================================= -->
 	<target name="copy-hoplugins-common">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-Commons/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-Commons/bin/hoplugins" />
 		</copy>
 	</target>
-	
+
 	<!-- ================================= 
           target: copy-hoplugins-trainingexperience              
          ================================= -->
 	<target name="copy-hoplugins-trainingexperience">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-TrainingExperience/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-TrainingExperience/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -287,7 +326,7 @@
          ================================= -->
 	<target name="copy-hoplugins-nationalteams">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-NationalTeams/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-NationalTeams/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -296,7 +335,7 @@
          ================================= -->
 	<target name="copy-hoplugins-specialevents">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-SpecialEvents/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-SpecialEvents/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -305,7 +344,7 @@
          ================================= -->
 	<target name="copy-hoplugins-transfers">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-Transfers/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-Transfers/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -314,7 +353,7 @@
          ================================= -->
 	<target name="copy-hoplugins-teamanalyzer">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-TeamAnalyzer/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-TeamAnalyzer/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -323,7 +362,7 @@
          ================================= -->
 	<target name="copy-hoplugins-evilcard">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-EvilCard/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-EvilCard/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -332,7 +371,7 @@
          ================================= -->
 	<target name="copy-hoplugins-experienceviewer">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-ExperienceViewer/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-ExperienceViewer/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -341,7 +380,7 @@
          ================================= -->
 	<target name="copy-hoplugins-feedback">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-Feedback/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-Feedback/bin/hoplugins" />
 		</copy>
 	</target>
 
@@ -350,113 +389,106 @@
          ================================= -->
 	<target name="copy-hoplugins-tsforecast">
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-TSForecast/bin/hoplugins"/>
+			<fileset dir="${basedir}/../HO-Plugin-TSForecast/bin/hoplugins" />
 		</copy>
 	</target>
 
 	<!-- ================================= 
           target: clean              
          ================================= -->
-	<target name="clean" description="Remove temp dir">
+	<target name="clean" description="Remove temp dirs">
 		<echo>Removing temp files and dirs</echo>
 		<delete includeemptydirs="true" failonerror="false" verbose="true">
-			<fileset dir="${tmp}"/>
-			<fileset dir="${export-dmg-targetdir}"/>
-			<fileset dir="${build-dir}"/>
+			<fileset dir="${tmp}" />
+			<fileset dir="${export-dmg-targetdir}" />
+			<fileset dir="${build-dir}" />
+			<fileset dir="${debug-dir}" />
 		</delete>
 	</target>
-	
+
 	<!-- ================================= 
           target: makeZip              
          ================================= -->
-    <target name="makeZip" depends="init,makeJar,copy2build" description="Creates the full HO.zip">
-    	<mkdir dir="${export-zip-dir}"/>
-        <zip destfile="${export-zip-dir}/HO_${hoversion}${dev}${modversion}${private}.zip">
-        	<fileset dir="${build-dir}"/>
-        </zip>
-    </target>
-	
+	<target name="makeZip" depends="init,makeJar,copy2build" description="Creates the full HO.zip">
+		<mkdir dir="${export-zip-dir}" />
+		<zip destfile="${export-zip-dir}/HO_${hofullversion}.zip">
+			<fileset dir="${build-dir}" />
+		</zip>
+	</target>
+
 	<!-- ================================= 
           target: makeDmg              
          ================================= -->
-    <target name="makeDmg" depends="init,makeJar,copy2build" description="Create OSX DMG dir">
-    	<property name="InfoSrc" value="${export-dmg-sourcedir}/Hattrick Organizer.app/Contents/Info.plist"/>
-    	<property name="InfoTarget" value="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Info.plist"/>
+	<target name="makeDmg" depends="init,makeJar,copy2build" description="Create OSX DMG dir">
+		<property name="InfoSrc" value="${export-dmg-sourcedir}/Hattrick Organizer.app/Contents/Info.plist" />
+		<property name="InfoTarget" value="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Info.plist" />
 
-    	<mkdir dir="${export-dmg-targetdir}"/>
+		<mkdir dir="${export-dmg-targetdir}" />
 
-    	<copy todir="${export-dmg-targetdir}" preservelastmodified= 	"yes">
-    		<fileset dir="${export-dmg-sourcedir}"/>
-    	</copy>
-    	<copy todir="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java" preservelastmodified="yes">
-    		<fileset dir="${build-dir}"/>
-    	</copy>
-    	<copy file="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java/changelog.txt"  
-    			tofile="${export-dmg-targetdir}/ChangeLog.txt" preservelastmodified="true"/>
-    	<echo>Setting HOVERSION=${hoversion} in ${InfoTarget}</echo>
-    	<copy file="${InfoSrc}" tofile="${InfoTarget}" overwrite="true">
-    		<filterchain>
-    			<replacestring from="HOVERSION" to="${hoversion}"/>
-    		</filterchain>
-    	</copy>
-    	<copy file="${export-dmg-backgrounddir}/Back${dev}.png"
-    			tofile="${export-dmg-targetdir}/.Back.png" preservelastmodified="true"/>
-    </target>
-	
+		<copy todir="${export-dmg-targetdir}" preservelastmodified="yes">
+			<fileset dir="${export-dmg-sourcedir}" />
+		</copy>
+		<copy todir="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java" preservelastmodified="yes">
+			<fileset dir="${build-dir}" />
+		</copy>
+		<copy file="${export-dmg-targetdir}/Hattrick Organizer.app/Contents/Resources/Java/changelog.txt" tofile="${export-dmg-targetdir}/ChangeLog.txt" preservelastmodified="true" />
+		<echo>Setting HOVERSION=${hoversion} in ${InfoTarget}</echo>
+		<copy file="${InfoSrc}" tofile="${InfoTarget}" overwrite="true">
+			<filterchain>
+				<replacestring from="HOVERSION" to="${hoversion}" />
+			</filterchain>
+		</copy>
+		<copy file="${export-dmg-backgrounddir}/Back${dev}.png" tofile="${export-dmg-targetdir}/.Back.png" preservelastmodified="true" />
+	</target>
+
 	<!-- ================================= 
           target: makeDmgImage              
          ================================= -->
-    <target name="makeDmgImage" depends="makeDmg" description="Creates the DMG image">
-    	<echo>Trying to unmount DMG, just to be sure</echo>
-    	<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true"/>
-    	<echo>Copying template DMG</echo>
-    	<copy file="${export-dmg-templatefile}" 
-    		tofile="${export-dmg-targetfile}" overwrite="true"/>
-    	<exec executable="${export-dmg-basedir}/mountDmg" resolveexecutable="true"/>
-    	<echo>Updating dmg image...</echo>
-    	<copy todir="${export-dmg-mountdir}" preservelastmodified="yes">
-    		<fileset dir="${export-dmg-targetdir}"/>
-    	</copy>
-    	<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true"/>
-    	<copy file="${export-dmg-targetfile}" 
-    		tofile="${export-dmg-imagedir}/HO_${hoversion}${dev}${modversion}${private}.dmg" 
-    		overwrite="true" verbose="true"/>
-    	<zip destfile="${export-dmg-imagedir}/HO_${hoversion}${dev}${modversion}${private}_MacOS_DMG.zip">
-    		<fileset file="${export-dmg-imagedir}/HO_${hoversion}${dev}${modversion}${private}.dmg"/>
-    	</zip>
-    </target>
+	<target name="makeDmgImage" depends="makeDmg" description="Creates the DMG image">
+		<echo>Trying to unmount DMG, just to be sure</echo>
+		<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true" />
+		<echo>Copying template DMG</echo>
+		<copy file="${export-dmg-templatefile}" tofile="${export-dmg-targetfile}" overwrite="true" />
+		<exec executable="${export-dmg-basedir}/mountDmg" resolveexecutable="true" />
+		<echo>Updating dmg image...</echo>
+		<copy todir="${export-dmg-mountdir}" preservelastmodified="yes">
+			<fileset dir="${export-dmg-targetdir}" />
+		</copy>
+		<exec executable="${export-dmg-basedir}/umountDmg" resolveexecutable="true" />
+		<copy file="${export-dmg-targetfile}" tofile="${export-dmg-imagedir}/HO_${hofullversion}.dmg" overwrite="true" verbose="true" />
+		<zip destfile="${export-dmg-imagedir}/HO_${hofullversion}_MacOS_DMG.zip">
+			<fileset file="${export-dmg-imagedir}/HO_${hofullversion}.dmg" />
+		</zip>
+	</target>
 
 	<!-- ================================= 
           target: makeNSIS
          ================================= -->
 	<target name="makeNSIS" depends="init,makeJar,copy2build" description="Create Win32-Installer using NSIS">
-		<mkdir dir="${nsis-export-dir}"/>
-		<property name="nsis-installerName" 
-			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer.exe"/>
-		<property name="nsis-installerNameWithJRE" 
-			value="${nsis-export-dir}/HO_${hoversion}${dev}${modversion}${private}_Win32_Installer_with_JRE-${nsis-JRE-Version}.exe"/>
-		
-		<property name="nsis-default-args" 
-			value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${nsis-confPath}'"/>
-		
+		<mkdir dir="${nsis-export-dir}" />
+		<property name="nsis-installerName" value="${nsis-export-dir}/HO_${hofullversion}_Win32_Installer.exe" />
+		<property name="nsis-installerNameWithJRE" value="${nsis-export-dir}/HO_${hofullversion}_Win32_Installer_with_JRE-${nsis-JRE-Version}.exe" />
+
+		<property name="nsis-default-args" value="-V2 -NOCD -DBUILDDIR='${build-dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${nsis-confPath}'" />
+
 		<!-- Create Installer for HO only -->
 		<echo>Creating win32 installer at ${nsis-installerName} using NSIS...</echo>
-    	<exec command="${nsis-command}">
-    		<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}"/>
-    	</exec>
+		<exec command="${nsis-command}">
+			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}" />
+		</exec>
 
 		<!-- Create Installer for HO bundled with JRE -->
 		<echo>Creating win32 installer at ${nsis-installerNameWithJRE} with JRE ${nsis-JRE-Version} using NSIS...</echo>
-    	<exec command="${nsis-command}">
-			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-scriptName}"/>
-       	</exec>
-		
+		<exec command="${nsis-command}">
+			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-scriptName}" />
+		</exec>
+
 		<!-- Create ZIP files for esnips.com (executables are not allowed) -->
 		<zip destfile="${nsis-installerName}.zip">
-			<fileset file="${nsis-installerName}"/>
+			<fileset file="${nsis-installerName}" />
 		</zip>
 		<zip destfile="${nsis-installerNameWithJRE}.zip">
-			<fileset file="${nsis-installerNameWithJRE}"/>
+			<fileset file="${nsis-installerNameWithJRE}" />
 		</zip>
 	</target>
-</project> 
+</project>
