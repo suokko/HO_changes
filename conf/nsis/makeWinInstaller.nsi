@@ -68,7 +68,7 @@ VIProductVersion "$HOVERSION"
 
 !insertmacro MUI_PAGE_WELCOME
 !define MUI_LICENSEPAGE_CHECKBOX
-!insertmacro MUI_PAGE_LICENSE "${CONFPATH}/HO_lgpl_utf16le.txt"
+!insertmacro MUI_PAGE_LICENSE "${CONFPATH}/HO_lgpl.txt"
 
 ; Show componentspage only WITHJRE
 !define MUI_COMPONENTSPAGE_NODESC
@@ -138,7 +138,7 @@ VIProductVersion "$HOVERSION"
 !insertmacro LANG_LOAD "Hungarian"
 !insertmacro LANG_LOAD "Icelandic"
 !insertmacro LANG_LOAD "Indonesian"
-#!insertmacro LANG_LOAD "Irish" # Broken at the moment
+!insertmacro LANG_LOAD "Irish"
 !insertmacro LANG_LOAD "Italian"
 !insertmacro LANG_LOAD "Japanese"
 !insertmacro LANG_LOAD "Korean"
