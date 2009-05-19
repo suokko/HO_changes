@@ -81,18 +81,21 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                                                                                           .getProperty("AddTempspieler"));
     private JButton jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                           .loadImage("gui/bilder/Drucken.png")));
-    private JButton jbEntfernen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("ScoutEntfernen"));
-    private JButton jbHinzufuegen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("ScoutHinzu"));
-    private JButton jbMiniScout = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("ScoutMini"));
-    private JButton jbUebernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("Uebernehmen"));
+    private JButton jbEntfernen = new JButton(HOVerwaltung.instance()
+                                                          .getResource()
+                                                          .getProperty("ScoutEntfernen"));
+    private JButton jbHinzufuegen = new JButton(HOVerwaltung.instance()
+                                                            .getResource()
+                                                            .getProperty("ScoutHinzu"));
+    private JButton jbMiniScout = new JButton(HOVerwaltung.instance()
+                                                          .getResource()
+                                                          .getProperty("ScoutMini"));
+    private JButton jbUebernehmen = new JButton(HOVerwaltung.instance()
+                                                            .getResource()
+                                                            .getProperty("Uebernehmen"));
+    private JButton jbRemoveAll = new JButton(HOVerwaltung.instance()
+			                                              .getResource()
+			                                              .getProperty("Scout.RemoveAll"));
     //private JButton jbClipBoard = new JButton("From Clipboard");
     private JComboBox jcbErfahrung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbFluegel = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
@@ -231,7 +234,12 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
             de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
             de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
-        } else {
+        } 
+    	
+		else if (actionEvent.getSource().equals(jbRemoveAll)) {
+			clOwner.removeScoutEntries();
+		}
+    	else {
             clScoutEintrag.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
             clScoutEintrag.setPrice(Integer.parseInt(jtfPrice.getText()));
             clScoutEintrag.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
@@ -925,7 +933,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         // Buttons
         panel = new ImagePanel();
-        panel.setLayout(new GridLayout(5, 1, 4, 4));
+        panel.setLayout(new GridLayout(6, 1, 4, 4));
 
         jbHinzufuegen.setToolTipText(properties.getProperty("tt_Transferscout_hinzufuegen"));
         jbHinzufuegen.addActionListener(this);
@@ -934,6 +942,10 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jbEntfernen.addActionListener(this);
         jbEntfernen.setEnabled(false);
         panel.add(jbEntfernen);
+		jbRemoveAll.addActionListener(this);
+		jbRemoveAll.setToolTipText(properties
+				.getProperty("Scout.tt_RemoveAll"));
+		panel.add(jbRemoveAll);
         jbMiniScout.setToolTipText(properties.getProperty("tt_Transferscout_Miniscout"));
         jbMiniScout.addActionListener(this);
         panel.add(jbMiniScout);

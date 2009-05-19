@@ -18,13 +18,15 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Das HauptPanel des TransferScouts
+ * The TransferScout main Panel
  */
 public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements MouseListener, KeyListener
 {
-    //~ Instance fields ----------------------------------------------------------------------------
 
+	private static final long serialVersionUID = 1L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
     private JSplitPane verticalSplitPane;
     private ScoutThread m_clScoutThread;
     private TransferEingabePanel m_jpTransferEingabePanel;
@@ -202,9 +204,9 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Removes one entry from transfer table
      *
-     * @param scouteintrag TODO Missing Method Parameter Documentation
+     * @param scouteintrag the scout entry which should be removed
      */
     public final void removeScoutEintrag(ScoutEintrag scouteintrag) {
         m_jtTransferTable.getTransferTableModel().removeScoutEintrag(scouteintrag);
@@ -212,6 +214,18 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         //Thread aktualisieren
         //m_clScoutThread.removeEintrag ( scouteintrag );
         m_clScoutThread.setVector(m_jtTransferTable.getTransferTableModel().getScoutListe());
+        m_jtTransferTable.refresh();
+    }
+    
+    /**
+     * Removes all entries from transfer table and scout thread
+     */
+    public final void removeScoutEntries() {
+        m_jtTransferTable.getTransferTableModel().removeScoutEntries();
+
+        //Thread aktualisieren
+        //m_clScoutThread.removeEintrag ( scouteintrag );
+        m_clScoutThread.setVector(null);
         m_jtTransferTable.refresh();
     }
 

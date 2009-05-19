@@ -20,7 +20,10 @@ import de.hattrickorganizer.model.SpielerPosition;
  * @version 0.2a    31.10.2001
  */
 public class TransferTableModel extends AbstractTableModel {
-    //~ Instance fields ----------------------------------------------------------------------------
+	
+	private static final long serialVersionUID = 1L;
+
+	//~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
@@ -491,14 +494,25 @@ public class TransferTableModel extends AbstractTableModel {
     }
 
     /**
-     * Remove player from table
+     * Remove one ScoutEntry from table
      *
-     * @param scouteintraege TODO Missing Constructuor Parameter Documentation
+     * @param scouteintraege the ScoutEntry which will be removed from the table
      */
     public final void removeScoutEintrag(ScoutEintrag scouteintraege) {
         if (m_vScoutEintraege.remove(scouteintraege)) {
             initData();
         }
+    }
+    
+    /**
+     * Remove all players from table
+     *
+     */
+    public final void removeScoutEntries() {
+    	if (m_vScoutEintraege != null) {
+    		m_vScoutEintraege.removeAllElements();
+            initData();	
+    	}
     }
 
     //-----initialization-----------------------------------------
