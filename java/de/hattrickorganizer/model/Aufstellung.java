@@ -52,7 +52,7 @@ public  class Aufstellung implements plugins.ILineUp {
 
     //protected Vector    m_vSpieler      =   null;
 
-    /** wer ist Kapitï¿½n */
+    /** wer ist Kapitän */
     private int m_iKapitaen = -1;
 
     /** wer schieï¿½t Standards */
@@ -164,7 +164,7 @@ public  class Aufstellung implements plugins.ILineUp {
             m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
             m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Aufstellung.<init1>: " + e);
+            HOLogger.instance().warning(getClass(),"Aufstellung.<init1>: " + e);
             m_vPositionen.removeAllElements();
             initPositionen442();
         }
@@ -174,7 +174,7 @@ public  class Aufstellung implements plugins.ILineUp {
             m_iKicker = Integer.parseInt(properties.getProperty("kicker1", "0"));
             m_iKapitaen = Integer.parseInt(properties.getProperty("captain", "0"));
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Aufstellung.<init2>: " + e);
+            HOLogger.instance().warning(getClass(),"Aufstellung.<init2>: " + e);
         }
     }
 
@@ -773,6 +773,7 @@ public  class Aufstellung implements plugins.ILineUp {
         try {
             return getPositionById(positionsid).getPosition();
         } catch (Exception e) {
+        	HOLogger.instance().error(getClass(),"getEffectivePos4PositionID: " + e);
             return ISpielerPosition.UNBESTIMMT;
         }
     }
@@ -808,6 +809,7 @@ public  class Aufstellung implements plugins.ILineUp {
                 m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
                                                                  .getTeamId()) ? (short) 1 : (short) 0;
             } catch (Exception e) {
+            	HOLogger.instance().error(getClass(),"geHeimspiel: " + e);
             	m_sLocation = 0;
             }
         }
@@ -832,6 +834,7 @@ public  class Aufstellung implements plugins.ILineUp {
             return HOVerwaltung.instance().getModel().getSpieler(getPositionById(positionsid)
                                                                      .getSpielerId());
         } catch (Exception e) {
+        	HOLogger.instance().error(getClass(),"getPlayerByPositionID: " + e);
             return null;
         }
     }
@@ -1079,6 +1082,7 @@ public  class Aufstellung implements plugins.ILineUp {
         try {
             return getPositionById(positionsid).getTaktik();
         } catch (Exception e) {
+        	HOLogger.instance().error(getClass(),"getTactic4PositionID: " + e);
             return plugins.ISpielerPosition.UNBESTIMMT;
         }
     }
@@ -1336,7 +1340,7 @@ public  class Aufstellung implements plugins.ILineUp {
             clone = new Aufstellung(properties);
             clone.setHeimspiel(getHeimspiel());
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Aufstellung.duplicate: " + e);
+            HOLogger.instance().error(getClass(),"Aufstellung.duplicate: " + e);
         }
 
         return clone;
