@@ -353,7 +353,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
         m_jslSchriftgroesse = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                      .getResource()
                                                                                      .getProperty("Schriftgroesse"),
-                                              12, 8, 1, 1.0f, 120);
+                                              13, 7, 1, 1.0f, 120);
         m_jslSchriftgroesse.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                   .getResource()
                                                                                   .getProperty("tt_Optionen_Schriftgroesse"));
