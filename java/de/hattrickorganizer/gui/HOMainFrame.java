@@ -40,7 +40,7 @@ import com.jgoodies.looks.FontPolicy;
 import com.jgoodies.looks.FontSet;
 import com.jgoodies.looks.FontSets;
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
-import com.jgoodies.looks.plastic.theme.SkyGreen;
+import com.jgoodies.looks.plastic.theme.SkyBlue;
 
 import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
@@ -1604,7 +1604,7 @@ public final class HOMainFrame extends JFrame
 	 */
 	private void setDefaultFont(int groesse) {
 		try {
-			Plastic3DLookAndFeel.setPlasticTheme(new SkyGreen());
+			Plastic3DLookAndFeel.setPlasticTheme(new SkyBlue());
 //			final javax.swing.plaf.metal.MetalLookAndFeel laf =
 //				new javax.swing.plaf.metal.MetalLookAndFeel();
 //			laf.setCurrentTheme(
