@@ -4,22 +4,18 @@ if [ "x$2" == "x" ]; then
 	exit 1
 fi
 fitStringLength=25
-TMPFILE=`mktemp`
 for curLang in `cat languages`; do
 	if [ -e ${curLang}.txt ]; then
 		echo "Adding string to ${curLang}"
 		stringLength=${#1}
 		addSpaces=`expr ${fitStringLength} - ${stringLength}`
-		cat ${curLang}.txt | recode utf16le..utf8 > ${TMPFILE}
-		echo -e -n '!'"insertmacro LANG_STRING" >> ${TMPFILE}
-		echo -n " $1 " >> ${TMPFILE}
+		echo -e -n '!'"insertmacro LANG_STRING" >> ${curLang}.txt
+		echo -n " $1 " >> ${curLang}.txt
 		while [ ${addSpaces} -gt 0 ]; do
-			echo -n " " >> ${TMPFILE}
+			echo -n " " >> ${curLang}.txt
 			addSpaces=`expr ${addSpaces} - 1`
 		done
-		echo -e "\"$2\"\r"  >> ${TMPFILE}
-		recode utf8..utf16le ${TMPFILE}
-		mv ${TMPFILE} ${curLang}.txt
+		echo -e "\"$2\"\r"  >> ${curLang}.txt
 	else
 		echo "${curLang}.txt not found, skipping"
 	fi
