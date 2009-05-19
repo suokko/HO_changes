@@ -34,6 +34,14 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FontUIResource;
 
 import plugins.ISpieler;
+
+import com.jgoodies.looks.FontPolicies;
+import com.jgoodies.looks.FontPolicy;
+import com.jgoodies.looks.FontSet;
+import com.jgoodies.looks.FontSets;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.theme.SkyGreen;
+
 import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
@@ -1596,19 +1604,68 @@ public final class HOMainFrame extends JFrame
 	 */
 	private void setDefaultFont(int groesse) {
 		try {
-			//com.jgoodies.plaf.plastic.Plastic3DLookAndFeel laf = new com.jgoodies.plaf.plastic.Plastic3DLookAndFeel();
-			final javax.swing.plaf.metal.MetalLookAndFeel laf =
-				new javax.swing.plaf.metal.MetalLookAndFeel();
-			laf.setCurrentTheme(
-				new de.hattrickorganizer.gui.utils.HOTheme(
-					UserParameter.instance().schriftGroesse));
-			javax.swing.UIManager.setLookAndFeel(laf);
+			Plastic3DLookAndFeel.setPlasticTheme(new SkyGreen());
+//			final javax.swing.plaf.metal.MetalLookAndFeel laf =
+//				new javax.swing.plaf.metal.MetalLookAndFeel();
+//			laf.setCurrentTheme(
+//				new de.hattrickorganizer.gui.utils.HOTheme(
+//					UserParameter.instance().schriftGroesse));
+			FontPolicy defaultFontPolicy = Plastic3DLookAndFeel.getFontPolicy();
+			FontSet defaultFontSet = defaultFontPolicy.getFontSet(Plastic3DLookAndFeel.getPlasticTheme().getName(), null);
+			HOLogger.instance().debug(getClass(), ("Default Font Sizes: " 
+					+ defaultFontSet.getControlFont().getSize() + ", "
+					+ defaultFontSet.getMenuFont().getSize() + ", "
+					+ defaultFontSet.getTitleFont().getSize() + ", "
+					+ defaultFontSet.getMessageFont().getSize() + ", "
+					+ defaultFontSet.getSmallFont().getSize() + ", "
+					+ defaultFontSet.getWindowTitleFont().getSize()));
+			
+			/* Use 11 as default for now,
+			 * old HO installations default to 10,
+			 * so we end up in -1pt relative font size */
+			float relFontSize = (groesse-11);
+			
+			if (relFontSize != 0) {
+				float minSize = 7;
+				/* Fetch default fonts and change their size */
+				Font controlFont = getRelativeSizedFont(defaultFontSet.getControlFont(), relFontSize, minSize);
+				Font menuFont = getRelativeSizedFont(defaultFontSet.getMenuFont(), relFontSize, minSize);
+				Font titleFont = getRelativeSizedFont(defaultFontSet.getTitleFont(), relFontSize, minSize);
+				Font messageFont = getRelativeSizedFont(defaultFontSet.getMessageFont(), relFontSize, minSize);
+				Font smallFont = getRelativeSizedFont(defaultFontSet.getSmallFont(), relFontSize, minSize);
+				Font windowTitleFont = getRelativeSizedFont(defaultFontSet.getWindowTitleFont(), relFontSize, minSize);
+				
+				/* Create a set of these fonts */
+				FontSet newFontSet = FontSets.createDefaultFontSet(
+						controlFont, menuFont, titleFont, messageFont, smallFont, windowTitleFont);
+				HOLogger.instance().debug(getClass(), ("User defined font sizes: "
+						+ "relFontSize="+relFontSize+", minSize="+minSize + ", "
+						+ newFontSet.getControlFont().getSize() + ", "
+						+ newFontSet.getMenuFont().getSize() + ", "
+						+ newFontSet.getTitleFont().getSize() + ", "
+						+ newFontSet.getMessageFont().getSize() + ", "
+						+ newFontSet.getSmallFont().getSize() + ", "
+						+ newFontSet.getWindowTitleFont().getSize()));
+				
+				/* Set the FontPolicy */
+				FontPolicy fontPolicy = FontPolicies.createFixedPolicy(newFontSet);
+				Plastic3DLookAndFeel.setFontPolicy(fontPolicy);
+			}
+			javax.swing.UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 			SwingUtilities.updateComponentTreeUI(this);
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, e);
 		}
 	}
 
+	private Font getRelativeSizedFont (FontUIResource original, float relSize, float minSize) {
+		float newSize = original.getSize2D() + relSize;
+		if (newSize < minSize) {
+			newSize = minSize;
+		}
+		return original.deriveFont (newSize);
+	}
+	
 	/**
 	 * Alle temporären Tabs entfernen
 	 */
