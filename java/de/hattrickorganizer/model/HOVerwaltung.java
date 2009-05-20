@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
+import java.util.Properties;
 
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.tools.HOLogger;
@@ -32,7 +33,7 @@ public class HOVerwaltung {
     protected HOModel m_clHoModel;
 
     /** Resource */
-    protected java.util.Properties m_clResource;
+    protected Properties m_clResource;
 
     /** Parameter */
     protected String[] m_sArgs;
@@ -283,7 +284,7 @@ public class HOVerwaltung {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Properties getResource() {
+    public Properties getResource() {
         return m_clResource;
     }
 
@@ -386,5 +387,37 @@ public class HOVerwaltung {
         model.setXtraDaten(de.hattrickorganizer.database.DBZugriff.instance().getXtraDaten(id));
 
         return model;
+    }
+    
+    /**
+     * Returns the String connected to the active language file or connected
+     * to the english language file. Returns !key! if the key can not be found. 
+     *  
+     * @param key Key to be searched in language files
+     * 
+     * @return String connected to the key or !key! if nothing can be found in language files
+     */
+    
+    public String getLanguageString(String key) {
+    	String temp = getResource().getProperty(key);
+    	if (temp != null)
+    		return temp;
+    	//Search in english.properties if nothing found and active language not english
+    	if (gui.UserParameter.instance().sprachDatei != "english") {
+    		Properties tempResource = new Properties();
+	    	final ClassLoader loader =
+				new de.hattrickorganizer.gui.templates.ImagePanel().getClass().getClassLoader();
+	        try {
+	        	tempResource.load(loader.getResourceAsStream("sprache/english.properties"));
+	        } catch (Exception e) {
+	            HOLogger.instance().log(getClass(),e);
+	        }
+	        temp = tempResource.getProperty(key);
+	        if (temp != null)
+	    		return temp;
+    	}
+        //Return key if nothing found in english.properties
+        HOLogger.instance().warning(getClass(),"HOVerwaltung.getLanguageString: Key: "+key+" not found!");
+    	return "!"+key+"!";
     }
 }
