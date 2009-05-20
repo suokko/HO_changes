@@ -1,24 +1,28 @@
 // %198737965:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.dbcleanup;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import com.jgoodies.forms.builder.ButtonBarBuilder2;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
@@ -27,30 +31,44 @@ import de.hattrickorganizer.model.HOVerwaltung;
  * 
  * @author flattermann <HO@flattermann.net>
  */
-public class DBCleanupDialog extends JDialog implements ActionListener {
+public class DBCleanupDialog extends JDialog implements ActionListener, FocusListener {
 
 	private static final long serialVersionUID = 3533368597781557223L;
-	private JButton m_jbCleanupNow = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cleanupnow"));
-	private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cancel"));
+	private static final int MATCHTYPE_OWN_MATCH = 0;
+	private static final int MATCHTYPE_OWN_FRIENDLY = 1;
+	private static final int MATCHTYPE_OTHER_MATCH = 2;
+	private static final int MATCHTYPE_OTHER_FRIENDLY = 3;
+	private static final int NUM_MATCHTYPES = 4;
+
+	// Components as in array allComponents
+	private static final int COMPONENT_LABEL = 0;
+	private static final int COMPONENT_NONE = 1;
+	private static final int COMPONENT_ALL = 2;
+	private static final int COMPONENT_OLDER_THAN= 3;
+	private static final int COMPONENT_WEEKS_INPUT= 4;
+	private static final int NUM_COMPONENTS = 5;
+	
 	private DBCleanupTool cleanupTool;
 
-	private JTextArea textIntro = new JTextArea (HOVerwaltung.instance().getResource().getProperty("dbcleanup.intro"));
-	
-	private JLabel labelOwnMatches = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownMatches"));
-	private JLabel labelOwnFriendlies = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownFriendlies"));
-	private JLabel labelOtherMatches = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherMatches"));
-	private JLabel labelOtherFriendlies = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherFriendlies"));
-	
-	private WeekSelectionPanel wsp_OwnMatches =	new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE);
-	private WeekSelectionPanel wsp_OwnFriendlies = new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE);
-	private WeekSelectionPanel wsp_OtherMatches = new WeekSelectionPanel (16);
-	private WeekSelectionPanel wsp_OtherFriendlies = new WeekSelectionPanel (8);
+	private JButton jbCleanupNow = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cleanupnow"));
+	private JButton jbCancel = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cancel"));
 
-	private JLabel labelHrf = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrf"));
+	private JTextArea jtaIntro = new JTextArea (HOVerwaltung.instance().getResource().getProperty("dbcleanup.intro"));
+	
+	private JLabel jlMatches[] = new JLabel[NUM_MATCHTYPES];
+	private JCheckBox jcbNone[] = new JCheckBox[NUM_MATCHTYPES];
+	private JCheckBox jcbAll[] = new JCheckBox[NUM_MATCHTYPES];
+	private JCheckBox jcbOlderThan[] = new JCheckBox[NUM_MATCHTYPES];
+	private JTextField jtfWeeksInput[] = new JTextField[NUM_MATCHTYPES];
+	private JLabel jlWeeks[] = new JLabel[NUM_MATCHTYPES];
+
+	private JComponent[][] allComponents = {jlMatches, jcbNone, jcbAll, jcbOlderThan, jtfWeeksInput};
+	
+	private JLabel jlHrf = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrf"));
 //	private WeekSelectionPanel wsp_Hrf = new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE, false);
 
 //	private JLabel labelHrfAutoremove = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
-	private JCheckBox m_jcbHrfAutoremove = new JCheckBox(HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
+	private JCheckBox jcbHrfAutoremove = new JCheckBox(HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -63,76 +81,59 @@ public class DBCleanupDialog extends JDialog implements ActionListener {
 				true);
 		this.cleanupTool = cleanupTool;
 		initComponents();
+		initLayout();
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
 
-	private void initComponents() {
-//		setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());
-		getContentPane().setLayout(new BorderLayout());
-
-		textIntro.setAlignmentX(CENTER_ALIGNMENT);
-		textIntro.setEditable(false);
-		textIntro.setWrapStyleWord(true);
-		textIntro.setLineWrap(true);
-		JPanel weekSelectionPanel = new JPanel(new GridBagLayout());
+	private void initLayout() {
+		FormLayout layout = new FormLayout("p, 10dlu, p, 10dlu, p, 10dlu, p, 2dlu, p, 2dlu, p", // cols 
+									""); // dynamic rows
 		
-		labelOwnMatches.setFont(labelOwnMatches.getFont().deriveFont(Font.BOLD));
-		labelOwnFriendlies.setFont(labelOwnFriendlies.getFont().deriveFont(Font.BOLD));
-		labelOtherMatches.setFont(labelOtherMatches.getFont().deriveFont(Font.BOLD));
-		labelOtherFriendlies.setFont(labelOtherFriendlies.getFont().deriveFont(Font.BOLD));
-		labelHrf.setFont(labelHrf.getFont().deriveFont(Font.BOLD));
-//		labelHrfAutoremove.setFont(labelHrfAutoremove.getFont().deriveFont(Font.BOLD));
+		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+		builder.setDefaultDialogBorder();
+		builder.setRowGroupingEnabled(true);
+		CellConstraints cc = new CellConstraints();
 
-		m_jcbHrfAutoremove.setSelected(true);
-		
-		GridBagConstraints c = new GridBagConstraints();
-		
-		c.gridx=0;
-		c.gridy=0;
-		c.anchor=GridBagConstraints.LINE_START;
-		c.ipadx=20;
-		
-		weekSelectionPanel.add (labelOwnMatches, c);
-		c.gridy++;
-		weekSelectionPanel.add (labelOwnFriendlies, c);
-		c.gridy++;
-		weekSelectionPanel.add (labelOtherMatches, c);
-		c.gridy++;
-		weekSelectionPanel.add (labelOtherFriendlies, c);
-		c.gridy++;
-//		weekSelectionPanel.add (labelHrfAutoremove, c);
-//		c.gridy++;
-		weekSelectionPanel.add (labelHrf, c);
+		builder.appendTitle(HOVerwaltung.instance().getResource().getProperty("dbcleanup"));
 
-		c.gridx=1;
-		c.gridy=0;
-		weekSelectionPanel.add (wsp_OwnMatches, c);
-		c.gridy++;
-		weekSelectionPanel.add (wsp_OwnFriendlies, c);
-		c.gridy++;
-		weekSelectionPanel.add (wsp_OtherMatches, c);
-		c.gridy++;
-		weekSelectionPanel.add (wsp_OtherFriendlies, c);
-		c.gridy++;
-		weekSelectionPanel.add(m_jcbHrfAutoremove, c);
-//		c.gridy++;
-//		weekSelectionPanel.add (wsp_Hrf, c);
+		builder.appendRow("p");
+		builder.nextLine();
+		builder.add (jtaIntro, cc.xyw(builder.getColumn(), builder.getRow(), builder.getColumnCount()));
+		builder.nextLine();
 		
+		builder.appendSeparator("Cleanup matches");//HOVerwaltung.instance().getResource().getProperty("dbcleanup.matches"));
 		
-		ImagePanel m_jpButtonPanel = new ImagePanel();
-		// Add Buttons
-		m_jpButtonPanel.add(m_jbCleanupNow);
-		m_jbCleanupNow.setFont(m_jbCleanupNow.getFont().deriveFont(Font.BOLD));
-		m_jpButtonPanel.add(m_jbCancel);
+		for (int matchType=0; matchType<NUM_MATCHTYPES; matchType++) {
+			builder.append(jlMatches[matchType]);
+			builder.append(jcbNone[matchType]);
+			builder.append(jcbAll[matchType]);
+			builder.append(jcbOlderThan[matchType]);
+			builder.append(jtfWeeksInput[matchType]);
+			builder.append(jlWeeks[matchType]);
+			builder.nextLine();
+		}
 
-		m_jbCleanupNow.addActionListener(this);
-		m_jbCancel.addActionListener(this);
+		builder.appendSeparator(HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrf"));
 
-		getContentPane().add(textIntro, BorderLayout.NORTH);
-		getContentPane().add(weekSelectionPanel, BorderLayout.CENTER);
-		getContentPane().add(m_jpButtonPanel, BorderLayout.SOUTH);
+		builder.appendRow("p");
+		builder.nextLine();
+		builder.add (jcbHrfAutoremove, cc.xyw(builder.getColumn(), builder.getRow(), builder.getColumnCount()));
+		
+		builder.appendRow("p");
+		builder.nextLine();
+		
+		/* Create button bar */
+		ButtonBarBuilder2 buttonBarBuilder = new ButtonBarBuilder2();
+		buttonBarBuilder.addGlue();
+		buttonBarBuilder.addButton(jbCleanupNow);
+		buttonBarBuilder.addRelatedGap();
+		buttonBarBuilder.addButton(jbCancel);
 
+		builder.add(buttonBarBuilder.getPanel(), cc.xyw(builder.getColumn(), builder.getRow(), builder.getColumnCount()));
+
+		getContentPane().add(builder.getPanel());
+		
 		pack();
 		
         final Dimension size = HOMainFrame.instance().getToolkit().getScreenSize();
@@ -142,17 +143,149 @@ public class DBCleanupDialog extends JDialog implements ActionListener {
             this.setLocation((size.width / 2) - (this.getSize().width / 2),
                              (size.height / 2) - (this.getSize().height / 2));
         }
-        
-		setVisible(true);
+        setVisible(true);
+}
+	
+	private void initComponents() {
+		for (int matchType=0; matchType < NUM_MATCHTYPES; matchType++) {
+			jcbNone[matchType] = new JCheckBox (HOVerwaltung.instance().getResource().getProperty("dbcleanup.none"));
+			jcbAll[matchType] = new JCheckBox (HOVerwaltung.instance().getResource().getProperty("dbcleanup.all"));
+			jcbOlderThan[matchType] = new JCheckBox (HOVerwaltung.instance().getResource().getProperty("dbcleanup.removeOlderThan"));
+			jtfWeeksInput[matchType] = new JTextField("0", 3);
+			jlWeeks[matchType] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.weeks"));
+
+			jcbNone[matchType].addActionListener(this);
+			jcbAll[matchType].addActionListener(this);
+			jcbOlderThan[matchType].addActionListener(this);
+			jtfWeeksInput[matchType].addFocusListener(this);
+		}
+
+		jlMatches[MATCHTYPE_OWN_MATCH] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownMatches"));
+		jlMatches[MATCHTYPE_OWN_FRIENDLY] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownFriendlies"));
+		jlMatches[MATCHTYPE_OTHER_MATCH] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherMatches"));
+		jlMatches[MATCHTYPE_OTHER_FRIENDLY] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherFriendlies"));
+
+		Font boldFont = jlMatches[MATCHTYPE_OWN_MATCH].getFont().deriveFont(Font.BOLD);
+		jlMatches[MATCHTYPE_OWN_MATCH].setFont(boldFont);
+		jlMatches[MATCHTYPE_OWN_FRIENDLY].setFont(boldFont);
+		jlMatches[MATCHTYPE_OTHER_MATCH].setFont(boldFont);
+		jlMatches[MATCHTYPE_OTHER_FRIENDLY].setFont(boldFont);
+
+		jbCleanupNow.addActionListener(this);
+		jbCancel.addActionListener(this);
+
+		jtaIntro.setEditable(false);
+		jtaIntro.setWrapStyleWord(true);
+		jtaIntro.setLineWrap(true);
+
+		jlHrf.setFont(jlHrf.getFont().deriveFont(Font.BOLD));
+
+		// Set defaults
+		jcbNone[MATCHTYPE_OWN_MATCH].setSelected(true);
+		jcbNone[MATCHTYPE_OWN_FRIENDLY].setSelected(true);
+		jcbOlderThan[MATCHTYPE_OTHER_MATCH].setSelected(true);
+		jtfWeeksInput[MATCHTYPE_OTHER_MATCH].setText("16");
+		jcbOlderThan[MATCHTYPE_OTHER_FRIENDLY].setSelected(true);
+		jtfWeeksInput[MATCHTYPE_OTHER_FRIENDLY].setText("8");
+		jcbHrfAutoremove.setSelected(true);
+	}
+
+	private int getMatchType (Object o) {
+		try {
+			JComponent curComponent = (JComponent)o;
+			for (int compType=0; compType < NUM_COMPONENTS; compType++) {
+				for (int matchType=0; matchType < NUM_MATCHTYPES; matchType++) {
+					if (curComponent.equals(allComponents[compType][matchType])) {
+						return matchType;
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return -1;
+	}
+	
+	private int getComponentType (Object o) {
+		try {
+			JComponent curComponent = (JComponent)o;
+			for (int compType=0; compType < NUM_COMPONENTS; compType++) {
+				for (int matchType=0; matchType < NUM_MATCHTYPES; matchType++) {
+					if (curComponent.equals(allComponents[compType][matchType])) {
+						return compType;
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return -1;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(m_jbCleanupNow)) {
-			cleanupTool.cleanupMatches (wsp_OwnMatches.getWeeks(), wsp_OwnFriendlies.getWeeks(), wsp_OtherMatches.getWeeks(), wsp_OtherFriendlies.getWeeks());
-			cleanupTool.cleanupHRFs (DBCleanupTool.REMOVE_NONE, m_jcbHrfAutoremove.isSelected());
+		int compType = getComponentType(e.getSource());
+		int matchType = getMatchType(e.getSource());
+		if (compType == COMPONENT_NONE) {
+			if (jcbNone[matchType].isSelected()) {
+				jcbAll[matchType].setSelected(false);
+				jcbOlderThan[matchType].setSelected(false);
+			} else {
+				jcbNone[matchType].setSelected(true);
+			}
+		} else if (compType == COMPONENT_ALL) {
+			if (jcbAll[matchType].isSelected()) {
+				jcbNone[matchType].setSelected(false);
+				jcbOlderThan[matchType].setSelected(false);
+			} else {
+				jcbNone[matchType].setSelected(true);
+			}
+		} else if (compType == COMPONENT_OLDER_THAN) {
+			if (jcbOlderThan[matchType].isSelected()) {
+				jcbAll[matchType].setSelected(false);
+				jcbNone[matchType].setSelected(false);
+			} else {
+				jcbNone[matchType].setSelected(true);
+			}
+		} else if (e.getSource().equals(jbCleanupNow)) {
+			cleanupTool.cleanupMatches (getRemoveWeeks(MATCHTYPE_OWN_MATCH), getRemoveWeeks(MATCHTYPE_OWN_FRIENDLY),
+					getRemoveWeeks(MATCHTYPE_OTHER_MATCH), getRemoveWeeks(MATCHTYPE_OTHER_FRIENDLY));
+			cleanupTool.cleanupHRFs (DBCleanupTool.REMOVE_NONE, jcbHrfAutoremove.isSelected());
 			setVisible(false);
-		} else if (e.getSource().equals(m_jbCancel)) {
+		} else if (e.getSource().equals(jbCancel)) {
 			setVisible(false);
 		}
+	}
+
+	private int getRemoveWeeks (int matchType) {
+		if (jcbNone[matchType].isSelected()) {
+			return DBCleanupTool.REMOVE_NONE;			
+		} else if (jcbAll[matchType].isSelected()) {
+			return DBCleanupTool.REMOVE_ALL;
+		} else if (jcbOlderThan[matchType].isSelected()){
+			int weeks = DBCleanupTool.REMOVE_NONE;
+			try {
+				weeks = Integer.parseInt(jtfWeeksInput[matchType].getText());
+			} catch (Exception e) {
+				// be silent
+			}
+			if (weeks > 0) {
+				return weeks;
+			}
+		}
+		return DBCleanupTool.REMOVE_NONE;
+	}
+	
+	public void focusGained(FocusEvent e) {
+		int compType = getComponentType(e.getSource());
+		int matchType = getMatchType(e.getSource());
+		if (compType == COMPONENT_WEEKS_INPUT) {
+			jcbAll[matchType].setSelected(false);
+			jcbNone[matchType].setSelected(false);
+			jcbOlderThan[matchType].setSelected(true);
+		}
+	}
+
+	public void focusLost(FocusEvent arg0) {
+		// do nothing
 	}
 }
