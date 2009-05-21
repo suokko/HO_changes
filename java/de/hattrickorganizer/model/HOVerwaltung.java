@@ -403,12 +403,12 @@ public class HOVerwaltung {
     	if (temp != null)
     		return temp;
     	//Search in english.properties if nothing found and active language not english
-    	if (gui.UserParameter.instance().sprachDatei != "english") {
+    	if (!gui.UserParameter.instance().sprachDatei.equalsIgnoreCase("english")) {
     		Properties tempResource = new Properties();
 	    	final ClassLoader loader =
 				new de.hattrickorganizer.gui.templates.ImagePanel().getClass().getClassLoader();
 	        try {
-	        	tempResource.load(loader.getResourceAsStream("sprache/english.properties"));
+	        	tempResource.load(loader.getResourceAsStream("sprache/English.properties"));
 	        } catch (Exception e) {
 	            HOLogger.instance().log(getClass(),e);
 	        }
