@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.ScoutThread;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
@@ -74,7 +75,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
 
             //neuer Thread
         } else {
-            m_clScoutThread.start(m_jtTransferTable.getTransferTableModel().getScoutListe());
+            ScoutThread.start(m_jtTransferTable.getTransferTableModel().getScoutListe());
         }
 
         m_jtTransferTable.refresh();
@@ -251,8 +252,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         verticalSplitPane.setDividerLocation(gui.UserParameter.instance().transferScoutPanel_horizontalSplitPane);
 
         //Thread mit Wecker starten
-        m_clScoutThread = ScoutThread.start(de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                   .getScoutList());
+        m_clScoutThread = ScoutThread.start(DBZugriff.instance().getScoutList());
     }
 
     /**

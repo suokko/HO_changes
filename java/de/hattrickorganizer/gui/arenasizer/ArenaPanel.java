@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,6 +21,7 @@ import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.logik.ArenaSizer;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -32,7 +32,10 @@ import de.hattrickorganizer.tools.HOLogger;
 final class ArenaPanel extends ImagePanel implements ActionListener, FocusListener,
                                                      de.hattrickorganizer.gui.Refreshable
 {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = -3049319214078126491L;
+
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
     protected static final byte HRFARENA = 0;
@@ -189,10 +192,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
 
             JLabel label;
 
-            final Properties ressource = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource();
-
-            label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtgroesse"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamtgroesse"));
             constraints2.gridx = 0;
             constraints2.gridy = 0;
             layout2.setConstraints(label, constraints2);
@@ -211,7 +211,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
             m_jbUbernehmenGesamt.addActionListener(this);
             panel2.add(m_jbUbernehmenGesamt);
 
-            label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stehplaetze"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("Stehplaetze"));
             constraints2.gridx = 0;
             constraints2.gridy = 2;
             constraints2.gridwidth = 1;
@@ -224,7 +224,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
             layout2.setConstraints(m_jtfStehplatze, constraints2);
             panel2.add(m_jtfStehplatze);
 
-            label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sitzplaetze"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("Sitzplaetze"));
             constraints2.gridx = 0;
             constraints2.gridy = 3;
             layout2.setConstraints(label, constraints2);
@@ -236,7 +236,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
             layout2.setConstraints(m_jtfSitzplatze, constraints2);
             panel2.add(m_jtfSitzplatze);
 
-            label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"));
             constraints2.gridx = 0;
             constraints2.gridy = 4;
             layout2.setConstraints(label, constraints2);
@@ -248,7 +248,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
             layout2.setConstraints(m_jtfUeberdachteSitzplaetze, constraints2);
             panel2.add(m_jtfUeberdachteSitzplaetze);
 
-            label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Logen"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("Logen"));
             constraints2.gridx = 0;
             constraints2.gridy = 5;
             layout2.setConstraints(label, constraints2);
@@ -260,7 +260,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
             layout2.setConstraints(m_jtfLogen, constraints2);
             panel2.add(m_jtfLogen);
 
-            label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("Fans"));
             constraints2.gridx = 0;
             constraints2.gridy = 6;
             layout2.setConstraints(label, constraints2);
@@ -305,9 +305,9 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     //Init aus dem HRF
     private void initStadium() {
         //Nur, wenn es eine HRFArena ist
-        m_clStadium = de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getStadium();
+        m_clStadium = HOVerwaltung.instance().getModel().getStadium();
 
-        m_jtfFans.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getVerein()
+        m_jtfFans.setText(HOVerwaltung.instance().getModel().getVerein()
                                                                  .getFans() + "");
         m_jtfStehplatze.setText(m_clStadium.getStehplaetze() + "");
         m_jtfSitzplatze.setText(m_clStadium.getSitzplaetze() + "");
@@ -315,10 +315,10 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
         m_jtfLogen.setText(m_clStadium.getLogen() + "");
         m_jtfGesamtgroesse.setText(m_clStadium.getGesamtgroesse() + "");
 
-        m_clStadien = m_clArenaSizer.berechneAusbaustufen(de.hattrickorganizer.model.HOVerwaltung.instance()
+        m_clStadien = m_clArenaSizer.berechneAusbaustufen(HOVerwaltung.instance()
                                                                                                  .getModel()
                                                                                                  .getStadium(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
+                                                          HOVerwaltung.instance()
                                                                                                  .getModel()
                                                                                                  .getVerein()
                                                                                                  .getFans());
@@ -333,63 +333,62 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     private void initTabelle() {
         //Tablewerte setzen
         tabellenwerte = new Object[10][5];
-        
-        Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance().getResource();
+
         //Spalten
         tabellenwerte[0][0] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][1] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aktuell"),
+        tabellenwerte[0][1] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Aktuell"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][2] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Maximal"),
+        tabellenwerte[0][2] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Maximal"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][3] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Durchschnitt"),
+        tabellenwerte[0][3] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Durchschnitt"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][4] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Minimal"),
+        tabellenwerte[0][4] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Minimal"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
 
         //Zeilen
-        tabellenwerte[1][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stehplaetze"),
+        tabellenwerte[1][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Stehplaetze"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[2][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
+        tabellenwerte[2][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[3][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
+        tabellenwerte[3][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[4][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Logen"),
+        tabellenwerte[4][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Logen"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[5][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamt"),
+        tabellenwerte[5][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Gesamt"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[6][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Einnahmen"),
+        tabellenwerte[6][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Einnahmen"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[7][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unterhalt"),
+        tabellenwerte[7][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Unterhalt"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[8][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gewinn"),
+        tabellenwerte[8][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Gewinn"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[9][0] = new ColorLabelEntry(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Baukosten"),
+        tabellenwerte[9][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Baukosten"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
@@ -482,8 +481,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
      * TODO Missing Method Documentation
      */
     private void reinitTabelle() {
-        final Stadium stadium = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                       .getStadium();
+        final Stadium stadium = HOVerwaltung.instance().getModel().getStadium();
 
         if (m_clTyp == HRFARENA) {
             ((DoppelLabelEntry) tabellenwerte[1][1]).getLinks().setText(stadium.getStehplaetze()

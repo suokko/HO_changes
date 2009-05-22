@@ -10,7 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Properties;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -37,8 +37,9 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
     implements ItemListener, FocusListener
 {
     //~ Static fields/initializers -----------------------------------------------------------------
+	private static final long serialVersionUID = 3121389904504282953L;
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     protected static final int SPIELFUEHRER = 100;
 
     /** TODO Missing Parameter Documentation */
@@ -316,7 +317,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public void refresh(java.util.Vector spieler) {
+    public void refresh(Vector<Spieler> spieler) {
         Spieler aktuellerSpieler = null;
 		playerId = -1;
         if (m_iPositionsID == STANDARD) {
@@ -367,7 +368,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
      * @param spielerListe TODO Missing Constructuor Parameter Documentation
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
-    protected void setSpielerListe(java.util.Vector spielerListe, Spieler aktuellerSpieler) {
+    protected void setSpielerListe(Vector<Spieler> spielerListe, Spieler aktuellerSpieler) {
         //Listener entfernen
         m_jcbSpieler.removeItemListener(this);
 
@@ -472,7 +473,6 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
      * Setzt das Label
      */
     private void initLabel() {
-    	final Properties properties = HOVerwaltung.instance().getResource();
     	final Aufstellung lineup = HOVerwaltung.instance().getModel().getAufstellung();
     	
         if (m_iPositionsID == STANDARD) {
@@ -521,7 +521,6 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
      */
     private void initTaktik(plugins.ISpieler aktuellerSpieler) {
         m_jcbTaktik.removeAllItems();
-        final Properties properties = HOVerwaltung.instance().getResource();
 
         switch (m_iPositionsID) {
             case ISpielerPosition.keeper: {

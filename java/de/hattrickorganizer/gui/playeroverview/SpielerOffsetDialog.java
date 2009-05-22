@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -28,6 +27,9 @@ import de.hattrickorganizer.model.Spieler;
  * @author TODO Author Name
  */
 final class SpielerOffsetDialog extends JDialog implements ActionListener {
+
+	private static final long serialVersionUID = 1187335231698270294L;
+	
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private JButton m_jbAbbrechen;
@@ -130,7 +132,6 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.setLayout(new GridLayout(7, 1, 4, 4));
 		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 
-		Properties properties = HOVerwaltung.instance().getResource();
 		m_jpSpielaufbau =
 			new SliderPanel(HOVerwaltung.instance().getLanguageString(	"Spielaufbau"),
 				100,

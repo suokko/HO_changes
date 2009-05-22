@@ -21,6 +21,7 @@ import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.model.HRF;
 import de.hattrickorganizer.model.Liga;
+import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.Stadium;
@@ -1029,7 +1030,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getScoutList() {
+	public Vector<ScoutEintrag> getScoutList() {
 		return ((ScoutTable) getTable(ScoutTable.TABLENAME)).getScoutList();
 	}
 

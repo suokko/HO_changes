@@ -549,9 +549,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         JLabel label;
         JPanel panel;
 
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-        												.getResource();
-
         int yPos = 1;
 
         constraints.gridx = 1;
@@ -799,8 +796,7 @@ final class AufstellungsDetailPanel extends ImagePanel
     }
 
     private CBItem[] getPredictionItems () {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-        											.getResource();
+        final Properties properties = HOVerwaltung.instance().getResource();
 		String[] allPredictionNames = RatingPredictionConfig.getAllPredictionNames();
 		CBItem[] allItems = new CBItem[allPredictionNames.length];
 		for (int i=0; i < allItems.length; i++)	{

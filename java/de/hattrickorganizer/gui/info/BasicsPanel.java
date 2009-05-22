@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -19,7 +18,10 @@ import javax.swing.JPanel;
  * Zeigt die Sonstige Informationen an
  */
 public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
-    //~ Instance fields ----------------------------------------------------------------------------
+	
+	private static final long serialVersionUID = 358240701613667104L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private ColorLabelEntry m_jpLiga = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                            ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
@@ -101,7 +103,6 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;

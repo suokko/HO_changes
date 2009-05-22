@@ -13,9 +13,11 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author TODO Author Name
  */
 public class TransferTable extends JTable implements de.hattrickorganizer.gui.Refreshable {
+	
+	private static final long serialVersionUID = 5687881326217263261L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private TableSorter m_clTableSorter;
+	private TableSorter m_clTableSorter;
     private TransferTableModel m_clTableModel;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -117,7 +119,7 @@ public class TransferTable extends JTable implements de.hattrickorganizer.gui.Re
         }
 
         // Set column sizes
-        setAutoResizeMode(this.AUTO_RESIZE_OFF);
+        setAutoResizeMode(AUTO_RESIZE_OFF);
         setMinWidth(0, 80);
         setMinWidth(1, 120);
         setMinWidth(2, 80);

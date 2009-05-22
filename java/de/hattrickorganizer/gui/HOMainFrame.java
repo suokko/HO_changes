@@ -894,7 +894,6 @@ public final class HOMainFrame extends JFrame
 	 * Frame aufbauen
 	 */
 	public void initComponents() {
-		final Properties properties = HOVerwaltung.instance().getResource();
 		javax.swing.ToolTipManager.sharedInstance().setDismissDelay(5000);
 
 		setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());

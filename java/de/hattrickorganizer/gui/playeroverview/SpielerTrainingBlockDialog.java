@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -43,7 +42,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
     private JButton m_jbAdd;
 	
     /* A list of <SingleTrainingBlock> */
-	private List allTrainingBlocks;
+	private List<SingleTrainingBlock> allTrainingBlocks;
 	
 	/* current player */
 	private Spieler m_clPlayer;
@@ -93,7 +92,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	 * i.e. check all HRFs for an active training block
 	 */
 	private void initTrainingBlockList() {
-		allTrainingBlocks = new ArrayList();
+		allTrainingBlocks = new ArrayList<SingleTrainingBlock>();
 		int playerId = m_clPlayer.getSpielerID();
 		Timestamp timestampFirstPlayerHRF = DBZugriff.instance().getTimestamp4FirstPlayerHRF(playerId);
 		int hrfId = DBZugriff.instance().getHRFID4Date(timestampFirstPlayerHRF);
@@ -265,8 +264,6 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		panel = new ImagePanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
-
-		Properties properties = HOVerwaltung.instance().getResource();
 
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
 			addBlock((SingleTrainingBlock)allTrainingBlocks.get(i));

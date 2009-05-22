@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Properties;
+import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
@@ -439,32 +439,32 @@ public class Helper extends LanguageFiles {
     public static boolean paneShown;
 
     /** Hashtable mit Veränderungspfeilgrafiken nach Integer als Key */
-    private static Hashtable m_clPfeilCache = new Hashtable();
-    private static Hashtable m_clPfeilLightCache = new Hashtable();
+    private static Hashtable<Integer,ExtendedImageIcon> m_clPfeilCache = new Hashtable<Integer,ExtendedImageIcon>();
+    private static Hashtable<Integer,ExtendedImageIcon> m_clPfeilLightCache = new Hashtable<Integer,ExtendedImageIcon>();
 
     /** Hashtable mit Trikotnummern nach Integer als Key */
-    private static Hashtable m_clTrickotnummerCache = new Hashtable();
+    private static Hashtable<Integer,ImageIcon> m_clTrickotnummerCache = new Hashtable<Integer,ImageIcon>();
 
     /** Cache für Bilder */
-    private static HashMap m_clBilderCache = new HashMap();
+    private static HashMap<String,BufferedImage> m_clBilderCache = new HashMap<String,BufferedImage>();
 
     /** Cache für Transparent gemachte Bilder */
-    private static HashMap m_clTransparentsCache = new HashMap();
+    private static HashMap<Image,Image> m_clTransparentsCache = new HashMap<Image,Image>();
 
     /** Cache für Trickots */
-    private static HashMap m_clTrickotCache = new HashMap();
+    private static HashMap<TrickotCacheKey,ImageIcon> m_clTrickotCache = new HashMap<TrickotCacheKey,ImageIcon>();
 
     /** Cache für Spezialitäten */
-    private static HashMap m_clSpezialitaetCache = new HashMap();
+    private static HashMap<Integer,ExtendedImageIcon> m_clSpezialitaetCache = new HashMap<Integer,ExtendedImageIcon>();
 
     /** Cache für Gruppen */
-    private static HashMap m_clGruppenCache = new HashMap();
+    private static HashMap<String,ImageIcon> m_clGruppenCache = new HashMap<String,ImageIcon>();
 
     /** Cache für MiniGruppen */
-    private static HashMap m_clMiniGruppenCache = new HashMap();
+    private static HashMap<String,ImageIcon> m_clMiniGruppenCache = new HashMap<String,ImageIcon>();
 
     /** Cache für Spieltypen */
-    private static HashMap m_clSpieltypCache = new HashMap();
+    private static HashMap<Integer,ImageIcon> m_clSpieltypCache = new HashMap<Integer,ImageIcon>();
 
     //Initialisierung
     static {
@@ -1672,14 +1672,14 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static int getMaxBewertungWidth(java.util.Vector spieler) {
+    public static int getMaxBewertungWidth(Vector<Spieler> spieler) {
         int bewertung = 0;
 
         for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-            int aktuellebewertung = ((Spieler) spieler.get(i)).getBewertung();
+            int aktuellebewertung = spieler.get(i).getBewertung();
 
             if (aktuellebewertung == 0) {
-                aktuellebewertung = ((Spieler) spieler.get(i)).getLetzteBewertung();
+                aktuellebewertung = spieler.get(i).getLetzteBewertung();
             }
 
             bewertung = Math.max(bewertung, aktuellebewertung);
@@ -1709,7 +1709,6 @@ public class Helper extends LanguageFiles {
      * @return TODO Missing Return Method Documentation
      */
     public static String getTooltiptext4SpielHighlight(int typ, int subtyp) {
-    	final Properties properties = HOVerwaltung.instance().getResource();
         if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
             if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
                 || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
@@ -1983,7 +1982,7 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.DefaultComboBoxModel createListModel(java.util.Vector vector) {
+    public static javax.swing.DefaultComboBoxModel createListModel(Vector<Object> vector) {
         final javax.swing.DefaultComboBoxModel model = new javax.swing.DefaultComboBoxModel();
 
         for (int i = 0; i < vector.size(); i++) {

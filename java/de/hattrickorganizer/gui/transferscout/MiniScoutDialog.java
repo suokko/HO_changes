@@ -40,10 +40,11 @@ import de.hattrickorganizer.model.SpielerPosition;
  * @author Marco Senn
  */
 public class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, FocusListener {
-    //~ Instance fields ----------------------------------------------------------------------------
-
 	
-    private JButton jbApply = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+	private static final long serialVersionUID = -2092930481559683730L;
+	
+    //~ Instance fields ----------------------------------------------------------------------------
+	private JButton jbApply = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbApplyScout = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbCancel = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private JComboBox jcbAttacking = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
