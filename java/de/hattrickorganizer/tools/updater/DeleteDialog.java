@@ -27,7 +27,7 @@ import de.hattrickorganizer.tools.HelperWrapper;
 public final class DeleteDialog extends UpdaterDialog {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String PROP_DELETE = HOVerwaltung.instance().getResource().getProperty("loeschen");
+    private static String PROP_DELETE = HOVerwaltung.instance().getLanguageString("loeschen");
 
     //~ Constructors -------------------------------------------------------------------------------
 

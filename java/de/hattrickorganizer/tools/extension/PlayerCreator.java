@@ -217,31 +217,31 @@ public class PlayerCreator extends XMLCreator {
 		// Based on the code returns the proper ho property
 		switch (skillIndex) {
 			case ISpieler.SKILL_TORWART :
-				return HOMiniModel.instance().getResource().getProperty("Torwart"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Torwart"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_SPIELAUFBAU :
-				return HOMiniModel.instance().getResource().getProperty("Spielaufbau"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Spielaufbau"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_PASSSPIEL :
-				return HOMiniModel.instance().getResource().getProperty("Passpiel"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Passpiel"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_FLUEGEL :
-				return HOMiniModel.instance().getResource().getProperty("Fluegelspiel"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Fluegelspiel"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_VERTEIDIGUNG :
-				return HOMiniModel.instance().getResource().getProperty("Verteidigung"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Verteidigung"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_TORSCHUSS :
-				return HOMiniModel.instance().getResource().getProperty("Chancenverwertung"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Chancenverwertung"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_STANDARDS :
-				return HOMiniModel.instance().getResource().getProperty("Standards"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Standards"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_KONDITION :
-				return HOMiniModel.instance().getResource().getProperty("Kondition"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Kondition"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_EXPIERIENCE :
-				return HOMiniModel.instance().getResource().getProperty("Erfahrung"); //$NON-NLS-1$
+				return HOMiniModel.instance().getLanguageString("Erfahrung"); //$NON-NLS-1$
 		}
 
 		return ""; //$NON-NLS-1$

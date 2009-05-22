@@ -61,51 +61,37 @@ public final class CheckOptionPanel extends ImagePanel
     private void initComponents() {
         setLayout(new GridLayout(10, 1, 4, 4));
 
-		m_jchHONews = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		   .getProperty("NewsCheck"));
-		m_jchHONews.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		  .getProperty("tt_Optionen_NewsCheck"));
+		m_jchHONews = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NewsCheck"));
+		m_jchHONews.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_NewsCheck"));
 		m_jchHONews.setOpaque(false);
 		m_jchHONews.setSelected(gui.UserParameter.temp().newsCheck);
 		m_jchHONews.addItemListener(this);
 		add(m_jchHONews);
 
-		m_jchHOUsers = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		   .getProperty("UsersCheck"));
-		m_jchHOUsers.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		  .getProperty("tt_Optionen_UsersCheck"));
+		m_jchHOUsers = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("UsersCheck"));
+		m_jchHOUsers.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_UsersCheck"));
 		m_jchHOUsers.setOpaque(false);
 		m_jchHOUsers.setSelected(gui.UserParameter.temp().userCheck);
 		m_jchHOUsers.addItemListener(this);
 		add(m_jchHOUsers);
 
 
-        m_jchUpdateCheck = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("UpdateCheck"));
-        m_jchUpdateCheck.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("tt_Optionen_UpdateCheck"));
+        m_jchUpdateCheck = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("UpdateCheck"));
+        m_jchUpdateCheck.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_UpdateCheck"));
         m_jchUpdateCheck.setOpaque(false);
         m_jchUpdateCheck.setSelected(gui.UserParameter.temp().updateCheck);
         m_jchUpdateCheck.addItemListener(this);
         add(m_jchUpdateCheck);
 
-        m_jchLogout = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("Logout_beim_Beenden"));
-        m_jchLogout.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Optionen_Logout_beim_Beenden"));
+        m_jchLogout = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Logout_beim_Beenden"));
+        m_jchLogout.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Logout_beim_Beenden"));
         m_jchLogout.setOpaque(false);
         m_jchLogout.setSelected(gui.UserParameter.temp().logoutOnExit);
         m_jchLogout.addItemListener(this);
         add(m_jchLogout);
 
-        m_jchShowSaveDialog = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Show_SaveHRF_Dialog"));
-        m_jchShowSaveDialog.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("tt_Optionen_Show_SaveHRF_Dialog"));
+        m_jchShowSaveDialog = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Show_SaveHRF_Dialog"));
+        m_jchShowSaveDialog.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Show_SaveHRF_Dialog"));
         m_jchShowSaveDialog.setOpaque(false);
         m_jchShowSaveDialog.setSelected(gui.UserParameter.temp().showHRFSaveDialog);
         m_jchShowSaveDialog.addItemListener(this);

@@ -114,13 +114,9 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
             if (m_jcbSaison.getSelectedItem() != null) {
                 final Spielplan spielplan = (Spielplan) m_jcbSaison.getSelectedItem();
                 final int value = JOptionPane.showConfirmDialog(this,
-                                                                de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                       .getResource()
-                                                                                                       .getProperty("Ligatabelle")
+                                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ligatabelle")
                                                                 + " "
-                                                                + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                         .getResource()
-                                                                                                         .getProperty("loeschen")
+                                                                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen")
                                                                 + ":\n" + spielplan.toString(), "",
                                                                 JOptionPane.YES_NO_OPTION);
 
@@ -142,8 +138,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Ligatabelle")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ligatabelle")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()
@@ -342,23 +337,20 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
 
         final JPanel cbpanel = new ImagePanel(null);
         m_jcbSaison = new JComboBox();
-        m_jcbSaison.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Ligatabelle_Saisonauswahl"));
+        m_jcbSaison.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_Saisonauswahl"));
         m_jcbSaison.addItemListener(this);
         m_jcbSaison.setSize(200, 25);
         m_jcbSaison.setLocation(10, 5);
         cbpanel.add(m_jcbSaison);
 
-        m_jbLoeschen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("tt_Ligatabelle_SaisonLoeschen"));
+        m_jbLoeschen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonLoeschen"));
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setSize(25, 25);
         m_jbLoeschen.setLocation(220, 5);
         m_jbLoeschen.setBackground(Color.WHITE);
         cbpanel.add(m_jbLoeschen);
 
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Ligatabelle_SaisonDrucken"));
+        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonDrucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setSize(25, 25);
         m_jbDrucken.setLocation(255, 5);

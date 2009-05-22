@@ -27,145 +27,143 @@ public class TransferTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("ID"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
                                             
 
     //Name
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Name"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
                                             
 
     //Current price
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("scout_price"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_price"),
                                             
 
     //Ablaufdatum
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Ablaufdatum"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
                                             
 
     //Beste Position
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("BestePosition"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
                                             
 
     //Alter
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Alter"), 
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Alter"), 
     //TSI
     "TSI", 
     //Erfahrung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Erfahrung"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung"),
                                             
 
     //Form
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Form"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form"),
                                             
 
     //Kondition
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Kondition"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition"),
                                             
 
     //Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Torwart"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
                                             
 
     //Verteidigung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Verteidigung"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
                                             
 
     //Spielaufbau
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Spielaufbau"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
                                             
 
     //Passpiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Passpiel"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
                                             
 
     //Flügelspiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fluegelspiel"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                             
 
     //Torschuss
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Torschuss"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
                                             
 
     //Standards
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Standards"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
                                             
 
     //Gesamt Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Torwart"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
                                             
 
     //Innenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Innenverteidiger"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger"),
                                             
 
     //Innenverteidiger Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Innenverteidiger_Aus"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"),
                                             
 
     //Innenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Innenverteidiger_Off"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"),
                                             
 
     //Aussenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger"),
                                             
 
     //Aussenverteidiger Nach Innen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger_In"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"),
                                             
 
     //Aussenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger_Off"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"),
                                             
 
     //Aussenverteidiger Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger_Def"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"),
                                             
 
     //Mittelfeld
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Mittelfeld"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld"),
                                             
 
     //Mittelfeld Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Mittelfeld_Aus"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"),
                                             
 
     //Mittelfeld Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Mittelfeld_Off"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"),
                                             
 
     //Mittelfeld Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Mittelfeld_Def"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
                                             
 
     //Flügel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fluegelspiel"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                             
 
     //Flügel Nach Innen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fluegelspiel_In"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
                                             
 
     //Flügel Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fluegelspiel_Off"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
                                             
 
     //Flügel Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fluegelspiel_Def"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
                                             
 
     //Sturm
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Sturm"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm"),
                                             
 
     //Sturm Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Sturm_Def"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm_Def"),
                                             
 
     //Notes
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Notizen"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Notizen"),
                                         };
 
     /** TODO Missing Parameter Documentation */
@@ -173,25 +171,23 @@ public class TransferTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("ID"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
                                             
 
     //Name
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Name"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
                                             
 
     //Current price
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("scout_price"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_price"),
                                             
 
     //Ablaufdatum
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Ablaufdatum"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
                                             
 
     //Beste Position
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("BestePosition"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
                                             
 
     //Alter
@@ -199,119 +195,119 @@ public class TransferTableModel extends AbstractTableModel {
     //TSI
     "TSI", 
     //Erfahrung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ER"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ER"),
                                             
 
     //Form
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FO"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FO"),
                                             
 
     //Kondition
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("KO"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("KO"),
                                             
 
     //Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("TW"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TW"),
                                             
 
     //Verteidigung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("VE"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VE"),
                                             
 
     //Spielaufbau
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("SA"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SA"),
                                             
 
     //Passpiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("PS"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PS"),
                                             
 
     //Flügelspiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FL"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FL"),
                                             
 
     //Torschuss
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("TS"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TS"),
                                             
 
     //Standards
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ST"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ST"),
                                             
 
     //Gesamt Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("TORW"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TORW"),
                                             
 
     //Innenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IV"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IV"),
                                             
 
     //Innenverteidiger Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IVA"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IVA"),
                                             
 
     //Innenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IVO"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IVO"),
                                             
 
     //Aussenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("AV"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AV"),
                                             
 
     //Aussenverteidiger Zur Mitte
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("AVI"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVI"),
                                             
 
     //Aussenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("AVO"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVO"),
                                             
 
     //Aussenverteidiger Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("AVD"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVD"),
                                             
 
     //Mittelfeld
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("MIT"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MIT"),
                                             
 
     //Mittelfeld Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("MITA"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITA"),
                                             
 
     //Mittelfeld Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("MITO"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITO"),
                                             
 
     //Mittelfeld Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("MITD"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITD"),
                                             
 
     //Flügel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FLG"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLG"),
                                             
 
     //Flügel Nach Innen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FLGI"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGI"),
                                             
 
     //Flügel Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FLGO"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGO"),
                                             
 
     //Flügel Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FLGD"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGD"),
                                             
 
     //Sturm
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("STU"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STU"),
                                             
 
     //Sturm Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("STUD"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STUD"),
                                             
 
     //Notes
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Notizen"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Notizen"),
                                         };
     private Vector m_vScoutEintraege;
 

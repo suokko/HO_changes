@@ -40,21 +40,21 @@ final class RefreshDialog extends UpdaterDialog {
     protected Hashtable infos = null;
 
     /** TODO Missing Parameter Documentation */
-    protected String PROP_ADD = HOVerwaltung.instance().getResource().getProperty("Hinzufuegen");
+    protected String PROP_ADD = HOVerwaltung.instance().getLanguageString("Hinzufuegen");
 
     /** TODO Missing Parameter Documentation */
     protected String WEB_PLUGINS = UpdateController.PLUGINS_HOMEPAGE + "/downloads/";
 
     /** TODO Missing Parameter Documentation */
     ArrayList others = new ArrayList();
-    private String ADDPLUGIN = HOVerwaltung.instance().getResource().getProperty("addPlugin");
-    private String CORRUPTEDPLUGIN = HOVerwaltung.instance().getResource().getProperty("corruptedPlugin");
-    private String INFO = HOVerwaltung.instance().getResource().getProperty("Info");
-    private String INSTALLATIONCANCELLED = HOVerwaltung.instance().getResource().getProperty("installationCancelled");
-    private String INSTALLATIONCANCELLEDTEXT = HOVerwaltung.instance().getResource().getProperty("installationCancelledText");
-    private String PROP_NOTE = HOVerwaltung.instance().getResource().getProperty("Notizen");
-    private String REQUIREDPLUGIN = HOVerwaltung.instance().getResource().getProperty("requiredPlugin");
-    private String UNKNOWNPLUGIN = HOVerwaltung.instance().getResource().getProperty("unknownPlugin");
+    private String ADDPLUGIN = HOVerwaltung.instance().getLanguageString("addPlugin");
+    private String CORRUPTEDPLUGIN = HOVerwaltung.instance().getLanguageString("corruptedPlugin");
+    private String INFO = HOVerwaltung.instance().getLanguageString("Info");
+    private String INSTALLATIONCANCELLED = HOVerwaltung.instance().getLanguageString("installationCancelled");
+    private String INSTALLATIONCANCELLEDTEXT = HOVerwaltung.instance().getLanguageString("installationCancelledText");
+    private String PROP_NOTE = HOVerwaltung.instance().getLanguageString("Notizen");
+    private String REQUIREDPLUGIN = HOVerwaltung.instance().getLanguageString("requiredPlugin");
+    private String UNKNOWNPLUGIN = HOVerwaltung.instance().getLanguageString("unknownPlugin");
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ final class RefreshDialog extends UpdaterDialog {
      * @param data
      */
     protected RefreshDialog(Object data) {
-        super(data, HOVerwaltung.instance().getResource().getProperty("Plugins"));
+        super(data, HOVerwaltung.instance().getLanguageString("Plugins"));
         object = ((ArrayList) data).toArray();
         inizialize();
 

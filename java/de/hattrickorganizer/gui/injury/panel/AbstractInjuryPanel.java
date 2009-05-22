@@ -136,7 +136,7 @@ public abstract class AbstractInjuryPanel extends JPanel {
         final JPanel pan = GUIPluginWrapper.instance().createImagePanel();
         pan.setLayout(new GridLayout(1, 4));
 
-        final JButton button = new JButton(HOVerwaltung.instance().getResource().getProperty("Calculate"));
+        final JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Calculate"));
         pan.add(inputMsg);
         pan.add(input);
         pan.add(outputMsg);

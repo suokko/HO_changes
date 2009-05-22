@@ -39,8 +39,7 @@ public class MatchEnginePanel extends ImagePanel implements plugins.IMatchPredic
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    JButton m_jbButton = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("Simulate"));
+    JButton m_jbButton = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Simulate"));
                                                                             
 	private JSlider slider = new JSlider(JSlider.HORIZONTAL,0,100,0);
     private MatchResultTable m_jtMatchResultTable;

@@ -191,8 +191,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Spieleruebersicht")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieleruebersicht")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()
@@ -253,8 +252,8 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         setLayout(layout);
 
         final ButtonGroup bg = new ButtonGroup();
-        final String tooltipFrom = properties.getProperty("tt_Gruppe_von");
-        final String tooltipTo = properties.getProperty("tt_Gruppe_nach");
+        final String tooltipFrom = HOVerwaltung.instance().getLanguageString("tt_Gruppe_von");
+        final String tooltipTo = HOVerwaltung.instance().getLanguageString("tt_Gruppe_nach");
         
         initButton(noGruppe,tooltipFrom,"gui/bilder/smilies/No-Team.png");
         constraints.gridx = 0;
@@ -332,7 +331,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         bg2.add(eGruppe2);
         add(eGruppe2);
 
-        doButton.setToolTipText(properties.getProperty("tt_Gruppe_wechseln"));
+        doButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Gruppe_wechseln"));
         doButton.setPreferredSize(new Dimension(28, 28));
         doButton.setEnabled(false);
         doButton.addActionListener(this);
@@ -342,7 +341,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         layout.setConstraints(doButton, constraints);
         add(doButton);
 
-        m_jbDrucken.setToolTipText(properties.getProperty("tt_Spieler_drucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spieler_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(28, 28));
         m_jbDrucken.addActionListener(this);
         constraints.gridx = 7;

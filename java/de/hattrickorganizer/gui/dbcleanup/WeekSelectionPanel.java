@@ -15,10 +15,10 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class WeekSelectionPanel extends JPanel implements ActionListener, FocusListener {
 
 	private static final long serialVersionUID = -8423470613835503603L;
-	private JLabel labelNone = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.none"));
-	private JLabel labelAll = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.all"));
-	private JLabel labelRemoveOlderThan = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.removeOlderThan"));
-	private JLabel labelWeeks = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.weeks"));
+	private JLabel labelNone = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.none"));
+	private JLabel labelAll = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.all"));
+	private JLabel labelRemoveOlderThan = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.removeOlderThan"));
+	private JLabel labelWeeks = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.weeks"));
 	private JCheckBox m_jcbNone = new JCheckBox();
 	private JCheckBox m_jcbAll = new JCheckBox();
 	private JTextField m_jtfWeeks = new JTextField(3);

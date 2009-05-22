@@ -58,9 +58,7 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
             final ImagePanel buttonPanel = new ImagePanel(layout);
             buttonPanel.setBackground(Color.white);
 
-            m_jbMaximieren.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                 .getResource()
-                                                                                 .getProperty("tt_Matchbericht_Maximieren"));
+            m_jbMaximieren.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Matchbericht_Maximieren"));
             m_jbMaximieren.setEnabled(false);
             m_jbMaximieren.setPreferredSize(new Dimension(25, 25));
             m_jbMaximieren.addActionListener(this);

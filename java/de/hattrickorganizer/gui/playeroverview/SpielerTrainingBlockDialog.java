@@ -62,7 +62,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	protected SpielerTrainingBlockDialog(javax.swing.JFrame owner, Spieler player) {
 		super(owner, true);
 		setTitle(
-			HOVerwaltung.instance().getResource().getProperty(
+			HOVerwaltung.instance().getLanguageString(
 				"TrainingBlock")
 				+ " "
 				+ player.getName());
@@ -280,7 +280,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(panel);
 
 		m_jbAdd =
-			new JButton(properties.getProperty("TrainingBlock.add"));
+			new JButton(HOVerwaltung.instance().getLanguageString("TrainingBlock.add"));
 		m_jbAdd.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -291,7 +291,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(m_jbAdd);
 
 		m_jbOK =
-			new JButton(properties.getProperty("Uebernehmen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
 		m_jbOK.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -303,7 +303,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(m_jbOK);
 
 		m_jbCancel =
-			new JButton(properties.getProperty("Abbrechen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
 		m_jbCancel.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.EAST;

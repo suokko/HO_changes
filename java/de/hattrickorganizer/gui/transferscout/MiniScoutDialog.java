@@ -43,15 +43,9 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     //~ Instance fields ----------------------------------------------------------------------------
 
 	
-    private JButton jbApply = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                 .getResource()
-                                                                                 .getProperty("Uebernehmen"));
-    private JButton jbApplyScout = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Uebernehmen"));
-    private JButton jbCancel = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("Abbrechen"));
+    private JButton jbApply = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbApplyScout = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbCancel = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private JComboBox jcbAttacking = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbDefense = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbExperience = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
@@ -63,9 +57,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     private JComboBox jcbStamina = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_KONDITION);
     private JComboBox jcbStandards = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbWinger = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JLabel jlRating = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("Unbestimmt")
+    private JLabel jlRating = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt")
                                          + ": 0.0");
     private JLabel jlStatus = new JLabel("Status: ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
@@ -88,7 +80,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      * @param owner the parent control holding this dialog
      */
     public MiniScoutDialog(TransferEingabePanel owner) {
-        super(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ScoutMini"));
+        super(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutMini"));
         this.setIconImage(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/Logo-16px.png"));
         clOwner = owner;
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -239,7 +231,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
                 spielervalueChanged();
             }
         } catch (Exception e) {
-            message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("scout_error");
+            message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_error");
         }
 
         jtaCopyPaste.setText("");
@@ -247,23 +239,19 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         if (message.equals("")) {
             switch (pc.getError()) {
                 case 1:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("scout_warning");
+                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_warning");
                     break;
 
                 case 2:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("scout_error");
+                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_error");
                     break;
 
                 default:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("scout_success");
+                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_success");
             }
         }
 
-        jlStatus.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                .getProperty("scout_status") + ": "
+        jlStatus.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_status") + ": "
                          + message);
     }
 
@@ -329,21 +317,18 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(9, 4, 4, 4));
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ID"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"));
         panel.add(label);
         jtfPlayerID.setHorizontalAlignment(JLabel.RIGHT);
         jtfPlayerID.addFocusListener(this);
         panel.add(jtfPlayerID);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Name"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"));
         panel.add(label);
         jtfName.addFocusListener(this);
         panel.add(jtfName);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Alter"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Alter"));
         panel.add(label);
         jtfAge.setHorizontalAlignment(JLabel.RIGHT);
         jtfAge.addFocusListener(this);
@@ -355,21 +340,18 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         jtfTSI.addFocusListener(this);
         panel.add(jtfTSI);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("scout_price"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_price"));
         panel.add(label);
         jtfPrice.setHorizontalAlignment(JLabel.RIGHT);
         jtfPrice.addFocusListener(this);
         panel.add(jtfPrice);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Ablaufdatum"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ablaufdatum"));
         panel.add(label);
         jsSpinner.addFocusListener(this);
         panel.add(jsSpinner);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Spezialitaet"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spezialitaet"));
         panel.add(label);
         jcbSpeciality.addItemListener(this);
         panel.add(jcbSpeciality);
@@ -378,62 +360,52 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
 		panel.add(label);
 		panel.add(jtfEPV);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Erfahrung"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung"));
         panel.add(label);
         jcbExperience.addItemListener(this);
         panel.add(jcbExperience);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Form"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form"));
         panel.add(label);
         jcbForm.addItemListener(this);
         panel.add(jcbForm);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Kondition"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition"));
         panel.add(label);
         jcbStamina.addItemListener(this);
         panel.add(jcbStamina);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Torwart"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"));
         panel.add(label);
         jcbKeeper.addItemListener(this);
         panel.add(jcbKeeper);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Spielaufbau"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"));
         panel.add(label);
         jcbPlaymaking.addItemListener(this);
         panel.add(jcbPlaymaking);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Passpiel"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"));
         panel.add(label);
         jcbPassing.addItemListener(this);
         panel.add(jcbPassing);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Fluegelspiel"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         panel.add(label);
         jcbWinger.addItemListener(this);
         panel.add(jcbWinger);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Verteidigung"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"));
         panel.add(label);
         jcbDefense.addItemListener(this);
         panel.add(jcbDefense);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Torschuss"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"));
         panel.add(label);
         jcbAttacking.addItemListener(this);
         panel.add(jcbAttacking);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Standards"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"));
         panel.add(label);
         jcbStandards.addItemListener(this);
         panel.add(jcbStandards);
@@ -446,8 +418,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
 
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(1, 3, 4, 4));
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("BestePosition")
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition")
                            + ":");
         label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize() + 2));
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -467,9 +438,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         // Notes
         panel = new ImagePanel();
         panel.setLayout(new BorderLayout());
-        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                            .getResource()
-                                                                                                            .getProperty("Notizen")));
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Notizen")));
         panel.add(new JScrollPane(jtaNotes), BorderLayout.CENTER);
 
         constraints.fill = GridBagConstraints.BOTH;
@@ -482,11 +451,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         // Copy & Paste
         panel = new ImagePanel();
         panel.setLayout(new BorderLayout());
-        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                            .getResource()
-                                                                                                            .getProperty("CopyPaste")));
-        jtaCopyPaste.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("tt_Transferscout_CopyPaste"));
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("CopyPaste")));
+        jtaCopyPaste.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Transferscout_CopyPaste"));
         panel.add(new JScrollPane(jtaCopyPaste), BorderLayout.NORTH);
         layout.setConstraints(jbApplyScout, constraints);
         jbApplyScout.addActionListener(this);
@@ -503,12 +469,10 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        jbApply.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("tt_Transferscout_uebernehmen"));
+        jbApply.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Transferscout_uebernehmen"));
         jbApply.addActionListener(this);
         panel.add(jbApply);
-        jbCancel.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                       .getProperty("tt_Transferscout_abbrechen"));
+        jbCancel.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Transferscout_abbrechen"));
         jbCancel.addActionListener(this);
         panel.add(jbCancel);
 

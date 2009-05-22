@@ -36,27 +36,27 @@ public class PlayerConverter {
         // Get all skills for active language
         // This should be the same language as in Hattrick
         skills = new ArrayList();
-        skills.add(homodel.getResource().getProperty("nonexisting").toLowerCase());
-        skills.add(homodel.getResource().getProperty("katastrophal").toLowerCase());
-        skills.add(homodel.getResource().getProperty("erbaermlich").toLowerCase());
-        skills.add(homodel.getResource().getProperty("armselig").toLowerCase());
-        skills.add(homodel.getResource().getProperty("schwach").toLowerCase());
-        skills.add(homodel.getResource().getProperty("durchschnittlich").toLowerCase());
-        skills.add(homodel.getResource().getProperty("passabel").toLowerCase());
-        skills.add(homodel.getResource().getProperty("gut").toLowerCase());
-        skills.add(homodel.getResource().getProperty("sehr_gut").toLowerCase());
-        skills.add(homodel.getResource().getProperty("hervorragend").toLowerCase());
-        skills.add(homodel.getResource().getProperty("grossartig").toLowerCase());
-        skills.add(homodel.getResource().getProperty("brilliant").toLowerCase());
-        skills.add(homodel.getResource().getProperty("fantastisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("Weltklasse").toLowerCase());
-        skills.add(homodel.getResource().getProperty("uebernatuerlich").toLowerCase());
-        skills.add(homodel.getResource().getProperty("gigantisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("ausserirdisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("mythisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("maerchenhaft").toLowerCase());
-        skills.add(homodel.getResource().getProperty("galaktisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("goettlich").toLowerCase());
+        skills.add(homodel.getLanguageString("nonexisting").toLowerCase());
+        skills.add(homodel.getLanguageString("katastrophal").toLowerCase());
+        skills.add(homodel.getLanguageString("erbaermlich").toLowerCase());
+        skills.add(homodel.getLanguageString("armselig").toLowerCase());
+        skills.add(homodel.getLanguageString("schwach").toLowerCase());
+        skills.add(homodel.getLanguageString("durchschnittlich").toLowerCase());
+        skills.add(homodel.getLanguageString("passabel").toLowerCase());
+        skills.add(homodel.getLanguageString("gut").toLowerCase());
+        skills.add(homodel.getLanguageString("sehr_gut").toLowerCase());
+        skills.add(homodel.getLanguageString("hervorragend").toLowerCase());
+        skills.add(homodel.getLanguageString("grossartig").toLowerCase());
+        skills.add(homodel.getLanguageString("brilliant").toLowerCase());
+        skills.add(homodel.getLanguageString("fantastisch").toLowerCase());
+        skills.add(homodel.getLanguageString("Weltklasse").toLowerCase());
+        skills.add(homodel.getLanguageString("uebernatuerlich").toLowerCase());
+        skills.add(homodel.getLanguageString("gigantisch").toLowerCase());
+        skills.add(homodel.getLanguageString("ausserirdisch").toLowerCase());
+        skills.add(homodel.getLanguageString("mythisch").toLowerCase());
+        skills.add(homodel.getLanguageString("maerchenhaft").toLowerCase());
+        skills.add(homodel.getLanguageString("galaktisch").toLowerCase());
+        skills.add(homodel.getLanguageString("goettlich").toLowerCase());
 
         skillvalues = new ArrayList();
 
@@ -88,12 +88,12 @@ public class PlayerConverter {
         // Get all specialities for active language
         // This should be the same language as in Hattrick
         specialities = new ArrayList();
-        specialities.add(homodel.getResource().getProperty("sp_Technical").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Quick").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Powerful").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Unpredictable").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Head").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Regainer").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Technical").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Quick").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Powerful").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Unpredictable").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Head").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Regainer").toLowerCase());
 
         specialitiesvalues = new ArrayList();
 

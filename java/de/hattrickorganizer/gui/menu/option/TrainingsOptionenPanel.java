@@ -68,61 +68,46 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
         setLayout(new GridLayout(13, 1, 4, 4));
 
         JLabel label = new JLabel("   "
-                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("VoraussichtlicheTrainingwochen"));
+                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VoraussichtlicheTrainingwochen"));
         add(label);
 
-        m_jslTrainingTorwart = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Torwart"),
+        m_jslTrainingTorwart = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
                                                100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingTorwart.setValue( gui.UserParameter.temp().DAUER_TORWART);
         m_jslTrainingTorwart.addChangeListener(this);
         add(m_jslTrainingTorwart);
 
-        m_jslTrainingVerteidigung = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                           .getResource()
-                                                                                           .getProperty("Verteidigung"),
+        m_jslTrainingVerteidigung = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
                                                     100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingVerteidigung.setValue( gui.UserParameter.temp().DAUER_VERTEIDIGUNG);
         m_jslTrainingVerteidigung.addChangeListener(this);
         add(m_jslTrainingVerteidigung);
 
-        m_jslTrainingSpielaufbau = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("Spielaufbau"),
+        m_jslTrainingSpielaufbau = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
                                                    100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingSpielaufbau.setValue( gui.UserParameter.temp().DAUER_SPIELAUFBAU);
         m_jslTrainingSpielaufbau.addChangeListener(this);
         add(m_jslTrainingSpielaufbau);
 
-        m_jslTrainingPasspiel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("Passpiel"),
+        m_jslTrainingPasspiel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
                                                 100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingPasspiel.setValue( gui.UserParameter.temp().DAUER_PASSPIEL);
         m_jslTrainingPasspiel.addChangeListener(this);
         add(m_jslTrainingPasspiel);
 
-        m_jslTrainingFluegel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Fluegelspiel"),
+        m_jslTrainingFluegel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                                100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingFluegel.setValue( gui.UserParameter.temp().DAUER_FLUEGELSPIEL);
         m_jslTrainingFluegel.addChangeListener(this);
         add(m_jslTrainingFluegel);
 
-        m_jslTrainingTorschuss = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                        .getResource()
-                                                                                        .getProperty("Torschuss"),
+        m_jslTrainingTorschuss = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
                                                  100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingTorschuss.setValue( gui.UserParameter.temp().DAUER_CHANCENVERWERTUNG);
         m_jslTrainingTorschuss.addChangeListener(this);
         add(m_jslTrainingTorschuss);
         
-        m_jslTrainingStandards = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                        .getResource()
-                                                                                        .getProperty("Standards"),
+        m_jslTrainingStandards = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
                                                  100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingStandards.setValue( gui.UserParameter.temp().DAUER_STANDARDS);
                 
@@ -130,13 +115,10 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
         add(m_jslTrainingStandards);
 
         label = new JLabel("   "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("TrainingFaktoren"));
+                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TrainingFaktoren"));
         add(label);
 
-        m_jslAlterFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("FaktorSpieleralter"),
+        m_jslAlterFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
                                            
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
@@ -144,9 +126,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
         m_jslAlterFaktor.addChangeListener(this);
         add(m_jslAlterFaktor);
 
-        m_jslTrainerFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("FaktorTrainerfertigkeit"),
+        m_jslTrainerFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorTrainerfertigkeit"),
                                              
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
@@ -154,9 +134,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
         m_jslTrainerFaktor.addChangeListener(this);
         add(m_jslTrainerFaktor);
 
-        m_jslCoTrainerFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("FaktorCoTraineranzahl"),
+        m_jslCoTrainerFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorCoTraineranzahl"),
                                                
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
@@ -164,9 +142,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
         m_jslCoTrainerFaktor.addChangeListener(this);
         add(m_jslCoTrainerFaktor);
 
-        m_jslIntensitaetFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                        .getResource()
-                                                                                        .getProperty("FaktorIntensitaet"),
+        m_jslIntensitaetFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
                                                  
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);

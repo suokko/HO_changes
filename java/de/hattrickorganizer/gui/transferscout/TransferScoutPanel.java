@@ -101,8 +101,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("TransferScout")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TransferScout")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()

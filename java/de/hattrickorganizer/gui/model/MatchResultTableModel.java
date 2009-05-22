@@ -25,8 +25,8 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 
 	/** TODO Missing Parameter Documentation */
 	public final static String[] columnNames = {
-		HOVerwaltung.instance().getResource().getProperty("Ergebnis"), 
-		HOVerwaltung.instance().getResource().getProperty("frequency"),
+		HOVerwaltung.instance().getLanguageString("Ergebnis"), 
+		HOVerwaltung.instance().getLanguageString("frequency"),
 		"" };
 
 

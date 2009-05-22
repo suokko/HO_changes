@@ -46,9 +46,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbAngeschlagen)) {
             Color color = JColorChooser.showDialog(this,
-                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("Angeschlagen"),
+                                                   de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angeschlagen"),
                                                    gui.UserParameter.temp().FG_ANGESCHLAGEN);
 
             if (color != null) {
@@ -58,9 +56,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource().equals(m_jbVerletzt)) {
             Color color = JColorChooser.showDialog(this,
-                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("Verletzt"),
+                                                   de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verletzt"),
                                                    gui.UserParameter.temp().FG_VERLETZT);
 
             if (color != null) {
@@ -70,9 +66,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource().equals(m_jbZweiKarten)) {
             Color color = JColorChooser.showDialog(this,
-                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("Verwarnt"),
+                                                   de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verwarnt"),
                                                    gui.UserParameter.temp().FG_ZWEIKARTEN);
 
             if (color != null) {
@@ -82,9 +76,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource().equals(m_jbGesperrt)) {
             Color color = JColorChooser.showDialog(this,
-                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("Gesperrt"),
+                                                   de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesperrt"),
                                                    gui.UserParameter.temp().FG_GESPERRT);
 
             if (color != null) {
@@ -94,9 +86,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource().equals(m_jbTransfermarkt)) {
             Color color = JColorChooser.showDialog(this,
-                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("Transfermarkt"),
+                                                   de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Transfermarkt"),
                                                    gui.UserParameter.temp().FG_TRANSFERMARKT);
 
             if (color != null) {
@@ -136,8 +126,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 
         JLabel label = new JLabel("  "
-                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("Angeschlagen"));
+                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angeschlagen"));
         panel.add(label);
 
         m_jbAngeschlagen = new JButton();
@@ -146,8 +135,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(m_jbAngeschlagen);
 
         label = new JLabel("  "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("Verletzt"));
+                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verletzt"));
         panel.add(label);
 
         m_jbVerletzt = new JButton();
@@ -156,8 +144,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(m_jbVerletzt);
 
         label = new JLabel("  "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("Verwarnt"));
+                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verwarnt"));
         panel.add(label);
 
         m_jbZweiKarten = new JButton();
@@ -166,8 +153,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(m_jbZweiKarten);
 
         label = new JLabel("  "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("Gesperrt"));
+                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesperrt"));
         panel.add(label);
 
         m_jbGesperrt = new JButton();
@@ -176,8 +162,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(m_jbGesperrt);
 
         label = new JLabel("  "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("Transfermarkt"));
+                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Transfermarkt"));
         panel.add(label);
 
         m_jbTransfermarkt = new JButton();

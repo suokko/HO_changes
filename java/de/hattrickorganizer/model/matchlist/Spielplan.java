@@ -261,9 +261,9 @@ public class Spielplan implements plugins.ISpielplan {
      * @return TODO Missing Return Method Documentation
      */
     public final String toString() {
-        return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Season")
+        return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season")
                + " " + getSaison() + " "
-               + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Liga")
+               + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Liga")
                + " " + getLigaName() + " (" + getLigaId() + ")";
     }
 

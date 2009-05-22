@@ -31,9 +31,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbLoeschen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("loeschen"));
+    private JButton m_jbLoeschen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen"));
     private JList m_jlHRFs = new JList();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -76,7 +74,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         final Object[] hrfs = m_jlHRFs.getSelectedValues();
-        String text = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("loeschen");
+        String text = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen");
 
         if (hrfs.length > 1) {
             text += (" (" + hrfs.length + " Files) : ");
@@ -93,9 +91,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
         }
 
         final int value = JOptionPane.showConfirmDialog(this, text,
-                                                        de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                               .getResource()
-                                                                                               .getProperty("loeschen"),
+                                                        de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen"),
                                                         JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.OK_OPTION) {
@@ -169,7 +165,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
     private void initComponents() {
         setLayout(new BorderLayout());
 
-        add(new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("VergleichsHRF")),
+        add(new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VergleichsHRF")),
             BorderLayout.NORTH);
 
         m_jlHRFs.setOpaque(false);

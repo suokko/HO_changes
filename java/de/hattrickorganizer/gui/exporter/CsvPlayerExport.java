@@ -58,7 +58,7 @@ public class CsvPlayerExport {
 			Properties prop = HOVerwaltung.instance().getResource();
 			if (file.exists() && JOptionPane.showConfirmDialog(
 					HOMiniModel.instance().getGUI().getOwner4Dialog(), 
-					prop.getProperty("overwrite"), NAME,
+					HOVerwaltung.instance().getLanguageString("overwrite"), NAME,
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				// Cancel
 				return;		

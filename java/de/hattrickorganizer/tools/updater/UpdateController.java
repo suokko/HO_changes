@@ -206,7 +206,7 @@ public final class UpdateController {
             ZipHelper zip = new ZipHelper(getLocalZipFile());
             zip.unzip(System.getProperty("user.dir"));
             JOptionPane.showMessageDialog(null,
-                                          HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"),
+                                          HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
                                           "HO!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e1) {
             HOLogger.instance().log(UpdateController.class,e1);
@@ -318,9 +318,9 @@ public final class UpdateController {
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
-					HOVerwaltung.instance().getResource().getProperty("updateMSG") + "\n"
-						+ HOVerwaltung.instance().getResource().getProperty("update") + "?",
-					HOVerwaltung.instance().getResource().getProperty("update")+"?",
+					HOVerwaltung.instance().getLanguageString("updateMSG") + "\n"
+						+ HOVerwaltung.instance().getLanguageString("update") + "?",
+					HOVerwaltung.instance().getLanguageString("update")+"?",
 					JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
@@ -328,7 +328,7 @@ public final class UpdateController {
 			}
 //			int update = JOptionPane.showConfirmDialog(
 //					HOMainFrame.instance(),
-//					"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+//					"" + HOVerwaltung.instance().getLanguageString("updateMSG"),
 //					"Open page?",
 //					JOptionPane.YES_NO_OPTION);
 //			if (update == JOptionPane.YES_OPTION) {
@@ -362,7 +362,7 @@ public final class UpdateController {
 		} catch (Exception e) {
 			return;
 		}
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
+		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
 									  JOptionPane.INFORMATION_MESSAGE);
 
 		HOMainFrame.instance().beenden();
@@ -376,8 +376,8 @@ public final class UpdateController {
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
-					HOVerwaltung.instance().getResource().getProperty("updateFile"),
-					HOVerwaltung.instance().getResource().getProperty("update")+"?",
+					HOVerwaltung.instance().getLanguageString("updateFile"),
+					HOVerwaltung.instance().getLanguageString("update")+"?",
 					JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
@@ -430,7 +430,7 @@ public final class UpdateController {
 		tmp.renameTo(target);
 		HOParameter.instance().EpvRelease = release;
 		wait.setVisible(false);
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
+		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
 									  JOptionPane.INFORMATION_MESSAGE);
 
 	}
@@ -443,8 +443,8 @@ public final class UpdateController {
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
-					HOVerwaltung.instance().getResource().getProperty("updateFile"),
-					HOVerwaltung.instance().getResource().getProperty("update")+"?",
+					HOVerwaltung.instance().getLanguageString("updateFile"),
+					HOVerwaltung.instance().getLanguageString("update")+"?",
 					JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
@@ -476,7 +476,7 @@ public final class UpdateController {
 			HOLogger.instance().log(UpdateController.class,"Rating update unzip: " + e);
 		}
 		wait.setVisible(false);
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"), "",
+		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
 									  JOptionPane.INFORMATION_MESSAGE);
 
 	}
@@ -493,15 +493,15 @@ public final class UpdateController {
 								int update =
 									JOptionPane.showConfirmDialog(
 										HOMainFrame.instance(),
-										HOVerwaltung.instance().getResource().getProperty("updateMSG"),
-										HOVerwaltung.instance().getResource().getProperty("update") + "?",
+										HOVerwaltung.instance().getLanguageString("updateMSG"),
+										HOVerwaltung.instance().getLanguageString("update") + "?",
 										JOptionPane.YES_NO_OPTION);
 								if (update == JOptionPane.YES_OPTION) {
 									UpdateController.updateHO(news.getVersion());
 								}
 //								int update = JOptionPane.showConfirmDialog(
 //										HOMainFrame.instance(),
-//										"" + HOVerwaltung.instance().getResource().getProperty("updateMSG"),
+//										"" + HOVerwaltung.instance().getLanguageString("updateMSG"),
 //										"Open page?",
 //										JOptionPane.YES_NO_OPTION);
 //								if (update == JOptionPane.YES_OPTION) {
@@ -518,7 +518,7 @@ public final class UpdateController {
 									JOptionPane.showConfirmDialog(
 										HOMainFrame.instance(),
 										news.getMessages().get(0),
-										HOVerwaltung.instance().getResource().getProperty("update") + "?",
+										HOVerwaltung.instance().getLanguageString("update") + "?",
 										JOptionPane.YES_NO_OPTION);
 								if (update == JOptionPane.YES_OPTION) {
 									UpdateController.updateEPV(news.getVersion());
@@ -535,7 +535,7 @@ public final class UpdateController {
 									JOptionPane.showConfirmDialog(
 										HOMainFrame.instance(),
 										news.getMessages().get(0),
-										HOVerwaltung.instance().getResource().getProperty("update") + "?",
+										HOVerwaltung.instance().getLanguageString("update") + "?",
 										JOptionPane.YES_NO_OPTION);
 								if (update == JOptionPane.YES_OPTION) {
 

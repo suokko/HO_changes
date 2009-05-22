@@ -166,16 +166,16 @@ public class Matchdetails implements plugins.IMatchDetails {
     public static String getNameForEinstellung(int einstellung) {
         switch (einstellung) {
             case EINSTELLUNG_PIC:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("PIC");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC");
 
             case EINSTELLUNG_NORMAL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Normal");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal");
 
             case EINSTELLUNG_MOTS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("MOTS");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS");
 
             default:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -196,28 +196,28 @@ public class Matchdetails implements plugins.IMatchDetails {
 
         switch (taktikTyp) {
             case TAKTIK_NORMAL:
-                return properties.getProperty("Normal");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal");
 
             case TAKTIK_PRESSING:
-                return properties.getProperty("TT_Pressing");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TT_Pressing");
 
             case TAKTIK_KONTER:
-                return properties.getProperty("TT_Counter");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TT_Counter");
 
             case TAKTIK_MIDDLE:
-                return properties.getProperty("TT_MIDDLE");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TT_MIDDLE");
 
             case TAKTIK_WINGS:
-                return properties.getProperty("TT_WINGS");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TT_WINGS");
 
             case TAKTIK_CREATIVE:
-                return properties.getProperty("tt_creative");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_creative");
             
             case TAKTIK_LONGSHOTS:
-            	return properties.getProperty("Tactic.LongShots");
+            	return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
                 
             default:
-                return properties.getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 

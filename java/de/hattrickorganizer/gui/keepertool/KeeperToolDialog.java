@@ -43,7 +43,7 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
      */
     public KeeperToolDialog(JFrame owner) {
         super(owner, false);
-        setTitle(HOVerwaltung.instance().getResource().getProperty("KeeperTool"));
+        setTitle(HOVerwaltung.instance().getLanguageString("KeeperTool"));
 
         resultPanel = new ResultPanel(this);
         initComponents();
@@ -163,22 +163,16 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
         final JPanel main = new JPanel(new BorderLayout());
         main.setOpaque(false);
 
-        rosterButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("Spieleruebersicht"));
+        rosterButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
         rosterButton.setSelected(true);
         rosterButton.addActionListener(this);
         rosterButton.setOpaque(false);
 
-        scoutButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("TransferScout"));
+        scoutButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TransferScout"));
         scoutButton.addActionListener(this);
         scoutButton.setOpaque(false);
 
-        final JRadioButton manualButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                  .getResource()
-                                                                                                  .getProperty("Manual"));
+        final JRadioButton manualButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Manual"));
         manualButton.addActionListener(this);
         manualButton.setOpaque(false);
 

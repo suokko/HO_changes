@@ -305,7 +305,7 @@ public class TrainingsManager implements ITrainingsManager {
                                           "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             HOVerwaltung.instance().recalcSubskills(showBar, null);
 
-            //tools.Helper.showMessage ( this, model.HOVerwaltung.instance ().getResource ().getProperty( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
+            //tools.Helper.showMessage ( this, model.HOVerwaltung.instance().getLanguageString( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
         }
     }
 
