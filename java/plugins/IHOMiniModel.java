@@ -3,6 +3,12 @@ package plugins;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+
+import de.hattrickorganizer.logik.exporter.ExportMatchData;
+import de.hattrickorganizer.model.FutureTrainingWeek;
+import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.TrainingPerWeek;
 
 
 /**
@@ -33,14 +39,14 @@ public interface IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getAllOldSpieler();
+    public Vector<Spieler> getAllOldSpieler();
 
     /**
      * Returns all Player of the actual HRF
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getAllSpieler();
+    public Vector<Spieler> getAllSpieler();
 
     //----------Basics----------------------------------------
 
@@ -56,7 +62,7 @@ public interface IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getDBManualTrainingsVector();
+    public Vector<TrainingPerWeek> getDBManualTrainingsVector();
 
     /**
      * Getter for property m_lcDownloadHelper.
@@ -302,7 +308,7 @@ public interface IHOMiniModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public List getFutureTrainingWeeks();
+	public List<FutureTrainingWeek> getFutureTrainingWeeks();
 
 	/**
 	 * stores FutureTrainingWeek in database
@@ -328,5 +334,5 @@ public interface IHOMiniModel {
 	 *
 	 * @return List of IExportMatchData objects
 	 */
-	public List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
+	public List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
 }
