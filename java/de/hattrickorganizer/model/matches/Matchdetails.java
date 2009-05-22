@@ -9,7 +9,6 @@ package de.hattrickorganizer.model.matches;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +45,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     private Timestamp m_clSpielDatum;
 
     /** TODO Missing Parameter Documentation */
-    private Vector m_vHighlights = new Vector();
+    private Vector<MatchHighlight> m_vHighlights = new Vector<MatchHighlight>();
 
     /** TODO Missing Parameter Documentation */
     private int m_iArenaID = -1;
@@ -191,8 +190,6 @@ public class Matchdetails implements plugins.IMatchDetails {
      * @return TODO Missing Return Method Documentation
      */
     public static String getNameForTaktik(int taktikTyp) {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource();
 
         switch (taktikTyp) {
             case TAKTIK_NORMAL:
@@ -632,7 +629,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @param m_vHighlights New value of property m_vHighlights.
      */
-    public final void setHighlights(java.util.Vector m_vHighlights) {
+    public final void setHighlights(Vector<MatchHighlight> m_vHighlights) {
         this.m_vHighlights = m_vHighlights;
     }
 
@@ -641,7 +638,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @return Value of property m_vHighlights.
      */
-    public final java.util.Vector getHighlights() {
+    public final Vector<MatchHighlight> getHighlights() {
         return m_vHighlights;
     }
 
@@ -874,7 +871,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @return The list of last names that started the match
      */
-    public final List getLineup(boolean home) {
+    public final List<String> getLineup(boolean home) {
         try {
             final Pattern p = Pattern.compile(".-.-.");
             final Matcher m = p.matcher(m_sMatchreport);
@@ -888,7 +885,7 @@ public class Matchdetails implements plugins.IMatchDetails {
             start = m_sMatchreport.indexOf(":", start);
 
             final int end = m_sMatchreport.indexOf(".", start);
-            final List lineup = new ArrayList();
+            final List<String> lineup = new ArrayList<String>();
 
             final String[] zones = m_sMatchreport.substring(start + 1, end).split(" - ");
 
@@ -902,7 +899,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
             return lineup;
         } catch (RuntimeException e) {
-            return new ArrayList();
+            return new ArrayList<String>();
         }
     }
 

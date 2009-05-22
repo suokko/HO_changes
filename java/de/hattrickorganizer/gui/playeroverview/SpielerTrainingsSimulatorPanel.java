@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -40,7 +39,10 @@ import de.hattrickorganizer.tools.Helper;
 final class SpielerTrainingsSimulatorPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, ItemListener, ActionListener, FocusListener
 {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = 7657564758631332932L;
+	
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     private static Dimension CBSIZE = new Dimension(Helper.calcCellWidth(120),
                                                     Helper.calcCellWidth(25));
@@ -507,7 +509,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         //Eingaben-------
         final GridBagLayout eingabenLayout = new GridBagLayout();
         final GridBagConstraints eingabenconstraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         eingabenconstraints.anchor = GridBagConstraints.WEST;
         eingabenconstraints.fill = GridBagConstraints.NONE;
         eingabenconstraints.weightx = 0.0;

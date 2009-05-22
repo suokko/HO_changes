@@ -9,7 +9,6 @@ package de.hattrickorganizer.model;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.model.CBItem;
@@ -22,7 +21,10 @@ import de.hattrickorganizer.tools.HOLogger;
  * @author thomas.werth
  */
 public class SpielerPosition implements java.io.Serializable, Comparable, plugins.ISpielerPosition {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = -4822360078242315135L;
+
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     /** Array mit den Konstanten (CBItems) für die Positionen, Ohne Ausgewechselt */
     public static final CBItem[] POSITIONEN = {
@@ -215,75 +217,73 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
      * @return TODO Missing Return Method Documentation
      */
     public static String getKurzNameForPosition(byte posId) {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource();
 
         switch (posId) {
             case TORWART:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TORW");
+                return HOVerwaltung.instance().getLanguageString("TORW");
 
             case INNENVERTEIDIGER:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IV");
+                return HOVerwaltung.instance().getLanguageString("IV");
 
             case INNENVERTEIDIGER_AUS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IVA");
+                return HOVerwaltung.instance().getLanguageString("IVA");
 
             case INNENVERTEIDIGER_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IVO");
+                return HOVerwaltung.instance().getLanguageString("IVO");
 
             case AUSSENVERTEIDIGER:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AV");
+                return HOVerwaltung.instance().getLanguageString("AV");
 
             case AUSSENVERTEIDIGER_IN:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVI");
+                return HOVerwaltung.instance().getLanguageString("AVI");
 
             case AUSSENVERTEIDIGER_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVO");
+                return HOVerwaltung.instance().getLanguageString("AVO");
 
             case AUSSENVERTEIDIGER_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVD");
+                return HOVerwaltung.instance().getLanguageString("AVD");
 
             case MITTELFELD:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MIT");
+                return HOVerwaltung.instance().getLanguageString("MIT");
 
             case MITTELFELD_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITO");
+                return HOVerwaltung.instance().getLanguageString("MITO");
 
             case MITTELFELD_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITD");
+                return HOVerwaltung.instance().getLanguageString("MITD");
 
             case MITTELFELD_AUS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITA");
+                return HOVerwaltung.instance().getLanguageString("MITA");
 
             case FLUEGELSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLG");
+                return HOVerwaltung.instance().getLanguageString("FLG");
 
             case FLUEGELSPIEL_IN:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGI");
+                return HOVerwaltung.instance().getLanguageString("FLGI");
 
             case FLUEGELSPIEL_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGO");
+                return HOVerwaltung.instance().getLanguageString("FLGO");
 
             case FLUEGELSPIEL_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGD");
+                return HOVerwaltung.instance().getLanguageString("FLGD");
 
             case STURM:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STU");
+                return HOVerwaltung.instance().getLanguageString("STU");
 
             case STURM_AUS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STUA");
+                return HOVerwaltung.instance().getLanguageString("STUA");
                 
             case STURM_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STUD");
+                return HOVerwaltung.instance().getLanguageString("STUD");
 
             case AUSGEWECHSELT1:
             case AUSGEWECHSELT2:
             case AUSGEWECHSELT3:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ausgewechselt");
+                return HOVerwaltung.instance().getLanguageString("Ausgewechselt");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
             default:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -356,78 +356,76 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
      * @return TODO Missing Return Method Documentation
      */
     public static String getNameForPosition(byte posId) {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource();
 
         switch (posId) {
             case TORWART:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart");
+                return HOVerwaltung.instance().getLanguageString("Torwart");
 
             case INNENVERTEIDIGER:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger");
+                return HOVerwaltung.instance().getLanguageString("Innenverteidiger");
 
             case INNENVERTEIDIGER_AUS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus");
+                return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus");
 
             case INNENVERTEIDIGER_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off");
+                return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off");
 
             case AUSSENVERTEIDIGER:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger");
 
             case AUSSENVERTEIDIGER_IN:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In");
 
             case AUSSENVERTEIDIGER_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off");
 
             case AUSSENVERTEIDIGER_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def");
 
             case MITTELFELD:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld");
 
             case MITTELFELD_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Off");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld_Off");
 
             case MITTELFELD_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Def");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld_Def");
 
             case MITTELFELD_AUS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus");
 
             case FLUEGELSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegel");
+                return HOVerwaltung.instance().getLanguageString("Fluegel");
 
             case FLUEGELSPIEL_IN:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_In");
+                return HOVerwaltung.instance().getLanguageString("Fluegelspiel_In");
 
             case FLUEGELSPIEL_OFF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off");
+                return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off");
 
             case FLUEGELSPIEL_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def");
+                return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def");
 
             case STURM:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm");
+                return HOVerwaltung.instance().getLanguageString("Sturm");
 
             case STURM_DEF:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm_Def");
+                return HOVerwaltung.instance().getLanguageString("Sturm_Def");
 
             case STURM_AUS:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm_Aus");
+                return HOVerwaltung.instance().getLanguageString("Sturm_Aus");
 
             case AUSGEWECHSELT1:
             case AUSGEWECHSELT2:
             case AUSGEWECHSELT3:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ausgewechselt");
+                return HOVerwaltung.instance().getLanguageString("Ausgewechselt");
 
             case TRAINER:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Trainer");
+                return HOVerwaltung.instance().getLanguageString("Trainer");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
             default:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 

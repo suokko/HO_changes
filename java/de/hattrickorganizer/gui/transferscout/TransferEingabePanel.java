@@ -6,15 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
+//import java.awt.datatransfer.Clipboard;
+//import java.awt.datatransfer.DataFlavor;
+//import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -76,7 +75,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private DoppelLabelEntry jpWertSturmAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpWertSturmDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpWertTor = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private JButton jbAddTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AddTempspieler"));
+    private JButton jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
     private JButton jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                           .loadImage("gui/bilder/Drucken.png")));
     private JButton jbEntfernen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
@@ -96,7 +95,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JComboBox jcbTorschuss = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbTorwart = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbVerteidigung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JLabel jlStatus = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_status")
+    private JLabel jlStatus = new JLabel(HOVerwaltung.instance().getLanguageString("scout_status")
                                          + ": ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
     private JTextArea jtaNotizen = new JTextArea();
@@ -146,19 +145,19 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             // If scout entry already exists
             if (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(clScoutEintrag
                                                                                    .getPlayerID()) != null) {
-                jbHinzufuegen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Transferscout_ersetzen"));
-                jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
+                jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_ersetzen"));
+                jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
                 jbEntfernen.setEnabled(true);
             } else {
-                jbHinzufuegen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
-                jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+                jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
+                jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
                 jbEntfernen.setEnabled(false);
             }
 
             jbHinzufuegen.setEnabled(true);
         } else {
             clScoutEintrag = new ScoutEintrag();
-            jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
             jbEntfernen.setEnabled(false);
             jbHinzufuegen.setEnabled(false);
         }
@@ -537,15 +536,16 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         if (valid
             && (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(id) != null)) {
             jbHinzufuegen.setEnabled(true);
-            jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
+            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
             jbEntfernen.setEnabled(true);
         } else {
             jbHinzufuegen.setEnabled(true);
-            jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
             jbEntfernen.setEnabled(false);
         }
     }
-
+    
+    /* Not used anymore
     private void copyFromClipBoard() {
     	try {
 			Clipboard clipboard = getToolkit().getSystemClipboard ();
@@ -568,6 +568,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 			e.printStackTrace();
 		}
     }
+    */
 
     /**
      * Calls playerconverter and fills boxes to the corresponding values
@@ -631,7 +632,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 setLabels();
             }
         } catch (Exception e) {
-            message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_error");
+            message = HOVerwaltung.instance().getLanguageString("scout_error");
         }
 
         jtaCopyPaste.setText("");
@@ -639,19 +640,19 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         if (message.equals("")) {
             switch (pc.getError()) {
                 case 1:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_warning");
+                    message = HOVerwaltung.instance().getLanguageString("scout_warning");
                     break;
 
                 case 2:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_error");
+                    message = HOVerwaltung.instance().getLanguageString("scout_error");
                     break;
 
                 default:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_success");
+                    message = HOVerwaltung.instance().getLanguageString("scout_success");
             }
         }
 
-        jlStatus.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_status") + ": "
+        jlStatus.setText(HOVerwaltung.instance().getLanguageString("scout_status") + ": "
                          + message);
     }
 
@@ -661,7 +662,6 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;

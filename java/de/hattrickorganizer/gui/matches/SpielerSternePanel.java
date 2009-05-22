@@ -9,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -31,9 +30,12 @@ import de.hattrickorganizer.tools.Helper;
  * Zeigt den Spieler an der Position an und dessen Sterne
  */
 final class SpielerSternePanel extends ImagePanel implements ActionListener {
+	
+	private static final long serialVersionUID = 744463551751056443L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     protected int m_iPositionsID = -1;
     private final JButton m_jbSpieler = new JButton();
     private final JLabel m_jlPosition = new JLabel();
@@ -221,7 +223,6 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
      * @param taktik TODO Missing Constructuor Parameter Documentation
      */
     protected final void initLabel(int posid, byte taktik) {
-    	final Properties properties = HOVerwaltung.instance().getResource();
         if (m_iPositionsID == ISpielerPosition.ausgewechselt) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
         } else if (m_iPositionsID == ISpielerPosition.standard) {

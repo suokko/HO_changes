@@ -309,7 +309,7 @@ public class TransferTableModel extends AbstractTableModel {
     //Notes
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Notizen"),
                                         };
-    private Vector m_vScoutEintraege;
+    private Vector<ScoutEintrag> m_vScoutEintraege;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -318,7 +318,7 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @param scouteintraege TODO Missing Constructuor Parameter Documentation
      */
-    public TransferTableModel(Vector scouteintraege) {
+    public TransferTableModel(Vector<ScoutEintrag> scouteintraege) {
         m_vScoutEintraege = scouteintraege;
         initData();
     }
@@ -416,7 +416,7 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final java.util.Vector getScoutListe() {
+    public final java.util.Vector<ScoutEintrag> getScoutListe() {
         return m_vScoutEintraege;
     }
 
@@ -474,7 +474,7 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @param scouteintraege TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector scouteintraege) {
+    public final void setValues(Vector<ScoutEintrag> scouteintraege) {
         m_vScoutEintraege = scouteintraege;
         initData();
     }

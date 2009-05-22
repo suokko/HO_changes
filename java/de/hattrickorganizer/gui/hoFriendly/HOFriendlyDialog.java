@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.JFrame;
 
@@ -21,9 +20,10 @@ import de.hattrickorganizer.model.SpielerPosition;
 public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.model.MatchScreen,
                                                         java.awt.event.WindowListener
 {
+	private static final long serialVersionUID = 5146409894948790465L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     public boolean m_bAbbruch;
 
     /** TODO Missing Parameter Documentation */
@@ -428,7 +428,6 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         //Message anzeigen
         //Tabelle!
         final StringBuffer buffer = new StringBuffer();
-        final Properties properties = HOVerwaltung.instance().getResource();
         //Kopfzeile
         buffer.append("<Table border=0><tr><th></th><th>");
         buffer.append(HEIMTEAM);

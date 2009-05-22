@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -21,9 +20,11 @@ import javax.swing.SwingConstants;
  * Zeigt die Finanzen für die aktuelle oder die vorherige Woche an
  */
 final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
+	
+	private static final long serialVersionUID = 5220006612961140628L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private final ColorLabelEntry m_jpAGehaelter = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+	private final ColorLabelEntry m_jpAGehaelter = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                  ColorLabelEntry.BG_STANDARD,
                                                                  SwingConstants.LEFT);
     private final ColorLabelEntry m_jpAGesamt = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
@@ -148,7 +149,6 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;

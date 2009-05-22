@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,7 +43,10 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
                                                               java.awt.event.ItemListener,
                                                               java.awt.event.ActionListener
 {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = 3466993172643378958L;
+	
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     public static final Dimension COMPONENTENSIZE = new Dimension(Helper.calcCellWidth(150),
                                                              Helper.calcCellWidth(18));
@@ -737,7 +739,6 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         final JPanel panel = new ImagePanel();
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         //constraints.anchor              =   GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.0;

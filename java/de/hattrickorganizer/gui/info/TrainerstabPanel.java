@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -20,7 +19,10 @@ import javax.swing.SwingConstants;
  * Zeigt die Vereininformationen an
  */
 final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = 8873968321073527819L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private final ColorLabelEntry m_jpAerzte = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                              ColorLabelEntry.BG_STANDARD,
@@ -95,7 +97,6 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;

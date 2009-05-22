@@ -9,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -43,7 +42,10 @@ import de.hattrickorganizer.tools.PlayerHelper;
  * Zeigt Details zu einem Spieler zu einer Zeit an
  */
 final class SpielerDetailDialog extends JDialog implements WindowListener {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = 7104209757847006926L;
+	
+	//~ Static fields/initializers -----------------------------------------------------------------
     private static final Dimension COMPONENTENSIZE3 = new Dimension(Helper.calcCellWidth(100),
                                                                     Helper.calcCellWidth(18));
     private static final Dimension COMPONENTENSIZE4 = new Dimension(Helper.calcCellWidth(50),
@@ -616,7 +618,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         final JPanel panel = new ImagePanel();
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
 
         //constraints.anchor              =   GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.BOTH;
