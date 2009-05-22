@@ -538,33 +538,27 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
         for (int i = 0; i < m_aSerie.length; i++) {
             switch (m_aSerie[i]) {
                 case H_SIEG:
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("SerieHeimSieg"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieHeimSieg"));
                     break;
 
                 case H_UN:
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("SerieHeimUnendschieden"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieHeimUnendschieden"));
                     break;
 
                 case H_NIED:
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("SerieHeimNiederlage"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieHeimNiederlage"));
                     break;
 
                 case A_SIEG:
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("SerieAuswaertsSieg"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"));
                     break;
 
                 case A_UN:
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("SerieAuswaertsUnendschieden"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"));
                     break;
 
                 case A_NIED:
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("SerieAuswaertsNiederlage"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"));
                     break;
 
                 default:

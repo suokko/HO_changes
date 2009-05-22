@@ -183,25 +183,15 @@ public final class SonstigeOptionenPanel extends ImagePanel
 
     /** TODO Missing Parameter Documentation */
     public de.hattrickorganizer.gui.model.CBItem[] SORTIERUNG = {
-                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                     .getResource()
-                                                                                                                                                     .getProperty("Name"),
+                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
                                                                                                               gui.UserParameter.SORT_NAME),
-                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                     .getResource()
-                                                                                                                                                     .getProperty("BestePosition"),
+                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
                                                                                                               gui.UserParameter.SORT_BESTPOS),
-                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                     .getResource()
-                                                                                                                                                     .getProperty("Aufgestellt"),
+                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufgestellt"),
                                                                                                               gui.UserParameter.SORT_AUFGESTELLT),
-                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                     .getResource()
-                                                                                                                                                     .getProperty("Gruppe"),
+                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gruppe"),
                                                                                                               gui.UserParameter.SORT_GRUPPE),
-                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                     .getResource()
-                                                                                                                                                     .getProperty("Bewertung"),
+                                                                    new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"),
                                                                                                               gui.UserParameter.SORT_BEWERTUNG),
                                                                 };
     private ComboBoxPanel m_jcbNachkomma;
@@ -303,60 +293,41 @@ public final class SonstigeOptionenPanel extends ImagePanel
     private void initComponents() {
         setLayout(new GridLayout(10, 1, 4, 4));
 
-        //        m_jcbHTIP= new ComboBoxPanel( model.HOVerwaltung.instance ().getResource ().getProperty( "Hattrick" ), HT_IP_ADRESSEN, 120 );
+        //        m_jcbHTIP= new ComboBoxPanel( model.HOVerwaltung.instance().getLanguageString( "Hattrick" ), HT_IP_ADRESSEN, 120 );
         //        m_jcbHTIP.setSelectedItem ( gui.UserParameter.temp ().htip );
         //        m_jcbHTIP.addItemListener ( this );
         //        add( m_jcbHTIP );
-        m_jslDeadline = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("TransferWecker"),
+        m_jslDeadline = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TransferWecker"),
                                         60, 0, 1f / 60000f, 1.0f, 120);
-        m_jslDeadline.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("tt_Optionen_TransferWecker"));
+        m_jslDeadline.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TransferWecker"));
         m_jslDeadline.setValue((float) gui.UserParameter.temp().deadlineFrist);
         m_jslDeadline.addChangeListener(this);
         add(m_jslDeadline);
 
-        m_jslMinStaerke = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                 .getResource()
-                                                                                 .getProperty("MinStaerkeIdealPos"),
+        m_jslMinStaerke = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MinStaerkeIdealPos"),
                                           100, 0, 10, 0.1f, 120);
-        m_jslMinStaerke.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("tt_Optionen_MinStaerkeIdealPos"));
+        m_jslMinStaerke.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_MinStaerkeIdealPos"));
         m_jslMinStaerke.setValue(gui.UserParameter.temp().MinIdealPosStk);
         m_jslMinStaerke.addChangeListener(this);
         add(m_jslMinStaerke);
 
-        m_jslWetterEffekt = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Wettereffekt"),
+        m_jslWetterEffekt = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wettereffekt"),
                                             100, 0, 100, 1f, 120);
-        m_jslWetterEffekt.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("tt_Optionen_Wettereffekt"));
+        m_jslWetterEffekt.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Wettereffekt"));
         m_jslWetterEffekt.setValue(gui.UserParameter.temp().WetterEffektBonus);
         m_jslWetterEffekt.addChangeListener(this);
         add(m_jslWetterEffekt);
 
-		m_jslFutureWeeks = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-																				   .getResource()
-																				   .getProperty("futureWeeks"),
+		m_jslFutureWeeks = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("futureWeeks"),
 											80, 0, 1, 1f, 120);
-		m_jslFutureWeeks.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-																				.getResource()
-																				.getProperty("tt_Optionen_futureWeeks"));
+		m_jslFutureWeeks.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_futureWeeks"));
 		m_jslFutureWeeks.setValue(gui.UserParameter.temp().futureWeeks);
 		m_jslFutureWeeks.addChangeListener(this);
 		add(m_jslFutureWeeks);
 
-        m_jslSchriftgroesse = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("Schriftgroesse"),
+        m_jslSchriftgroesse = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Schriftgroesse"),
                                               12, 8, 1, 1.0f, 120);
-        m_jslSchriftgroesse.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("tt_Optionen_Schriftgroesse"));
+        m_jslSchriftgroesse.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Schriftgroesse"));
         m_jslSchriftgroesse.setValue(gui.UserParameter.temp().schriftGroesse);
         m_jslSchriftgroesse.addChangeListener(this);
         add(m_jslSchriftgroesse);
@@ -368,82 +339,54 @@ public final class SonstigeOptionenPanel extends ImagePanel
         } catch (Exception e) {
         }
 
-        m_jcbSprachdatei = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Sprachdatei"),
+        m_jcbSprachdatei = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sprachdatei"),
                                              sprachdateien, 120);
-        m_jcbSprachdatei.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("tt_Optionen_Sprachdatei"));
+        m_jcbSprachdatei.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Sprachdatei"));
         m_jcbSprachdatei.setSelectedItem(gui.UserParameter.temp().sprachDatei);
         m_jcbSprachdatei.addItemListener(this);
         add(m_jcbSprachdatei);
 
-        m_jcbTimeZoneDifference = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                           .getResource()
-                                                                                           .getProperty("options_TimeZone"),
+        m_jcbTimeZoneDifference = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("options_TimeZone"),
                                                     TIMEZONES, 120);
-        m_jcbTimeZoneDifference.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("tt_Options_TimeZone"));
+        m_jcbTimeZoneDifference.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Options_TimeZone"));
         m_jcbTimeZoneDifference.setSelectedId(gui.UserParameter.temp().TimeZoneDifference);
         m_jcbTimeZoneDifference.addItemListener(this);
         add(m_jcbTimeZoneDifference);
 
         java.util.Arrays.sort(WAEHRUNGEN);
-        m_jcbWaehrung = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                 .getResource()
-                                                                                 .getProperty("Waehrungsfaktor"),
+        m_jcbWaehrung = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Waehrungsfaktor"),
                                           WAEHRUNGEN, 120);
         m_jcbWaehrung.setSelectedId(gui.UserParameter.temp().waehrungsID);
         m_jcbWaehrung.addItemListener(this);
 
         //        add( m_jcbWaehrung );
-        m_jcbSortierung = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Defaultsortierung"),
+        m_jcbSortierung = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Defaultsortierung"),
                                             SORTIERUNG, 120);
-        m_jcbSortierung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("tt_Optionen_Defaultsortierung"));
+        m_jcbSortierung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Defaultsortierung"));
         m_jcbSortierung.setSelectedId(gui.UserParameter.temp().standardsortierung);
         m_jcbSortierung.addItemListener(this);
         add(m_jcbSortierung);
 
-        m_jcbNachkomma = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("Nachkommastellen"),
+        m_jcbNachkomma = new ComboBoxPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Nachkommastellen"),
                                            NACHKOMMASTELLEN, 120);
-        m_jcbNachkomma.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Optionen_Nachkommastellen"));
+        m_jcbNachkomma.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_Nachkommastellen"));
         m_jcbNachkomma.setSelectedId(gui.UserParameter.temp().anzahlNachkommastellen);
         m_jcbNachkomma.addItemListener(this);
         add(m_jcbNachkomma);
 
         /*
-        m_jchEinzelnePositionen = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("EinzelneTabellenPositionen"));
-        m_jchEinzelnePositionen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("tt_Optionen_EinzelneTabellenPositionen"));
+        m_jchEinzelnePositionen = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("EinzelneTabellenPositionen"));
+        m_jchEinzelnePositionen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_EinzelneTabellenPositionen"));
         m_jchEinzelnePositionen.setOpaque(false);
         m_jchEinzelnePositionen.setSelected(gui.UserParameter.temp().einzelnePositionenAnzeigen);
         m_jchEinzelnePositionen.addItemListener(this);
         add(m_jchEinzelnePositionen);
 */
-        m_jchZahlenBewertung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("SkillZahlen")
+        m_jchZahlenBewertung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SkillZahlen")
                                              + " : "
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("passabel")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("passabel")
                                              + " (6)");
-        m_jchZahlenBewertung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("tt_Optionen_SkillZahlen"));
+        m_jchZahlenBewertung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_SkillZahlen"));
         m_jchZahlenBewertung.setOpaque(false);
         m_jchZahlenBewertung.setSelected(gui.UserParameter.temp().zahlenFuerSkill);
         m_jchZahlenBewertung.addItemListener(this);

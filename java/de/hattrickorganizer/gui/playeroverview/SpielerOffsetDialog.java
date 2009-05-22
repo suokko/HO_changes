@@ -52,7 +52,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 	protected SpielerOffsetDialog(javax.swing.JFrame owner, Spieler spieler) {
 		super(owner, true);
 		setTitle(
-			HOVerwaltung.instance().getResource().getProperty(
+			HOVerwaltung.instance().getLanguageString(
 				"OffsetTitle")
 				+ " "
 				+ spieler.getName());
@@ -132,7 +132,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 
 		Properties properties = HOVerwaltung.instance().getResource();
 		m_jpSpielaufbau =
-			new SliderPanel(properties.getProperty(	"Spielaufbau"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString(	"Spielaufbau"),
 				100,
 				0,
 				1,
@@ -142,7 +142,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpSpielaufbau);
 
 		m_jpFluegelspiel =
-			new SliderPanel(properties.getProperty("Fluegelspiel"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
 				100,
 				0,
 				1,
@@ -152,7 +152,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpFluegelspiel);
 
 		m_jpTorschuss =
-			new SliderPanel(properties.getProperty("Torschuss"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("Torschuss"),
 				100,
 				0,
 				1,
@@ -162,7 +162,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpTorschuss);
 
 		m_jpTorwart =
-			new SliderPanel(properties.getProperty("Torwart"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("Torwart"),
 				100,
 				0,
 				1,
@@ -172,7 +172,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpTorwart);
 
 		m_jpPasspiel =
-			new SliderPanel(properties.getProperty("Passpiel"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("Passpiel"),
 				100,
 				0,
 				1,
@@ -182,7 +182,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpPasspiel);
 
 		m_jpVerteidigung =
-			new SliderPanel(properties.getProperty("Verteidigung"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("Verteidigung"),
 				100,
 				0,
 				1,
@@ -192,7 +192,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpVerteidigung);
 
 		m_jpStandard =
-			new SliderPanel(properties.getProperty("Standards"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("Standards"),
 				100,
 				0,
 				1,
@@ -209,7 +209,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		getContentPane().add(panel);
 
 		m_jbOK =
-			new JButton(properties.getProperty("Uebernehmen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
 		m_jbOK.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -221,7 +221,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		getContentPane().add(m_jbOK);
 
 		m_jbAbbrechen =
-			new JButton(properties.getProperty("Abbrechen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
 		m_jbAbbrechen.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.EAST;

@@ -64,7 +64,7 @@ public class LoginDialog extends JDialog
 	public LoginDialog(HOMainFrame mainFrame) {
 		super(
 			mainFrame,
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Login"),
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Login"),
 			true);
 
 		this.m_clMainFrame = mainFrame;
@@ -288,28 +288,28 @@ public class LoginDialog extends JDialog
 				if (MyConnector.instance().hasSecLogin()) {
 					if (!MyConnector.instance().login()) {
 						m_clMainFrame.getInfoPanel().setLangInfoText(
-							de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
+							de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
 								+ " : Error login Failed. Maybe wrong Password? Make sure that you use the securitycode, NOT the HT-Password! :"
 								+ gui.UserParameter.instance().htip,
 							de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 						de.hattrickorganizer.tools.Helper.showMessage(
 							this,
-							de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
+							de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
 								+ " : Error login Failed. Maybe wrong Password? Make sure that you use the securitycode, NOT the HT-Password! :"
 								+ gui.UserParameter.instance().htip,
-							de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fehler"),
+							de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
 							JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
 					//Info
 					m_clMainFrame.getInfoPanel().setLangInfoText(
-						de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
+						de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
 							+ " : No Secure Password set or general connection problem:" + gui.UserParameter.instance().htip, de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 					de.hattrickorganizer.tools.Helper.showMessage(
 						this,
-						de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Downloadfehler")
+						de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
 							+ " : No Secure Password set or general connection problem:"	+ gui.UserParameter.instance().htip,
-						de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fehler"),
+						de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
 						JOptionPane.ERROR_MESSAGE);
 					LoginDialog.loginWaitDialog.setVisible(false);
 					return;
@@ -318,18 +318,18 @@ public class LoginDialog extends JDialog
 		} catch (Exception e) {
 			//Info
 			m_clMainFrame.getInfoPanel().setLangInfoText(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"Downloadfehler")
 					+ " : Error login Failed. Maybe wrong Password ? :"
 					+ gui.UserParameter.instance().htip,
 				de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 			de.hattrickorganizer.tools.Helper.showMessage(
 				this,
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"Downloadfehler")
 					+ " : Error login Failed. Maybe wrong Password ? :"
 					+ gui.UserParameter.instance().htip,
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"Fehler"),
 				JOptionPane.ERROR_MESSAGE);
 			LoginDialog.loginWaitDialog.setVisible(false);
@@ -381,10 +381,10 @@ public class LoginDialog extends JDialog
 
 		label =
 			new JLabel(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"Benutzername"));
 		label.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_Name"));
 		label.setLocation(10, 15);
 		label.setSize(180, 25);
@@ -398,10 +398,10 @@ public class LoginDialog extends JDialog
 
 		label =
 			new JLabel(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"securitycode"));
 		label.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_Passwort"));
 		label.setLocation(10, 50);
 		label.setSize(185, 25);
@@ -423,7 +423,7 @@ public class LoginDialog extends JDialog
 		panel.setLocation(5, 5);
 		panel.setBorder(
 			new javax.swing.border.TitledBorder(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"Benutzerdaten")));
 
 		getContentPane().add(panel);
@@ -433,11 +433,11 @@ public class LoginDialog extends JDialog
 		panel.setLayout(null);
 
 		m_jchProxyAktiv.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_Proxy"));
 		m_jchProxyAktiv.setLocation(5, 15);
 		m_jchProxyAktiv.setText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"ProxyAktiv"));
 		m_jchProxyAktiv.setSize(250, 25);
 		m_jchProxyAktiv.addActionListener(this);
@@ -446,10 +446,10 @@ public class LoginDialog extends JDialog
 
 		label =
 			new JLabel(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"ProxyHost"));
 		label.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_ProxyHost"));
 		label.setLocation(10, 40);
 		label.setSize(185, 25);
@@ -463,10 +463,10 @@ public class LoginDialog extends JDialog
 
 		label =
 			new JLabel(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"ProxyPort"));
 		label.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_ProxyPort"));
 		label.setLocation(10, 75);
 		label.setSize(180, 25);
@@ -480,11 +480,11 @@ public class LoginDialog extends JDialog
 
 		//Auth
 		m_jchProxyAuthAktiv.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_ProxyAuth"));
 		m_jchProxyAuthAktiv.setLocation(5, 120);
 		m_jchProxyAuthAktiv.setText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"ProxyAuthAktiv"));
 		m_jchProxyAuthAktiv.setSize(250, 25);
 		m_jchProxyAuthAktiv.addActionListener(this);
@@ -493,10 +493,10 @@ public class LoginDialog extends JDialog
 
 		label =
 			new JLabel(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"ProxyAuthName"));
 		label.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_ProxyAuthName"));
 		label.setLocation(10, 155);
 		label.setSize(185, 25);
@@ -509,10 +509,10 @@ public class LoginDialog extends JDialog
 
 		label =
 			new JLabel(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"ProxyAuthPassword"));
 		label.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_ProxyAuthPassword"));
 		label.setLocation(10, 190);
 		label.setSize(180, 25);
@@ -527,17 +527,17 @@ public class LoginDialog extends JDialog
 		panel.setLocation(5, 100);
 		panel.setBorder(
 			new javax.swing.border.TitledBorder(
-				de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+				de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 					"Proxydaten")));
 
 		getContentPane().add(panel);
 
 		//Buttons
 		m_jbOK.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_Anmelden"));
 		m_jbOK.setText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"Anmelden"));
 		m_jbOK.setLocation(5, 340);
 		m_jbOK.setSize(170, 35);
@@ -545,10 +545,10 @@ public class LoginDialog extends JDialog
 		getContentPane().add(m_jbOK);
 
 		m_jbAbbrechen.setToolTipText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"tt_Login_Abbrechen"));
 		m_jbAbbrechen.setText(
-			de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(
+			de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(
 				"Abbrechen"));
 		m_jbAbbrechen.setLocation(190, 340);
 		m_jbAbbrechen.setSize(170, 35);

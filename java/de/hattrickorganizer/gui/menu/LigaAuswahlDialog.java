@@ -24,20 +24,12 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 public class LigaAuswahlDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("Abbrechen"));
-    private JButton m_jbOk = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("Download"));
+    private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+    private JButton m_jbOk = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"));
     private JComboBox m_jcbLiga;
-    private JRadioButton m_jrbLigaAktuell = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("AktuelleLiga"),
+    private JRadioButton m_jrbLigaAktuell = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleLiga"),
                                                              true);
-    private JRadioButton m_jrbLigaAndere = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                   .getResource()
-                                                                                                   .getProperty("AndereLiga"),
+    private JRadioButton m_jrbLigaAndere = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AndereLiga"),
                                                             false);
     private int m_iLigaId = -2;
 
@@ -51,7 +43,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
      */
     public LigaAuswahlDialog(JDialog owner, int seasonid) {
         super(owner,
-              de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Liga"),
+              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Liga"),
               true);
 
         initComponents(seasonid);
@@ -119,8 +111,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
     private void initComponents(int seasonid) {
         setContentPane(new ImagePanel(new GridLayout(4, 2, 4, 4)));
 
-        JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("Season"));
+        JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season"));
         getContentPane().add(label);
 
         final JTextField textfield = new JTextField(seasonid + "");
@@ -129,9 +120,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
 
         final ButtonGroup bg = new ButtonGroup();
 
-        m_jrbLigaAktuell.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("tt_LigaDownload_Aktuell"));
+        m_jrbLigaAktuell.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_LigaDownload_Aktuell"));
         m_jrbLigaAktuell.setOpaque(false);
         m_jrbLigaAktuell.addActionListener(this);
         bg.add(m_jrbLigaAktuell);
@@ -141,30 +130,25 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
         label = new JLabel();
         getContentPane().add(label);
 
-        m_jrbLigaAndere.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("tt_LigaDownload_Andere"));
+        m_jrbLigaAndere.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_LigaDownload_Andere"));
         m_jrbLigaAndere.setOpaque(false);
         m_jrbLigaAndere.addActionListener(this);
         bg.add(m_jrbLigaAndere);
         getContentPane().add(m_jrbLigaAndere);
 
         m_jcbLiga = new JComboBox(fillCB());
-        m_jcbLiga.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("tt_LigaDownload_LigaID"));
+        m_jcbLiga.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_LigaDownload_LigaID"));
         m_jcbLiga.setEnabled(false);
         m_jcbLiga.setSelectedItem(new Integer(de.hattrickorganizer.database.DBZugriff.instance()
                                                                                      .getLigaID4SaisonID(seasonid)));
         m_jcbLiga.setEditable(true);
         getContentPane().add(m_jcbLiga);
 
-        m_jbOk.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("tt_Download_Start"));
+        m_jbOk.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
         m_jbOk.addActionListener(this);
         getContentPane().add(m_jbOk);
 
-        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("tt_Download_Abbrechen"));
+        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
         m_jbAbbrechen.addActionListener(this);
         getContentPane().add(m_jbAbbrechen);
 
@@ -190,22 +174,18 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
             final int temp = Integer.parseInt(text);
 
             if (!negativErlaubt && (temp < 0)) {
-                message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("negativVerboten");
+                message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("negativVerboten");
                 throw new NumberFormatException();
             }
 
             return temp;
         } catch (NumberFormatException nfe) {
             if (message.equals("")) {
-                message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("keineZahl");
+                message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("keineZahl");
             }
 
             de.hattrickorganizer.tools.Helper.showMessage(parent, message,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           javax.swing.JOptionPane.ERROR_MESSAGE);
             return -1;
         }

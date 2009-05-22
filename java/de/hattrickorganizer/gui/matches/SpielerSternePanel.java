@@ -121,8 +121,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         panel.setBackground(Color.WHITE);
         panel.setOpaque(true);
 
-        m_jbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Spiel_Spielerdetails"));
+        m_jbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_Spielerdetails"));
         m_jbSpieler.setHorizontalAlignment(SwingConstants.LEFT);
         m_jbSpieler.setMargin(new Insets(0, 1, 0, 1));
         m_jbSpieler.setPreferredSize(new Dimension(145, 16));
@@ -224,37 +223,37 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     protected final void initLabel(int posid, byte taktik) {
     	final Properties properties = HOVerwaltung.instance().getResource();
         if (m_iPositionsID == ISpielerPosition.ausgewechselt) {
-            m_jlPosition.setText(properties.getProperty("Ausgewechselt"));
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
         } else if (m_iPositionsID == ISpielerPosition.standard) {
-            m_jlPosition.setText(properties.getProperty("Standards"));
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
         } else if (m_iPositionsID == ISpielerPosition.spielfuehrer) {
-            m_jlPosition.setText(properties.getProperty("Spielfuehrer"));
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
         } else if (m_iPositionsID == ISpielerPosition.substBack) {
-            m_jlPosition.setText(properties.getProperty("Reserve")
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
-                                 + properties.getProperty("defender"));
+                                 + HOVerwaltung.instance().getLanguageString("defender"));
         } else if (m_iPositionsID == ISpielerPosition.substForward) {
-            m_jlPosition.setText(properties.getProperty("Reserve")
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
-                                 + properties.getProperty("Sturm"));
+                                 + HOVerwaltung.instance().getLanguageString("Sturm"));
         } else if (m_iPositionsID == ISpielerPosition.substWinger) {
-            m_jlPosition.setText(properties.getProperty("Reserve")
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
-                                 + properties.getProperty("Fluegelspiel"));
+                                 + HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         } else if (m_iPositionsID == ISpielerPosition.substInsideMid) {
-            m_jlPosition.setText(properties.getProperty("Reserve")
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
-                                 + properties.getProperty("Mittelfeld"));
+                                 + HOVerwaltung.instance().getLanguageString("Mittelfeld"));
         } else if (m_iPositionsID == ISpielerPosition.substKeeper) {
-            m_jlPosition.setText(properties.getProperty("Reserve")
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
-                                 + properties.getProperty("Torwart"));
+                                 + HOVerwaltung.instance().getLanguageString("Torwart"));
         } else {
             if (posid >= 0) {
                 //Reserve
                 //Bei Reserve ist die posId immer -1! Fehler!
                 if (posid >= ISpielerPosition.beginnReservere) {
-                    m_jlPosition.setText(properties.getProperty("Reserve")
+                    m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                          + " "
                                          + de.hattrickorganizer.model.SpielerPosition
                                            .getNameForPosition(de.hattrickorganizer.model.SpielerPosition

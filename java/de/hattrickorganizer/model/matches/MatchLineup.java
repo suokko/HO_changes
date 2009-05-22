@@ -300,40 +300,40 @@ public class MatchLineup implements plugins.IMatchLineup {
     public static String getName4MatchTyp(int typ) {
         switch (typ) {
             case MatchLineup.LIGASPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("LigaSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LigaSpiel");
 
             case MatchLineup.POKALSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("PokalSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PokalSpiel");
 
             case MatchLineup.QUALISPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("QualifikationSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("QualifikationSpiel");
 
             case MatchLineup.LAENDERCUPSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("LaenderCupSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LaenderCupSpiel");
 
             case MatchLineup.INTCUPSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IntCupSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntCupSpiel");
 
             case MatchLineup.LAENDERSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("LaenderSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LaenderSpiel");
 
             case MatchLineup.INTSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IntSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntSpiel");
 
             case MatchLineup.INT_TESTCUPSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IntFriendlyCupSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntFriendlyCupSpiel");
 
             case MatchLineup.INT_TESTSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("IntFriendlySpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntFriendlySpiel");
 
             case MatchLineup.TESTLAENDERSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("LaenderFriendlySpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LaenderFriendlySpiel");
 
             case MatchLineup.TESTPOKALSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FriendlyCupSpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FriendlyCupSpiel");
 
             case MatchLineup.TESTSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("FriendlySpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FriendlySpiel");
 
             //Fehler?
             default:

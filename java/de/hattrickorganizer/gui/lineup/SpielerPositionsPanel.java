@@ -476,9 +476,9 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
     	final Aufstellung lineup = HOVerwaltung.instance().getModel().getAufstellung();
     	
         if (m_iPositionsID == STANDARD) {
-            m_jlPosition.setText(properties.getProperty("Standards"));
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
         } else if (m_iPositionsID == SPIELFUEHRER) {
-            m_jlPosition.setText(properties.getProperty("Spielfuehrer"));
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
         } else {
             final SpielerPosition position = lineup.getPositionById(m_iPositionsID);
 
@@ -490,10 +490,10 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
                 if ((m_jcbTaktik.getItemCount() == 1) && (position.getId() != ISpielerPosition.keeper)) {
                 	//special naming for reserve defender
                 	if (!m_bMinimize && position.getId() == ISpielerPosition.substBack) {
-                		m_jlPosition.setText(properties.getProperty("Reserve")
-                                + " " + properties.getProperty("defender"));
+                		m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
+                                + " " + HOVerwaltung.instance().getLanguageString("defender"));
                 	} else {
-                		m_jlPosition.setText(properties.getProperty("Reserve")
+                		m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                          + " " + nameForPosition);
                 	}
                 } else {
@@ -525,63 +525,63 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 
         switch (m_iPositionsID) {
             case ISpielerPosition.keeper: {
-                m_jcbTaktik.addItem(new CBItem(properties.getProperty("Normal"),
+                m_jcbTaktik.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("Normal"),
                                                ISpielerPosition.NORMAL));
                 break;
             }
 
             case ISpielerPosition.rightBack:
             case ISpielerPosition.leftBack: {
-            	addTactic(aktuellerSpieler,properties.getProperty("Normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,properties.getProperty("Offensiv"),ISpielerPosition.OFFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("Defensiv"),ISpielerPosition.DEFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("zurMitte"),ISpielerPosition.ZUR_MITTE);
-				addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
-            	addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
-            	addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zurMitte"),ISpielerPosition.ZUR_MITTE);
+				addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
                 break;
             }
 
             case ISpielerPosition.insideBack1:
             case ISpielerPosition.insideBack2: {
-            	addTactic(aktuellerSpieler,properties.getProperty("Normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,properties.getProperty("Offensiv"),ISpielerPosition.OFFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("nachAussen"),ISpielerPosition.NACH_AUSSEN);
-                addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
-                addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.NACH_AUSSEN);
+                addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
+                addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
                 break;
             }
 
             case ISpielerPosition.insideMid1:
             case ISpielerPosition.insideMid2: {
-            	addTactic(aktuellerSpieler,properties.getProperty("Normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,properties.getProperty("Offensiv"),ISpielerPosition.OFFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("Defensiv"),ISpielerPosition.DEFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("nachAussen"),ISpielerPosition.NACH_AUSSEN);
-            	addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
-                addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.NACH_AUSSEN);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
+                addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
                 break;
             }
 
             case ISpielerPosition.leftWinger:
             case ISpielerPosition.rightWinger: {
-            	addTactic(aktuellerSpieler,properties.getProperty("Normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,properties.getProperty("Offensiv"),ISpielerPosition.OFFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("Defensiv"),ISpielerPosition.DEFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("zurMitte"),ISpielerPosition.ZUR_MITTE);
-				addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);            	
-            	addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
-                addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zurMitte"),ISpielerPosition.ZUR_MITTE);
+				addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);            	
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
+                addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
                 break;
             }
 
             case ISpielerPosition.forward1:
             case ISpielerPosition.forward2: {
-            	addTactic(aktuellerSpieler,properties.getProperty("Normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,properties.getProperty("Defensiv"),ISpielerPosition.DEFENSIV);
-            	addTactic(aktuellerSpieler,properties.getProperty("nachAussen"),ISpielerPosition.NACH_AUSSEN);
-            	addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
-                addTactic(aktuellerSpieler,properties.getProperty("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIV);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.NACH_AUSSEN);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
+                addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
                 break;
             }
 
@@ -590,13 +590,13 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
             case ISpielerPosition.substInsideMid:
             case ISpielerPosition.substKeeper:
             case ISpielerPosition.substWinger: {
-                m_jcbTaktik.addItem(new CBItem(properties.getProperty("Normal"),
+                m_jcbTaktik.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("Normal"),
                                                ISpielerPosition.NORMAL));
                 break;
             }
 
             default:
-                m_jcbTaktik.addItem(new CBItem(properties.getProperty("Normal"),
+                m_jcbTaktik.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("Normal"),
                                                ISpielerPosition.NORMAL));
         }
     }

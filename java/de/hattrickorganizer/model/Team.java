@@ -124,37 +124,37 @@ public final class Team implements plugins.ITeam {
     public static String getNameForSelbstvertrauen(int level) {
         switch (level) {
             case SV_voellig_abgehoben:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("extremely_exaggerated");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("extremely_exaggerated");
 
             case SV_voellig_uebertrieben:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("completely_exaggerated");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("completely_exaggerated");
 
             case SV_etwas_ueberheblich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("slightly_exaggerated");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("slightly_exaggerated");
 
             case SV_sehr_gross:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("wonderful");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("wonderful");
 
             case SV_stark:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("strong");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("strong");
 
             case SV_bescheiden:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("decent");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("decent");
 
             case SV_gering:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("poor");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("poor");
 
             case SV_armselig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("wretched");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("wretched");
 
             case SV_katastrophal:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("disastrous");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("disastrous");
 
             case SV_nichtVorhanden:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("nonexisting");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("nonexisting");
 
             default:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -168,45 +168,44 @@ public final class Team implements plugins.ITeam {
     public static String getNameForStimmung(int level) {
         switch (level) {
             case TS_paradiesisch:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_Paradise_on_Earth");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_Paradise_on_Earth");
 
             case TS_auf_Wolke_sieben:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_Walking_on_Clouds");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_Walking_on_Clouds");
 
             case TS_euphorisch:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_delirious");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_delirious");
 
             case TS_ausgezeichnet:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_satisfied");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_satisfied");
 
             case TS_gut:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_content");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_content");
 
             case TS_zufrieden:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_calm");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_calm");
 
             case TS_ruhig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_composed");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_composed");
 
             case TS_irritiert:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_irritated");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_irritated");
 
             case TS_wuetend:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_furious");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_furious");
 
             case TS_blutruenstig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_murderous");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_murderous");
 
             case TS_wie_im_kalten_Krieg:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ts_like_the_cold_War");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_like_the_cold_War");
 
             default: {
                 if (level > TS_paradiesisch) {
-                    return de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ts_Paradise_on_Earth");
+                    return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ts_Paradise_on_Earth");
                 }
 
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
             }
         }
     }
@@ -225,41 +224,41 @@ public final class Team implements plugins.ITeam {
     public static String getNameForTraining(int type) {
         switch (type) {
             case TA_TORWART:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Torwart");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart");
 
             case TA_SPIELAUFBAU:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Spielaufbau");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau");
 
             case TA_PASSSPIEL:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Passpiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel");
 
             case TA_SCHUSSTRAINING:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Torschuss_Training");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss_Training");
 
             case TA_FLANKEN:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fluegelspiel");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel");
 
             case TA_CHANCEN:
 
                 //Fehlt
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Chancenverwertung");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Chancenverwertung");
 
             case TA_VERTEIDIGUNG:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Verteidigung");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung");
 
             case TA_STANDARD:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Standards");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards");
 
             case TA_KONDITION:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Kondition");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition");
 
             case TA_ALLGEMEIN:
 
                 //Fehlt
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Allgemein");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Allgemein");
 
             default:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 

@@ -43,12 +43,8 @@ public class HOFriendlyManager implements IHOFriendlyManager {
 
         if (team.getAnzAufgestellteSpieler() < 8) {
             de.hattrickorganizer.tools.Helper.showMessage(HOMainFrame.instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("ZuWenigSpieler"),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ZuWenigSpieler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -70,13 +66,9 @@ public class HOFriendlyManager implements IHOFriendlyManager {
         } else {
             //Fehlermeldung                        
             de.hattrickorganizer.tools.Helper.showMessage(HOMainFrame.instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("KeinServer")
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("KeinServer")
                                                           + serverIP + ":" + serverPort,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
 
             //Dialog shutdown                                                
@@ -102,12 +94,8 @@ public class HOFriendlyManager implements IHOFriendlyManager {
 
         if (team.getAnzAufgestellteSpieler() < 8) {
             de.hattrickorganizer.tools.Helper.showMessage(HOMainFrame.instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("ZuWenigSpieler"),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ZuWenigSpieler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -169,12 +157,8 @@ public class HOFriendlyManager implements IHOFriendlyManager {
 
         if (team.getAnzAufgestellteSpieler() < 8) {
             de.hattrickorganizer.tools.Helper.showMessage(HOMainFrame.instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("ZuWenigSpieler"),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ZuWenigSpieler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             return;
         }

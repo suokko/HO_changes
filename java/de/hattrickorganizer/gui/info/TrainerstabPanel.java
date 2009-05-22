@@ -104,13 +104,13 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
 
         this.setBackground(Color.white);
 
-        setBorder(BorderFactory.createTitledBorder(properties.getProperty("Trainerstab")));
+        setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Trainerstab")));
 
         JLabel label;
 
         setLayout(layout);
 
-        label = new JLabel(properties.getProperty("Torwarttrainer"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwarttrainer"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -125,7 +125,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpTWTrainer.getComponent(false), constraints);
         add(m_jpTWTrainer.getComponent(false));
 
-        label = new JLabel(properties.getProperty("CoTrainer"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("CoTrainer"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -140,7 +140,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpCoTrainer.getComponent(false), constraints);
         add(m_jpCoTrainer.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Psychologen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Psychologen"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -155,7 +155,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpPsychologen.getComponent(false), constraints);
         add(m_jpPsychologen.getComponent(false));
 
-        label = new JLabel(properties.getProperty("PRManager"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("PRManager"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 5;
@@ -170,7 +170,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpPRManager.getComponent(false), constraints);
         add(m_jpPRManager.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Finanzberater"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Finanzberater"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 6;
@@ -185,7 +185,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpFinanzberater.getComponent(false), constraints);
         add(m_jpFinanzberater.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Physiotherapeuten"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Physiotherapeuten"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 7;
@@ -200,7 +200,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpPhysiotherapeuten.getComponent(false), constraints);
         add(m_jpPhysiotherapeuten.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aerzte"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aerzte"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 8;

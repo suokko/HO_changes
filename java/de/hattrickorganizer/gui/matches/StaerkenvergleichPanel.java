@@ -129,8 +129,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Zuschauer"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -150,8 +149,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(m_clZuschauer, constraints);
         panel.add(m_clZuschauer);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Wetter"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wetter"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -183,8 +181,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Heim"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(JLabel.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -196,8 +193,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gast"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(JLabel.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -210,8 +206,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(label);
 
         //Teams mit Ergebnis
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Ergebnis"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -259,8 +254,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTeamTore);
 
         //Sterne
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Bewertung"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -305,8 +299,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastSterne);
 
         //Einstellung
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Einstellung"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Einstellung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -335,8 +328,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastEinstellung);
 
         //Taktiktyp
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Taktik"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Taktik"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -365,8 +357,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTaktik);
 
         //Taktikskill
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Taktikstaerke"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -395,8 +386,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTaktikskill);
 
         //Stimmung
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Stimmung"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -425,8 +415,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastStimmung);
 
         //Selbstvertrauen
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Selbstvertrauen"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Selbstvertrauen"));
         label.setPreferredSize(new Dimension(label.getPreferredSize().width + 10,
                                              label.getPreferredSize().height));
         constraints.anchor = GridBagConstraints.WEST;
@@ -518,7 +507,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
         if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED)) {
             name4matchtyp += (" ( "
-            + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Reload_Match")
+            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Reload_Match")
             + " )");
         }
 
@@ -616,21 +605,15 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
             switch (details.getHomeEinstellung()) {
                 case Matchdetails.EINSTELLUNG_NORMAL:
-                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("Normal");
+                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal");
                     break;
 
                 case Matchdetails.EINSTELLUNG_PIC:
-                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("PIC");
+                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC");
                     break;
 
                 case Matchdetails.EINSTELLUNG_MOTS:
-                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("MOTS");
+                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS");
                     break;
 
                 default:
@@ -639,21 +622,15 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
             switch (details.getGuestEinstellung()) {
                 case Matchdetails.EINSTELLUNG_NORMAL:
-                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("Normal");
+                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal");
                     break;
 
                 case Matchdetails.EINSTELLUNG_PIC:
-                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("PIC");
+                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC");
                     break;
 
                 case Matchdetails.EINSTELLUNG_MOTS:
-                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("MOTS");
+                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS");
                     break;
 
                 default:

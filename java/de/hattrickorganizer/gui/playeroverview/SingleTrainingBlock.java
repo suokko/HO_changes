@@ -62,10 +62,10 @@ final class SingleTrainingBlock extends JPanel {
 	 */
 	private void initComponents() {
 		Properties properties = HOVerwaltung.instance().getResource();
-		String fromString = properties.getProperty("TrainingBlock.from");
-		String toString = properties.getProperty("TrainingBlock.to");
+		String fromString = HOVerwaltung.instance().getLanguageString("TrainingBlock.from");
+		String toString = HOVerwaltung.instance().getLanguageString("TrainingBlock.to");
 
-		m_jbRemove.setToolTipText(properties.getProperty("TrainingBlock.remove"));
+		m_jbRemove.setToolTipText(HOVerwaltung.instance().getLanguageString("TrainingBlock.remove"));
 
 		m_jbRemove.addActionListener(parent);
 		this.setLayout(new FlowLayout());

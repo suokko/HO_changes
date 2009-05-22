@@ -755,7 +755,7 @@ public  class Aufstellung implements plugins.ILineUp {
                 break;
 
             default:
-                name = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                name = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
                 break;
         }
 

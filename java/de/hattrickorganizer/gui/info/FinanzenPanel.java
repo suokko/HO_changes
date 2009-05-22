@@ -157,16 +157,16 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         this.setBackground(Color.white);
 
         if (m_bAktuelleFinanzen) {
-            setBorder(BorderFactory.createTitledBorder(properties.getProperty("DieseWoche")));
+            setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("DieseWoche")));
         } else {
-            setBorder(BorderFactory.createTitledBorder(properties.getProperty("Vorwoche")));
+            setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Vorwoche")));
         }
 
         JLabel label;
 
         setLayout(layout);
 
-        label = new JLabel(properties.getProperty("Kontostand"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kontostand"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -181,7 +181,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpKontostand.getComponent(false), constraints);
         add(m_jpKontostand.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Einnahmen"),
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Einnahmen"),
         		SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         constraints.anchor = GridBagConstraints.WEST;
@@ -191,7 +191,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(label, constraints);
         add(label);
 
-        label = new JLabel(properties.getProperty("Ausgaben"),
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ausgaben"),
         		SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         constraints.gridx = 2;
@@ -200,7 +200,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(label, constraints);
         add(label);
 
-        label = new JLabel(properties.getProperty("Zuschauer"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Zuschauer"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -215,7 +215,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpEZuschauer.getComponent(false), constraints);
         add(m_jpEZuschauer.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Stadion"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Stadion"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 2;
@@ -230,7 +230,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpAStadion.getComponent(false), constraints);
         add(m_jpAStadion.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sponsoren"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sponsoren"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -245,7 +245,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpESponsoren.getComponent(false), constraints);
         add(m_jpESponsoren.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Spielergehaelter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielergehaelter"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 3;
@@ -260,7 +260,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpAGehaelter.getComponent(false), constraints);
         add(m_jpAGehaelter.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Zinsertraege"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Zinsertraege"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -275,7 +275,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpEZinsertraege.getComponent(false), constraints);
         add(m_jpEZinsertraege.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Zinsaufwendungen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 4;
@@ -290,7 +290,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpAZinsaufwendungen.getComponent(false), constraints);
         add(m_jpAZinsaufwendungen.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sonstiges"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sonstiges"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 5;
@@ -305,7 +305,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpESonstiges.getComponent(false), constraints);
         add(m_jpESonstiges.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sonstiges"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sonstiges"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 5;
@@ -320,7 +320,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpASonstiges.getComponent(false), constraints);
         add(m_jpASonstiges.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Trainerstab"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Trainerstab"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 6;
@@ -335,7 +335,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpATrainerstab.getComponent(false), constraints);
         add(m_jpATrainerstab.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Jugend"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Jugend"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 7;
@@ -350,7 +350,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpAJugend.getComponent(false), constraints);
         add(m_jpAJugend.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Gesamteinnahmen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 8;
@@ -365,7 +365,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(m_jpEGesamt.getComponent(false), constraints);
         add(m_jpEGesamt.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Gesamtausgaben"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamtausgaben"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 2;
         constraints.gridy = 8;
@@ -381,9 +381,9 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         add(m_jpAGesamt.getComponent(false));
 
         if (m_bAktuelleFinanzen) {
-            label = new JLabel(properties.getProperty("ErwarteterGewinnVerlust"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("ErwarteterGewinnVerlust"));
         } else {
-            label = new JLabel(properties.getProperty("VorwocheGewinnVerlust"));
+            label = new JLabel(HOVerwaltung.instance().getLanguageString("VorwocheGewinnVerlust"));
         }
 
         constraints.anchor = GridBagConstraints.WEST;

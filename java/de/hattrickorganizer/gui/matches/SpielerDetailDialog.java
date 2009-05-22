@@ -255,10 +255,8 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
         //Nicht gefunden
         if (player == null) {
-            de.hattrickorganizer.tools.Helper.showMessage(owner,HOVerwaltung.instance().getResource()
-                                                                                                 .getProperty("Fehler_Spielerdetails"),
-                                                          HOVerwaltung.instance().getResource()
-                                                                                                 .getProperty("Fehler"),
+            de.hattrickorganizer.tools.Helper.showMessage(owner,HOVerwaltung.instance().getLanguageString("Fehler_Spielerdetails"),
+                                                          HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -413,8 +411,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
-                        + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Bonus") + ")";
+                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bonus") + ")";
             }
 
             m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
@@ -481,8 +478,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
-                        + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Bonus") + ")";
+                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bonus") + ")";
             }
 
             m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
@@ -641,7 +637,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         panel.add(label);
         constraints.gridheight = 1;
 
-        label = new JLabel(properties.getProperty("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 0;
@@ -657,7 +653,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Alter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 1;
@@ -673,7 +669,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Nationalitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Nationalitaet"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 2;
@@ -689,7 +685,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Aufgestellt"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aufgestellt"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 3;
@@ -705,8 +701,8 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Aktuell") + " "
-                           + properties.getProperty("Bewertung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aktuell") + " "
+                           + HOVerwaltung.instance().getLanguageString("Bewertung"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 4;
@@ -722,7 +718,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("BestePosition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("BestePosition"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 5;
@@ -738,7 +734,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Gruppe"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gruppe"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 0;
@@ -758,7 +754,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Status"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Status"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 1;
@@ -774,7 +770,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Gehalt"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gehalt"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 2;
@@ -806,7 +802,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Bewertung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Bewertung"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 4;
@@ -833,7 +829,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         panel.add(label);
         constraints.gridwidth = 1;
 
-        label = new JLabel(properties.getProperty("Erfahrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 7;
@@ -854,7 +850,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 7;
@@ -875,7 +871,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -896,7 +892,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -917,7 +913,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -938,7 +934,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -959,7 +955,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -980,7 +976,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -1001,7 +997,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
@@ -1022,7 +1018,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
@@ -1054,7 +1050,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         panel.add(label);
         constraints.gridheight = 1;
 
-        label = new JLabel(properties.getProperty("Fuehrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fuehrung"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 0;
@@ -1076,7 +1072,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Spezialitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spezialitaet"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 1;
@@ -1092,7 +1088,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Aggressivitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aggressivitaet"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 2;
@@ -1108,7 +1104,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Ansehen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ansehen"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 3;
@@ -1124,7 +1120,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Charakter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Charakter"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 4;
@@ -1152,7 +1148,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
 
-        label = new JLabel(properties.getProperty("ToreFreund"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ToreFreund"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 7;
@@ -1168,7 +1164,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("ToreLiga"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ToreLiga"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -1184,7 +1180,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("TorePokal"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("TorePokal"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -1200,7 +1196,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("ToreGesamt"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ToreGesamt"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -1216,7 +1212,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(properties.getProperty("Hattricks"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Hattricks"));
         constraints.gridx = 8;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
@@ -1271,30 +1267,30 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.insets = new Insets(1, 2, 1, 1);
 
         JPanel subpanel = new ImagePanel(sublayout);
-        subpanel.setBorder(BorderFactory.createTitledBorder(properties.getProperty("Bewertung")));
+        subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")));
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 0;
         subconstraints.weightx = 0.0;
-        label = new JLabel(properties.getProperty("Maximal"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Maximal"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 1;
-        label = new JLabel(properties.getProperty("Minimal"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Minimal"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 2;
-        label = new JLabel(properties.getProperty("Durchschnitt"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Durchschnitt"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 3;
-        label = new JLabel(properties.getProperty("Spiele"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spiele"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
@@ -1372,7 +1368,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.weighty = 0.0;
         subconstraints.insets = new Insets(1, 2, 1, 1);
         subpanel = new ImagePanel(sublayout);
-        subpanel.setBorder(BorderFactory.createTitledBorder(properties.getProperty("Bewertung")
+        subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")
                                                             + " "
                                                             + de.hattrickorganizer.model.SpielerPosition
                                                               .getNameForPosition(de.hattrickorganizer.model.SpielerPosition
@@ -1384,25 +1380,25 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridx = 0;
         subconstraints.gridy = 0;
         subconstraints.weightx = 0.0;
-        label = new JLabel(properties.getProperty("Maximal"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Maximal"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 1;
-        label = new JLabel(properties.getProperty("Minimal"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Minimal"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 2;
-        label = new JLabel(properties.getProperty("Durchschnitt"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Durchschnitt"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 3;
-        label = new JLabel(properties.getProperty("Spiele"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spiele"));
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
 

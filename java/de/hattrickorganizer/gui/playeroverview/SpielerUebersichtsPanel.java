@@ -364,16 +364,14 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
         JScrollPane scrollPane = new JScrollPane(m_jpSpielerDetailPanel);
         scrollPane.getVerticalScrollBar().setBlockIncrement(100);
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("SpielerDetails"),
+        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SpielerDetails"),
                           scrollPane);
 
         m_jpSpielerTrainingsSimulatorPanel = new SpielerTrainingsSimulatorPanel();
         scrollPane = new JScrollPane(m_jpSpielerTrainingsSimulatorPanel);
         scrollPane.getVerticalScrollBar().setBlockIncrement(100);
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Skilltester"),
+        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Skilltester"),
                           scrollPane);
 
         return tabbedPane;

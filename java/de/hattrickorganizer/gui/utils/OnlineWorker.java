@@ -82,24 +82,18 @@ public class OnlineWorker {
             //hrf                 =   MyConnector.instance().getHRF();
         } catch (Exception e) {
             //Info
-            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                  .getResource()
-                                                                                                                                  .getProperty("Downloadfehler")
+            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error converting xml 2 HRF. Corrupt/Missing Data : "
                                                                                            + gui.UserParameter
                                                                                              .instance().htip,
                                                                                            de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
             de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                           .instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Downloadfehler")
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + " : Error converting xml 2 HRF. Corrupt/Missing Data : \n"
                                                           + e.toString() + "\n"
                                                           + gui.UserParameter.instance().htip,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
@@ -109,12 +103,8 @@ public class OnlineWorker {
         //Sprachdatei anbinden
         if ((hrf.indexOf("playingMatch=true") > -1) || (hrf.indexOf("NOT AVAILABLE") > -1)) {
             javax.swing.JOptionPane.showMessageDialog(de.hattrickorganizer.gui.HOMainFrame.instance(),
-                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                             .getResource()
-                                                                                             .getProperty("NO_HRF_Spiel"),
-                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                             .getResource()
-                                                                                             .getProperty("NO_HRF_ERROR"),
+                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NO_HRF_Spiel"),
+                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NO_HRF_ERROR"),
                                                       1);
             waitDialog.setVisible(false);
             return false;
@@ -148,9 +138,7 @@ public class OnlineWorker {
             || file.exists()) {
             final JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-            fileChooser.setDialogTitle(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("FileExport"));
+            fileChooser.setDialogTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FileExport"));
 
             final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
             filter.addExtension("hrf");
@@ -187,9 +175,7 @@ public class OnlineWorker {
             //Datei schon vorhanden?
             if (file.exists()) {
                 value = JOptionPane.showConfirmDialog(de.hattrickorganizer.gui.HOMainFrame.instance(),
-                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                             .getResource()
-                                                                                             .getProperty("overwrite"),
+                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("overwrite"),
                                                       "", JOptionPane.YES_NO_OPTION);
             }
             //Datei nicht vorhanden?
@@ -210,26 +196,18 @@ public class OnlineWorker {
 
                 if (homodel == null) {
                     //Info
-                    de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                          .getResource()
-                                                                                                                                          .getProperty("Importfehler"),
+                    de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Importfehler"),
                                                                                                    de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 
                     //Fehler
                     de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                                   .instance(),
-                                                                  de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                         .getResource()
-                                                                                                         .getProperty("Importfehler"),
-                                                                  de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                         .getResource()
-                                                                                                         .getProperty("Fehler"),
+                                                                  de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Importfehler"),
+                                                                  de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                                   javax.swing.JOptionPane.ERROR_MESSAGE);
                 } else {
                     //Info
-                    de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                          .getResource()
-                                                                                                                                          .getProperty("HRFSave"));
+                    de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFSave"));
 
                     //Datei schon importiert worden?
                     final String oldHRFName = de.hattrickorganizer.database.DBZugriff.instance()
@@ -241,13 +219,9 @@ public class OnlineWorker {
                     if (oldHRFName != null) {
                         value = javax.swing.JOptionPane.showConfirmDialog(de.hattrickorganizer.gui.HOMainFrame
                                                                           .instance(),
-                                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                 .getResource()
-                                                                                                                 .getProperty("ErneutImportieren")
+                                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ErneutImportieren")
                                                                           + " " + oldHRFName,
-                                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                 .getResource()
-                                                                                                                 .getProperty("Frage"),
+                                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Frage"),
                                                                           javax.swing.JOptionPane.YES_NO_OPTION);
                     }
 
@@ -304,9 +278,7 @@ public class OnlineWorker {
                             .setHRFAufstellung(homodel.getAufstellung(),
                                                homodel.getLastAufstellung());
                             de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel
-                            .setAngezeigteAufstellung(new de.hattrickorganizer.gui.model.AufstellungCBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                  .getResource()
-                                                                                                                                                  .getProperty("AktuelleAufstellung"),
+                            .setAngezeigteAufstellung(new de.hattrickorganizer.gui.model.AufstellungCBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"),
                                                                                                            homodel
                                                                                                            .getAufstellung()));
 							HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
@@ -328,17 +300,13 @@ public class OnlineWorker {
 
                         //Info
                         de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel()
-                                                            .setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                    .getResource()
-                                                                                                                    .getProperty("HRFErfolg"));
+                                                            .setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFErfolg"));
                     }
                     //Abbruch
                     else {
                         //Info
                         de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel()
-                                                            .setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                    .getResource()
-                                                                                                                    .getProperty("HRFAbbruch"),
+                                                            .setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFAbbruch"),
                                                                              de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
                     }
                 }
@@ -397,23 +365,17 @@ public class OnlineWorker {
                 waitDialog.setValue(20);
             } catch (Exception e) {
                 //Info
-                de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                      .getResource()
-                                                                                                                                      .getProperty("Downloadfehler")
+                de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                                + " : Error fetching MatchArchiv : "
                                                                                                + gui.UserParameter
                                                                                                  .instance().htip,
                                                                                                de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
                 de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                               .instance(),
-                                                              de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                     .getResource()
-                                                                                                     .getProperty("Downloadfehler")
+                                                              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                               + " : Error fetching MatchArchiv : "
                                                               + gui.UserParameter.instance().htip,
-                                                              de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                     .getResource()
-                                                                                                     .getProperty("Fehler"),
+                                                              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                               JOptionPane.ERROR_MESSAGE);
                 MyConnector.instance().setAuthenticated(false);
                 waitDialog.setVisible(false);
@@ -545,23 +507,17 @@ public class OnlineWorker {
             waitDialog.setValue(50);
         } catch (Exception e) {
             //Info
-            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                  .getResource()
-                                                                                                                                  .getProperty("Downloadfehler")
+            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error fetching MatchesASP : "
                                                                                            + gui.UserParameter
                                                                                              .instance().htip,
                                                                                            de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
             de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                           .instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Downloadfehler")
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + " : Error fetching MatchesASP : "
                                                           + gui.UserParameter.instance().htip,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
@@ -718,23 +674,17 @@ public class OnlineWorker {
         } catch (Exception e) {
             //Info
             HOLogger.instance().log(getClass(),e);
-            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                  .getResource()
-                                                                                                                                  .getProperty("Downloadfehler")
+            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error fetching leagueFixture xml. Corrupt/Missing Data :"
                                                                                            + gui.UserParameter
                                                                                              .instance().htip,
                                                                                            de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
             de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                           .instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Downloadfehler")
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + " : Error fetching leagueFixture xml. Corrupt/Missing Data :"
                                                           + gui.UserParameter.instance().htip,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
@@ -825,23 +775,17 @@ public class OnlineWorker {
             details.setRegionId(regionId);
         } catch (Exception e) {
             //Info
-            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                  .getResource()
-                                                                                                                                  .getProperty("Downloadfehler")
+            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + ": Error fetching Matchdetails XML.: "
                                                                                            + gui.UserParameter
                                                                                              .instance().htip,
                                                                                            de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
             de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                           .instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Downloadfehler")
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + ": Error fetching Matchdetails XML.: "
                                                           + gui.UserParameter.instance().htip,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
@@ -867,23 +811,17 @@ public class OnlineWorker {
             matchLineup = MyConnector.instance().getMatchLineup(matchID, teamID);
         } catch (Exception e) {
             //Info
-            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                  .getResource()
-                                                                                                                                  .getProperty("Downloadfehler")
+            de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error fetching Matchlineup :"
                                                                                            + gui.UserParameter
                                                                                              .instance().htip,
                                                                                            de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
             de.hattrickorganizer.tools.Helper.showMessage(de.hattrickorganizer.gui.HOMainFrame
                                                           .instance(),
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Downloadfehler")
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + " : Error fetching Matchlineup :"
                                                           + gui.UserParameter.instance().htip,
-                                                          de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Fehler"),
+                                                          de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);

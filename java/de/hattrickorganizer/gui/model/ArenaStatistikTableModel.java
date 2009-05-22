@@ -90,56 +90,50 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Datum"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Datum"),
                                             
 
     //Spielart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Spielart"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielart"),
                                             
 
     //Gast
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Gast"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"),
                                             
 
     //Ergebnis
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Ergebnis"), 
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"), 
     //Wetter
     "", 
     //MatchId
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ID"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
                                             
 
     //Stadiongroesse
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aktuell"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aktuell"),
                                             
 
     //Zuschauer
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Zuschauer"), 
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"), 
     //Auslastung
     "%", 
     //Fananzahl
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fans"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
                                             
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fans") + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("Wochen"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans") + " / "
+                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                             
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Zuschauer")
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer")
                                             + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("Fans"),
+                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
                                             
 
     //Stimmung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fans"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
                                             
 
     //LigaPlatz
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Platzierung")
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Platzierung")
                                         };
 
     /** TODO Missing Parameter Documentation */
@@ -147,54 +141,48 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Datum"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Datum"),
                                             
 
     //Spielart
     "", 
     //Gast
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Gast"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"),
                                             
 
     //Ergebnis
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Ergebnis"), 
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"), 
     //Wetter
     "", 
     //MatchId
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ID"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
                                             
 
     //Stadiongroesse
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aktuell"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aktuell"),
                                             
 
     //Zuschauer
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Zuschauer"), 
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"), 
     //Auslastung
     "%", 
     //Fananzahl
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fans"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
                                             
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fans") + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("Wochen"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans") + " / "
+                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                             
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Zuschauer")
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer")
                                             + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("Fans"),
+                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
                                             
 
     //Stimmung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fans"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
                                             
 
     //LigaPlatz
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Platzierung")
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Platzierung")
                                         };
     private ArenaStatistikModel[] m_clMatches;
     private int m_iMaxArenaGroesse;

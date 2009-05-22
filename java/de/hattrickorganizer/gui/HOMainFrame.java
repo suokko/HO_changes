@@ -152,96 +152,96 @@ public final class HOMainFrame extends JFrame
 	private InformationsPanel m_jpInformation;
 	private InjuryDialog injuryTool;
 	private final JMenu m_jmAbout =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("About"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("About"));
 	private final JMenu m_jmDatei =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("Datei"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
 	// disabled HOFriendly, aik, 05.03.2008
 //	private final JMenu m_jmHoFriendlyMenu =
-//		new JMenu(HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
+//		new JMenu(HOVerwaltung.instance().getLanguageString("HoFriendly"));
 	private final JMenu m_jmPluginMenu =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("Plugins"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenu m_jmPluginsRefresh =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("Plugins"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenu m_jmToolsMenu =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("Tools"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("Tools"));
 	private final JMenu m_jmUpdating =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("Refresh"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private final JMenu m_jmVerschiedenes =
-		new JMenu(HOVerwaltung.instance().getResource().getProperty("Funktionen"));
+		new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
 
 	//----Menue--------------------------------
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
 	private final JMenuItem m_jmBeendenItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Beenden"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
 	private final JMenuItem m_jmCreditsItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Credits"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
 	private final JMenuItem m_jmDownloadItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Download"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Download"));
 	private final JMenuItem m_jmForumItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Forum"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Forum"));
 	private final JMenuItem m_jmHattrickItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Hattrick"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Hattrick"));
 //	private final JMenuItem m_jmHoFriendly =
-//		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
+//		new JMenuItem(HOVerwaltung.instance().getLanguageString("HoFriendly"));
 	private final JMenuItem m_jmHomepageItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Homepage"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
 //	private final JMenuItem m_jmIPAdresse =
-//		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("IP"));
+//		new JMenuItem(HOVerwaltung.instance().getLanguageString("IP"));
 
-	//private JMenuItem               m_jmFixturesItem        =   new JMenuItem( model.HOVerwaltung.instance ().getResource ().getProperty("FixturesDownload") );
+	//private JMenuItem               m_jmFixturesItem        =   new JMenuItem( model.HOVerwaltung.instance().getLanguageString("FixturesDownload") );
 	private final JMenuItem m_jmImportItem =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("HRFImportieren"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
 	private final JMenuItem m_jmOptionen =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Optionen"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
 	private final JMenuItem m_jmPluginsHomepage =
-		new JMenuItem("HO! " + HOVerwaltung.instance().getResource().getProperty("Plugins"));
+		new JMenuItem("HO! " + HOVerwaltung.instance().getLanguageString("Plugins"));
 //	private final JMenuItem m_jmRatingItem = new JMenuItem("Friendly-Rating");
 	private final JMenuItem m_jmTraining =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("SubskillsBerechnen"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
 	private final JMenuItem m_jmiArena =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("ArenaSizer"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
 	private final JMenuItem m_jmiAufstellung =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Aufstellung"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Aufstellung"));
 	private final JMenuItem m_jmiFlags =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Flaggen"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem("HO!");
 	private final JMenuItem m_jmiEPV = new JMenuItem("EPV");
 	private final JMenuItem m_jmiRatings = new JMenuItem("Ratings");
 
 	private final JMenuItem m_jmiInjuryCalculator =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("InjuryCalculator"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("InjuryCalculator"));
 	private final JMenuItem m_jmiKeeperTool =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("KeeperTool"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("KeeperTool"));
 	private final JMenuItem m_jmiNotepad =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Notizen"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Notizen"));
 	private final JMenuItem m_jmiExporter = new JMenuItem("XML Exporter");
 	private final JMenuItem m_jmiCsvPlayerExporter =
 		new JMenuItem("CSV PlayerExport"); // TODO L10N
 	private final JMenuItem m_jmiDbCleanupTool=
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("dbcleanup"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
 
 	private final JMenuItem m_jmiLanguages =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Sprachdatei"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
 	private final JMenuItem m_jmiLigatabelle =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Ligatabelle"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
 	private final JMenuItem m_jmiPluginsDelete =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("loeschen"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("loeschen"));
 	private final JMenuItem m_jmiPluginsLibrary =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Libraries"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Libraries"));
 	private final JMenuItem m_jmiPluginsNormal =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Normal"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Normal"));
 	private final JMenuItem m_jmiSpiele =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Spiele"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Spiele"));
 	private final JMenuItem m_jmiSpieleranalyse =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("SpielerAnalyse"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
 	private final JMenuItem m_jmiSpieleruebersicht =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Spieleruebersicht"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
 	private final JMenuItem m_jmiStatistik =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Statistik"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
 	private final JMenuItem m_jmiTransferscout =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("TransferScout"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
 	private final JMenuItem m_jmiVerschiedenes =
-		new JMenuItem(HOVerwaltung.instance().getResource().getProperty("Verschiedenes"));
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
 	//----Komponenten--------------------------
 	private JTabbedPane m_jtpTabbedPane;
@@ -250,7 +250,7 @@ public final class HOMainFrame extends JFrame
 	//    private SkillAenderungsPanel    m_jpSkillAenderungsPanel=   null;
 	private LigaTabellePanel m_jpLigaTabelle;
 
-	// private JMenuItem               m_jmChatItem            =   new JMenuItem( model.HOVerwaltung.instance ().getResource ().getProperty("Chat") );
+	// private JMenuItem               m_jmChatItem            =   new JMenuItem( model.HOVerwaltung.instance().getLanguageString("Chat") );
 	//eventuell Menuitem Vector für Plugins anlegen
 	//-----------------------------------------
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
@@ -526,7 +526,7 @@ public final class HOMainFrame extends JFrame
 				== JOptionPane.OK_OPTION) {
 				HOVerwaltung.instance().recalcSubskills(true, null);
 
-				//tools.Helper.showMessage ( this, model.HOVerwaltung.instance ().getResource ().getProperty( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
+				//tools.Helper.showMessage ( this, model.HOVerwaltung.instance().getLanguageString( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
 		//Beenden
@@ -610,8 +610,8 @@ public final class HOMainFrame extends JFrame
 //			if (team.getAnzAufgestellteSpieler() < 8) {
 //				de.hattrickorganizer.tools.Helper.showMessage(
 //					this,
-//					HOVerwaltung.instance().getResource().getProperty("ZuWenigSpieler"),
-//					HOVerwaltung.instance().getResource().getProperty("Fehler"),
+//					HOVerwaltung.instance().getLanguageString("ZuWenigSpieler"),
+//					HOVerwaltung.instance().getLanguageString("Fehler"),
 //					JOptionPane.ERROR_MESSAGE);
 //				HOMainFrame.setHOStatus(HOMainFrame.READY);
 //				return;
@@ -702,11 +702,11 @@ public final class HOMainFrame extends JFrame
 //						//Fehlermeldung
 //						de.hattrickorganizer.tools.Helper.showMessage(
 //							this,
-//							HOVerwaltung.instance().getResource().getProperty("KeinServer")
+//							HOVerwaltung.instance().getLanguageString("KeinServer")
 //								+ rmiDialog.getServerIP()
 //								+ ":"
 //								+ rmiDialog.getPort(),
-//							HOVerwaltung.instance().getResource().getProperty("Fehler"),
+//							HOVerwaltung.instance().getLanguageString("Fehler"),
 //							JOptionPane.ERROR_MESSAGE);
 //
 //						//Dialog shutdown
@@ -740,7 +740,7 @@ public final class HOMainFrame extends JFrame
 			NotepadDialog notepad =
 				new NotepadDialog(
 					this,
-					HOVerwaltung.instance().getResource().getProperty("Notizen"));
+					HOVerwaltung.instance().getLanguageString("Notizen"));
 			notepad.setVisible(true);
 		} else if (source.equals(m_jmiExporter)) {
 			XMLExporter exporter = new XMLExporter();
@@ -808,7 +808,7 @@ public final class HOMainFrame extends JFrame
 		HOLogger.instance().debug(getClass(), "Shutting down HO!");
 
 		//Keine Sicherheitsabfrage mehr
-		//int value = JOptionPane.showConfirmDialog( this, model.HOVerwaltung.instance ().getResource ().getProperty("BeendenMeldung"), model.HOVerwaltung.instance ().getResource ().getProperty("BeendenTitel"), JOptionPane.YES_NO_OPTION);
+		//int value = JOptionPane.showConfirmDialog( this, model.HOVerwaltung.instance().getLanguageString("BeendenMeldung"), model.HOVerwaltung.instance().getLanguageString("BeendenTitel"), JOptionPane.YES_NO_OPTION);
 		//        int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
 		//        if ( value == JOptionPane.OK_OPTION )
 		//aktuelle UserParameter speichern
@@ -908,7 +908,7 @@ public final class HOMainFrame extends JFrame
 
 		if (!gui.UserParameter.instance().tempTabSpieleruebersicht) {
 			m_jtpTabbedPane.addTab(
-				properties.getProperty("Spieleruebersicht"),
+				HOVerwaltung.instance().getLanguageString("Spieleruebersicht"),
 				m_jpSpielerUebersicht);
 		}
 
@@ -916,21 +916,21 @@ public final class HOMainFrame extends JFrame
 		m_jpAufstellung = new AufstellungsPanel();
 
 		if (!gui.UserParameter.instance().tempTabAufstellung) {
-			m_jtpTabbedPane.addTab(properties.getProperty("Aufstellung"), m_jpAufstellung);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), m_jpAufstellung);
 		}
 
 		//Tabelle
 		m_jpLigaTabelle = new LigaTabellePanel();
 
 		if (!gui.UserParameter.instance().tempTabLigatabelle) {
-			m_jtpTabbedPane.addTab(properties.getProperty("Ligatabelle"), m_jpLigaTabelle);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"), m_jpLigaTabelle);
 		}
 
 		//Spiele
 		m_jpSpielePanel = new SpielePanel();
 
 		if (!gui.UserParameter.instance().tempTabSpiele) {
-			m_jtpTabbedPane.addTab(properties.getProperty("Spiele"), m_jpSpielePanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), m_jpSpielePanel);
 		}
 
 		//SpielerAnalyse
@@ -938,7 +938,7 @@ public final class HOMainFrame extends JFrame
 
 		if (!gui.UserParameter.instance().tempTabSpieleranalyse) {
 			m_jtpTabbedPane.addTab(
-				properties.getProperty("SpielerAnalyse"),
+				HOVerwaltung.instance().getLanguageString("SpielerAnalyse"),
 				m_jpSpielerAnalysePanel);
 		}
 
@@ -946,39 +946,39 @@ public final class HOMainFrame extends JFrame
 		//        m_jtpTraining = new JTabbedPane();
 		//        //Trainingshilfe
 		//        m_jpTrainingshelfer = new TrainingsPanel();
-		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty("Training"), m_jpTrainingshelfer );
+		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"), m_jpTrainingshelfer );
 		//        //SkillAenderung
 		//        m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
-		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty("Training") + " 2", m_jpSkillAenderungsPanel );
+		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training") + " 2", m_jpSkillAenderungsPanel );
 		//        //Adden
-		//        m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty("Training"), m_jtpTraining );
+		//        m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"), m_jtpTraining );
 		//
 		//Transferscout
 		m_jpTransferScout = new TransferScoutPanel();
 
 		if (!gui.UserParameter.instance().tempTabTransferscout) {
-			m_jtpTabbedPane.addTab(properties.getProperty("TransferScout"), m_jpTransferScout);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TransferScout"), m_jpTransferScout);
 		}
 
 		//Arena
 		m_jpArenaSizer = new ArenaSizerPanel();
 
 		if (!gui.UserParameter.instance().tempTabArenasizer) {
-			m_jtpTabbedPane.addTab(properties.getProperty("ArenaSizer"), m_jpArenaSizer);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ArenaSizer"), m_jpArenaSizer);
 		}
 
 		//Sonstiges
 		m_jpInformation = new InformationsPanel();
 
 		if (!gui.UserParameter.instance().tempTabInformation) {
-			m_jtpTabbedPane.addTab(properties.getProperty("Verschiedenes"), m_jpInformation);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"), m_jpInformation);
 		}
 
 		//Statistiken
 		m_jpStatistikPanel = new StatistikMainPanel();
 
 		if (!gui.UserParameter.instance().tempTabStatistik) {
-			m_jtpTabbedPane.addTab(properties.getProperty("Statistik"), m_jpStatistikPanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), m_jpStatistikPanel);
 		}
 
 		//Matchpaneltest
@@ -1309,55 +1309,55 @@ public final class HOMainFrame extends JFrame
 		switch (tabnumber) {
 			case SPIELERUEBERSICHT :
 				component = m_jpSpielerUebersicht;
-				titel = HOVerwaltung.instance().getResource().getProperty("Spieleruebersicht");
+				titel = HOVerwaltung.instance().getLanguageString("Spieleruebersicht");
 				temporaer = gui.UserParameter.instance().tempTabSpieleruebersicht;
 				break;
 
 			case AUFSTELLUNG :
 				component = m_jpAufstellung;
-				titel = HOVerwaltung.instance().getResource().getProperty("Aufstellung");
+				titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
 				temporaer = gui.UserParameter.instance().tempTabAufstellung;
 				break;
 
 			case LIGATABELLE :
 				component = m_jpLigaTabelle;
-				titel = HOVerwaltung.instance().getResource().getProperty("Ligatabelle");
+				titel = HOVerwaltung.instance().getLanguageString("Ligatabelle");
 				temporaer = gui.UserParameter.instance().tempTabLigatabelle;
 				break;
 
 			case SPIELE :
 				component = m_jpSpielePanel;
-				titel = HOVerwaltung.instance().getResource().getProperty("Spiele");
+				titel = HOVerwaltung.instance().getLanguageString("Spiele");
 				temporaer = gui.UserParameter.instance().tempTabSpiele;
 				break;
 
 			case SPIELERANALYSE :
 				component = m_jpSpielerAnalysePanel;
-				titel = HOVerwaltung.instance().getResource().getProperty("SpielerAnalyse");
+				titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse");
 				temporaer = gui.UserParameter.instance().tempTabSpieleranalyse;
 				break;
 
 			case STATISTIK :
 				component = m_jpStatistikPanel;
-				titel = HOVerwaltung.instance().getResource().getProperty("Statistik");
+				titel = HOVerwaltung.instance().getLanguageString("Statistik");
 				temporaer = gui.UserParameter.instance().tempTabStatistik;
 				break;
 
 			case TRANSFERSCOUT :
 				component = m_jpTransferScout;
-				titel = HOVerwaltung.instance().getResource().getProperty("TransferScout");
+				titel = HOVerwaltung.instance().getLanguageString("TransferScout");
 				temporaer = gui.UserParameter.instance().tempTabTransferscout;
 				break;
 
 			case ARENASIZER :
 				component = m_jpArenaSizer;
-				titel = HOVerwaltung.instance().getResource().getProperty("ArenaSizer");
+				titel = HOVerwaltung.instance().getLanguageString("ArenaSizer");
 				temporaer = gui.UserParameter.instance().tempTabArenasizer;
 				break;
 
 			case INFORMATIONEN :
 				component = m_jpInformation;
-				titel = HOVerwaltung.instance().getResource().getProperty("Verschiedenes");
+				titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");
 				temporaer = gui.UserParameter.instance().tempTabInformation;
 				break;
 
@@ -1620,7 +1620,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabSpieleruebersicht) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("Spieleruebersicht"));
+					HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1630,7 +1630,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabAufstellung) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("Aufstellung"));
+					HOVerwaltung.instance().getLanguageString("Aufstellung"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1640,7 +1640,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabLigatabelle) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("Ligatabelle"));
+					HOVerwaltung.instance().getLanguageString("Ligatabelle"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1650,7 +1650,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabSpiele) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("Spiele"));
+					HOVerwaltung.instance().getLanguageString("Spiele"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1660,7 +1660,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabSpieleranalyse) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("SpielerAnalyse"));
+					HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1670,7 +1670,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabStatistik) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("Statistik"));
+					HOVerwaltung.instance().getLanguageString("Statistik"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1680,7 +1680,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabTransferscout) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("TransferScout"));
+					HOVerwaltung.instance().getLanguageString("TransferScout"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1690,7 +1690,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabArenasizer) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("ArenaSizer"));
+					HOVerwaltung.instance().getLanguageString("ArenaSizer"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1700,7 +1700,7 @@ public final class HOMainFrame extends JFrame
 		if (gui.UserParameter.instance().tempTabInformation) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getResource().getProperty("Verschiedenes"));
+					HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);

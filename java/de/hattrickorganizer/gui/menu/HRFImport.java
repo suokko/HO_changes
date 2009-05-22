@@ -28,8 +28,7 @@ public class HRFImport {
         final javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
         fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        fileChooser.setDialogTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("HRFImportieren"));
+        fileChooser.setDialogTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFImportieren"));
 
         final java.io.File pfad = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath);
 
@@ -61,19 +60,13 @@ public class HRFImport {
                     //Datei schon vorhanden?
                     if (!files[i].exists()) {
                         //Info
-                        frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("DateiNichtGefunden"),
+                        frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("DateiNichtGefunden"),
                                                              de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 
                         //Fehler
                         de.hattrickorganizer.tools.Helper.showMessage(frame,
-                                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                             .getResource()
-                                                                                                             .getProperty("DateiNichtGefunden"),
-                                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                             .getResource()
-                                                                                                             .getProperty("Fehler"),
+                                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("DateiNichtGefunden"),
+                                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                                       javax.swing.JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -83,35 +76,25 @@ public class HRFImport {
                                                                              .getAbsolutePath();
 
                     //Info
-                    frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                .getResource()
-                                                                                                .getProperty("StartParse"));
+                    frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("StartParse"));
 
                     //HRFParser
                     homodel = new de.hattrickorganizer.tools.HRFFileParser().parse(files[i]);
 
                     if (homodel == null) {
                         //Info
-                        frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("Importfehler")
+                        frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Importfehler")
                                                              + " : " + files[i].getName(),
                                                              de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
 
                         //Fehler
                         de.hattrickorganizer.tools.Helper.showMessage(frame,
-                                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                             .getResource()
-                                                                                                             .getProperty("Importfehler"),
-                                                                      de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                             .getResource()
-                                                                                                             .getProperty("Fehler"),
+                                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Importfehler"),
+                                                                      de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                                       javax.swing.JOptionPane.ERROR_MESSAGE);
                     } else {
                         //Info
-                        frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("HRFSave"));
+                        frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFSave"));
 
                         //Datei schon importiert worden?
                         final String oldHRFName = de.hattrickorganizer.database.DBZugriff.instance()
@@ -122,13 +105,9 @@ public class HRFImport {
                         //Erneut importieren
                         if (oldHRFName != null) {
                             value = javax.swing.JOptionPane.showConfirmDialog(frame,
-                                                                              de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                     .getResource()
-                                                                                                                     .getProperty("ErneutImportieren")
+                                                                              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ErneutImportieren")
                                                                               + " " + oldHRFName,
-                                                                              de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                     .getResource()
-                                                                                                                     .getProperty("Frage"),
+                                                                              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Frage"),
                                                                               javax.swing.JOptionPane.YES_NO_OPTION);
                         }
 
@@ -142,16 +121,12 @@ public class HRFImport {
                             }
 
                             //Info
-                            frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                        .getResource()
-                                                                                                        .getProperty("HRFErfolg"));
+                            frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFErfolg"));
                         }
                         //Abbruch
                         else {
                             //Info
-                            frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                        .getResource()
-                                                                                                        .getProperty("HRFAbbruch"),
+                            frame.getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFAbbruch"),
                                                                  de.hattrickorganizer.gui.InfoPanel.FEHLERFARBE);
                         }
                     }
@@ -181,9 +156,7 @@ public class HRFImport {
                                                                                                 hom
                                                                                                 .getLastAufstellung());
             de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel
-            .setAngezeigteAufstellung(new de.hattrickorganizer.gui.model.AufstellungCBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                  .getResource()
-                                                                                                                                  .getProperty("AktuelleAufstellung"),
+            .setAngezeigteAufstellung(new de.hattrickorganizer.gui.model.AufstellungCBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"),
                                                                                            hom
                                                                                            .getAufstellung()));
 
@@ -204,7 +177,7 @@ public class HRFImport {
             //                homodel.calcSubskills();
             //                //Aufstellung in liste als Aktuelle Aufstellungsetzen und als Angezeigte Aufstellung
             //                gui.aufstellung.AufstellungsVergleichHistoryPanel.setHRFAufstellung ( homodel.getAufstellung (), homodel.getLastAufstellung () );
-            //                gui.aufstellung.AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung ( new gui.model.AufstellungCBItem( model.HOVerwaltung.instance ().getResource ().getProperty("AktuelleAufstellung") , homodel.getAufstellung () ) );                
+            //                gui.aufstellung.AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung ( new gui.model.AufstellungCBItem( model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung") , homodel.getAufstellung () ) );                
             //            }
             //Refreshen aller Fenster
             de.hattrickorganizer.gui.RefreshManager.instance().doReInit();

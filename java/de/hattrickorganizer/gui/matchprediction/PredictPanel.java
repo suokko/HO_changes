@@ -201,8 +201,7 @@ public class PredictPanel extends JPanel {
 
         constraints.gridx = 0;
         constraints.gridy = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Heim"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(m_jlHomeTeam.getFont().deriveFont(Font.BOLD));
         toppanel.add(label, constraints);
 
@@ -213,8 +212,7 @@ public class PredictPanel extends JPanel {
 
         constraints.gridx = 2;
         constraints.gridy = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Unendschieden"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unendschieden"));
         label.setFont(m_jlHomeTeam.getFont().deriveFont(Font.BOLD));
         toppanel.add(label, constraints);
 
@@ -225,8 +223,7 @@ public class PredictPanel extends JPanel {
 
         constraints.gridx = 4;
         constraints.gridy = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gast"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(m_jlHomeTeam.getFont().deriveFont(Font.BOLD));
         toppanel.add(label, constraints);
 
@@ -287,8 +284,7 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gesamt"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamt"));
         bottompanel.add(label, constraints);
 
         constraints.gridx = 1;
@@ -344,8 +340,7 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Rechts"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Rechts"));
         bottompanel.add(label, constraints);
 
         constraints.gridx = 1;
@@ -401,8 +396,7 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Mitte"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mitte"));
         bottompanel.add(label, constraints);
 
         constraints.gridx = 1;
@@ -458,8 +452,7 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Links"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Links"));
         bottompanel.add(label, constraints);
 
         constraints.gridx = 1;

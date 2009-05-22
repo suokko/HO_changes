@@ -30,27 +30,27 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class DBCleanupDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 3533368597781557223L;
-	private JButton m_jbCleanupNow = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cleanupnow"));
-	private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cancel"));
+	private JButton m_jbCleanupNow = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cleanupnow"));
+	private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cancel"));
 	private DBCleanupTool cleanupTool;
 
-	private JTextArea textIntro = new JTextArea (HOVerwaltung.instance().getResource().getProperty("dbcleanup.intro"));
+	private JTextArea textIntro = new JTextArea (HOVerwaltung.instance().getLanguageString("dbcleanup.intro"));
 	
-	private JLabel labelOwnMatches = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownMatches"));
-	private JLabel labelOwnFriendlies = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownFriendlies"));
-	private JLabel labelOtherMatches = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherMatches"));
-	private JLabel labelOtherFriendlies = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherFriendlies"));
+	private JLabel labelOwnMatches = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.ownMatches"));
+	private JLabel labelOwnFriendlies = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.ownFriendlies"));
+	private JLabel labelOtherMatches = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.otherMatches"));
+	private JLabel labelOtherFriendlies = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.otherFriendlies"));
 	
 	private WeekSelectionPanel wsp_OwnMatches =	new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE);
 	private WeekSelectionPanel wsp_OwnFriendlies = new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE);
 	private WeekSelectionPanel wsp_OtherMatches = new WeekSelectionPanel (16);
 	private WeekSelectionPanel wsp_OtherFriendlies = new WeekSelectionPanel (8);
 
-	private JLabel labelHrf = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrf"));
+	private JLabel labelHrf = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.hrf"));
 //	private WeekSelectionPanel wsp_Hrf = new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE, false);
 
-//	private JLabel labelHrfAutoremove = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
-	private JCheckBox m_jcbHrfAutoremove = new JCheckBox(HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
+//	private JLabel labelHrfAutoremove = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.hrfAutoremove"));
+	private JCheckBox m_jcbHrfAutoremove = new JCheckBox(HOVerwaltung.instance().getLanguageString("dbcleanup.hrfAutoremove"));
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ public class DBCleanupDialog extends JDialog implements ActionListener {
 	 */
 	public DBCleanupDialog(JFrame owner, DBCleanupTool cleanupTool) {
 		super(owner, 
-				HOVerwaltung.instance().getResource().getProperty("dbcleanup"),
+				HOVerwaltung.instance().getLanguageString("dbcleanup"),
 				true);
 		this.cleanupTool = cleanupTool;
 		initComponents();

@@ -25,7 +25,7 @@ public class ElfmeterSchuetzenDialog extends JDialog {
      */
     public ElfmeterSchuetzenDialog(JFrame owner) {
         super(owner,
-              de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Elfmeterschuetzen"));
+              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Elfmeterschuetzen"));
         initComponents();
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

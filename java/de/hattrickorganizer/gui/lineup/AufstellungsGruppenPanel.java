@@ -97,28 +97,23 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
 
         //Platzhalter
         add(new JLabel("   "));
-        aGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("tt_AufstellungsGruppe_Zuordnung"));
+        aGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         aGruppe.setPreferredSize(new Dimension(18, 18));
         aGruppe.addActionListener(this);
         add(aGruppe);
-        bGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("tt_AufstellungsGruppe_Zuordnung"));
+        bGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         bGruppe.setPreferredSize(new Dimension(18, 18));
         bGruppe.addActionListener(this);
         add(bGruppe);
-        cGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("tt_AufstellungsGruppe_Zuordnung"));
+        cGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         cGruppe.setPreferredSize(new Dimension(18, 18));
         cGruppe.addActionListener(this);
         add(cGruppe);
-        dGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("tt_AufstellungsGruppe_Zuordnung"));
+        dGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         dGruppe.setPreferredSize(new Dimension(18, 18));
         dGruppe.addActionListener(this);
         add(dGruppe);
-        eGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("tt_AufstellungsGruppe_Zuordnung"));
+        eGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         eGruppe.setPreferredSize(new Dimension(18, 18));
         eGruppe.addActionListener(this);
         add(eGruppe);

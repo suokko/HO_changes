@@ -33,31 +33,17 @@ import de.hattrickorganizer.tools.extension.StandingCreator;
 public class DownloadDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("Abbrechen"));
-    private JButton m_jbDownload = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Download"));
-    private JCheckBox m_jchAlterSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("FixturesDownload"),
+    private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+    private JButton m_jbDownload = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"));
+    private JCheckBox m_jchAlterSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"),
                                                           false);
-    private JCheckBox m_jchEigenenSpiele = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                .getResource()
-                                                                                                .getProperty("AktuellerSpielplanDownload"),
+    private JCheckBox m_jchEigenenSpiele = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"),
                                                          gui.UserParameter.instance().currentMatchlist);
-    private JCheckBox m_jchHRF = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("HRFDownload"),
+    private JCheckBox m_jchHRF = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFDownload"),
                                                gui.UserParameter.instance().xmlDownload);
-    private JCheckBox m_jchMatchArchiv = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                              .getResource()
-                                                                                              .getProperty("Matcharchiv"),
+    private JCheckBox m_jchMatchArchiv = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Matcharchiv"),
                                                        false);
-    private JCheckBox m_jchSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                            .getResource()
-                                                                                            .getProperty("FixturesDownload"),
+    private JCheckBox m_jchSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"),
                                                      gui.UserParameter.instance().fixtures);
     private JList m_jlAlterSeasons = new JList();
     private SpinnerDateModel m_clSpinnerModel = new SpinnerDateModel();
@@ -70,7 +56,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
      */
     public DownloadDialog() {
         super(de.hattrickorganizer.gui.HOMainFrame.instance(),
-              de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Download"),
+              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"),
               true);
 
         initComponents();
@@ -103,9 +89,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
         final DefaultListModel listModel = new DefaultListModel();
 
         for (int i = aktuelleSaison; i > 0; i--) {
-            listModel.addElement(new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Season")
+            listModel.addElement(new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season")
                                             + " " + i, i));
         }
 
@@ -120,18 +104,11 @@ public class DownloadDialog extends JDialog implements ActionListener {
         setContentPane(new ImagePanel(null));
 
         final JPanel normalDownloadPanel = new ImagePanel(new GridLayout(3, 1, 4, 4));
-        normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                              .getResource()
-                                                                                                              .getProperty("Download")));
+        normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download")));
 
-        m_jchHRF.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                       .getProperty("tt_Download_XML"));
-        m_jchEigenenSpiele.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                 .getResource()
-                                                                                 .getProperty("tt_Download_AktuellerSpielplan"));
-        m_jchSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Download_Ligatabelle"));
+        m_jchHRF.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_XML"));
+        m_jchEigenenSpiele.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_AktuellerSpielplan"));
+        m_jchSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Ligatabelle"));
         m_jchHRF.setOpaque(false);
         m_jchEigenenSpiele.setOpaque(false);
         m_jchSpielplan.setOpaque(false);
@@ -144,16 +121,12 @@ public class DownloadDialog extends JDialog implements ActionListener {
         getContentPane().add(normalDownloadPanel);
 
         final JPanel speziellerDownload = new ImagePanel(new GridLayout(1, 1, 4, 4));
-        speziellerDownload.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                             .getResource()
-                                                                                                             .getProperty("Verschiedenes")));
+        speziellerDownload.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verschiedenes")));
 
         //Alte Spielpläne
         final JPanel alteSpielplaenePanel = new ImagePanel(new BorderLayout());
 
-        m_jchAlterSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("tt_Download_AlteLigatabelle"));
+        m_jchAlterSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_AlteLigatabelle"));
         m_jchAlterSpielplan.addActionListener(this);
         m_jchAlterSpielplan.setOpaque(false);
         alteSpielplaenePanel.add(m_jchAlterSpielplan, BorderLayout.NORTH);
@@ -167,9 +140,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
         final JPanel matchArchivPanel = new JPanel(new BorderLayout(1, 2));
         matchArchivPanel.setOpaque(false);
 
-        m_jchMatchArchiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("tt_Download_Matcharchiv"));
+        m_jchMatchArchiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Matcharchiv"));
         m_jchMatchArchiv.addActionListener(this);
         m_jchMatchArchiv.setOpaque(false);
         matchArchivPanel.add(m_jchMatchArchiv, BorderLayout.WEST);
@@ -188,16 +159,14 @@ public class DownloadDialog extends JDialog implements ActionListener {
         speziellerDownload.setLocation(220, 10);
         getContentPane().add(speziellerDownload);
 
-        m_jbDownload.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("tt_Download_Start"));
+        m_jbDownload.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
         m_jbDownload.addActionListener(this);
         m_jbDownload.setFont(m_jbDownload.getFont().deriveFont(Font.BOLD));
         m_jbDownload.setSize(140, 30);
         m_jbDownload.setLocation(10, 220);
         getContentPane().add(m_jbDownload);
 
-        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("tt_Download_Abbrechen"));
+        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
         m_jbAbbrechen.addActionListener(this);
         m_jbAbbrechen.setSize(140, 30);
         m_jbAbbrechen.setLocation(380, 220);

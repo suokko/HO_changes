@@ -109,8 +109,7 @@ public class MatchFinder implements Runnable {
                     //Keep alive senden
                     if (!MyConnector.instance().sendAlive(m_iMatchId)) {
                         m_bRunning = false;
-                        doMsg(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("ERROR_MATCHFINDER"));
+                        doMsg(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ERROR_MATCHFINDER"));
                     }
 
                     //knapp unter 3 min, (wegen meinem Router) heia machen
@@ -119,7 +118,7 @@ public class MatchFinder implements Runnable {
                 }
             }
         } else {
-            doMsg(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ERROR_MATCHFINDER"));
+            doMsg(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ERROR_MATCHFINDER"));
         }
     }
 
@@ -131,9 +130,7 @@ public class MatchFinder implements Runnable {
     protected final void doMsg(String msg) {
         javax.swing.JOptionPane.showMessageDialog(de.hattrickorganizer.gui.HOMainFrame.instance(),
                                                   msg,
-                                                  de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                         .getResource()
-                                                                                         .getProperty("Fehler"),
+                                                  de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fehler"),
                                                   javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 }

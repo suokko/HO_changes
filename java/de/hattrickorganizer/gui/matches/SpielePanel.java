@@ -87,33 +87,19 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
        public static final int             NUR_GESPIELTEN_SPIELE             = 10;
      */
     private CBItem[] SPIELEFILTER = {
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("AlleSpiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AlleSpiele"),
                                                    ALLE_SPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("NurEigeneSpiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
                                                    NUR_EIGENE_SPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("NurEigenePflichtspiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
                                                    NUR_EIGENE_PFLICHTSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("NurEigenePokalspiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
                                                    NUR_EIGENE_POKALSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("NurEigeneLigaspiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
                                                    NUR_EIGENE_LIGASPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("NurEigeneFreundschaftsspiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
                                                    NUR_EIGENE_FREUNDSCHAFTSSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("NurFremdeSpiele"),
+                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"),
                                                    NUR_FREMDE_SPIELE)
                                     };
 
@@ -187,12 +173,11 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                      .getZahl());
             }
 
-            String text = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("loeschen");
+            String text = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen");
 
             if (infos.length > 1) {
                 text += (" (" + infos.length + " "
-                + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Spiele")
+                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele")
                 + ") : ");
             } else {
                 text += " : ";
@@ -207,9 +192,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             }
 
             final int value = JOptionPane.showConfirmDialog(this, text,
-                                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                   .getResource()
-                                                                                                   .getProperty("loeschen"),
+                                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen"),
                                                             JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
@@ -475,26 +458,22 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
         //Allgemein
         m_jpStaerkenvergleichsPanel = new StaerkenvergleichPanel();
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Allgemein"),
+        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Allgemein"),
                                  new JScrollPane(m_jpStaerkenvergleichsPanel));
 
         //Bewertung
         m_jpManschaftsBewertungsPanel = new ManschaftsBewertungsPanel();
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Bewertung"),
+        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"),
                                  new JScrollPane(m_jpManschaftsBewertungsPanel));
 
         //Highlights
         m_jpSpielHighlightPanel = new SpielHighlightPanel();
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Highlights"),
+        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Highlights"),
                                  new JScrollPane(m_jpSpielHighlightPanel));
 
         //Matchbericht
         m_jpMatchberichtPanel = new MatchberichtPanel(true);
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Matchbericht"),
+        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Matchbericht"),
                                  m_jpMatchberichtPanel);
 
         mainconstraints.gridx = 0;
@@ -513,9 +492,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonPanel.setLayout(buttonlayout);
 
         //Reloadbutton
-        m_jbReloadMatch.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("tt_Spiel_reload"));
+        m_jbReloadMatch.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_reload"));
         m_jbReloadMatch.addActionListener(this);
         m_jbReloadMatch.setPreferredSize(new Dimension(24, 24));
         m_jbReloadMatch.setEnabled(false);
@@ -524,8 +501,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonlayout.setConstraints(m_jbReloadMatch, buttonconstraints);
         buttonPanel.add(m_jbReloadMatch);
 
-        m_jbLoeschen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("tt_Spiel_loeschen"));
+        m_jbLoeschen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_loeschen"));
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setPreferredSize(new Dimension(24, 24));
         m_jbLoeschen.setEnabled(false);
@@ -534,8 +510,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonlayout.setConstraints(m_jbLoeschen, buttonconstraints);
         buttonPanel.add(m_jbLoeschen);
 
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Spiel_drucken"));
+        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_drucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setPreferredSize(new Dimension(24, 24));
         m_jbDrucken.setEnabled(false);
@@ -544,9 +519,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonlayout.setConstraints(m_jbDrucken, buttonconstraints);
         buttonPanel.add(m_jbDrucken);
 
-        m_jbAufstellungUebernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                         .getResource()
-                                                                                         .getProperty("tt_Spiel_aufstellunguebernehmen"));
+        m_jbAufstellungUebernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_aufstellunguebernehmen"));
         m_jbAufstellungUebernehmen.addActionListener(this);
         m_jbAufstellungUebernehmen.setPreferredSize(new Dimension(24, 24));
         m_jbAufstellungUebernehmen.setEnabled(false);
