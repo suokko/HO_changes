@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.model.FutureTrainingWeek;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.TrainingPerWeek;
 
@@ -174,6 +175,16 @@ public interface IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc);
+    
+    /**
+     * Returns the String connected to the active language file or connected
+     * to the english language file. Returns !key! if the key can not be found. 
+     *  
+     * @param key Key to be searched in language files
+     * 
+     * @return String connected to the key or !key! if nothing can be found in language files
+     */
+    public String getLanguageString(String key);
 
     /**
      * Getter for property m_clResource. usage minimodel.getResource().getProperty("Download") to
