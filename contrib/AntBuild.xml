@@ -59,18 +59,24 @@
 -->
 
 <project name="HO1-AntBuild" default="copy2build" basedir=".">
+
 	<property name="src-dir" value="src" />
+	<!-- 
+		Where do all outputs go to, this is normally the $basedir
+		Can be overridden via Ant command line (-Doutput-basedir=xxx) if needed
+	-->
+	<property name="output-basedir" value="${basedir}" />
 
 	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1" />
 	<property name="tmp-target" value="${tmp}/target" />
 
-	<property name="bin-dir" value="bin" />
-	<property name="build-dir" value="build" />
-	<property name="debug-dir" value="debug" />
+	<property name="bin-dir" value="${output-basedir}/bin" />
+	<property name="build-dir" value="${output-basedir}/build" />
+	<property name="debug-dir" value="${output-basedir}/debug" />
 
-	<property name="export-zip-dir" value="export-zip" />
+	<property name="export-zip-dir" value="${output-basedir}/export-zip" />
 
-	<property name="export-dmg-basedir" value="export-dmg" />
+	<property name="export-dmg-basedir" value="${output-basedir}/export-dmg" />
 	<property name="export-dmg-templatefile" value="${export-dmg-basedir}/HO.template.dmg" />
 	<property name="export-dmg-targetfile" value="${export-dmg-basedir}/HO.dmg" />
 	<property name="export-dmg-sourcedir" value="${export-dmg-basedir}/source" />
@@ -91,7 +97,7 @@
 	<property name="nsis-directory" value="${src-dir}/conf/nsis" />
 	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi" />
 	<property name="nsis-confPath" value="${nsis-directory}" />
-	<property name="nsis-export-dir" value="export-w32installer" />
+	<property name="nsis-export-dir" value="${output-basedir}/export-w32installer" />
 	<property name="nsis-JRE-DistPath" value="java.dist" />
 	<property name="nsis-JRE-Version" value="6u11" />
 	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p-s.exe" />
