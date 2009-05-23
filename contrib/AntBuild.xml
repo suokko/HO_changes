@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	Ant Build file for HO by flattermann <HO@flattermann.net>
+	Ant Build file for HO by flattermann <HO@flattermann.net> - 2009-05-19
 	
 	- created for personal use, but perhaps it may be useful for other, too -
 	 
@@ -59,7 +59,7 @@
 -->
 
 <project name="HO1-AntBuild" default="copy2build" basedir=".">
-	<property name="svn-dir" value="src" />
+	<property name="src-dir" value="src" />
 
 	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1" />
 	<property name="tmp-target" value="${tmp}/target" />
@@ -87,13 +87,14 @@
 		linux:   nsis-command = "wine c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
 	-->
 	<property name="nsis-command" value="wine c:/Programme/NSIS/Unicode/makensis.exe" />
-	<property name="nsis-directory" value="${svn-dir}/conf/nsis" />
+	<property name="nsis-directory" value="${src-dir}/conf/nsis" />
 	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi" />
 	<property name="nsis-confPath" value="${nsis-directory}" />
 	<property name="nsis-export-dir" value="export-w32installer" />
 	<property name="nsis-JRE-DistPath" value="java.dist" />
 	<property name="nsis-JRE-Version" value="6u11" />
 	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p-s.exe" />
+	<property name="manifestFile" value="${src-dir}/conf/MANIFEST.MF" />
 
 	<!--
 		If svn is not in your path, please adjust the following property
@@ -104,9 +105,50 @@
 	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
-			<pathelement location="${svn-dir}/contrib/libs/ant-contrib-1.0b3.jar" />
+			<pathelement location="${src-dir}/contrib/libs/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
+
+	<!-- =================================
+          target: ant-compile
+          This target is used by automatic build scripts
+         ================================= -->
+	<target name="ant-compile" description="Compile source via Ant (not necessary when building in Eclipse)">
+		<echo>src-dir is ${src-dir}</echo>
+		<property name="javaSourcePath" value="${src-dir}/java" />
+		<echo>javaSourcePath is ${javaSourcePath}</echo>
+		<property name="antCompilePath" value="${src-dir}/antCompile" />
+		<echo>antCompilePath is ${antCompilePath}</echo>
+		<!-- Read classpath from MANIFEST.MF -->
+		<loadfile property="compileClasspath" srcfile="${manifestFile}">
+			<filterchain>
+				<linecontains>
+					<contains value="Class-Path:" />
+				</linecontains>
+				<replaceregex pattern="Class-Path:\w*" replace="" />
+				<replaceregex pattern="\.\s" replace=" " flags="g" />
+				<replaceregex pattern="\./\s" replace=" " flags="g" />
+				<replaceregex pattern="\./hoplugins" replace="" flags="g" />
+				<replaceregex pattern="\./" replace="${src-dir}/conf/addToZip/" flags="g" />
+				<replaceregex pattern="^\s+" replace="" />
+				<replaceregex pattern="\s+" replace=":" flags="g" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<!--
+		<echo>Removing old build</echo>
+		<delete>
+			<fileset dir="antbuild"/>
+		</delete>
+		-->
+		<mkdir dir="${antCompilePath}" />
+		<echo>compileClasspath (from ${manifestFile}) is ${compileClasspath}</echo>
+		<echo>Building now</echo>
+		<javac srcdir="${javaSourcePath}" destdir="${antCompilePath}" debug="on" verbose="off">
+			<compilerarg value="-Xlint" />
+			<classpath path="${compileClasspath}" />
+		</javac>
+	</target>
 
 	<!-- ================================= 
           target: makeAll              
@@ -126,7 +168,7 @@
 		<mkdir dir="${export-dmg-targetdir}" />
 		<mkdir dir="${build-dir}" />
 		<mkdir dir="${debug-dir}" />
-		<loadfile property="hoversion" srcfile="${svn-dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+		<loadfile property="hoversion" srcfile="${src-dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
 			<filterchain>
 				<linecontains>
 					<contains value=" VERSION =" />
@@ -137,7 +179,7 @@
 				<striplinebreaks />
 			</filterchain>
 		</loadfile>
-		<loadfile property="dev" srcfile="${svn-dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+		<loadfile property="dev" srcfile="${src-dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
 			<filterchain>
 				<linecontains>
 					<contains value=" DEVELOPMENT =" />
@@ -151,7 +193,7 @@
 		</loadfile>
 		<!-- if the file "svn/isPrivateBuild" exists, set ${private} to "-PRIVATE"... -->
 		<condition property="private" value="_PRIVATE">
-			<available file="${svn-dir}/isPrivateBuild" />
+			<available file="${src-dir}/isPrivateBuild" />
 		</condition>
 		<!-- ... else ${private} defaults to "" -->
 		<condition property="private" value="">
@@ -176,7 +218,7 @@
 			</not>
 		</condition>
 		<!-- get current SVN version / release -->
-		<exec executable="${svn-command}" dir="${svn-dir}" failifexecutionfails="false" logerror="true">
+		<exec executable="${svn-command}" dir="${src-dir}" failifexecutionfails="false" logerror="true">
 			<arg value="info" />
 			<redirector outputproperty="svninfo">
 				<outputfilterchain>
@@ -224,9 +266,9 @@
 			<fileset dir="bin" />
 		</copy>
 		<copy todir="${tmp-target}" preservelastmodified="yes">
-			<fileset dir="${svn-dir}/conf/addToJar" />
+			<fileset dir="${src-dir}/conf/addToJar" />
 		</copy>
-		<jar manifest="${svn-dir}/conf/MANIFEST.MF" destfile="${build-dir}/ho.jar" basedir="${tmp-target}" />
+		<jar manifest="${manifestFile}" destfile="${build-dir}/ho.jar" basedir="${tmp-target}" />
 	</target>
 
 
@@ -236,15 +278,9 @@
 	<target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
 		<mkdir dir="${build-dir}" />
 		<copy todir="${build-dir}" overwrite="true">
-			<fileset dir="${svn-dir}/conf/addToZip" />
+			<fileset dir="${src-dir}/conf/addToZip" />
 			<fileset file="${tmp-target}/HOLauncher.class" />
 		</copy>
-		<!-- Add DEBUG option to ho.jar -->
-		<!--
-		<replaceregexp match="(-jar.*ho.jar.*$)" replace="\1 ${debug}" flags="i" byline="yes">
-			<fileset dir="${build-dir}" includes="HO.sh HO.bat"/>
-		</replaceregexp>
--->
 		<antcall target="copyPlugins" />
 		<antcall target="copyBuild2debug" />
 	</target>
