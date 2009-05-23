@@ -76,7 +76,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
     public AufstellungsMiniPositionsFrame(AufstellungsPanel aufstellungsPanel, boolean print,
                                           boolean minimized) {
         super("Mini"
-              + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Aufstellung"));
+              + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung"));
 
         m_bPrint = print;
         m_bMinimize = minimized;
@@ -130,8 +130,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Aufstellung")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()
@@ -513,9 +512,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
             //MiniLineup
             final JPanel panel = new JPanel(new BorderLayout());
             panel.setOpaque(false);
-            m_jbMaxFrame.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("tt_AufstellungsMiniPosFrame_zurueck"));
+            m_jbMaxFrame.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsMiniPosFrame_zurueck"));
             m_jbMaxFrame.setPreferredSize(new Dimension(25, 25));
             m_jbMaxFrame.addActionListener(this);
             panel.add(m_jbMaxFrame, BorderLayout.EAST);
@@ -534,9 +531,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         final JPanel sidePanel = new JPanel(new BorderLayout());
         sidePanel.setOpaque(false);
 
-        final JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("Elfmeterschuetzen"));
+        final JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Elfmeterschuetzen"));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
 
         if (!m_bPrint) {

@@ -547,29 +547,21 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
                                                                      40400, 500));
 
         //Übersetzung
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                            .getResource()
-                                                                                                            .getProperty("UebersetzungIn"),
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("UebersetzungIn"),
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      ueberschriftColor2, 200, 170,
                                                                      28000, 33600, 500));
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                            .getResource()
-                                                                                                            .getProperty("UebersetzungIn"),
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("UebersetzungIn"),
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      Color.black, 203, 173, 28000,
                                                                      33600, 500));
 
         //Autor
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                            .getResource()
-                                                                                                            .getProperty("Autor"),
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Autor"),
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      namenColor, 150, 200, 28200,
                                                                      33600, 500));
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                            .getResource()
-                                                                                                            .getProperty("Autor"),
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Autor"),
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      Color.black, 153, 203, 28200,
                                                                      33600, 500));

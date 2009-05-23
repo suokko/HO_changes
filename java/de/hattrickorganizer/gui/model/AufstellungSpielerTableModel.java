@@ -32,120 +32,120 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     public final String[] m_sToolTipStrings = {
-                                            HOVerwaltung.instance().getResource().getProperty("Name"),
+                                            HOVerwaltung.instance().getLanguageString("Name"),
  
     //Trickotnummer
     " ", 
     //Alter
-    HOVerwaltung.instance().getResource().getProperty("Alter"),
+    HOVerwaltung.instance().getLanguageString("Alter"),
 
     //Beste Position
-    HOVerwaltung.instance().getResource().getProperty("BestePosition"),
+    HOVerwaltung.instance().getLanguageString("BestePosition"),
  
     //Aufgestellt
-    HOVerwaltung.instance().getResource().getProperty("Aufgestellt"),
+    HOVerwaltung.instance().getLanguageString("Aufgestellt"),
  
     //Autolineup
-    HOVerwaltung.instance().getResource().getProperty("AutoAufstellung"),
+    HOVerwaltung.instance().getLanguageString("AutoAufstellung"),
 
     //Gruppe
-    HOVerwaltung.instance().getResource().getProperty("Gruppe"),
+    HOVerwaltung.instance().getLanguageString("Gruppe"),
  
     //Status
-    HOVerwaltung.instance().getResource().getProperty("Status"),
+    HOVerwaltung.instance().getLanguageString("Status"),
  
     //Form       
-    HOVerwaltung.instance().getResource().getProperty("Form"),
+    HOVerwaltung.instance().getLanguageString("Form"),
 
     //Erfahrung
-    HOVerwaltung.instance().getResource().getProperty("Erfahrung"),
+    HOVerwaltung.instance().getLanguageString("Erfahrung"),
 
     //Bewertung
-    HOVerwaltung.instance().getResource().getProperty("Bewertung"),
+    HOVerwaltung.instance().getLanguageString("Bewertung"),
 
     //Kondition
-    HOVerwaltung.instance().getResource().getProperty("Kondition"),
+    HOVerwaltung.instance().getLanguageString("Kondition"),
  
     //Torwart
-    HOVerwaltung.instance().getResource().getProperty("Torwart"),
+    HOVerwaltung.instance().getLanguageString("Torwart"),
 
     //Verteidigung
-    HOVerwaltung.instance().getResource().getProperty("Verteidigung"),
+    HOVerwaltung.instance().getLanguageString("Verteidigung"),
 
     //Spielaufbau
-    HOVerwaltung.instance().getResource().getProperty("Spielaufbau"),
+    HOVerwaltung.instance().getLanguageString("Spielaufbau"),
 
     //Passpiel
-    HOVerwaltung.instance().getResource().getProperty("Passpiel"),
+    HOVerwaltung.instance().getLanguageString("Passpiel"),
  
     //Flügelspiel
-    HOVerwaltung.instance().getResource().getProperty("Fluegelspiel"),
+    HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
  
     //Torschuss
-    HOVerwaltung.instance().getResource().getProperty("Torschuss"),
+    HOVerwaltung.instance().getLanguageString("Torschuss"),
   
     //Standards
-    HOVerwaltung.instance().getResource().getProperty("Standards"),
+    HOVerwaltung.instance().getLanguageString("Standards"),
 
     //Gesamt Torwart
-    HOVerwaltung.instance().getResource().getProperty("Torwart"),
+    HOVerwaltung.instance().getLanguageString("Torwart"),
  
     //Innenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("Innenverteidiger"),
+    HOVerwaltung.instance().getLanguageString("Innenverteidiger"),
  
     //Innenverteidiger Nach Aussen
-    HOVerwaltung.instance().getResource().getProperty("Innenverteidiger_Aus"),
+    HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"),
 
     //Innenverteidiger Offensiv
-    HOVerwaltung.instance().getResource().getProperty("Innenverteidiger_Off"),
+    HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"),
 
     //Aussenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger"),
+    HOVerwaltung.instance().getLanguageString("Aussenverteidiger"),
 
     //Aussenverteidiger Nach Innen
-    HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger_In"),
+    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"),
 
     //Aussenverteidiger Offensiv
-    HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger_Off"),
+    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"),
 
     //Aussenverteidiger Defensiv
-    HOVerwaltung.instance().getResource().getProperty("Aussenverteidiger_Def"),
+    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"),
  
     //Mittelfeld
-    HOVerwaltung.instance().getResource().getProperty("Mittelfeld"),
+    HOVerwaltung.instance().getLanguageString("Mittelfeld"),
 
     //Mittelfeld Nach Aussen
-    HOVerwaltung.instance().getResource().getProperty("Mittelfeld_Aus"),
+    HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"),
  
     //Mittelfeld Offensiv
-    HOVerwaltung.instance().getResource().getProperty("Mittelfeld_Off"),
+    HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"),
 
     //Mittelfeld Defensiv
-    HOVerwaltung.instance().getResource().getProperty("Mittelfeld_Def"),
+    HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
 
     //Flügel
-    HOVerwaltung.instance().getResource().getProperty("Fluegelspiel"),
+    HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
 
     //Flügel Nach Innen
-    HOVerwaltung.instance().getResource().getProperty("Fluegelspiel_In"),
+    HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
  
     //Flügel Offensiv
-    HOVerwaltung.instance().getResource().getProperty("Fluegelspiel_Off"),
+    HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
 
     //Flügel Defensiv
-    HOVerwaltung.instance().getResource().getProperty("Fluegelspiel_Def"),
+    HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
  
     //Sturm
-    HOVerwaltung.instance().getResource().getProperty("Sturm"),
+    HOVerwaltung.instance().getLanguageString("Sturm"),
 
     //Sturm nach Aussen
-    HOVerwaltung.instance().getResource().getProperty("Sturm_Aus"),
+    HOVerwaltung.instance().getLanguageString("Sturm_Aus"),
     
     //Sturm Defensiv
-    HOVerwaltung.instance().getResource().getProperty("Sturm_Def"),                                        
+    HOVerwaltung.instance().getLanguageString("Sturm_Def"),                                        
 
     //ID
-    HOVerwaltung.instance().getResource().getProperty("ID")
+    HOVerwaltung.instance().getLanguageString("ID")
     };
 
     /** TODO Missing Parameter Documentation */
@@ -153,7 +153,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     private final String[] m_sColumnNames = {
-                                            HOVerwaltung.instance().getResource().getProperty("Name"),
+                                            HOVerwaltung.instance().getLanguageString("Name"),
                                             
     //Trickotnummer
     " ", 
@@ -161,112 +161,112 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     " ",
  
     //Beste Position
-    HOVerwaltung.instance().getResource().getProperty("BestePosition"),
+    HOVerwaltung.instance().getLanguageString("BestePosition"),
 
     //Aufgestellt
     " ",
 
     //Autolineup
-    HOVerwaltung.instance().getResource().getProperty("AutoAufstellung"),
+    HOVerwaltung.instance().getLanguageString("AutoAufstellung"),
 
     //Gruppe
-    HOVerwaltung.instance().getResource().getProperty("Gruppe"),
+    HOVerwaltung.instance().getLanguageString("Gruppe"),
 
     //Status
-    HOVerwaltung.instance().getResource().getProperty("Status"),
+    HOVerwaltung.instance().getLanguageString("Status"),
  
     //Form     
-    HOVerwaltung.instance().getResource().getProperty("FO"),
+    HOVerwaltung.instance().getLanguageString("FO"),
  
     //Erfahrung
-    HOVerwaltung.instance().getResource().getProperty("ER"),
+    HOVerwaltung.instance().getLanguageString("ER"),
 
     //Bewertung
-    HOVerwaltung.instance().getResource().getProperty("Bewertung"),
+    HOVerwaltung.instance().getLanguageString("Bewertung"),
 
     //Kondition
-    HOVerwaltung.instance().getResource().getProperty("KO"),
+    HOVerwaltung.instance().getLanguageString("KO"),
 
     //Torwart
-    HOVerwaltung.instance().getResource().getProperty("TW"),
+    HOVerwaltung.instance().getLanguageString("TW"),
  
     //Verteidigung
-    HOVerwaltung.instance().getResource().getProperty("VE"),
+    HOVerwaltung.instance().getLanguageString("VE"),
  
     //Spielaufbau
-    HOVerwaltung.instance().getResource().getProperty("SA"),
+    HOVerwaltung.instance().getLanguageString("SA"),
  
     //Passpiel
-    HOVerwaltung.instance().getResource().getProperty("PS"),
+    HOVerwaltung.instance().getLanguageString("PS"),
 
     //Flügelspiel
-    HOVerwaltung.instance().getResource().getProperty("FL"),
+    HOVerwaltung.instance().getLanguageString("FL"),
 
     //Torschuss
-    HOVerwaltung.instance().getResource().getProperty("TS"),
+    HOVerwaltung.instance().getLanguageString("TS"),
 
     //Standards
-    HOVerwaltung.instance().getResource().getProperty("ST"),
+    HOVerwaltung.instance().getLanguageString("ST"),
 
     //Gesamt Torwart
-    HOVerwaltung.instance().getResource().getProperty("TORW"),
+    HOVerwaltung.instance().getLanguageString("TORW"),
 
     //Innenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("IV"),
+    HOVerwaltung.instance().getLanguageString("IV"),
 
     //Innenverteidiger Nach Aussen
-    HOVerwaltung.instance().getResource().getProperty("IVA"),
+    HOVerwaltung.instance().getLanguageString("IVA"),
 
     //Innenverteidiger Offensiv
-    HOVerwaltung.instance().getResource().getProperty("IVO"),
+    HOVerwaltung.instance().getLanguageString("IVO"),
 
     //Aussenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("AV"),
+    HOVerwaltung.instance().getLanguageString("AV"),
 
     //Aussenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("AVI"),
+    HOVerwaltung.instance().getLanguageString("AVI"),
  
     //Aussenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("AVO"),
+    HOVerwaltung.instance().getLanguageString("AVO"),
 
     //Aussenverteidiger
-    HOVerwaltung.instance().getResource().getProperty("AVD"),
+    HOVerwaltung.instance().getLanguageString("AVD"),
  
     //Mittelfeld
-    HOVerwaltung.instance().getResource().getProperty("MIT"),
+    HOVerwaltung.instance().getLanguageString("MIT"),
 
     //Mittelfeld Nach Aussen
-    HOVerwaltung.instance().getResource().getProperty("MITA"),
+    HOVerwaltung.instance().getLanguageString("MITA"),
  
     //Mittelfeld Offensiv
-    HOVerwaltung.instance().getResource().getProperty("MITO"),
+    HOVerwaltung.instance().getLanguageString("MITO"),
  
     //Mittelfeld Defensiv
-    HOVerwaltung.instance().getResource().getProperty("MITD"),
+    HOVerwaltung.instance().getLanguageString("MITD"),
  
     //Flügel
-    HOVerwaltung.instance().getResource().getProperty("FLG"),
+    HOVerwaltung.instance().getLanguageString("FLG"),
 
     //Flügel Nach Innen
-    HOVerwaltung.instance().getResource().getProperty("FLGI"),
+    HOVerwaltung.instance().getLanguageString("FLGI"),
 
     //Flügel Offensiv
-    HOVerwaltung.instance().getResource().getProperty("FLGO"),
+    HOVerwaltung.instance().getLanguageString("FLGO"),
  
     //Flügel Defensiv
-    HOVerwaltung.instance().getResource().getProperty("FLGD"),
+    HOVerwaltung.instance().getLanguageString("FLGD"),
 
     //Sturm
-    HOVerwaltung.instance().getResource().getProperty("STU"),
+    HOVerwaltung.instance().getLanguageString("STU"),
 
     //Sturm
-    HOVerwaltung.instance().getResource().getProperty("STUA"),
+    HOVerwaltung.instance().getLanguageString("STUA"),
     
     //Sturm Defensiv
-    HOVerwaltung.instance().getResource().getProperty("STUD"),
+    HOVerwaltung.instance().getLanguageString("STUD"),
 
     //ID
-    HOVerwaltung.instance().getResource().getProperty("ID")
+    HOVerwaltung.instance().getLanguageString("ID")
     };
     
     private Vector m_vSpieler;

@@ -58,7 +58,7 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
      */
     public RMIDialog(JFrame owner) {
         super(owner,
-              de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("HoFriendly"),
+              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HoFriendly"),
               true);
 
         initComponents();
@@ -339,13 +339,9 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         //Server------------------------------------
         final JPanel serverpanel = new ImagePanel(null);
 
-        serverpanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                      .getResource()
-                                                                                                      .getProperty("Server")));
+        serverpanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Server")));
 
-        m_jchServerRegister = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Als_InternetServer_registrieren"));
+        m_jchServerRegister = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Als_InternetServer_registrieren"));
         m_jchServerRegister.setOpaque(false);
         m_jchServerRegister.setSize(205, 25);
         m_jchServerRegister.setLocation(10, 10);
@@ -353,8 +349,7 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         m_jchServerRegister.setEnabled(!gui.UserParameter.instance().ProxyAktiv /*net.MyConnector.instance().isUseProxy()*/);
         serverpanel.add(m_jchServerRegister);
 
-        JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("IP"));
+        JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IP"));
         label.setSize(100, 25);
         label.setLocation(10, 40);
         serverpanel.add(label);
@@ -378,8 +373,7 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         m_jtfServerServerIP.setLocation(105, 40);
         serverpanel.add(m_jtfServerServerIP);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Port"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Port"));
         label.setSize(100, 25);
         label.setLocation(10, 70);
         serverpanel.add(label);
@@ -390,8 +384,7 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         m_jtfServerServerPort.addKeyListener(this);
         serverpanel.add(m_jtfServerServerPort);
 
-        m_jbServerIP = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("IP"));
+        m_jbServerIP = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IP"));
         m_jbServerIP.setSize(205, 25);
         m_jbServerIP.setLocation(10, 255);
         m_jbServerIP.addActionListener(this);
@@ -404,13 +397,9 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         //Client-----------------------
         //Client
         final JPanel clientpanel = new ImagePanel(null);
-        clientpanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                      .getResource()
-                                                                                                      .getProperty("Client")));
+        clientpanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Client")));
 
-        m_jchClientListe = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("Internetserver_auswaehlen"),
+        m_jchClientListe = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Internetserver_auswaehlen"),
                                          false);
         m_jchClientListe.setOpaque(false);
         m_jchClientListe.addActionListener(this);
@@ -419,10 +408,8 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         m_jchClientListe.setEnabled(!gui.UserParameter.instance().ProxyAktiv);
         clientpanel.add(m_jchClientListe);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Server") + " "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("IP"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Server") + " "
+                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IP"));
         label.setSize(100, 25);
         label.setLocation(10, 40);
         clientpanel.add(label);
@@ -433,8 +420,7 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         m_jtfClientServerIP.setLocation(105, 40);
         clientpanel.add(m_jtfClientServerIP);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Port"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Port"));
         label.setSize(100, 25);
         label.setLocation(10, 70);
         clientpanel.add(label);
@@ -454,9 +440,7 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         scrollPanel.setLocation(10, 100);
         clientpanel.add(scrollPanel);
 
-        m_jbRefreshList = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("Refresh"));
+        m_jbRefreshList = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Refresh"));
         m_jbRefreshList.addActionListener(this);
         m_jbRefreshList.setEnabled(false);
         m_jbRefreshList.setSize(205, 25);
@@ -468,29 +452,24 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
         getContentPane().add(clientpanel);
 
         //----Button
-        m_jbServer = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Starte")
+        m_jbServer = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Starte")
                                  + " "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("Server"));
+                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Server"));
         m_jbServer.setFont(m_jbServer.getFont().deriveFont(Font.BOLD));
         m_jbServer.addActionListener(this);
         m_jbServer.setSize(140, 30);
         m_jbServer.setLocation(10, 300);
         getContentPane().add(m_jbServer);
 
-        m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("Abbrechen"));
+        m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
         m_jbAbbrechen.addActionListener(this);
         m_jbAbbrechen.setSize(140, 30);
         m_jbAbbrechen.setLocation(175, 300);
         getContentPane().add(m_jbAbbrechen);
 
-        m_jbClient = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Starte")
+        m_jbClient = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Starte")
                                  + " "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("Client"));
+                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Client"));
         m_jbClient.setFont(m_jbClient.getFont().deriveFont(Font.BOLD));
         m_jbClient.addActionListener(this);
         m_jbClient.setSize(140, 30);

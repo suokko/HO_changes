@@ -60,13 +60,13 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         final TeamRatings tr = (TeamRatings) team.getRatings();
         final de.hattrickorganizer.model.HOVerwaltung verwaltung = de.hattrickorganizer.model.HOVerwaltung
                                                                    .instance();
-        addLine(tr.getMidfield(), verwaltung.getResource().getProperty("MatchMittelfeld"));
-        addLine(tr.getRightDef(), verwaltung.getResource().getProperty("rechteAbwehrseite"));
-        addLine(tr.getMiddleDef(), verwaltung.getResource().getProperty("Abwehrzentrum"));
-        addLine(tr.getLeftDef(), verwaltung.getResource().getProperty("linkeAbwehrseite"));
-        addLine(tr.getRightAttack(), verwaltung.getResource().getProperty("rechteAngriffsseite"));
-        addLine(tr.getMiddleAttack(), verwaltung.getResource().getProperty("Angriffszentrum"));
-        addLine(tr.getLeftAttack(), verwaltung.getResource().getProperty("linkeAngriffsseite"));
+        addLine(tr.getMidfield(), verwaltung.getLanguageString("MatchMittelfeld"));
+        addLine(tr.getRightDef(), verwaltung.getLanguageString("rechteAbwehrseite"));
+        addLine(tr.getMiddleDef(), verwaltung.getLanguageString("Abwehrzentrum"));
+        addLine(tr.getLeftDef(), verwaltung.getLanguageString("linkeAbwehrseite"));
+        addLine(tr.getRightAttack(), verwaltung.getLanguageString("rechteAngriffsseite"));
+        addLine(tr.getMiddleAttack(), verwaltung.getLanguageString("Angriffszentrum"));
+        addLine(tr.getLeftAttack(), verwaltung.getLanguageString("linkeAngriffsseite"));
 
         m_clConstraints.gridx = 0;
         m_clConstraints.gridy = row;
@@ -238,10 +238,10 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
 
         final de.hattrickorganizer.model.HOVerwaltung verwaltung = de.hattrickorganizer.model.HOVerwaltung
                                                                    .instance();
-        subLevels.add(new RatingItem(verwaltung.getResource().getProperty("verylow"), 0));
-        subLevels.add(new RatingItem(verwaltung.getResource().getProperty("low"), 1));
-        subLevels.add(new RatingItem(verwaltung.getResource().getProperty("high"), 2));
-        subLevels.add(new RatingItem(verwaltung.getResource().getProperty("veryhigh"), 3));
+        subLevels.add(new RatingItem(verwaltung.getLanguageString("verylow"), 0));
+        subLevels.add(new RatingItem(verwaltung.getLanguageString("low"), 1));
+        subLevels.add(new RatingItem(verwaltung.getLanguageString("high"), 2));
+        subLevels.add(new RatingItem(verwaltung.getLanguageString("veryhigh"), 3));
     }
 
     /**

@@ -71,8 +71,7 @@ public class ManualPanel extends JPanel {
         buttonPanel.add(tsi);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));
-        buttonPanel.add(label(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Form")));
+        buttonPanel.add(label(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form")));
         buttonPanel.add(form);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));
@@ -88,9 +87,7 @@ public class ManualPanel extends JPanel {
                 }
             });
 
-        final JButton b = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("SubskillsBerechnen"));
+        final JButton b = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
         b.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     final int tsiValue = Integer.parseInt(tsi.getText());

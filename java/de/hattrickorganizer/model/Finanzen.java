@@ -266,48 +266,47 @@ public class Finanzen implements plugins.IFinanzen {
     	}
         switch (level) {
             case LV_fans_vergoettern_Dich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_sending_love_poems_to_you");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
 
             case LV_fans_im_siebten_Himmel:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_dancing_in_the_streets");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_dancing_in_the_streets");
 
             case LV_fans_euphorisch:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_high_on_life");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_high_on_life");
 
             case LV_fans_uebergluecklich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_delirious");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_delirious");
 
             case LV_fans_gluecklich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_satisfied");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_satisfied");
 
             case LV_fans_zufrieden:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_content");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_content");
 
             case LV_fans_ruhig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_calm");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_calm");
 
             case LV_fans_disappointed:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_disappointed");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_disappointed");
                 
             case LV_fans_irritiert:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_irritated");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_irritated");
                 
             case LV_fans_angry:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_angry");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_angry");
 
             case LV_fans_wuetend:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_furious");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_furious");
 
             case LV_fans_blutduerstig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_murderous");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_murderous");
 
             default: {
                 if (level > LV_fans_vergoettern_Dich) {
-                    return de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ss_sending_love_poems_to_you");
+                    return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
                 }
 
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
             }
         }
     }
@@ -321,42 +320,41 @@ public class Finanzen implements plugins.IFinanzen {
     public static String getNameForLevelSponsors(int level) {
         switch (level) {
             case LV_spons_vergoettern_Dich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_sending_love_poems_to_you");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
 
             case LV_spons_im_siebten_Himmel:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_dancing_in_the_streets");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_dancing_in_the_streets");
 
             case LV_spons_euphorisch:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_high_on_life");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_high_on_life");
 
             case LV_spons_uebergluecklich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_delirious");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_delirious");
 
             case LV_spons_gluecklich:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_satisfied");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_satisfied");
 
             case LV_spons_zufrieden:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_content");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_content");
 
             case LV_spons_ruhig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_calm");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_calm");
 
             case LV_spons_irritiert:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_irritated");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_irritated");
                 
             case LV_spons_wuetend:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_furious");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_furious");
 
             case LV_spons_blutduerstig:
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("ss_murderous");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_murderous");
 
             default: {
                 if (level > LV_spons_vergoettern_Dich) {
-                    return de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ss_sending_love_poems_to_you");
+                    return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
                 }
 
-                return de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
             }
         }
     }

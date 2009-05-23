@@ -93,8 +93,7 @@ public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListene
         final JPanel panel = new ImagePanel(new BorderLayout());
 
         m_jbDrehen = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/drehen.png")));
-        m_jbDrehen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("tt_SpielerAnalyse_drehen"));
+        m_jbDrehen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_SpielerAnalyse_drehen"));
         m_jbDrehen.setPreferredSize(new Dimension(24, 24));
         m_jbDrehen.addActionListener(this);
         panel.add(m_jbDrehen, BorderLayout.WEST);

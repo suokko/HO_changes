@@ -180,8 +180,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("SpielerAnalyse")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SpielerAnalyse")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()

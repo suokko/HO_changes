@@ -20,10 +20,10 @@ public class PlayerConverter {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of all 21 ratings for the active language */
-    private List skills;
-    private List skillvalues;
-    private List specialities;
-    private List specialitiesvalues;
+    private List<String> skills;
+    private List<Integer> skillvalues;
+    private List<String> specialities;
+    private List<Integer> specialitiesvalues;
     private int error;
     final HOVerwaltung homodel = HOVerwaltung.instance();
 
@@ -35,30 +35,30 @@ public class PlayerConverter {
     public PlayerConverter() {
         // Get all skills for active language
         // This should be the same language as in Hattrick
-        skills = new ArrayList();
-        skills.add(homodel.getResource().getProperty("nonexisting").toLowerCase());
-        skills.add(homodel.getResource().getProperty("katastrophal").toLowerCase());
-        skills.add(homodel.getResource().getProperty("erbaermlich").toLowerCase());
-        skills.add(homodel.getResource().getProperty("armselig").toLowerCase());
-        skills.add(homodel.getResource().getProperty("schwach").toLowerCase());
-        skills.add(homodel.getResource().getProperty("durchschnittlich").toLowerCase());
-        skills.add(homodel.getResource().getProperty("passabel").toLowerCase());
-        skills.add(homodel.getResource().getProperty("gut").toLowerCase());
-        skills.add(homodel.getResource().getProperty("sehr_gut").toLowerCase());
-        skills.add(homodel.getResource().getProperty("hervorragend").toLowerCase());
-        skills.add(homodel.getResource().getProperty("grossartig").toLowerCase());
-        skills.add(homodel.getResource().getProperty("brilliant").toLowerCase());
-        skills.add(homodel.getResource().getProperty("fantastisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("Weltklasse").toLowerCase());
-        skills.add(homodel.getResource().getProperty("uebernatuerlich").toLowerCase());
-        skills.add(homodel.getResource().getProperty("gigantisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("ausserirdisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("mythisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("maerchenhaft").toLowerCase());
-        skills.add(homodel.getResource().getProperty("galaktisch").toLowerCase());
-        skills.add(homodel.getResource().getProperty("goettlich").toLowerCase());
+        skills = new ArrayList<String>();
+        skills.add(homodel.getLanguageString("nonexisting").toLowerCase());
+        skills.add(homodel.getLanguageString("katastrophal").toLowerCase());
+        skills.add(homodel.getLanguageString("erbaermlich").toLowerCase());
+        skills.add(homodel.getLanguageString("armselig").toLowerCase());
+        skills.add(homodel.getLanguageString("schwach").toLowerCase());
+        skills.add(homodel.getLanguageString("durchschnittlich").toLowerCase());
+        skills.add(homodel.getLanguageString("passabel").toLowerCase());
+        skills.add(homodel.getLanguageString("gut").toLowerCase());
+        skills.add(homodel.getLanguageString("sehr_gut").toLowerCase());
+        skills.add(homodel.getLanguageString("hervorragend").toLowerCase());
+        skills.add(homodel.getLanguageString("grossartig").toLowerCase());
+        skills.add(homodel.getLanguageString("brilliant").toLowerCase());
+        skills.add(homodel.getLanguageString("fantastisch").toLowerCase());
+        skills.add(homodel.getLanguageString("Weltklasse").toLowerCase());
+        skills.add(homodel.getLanguageString("uebernatuerlich").toLowerCase());
+        skills.add(homodel.getLanguageString("gigantisch").toLowerCase());
+        skills.add(homodel.getLanguageString("ausserirdisch").toLowerCase());
+        skills.add(homodel.getLanguageString("mythisch").toLowerCase());
+        skills.add(homodel.getLanguageString("maerchenhaft").toLowerCase());
+        skills.add(homodel.getLanguageString("galaktisch").toLowerCase());
+        skills.add(homodel.getLanguageString("goettlich").toLowerCase());
 
-        skillvalues = new ArrayList();
+        skillvalues = new ArrayList<Integer>();
 
         for (int k = 0; k < skills.size(); k++) {
             skillvalues.add(new Integer(k));
@@ -87,15 +87,15 @@ public class PlayerConverter {
 
         // Get all specialities for active language
         // This should be the same language as in Hattrick
-        specialities = new ArrayList();
-        specialities.add(homodel.getResource().getProperty("sp_Technical").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Quick").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Powerful").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Unpredictable").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Head").toLowerCase());
-        specialities.add(homodel.getResource().getProperty("sp_Regainer").toLowerCase());
+        specialities = new ArrayList<String>();
+        specialities.add(homodel.getLanguageString("sp_Technical").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Quick").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Powerful").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Unpredictable").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Head").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Regainer").toLowerCase());
 
-        specialitiesvalues = new ArrayList();
+        specialitiesvalues = new ArrayList<Integer>();
 
         for (int k = 0; k < 6; k++) {
             specialitiesvalues.add(new Integer(k));
@@ -151,7 +151,7 @@ public class PlayerConverter {
 
         // Init some helper variables
         String mytext = text;
-        final List lines = new ArrayList();
+        final List<String> lines = new ArrayList<String>();
         int p = -1;
         String tmp = "";
 
@@ -507,14 +507,14 @@ public class PlayerConverter {
             // We can search all the skills in text now
             p = skills.size() - 1;
 
-            final List foundskills = new ArrayList();
+            final List<List<Object>> foundskills = new ArrayList<List<Object>>();
 
             while (p >= 0) {
                 final String singleskill = skills.get(p).toString();
                 k = mytext.indexOf(singleskill);
 
                 if (k >= 0) {
-                    final List pair = new ArrayList();
+                    final List<Object> pair = new ArrayList<Object>();
                     pair.add(new Integer(k));
                     pair.add(singleskill);
                     pair.add(new Integer(p));
@@ -543,8 +543,8 @@ public class PlayerConverter {
                 k = p;
 
                 while (k < foundskills.size()) {
-                    final List ts1 = (ArrayList) foundskills.get(k - 1);
-                    final List ts2 = (ArrayList) foundskills.get(k);
+                    final List<Object> ts1 = foundskills.get(k - 1);
+                    final List<Object> ts2 = foundskills.get(k);
 
                     if (((Integer) ts1.get(0)).intValue() > ((Integer) ts2.get(0)).intValue()) {
                         foundskills.set(k - 1, ts2);
@@ -575,14 +575,14 @@ public class PlayerConverter {
             // We can search the speciality in text now
             p = specialities.size() - 1;
 
-            final List foundspecialities = new ArrayList();
+            final List<List<Object>> foundspecialities = new ArrayList<List<Object>>();
 
             while (p >= 0) {
                 final String singlespeciality = specialities.get(p).toString();
                 k = mytext.indexOf(singlespeciality);
 
                 if (k >= 0) {
-                    final List pair = new ArrayList();
+                    final List<Object> pair = new ArrayList<Object>();
                     pair.add(new Integer(k));
                     pair.add(singlespeciality);
                     pair.add(new Integer(p));
@@ -611,8 +611,8 @@ public class PlayerConverter {
                 k = p;
 
                 while (k < foundspecialities.size()) {
-                    final List ts1 = (ArrayList) foundspecialities.get(k - 1);
-                    final List ts2 = (ArrayList) foundspecialities.get(k);
+                    final List<Object> ts1 = foundspecialities.get(k - 1);
+                    final List<Object> ts2 = foundspecialities.get(k);
 
                     if (((Integer) ts1.get(0)).intValue() > ((Integer) ts2.get(0)).intValue()) {
                         foundspecialities.set(k - 1, ts2);
@@ -627,7 +627,7 @@ public class PlayerConverter {
             }
 
             if (foundspecialities.size() > 0) {
-                player.setSpeciality(((Integer) specialitiesvalues.get(((Integer) ((ArrayList) foundspecialities.get(0)).get(2)).intValue())).intValue() + 1);
+                player.setSpeciality(((Integer) specialitiesvalues.get(((Integer) (foundspecialities.get(0)).get(2)).intValue())).intValue() + 1);
             } else {
                 player.setSpeciality(0);
             }
@@ -639,39 +639,39 @@ public class PlayerConverter {
     /**
      * Set parsed skills in the player object. Bar style.
      */
-    private void setSkillsBarStyle(Player player, final List foundskills) throws Exception {
+    private void setSkillsBarStyle(Player player, final List<List<Object>> foundskills) throws Exception {
     	// player skills (long default format with bars)
-    	player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0)).get(2)).intValue())).intValue());
-    	player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1)).get(2)).intValue())).intValue());
-    	player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2)).get(2)).intValue())).intValue());
-    	player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(3)).get(2)).intValue())).intValue());
+    	player.setForm(((Integer) skillvalues.get(((Integer) (foundskills.get(0)).get(2)).intValue())).intValue());
+    	player.setStamina(((Integer) skillvalues.get(((Integer) (foundskills.get(1)).get(2)).intValue())).intValue());
+    	player.setExperience(((Integer) skillvalues.get(((Integer) (foundskills.get(2)).get(2)).intValue())).intValue());
+    	player.setLeadership(((Integer) skillvalues.get(((Integer) (foundskills.get(3)).get(2)).intValue())).intValue());
 
-    	player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(4)).get(2)).intValue())).intValue());
-    	player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(5)).get(2)).intValue())).intValue());
-    	player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(6)).get(2)).intValue())).intValue());
-    	player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(7)).get(2)).intValue())).intValue());
-    	player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(8)).get(2)).intValue())).intValue());
-    	player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(9)).get(2)).intValue())).intValue());
-    	player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(10)).get(2)).intValue())).intValue());
+    	player.setGoalKeeping(((Integer) skillvalues.get(((Integer) (foundskills.get(4)).get(2)).intValue())).intValue());
+    	player.setDefense(((Integer) skillvalues.get(((Integer) (foundskills.get(5)).get(2)).intValue())).intValue());
+    	player.setPlayMaking(((Integer) skillvalues.get(((Integer) (foundskills.get(6)).get(2)).intValue())).intValue());
+    	player.setWing(((Integer) skillvalues.get(((Integer) (foundskills.get(7)).get(2)).intValue())).intValue());
+    	player.setPassing(((Integer) skillvalues.get(((Integer) (foundskills.get(8)).get(2)).intValue())).intValue());
+    	player.setAttack(((Integer) skillvalues.get(((Integer) (foundskills.get(9)).get(2)).intValue())).intValue());
+    	player.setSetPieces(((Integer) skillvalues.get(((Integer) (foundskills.get(10)).get(2)).intValue())).intValue());
     }
 
     /**
      * Set parsed skills in the player object. Classic style with 2 skills per line.
      */
-    private void setSkillsClassicStyle(Player player, final List foundskills) throws Exception {
+    private void setSkillsClassicStyle(Player player, final List<List<Object>> foundskills) throws Exception {
     	// player skills (2er format without bars)
-	    player.setForm(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(0)).get(2)).intValue())).intValue());
-	    player.setStamina(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(1)).get(2)).intValue())).intValue());
-	    player.setExperience(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(2)).get(2)).intValue())).intValue());
-	    player.setLeadership(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(3)).get(2)).intValue())).intValue());
+	    player.setForm(((Integer) skillvalues.get(((Integer) (foundskills.get(0)).get(2)).intValue())).intValue());
+	    player.setStamina(((Integer) skillvalues.get(((Integer) (foundskills.get(1)).get(2)).intValue())).intValue());
+	    player.setExperience(((Integer) skillvalues.get(((Integer) (foundskills.get(2)).get(2)).intValue())).intValue());
+	    player.setLeadership(((Integer) skillvalues.get(((Integer) (foundskills.get(3)).get(2)).intValue())).intValue());
 
-	    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(5)).get(2)).intValue())).intValue());
-	    player.setDefense(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(9)).get(2)).intValue())).intValue());
-	    player.setPlayMaking(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(6)).get(2)).intValue())).intValue());
-	    player.setWing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(8)).get(2)).intValue())).intValue());
-	    player.setPassing(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(7)).get(2)).intValue())).intValue());
-	    player.setAttack(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(10)).get(2)).intValue())).intValue());
-	    player.setSetPieces(((Integer) skillvalues.get(((Integer) ((ArrayList) foundskills.get(11)).get(2)).intValue())).intValue());
+	    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) (foundskills.get(5)).get(2)).intValue())).intValue());
+	    player.setDefense(((Integer) skillvalues.get(((Integer) (foundskills.get(9)).get(2)).intValue())).intValue());
+	    player.setPlayMaking(((Integer) skillvalues.get(((Integer) (foundskills.get(6)).get(2)).intValue())).intValue());
+	    player.setWing(((Integer) skillvalues.get(((Integer) (foundskills.get(8)).get(2)).intValue())).intValue());
+	    player.setPassing(((Integer) skillvalues.get(((Integer) (foundskills.get(7)).get(2)).intValue())).intValue());
+	    player.setAttack(((Integer) skillvalues.get(((Integer) (foundskills.get(10)).get(2)).intValue())).intValue());
+	    player.setSetPieces(((Integer) skillvalues.get(((Integer) (foundskills.get(11)).get(2)).intValue())).intValue());
     }
 
     public static int getPrice(String bid, String curbid) {

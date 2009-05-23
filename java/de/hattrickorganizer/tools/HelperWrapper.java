@@ -225,8 +225,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @return TODO Missing Return Method Documentation
      */
     public int getLanguageID() {
-        final String id = HOVerwaltung.instance().getResource()
-                                                                 .getProperty("LanguageID", "-1");
+        final String id = HOVerwaltung.instance().getLanguageString("LanguageID");
 
         try {
             return Integer.parseInt(id);

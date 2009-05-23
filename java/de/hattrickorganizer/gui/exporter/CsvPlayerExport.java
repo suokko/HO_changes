@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -55,10 +54,9 @@ public class CsvPlayerExport {
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			file = fileChooser.getSelectedFile();
-			Properties prop = HOVerwaltung.instance().getResource();
 			if (file.exists() && JOptionPane.showConfirmDialog(
 					HOMiniModel.instance().getGUI().getOwner4Dialog(), 
-					prop.getProperty("overwrite"), NAME,
+					HOVerwaltung.instance().getLanguageString("overwrite"), NAME,
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				// Cancel
 				return;		
@@ -75,7 +73,7 @@ public class CsvPlayerExport {
 	private void doExport (File file) {
 		HOLogger.instance().info(getClass(),
 				"Exporting all players as CSV to " + file.getName() + "...");
-		List list = miniModel.getAllSpieler();
+		List<Spieler> list = miniModel.getAllSpieler();
 		try {
 			FileWriter writer = new FileWriter(file);
 			writer.write("id,shirtno,name,age,agedays,form,stamina,"
@@ -83,7 +81,7 @@ public class CsvPlayerExport {
 					+ "specialty,tsi,wage,xp,leadership,pop,agg,hon,cards,injury,"
 					+ "GK,CD,CD_off,CD_tw,WB,WB_off,WB_def,WB_tm,IM,IM_off,IM_def,IM_tw,WI,WI_off,WI_def,WI_tm,FW,FW_def,FW_tw"
 					+ "\n");
-			Iterator iter = list.iterator();
+			Iterator<Spieler> iter = list.iterator();
 			while (iter.hasNext()) {
 				Spieler curPlayer = (Spieler)iter.next();
 				String [] outCols = {

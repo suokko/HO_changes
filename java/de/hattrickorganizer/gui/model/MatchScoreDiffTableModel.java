@@ -26,8 +26,8 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
 		{
-			HOVerwaltung.instance().getResource().getProperty("Ergebnis"),
-			HOVerwaltung.instance().getResource().getProperty("frequency")};
+			HOVerwaltung.instance().getLanguageString("Ergebnis"),
+			HOVerwaltung.instance().getLanguageString("frequency")};
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -61,11 +61,11 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 			result[diff + 4] += n;
 		}
 				
-		String homeWin = HOVerwaltung.instance().getResource().getProperty("Winby");
-		String awayWin = HOVerwaltung.instance().getResource().getProperty("Lostby");
+		String homeWin = HOVerwaltung.instance().getLanguageString("Winby");
+		String awayWin = HOVerwaltung.instance().getLanguageString("Lostby");
 		if (!isHomeMatch()) {
-			awayWin = HOVerwaltung.instance().getResource().getProperty("Winby");
-			homeWin  = HOVerwaltung.instance().getResource().getProperty("Lostby");
+			awayWin = HOVerwaltung.instance().getLanguageString("Winby");
+			homeWin  = HOVerwaltung.instance().getLanguageString("Lostby");
 			
 		}
 		for (int i = 8; i > 4; i--) {
@@ -83,7 +83,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 
 		m_clData[4][0] =
 			new ColorLabelEntry(
-				HOVerwaltung.instance().getResource().getProperty("Unendschieden"),
+				HOVerwaltung.instance().getLanguageString("Unendschieden"),
 				ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD,
 				JLabel.LEFT);

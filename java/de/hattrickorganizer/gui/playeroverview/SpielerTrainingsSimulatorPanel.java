@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -40,7 +39,10 @@ import de.hattrickorganizer.tools.Helper;
 final class SpielerTrainingsSimulatorPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, ItemListener, ActionListener, FocusListener
 {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = 7657564758631332932L;
+	
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     private static Dimension CBSIZE = new Dimension(Helper.calcCellWidth(120),
                                                     Helper.calcCellWidth(25));
@@ -74,12 +76,8 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 									            ColorLabelEntry.FG_STANDARD,
 									            ColorLabelEntry.BG_STANDARD,
 									            SwingConstants.RIGHT);
-    private final JButton m_jbAddTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                            .getResource()
-                                                                                            .getProperty("AddTempspieler"));
-    private final  JButton m_jbRemoveTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                               .getResource()
-                                                                                               .getProperty("RemoveTempspieler"));
+    private final JButton m_jbAddTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AddTempspieler"));
+    private final  JButton m_jbRemoveTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("RemoveTempspieler"));
     private final JComboBox m_jcbErfahrung = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbFluegel = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbForm = new JComboBox(Helper.EINSTUFUNG_FORM);
@@ -511,7 +509,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         //Eingaben-------
         final GridBagLayout eingabenLayout = new GridBagLayout();
         final GridBagConstraints eingabenconstraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         eingabenconstraints.anchor = GridBagConstraints.WEST;
         eingabenconstraints.fill = GridBagConstraints.NONE;
         eingabenconstraints.weightx = 0.0;
@@ -521,7 +518,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         panel = new ImagePanel();
         panel.setLayout(eingabenLayout);
 
-        label = new JLabel(properties.getProperty("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 0;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -532,7 +529,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlName, eingabenconstraints);
         panel.add(m_jlName);
 
-		label = new JLabel(properties.getProperty("Spezialitaet"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("Spezialitaet"));
 		eingabenconstraints.gridx = 0;
 		eingabenconstraints.gridy = 1;
 		eingabenconstraints.gridwidth = 1;
@@ -545,7 +542,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 		eingabenLayout.setConstraints(m_jcbSpeciality, eingabenconstraints);
 		panel.add(m_jcbSpeciality);
 		
-		label = new JLabel(properties.getProperty("Alter"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
 		eingabenconstraints.gridx = 3;
 		eingabenconstraints.gridy = 1;
 		eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -557,7 +554,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 		eingabenLayout.setConstraints(jtfAge, eingabenconstraints);
 		panel.add(jtfAge);
 
-        label = new JLabel(properties.getProperty("Erfahrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 2;
         eingabenconstraints.gridwidth = 1;
@@ -575,7 +572,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlErfahrung, eingabenconstraints);
         panel.add(m_jlErfahrung);
 
-        label = new JLabel(properties.getProperty("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 2;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -592,7 +589,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlForm, eingabenconstraints);
         panel.add(m_jlForm);
 
-        label = new JLabel(properties.getProperty("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -609,7 +606,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlKondition, eingabenconstraints);
         panel.add(m_jlKondition);
 
-        label = new JLabel(properties.getProperty("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -626,7 +623,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlTorwart, eingabenconstraints);
         panel.add(m_jlTorwart);
 
-        label = new JLabel(properties.getProperty("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 4;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -643,7 +640,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlSpielaufbau, eingabenconstraints);
         panel.add(m_jlSpielaufbau);
 
-        label = new JLabel(properties.getProperty("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 4;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -660,7 +657,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlPasspiel, eingabenconstraints);
         panel.add(m_jlPasspiel);
 
-        label = new JLabel(properties.getProperty("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 5;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -677,7 +674,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlFluegel, eingabenconstraints);
         panel.add(m_jlFluegel);
 
-        label = new JLabel(properties.getProperty("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 5;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -694,7 +691,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlVerteidigung, eingabenconstraints);
         panel.add(m_jlVerteidigung);
 
-        label = new JLabel(properties.getProperty("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 6;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -711,7 +708,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlTorschuss, eingabenconstraints);
         panel.add(m_jlTorschuss);
 
-        label = new JLabel(properties.getProperty("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 6;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -736,10 +733,10 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 
         //Button--------
         panel = new JPanel();
-        m_jbAddTempSpieler.setToolTipText(properties.getProperty("tt_add_tempspieler"));
+        m_jbAddTempSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_add_tempspieler"));
         m_jbAddTempSpieler.addActionListener(this);
         panel.add(m_jbAddTempSpieler);
-        m_jbRemoveTempSpieler.setToolTipText(properties.getProperty("tt_remove_tempspieler"));
+        m_jbRemoveTempSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_remove_tempspieler"));
         m_jbRemoveTempSpieler.addActionListener(this);
         m_jbRemoveTempSpieler.setEnabled(false);
         panel.add(m_jbRemoveTempSpieler);
@@ -754,87 +751,87 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(21, 2, 2, 2));
 
-        label = new JLabel(properties.getProperty("BestePosition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("BestePosition"));
         panel.add(label);
         panel.add(m_jpBestPos.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
         panel.add(label);
         panel.add(m_jpWertTor.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Innenverteidiger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger"));
         panel.add(label);
         panel.add(m_jpWertInnenVert.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Innenverteidiger_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"));
         panel.add(label);
         panel.add(m_jpWertInnenVertAus.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Innenverteidiger_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"));
         panel.add(label);
         panel.add(m_jpWertInnenVertOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger"));
         panel.add(label);
         panel.add(m_jpWertAussenVert.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger_In"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"));
         panel.add(label);
         panel.add(m_jpWertAussenVertIn.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"));
         panel.add(label);
         panel.add(m_jpWertAussenVertOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"));
         panel.add(label);
         panel.add(m_jpWertAussenVertDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld"));
         panel.add(label);
         panel.add(m_jpWertMittelfeld.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"));
         panel.add(label);
         panel.add(m_jpWertMittelfeldAus.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"));
         panel.add(label);
         panel.add(m_jpWertMittelfeldOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"));
         panel.add(label);
         panel.add(m_jpWertMittelfeldDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegel"));
         panel.add(label);
         panel.add(m_jpWertFluegel.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel_In"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"));
         panel.add(label);
         panel.add(m_jpWertFluegelIn.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"));
         panel.add(label);
         panel.add(m_jpWertFluegelOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"));
         panel.add(label);
         panel.add(m_jpWertFluegelDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sturm"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm"));
         panel.add(label);
         panel.add(m_jpWertSturm.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sturm_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Aus"));
         panel.add(label);
         panel.add(m_jpWertSturmAus.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sturm_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Def"));
         panel.add(label);
         panel.add(m_jpWertSturmDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Marktwert"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Marktwert"));
         panel.add(label);
         panel.add(m_jpEPV.getComponent(false));
         

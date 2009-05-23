@@ -231,7 +231,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			new de.hattrickorganizer.logik.xml.XMLMenuParser();
 		final String page = getWebPage(surl, false);
 
-		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance ().getResource ().getProperty("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
+		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance().getLanguageString("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
 		return worker.parseMenuFromString(page);
 	}
 

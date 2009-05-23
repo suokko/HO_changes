@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.DecimalFormat;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -133,7 +132,6 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -141,13 +139,13 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
 
         this.setBackground(Color.white);
 
-        setBorder(BorderFactory.createTitledBorder(properties.getProperty("Verschiedenes")));
+        setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Verschiedenes")));
 
         JLabel label;
 
         setLayout(layout);
 
-        label = new JLabel(properties.getProperty("Jugend"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Jugend"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -162,7 +160,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpJugend.getComponent(false), constraints);
         add(m_jpJugend.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fans"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fans"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -177,7 +175,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpFansAnzahl.getComponent(false), constraints);
         add(m_jpFansAnzahl.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fans"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fans"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -192,7 +190,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpFans.getComponent(false), constraints);
         add(m_jpFans.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sponsoren"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sponsoren"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -207,7 +205,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpSponsoren.getComponent(false), constraints);
         add(m_jpSponsoren.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Ungeschlagen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ungeschlagen"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 5;
@@ -222,7 +220,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpUngeschlagen.getComponent(false), constraints);
         add(m_jpUngeschlagen.getComponent(false));
 
-        label = new JLabel(properties.getProperty("SiegeInFolge"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("SiegeInFolge"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 6;
@@ -237,7 +235,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpSiegeInFolge.getComponent(false), constraints);
         add(m_jpSiegeInFolge.getComponent(false));
 
-        label = new JLabel(properties.getProperty("AnzahlSpieler"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("AnzahlSpieler"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 7;
@@ -252,7 +250,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpAnzahlSpieler.getComponent(false), constraints);
         add(m_jpAnzahlSpieler.getComponent(false));
 
-        label = new JLabel(properties.getProperty("AverageTSI"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("AverageTSI"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 8;
@@ -267,7 +265,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpAvgTSI.getComponent(false), constraints);
         add(m_jpAvgTSI.getComponent(false));
 
-        label = new JLabel(properties.getProperty("TotalTSI"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("TotalTSI"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 9;
@@ -282,7 +280,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpSumTSI.getComponent(false), constraints);
         add(m_jpSumTSI.getComponent(false));
 
-        label = new JLabel(properties.getProperty("AverageEPV"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("AverageEPV"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 10;
@@ -297,7 +295,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpAvgEPV.getComponent(false), constraints);
         add(m_jpAvgEPV.getComponent(false));
 
-        label = new JLabel(properties.getProperty("TotalEPV"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("TotalEPV"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 11;
@@ -312,7 +310,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpSumEPV.getComponent(false), constraints);
         add(m_jpSumEPV.getComponent(false));
 
-        label = new JLabel(properties.getProperty("DurchschnittForm"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("DurchschnittForm"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 12;
@@ -327,7 +325,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpDForm.getComponent(false), constraints);
         add(m_jpDForm.getComponent(false));
 
-        label = new JLabel(properties.getProperty("DurchschnittErfahrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("DurchschnittErfahrung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 13;
@@ -342,7 +340,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
         layout.setConstraints(m_jpDErfahrung.getComponent(false), constraints);
         add(m_jpDErfahrung.getComponent(false));
 
-        label = new JLabel(properties.getProperty("DurchschnittAlter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("DurchschnittAlter"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 14;

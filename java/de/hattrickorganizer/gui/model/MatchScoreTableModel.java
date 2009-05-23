@@ -26,9 +26,9 @@ public class MatchScoreTableModel extends AbstractMatchTableModel {
 	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
 		{
-			HOVerwaltung.instance().getResource().getProperty("Tore"),
-			HOVerwaltung.instance().getResource().getProperty("Heim"),
-			HOVerwaltung.instance().getResource().getProperty("Gast")};
+			HOVerwaltung.instance().getLanguageString("Tore"),
+			HOVerwaltung.instance().getLanguageString("Heim"),
+			HOVerwaltung.instance().getLanguageString("Gast")};
 
 	//~ Constructors -------------------------------------------------------------------------------
 

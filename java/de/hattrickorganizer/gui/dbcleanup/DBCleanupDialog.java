@@ -50,10 +50,10 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 	
 	private DBCleanupTool cleanupTool;
 
-	private JButton jbCleanupNow = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cleanupnow"));
-	private JButton jbCancel = new JButton(HOVerwaltung.instance().getResource().getProperty("dbcleanup.cancel"));
+	private JButton jbCleanupNow = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cleanupnow"));
+	private JButton jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cancel"));
 
-	private JTextArea jtaIntro = new JTextArea (HOVerwaltung.instance().getResource().getProperty("dbcleanup.intro"));
+	private JTextArea jtaIntro = new JTextArea (HOVerwaltung.instance().getLanguageString("dbcleanup.intro"));
 	
 	private JLabel jlMatches[] = new JLabel[NUM_MATCHTYPES];
 	private JCheckBox jcbNone[] = new JCheckBox[NUM_MATCHTYPES];
@@ -64,11 +64,11 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 
 	private JComponent[][] allComponents = {jlMatches, jcbNone, jcbAll, jcbOlderThan, jtfWeeksInput};
 	
-	private JLabel jlHrf = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrf"));
+	private JLabel jlHrf = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.hrf"));
 //	private WeekSelectionPanel wsp_Hrf = new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE, false);
 
-//	private JLabel labelHrfAutoremove = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
-	private JCheckBox jcbHrfAutoremove = new JCheckBox(HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrfAutoremove"));
+//	private JLabel labelHrfAutoremove = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.hrfAutoremove"));
+	private JCheckBox jcbHrfAutoremove = new JCheckBox(HOVerwaltung.instance().getLanguageString("dbcleanup.hrfAutoremove"));
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 	 */
 	public DBCleanupDialog(JFrame owner, DBCleanupTool cleanupTool) {
 		super(owner, 
-				HOVerwaltung.instance().getResource().getProperty("dbcleanup"),
+				HOVerwaltung.instance().getLanguageString("dbcleanup"),
 				true);
 		this.cleanupTool = cleanupTool;
 		initComponents();
@@ -95,14 +95,14 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 		builder.setRowGroupingEnabled(true);
 		CellConstraints cc = new CellConstraints();
 
-		builder.appendTitle(HOVerwaltung.instance().getResource().getProperty("dbcleanup"));
+		builder.appendTitle(HOVerwaltung.instance().getLanguageString("dbcleanup"));
 
 		builder.appendRow("p");
 		builder.nextLine();
 		builder.add (jtaIntro, cc.xyw(builder.getColumn(), builder.getRow(), builder.getColumnCount()));
 		builder.nextLine();
 		
-		builder.appendSeparator("Cleanup matches");//HOVerwaltung.instance().getResource().getProperty("dbcleanup.matches"));
+		builder.appendSeparator("Cleanup matches");//HOVerwaltung.instance().getLanguageString("dbcleanup.matches"));
 		
 		for (int matchType=0; matchType<NUM_MATCHTYPES; matchType++) {
 			builder.append(jlMatches[matchType]);
@@ -114,7 +114,7 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 			builder.nextLine();
 		}
 
-		builder.appendSeparator(HOVerwaltung.instance().getResource().getProperty("dbcleanup.hrf"));
+		builder.appendSeparator(HOVerwaltung.instance().getLanguageString("dbcleanup.hrf"));
 
 		builder.appendRow("p");
 		builder.nextLine();
@@ -148,11 +148,11 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 	
 	private void initComponents() {
 		for (int matchType=0; matchType < NUM_MATCHTYPES; matchType++) {
-			jcbNone[matchType] = new JCheckBox (HOVerwaltung.instance().getResource().getProperty("dbcleanup.none"));
-			jcbAll[matchType] = new JCheckBox (HOVerwaltung.instance().getResource().getProperty("dbcleanup.all"));
-			jcbOlderThan[matchType] = new JCheckBox (HOVerwaltung.instance().getResource().getProperty("dbcleanup.removeOlderThan"));
+			jcbNone[matchType] = new JCheckBox (HOVerwaltung.instance().getLanguageString("dbcleanup.none"));
+			jcbAll[matchType] = new JCheckBox (HOVerwaltung.instance().getLanguageString("dbcleanup.all"));
+			jcbOlderThan[matchType] = new JCheckBox (HOVerwaltung.instance().getLanguageString("dbcleanup.removeOlderThan"));
 			jtfWeeksInput[matchType] = new JTextField("0", 3);
-			jlWeeks[matchType] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.weeks"));
+			jlWeeks[matchType] = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.weeks"));
 
 			jcbNone[matchType].addActionListener(this);
 			jcbAll[matchType].addActionListener(this);
@@ -160,10 +160,10 @@ public class DBCleanupDialog extends JDialog implements ActionListener, FocusLis
 			jtfWeeksInput[matchType].addFocusListener(this);
 		}
 
-		jlMatches[MATCHTYPE_OWN_MATCH] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownMatches"));
-		jlMatches[MATCHTYPE_OWN_FRIENDLY] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.ownFriendlies"));
-		jlMatches[MATCHTYPE_OTHER_MATCH] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherMatches"));
-		jlMatches[MATCHTYPE_OTHER_FRIENDLY] = new JLabel (HOVerwaltung.instance().getResource().getProperty("dbcleanup.otherFriendlies"));
+		jlMatches[MATCHTYPE_OWN_MATCH] = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.ownMatches"));
+		jlMatches[MATCHTYPE_OWN_FRIENDLY] = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.ownFriendlies"));
+		jlMatches[MATCHTYPE_OTHER_MATCH] = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.otherMatches"));
+		jlMatches[MATCHTYPE_OTHER_FRIENDLY] = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.otherFriendlies"));
 
 		Font boldFont = jlMatches[MATCHTYPE_OWN_MATCH].getFont().deriveFont(Font.BOLD);
 		jlMatches[MATCHTYPE_OWN_MATCH].setFont(boldFont);

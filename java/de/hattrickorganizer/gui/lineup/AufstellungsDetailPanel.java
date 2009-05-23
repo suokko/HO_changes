@@ -95,17 +95,11 @@ final class AufstellungsDetailPanel extends ImagePanel
                                                                     SwingConstants.LEFT);
     private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
     private CBItem[] EINSTELLUNG = {
-                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                         .getResource()
-                                                                                         .getProperty("PIC"),
+                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC"),
                                                   IMatchDetails.EINSTELLUNG_PIC),
-                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                         .getResource()
-                                                                                         .getProperty("Normal"),
+                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal"),
                                                   IMatchDetails.EINSTELLUNG_NORMAL),
-                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                         .getResource()
-                                                                                         .getProperty("MOTS"),
+                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS"),
                                                   IMatchDetails.EINSTELLUNG_MOTS)
                                    };
     private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
@@ -143,9 +137,9 @@ final class AufstellungsDetailPanel extends ImagePanel
                                        };
     private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
 	private CBItem[] TRAINERTYPE = {
-			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.defensive"),0),
-			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.normal"),2),
-			new CBItem(HOMiniModel.instance().getResource().getProperty("coach.offensive"),1),
+			new CBItem(HOMiniModel.instance().getLanguageString("coach.defensive"),0),
+			new CBItem(HOMiniModel.instance().getLanguageString("coach.normal"),2),
+			new CBItem(HOMiniModel.instance().getLanguageString("coach.offensive"),1),
 		};
 	private JComboBox m_jcbTrainerType= new JComboBox(TRAINERTYPE);
 	private CBItem[] PREDICTIONTYPE = getPredictionItems();
@@ -176,11 +170,11 @@ final class AufstellungsDetailPanel extends ImagePanel
                                 };
     private JComboBox m_jcbMainStimmung = new JComboBox(STIMMUNG);
 	private CBItem[] SUBSTIMM = {
-									new CBItem(HOMiniModel.instance().getResource().getProperty("verylow"),0),
-									new CBItem(HOMiniModel.instance().getResource().getProperty("low"),1),
-									new CBItem(HOMiniModel.instance().getResource().getProperty("Durchschnitt"),2),
-									new CBItem(HOMiniModel.instance().getResource().getProperty("high"),3),
-									new CBItem(HOMiniModel.instance().getResource().getProperty("veryhigh"),4)
+									new CBItem(HOMiniModel.instance().getLanguageString("verylow"),0),
+									new CBItem(HOMiniModel.instance().getLanguageString("low"),1),
+									new CBItem(HOMiniModel.instance().getLanguageString("Durchschnitt"),2),
+									new CBItem(HOMiniModel.instance().getLanguageString("high"),3),
+									new CBItem(HOMiniModel.instance().getLanguageString("veryhigh"),4)
 								};
 	private JComboBox m_jcbSubStimmung = new JComboBox(SUBSTIMM);
     private CBItem[] TAKTIK = {
@@ -203,11 +197,11 @@ final class AufstellungsDetailPanel extends ImagePanel
 
     // home / away / away-derby
     private CBItem[] LOCATION = {
-	            new CBItem(HOVerwaltung.instance().getResource().getProperty("Heimspiel"),
+	            new CBItem(HOVerwaltung.instance().getLanguageString("Heimspiel"),
 	                       IMatchDetails.LOCATION_HOME),
-	            new CBItem(HOVerwaltung.instance().getResource().getProperty("matchlocation.away"),
+	            new CBItem(HOVerwaltung.instance().getLanguageString("matchlocation.away"),
 	                       IMatchDetails.LOCATION_AWAY),
-	            new CBItem(HOVerwaltung.instance().getResource().getProperty("matchlocation.awayderby"),
+	            new CBItem(HOVerwaltung.instance().getLanguageString("matchlocation.awayderby"),
 	                       IMatchDetails.LOCATION_AWAYDERBY)
             };
     private JComboBox m_jcbLocation = new JComboBox(LOCATION);
@@ -526,7 +520,7 @@ final class AufstellungsDetailPanel extends ImagePanel
             case IMatchDetails.TAKTIK_NORMAL:
             // Play creatively has no tactic level
             case IMatchDetails.TAKTIK_CREATIVE:
-                return HOVerwaltung.instance().getResource().getProperty("Normal");
+                return HOVerwaltung.instance().getLanguageString("Normal");
 
             case IMatchDetails.TAKTIK_PRESSING:
             case IMatchDetails.TAKTIK_KONTER:
@@ -536,7 +530,7 @@ final class AufstellungsDetailPanel extends ImagePanel
                 return PlayerHelper.getNameForSkill(aufstellung.getTacticLevel(getTaktik()));
 
             default:
-                return HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -555,9 +549,6 @@ final class AufstellungsDetailPanel extends ImagePanel
         JLabel label;
         JPanel panel;
 
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-        												.getResource();
-
         int yPos = 1;
 
         constraints.gridx = 1;
@@ -569,10 +560,10 @@ final class AufstellungsDetailPanel extends ImagePanel
         yPos++;
         panel = new JPanel(new BorderLayout());
         panel.setOpaque(true);
-        m_jpGesamtStaerke.setToolTipText(properties.getProperty("Gesamtstaerke"));
+        m_jpGesamtStaerke.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
         panel.add(m_jpGesamtStaerke.getComponent(false), BorderLayout.CENTER);
         m_jpGesamtStaerkeText.setFontStyle(Font.BOLD);
-        m_jpGesamtStaerkeText.setToolTipText(properties.getProperty("Gesamtstaerke"));
+        m_jpGesamtStaerkeText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
         panel.add(m_jpGesamtStaerkeText.getComponent(false), BorderLayout.EAST);
         constraints.gridx = 1;
         constraints.gridy = yPos;
@@ -587,7 +578,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbEinstellung.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Einstellung"));
+        m_jcbEinstellung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Einstellung"));
         layout.setConstraints(m_jcbEinstellung, constraints);
         add(m_jcbEinstellung);
 
@@ -595,7 +586,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbTaktik.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Taktik"));
+        m_jcbTaktik.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Taktik"));
         layout.setConstraints(m_jcbTaktik, constraints);
         add(m_jcbTaktik);
 
@@ -603,7 +594,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbLocation.setToolTipText(properties.getProperty("tt_AufstellungsDetails_Spielort"));
+        m_jcbLocation.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Spielort"));
         m_jcbLocation.setOpaque(false);
         layout.setConstraints(m_jcbLocation, constraints);
         add(m_jcbLocation);
@@ -613,14 +604,14 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
 
-        //model.HOVerwaltung.instance ().getResource ().getProperty( "HATStat" ) );
+        //model.HOVerwaltung.instance().getLanguageString( "HATStat" ) );
         label = new JLabel("HatStats");
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 
-        //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance ().getResource ().getProperty( "tt_AufstellungsDetails_HatStat" ) );
+        //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance().getLanguageString( "tt_AufstellungsDetails_HatStat" ) );
         layout.setConstraints(m_jpHatstat.getComponent(false), constraints);
         add(m_jpHatstat.getComponent(false));
 
@@ -629,7 +620,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 2;
         constraints.gridy = yPos;
 
-        //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance ().getResource ().getProperty( "tt_AufstellungsDetails_LoddarStat" ) );
+        //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance().getLanguageString( "tt_AufstellungsDetails_LoddarStat" ) );
         layout.setConstraints(m_jpLoddarstat.getComponent(false), constraints);
         add(m_jpLoddarstat.getComponent(false));
 
@@ -637,7 +628,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
-        label = new JLabel(properties.getProperty("Taktikstaerke"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
@@ -647,7 +638,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jpTaktikStaerke.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Stimmung")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbMainStimmung.setPreferredSize(new Dimension(50,
@@ -658,7 +649,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbMainStimmung);
 
         yPos++;
-		initLabel(constraints,layout,new JLabel("Sub"+properties.getProperty("Stimmung")), yPos);
+		initLabel(constraints,layout,new JLabel("Sub"+de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
 		constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbSubStimmung.setPreferredSize(new Dimension(50,
@@ -669,7 +660,7 @@ final class AufstellungsDetailPanel extends ImagePanel
 		add(m_jcbSubStimmung);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Selbstvertrauen")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Selbstvertrauen")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50,
@@ -680,7 +671,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbSelbstvertrauen);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Trainer")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Trainer")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbTrainerType.setPreferredSize(new Dimension(50,
@@ -691,7 +682,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbTrainerType);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("PredictionType")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbPredictionType.setPreferredSize(new Dimension(50,
@@ -702,63 +693,63 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbPredictionType);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpDurchschnittErfahrung.getComponent(false), constraints);
         add(m_jpDurchschnittErfahrung.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("AktuellesSystem")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuellesSystem")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpAktuellesSystem.getComponent(false), constraints);
         add(m_jpAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("ErfahrungAktuellesSys")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ErfahrungAktuellesSys")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrungAktuellesSystem.getComponent(false), constraints);
         add(m_jpErfahrungAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung433")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung433")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung433.getComponent(false), constraints);
         add(m_jpErfahrung433.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung442")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung442")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung442.getComponent(false), constraints);
         add(m_jpErfahrung442.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung532")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung532")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung532.getComponent(false), constraints);
         add(m_jpErfahrung532.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung541")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung541")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung541.getComponent(false), constraints);
         add(m_jpErfahrung541.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung352")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung352")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung352.getComponent(false), constraints);
         add(m_jpErfahrung352.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung343")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung343")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung343.getComponent(false), constraints);
@@ -766,7 +757,7 @@ final class AufstellungsDetailPanel extends ImagePanel
 
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(properties.getProperty("Erfahrung451")), yPos);
+        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung451")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
@@ -805,14 +796,13 @@ final class AufstellungsDetailPanel extends ImagePanel
     }
 
     private CBItem[] getPredictionItems () {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-        											.getResource();
+        final Properties properties = HOVerwaltung.instance().getResource();
 		String[] allPredictionNames = RatingPredictionConfig.getAllPredictionNames();
 		CBItem[] allItems = new CBItem[allPredictionNames.length];
 		for (int i=0; i < allItems.length; i++)	{
 			String predictionName = allPredictionNames[i];
 			if (properties.containsKey("prediction."+predictionName))
-				predictionName = properties.getProperty("prediction."+predictionName);
+				predictionName = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("prediction."+predictionName);
 			allItems[i] = new CBItem(predictionName, i);
 		}
 		return allItems;

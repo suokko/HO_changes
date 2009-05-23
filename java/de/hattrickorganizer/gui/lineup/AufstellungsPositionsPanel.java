@@ -450,23 +450,19 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
 
         final JPanel panel = new JPanel();
         panel.setOpaque(false);
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_AufstellungsPosition_Drucken"));
+        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsPosition_Drucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         panel.add(m_jbDrucken);
-        m_jbMiniFrame.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("tt_AufstellungsPosition_MiniFrame"));
+        m_jbMiniFrame.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsPosition_MiniFrame"));
         m_jbMiniFrame.addActionListener(this);
         m_jbMiniFrame.setPreferredSize(new Dimension(25, 25));
         panel.add(m_jbMiniFrame);
-        m_jbMidiFrame.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("tt_AufstellungsPosition_MidiFrame"));
+        m_jbMidiFrame.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsPosition_MidiFrame"));
         m_jbMidiFrame.addActionListener(this);
         m_jbMidiFrame.setPreferredSize(new Dimension(25, 25));
         panel.add(m_jbMidiFrame);
-        m_jbFlipSide.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("tt_AufstellungsPosition_FlipSide"));
+        m_jbFlipSide.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsPosition_FlipSide"));
         m_jbFlipSide.addActionListener(this);
         m_jbFlipSide.setPreferredSize(new Dimension(25, 25));
         panel.add(m_jbFlipSide);

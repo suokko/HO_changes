@@ -205,9 +205,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
             //Match schon in der Datenbank
             if (de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(paarung
                                                                                     .getMatchId())) {
-                button.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Ligatabelle_SpielAnzeigen"));
+                button.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielAnzeigen"));
                 button.setEnabled(true);
                 button.setIcon(de.hattrickorganizer.tools.Helper.SHOWMATCHICON);
                 button.setDisabledIcon(de.hattrickorganizer.tools.Helper.SHOWMATCHICON);
@@ -222,9 +220,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
                 //                && ( tools.MyHelper.decryptString ( "k[gmn" ).equals ( args[0] ) ) ) //Scout
                 //                || ( paarung.getHeimId () == teamid  ||  paarung.getGastId () == teamid ) )//oder Eigene Teamid
                 //                {
-                button.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Ligatabelle_SpielDownloaden"));
+                button.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielDownloaden"));
                 button.setEnabled(true);
                 button.setIcon(de.hattrickorganizer.tools.Helper.DOWNLOADMATCHICON);
                 button.setDisabledIcon(de.hattrickorganizer.tools.Helper.DOWNLOADMATCHICON);
@@ -240,8 +236,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         }
         //Noch nicht stattgefunden
         else {
-            button.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("tt_Ligatabelle_SpielNochnichtgespielt"));
+            button.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielNochnichtgespielt"));
             button.setEnabled(false);
             button.setIcon(de.hattrickorganizer.tools.Helper.NOMATCHICON);
             button.setDisabledIcon(de.hattrickorganizer.tools.Helper.NOMATCHICON);
@@ -303,7 +298,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "letzte" ) + " " + model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) ) );
+            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "letzte" ) + " " + model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) ) );
         }
         //Nächste Spieltag
         else if (spieltag == NAECHSTER_SPIELTAG) {
@@ -316,17 +311,16 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "naechste" ) + " " + model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) ) );
+            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "naechste" ) + " " + model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) ) );
         }
         //Absoluter Spieltag
         else {
             paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance ().getResource ().getProperty( "Spieltag" ) + " " + spieltag ) );
+            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) + " " + spieltag ) );
         }
 
-        String bordertext = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                   .getProperty("Spieltag") + " "
+        String bordertext = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieltag") + " "
                             + spieltag;
 
         if (paarungen != null && paarungen.size()>0) {
@@ -493,8 +487,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
         setLayout(layout);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Heim"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         setConstraintsValues(constraints, GridBagConstraints.HORIZONTAL, 1.0, 0, 0, 1);
@@ -507,16 +500,14 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         layout.setConstraints(label, constraints);
         add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gast"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         setConstraintsValues(constraints, GridBagConstraints.HORIZONTAL, 1.0, 2, 0, 1);
         layout.setConstraints(label, constraints);
         add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Ergebnis"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"));
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         setConstraintsValues(constraints, GridBagConstraints.NONE, 0.5, 3, 0, 3);

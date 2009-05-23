@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.JFrame;
 
@@ -21,9 +20,10 @@ import de.hattrickorganizer.model.SpielerPosition;
 public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.model.MatchScreen,
                                                         java.awt.event.WindowListener
 {
+	private static final long serialVersionUID = 5146409894948790465L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     public boolean m_bAbbruch;
 
     /** TODO Missing Parameter Documentation */
@@ -42,8 +42,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     private String GASTTEAM = "<b color=#990000>";
     private String HEIMTEAM = "<b color=#000099>";
     private String TOR = "<b color=#333333>"
-                         + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("TOR") + "</b>";
+                         + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TOR") + "</b>";
     private TextModusPanel m_jpTextModusPanel;
     private ZusatzInfoPanel m_jpZusatzInfoPanel;
     private boolean m_bServer = true;
@@ -61,7 +60,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
      */
     public HOFriendlyDialog(JFrame owner, boolean server) {
         super("Waiting... - "
-              + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
+              + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HoFriendly"));
 
         //setDefaultCloseOperation ( DO_NOTHING_ON_CLOSE );
         //setDefaultCloseOperation ( this.DISPOSE_ON_CLOSE );
@@ -206,7 +205,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
             aktuKey = "" + textKey + "_" + variante;
 
             try {
-                msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+                msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
                 //Variablen mit Spielernamen füllen
                 tokenmsg = replaceAllVars(varConst, varValue, msg);
@@ -257,7 +256,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         aktuKey = "" + key + "_" + art + "_" + variante;
 
         try {
-            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
             //Variablen mit Spielernamen füllen
             tokenmsg = replaceAllVars(varConst, varValue, msg);
@@ -307,7 +306,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         aktuKey = "" + textKey + "_" + variante;
 
         try {
-            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
             //Variablen mit Spielernamen füllen
             tokenmsg = replaceAllVars(varConst, varValue, msg);
@@ -349,7 +348,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     public final void doSpielbeginn(Spielbericht sb) {
         setExtendedState(NORMAL);
         toFront();
-        setTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("HoFriendly"));
+        setTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HoFriendly"));
 
         m_jpSpielstandPanel.setHeimmannschaft(sb.Heim().getTeamName());
         m_jpSpielstandPanel.setGastmannschaft(sb.Gast().getTeamName());
@@ -380,8 +379,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
                 buffer.append("<tr><td><b>");
 
                 if (heim[i].getId() >= de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("Reserve"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Reserve"));
                     buffer.append(" ");
                 }
 
@@ -398,8 +396,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
                 buffer.append("<td><b>");
 
                 if (gast[i].getId() >= de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
-                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("Reserve"));
+                    buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Reserve"));
                     buffer.append(" ");
                 }
 
@@ -431,7 +428,6 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         //Message anzeigen
         //Tabelle!
         final StringBuffer buffer = new StringBuffer();
-        final Properties properties = HOVerwaltung.instance().getResource();
         //Kopfzeile
         buffer.append("<Table border=0><tr><th></th><th>");
         buffer.append(HEIMTEAM);
@@ -445,7 +441,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Tore
         buffer.append("<tr><td><b>");
-        buffer.append(properties.getProperty("Tore"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("Tore"));
         buffer.append("</b></td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.ToreHeim());
@@ -458,7 +454,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Torchancen
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("Chancen"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("Chancen"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.TorchancenHeim());
@@ -471,7 +467,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Abseitsfalle
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("Abseitsfalle"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("Abseitsfalle"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.getAbseitsfalleHeim());
@@ -486,7 +482,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Zweikampfwerte
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("Zweikampfwerte"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("Zweikampfwerte"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.getZweikampfBilanzHeim());
@@ -501,7 +497,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Ecken
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("Ecken"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("Ecken"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.getAnzEckenHeim());
@@ -514,7 +510,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //GelbeKarten
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("GelbeKarten"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("GelbeKarten"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.getAnzGelbeKartenHeim());
@@ -527,7 +523,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //RoteKarten
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("RoteKarten"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("RoteKarten"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.getAnzRoteKartenHeim());
@@ -540,7 +536,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Auswechslungen
         buffer.append("<tr><td>");
-        buffer.append(properties.getProperty("Auswechslungen"));
+        buffer.append(HOVerwaltung.instance().getLanguageString("Auswechslungen"));
         buffer.append("</td><td align=\"right\">");
         buffer.append(HEIMTEAM);
         buffer.append(sb.getAnzWechselHeim());
@@ -672,7 +668,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         aktuKey = keyBeginn + MatchScreen.KEY_START + "_" + aktionen[0];
 
         try {
-            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
             //Variablen mit Spielernamen füllen
             tokenmsg = replaceVars(schuetzeName, vorbereiter1Name, verteidiger1Name,
@@ -694,7 +690,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
             aktuKey = keyBeginn + MatchScreen.KEY_AKTION + "_" + aktionen[i];
 
             try {
-                msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+                msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
                 //Variablen mit Spielernamen füllen
                 tokenmsg = replaceVars(schuetzeName, vorbereiter1Name, verteidiger1Name,
@@ -722,7 +718,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         }
 
         try {
-            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
             //Variablen mit Spielernamen füllen
             tokenmsg = replaceVars(schuetzeName, vorbereiter1Name, verteidiger1Name,
@@ -807,7 +803,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         aktuKey = "" + textKey + "_" + variante;
 
         try {
-            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+            msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
             //Variablen mit Spielernamen füllen
             tokenmsg = replaceAllVars(varConst, varValue, msg);
@@ -846,7 +842,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
 
         //Erste AktionsKey bestimmen        
         aktuKey = "" + msgType + "_" + variante;
-        msg = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty(aktuKey);
+        msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
         //Message anzeigen
         drawString(ALLGEMEIN + msg + ENDEALLGEMEIN + BREAK);
@@ -1079,8 +1075,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         m_jpSpielstandPanel.setSpielminute(minute);
 
         final String string = ALLGEMEIN + minute + ". "
-                              + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                       .getProperty("Spielminute")
+                              + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielminute")
                               + ENDEALLGEMEIN;
         drawString(string);
     }

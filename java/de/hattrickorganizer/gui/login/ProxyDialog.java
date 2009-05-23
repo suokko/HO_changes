@@ -238,21 +238,16 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
         panel = new ImagePanel();
         panel.setLayout(null);
 
-        m_jchProxyAktiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("tt_Login_Proxy"));
+        m_jchProxyAktiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_Proxy"));
         m_jchProxyAktiv.setLocation(5, 15);
-        m_jchProxyAktiv.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                       .getProperty("ProxyAktiv"));
+        m_jchProxyAktiv.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ProxyAktiv"));
         m_jchProxyAktiv.setSize(250, 25);
         m_jchProxyAktiv.addActionListener(this);
         m_jchProxyAktiv.setOpaque(false);
         panel.add(m_jchProxyAktiv);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ProxyHost"));
-        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("tt_Login_ProxyHost"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ProxyHost"));
+        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_ProxyHost"));
         label.setLocation(10, 40);
         label.setSize(185, 25);
         panel.add(label);
@@ -263,10 +258,8 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
         m_jtfProxyHost.addKeyListener(this);
         panel.add(m_jtfProxyHost);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ProxyPort"));
-        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("tt_Login_ProxyPort"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ProxyPort"));
+        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_ProxyPort"));
         label.setLocation(10, 75);
         label.setSize(180, 25);
         panel.add(label);
@@ -278,21 +271,16 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
         panel.add(m_jtfProxyPort);
 
         //Auth
-        m_jchProxyAuthAktiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                  .getResource()
-                                                                                  .getProperty("tt_Login_ProxyAuth"));
+        m_jchProxyAuthAktiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_ProxyAuth"));
         m_jchProxyAuthAktiv.setLocation(5, 120);
-        m_jchProxyAuthAktiv.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("ProxyAuthAktiv"));
+        m_jchProxyAuthAktiv.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ProxyAuthAktiv"));
         m_jchProxyAuthAktiv.setSize(250, 25);
         m_jchProxyAuthAktiv.addActionListener(this);
         m_jchProxyAuthAktiv.setOpaque(false);
         panel.add(m_jchProxyAuthAktiv);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ProxyAuthName"));
-        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("tt_Login_ProxyAuthName"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ProxyAuthName"));
+        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_ProxyAuthName"));
         label.setLocation(10, 155);
         label.setSize(185, 25);
         panel.add(label);
@@ -302,10 +290,8 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
         m_jtfProxyAuthName.addFocusListener(this);
         panel.add(m_jtfProxyAuthName);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("ProxyAuthPassword"));
-        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("tt_Login_ProxyAuthPassword"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ProxyAuthPassword"));
+        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_ProxyAuthPassword"));
         label.setLocation(10, 190);
         label.setSize(180, 25);
         panel.add(label);
@@ -317,25 +303,20 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
 
         panel.setSize(355, 225);
         panel.setLocation(5, 5);
-        panel.setBorder(new javax.swing.border.TitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                   .getResource()
-                                                                                                   .getProperty("Proxydaten")));
+        panel.setBorder(new javax.swing.border.TitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Proxydaten")));
 
         getContentPane().add(panel);
 
         //Buttons
-        m_jbOK.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("tt_Login_Anmelden"));
-        m_jbOK.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Anmelden"));
+        m_jbOK.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_Anmelden"));
+        m_jbOK.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Anmelden"));
         m_jbOK.setLocation(5, 245);
         m_jbOK.setSize(170, 35);
         m_jbOK.addActionListener(this);
         getContentPane().add(m_jbOK);
 
-        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                            .getProperty("tt_Login_Abbrechen"));
-        m_jbAbbrechen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Abbrechen"));
+        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Login_Abbrechen"));
+        m_jbAbbrechen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
         m_jbAbbrechen.setLocation(190, 245);
         m_jbAbbrechen.setSize(170, 35);
         m_jbAbbrechen.addActionListener(this);

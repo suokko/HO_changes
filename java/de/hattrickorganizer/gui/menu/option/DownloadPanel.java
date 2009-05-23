@@ -57,29 +57,23 @@ public final class DownloadPanel extends ImagePanel
     private void initComponents() {
         setLayout(new GridLayout(10, 1, 4, 4));
 
-		m_jchXMLDownload = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		   .getProperty("HRFDownload"));
-		m_jchXMLDownload.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		  .getProperty("tt_Download_XML"));
+		m_jchXMLDownload = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFDownload"));
+		m_jchXMLDownload.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_XML"));
 		m_jchXMLDownload.setOpaque(false);
 		m_jchXMLDownload.setSelected(gui.UserParameter.temp().xmlDownload);
 		m_jchXMLDownload.addItemListener(this);
 		add(m_jchXMLDownload);
 
-		m_jchCurrentMatchlist = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		   .getProperty("AktuellerSpielplanDownload"));
-		m_jchCurrentMatchlist.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-																		  .getProperty("tt_Download_AktuellerSpielplan"));
+		m_jchCurrentMatchlist = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"));
+		m_jchCurrentMatchlist.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_AktuellerSpielplan"));
 		m_jchCurrentMatchlist.setOpaque(false);
 		m_jchCurrentMatchlist.setSelected(gui.UserParameter.temp().currentMatchlist);
 		m_jchCurrentMatchlist.addItemListener(this);
 		add(m_jchCurrentMatchlist);
 
 
-        m_jchFixtures = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("FixturesDownload"));
-        m_jchFixtures.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Download_Ligatabelle"));
+        m_jchFixtures = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"));
+        m_jchFixtures.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Ligatabelle"));
         m_jchFixtures.setOpaque(false);
         m_jchFixtures.setSelected(gui.UserParameter.temp().fixtures);
         m_jchFixtures.addItemListener(this);

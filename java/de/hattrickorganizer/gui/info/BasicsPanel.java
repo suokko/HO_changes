@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -19,7 +18,10 @@ import javax.swing.JPanel;
  * Zeigt die Sonstige Informationen an
  */
 public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
-    //~ Instance fields ----------------------------------------------------------------------------
+	
+	private static final long serialVersionUID = 358240701613667104L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private ColorLabelEntry m_jpLiga = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                            ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
@@ -101,7 +103,6 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -109,13 +110,13 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
 
         this.setBackground(Color.white);
 
-        setBorder(BorderFactory.createTitledBorder(properties.getProperty("Allgemein")));
+        setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Allgemein")));
 
         JLabel label;
 
         setLayout(layout);
 
-        label = new JLabel(properties.getProperty("Verein"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verein"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -130,7 +131,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpTeamname.getComponent(false), constraints);
         add(m_jpTeamname.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Manager"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Manager"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -145,7 +146,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpManagername.getComponent(false), constraints);
         add(m_jpManagername.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Stadion"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Stadion"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -160,7 +161,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpStadion.getComponent(false), constraints);
         add(m_jpStadion.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Season"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Season"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -175,7 +176,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpSeason.getComponent(false), constraints);
         add(m_jpSeason.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Spieltag"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spieltag"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 5;
@@ -190,7 +191,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpSpieltag.getComponent(false), constraints);
         add(m_jpSpieltag.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Liga"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Liga"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 6;
@@ -205,7 +206,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpLiga.getComponent(false), constraints);
         add(m_jpLiga.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Platzierung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Platzierung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 7;
@@ -220,7 +221,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpPlatzierung.getComponent(false), constraints);
         add(m_jpPlatzierung.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Punkte"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Punkte"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 8;
@@ -235,7 +236,7 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
         layout.setConstraints(m_jpPunkte.getComponent(false), constraints);
         add(m_jpPunkte.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Torverhaeltnis"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torverhaeltnis"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
         constraints.gridy = 9;

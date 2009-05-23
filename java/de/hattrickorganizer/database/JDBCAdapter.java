@@ -41,7 +41,8 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
             m_clConnection.close();
             m_clConnection = null;
         } catch (Exception e) {
-            //vapEngine.Verwaltung.instance ().writeLog ( "JDBCAdapter.disconnect : " + e.getMessage() ); 
+            //vapEngine.Verwaltung.instance ().writeLog ( "JDBCAdapter.disconnect : " + e.getMessage() );
+        	HOLogger.instance().error(getClass(),"JDBCAdapter.disconnect : " + e );
             m_clConnection = null;
         }
     }
@@ -49,9 +50,9 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     /**
      * Führt einen SQL select - befehl aus
      *
-     * @param Sql TODO Missing Constructuor Parameter Documentation
+     * @param Sql Sql query
      *
-     * @return TODO Missing Return Method Documentation
+     * @return ResultSet of the query
      */
     public final ResultSet executeQuery(String Sql) {
         ResultSet resultat = null;
@@ -67,7 +68,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
             //statement.close();
             return resultat;
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"JDBCAdapter.executeQuery : " + e + "\nStatement: " + Sql);
+            HOLogger.instance().error(getClass(),"JDBCAdapter.executeQuery : " + e + "\nStatement: " + Sql);
             return null;
         }
     }
@@ -76,9 +77,11 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
      * Executes an SQL INSERT, UPDATE or DELETE statement. In addition, SQL statements that return
      * nothing, such as SQL DDL statements, can be executed.
      *
-     * @param Sql TODO Missing Constructuor Parameter Documentation
+     * @param Sql INSERT, UPDATE or DELETE statement
      *
-     * @return TODO Missing Return Method Documentation
+     * @return either the row count for SQL Data Manipulation Language (DML) statements 
+     * or 0 for SQL statements that return nothing
+     * 
      */
     public final int executeUpdate(String Sql) {
         int ret = 0;
@@ -94,7 +97,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
             //statement.close();
             return ret;
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"JDBCAdapter.executeUpdate : " + e + "\nStatement: " + Sql);
+            HOLogger.instance().error(getClass(),"JDBCAdapter.executeUpdate : " + e + "\nStatement: " + Sql);
             return 0;
         }
     }
@@ -106,8 +109,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
      * @param User der Username
      * @param PWD Password
      * @param Treiber der zu verwendende Treiber
-     *
-     * @return TODO Missing Return Method Documentation
+     * 
      */
     public final void connect(String URL, String User, String PWD, String Treiber) throws Exception{
         try {
@@ -124,10 +126,10 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
                 try {
                     m_clConnection.close();
                 } catch (Exception ex) {
-                    HOLogger.instance().log(getClass(),"JDBCAdapter.connect : " + ex.getMessage());
+                    HOLogger.instance().error(getClass(),"JDBCAdapter.connect : " + ex.getMessage());
                 }
             }
-            HOLogger.instance().log(getClass(),"JDBCAdapter.connect : " + e.getMessage());
+            HOLogger.instance().error(getClass(),"JDBCAdapter.connect : " + e.getMessage());
 
             //System.exit( 1 );            
             throw e;
@@ -150,6 +152,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     	try {
     		return getDBInfo().getAllTablesNames();
 		} catch (Exception e) {
+			HOLogger.instance().error(getClass(),"JDBCAdapter.getAllTableNames : " + e);
 			String[] fuck = new String[1];
 			fuck[0] = e.getMessage();
 			return fuck;

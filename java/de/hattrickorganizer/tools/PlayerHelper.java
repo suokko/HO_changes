@@ -33,19 +33,19 @@ public class PlayerHelper {
     public static String getName4Sublevel(int sub) {
         if (sub == 1) {
             return " ("
-                   + HOVerwaltung.instance().getResource().getProperty("verylow")
+                   + HOVerwaltung.instance().getLanguageString("verylow")
                    + ")";
         } else if (sub == 2) {
             return " ("
-                   + HOVerwaltung.instance().getResource().getProperty("low")
+                   + HOVerwaltung.instance().getLanguageString("low")
                    + ")";
         } else if (sub == 3) {
             return " ("
-                   + HOVerwaltung.instance().getResource().getProperty("high")
+                   + HOVerwaltung.instance().getLanguageString("high")
                    + ")";
         } else if (sub == 0) {
             return " ("
-                   + HOVerwaltung.instance().getResource().getProperty("veryhigh")
+                   + HOVerwaltung.instance().getLanguageString("veryhigh")
                    + ")";
         } else {
             return "";
@@ -62,22 +62,22 @@ public class PlayerHelper {
     public static String getNameForAggressivness(int level) {
         switch (level) {
             case ISpieler.PS_aufbrausend:
-                return HOVerwaltung.instance().getResource().getProperty("fiery");
+                return HOVerwaltung.instance().getLanguageString("fiery");
 
             case ISpieler.PS_temparamentvoll:
-                return HOVerwaltung.instance().getResource().getProperty("temperamental");
+                return HOVerwaltung.instance().getLanguageString("temperamental");
 
             case ISpieler.PS_ausgeglichen:
-                return HOVerwaltung.instance().getResource().getProperty("balanced");
+                return HOVerwaltung.instance().getLanguageString("balanced");
 
             case ISpieler.PS_ruhig:
-                return HOVerwaltung.instance().getResource().getProperty("calm");
+                return HOVerwaltung.instance().getLanguageString("calm");
 
             case ISpieler.PS_introvertiert:
-                return HOVerwaltung.instance().getResource().getProperty("tranquil");
+                return HOVerwaltung.instance().getLanguageString("tranquil");
 
             default:
-                return HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -91,25 +91,25 @@ public class PlayerHelper {
     public static String getNameForCharacter(int level) {
         switch (level) {
             case ISpieler.CK_herzensgut:
-                return HOVerwaltung.instance().getResource().getProperty("saint_like");
+                return HOVerwaltung.instance().getLanguageString("saint_like");
 
             case ISpieler.CK_rechtschaffen:
-                return HOVerwaltung.instance().getResource().getProperty("righteous");
+                return HOVerwaltung.instance().getLanguageString("righteous");
 
             case ISpieler.CK_aufrichtig:
-                return HOVerwaltung.instance().getResource().getProperty("upright");
+                return HOVerwaltung.instance().getLanguageString("upright");
 
             case ISpieler.CK_ehrlich:
-                return HOVerwaltung.instance().getResource().getProperty("honest");
+                return HOVerwaltung.instance().getLanguageString("honest");
 
             case ISpieler.CK_unehrlich:
-                return HOVerwaltung.instance().getResource().getProperty("dishonest");
+                return HOVerwaltung.instance().getLanguageString("dishonest");
 
             case ISpieler.CK_niedertraechtig:
-                return HOVerwaltung.instance().getResource().getProperty("infamous");
+                return HOVerwaltung.instance().getLanguageString("infamous");
 
             default:
-                return HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -123,25 +123,25 @@ public class PlayerHelper {
     public static String getNameForGentleness(int level) {
         switch (level) {
             case ISpieler.BL_Integrationsfigur:
-                return HOVerwaltung.instance().getResource().getProperty("beloved_team_member");
+                return HOVerwaltung.instance().getLanguageString("beloved_team_member");
 
             case ISpieler.BL_beliebt:
-                return HOVerwaltung.instance().getResource().getProperty("popular");
+                return HOVerwaltung.instance().getLanguageString("popular");
 
             case ISpieler.BL_sympathisch:
-                return HOVerwaltung.instance().getResource().getProperty("sympathetic");
+                return HOVerwaltung.instance().getLanguageString("sympathetic");
 
             case ISpieler.BL_angenehm:
-                return HOVerwaltung.instance().getResource().getProperty("pleasant");
+                return HOVerwaltung.instance().getLanguageString("pleasant");
 
             case ISpieler.BL_umstritten:
-                return HOVerwaltung.instance().getResource().getProperty("controversial");
+                return HOVerwaltung.instance().getLanguageString("controversial");
 
             case ISpieler.BL_Ekel:
-                return HOVerwaltung.instance().getResource().getProperty("nasty");
+                return HOVerwaltung.instance().getLanguageString("nasty");
 
             default:
-                return HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -207,115 +207,115 @@ public class PlayerHelper {
         switch (bewertungwert) {
         
         	case ISpieler.nicht_vorhanden: {
-        		bewertung = HOVerwaltung.instance().getResource().getProperty("nonexisting");
+        		bewertung = HOVerwaltung.instance().getLanguageString("nonexisting");
         		break;
         	}
             
             case ISpieler.katastrophal: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("katastrophal");
+                bewertung = HOVerwaltung.instance().getLanguageString("katastrophal");
                 break;
             }
 
             case ISpieler.erbaermlich: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("erbaermlich");
+                bewertung = HOVerwaltung.instance().getLanguageString("erbaermlich");
                 break;
             }
 
             case ISpieler.armselig: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("armselig");
+                bewertung = HOVerwaltung.instance().getLanguageString("armselig");
                 break;
             }
 
             case ISpieler.schwach: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("schwach");
+                bewertung = HOVerwaltung.instance().getLanguageString("schwach");
                 break;
             }
 
             case ISpieler.durchschnittlich: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("durchschnittlich");
+                bewertung = HOVerwaltung.instance().getLanguageString("durchschnittlich");
                 break;
             }
 
             case ISpieler.passabel: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("passabel");
+                bewertung = HOVerwaltung.instance().getLanguageString("passabel");
                 break;
             }
 
             case ISpieler.gut: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("gut");
+                bewertung = HOVerwaltung.instance().getLanguageString("gut");
                 break;
             }
 
             case ISpieler.sehr_gut: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("sehr_gut");
+                bewertung = HOVerwaltung.instance().getLanguageString("sehr_gut");
                 break;
             }
 
             case ISpieler.hervorragend: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("hervorragend");
+                bewertung = HOVerwaltung.instance().getLanguageString("hervorragend");
                 break;
             }
 
             case ISpieler.grossartig: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("grossartig");
+                bewertung = HOVerwaltung.instance().getLanguageString("grossartig");
                 break;
             }
 
             case ISpieler.brilliant: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("brilliant");
+                bewertung = HOVerwaltung.instance().getLanguageString("brilliant");
                 break;
             }
 
             case ISpieler.fantastisch: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("fantastisch");
+                bewertung = HOVerwaltung.instance().getLanguageString("fantastisch");
                 break;
             }
 
             case ISpieler.Weltklasse: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("Weltklasse");
+                bewertung = HOVerwaltung.instance().getLanguageString("Weltklasse");
                 break;
             }
 
             case ISpieler.uebernatuerlich: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("uebernatuerlich");
+                bewertung = HOVerwaltung.instance().getLanguageString("uebernatuerlich");
                 break;
             }
 
             case ISpieler.gigantisch: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("gigantisch");
+                bewertung = HOVerwaltung.instance().getLanguageString("gigantisch");
                 break;
             }
 
             case ISpieler.ausserirdisch: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("ausserirdisch");
+                bewertung = HOVerwaltung.instance().getLanguageString("ausserirdisch");
                 break;
             }
 
             case ISpieler.mythisch: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("mythisch");
+                bewertung = HOVerwaltung.instance().getLanguageString("mythisch");
                 break;
             }
 
             case ISpieler.maerchenhaft: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("maerchenhaft");
+                bewertung = HOVerwaltung.instance().getLanguageString("maerchenhaft");
                 break;
             }
 
             case ISpieler.galaktisch: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("galaktisch");
+                bewertung = HOVerwaltung.instance().getLanguageString("galaktisch");
                 break;
             }
 
             case ISpieler.goettlich: {
-                bewertung = HOVerwaltung.instance().getResource().getProperty("goettlich");
+                bewertung = HOVerwaltung.instance().getLanguageString("goettlich");
                 break;
             }
 
             default: {
                 if (bewertungwert > ISpieler.goettlich) {
-                    bewertung = HOVerwaltung.instance().getResource().getProperty("goettlich");
+                    bewertung = HOVerwaltung.instance().getLanguageString("goettlich");
                 } else {
-                    bewertung = HOVerwaltung.instance().getResource().getProperty("Unbestimmt");
+                    bewertung = HOVerwaltung.instance().getLanguageString("Unbestimmt");
                 }
 
                 break;
@@ -352,19 +352,19 @@ public class PlayerHelper {
     public static String getNameForSpeciality(int level) {
         switch (level) {
             case ISpieler.BALLZAUBERER:
-                return HOVerwaltung.instance().getResource().getProperty("sp_Technical");
+                return HOVerwaltung.instance().getLanguageString("sp_Technical");
 
             case ISpieler.SCHNELL:
-                return HOVerwaltung.instance().getResource().getProperty("sp_Quick");
+                return HOVerwaltung.instance().getLanguageString("sp_Quick");
 
             case ISpieler.DURCHSETZUGNSSTARK:
-                return HOVerwaltung.instance().getResource().getProperty("sp_Powerful");
+                return HOVerwaltung.instance().getLanguageString("sp_Powerful");
 
             case ISpieler.UNBERECHENBAR:
-                return HOVerwaltung.instance().getResource().getProperty("sp_Unpredictable");
+                return HOVerwaltung.instance().getLanguageString("sp_Unpredictable");
 
             case ISpieler.KOPFBALLSTARK:
-                return HOVerwaltung.instance().getResource().getProperty("sp_Head");
+                return HOVerwaltung.instance().getLanguageString("sp_Head");
 
             default:
                 return "";

@@ -570,14 +570,14 @@ public final class Spieler implements plugins.ISpieler {
     	StringBuffer ret = new StringBuffer();
     	ret.append(years);
     	ret.append(" ");
-    	ret.append(HOVerwaltung.instance().getResource().getProperty("age.years"));
+    	ret.append(HOVerwaltung.instance().getLanguageString("age.years"));
     	ret.append(" ");
     	ret.append(days);
     	ret.append(" ");
-    	ret.append(HOVerwaltung.instance().getResource().getProperty("age.days"));
+    	ret.append(HOVerwaltung.instance().getLanguageString("age.days"));
     	if (birthday) {
     		ret.append(" (");
-    		ret.append(HOVerwaltung.instance().getResource().getProperty("age.birthday"));
+    		ret.append(HOVerwaltung.instance().getLanguageString("age.birthday"));
     		ret.append(")");
     	}
     	return ret.toString();

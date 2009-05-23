@@ -6,15 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
+//import java.awt.datatransfer.Clipboard;
+//import java.awt.datatransfer.DataFlavor;
+//import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -76,23 +75,14 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private DoppelLabelEntry jpWertSturmAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpWertSturmDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpWertTor = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private JButton jbAddTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                          .getResource()
-                                                                                          .getProperty("AddTempspieler"));
+    private JButton jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
     private JButton jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                           .loadImage("gui/bilder/Drucken.png")));
-    private JButton jbEntfernen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("ScoutEntfernen"));
-    private JButton jbHinzufuegen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("ScoutHinzu"));
-    private JButton jbMiniScout = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getResource()
-                                                                                     .getProperty("ScoutMini"));
-    private JButton jbUebernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("Uebernehmen"));
+    private JButton jbEntfernen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
+    private JButton jbHinzufuegen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+    private JButton jbMiniScout = new JButton(HOVerwaltung.instance().getLanguageString("ScoutMini"));
+    private JButton jbUebernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbRemoveAll = new JButton(HOVerwaltung.instance().getLanguageString("Scout.RemoveAll"));
     //private JButton jbClipBoard = new JButton("From Clipboard");
     private JComboBox jcbErfahrung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbFluegel = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
@@ -105,9 +95,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JComboBox jcbTorschuss = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbTorwart = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbVerteidigung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JLabel jlStatus = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("scout_status")
+    private JLabel jlStatus = new JLabel(HOVerwaltung.instance().getLanguageString("scout_status")
                                          + ": ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
     private JTextArea jtaNotizen = new JTextArea();
@@ -157,28 +145,19 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             // If scout entry already exists
             if (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(clScoutEintrag
                                                                                    .getPlayerID()) != null) {
-                jbHinzufuegen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("tt_Transferscout_ersetzen"));
-                jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("ScoutErsetzen"));
+                jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_ersetzen"));
+                jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
                 jbEntfernen.setEnabled(true);
             } else {
-                jbHinzufuegen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("tt_Transferscout_hinzufuegen"));
-                jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("ScoutHinzu"));
+                jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
+                jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
                 jbEntfernen.setEnabled(false);
             }
 
             jbHinzufuegen.setEnabled(true);
         } else {
             clScoutEintrag = new ScoutEintrag();
-            jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("ScoutHinzu"));
+            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
             jbEntfernen.setEnabled(false);
             jbHinzufuegen.setEnabled(false);
         }
@@ -231,7 +210,12 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
             de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
             de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
-        } else {
+        } 
+    	
+		else if (actionEvent.getSource().equals(jbRemoveAll)) {
+			clOwner.removeScoutEntries();
+		}
+    	else {
             clScoutEintrag.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
             clScoutEintrag.setPrice(Integer.parseInt(jtfPrice.getText()));
             clScoutEintrag.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
@@ -552,17 +536,16 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         if (valid
             && (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(id) != null)) {
             jbHinzufuegen.setEnabled(true);
-            jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("ScoutErsetzen"));
+            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
             jbEntfernen.setEnabled(true);
         } else {
             jbHinzufuegen.setEnabled(true);
-            jbHinzufuegen.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("ScoutHinzu"));
+            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
             jbEntfernen.setEnabled(false);
         }
     }
-
+    
+    /* Not used anymore
     private void copyFromClipBoard() {
     	try {
 			Clipboard clipboard = getToolkit().getSystemClipboard ();
@@ -585,6 +568,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 			e.printStackTrace();
 		}
     }
+    */
 
     /**
      * Calls playerconverter and fills boxes to the corresponding values
@@ -648,7 +632,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 setLabels();
             }
         } catch (Exception e) {
-            message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("scout_error");
+            message = HOVerwaltung.instance().getLanguageString("scout_error");
         }
 
         jtaCopyPaste.setText("");
@@ -656,23 +640,19 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         if (message.equals("")) {
             switch (pc.getError()) {
                 case 1:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("scout_warning");
+                    message = HOVerwaltung.instance().getLanguageString("scout_warning");
                     break;
 
                 case 2:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("scout_error");
+                    message = HOVerwaltung.instance().getLanguageString("scout_error");
                     break;
 
                 default:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("scout_success");
+                    message = HOVerwaltung.instance().getLanguageString("scout_success");
             }
         }
 
-        jlStatus.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                .getProperty("scout_status") + ": "
+        jlStatus.setText(HOVerwaltung.instance().getLanguageString("scout_status") + ": "
                          + message);
     }
 
@@ -682,7 +662,6 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -697,19 +676,19 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(9, 4, 4, 4));
 
-        label = new JLabel(properties.getProperty("ID"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ID"));
         panel.add(label);
         jtfPlayerID.setHorizontalAlignment(JLabel.RIGHT);
         jtfPlayerID.addFocusListener(this);
         jtfPlayerID.addKeyListener(this);
         panel.add(jtfPlayerID);
 
-        label = new JLabel(properties.getProperty("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
         panel.add(label);
         jtfName.addFocusListener(this);
         panel.add(jtfName);
 
-        label = new JLabel(properties.getProperty("Alter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
         panel.add(label);
         jtfAlter.setHorizontalAlignment(JLabel.RIGHT);
         jtfAlter.addFocusListener(this);
@@ -721,18 +700,18 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtfTSI.addFocusListener(this);
         panel.add(jtfTSI);
 
-        label = new JLabel(properties.getProperty("scout_price"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("scout_price"));
         panel.add(label);
         jtfPrice.setHorizontalAlignment(JLabel.RIGHT);
         jtfPrice.addFocusListener(this);
         panel.add(jtfPrice);
 
-        label = new JLabel(properties.getProperty("Ablaufdatum"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ablaufdatum"));
         panel.add(label);
         jsSpinner.addFocusListener(this);
         panel.add(jsSpinner);
 
-        label = new JLabel(properties.getProperty("Spezialitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spezialitaet"));
         panel.add(label);
         jcbSpeciality.addItemListener(this);
         panel.add(jcbSpeciality);
@@ -741,52 +720,52 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 		panel.add(label);
 		panel.add(jtfEPV);
 
-        label = new JLabel(properties.getProperty("Erfahrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung"));
         panel.add(label);
         jcbErfahrung.addItemListener(this);
         panel.add(jcbErfahrung);
 
-        label = new JLabel(properties.getProperty("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
         panel.add(label);
         jcbForm.addItemListener(this);
         panel.add(jcbForm);
 
-        label = new JLabel(properties.getProperty("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
         panel.add(label);
         jcbKondition.addItemListener(this);
         panel.add(jcbKondition);
 
-        label = new JLabel(properties.getProperty("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
         panel.add(label);
         jcbTorwart.addItemListener(this);
         panel.add(jcbTorwart);
 
-        label = new JLabel(properties.getProperty("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
         panel.add(label);
         jcbSpielaufbau.addItemListener(this);
         panel.add(jcbSpielaufbau);
 
-        label = new JLabel(properties.getProperty("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
         panel.add(label);
         jcbPasspiel.addItemListener(this);
         panel.add(jcbPasspiel);
 
-        label = new JLabel(properties.getProperty("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         panel.add(label);
         jcbFluegel.addItemListener(this);
         panel.add(jcbFluegel);
 
-        label = new JLabel(properties.getProperty("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
         panel.add(label);
         jcbVerteidigung.addItemListener(this);
         panel.add(jcbVerteidigung);
 
-        label = new JLabel(properties.getProperty("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
         panel.add(label);
         jcbTorschuss.addItemListener(this);
         panel.add(jcbTorschuss);
 
-        label = new JLabel(properties.getProperty("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
         panel.add(label);
         jcbStandard.addItemListener(this);
         panel.add(jcbStandard);
@@ -800,7 +779,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         // Notes
         panel = new ImagePanel();
         panel.setLayout(new BorderLayout());
-        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(properties.getProperty("Notizen")));
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Notizen")));
         jtaNotizen.addFocusListener(this);
         panel.add(new JScrollPane(jtaNotizen), BorderLayout.CENTER);
 
@@ -814,8 +793,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         // Copy & Paste
         panel = new ImagePanel();
         panel.setLayout(new BorderLayout());
-        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(properties.getProperty("CopyPaste")));
-        jtaCopyPaste.setToolTipText(properties.getProperty("tt_Transferscout_CopyPaste"));
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("CopyPaste")));
+        jtaCopyPaste.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_CopyPaste"));
         panel.add(new JScrollPane(jtaCopyPaste), BorderLayout.NORTH);
         jbUebernehmen.addActionListener(this);
         //jbClipBoard.addActionListener(this);
@@ -836,83 +815,83 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(20, 2, 4, 4));
 
-        label = new JLabel(properties.getProperty("BestePosition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("BestePosition"));
         panel.add(label);
         panel.add(jpBestPos.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
         panel.add(label);
         panel.add(jpWertTor.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Innenverteidiger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger"));
         panel.add(label);
         panel.add(jpWertInnenVert.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Innenverteidiger_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"));
         panel.add(label);
         panel.add(jpWertInnenVertAus.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Innenverteidiger_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"));
         panel.add(label);
         panel.add(jpWertInnenVertOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger"));
         panel.add(label);
         panel.add(jpWertAussenVert.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger_In"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"));
         panel.add(label);
         panel.add(jpWertAussenVertIn.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"));
         panel.add(label);
         panel.add(jpWertAussenVertOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Aussenverteidiger_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"));
         panel.add(label);
         panel.add(jpWertAussenVertDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld"));
         panel.add(label);
         panel.add(jpWertMittelfeld.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"));
         panel.add(label);
         panel.add(jpWertMittelfeldAus.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"));
         panel.add(label);
         panel.add(jpWertMittelfeldOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Mittelfeld_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"));
         panel.add(label);
         panel.add(jpWertMittelfeldDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         panel.add(label);
         panel.add(jpWertFluegel.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel_In"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"));
         panel.add(label);
         panel.add(jpWertFluegelIn.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"));
         panel.add(label);
         panel.add(jpWertFluegelOff.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Fluegelspiel_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"));
         panel.add(label);
         panel.add(jpWertFluegelDef.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sturm"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm"));
         panel.add(label);
         panel.add(jpWertSturm.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sturm_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Aus"));
         panel.add(label);
         panel.add(jpWertSturmAus.getComponent(false));
 
-        label = new JLabel(properties.getProperty("Sturm_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Def"));
         panel.add(label);
         panel.add(jpWertSturmDef.getComponent(false));
 
@@ -925,22 +904,25 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         // Buttons
         panel = new ImagePanel();
-        panel.setLayout(new GridLayout(5, 1, 4, 4));
+        panel.setLayout(new GridLayout(6, 1, 4, 4));
 
-        jbHinzufuegen.setToolTipText(properties.getProperty("tt_Transferscout_hinzufuegen"));
+        jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
         jbHinzufuegen.addActionListener(this);
         panel.add(jbHinzufuegen);
-        jbEntfernen.setToolTipText(properties.getProperty("tt_Transferscout_entfernen"));
+        jbEntfernen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_entfernen"));
         jbEntfernen.addActionListener(this);
         jbEntfernen.setEnabled(false);
         panel.add(jbEntfernen);
-        jbMiniScout.setToolTipText(properties.getProperty("tt_Transferscout_Miniscout"));
+		jbRemoveAll.addActionListener(this);
+		jbRemoveAll.setToolTipText(HOVerwaltung.instance().getLanguageString("Scout.tt_RemoveAll"));
+		panel.add(jbRemoveAll);
+        jbMiniScout.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_Miniscout"));
         jbMiniScout.addActionListener(this);
         panel.add(jbMiniScout);
-        jbDrucken.setToolTipText(properties.getProperty("tt_Transferscout_drucken"));
+        jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_drucken"));
         jbDrucken.addActionListener(this);
         panel.add(jbDrucken);
-        jbAddTempSpieler.setToolTipText(properties.getProperty("tt_add_tempspieler"));
+        jbAddTempSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_add_tempspieler"));
         jbAddTempSpieler.addActionListener(this);
         panel.add(jbAddTempSpieler);
 

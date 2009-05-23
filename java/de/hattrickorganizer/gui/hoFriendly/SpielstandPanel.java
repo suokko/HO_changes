@@ -23,8 +23,7 @@ public class SpielstandPanel extends JPanel {
 
     //Spielstand
     private String SPIELSTAND = ". "
-                                + de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                         .getProperty("Spielminute");
+                                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielminute");
 
     //Name der Gastmannschaft
     private String m_sGastmannschaft = "";

@@ -101,31 +101,25 @@ public class Action implements plugins.IMPActions, Comparable {
         final StringBuffer buffer = new StringBuffer();
 
         if (type == IMatchDetails.TAKTIK_KONTER) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Counter"));
+            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Counter"));
         } else {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Attack"));
+            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Attack"));
         }
 
         buffer.append(" ");
 
         if (area == -1) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("on_the_left"));
+            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("on_the_left"));
         } else if (area == 0) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("on_the_middle"));
+            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("on_the_middle"));
         } else {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("on_the_right"));
+            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("on_the_right"));
         }
 
         buffer.append(". ");
 
         if (score) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("TOR"));
+            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TOR"));
             buffer.append("!");
         }
 

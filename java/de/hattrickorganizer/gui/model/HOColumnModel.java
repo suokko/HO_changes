@@ -63,7 +63,7 @@ public abstract class HOColumnModel extends AbstractTableModel{
 	 * return the language dependent name of this model
 	 */
 	public String toString(){
-		String tmp = HOVerwaltung.instance().getResource().getProperty(name);
+		String tmp = HOVerwaltung.instance().getLanguageString(name);
 		return (instance == 0)?tmp:(tmp+instance);
 	}
 	

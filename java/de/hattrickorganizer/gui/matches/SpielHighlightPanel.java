@@ -94,8 +94,7 @@ public class SpielHighlightPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Heim"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(JLabel.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -108,8 +107,7 @@ public class SpielHighlightPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gast"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(JLabel.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;

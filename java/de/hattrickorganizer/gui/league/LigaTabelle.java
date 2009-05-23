@@ -49,98 +49,54 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
 
     /** TODO Missing Parameter Documentation */
     private final String[] COLUMNNAMES = {
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Platz"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Verein"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Serie"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Spiele_kurz"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("SerieAuswaertsSieg"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("SerieAuswaertsUnendschieden"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("SerieAuswaertsNiederlage"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Tore"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Differenz_kurz"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getResource()
-                                                                                    .getProperty("Punkte_kurz"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Platz"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verein"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Serie"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele_kurz"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tore"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
+                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Punkte_kurz"),
                                              "",
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("SerieAuswaertsSieg"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("SerieAuswaertsUnendschieden"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("SerieAuswaertsNiederlage"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Tore"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tore"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Differenz_kurz"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Punkte_kurz"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Punkte_kurz"),
                                              "",
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("SerieAuswaertsSieg"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("SerieAuswaertsUnendschieden"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("SerieAuswaertsNiederlage"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Tore"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tore"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Differenz_kurz"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Punkte_kurz")
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Punkte_kurz")
                                          };
     private JTable m_jtLigaTabelle = new JTable();
     private Object[][] tabellenwerte;

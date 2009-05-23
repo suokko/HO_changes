@@ -38,8 +38,8 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     private UserPanel m_jpUserOptionen;
     private UserColumnsPanel m_jpUserColumns;
     private DownloadPanel m_jpDownloadPanel;
-    private JButton m_jbSave = new JButton(HOVerwaltung.instance().getResource().getProperty("Speichern"));
-    private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getResource().getProperty("Abbrechen"));
+    private JButton m_jbSave = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
+    private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private ImagePanel m_jpButtonPanel = new ImagePanel();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
      */
     public OptionenDialog(JFrame owner) {
         super(owner,
-              HOVerwaltung.instance().getResource().getProperty("Optionen"),
+              HOVerwaltung.instance().getLanguageString("Optionen"),
               true);
 
         this.addWindowListener(this);
@@ -82,7 +82,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     	gui.UserParameter.saveTempParameter();
 
 		if (OptionManager.instance().isRestartNeeded()) {
-	            Helper.showMessage(this, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"),
+	            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 	            		"", JOptionPane.INFORMATION_MESSAGE);
 	    }
 		
@@ -141,32 +141,32 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
         //Verschiedenes
         m_jpSonstigeOptionen = new SonstigeOptionenPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("Verschiedenes"),
+        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"),
                           new JScrollPane(m_jpSonstigeOptionen));
 
         //Tab
         m_jpTabOptionen = new TabOptionenPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("TabManagement"),
+        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TabManagement"),
                           new JScrollPane(m_jpTabOptionen));
 
         //Farben
         m_jpFarben = new FarbPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("Farben"),
+        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Farben"),
                           new JScrollPane(m_jpFarben));
 
         //Formeln
         m_jpFormeln = new FormelPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("Formeln"),
+        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Formeln"),
                           new JScrollPane(m_jpFormeln));
 
 		//Rating Offset
 		m_jpRatingOffset = new RatingOffsetPanel();
-		tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("PredictionOffset"),
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("PredictionOffset"),
 						  new JScrollPane(m_jpRatingOffset));
 
         //Training
         m_jpTrainingsOptionen = new TrainingsOptionenPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("Training"),
+        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"),
                           new JScrollPane(m_jpTrainingsOptionen));
 
         m_jpUserOptionen = new UserPanel();
@@ -178,13 +178,12 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
 		//Download
         m_jpDownloadPanel = new DownloadPanel();
-        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                 .getProperty("Download"),
+        tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"),
                           new JScrollPane(m_jpDownloadPanel));
 		
 //		 HO Check
 		m_jpUserColumns = new UserColumnsPanel();
-		tabbedPane.addTab(HOVerwaltung.instance().getResource().getProperty("columns"),new JScrollPane(m_jpUserColumns));
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("columns"),new JScrollPane(m_jpUserColumns));
 
 
         //Tabs der plugins
@@ -229,7 +228,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		if (e.getSource().equals(m_jbSave)) {
 			gui.UserParameter.saveTempParameter();
 			if (OptionManager.instance().isRestartNeeded()) {
-		            Helper.showMessage(this, HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich"),
+		            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 		            		"", JOptionPane.INFORMATION_MESSAGE);
 		    }
 			if (OptionManager.instance().isReInitNeeded()) {
