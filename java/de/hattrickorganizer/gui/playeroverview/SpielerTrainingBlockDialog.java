@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -43,7 +42,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
     private JButton m_jbAdd;
 	
     /* A list of <SingleTrainingBlock> */
-	private List allTrainingBlocks;
+	private List<SingleTrainingBlock> allTrainingBlocks;
 	
 	/* current player */
 	private Spieler m_clPlayer;
@@ -62,7 +61,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	protected SpielerTrainingBlockDialog(javax.swing.JFrame owner, Spieler player) {
 		super(owner, true);
 		setTitle(
-			HOVerwaltung.instance().getResource().getProperty(
+			HOVerwaltung.instance().getLanguageString(
 				"TrainingBlock")
 				+ " "
 				+ player.getName());
@@ -93,7 +92,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	 * i.e. check all HRFs for an active training block
 	 */
 	private void initTrainingBlockList() {
-		allTrainingBlocks = new ArrayList();
+		allTrainingBlocks = new ArrayList<SingleTrainingBlock>();
 		int playerId = m_clPlayer.getSpielerID();
 		Timestamp timestampFirstPlayerHRF = DBZugriff.instance().getTimestamp4FirstPlayerHRF(playerId);
 		int hrfId = DBZugriff.instance().getHRFID4Date(timestampFirstPlayerHRF);
@@ -266,8 +265,6 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 
-		Properties properties = HOVerwaltung.instance().getResource();
-
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
 			addBlock((SingleTrainingBlock)allTrainingBlocks.get(i));
 		}
@@ -280,7 +277,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(panel);
 
 		m_jbAdd =
-			new JButton(properties.getProperty("TrainingBlock.add"));
+			new JButton(HOVerwaltung.instance().getLanguageString("TrainingBlock.add"));
 		m_jbAdd.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -291,7 +288,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(m_jbAdd);
 
 		m_jbOK =
-			new JButton(properties.getProperty("Uebernehmen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
 		m_jbOK.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -303,7 +300,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(m_jbOK);
 
 		m_jbCancel =
-			new JButton(properties.getProperty("Abbrechen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
 		m_jbCancel.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.EAST;

@@ -52,18 +52,14 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
             m_jtfAufstellungsName.setText(aufstellungsName);
         }
 
-        setTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("AufstellungSpeichern"));
-        m_jbOK = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                    .getProperty("Speichern"));
-        m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                           .getProperty("Abbrechen"));
+        setTitle(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AufstellungSpeichern"));
+        m_jbOK = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Speichern"));
+        m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
 
         setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());
         getContentPane().setLayout(new GridLayout(2, 2, 4, 4));
 
-        getContentPane().add(new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("Name")));
+        getContentPane().add(new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name")));
 
         getContentPane().add(m_jtfAufstellungsName);
 
@@ -93,16 +89,12 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
             if (checkName(m_jtfAufstellungsName.getText(), true)) {
                 m_clAufstellung.save(m_jtfAufstellungsName.getText());
-                de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                      .getResource()
-                                                                                                                                      .getProperty("Aufstellung")
+                de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung")
                                                                                                + " "
                                                                                                + m_jtfAufstellungsName
                                                                                                  .getText()
                                                                                                + " "
-                                                                                               + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                        .getResource()
-                                                                                                                                        .getProperty("gespeichert"));
+                                                                                               + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("gespeichert"));
 
                 //gui.RefreshManager.instance ().doReInit ();
                 AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(m_jtfAufstellungsName
@@ -115,27 +107,19 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
                 
             } else {
                 final int value = JOptionPane.showConfirmDialog(this,
-                                                                de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                       .getResource()
-                                                                                                       .getProperty("Aufstellung_NameSchonVorhanden")
+                                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung_NameSchonVorhanden")
                                                                 + " "
-                                                                + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                         .getResource()
-                                                                                                         .getProperty("Ueberschreiben")
+                                                                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ueberschreiben")
                                                                 + "?", "", JOptionPane.YES_NO_OPTION);
 
                 if (value == JOptionPane.YES_OPTION) {
                     m_clAufstellung.save(m_jtfAufstellungsName.getText());
-                    de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                          .getResource()
-                                                                                                                                          .getProperty("Aufstellung")
+                    de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung")
                                                                                                    + " "
                                                                                                    + m_jtfAufstellungsName
                                                                                                      .getText()
                                                                                                    + " "
-                                                                                                   + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                            .getResource()
-                                                                                                                                            .getProperty("gespeichert"));
+                                                                                                   + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("gespeichert"));
 
                     //gui.RefreshManager.instance ().doReInit ();
                     AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(m_jtfAufstellungsName
@@ -164,10 +148,8 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
         }
 
         //nicht Aktuelle Aufstellung
-        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("AktuelleAufstellung"));
-        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("LetzteAufstellung"));
+        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"));
+        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LetzteAufstellung"));
 
         //nicht HO!
         aufstellungsNamen.add(Aufstellung.DEFAULT_NAME);

@@ -57,7 +57,7 @@ public class ResultPanel extends JPanel {
         average = 0;
         set.setEnabled(false);
         result.setText("Skill");
-        set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Disabled"));
+        set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Disabled"));
     }
 
     /**
@@ -81,13 +81,11 @@ public class ResultPanel extends JPanel {
         average = kt.getAvg();
 
         if (playerId > 0) {
-            set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                               .getProperty("OffsetTitle") + " "
+            set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("OffsetTitle") + " "
                         + name);
             set.setEnabled(true);
         } else {
-            set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                               .getProperty("Disabled"));
+            set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Disabled"));
             set.setEnabled(false);
         }
     }

@@ -63,7 +63,7 @@ public abstract class UserColumn {
 	 * @return String
 	 */
 	public final String getColumnName() {
-		return (columnName.equals("TSI") || columnName.equals(" "))?columnName:HOVerwaltung.instance().getResource().getProperty(columnName);
+		return (columnName.equals("TSI") || columnName.equals(" "))?columnName:HOVerwaltung.instance().getLanguageString(columnName);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public abstract class UserColumn {
 	 * @return
 	 */
 	public final String getTooltip() {
-		return (columnName.equals("TSI") || tooltip.equals(" "))?tooltip:HOVerwaltung.instance().getResource().getProperty(tooltip);
+		return (columnName.equals("TSI") || tooltip.equals(" "))?tooltip:HOVerwaltung.instance().getLanguageString(tooltip);
 	}
 	
 	/**

@@ -37,7 +37,7 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JComboBox m_jcbColumnModel 	= null;
 	private JTable table 				= null;
-	private final String [] columnNames = new String[]{" ", HOVerwaltung.instance().getResource().getProperty("column")};
+	private final String [] columnNames = new String[]{" ", HOVerwaltung.instance().getLanguageString("column")};
 	private final ImageIcon lockedImage 	= new ImageIcon(Helper.loadImage("gui/bilder/Locked.gif"));
 	protected UserColumnsPanel(){
 		initComponents();

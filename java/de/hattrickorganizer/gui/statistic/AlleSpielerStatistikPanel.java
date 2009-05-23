@@ -47,84 +47,56 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("Erfahrung"),
+    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(ERFAHRUNG),
                                                              gui.UserParameter.instance().statistikAlleErfahrung);
-    private ImageCheckbox m_jchFluegel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                  .getResource()
-                                                                                                  .getProperty("Fluegelspiel"),
+    private ImageCheckbox m_jchFluegel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                                            de.hattrickorganizer.tools.Helper
                                                            .getImageIcon4Color(FLUEGEL),
                                                            gui.UserParameter.instance().statistikAlleFluegel);
-    private ImageCheckbox m_jchForm = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                               .getResource()
-                                                                                               .getProperty("Form"),
+    private ImageCheckbox m_jchForm = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form"),
                                                         de.hattrickorganizer.tools.Helper
                                                         .getImageIcon4Color(FORM),
                                                         gui.UserParameter.instance().statistikAlleForm);
-    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                   .getResource()
-                                                                                                   .getProperty("Fuehrung"),
+    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fuehrung"),
                                                             de.hattrickorganizer.tools.Helper
                                                             .getImageIcon4Color(FUEHRUNG),
                                                             gui.UserParameter.instance().statistikAlleFuehrung);
-    private ImageCheckbox m_jchKondition = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("Kondition"),
+    private ImageCheckbox m_jchKondition = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(KONDITION),
                                                              gui.UserParameter.instance().statistikAlleKondition);
-    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                   .getResource()
-                                                                                                   .getProperty("Passpiel"),
+    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
                                                             de.hattrickorganizer.tools.Helper
                                                             .getImageIcon4Color(PASSPIEL),
                                                             gui.UserParameter.instance().statistikAllePasspiel);
-    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                      .getResource()
-                                                                                                      .getProperty("Spielaufbau"),
+    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
                                                                de.hattrickorganizer.tools.Helper
                                                                .getImageIcon4Color(SPIELAUFBAU),
                                                                gui.UserParameter.instance().statistikAlleSpielaufbau);
-    private ImageCheckbox m_jchStandards = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("Standards"),
+    private ImageCheckbox m_jchStandards = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(STANDARDS),
                                                              gui.UserParameter.instance().statistikAlleStandards);
-    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("Torschuss"),
+    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(TORSCHUSS),
                                                              gui.UserParameter.instance().statistikAlleTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                  .getResource()
-                                                                                                  .getProperty("Torwart"),
+    private ImageCheckbox m_jchTorwart = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
                                                            de.hattrickorganizer.tools.Helper
                                                            .getImageIcon4Color(TORWART),
                                                            gui.UserParameter.instance().statistikAlleTorwart);
-    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                       .getResource()
-                                                                                                       .getProperty("Verteidigung"),
+    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
                                                                 de.hattrickorganizer.tools.Helper
                                                                 .getImageIcon4Color(VERTEIDIGUNG),
                                                                 gui.UserParameter.instance().statistikAlleVerteidigung);
     private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                             .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                        .getResource()
-                                                                                        .getProperty("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                               .getResource()
-                                                                                               .getProperty("Beschriftung"),
+    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikAlleBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                             .getResource()
-                                                                                             .getProperty("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikAlleHilfslinien);
     private JComboBox m_jcbGruppe = new JComboBox(de.hattrickorganizer.tools.Helper.TEAMSMILIES);
     private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikAnzahlHRF
@@ -170,9 +142,7 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("Verein"));
+            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verein"));
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
             gui.UserParameter.instance().statistikAlleHilfslinien = m_jchHilflinien.isSelected();
@@ -295,15 +265,13 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Wochen"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -322,14 +290,11 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
         layout2.setConstraints(m_jbUbernehmen, constraints2);
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gruppe"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gruppe"));
         constraints2.gridx = 0;
         constraints2.gridy = 3;
         constraints2.gridwidth = 2;
@@ -532,9 +497,7 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
                                             .convertTimeMillisToFormatString(statistikWerte[11]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Wochen"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                             "", m_jchBeschriftung.isSelected(),
                                             m_jchHilflinien.isSelected());
         } catch (Exception e) {

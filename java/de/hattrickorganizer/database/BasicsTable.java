@@ -128,11 +128,11 @@ public final class BasicsTable extends AbstractTable {
 						new de.hattrickorganizer.gui.model.CBItem(
 							java.text.DateFormat.getDateTimeInstance().format(rs.getTimestamp("Datum"))
 								+ " ( "
-								+ de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Season")
+								+ de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season")
 								+ " "
 								+ rs.getInt("Saison")
 								+ "  "
-								+ de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Spieltag")
+								+ de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieltag")
 								+ " "
 								+ rs.getInt("Spieltag")
 								+ " )",

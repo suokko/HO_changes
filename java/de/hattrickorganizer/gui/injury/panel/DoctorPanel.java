@@ -14,7 +14,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class DoctorPanel extends AbstractInjuryPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private String msg = HOVerwaltung.instance().getResource().getProperty("DoctorsNeeded");
+    private String msg = HOVerwaltung.instance().getLanguageString("DoctorsNeeded");
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -51,8 +51,8 @@ public class DoctorPanel extends AbstractInjuryPanel {
      */
     public final void reset() {
         setInputValue("");
-        setInputMsg(HOVerwaltung.instance().getResource().getProperty("Updates"));
+        setInputMsg(HOVerwaltung.instance().getLanguageString("Updates"));
         setOutputMsg(msg);
-        setHeader(HOVerwaltung.instance().getResource().getProperty("Injury1"));
+        setHeader(HOVerwaltung.instance().getLanguageString("Injury1"));
     }
 }

@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,11 +13,8 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
 
 /**
  * Represents a single training block with start and end date
@@ -61,11 +57,10 @@ final class SingleTrainingBlock extends JPanel {
 	 * Init the GUI components
 	 */
 	private void initComponents() {
-		Properties properties = HOVerwaltung.instance().getResource();
-		String fromString = properties.getProperty("TrainingBlock.from");
-		String toString = properties.getProperty("TrainingBlock.to");
+		String fromString = HOVerwaltung.instance().getLanguageString("TrainingBlock.from");
+		String toString = HOVerwaltung.instance().getLanguageString("TrainingBlock.to");
 
-		m_jbRemove.setToolTipText(properties.getProperty("TrainingBlock.remove"));
+		m_jbRemove.setToolTipText(HOVerwaltung.instance().getLanguageString("TrainingBlock.remove"));
 
 		m_jbRemove.addActionListener(parent);
 		this.setLayout(new FlowLayout());

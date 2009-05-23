@@ -95,12 +95,12 @@ public final class RatingOffsetPanel
 
         m_jbCalculate =
             new JButton(
-                HOVerwaltung.instance().getResource().getProperty("Calculate"));
+                HOVerwaltung.instance().getLanguageString("Calculate"));
         m_jbCalculate.addActionListener(this);
 
         m_jbReset =
             new JButton(
-                HOVerwaltung.instance().getResource().getProperty("Reset"));
+                HOVerwaltung.instance().getLanguageString("Reset"));
         m_jbReset.addActionListener(this);
 
         //Layout components
@@ -198,7 +198,7 @@ public final class RatingOffsetPanel
 
     private SliderPanel createSlider(double initialValue, String name) {
         SliderPanel slider = new SliderPanel(
-                HOVerwaltung.instance().getResource().getProperty(name),100,-100,1,0.01f,120,2);
+                HOVerwaltung.instance().getLanguageString(name),100,-100,1,0.01f,120,2);
         slider.setValue((int) (100 * initialValue));
         slider.addChangeListener(this);
         return slider;

@@ -218,9 +218,9 @@ public class InjuryDetailPanel extends JPanel {
      * Initialize the GUI components
      */
     private void init() {
-        injuryType.addItem(HOVerwaltung.instance().getResource().getProperty("Healthy"));
-        injuryType.addItem(HOVerwaltung.instance().getResource().getProperty("Bruised"));
-        injuryType.addItem(HOVerwaltung.instance().getResource().getProperty("InjuredTraining"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("Healthy"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("Bruised"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("InjuredTraining"));
 
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -228,15 +228,15 @@ public class InjuryDetailPanel extends JPanel {
         final JPanel config = GUIPluginWrapper.instance().createImagePanel();
         config.setOpaque(false);
         config.setLayout(new GridLayout(4, 3));
-        config.add(createLabel(HOVerwaltung.instance().getResource().getProperty("Spieler")));
-        config.add(createLabel(HOVerwaltung.instance().getResource().getProperty("Alter")));
-        config.add(createLabel(HOVerwaltung.instance().getResource().getProperty("Verletzt")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Spieler")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Alter")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Verletzt")));
         config.add(createPanel(players));
         config.add(createPanel(age));
         config.add(createPanel(injury));
-        config.add(createLabel(HOVerwaltung.instance().getResource().getProperty("Status")));
-        config.add(createLabel(HOVerwaltung.instance().getResource().getProperty("TSIPre")));
-        config.add(createLabel(HOVerwaltung.instance().getResource().getProperty("TSIPost")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Status")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("TSIPre")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("TSIPost")));
         config.add(createPanel(injuryType));
         config.add(createPanel(tsiPre));
         config.add(createPanel(tsiPost));

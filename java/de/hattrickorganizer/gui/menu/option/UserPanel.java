@@ -35,9 +35,9 @@ public class UserPanel extends ImagePanel implements ActionListener {
     private JButton m_jbSaveUser = null;
     private JTable table;
     private String[] columnNames = new String[]{
-			HOVerwaltung.instance().getResource().getProperty("Benutzername"),
-			HOVerwaltung.instance().getResource().getProperty("Datenbank"),
-			HOVerwaltung.instance().getResource().getProperty("AnzahlHRF").replaceAll("HRF","ZIP")
+			HOVerwaltung.instance().getLanguageString("Benutzername"),
+			HOVerwaltung.instance().getLanguageString("Datenbank"),
+			HOVerwaltung.instance().getLanguageString("AnzahlHRF").replaceAll("HRF","ZIP")
 	};
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -153,11 +153,11 @@ public class UserPanel extends ImagePanel implements ActionListener {
      */
     private JPanel getTopPanel() {
         JPanel topPanel = new ImagePanel();
-        m_jbNewUser = new JButton(HOVerwaltung.instance().getResource().getProperty("Hinzufuegen"));
+        m_jbNewUser = new JButton(HOVerwaltung.instance().getLanguageString("Hinzufuegen"));
         m_jbNewUser.addActionListener(this);
-        m_jbDeleteUser = new JButton(HOVerwaltung.instance().getResource().getProperty("loeschen"));
+        m_jbDeleteUser = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));
         m_jbDeleteUser.addActionListener(this);
-        m_jbSaveUser = new JButton(HOVerwaltung.instance().getResource().getProperty("Speichern"));
+        m_jbSaveUser = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
         m_jbSaveUser.addActionListener(this);
 
         topPanel.add(m_jbNewUser);

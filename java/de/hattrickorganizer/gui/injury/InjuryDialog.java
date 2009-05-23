@@ -43,7 +43,7 @@ public class InjuryDialog extends JDialog implements WindowListener {
      */
     public InjuryDialog(JFrame owner) {
         super(owner, false);
-        setTitle(HOVerwaltung.instance().getResource().getProperty("InjuryCalculator"));
+        setTitle(HOVerwaltung.instance().getLanguageString("InjuryCalculator"));
 
         initComponents();
 

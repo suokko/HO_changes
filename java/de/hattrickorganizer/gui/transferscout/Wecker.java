@@ -16,12 +16,13 @@ import javax.swing.JTextArea;
  * @author thomas.werth
  */
 public class Wecker extends javax.swing.JFrame implements java.awt.event.ActionListener {
-    //~ Instance fields ----------------------------------------------------------------------------
 
+	private static final long serialVersionUID = -8263831429834255080L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
     private JButton m_jbOK = new JButton();
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new instance of Wecker
      *

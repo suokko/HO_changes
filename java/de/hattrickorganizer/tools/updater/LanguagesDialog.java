@@ -34,13 +34,12 @@ public final class LanguagesDialog extends UpdaterDialog {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    private static final String PROP_LANGUAGEFILE = HOVerwaltung.instance().getResource()
-                                                                .getProperty("Sprachdatei");
+    private static final String PROP_LANGUAGEFILE = HOVerwaltung.instance().getLanguageString("Sprachdatei");
 
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    protected final String PROP_REFRESH = HOVerwaltung.instance().getResource().getProperty("Refresh");
+    protected final String PROP_REFRESH = HOVerwaltung.instance().getLanguageString("Refresh");
 
     /** TODO Missing Parameter Documentation */
     protected final String WEB_LANGUAGE_DIR = UpdateController.PLUGINS_HOMEPAGE + "/Sprache/";

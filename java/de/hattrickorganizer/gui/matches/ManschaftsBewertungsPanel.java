@@ -106,8 +106,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Heim"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -120,8 +119,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gast"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -134,8 +132,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(label);
 
         //Teams mit Ergebnis
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Ergebnis"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -195,8 +192,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
 
         //Bewertungen
         //Mittelfeld
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Gesamtstaerke"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -236,8 +232,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(label);
 
         //Mittelfeld
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("MatchMittelfeld"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -266,8 +261,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(m_clGastMidfield);
 
         //rechte Abwehrseite
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("rechteAbwehrseite"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -296,8 +290,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(m_clGastRightDef);
 
         //Abwehrzentrum
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Abwehrzentrum"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -326,8 +319,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(m_clGastCenterDef);
 
         //Linke Abwehrseite
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("linkeAbwehrseite"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -356,8 +348,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(m_clGastLeftDef);
 
         //Rechte Angriffsseite
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("rechteAngriffsseite"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -386,8 +377,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(m_clGastRightAtt);
 
         //Angriffszentrum
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Angriffszentrum"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -416,8 +406,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         panel.add(m_clGastCenterAtt);
 
         //Linke Angriffsseite
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("linkeAngriffsseite"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;

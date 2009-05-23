@@ -60,9 +60,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         constraints.insets = new Insets(1, 2, 1, 1);
         getContentPane().setLayout(layout);
 
-        final JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                               .getResource()
-                                                                               .getProperty("BitteWarten"),
+        final JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BitteWarten"),
                                         JLabel.CENTER);
         label.setFont(label.getFont().deriveFont(java.awt.Font.BOLD, 24f));
         label.setForeground(java.awt.Color.white);

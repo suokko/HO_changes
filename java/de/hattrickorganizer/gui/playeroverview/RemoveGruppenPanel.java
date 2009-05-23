@@ -8,7 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
+import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -18,6 +18,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
@@ -28,7 +29,10 @@ import de.hattrickorganizer.tools.Helper;
 public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener
 {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = 3606384591123088694L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     private final JButton doButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Taktik_Offensiv.png")));
     private final JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
@@ -191,8 +195,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("Spieleruebersicht")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieleruebersicht")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()
@@ -217,13 +220,12 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
     private void gruppenMarkierung() {
         //Von beiden Gruppen ein Button selektiert
         if ((getSelectedButton(true) != null) && (getSelectedButton(false) != null)) {
-            final java.util.Vector alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+            final Vector<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
             final String suchName = getName4Button(getSelectedButton(true));
             final String ersatzName = getName4Button(getSelectedButton(false));
 
             for (int i = 0; i < alleSpieler.size(); i++) {
-                final de.hattrickorganizer.model.Spieler spieler = (de.hattrickorganizer.model.Spieler) alleSpieler
-                                                                   .get(i);
+                final Spieler spieler = alleSpieler.get(i);
 
                 //Spieler in der Gruppe
                 if (spieler.getTeamInfoSmilie().equals(suchName)) {
@@ -243,7 +245,6 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        final Properties properties = HOVerwaltung.instance().getResource();
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
@@ -253,8 +254,8 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         setLayout(layout);
 
         final ButtonGroup bg = new ButtonGroup();
-        final String tooltipFrom = properties.getProperty("tt_Gruppe_von");
-        final String tooltipTo = properties.getProperty("tt_Gruppe_nach");
+        final String tooltipFrom = HOVerwaltung.instance().getLanguageString("tt_Gruppe_von");
+        final String tooltipTo = HOVerwaltung.instance().getLanguageString("tt_Gruppe_nach");
         
         initButton(noGruppe,tooltipFrom,"gui/bilder/smilies/No-Team.png");
         constraints.gridx = 0;
@@ -332,7 +333,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         bg2.add(eGruppe2);
         add(eGruppe2);
 
-        doButton.setToolTipText(properties.getProperty("tt_Gruppe_wechseln"));
+        doButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Gruppe_wechseln"));
         doButton.setPreferredSize(new Dimension(28, 28));
         doButton.setEnabled(false);
         doButton.addActionListener(this);
@@ -342,7 +343,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         layout.setConstraints(doButton, constraints);
         add(doButton);
 
-        m_jbDrucken.setToolTipText(properties.getProperty("tt_Spieler_drucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spieler_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(28, 28));
         m_jbDrucken.addActionListener(this);
         constraints.gridx = 7;

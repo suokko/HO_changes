@@ -44,7 +44,7 @@ import de.hattrickorganizer.tools.Helper;
 abstract class UpdaterDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    //	protected String PROP_NO_SERVER		= HOVerwaltung.instance().getResource().getProperty("KeinServer");
+    //	protected String PROP_NO_SERVER		= HOVerwaltung.instance().getLanguageString("KeinServer");
 
     /** TODO Missing Parameter Documentation */
     protected JTable table;
@@ -57,19 +57,19 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
                                            + "hoplugins";
 
     /** TODO Missing Parameter Documentation */
-    protected String PROP_APPLY = HOVerwaltung.instance().getResource().getProperty("Uebernehmen");
+    protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("Uebernehmen");
 
     /** TODO Missing Parameter Documentation */
-    protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getResource().getProperty("DateiNichtGefunden");
+    protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getLanguageString("DateiNichtGefunden");
 
     /** TODO Missing Parameter Documentation */
-    protected String PROP_HOMEPAGE = HOVerwaltung.instance().getResource().getProperty("Homepage");
+    protected String PROP_HOMEPAGE = HOVerwaltung.instance().getLanguageString("Homepage");
 
     /** TODO Missing Parameter Documentation */
-    protected String PROP_NAME = HOVerwaltung.instance().getResource().getProperty("Name");
+    protected String PROP_NAME = HOVerwaltung.instance().getLanguageString("Name");
 
     /** TODO Missing Parameter Documentation */
-    protected String PROP_NEW_START = HOVerwaltung.instance().getResource().getProperty("NeustartErforderlich");
+    protected String PROP_NEW_START = HOVerwaltung.instance().getLanguageString("NeustartErforderlich");
 
     /** TODO Missing Parameter Documentation */
     protected String okButtonLabel;
@@ -247,7 +247,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         okButton.setActionCommand(ACT_FIND);
         okButton.addActionListener(this);
 
-        JButton cancelButton = new JButton(HOVerwaltung.instance().getResource().getProperty("Abbrechen"));
+        JButton cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
         cancelButton.setActionCommand(ACT_CANCEL);
         cancelButton.addActionListener(this);
 
@@ -282,7 +282,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         table.getTableHeader().setReorderingAllowed(false);
 
         if (table.getColumnCount() == 5) {
-            table.getColumn(HOVerwaltung.instance().getResource().getProperty("Notizen"))
+            table.getColumn(HOVerwaltung.instance().getLanguageString("Notizen"))
                  .setCellEditor(new TableEditor());
         }
 

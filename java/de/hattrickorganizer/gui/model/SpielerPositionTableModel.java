@@ -22,21 +22,19 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Position"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Position"),
                                             
 
     //Maximal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Maximal"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Maximal"),
                                             
 
     //Minimal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Minimal"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Minimal"),
                                             
 
     //Durchschnitt
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Durchschnitt"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Durchschnitt"),
                                         };
 
     /** TODO Missing Parameter Documentation */
@@ -44,21 +42,19 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Position"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Position"),
                                             
 
     //Maximal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Maximal"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Maximal"),
                                             
 
     //Minimal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Minimal"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Minimal"),
                                             
 
     //Durchschnitt
-    de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Durchschnitt"),
+    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Durchschnitt"),
                                         };
     private Vector m_vSpielerBewertung;
 

@@ -42,24 +42,14 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
 
     private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                             .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                        .getResource()
-                                                                                        .getProperty("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                               .getResource()
-                                                                                               .getProperty("Beschriftung"),
+    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikSpielerFinanzenBeschriftung);
-    private JCheckBox m_jchGehalt = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                         .getResource()
-                                                                                         .getProperty("Gehalt"),
+    private JCheckBox m_jchGehalt = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gehalt"),
                                                   gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                             .getResource()
-                                                                                             .getProperty("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien);
-    private JCheckBox m_jchMarktwert = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                            .getResource()
-                                                                                            .getProperty("Marktwert"),
+    private JCheckBox m_jchMarktwert = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Marktwert"),
                                                      gui.UserParameter.instance().statistikSpielerFinanzenMarktwert);
     private JComboBox m_jcbSpieler = new JComboBox();
     private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikSpielerFinanzenAnzahlHRF
@@ -88,12 +78,8 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("Spieler")
-                                       + de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getResource()
-                                                                                .getProperty("Finanzen"));
+            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieler")
+                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Finanzen"));
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
             gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien = m_jchHilflinien
@@ -185,15 +171,13 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("AnzahlHRF"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AnzahlHRF"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -211,15 +195,12 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         constraints2.gridx = 0;
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         layout2.setConstraints(m_jbUbernehmen, constraints2);
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Spieler"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieler"));
         constraints2.gridx = 0;
         constraints2.gridy = 3;
         constraints2.gridwidth = 2;
@@ -398,9 +379,7 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
                                                 .convertTimeMillisToFormatString(statistikWerte[2]);
 
                 m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                                de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                       .getResource()
-                                                                                       .getProperty("Wochen"),
+                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                 "", m_jchBeschriftung.isSelected(),
                                                 m_jchHilflinien.isSelected());
             }

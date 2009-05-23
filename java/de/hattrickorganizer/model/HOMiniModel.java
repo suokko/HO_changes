@@ -3,6 +3,7 @@ package de.hattrickorganizer.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import plugins.IBasics;
 import plugins.IDBAdapter;
@@ -27,7 +28,9 @@ import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
 import plugins.IVerein;
 import plugins.IXtraData;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.FutureTrainingManager;
+import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 
 
@@ -86,7 +89,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getAllOldSpieler() {
+    public Vector<Spieler> getAllOldSpieler() {
         return getModel().getAllOldSpieler();
     }
 
@@ -97,7 +100,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getAllSpieler() {
+    public Vector<Spieler> getAllSpieler() {
         return getModel().getAllSpieler();
     }
 
@@ -117,8 +120,8 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getDBManualTrainingsVector() {
-        return de.hattrickorganizer.database.DBZugriff.instance().getTrainingsVector();
+    public Vector<TrainingPerWeek> getDBManualTrainingsVector() {
+        return DBZugriff.instance().getTrainingsVector();
     }
 
     /**
@@ -261,14 +264,29 @@ public class HOMiniModel implements IHOMiniModel {
         return de.hattrickorganizer.database.DBZugriff.instance().getMatchesKurzInfo(teamId,
                                                                                      matchtyp, asc);
     }
+    
+    /**
+     * Returns the String connected to the active language file or connected
+     * to the english language file. Returns !key! if the key can not be found. 
+     *  
+     * @param key Key to be searched in language files
+     * 
+     * @return String connected to the key or !key! if nothing can be found in language files
+     */
+    public String getLanguageString(String key) {
+    	return HOVerwaltung.instance().getLanguageString(key);
+    }
 
     /**
      * Getter for property m_clResource.
+     * 
+     * !!!PLEASE USE getLanguageString from now on!!!
      *
      * @return Value of property m_clResource. usage
      *         minimodel.getResource().getProperty("Download") to get Name for download in current
      *         language
      */
+    @Deprecated
     public java.util.Properties getResource() {
         return HOVerwaltung.instance().getResource();
     }
@@ -429,7 +447,7 @@ public class HOMiniModel implements IHOMiniModel {
 		return ftm;
 	}
 
-	public List getFutureTrainingWeeks() {
+	public List<FutureTrainingWeek> getFutureTrainingWeeks() {
 		return de.hattrickorganizer.database.DBZugriff.instance().getFutureTrainingsVector();
 	}
 
@@ -481,7 +499,7 @@ public class HOMiniModel implements IHOMiniModel {
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
+	public List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
 		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies);
 	}
 

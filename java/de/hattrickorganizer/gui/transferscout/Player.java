@@ -216,13 +216,12 @@ public class Player {
 
         if (getLeadership() > 0) {
             info = info
-                   + de.hattrickorganizer.model.HOVerwaltung.instance().getResource().getProperty("Fuehrung")
+                   + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fuehrung")
                    + ": " + PlayerHelper.getNameForSkill(getLeadership()) + "\r\n";
         }
 
         if (getInjury() > 0) {
-            final String tmp = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                      .getProperty("scout_injury");
+            final String tmp = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_injury");
             info = info + tmp.replaceAll("%weeks%", String.valueOf(getInjury())) + "\r\n";
         }
 

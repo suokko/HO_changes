@@ -32,30 +32,25 @@ public class StatistikMainPanel extends ImagePanel implements javax.swing.event.
         m_clTabbedPane = new JTabbedPane();
 
         //Spielerstatistik
-        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Spieler"),
+        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieler"),
                               m_clSpielerStatistikPanel);
 
         //SpielerFinanzstatistik
-        //m_clTabbedPane.addTab ( model.HOVerwaltung.instance ().getResource ().getProperty( "Spieler" ) + model.HOVerwaltung.instance ().getResource ().getProperty( "Finanzen" ), new SpielerFinanzenStatistikPanel() );
+        //m_clTabbedPane.addTab ( model.HOVerwaltung.instance().getLanguageString( "Spieler" ) + model.HOVerwaltung.instance().getLanguageString( "Finanzen" ), new SpielerFinanzenStatistikPanel() );
         //SpieleStatistik
-        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Spiele"),
+        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele"),
                               m_clSpieleStatistikPanel);
 
         //DurchschnittlicheSpielerstatistik
-        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Verein"),
+        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verein"),
                               m_clAlleSpielerStatistikPanel);
 
         //Finanzstatistik
-        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Finanzen"),
+        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Finanzen"),
                               m_clFinanzStatistikPanel);
 
         //Arenastatistik
-        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                     .getProperty("Stadion"),
+        m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stadion"),
                               m_clArenaStatistikPanel);
 
         add(m_clTabbedPane, java.awt.BorderLayout.CENTER);

@@ -9,7 +9,6 @@ package de.hattrickorganizer.model;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.model.CBItem;
@@ -22,7 +21,10 @@ import de.hattrickorganizer.tools.HOLogger;
  * @author thomas.werth
  */
 public class SpielerPosition implements java.io.Serializable, Comparable, plugins.ISpielerPosition {
-    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = -4822360078242315135L;
+
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     /** Array mit den Konstanten (CBItems) für die Positionen, Ohne Ausgewechselt */
     public static final CBItem[] POSITIONEN = {
@@ -215,75 +217,73 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
      * @return TODO Missing Return Method Documentation
      */
     public static String getKurzNameForPosition(byte posId) {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource();
 
         switch (posId) {
             case TORWART:
-                return properties.getProperty("TORW");
+                return HOVerwaltung.instance().getLanguageString("TORW");
 
             case INNENVERTEIDIGER:
-                return properties.getProperty("IV");
+                return HOVerwaltung.instance().getLanguageString("IV");
 
             case INNENVERTEIDIGER_AUS:
-                return properties.getProperty("IVA");
+                return HOVerwaltung.instance().getLanguageString("IVA");
 
             case INNENVERTEIDIGER_OFF:
-                return properties.getProperty("IVO");
+                return HOVerwaltung.instance().getLanguageString("IVO");
 
             case AUSSENVERTEIDIGER:
-                return properties.getProperty("AV");
+                return HOVerwaltung.instance().getLanguageString("AV");
 
             case AUSSENVERTEIDIGER_IN:
-                return properties.getProperty("AVI");
+                return HOVerwaltung.instance().getLanguageString("AVI");
 
             case AUSSENVERTEIDIGER_OFF:
-                return properties.getProperty("AVO");
+                return HOVerwaltung.instance().getLanguageString("AVO");
 
             case AUSSENVERTEIDIGER_DEF:
-                return properties.getProperty("AVD");
+                return HOVerwaltung.instance().getLanguageString("AVD");
 
             case MITTELFELD:
-                return properties.getProperty("MIT");
+                return HOVerwaltung.instance().getLanguageString("MIT");
 
             case MITTELFELD_OFF:
-                return properties.getProperty("MITO");
+                return HOVerwaltung.instance().getLanguageString("MITO");
 
             case MITTELFELD_DEF:
-                return properties.getProperty("MITD");
+                return HOVerwaltung.instance().getLanguageString("MITD");
 
             case MITTELFELD_AUS:
-                return properties.getProperty("MITA");
+                return HOVerwaltung.instance().getLanguageString("MITA");
 
             case FLUEGELSPIEL:
-                return properties.getProperty("FLG");
+                return HOVerwaltung.instance().getLanguageString("FLG");
 
             case FLUEGELSPIEL_IN:
-                return properties.getProperty("FLGI");
+                return HOVerwaltung.instance().getLanguageString("FLGI");
 
             case FLUEGELSPIEL_OFF:
-                return properties.getProperty("FLGO");
+                return HOVerwaltung.instance().getLanguageString("FLGO");
 
             case FLUEGELSPIEL_DEF:
-                return properties.getProperty("FLGD");
+                return HOVerwaltung.instance().getLanguageString("FLGD");
 
             case STURM:
-                return properties.getProperty("STU");
+                return HOVerwaltung.instance().getLanguageString("STU");
 
             case STURM_AUS:
-                return properties.getProperty("STUA");
+                return HOVerwaltung.instance().getLanguageString("STUA");
                 
             case STURM_DEF:
-                return properties.getProperty("STUD");
+                return HOVerwaltung.instance().getLanguageString("STUD");
 
             case AUSGEWECHSELT1:
             case AUSGEWECHSELT2:
             case AUSGEWECHSELT3:
-                return properties.getProperty("Ausgewechselt");
+                return HOVerwaltung.instance().getLanguageString("Ausgewechselt");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
             default:
-                return properties.getProperty("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 
@@ -356,78 +356,76 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
      * @return TODO Missing Return Method Documentation
      */
     public static String getNameForPosition(byte posId) {
-        final Properties properties = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource();
 
         switch (posId) {
             case TORWART:
-                return properties.getProperty("Torwart");
+                return HOVerwaltung.instance().getLanguageString("Torwart");
 
             case INNENVERTEIDIGER:
-                return properties.getProperty("Innenverteidiger");
+                return HOVerwaltung.instance().getLanguageString("Innenverteidiger");
 
             case INNENVERTEIDIGER_AUS:
-                return properties.getProperty("Innenverteidiger_Aus");
+                return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus");
 
             case INNENVERTEIDIGER_OFF:
-                return properties.getProperty("Innenverteidiger_Off");
+                return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off");
 
             case AUSSENVERTEIDIGER:
-                return properties.getProperty("Aussenverteidiger");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger");
 
             case AUSSENVERTEIDIGER_IN:
-                return properties.getProperty("Aussenverteidiger_In");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In");
 
             case AUSSENVERTEIDIGER_OFF:
-                return properties.getProperty("Aussenverteidiger_Off");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off");
 
             case AUSSENVERTEIDIGER_DEF:
-                return properties.getProperty("Aussenverteidiger_Def");
+                return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def");
 
             case MITTELFELD:
-                return properties.getProperty("Mittelfeld");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld");
 
             case MITTELFELD_OFF:
-                return properties.getProperty("Mittelfeld_Off");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld_Off");
 
             case MITTELFELD_DEF:
-                return properties.getProperty("Mittelfeld_Def");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld_Def");
 
             case MITTELFELD_AUS:
-                return properties.getProperty("Mittelfeld_Aus");
+                return HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus");
 
             case FLUEGELSPIEL:
-                return properties.getProperty("Fluegel");
+                return HOVerwaltung.instance().getLanguageString("Fluegel");
 
             case FLUEGELSPIEL_IN:
-                return properties.getProperty("Fluegelspiel_In");
+                return HOVerwaltung.instance().getLanguageString("Fluegelspiel_In");
 
             case FLUEGELSPIEL_OFF:
-                return properties.getProperty("Fluegelspiel_Off");
+                return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off");
 
             case FLUEGELSPIEL_DEF:
-                return properties.getProperty("Fluegelspiel_Def");
+                return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def");
 
             case STURM:
-                return properties.getProperty("Sturm");
+                return HOVerwaltung.instance().getLanguageString("Sturm");
 
             case STURM_DEF:
-                return properties.getProperty("Sturm_Def");
+                return HOVerwaltung.instance().getLanguageString("Sturm_Def");
 
             case STURM_AUS:
-                return properties.getProperty("Sturm_Aus");
+                return HOVerwaltung.instance().getLanguageString("Sturm_Aus");
 
             case AUSGEWECHSELT1:
             case AUSGEWECHSELT2:
             case AUSGEWECHSELT3:
-                return properties.getProperty("Ausgewechselt");
+                return HOVerwaltung.instance().getLanguageString("Ausgewechselt");
 
             case TRAINER:
-                return properties.getProperty("Trainer");
+                return HOVerwaltung.instance().getLanguageString("Trainer");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
             default:
-                return properties.getProperty("Unbestimmt");
+                return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
     }
 

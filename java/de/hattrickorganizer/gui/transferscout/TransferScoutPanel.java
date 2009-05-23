@@ -12,19 +12,22 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.ScoutThread;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Das HauptPanel des TransferScouts
+ * The TransferScout main Panel
  */
 public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements MouseListener, KeyListener
 {
-    //~ Instance fields ----------------------------------------------------------------------------
 
+	private static final long serialVersionUID = 1L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
     private JSplitPane verticalSplitPane;
     private ScoutThread m_clScoutThread;
     private TransferEingabePanel m_jpTransferEingabePanel;
@@ -72,7 +75,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
 
             //neuer Thread
         } else {
-            m_clScoutThread.start(m_jtTransferTable.getTransferTableModel().getScoutListe());
+            ScoutThread.start(m_jtTransferTable.getTransferTableModel().getScoutListe());
         }
 
         m_jtTransferTable.refresh();
@@ -99,8 +102,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                        .getProperty("TransferScout")
+            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TransferScout")
                                  + " - "
                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()
@@ -202,9 +204,9 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Removes one entry from transfer table
      *
-     * @param scouteintrag TODO Missing Method Parameter Documentation
+     * @param scouteintrag the scout entry which should be removed
      */
     public final void removeScoutEintrag(ScoutEintrag scouteintrag) {
         m_jtTransferTable.getTransferTableModel().removeScoutEintrag(scouteintrag);
@@ -212,6 +214,18 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         //Thread aktualisieren
         //m_clScoutThread.removeEintrag ( scouteintrag );
         m_clScoutThread.setVector(m_jtTransferTable.getTransferTableModel().getScoutListe());
+        m_jtTransferTable.refresh();
+    }
+    
+    /**
+     * Removes all entries from transfer table and scout thread
+     */
+    public final void removeScoutEntries() {
+        m_jtTransferTable.getTransferTableModel().removeScoutEntries();
+
+        //Thread aktualisieren
+        //m_clScoutThread.removeEintrag ( scouteintrag );
+        m_clScoutThread.setVector(null);
         m_jtTransferTable.refresh();
     }
 
@@ -238,8 +252,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         verticalSplitPane.setDividerLocation(gui.UserParameter.instance().transferScoutPanel_horizontalSplitPane);
 
         //Thread mit Wecker starten
-        m_clScoutThread = ScoutThread.start(de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                   .getScoutList());
+        m_clScoutThread = ScoutThread.start(DBZugriff.instance().getScoutList());
     }
 
     /**

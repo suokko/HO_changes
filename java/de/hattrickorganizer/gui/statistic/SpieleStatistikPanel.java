@@ -54,113 +54,75 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                        .getResource()
-                                                                                                        .getProperty("Abwehrzentrum"),
+    private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"),
                                                                  de.hattrickorganizer.tools.Helper
                                                                  .getImageIcon4Color(ABWEHRZENTRUM),
                                                                  gui.UserParameter.instance().statistikSpieleAbwehrzentrum);
-    private ImageCheckbox m_jchAngriffszentrum = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                          .getResource()
-                                                                                                          .getProperty("Angriffszentrum"),
+    private ImageCheckbox m_jchAngriffszentrum = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"),
                                                                    de.hattrickorganizer.tools.Helper
                                                                    .getImageIcon4Color(ANGRIFFSZENTRUM),
                                                                    gui.UserParameter.instance().statistikSpieleAngriffszentrum);
-    private ImageCheckbox m_jchBewertung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                    .getResource()
-                                                                                                    .getProperty("Bewertung"),
+    private ImageCheckbox m_jchBewertung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(BEWERTUNG),
                                                              gui.UserParameter.instance().statistikSpieleBewertung);
-    private ImageCheckbox m_jchGesamt = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                 .getResource()
-                                                                                                 .getProperty("Gesamtstaerke"),
+    private ImageCheckbox m_jchGesamt = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"),
                                                           de.hattrickorganizer.tools.Helper
                                                           .getImageIcon4Color(GESAMT),
                                                           gui.UserParameter.instance().statistikSpieleGesamt);
-    private ImageCheckbox m_jchLinkeAbwehr = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                      .getResource()
-                                                                                                      .getProperty("linkeAbwehrseite"),
+    private ImageCheckbox m_jchLinkeAbwehr = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"),
                                                                de.hattrickorganizer.tools.Helper
                                                                .getImageIcon4Color(LINKEABWEHR),
                                                                gui.UserParameter.instance().statistikSpieleLinkeAbwehr);
-    private ImageCheckbox m_jchLinkerAngriff = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                        .getResource()
-                                                                                                        .getProperty("linkeAngriffsseite"),
+    private ImageCheckbox m_jchLinkerAngriff = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"),
                                                                  de.hattrickorganizer.tools.Helper
                                                                  .getImageIcon4Color(LINKERANGRIFF),
                                                                  gui.UserParameter.instance().statistikSpieleLinkerAngriff);
-    private ImageCheckbox m_jchMittelfeld = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                     .getResource()
-                                                                                                     .getProperty("Mittelfeld"),
+    private ImageCheckbox m_jchMittelfeld = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld"),
                                                               de.hattrickorganizer.tools.Helper
                                                               .getImageIcon4Color(MITTELFELD),
                                                               gui.UserParameter.instance().statistikSpieleMittelfeld);
-    private ImageCheckbox m_jchRechteAbwehr = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                       .getResource()
-                                                                                                       .getProperty("rechteAbwehrseite"),
+    private ImageCheckbox m_jchRechteAbwehr = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"),
                                                                 de.hattrickorganizer.tools.Helper
                                                                 .getImageIcon4Color(RECHTEABWEHR),
                                                                 gui.UserParameter.instance().statistikSpieleRechteAbwehr);
-    private ImageCheckbox m_jchRechterAngriff = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                         .getResource()
-                                                                                                         .getProperty("rechteAngriffsseite"),
+    private ImageCheckbox m_jchRechterAngriff = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"),
                                                                   de.hattrickorganizer.tools.Helper
                                                                   .getImageIcon4Color(RECHTERANGRIFF),
                                                                   gui.UserParameter.instance().statistikSpieleRechterAngriff);
-    private ImageCheckbox m_jchSelbstvertrauen = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                          .getResource()
-                                                                                                          .getProperty("Selbstvertrauen"),
+    private ImageCheckbox m_jchSelbstvertrauen = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Selbstvertrauen"),
                                                                    de.hattrickorganizer.tools.Helper
                                                                    .getImageIcon4Color(SELBSTVERTRAUEN),
                                                                    gui.UserParameter.instance().statistikSpieleSelbstvertrauen);
-    private ImageCheckbox m_jchStimmung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                   .getResource()
-                                                                                                   .getProperty("Stimmung"),
+    private ImageCheckbox m_jchStimmung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung"),
                                                             de.hattrickorganizer.tools.Helper
                                                             .getImageIcon4Color(STIMMUNG),
                                                             gui.UserParameter.instance().statistikSpieleStimmung);
     private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                             .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                        .getResource()
-                                                                                        .getProperty("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                               .getResource()
-                                                                                               .getProperty("Beschriftung"),
+    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikSpielerFinanzenBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                             .getResource()
-                                                                                             .getProperty("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien);
     private JComboBox m_jcbSpieleFilter;
     private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikSpielerFinanzenAnzahlHRF
                                                        + "", 5);
     private StatistikPanel m_clStatistikPanel;
     private de.hattrickorganizer.gui.model.CBItem[] SPIELEFILTER = {
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                        .getResource()
-                                                                                                                                                        .getProperty("NurEigeneSpiele"),
+                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
                                                                                                                  de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_SPIELE
                                                                                                                  + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                        .getResource()
-                                                                                                                                                        .getProperty("NurEigenePflichtspiele"),
+                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
                                                                                                                  de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_PFLICHTSPIELE
                                                                                                                  + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                        .getResource()
-                                                                                                                                                        .getProperty("NurEigenePokalspiele"),
+                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
                                                                                                                  de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_POKALSPIELE
                                                                                                                  + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                        .getResource()
-                                                                                                                                                        .getProperty("NurEigeneLigaspiele"),
+                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
                                                                                                                  de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_LIGASPIELE
                                                                                                                  + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                        .getResource()
-                                                                                                                                                        .getProperty("NurEigeneFreundschaftsspiele"),
+                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
                                                                                                                  de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
                                                                                                                  + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE)
                                                                    };
@@ -217,9 +179,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                              .getResource()
-                                                                              .getProperty("Spiele"));
+            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele"));
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
             gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien = m_jchHilflinien
@@ -349,15 +309,13 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                          .getProperty("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getResource()
-                                                                  .getProperty("Wochen"));
+        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -376,9 +334,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
         layout2.setConstraints(m_jbUbernehmen, constraints2);
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                             .getResource()
-                                                                             .getProperty("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
@@ -753,9 +709,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                                             .convertTimeMillisToFormatString(statistikWerte[11]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getResource()
-                                                                                   .getProperty("Spiele"),
+                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele"),
                                             "", m_jchBeschriftung.isSelected(),
                                             m_jchHilflinien.isSelected());
         } catch (Exception e) {

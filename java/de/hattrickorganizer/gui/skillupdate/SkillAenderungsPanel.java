@@ -19,9 +19,7 @@ public class SkillAenderungsPanel extends de.hattrickorganizer.gui.templates.Ima
 {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_bBerechnen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                      .getResource()
-                                                                                      .getProperty("Tabelle_berechnen"));
+    private JButton m_bBerechnen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tabelle_berechnen"));
     private SkillAenderungsTable m_jtTable;
 
     //~ Constructors -------------------------------------------------------------------------------

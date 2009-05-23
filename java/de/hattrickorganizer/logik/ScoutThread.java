@@ -8,6 +8,8 @@ package de.hattrickorganizer.logik;
 
 import java.util.Vector;
 
+import de.hattrickorganizer.model.ScoutEintrag;
+
 
 /**
  * DOCUMENT ME!
@@ -17,7 +19,7 @@ import java.util.Vector;
 public class ScoutThread implements Runnable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector m_vScoutEintraege = new Vector();
+    private Vector<ScoutEintrag> m_vScoutEintraege = new Vector<ScoutEintrag>();
     private int difference = gui.UserParameter.instance().TimeZoneDifference * 3600000;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -27,8 +29,8 @@ public class ScoutThread implements Runnable {
      *
      * @param scouts TODO Missing Constructuor Parameter Documentation
      */
-    public ScoutThread(Vector scouts) {
-        m_vScoutEintraege = new Vector(scouts);
+    public ScoutThread(Vector<ScoutEintrag> scouts) {
+        m_vScoutEintraege = new Vector<ScoutEintrag>(scouts);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -93,7 +95,7 @@ public class ScoutThread implements Runnable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static ScoutThread start(Vector scouts) {
+    public static ScoutThread start(Vector<ScoutEintrag> scouts) {
         final ScoutThread temp = new ScoutThread(scouts);
 
         new Thread(temp).start();
@@ -115,7 +117,7 @@ public class ScoutThread implements Runnable {
            m_vScoutEintraege.removeElement ( se );
        }
      */
-    public final void setVector(Vector vec) {
+    public final void setVector(Vector<ScoutEintrag> vec) {
         m_vScoutEintraege = vec;
     }
 }

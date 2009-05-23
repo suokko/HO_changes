@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Properties;
+import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
@@ -267,12 +267,12 @@ public class Helper extends LanguageFiles {
     /** Speciality */
     public static final CBItem[] EINSTUFUNG_SPECIALITY = {
     	new CBItem("", 0),
-    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Technical"), 1),
-    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Quick"),2),
-    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Powerful"), 3),
-    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Unpredictable"), 4),
-    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Head"), 5),
-    	new CBItem(HOVerwaltung.instance().getResource().getProperty("sp_Regainer"), 6)
+    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Technical"), 1),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Quick"),2),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Powerful"), 3),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Unpredictable"), 4),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Head"), 5),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Regainer"), 6)
     };
 
     /** Spielerpositionen */
@@ -439,32 +439,32 @@ public class Helper extends LanguageFiles {
     public static boolean paneShown;
 
     /** Hashtable mit Veränderungspfeilgrafiken nach Integer als Key */
-    private static Hashtable m_clPfeilCache = new Hashtable();
-    private static Hashtable m_clPfeilLightCache = new Hashtable();
+    private static Hashtable<Integer,ExtendedImageIcon> m_clPfeilCache = new Hashtable<Integer,ExtendedImageIcon>();
+    private static Hashtable<Integer,ExtendedImageIcon> m_clPfeilLightCache = new Hashtable<Integer,ExtendedImageIcon>();
 
     /** Hashtable mit Trikotnummern nach Integer als Key */
-    private static Hashtable m_clTrickotnummerCache = new Hashtable();
+    private static Hashtable<Integer,ImageIcon> m_clTrickotnummerCache = new Hashtable<Integer,ImageIcon>();
 
     /** Cache für Bilder */
-    private static HashMap m_clBilderCache = new HashMap();
+    private static HashMap<String,BufferedImage> m_clBilderCache = new HashMap<String,BufferedImage>();
 
     /** Cache für Transparent gemachte Bilder */
-    private static HashMap m_clTransparentsCache = new HashMap();
+    private static HashMap<Image,Image> m_clTransparentsCache = new HashMap<Image,Image>();
 
     /** Cache für Trickots */
-    private static HashMap m_clTrickotCache = new HashMap();
+    private static HashMap<TrickotCacheKey,ImageIcon> m_clTrickotCache = new HashMap<TrickotCacheKey,ImageIcon>();
 
     /** Cache für Spezialitäten */
-    private static HashMap m_clSpezialitaetCache = new HashMap();
+    private static HashMap<Integer,ExtendedImageIcon> m_clSpezialitaetCache = new HashMap<Integer,ExtendedImageIcon>();
 
     /** Cache für Gruppen */
-    private static HashMap m_clGruppenCache = new HashMap();
+    private static HashMap<String,ImageIcon> m_clGruppenCache = new HashMap<String,ImageIcon>();
 
     /** Cache für MiniGruppen */
-    private static HashMap m_clMiniGruppenCache = new HashMap();
+    private static HashMap<String,ImageIcon> m_clMiniGruppenCache = new HashMap<String,ImageIcon>();
 
     /** Cache für Spieltypen */
-    private static HashMap m_clSpieltypCache = new HashMap();
+    private static HashMap<Integer,ImageIcon> m_clSpieltypCache = new HashMap<Integer,ImageIcon>();
 
     //Initialisierung
     static {
@@ -1672,14 +1672,14 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static int getMaxBewertungWidth(java.util.Vector spieler) {
+    public static int getMaxBewertungWidth(Vector<Spieler> spieler) {
         int bewertung = 0;
 
         for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-            int aktuellebewertung = ((Spieler) spieler.get(i)).getBewertung();
+            int aktuellebewertung = spieler.get(i).getBewertung();
 
             if (aktuellebewertung == 0) {
-                aktuellebewertung = ((Spieler) spieler.get(i)).getLetzteBewertung();
+                aktuellebewertung = spieler.get(i).getLetzteBewertung();
             }
 
             bewertung = Math.max(bewertung, aktuellebewertung);
@@ -1709,15 +1709,14 @@ public class Helper extends LanguageFiles {
      * @return TODO Missing Return Method Documentation
      */
     public static String getTooltiptext4SpielHighlight(int typ, int subtyp) {
-    	final Properties properties = HOVerwaltung.instance().getResource();
         if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
             if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
                 || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
-                return properties.getProperty("highlight_yellowcard");
+                return HOVerwaltung.instance().getLanguageString("highlight_yellowcard");
             } else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_ROT)
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
-                return properties.getProperty("highlight_redcard");
+                return HOVerwaltung.instance().getLanguageString("highlight_redcard");
             }
         } else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
             switch (subtyp) {
@@ -1729,7 +1728,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-                    return properties.getProperty("highlight_freekick");
+                    return HOVerwaltung.instance().getLanguageString("highlight_freekick");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE:
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_2:
@@ -1739,7 +1738,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_8:
-                    return properties.getProperty("highlight_middle");
+                    return HOVerwaltung.instance().getLanguageString("highlight_middle");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_2:
@@ -1749,7 +1748,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_8:
-                    return properties.getProperty("highlight_links");
+                    return HOVerwaltung.instance().getLanguageString("highlight_links");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_2:
@@ -1759,7 +1758,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_8:
-                    return properties.getProperty("highlight_rechts");
+                    return HOVerwaltung.instance().getLanguageString("highlight_rechts");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
@@ -1769,14 +1768,14 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-                    return properties.getProperty("highlight_penalty");
+                    return HOVerwaltung.instance().getLanguageString("highlight_penalty");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
                 case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-                	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
+                	return HOVerwaltung.instance().getLanguageString("highlight_freekick") + " " + HOVerwaltung.instance().getLanguageString("indirect");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-                	return properties.getProperty("Tactic.LongShots");
+                	return HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
@@ -1793,14 +1792,14 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-                    return properties.getProperty("highlight_special");
+                    return HOVerwaltung.instance().getLanguageString("highlight_special");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-                    return properties.getProperty("highlight_counter");
+                    return HOVerwaltung.instance().getLanguageString("highlight_counter");
 
                 default:
                     return "";
@@ -1815,7 +1814,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-                    return properties.getProperty("highlight_freekick");
+                    return HOVerwaltung.instance().getLanguageString("highlight_freekick");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE:
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_2:
@@ -1825,7 +1824,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_8:
-                    return properties.getProperty("highlight_middle");
+                    return HOVerwaltung.instance().getLanguageString("highlight_middle");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_2:
@@ -1835,7 +1834,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_8:
-                    return properties.getProperty("highlight_links");
+                    return HOVerwaltung.instance().getLanguageString("highlight_links");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_2:
@@ -1845,7 +1844,7 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_8:
-                    return properties.getProperty("highlight_rechts");
+                    return HOVerwaltung.instance().getLanguageString("highlight_rechts");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
@@ -1855,14 +1854,14 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
                 case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-                    return properties.getProperty("highlight_penalty");
+                    return HOVerwaltung.instance().getLanguageString("highlight_penalty");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
                 case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-                	return properties.getProperty("highlight_freekick") + " " + properties.getProperty("indirect");
+                	return HOVerwaltung.instance().getLanguageString("highlight_freekick") + " " + HOVerwaltung.instance().getLanguageString("indirect");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-                	return properties.getProperty("Tactic.LongShots");
+                	return HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
@@ -1879,14 +1878,14 @@ public class Helper extends LanguageFiles {
                 case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
                 case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-                    return properties.getProperty("highlight_special");
+                    return HOVerwaltung.instance().getLanguageString("highlight_special");
 
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
                 case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-                    return properties.getProperty("highlight_counter");
+                    return HOVerwaltung.instance().getLanguageString("highlight_counter");
 
                 default:
                     return "";
@@ -1894,13 +1893,13 @@ public class Helper extends LanguageFiles {
         } else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
             if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER)
                 || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
-                return properties.getProperty("Angeschlagen");
+                return HOVerwaltung.instance().getLanguageString("Angeschlagen");
             } else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
                        || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
-                return properties.getProperty("Verletzt");
+                return HOVerwaltung.instance().getLanguageString("Verletzt");
             }
         }
 
@@ -1983,7 +1982,7 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.DefaultComboBoxModel createListModel(java.util.Vector vector) {
+    public static javax.swing.DefaultComboBoxModel createListModel(Vector<Object> vector) {
         final javax.swing.DefaultComboBoxModel model = new javax.swing.DefaultComboBoxModel();
 
         for (int i = 0; i < vector.size(); i++) {
@@ -2313,7 +2312,7 @@ public class Helper extends LanguageFiles {
             final int temp = Integer.parseInt(field.getText());
 
             if (!negativErlaubt && (temp < 0)) {
-                message = HOVerwaltung.instance().getResource().getProperty("negativVerboten");
+                message = HOVerwaltung.instance().getLanguageString("negativVerboten");
                 throw new NumberFormatException();
             }
 
@@ -2321,11 +2320,11 @@ public class Helper extends LanguageFiles {
             return true;
         } catch (NumberFormatException nfe) {
             if (message.equals("")) {
-                message = HOVerwaltung.instance().getResource().getProperty("keineZahl");
+                message = HOVerwaltung.instance().getLanguageString("keineZahl");
             }
 
             showMessage(parent, message,
-                        HOVerwaltung.instance().getResource().getProperty("Fehler"), JOptionPane.ERROR_MESSAGE);
+                        HOVerwaltung.instance().getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
 
             field.setText(String.valueOf(0));
             return false;
