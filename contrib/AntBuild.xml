@@ -64,6 +64,7 @@
 	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1" />
 	<property name="tmp-target" value="${tmp}/target" />
 
+	<property name="bin-dir" value="bin" />
 	<property name="build-dir" value="build" />
 	<property name="debug-dir" value="debug" />
 
@@ -115,10 +116,9 @@
          ================================= -->
 	<target name="ant-compile" description="Compile source via Ant (not necessary when building in Eclipse)">
 		<echo>src-dir is ${src-dir}</echo>
+		<echo>bin-dir is ${bin-dir}</echo>
 		<property name="javaSourcePath" value="${src-dir}/java" />
 		<echo>javaSourcePath is ${javaSourcePath}</echo>
-		<property name="antCompilePath" value="${src-dir}/antCompile" />
-		<echo>antCompilePath is ${antCompilePath}</echo>
 		<!-- Read classpath from MANIFEST.MF -->
 		<loadfile property="compileClasspath" srcfile="${manifestFile}">
 			<filterchain>
@@ -141,10 +141,10 @@
 			<fileset dir="antbuild"/>
 		</delete>
 		-->
-		<mkdir dir="${antCompilePath}" />
+		<mkdir dir="${bin-dir}" />
 		<echo>compileClasspath (from ${manifestFile}) is ${compileClasspath}</echo>
 		<echo>Building now</echo>
-		<javac srcdir="${javaSourcePath}" destdir="${antCompilePath}" debug="on" verbose="off">
+		<javac srcdir="${javaSourcePath}" destdir="${bin-dir}" debug="on" verbose="off">
 			<compilerarg value="-Xlint" />
 			<classpath path="${compileClasspath}" />
 		</javac>
@@ -263,7 +263,7 @@
 	<target name="makeJar" depends="init" description="Create JAR File">
 		<mkdir dir="${tmp-target}" />
 		<copy todir="${tmp-target}" preservelastmodified="yes">
-			<fileset dir="bin" />
+			<fileset dir="${bin-dir}" />
 		</copy>
 		<copy todir="${tmp-target}" preservelastmodified="yes">
 			<fileset dir="${src-dir}/conf/addToJar" />
