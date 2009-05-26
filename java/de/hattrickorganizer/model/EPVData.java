@@ -74,9 +74,10 @@ public class EPVData implements Cloneable, IEPVData {
         setAggressivity(s.getAgressivitaet());
         setHonesty(s.getCharakter());
         setPopularity(s.getAnsehen());
+        setSpeciality(s.getSpezialitaet());
         
         setPlayerId(s.getSpielerID());
-
+        
         normalizeSkill();
     }
     
@@ -100,6 +101,7 @@ public class EPVData implements Cloneable, IEPVData {
         setAggressivity(s.getAggressivity());
         setHonesty(s.getHonesty());
         setPopularity(s.getPopularity());
+        setSpeciality(s.getSpeciality());
 
 		setPlayerId(s.getPlayerId());
 
