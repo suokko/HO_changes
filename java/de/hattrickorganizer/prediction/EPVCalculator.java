@@ -13,10 +13,10 @@ public class EPVCalculator
     private static EPVCalculator epvCalculator = null;
     private static String networkStructure = "@age,@fo,@xp,@lead,@st,@gk,@pm,@ps,@wi,@de,@sc,@sp,@spec,@agg,@pop,@hon,@week:50:50:price";
     private static String weightsFilename = "prediction/epvWeights.mlp";
-    private Net neuronalNetwork;
+    private static Net neuronalNetwork = new Net(networkStructure, weightsFilename);
 
     private EPVCalculator () {
-    	neuronalNetwork = new Net(networkStructure, weightsFilename);
+//    	neuronalNetwork = new Net(networkStructure, weightsFilename);
 //    	System.out.println(neuronalNetwork.toString());
     }
 
