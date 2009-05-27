@@ -4,7 +4,7 @@ package de.hattrickorganizer.model;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
- * Enth‰lt alle Ligadaten
+ * Enth√§lt alle Ligadaten
  */
 public final class Liga implements plugins.ILiga {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ public final class Liga implements plugins.ILiga {
             m_iSpieltag = 0;
         }
 
-        //.. fehlen noch Eintr‰ge, Bedeutung unklar
+        //.. fehlen noch Eintr√§ge, Bedeutung unklar
         try {
             m_iPlatzierung = Integer.parseInt(properties.getProperty("placering", "0"));
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public final class Liga implements plugins.ILiga {
             m_iToreFuer = rs.getInt("ToreFuer");
             m_iSpieltag = rs.getInt("Spieltag");
 
-            //.. fehlen noch Eintr‰ge, Bedeutung unklar
+            //.. fehlen noch Eintr√§ge, Bedeutung unklar
             m_iPlatzierung = rs.getInt("Platz");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor Liga : " + e.toString());

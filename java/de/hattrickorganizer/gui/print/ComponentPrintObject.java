@@ -11,7 +11,7 @@ import javax.swing.JDialog;
 
 
 /**
- * Druckt eine Componente und sorgt dafür, dass sie komplett auf die Seite passt
+ * Druckt eine Componente und sorgt dafÃ¼r, dass sie komplett auf die Seite passt
  */
 public class ComponentPrintObject extends PrintObject {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -71,7 +71,7 @@ public class ComponentPrintObject extends PrintObject {
             dialog.getContentPane().setLayout(new BorderLayout());
             dialog.getContentPane().add(m_clComponent, BorderLayout.CENTER);
 
-            //Grösse - Nach Componente oder Maximieren?
+            //GrÃ¶sse - Nach Componente oder Maximieren?
             if (m_iSichtbar == NICHTSICHTBAR) {
                 dialog.setSize(m_clComponent.getPreferredSize());
 
@@ -91,7 +91,7 @@ public class ComponentPrintObject extends PrintObject {
             dialog.setVisible(true);
         }
 
-        //Grösse der Componente holen
+        //GrÃ¶sse der Componente holen
         Dimension dimension = m_clComponent.getSize();
 
         if (m_iSichtbar == SICHTBARMAXIMIEREN) {
@@ -104,7 +104,7 @@ public class ComponentPrintObject extends PrintObject {
         //Druckbereich nach unten verschieben
         g2.translate(0, 15);
 
-        //Skalierung setzten, damit die Componente das Blatt ausfüllt
+        //Skalierung setzten, damit die Componente das Blatt ausfÃ¼llt
         final double faktorX = dw / dimension.width;
         final double faktorY = (dh - 15) / dimension.height;
         final double faktor = Math.min(faktorX, faktorY);

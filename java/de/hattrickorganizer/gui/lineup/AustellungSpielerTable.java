@@ -148,7 +148,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
     }
 
     /**
-     * Breite der BestPosSpalte zurückgeben
+     * Breite der BestPosSpalte zurÃ¼ckgeben
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -157,7 +157,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
     }
 
     /**
-     * Gibt die Spalte für die Sortierung zurück
+     * Gibt die Spalte fÃ¼r die Sortierung zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */

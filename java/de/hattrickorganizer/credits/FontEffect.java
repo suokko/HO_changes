@@ -32,13 +32,13 @@ public class FontEffect implements DynamischesObjekt {
      * DOCUMENT ME!
      *
      * @param text Der Text
-     * @param font Font für den Text
-     * @param color Farbe für den Text
+     * @param font Font fÃ¼r den Text
+     * @param color Farbe fÃ¼r den Text
      * @param x X-Position
      * @param y Y-Position
      * @param starttime Offsetzeit, wenn der Effekt gezeigt werden soll.
      * @param endtime Zeit, wenn der Effekt zu ende ist
-     * @param fadetime Aus und Einfaden des Textes, &lt;0 = auto 10% der Anzeigelänge,  0 = aus ,
+     * @param fadetime Aus und Einfaden des Textes, &lt;0 = auto 10% der AnzeigelÃ¤nge,  0 = aus ,
      *        &gt;0 = die Zeit in ms
      */
     public FontEffect(String text, Font font, Color color, int x, int y, long starttime,

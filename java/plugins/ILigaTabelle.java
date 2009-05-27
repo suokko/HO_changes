@@ -91,7 +91,7 @@ public interface ILigaTabelle {
     public byte getTeamPlatzTendenz(int teamId, ILigaTabelle compare);
 
     /*
-     *Sortiert die Eintr‰ge
+     *Sortiert die Eintr√§ge
      */
     public void sort();
 }

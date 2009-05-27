@@ -2,7 +2,7 @@
 /*
  * IDownloadHelper.java
  *
- * Created on 29. März 2004, 07:41
+ * Created on 29. MÃ¤rz 2004, 07:41
  */
 package plugins;
 

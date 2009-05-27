@@ -2,7 +2,7 @@
 package de.hattrickorganizer.gui;
 
 /**
- * Die Implementation kann sich beim MainFrame anmelden und wird dann bei Daten‰nderungen
+ * Die Implementation kann sich beim MainFrame anmelden und wird dann bei Daten√§nderungen
  * aufgefordert sich neu zu zeichnen
  */
 public interface Refreshable extends plugins.IRefreshable {

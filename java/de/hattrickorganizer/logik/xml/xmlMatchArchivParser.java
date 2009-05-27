@@ -120,7 +120,7 @@ public class xmlMatchArchivParser {
                 spiel = new MatchKurzInfo();
                 ele = (Element) list.item(i);
 
-                //Daten füllen
+                //Daten fÃ¼llen
                 tmp = (Element) ele.getElementsByTagName("MatchDate").item(0);
                 spiel.setMatchDate(tmp.getFirstChild().getNodeValue());
                 tmp = (Element) ele.getElementsByTagName("MatchID").item(0);

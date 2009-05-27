@@ -44,7 +44,7 @@ public class ServerVerweis {
     }
 
     /**
-     * enthält einen zu parsenden String Format : id,ip,port,info,Timestamp
+     * enthÃ¤lt einen zu parsenden String Format : id,ip,port,info,Timestamp
      *
      * @param parse TODO Missing Constructuor Parameter Documentation
      */
@@ -69,7 +69,7 @@ public class ServerVerweis {
                 m_iPort = 1099;
             }
 
-            m_sInfo = MyHelper.replaceChar(inhalt[3], '§', ' ');
+            m_sInfo = MyHelper.replaceChar(inhalt[3], 'Â§', ' ');
 
             m_clDate = MyHelper.parseDate(inhalt[4]);
         } catch (Exception e) {

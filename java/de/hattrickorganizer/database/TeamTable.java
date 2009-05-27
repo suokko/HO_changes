@@ -55,7 +55,7 @@ public final class TeamTable extends AbstractTable {
 		final String[] awhereV = { "" + hrfId };
 
 		if (team != null) {
-			//erst Vorhandene Aufstellung löschen
+			//erst Vorhandene Aufstellung lÃ¶schen
 			delete( awhereS, awhereV );
 			//insert vorbereiten
 			statement =
@@ -97,7 +97,7 @@ public final class TeamTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
+	 * Gibt die Teamstimmung und das Selbstvertrauen fÃ¼r ein HRFID zurÃ¼ck [0] = Stimmung [1] =
 	 * Selbstvertrauen
 	 *
 	 * @param hrfid TODO Missing Constructuor Parameter Documentation
@@ -133,7 +133,7 @@ public final class TeamTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
+	 * Gibt die Teamstimmung und das Selbstvertrauen fÃ¼r ein HRFID zurÃ¼ck [0] = Stimmung [1] =
 	 * Selbstvertrauen
 	 *
 	 * @param hrfid TODO Missing Constructuor Parameter Documentation
@@ -159,7 +159,7 @@ public final class TeamTable extends AbstractTable {
 	}
 	
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -185,7 +185,7 @@ public final class TeamTable extends AbstractTable {
 	}
 
 //	/**
-//	 * liefert die Trainingsart für das angeforderte HRF
+//	 * liefert die Trainingsart fÃ¼r das angeforderte HRF
 //	 *
 //	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 //	 *

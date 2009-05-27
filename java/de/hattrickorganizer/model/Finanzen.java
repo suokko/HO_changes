@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
- * Enth‰lt alle Informationen zu den Finanzen
+ * Enth√§lt alle Informationen zu den Finanzen
  */
 public class Finanzen implements plugins.IFinanzen {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -64,7 +64,7 @@ public class Finanzen implements plugins.IFinanzen {
     /** Einnahmen Sponsoren */
     protected int m_iEinnahmenSponsoren;
 
-    /** Einnahmen Zinsertr‰ge */
+    /** Einnahmen Zinsertr√§ge */
     protected int m_iEinnahmenZinsen;
 
     /** Einnahmen Zuschauer */
@@ -106,7 +106,7 @@ public class Finanzen implements plugins.IFinanzen {
     /** Einnahmen Sponsoren */
     protected int m_iLetzteEinnahmenSponsoren;
 
-    /** Einnahmen Zinsertr‰ge */
+    /** Einnahmen Zinsertr√§ge */
     protected int m_iLetzteEinnahmenZinsen;
 
     /** Einnahmen Zuschauer */

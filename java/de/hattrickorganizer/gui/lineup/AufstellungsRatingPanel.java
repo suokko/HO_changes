@@ -26,7 +26,7 @@ import de.hattrickorganizer.gui.templates.RasenPanel;
 
 
 /**
- * Zeigt das Rating für eine Aufstellung an
+ * Zeigt das Rating fÃ¼r eine Aufstellung an
  *
  * @author Pirania
  */

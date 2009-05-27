@@ -35,8 +35,8 @@ import de.hattrickorganizer.logik.exporter.MatchExporter;
 
 
 /**
- * Die Klasse bündelt alle anderen Model, die zu einer HRF Datei gehören. Die Daten können
- * natürlich auch aus der Datenbank kommen
+ * Die Klasse bÃ¼ndelt alle anderen Model, die zu einer HRF Datei gehÃ¶ren. Die Daten kÃ¶nnen
+ * natÃ¼rlich auch aus der Datenbank kommen
  */
 public class HOMiniModel implements IHOMiniModel {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -85,7 +85,7 @@ public class HOMiniModel implements IHOMiniModel {
     }
 
     /**
-     * Gibt alle alte Spieler zurück
+     * Gibt alle alte Spieler zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -96,7 +96,7 @@ public class HOMiniModel implements IHOMiniModel {
     //---------Spieler--------------------------------------
 
     /**
-     * Gibt alle Spieler zurück
+     * Gibt alle Spieler zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -107,7 +107,7 @@ public class HOMiniModel implements IHOMiniModel {
     //----------Basics----------------------------------------
 
     /**
-     * Gibt die Basics zurück
+     * Gibt die Basics zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -145,7 +145,7 @@ public class HOMiniModel implements IHOMiniModel {
     //-------Finanzen---------------------------------------
 
     /**
-     * Gibt die Finanzen zurück
+     * Gibt die Finanzen zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -192,7 +192,7 @@ public class HOMiniModel implements IHOMiniModel {
     //----------Liga----------------------------------------
 
     /**
-     * Gibt die Basics zurück
+     * Gibt die Basics zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -210,7 +210,7 @@ public class HOMiniModel implements IHOMiniModel {
     }
 
     /**
-     * Gibt die MatchDetails zu einem Match zurück
+     * Gibt die MatchDetails zu einem Match zurÃ¼ck
      *
      * @param matchId TODO Missing Constructuor Parameter Documentation
      *
@@ -243,7 +243,7 @@ public class HOMiniModel implements IHOMiniModel {
     /**
      * holt die MAtches zu einem Team aus der DB
      *
-     * @param teamId Die Teamid oder -1 für alle
+     * @param teamId Die Teamid oder -1 fÃ¼r alle
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -254,7 +254,7 @@ public class HOMiniModel implements IHOMiniModel {
     /**
      * Wichtig: Wenn die Teamid = -1 ist muss der Matchtyp ALLE_SPIELE sein!
      *
-     * @param teamId Die Teamid oder -1 für alle
+     * @param teamId Die Teamid oder -1 fÃ¼r alle
      * @param matchtyp Const in ISpielePanel!
      * @param asc TODO Missing Constructuor Parameter Documentation
      *
@@ -292,7 +292,7 @@ public class HOMiniModel implements IHOMiniModel {
     }
 
     /**
-     * Gibt den Spieler mit der ID zurück
+     * Gibt den Spieler mit der ID zurÃ¼ck
      *
      * @param id TODO Missing Constructuor Parameter Documentation
      *
@@ -340,7 +340,7 @@ public class HOMiniModel implements IHOMiniModel {
     //--------Stadium----------------------------------------
 
     /**
-     * Gibt das Stadium zurück
+     * Gibt das Stadium zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -351,7 +351,7 @@ public class HOMiniModel implements IHOMiniModel {
     //----------Team----------------------------------------
 
     /**
-     * Gibt das Team zurück
+     * Gibt das Team zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -360,7 +360,7 @@ public class HOMiniModel implements IHOMiniModel {
     }
 
     /**
-     * Gibt den Trainer zurück
+     * Gibt den Trainer zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -389,7 +389,7 @@ public class HOMiniModel implements IHOMiniModel {
     //----------Verein----------------------------------------
 
     /**
-     * Gibt den Verein zurück
+     * Gibt den Verein zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */

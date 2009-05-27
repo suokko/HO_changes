@@ -2,7 +2,7 @@
 /*
  * Spieler.java
  *
- * Created on 17. M�rz 2003, 15:41
+ * Created on 17. März 2003, 15:41
  */
 package de.hattrickorganizer.model;
 
@@ -40,7 +40,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Spielberechtigt */
     private Boolean m_bSpielberechtigt;
 
-    /** Agressivit�tName */
+    /** AgressivitätName */
     private String m_sAgressivitaet = "";
 
     /** Ansehen Name */
@@ -58,7 +58,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Spielernotizen */
     private String m_sNotiz;
 
-    /** Spezialit�tName */
+    /** SpezialitätName */
     private String m_sSpezialitaet = "";
 
     /** TeamInfoSmilie Dateiname */
@@ -102,7 +102,7 @@ public final class Spieler implements plugins.ISpieler {
     private double m_dTrainingsOffsetTorwart;
     private double m_dTrainingsOffsetVerteidigung;
 
-    /** Agressivit�t */
+    /** Agressivität */
     private int m_iAgressivitaet;
 
     /** Alter */
@@ -129,7 +129,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Form */
     private int m_iForm = 1;
 
-    /** F�hrungsqualit�t */
+    /** Führungsqualität */
     private int m_iFuehrung = 1;
 
     /** Gehalt */
@@ -144,7 +144,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Kondition */
     private int m_iKondition = 1;
 
-    /** L�nderspiele */
+    /** Länderspiele */
     private int m_iLaenderspiele;
 
     //Cache
@@ -165,7 +165,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Passpiel */
     private int m_iPasspiel = 1;
 
-    /** Spezialit�tID */
+    /** SpezialitätID */
     private int m_iSpezialitaet;
 
     /** Spielaufbau */
@@ -199,7 +199,7 @@ public final class Spieler implements plugins.ISpieler {
     /** Torwart */
     private int m_iTorwart = 1;
 
-    /** Trainerf�higkeit */
+    /** Trainerfähigkeit */
     private int m_iTrainer;
 
     /** Trainertyp */
@@ -217,7 +217,7 @@ public final class Spieler implements plugins.ISpieler {
     /*TrikotNummer*/
     private int m_iTrikotnummer = -1;
 
-    /** L�nderspiele */
+    /** Länderspiele */
     private int m_iU20Laenderspiele;
 
     /** Verletzt Wochen */
@@ -464,8 +464,8 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * liefert das Datum des letzen LevelAufstiegs f�r den angeforderten Skill Vector filled with
-     * object[] [0] = Time der �nderung [1] = Boolean: false=Keine �nderung gefunden
+     * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill Vector filled with
+     * object[] [0] = Time der Änderung [1] = Boolean: false=Keine Änderung gefunden
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      *
@@ -929,7 +929,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * liefert die St�rke f�r die IdealPosition
+     * liefert die Stärke für die IdealPosition
      *
      * @param mitForm TODO Missing Constructuor Parameter Documentation
      *
@@ -1011,8 +1011,8 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * liefert das Datum des letzen LevelAufstiegs f�r den angeforderten Skill [0] = Time der
-     * �nderung [1] = Boolean: false=Keine �nderung gefunden
+     * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill [0] = Time der
+     * Änderung [1] = Boolean: false=Keine Änderung gefunden
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      *
@@ -1023,7 +1023,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * liefert die vergangenen Tage seit dem letzem LevelAufstieg f�r den angeforderten Skill
+     * liefert die vergangenen Tage seit dem letzem LevelAufstieg für den angeforderten Skill
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      *
@@ -1046,7 +1046,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Gibt die Letzte Bewertung zur�ck, die der Spieler bekommen hat
+     * Gibt die Letzte Bewertung zurück, die der Spieler bekommen hat
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -1252,7 +1252,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Zum speichern! Die Reduzierung des Marktwerts auf TSI wird r�ckg�ngig gemacht
+     * Zum speichern! Die Reduzierung des Marktwerts auf TSI wird rückgängig gemacht
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -1386,7 +1386,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * setzt ob der User den Spieler zum Spiel zul�sst
+     * setzt ob der User den Spieler zum Spiel zulässt
      *
      * @param flag TODO Missing Constructuor Parameter Documentation
      */
@@ -1397,7 +1397,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * gibt an ob der User den Spieler zum Spiel zul�sst
+     * gibt an ob der User den Spieler zum Spiel zulässt
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -1579,7 +1579,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Gibt das Datum des ersten HRFs mit dem Spieler zur�ck
+     * Gibt das Datum des ersten HRFs mit dem Spieler zurück
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -2121,23 +2121,23 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /*
-       Wetterabh�ngige Sonderereignisse
-       Bestimmte Spezialf�higkeiten k�nnen in Zusammenhang mit einem bestimmten Wetter
-        zu Sonderereignissen f�hren. Die Auswirkung dieses Sonderereignisses tritt
-        von dem Zeitpunkt in Kraft, an dem es im Spielbericht erw�hnt wird,
-        und hat bis zum Spielende Einflu� auf die Leistung des Spielers.
+       Wetterabhängige Sonderereignisse
+       Bestimmte Spezialfähigkeiten können in Zusammenhang mit einem bestimmten Wetter
+        zu Sonderereignissen führen. Die Auswirkung dieses Sonderereignisses tritt
+        von dem Zeitpunkt in Kraft, an dem es im Spielbericht erwähnt wird,
+        und hat bis zum Spielende Einfluß auf die Leistung des Spielers.
         Diese Auswirkung wird nach dem Spiel an der Spielerbewertung (Anzahl Sterne) sichtbar.
-       Die Torschu�- und die Spielaufbau-F�higkeit von Ballzauberern kann sich bei Regen verschlechtern,
-        w�hrend sich die gleichen F�higkeiten bei Sonnenschein verbessern k�nnen.
-       Bei Regen gibt es die M�glichkeit, da� sich die Torschu�-, Verteidigungs- und Spielaufbau-F�higkeit
+       Die Torschuß- und die Spielaufbau-Fähigkeit von Ballzauberern kann sich bei Regen verschlechtern,
+        während sich die gleichen Fähigkeiten bei Sonnenschein verbessern können.
+       Bei Regen gibt es die Möglichkeit, daß sich die Torschuß-, Verteidigungs- und Spielaufbau-Fähigkeit
         von durchsetzungsstarken Spielern verbessert.
-        Auf der anderen Seite kann sich die Torschu�f�higkeit bei Sonnenschein verschlechtern.
-       Schnelle Spieler laufen bei Regen Gefahr, da� sich ihre Torschu�- und
-        Verteidigungsf�higkeiten verschlechtern. Bei Sonnenschein besteht das Risiko
-        , da� ihre Torschu�f�higkeit unter dem Wetter leidet.
+        Auf der anderen Seite kann sich die Torschußfähigkeit bei Sonnenschein verschlechtern.
+       Schnelle Spieler laufen bei Regen Gefahr, daß sich ihre Torschuß- und
+        Verteidigungsfähigkeiten verschlechtern. Bei Sonnenschein besteht das Risiko
+        , daß ihre Torschußfähigkeit unter dem Wetter leidet.
      */
     /*
-       Liefert die m�gliche Auswirkung des Wetters auf den Spieler
+       Liefert die mögliche Auswirkung des Wetters auf den Spieler
        return 0 bei keine auswirkung
        1 bei positiv
        -1 bei negativ
@@ -2684,7 +2684,7 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * pr�ft ob Skillup vorliegt
+     * prüft ob Skillup vorliegt
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      * @param oldPlayer TODO Missing Constructuor Parameter Documentation

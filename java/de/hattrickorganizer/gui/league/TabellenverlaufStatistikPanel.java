@@ -62,7 +62,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
                                                                               .getBasics()
                                                                               .getTeamId();
 
-            //Wegen Überschrift!
+            //Wegen Ãœberschrift!
             final int anzahlPlaetze = m_clVerlaufeintraege.length + 1;
             final int anzahlSpieltage = m_clVerlaufeintraege[0].getPlatzierungen().length;
             final int abstandVertikal = getHeight() / (anzahlPlaetze + 1);

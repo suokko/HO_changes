@@ -20,7 +20,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
 /**
- * Bietet Übersicht über alle Spieler
+ * Bietet Ãœbersicht Ã¼ber alle Spieler
  */
 public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener, KeyListener {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     }
 
     /**
-     * Breite der BestPosSpalte zurückgeben
+     * Breite der BestPosSpalte zurÃ¼ckgeben
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -73,7 +73,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     }
 
     /**
-     * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
+     * Gibt die aktuellen DividerLocations zurÃ¼ck, damit sie gespeichert werden kÃ¶nnen
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -304,7 +304,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     //----------------------Refresh--
 
     /**
-     * Refresh, wenn ein Spieler in der Aufstellung geändert wird
+     * Refresh, wenn ein Spieler in der Aufstellung geÃ¤ndert wird
      */
     public final void refresh() {
         m_jpSpielerDetailPanel.refresh();
@@ -324,7 +324,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     }
 
     /**
-     * Refeshed die Tabelle hier und im Aufstellungspanel, wenn die Gruppen/Info geändert wurde
+     * Refeshed die Tabelle hier und im Aufstellungspanel, wenn die Gruppen/Info geÃ¤ndert wurde
      */
     public final void update() {
         refresh();

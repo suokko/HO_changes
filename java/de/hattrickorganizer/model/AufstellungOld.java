@@ -2,7 +2,7 @@
 /*
  * Aufstellung.java
  *
- * Created on 20. M�rz 2003, 14:35
+ * Created on 20. März 2003, 14:35
  */
 package de.hattrickorganizer.model;
 

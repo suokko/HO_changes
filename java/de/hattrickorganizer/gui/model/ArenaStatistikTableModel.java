@@ -413,7 +413,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * Gibt eine String zur¸ck, der die Tore darstellt
+     * Gibt eine String zur√ºck, der die Tore darstellt
      *
      * @param heim TODO Missing Constructuor Parameter Documentation
      * @param gast TODO Missing Constructuor Parameter Documentation
@@ -484,7 +484,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
                                                  ColorLabelEntry.FG_STANDARD, background,
                                                  JLabel.CENTER);
 
-            //Sterne f¸r Sieger!
+            //Sterne f√ºr Sieger!
             if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
             } else if (match.getHeimTore() > match.getGastTore()) {
@@ -516,7 +516,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
                                                        m_iMaxArenaGroesse, 0, 1, background,
                                                        new Color(0, 120, 0), "");
 
-            //Verh‰ltnis Auslastung
+            //Verh√§ltnis Auslastung
             m_clData[i][8] = new ProgressbarTableEntry((int) ((float) match.getZuschaueranzahl() / (float) match
                                                                                                    .getArenaGroesse() * 1000),
                                                        0, 1000, 1, 0.1, background,

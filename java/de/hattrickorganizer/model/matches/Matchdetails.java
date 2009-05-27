@@ -133,7 +133,7 @@ public class Matchdetails implements plugins.IMatchDetails {
 
     /** TODO Missing Parameter Documentation */
 
-    //0=Regen,1=Bewölkt,2=wolkig,3=Sonne
+    //0=Regen,1=BewÃ¶lkt,2=wolkig,3=Sonne
     private int m_iWetterId = -1;
 
     /** TODO Missing Parameter Documentation */
@@ -156,7 +156,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param einstellung TODO Missing Constructuor Parameter Documentation
      *
@@ -183,7 +183,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param taktikTyp TODO Missing Constructuor Parameter Documentation
      *
@@ -381,7 +381,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     }
 
     /**
-     * Gibt die Gesamtstärke zurück, Absolut oder durch die Anzahl der Summanten geteilt
+     * Gibt die GesamtstÃ¤rke zurÃ¼ck, Absolut oder durch die Anzahl der Summanten geteilt
      *
      * @param absolut TODO Missing Constructuor Parameter Documentation
      *
@@ -661,7 +661,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     }
 
     /**
-     * Gibt die Gesamtstärke zurück, Absolut oder durch die Anzahl der Summanten geteilt
+     * Gibt die GesamtstÃ¤rke zurÃ¼ck, Absolut oder durch die Anzahl der Summanten geteilt
      *
      * @param absolut TODO Missing Constructuor Parameter Documentation
      *

@@ -93,7 +93,7 @@ public class XMLClubParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             club.put("FetchedDate", XMLManager.instance().getFirstChildNodeValue(ele));
 
@@ -162,7 +162,7 @@ public class XMLClubParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             club.setDateFromString(ele.getFirstChild().getNodeValue());
 

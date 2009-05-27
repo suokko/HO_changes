@@ -351,7 +351,7 @@ public class LoginDialog extends JDialog
 
 		LoginDialog.loginWaitDialog.setVisible(false);
 
-		//update prüfen
+		//update prÃ¼fen
 		if (UserParameter.instance().updateCheck) {
 			UpdateController.check4update();
 		}
@@ -572,7 +572,7 @@ public class LoginDialog extends JDialog
 	}
 
 	/**
-	 * speichert in die Angegebene Datei den übergebenen Inhalt protected java.io.File saveFile(
+	 * speichert in die Angegebene Datei den Ã¼bergebenen Inhalt protected java.io.File saveFile(
 	 * String dateiname, String inhalt ) { java.io.File            datei   =   null; try { datei =
 	 * new java.io.File ( dateiname ); if ( datei.exists() ) { datei.delete(); }
 	 * datei.createNewFile(); java.io.BufferedWriter out =   new java.io.BufferedWriter( new

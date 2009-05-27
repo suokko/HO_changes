@@ -80,14 +80,14 @@ public class ConvertXml2Hrf {
     /** TODO Missing Parameter Documentation */
     protected MatchLineupTeam m_clTeam;
 
-    /** enthält die HRF-Textdatei */
+    /** enthÃ¤lt die HRF-Textdatei */
     protected StringBuffer m_sHRFBuffer;
 
     //Spieler
 
     /** TODO Missing Parameter Documentation */
 
-    //enthält eine Liste an Hashtable die je einen Spieler beschreiben
+    //enthÃ¤lt eine Liste an Hashtable die je einen Spieler beschreiben
     protected Vector m_vSpieler;
 
     //MatchOrder
@@ -112,7 +112,7 @@ public class ConvertXml2Hrf {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * erzeugt ein HRF und liefert den String zurück
+     * erzeugt ein HRF und liefert den String zurÃ¼ck
      *
      * @param waitDialog TODO Missing Constructuor Parameter Documentation
      *
@@ -127,7 +127,7 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer = new StringBuffer();
 
         try {
-            //Hashtable's füllen
+            //Hashtable's fÃ¼llen
             waitDialog.setValue(5);
             m_htTeamdeatils = new xmlTeamDetailsParser().parseTeamdetailsFromString(MyConnector.instance()
                                                                                                .getTeamdetails(-1));
@@ -182,7 +182,7 @@ public class ConvertXml2Hrf {
 
             waitDialog.setValue(55);
 
-            //Team ermitteln, für Ratings der Player wichtig
+            //Team ermitteln, fÃ¼r Ratings der Player wichtig
             if (m_clLineUp != null) {
                 final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(MyConnector.instance()
                                                                                                            .getMatchdetails(m_clLineUp
@@ -455,7 +455,7 @@ public class ConvertXml2Hrf {
             m_sHRFBuffer.append("behForward2=" + m_clTeam.getPlayerByPosition(11).getTaktik()
                                 + "\n");
 
-            //fangen da manchmal kein Lineup verfügbar ist...
+            //fangen da manchmal kein Lineup verfÃ¼gbar ist...
         } catch (Exception e) {
         }
     }
@@ -550,7 +550,7 @@ public class ConvertXml2Hrf {
                                    ? "0" : m_htNextLineup.get("Forward2Order").toString().trim())
                                 + "\n");
 
-            //fangen da manchmal kein Lineup verfügbar  ist...
+            //fangen da manchmal kein Lineup verfÃ¼gbar  ist...
         } catch (Exception e) {
         }
     }

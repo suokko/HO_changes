@@ -28,7 +28,7 @@ public interface IHOTableEntry extends java.lang.Comparable {
     public javax.swing.JComponent getComponent(boolean isSelected);
 
     /**
-     * Clear the Component and reset it to the defaultvalues You don´t have to use this method at
+     * Clear the Component and reset it to the defaultvalues You donÂ´t have to use this method at
      * all, but it is recommend.
      */
     public void clear();
@@ -44,13 +44,13 @@ public interface IHOTableEntry extends java.lang.Comparable {
 
     /**
      * Create the Component. Keep it in a variable, so the same Component can be returned by
-     * calling getComponent.  You don´t have to use this method at all, but it is recommend.
+     * calling getComponent.  You donÂ´t have to use this method at all, but it is recommend.
      */
     public void createComponent();
 
     /**
      * Update the Component which was created bei createComponent instead of creating a new one.
-     * You don´t have to use this method at all, but it is recommend.
+     * You donÂ´t have to use this method at all, but it is recommend.
      */
     public void updateComponent();
 }

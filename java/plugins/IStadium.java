@@ -2,7 +2,7 @@
 package plugins;
 
 /**
- * Enth‰lt die Stadiendaten
+ * Enth√§lt die Stadiendaten
  */
 /**
  * Interface to Access data stored in Stadium section of HRF

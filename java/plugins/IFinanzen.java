@@ -2,7 +2,7 @@
 package plugins;
 
 /**
- * Enth‰lt alle Informationen zu den Finanzen
+ * Enth√§lt alle Informationen zu den Finanzen
  */
 /**
  * access to data stored in finance section of hrf

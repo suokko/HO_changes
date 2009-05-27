@@ -15,7 +15,7 @@ import de.hattrickorganizer.model.SpielerPosition;
 
 
 /**
- * Ein Dialog für die Freundschaftsspiele
+ * Ein Dialog fÃ¼r die Freundschaftsspiele
  */
 public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.model.MatchScreen,
                                                         java.awt.event.WindowListener
@@ -207,7 +207,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
             try {
                 msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-                //Variablen mit Spielernamen füllen
+                //Variablen mit Spielernamen fÃ¼llen
                 tokenmsg = replaceAllVars(varConst, varValue, msg);
 
                 //Message anzeigen
@@ -228,10 +228,10 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     /**
      * Fangesang
      *
-     * @param key FanGesangsArt ,steht für Anfeuerung, verhöhnen
+     * @param key FanGesangsArt ,steht fÃ¼r Anfeuerung, verhÃ¶hnen
      * @param art (Spieler, Team, Trainer )
      * @param variante welche Variante
-     * @param fanTeam Füllmaterial für die Variable
+     * @param fanTeam FÃ¼llmaterial fÃ¼r die Variable
      * @param fanManager TODO Missing Constructuor Parameter Documentation
      * @param gegnerTeam TODO Missing Constructuor Parameter Documentation
      * @param gegnerManager TODO Missing Constructuor Parameter Documentation
@@ -258,7 +258,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         try {
             msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-            //Variablen mit Spielernamen füllen
+            //Variablen mit Spielernamen fÃ¼llen
             tokenmsg = replaceAllVars(varConst, varValue, msg);
 
             //Message anzeigen
@@ -272,7 +272,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     }
 
     /**
-     * übermittelt Inforamtionen zu einer Karte
+     * Ã¼bermittelt Inforamtionen zu einer Karte
      *
      * @param textKey TODO Missing Constructuor Parameter Documentation
      * @param spieler TODO Missing Constructuor Parameter Documentation
@@ -308,7 +308,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         try {
             msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-            //Variablen mit Spielernamen füllen
+            //Variablen mit Spielernamen fÃ¼llen
             tokenmsg = replaceAllVars(varConst, varValue, msg);
 
             //Message anzeigen
@@ -670,7 +670,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         try {
             msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-            //Variablen mit Spielernamen füllen
+            //Variablen mit Spielernamen fÃ¼llen
             tokenmsg = replaceVars(schuetzeName, vorbereiter1Name, verteidiger1Name,
                                    verteidiger2Name, torwartName, msg);
 
@@ -692,7 +692,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
             try {
                 msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-                //Variablen mit Spielernamen füllen
+                //Variablen mit Spielernamen fÃ¼llen
                 tokenmsg = replaceVars(schuetzeName, vorbereiter1Name, verteidiger1Name,
                                        verteidiger2Name, torwartName, msg);
 
@@ -720,7 +720,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         try {
             msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-            //Variablen mit Spielernamen füllen
+            //Variablen mit Spielernamen fÃ¼llen
             tokenmsg = replaceVars(schuetzeName, vorbereiter1Name, verteidiger1Name,
                                    verteidiger2Name, torwartName, msg);
 
@@ -805,7 +805,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         try {
             msg = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString(aktuKey);
 
-            //Variablen mit Spielernamen füllen
+            //Variablen mit Spielernamen fÃ¼llen
             tokenmsg = replaceAllVars(varConst, varValue, msg);
 
             //Message anzeigen
@@ -828,7 +828,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     }
 
     /**
-     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchießen, Spielende...
+     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchieÃŸen, Spielende...
      *
      * @param msgType TODO Missing Constructuor Parameter Documentation
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -894,7 +894,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     //----------Chat------------------------------------    
 
     /**
-     * empfängt Msg und stellt sie dar
+     * empfÃ¤ngt Msg und stellt sie dar
      *
      * @param trainer TODO Missing Constructuor Parameter Documentation
      * @param msg TODO Missing Constructuor Parameter Documentation
@@ -1005,7 +1005,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
              && (i < varConst.length); i++) {
             index = buf.indexOf(varConst[i]);
 
-            //Schuütze ersetzen
+            //SchuÃ¼tze ersetzen
             while (index > -1) {
                 buf.replace(index, index + varConst[i].length(), varValue[i]);
                 index = buf.indexOf(varConst[i]);
@@ -1023,7 +1023,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         final StringBuffer buf = new StringBuffer(msg);
         int index = buf.indexOf(VAR_SCHUETZE);
 
-        //Schuütze ersetzen
+        //SchuÃ¼tze ersetzen
         while (index > -1) {
             buf.replace(index, index + VAR_SCHUETZE.length(), schuetze);
             index = buf.indexOf(VAR_SCHUETZE);

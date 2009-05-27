@@ -121,7 +121,7 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
      */
     public final void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //Änderung der Tabelle -> Anderer Filter!
+            //Ã„nderung der Tabelle -> Anderer Filter!
             reInit();
         }
     }

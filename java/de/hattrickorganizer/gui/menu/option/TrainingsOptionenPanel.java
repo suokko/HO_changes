@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 
 /**
- * Optionen für das Training
+ * Optionen fÃ¼r das Training
  */
 final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.event.ChangeListener {
     //~ Static / Instance fields ----------------------------------------------------------------------------

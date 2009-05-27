@@ -78,7 +78,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     //Passpiel
     HOVerwaltung.instance().getLanguageString("Passpiel"),
  
-    //Flügelspiel
+    //FlÃ¼gelspiel
     HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
  
     //Torschuss
@@ -123,16 +123,16 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     //Mittelfeld Defensiv
     HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
 
-    //Flügel
+    //FlÃ¼gel
     HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
 
-    //Flügel Nach Innen
+    //FlÃ¼gel Nach Innen
     HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
  
-    //Flügel Offensiv
+    //FlÃ¼gel Offensiv
     HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
 
-    //Flügel Defensiv
+    //FlÃ¼gel Defensiv
     HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
  
     //Sturm
@@ -199,7 +199,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     //Passpiel
     HOVerwaltung.instance().getLanguageString("PS"),
 
-    //Flügelspiel
+    //FlÃ¼gelspiel
     HOVerwaltung.instance().getLanguageString("FL"),
 
     //Torschuss
@@ -244,16 +244,16 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     //Mittelfeld Defensiv
     HOVerwaltung.instance().getLanguageString("MITD"),
  
-    //Flügel
+    //FlÃ¼gel
     HOVerwaltung.instance().getLanguageString("FLG"),
 
-    //Flügel Nach Innen
+    //FlÃ¼gel Nach Innen
     HOVerwaltung.instance().getLanguageString("FLGI"),
 
-    //Flügel Offensiv
+    //FlÃ¼gel Offensiv
     HOVerwaltung.instance().getLanguageString("FLGO"),
  
-    //Flügel Defensiv
+    //FlÃ¼gel Defensiv
     HOVerwaltung.instance().getLanguageString("FLGD"),
 
     //Sturm
@@ -361,7 +361,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     //----------Listener------------------------------        
 
     /**
-     * Listener für die Checkboxen zum Autoaufstellen
+     * Listener fÃ¼r die Checkboxen zum Autoaufstellen
      *
      * @param zeile TODO Missing Constructuor Parameter Documentation
      */
@@ -475,7 +475,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
 //    }
 
     /**
-     * Fügt der Tabelle einen Spieler hinzu
+     * FÃ¼gt der Tabelle einen Spieler hinzu
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param index TODO Missing Constructuor Parameter Documentation
@@ -559,7 +559,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     }
 
 //    /**
-//     * Gibt den Spieler mit der gleichen ID, wie die übergebene, zurück, oder null
+//     * Gibt den Spieler mit der gleichen ID, wie die Ã¼bergebene, zurÃ¼ck, oder null
 //     *
 //     * @param vorlage TODO Missing Constructuor Parameter Documentation
 //     *
@@ -715,7 +715,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
                                              ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
                                              ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
-            //Flügelspiel
+            //FlÃ¼gelspiel
             m_clData[i][16] = new SkillEntry(aktuellerSpieler.getFluegelspiel()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL),
                                              ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
@@ -813,27 +813,27 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][31] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][32] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_IN,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][33] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][34] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,

@@ -25,7 +25,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Enth‰lt die einzelnen Positionen
+ * Enth√§lt die einzelnen Positionen
  */
 public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templates.RasenPanel
     implements de.hattrickorganizer.gui.Refreshable, de.hattrickorganizer.gui.Updateable,

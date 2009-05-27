@@ -326,7 +326,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
     }
 
     /**
-     * Erzeugt ein Label für den Spieler
+     * Erzeugt ein Label fÃ¼r den Spieler
      *
      * @param spielerID TODO Missing Constructuor Parameter Documentation
      *
@@ -527,7 +527,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
             getContentPane().add(detailpanel, BorderLayout.WEST);
         }
 
-        //Elfmeterschützen
+        //ElfmeterschÃ¼tzen
         final JPanel sidePanel = new JPanel(new BorderLayout());
         sidePanel.setOpaque(false);
 

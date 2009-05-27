@@ -43,7 +43,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	/**
 	 * Wichtig: Wenn die Teamid = -1 ist muss der Matchtyp ALLE_SPIELE sein!
 	 *
-	 * @param teamId Die Teamid oder -1 für alle
+	 * @param teamId Die Teamid oder -1 fÃ¼r alle
 	 * @param matchtyp Welche Matches? Konstanten im SpielePanel!
 	 * @param asc TODO Missing Constructuor Parameter Documentation
 	 *
@@ -56,7 +56,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		ResultSet rs = null;
 		final Vector liste = new Vector();
 
-		//Ohne Matchid nur AlleSpiele möglich!
+		//Ohne Matchid nur AlleSpiele mÃ¶glich!
 		if ((teamId < 0) && (matchtyp != ISpielePanel.ALLE_SPIELE)) {
 			return matches;
 		}
@@ -72,7 +72,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 				sql += (" WHERE ( GastID != " + teamId + " AND HeimID != " + teamId + " )");
 			}
 
-			//Nur eigene gewählt
+			//Nur eigene gewÃ¤hlt
 			if (matchtyp >= 10) {
 				matchtyp = matchtyp - 10;
 
@@ -83,7 +83,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 			switch (matchtyp) {
 				case ISpielePanel.NUR_EIGENE_SPIELE :
 
-					//Nix zu tun, da die teamId die einzige Einschränkung ist
+					//Nix zu tun, da die teamId die einzige EinschrÃ¤nkung ist
 					break;
 
 				case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
@@ -183,7 +183,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	/**
 	 * holt die MAtches zu einem Team aus der DB
 	 *
-	 * @param teamId Die Teamid oder -1 für alle
+	 * @param teamId Die Teamid oder -1 fÃ¼r alle
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */

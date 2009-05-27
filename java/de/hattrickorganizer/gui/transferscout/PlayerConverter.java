@@ -181,7 +181,7 @@ public class PlayerConverter {
             while ((p = txt.indexOf(feed)) >= 0) {
                 tmp = txt.substring(0, p).trim();
 
-                if (tmp.indexOf("»") > 0) {
+                if (tmp.indexOf("Â»") > 0) {
                 	startFound = true;
                 }
 
@@ -194,8 +194,8 @@ public class PlayerConverter {
 
             //-- get name and store club name
             tmp = lines.get(0).toString();
-            player.setPlayerName(tmp.substring(tmp.indexOf("»")+1).trim());
-            String teamname = tmp.substring(0, tmp.indexOf("»")).trim();
+            player.setPlayerName(tmp.substring(tmp.indexOf("Â»")+1).trim());
+            String teamname = tmp.substring(0, tmp.indexOf("Â»")).trim();
 
             //-- get playerid
             int found_at_line = -1;

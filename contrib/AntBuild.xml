@@ -60,7 +60,15 @@
 
 <project name="HO1-AntBuild" default="copy2build" basedir=".">
 
-	<property name="src-dir" value="src" />
+	<property name="src-dir" value="${basedir}/src" />
+
+	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${src-dir}/contrib/libs/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
 	<!-- 
 		Where do all outputs go to, this is normally the $basedir
 		Can be overridden via Ant command line (-Doutput-basedir=xxx) if needed
@@ -109,12 +117,24 @@
 	-->
 	<property name="svn-command" value="svn" />
 
-	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-		<classpath>
-			<pathelement location="${src-dir}/contrib/libs/ant-contrib-1.0b3.jar" />
-		</classpath>
-	</taskdef>
+	<if>
+		<and>
+			<equals arg1="${dev}" arg2="" />
+			<equals arg1="${private}" arg2="" />
+		</and>
+		<then>
+			<!-- 
+				These default plugins are always build for a HO release
+				Of course, you can comment them out if you want to skip
+				some or all of them
+			-->
+			<property name="allPlugins" value="Commons,Feedback,TeamAnalyzer,TrainingExperience,Transfers" />
+		</then>
+		<else>
+			<!-- Add additional plugins if we build a DEV or PRIVATE build -->
+			<property name="allPlugins" value="Commons,Feedback,TeamAnalyzer,TrainingExperience,Transfers,EvilCard,ExperienceViewer,SpecialEvents" />
+		</else>
+	</if>
 
 	<!-- =================================
           target: ant-compile
@@ -150,7 +170,7 @@
 		<mkdir dir="${bin-dir}" />
 		<echo>compileClasspath (from ${manifestFile}) is ${compileClasspath}</echo>
 		<echo>Building now</echo>
-		<javac srcdir="${javaSourcePath}" destdir="${bin-dir}" debug="on" verbose="off">
+		<javac srcdir="${javaSourcePath}" destdir="${bin-dir}" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
 			<compilerarg value="-Xlint" />
 			<classpath path="${compileClasspath}" />
 		</javac>
@@ -287,7 +307,7 @@
 			<fileset dir="${src-dir}/conf/addToZip" />
 			<fileset file="${tmp-target}/HOLauncher.class" />
 		</copy>
-		<antcall target="copyPlugins" />
+		<antcall target="copyAllPlugins" />
 		<antcall target="copyBuild2debug" />
 	</target>
 
@@ -302,137 +322,21 @@
 	</target>
 
 	<!-- ================================= 
-          target: copyPlugins              
+          target: copySinglePlugin            
          ================================= -->
-	<target name="copyPlugins" description="Copy hoplugins to builddir">
-		<!-- 
-    		These default plugins are always build for a HO release
-    		Of course, you can comment them out if you want to skip
-    		some or all of them
-    	-->
-		<antcall target="copy-hoplugins-common" />
-		<antcall target="copy-hoplugins-feedback" />
-		<antcall target="copy-hoplugins-teamanalyzer" />
-		<antcall target="copy-hoplugins-trainingexperience" />
-		<antcall target="copy-hoplugins-transfers" />
-
-		<!-- Add additional plugins if we build a DEV or PRIVATE build -->
-		<if>
-			<and>
-				<equals arg1="${dev}" arg2="" />
-				<equals arg1="${private}" arg2="" />
-			</and>
-			<then>
-				<echo>This is a release build, using default plugins only</echo>
-			</then>
-			<else>
-				<echo>This is a private or dev build, adding more plugins</echo>
-				<antcall target="copyPlugins-contrib" />
-			</else>
-		</if>
-	</target>
-
-	<!-- ================================= 
-          target: copyPlugins-contrib              
-         ================================= -->
-	<target name="copyPlugins-contrib" description="Copy more hoplugins to builddir (not included in standard release)">
-		<antcall target="copy-hoplugins-evilcard" />
-		<antcall target="copy-hoplugins-experienceviewer" />
-		<antcall target="copy-hoplugins-specialevents" />
-		<!-- Skip these plugins:
-		<antcall target="copy-hoplugins-nationalteams"/>
-		<antcall target="copy-hoplugins-tsforecast"/>
-		-->
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-common              
-         ================================= -->
-	<target name="copy-hoplugins-common">
+	<target name="copySinglePlugin" description="Copy a single ho plugin to build/hoplugins">
+		<echo>Copy plugin: ${PLUGINNAME} (${basedir}/../HO-Plugin-${PLUGINNAME}/bin/hoplugins to ${build-dir}/hoplugins)</echo>
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-Commons/bin/hoplugins" />
+			<fileset dir="${basedir}/../HO-Plugin-${PLUGINNAME}/bin/hoplugins" />
 		</copy>
 	</target>
 
 	<!-- ================================= 
-          target: copy-hoplugins-trainingexperience              
+          target: copyAllPlugins              
          ================================= -->
-	<target name="copy-hoplugins-trainingexperience">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-TrainingExperience/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-nationalteams              
-         ================================= -->
-	<target name="copy-hoplugins-nationalteams">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-NationalTeams/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-specialevents              
-         ================================= -->
-	<target name="copy-hoplugins-specialevents">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-SpecialEvents/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-transfers              
-         ================================= -->
-	<target name="copy-hoplugins-transfers">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-Transfers/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-teamanalyzer              
-         ================================= -->
-	<target name="copy-hoplugins-teamanalyzer">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-TeamAnalyzer/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-evilcard              
-         ================================= -->
-	<target name="copy-hoplugins-evilcard">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-EvilCard/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-experienceviewer              
-         ================================= -->
-	<target name="copy-hoplugins-experienceviewer">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-ExperienceViewer/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-feedback              
-         ================================= -->
-	<target name="copy-hoplugins-feedback">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-Feedback/bin/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- ================================= 
-          target: copy-hoplugins-tsforecast              
-         ================================= -->
-	<target name="copy-hoplugins-tsforecast">
-		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-TSForecast/bin/hoplugins" />
-		</copy>
+	<target name="copyAllPlugins" description="Copy all hoplugins to builddir">
+		<echo>Installing the following plugins: ${allPlugins}</echo>
+		<foreach list="${allPlugins}" target="copySinglePlugin" param="PLUGINNAME" />
 	</target>
 
 	<!-- ================================= 
@@ -519,18 +423,27 @@
 			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}" />
 		</exec>
 
-		<!-- Create Installer for HO bundled with JRE -->
-		<echo>Creating win32 installer at ${nsis-installerNameWithJRE} with JRE ${nsis-JRE-Version} using NSIS...</echo>
-		<exec command="${nsis-command}">
-			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-scriptName}" />
-		</exec>
-
 		<!-- Create ZIP files for esnips.com (executables are not allowed) -->
 		<zip destfile="${nsis-installerName}.zip">
 			<fileset file="${nsis-installerName}" />
 		</zip>
-		<zip destfile="${nsis-installerNameWithJRE}.zip">
-			<fileset file="${nsis-installerNameWithJRE}" />
-		</zip>
+
+		<if>
+			<available file="${nsis-JRE-DistPath}/${nsis-JRE-DistFile}" />
+			<then>
+				<!-- Create Installer for HO bundled with JRE -->
+				<echo>Creating win32 installer at ${nsis-installerNameWithJRE} with JRE ${nsis-JRE-Version} using NSIS...</echo>
+				<exec command="${nsis-command}">
+					<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerNameWithJRE}' -DWITHJRE=${nsis-JRE-Version} -DJREPATH=${nsis-JRE-DistPath} -DJREFILE=${nsis-JRE-DistFile} ${nsis-scriptName}" />
+				</exec>
+				<zip destfile="${nsis-installerNameWithJRE}.zip">
+					<fileset file="${nsis-installerNameWithJRE}" />
+				</zip>
+			</then>
+			<else>
+				<echo>Not creating JRE bundled version because ${nsis-JRE-DistPath}/${nsis-JRE-DistFile} is not available...</echo>
+			</else>
+		</if>
+
 	</target>
 </project>

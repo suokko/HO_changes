@@ -106,7 +106,7 @@ public interface IMatchLineupPlayer {
     //public int compareTo (Object obj);
 
     /**
-     * liefert eine ID nach der Sortiert werden kann ( z.B. Spierlübersichtstabelle
+     * liefert eine ID nach der Sortiert werden kann ( z.B. SpierlÃ¼bersichtstabelle
      *
      * @return TODO Missing Return Method Documentation
      */

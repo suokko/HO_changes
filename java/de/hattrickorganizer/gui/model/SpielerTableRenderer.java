@@ -11,7 +11,7 @@ import de.hattrickorganizer.gui.templates.TableEntry;
 
 
 /**
- * Render für Tabellen mit JLabels als Tabellenobjekte
+ * Render fÃ¼r Tabellen mit JLabels als Tabellenobjekte
  */
 public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------

@@ -27,7 +27,7 @@ public final class SpielplanTable extends AbstractTable {
 	}
 
 	/**
-	 * l‰dt alle Spielpl‰ne aus der DB
+	 * l√§dt alle Spielpl√§ne aus der DB
 	 *
 	 * @param mitPaarungen inklusive der Paarungen ja/nein
 	 *
@@ -67,7 +67,7 @@ public final class SpielplanTable extends AbstractTable {
 
 		if (mitPaarungen) {
 			for (int i = 0; i < vec.size(); i++) {
-				//Eintr‰ge holen
+				//Eintr√§ge holen
 				DBZugriff.instance().getPaarungen(((Spielplan) vec.get(i)));
 			}
 		}
@@ -112,7 +112,7 @@ public final class SpielplanTable extends AbstractTable {
 			plan.setLigaName(rs.getString("LigaName"));
 			plan.setSaison(rs.getInt("Saison"));
 
-			//Eintr‰ge holen
+			//Eintr√§ge holen
 			DBZugriff.instance().getPaarungen(plan);
 			}
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public final class SpielplanTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt eine Ligaid zu einer Seasonid zur¸ck, oder -1, wenn kein Eintrag in der DB gefunden
+	 * Gibt eine Ligaid zu einer Seasonid zur√ºck, oder -1, wenn kein Eintrag in der DB gefunden
 	 * wurde
 	 *
 	 * @param seasonid TODO Missing Constructuor Parameter Documentation
@@ -163,13 +163,13 @@ public final class SpielplanTable extends AbstractTable {
 				boolean update = false;
 
 				try {
-					//pr¸fen ob update oder insert
+					//pr√ºfen ob update oder insert
 					//"SELECT LigaID FROM Spielplan" );
 					result = adapter.executeQuery(sql);
 					result.first();
 					result.getInt("LigaID");
 
-					//wenn bishier durchl‰uft update = true
+					//wenn bishier durchl√§uft update = true
 					update = true;
 				} catch (Exception e) {
 					//Error
@@ -199,7 +199,7 @@ public final class SpielplanTable extends AbstractTable {
 					adapter.executeUpdate(sql);
 				}
 
-				//Eintr‰ge noch saven
+				//Eintr√§ge noch saven
 				DBZugriff.instance().storePaarung(plan.getEintraege(), plan.getLigaId(), plan.getSaison());
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeSpielplan Error" + e);

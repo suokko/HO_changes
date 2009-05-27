@@ -120,7 +120,7 @@ public class XMLTabelleParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("LeagueName").item(0);
             tbl.setLigaName(ele.getFirstChild().getNodeValue());
             ele = (Element) root.getElementsByTagName("LeagueID").item(0);
@@ -136,7 +136,7 @@ public class XMLTabelleParser {
             ele = (Element) root.getElementsByTagName("LeagueLevelUnitName").item(0);
             tbl.setLigaLandName(ele.getFirstChild().getNodeValue());
 
-            //Einträge adden
+            //EintrÃ¤ge adden
             list = root.getElementsByTagName("Team");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {

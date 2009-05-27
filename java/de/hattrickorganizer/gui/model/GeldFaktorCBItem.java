@@ -2,7 +2,7 @@
 package de.hattrickorganizer.gui.model;
 
 /**
- * Faktor für Geld mit Id fürs Land
+ * Faktor fÃ¼r Geld mit Id fÃ¼rs Land
  */
 public class GeldFaktorCBItem extends CBItem implements Comparable {
     //~ Instance fields ----------------------------------------------------------------------------

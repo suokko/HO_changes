@@ -27,7 +27,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 
     private ISpieler spieler;
 
-    //Flügespiel
+    //FlÃ¼gespiel
     private double FL;
 
     //Stamania

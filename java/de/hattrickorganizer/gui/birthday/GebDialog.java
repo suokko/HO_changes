@@ -58,7 +58,7 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_clOK)) {
             if (m_clGeb.getSekunden() < 5) {
-                //böse
+                //bÃ¶se
                 javax.swing.JOptionPane.showMessageDialog(this,
                                                           "Was nur " + m_clGeb.getSekunden()
                                                           + " Sekunden ?!?\n *schmoll* ;) ",
@@ -66,7 +66,7 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
                                                           JOptionPane.WARNING_MESSAGE);
             } else if (m_clGeb.getSekunden() < 55) {
                 javax.swing.JOptionPane.showMessageDialog(this,
-                                                          "Das war keine Minute.\n Du solltest dich schämen! ;)",
+                                                          "Das war keine Minute.\n Du solltest dich schÃ¤men! ;)",
                                                           "Ein wenig mehr Respekt bitte",
                                                           JOptionPane.WARNING_MESSAGE);
             }

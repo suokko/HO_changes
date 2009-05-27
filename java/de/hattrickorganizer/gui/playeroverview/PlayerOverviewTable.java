@@ -42,7 +42,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 
  
     /**
-     * Breite der BestPosSpalte zurückgeben
+     * Breite der BestPosSpalte zurÃ¼ckgeben
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -144,7 +144,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
     }
 
     /**
-     * Gibt die Spalte für die Sortierung zurück
+     * Gibt die Spalte fÃ¼r die Sortierung zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
