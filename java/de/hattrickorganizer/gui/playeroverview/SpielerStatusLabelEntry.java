@@ -97,7 +97,7 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
                     }
                 }
             }
-            //Wird eigendlich nicht benötigt, darum nur Kartentest
+            //Wird eigendlich nicht benÃ¶tigt, darum nur Kartentest
             else if ((entry.getServerSpieler() != null) && (getServerSpieler() != null)) {
                 if (entry.getServerSpieler().getGelbeKarten() > getServerSpieler().getGelbeKarten()) {
                     return 1;

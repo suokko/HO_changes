@@ -49,7 +49,7 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
         if (obj instanceof SpielerCBItem) {
             final plugins.ISpieler spieler = ((SpielerCBItem) obj).getSpieler();
 
-            //Kann für Tempspieler < 0 sein && spieler.getSpielerID () > 0 )
+            //Kann fÃ¼r Tempspieler < 0 sein && spieler.getSpielerID () > 0 )
             if (spieler != null) {
                 //m_clEntry = new SpielerLabelEntry( spieler, model.HOVerwaltung.instance ().getModel().getAufstellung ().getPositionBySpielerId ( spieler.getSpielerID () ), ( (SpielerCBItem)obj ).getPositionsBewertung (), true, true );
                 m_clEntry.updateComponent(spieler,

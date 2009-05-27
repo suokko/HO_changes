@@ -16,10 +16,10 @@ import de.hattrickorganizer.tools.HOLogger;
 public class MatchKurzInfo implements plugins.IMatchKurzInfo {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** Name des Teams zu dem die Matchinfo gehört */
+    /** Name des Teams zu dem die Matchinfo gehÃ¶rt */
     private String m_sGastName = "";
 
-    /** Name des Teams zu dem die Matchinfo gehört */
+    /** Name des Teams zu dem die Matchinfo gehÃ¶rt */
     private String m_sHeimName = "";
 
     /** Datum des spiels */
@@ -28,13 +28,13 @@ public class MatchKurzInfo implements plugins.IMatchKurzInfo {
     /** Aufstellung erstellt */
     private boolean m_bAufstellung = true;
 
-    /** ID des Teams zu dem die info gehört */
+    /** ID des Teams zu dem die info gehÃ¶rt */
     private int m_iGastID = -1;
 
     /** Gast Tore */
     private int m_iGastTore = -1;
 
-    /** ID des Teams zu dem die info gehört */
+    /** ID des Teams zu dem die info gehÃ¶rt */
     private int m_iHeimID = -1;
 
     /** Heim Tore */

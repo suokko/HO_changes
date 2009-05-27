@@ -18,8 +18,8 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
 /**
- * Erfragt einen Namen für die zu Speichernde Aufstellung und fügt sie in die Datenbank ein, wenn
- * gewünscht
+ * Erfragt einen Namen fÃ¼r die zu Speichernde Aufstellung und fÃ¼gt sie in die Datenbank ein, wenn
+ * gewÃ¼nscht
  */
 final class AufstellungsNameDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------

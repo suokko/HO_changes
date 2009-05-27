@@ -139,10 +139,10 @@ public interface MatchScreen {
     /**
      * Fangesang
      *
-     * @param key FanGesangsArt ,steht für Anfeuerung, verhöhnen
+     * @param key FanGesangsArt ,steht fÃ¼r Anfeuerung, verhÃ¶hnen
      * @param art (Spieler, Team, Trainer )
      * @param variante welche Variante
-     * @param fanTeam Füllmaterial für die Variable
+     * @param fanTeam FÃ¼llmaterial fÃ¼r die Variable
      * @param fanManager TODO Missing Constructuor Parameter Documentation
      * @param gegnerTeam TODO Missing Constructuor Parameter Documentation
      * @param gegnerManager TODO Missing Constructuor Parameter Documentation
@@ -152,7 +152,7 @@ public interface MatchScreen {
                             String gegnerTeam, String gegnerManager, boolean heim);
 
     /**
-     * übermittelt Inforamtionen zu einer Karte
+     * Ã¼bermittelt Inforamtionen zu einer Karte
      *
      * @param textKey TODO Missing Constructuor Parameter Documentation
      * @param spielerName TODO Missing Constructuor Parameter Documentation
@@ -226,7 +226,7 @@ public interface MatchScreen {
     //    public void drawBlinkingString( String msg, byte msgTyp, byte sec );
 
     /**
-     * läßt die Anzeige der Heimtore Rot blinken
+     * lÃ¤ÃŸt die Anzeige der Heimtore Rot blinken
      *
      * @param heimTeam TODO Missing Constructuor Parameter Documentation
      * @param schuetze TODO Missing Constructuor Parameter Documentation
@@ -246,7 +246,7 @@ public interface MatchScreen {
     //    public void blinkHeimTore( byte sec );
 
     /**
-     * läßt die Anzeige der Heimtore Rot blinken
+     * lÃ¤ÃŸt die Anzeige der Heimtore Rot blinken
      *
      * @param heimTeam TODO Missing Constructuor Parameter Documentation
      * @param schuetze TODO Missing Constructuor Parameter Documentation
@@ -365,7 +365,7 @@ public interface MatchScreen {
                              int trainerVariante, boolean heim);
 
     /**
-     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchießen, Spielende...
+     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchieÃŸen, Spielende...
      *
      * @param textKey == Info, Vortext usw.
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -373,7 +373,7 @@ public interface MatchScreen {
     public void drawInfoText(byte textKey, int variante);
 
     /**
-     * empfängt Msg und stellt sie dar
+     * empfÃ¤ngt Msg und stellt sie dar
      *
      * @param trainer der Trainername
      * @param msg die Msg

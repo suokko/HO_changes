@@ -72,7 +72,7 @@ public final class FinanzenTable extends AbstractTable {
 		final String[] awhereV = { "" + hrfId };
 
 		if (finanzen != null) {
-			//erst Vorhandene Aufstellung löschen
+			//erst Vorhandene Aufstellung lÃ¶schen
 			delete( awhereS, awhereV );
 			//insert vorbereiten
 			statement =
@@ -146,7 +146,7 @@ public final class FinanzenTable extends AbstractTable {
 	}
 	
 	/**
-	 * lädt die Finanzen zum angegeben HRF file ein
+	 * lÃ¤dt die Finanzen zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *

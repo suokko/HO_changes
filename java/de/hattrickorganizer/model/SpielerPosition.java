@@ -2,7 +2,7 @@
 /*
  * SpielerPosition.java
  *
- * Created on 20. März 2003, 10:21
+ * Created on 20. MÃ¤rz 2003, 10:21
  */
 package de.hattrickorganizer.model;
 
@@ -26,7 +26,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
 
 	//~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Array mit den Konstanten (CBItems) für die Positionen, Ohne Ausgewechselt */
+    /** Array mit den Konstanten (CBItems) fÃ¼r die Positionen, Ohne Ausgewechselt */
     public static final CBItem[] POSITIONEN = {
                                                   new CBItem(SpielerPosition.getNameForPosition(UNBESTIMMT),
                                                              UNBESTIMMT),
@@ -72,7 +72,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
                                                              STURM_AUS)
                                               };
 
-    //Konstanten für TRAININGSEFFEKTE
+    //Konstanten fÃ¼r TRAININGSEFFEKTE
 
     /** TODO Missing Parameter Documentation */
     public static final byte KEIN_TE = 0;
@@ -131,7 +131,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     ////////////////////Load/Save/////////////////
 
     /**
-     * Konstruktor lädt die SpielerPosition aus einem InputStream
+     * Konstruktor lÃ¤dt die SpielerPosition aus einem InputStream
      *
      * @param dis Der InputStream aus dem gelesen wird
      */
@@ -157,7 +157,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt eine mögliche HT-Positionsid für eine HO-Positionsid zurück. Nur zum Laden des
+     * Gibt eine mÃ¶gliche HT-Positionsid fÃ¼r eine HO-Positionsid zurÃ¼ck. Nur zum Laden des
      * Positionsimage zu gebrauchen!!!
      *
      * @param posId TODO Missing Constructuor Parameter Documentation
@@ -210,7 +210,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     }
 
     /**
-     * Gibt das Kürzel für den Namen zurück
+     * Gibt das KÃ¼rzel fÃ¼r den Namen zurÃ¼ck
      *
      * @param posId TODO Missing Constructuor Parameter Documentation
      *
@@ -288,7 +288,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     }
 
     /**
-     * Gibt zu einer Positionsid den Namen zurück
+     * Gibt zu einer Positionsid den Namen zurÃ¼ck
      *
      * @param id TODO Missing Constructuor Parameter Documentation
      *
@@ -349,7 +349,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     }
 
     /**
-     * Gibt zu einer Positionsid den Namen zurück
+     * Gibt zu einer Positionsid den Namen zurÃ¼ck
      *
      * @param posId TODO Missing Constructuor Parameter Documentation
      *
@@ -586,7 +586,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     }
 
     /**
-     * liefert eine ID nach der Sortiert werden kann ( z.B. Spierlübersichtstabelle
+     * liefert eine ID nach der Sortiert werden kann ( z.B. SpierlÃ¼bersichtstabelle
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -605,7 +605,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     }
 
     /**
-     * liefert eine ID nach der Sortiert werden kann ( z.B. Spierlübersichtstabelle
+     * liefert eine ID nach der Sortiert werden kann ( z.B. SpierlÃ¼bersichtstabelle
      *
      * @param position TODO Missing Constructuor Parameter Documentation
      * @param reserve TODO Missing Constructuor Parameter Documentation
@@ -659,7 +659,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
     }
 
     /**
-     * liefert den Trainingseffekt dieser Position für das eingestellte Training
+     * liefert den Trainingseffekt dieser Position fÃ¼r das eingestellte Training
      *
      * @param obj TODO Missing Constructuor Parameter Documentation
      *
@@ -857,7 +857,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
 
             /*//Strom konvertieren in Byte
                data = baos.toByteArray();
-               //Hilfsstrom schließen
+               //Hilfsstrom schlieÃŸen
                das.close ();
             
                return data;*/

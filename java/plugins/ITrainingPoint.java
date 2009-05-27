@@ -2,7 +2,7 @@
 /*
  * ITrainingPoint.java
  *
- * Created on 29. März 2005, 15:10
+ * Created on 29. MÃ¤rz 2005, 15:10
  */
 package plugins;
 

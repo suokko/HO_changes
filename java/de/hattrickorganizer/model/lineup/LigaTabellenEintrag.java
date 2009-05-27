@@ -469,7 +469,7 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
             miniSerie[i - start] = m_aSerie[i];
         }
 
-        //nix zurückgeben
+        //nix zurÃ¼ckgeben
         return miniSerie;
     }
 
@@ -644,7 +644,7 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
     }
 
     /**
-     * fügt einen Eintrag hinzu
+     * fÃ¼gt einen Eintrag hinzu
      *
      * @param index = (Spieltag-1)
      * @param serienInfo serienInfo Info
@@ -656,7 +656,7 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
     }
 
     /**
-     * vergleicht die Einträge
+     * vergleicht die EintrÃ¤ge
      *
      * @param obj TODO Missing Constructuor Parameter Documentation
      *
@@ -686,7 +686,7 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
                            return 0;
                        }*/
 
-                    //nun gilt der Auswärtsfaktor
+                    //nun gilt der AuswÃ¤rtsfaktor
                     else if (getA_Punkte() > lte.getA_Punkte()) {
                         return -1;
                     } else if (getA_Punkte() < lte.getA_Punkte()) {

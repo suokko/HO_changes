@@ -2,7 +2,7 @@
 /*
  * Aufstellung.java
  *
- * Created on 20. M�rz 2003, 14:35
+ * Created on 20. Mï¿½rz 2003, 14:35
  */
 package de.hattrickorganizer.model;
 
@@ -44,7 +44,7 @@ public  class Aufstellung implements plugins.ILineUp {
     /** Aufstellungsassistent */
     private Aufstellungsassistent m_clAssi = new Aufstellungsassistent();
 
-    /** h�lt die Positionen */
+    /** hï¿½lt die Positionen */
     private Vector<SpielerPosition> m_vPositionen = new Vector<SpielerPosition>();
 
     /** Attitude */
@@ -52,10 +52,10 @@ public  class Aufstellung implements plugins.ILineUp {
 
     //protected Vector    m_vSpieler      =   null;
 
-    /** wer ist Kapit�n */
+    /** wer ist Kapitän */
     private int m_iKapitaen = -1;
 
-    /** wer schie�t Standards */
+    /** wer schieï¿½t Standards */
     private int m_iKicker = -1;
 
     /** TacticType */
@@ -170,7 +170,7 @@ public  class Aufstellung implements plugins.ILineUp {
         }
 
         try {
-            //Kapit�n + kicker
+            //Kapitï¿½n + kicker
             m_iKicker = Integer.parseInt(properties.getProperty("kicker1", "0"));
             m_iKapitaen = Integer.parseInt(properties.getProperty("captain", "0"));
         } catch (Exception e) {
@@ -262,7 +262,7 @@ public  class Aufstellung implements plugins.ILineUp {
     //    }
 
     /**
-     * errechnet die Gesamt AW St�rke
+     * errechnet die Gesamt AW Stï¿½rke
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param mitForm TODO Missing Constructuor Parameter Documentation
@@ -301,7 +301,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * bestimmt automatisch den Kapit�n
+     * bestimmt automatisch den Kapitï¿½n
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
@@ -328,7 +328,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * bestimmt den Standard sch�tzen
+     * bestimmt den Standard schï¿½tzen
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
@@ -404,7 +404,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * errechnet anhand der aktuellen Aufstellung die besten Elfersch�tzen
+     * errechnet anhand der aktuellen Aufstellung die besten Elferschï¿½tzen
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -454,7 +454,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * errechnet die Gesamt St�rke
+     * errechnet die Gesamt Stärke
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param mitForm TODO Missing Constructuor Parameter Documentation
@@ -670,7 +670,7 @@ public  class Aufstellung implements plugins.ILineUp {
 		return (int) (((x - 1.0f) * 4.0f) + 1.0f);
 	}
     /**
-     * errechnet die Gesamt MF St�rke
+     * errechnet die Gesamt MF Stï¿½rke
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param mitForm TODO Missing Constructuor Parameter Documentation
@@ -716,7 +716,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Gibt den Namen f�r das System zur�ck
+     * Gibt den Namen fï¿½r das System zurï¿½ck
      *
      * @param system TODO Missing Constructuor Parameter Documentation
      *
@@ -840,7 +840,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Gibt die Spielerposition zu der Id zur�ck
+     * Gibt die Spielerposition zu der Id zurï¿½ck
      *
      * @param id TODO Missing Constructuor Parameter Documentation
      *
@@ -858,7 +858,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Gibt die Spielerposition zu der SpielerId zur�ck
+     * Gibt die Spielerposition zu der SpielerId zurï¿½ck
      *
      * @param spielerid TODO Missing Constructuor Parameter Documentation
      *
@@ -940,7 +940,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * errechnet die Gesamt ST St�rke
+     * errechnet die Gesamt ST Stï¿½rke
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param mitForm TODO Missing Constructuor Parameter Documentation
@@ -957,7 +957,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Setzt einen Spieler in eine Position und sorgt daf�r, da� er nicht noch woanders
+     * Setzt einen Spieler in eine Position und sorgt dafï¿½r, daï¿½ er nicht noch woanders
      * aufgestellt ist
      *
      * @param positionsid TODO Missing Constructuor Parameter Documentation
@@ -980,7 +980,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Setzt einen Spieler in eine Position und sorgt daf�r, da� er nicht noch woanders
+     * Setzt einen Spieler in eine Position und sorgt dafï¿½r, daï¿½ er nicht noch woanders
      * aufgestellt ist
      *
      * @param positionsid TODO Missing Constructuor Parameter Documentation
@@ -1002,14 +1002,14 @@ public  class Aufstellung implements plugins.ILineUp {
         final SpielerPosition position = getPositionById(positionsid);
         position.setSpielerId(spielerid);
 
-        //Ist der Spielf�hrer und der Kicker noch aufgestellt?
+        //Ist der Spielfï¿½hrer und der Kicker noch aufgestellt?
         if (!isSpielerAufgestellt(m_iKapitaen)) {
-            //Spielf�hrer entfernen
+            //Spielfï¿½hrer entfernen
             m_iKapitaen = 0;
         }
 
         if (!isSpielerAufgestellt(m_iKicker)) {
-            //Spielf�hrer entfernen
+            //Spielfï¿½hrer entfernen
             m_iKicker = 0;
         }
     }
@@ -1049,7 +1049,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Gibt den Namen f�r das System zur�ck
+     * Gibt den Namen fï¿½r das System zurï¿½ck
      *
      * @param system TODO Missing Constructuor Parameter Documentation
      *
@@ -1060,7 +1060,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * errechnet die Gesamt TW St�rke
+     * errechnet die Gesamt TW Stï¿½rke
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param mitForm TODO Missing Constructuor Parameter Documentation
@@ -1136,7 +1136,7 @@ public  class Aufstellung implements plugins.ILineUp {
     /**
      * liefert die Team erfahrung des Systems
      *
-     * @return ERfahrung -1 wenn unsinniges System gew�hlt ist
+     * @return ERfahrung -1 wenn unsinniges System gewï¿½hlt ist
      */
     public final int getTeamErfahrung4AktuellesSystem() {
         int erfahrung = -1;
@@ -1188,7 +1188,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * pr�ft ob die aufgestellten Spieler noch implements KAder sind
+     * prï¿½ft ob die aufgestellten Spieler noch implements KAder sind
      */
     public final void checkAufgestellteSpieler() {
         SpielerPosition pos = null;
@@ -1214,8 +1214,8 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param spieler die aufszustellenden Spieler
      * @param reihenfolge Reihenfolge in der die Mannschaftsteile besetzt werden sollen
-     * @param mitForm Formber�cksichtigung
-     * @param idealPosFirst IdealPosition ber�cksichtigen ?
+     * @param mitForm Formberï¿½cksichtigung
+     * @param idealPosFirst IdealPosition berï¿½cksichtigen ?
      * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
      * @param ignoreSperren TODO Missing Constructuor Parameter Documentation
      * @param wetterBonus TODO Missing Constructuor Parameter Documentation
@@ -1429,7 +1429,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * l�dt dei Aufstellung
+     * lï¿½dt dei Aufstellung
      *
      * @param name TODO Missing Constructuor Parameter Documentation
      */
@@ -1444,7 +1444,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * l�dt dei Aufstellung
+     * lï¿½dt dei Aufstellung
      */
     public final void load4HRF() {
         final Aufstellung temp = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(HOVerwaltung.instance()
@@ -1463,7 +1463,7 @@ public  class Aufstellung implements plugins.ILineUp {
     /////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * L�dt ein System aus der Datenbank ein
+     * Lï¿½dt ein System aus der Datenbank ein
      *
      * @param name TODO Missing Constructuor Parameter Documentation
      */
@@ -1479,14 +1479,14 @@ public  class Aufstellung implements plugins.ILineUp {
     /////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * l�scht die aufgestellten Spieler
+     * lï¿½scht die aufgestellten Spieler
      */
     public final void resetAufgestellteSpieler() {
         m_clAssi.resetPositionsbesetzungen(m_vPositionen);
     }
 
     /**
-     * l�scht die Reservespieler
+     * lï¿½scht die Reservespieler
      */
     public final void resetReserveBank() {
         //Nur Reservespieler
@@ -1604,7 +1604,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * berechnet die stk des Spielers f�r die angegebene Position
+     * berechnet die stk des Spielers fï¿½r die angegebene Position
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param spielerId TODO Missing Constructuor Parameter Documentation
@@ -1628,7 +1628,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * berechnet die STK-Summe aller aufgestllten Spieler f�r diese Position
+     * berechnet die STK-Summe aller aufgestllten Spieler fï¿½r diese Position
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param position TODO Missing Constructuor Parameter Documentation
@@ -1677,7 +1677,7 @@ public  class Aufstellung implements plugins.ILineUp {
         }
 
         if (m_iKapitaen > 0) {
-            HOLogger.instance().log(getClass(),"Kapit�n : "
+            HOLogger.instance().log(getClass(),"Kapitï¿½n : "
                                + HOVerwaltung.instance().getModel().getSpieler(m_iKapitaen).getName());
         }
 

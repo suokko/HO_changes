@@ -48,7 +48,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     }
 
     /**
-     * Führt einen SQL select - befehl aus
+     * FÃ¼hrt einen SQL select - befehl aus
      *
      * @param Sql Sql query
      *

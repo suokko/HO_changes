@@ -67,7 +67,7 @@ public class xmlPlayersParser {
             root = (Element) root.getElementsByTagName("Team").item(0);
             root = (Element) root.getElementsByTagName("PlayerList").item(0);
 
-            //Eintr‰ge adden
+            //Eintr√§ge adden
             list = root.getElementsByTagName("Player");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {
@@ -76,7 +76,7 @@ public class xmlPlayersParser {
                 //Root setzen
                 root = (Element) list.item(i);
 
-                //ht f¸llen
+                //ht f√ºllen
                 ele = (Element) root.getElementsByTagName("PlayerID").item(0);
                 hash.put("PlayerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("PlayerName").item(0);
@@ -88,7 +88,7 @@ public class xmlPlayersParser {
                 ele = (Element) root.getElementsByTagName("AgeDays").item(0);
                 hash.put("AgeDays", (XMLManager.instance().getFirstChildNodeValue(ele)));
 
-                //TSI lˆste Marktwert ab!
+                //TSI l√∂ste Marktwert ab!
                 ele = (Element) root.getElementsByTagName("TSI").item(0);
                 hash.put("MarketValue", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("PlayerForm").item(0);

@@ -24,25 +24,25 @@ public abstract class PrintObject extends JPanel implements Printable {
     /** TODO Missing Parameter Documentation */
     protected PageFormat pf;
 
-    // Druckbereich (obere linke Ecke, Breite, Höhe)
+    // Druckbereich (obere linke Ecke, Breite, HÃ¶he)
 
     /** TODO Missing Parameter Documentation */
     protected double dh;
 
-    // Druckbereich (obere linke Ecke, Breite, Höhe)
+    // Druckbereich (obere linke Ecke, Breite, HÃ¶he)
 
     /** TODO Missing Parameter Documentation */
     /** TODO Missing Parameter Documentation */
     protected double dw;
 
-    // Druckbereich (obere linke Ecke, Breite, Höhe)
+    // Druckbereich (obere linke Ecke, Breite, HÃ¶he)
 
     /** TODO Missing Parameter Documentation */
     /** TODO Missing Parameter Documentation */
     /** TODO Missing Parameter Documentation */
     protected double dx;
 
-    // Druckbereich (obere linke Ecke, Breite, Höhe)
+    // Druckbereich (obere linke Ecke, Breite, HÃ¶he)
 
     /** TODO Missing Parameter Documentation */
     /** TODO Missing Parameter Documentation */
@@ -77,10 +77,10 @@ public abstract class PrintObject extends JPanel implements Printable {
      * @param pf TODO Missing Constructuor Parameter Documentation
      */
     public PrintObject(PageFormat pf) {
-        // Werte übernehmen
+        // Werte Ã¼bernehmen
         this.pf = pf;
 
-        // Papiergrösse
+        // PapiergrÃ¶sse
         pw = pf.getWidth();
         ph = pf.getHeight();
 
@@ -90,7 +90,7 @@ public abstract class PrintObject extends JPanel implements Printable {
         dh = pf.getImageableHeight();
         dw = pf.getImageableWidth();
 
-        // Grösse des Panels festlegen
+        // GrÃ¶sse des Panels festlegen
         setPreferredSize(new Dimension((int) ((pw + (2 * sr)) /*zoomfaktor*/),
                                        (int) ((ph + (2 * sr)) /*zoomfaktor*/)));
     }

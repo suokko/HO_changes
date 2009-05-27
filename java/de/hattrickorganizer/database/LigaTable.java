@@ -44,7 +44,7 @@ public final class LigaTable extends AbstractTable {
 		final String[] awhereV = { "" + hrfId };
 
 		if (liga != null) {
-			//erst Vorhandene Aufstellung löschen
+			//erst Vorhandene Aufstellung lÃ¶schen
 			delete( awhereS, awhereV );
 			//insert vorbereiten
 			statement = "INSERT INTO "+getTableName()+" ( LigaName , Punkte , ToreFuer , ToreGegen , Platz , Spieltag , HRF_ID ) VALUES(";
@@ -55,7 +55,7 @@ public final class LigaTable extends AbstractTable {
 	}
 	
 	/**
-	 * Gibt alle bekannten Ligaids zurück
+	 * Gibt alle bekannten Ligaids zurÃ¼ck
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -87,7 +87,7 @@ public final class LigaTable extends AbstractTable {
 	}
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *

@@ -7,15 +7,15 @@ import java.text.SimpleDateFormat;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
- * Hält die Daten für ein Spiel für die Arenastatistik
+ * HÃ¤lt die Daten fÃ¼r ein Spiel fÃ¼r die Arenastatistik
  */
 public class ArenaStatistikModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** Name des Teams zu dem die Matchinfo gehört */
+    /** Name des Teams zu dem die Matchinfo gehÃ¶rt */
     protected String m_sGastName = "";
 
-    /** Name des Teams zu dem die Matchinfo gehört */
+    /** Name des Teams zu dem die Matchinfo gehÃ¶rt */
     protected String m_sHeimName = "";
 
     /** Datum des spiels */

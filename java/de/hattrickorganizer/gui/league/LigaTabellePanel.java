@@ -33,7 +33,7 @@ import de.hattrickorganizer.model.matchlist.Spielplan;
 
 
 /**
- * Panel, das die Ligatabelle sowie das letzte und das n‰chste Spiel enth‰lt
+ * Panel, das die Ligatabelle sowie das letzte und das n√§chste Spiel enth√§lt
  */
 public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemListener,
                                                             ActionListener, MouseListener,
@@ -269,7 +269,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
      * TODO Missing Method Documentation
      */
     private void fillSaisonCB() {
-        //Die Spielpl‰ne als Objekte mit den Paarungen holen
+        //Die Spielpl√§ne als Objekte mit den Paarungen holen
         final Spielplan[] spielplaene = de.hattrickorganizer.database.DBZugriff.instance()
                                                                                .getAllSpielplaene(true);
 
@@ -280,7 +280,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         //Alle alten Saisons entfernen
         m_jcbSaison.removeAllItems();
 
-        //Neue f¸llen
+        //Neue f√ºllen
         for (int i = 0; (spielplaene != null) && (i < spielplaene.length); i++) {
             m_jcbSaison.addItem(spielplaene[i]);
         }
@@ -332,7 +332,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     private void initComponents() {
         setLayout(new BorderLayout());
 
-        //ComboBox f¸r Saisonauswahl
+        //ComboBox f√ºr Saisonauswahl
         final JPanel panel = new ImagePanel(new BorderLayout());
 
         final JPanel cbpanel = new ImagePanel(null);

@@ -2,7 +2,7 @@
 /*
  * XMLMenuParser.java
  *
- * Created on 12. März 2004, 07:53
+ * Created on 12. MÃ¤rz 2004, 07:53
  */
 package de.hattrickorganizer.logik.xml;
 
@@ -96,7 +96,7 @@ public class XMLMenuParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("RecommendedURL").item(0);
 
             String ip = ele.getFirstChild().getNodeValue();

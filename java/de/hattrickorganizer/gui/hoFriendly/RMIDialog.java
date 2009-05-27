@@ -25,7 +25,7 @@ import de.hattrickorganizer.net.MyConnector;
 
 
 /**
- * Dialog für IP und Port / Server oder Client
+ * Dialog fÃ¼r IP und Port / Server oder Client
  */
 public class RMIDialog extends JDialog implements ActionListener, KeyListener,
                                                   ListSelectionListener

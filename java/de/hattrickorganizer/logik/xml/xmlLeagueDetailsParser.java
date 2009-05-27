@@ -69,12 +69,12 @@ public class xmlLeagueDetailsParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen            
+            //Daten fÃ¼llen            
             //root  =   (Element) root.getElementsByTagName ( "Team" ).item (0);    
             ele = (Element) root.getElementsByTagName("LeagueLevelUnitName").item(0);
             hash.put("LeagueLevelUnitName", (XMLManager.instance().getFirstChildNodeValue(ele)));
 
-            //Einträge adden
+            //EintrÃ¤ge adden
             list = root.getElementsByTagName("Team");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {

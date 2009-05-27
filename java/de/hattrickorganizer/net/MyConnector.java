@@ -219,7 +219,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt die IP Adress-Seite
+	 * l√§dt die IP Adress-Seite
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 *
@@ -262,7 +262,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt die Tabelle
+	 * l√§dt die Tabelle
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 *
@@ -276,9 +276,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt den Spielplan
+	 * l√§dt den Spielplan
 	 *
-	 * @param season angabe der Saison ( optinal &lt; 1 f¸r aktuelle
+	 * @param season angabe der Saison ( optinal &lt; 1 f√ºr aktuelle
 	 * @param ligaID TODO Missing Constructuor Parameter Documentation
 	 *
 	 * @return TODO Missing Return Method Documentation
@@ -301,7 +301,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt das MatchArchiv als xml
+	 * l√§dt das MatchArchiv als xml
 	 *
 	 * @param teamId TODO Missing Constructuor Parameter Documentation
 	 * @param firstDate TODO Missing Constructuor Parameter Documentation
@@ -332,9 +332,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt den Die Aufstellungsbewertung zu einem Spiel
+	 * l√§dt den Die Aufstellungsbewertung zu einem Spiel
 	 *
-	 * @param matchId angabe der Saison ( optinal &lt; 1 f¸r aktuelle
+	 * @param matchId angabe der Saison ( optinal &lt; 1 f√ºr aktuelle
 	 * @param teamId TODO Missing Constructuor Parameter Documentation
 	 *
 	 * @return TODO Missing Return Method Documentation
@@ -357,9 +357,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt den Die Aufstellung zu einem Spiel
+	 * l√§dt den Die Aufstellung zu einem Spiel
 	 *
-	 * @param matchId angabe der Saison ( optinal &lt; 1 f¸r aktuelle
+	 * @param matchId angabe der Saison ( optinal &lt; 1 f√ºr aktuelle
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 *
@@ -373,9 +373,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt den Die Aufstellungsbewertung zu einem Spiel
+	 * l√§dt den Die Aufstellungsbewertung zu einem Spiel
 	 *
-	 * @param matchId angabe der Saison ( optinal &lt; 1 f¸r aktuelle
+	 * @param matchId angabe der Saison ( optinal &lt; 1 f√ºr aktuelle
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 *
@@ -393,7 +393,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * l‰dt die matches.asp seite als xml
+	 * l√§dt die matches.asp seite als xml
 	 *
 	 * @param teamId TODO Missing Constructuor Parameter Documentation
 	 * @param forceRefresh TODO Missing Constructuor Parameter Documentation
@@ -562,7 +562,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * holt die Liste der verf¸gbaren Server aus der I-Net-Server-DB
+	 * holt die Liste der verf√ºgbaren Server aus der I-Net-Server-DB
 	 *
 	 * @return Array-Liste mit ServerVerweis Objekten
 	 */
@@ -583,7 +583,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			HOLogger.instance().log(getClass(),"MyConnector.getServerList: Kein Connect zur FriendlyDB" + e);
 		}
 
-		//gleich Eintr‰ge erstellen
+		//gleich Eintr√§ge erstellen
 		for (int i = 0; i < (list.length - 1); i++) {
 			server[i] = new ServerVerweis(list[i]);
 		}
@@ -628,7 +628,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	//get-HTML-Files
 	////////////////////////////////////////////////////////////////////////////////
 	//    /**
-	//     *l‰dt das HRF
+	//     *l√§dt das HRF
 	//     */
 	//    public String getHRF() throws IOException
 	//    {
@@ -694,7 +694,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	//    }
 
 	/**
-	 * l‰dt die Tabelle
+	 * l√§dt die Tabelle
 	 *
 	 * @param playerID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1255,7 +1255,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * holt die Liste der verf¸gbaren Server aus der I-Net-Server-DB
+	 * holt die Liste der verf√ºgbaren Server aus der I-Net-Server-DB
 	 *
 	 * @param sb TODO Missing Constructuor Parameter Documentation
 	 * @param isServer TODO Missing Constructuor Parameter Documentation
@@ -1269,7 +1269,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		//Verhindern das eigen Spiele gesendet werden!
 		if ((sb == null)
 			|| (sb.Heim().getTeamName().trim().equals(sb.Gast().getTeamName().trim()))) {
-			//Kein Send nˆtig return success
+			//Kein Send n√∂tig return success
 			return true;
 		}
 
@@ -1309,7 +1309,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			request += "&isHome=";
 			request += ((isServer) ? "1" : "0");
 
-			//noch unused , f¸r sp‰ter reserviert
+			//noch unused , f√ºr sp√§ter reserviert
 			request += "&CupID=0";
 
 			//HOLogger.instance().log(getClass(), request );
@@ -1324,7 +1324,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * Informiert die DB das der Server nicht mehr zur verf¸gung steht
+	 * Informiert die DB das der Server nicht mehr zur verf√ºgung steht
 	 *
 	 * @param matchId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1421,7 +1421,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		httpurlconnection.setRequestProperty("accept-encoding", "gzip, deflate");
 		httpurlconnection.setRequestProperty("user-agent", m_sIDENTIFIER);
 
-		//Host einfach ¸bernehmen
+		//Host einfach √ºbernehmen
 		httpurlconnection.setRequestProperty("host", httpurlconnection.getURL().getHost());
 
 		//ProxyAuth hier einbinden da diese Funk immer aufgerufen wird

@@ -56,7 +56,7 @@ public class StatistikPanel extends JPanel {
     private boolean hilfslinien = true;
     private boolean m_bMaxMinBerechnen;
 
-    //Seitenabstände bis zum Koordinatenkreuzanfang
+    //SeitenabstÃ¤nde bis zum Koordinatenkreuzanfang
     //Dynamisch berechnen
     private int SL = 60;
 
@@ -82,7 +82,7 @@ public class StatistikPanel extends JPanel {
      * Maximaler Konstruktor
      *
      * @param hilfslinien Vertikale und Horizontale Linien durch den Graphen
-     * @param yAchseBeschriftung Wert, mit der die x-Achse zu zählen anfängt
+     * @param yAchseBeschriftung Wert, mit der die x-Achse zu zÃ¤hlen anfÃ¤ngt
      * @param yAchseFormat Der Wertabstand der x-Achse zwischen 2 Werten
      * @param xBezeichner Bezeichnung der x-Achse
      * @param yBezeichner Bezeichnung der y-Achse
@@ -227,7 +227,7 @@ public class StatistikPanel extends JPanel {
         }
     }
 
-    // gibt ein String zurück, der einen double-Wert mit n Nachkommastellen repräsentiert
+    // gibt ein String zurÃ¼ck, der einen double-Wert mit n Nachkommastellen reprÃ¤sentiert
     public final String formatedDouble(double d, byte n) {
         final String sHilf = Double.toString(d);
         String sResultValue = "";
@@ -298,7 +298,7 @@ public class StatistikPanel extends JPanel {
             g.drawString(yBezeichner, 8, 18);
             g.drawString(xBezeichner, b - 150, h - 8);
 
-            //Höchster Wert in der Menge
+            //HÃ¶chster Wert in der Menge
             double max = 20;
             double min = 0;
             double maxohneFaktor = 20;
@@ -321,11 +321,11 @@ public class StatistikPanel extends JPanel {
             maxohneFaktor = maxFinder(false);
             minohneFaktor = minFinder(false);
 
-            //Höhe der x-Achse bestimmen
+            //HÃ¶he der x-Achse bestimmen
             final int xHoehe = (int) (((h - SU - SO) / 2) + SO
                                + ((max + min) * (((h - SU - SO) / 2) / (max - min))));
 
-            //#############SL abhängig von max###############################+++++++++++++
+            //#############SL abhÃ¤ngig von max###############################+++++++++++++
             if ((m_clStatistikModel != null)
                 && (m_clStatistikModel.length > 0)
                 && (m_clStatistikModel[0] != null)) {
@@ -361,7 +361,7 @@ public class StatistikPanel extends JPanel {
                                 + 10)));
 
                 for (int i = yStriche; i >= 0; i--) {
-                    //Striche y zeichnen: Höhe - Abstand vom unteren Rand - Vielfaches des Strichabstandes
+                    //Striche y zeichnen: HÃ¶he - Abstand vom unteren Rand - Vielfaches des Strichabstandes
                     if (hilfslinien) {
                         g.setColor(Color.lightGray);
                         g.drawLine(SL + 5, (int) (h - SU - (yAbstand * i)), b - SR,

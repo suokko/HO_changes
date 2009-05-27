@@ -9,7 +9,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Allgemeine Informationen über den Verein
+ * Allgemeine Informationen Ã¼ber den Verein
  */
 public final class Verein implements plugins.IVerein {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ public final class Verein implements plugins.IVerein {
     /** Jungendspieler gezogen */
     private boolean m_bYouthPull;
 
-    /** Ärzte */
+    /** Ã„rzte */
     private int m_iAerzte;
 
     /** Co-Trainer */
@@ -65,7 +65,7 @@ public final class Verein implements plugins.IVerein {
     /** Torwarttrainer */
     private int m_iTorwartTrainer;
 
-    /** Ungeschlagen für # Spiele */
+    /** Ungeschlagen fÃ¼r # Spiele */
     private int m_iUngeschlagen;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -455,7 +455,7 @@ public final class Verein implements plugins.IVerein {
 
             //Keine TMP Player bei Friendly's zulassen
             if ((position != null) && (player.getSpielerID() > 0)) {
-                //Abähngig von Id pos speichern oder Reserve Codierung
+                //AbÃ¤hngig von Id pos speichern oder Reserve Codierung
                 switch (position.getId()) {
                     case ISpielerPosition.substBack:
                         pos = ServerSpieler.BANK_AB;
@@ -482,7 +482,7 @@ public final class Verein implements plugins.IVerein {
                         break;
                 }
             } else {
-                //Nur echte Spieler + Aufgestellte + Bank berücksichtigen!
+                //Nur echte Spieler + Aufgestellte + Bank berÃ¼cksichtigen!
                 continue;
             }
 

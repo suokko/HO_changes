@@ -23,7 +23,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
 /**
- * Ein Dialog mit allen Optionen für HO
+ * Ein Dialog mit allen Optionen fÃ¼r HO
  */
 public class OptionenDialog extends JDialog implements WindowListener, ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------

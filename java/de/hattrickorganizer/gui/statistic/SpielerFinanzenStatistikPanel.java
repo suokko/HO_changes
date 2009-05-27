@@ -322,7 +322,7 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
 
         java.util.Arrays.sort(spielerAllCBItems);
 
-        //Zusammenfügen
+        //ZusammenfÃ¼gen
         final de.hattrickorganizer.gui.model.SpielerCBItem[] cbItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spielerCBItems.length
                                                                        + spielerAllCBItems.length
                                                                        + 1];

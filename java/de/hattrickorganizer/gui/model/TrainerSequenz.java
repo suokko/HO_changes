@@ -38,7 +38,7 @@ public class TrainerSequenz {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt den aktuellen Durchlauf zurück
+     * Gibt den aktuellen Durchlauf zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -47,7 +47,7 @@ public class TrainerSequenz {
     }
 
     /**
-     * Gibt den Index des aktuellen ImageSequenzItems zurück
+     * Gibt den Index des aktuellen ImageSequenzItems zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -56,7 +56,7 @@ public class TrainerSequenz {
     }
 
     /**
-     * Gibt das nächste ImageSequenzItem in der Reihe zurück
+     * Gibt das nÃ¤chste ImageSequenzItem in der Reihe zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -65,7 +65,7 @@ public class TrainerSequenz {
         if (m_vImageSequenzItems.size() > (m_iAktuellesImage + 1)) {
             m_iAktuellesImage++;
         }
-        //Sonst wieder von vorne Anfangen und Aktuellen Durchlauf Counter erhöhen
+        //Sonst wieder von vorne Anfangen und Aktuellen Durchlauf Counter erhÃ¶hen
         else {
             m_iAktuellerDurchlauf++;
             m_iAktuellesImage = 0;
@@ -75,7 +75,7 @@ public class TrainerSequenz {
     }
 
     /**
-     * Dupliziert die Sequenz, damit nicht mehrere TrainerPanels auf eine Sequenz zurückgreifen
+     * Dupliziert die Sequenz, damit nicht mehrere TrainerPanels auf eine Sequenz zurÃ¼ckgreifen
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -101,7 +101,7 @@ public class TrainerSequenz {
     }
 
     /**
-     * Setzt die Counter für das Aktuelle Bild und den Aktuellen Durchlauf zurück
+     * Setzt die Counter fÃ¼r das Aktuelle Bild und den Aktuellen Durchlauf zurÃ¼ck
      */
     public final void resetCounters() {
         m_iAktuellesImage = -1;

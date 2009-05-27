@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 
 /**
- * Erzeugt einen PartikelEffekt für Magische Ereignisse
+ * Erzeugt einen PartikelEffekt fÃ¼r Magische Ereignisse
  *
  * @author Volker Fischer
  * @version 0.2a 09.10.01

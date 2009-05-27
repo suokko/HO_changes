@@ -239,7 +239,7 @@ public class LigaTabelle implements ILigaTabelle {
     }
 
     /*
-     *Sortiert die Eintr‰ge
+     *Sortiert die Eintr√§ge
      */
     public final void sort() {
         LigaTabellenEintrag[] list = new LigaTabellenEintrag[m_vEintraege.size()];
@@ -252,10 +252,10 @@ public class LigaTabelle implements ILigaTabelle {
             list[i].setPosition(i + 1);
         }
 
-        //aufr‰umen
+        //aufr√§umen
         m_vEintraege.clear();
 
-        //zur¸ckkopieren
+        //zur√ºckkopieren
         MyHelper.copyArray2Vector(list, m_vEintraege);
         list = null;
     }

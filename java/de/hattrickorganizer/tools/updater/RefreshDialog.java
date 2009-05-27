@@ -141,7 +141,7 @@ final class RefreshDialog extends UpdaterDialog {
                 }
             }
 
-            // wenn pluginVersion höher dann rot
+            // wenn pluginVersion hÃ¶her dann rot
             if (HOMainFrame.VERSION < ((HPPluginInfo) object[i]).getHoversionAsDouble()) {
                 value[i][3] = +((HPPluginInfo) object[i]).getVersion() + " (HO "
                               + ((HPPluginInfo) object[i]).getHoversion() + " )";
@@ -192,7 +192,7 @@ final class RefreshDialog extends UpdaterDialog {
                             continue;
                         }
 
-                        // Wenn schon installiert, dann lösche vorher
+                        // Wenn schon installiert, dann lÃ¶sche vorher
                         if (officialPlugin != null) {
                             deletePlugin(officialPlugin, false);
                         }
@@ -277,7 +277,7 @@ final class RefreshDialog extends UpdaterDialog {
 						
                         ok = true;
                     } else {
-                        // überprüfen, ob die aktuelleste Version und wenn nicht
+                        // Ã¼berprÃ¼fen, ob die aktuelleste Version und wenn nicht
                         // installieren
                         Object[] runplugins = HelperWrapper.instance().getPlugins().toArray();
 

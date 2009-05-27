@@ -31,10 +31,10 @@ public class SpielstandPanel extends JPanel {
     //Name der Heimmannschaft
     private String m_sHeimmannschaft = "";
 
-    //Vector mit CBItem ( Spielername + Spielminute ) für ein Tor der Gastmannschaft
+    //Vector mit CBItem ( Spielername + Spielminute ) fÃ¼r ein Tor der Gastmannschaft
     private Vector m_vGasttore = new Vector();
 
-    //Vector mit CBItem ( Spielername + Spielminute ) für ein Tor der Heimmannschaft
+    //Vector mit CBItem ( Spielername + Spielminute ) fÃ¼r ein Tor der Heimmannschaft
     private Vector m_vHeimtore = new Vector();
     private int HORIZONTALOFFSET = 30;
 

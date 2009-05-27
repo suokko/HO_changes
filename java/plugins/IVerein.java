@@ -2,7 +2,7 @@
 package plugins;
 
 /**
- * Allgemeine Informationen über den Verein Stores hrf data to club
+ * Allgemeine Informationen Ã¼ber den Verein Stores hrf data to club
  */
 public interface IVerein {
     //~ Methods ------------------------------------------------------------------------------------

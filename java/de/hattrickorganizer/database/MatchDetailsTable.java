@@ -61,7 +61,7 @@ public final class MatchDetailsTable extends AbstractTable {
 	}	
 
 	/**
-	 * Gibt die MatchDetails zu einem Match zurück
+	 * Gibt die MatchDetails zu einem Match zurÃ¼ck
 	 *
 	 * @param matchId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -129,7 +129,7 @@ public final class MatchDetailsTable extends AbstractTable {
 	 */
 	public void storeMatchDetails(Matchdetails details) {
 		if (details != null) {
-			//Vorhandene Einträge entfernen
+			//Vorhandene EintrÃ¤ge entfernen
 			final String[] where = { "MatchID" };
 			final String[] werte = { "" + details.getMatchID()};
 			delete(where, werte);

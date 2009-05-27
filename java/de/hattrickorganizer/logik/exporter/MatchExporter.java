@@ -49,7 +49,7 @@ public class MatchExporter {
 
 		IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(HOMiniModel.instance().getBasics().getTeamId());
 
-		//Alle matches pr�fen        
+		//Alle matches prï¿½fen        
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
 			//details holen
 			IMatchDetails details = HOMiniModel.instance().getMatchDetails(matches[i].getMatchID());
@@ -70,10 +70,10 @@ public class MatchExporter {
 					//MatchDaten zum Spieler holen
 					plugins.IMatchLineupPlayer player = (IMatchLineupPlayer) aufstellung.get(k);
 
-					//Alte Werte zum Spieler holen f�r das Matchdate
+					//Alte Werte zum Spieler holen fï¿½r das Matchdate
 					plugins.ISpieler formerPlayerData = null;
 
-					//Bankl + verlketzte �berspringen
+					//Bankl + verlketzte ï¿½berspringen
 					if (player.getId() >= ISpielerPosition.beginnReservere) {
 						continue;
 					}
@@ -82,7 +82,7 @@ public class MatchExporter {
 						HOMiniModel.instance().getSpielerAtDate(player.getSpielerId(),matches[i].getMatchDateAsTimestamp());
 
 
-					//Keine Daten verf�gbar ?
+					//Keine Daten verfï¿½gbar ?
 					if (formerPlayerData == null) {
 						//Abbruch
 						dataOK = false;
@@ -128,7 +128,7 @@ public class MatchExporter {
 			return false;
 		} else //Datum i.O. weitere checks fahren
 			{
-			//Highlights pr�fen auf Verletzung, Rote Karte, Verwirrung, Untersch�tzung
+			//Highlights prüfen auf Verletzung, Rote Karte, Verwirrung, Unterschätzung
 			for (int j = 0;(highlights != null) && (j < highlights.size()); j++) {
 				plugins.IMatchHighlight hlight = (IMatchHighlight) highlights.get(j);
 				// Check Highlights for our team only

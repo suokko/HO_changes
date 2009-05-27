@@ -175,12 +175,12 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
     }
 
     /**
-     * Drucken der Spielerübersicht
+     * Drucken der SpielerÃ¼bersicht
      */
     private void drucken() {
         try {
             //Damit nur bestimmte Spalten gedruckt werden ist eine spezielle Tabelle notwendig.
-            //Das Scrollpane benötigt man, damit die Spaltenbeschriftung auch angezeigt wird.
+            //Das Scrollpane benÃ¶tigt man, damit die Spaltenbeschriftung auch angezeigt wird.
             final SpielerUebersichtPrintTable table = new SpielerUebersichtPrintTable(m_clTable);
             final JScrollPane scrollPane = new JScrollPane(table);
             scrollPane.setPreferredSize(new Dimension(table.getPreferredSize().width + 10,

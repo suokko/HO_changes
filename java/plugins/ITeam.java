@@ -2,7 +2,7 @@
 package plugins;
 
 /**
- * Enth�lt die Daten des Teams (nicht der Spieler!); Stores data from team section of HRF ( no
+ * Enthält die Daten des Teams (nicht der Spieler!); Stores data from team section of HRF ( no
  * players are stored here )
  */
 public interface ITeam {

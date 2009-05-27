@@ -57,14 +57,14 @@ public class ScoutThread implements Runnable {
                 ts2.setTime(se.getDeadline().getTime() - gui.UserParameter.instance().deadlineFrist
                             + difference);
 
-                //übersehene abgelaufen entfernen
+                //Ã¼bersehene abgelaufen entfernen
 
                 /*
                    if ( se.getDeadline ().before ( ts ) )
                    {
                        m_vScoutEintraege.removeElementAt ( i );
                        --i;
-                   }//in 5 min fällige anzeigen
+                   }//in 5 min fÃ¤llige anzeigen
                 
                    else */
                 if (ts2.before(ts) && !se.getDeadline().before(ts) && !se.isWecker()) {

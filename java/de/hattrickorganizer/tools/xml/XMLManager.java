@@ -99,7 +99,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
     /**
-     * parsed eine übergebene Datei
+     * parsed eine Ã¼bergebene Datei
      *
      * @param dateiname TODO Missing Constructuor Parameter Documentation
      *
@@ -111,7 +111,7 @@ public class XMLManager implements plugins.IXMLParser {
         Document doc = null;
 
         try {
-            //Validierung, Namensräume einschalten
+            //Validierung, NamensrÃ¤ume einschalten
             //factory.setValidating ( false );
             //factory.setNamespaceAware ( true );
             builder = factory.newDocumentBuilder();
@@ -126,7 +126,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
     /**
-     * parsed eine übergebene Datei
+     * parsed eine Ã¼bergebene Datei
      *
      * @param datei TODO Missing Constructuor Parameter Documentation
      *
@@ -138,7 +138,7 @@ public class XMLManager implements plugins.IXMLParser {
         Document doc = null;
 
         try {
-            //Validierung, Namensräume einschalten
+            //Validierung, NamensrÃ¤ume einschalten
             //factory.setValidating ( false );
             //factory.setNamespaceAware ( true );
             builder = factory.newDocumentBuilder();
@@ -153,7 +153,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
     /**
-     * parsed eine übergebene Datei
+     * parsed eine Ã¼bergebene Datei
      *
      * @param inputString TODO Missing Constructuor Parameter Documentation
      *
@@ -178,7 +178,7 @@ public class XMLManager implements plugins.IXMLParser {
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = null;
 
-            //Validierung, Namensräume einschalten
+            //Validierung, NamensrÃ¤ume einschalten
             //factory.setValidating ( false );
             //factory.setNamespaceAware ( true );
             builder = factory.newDocumentBuilder();
@@ -193,7 +193,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
     /**
-     * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
+     * speichert das Ã¼bergebene Dokument in der angegebenen Datei Datei wird Ã¼berschrieben falls
      * vorhanden
      *
      * @param doc TODO Missing Constructuor Parameter Documentation
@@ -255,7 +255,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
 	/**
-	 * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
+	 * speichert das Ã¼bergebene Dokument in der angegebenen Datei Datei wird Ã¼berschrieben falls
 	 * vorhanden
 	 *
 	 * @param doc TODO Missing Constructuor Parameter Documentation

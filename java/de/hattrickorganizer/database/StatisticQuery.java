@@ -109,7 +109,7 @@ public class StatisticQuery {
 	}
 
 	/**
-	 * Gibt die MatchDetails zu einem Match zurück
+	 * Gibt die MatchDetails zu einem Match zurÃ¼ck
 	 *
 	 * @param matchtyp TODO Missing Constructuor Parameter Documentation
 	 *
@@ -135,7 +135,7 @@ public class StatisticQuery {
 			switch (matchtyp) {
 				case ISpielePanel.NUR_EIGENE_SPIELE :
 
-					//Nix zu tun, da die teamId die einzige Einschränkung ist
+					//Nix zu tun, da die teamId die einzige EinschrÃ¤nkung ist
 					break;
 
 				case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
@@ -190,7 +190,7 @@ public class StatisticQuery {
 		arenamodels = new ArenaStatistikModel[liste.size()];
 		MyHelper.copyVector2Array(liste, arenamodels);
 
-		// Jetzt noch die Arenadate für die Zeit holen
+		// Jetzt noch die Arenadate fÃ¼r die Zeit holen
 		for (int i = 0; i < arenamodels.length; i++) {
 			final int hrfid = DBZugriff.instance().getHRFID4Date(arenamodels[i].getTimestampMatchDate());
 
@@ -205,7 +205,7 @@ public class StatisticQuery {
 				}
 				rs.close();
 
-				//Stadiongrösse
+				//StadiongrÃ¶sse
 				sql = "SELECT GesamtGr FROM " + StadionTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
 				if (rs.first()) {
@@ -278,7 +278,7 @@ public class StatisticQuery {
 		//ResultSet  rs = DBZugriff.instance().getAdapter().executeQuery( "SELECT * FROM Spieler WHERE HRF_ID>" + minid  + " AND Trainer=0 ORDER BY HRF_ID" );// Geht nicht -> + " ORDER BY SpielerID DESC" );
 		String statement = "SELECT * FROM SPIELER";
 
-		//Eine Gruppe gewählt
+		//Eine Gruppe gewÃ¤hlt
 		if (!gruppe.equals("")) {
 			statement += (" , SPIELERNOTIZ WHERE SPIELERNOTIZ.TeamInfoSmilie='" + gruppe + "' AND SPIELERNOTIZ.SpielerID=SPIELER.SpielerID AND");
 		} else {
@@ -332,7 +332,7 @@ public class StatisticQuery {
 						//summenwerte speichern
 						vWerte.add(summewerte);
 
-						//---Für neue HRF vorbereiten----
+						//---FÃ¼r neue HRF vorbereiten----
 						letzteHRFID = rs.getInt("HRF_ID");
 
 						summewerte = new double[anzahlSpalten];
@@ -353,11 +353,11 @@ public class StatisticQuery {
 					//Datum
 					summewerte[11] = rs.getTimestamp("Datum").getTime();
 
-					//Spieleranzahl pro HRF erhöhen
+					//Spieleranzahl pro HRF erhÃ¶hen
 					spielerProHRFID++;
 				}
 
-				//Die letzen werte noch übernehmen
+				//Die letzen werte noch Ã¼bernehmen
 				//summenwerte durch anzahl Spieler pro HRF teilen
 				for (int i = 0; i < (summewerte.length - 1); i++) {
 					summewerte[i] = summewerte[i] / spielerProHRFID;
@@ -401,7 +401,7 @@ public class StatisticQuery {
 		Vector<double[]> vWerte = new Vector<double[]>();
 
 		try {
-			//aktuelle Werte hinzufügen
+			//aktuelle Werte hinzufÃ¼gen
 			ResultSet rs =
 				DBZugriff.instance().getAdapter().executeQuery(
 					"SELECT FINANZEN.*, VEREIN.Fans FROM FINANZEN, VEREIN where FINANZEN.HRF_ID="
@@ -483,7 +483,7 @@ public class StatisticQuery {
 				}
 			}
 
-			//Zurückreferenzieren
+			//ZurÃ¼ckreferenzieren
 			vWerte = temp;
 
 			returnWerte = new double[anzahlSpalten][vWerte.size()];

@@ -2,7 +2,7 @@
 /*
  * IPlugin.java
  *
- * Created on 26. März 2004, 08:12
+ * Created on 26. MÃ¤rz 2004, 08:12
  */
 package plugins;
 

@@ -79,10 +79,10 @@ public class xmlWorldDetailsParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen            
+            //Daten fÃ¼llen            
             root = (Element) root.getElementsByTagName("LeagueList").item(0);
 
-            //Einträge adden
+            //EintrÃ¤ge adden
             list = root.getElementsByTagName("League");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {

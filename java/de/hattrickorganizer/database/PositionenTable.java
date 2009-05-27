@@ -27,7 +27,7 @@ public final class PositionenTable extends AbstractTable {
 	}
 	
 	/**
-	 * l‰dt System Positionen
+	 * l√§dt System Positionen
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 * @param sysName TODO Missing Constructuor Parameter Documentation

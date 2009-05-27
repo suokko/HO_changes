@@ -4,7 +4,7 @@ package de.hattrickorganizer.model;
 import de.hattrickorganizer.tools.HRFFileParser;
 
 /**
- * Enth�lt die Daten des Teams (nicht der Spieler!)
+ * Enthält die Daten des Teams (nicht der Spieler!)
  */
 public final class Team implements plugins.ITeam {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ public final class Team implements plugins.ITeam {
     //Member
     ////////////////////////////////////////////////////////////////////////////////
 
-    /** Trainingsintensit�t */
+    /** Trainingsintensität */
     private int m_iTrainingslevel;
 
     private int m_iStaminaTrainingPart;
@@ -115,7 +115,7 @@ public final class Team implements plugins.ITeam {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzur�ck
+     * Gibt den Namen zu einer Bewertung zurück
      *
      * @param level TODO Missing Constructuor Parameter Documentation
      *
@@ -159,7 +159,7 @@ public final class Team implements plugins.ITeam {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzur�ck
+     * Gibt den Namen zu einer Bewertung zurück
      *
      * @param level TODO Missing Constructuor Parameter Documentation
      *
@@ -215,7 +215,7 @@ public final class Team implements plugins.ITeam {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Gibt den Namen zu einer Bewertungzur�ck
+     * Gibt den Namen zu einer Trainingsart zurück
      *
      * @param type TODO Missing Constructuor Parameter Documentation
      *

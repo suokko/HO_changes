@@ -52,7 +52,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt die Ligaid zurück oder -1 für aktulleLigaid oder -2 für abbruch
+     * Gibt die Ligaid zurÃ¼ck oder -1 fÃ¼r aktulleLigaid oder -2 fÃ¼r abbruch
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -99,7 +99,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
      * @return TODO Missing Return Method Documentation
      */
     private Integer[] fillCB() {
-        //Alle möglichen LigaIDs holen
+        //Alle mÃ¶glichen LigaIDs holen
         return de.hattrickorganizer.database.DBZugriff.instance().getAllLigaIDs();
     }
 

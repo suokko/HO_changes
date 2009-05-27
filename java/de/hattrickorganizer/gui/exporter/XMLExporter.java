@@ -360,7 +360,7 @@ public class XMLExporter  {
 					IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
 					ISpieler playerData = (ISpieler) matchData.getPlayers().get(new Integer(playerMatch.getSpielerId()));
 
-					//Bankl + verlketzte �berspringen
+					//Bank + verletzte überspringen
 					if (playerMatch.getId() >= ISpielerPosition.beginnReservere) {
 						continue;
 					}
@@ -542,7 +542,7 @@ public class XMLExporter  {
 	}
 
 	/**
-	 * l�dt die Basics zum angegeben HRF file ein
+	 * lädt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 * @param system TODO Missing Constructuor Parameter Documentation

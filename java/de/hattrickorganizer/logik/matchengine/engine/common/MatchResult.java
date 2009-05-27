@@ -100,7 +100,7 @@ public class MatchResult implements IMatchResult {
 		}
 		resultDetail[(home * 5) + away]++;
 
-		//Werte zusamenz‰hlen
+		//Werte zusamenz√§hlen
 		homeGoals += matchHomeGoals;
 		homeChances += matchHomeChances;
 		guestGoals += matchGuestGoals;
@@ -144,7 +144,7 @@ public class MatchResult implements IMatchResult {
 		}
 		resultDetail[(home * 5) + away]++;
 
-		//Werte zusamenz‰hlen
+		//Werte zusamenz√§hlen
 		homeGoals += result.getHomeGoals();
 		homeChances += result.getHomeChances();
 		guestGoals += result.getGuestGoals();

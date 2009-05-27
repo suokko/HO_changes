@@ -28,7 +28,7 @@ import de.hattrickorganizer.tools.extension.StandingCreator;
 
 
 /**
- * Dialog, der den User den Download von verschiedenen Daten aus Hattrick heraus ermöglicht
+ * Dialog, der den User den Download von verschiedenen Daten aus Hattrick heraus ermÃ¶glicht
  */
 public class DownloadDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
         final JPanel speziellerDownload = new ImagePanel(new GridLayout(1, 1, 4, 4));
         speziellerDownload.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verschiedenes")));
 
-        //Alte Spielpläne
+        //Alte SpielplÃ¤ne
         final JPanel alteSpielplaenePanel = new ImagePanel(new BorderLayout());
 
         m_jchAlterSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_AlteLigatabelle"));
@@ -263,7 +263,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
             }
         }
 
-        //Als letztes, damit die Matches für die Trainingsberechnung schon vorhanden sind
+        //Als letztes, damit die Matches fÃ¼r die Trainingsberechnung schon vorhanden sind
         if (m_jchHRF.isSelected()) {
             de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker().getHrf();
         }

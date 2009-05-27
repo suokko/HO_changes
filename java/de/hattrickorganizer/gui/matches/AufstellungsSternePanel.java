@@ -17,7 +17,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Zeigt die Stärken und Aufstellung einer Mannschaft an
+ * Zeigt die StÃ¤rken und Aufstellung einer Mannschaft an
  */
 public class AufstellungsSternePanel extends RasenPanel {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ public class AufstellungsSternePanel extends RasenPanel {
     }
 
     /**
-     * Holt das Lineup für das Match und Team und aktualisiert die SpielerSternePanels
+     * Holt das Lineup fÃ¼r das Match und Team und aktualisiert die SpielerSternePanels
      *
      * @param matchid TODO Missing Constructuor Parameter Documentation
      * @param teamid TODO Missing Constructuor Parameter Documentation

@@ -30,8 +30,8 @@ class ComboBoxPanel extends ImagePanel {
      * DOCUMENT ME!
      *
      * @param text Text des Labels
-     * @param items Einträge in der ComboBox
-     * @param textbreite Breite, die für das Label vorgesehen ist.
+     * @param items EintrÃ¤ge in der ComboBox
+     * @param textbreite Breite, die fÃ¼r das Label vorgesehen ist.
      */
     protected ComboBoxPanel(String text, Object[] items, int textbreite) {
         m_iTextbreite = textbreite;

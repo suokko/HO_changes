@@ -102,7 +102,7 @@ public abstract class UserColumn {
 
 	/**
 	 * return the currently index of column
-	 * only actual if user don´t move the column !!
+	 * only actual if user donÂ´t move the column !!
 	 * @return int
 	 */
 	public final int getIndex() {

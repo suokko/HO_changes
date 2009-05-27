@@ -142,7 +142,7 @@ public class MatchEnginePanel extends ImagePanel implements plugins.IMatchPredic
     }
 
     ////////////////////////////////////////////////////////////////////////
-    //Methoden für das Interface!
+    //Methoden fÃ¼r das Interface!
 
     /**
      * Use this methode, if you have created your own matchresults. To calculate n matches use
@@ -155,7 +155,7 @@ public class MatchEnginePanel extends ImagePanel implements plugins.IMatchPredic
         //Beide Tabellen anpassen
         m_jtMatchResultTable.refresh(matchresults,isHomeMatch);
 
-        //Leeren, wird gefüllt durch Klick auf ein Spiel in der Anderen Tabelle
+        //Leeren, wird gefÃ¼llt durch Klick auf ein Spiel in der Anderen Tabelle
         m_jtMatchScoreTable.refresh(matchresults,isHomeMatch);
 		m_jtMatchScoreDiffTable.refresh(matchresults,isHomeMatch);
 

@@ -536,7 +536,7 @@ public class xmlMatchdetailsParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen            
+            //Daten fÃ¼llen            
             //MatchData
             root = (Element) root.getElementsByTagName("Match").item(0);
             root = (Element) root.getElementsByTagName("Arena").item(0);
@@ -568,7 +568,7 @@ public class xmlMatchdetailsParser {
         NodeList list = null;
 
         try {
-            //Daten füllen                        
+            //Daten fÃ¼llen                        
             root = doc.getDocumentElement();
             root = (Element) root.getElementsByTagName("Match").item(0);
             root = (Element) root.getElementsByTagName("Bookings").item(0);
@@ -613,7 +613,7 @@ public class xmlMatchdetailsParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             md.setFetchDatumFromString(ele.getFirstChild().getNodeValue());
 
@@ -643,7 +643,7 @@ public class xmlMatchdetailsParser {
         NodeList list = null;
 
         try {
-            //Daten füllen                        
+            //Daten fÃ¼llen                        
             root = doc.getDocumentElement();
             root = (Element) root.getElementsByTagName("Match").item(0);
             root = (Element) root.getElementsByTagName("Scorers").item(0);
@@ -690,7 +690,7 @@ public class xmlMatchdetailsParser {
         Element root = null;
 
         try {
-            //Daten füllen                        
+            //Daten fÃ¼llen                        
             root = doc.getDocumentElement();
             root = (Element) root.getElementsByTagName("Match").item(0);
             root = (Element) root.getElementsByTagName("AwayTeam").item(0);
@@ -742,7 +742,7 @@ public class xmlMatchdetailsParser {
                 ele = (Element) root.getElementsByTagName("TeamAttitude").item(0);
                 md.setGuestEinstellung(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             } catch (Exception e) {
-                //nicht tragisch da Attrib nur bei eigenem Team vorhanden wäre
+                //nicht tragisch da Attrib nur bei eigenem Team vorhanden wÃ¤re
                 md.setGuestEinstellung(Matchdetails.EINSTELLUNG_UNBEKANNT);
             }
         } catch (Exception e) {
@@ -763,7 +763,7 @@ public class xmlMatchdetailsParser {
         Element root = null;
 
         try {
-            //Daten füllen                        
+            //Daten fÃ¼llen                        
             root = doc.getDocumentElement();
             root = (Element) root.getElementsByTagName("Match").item(0);
             root = (Element) root.getElementsByTagName("HomeTeam").item(0);
@@ -815,7 +815,7 @@ public class xmlMatchdetailsParser {
                 ele = (Element) root.getElementsByTagName("TeamAttitude").item(0);
                 md.setHomeEinstellung(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             } catch (Exception e) {
-                //nicht tragisch da Attrib nur bei eigenem Team vorhanden wäre, als Unbekannt markieren
+                //nicht tragisch da Attrib nur bei eigenem Team vorhanden wÃ¤re, als Unbekannt markieren
                 md.setHomeEinstellung(Matchdetails.EINSTELLUNG_UNBEKANNT);
             }
         } catch (Exception e) {

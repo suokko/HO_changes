@@ -24,9 +24,9 @@ public final class SonstigeOptionenPanel extends ImagePanel
 	/** TODO Missing Parameter Documentation */
     public static de.hattrickorganizer.gui.model.GeldFaktorCBItem[] WAEHRUNGEN = {
                                                                                      new GeldFaktorCBItem("Sverige kr",1f,1),
-                                                                                     new GeldFaktorCBItem("Great Britain £",15f,2),
-                                                                                     new GeldFaktorCBItem("Euro €",10f,3),
-                                                                                     new GeldFaktorCBItem("México Pesos",1f,4),
+                                                                                     new GeldFaktorCBItem("Great Britain Â£",15f,2),
+                                                                                     new GeldFaktorCBItem("Euro Â€",10f,3),
+                                                                                     new GeldFaktorCBItem("MÃ©xico Pesos",1f,4),
                                                                                      new GeldFaktorCBItem("Argentina Pesos",10f, 5),
                                                                                      new GeldFaktorCBItem("USA $",10f, 6),
                                                                                      new GeldFaktorCBItem("Norge Kroner", 1f, 7),
@@ -36,12 +36,12 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                                                                      new GeldFaktorCBItem("South Africa Rand", 1.25f, 11),
                                                                                      new GeldFaktorCBItem("Venezuela VZ$", 10f, 12),
                                                                                      new GeldFaktorCBItem("Prathet Thai Baht", 0.25f, 13),
-                                                                                     new GeldFaktorCBItem("Egypt E£", 2.5f, 14),
+                                                                                     new GeldFaktorCBItem("Egypt EÂ£", 2.5f, 14),
                                                                                      new GeldFaktorCBItem("Rossiya Roubel", 0.25f, 15),
-                                                                                     new GeldFaktorCBItem("România Lei", 0.5f, 16),
+                                                                                     new GeldFaktorCBItem("RomÃ¢nia Lei", 0.5f, 16),
                                                                                      new GeldFaktorCBItem("Island Ikr", 0.1f, 17),
                                                                                      new GeldFaktorCBItem("Schweiz CHF", 5f, 18),
-                                                                                     new GeldFaktorCBItem("Magyarország hFt", 5f, 19),
+                                                                                     new GeldFaktorCBItem("MagyarorszÃ¡g hFt", 5f, 19),
                                                                                      new GeldFaktorCBItem("Latvija Lats", 20f,20),
                                                                                      new GeldFaktorCBItem("Indonesia RP", 1f, 21),
                                                                                      new GeldFaktorCBItem("Pilipinas Pesos", 0.25f, 22),
@@ -60,7 +60,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
                                                                                      new GeldFaktorCBItem("Polska Zloty", 2.5f, 35),
                                                                                      new GeldFaktorCBItem("Uruguay Pesos", 1f, 36),
                                                                                      new GeldFaktorCBItem("South Korea Won", 0.01f, 37),
-                                                                                     new GeldFaktorCBItem("Türkiye Lira",10f,38),
+                                                                                     new GeldFaktorCBItem("TÃ¼rkiye Lira",10f,38),
                                                                                      new GeldFaktorCBItem("China Yuan", 1f, 39),
                                                                                      new GeldFaktorCBItem("Malaysia MYR", 2.5f, 40),
                                                                                      new GeldFaktorCBItem("Singapore SG$", 5f,41),
@@ -179,7 +179,7 @@ public final class SonstigeOptionenPanel extends ImagePanel
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    //Nicht Statik, da es sonst zu früh initialisiert wird
+    //Nicht Statik, da es sonst zu frÃ¼h initialisiert wird
 
     /** TODO Missing Parameter Documentation */
     public de.hattrickorganizer.gui.model.CBItem[] SORTIERUNG = {

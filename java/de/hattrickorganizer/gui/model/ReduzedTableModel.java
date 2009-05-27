@@ -92,7 +92,7 @@ public class ReduzedTableModel implements TableModel {
     }
 
     /**
-     * Immer Wert der einen Spalte zurückgeben
+     * Immer Wert der einen Spalte zurÃ¼ckgeben
      *
      * @param row TODO Missing Constructuor Parameter Documentation
      * @param col TODO Missing Constructuor Parameter Documentation

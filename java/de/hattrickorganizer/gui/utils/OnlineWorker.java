@@ -230,12 +230,12 @@ public class OnlineWorker {
                         //Saven
                         homodel.saveHRF();
 
-                        //Spielplan übernehmen!
+                        //Spielplan Ã¼bernehmen!
                         homodel.setSpielplan(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                     .getModel()
                                                                                     .getSpielplan());
 
-                        //OldPlayer dem Model hinzufügen
+                        //OldPlayer dem Model hinzufÃ¼gen
                         homodel.setAllOldSpieler(de.hattrickorganizer.database.DBZugriff.instance()
                                                                                         .getAllSpieler());
 
@@ -321,8 +321,8 @@ public class OnlineWorker {
     /**
      * saugt das Archiv
      *
-     * @param teamId null falls unnötig sonst im Format 2004-02-01
-     * @param firstDate null falls unnötig sonst im Format 2004-02-01
+     * @param teamId null falls unnÃ¶tig sonst im Format 2004-02-01
+     * @param firstDate null falls unnÃ¶tig sonst im Format 2004-02-01
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -480,7 +480,7 @@ public class OnlineWorker {
     /**
      * saugt den Spielplan
      *
-     * @param teamId angabe der Saison ( optinal &lt; 1 für aktuelle
+     * @param teamId angabe der Saison ( optinal &lt; 1 fÃ¼r aktuelle
      * @param forceRefresh TODO Missing Constructuor Parameter Documentation
      *
      * @return TODO Missing Return Method Documentation
@@ -647,7 +647,7 @@ public class OnlineWorker {
     /**
      * saugt den Spielplan
      *
-     * @param season angabe der Saison ( optinal &lt; 1 für aktuelle
+     * @param season angabe der Saison ( optinal &lt; 1 fÃ¼r aktuelle
      * @param ligaID TODO Missing Constructuor Parameter Documentation
      *
      * @return TODO Missing Return Method Documentation
@@ -840,7 +840,7 @@ public class OnlineWorker {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * speichert in die Angegebene Datei den übergebenen Inhalt
+     * speichert in die Angegebene Datei den Ã¼bergebenen Inhalt
      *
      * @param dateiname TODO Missing Constructuor Parameter Documentation
      * @param inhalt TODO Missing Constructuor Parameter Documentation
@@ -878,7 +878,7 @@ public class OnlineWorker {
     }
 
 	/**
-	 * Holt für alle Kurzinfos die Lineups, wenn diese noch nicht vorhanden sind
+	 * Holt fÃ¼r alle Kurzinfos die Lineups, wenn diese noch nicht vorhanden sind
 	 */
 	public void getAllLineups() {
 		final MatchKurzInfo[] infos = DBZugriff.instance()
@@ -888,7 +888,7 @@ public class OnlineWorker {
 		for (int i = 0; i < infos.length; i++) {
 			int curMatchId = infos[i].getMatchID();
 			if (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId)) {
-				//Prüfen, ob Lineup schon gezogen werden kann!
+				//PrÃ¼fen, ob Lineup schon gezogen werden kann!
 				if (infos[i].getMatchDateAsTimestamp().before(new java.sql.Timestamp(System
 																					 .currentTimeMillis()))) {
 					HOLogger.instance().log(getClass(),"Get Lineup : " + curMatchId);

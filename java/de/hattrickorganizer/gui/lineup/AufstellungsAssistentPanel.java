@@ -211,7 +211,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
                 final de.hattrickorganizer.model.Spieler spieler = (de.hattrickorganizer.model.Spieler) alleSpieler
                                                                    .get(i);
 
-                //Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, oder genau die zu der der Spieler gehört
+                //Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, oder genau die zu der der Spieler gehÃ¶rt
                 if (spieler.isSpielberechtigt()
                     && (((this.getGruppe().trim().equals("")
                     || spieler.getTeamInfoSmilie().equals(this.getGruppe()))

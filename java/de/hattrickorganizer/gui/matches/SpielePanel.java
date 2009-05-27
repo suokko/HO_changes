@@ -39,7 +39,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Bietet Übersicht über alle Spieler
+ * Bietet Ãœbersicht Ã¼ber alle Spieler
  */
 public final class SpielePanel extends ImagePanel implements MouseListener, KeyListener,
                                                              Refreshable, ItemListener,
@@ -117,7 +117,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
+     * Gibt die aktuellen DividerLocations zurÃ¼ck, damit sie gespeichert werden kÃ¶nnen
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -131,7 +131,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Gibt die Reihenfolge der Spalten in der Tabelle zurück
+     * Gibt die Reihenfolge der Spalten in der Tabelle zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -255,7 +255,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
      */
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //Änderung der Tabelle -> Anderer Filter!
+            //Ã„nderung der Tabelle -> Anderer Filter!
             reInit();
         }
     }
@@ -374,7 +374,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
         //Wenn kein Match in Tabelle gefunden
         if (m_jtSpieleTable.getSelectedRow() < 0) {
-            //Alle Spiele auswählen, damit die Markierung funktioniert  
+            //Alle Spiele auswÃ¤hlen, damit die Markierung funktioniert  
             m_jcbSpieleFilter.setSelectedIndex(0);
             UserParameter.instance().spieleFilter = 0;
             m_jtSpieleTable.markiereMatch(matchid);
@@ -384,7 +384,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Für die Button
+     * FÃ¼r die Button
      */
     private void clear() {
         m_jbReloadMatch.setEnabled(false);
@@ -619,7 +619,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                    + e);
             }
         } else {
-            //Alle Panels zurücksetzen
+            //Alle Panels zurÃ¼cksetzen
             clear();
             m_jpStaerkenvergleichsPanel.clear();
             m_jpManschaftsBewertungsPanel.clear();
@@ -631,7 +631,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Für die Buttons
+     * FÃ¼r die Buttons
      *
      * @param info TODO Missing Constructuor Parameter Documentation
      */
@@ -641,7 +641,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         m_jbLoeschen.setEnabled(true);
         m_jbDrucken.setEnabled(true);
 
-        //Reload möglich?
+        //Reload mÃ¶glich?
         HOLogger.instance().log(getClass(),info.getMatchDateAsTimestamp() + " "
                            + new java.sql.Timestamp(System.currentTimeMillis()) + " "
                            + info.getMatchDateAsTimestamp().before(new java.sql.Timestamp(System

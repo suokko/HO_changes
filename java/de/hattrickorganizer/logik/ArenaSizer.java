@@ -2,7 +2,7 @@
 /*
  * ArenaSizer.java
  *
- * Created on 21. März 2003, 08:19
+ * Created on 21. MÃ¤rz 2003, 08:19
  */
 package de.hattrickorganizer.logik;
 
@@ -96,7 +96,7 @@ public class ArenaSizer {
      * Creates a new instance of ArenaSizer
      */
     public ArenaSizer() {
-        /* Neue Kosten für die nächste Saison schon angepasst
+        /* Neue Kosten fÃ¼r die nÃ¤chste Saison schon angepasst
            if( updatetest )
            {
                java.util.GregorianCalendar aktuCalendar    = new java.util.GregorianCalendar(  );
@@ -119,7 +119,7 @@ public class ArenaSizer {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * berechnet die möglichen Ausbaustufen
+     * berechnet die mÃ¶glichen Ausbaustufen
      *
      * @param aktuell TODO Missing Constructuor Parameter Documentation
      * @param anzFans TODO Missing Constructuor Parameter Documentation
@@ -253,7 +253,7 @@ public class ArenaSizer {
     }
 
     /**
-     * berechnet die optimale stadion grösse
+     * berechnet die optimale stadion grÃ¶sse
      *
      * @param fanFaktor TODO Missing Constructuor Parameter Documentation
      * @param anzahlFans TODO Missing Constructuor Parameter Documentation

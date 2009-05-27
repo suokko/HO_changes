@@ -56,7 +56,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
                                             
 
-    //Flügelspiel
+    //FlÃ¼gelspiel
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                             
 
@@ -108,7 +108,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
                                             
 
-    //Flügelspiel
+    //FlÃ¼gelspiel
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                             
 
@@ -283,7 +283,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
     }
 
     /**
-     * Fügt der Tabelle einen Spieler hinzu
+     * FÃ¼gt der Tabelle einen Spieler hinzu
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param index TODO Missing Constructuor Parameter Documentation
@@ -413,7 +413,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
 
-            //Flügelspiel
+            //FlÃ¼gelspiel
             object = aktuellerSpieler.getLastLevelUp(ISpieler.SKILL_FLUEGEL);
             time = (java.sql.Timestamp) object[0];
             foreground = getForeground(((Boolean) object[1]).booleanValue());

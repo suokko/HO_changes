@@ -23,7 +23,7 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
 /**
- * Aufstellungen können hier gespeichert werden oder mit anderen verglichen werden
+ * Aufstellungen kÃ¶nnen hier gespeichert werden oder mit anderen verglichen werden
  */
 public class AufstellungsVergleichHistoryPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, ListSelectionListener, ActionListener,
@@ -77,7 +77,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Ist die Übergebene Aufstellung angezeigt?
+     * Ist die Ãœbergebene Aufstellung angezeigt?
      *
      * @param aufstellung TODO Missing Constructuor Parameter Documentation
      *
@@ -140,7 +140,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
     }
 
     /**
-     * Gibt die VergleichsAufstellung zurück
+     * Gibt die VergleichsAufstellung zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -294,7 +294,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
             final de.hattrickorganizer.gui.model.AufstellungCBItem aufstellungCB = (de.hattrickorganizer.gui.model.AufstellungCBItem) m_jlAufstellungen
                                                                                    .getSelectedValue();
 
-            //"Aktuelle Aufstellung" nicht zu löschen!
+            //"Aktuelle Aufstellung" nicht zu lÃ¶schen!
             if (aufstellungCB.getText().equals(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"))
                 || aufstellungCB.getText().equals(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LetzteAufstellung"))) {
                 m_jbAufstellungAnzeigen.setEnabled(true);
@@ -357,7 +357,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
             listmodel.addElement(m_clHRFLastAufstellung);
         }
 
-        //Temporäre geladene Aufstellungen
+        //TemporÃ¤re geladene Aufstellungen
         for (int i = 0; i < aufstellungsListe.size(); i++) {
             listmodel.addElement(aufstellungsListe.get(i));
         }

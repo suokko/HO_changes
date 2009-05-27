@@ -33,7 +33,7 @@ public class SkillEntry extends TableEntry {
     private String m_sNachkomma = "";
     private String m_sText = "";
 
-    //Für Compareto
+    //FÃ¼r Compareto
     private double m_dZahl = Double.NEGATIVE_INFINITY;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ public class SkillEntry extends TableEntry {
     }
 
     /**
-     * Gibt eine passende Komponente zurück
+     * Gibt eine passende Komponente zurÃ¼ck
      *
      * @param isSelected TODO Missing Constructuor Parameter Documentation
      *
@@ -125,7 +125,7 @@ public class SkillEntry extends TableEntry {
     }
 
     /**
-     * Gibt die Zahl zurück
+     * Gibt die Zahl zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */

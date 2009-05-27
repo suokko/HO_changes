@@ -71,7 +71,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
      * @return TODO Missing Return Method Documentation
      */
     public final Spieler getSpieler(int id) {
-        //Kann < 0 sein für TempSpieler if ( id > 0 )
+        //Kann < 0 sein fÃ¼r TempSpieler if ( id > 0 )
         if (id != 0) {
             for (int i = 0; i < m_vPlayers.size(); i++) {
                 if (((Spieler) m_vPlayers.get(i)).getSpielerID() == id) {
@@ -94,7 +94,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
     }
     
     /**
-     * Fügt der Tabelle einen Spieler hinzu
+     * FÃ¼gt der Tabelle einen Spieler hinzu
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param index TODO Missing Constructuor Parameter Documentation
@@ -105,7 +105,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
     }
     
     /**
-     * Passt alle Spalten an, die Verändungen bei einem HRF-Vergleich anzeigen
+     * Passt alle Spalten an, die VerÃ¤ndungen bei einem HRF-Vergleich anzeigen
      */
     public final void reInitDataHRFVergleich() {
         initData();
@@ -122,7 +122,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
     }
     
     /**
-     * Gibt den Spieler mit der gleichen ID, wie die übergebene, zurück, oder null
+     * Gibt den Spieler mit der gleichen ID, wie die Ã¼bergebene, zurÃ¼ck, oder null
      *
      * @param vorlage TODO Missing Constructuor Parameter Documentation
      *
@@ -151,7 +151,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
     }
     
     /**
-     * Gibt den Spieler aus dem ersten HRF, wo der Spieler aufgetauch ist, zurück
+     * Gibt den Spieler aus dem ersten HRF, wo der Spieler aufgetauch ist, zurÃ¼ck
      *
      * @param vorlage TODO Missing Constructuor Parameter Documentation
      *
