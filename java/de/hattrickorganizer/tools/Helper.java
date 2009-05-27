@@ -423,7 +423,7 @@ public class Helper extends LanguageFiles {
 
 	public static NumberFormat CURRENCYFORMAT = java.text.NumberFormat.getCurrencyInstance();
 
-    /** wird für das Parsen in parseFloat benötigt */
+    /** wird fÃ¼r das Parsen in parseFloat benÃ¶tigt */
     public static DecimalFormat INTEGERFORMAT = new java.text.DecimalFormat("#0");
 
     /** decimal format - 1 fraction digit */
@@ -438,32 +438,32 @@ public class Helper extends LanguageFiles {
     /** Schon eine Meldung angezeigt? */
     public static boolean paneShown;
 
-    /** Hashtable mit Veränderungspfeilgrafiken nach Integer als Key */
+    /** Hashtable mit VerÃ¤nderungspfeilgrafiken nach Integer als Key */
     private static Hashtable<Integer,ExtendedImageIcon> m_clPfeilCache = new Hashtable<Integer,ExtendedImageIcon>();
     private static Hashtable<Integer,ExtendedImageIcon> m_clPfeilLightCache = new Hashtable<Integer,ExtendedImageIcon>();
 
     /** Hashtable mit Trikotnummern nach Integer als Key */
     private static Hashtable<Integer,ImageIcon> m_clTrickotnummerCache = new Hashtable<Integer,ImageIcon>();
 
-    /** Cache für Bilder */
+    /** Cache fÃ¼r Bilder */
     private static HashMap<String,BufferedImage> m_clBilderCache = new HashMap<String,BufferedImage>();
 
-    /** Cache für Transparent gemachte Bilder */
+    /** Cache fÃ¼r Transparent gemachte Bilder */
     private static HashMap<Image,Image> m_clTransparentsCache = new HashMap<Image,Image>();
 
-    /** Cache für Trickots */
+    /** Cache fÃ¼r Trickots */
     private static HashMap<TrickotCacheKey,ImageIcon> m_clTrickotCache = new HashMap<TrickotCacheKey,ImageIcon>();
 
-    /** Cache für Spezialitäten */
+    /** Cache fÃ¼r SpezialitÃ¤ten */
     private static HashMap<Integer,ExtendedImageIcon> m_clSpezialitaetCache = new HashMap<Integer,ExtendedImageIcon>();
 
-    /** Cache für Gruppen */
+    /** Cache fÃ¼r Gruppen */
     private static HashMap<String,ImageIcon> m_clGruppenCache = new HashMap<String,ImageIcon>();
 
-    /** Cache für MiniGruppen */
+    /** Cache fÃ¼r MiniGruppen */
     private static HashMap<String,ImageIcon> m_clMiniGruppenCache = new HashMap<String,ImageIcon>();
 
-    /** Cache für Spieltypen */
+    /** Cache fÃ¼r Spieltypen */
     private static HashMap<Integer,ImageIcon> m_clSpieltypCache = new HashMap<Integer,ImageIcon>();
 
     //Initialisierung
@@ -613,7 +613,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Gibt die Grafik zu der Position zurück
+     * Gibt die Grafik zu der Position zurÃ¼ck
      *
      * @param posid TODO Missing Constructuor Parameter Documentation
      * @param taktik TODO Missing Constructuor Parameter Documentation
@@ -801,7 +801,7 @@ public class Helper extends LanguageFiles {
              */
             komplettIcon = new javax.swing.ImageIcon(zusammenImage);
 
-            //In den Cache hinzufügen
+            //In den Cache hinzufÃ¼gen
             m_clTrickotCache.put(new TrickotCacheKey(posid, taktik), komplettIcon);
 
             //HOLogger.instance().log(Helper.class, "Laden Grafik: "+ position.getPosition () + "/" + position.getTaktik () );
@@ -832,7 +832,7 @@ public class Helper extends LanguageFiles {
             g2d.setColor(Color.black);
             g2d.drawString(trickotnummer + "", xPosText, 13);
 
-            //Zusammenführen
+            //ZusammenfÃ¼hren
             image = (BufferedImage) Helper.zusammenfuehren(komplettIcon.getImage(),
                                                                           image);
 
@@ -910,7 +910,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Gibt die Grafik für die Gruppe oder Smilie zurück
+     * Gibt die Grafik fÃ¼r die Gruppe oder Smilie zurÃ¼ck
      *
      * @param gruppe TODO Missing Constructuor Parameter Documentation
      *
@@ -939,7 +939,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Gibt die Grafik für die Gruppe in 7px Grösse für die Aufstellung zurück
+     * Gibt die Grafik fÃ¼r die Gruppe in 7px GrÃ¶sse fÃ¼r die Aufstellung zurÃ¼ck
      *
      * @param gruppe TODO Missing Constructuor Parameter Documentation
      *
@@ -1282,7 +1282,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Gibt die Grafik für die Spieltypen zurück
+     * Gibt die Grafik fÃ¼r die Spieltypen zurÃ¼ck
      *
      * @param spieltyp TODO Missing Constructuor Parameter Documentation
      *
@@ -1424,7 +1424,7 @@ public class Helper extends LanguageFiles {
                 image = (BufferedImage) Helper.zusammenfuehren(trickotImage, image);
             }
 
-            //Zusammenführen
+            //ZusammenfÃ¼hren
             //Icon erstellen und in den Cache packen
             icon = new javax.swing.ImageIcon(image);
             m_clTrickotnummerCache.put(keywert, icon);
@@ -1477,7 +1477,7 @@ public class Helper extends LanguageFiles {
                 final int[] xpoints = {0, 6, 7, 13, 10, 10, 3, 3, 0};
                 final int[] ypoints = {6, 0, 0, 6, 6, 13, 13, 6, 6};
 
-                //Polygon füllen
+                //Polygon fÃ¼llen
                 if (!aktuell) {
                     g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER,
                                                                          0.4f));
@@ -1500,14 +1500,14 @@ public class Helper extends LanguageFiles {
 
                 g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.PLAIN, 10));
 
-                //Für 1 und 2 Weisse Schrift oben
+                //FÃ¼r 1 und 2 Weisse Schrift oben
                 if (wert < 3) {
                     g2d.setColor(java.awt.Color.black);
                     g2d.drawString(wert + "", xPosText, 11);
                     g2d.setColor(java.awt.Color.white);
                     g2d.drawString(wert + "", xPosText + 1, 11);
                 }
-                //Sonst Schwarze Schrift oben (nur bei Positiven Veränderungen)
+                //Sonst Schwarze Schrift oben (nur bei Positiven VerÃ¤nderungen)
                 else {
                     //Position bei grossen Zahlen weiter nach vorne
                     if (wert > 9) {
@@ -1523,7 +1523,7 @@ public class Helper extends LanguageFiles {
                 final int[] xpoints = {0, 6, 7, 13, 10, 10, 3, 3, 0};
                 final int[] ypoints = {7, 13, 13, 7, 7, 0, 0, 7, 7};
 
-                //Polygon füllen
+                //Polygon fÃ¼llen
                 if (!aktuell) {
                     g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER,
                                                                          0.4f));
@@ -1666,7 +1666,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Benötigte Breite für die Spalte in den Tabellen
+     * BenÃ¶tigte Breite fÃ¼r die Spalte in den Tabellen
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      *
@@ -1931,7 +1931,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Errechnet die Spaltenbreite für den User-Schriftgrösse
+     * Errechnet die Spaltenbreite fÃ¼r den User-SchriftgrÃ¶sse
      *
      * @param width TODO Missing Constructuor Parameter Documentation
      *
@@ -2026,7 +2026,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Überprüft den Inhalt eines Textfields, ob der Wert aus ints mit , getrennt besteht,
+     * ÃœberprÃ¼ft den Inhalt eines Textfields, ob der Wert aus ints mit , getrennt besteht,
      * ansonsten setzt er den Wert auf 0
      *
      * @param text TODO Missing Constructuor Parameter Documentation
@@ -2112,7 +2112,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Lädt Grafiken auch im jar-File
+     * LÃ¤dt Grafiken auch im jar-File
      *
      * @param datei TODO Missing Constructuor Parameter Documentation
      *
@@ -2148,7 +2148,7 @@ public class Helper extends LanguageFiles {
                 } catch (InterruptedException ie) {
                 }
 
-                //Bild in den Cache hinzufügen
+                //Bild in den Cache hinzufÃ¼gen
                 m_clBilderCache.put(datei, image);
 
                 return image;
@@ -2181,7 +2181,7 @@ public class Helper extends LanguageFiles {
                                                                                            new TransparentFilter(color));
             image = java.awt.Toolkit.getDefaultToolkit().createImage(ip);
 
-            //Bild in den Cache hinzufügen
+            //Bild in den Cache hinzufÃ¼gen
             m_clTransparentsCache.put(im, image);
         }
 
@@ -2259,11 +2259,11 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Überprüft den Inhalt eines Textfields, ob der Wert ein float ist, ansonsten setzt er den
+     * ÃœberprÃ¼ft den Inhalt eines Textfields, ob der Wert ein float ist, ansonsten setzt er den
      * Wert auf 0.0
      *
      * @param parent Window, in dem der Fehlerdialog angezeigt werden soll.
-     * @param field Das Textfeld mit dem zu prüfenden Wert
+     * @param field Das Textfeld mit dem zu prÃ¼fenden Wert
      * @param negativErlaubt true, wenn negative Werte erlaubt sind
      * @param format das Dezimalformat
      *
@@ -2296,11 +2296,11 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Überprüft den Inhalt eines Textfields, ob der Wert ein int ist, ansonsten setzt er den Wert
+     * ÃœberprÃ¼ft den Inhalt eines Textfields, ob der Wert ein int ist, ansonsten setzt er den Wert
      * auf 0
      *
      * @param parent Window, in dem der Fehlerdialog angezeigt werden soll.
-     * @param field Das Textfeld mit dem zu prüfenden Wert
+     * @param field Das Textfeld mit dem zu prÃ¼fenden Wert
      * @param negativErlaubt true, wenn negative Werte erlaubt sind
      *
      * @return true, wenn der Wert im Textfeld ein int ist, ansonsten false
@@ -2332,17 +2332,17 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Überprüft den Inhalt eines Textfields, ob der Wert aus ints mit , getrennt besteht,
+     * ÃœberprÃ¼ft den Inhalt eines Textfields, ob der Wert aus ints mit , getrennt besteht,
      * ansonsten setzt er den Wert auf 0
      *
      * @param parent Window, in dem der Fehlerdialog angezeigt werden soll.
-     * @param field Das Textfeld mit dem zu prüfenden Wert
+     * @param field Das Textfeld mit dem zu prÃ¼fenden Wert
      * @param negativErlaubt true, wenn negative Werte erlaubt sind
      * @param maxValue der maximal erlaubte Wert
      *
      * @return Die Zahlen, wenn der Wert im Textfeld ints sind, ansonsten null
      *
-     * @deprecated Keine Fehlermeldungen! Keine negativ/max Prüfung!
+     * @deprecated Keine Fehlermeldungen! Keine negativ/max PrÃ¼fung!
      */
     public static int[] parseMultiInt(Window parent, JTextField field, boolean negativErlaubt,
                                       int maxValue) {
@@ -2361,7 +2361,7 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Rundet den übergeben wert auf eine bestimmte nachkommastellen-Anzahl
+     * Rundet den Ã¼bergeben wert auf eine bestimmte nachkommastellen-Anzahl
      *
      * @param wert Der zu rundene Wert
      * @param nachkommastellen Anzahl der Nachkommastellen
@@ -2376,7 +2376,7 @@ public class Helper extends LanguageFiles {
 //        final long lwert = Math.round(dwert);
         final double lwert = Math.floor(dwert);
 
-        //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
+        //Wert wieder durch 10^nachkommastellen teilen und zurÃ¼ckgeben
         return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
     }
 
@@ -2420,7 +2420,7 @@ public class Helper extends LanguageFiles {
             //Spalte sortieren
             java.util.Arrays.sort(sortSpalte);
 
-            //Alle Einträge durchlaufen und nach Wert im toSort suchen und den Wert dann in das Ergebnis kopieren
+            //Alle EintrÃ¤ge durchlaufen und nach Wert im toSort suchen und den Wert dann in das Ergebnis kopieren
             for (int i = 0; i < toSort.length; i++) {
                 for (int j = 0; j < toSort.length; j++) {
                     if (sortSpalte[i] == toSort[j][spaltenindex]) {

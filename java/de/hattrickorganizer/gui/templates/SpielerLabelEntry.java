@@ -48,7 +48,7 @@ public final class SpielerLabelEntry extends TableEntry {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
-     * Label für den Spielernamen (je nach Status)
+     * Label fÃ¼r den Spielernamen (je nach Status)
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param positionAktuell TODO Missing Constructuor Parameter Documentation
@@ -69,7 +69,7 @@ public final class SpielerLabelEntry extends TableEntry {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt eine passende Komponente zurück
+     * Gibt eine passende Komponente zurÃ¼ck
      *
      * @param isSelected TODO Missing Constructuor Parameter Documentation
      *
@@ -157,7 +157,7 @@ public final class SpielerLabelEntry extends TableEntry {
 
         spezPanel.add(m_jlWeatherEffect);
 
-        //Spezialität
+        //SpezialitÃ¤t
         m_jlSpezialitaet.setBackground(ColorLabelEntry.BG_STANDARD);
         m_jlSpezialitaet.setOpaque(false);
 

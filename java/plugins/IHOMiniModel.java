@@ -132,7 +132,7 @@ public interface IHOMiniModel {
     public plugins.ILineUp getLineUP();
 
     /**
-     * Gibt die MatchDetails zu einem Match zurück
+     * Gibt die MatchDetails zu einem Match zurÃ¼ck
      *
      * @param matchId TODO Missing Constructuor Parameter Documentation
      *
@@ -159,7 +159,7 @@ public interface IHOMiniModel {
     /**
      * holt die MAtches zu einem Team aus der DB
      *
-     * @param teamId Die Teamid oder -1 für alle
+     * @param teamId Die Teamid oder -1 fÃ¼r alle
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -233,7 +233,7 @@ public interface IHOMiniModel {
     //--------Stadium----------------------------------------
 
     /**
-     * Gibt das Stadium zurück
+     * Gibt das Stadium zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -272,7 +272,7 @@ public interface IHOMiniModel {
     //----------Verein----------------------------------------
 
     /**
-     * Gibt den Verein zurück
+     * Gibt den Verein zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */

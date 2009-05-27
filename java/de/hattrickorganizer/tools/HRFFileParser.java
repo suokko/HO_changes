@@ -100,13 +100,13 @@ public class HRFFileParser {
 
                 //Leere Zeile ist null! Wird auf leeren String gesetzt.
                 if ((zeile == null) || zeile.trim().equals("")) {
-                    //Überspringen
+                    //Ãœberspringen
                     continue;
                 }
 
                 //Neue Properties
                 if (zeile.startsWith("[")) {
-                    //Alte Property vorhanden, dann dem Vector hinzufügen
+                    //Alte Property vorhanden, dann dem Vector hinzufÃ¼gen
                     if (properties != null) {
                         //Datum des HRFs
                         final Object entity = properties.get(HRFFileParser.ENTITY);
@@ -133,7 +133,7 @@ public class HRFFileParser {
                         properties.setProperty(HRFFileParser.ENTITY, zeile);
                     }
                 }
-                //Aktuelle Properties füllen
+                //Aktuelle Properties fÃ¼llen
                 else {
                     final int indexGleichheitszeichen = zeile.indexOf('=');
 

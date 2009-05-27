@@ -62,7 +62,7 @@ public class HOFriendlyManager implements IHOFriendlyManager {
             //Spiel starten
             hoClientImp.sendStarteFriendly(team);
 
-            //man könnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
+            //man kÃ¶nnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
         } else {
             //Fehlermeldung                        
             de.hattrickorganizer.tools.Helper.showMessage(HOMainFrame.instance(),
@@ -115,7 +115,7 @@ public class HOFriendlyManager implements IHOFriendlyManager {
 
             //String[]    find        ={ " " };
             //String[]    replace =   { "%20%" };
-            //Werte übergeben
+            //Werte Ã¼bergeben
             server.setScreen1(nms);
 
             //Server Team noch setzen
@@ -143,7 +143,7 @@ public class HOFriendlyManager implements IHOFriendlyManager {
             //Socket starten
             hoServerImp.createServer(isInternetServer, serverIP, serverPort, info);
 
-            //man könnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...                        
+            //man kÃ¶nnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...                        
         } else {
             //Fehlermeldung
         }

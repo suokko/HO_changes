@@ -2,7 +2,7 @@
 /*
  * Spieler.java
  *
- * Created on 17. März 2003, 15:41
+ * Created on 17. MÃ¤rz 2003, 15:41
  */
 package plugins;
 
@@ -59,7 +59,7 @@ public interface ISpieler {
     /** TODO Missing Parameter Documentation */
     public static final int REGEN = 4;
 
-    //FähigkeitsKonstanten
+    //FÃ¤higkeitsKonstanten
 
     /** TODO Missing Parameter Documentation */
     public static final int goettlich = 20;
@@ -285,8 +285,8 @@ public interface ISpieler {
     public java.lang.String getAgressivitaetString();
 
     /**
-     * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill Vector filled with
-     * object[] [0] = Time der Änderung [1] = Boolean: false=Keine Änderung gefunden
+     * liefert das Datum des letzen LevelAufstiegs fÃ¼r den angeforderten Skill Vector filled with
+     * object[] [0] = Time der Ã„nderung [1] = Boolean: false=Keine Ã„nderung gefunden
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      *
@@ -550,7 +550,7 @@ public interface ISpieler {
     public java.sql.Timestamp getHrfDate();
 
     /**
-     * liefert die Stärke für die IdealPosition
+     * liefert die StÃ¤rke fÃ¼r die IdealPosition
      *
      * @param mitForm TODO Missing Constructuor Parameter Documentation
      *
@@ -594,8 +594,8 @@ public interface ISpieler {
     public int getLaenderspiele();
 
     /**
-     * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill [0] = Time der
-     * Änderung [1] = Boolean: false=Keine Änderung gefunden
+     * liefert das Datum des letzen LevelAufstiegs fÃ¼r den angeforderten Skill [0] = Time der
+     * Ã„nderung [1] = Boolean: false=Keine Ã„nderung gefunden
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      *
@@ -604,7 +604,7 @@ public interface ISpieler {
     public Object[] getLastLevelUp(int skill);
 
     /**
-     * liefert die vergangenen Tage seit dem letzem LevelAufstieg für den angeforderten Skill
+     * liefert die vergangenen Tage seit dem letzem LevelAufstieg fÃ¼r den angeforderten Skill
      *
      * @param skill TODO Missing Constructuor Parameter Documentation
      *
@@ -613,7 +613,7 @@ public interface ISpieler {
     public int getLastLevelUpInTage(int skill);
 
     /**
-     * Gibt die Letzte Bewertung zurück, die der Spieler bekommen hat
+     * Gibt die Letzte Bewertung zurÃ¼ck, die der Spieler bekommen hat
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -786,14 +786,14 @@ public interface ISpieler {
     public int getSpielaufbau();
 
     /**
-     * setzt ob der User den Spieler zum Spiel zulässt
+     * setzt ob der User den Spieler zum Spiel zulÃ¤sst
      *
      * @param flag TODO Missing Constructuor Parameter Documentation
      */
     public void setSpielberechtigt(boolean flag);
 
     /**
-     * gibt an ob der User den Spieler zum Spiel zulässt
+     * gibt an ob der User den Spieler zum Spiel zulÃ¤sst
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -1191,23 +1191,23 @@ public interface ISpieler {
     public int getVerteidigung();
 
     /*
-       Wetterabhängige Sonderereignisse
-       Bestimmte Spezialfähigkeiten können in Zusammenhang mit einem bestimmten Wetter
-        zu Sonderereignissen führen. Die Auswirkung dieses Sonderereignisses tritt
-        von dem Zeitpunkt in Kraft, an dem es im Spielbericht erwähnt wird,
-        und hat bis zum Spielende Einfluß auf die Leistung des Spielers.
+       WetterabhÃ¤ngige Sonderereignisse
+       Bestimmte SpezialfÃ¤higkeiten kÃ¶nnen in Zusammenhang mit einem bestimmten Wetter
+        zu Sonderereignissen fÃ¼hren. Die Auswirkung dieses Sonderereignisses tritt
+        von dem Zeitpunkt in Kraft, an dem es im Spielbericht erwÃ¤hnt wird,
+        und hat bis zum Spielende EinfluÃŸ auf die Leistung des Spielers.
         Diese Auswirkung wird nach dem Spiel an der Spielerbewertung (Anzahl Sterne); sichtbar.
-       Die Torschuß- und die Spielaufbau-Fähigkeit von Ballzauberern kann sich bei Regen verschlechtern,
-        während sich die gleichen Fähigkeiten bei Sonnenschein verbessern können.
-       Bei Regen gibt es die Möglichkeit, daß sich die Torschuß-, Verteidigungs- und Spielaufbau-Fähigkeit
+       Die TorschuÃŸ- und die Spielaufbau-FÃ¤higkeit von Ballzauberern kann sich bei Regen verschlechtern,
+        wÃ¤hrend sich die gleichen FÃ¤higkeiten bei Sonnenschein verbessern kÃ¶nnen.
+       Bei Regen gibt es die MÃ¶glichkeit, daÃŸ sich die TorschuÃŸ-, Verteidigungs- und Spielaufbau-FÃ¤higkeit
         von durchsetzungsstarken Spielern verbessert.
-        Auf der anderen Seite kann sich die Torschußfähigkeit bei Sonnenschein verschlechtern.
-       Schnelle Spieler laufen bei Regen Gefahr, daß sich ihre Torschuß- und
-        Verteidigungsfähigkeiten verschlechtern. Bei Sonnenschein besteht das Risiko
-        , daß ihre Torschußfähigkeit unter dem Wetter leidet.
+        Auf der anderen Seite kann sich die TorschuÃŸfÃ¤higkeit bei Sonnenschein verschlechtern.
+       Schnelle Spieler laufen bei Regen Gefahr, daÃŸ sich ihre TorschuÃŸ- und
+        VerteidigungsfÃ¤higkeiten verschlechtern. Bei Sonnenschein besteht das Risiko
+        , daÃŸ ihre TorschuÃŸfÃ¤higkeit unter dem Wetter leidet.
      */
     /*
-       Liefert die mögliche Auswirkung des Wetters auf den Spieler
+       Liefert die mÃ¶gliche Auswirkung des Wetters auf den Spieler
        return 0 bei keine auswirkung
        1 bei positiv
        -1 bei negativ
@@ -1219,10 +1219,10 @@ public interface ISpieler {
     ////////////////////////////////////////////////////////////////////////////////       
 
     /**
-     * berechnet die Stärke eines Spieler für angegebene Position
+     * berechnet die StÃ¤rke eines Spieler fÃ¼r angegebene Position
      *
      * @param pos die Position
-     * @param mitForm gibt an ob Form berücksichtigt werden soll
+     * @param mitForm gibt an ob Form berÃ¼cksichtigt werden soll
      *
      * @return TODO Missing Return Method Documentation
      */

@@ -107,7 +107,7 @@ public class Spielbericht implements java.io.Serializable {
     }
 
     /**
-     * Konstruktor l‰dt den Spielbericht aus einem InputStream
+     * Konstruktor l√§dt den Spielbericht aus einem InputStream
      *
      * @param dis Der InputStream aus dem gelesen wird
      */
@@ -515,7 +515,7 @@ public class Spielbericht implements java.io.Serializable {
             //Strom konvertieren in Byte
 
             /*data = baos.toByteArray();
-               //Hilfsstrom schlieﬂen
+               //Hilfsstrom schlie√üen
                das.close ();
             
                return data;*/

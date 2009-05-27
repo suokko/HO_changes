@@ -19,14 +19,14 @@ public class LineUpRow {
 
     /** TODO Missing Parameter Documentation */
 
-    // für den Anfang erstmal statisch
+    // fÃ¼r den Anfang erstmal statisch
     protected static int width = 100;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
     private LineUpBox[] boxes;
 
-    // für den Anfang erstmal statisch
+    // fÃ¼r den Anfang erstmal statisch
     private int margin = 20;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class LineUpRow {
     }
 
     /**
-     * gibt die Höhe der größten Box wieder
+     * gibt die HÃ¶he der grÃ¶ÃŸten Box wieder
      *
      * @return
      */
@@ -135,7 +135,7 @@ public class LineUpRow {
         //~ Methods --------------------------------------------------------------------------------
 
         /**
-         * gibt die Höhe der Box wieder
+         * gibt die HÃ¶he der Box wieder
          *
          * @return int
          */

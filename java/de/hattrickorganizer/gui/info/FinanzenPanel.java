@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 
 
 /**
- * Zeigt die Finanzen für die aktuelle oder die vorherige Woche an
+ * Zeigt die Finanzen fÃ¼r die aktuelle oder die vorherige Woche an
  */
 final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
 	

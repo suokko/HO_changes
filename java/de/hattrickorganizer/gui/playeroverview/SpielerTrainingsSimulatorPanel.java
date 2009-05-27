@@ -33,8 +33,8 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Hier kann ein Spieler erstellt werden, bzw die Parameter verändert werden, um sich die
- * Änderungen anzeigen zu lassen
+ * Hier kann ein Spieler erstellt werden, bzw die Parameter verÃ¤ndert werden, um sich die
+ * Ã„nderungen anzeigen zu lassen
  */
 final class SpielerTrainingsSimulatorPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, ItemListener, ActionListener, FocusListener
@@ -126,7 +126,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
             setLabels();
             setCBs();
 
-            //Remove für Tempspieler
+            //Remove fÃ¼r Tempspieler
             if (spieler.getSpielerID() < 0) {
                 m_jbRemoveTempSpieler.setEnabled(true);
             } else {

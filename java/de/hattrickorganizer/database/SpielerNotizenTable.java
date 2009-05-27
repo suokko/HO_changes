@@ -183,7 +183,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 
 				//Insert falls kein passender Eintrag gefunden wurde
 				if (adapter.executeUpdate(statement) < 1) {
-					//erst Vorhandene Aufstellung löschen
+					//erst Vorhandene Aufstellung lÃ¶schen
 					//deleteSpielerNotizTabelle( awhereS, awhereV );
 					//insert vorbereiten
 					createEntry(spielerId,"","",smilie,true,(byte) -1);
@@ -210,7 +210,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 
 				//Insert falls kein passender Eintrag gefunden wurde
 				if (adapter.executeUpdate(statement) < 1) {
-					//erst Vorhandene Aufstellung löschen
+					//erst Vorhandene Aufstellung lÃ¶schen
 					//deleteSpielerNotizTabelle( awhereS, awhereV );
 					//insert vorbereiten
 					createEntry(spielerId,notiz,"","",true,(byte) -1);					
@@ -239,7 +239,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 
 				//Insert falls kein passender Eintrag gefunden wurde
 				if (adapter.executeUpdate(statement) < 1) {
-					//erst Vorhandene Aufstellung löschen
+					//erst Vorhandene Aufstellung lÃ¶schen
 					//deleteSpielerNotizTabelle( awhereS, awhereV );
 					//insert vorbereiten
 					createEntry(spielerId,"","","",spielberechtigt,(byte) -1);
@@ -266,7 +266,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 
 				//Insert falls kein passender Eintrag gefunden wurde
 				if (adapter.executeUpdate(statement) < 1) {
-					//erst Vorhandene Aufstellung löschen
+					//erst Vorhandene Aufstellung lÃ¶schen
 					//deleteSpielerNotizTabelle( awhereS, awhereV );
 					//insert vorbereiten
 					createEntry(spielerId,"","","",true,flag);					
@@ -292,7 +292,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 
 				//Insert falls kein passender Eintrag gefunden wurde
 				if (adapter.executeUpdate(statement) < 1) {
-					//erst Vorhandene Aufstellung löschen
+					//erst Vorhandene Aufstellung lÃ¶schen
 					//deleteSpielerNotizTabelle( awhereS, awhereV );
 					//insert vorbereiten
 					createEntry(spielerId,"",smilie,"",true,(byte) -1);

@@ -9,7 +9,7 @@ import de.hattrickorganizer.model.Spieler;
 
 
 /**
- * Transferabel für DND
+ * Transferabel fÃ¼r DND
  */
 public class SpielerTransferable implements Transferable {
     //~ Instance fields ----------------------------------------------------------------------------

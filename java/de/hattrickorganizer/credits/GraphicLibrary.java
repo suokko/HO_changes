@@ -45,8 +45,8 @@ public class GraphicLibrary {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * lädt alle Grafiken, die für das Spiel benötigt werden:<br>
-     * - Misc (alles, was keiner anderen Gruppe angehört)<br>
+     * lÃ¤dt alle Grafiken, die fÃ¼r das Spiel benÃ¶tigt werden:<br>
+     * - Misc (alles, was keiner anderen Gruppe angehÃ¶rt)<br>
      *
      * @param component TODO Missing Constructuor Parameter Documentation
      */
@@ -57,7 +57,7 @@ public class GraphicLibrary {
     }
 
     /**
-     * lädt alle weiteren Grafiken
+     * lÃ¤dt alle weiteren Grafiken
      */
     private static void loadMisc() {
         ball = de.hattrickorganizer.tools.Helper.makeColorTransparent(de.hattrickorganizer.tools.Helper

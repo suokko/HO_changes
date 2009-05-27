@@ -27,7 +27,7 @@ import javax.swing.event.ChangeListener;
 
 
 /**
- * Panel zum editieren der Formelwerte der Spielerst‰rkenberechnung
+ * Panel zum editieren der Formelwerte der Spielerst√§rkenberechnung
  */
 final class FormelPanel extends ImagePanel implements ActionListener, ItemListener, ChangeListener {
 

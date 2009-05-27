@@ -251,7 +251,7 @@ public final class HOMainFrame extends JFrame
 	private LigaTabellePanel m_jpLigaTabelle;
 
 	// private JMenuItem               m_jmChatItem            =   new JMenuItem( model.HOVerwaltung.instance().getLanguageString("Chat") );
-	//eventuell Menuitem Vector für Plugins anlegen
+	//eventuell Menuitem Vector fÃ¼r Plugins anlegen
 	//-----------------------------------------
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
 	private SpielePanel m_jpSpielePanel;
@@ -421,7 +421,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * Gibt den Vector mit den Gestarteten Plugins zurück
+	 * Gibt den Vector mit den Gestarteten Plugins zurÃ¼ck
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -639,7 +639,7 @@ public final class HOMainFrame extends JFrame
 //
 //						//String[]    find        ={ " " };
 //						//String[]    replace =   { "%20%" };
-//						//Werte übergeben
+//						//Werte Ã¼bergeben
 //						server.setScreen1(nms);
 //
 //						//Server Team noch setzen
@@ -675,7 +675,7 @@ public final class HOMainFrame extends JFrame
 //							rmiDialog.getPort(),
 //							info);
 //
-//						//man könnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...
+//						//man kÃ¶nnte mit server.getSpielbericht () nach Ende den Spielbericht abfragen...
 //					} else {
 //						//Fehlermeldung
 //					}
@@ -697,7 +697,7 @@ public final class HOMainFrame extends JFrame
 //						//Spiel starten
 //						hoClientImp.sendStarteFriendly(team);
 //
-//						//man könnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
+//						//man kÃ¶nnte mit hoClientImp.getSpielbericht () nach Ende den Spielbericht abfragen...
 //					} else {
 //						//Fehlermeldung
 //						de.hattrickorganizer.tools.Helper.showMessage(
@@ -775,7 +775,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * Für Plugins zur Info
+	 * FÃ¼r Plugins zur Info
 	 *
 	 * @param listener TODO Missing Constructuor Parameter Documentation
 	 */
@@ -841,7 +841,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		HOLogger.instance().debug(getClass(), "Shutdown complete!");
-		//Dispose führt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
+		//Dispose fÃ¼hrt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
 		try {
 			dispose();
 		} catch (Exception e) {
@@ -901,7 +901,7 @@ public final class HOMainFrame extends JFrame
 
 		m_jtpTabbedPane = new JTabbedPane();
 
-		//Hinzufügen der Tabs nur, wenn von der Userparameter gewünscht
+		//HinzufÃ¼gen der Tabs nur, wenn von der Userparameter gewÃ¼nscht
 		//Spieler
 		m_jpSpielerUebersicht = new SpielerUebersichtsPanel();
 
@@ -1234,7 +1234,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * OptionsPanels für Plugins
+	 * OptionsPanels fÃ¼r Plugins
 	 *
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 * @param optionpanel TODO Missing Constructuor Parameter Documentation
@@ -1248,7 +1248,7 @@ public final class HOMainFrame extends JFrame
 	 * TODO Missing Method Documentation
 	 */
 	public void reInit() {
-		//Die Währung auf die aus dem HRF setzen
+		//Die WÃ¤hrung auf die aus dem HRF setzen
 		try {
 			float faktorgeld =
 				(float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
@@ -1257,24 +1257,24 @@ public final class HOMainFrame extends JFrame
 				gui.UserParameter.instance().faktorGeld = faktorgeld;
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class, "Währungsanpassung gescheitert!");
+			HOLogger.instance().log(HOMainFrame.class, "WÃ¤hrungsanpassung gescheitert!");
 		}
 
-		//Tabs prüfen
+		//Tabs prÃ¼fen
 		checkTabs();
 	}
 
 	//------Refreshfunktionen-------------------------------
 
 	/**
-	 * Wird bei einer Datenänderung aufgerufen
+	 * Wird bei einer DatenÃ¤nderung aufgerufen
 	 */
 	public void refresh() {
 		//nix?
 	}
 
 	/**
-	 * Für Plugins zur Info
+	 * FÃ¼r Plugins zur Info
 	 *
 	 * @param listener TODO Missing Constructuor Parameter Documentation
 	 */
@@ -1364,10 +1364,10 @@ public final class HOMainFrame extends JFrame
 				return;
 		}
 
-		//Wenn Temp, dann jetzt Hinzufügen
+		//Wenn Temp, dann jetzt HinzufÃ¼gen
 		int index = m_jtpTabbedPane.indexOfTab(titel);
 
-		//Hinzufügen, aber später per ChangeListener löschen
+		//HinzufÃ¼gen, aber spÃ¤ter per ChangeListener lÃ¶schen
 		if (index < 0) {
 			m_jtpTabbedPane.addTab(titel, component);
 			index = m_jtpTabbedPane.indexOfTab(titel);
@@ -1447,7 +1447,7 @@ public final class HOMainFrame extends JFrame
 				} catch (Throwable e2) {
 					HOLogger.instance().log(
 						HOMainFrame.class,
-						"- " + files[i].getName() + " wird übersprungen: " + e2.toString());
+						"- " + files[i].getName() + " wird Ã¼bersprungen: " + e2.toString());
 
 					//HOLogger.instance().log(HOMainFrame.class,e2);
 				}
@@ -1493,7 +1493,7 @@ public final class HOMainFrame extends JFrame
 				} catch (Throwable e2) {
 					HOLogger.instance().log(
 						HOMainFrame.class,
-						"- " + files[i].getName() + " wird übersprungen: " + e2.toString());
+						"- " + files[i].getName() + " wird Ã¼bersprungen: " + e2.toString());
 
 					//HOLogger.instance().log(HOMainFrame.class,e2);
 				}
@@ -1609,7 +1609,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * Alle temporären Tabs entfernen
+	 * Alle temporÃ¤ren Tabs entfernen
 	 */
 	private void checkTabs() {
 		int index;
@@ -1743,7 +1743,7 @@ public final class HOMainFrame extends JFrame
 		parameter.aufstellungsAssistentPanel_gesperrt = aap.isGesperrtIgnorieren();
 		parameter.aufstellungsAssistentPanel_notLast = aap.isExcludeLastMatch();
 
-		//      SpielerÜbersichtsPanel
+		//      SpielerÃœbersichtsPanel
 		parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = sup[0];
 		parameter.spielerUebersichtsPanel_horizontalRightSplitPane = sup[1];
 		parameter.spielerUebersichtsPanel_verticalSplitPane = sup[2];
@@ -1930,7 +1930,7 @@ public final class HOMainFrame extends JFrame
 		// TableColumn
 		UserColumnController.instance().load();
 
-		//Die Währung auf die aus dem HRF setzen
+		//Die WÃ¤hrung auf die aus dem HRF setzen
 		float faktorgeld =
 			(float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
 
@@ -1941,7 +1941,7 @@ public final class HOMainFrame extends JFrame
 		//Training
 		interuptionsWindow.setInfoText("Initialize Training");
 
-		//Training erstellen -> dabei Trainingswochen berechnen auf Grundlage der manuellen DB Einträge
+		//Training erstellen -> dabei Trainingswochen berechnen auf Grundlage der manuellen DB EintrÃ¤ge
 		de.hattrickorganizer.logik.TrainingsManager.instance().calculateTrainings(
 			de.hattrickorganizer.database.DBZugriff.instance().getTrainingsVector());
 

@@ -48,7 +48,7 @@ public final class BasicsTable extends AbstractTable {
 		final String[] awhereV = { "" + hrfId };
 
 		if (basics != null) {
-			//erst Vorhandene Aufstellung l�schen
+			//erst Vorhandene Aufstellung löschen
 			delete( awhereS, awhereV );
 
 			//insert vorbereiten
@@ -80,7 +80,7 @@ public final class BasicsTable extends AbstractTable {
 	}
 	
 	/**
-	 * l�dt die Basics zum angegeben HRF file ein
+	 * lädt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -106,7 +106,7 @@ public final class BasicsTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt eine Vector mit HRF-CBItems zur�ck
+	 * Gibt eine Vector mit HRF-CBItems zurück
 	 *
 	 * @param datum from which hrf has to be returned, used to load a subset of hrf
 	 *
@@ -147,7 +147,7 @@ public final class BasicsTable extends AbstractTable {
 	}
 	
 	/**
-	 * Gibt die HRFId vor dem Datum zur�ck, wenn m�glich
+	 * Gibt die HRFId vor dem Datum zurï¿½ck, wenn mï¿½glich
 	 *
 	 * @param time TODO Missing Constructuor Parameter Documentation
 	 *

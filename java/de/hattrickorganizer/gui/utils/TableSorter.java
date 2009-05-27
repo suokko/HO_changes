@@ -86,7 +86,7 @@ public class TableSorter extends TableMap {
                 try {
                     if (matchid == (int) ((ColorLabelEntry) getValueAt(i,idSpalte))
                                    .getZahl()) {
-                        //Die Zeile zurückgeben, muss vorher gemapped werden
+                        //Die Zeile zurÃ¼ckgeben, muss vorher gemapped werden
                         return indexes[i];
                     }
                 } catch (Exception e) {
@@ -106,14 +106,14 @@ public class TableSorter extends TableMap {
      * @return TODO Missing Return Method Documentation
      */
     public final int getRow4Spieler(int spielerid) {
-        //Kann < 0 für Tempspieler sein if ( spielerid > 0 )
+        //Kann < 0 fÃ¼r Tempspieler sein if ( spielerid > 0 )
         if (spielerid != 0) {
             for (int i = 0; i < getRowCount(); i++) {
                 try {
                     if (spielerid == Integer.parseInt(((de.hattrickorganizer.gui.templates.ColorLabelEntry) getValueAt(i,
                                                                                                                        idSpalte))
                                                       .getText())) {
-                        //Die Zeile zurückgeben, muss vorher gemapped werden
+                        //Die Zeile zurÃ¼ckgeben, muss vorher gemapped werden
                         // indexes[i];
                         return i;
                     }
@@ -328,7 +328,7 @@ public class TableSorter extends TableMap {
     }
 
     /**
-     * Sortierung am Anfang beim Erstellen der Tabelle und bei Modeländerungen
+     * Sortierung am Anfang beim Erstellen der Tabelle und bei ModelÃ¤nderungen
      */
     public final void initsort() {
         //InitSortColumnIndex

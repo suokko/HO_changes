@@ -40,8 +40,8 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
      * @param min Minimaler Wert
      * @param faktor Faktor, mit dem Werte eingangs multipliziert und durch die sie ausgangs wieder
      *        dividiert werden
-     * @param textfeldfaktor Faktor für die Anzeige des Sliderwerts in Textfeld
-     * @param textbreite Breite, die für das Label vorgesehen ist.
+     * @param textfeldfaktor Faktor fÃ¼r die Anzeige des Sliderwerts in Textfeld
+     * @param textbreite Breite, die fÃ¼r das Label vorgesehen ist.
      */
     public SliderPanel(String text, int max, int min, float faktor, float textfeldfaktor,
                        int textbreite) {
@@ -59,8 +59,8 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
 	 * @param min Minimaler Wert
 	 * @param faktor Faktor, mit dem Werte eingangs multipliziert und durch die sie ausgangs wieder
 	 *        dividiert werden
-	 * @param textfeldfaktor Faktor für die Anzeige des Sliderwerts in Textfeld
-	 * @param textbreite Breite, die für das Label vorgesehen ist.
+	 * @param textfeldfaktor Faktor fÃ¼r die Anzeige des Sliderwerts in Textfeld
+	 * @param textbreite Breite, die fÃ¼r das Label vorgesehen ist.
 	 */
 	public SliderPanel(String text, int max, int min, float faktor, float textfeldfaktor,
 					   int textbreite,int decimal) {
@@ -71,7 +71,7 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * werte direkt übernehmen public void setValue( int value ) { m_jslSlider.setValue ( value );
+     * werte direkt Ã¼bernehmen public void setValue( int value ) { m_jslSlider.setValue ( value );
      * }
      *
      * @param value TODO Missing Constructuor Parameter Documentation

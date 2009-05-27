@@ -41,7 +41,7 @@ public final class FaktorenTable extends AbstractTable {
 			final String[] awhereS = { "HOPosition" };
 			final String[] awhereV = { "" + fo.getPosition()};
 
-			//erst Vorhandene Aufstellung löschen
+			//erst Vorhandene Aufstellung lÃ¶schen
 			delete( awhereS, awhereV );
 
 			//insert vorbereiten

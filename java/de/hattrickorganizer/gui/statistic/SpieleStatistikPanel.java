@@ -530,10 +530,10 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
 
                 int bewertungwert = 0;
 
-                //Für match
+                //FÃ¼r match
                 int sublevel = 0;
 
-                //Für gesamtstärke
+                //FÃ¼r gesamtstÃ¤rke
                 double temp = 0d;
 
                 if (details.getHeimId() == teamid) {

@@ -327,7 +327,7 @@ public class TrainerLibrary {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Karte für den Trainer in der Variante
+     * Karte fÃ¼r den Trainer in der Variante
      *
      * @param heimtrainer TODO Missing Constructuor Parameter Documentation
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -360,7 +360,7 @@ public class TrainerLibrary {
     }
 
     /**
-     * Spielende für den Trainer mit dem Ergebnis in der variante
+     * Spielende fÃ¼r den Trainer mit dem Ergebnis in der variante
      *
      * @param heimtrainer TODO Missing Constructuor Parameter Documentation
      * @param heimsieg TODO Missing Constructuor Parameter Documentation
@@ -396,8 +396,8 @@ public class TrainerLibrary {
     /**
      * Torabschluss
      *
-     * @param heimtrainer für den Trainer
-     * @param heim für welche Mannschaft
+     * @param heimtrainer fÃ¼r den Trainer
+     * @param heim fÃ¼r welche Mannschaft
      * @param tor ein Treffer
      * @param variante Variante
      *
@@ -407,7 +407,7 @@ public class TrainerLibrary {
                                                        boolean tor, int variante) {
         //Heim
         if (heimtrainer) {
-            //Für Heim
+            //FÃ¼r Heim
             if (heim) {
                 //Tor
                 if (tor) {
@@ -432,7 +432,7 @@ public class TrainerLibrary {
                     }
                 }
             }
-            //Für Gast
+            //FÃ¼r Gast
             else {
                 //Tor
                 if (tor) {
@@ -462,7 +462,7 @@ public class TrainerLibrary {
         }
         //Gast
         else {
-            //Für Gast
+            //FÃ¼r Gast
             if (!heim) {
                 //Tor
                 if (tor) {
@@ -487,7 +487,7 @@ public class TrainerLibrary {
                     }
                 }
             }
-            //Für Heim
+            //FÃ¼r Heim
             else {
                 //Tor
                 if (tor) {
@@ -518,7 +518,7 @@ public class TrainerLibrary {
     }
 
     /**
-     * Torspannung für den Trainer in der Variante
+     * Torspannung fÃ¼r den Trainer in der Variante
      *
      * @param heimtrainer TODO Missing Constructuor Parameter Documentation
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -537,7 +537,7 @@ public class TrainerLibrary {
     }
 
     /**
-     * Verletzung für den Trainer in der Variante
+     * Verletzung fÃ¼r den Trainer in der Variante
      *
      * @param heimtrainer TODO Missing Constructuor Parameter Documentation
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -559,7 +559,7 @@ public class TrainerLibrary {
     //-----------Zugriffsmethoden---------------------------------------------------
 
     /**
-     * Warte Sequenz für den Trainer in der Variante
+     * Warte Sequenz fÃ¼r den Trainer in der Variante
      *
      * @param heimtrainer TODO Missing Constructuor Parameter Documentation
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -578,7 +578,7 @@ public class TrainerLibrary {
     }
 
     /**
-     * lädt alle Grafiken, und erstellt die ImageSequenzItem-Vectoren:<br>
+     * lÃ¤dt alle Grafiken, und erstellt die ImageSequenzItem-Vectoren:<br>
      */
     public static void load() {
         //Nur laden, wenn noch nicht geschehen
@@ -590,7 +590,7 @@ public class TrainerLibrary {
         }
     }
 
-    //Lädt Grafiken mit dem Mediatracker
+    //LÃ¤dt Grafiken mit dem Mediatracker
     private static Image cache(Image image) {
         try {
             m_clTracker.addImage(image, 0);
@@ -629,7 +629,7 @@ public class TrainerLibrary {
         return (Image) bImageOp.filter(bImage, null);
     }
 
-    //Lädt Grafiken auch im jar-File
+    //LÃ¤dt Grafiken auch im jar-File
     private static Image loadImage(String datei) {
         try {
             final java.net.URL resource = m_clComponent.getClass().getClassLoader().getResource(datei);
@@ -655,7 +655,7 @@ public class TrainerLibrary {
     }
 
     /**
-     * lädt alle weiteren Grafiken
+     * lÃ¤dt alle weiteren Grafiken
      */
     private static void loadTrainer() {
         loadTrainer1_Langweile();

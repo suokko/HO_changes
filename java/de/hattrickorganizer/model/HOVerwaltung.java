@@ -2,7 +2,7 @@
 /*
  * HOVerwaltung.java
  *
- * Created on 22. März 2003, 16:31
+ * Created on 22. MÃ¤rz 2003, 16:31
  */
 package de.hattrickorganizer.model;
 
@@ -84,7 +84,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt den Durchschnittlichen Mannschaftswert zurück
+     * Gibt den Durchschnittlichen Mannschaftswert zurÃ¼ck
      * Returns the average estimated market value (EPV)
      *
      * @return average EPV
@@ -99,7 +99,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt das Durchschnittsalter zurück
+     * Gibt das Durchschnittsalter zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -108,7 +108,7 @@ public class HOVerwaltung {
         final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
+            //Trainer nicht berÃ¼cksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
             	// Age Years
                 summe += ((Spieler) vSpieler.get(i)).getAlter();
@@ -122,7 +122,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt das Durchschnittserfahrung zurück
+     * Gibt das Durchschnittserfahrung zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -131,7 +131,7 @@ public class HOVerwaltung {
         final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
+            //Trainer nicht berÃ¼cksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
                 summe += ((Spieler) vSpieler.get(i)).getErfahrung();
             }
@@ -142,7 +142,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt das Durchschnittsform zurück
+     * Gibt das Durchschnittsform zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -151,7 +151,7 @@ public class HOVerwaltung {
         final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
+            //Trainer nicht berÃ¼cksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
                 summe += ((Spieler) vSpieler.get(i)).getForm();
             }
@@ -162,7 +162,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt den gesamtmarktwert zurück
+     * Gibt den gesamtmarktwert zurÃ¼ck
      * Returns the TSI sum
      *
      * @return TODO Missing Return Method Documentation
@@ -172,7 +172,7 @@ public class HOVerwaltung {
         final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
+            //Trainer nicht berÃ¼cksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
                 summe += ((Spieler) vSpieler.get(i)).getTSI();
             }
@@ -182,7 +182,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt den gesamtmarktwert zurück
+     * Gibt den gesamtmarktwert zurÃ¼ck
      * Returns the sum of all estimated player values (EPV)
      *
      * @return TODO Missing Return Method Documentation
@@ -192,7 +192,7 @@ public class HOVerwaltung {
         final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
+            //Trainer nicht berÃ¼cksichtigen
             if (!((Spieler) vSpieler.get(i)).isTrainer()) {
                 summe += ((Spieler) vSpieler.get(i)).getEPV();
             }
@@ -228,10 +228,10 @@ public class HOVerwaltung {
         if (m_clInstance == null) {
             m_clInstance = new HOVerwaltung();
 
-            //TODO : defaults für FaktorObjekte einladen
+            //TODO : defaults fÃ¼r FaktorObjekte einladen
             de.hattrickorganizer.database.DBZugriff.instance().getFaktorenFromDB();
 
-            //Krücke bisher
+            //KrÃ¼cke bisher
             //berechnung.FormulaFactors.instance ().init ();
         }
 
@@ -299,7 +299,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * läadt das zuletzt importtiert model ein
+     * lÃ¤adt das zuletzt importtiert model ein
      */
     public void loadLatestHoModel() {
         int id = de.hattrickorganizer.database.DBZugriff.instance().getLatestHrfId();
@@ -353,7 +353,7 @@ public class HOVerwaltung {
             waitDialog.setVisible(false);
         }
 
-        //Erneut laden, da sich die Subskills geändert haben
+        //Erneut laden, da sich die Subskills geÃ¤ndert haben
         loadLatestHoModel();
 
         de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
@@ -362,7 +362,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * interne Func die ein Model aus der DB lädt
+     * interne Func die ein Model aus der DB lÃ¤dt
      *
      * @param id TODO Missing Constructuor Parameter Documentation
      *

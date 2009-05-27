@@ -32,7 +32,7 @@ public class DBUserParameter {
      * @param m_clJDBCAdapter TODO Missing Constructuor Parameter Documentation
      */
     /**
-     * Lädt die UserParameter direkt in das UserParameter-SingeltonObjekt
+     * LÃ¤dt die UserParameter direkt in das UserParameter-SingeltonObjekt
      *
      * @param m_clJDBCAdapter TODO Missing Constructuor Parameter Documentation
      */
@@ -57,7 +57,7 @@ public class DBUserParameter {
                 parameter.hoMainFrame_width = rs.getInt("FrameWidth");
                 parameter.hoMainFrame_height = rs.getInt("FrameHeight");
 
-                //SpielerÜbersichtsPanel
+                //SpielerÃœbersichtsPanel
                 parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = rs.getInt("SUP_HorLeft");
                 parameter.spielerUebersichtsPanel_horizontalRightSplitPane = rs.getInt("SUP_HorRight");
                 parameter.spielerUebersichtsPanel_verticalSplitPane = rs.getInt("SUP_Vert");
@@ -110,8 +110,8 @@ public class DBUserParameter {
                 parameter.MinIdealPosStk = rs.getFloat("MinIdealPosStk");
                 parameter.WetterEffektBonus = rs.getFloat("WetterEffektBonus");
 
-                //Währung, Sprachdatei, Schriftgroesse
-                //Die Währungsid ist veraltet, der Faktor wird nachher überschrieben durch die Extradata aus dem HRF, wenn vorhanden
+                //WÃ¤hrung, Sprachdatei, Schriftgroesse
+                //Die WÃ¤hrungsid ist veraltet, der Faktor wird nachher Ã¼berschrieben durch die Extradata aus dem HRF, wenn vorhanden
                 parameter.waehrungsID = rs.getInt("Waehrung");
                 parameter.faktorGeld = de.hattrickorganizer.gui.menu.option.SonstigeOptionenPanel
                                        .getFaktorGeld4WaehrungsID(parameter.waehrungsID);
@@ -152,7 +152,7 @@ public class DBUserParameter {
                 parameter.statistikStandards = rs.getBoolean("Stat_Standards");
                 parameter.statistikBewertung = rs.getBoolean("Stat_Bewertung");
 
-                //SpielerFinanzStatistik - Benutzt für SpieleStatistik
+                //SpielerFinanzStatistik - Benutzt fÃ¼r SpieleStatistik
                 parameter.statistikSpielerFinanzenAnzahlHRF = rs.getInt("StatSpielerFinanzen_AnzahlHRF");
                 parameter.statistikSpielerFinanzenHilfslinien = rs.getBoolean("StatSpielerFinanzen_Hilfslinien");
                 parameter.statistikSpielerFinanzenBeschriftung = rs.getBoolean("StatSpielerFinanzen_Beschriftung");
@@ -212,7 +212,7 @@ public class DBUserParameter {
                 parameter.statistikMarktwert = rs.getBoolean("Stat_Marktwert");
                 parameter.statistikFananzahl = rs.getBoolean("Stat_Fananzahl");
 
-                //Faktor für Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet
+                //Faktor fÃ¼r Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet
                 //11 ist defaultschriftgroesse
                 parameter.zellenbreitenFaktor = parameter.schriftGroesse / 11f;
 

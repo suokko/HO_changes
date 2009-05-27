@@ -19,7 +19,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Dies ist eine Test-Klasse für den Java-FullScreen-Mode
+ * Dies ist eine Test-Klasse fÃ¼r den Java-FullScreen-Mode
  */
 public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.MouseListener,
                                    java.awt.event.MouseMotionListener,
@@ -96,7 +96,7 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
         //foregroundLayer = new StaticEffectLayer( container, false );
         throwLayer = new DynamicEffectLayer(container, backgroundLayer);
 
-        //Bälle generieren
+        //BÃ¤lle generieren
         for (int i = 0; i < baelle.length; i++) {
             baelle[i] = new Ball(screenWidth, screenHeight);
         }
@@ -114,13 +114,13 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
 
         //Keinen Rahmen
         //window.setUndecorated(true);
-        //Größe des Fensters unveränderbar
+        //GrÃ¶ÃŸe des Fensters unverÃ¤nderbar
         window.setResizable(false);
 
         //Ignoriere alle Repaintanweisungen des Systems
         window.setIgnoreRepaint(true);
 
-        //Grösse
+        //GrÃ¶sse
         window.setSize(screenWidth, screenHeight);
 
         //Position
@@ -311,7 +311,7 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
     }
 
     /**
-     * Vorbereitung für nächstes Frame
+     * Vorbereitung fÃ¼r nÃ¤chstes Frame
      *
      * @param vergangeneZeit TODO Missing Constructuor Parameter Documentation
      */
@@ -536,17 +536,17 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
                                                                      Color.black, 153, 303, 23200,
                                                                      26000, 500));
 
-        //Unterstützung
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("Unterstützung",
+        //UnterstÃ¼tzung
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("UnterstÃ¼tzung",
                                                                      new Font("Egal", Font.PLAIN, 40),
                                                                      ueberschriftColor, 150, 100,
                                                                      27000, 40400, 500));
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("Unterstützung",
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("UnterstÃ¼tzung",
                                                                      new Font("Egal", Font.PLAIN, 40),
                                                                      Color.black, 153, 103, 27000,
                                                                      40400, 500));
 
-        //Übersetzung
+        //Ãœbersetzung
         movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("UebersetzungIn"),
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      ueberschriftColor2, 200, 170,
@@ -576,12 +576,12 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
                                                                      Color.black, 203, 253, 29200,
                                                                      33600, 500));
 
-        //Benjamin "Berick" Stössel
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("Benjamin \"Berick\" Stössel",
+        //Benjamin "Berick" StÃ¶ssel
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("Benjamin \"Berick\" StÃ¶ssel",
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      namenColor, 150, 280, 29400,
                                                                      33600, 500));
-        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("Benjamin \"Berick\" Stössel",
+        movieLayer.addZeitverzoegertDynamischenEffekt(new FontEffect("Benjamin \"Berick\" StÃ¶ssel",
                                                                      new Font("Egal", Font.PLAIN, 30),
                                                                      Color.black, 153, 283, 29400,
                                                                      33600, 500));
@@ -918,7 +918,7 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
                 vergangeneZeit = frameCounter();
                 gesamtZeit += vergangeneZeit;
 
-                //Aktionen durchführen
+                //Aktionen durchfÃ¼hren
                 action(vergangeneZeit);
 
                 //Frame zeichnen
@@ -936,7 +936,7 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
                     done = true;
 
                     /*
-                       //Muß neu erstellt werden, da sie sonst zu langsam wird!?
+                       //MuÃŸ neu erstellt werden, da sie sonst zu langsam wird!?
                        window.createBufferStrategy(2);
                        myStrategy = window.getBufferStrategy();
                     

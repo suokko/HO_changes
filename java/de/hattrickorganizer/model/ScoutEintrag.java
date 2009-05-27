@@ -2,7 +2,7 @@
 /*
  * ScoutEintrag.java
  *
- * Created on 26. März 2003, 13:57
+ * Created on 26. MÃ¤rz 2003, 13:57
  */
 package de.hattrickorganizer.model;
 

@@ -97,7 +97,7 @@ public class XMLArenaParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten f�llen
+            //Daten füllen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));

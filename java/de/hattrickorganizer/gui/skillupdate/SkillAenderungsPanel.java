@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 
 
 /**
- * Panel mit JTabel für die Arena anzeige und zum Testen
+ * Panel mit JTabel fÃ¼r die Arena anzeige und zum Testen
  */
 public class SkillAenderungsPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener

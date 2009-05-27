@@ -13,7 +13,7 @@ import javax.swing.plaf.FontUIResource;
 /*
  * ho.java
  *
- * Created on 17. März 2003, 15:30
+ * Created on 17. MÃ¤rz 2003, 15:30
  */
 
 /**

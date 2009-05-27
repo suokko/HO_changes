@@ -21,9 +21,9 @@ import de.hattrickorganizer.tools.HOLogger;
  */
 
 /*
-   SchnittStelle für Spieler OBJ
+   SchnittStelle fÃ¼r Spieler OBJ
    - ID
-   - Stk nur für aktuelle Position
+   - Stk nur fÃ¼r aktuelle Position
    - Anz Gelb
    - Anz Tore
    - Anz Torchancen
@@ -31,7 +31,7 @@ import de.hattrickorganizer.tools.HOLogger;
 public final class ServerSpieler implements java.io.Serializable {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    //Posotionscodierungen! für alle Positionen auf dem Spielfeld gilt die Codierung der Spielerposition!!
+    //Posotionscodierungen! fÃ¼r alle Positionen auf dem Spielfeld gilt die Codierung der Spielerposition!!
 
     /** TODO Missing Parameter Documentation */
     public static final byte BANK_TW = -1;
@@ -122,7 +122,7 @@ public final class ServerSpieler implements java.io.Serializable {
     /** TODO Missing Parameter Documentation */
     private float m_fST_D;
 
-    //Vorberechnete Stärken
+    //Vorberechnete StÃ¤rken
 
     /** TODO Missing Parameter Documentation */
     private float m_fTW;
@@ -152,7 +152,7 @@ public final class ServerSpieler implements java.io.Serializable {
         final FactorObject[] allPos = FormulaFactors.instance().getAllObj();
         float stk = -1.0f;
 
-        //Stärken übernhemen
+        //StÃ¤rken Ã¼bernhemen
         for (int i = 0; (allPos != null) && (i < allPos.length); i++) {
             stk = player.calcPosValue(allPos[i].getPosition(), true);
             setStk(allPos[i].getPosition(), stk);
@@ -164,7 +164,7 @@ public final class ServerSpieler implements java.io.Serializable {
     }
 
     /**
-     * Konstruktor lädt den ServerSpieler aus einem InputStream
+     * Konstruktor lÃ¤dt den ServerSpieler aus einem InputStream
      *
      * @param dis Der InputStream aus dem gelesen wird
      */
@@ -597,7 +597,7 @@ public final class ServerSpieler implements java.io.Serializable {
 
             //Strom konvertieren in Byte
             //data = das.baos.toByteArray();
-            //Hilfsstrom schließen
+            //Hilfsstrom schlieÃŸen
             //das.close ();
             //    return data;
         } catch (IOException ioe) {

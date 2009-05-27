@@ -2,7 +2,7 @@
 /*
  * FormulaFactors.java
  *
- * Created on 17. März 2003, 15:31
+ * Created on 17. MÃ¤rz 2003, 15:31
  */
 package de.hattrickorganizer.model;
 
@@ -196,7 +196,7 @@ public class FormulaFactors {
     	final Element root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             m_clTorwart = readObject("KEEPER", root);
             m_clInnenVerteidiger = readObject("DEFENSE", root);
             m_clInnenVerteidiger_OFF = readObject("DEFENSE_O", root);
@@ -238,7 +238,7 @@ public class FormulaFactors {
         try {
             root = (Element) root.getElementsByTagName(tagname).item(0);
 
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("Position").item(0);
             factorObject.setPosition(Byte.parseByte(manager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("defense").item(0);

@@ -105,7 +105,7 @@ public class XMLMatchLineupParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             ml.setFetchDatum(ele.getFirstChild().getNodeValue());
             ele = (Element) root.getElementsByTagName("MatchID").item(0);
@@ -177,12 +177,12 @@ public class XMLMatchLineupParser {
         if (spielerID > 0) {
             tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
 
-            //Fix für xml BUG von HT
+            //Fix fÃ¼r xml BUG von HT
             if (tmp.getFirstChild() != null) {
                 name = tmp.getFirstChild().getNodeValue();
             }
 
-            //taktik nur für aufgestellte
+            //taktik nur fÃ¼r aufgestellte
             if (roleID == 1) {
                 //Diese Werte sind von HT vorgegeben aber nicht garantiert  mitgeliefert in xml, daher selbst setzen!
                 behaivior = 0;
@@ -194,7 +194,7 @@ public class XMLMatchLineupParser {
                 positionsCode = Integer.parseInt(tmp.getFirstChild().getNodeValue());
             }
 
-            //rating nur für leute die gespielt haben
+            //rating nur fÃ¼r leute die gespielt haben
             if ((roleID < 12) || (roleID > 18)) {
                 tmp = (Element) ele.getElementsByTagName("RatingStars").item(0);
                 rating = Double.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",","."));
@@ -235,7 +235,7 @@ public class XMLMatchLineupParser {
         team = new MatchLineupTeam(teamName, teamId, erfahrung);
         tmp = (Element) ele.getElementsByTagName("Lineup").item(0);
 
-        //Einträge adden
+        //EintrÃ¤ge adden
         list = tmp.getElementsByTagName("Player");
 
         for (int i = 0; (list != null) && (i < list.getLength()); i++) {

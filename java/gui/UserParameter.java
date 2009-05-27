@@ -46,7 +46,7 @@ public final class UserParameter extends Configuration {
     /** TODO Missing Parameter Documentation */
     public Color FG_GESPERRT = new Color(200, 20, 20);
 
-    //Farben für Spielernamen
+    //Farben fÃ¼r Spielernamen
 
     /** TODO Missing Parameter Documentation */
     public Color FG_STANDARD = Color.black;
@@ -367,7 +367,7 @@ public final class UserParameter extends Configuration {
     /** TODO Missing Parameter Documentation */
     public boolean tempTabSpieleranalyse;
 
-    //Temporäre Tabs
+    //TemporÃ¤re Tabs
 
     /** TODO Missing Parameter Documentation */
     public boolean tempTabSpieleruebersicht;
@@ -401,7 +401,7 @@ public final class UserParameter extends Configuration {
     /** TODO Missing Parameter Documentation */
     public float IntensitaetFaktor = 1.0f;
 
-    /*gibt die mindeststärke für einen Spieler an für seine Idealpos um vom Aufstellungsassi bei idealpos gesetzt zu werden*/
+    /*gibt die mindeststÃ¤rke fÃ¼r einen Spieler an fÃ¼r seine Idealpos um vom Aufstellungsassi bei idealpos gesetzt zu werden*/
 
     /** TODO Missing Parameter Documentation */
     public float MinIdealPosStk = 3.5f;
@@ -415,12 +415,12 @@ public final class UserParameter extends Configuration {
     public float WetterEffektBonus = 0.2f;
 
     //Sonstiges
-    //Faktor, durch den Geld geteilt werden muß für die Währung (Gleiche Währungsfaktoren zusammenfassen)
+    //Faktor, durch den Geld geteilt werden muÃŸ fÃ¼r die WÃ¤hrung (Gleiche WÃ¤hrungsfaktoren zusammenfassen)
 
     /** TODO Missing Parameter Documentation */
     public float faktorGeld = 1f;
 
-    //Faktor für Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet    
+    //Faktor fÃ¼r Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet    
 
     /** TODO Missing Parameter Documentation */
     public float zellenbreitenFaktor = 1.0f;
@@ -585,7 +585,7 @@ public final class UserParameter extends Configuration {
     public int statistikSpieleFilter = 11;
 
     //SpielerFinanzenStatistikPanel
-    //Wird nun für SpieleStatistik verwendet!
+    //Wird nun fÃ¼r SpieleStatistik verwendet!
 
     /** TODO Missing Parameter Documentation */
     public int statistikSpielerFinanzenAnzahlHRF = 50;
@@ -595,7 +595,7 @@ public final class UserParameter extends Configuration {
     /** TODO Missing Parameter Documentation */
     public int transferScoutPanel_horizontalSplitPane = 300;
 
-    //Id der Währung
+    //Id der WÃ¤hrung
 
     /** TODO Missing Parameter Documentation */
 	

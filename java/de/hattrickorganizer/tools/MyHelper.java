@@ -51,7 +51,7 @@ public class MyHelper {
     }
 
     /**
-     * fügt den Array src an den Vector dest an
+     * fÃ¼gt den Array src an den Vector dest an
      *
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
@@ -63,7 +63,7 @@ public class MyHelper {
     }
 
     /**
-     * fügt den Vector src an den Vector dest an
+     * fÃ¼gt den Vector src an den Vector dest an
      *
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
@@ -92,7 +92,7 @@ public class MyHelper {
      * Kopiert einen Vector in einen Array
      *
      * @param src der Vektor der kopiert werden soll
-     * @param dest Array der Vector aufnehmen soll, muss bereits erstellt sein und die größe =
+     * @param dest Array der Vector aufnehmen soll, muss bereits erstellt sein und die grÃ¶ÃŸe =
      *        Vector.size() haben
      */
     public static void copyVector2Array(java.util.Vector src, Object[] dest) {
@@ -108,7 +108,7 @@ public class MyHelper {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////77    
 
     /**
-     * verschlüsselt einen String der nur aus Zahlen und Buchstaben besteht
+     * verschlÃ¼sselt einen String der nur aus Zahlen und Buchstaben besteht
      *
      * @param text TODO Missing Constructuor Parameter Documentation
      *
@@ -121,7 +121,7 @@ public class MyHelper {
             return "";
         }
 
-        //prüfen ob nur zahlen eingegeben sind !!!
+        //prÃ¼fen ob nur zahlen eingegeben sind !!!
         for (int j = 0; j < text.length(); j++) {
             if (!Character.isLetterOrDigit(text.charAt(j))) {
                 return null;
@@ -150,7 +150,7 @@ public class MyHelper {
     }
 
     /**
-     * entschlüsselt einen String der zuvor mit der Crypt methode verschlüsselt wurde
+     * entschlÃ¼sselt einen String der zuvor mit der Crypt methode verschlÃ¼sselt wurde
      *
      * @param text TODO Missing Constructuor Parameter Documentation
      *
@@ -187,7 +187,7 @@ public class MyHelper {
     /////////////////////////////String Funcs//////////////////
 
     /**
-     * Erzeugt aus einem String, der durch Komma getrennte Teilstrings enthält einen Array mit den
+     * Erzeugt aus einem String, der durch Komma getrennte Teilstrings enthÃ¤lt einen Array mit den
      * Teilstrings.
      *
      * @param werte TODO Missing Constructuor Parameter Documentation
@@ -225,7 +225,7 @@ public class MyHelper {
             }
         }
 
-        //letzte Zahl(Koordinate) hinzufügen, da am Ende kein Komma mehr folgt
+        //letzte Zahl(Koordinate) hinzufÃ¼gen, da am Ende kein Komma mehr folgt
         sValues[j] = buffer.toString().trim();
 
         return sValues;

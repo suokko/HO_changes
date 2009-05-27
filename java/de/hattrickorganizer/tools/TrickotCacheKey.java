@@ -2,7 +2,7 @@
 package de.hattrickorganizer.tools;
 
 /**
- * Key für den TrickotCache
+ * Key fÃ¼r den TrickotCache
  */
 public class TrickotCacheKey {
     //~ Instance fields ----------------------------------------------------------------------------

@@ -22,7 +22,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
- * Zeigt die Stärken eines Matches an
+ * Zeigt die StÃ¤rken eines Matches an
  */
 public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -544,7 +544,7 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
         }
 
         if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
-            //Sterne für Sieger!
+            //Sterne fÃ¼r Sieger!
             if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);

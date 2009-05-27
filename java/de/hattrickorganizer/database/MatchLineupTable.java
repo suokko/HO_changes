@@ -112,7 +112,7 @@ public final class MatchLineupTable extends AbstractTable {
 	 */
 	public void storeMatchLineup(MatchLineup lineup) {
 		if (lineup != null) {
-			//Vorhandene Eintr‰ge entfernen
+			//Vorhandene Eintr√§ge entfernen
 			final String[] where = { "MatchID" };
 			final String[] werte = { "" + lineup.getMatchID()};			
 			delete(where, werte);
@@ -145,7 +145,7 @@ public final class MatchLineupTable extends AbstractTable {
 						+ "' )");
 				adapter.executeUpdate(sql);
 
-				//Eintr‰ge noch saven
+				//Eintr√§ge noch saven
 				DBZugriff.instance().storeMatchLineupTeam((de.hattrickorganizer.model.matches.MatchLineupTeam) lineup.getHeim(), lineup.getMatchID());
 				DBZugriff.instance().storeMatchLineupTeam((de.hattrickorganizer.model.matches.MatchLineupTeam) lineup.getGast(), lineup.getMatchID());
 			} catch (Exception e) {

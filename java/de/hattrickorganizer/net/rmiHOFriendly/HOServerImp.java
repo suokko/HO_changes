@@ -140,7 +140,7 @@ public class HOServerImp implements Chat {
            }
          */
 
-        //wert zurückliefern
+        //wert zurÃ¼ckliefern
         return m_bClientBereit;
     }
 
@@ -217,7 +217,7 @@ public class HOServerImp implements Chat {
     /**
      * erzeugt den Server und registriert ihn auf Wunsch in I-Net
      *
-     * @param register Soll der Server öffentlich gemacht werden
+     * @param register Soll der Server Ã¶ffentlich gemacht werden
      * @param ipAdresse global Adress des Servers
      * @param port Port
      * @param info Infos zu diesem Server
@@ -225,14 +225,14 @@ public class HOServerImp implements Chat {
     public final void createServer(boolean register, String ipAdresse, int port, String info) {
         try {
             if (register) {
-                //IPAdresse + Info String übergeben bekommen
+                //IPAdresse + Info String Ã¼bergeben bekommen
                 m_clMatch = new MatchFinder(ipAdresse, port, info);
 
                 //starten
                 new Thread(m_clMatch).start();
             }
 
-            //Port öffnen
+            //Port Ã¶ffnen
             m_clServer = new ServerSocket(port);
 
             //Unendliches Timeout setzen
@@ -244,7 +244,7 @@ public class HOServerImp implements Chat {
             //Thread starten
             new Thread(m_clWorker).start();
 
-            //Inet DB über Server informieren, nur wenn gewünscht          
+            //Inet DB Ã¼ber Server informieren, nur wenn gewÃ¼nscht          
         } catch (Exception e) {
         }
     }
@@ -351,7 +351,7 @@ public class HOServerImp implements Chat {
 
         releaseWriteAccess();
 
-        //Client ist damit aber nicht wirklich beschäftigt
+        //Client ist damit aber nicht wirklich beschÃ¤ftigt
         m_bClientBereit = true;
 
         //an sich selbst senden
@@ -361,10 +361,10 @@ public class HOServerImp implements Chat {
     /**
      * Fangesang
      *
-     * @param key FanGesangsArt ,steht für Anfeuerung, verhöhnen
+     * @param key FanGesangsArt ,steht fÃ¼r Anfeuerung, verhÃ¶hnen
      * @param art (Spieler, Team, Trainer )
      * @param variante welche Variante
-     * @param fanTeam Füllmaterial für die Variable
+     * @param fanTeam FÃ¼llmaterial fÃ¼r die Variable
      * @param fanManager TODO Missing Constructuor Parameter Documentation
      * @param gegnerTeam TODO Missing Constructuor Parameter Documentation
      * @param gegnerManager TODO Missing Constructuor Parameter Documentation
@@ -393,7 +393,7 @@ public class HOServerImp implements Chat {
     }
 
     /**
-     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchießen, Spielende...
+     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchieÃŸen, Spielende...
      *
      * @param textKey == Info, Vortext usw.
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -413,7 +413,7 @@ public class HOServerImp implements Chat {
     }
 
     /**
-     * übermittelt Inforamtionen zu einer Karte
+     * Ã¼bermittelt Inforamtionen zu einer Karte
      *
      * @param textKey TODO Missing Constructuor Parameter Documentation
      * @param spielerName TODO Missing Constructuor Parameter Documentation
@@ -459,7 +459,7 @@ public class HOServerImp implements Chat {
         releaseWriteAccess();
     }
 
-    ////////////////////////////nur für's Interface  ,kein Inhalt!///////////////    
+    ////////////////////////////nur fÃ¼r's Interface  ,kein Inhalt!///////////////    
     public void sendPause(boolean bool) {
         /*
            try
@@ -639,7 +639,7 @@ public class HOServerImp implements Chat {
      * gibt die Schreibrechte wieder frei
      */
     protected final synchronized void releaseWriteAccess() {
-        //Client ist nun beschäftigt
+        //Client ist nun beschÃ¤ftigt
         m_bClientBereit = false;
 
         try {
@@ -651,7 +651,7 @@ public class HOServerImp implements Chat {
     }
 
     /**
-     * fordert Schreibrechte für den Output!
+     * fordert Schreibrechte fÃ¼r den Output!
      */
     protected final synchronized void requestWriteAccess() {
         while (m_bWriting) {

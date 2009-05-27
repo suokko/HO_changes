@@ -24,8 +24,8 @@ import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**
- * Die Klasse bündelt alle anderen Model, die zu einer HRF Datei gehören. Die Daten können
- * natürlich auch aus der Datenbank kommen
+ * Die Klasse bÃ¼ndelt alle anderen Model, die zu einer HRF Datei gehÃ¶ren. Die Daten kÃ¶nnen
+ * natÃ¼rlich auch aus der Datenbank kommen
  */
 public class HOModel {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class HOModel {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    //gibts über den Spielplan
+    //gibts Ã¼ber den Spielplan
     //private LigaTabelle         m_clLigaTabelle =   null;
     public HOModel() {
         //erst einbauen wenn db angebunden ist
@@ -61,7 +61,7 @@ public class HOModel {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Alle Spieler werden übergeben und die noch aktuellen Spieler entfernt
+     * Alle Spieler werden Ã¼bergeben und die noch aktuellen Spieler entfernt
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
@@ -71,11 +71,11 @@ public class HOModel {
             ((Spieler) spielerVector.get(i)).setOld(true);
 
             for (int j = 0; j < m_vSpieler.size(); j++) {
-                //Schon in den aktuellen Spielern vorhanden, dann überspringen
+                //Schon in den aktuellen Spielern vorhanden, dann Ã¼berspringen
                 if (((Spieler) spielerVector.get(i)).equals(m_vSpieler.get(j))) {
                     spielerVector.remove(i);
 
-                    //Index einen zurücksetzen, da ein wert gelöscht wurde
+                    //Index einen zurÃ¼cksetzen, da ein wert gelÃ¶scht wurde
                     i--;
                     break;
                 }
@@ -86,7 +86,7 @@ public class HOModel {
     }
 
     /**
-     * Gibt alle alten Spieler (nicht mehr im Team befindliche) zurück
+     * Gibt alle alten Spieler (nicht mehr im Team befindliche) zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -97,7 +97,7 @@ public class HOModel {
     //---------Spieler--------------------------------------
 
     /**
-     * Gibt alle Spieler zurück
+     * Gibt alle Spieler zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -117,7 +117,7 @@ public class HOModel {
     //---------Aufstellung ----------------------------------
 
     /**
-     * Gibt die Aufstellung zurück
+     * Gibt die Aufstellung zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -137,7 +137,7 @@ public class HOModel {
     //----------Basics----------------------------------------
 
     /**
-     * Gibt die Basics zurück
+     * Gibt die Basics zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -166,7 +166,7 @@ public class HOModel {
     //-------Finanzen---------------------------------------
 
     /**
-     * Gibt die Finanzen zurück
+     * Gibt die Finanzen zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -213,7 +213,7 @@ public class HOModel {
     }
 
     /**
-     * Gibt die Aufstellung zurück
+     * Gibt die Aufstellung zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -233,7 +233,7 @@ public class HOModel {
     //----------Liga----------------------------------------
 
     /**
-     * Gibt die Basics zurück
+     * Gibt die Basics zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -251,7 +251,7 @@ public class HOModel {
     }
 
     /**
-     * Gibt den Spieler mit der ID zurück
+     * Gibt den Spieler mit der ID zurÃ¼ck
      *
      * @param id TODO Missing Constructuor Parameter Documentation
      *
@@ -299,7 +299,7 @@ public class HOModel {
     //--------Stadium----------------------------------------
 
     /**
-     * Gibt das Stadium zurück
+     * Gibt das Stadium zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -319,7 +319,7 @@ public class HOModel {
     //----------Team----------------------------------------
 
     /**
-     * Gibt das Team zurück
+     * Gibt das Team zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -328,7 +328,7 @@ public class HOModel {
     }
 
     /**
-     * Gibt den Trainer zurück
+     * Gibt den Trainer zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -361,7 +361,7 @@ public class HOModel {
     //----------Verein----------------------------------------
 
     /**
-     * Gibt den Verein zurück
+     * Gibt den Verein zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -388,7 +388,7 @@ public class HOModel {
     }
 
     /**
-     * Fügt einen Spieler hinzu (wofür auch immer...)
+     * FÃ¼gt einen Spieler hinzu (wofÃ¼r auch immer...)
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
@@ -404,7 +404,7 @@ public class HOModel {
         final java.sql.Timestamp calcDate = m_clBasics.getDatum();
 
         /*
-           //null für aktuelles HRF-Model
+           //null fÃ¼r aktuelles HRF-Model
            java.sql.Timestamp       calcDate    =   null;
            if ( this.getBasics ().getDatum ().before ( database.DBZugriff.instance ().getBasics ( database.DBZugriff.instance ().getHRF_IDByDate ()  ).getDatum () ) )
            {
@@ -603,7 +603,7 @@ public class HOModel {
         m_clAufstellung = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(-1,
                                                                                             Aufstellung.DEFAULT_NAME);
 
-        //prüfen ob alle aufgstellen Spieler noch existieren
+        //prÃ¼fen ob alle aufgstellen Spieler noch existieren
         m_clAufstellung.checkAufgestellteSpieler();
     }
 
@@ -614,7 +614,7 @@ public class HOModel {
         m_clLastAufstellung = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(-1,
                                                                                                 Aufstellung.DEFAULT_NAMELAST);
 
-        //prüfen ob alle aufgstellen Spieler noch existieren
+        //prÃ¼fen ob alle aufgstellen Spieler noch existieren
         m_clLastAufstellung.checkAufgestellteSpieler();
     }
 
@@ -657,7 +657,7 @@ public class HOModel {
 
     //java.sql.Timestamp hrfDateiDatum )
     public final synchronized void saveHRF() {
-        //HRF //TODO Datum angabe in Modell aus file last modified übernehmen ersetzen
+        //HRF //TODO Datum angabe in Modell aus file last modified Ã¼bernehmen ersetzen
         de.hattrickorganizer.database.DBZugriff.instance().saveHRF(m_iID,
                                                                    java.text.DateFormat.getDateTimeInstance()
                                                                                        .format(new java.util.Date(System
@@ -711,7 +711,7 @@ public class HOModel {
 
     /*    public synchronizd void save(  )
        {
-           //HRF //TODO Datum angabe in Modell aus file last modified übernehmen ersetzen
+           //HRF //TODO Datum angabe in Modell aus file last modified Ã¼bernehmen ersetzen
            database.DBZugriff.instance ().saveHRF ( m_iID, java.text.DateFormat.getDateTimeInstance ().format( new java.util.Date(  System.currentTimeMillis () ) ), m_clBasics.getDatum () );
            //basics
            database.DBZugriff.instance ().saveBasics ( m_iID, m_clBasics );

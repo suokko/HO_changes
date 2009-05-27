@@ -27,7 +27,7 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * Panel mit JTabel für die Arena anzeige und zum Testen
+ * Panel mit JTabel fÃ¼r die Arena anzeige und zum Testen
  */
 final class ArenaPanel extends ImagePanel implements ActionListener, FocusListener,
                                                      de.hattrickorganizer.gui.Refreshable
@@ -130,7 +130,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
             m_jtfUeberdachteSitzplaetze.setText(m_clArenaSizer.calcDachVerteilung(groesse) + "");
             m_jtfLogen.setText(m_clArenaSizer.calcLogenVerteilung(groesse) + "");
 
-            //In Tabelle übernehmen
+            //In Tabelle Ã¼bernehmen
             m_jbUbernehmen.doClick();
         }
     }
@@ -323,7 +323,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
                                                                                                  .getVerein()
                                                                                                  .getFans());
 
-        //Entrys mit Werten füllen
+        //Entrys mit Werten fÃ¼llen
         reinitTabelle();
     }
 
@@ -473,7 +473,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
         m_clStadium = stadium;
         m_clStadien = m_clArenaSizer.berechneAusbaustufen(stadium, fans);
 
-        //Entrys mit Werten füllen
+        //Entrys mit Werten fÃ¼llen
         reinitTabelle();
     }
 

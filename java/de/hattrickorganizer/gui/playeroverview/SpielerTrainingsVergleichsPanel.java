@@ -59,7 +59,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
     }
 
     /**
-     * Gibt die Vergleichsspieler zurück
+     * Gibt die Vergleichsspieler zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -145,7 +145,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
                 m_jbLoeschen.setEnabled(false);
             }
         }
-        //Keine Markierung -> Alles löschen
+        //Keine Markierung -> Alles lÃ¶schen
         else {
             vergleichsSpieler.removeAllElements();
             vergleichsMarkierung = false;
@@ -223,7 +223,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
             m_jlHRFs.setSelectedIndex(1);
         }
 
-        //Beim Initialisieren hier den Listener hinzufügen
+        //Beim Initialisieren hier den Listener hinzufÃ¼gen
         if (init) {
             m_jlHRFs.addListSelectionListener(this);
         }

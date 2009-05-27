@@ -28,7 +28,7 @@ public final class AufstellungTable extends AbstractTable {
 	}
 
 	/**
-	 * lädt System Positionen
+	 * lÃ¤dt System Positionen
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 * @param name TODO Missing Constructuor Parameter Documentation
@@ -65,9 +65,9 @@ public final class AufstellungTable extends AbstractTable {
 	}
 	
 	/**
-	 * gibt liste für Aufstellungen
+	 * gibt liste fÃ¼r Aufstellungen
 	 *
-	 * @param hrfID -1 für default = hrf unabhängig
+	 * @param hrfID -1 fÃ¼r default = hrf unabhÃ¤ngig
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -95,7 +95,7 @@ public final class AufstellungTable extends AbstractTable {
 	}
 	
 	/**
-	 * Gibt eine Liste aller Usergespeicherten Aufstellungsnamen zurück
+	 * Gibt eine Liste aller Usergespeicherten Aufstellungsnamen zurÃ¼ck
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */

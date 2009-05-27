@@ -250,7 +250,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * TODO Missing Method Documentation
      */
     public void doLineupRefresh() {
-        //Das Aufstellungspanel aktualisiert sich selber und die Spielerübersichtstabelle!
+        //Das Aufstellungspanel aktualisiert sich selber und die SpielerÃ¼bersichtstabelle!
         de.hattrickorganizer.gui.HOMainFrame.instance().getAufstellungsPanel().update();
     }
 

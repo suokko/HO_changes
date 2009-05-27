@@ -9,7 +9,7 @@ import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 
 
 /**
- * Renderer für eine Combobox mit SpielerCBItems
+ * Renderer fÃ¼r eine Combobox mit SpielerCBItems
  */
 public class WetterRenderer implements javax.swing.ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------

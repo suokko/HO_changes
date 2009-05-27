@@ -52,7 +52,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 	 */
 	public void storeMatchHighlights(Matchdetails details) {
 		if (details != null) {
-			//Vorhandene Einträge entfernen
+			//Vorhandene EintrÃ¤ge entfernen
 			final String[] where = { "MatchID" };
 			final String[] werte = { "" + details.getMatchID()};
 			delete(where, werte);
@@ -109,7 +109,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt die MatchDetails zu einem Match zurück
+	 * Gibt die MatchDetails zu einem Match zurÃ¼ck
 	 *
 	 * @param matchId TODO Missing Constructuor Parameter Documentation
 	 *

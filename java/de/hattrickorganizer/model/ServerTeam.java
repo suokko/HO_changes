@@ -22,7 +22,7 @@ import de.hattrickorganizer.tools.HOLogger;
  */
 
 /*
-   Schnittstellen Obj für Heim und Gast Verein erstellen
+   Schnittstellen Obj fÃ¼r Heim und Gast Verein erstellen
    - Name
    - Managername
    - Aufstellung ( Kopie von m_vPositionen )
@@ -365,7 +365,7 @@ public class ServerTeam implements java.io.Serializable {
     }
 
     /**
-     * Gibt alle SpielerPositionen als Array zurück
+     * Gibt alle SpielerPositionen als Array zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -446,7 +446,7 @@ public class ServerTeam implements java.io.Serializable {
         final Vector liste = new Vector();
         ServerSpieler player = null;
 
-        //Liste nur mit vergebenen Positionen innnerhalb der ersten elf füllen
+        //Liste nur mit vergebenen Positionen innnerhalb der ersten elf fÃ¼llen
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
@@ -457,7 +457,7 @@ public class ServerTeam implements java.io.Serializable {
             }
         }
 
-        //Spieler auswählen
+        //Spieler auswÃ¤hlen
         if (!liste.isEmpty()) {
             if (nr > (liste.size() - 1)) {
                 nr = (byte) de.hattrickorganizer.logik.SpielLogik.getZufallsZahl(liste.size());
@@ -634,7 +634,7 @@ public class ServerTeam implements java.io.Serializable {
             return getSpielerAufFeld((byte) getAnzAufgestellteSpieler());
         }
 
-        //Liste füllen
+        //Liste fÃ¼llen
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
@@ -645,7 +645,7 @@ public class ServerTeam implements java.io.Serializable {
             }
         }
 
-        //Spieler auswählen
+        //Spieler auswÃ¤hlen
         if (!liste.isEmpty()) {
             wert = de.hattrickorganizer.logik.SpielLogik.getZufallsZahl(liste.size());
             player = this.getSpielerById(((Integer) liste.elementAt(wert)).intValue());
@@ -731,7 +731,7 @@ public class ServerTeam implements java.io.Serializable {
 
             /*       //Strom konvertieren in Byte
                data = baos.toByteArray();
-               //Hilfsstrom schließen
+               //Hilfsstrom schlieÃŸen
                das.close ();
             
                return data;
@@ -907,7 +907,7 @@ public class ServerTeam implements java.io.Serializable {
     }
 
     /**
-     * berechnet die stk des Spielers für die angegebene Position
+     * berechnet die stk des Spielers fÃ¼r die angegebene Position
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param spielerId TODO Missing Constructuor Parameter Documentation
@@ -930,7 +930,7 @@ public class ServerTeam implements java.io.Serializable {
     }
 
     /**
-     * berechnet die STK-Summe aller aufgestllten Spieler für diese Position
+     * berechnet die STK-Summe aller aufgestllten Spieler fÃ¼r diese Position
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param position TODO Missing Constructuor Parameter Documentation

@@ -17,7 +17,7 @@ package plugins;
 public interface ISpielerPosition {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    //Konstanten f�r die ID's
+    //Konstanten für die ID's
 
     /** ht-Keeper-Field */
     public static final int keeper = 1;
@@ -75,15 +75,15 @@ public interface ISpielerPosition {
 
     /** ht-subsituded-Field */
 
-    //oder gr�sser
+    //oder grösser
     public static final int ausgewechselt = 19;
 
-    /** ab welccher PositionsID geh�rt Pos zur Reserve Bank */
+    /** ab welccher PositionsID gehört Pos zur Reserve Bank */
 
     //First id of an the reserve
     public static final int beginnReservere = 12;
 
-    //Konstanten f�rs verhalten
+    //Konstanten fürs verhalten
 
     /** Normal */
     public static final byte NORMAL = 0;
@@ -109,7 +109,7 @@ public interface ISpielerPosition {
     /** additional defender */
     public static final byte ZUS_INNENV = 7;
 
-    //Konstanten f�r Position
+    //Konstanten für Position
 
     /** Number of Positions [0 (Keeper) - 24 (extraCD) => 25] **/
     public static final byte NUM_POSITIONS = 25;

@@ -2,7 +2,7 @@
 /*
  * Aufstellungsassistent.java
  *
- * Created on 20. März 2003, 10:20
+ * Created on 20. MÃ¤rz 2003, 10:20
  */
 package de.hattrickorganizer.logik;
 
@@ -25,7 +25,7 @@ public class Aufstellungsassistent {
    
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /*gibt die mindeststärke für einen Spieler an für seine Idealpos*/
+    /*gibt die mindeststÃ¤rke fÃ¼r einen Spieler an fÃ¼r seine Idealpos*/
 
     //protected float m_fMinIdealPosStk       =   3.5f;
 
@@ -56,7 +56,7 @@ public class Aufstellungsassistent {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * findet den besten noch freien Kicker für einen Elfer
+     * findet den besten noch freien Kicker fÃ¼r einen Elfer
      *
      * @param liste TODO Missing Constructuor Parameter Documentation
      * @param vSpieler TODO Missing Constructuor Parameter Documentation
@@ -107,7 +107,7 @@ public class Aufstellungsassistent {
         initElferKicker(bestElfer);
 
         for (int i = 0; (bestElfer != null) && (i < bestElfer.length); i++) {
-            //erster Schütze ist der Standard schütze
+            //erster SchÃ¼tze ist der Standard schÃ¼tze
             if ((i == 0) && (kicker > 0)) {
                 bestElfer[0] = kicker;
                 continue;
@@ -120,7 +120,7 @@ public class Aufstellungsassistent {
     }
 
     /**
-     * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zählt mit
+     * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zÃ¤hlt mit
      *
      * @param spielerId TODO Missing Constructuor Parameter Documentation
      * @param positionen TODO Missing Constructuor Parameter Documentation
@@ -176,13 +176,13 @@ public class Aufstellungsassistent {
     }
 
     /**
-     * übernimmt das automatische Aufstellen
+     * Ã¼bernimmt das automatische Aufstellen
      *
      * @param positionen die zu besetzenden Positionen
      * @param spieler die aufszustellenden Spieler
      * @param reihenfolge Reihenfolge in der die Mannschaftsteile besetzt werden sollen
-     * @param mitForm Formberücksichtigung
-     * @param idealPosFirst IdealPosition berücksichtigen ?
+     * @param mitForm FormberÃ¼cksichtigung
+     * @param idealPosFirst IdealPosition berÃ¼cksichtigen ?
      * @param ignoreVerletzung auch Verletzte aufstellen ?
      * @param ignoreSperre auch gesperrte aufstellen ?
      * @param wetterBonus Schwellwert der angibt an wie auf WetterEffekte reagiert werden soll
@@ -202,7 +202,7 @@ public class Aufstellungsassistent {
             //Wert speichern
             float backup = gui.UserParameter.instance().MinIdealPosStk;
 
-            //Maimum von beiden für Berechnung verwenden
+            //Maimum von beiden fÃ¼r Berechnung verwenden
             gui.UserParameter.instance().MinIdealPosStk = Math.max(calcAveragePosValue(spieler),
                                                                    gui.UserParameter.instance().MinIdealPosStk);
 
@@ -245,7 +245,7 @@ public class Aufstellungsassistent {
             doSpielerAufstellenIdealPos(ISpielerPosition.STURM_AUS,
                     				    mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
 
-            //Wert wieder zurücksetzen
+            //Wert wieder zurÃ¼cksetzen
             gui.UserParameter.instance().MinIdealPosStk = backup;
         }
 
@@ -255,7 +255,7 @@ public class Aufstellungsassistent {
 
         
         byte [] order = null;
-        //nun reihenfolge beachten und unbesetzte füllen
+        //nun reihenfolge beachten und unbesetzte fÃ¼llen
         switch (reihenfolge) {
             case ILineUp.AW_MF_ST:
 
@@ -464,7 +464,7 @@ public class Aufstellungsassistent {
                                                positionen);
         }
 
-        //und nochmal für alle unbesetzten
+        //und nochmal fÃ¼r alle unbesetzten
         //TW
         doReserveSpielerAufstellen(ISpielerPosition.TORWART, mitForm,
                                    ignoreVerletzung, ignoreSperre, spieler, positionen);
@@ -507,7 +507,7 @@ public class Aufstellungsassistent {
     }
 
     /**
-     * liefert aus dem eigenen Vector mit Spielern den besten für die angefordertet Position der
+     * liefert aus dem eigenen Vector mit Spielern den besten fÃ¼r die angefordertet Position der
      * noch nicht aufgestellt ist
      *
      * @param position TODO Missing Constructuor Parameter Documentation
@@ -551,7 +551,7 @@ public class Aufstellungsassistent {
     }
 
     /**
-     * liefert aus dem eigenen Vector mit Spielern den besten für die angefordertet Position der
+     * liefert aus dem eigenen Vector mit Spielern den besten fÃ¼r die angefordertet Position der
      * noch nicht aufgestellt ist
      *
      * @param position TODO Missing Constructuor Parameter Documentation
@@ -725,7 +725,7 @@ public class Aufstellungsassistent {
             }
         }
 
-        //nun die zus XYZ Positionen füllen
+        //nun die zus XYZ Positionen fÃ¼llen
         for (int i = 0; (zusPos != null) && (vSpieler != null) && (i < zusPos.size()); i++) {
             pos = (SpielerPosition) zusPos.elementAt(i);
 
@@ -796,7 +796,7 @@ public class Aufstellungsassistent {
             }
         }
 
-        //nun die zus XYZ Positionen füllen
+        //nun die zus XYZ Positionen fÃ¼llen
         for (int i = 0; (zusPos != null) && (vSpieler != null) && (i < zusPos.size()); i++) {
             pos = (SpielerPosition) zusPos.elementAt(i);
 

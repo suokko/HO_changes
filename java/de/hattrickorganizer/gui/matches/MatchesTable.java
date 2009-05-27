@@ -95,7 +95,7 @@ final class MatchesTable extends JTable {
     }
 
     /**
-     * Markiert ein Match, wenn es in der Tabelle vorhanden ist, sonst wird die Selektion gelöscht
+     * Markiert ein Match, wenn es in der Tabelle vorhanden ist, sonst wird die Selektion gelÃ¶scht
      *
      * @param matchid TODO Missing Constructuor Parameter Documentation
      */

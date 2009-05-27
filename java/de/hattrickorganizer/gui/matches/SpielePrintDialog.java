@@ -172,7 +172,7 @@ public class SpielePrintDialog extends JDialog {
                                    + e);
             }
         } else {
-            //Alle Panels zurücksetzen
+            //Alle Panels zurÃ¼cksetzen
             m_jpStaerkenvergleichsPanel.clear();
             m_jpManschaftsBewertungsPanel.clear();
             m_jpSpielHighlightPanel.clear();

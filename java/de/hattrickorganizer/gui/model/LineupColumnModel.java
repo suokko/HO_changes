@@ -72,7 +72,7 @@ public class LineupColumnModel extends HOColumnModel {
     }
     
     /**
-     * Listener für die Checkboxen zum Autoaufstellen
+     * Listener fÃ¼r die Checkboxen zum Autoaufstellen
      *
      * @param zeile TODO Missing Constructuor Parameter Documentation
      */
@@ -126,7 +126,7 @@ public class LineupColumnModel extends HOColumnModel {
     }
     
     /**
-     * Fügt der Tabelle einen Spieler hinzu
+     * FÃ¼gt der Tabelle einen Spieler hinzu
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      * @param index TODO Missing Constructuor Parameter Documentation

@@ -43,7 +43,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	}
 	
 	/**
-	 * Gibt eine Liste an Ratings zurück, auf denen der Spieler gespielt hat: 0 = Max 1 = Min 2 =
+	 * Gibt eine Liste an Ratings zurÃ¼ck, auf denen der Spieler gespielt hat: 0 = Max 1 = Min 2 =
 	 * Durchschnitt 3 = posid
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
@@ -53,13 +53,13 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	public Vector getAlleBewertungen(int spielerid) {
 		final Vector bewertung = new Vector();
 
-		//Alle Möglichen Kombos durchlaufen
+		//Alle MÃ¶glichen Kombos durchlaufen
 		for (byte i = 0; i <= SpielerPosition.STURM_AUS; i++) {
 			final float[] temp = getBewertungen4PlayerUndPosition(spielerid, i);
 
-			//Min ein Wert für die Pos gefunden -> Max > 0
+			//Min ein Wert fÃ¼r die Pos gefunden -> Max > 0
 			if (temp[0] > 0) {
-				//Erste Wert statt aktuellen wert mit der Posid füllen
+				//Erste Wert statt aktuellen wert mit der Posid fÃ¼llen
 				temp[3] = (float) i;
 
 				bewertung.add(temp);
@@ -70,8 +70,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	}
 	
 	/**
-	 * Gibt die beste, schlechteste und durchschnittliche Bewertung für den Spieler, sowie die
-	 * Anzahl der Bewertungen zurück // Match
+	 * Gibt die beste, schlechteste und durchschnittliche Bewertung fÃ¼r den Spieler, sowie die
+	 * Anzahl der Bewertungen zurÃ¼ck // Match
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -123,8 +123,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	}
 	
 	/**
-	 * Gibt die beste, schlechteste und durchschnittliche Bewertung für den Spieler, sowie die
-	 * Anzahl der Bewertungen zurück // Match
+	 * Gibt die beste, schlechteste und durchschnittliche Bewertung fÃ¼r den Spieler, sowie die
+	 * Anzahl der Bewertungen zurÃ¼ck // Match
 	 *
 	 * @param spielerid Spielerid
 	 * @param position Usere positionscodierung mit taktik

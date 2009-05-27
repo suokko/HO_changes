@@ -105,7 +105,7 @@ public class VAPSchild implements DynamischesObjekt {
         g2d.setComposite(alpha);
         g2d.drawImage(image, x + xx, y + yy, null);
 
-        //        fontEffect.action ( 0, 0 );//Muﬂ aufgerufen werden
+        //        fontEffect.action ( 0, 0 );//Mu√ü aufgerufen werden
         //        fontEffect.setAlpha ( AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaWert ) );
         //        fontEffect.render ( g2d, x + xx - 100, y + yy + 100 );
         g2d.setComposite(GraphicLibrary.DEFAULTALPHA);

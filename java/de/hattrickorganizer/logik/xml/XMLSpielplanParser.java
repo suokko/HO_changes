@@ -140,7 +140,7 @@ public class XMLSpielplanParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen            
+            //Daten fÃ¼llen            
             ele = (Element) root.getElementsByTagName("LeagueLevelUnitID").item(0);
             plan.setLigaId(Integer.parseInt(ele.getFirstChild().getNodeValue()));
 
@@ -156,7 +156,7 @@ public class XMLSpielplanParser {
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             plan.setFetchDate(MyHelper.parseDate(ele.getFirstChild().getNodeValue()));
 
-            //Einträge adden
+            //EintrÃ¤ge adden
             list = root.getElementsByTagName("Match");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {

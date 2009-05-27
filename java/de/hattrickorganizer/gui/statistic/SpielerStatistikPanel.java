@@ -155,7 +155,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
             if (model.getElementAt(i) instanceof de.hattrickorganizer.gui.model.SpielerCBItem) {
                 if (((de.hattrickorganizer.gui.model.SpielerCBItem) model.getElementAt(i)).getSpieler()
                      .getSpielerID() == spielerid) {
-                    //Spieler gefunden -> Auswählen und fertig
+                    //Spieler gefunden -> AuswÃ¤hlen und fertig
                     m_jcbSpieler.setSelectedIndex(i);
                     return;
                 }
@@ -582,7 +582,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
 
         java.util.Arrays.sort(spielerAllCBItems);
 
-        //Zusammenfügen
+        //ZusammenfÃ¼gen
         final de.hattrickorganizer.gui.model.SpielerCBItem[] cbItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spielerCBItems.length
                                                                        + spielerAllCBItems.length
                                                                        + 1];

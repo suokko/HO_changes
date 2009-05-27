@@ -88,7 +88,7 @@ public final class HRFTable extends AbstractTable {
 	
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor Wird kein HRF gefunden
-	 * wird -1 zurückgegeben
+	 * wird -1 zurÃ¼ckgegeben
 	 *
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -117,7 +117,7 @@ public final class HRFTable extends AbstractTable {
 
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor Wird kein HRF gefunden
-	 * wird -1 zurückgegeben
+	 * wird -1 zurÃ¼ckgegeben
 	 *
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -171,7 +171,7 @@ public final class HRFTable extends AbstractTable {
 	/**
 	 * gibt es ein HRFFile in der Datenbank mit dem gleichen Dateimodifieddatum schon?
 	 *
-	 * @param date der letzten Dateiänderung der zu vergleichenden Datei
+	 * @param date der letzten DateiÃ¤nderung der zu vergleichenden Datei
 	 *
 	 * @return Das Datum der Datei, an den die Datei importiert wurde oder null, wenn keine
 	 *         passende Datei vorhanden ist
@@ -199,7 +199,7 @@ public final class HRFTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt die HRFId vor dem Datum zurück, wenn möglich
+	 * Gibt die HRFId vor dem Datum zurÃ¼ck, wenn mÃ¶glich
 	 *
 	 * @param time TODO Missing Constructuor Parameter Documentation
 	 * @param auchNachfolgendSuchen TODO Missing Constructuor Parameter Documentation
@@ -240,7 +240,7 @@ public final class HRFTable extends AbstractTable {
 			
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *

@@ -47,8 +47,8 @@ public class MatchFinder implements Runnable {
         m_sInfo = info;
 
         //, ',' und ';' aus info entfernen        
-        m_sInfo.replace(',', 'ง');
-        m_sInfo.replace(';', 'ง');
+        m_sInfo.replace(',', 'ยง');
+        m_sInfo.replace(';', 'ยง');
     }
 
     //~ Methods ------------------------------------------------------------------------------------
