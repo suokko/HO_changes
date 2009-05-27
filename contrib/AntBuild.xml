@@ -170,7 +170,7 @@
 		<mkdir dir="${bin-dir}" />
 		<echo>compileClasspath (from ${manifestFile}) is ${compileClasspath}</echo>
 		<echo>Building now</echo>
-		<javac srcdir="${javaSourcePath}" destdir="${bin-dir}" debug="on" verbose="off">
+		<javac srcdir="${javaSourcePath}" destdir="${bin-dir}" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
 			<compilerarg value="-Xlint" />
 			<classpath path="${compileClasspath}" />
 		</javac>
