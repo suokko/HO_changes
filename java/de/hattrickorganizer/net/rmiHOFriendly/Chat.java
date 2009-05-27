@@ -84,7 +84,7 @@ public interface Chat {
      */
     public void sendChatMsg(String trainer, String msg, boolean heim);
 
-    //Eigentlich nur für Client relevant...
+    //Eigentlich nur fÃ¼r Client relevant...
     public void sendPause(boolean bool);
 
     /**

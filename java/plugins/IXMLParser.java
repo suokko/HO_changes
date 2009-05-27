@@ -2,7 +2,7 @@
 /*
  * IXMLParser.java
  *
- * Created on 29. März 2004, 07:45
+ * Created on 29. MÃ¤rz 2004, 07:45
  */
 package plugins;
 
@@ -62,7 +62,7 @@ public interface IXMLParser {
     public Document parseString(String inputString);
 
     /**
-     * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
+     * speichert das Ã¼bergebene Dokument in der angegebenen Datei Datei wird Ã¼berschrieben falls
      * vorhanden
      *
      * @param doc TODO Missing Constructuor Parameter Documentation

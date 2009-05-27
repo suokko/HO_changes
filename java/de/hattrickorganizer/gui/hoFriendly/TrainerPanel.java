@@ -34,7 +34,7 @@ public class TrainerPanel extends JPanel implements Runnable {
     //Wird immer gezeigt, wenn keine andere Sequenz aktiv ist
     private TrainerSequenz m_clDefaultTrainerSequenz;
 
-    //Nächste Sequenz
+    //NÃ¤chste Sequenz
     private TrainerSequenz m_clNaechsteTrainerSequenz;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ public class TrainerPanel extends JPanel implements Runnable {
      * @param sequenz TODO Missing Constructuor Parameter Documentation
      */
     public final void showSequence(TrainerSequenz sequenz) {
-        //ändern der Sequenz
+        //Ã¤ndern der Sequenz
         m_clNaechsteTrainerSequenz = sequenz.duplicate();
         m_clNaechsteTrainerSequenz.resetCounters();
 

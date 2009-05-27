@@ -23,7 +23,7 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Zeigt die Stärken eines Matches an.
+ * Zeigt die StÃ¤rken eines Matches an.
  */
 public class SpielHighlightPanel extends ImagePanel {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -35,7 +35,7 @@ public class SpielHighlightPanel extends ImagePanel {
 
     private GridBagConstraints constraints = new GridBagConstraints();
 
-    //müssen global sein, da sie auch im refresh benutzt werden
+    //mÃ¼ssen global sein, da sie auch im refresh benutzt werden
     private GridBagLayout layout = new GridBagLayout();
     private JLabel m_clGastTeamName = new JLabel();
     private JLabel m_clGastTeamTore = new JLabel();
@@ -191,7 +191,7 @@ public class SpielHighlightPanel extends ImagePanel {
      * Clear all highlights.
      */
     public final void clear() {
-        //Alle Highlights löschen
+        //Alle Highlights lÃ¶schen
         for (int i = 0; i < m_vHighlightLabels.size(); i++) {
             panel.remove((Component) m_vHighlightLabels.get(i));
         }
@@ -237,7 +237,7 @@ public class SpielHighlightPanel extends ImagePanel {
             m_clGastTeamName.setForeground(java.awt.Color.black);
         }
 
-        //Alle Highlights löschen
+        //Alle Highlights lÃ¶schen
         for (int i = 0; i < m_vHighlightLabels.size(); i++) {
             panel.remove((Component) m_vHighlightLabels.get(i));
         }
@@ -277,7 +277,7 @@ public class SpielHighlightPanel extends ImagePanel {
                                                                               highlight.getHighlightSubTyp()));
                     }
 
-                    //Steht Müll drin!
+                    //Steht MÃ¼ll drin!
                     if (highlight.getHighlightTyp() == MatchHighlight.HIGHLIGHT_ERFOLGREICH) {
                         resultlabel = new JLabel(highlight.getHeimTore() + " : "
                                                  + highlight.getGastTore());
@@ -285,7 +285,7 @@ public class SpielHighlightPanel extends ImagePanel {
                         resultlabel = new JLabel("");
                     }
 
-                    //Labels in den Highlightvector hinzufügen
+                    //Labels in den Highlightvector hinzufÃ¼gen
                     m_vHighlightLabels.add(playerlabel);
                     m_vHighlightLabels.add(resultlabel);
 
@@ -322,7 +322,7 @@ public class SpielHighlightPanel extends ImagePanel {
             }
 
             //--updaten--
-            //Sterne für Sieger!
+            //Sterne fÃ¼r Sieger!
             if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
@@ -340,7 +340,7 @@ public class SpielHighlightPanel extends ImagePanel {
 
         //Spiel noch nicht gespielt
         else {
-            //Alle Highlights löschen
+            //Alle Highlights lÃ¶schen
             for (int i = 0; i < m_vHighlightLabels.size(); i++) {
                 panel.remove((Component) m_vHighlightLabels.get(i));
             }

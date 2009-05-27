@@ -303,7 +303,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         String pluginName = plugin.getClass().getName();
         pluginName = pluginName.substring(pluginName.indexOf(".") + 1);
 
-        // nur beim richtiges Löschen und nicht beim Update
+        // nur beim richtiges LÃ¶schen und nicht beim Update
         if (withTables) {
             deletePluginTables(pluginName);
         }

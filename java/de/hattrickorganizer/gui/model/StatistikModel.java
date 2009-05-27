@@ -2,7 +2,7 @@
 package de.hattrickorganizer.gui.model;
 
 /**
- * Model für das StatistikPanel
+ * Model fÃ¼r das StatistikPanel
  */
 public class StatistikModel {
     //~ Instance fields ----------------------------------------------------------------------------

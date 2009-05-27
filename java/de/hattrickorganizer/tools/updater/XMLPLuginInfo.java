@@ -106,7 +106,7 @@ final class XMLPLuginInfo {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Can´t parse XML-File in directory " + name);
+            JOptionPane.showMessageDialog(null, "CanÂ´t parse XML-File in directory " + name);
         }
 
         return tmpPluginInfo;
@@ -153,7 +153,7 @@ final class XMLPLuginInfo {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Can´t parse XML-File in directory " + name);
+            JOptionPane.showMessageDialog(null, "CanÂ´t parse XML-File in directory " + name);
         }
     }
 }

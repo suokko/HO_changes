@@ -100,7 +100,7 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     }
 
     /**
-     * löscht alle Informationen
+     * lÃ¶scht alle Informationen
      */
     public final void clearAll() {
         clearLangInfo();
@@ -109,14 +109,14 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     }
 
     /**
-     * löscht den kurzen Infotext
+     * lÃ¶scht den kurzen Infotext
      */
     public final void clearKurzInfo() {
         m_jtfKurzInfoLabel.setText("");
     }
 
     /**
-     * löscht den langen Infotext und setzt die Farbe auf INFO
+     * lÃ¶scht den langen Infotext und setzt die Farbe auf INFO
      */
     public final void clearLangInfo() {
         m_jlInfoLabel.setText("");
@@ -124,7 +124,7 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     }
 
     /**
-     * setzt den Fortschrittsbalken zurück
+     * setzt den Fortschrittsbalken zurÃ¼ck
      */
     public final void clearProgressbar() {
         m_jpbProgressBar.setValue(0);
@@ -140,7 +140,7 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
         final GridBagConstraints constraint = new GridBagConstraints();
         constraint.insets = new Insets(4, 9, 4, 4);
 
-        //Layout erstellen und MainPanel hinzufügen
+        //Layout erstellen und MainPanel hinzufÃ¼gen
         final GridBagLayout layout = new GridBagLayout();
         setLayout(layout);
 

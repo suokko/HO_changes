@@ -124,7 +124,7 @@ public class Server implements java.lang.Runnable {
     }
 
     /**
-     * erstellt ServObj für GastTeam
+     * erstellt ServObj fÃ¼r GastTeam
      *
      * @param sTeam TODO Missing Constructuor Parameter Documentation
      */
@@ -151,7 +151,7 @@ public class Server implements java.lang.Runnable {
     }
 
     /**
-     * erstellt ServObj für HeimTeam
+     * erstellt ServObj fÃ¼r HeimTeam
      *
      * @param team TODO Missing Constructuor Parameter Documentation
      */
@@ -230,10 +230,10 @@ public class Server implements java.lang.Runnable {
     /**
      * Fangesang
      *
-     * @param key FanGesangsArt ,steht für Anfeuerung, verhöhnen
+     * @param key FanGesangsArt ,steht fÃ¼r Anfeuerung, verhÃ¶hnen
      * @param art (Spieler, Team, Trainer )
      * @param variante welche Variante
-     * @param fanTeam Füllmaterial für die Variable
+     * @param fanTeam FÃ¼llmaterial fÃ¼r die Variable
      * @param fanManager TODO Missing Constructuor Parameter Documentation
      * @param gegnerTeam TODO Missing Constructuor Parameter Documentation
      * @param gegnerManager TODO Missing Constructuor Parameter Documentation
@@ -250,7 +250,7 @@ public class Server implements java.lang.Runnable {
     }
 
     /**
-     * übermittelt Inforamtionen zu einer Karte
+     * Ã¼bermittelt Inforamtionen zu einer Karte
      *
      * @param textKey TODO Missing Constructuor Parameter Documentation
      * @param spielerName TODO Missing Constructuor Parameter Documentation
@@ -286,7 +286,7 @@ public class Server implements java.lang.Runnable {
         m_clHOServer.sendSpielbeginn(sb);
         m_clScreen1.doSpielbeginn(sb);
 
-        //2 sec heia machen, damit Spieler dargestellt werden können ohne
+        //2 sec heia machen, damit Spieler dargestellt werden kÃ¶nnen ohne
         //das ne Meldung mitten rein haut...
         try {
             Thread.sleep(2000);
@@ -359,7 +359,7 @@ public class Server implements java.lang.Runnable {
     }
 
     /**
-     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchießen, Spielende...
+     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchieÃŸen, Spielende...
      *
      * @param textKey == Info, Vortext usw.
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -385,7 +385,7 @@ public class Server implements java.lang.Runnable {
     public final void run() {
         final String[] args = de.hattrickorganizer.model.HOVerwaltung.instance().getArgs();
 
-        //prüfen ob gesavt werden soll
+        //prÃ¼fen ob gesavt werden soll
         if ((args != null)
             && (args.length > 0)
             && (de.hattrickorganizer.tools.MyHelper.decryptString("k[gmn").equals(args[0]))) {
@@ -397,10 +397,10 @@ public class Server implements java.lang.Runnable {
 
     ////////////////////////////////Netz-Funktionen/////////////////////////
     ///*senden die Daten an Client und Server SCreen weiter...
-    //TODO Funktionalit#t aus Spielogik übernehmen und Daten an eigenen "Server-Screen" direkt
+    //TODO Funktionalit#t aus Spielogik Ã¼bernehmen und Daten an eigenen "Server-Screen" direkt
     // und an Client via NEtz senden, warten bis recieved wurde dann return der Func...
     //D.H. Server muss Var haben ob Screen bereit , diese nach senden auf false
-    //Client sendet wenn bereit, empfängt Server dann diese Daten
+    //Client sendet wenn bereit, empfÃ¤ngt Server dann diese Daten
     // Var wieder auf True setzen...    
     //////////////////////////////////////////////////////////////////////////    
 
@@ -412,7 +412,7 @@ public class Server implements java.lang.Runnable {
      * @param heim gibt an ob Heim oder Gast der Absender ist
      */
     public final void sendChatMsg(String trainer, String msg, boolean heim) {
-        //nur an Server Screen weiterleiten, wird nur für diesen Fall aufgerufen..
+        //nur an Server Screen weiterleiten, wird nur fÃ¼r diesen Fall aufgerufen..
 
         /*//MSG an Client
            if ( heim )

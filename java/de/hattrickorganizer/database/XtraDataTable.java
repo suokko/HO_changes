@@ -34,7 +34,7 @@ public final class XtraDataTable extends AbstractTable {
 	}	
 	
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -76,7 +76,7 @@ public final class XtraDataTable extends AbstractTable {
 				hasProm = 1;
 			}
 
-			//erst Vorhandene Aufstellung löschen
+			//erst Vorhandene Aufstellung lÃ¶schen
 			deleteXtraDaten(hrfId);
 
 			//insert vorbereiten

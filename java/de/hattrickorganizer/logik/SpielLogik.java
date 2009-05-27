@@ -20,17 +20,17 @@ import de.hattrickorganizer.model.Spielbericht;
 public class SpielLogik {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** gibt den Zahlenraum für die Chancenberechung an */
+    /** gibt den Zahlenraum fÃ¼r die Chancenberechung an */
     public static final int CHANCEN_ZUFALLS_RAUM = 1250;
 
     /**
-     * Faktor durch den die Anzahl der Abwehr Spieler dividiert wird um endgültige
+     * Faktor durch den die Anzahl der Abwehr Spieler dividiert wird um endgÃ¼ltige
      * Offensiv/Defensiv Kraft zu bestimmen
      */
     public static final float ABWEHR_MANIPULATOR = 1.7f;
 
     /**
-     * Faktor durch den die Anzahl der Stürmer Spieler dividiert wird um endgültige
+     * Faktor durch den die Anzahl der StÃ¼rmer Spieler dividiert wird um endgÃ¼ltige
      * Offensiv/Defensiv Kraft zu bestimmen
      */
     public static final float STURM_MANIPULATOR = 1.3f;
@@ -93,7 +93,7 @@ public class SpielLogik {
     /** TODO Missing Parameter Documentation */
     public static final byte TA_FOULELFMETER = 92;
 
-    /** Normale Häufigkeit */
+    /** Normale HÃ¤ufigkeit */
     public static final byte TA_NORMAL = 0;
 
     /** Kommt selten Vor */
@@ -248,7 +248,7 @@ public class SpielLogik {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Erzeugt eine Zufallszahl von 0 bis einschließlich
+     * Erzeugt eine Zufallszahl von 0 bis einschlieÃŸlich
      *
      * @param bis ( exklusiv )
      *
@@ -313,7 +313,7 @@ public class SpielLogik {
             break;
 
             case TA_TOR_NACH_ECKE: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -348,7 +348,7 @@ public class SpielLogik {
             break;
 
             case TA_TOR_NACH_FREISTOSS: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -370,7 +370,7 @@ public class SpielLogik {
 
             case TA_FELDTOR_STARKER_FUSS:
             case TA_FELDTOR_SCHWACHER_FUSS: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -391,7 +391,7 @@ public class SpielLogik {
             break;
 
             case TA_FELDTOR_PER_KOPF: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -413,7 +413,7 @@ public class SpielLogik {
 
             case TA_EIGENTOR:
 
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -484,7 +484,7 @@ public class SpielLogik {
                 break;
 
             case TA_TOR_NACH_ECKE: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -535,7 +535,7 @@ public class SpielLogik {
                 break;
 
             case TA_TOR_NACH_FREISTOSS: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -557,7 +557,7 @@ public class SpielLogik {
 
             case TA_FELDTOR_STARKER_FUSS:
             case TA_FELDTOR_SCHWACHER_FUSS: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -578,7 +578,7 @@ public class SpielLogik {
             break;
 
             case TA_FELDTOR_PER_KOPF: {
-                //Schütze suchen
+                //SchÃ¼tze suchen
                 byte zufall = (byte) getZufallsZahl(100);
 
                 if (zufall < 0) {
@@ -724,7 +724,7 @@ public class SpielLogik {
                                      || (spielbericht.Heim().getAnzAufgestellteSpieler() < 3));
                         }
 
-                        //Torchancen mitzählen
+                        //Torchancen mitzÃ¤hlen
                         spielbericht.TorchancenHeim((byte) (spielbericht.TorchancenHeim() + 1));
 
                         //Tor
@@ -814,7 +814,7 @@ public class SpielLogik {
                                      || (spielbericht.Gast().getAnzAufgestellteSpieler() < 3));
                         }
 
-                        //Torchancen mitzählen
+                        //Torchancen mitzÃ¤hlen
                         spielbericht.TorchancenGast((byte) (spielbericht.TorchancenGast() + 1));
 
                         //Tor
@@ -957,7 +957,7 @@ public class SpielLogik {
                     }
                 }
 
-                // Fan Gesänge
+                // Fan GesÃ¤nge
                 doFangesang(spielbericht);
 
                 //Minute verstreichen lassen
@@ -982,14 +982,14 @@ public class SpielLogik {
                 spielzeit = 90;
                 minute = 46;
                 doText(KEY_HALBZEIT);
-            } //Verlämgerung 1.Halbzeit ?
+            } //VerlÃ¤mgerung 1.Halbzeit ?
             else if ((spielbericht.ToreHeim() == spielbericht.ToreGast())
                      && (spielzeit == 90)
                      && (minute == 91)) {
                 spielzeit = 105;
                 minute = 90;
                 doText(KEY_VERLAENGERUNG);
-            } //Verlämgerung 2.Halbzeit ?
+            } //VerlÃ¤mgerung 2.Halbzeit ?
             else if ((spielbericht.ToreHeim() == spielbericht.ToreGast())
                      && (spielzeit == 105)
                      && (minute == 106)) {
@@ -1162,10 +1162,10 @@ public class SpielLogik {
     }
 
     /**
-     * liefert einen Spieler der Mannschaft in der Defensive für eine Spielsituation
+     * liefert einen Spieler der Mannschaft in der Defensive fÃ¼r eine Spielsituation
      *
      * @param team welches Team
-     * @param ignoreID SpielerId die nicht zurückgeliefert werden soll!
+     * @param ignoreID SpielerId die nicht zurÃ¼ckgeliefert werden soll!
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -1316,14 +1316,14 @@ public class SpielLogik {
         pos = verein.getSpielerPositionObjBySpielerID(spielerId);
 
         if (pos != null) {
-            //Position des ausgewechselten ändern
+            //Position des ausgewechselten Ã¤ndern
             verein.getSpielerById(spielerId).setPosition(ServerSpieler.AUSGEWECHSELT);
             nameRaus = verein.getSpielerById(spielerId).getName();
 
             if (einwechselSpieler > 0) {
                 nameRein = verein.getSpielerById(einwechselSpieler).getName();
 
-                //Position des eingewechselten ändern
+                //Position des eingewechselten Ã¤ndern
                 verein.getSpielerById(einwechselSpieler).setPosition(verein.getSpielerById(spielerId)
                                                                            .getPosition());
 
@@ -1400,7 +1400,7 @@ public class SpielLogik {
                 if (zufall < 45) {
                     art = FG_ANFEUERUNG;
                 }
-                //Gegner veräppeln ( nur bei Führung )
+                //Gegner verÃ¤ppeln ( nur bei FÃ¼hrung )
                 else if ((zufall < 75) && (torDif > 0)) {
                     art = FG_GEGNER;
 
@@ -1421,7 +1421,7 @@ public class SpielLogik {
                 if (zufall < 45) {
                     art = FG_ANFEUERUNG;
                 }
-                //Gegner veräppeln ( nur bei Führung )
+                //Gegner verÃ¤ppeln ( nur bei FÃ¼hrung )
                 else if ((zufall < 75) && (torDif < 0)) {
                     art = FG_GEGNER;
 
@@ -1479,7 +1479,7 @@ public class SpielLogik {
                            .getID();
             }
 
-            //Halbe Wahrscheinlichkeit für bereits verwarnte
+            //Halbe Wahrscheinlichkeit fÃ¼r bereits verwarnte
             if (verein.getSpielerById(id).isGelbVerwarnt()) {
                 id = verein.getSpielerAufFeld((byte) (getZufallsZahl(verein
                                                                      .getAnzAufgestellteSpieler())))
@@ -1489,7 +1489,7 @@ public class SpielLogik {
             //pos nochmal holen sicher ist sicher!
             pos = verein.getSpielerPositionObjBySpielerID(id);
 
-            //prüfen auf GelbRot
+            //prÃ¼fen auf GelbRot
             if (verein.getSpielerById(id).isGelbVerwarnt()) {
                 gelbRot = true;
 
@@ -1580,7 +1580,7 @@ public class SpielLogik {
             m_clServer.doKarte(KEY_ROTEKARTE, verein.getSpielerById(id).getName(), minute,
                                variante, trainerVariante, heim);
 
-            //true zurückwerfen
+            //true zurÃ¼ckwerfen
             return true;
         }
 
@@ -1646,7 +1646,7 @@ public class SpielLogik {
     }
 
     /**
-     * prüft auf Verletzung
+     * prÃ¼ft auf Verletzung
      *
      * @param minute TODO Missing Constructuor Parameter Documentation
      * @param verein TODO Missing Constructuor Parameter Documentation
@@ -1949,12 +1949,12 @@ public class SpielLogik {
         //Start Ende ist immer da! + maximal 2 weitere = getZUfallsZahl( 3 )
         final int anzAktionen = 2 + getZufallsZahl(3);
 
-        //getZufallsZahl( m_clServer.getAnzTorVarianten() ); //wird über AktionsVarianten gewürfelt, also eigentlich hier unnötig daher = 0
+        //getZufallsZahl( m_clServer.getAnzTorVarianten() ); //wird Ã¼ber AktionsVarianten gewÃ¼rfelt, also eigentlich hier unnÃ¶tig daher = 0
         int variante = TA_NORMAL;
         final int trainerVariante = getZufallsZahl(100);
         final int trainerVariante2 = getZufallsZahl(100);
 
-        //wie viele verschiedene Aktionen stehen zur verfügung ?
+        //wie viele verschiedene Aktionen stehen zur verfÃ¼gung ?
         int aktionsRadius = m_clServer.getAnzAktionsVarianten();
 
         //Die Namen fehlen
@@ -1996,7 +1996,7 @@ public class SpielLogik {
         //Aktionen erstellen
         aktionen = new int[anzAktionen];
 
-        //aktionsvariante nur für mittelaktionen würfeln ?
+        //aktionsvariante nur fÃ¼r mittelaktionen wÃ¼rfeln ?
         for (int i = 0; i < anzAktionen; i++) {
             aktionen[i] = getZufallsZahl(aktionsRadius);
 
@@ -2017,7 +2017,7 @@ public class SpielLogik {
                                trainerVariante, trainerVariante2, aktionen, spielminute);
 
         /*
-           //Ebenentiefe zufällig ermitteln per Server maxTiefe
+           //Ebenentiefe zufÃ¤llig ermitteln per Server maxTiefe
            if ( screen2 != null )
            {
                screen2.doTorchance ( heimTeam, schuetze, vorbereiter1,  verteidiger1, verteidiger2, torwart, torart, torchance, variante, trainerVariante, trainerVariante2, aktionen, spielminute );
@@ -2063,10 +2063,10 @@ public class SpielLogik {
     }
 
     /**
-     * berechnet die Chancenwahrscheinlichkeit für ein Team
+     * berechnet die Chancenwahrscheinlichkeit fÃ¼r ein Team
      *
-     * @param M1 Mittelfeld Stärke des Teams
-     * @param M2 Mittelfeld Stärke des Gegners
+     * @param M1 Mittelfeld StÃ¤rke des Teams
+     * @param M2 Mittelfeld StÃ¤rke des Gegners
      * @param heimspiel hat das Team ein Heimspiel
      *
      * @return TODO Missing Return Method Documentation
@@ -2090,7 +2090,7 @@ public class SpielLogik {
 
         //Heimspiel Bonus
         if (heimspiel) {
-            //Zu überlegen = überheblich daher abzug wie bei auswärtsteam
+            //Zu Ã¼berlegen = Ã¼berheblich daher abzug wie bei auswÃ¤rtsteam
             if (TomX > 1.5f) {
                 ret *= 0.9f;
 
@@ -2099,7 +2099,7 @@ public class SpielLogik {
                 ret *= 1.1f;
             }
 
-            //Auswärts-Bonus kleiner als HeimBonus
+            //AuswÃ¤rts-Bonus kleiner als HeimBonus
         } else {
             ret *= 0.9f;
         }
@@ -2185,7 +2185,7 @@ public class SpielLogik {
             def2 = Math.round(spielbericht.Heim().getTWTeamStk()
                               + spielbericht.Heim().getAWTeamStk());
 
-            //Ist Offensive Stärker dann
+            //Ist Offensive StÃ¤rker dann
             if (off1 >= def2) {
                 //Offensive an defensive anpassen
                 off1 = Math.round((def2 * ((float) m_bOffensivGrenze)) / 100.0f);
@@ -2195,7 +2195,7 @@ public class SpielLogik {
             angriff = getZufallsZahl(Math.round((off1 * ((float) ESB_STEUERUNG)) / 100.0f));
             abwehr = getZufallsZahl(Math.round((def2 * ((float) ESB_STEUERUNG)) / 100.0f));
 
-            //Angriff bei zu starker Fphrung abschwächen
+            //Angriff bei zu starker Fphrung abschwÃ¤chen
             if ((spielbericht.ToreGast() - spielbericht.ToreHeim()) >= 3) {
                 angriff = Math.round(((float) angriff) / 2.0f);
             }
@@ -2209,12 +2209,12 @@ public class SpielLogik {
                 //tor
                 ret = ANGRIFF_ERFOLGREICH;
 
-                //Sonst prüfen wann gestoppt
+                //Sonst prÃ¼fen wann gestoppt
             } else {
                 zufall = (byte) (getZufallsZahl(100));
 
                 if (zufall < 20) {
-                    //MF klärt
+                    //MF klÃ¤rt
                     ret = ANGRIFF_MITTELFELD_KLAERT;
                 } else if (zufall < 65) {
                     ret = ANGRIFF_ABWEHR_KLAERT;
@@ -2251,7 +2251,7 @@ public class SpielLogik {
             def2 = Math.round(spielbericht.Gast().getTWTeamStk()
                               + spielbericht.Gast().getAWTeamStk());
 
-            //Ist Offensive Stärker dann
+            //Ist Offensive StÃ¤rker dann
             if (off1 >= def2) {
                 //Offensive an defensive anpassen
                 off1 = Math.round((def2 * ((float) m_bOffensivGrenze)) / 100.0f);
@@ -2261,7 +2261,7 @@ public class SpielLogik {
             angriff = getZufallsZahl(Math.round((off1 * ((float) ESB_STEUERUNG)) / 100.0f));
             abwehr = getZufallsZahl(Math.round((def2 * ((float) ESB_STEUERUNG)) / 100.0f));
 
-            //Angriff bei zu starker Führung abschwächen
+            //Angriff bei zu starker FÃ¼hrung abschwÃ¤chen
             if ((spielbericht.ToreHeim() - spielbericht.ToreGast()) >= 3) {
                 angriff = Math.round(((float) angriff) / 2.0f);
             }
@@ -2275,12 +2275,12 @@ public class SpielLogik {
                 //tor
                 ret = ANGRIFF_ERFOLGREICH;
 
-                //Sonst prüfen wann gestoppt
+                //Sonst prÃ¼fen wann gestoppt
             } else {
                 zufall = (byte) (getZufallsZahl(100));
 
                 if (zufall < 20) {
-                    //MF klärt
+                    //MF klÃ¤rt
                     ret = ANGRIFF_MITTELFELD_KLAERT;
                 } else if (zufall < 65) {
                     ret = ANGRIFF_ABWEHR_KLAERT;
@@ -2297,8 +2297,8 @@ public class SpielLogik {
     /**
      * berechnet die Torart
      *
-     * @param minimum = Minimumwert der Zufallszahl z.B. 10 sorgt dafür das ein Wert zwischen 10
-     *        und 100 rauskommt , damit würde es z.B. keine Elfmeter geben
+     * @param minimum = Minimumwert der Zufallszahl z.B. 10 sorgt dafÃ¼r das ein Wert zwischen 10
+     *        und 100 rauskommt , damit wÃ¼rde es z.B. keine Elfmeter geben
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -2364,7 +2364,7 @@ public class SpielLogik {
     }
 
     /**
-     * berechnet die Offensivgrenze für dieses Spiel
+     * berechnet die Offensivgrenze fÃ¼r dieses Spiel
      *
      * @param teamstk1 GesamtSTk des Heimteams
      * @param teamstk2 GesamtSTk des Gastteams

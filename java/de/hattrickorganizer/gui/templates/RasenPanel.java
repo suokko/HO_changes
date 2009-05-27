@@ -2,7 +2,7 @@
 package de.hattrickorganizer.gui.templates;
 
 /**
- * JPanel mit HintergrundGrafik für Fenster
+ * JPanel mit HintergrundGrafik fÃ¼r Fenster
  *
  * @author Volker Fischer
  * @version 0.2.1a 28.02.02
@@ -104,7 +104,7 @@ public class RasenPanel extends javax.swing.JPanel {
 
             tracker.addImage(background, 1);
 
-            //Der MediaTracker wartet, bis alle Grafiken als Image-Objekte verfügbar sind.
+            //Der MediaTracker wartet, bis alle Grafiken als Image-Objekte verfÃ¼gbar sind.
             try {
                 tracker.waitForAll();
             } catch (InterruptedException ie) {

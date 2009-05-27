@@ -11,7 +11,7 @@ public interface IJDBCAdapter {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Führt einen SQL select - befehl aus  executes an select query
+     * FÃ¼hrt einen SQL select - befehl aus  executes an select query
      *
      * @param Sql TODO Missing Constructuor Parameter Documentation
      *

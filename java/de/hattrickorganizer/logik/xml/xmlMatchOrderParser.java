@@ -104,7 +104,7 @@ public class xmlMatchOrderParser {
         tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
         name = XMLManager.instance().getFirstChildNodeValue(tmp);
 
-        //taktik nur für aufgestellte
+        //taktik nur fÃ¼r aufgestellte
         if ((roleID > 1) && (roleID < 12)) {
             tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
             behaivior = XMLManager.instance().getFirstChildNodeValue(tmp);
@@ -247,7 +247,7 @@ public class xmlMatchOrderParser {
                }
              */
             //Nach Format ab Version 1.2 parsen
-            //Daten füllen
+            //Daten fÃ¼llen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
@@ -322,7 +322,7 @@ public class xmlMatchOrderParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));

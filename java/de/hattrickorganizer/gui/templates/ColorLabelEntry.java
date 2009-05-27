@@ -67,7 +67,7 @@ public class ColorLabelEntry extends TableEntry {
     private String m_sText = "";
     private String m_sTooltip = "";
     
-    //Für Compareto
+    //FÃ¼r Compareto
     private double m_dZahl = Double.NEGATIVE_INFINITY;
     private int m_iAusrichtung = SwingConstants.LEFT;
     private int m_iFontStyle = Font.PLAIN;
@@ -146,7 +146,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * ColorLabel mit Image zur Darstellung von Veränderungen
+     * ColorLabel mit Image zur Darstellung von VerÃ¤nderungen
      *
      * @param intzahl TODO Missing Constructuor Parameter Documentation
      * @param zahl TODO Missing Constructuor Parameter Documentation
@@ -175,7 +175,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * ColorLabel mit Image zur Darstellung von Veränderungen (mit Text als String)
+     * ColorLabel mit Image zur Darstellung von VerÃ¤nderungen (mit Text als String)
      *
      * @param changeVal 	Change value for the icon
      * @param text 			text to show 
@@ -204,7 +204,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * ColorLabel zu darstellen von Veränderungen
+     * ColorLabel zu darstellen von VerÃ¤nderungen
      *
      * @param zahl TODO Missing Constructuor Parameter Documentation
      */
@@ -215,7 +215,7 @@ public class ColorLabelEntry extends TableEntry {
 
  
     /**
-     * ColorLabel zu darstellen von Veränderungen mit Hintergrundfarbe
+     * ColorLabel zu darstellen von VerÃ¤nderungen mit Hintergrundfarbe
      *
      * @param zahl TODO Missing Constructuor Parameter Documentation
      * @param bg_color TODO Missing Constructuor Parameter Documentation
@@ -239,7 +239,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * ColorLabel zu darstellen von Veränderungen mit Hintergrundfarbe
+     * ColorLabel zu darstellen von VerÃ¤nderungen mit Hintergrundfarbe
      *
      * @param zahl TODO Missing Constructuor Parameter Documentation
      * @param bg_color TODO Missing Constructuor Parameter Documentation
@@ -256,7 +256,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * ColorLabel zu darstellen von Geldwert mit Hintergrundfarbe, nachkommstellen sind nur für
+     * ColorLabel zu darstellen von Geldwert mit Hintergrundfarbe, nachkommstellen sind nur fÃ¼r
      * nichtcurrency interessant
      *
      * @param zahl TODO Missing Constructuor Parameter Documentation
@@ -274,14 +274,14 @@ public class ColorLabelEntry extends TableEntry {
 
     /**
      * Sammelmethode, um den Wert aus 'zahl' zu formatieren und die Instanz-Felder 
-     * dementsprechend füllen. 
+     * dementsprechend fÃ¼llen. 
      * @param zahl				zu formatierende Zahl
      * @param bg_color			Hintergrundfarbe
-     * @param currencyformat	as Währung formatieren?
+     * @param currencyformat	as WÃ¤hrung formatieren?
      * @param farbeInvertieren	Farbe invertieren?
      * @param nachkommastellen	Anzahl der Nachkommastellen
      * @param colorAndSign		soll das Feld farbig sein und ein 
-     * 								Vorzeichen bekommen (für Veränderungen)
+     * 								Vorzeichen bekommen (fÃ¼r VerÃ¤nderungen)
      */
     private void setValueAsText (double zahl, java.awt.Color bg_color, boolean currencyformat,
             boolean farbeInvertieren, int nachkommastellen, boolean colorAndSign) { 
@@ -330,7 +330,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * Gibt eine passende Komponente zurück
+     * Gibt eine passende Komponente zurÃ¼ck
      *
      * @param isSelected TODO Missing Constructuor Parameter Documentation
      *
@@ -412,7 +412,7 @@ public class ColorLabelEntry extends TableEntry {
 
  
     /**
-     * Ändern der Grafik der Veränderung (Für Werte ohne Sub, d.h. Form/Kondi/XP...)
+     * Ã„ndern der Grafik der VerÃ¤nderung (FÃ¼r Werte ohne Sub, d.h. Form/Kondi/XP...)
      *
      * @param zahl TODO Missing Constructuor Parameter Documentation
      * @param aktuell TODO Missing Constructuor Parameter Documentation
@@ -428,7 +428,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * Ändern der Grafik der Veränderung (Für Werte mit Sub, d.h. z.B. die normalen Skills)
+     * Ã„ndern der Grafik der VerÃ¤nderung (FÃ¼r Werte mit Sub, d.h. z.B. die normalen Skills)
      *
      * @param intzahl TODO Missing Constructuor Parameter Documentation
      * @param zahl TODO Missing Constructuor Parameter Documentation
@@ -534,7 +534,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * Gibt den Text zurück
+     * Gibt den Text zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -553,7 +553,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     /**
-     * Gibt die Zahl zurück
+     * Gibt die Zahl zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */

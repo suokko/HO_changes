@@ -296,7 +296,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 	
 	/**
-	 * lädt die Spieler zum angegeben HRF file ein
+	 * lÃ¤dt die Spieler zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -330,7 +330,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	/**
-	 * gibt alle Spieler zurück, auch ehemalige
+	 * gibt alle Spieler zurÃ¼ck, auch ehemalige
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -373,7 +373,7 @@ public final class SpielerTable extends AbstractTable {
 
 
 	/**
-	 * Gibt die letzte Bewertung für den Spieler zurück // HRF
+	 * Gibt die letzte Bewertung fÃ¼r den Spieler zurÃ¼ck // HRF
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -397,7 +397,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt einen Spieler zurück mit den Daten kurz vor dem Timestamp
+	 * Gibt einen Spieler zurÃ¼ck mit den Daten kurz vor dem Timestamp
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 * @param time TODO Missing Constructuor Parameter Documentation
@@ -433,10 +433,10 @@ public final class SpielerTable extends AbstractTable {
 				}
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"1. Spieler nicht gefunden für Datum " + time.toString() + " und SpielerID " + spielerid);
+			HOLogger.instance().log(getClass(),"1. Spieler nicht gefunden fÃ¼r Datum " + time.toString() + " und SpielerID " + spielerid);
 		}
 
-		//--- Dann ein HRF später versuchen, Dort muss er dann eigenlich vorhanden sein! ---
+		//--- Dann ein HRF spÃ¤ter versuchen, Dort muss er dann eigenlich vorhanden sein! ---
 		if (player == null) {
 			sql = "SELECT * from "+getTableName()+" WHERE Datum>'" + time.toString() + "' AND SpielerID=" + spielerid + " ORDER BY Datum";
 			rs = adapter.executeQuery(sql);
@@ -450,7 +450,7 @@ public final class SpielerTable extends AbstractTable {
 					}
 				}
 			} catch (Exception e) {
-				HOLogger.instance().log(getClass(),"2. Spieler nicht gefunden für Datum " + time.toString() + " und SpielerID " + spielerid);
+				HOLogger.instance().log(getClass(),"2. Spieler nicht gefunden fÃ¼r Datum " + time.toString() + " und SpielerID " + spielerid);
 			}
 		}
 
@@ -472,7 +472,7 @@ public final class SpielerTable extends AbstractTable {
 					}
 				}
 			} catch (Exception e) {
-				HOLogger.instance().log(getClass(),"3. Spieler nicht gefunden für Datum " + time.toString() + " und SpielerID " + spielerid);
+				HOLogger.instance().log(getClass(),"3. Spieler nicht gefunden fÃ¼r Datum " + time.toString() + " und SpielerID " + spielerid);
 			}
 		}
 
@@ -510,7 +510,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt einen Spieler zurück aus dem ersten HRF
+	 * Gibt einen Spieler zurÃ¼ck aus dem ersten HRF
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -529,7 +529,7 @@ public final class SpielerTable extends AbstractTable {
 				if (rs.first()) {
 					player = new Spieler(rs);
 
-					//Info, da der Spieler für den Vergleich in der Spielerübersicht benutzt wird
+					//Info, da der Spieler fÃ¼r den Vergleich in der SpielerÃ¼bersicht benutzt wird
 					player.setOld(true);
 					HOLogger.instance().log(getClass(),"Spieler " + player.getName() + " vom " + rs.getTimestamp("Datum"));
 				}
@@ -542,7 +542,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt das Datum des ersten HRFs zurück, in dem der Spieler aufgetaucht ist
+	 * Gibt das Datum des ersten HRFs zurÃ¼ck, in dem der Spieler aufgetaucht ist
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -566,7 +566,7 @@ public final class SpielerTable extends AbstractTable {
 	}
 
 	/**
-	 * Gibt einen Spieler zurï¿½ck mit den Daten kurz vor dem Timestamp
+	 * Gibt einen Spieler zurÃ¯Â¿Â½ck mit den Daten kurz vor dem Timestamp
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *

@@ -29,7 +29,7 @@ import de.hattrickorganizer.tools.MyHelper;
 public class Spielplan implements plugins.ISpielplan {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /*LigaTabellen Member für Schnellzugriff nach Berechnung*/
+    /*LigaTabellen Member fÃ¼r Schnellzugriff nach Berechnung*/
 
     /** TODO Missing Parameter Documentation */
     protected LigaTabelle m_clTabelle;
@@ -316,7 +316,7 @@ public class Spielplan implements plugins.ISpielplan {
         tmp.setLigaName(m_sLigaName);
 
         for (int i = 0; i < spieltag.size(); i++) {
-            //jeweils für Heim und Gast TabellenEinträge erstellen
+            //jeweils fÃ¼r Heim und Gast TabellenEintrÃ¤ge erstellen
             tmp.addEintrag(berechneTabellenEintrag(getPaarungenByTeamId(((Paarung) spieltag
                                                                          .elementAt(i)).getHeimId()),
                                                    ((Paarung) spieltag.elementAt(i)).getHeimId(),
@@ -369,7 +369,7 @@ public class Spielplan implements plugins.ISpielplan {
         for (int i = 0; (i < spiele.length) && (i < maxSpieltag); i++) {
             //Spiel schon gespielt
             if (spiele[i].getToreHeim() > -1) {
-                //Anz Spiel erhöhen
+                //Anz Spiel erhÃ¶hen
                 anzSpiele++;
 
                 //Heimspiel ?
@@ -401,7 +401,7 @@ public class Spielplan implements plugins.ISpielplan {
                         hToreFuer += spiele[i].getToreHeim();
                     }
                 }
-                //Auswärts
+                //AuswÃ¤rts
                 else {
                     //Niederlage
                     if (spiele[i].getToreHeim() > spiele[i].getToreGast()) {
@@ -436,7 +436,7 @@ public class Spielplan implements plugins.ISpielplan {
             }
         }
 
-        //Eintrag füllen
+        //Eintrag fÃ¼llen
         eintrag.setAnzSpiele(anzSpiele);
 
         //home
@@ -486,13 +486,13 @@ public class Spielplan implements plugins.ISpielplan {
                 tabelle[i - 1] = berechneTabelle(i);
             }
 
-            //VerlaufEinträge erstellen
+            //VerlaufEintrÃ¤ge erstellen
             if (tabelle.length > 0) {
                 ILigaTabellenEintrag tmp = null;
 
                 eintraege = new TabellenVerlaufEintrag[tabelle[spieltag - 1].getEintraege().size()];
 
-                //Für jeden Eintrag verlaufeintrag erstellen
+                //FÃ¼r jeden Eintrag verlaufeintrag erstellen
                 for (int j = 0; j < tabelle[spieltag - 1].getEintraege().size(); j++) {
                     //Platzierungen
                     final int[] positionen = new int[tabelle.length];

@@ -29,7 +29,7 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Bietet Übersicht über alle Spieler
+ * Bietet Ãœbersicht Ã¼ber alle Spieler
  */
 public class SpielerAnalysePanel extends ImagePanel implements Refreshable, ItemListener,
                                                                ActionListener
@@ -72,7 +72,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
      * m_jpStaerkenvergleichsPanel.clear (); m_jpAufstellungHeimPanel.clearAll ();
      * m_jpAufstellungGastPanel.clearAll (); HOLogger.instance().log(getClass(), "SpielePanel.newSelectionInform:
      * Keine Match zum Eintrag in der Tabelle gefunden! "+e ); }} else { //Alle Panels
-     * zurücksetzen m_jpStaerkenvergleichsPanel.clear (); m_jpAufstellungHeimPanel.clearAll ();
+     * zurÃ¼cksetzen m_jpStaerkenvergleichsPanel.clear (); m_jpAufstellungHeimPanel.clearAll ();
      * m_jpAufstellungGastPanel.clearAll (); }}
      *
      * @param spielerid TODO Missing Constructuor Parameter Documentation
@@ -84,7 +84,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
             if (model.getElementAt(i) instanceof de.hattrickorganizer.gui.model.SpielerCBItem) {
                 if (((de.hattrickorganizer.gui.model.SpielerCBItem) model.getElementAt(i)).getSpieler()
                      .getSpielerID() == spielerid) {
-                    //Spieler gefunden -> Auswählen und fertig
+                    //Spieler gefunden -> AuswÃ¤hlen und fertig
                     m_jcbSpieler.setSelectedIndex(i);
                     return;
                 }
@@ -93,7 +93,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
     }
 
     /**
-     * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
+     * Gibt die aktuellen DividerLocations zurÃ¼ck, damit sie gespeichert werden kÃ¶nnen
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -117,7 +117,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
   
     public final void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //Änderung der Tabelle -> Anderer Filter!
+            //Ã„nderung der Tabelle -> Anderer Filter!
             showSelectedPlayer();
         }
     }
@@ -149,7 +149,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
             panel.setBackground(Color.WHITE);
 
             //Damit nur bestimmte Spalten gedruckt werden ist eine spezielle Tabelle notwendig.
-            //Das Scrollpane benötigt man, damit die Spaltenbeschriftung auch angezeigt wird.
+            //Das Scrollpane benÃ¶tigt man, damit die Spaltenbeschriftung auch angezeigt wird.
             final SpielerMatchesTable table = new SpielerMatchesTable(((SpielerCBItem) m_jcbSpieler
                                                                        .getSelectedItem()).getSpieler()
                                                                        .getSpielerID(),columnModelInstance);
@@ -236,7 +236,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
 
         java.util.Arrays.sort(spielerAllCBItems);
 
-        //Zusammenfügen
+        //ZusammenfÃ¼gen
         final de.hattrickorganizer.gui.model.SpielerCBItem[] cbItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spielerCBItems.length
                                                                        + spielerAllCBItems.length
                                                                        + 1];
@@ -280,7 +280,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
                                              initSpielerPositionTabelle(spielerid));
 
         //horizontalSplitPane.setDividerLocation( gui.UserParameter.instance ().spielerAnalysePanel_horizontalSplitPane );
-        //1/4 Höhe des Frames
+        //1/4 HÃ¶he des Frames
         horizontalSplitPane.setDividerLocation((gui.UserParameter.instance().hoMainFrame_height * 1) / 3);
 
         add(horizontalSplitPane, BorderLayout.CENTER);
@@ -355,7 +355,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
     }
 
     /**
-     * Aktualisiert die beiden Tabellen mit den Werten des ausgewählten Spielers
+     * Aktualisiert die beiden Tabellen mit den Werten des ausgewÃ¤hlten Spielers
      */
     private void showSelectedPlayer() {
         if (m_jcbSpieler.getSelectedIndex() > -1) {

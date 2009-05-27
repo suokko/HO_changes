@@ -8,7 +8,7 @@ import javax.swing.ListCellRenderer;
 
 
 /**
- * Für 2 Markierungen
+ * FÃ¼r 2 Markierungen
  */
 public class AufstellungsListRenderer extends JLabel implements ListCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------

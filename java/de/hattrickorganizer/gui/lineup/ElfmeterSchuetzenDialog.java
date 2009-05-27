@@ -13,7 +13,7 @@ import de.hattrickorganizer.gui.model.SpielerCBItem;
 
 
 /**
- * Zeigt die besten Elfmeterschützen für die aktuelle Aufstellung an
+ * Zeigt die besten ElfmeterschÃ¼tzen fÃ¼r die aktuelle Aufstellung an
  */
 public class ElfmeterSchuetzenDialog extends JDialog {
     //~ Constructors -------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ public class ElfmeterSchuetzenDialog extends JDialog {
     }
 
     /**
-     * Erzeugt ein Label für den Spieler
+     * Erzeugt ein Label fÃ¼r den Spieler
      *
      * @param spielerID TODO Missing Constructuor Parameter Documentation
      *

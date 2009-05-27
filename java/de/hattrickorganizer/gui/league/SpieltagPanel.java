@@ -300,7 +300,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "letzte" ) + " " + model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) ) );
         }
-        //Nächste Spieltag
+        //NÃ¤chste Spieltag
         else if (spieltag == NAECHSTER_SPIELTAG) {
             spieltag = de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getBasics()
                                                               .getSpieltag();

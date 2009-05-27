@@ -53,7 +53,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 	private void storeSkillup(int hrfId, int spielerId, Timestamp date, int skillValue, int skillCode, boolean reload) {
 		String statement = null;
 
-		//erst Vorhandene Aufstellung löschen
+		//erst Vorhandene Aufstellung lÃ¶schen
 		final String[] awhereS = { "HRF_ID", "SpielerID", "Skill" };
 		final String[] awhereV = { "" + hrfId, "" + spielerId, "" +skillCode};
 

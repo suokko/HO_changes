@@ -25,7 +25,7 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Panel mit JTabel für die Arena anzeige und zum Testen
+ * Panel mit JTabel fÃ¼r die Arena anzeige und zum Testen
  */
 public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -119,7 +119,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt den Namen des Markierten Teams zurück
+     * Gibt den Namen des Markierten Teams zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -153,7 +153,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
     }
 
     /**
-     * Gibt die Farbe für die Zeile in der Tabelle zurück
+     * Gibt die Farbe fÃ¼r die Zeile in der Tabelle zurÃ¼ck
      *
      * @param row TODO Missing Constructuor Parameter Documentation
      *
@@ -245,7 +245,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         column.setMinWidth(Helper.calcCellWidth(5));
         column.setPreferredWidth(Helper.calcCellWidth(5));
 
-        //auswärts
+        //auswÃ¤rts
         //Gewonnen
         columnModel.getColumn(18).setPreferredWidth(Helper.calcCellWidth(25));
 
@@ -266,7 +266,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
     }
 
     /**
-     * Gibt eine String zurück, der die Tore darstellt
+     * Gibt eine String zurÃ¼ck, der die Tore darstellt
      *
      * @param heim TODO Missing Constructuor Parameter Documentation
      * @param gast TODO Missing Constructuor Parameter Documentation
@@ -324,12 +324,12 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
 
     //Init aus dem HRF-XML
     private void initLigaTabelle() {
-        //Entrys mit Werten füllen
+        //Entrys mit Werten fÃ¼llen
         //Ein Model vorhanden?
         if ((de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getSpielplan() != null)
             && (de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getSpielplan()
                                                        .getSaison() > 0)) {
-            //Daten in die Tabelle füllen
+            //Daten in die Tabelle fÃ¼llen
             reinitTabelle();
         }
     }
@@ -341,7 +341,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         //Tablewerte setzen
         tabellenwerte = new Object[9][COLUMNNAMES.length];
 
-        //Überschrift
+        //Ãœberschrift
         for (int i = 0; i < COLUMNNAMES.length; i++) {
             tabellenwerte[0][i] = new ColorLabelEntry(COLUMNNAMES[i], ColorLabelEntry.FG_STANDARD,
                                                       BG_TITEL, SwingConstants.CENTER);

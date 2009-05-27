@@ -31,7 +31,7 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Panel, in dem die Spielerposition dargestellt wird und geändert werden kann
+ * Panel, in dem die Spielerposition dargestellt wird und geÃ¤ndert werden kann
  */
 final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ItemListener, FocusListener
@@ -57,7 +57,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 
     /** TODO Missing Parameter Documentation */
 
-    //Für Minimized
+    //FÃ¼r Minimized
     private final JLabel m_jlSpieler = new JLabel();
     private final SpielerCBItem m_clAktuellerSpieler = new SpielerCBItem("", 0f, null);
 
@@ -114,7 +114,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
     //--------------------------------------------------------    
 
     /**
-     * Gibt die PositionsID zurück
+     * Gibt die PositionsID zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -134,7 +134,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 //    }
 
     /**
-     * Gibt den aktuellen Spieler auf dieser Position zurück, oder null, wenn keiner gewählt wurde
+     * Gibt den aktuellen Spieler auf dieser Position zurÃ¼ck, oder null, wenn keiner gewÃ¤hlt wurde
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -179,7 +179,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
     }
 
     /**
-     * Erzeugt die Komponenten, Die CB für die Spieler und den Listener nicht vergessen!
+     * Erzeugt die Komponenten, Die CB fÃ¼r die Spieler und den Listener nicht vergessen!
      *
      * @param aenderbar TODO Missing Constructuor Parameter Documentation
      */
@@ -233,7 +233,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 
             m_jcbSpieler.setBackground(Color.white);
 
-            //Nur anzeigen, wenn mehr als eine Taktik möglich ist
+            //Nur anzeigen, wenn mehr als eine Taktik mÃ¶glich ist
             if (m_jcbTaktik.getItemCount() > 1) {
                 constraints.gridx = 0;
                 constraints.gridy = 2;
@@ -272,7 +272,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
                         aufstellung.setKicker(0);
                     }
                 }
-                //Spielführer
+                //SpielfÃ¼hrer
                 else if (m_iPositionsID == SPIELFUEHRER) {
                     if (spieler != null) {
                         aufstellung.setKapitaen(spieler.getSpielerID());
@@ -363,7 +363,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
     }
 
     /**
-     * Setzt die Liste der möglichen Spieler für diese Position und den aktuell gewählten Spieler
+     * Setzt die Liste der mÃ¶glichen Spieler fÃ¼r diese Position und den aktuell gewÃ¤hlten Spieler
      *
      * @param spielerListe TODO Missing Constructuor Parameter Documentation
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
@@ -377,11 +377,11 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
         //Alle Items entfernen
         cbmodel.removeAllElements();
 
-        //Genug CBItems für alle Spieler
+        //Genug CBItems fÃ¼r alle Spieler
         if (m_clCBItems.length != spielerListe.size()) {
             SpielerCBItem[] tempCB = new SpielerCBItem[spielerListe.size()];
 
-            //Mit SpielerCBItems füllen: Vorzugsweise alte wiederverwenden
+            //Mit SpielerCBItems fÃ¼llen: Vorzugsweise alte wiederverwenden
             for (int i = 0; i < tempCB.length; i++) {
                 //Wiederverwenden
                 if ((m_clCBItems.length > i) && (m_clCBItems[i] != null)) {
@@ -459,7 +459,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
         //Listener entfernen
         m_jcbTaktik.removeItemListener(this);
 
-        //Taktik neu füllen!
+        //Taktik neu fÃ¼llen!
         initTaktik(aktuellerSpieler);
 
         //Suche nach der Taktik
@@ -614,7 +614,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
     //-------------private-------------------------------------------------
 
     /**
-     * Generiert ein SpielerCBItem für einen Spieler
+     * Generiert ein SpielerCBItem fÃ¼r einen Spieler
      *
      * @param item TODO Missing Constructuor Parameter Documentation
      * @param spieler TODO Missing Constructuor Parameter Documentation

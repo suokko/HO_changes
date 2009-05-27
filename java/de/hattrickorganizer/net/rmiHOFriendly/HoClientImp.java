@@ -166,7 +166,7 @@ public class HoClientImp implements Chat {
                }
                else
                {
-                   HOLogger.instance().log(getClass(),"Nö" );
+                   HOLogger.instance().log(getClass(),"NÃ¶" );
                }
              */
             m_clOutput = new DataOutputStream(m_clSocket.getOutputStream());
@@ -324,7 +324,7 @@ public class HoClientImp implements Chat {
     }
 
     /**
-     * fordert Schreibrechte für den Output!
+     * fordert Schreibrechte fÃ¼r den Output!
      */
     protected final synchronized void requestWriteAccess() {
         while (m_bWriting) {

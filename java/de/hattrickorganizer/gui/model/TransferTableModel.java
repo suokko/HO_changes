@@ -78,7 +78,7 @@ public class TransferTableModel extends AbstractTableModel {
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
                                             
 
-    //Flügelspiel
+    //FlÃ¼gelspiel
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                             
 
@@ -138,19 +138,19 @@ public class TransferTableModel extends AbstractTableModel {
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
                                             
 
-    //Flügel
+    //FlÃ¼gel
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
                                             
 
-    //Flügel Nach Innen
+    //FlÃ¼gel Nach Innen
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
                                             
 
-    //Flügel Offensiv
+    //FlÃ¼gel Offensiv
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
                                             
 
-    //Flügel Defensiv
+    //FlÃ¼gel Defensiv
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
                                             
 
@@ -222,7 +222,7 @@ public class TransferTableModel extends AbstractTableModel {
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PS"),
                                             
 
-    //Flügelspiel
+    //FlÃ¼gelspiel
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FL"),
                                             
 
@@ -282,19 +282,19 @@ public class TransferTableModel extends AbstractTableModel {
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITD"),
                                             
 
-    //Flügel
+    //FlÃ¼gel
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLG"),
                                             
 
-    //Flügel Nach Innen
+    //FlÃ¼gel Nach Innen
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGI"),
                                             
 
-    //Flügel Offensiv
+    //FlÃ¼gel Offensiv
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGO"),
                                             
 
-    //Flügel Defensiv
+    //FlÃ¼gel Defensiv
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGD"),
                                             
 
@@ -618,7 +618,7 @@ public class TransferTableModel extends AbstractTableModel {
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   JLabel.RIGHT);
 
-            //Flügelspiel
+            //FlÃ¼gelspiel
             m_clData[i][14] = new ColorLabelEntry(aktuellerSpieler.getFluegelspiel(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
@@ -716,27 +716,27 @@ public class TransferTableModel extends AbstractTableModel {
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][29] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][30] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL_IN,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][31] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert FlÃ¼gel
             m_clData[i][32] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,

@@ -46,7 +46,7 @@ import de.hattrickorganizer.tools.backup.BackupDialog;
 public class DBZugriff {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
-	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
+	//Datum der TSI Umstellung. Alle Marktwerte der Spieler mÃ¼ssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** TODO Missing Parameter Documentation */
 	private static final int DBVersion = 8;
 
@@ -258,7 +258,7 @@ public class DBZugriff {
 	 * @param value Wert des Skills Vor dem LevelUp
 	 * @param spielerId TODO Missing Constructuor Parameter Documentation
 	 *
-	 * @return [0] = Time der Änderung [1] = Boolean: false=Keine Änderung gefunden
+	 * @return [0] = Time der Ã„nderung [1] = Boolean: false=Keine Ã„nderung gefunden
 	 */
 	public Object[] getLastLevelUp(int skill, int spielerId) {
 		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).getLastLevelUp(
@@ -267,7 +267,7 @@ public class DBZugriff {
 	}
 
 	/**
-	* liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill Vector filled with
+	* liefert das Datum des letzen LevelAufstiegs fÃ¼r den angeforderten Skill Vector filled with
 	* Skillup Objects
 	*
 	* @param skill TODO Missing Constructuor Parameter Documentation
@@ -299,7 +299,7 @@ public class DBZugriff {
 	// ------------------------------- SpielerTable -------------------------------------------------
 
 	/**
-	 * gibt alle Spieler zurück, auch ehemalige
+	 * gibt alle Spieler zurÃ¼ck, auch ehemalige
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -308,7 +308,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt die letzte Bewertung für den Spieler zurück // HRF
+	 * Gibt die letzte Bewertung fÃ¼r den Spieler zurÃ¼ck // HRF
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -320,7 +320,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * lädt die Spieler zum angegeben HRF file ein
+	 * lÃ¤dt die Spieler zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -344,7 +344,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt einen Spieler zurück mit den Daten kurz vor dem Timestamp
+	 * Gibt einen Spieler zurÃ¼ck mit den Daten kurz vor dem Timestamp
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 * @param time TODO Missing Constructuor Parameter Documentation
@@ -368,7 +368,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt einen Spieler zurück aus dem ersten HRF
+	 * Gibt einen Spieler zurÃ¼ck aus dem ersten HRF
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -379,7 +379,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt das Datum des ersten HRFs zurück, in dem der Spieler aufgetaucht ist
+	 * Gibt das Datum des ersten HRFs zurÃ¼ck, in dem der Spieler aufgetaucht ist
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -421,7 +421,7 @@ public class DBZugriff {
 	// ------------------------------- LigaTable -------------------------------------------------
 
 	/**
-	 * Gibt alle bekannten Ligaids zurück
+	 * Gibt alle bekannten Ligaids zurÃ¼ck
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -430,7 +430,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -453,7 +453,7 @@ public class DBZugriff {
 	// ------------------------------- SpielplanTable -------------------------------------------------
 
 	/**
-	 * Gibt eine Ligaid zu einer Seasonid zurück, oder -1, wenn kein Eintrag in der DB gefunden
+	 * Gibt eine Ligaid zu einer Seasonid zurÃ¼ck, oder -1, wenn kein Eintrag in der DB gefunden
 	 * wurde
 	 *
 	 * @param seasonid TODO Missing Constructuor Parameter Documentation
@@ -496,7 +496,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * lädt alle Spielpläne aus der DB
+	 * lÃ¤dt alle SpielplÃ¤ne aus der DB
 	 *
 	 * @param mitPaarungen inklusive der Paarungen ja/nein
 	 *
@@ -510,7 +510,7 @@ public class DBZugriff {
 	// ------------------------------- MatchLineupPlayerTable -------------------------------------------------
 
 	/**
-	 * Gibt eine Liste an Ratings zurück, auf denen der Spieler gespielt hat: 0 = Max 1 = Min 2 =
+	 * Gibt eine Liste an Ratings zurÃ¼ck, auf denen der Spieler gespielt hat: 0 = Max 1 = Min 2 =
 	 * Durchschnitt 3 = posid
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
@@ -525,8 +525,8 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt die beste, schlechteste und durchschnittliche Bewertung für den Spieler, sowie die
-	 * Anzahl der Bewertungen zurück // Match
+	 * Gibt die beste, schlechteste und durchschnittliche Bewertung fÃ¼r den Spieler, sowie die
+	 * Anzahl der Bewertungen zurÃ¼ck // Match
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -540,8 +540,8 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt die beste, schlechteste und durchschnittliche Bewertung für den Spieler, sowie die
-	 * Anzahl der Bewertungen zurück // Match
+	 * Gibt die beste, schlechteste und durchschnittliche Bewertung fÃ¼r den Spieler, sowie die
+	 * Anzahl der Bewertungen zurÃ¼ck // Match
 	 *
 	 * @param spielerid Spielerid
 	 * @param position Usere positionscodierung mit taktik
@@ -591,7 +591,7 @@ public class DBZugriff {
 	// ------------------------------- AufstellungTable -------------------------------------------------
 
 	/**
-	 * lädt System Positionen
+	 * lÃ¤dt System Positionen
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 * @param name TODO Missing Constructuor Parameter Documentation
@@ -605,9 +605,9 @@ public class DBZugriff {
 	}
 
 	/**
-	 * gibt liste für Aufstellungen
+	 * gibt liste fÃ¼r Aufstellungen
 	 *
-	 * @param hrfID -1 für default = hrf unabhängig
+	 * @param hrfID -1 fÃ¼r default = hrf unabhÃ¤ngig
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -617,7 +617,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt eine Liste aller Usergespeicherten Aufstellungsnamen zurück
+	 * Gibt eine Liste aller Usergespeicherten Aufstellungsnamen zurÃ¼ck
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -642,7 +642,7 @@ public class DBZugriff {
 	// ------------------------------- BasicsTable -------------------------------------------------
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -653,7 +653,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt eine Vector mit HRF-CBItems zurück
+	 * Gibt eine Vector mit HRF-CBItems zurÃ¼ck
 	 *
 	 * @param datum from which hrf has to be returned, used to load a subset of hrf
 	 *
@@ -703,7 +703,7 @@ public class DBZugriff {
 	//	------------------------------- FinanzenTable -------------------------------------------------
 
 	/**
-	 * lädt die Finanzen zum angegeben HRF file ein
+	 * lÃ¤dt die Finanzen zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -765,7 +765,7 @@ public class DBZugriff {
 
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor Wird kein HRF gefunden
-	 * wird -1 zurückgegeben
+	 * wird -1 zurÃ¼ckgegeben
 	 *
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -777,7 +777,7 @@ public class DBZugriff {
 
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor Wird kein HRF gefunden
-	 * wird -1 zurückgegeben
+	 * wird -1 zurÃ¼ckgegeben
 	 *
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -808,7 +808,7 @@ public class DBZugriff {
 	/**
 	 * gibt es ein HRFFile in der Datenbank mit dem gleichen Dateimodifieddatum schon?
 	 *
-	 * @param date der letzten Dateiänderung der zu vergleichenden Datei
+	 * @param date der letzten DateiÃ¤nderung der zu vergleichenden Datei
 	 *
 	 * @return Das Datum der Datei, an den die Datei importiert wurde oder null, wenn keine
 	 *         passende Datei vorhanden ist
@@ -986,7 +986,7 @@ public class DBZugriff {
 	/**
 	 * holt die MAtches zu einem Team aus der DB
 	 *
-	 * @param teamId Die Teamid oder -1 für alle
+	 * @param teamId Die Teamid oder -1 fÃ¼r alle
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
@@ -999,7 +999,7 @@ public class DBZugriff {
 	/**
 	 * Wichtig: Wenn die Teamid = -1 ist muss der Matchtyp ALLE_SPIELE sein!
 	 *
-	 * @param teamId Die Teamid oder -1 für alle
+	 * @param teamId Die Teamid oder -1 fÃ¼r alle
 	 * @param matchtyp Welche Matches? Konstanten im SpielePanel!
 	 * @param asc TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1047,7 +1047,7 @@ public class DBZugriff {
 	//	------------------------------- StadionTable -------------------------------------------------
 
 	/**
-	 * lädt die Finanzen zum angegeben HRF file ein
+	 * lÃ¤dt die Finanzen zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1070,7 +1070,7 @@ public class DBZugriff {
 	//	------------------------------- TeamTable -------------------------------------------------
 
 	/**
-	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
+	 * Gibt die Teamstimmung und das Selbstvertrauen fÃ¼r ein HRFID zurÃ¼ck [0] = Stimmung [1] =
 	 * Selbstvertrauen
 	 *
 	 * @param hrfid TODO Missing Constructuor Parameter Documentation
@@ -1082,7 +1082,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
+	 * Gibt die Teamstimmung und das Selbstvertrauen fÃ¼r ein HRFID zurÃ¼ck [0] = Stimmung [1] =
 	 * Selbstvertrauen
 	 *
 	 * @param hrfid TODO Missing Constructuor Parameter Documentation
@@ -1094,7 +1094,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1117,7 +1117,7 @@ public class DBZugriff {
 	//	------------------------------- PositionenTable -------------------------------------------------
 
 	/**
-	 * lädt System Positionen
+	 * lÃ¤dt System Positionen
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 * @param sysName TODO Missing Constructuor Parameter Documentation
@@ -1154,7 +1154,7 @@ public class DBZugriff {
 		final String[] whereS = { "Aufstellungsname", "HRF_ID" };
 		final String[] whereV = { "'" + sysName + "'", "" + hrfId };
 
-		//erst vorhandene einträge für diesen Posnamen entfernen
+		//erst vorhandene eintrÃ¤ge fÃ¼r diesen Posnamen entfernen
 		getTable(PositionenTable.TABLENAME).delete(whereS, whereV);
 	}
 
@@ -1198,7 +1198,7 @@ public class DBZugriff {
 	//	------------------------------- VereinTable -------------------------------------------------
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1221,7 +1221,7 @@ public class DBZugriff {
 	//	------------------------------- XtraDataTable -------------------------------------------------
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1277,7 +1277,7 @@ public class DBZugriff {
 	 * int[][] spieleruebersicht, int[][] aufstellung ) {}
 	 */
 	/**
-	 * Lädt die UserParameter direkt in das UserParameter-SingeltonObjekt
+	 * LÃ¤dt die UserParameter direkt in das UserParameter-SingeltonObjekt
 	 */
 	public void loadUserParameter() {
 		UserConfigurationTable table = (UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME);
@@ -1332,7 +1332,7 @@ public class DBZugriff {
 	//	------------------------------- MatchDetailsTable -------------------------------------------------
 
 	/**
-	 * Gibt die MatchDetails zu einem Match zurück
+	 * Gibt die MatchDetails zu einem Match zurÃ¼ck
 	 *
 	 * @param matchId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1355,7 +1355,7 @@ public class DBZugriff {
 	//	------------------------------- MatchHighlightsTable -------------------------------------------------
 
 	/**
-	 * Gibt die MatchHighlights zu einem Match zurück
+	 * Gibt die MatchHighlights zu einem Match zurÃ¼ck
 	 *
 	 * @param matchId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1412,7 +1412,7 @@ public class DBZugriff {
 
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor Wird kein HRF gefunden
-	 * wird -1 zurückgegeben
+	 * wird -1 zurÃ¼ckgegeben
 	 *
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1440,7 +1440,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Gibt eine Liste mit SpielerMatchCBItems zu den einzelnen Matches zurück
+	 * Gibt eine Liste mit SpielerMatchCBItems zu den einzelnen Matches zurÃ¼ck
 	 *
 	 * @param spielerid TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1523,7 +1523,7 @@ public class DBZugriff {
 				final String[] stimmungSelbstvertrauen =
 					getStimmmungSelbstvertrauen(getHRFID4Date(filter));
 
-				//Nur wenn Spielerdaten gefunden wurden diese in den RückgabeVector übergeben
+				//Nur wenn Spielerdaten gefunden wurden diese in den RÃ¼ckgabeVector Ã¼bergeben
 				if ((player != null) && (details != null) && (stimmungSelbstvertrauen != null)) {
 					item.setSpieler(player);
 					item.setMatchdetails(details);
@@ -1566,7 +1566,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * Löscht alle Daten zu dem Match
+	 * LÃ¶scht alle Daten zu dem Match
 	 *
 	 * @param matchid TODO Missing Constructuor Parameter Documentation
 	 */
@@ -1592,7 +1592,7 @@ public class DBZugriff {
 		final String[] whereS = { "HRF_ID", "Aufstellungsname" };
 		final String[] whereV = { "" + hrfId, "'" + name + "'" };
 
-		//erst Vorhandene Aufstellung löschen
+		//erst Vorhandene Aufstellung lÃ¶schen
 		getTable(AufstellungTable.TABLENAME).delete(whereS, whereV);
 
 		//Standard sys resetten
@@ -1918,7 +1918,7 @@ public class DBZugriff {
 		final char[] chars = text.toCharArray();
 
 		for (int i = 0; i < chars.length; i++) {
-			if (chars[i] == '§') {
+			if (chars[i] == 'Â§') {
 				buffer.append("\\");
 			} else if (chars[i] != '#') {
 				buffer.append("" + chars[i]);
@@ -1931,7 +1931,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * ' " und ´ codieren durch \
+	 * ' " und Â´ codieren durch \
 	 *
 	 * @param text TODO Missing Constructuor Parameter Documentation
 	 *
@@ -1946,10 +1946,10 @@ public class DBZugriff {
 
 		for (int i = 0; i < chars.length; i++) {
 			int code = (int) chars[i];
-			if ((chars[i] == '"') || (chars[i] == '\'') || (chars[i] == '´')) {
+			if ((chars[i] == '"') || (chars[i] == '\'') || (chars[i] == 'Â´')) {
 				buffer.append("#");
 			} else if ( code == 92) {
-				buffer.append("§");
+				buffer.append("Â§");
 			} else {
 				buffer.append("" + chars[i]);
 			}

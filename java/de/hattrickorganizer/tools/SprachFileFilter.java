@@ -2,7 +2,7 @@
 package de.hattrickorganizer.tools;
 
 /**
- * Filter für Sprachdateien
+ * Filter fÃ¼r Sprachdateien
  */
 public class SprachFileFilter implements java.io.FileFilter {
     //~ Methods ------------------------------------------------------------------------------------

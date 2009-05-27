@@ -80,7 +80,7 @@ public class SpielerUebersichtNamenTable extends JTable
     }
 
     /**
-     * Initialisiert das Model für die Namen
+     * Initialisiert das Model fÃ¼r die Namen
      */
     private void initModelNamen() {
         setAutoResizeMode(this.AUTO_RESIZE_OFF);

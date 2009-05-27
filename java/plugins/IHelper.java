@@ -2,7 +2,7 @@
 /*
  * IHelper.java
  *
- * Created on 29. März 2004, 08:08
+ * Created on 29. MÃ¤rz 2004, 08:08
  */
 package plugins;
 
@@ -92,7 +92,7 @@ public interface IHelper {
     public javax.swing.ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp);
 
     /**
-     * Returns an Image für the Matchtyp
+     * Returns an Image fÃ¼r the Matchtyp
      *
      * @param spieltyp hattrickvalue for that Matchtyp Use static from IMatchConst
      *
@@ -101,7 +101,7 @@ public interface IHelper {
     public javax.swing.ImageIcon getImageIcon4Spieltyp(int spieltyp);
 
     /**
-     * Returns an ArrowImage, green up für pos values, red down für neg values and a - for 0 values
+     * Returns an ArrowImage, green up fÃ¼r pos values, red down fÃ¼r neg values and a - for 0 values
      *
      * @param wert TODO Missing Constructuor Parameter Documentation
      *

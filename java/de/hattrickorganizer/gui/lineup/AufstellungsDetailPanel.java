@@ -35,7 +35,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
- * Gibt die Gesamtst‰rken aus
+ * Gibt die Gesamtst√§rken aus
  */
 final class AufstellungsDetailPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, java.awt.event.ItemListener

@@ -128,7 +128,7 @@ public class xmlTeamDetailsParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));

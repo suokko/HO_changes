@@ -47,7 +47,7 @@ public final class VereinTable extends AbstractTable {
 		final String[] awhereV = { "" + hrfId };
 
 		if (verein != null) {
-			//erst Vorhandene Aufstellung löschen
+			//erst Vorhandene Aufstellung lÃ¶schen
 			delete( awhereS, awhereV );
 
 			//insert vorbereiten
@@ -83,7 +83,7 @@ public final class VereinTable extends AbstractTable {
 	}
 	
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
+	 * lÃ¤dt die Basics zum angegeben HRF file ein
 	 *
 	 * @param hrfID TODO Missing Constructuor Parameter Documentation
 	 *

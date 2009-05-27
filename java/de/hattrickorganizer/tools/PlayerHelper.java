@@ -53,7 +53,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param level TODO Missing Constructuor Parameter Documentation
      *
@@ -82,7 +82,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param level TODO Missing Constructuor Parameter Documentation
      *
@@ -114,7 +114,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param level TODO Missing Constructuor Parameter Documentation
      *
@@ -146,7 +146,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param bewertung TODO Missing Constructuor Parameter Documentation
      *
@@ -157,7 +157,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param bewertungwert TODO Missing Constructuor Parameter Documentation
      * @param zahlen TODO Missing Constructuor Parameter Documentation
@@ -169,7 +169,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param isMatch TODO Missing Constructuor Parameter Documentation
      * @param bewertungwert TODO Missing Constructuor Parameter Documentation
@@ -181,7 +181,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param bewertungwertfloat TODO Missing Constructuor Parameter Documentation
      * @param zahlen TODO Missing Constructuor Parameter Documentation
@@ -193,10 +193,10 @@ public class PlayerHelper {
         String bewertung = null;
         int bewertungwert = (int) bewertungwertfloat;
 
-        //Für match
+        //FÃ¼r match
         int sublevel = 0;
 
-        //Umrechnung für ein Spiel
+        //Umrechnung fÃ¼r ein Spiel
         if (isMatch) {
             sublevel = (bewertungwert) % 4;
 
@@ -343,7 +343,7 @@ public class PlayerHelper {
     }
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param level TODO Missing Constructuor Parameter Documentation
      *
@@ -461,23 +461,23 @@ public class PlayerHelper {
     }
 
     /*
-       Wetterabhängige Sonderereignisse
-       Bestimmte Spezialfähigkeiten können in Zusammenhang mit einem bestimmten Wetter
-        zu Sonderereignissen führen. Die Auswirkung dieses Sonderereignisses tritt
-        von dem Zeitpunkt in Kraft, an dem es im Spielbericht erwähnt wird,
-        und hat bis zum Spielende Einfluß auf die Leistung des Spielers.
+       WetterabhÃ¤ngige Sonderereignisse
+       Bestimmte SpezialfÃ¤higkeiten kÃ¶nnen in Zusammenhang mit einem bestimmten Wetter
+        zu Sonderereignissen fÃ¼hren. Die Auswirkung dieses Sonderereignisses tritt
+        von dem Zeitpunkt in Kraft, an dem es im Spielbericht erwÃ¤hnt wird,
+        und hat bis zum Spielende EinfluÃŸ auf die Leistung des Spielers.
         Diese Auswirkung wird nach dem Spiel an der Spielerbewertung (Anzahl Sterne) sichtbar.
-       Die Torschuß- und die Spielaufbau-Fähigkeit von Ballzauberern kann sich bei Regen verschlechtern,
-        während sich die gleichen Fähigkeiten bei Sonnenschein verbessern können.
-       Bei Regen gibt es die Möglichkeit, daß sich die Torschuß-, Verteidigungs- und Spielaufbau-Fähigkeit
+       Die TorschuÃŸ- und die Spielaufbau-FÃ¤higkeit von Ballzauberern kann sich bei Regen verschlechtern,
+        wÃ¤hrend sich die gleichen FÃ¤higkeiten bei Sonnenschein verbessern kÃ¶nnen.
+       Bei Regen gibt es die MÃ¶glichkeit, daÃŸ sich die TorschuÃŸ-, Verteidigungs- und Spielaufbau-FÃ¤higkeit
         von durchsetzungsstarken Spielern verbessert.
-        Auf der anderen Seite kann sich die Torschußfähigkeit bei Sonnenschein verschlechtern.
-       Schnelle Spieler laufen bei Regen Gefahr, daß sich ihre Torschuß- und
-        Verteidigungsfähigkeiten verschlechtern. Bei Sonnenschein besteht das Risiko
-        , daß ihre Torschußfähigkeit unter dem Wetter leidet.
+        Auf der anderen Seite kann sich die TorschuÃŸfÃ¤higkeit bei Sonnenschein verschlechtern.
+       Schnelle Spieler laufen bei Regen Gefahr, daÃŸ sich ihre TorschuÃŸ- und
+        VerteidigungsfÃ¤higkeiten verschlechtern. Bei Sonnenschein besteht das Risiko
+        , daÃŸ ihre TorschuÃŸfÃ¤higkeit unter dem Wetter leidet.
      */
     /*
-       Liefert die mögliche Auswirkung des Wetters auf den Spieler
+       Liefert die mÃ¶gliche Auswirkung des Wetters auf den Spieler
        return 0 bei keine auswirkung
        1 bei positiv
        -1 bei negativ

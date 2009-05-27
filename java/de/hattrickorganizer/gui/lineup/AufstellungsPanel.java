@@ -55,7 +55,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt das AufstellungsAssistentPanel zurück
+     * Gibt das AufstellungsAssistentPanel zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -64,7 +64,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     }
 
     /**
-     * Gibt das AufstellungsDetailPanel zurück
+     * Gibt das AufstellungsDetailPanel zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -73,7 +73,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     }
 
     /**
-     * Gibt die NamesTabelle zurück
+     * Gibt die NamesTabelle zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -82,7 +82,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     }
 
     /**
-     * Gibt das AufstellungsPositionsPanel zurück
+     * Gibt das AufstellungsPositionsPanel zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -91,7 +91,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     }
 
     /**
-     * Gibt die Tabelle zurück
+     * Gibt die Tabelle zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -100,7 +100,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     }
 
     /**
-     * Breite der BestPosSpalte zurückgeben
+     * Breite der BestPosSpalte zurÃ¼ckgeben
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -111,7 +111,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     //--------------------------------------------------------
 
     /**
-     * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
+     * Gibt die aktuellen DividerLocations zurÃ¼ck, damit sie gespeichert werden kÃ¶nnen
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -127,7 +127,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
     }
 
     /**
-     * Gibt die Reihenfolge der Spalten in der Tabelle zurück
+     * Gibt die Reihenfolge der Spalten in der Tabelle zurÃ¼ck
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -300,7 +300,7 @@ public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImageP
         m_jtAufstellungSpielerTable.refresh();
         m_jtAufstellungSpielerTableName.refresh();
 		
-        //Tabelle und Details der Spielerübersicht refreshen
+        //Tabelle und Details der SpielerÃ¼bersicht refreshen
         de.hattrickorganizer.gui.HOMainFrame.instance().getSpielerUebersichtPanel().refresh();
         
 		m_jpAufstellungsPositionsPanel.exportOldLineup("Actual");

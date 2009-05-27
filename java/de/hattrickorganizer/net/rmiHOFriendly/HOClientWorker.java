@@ -113,7 +113,7 @@ public class HOClientWorker implements Runnable {
     }
 
     /**
-     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchießen, Spielende...
+     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchieÃŸen, Spielende...
      */
     public final void getInfoText() {
         byte textKey = 0;
@@ -130,7 +130,7 @@ public class HOClientWorker implements Runnable {
     }
 
     /**
-     * übermittelt Inforamtionen zu einer Karte
+     * Ã¼bermittelt Inforamtionen zu einer Karte
      */
     public final void getKarte() {
         byte textKey = 0;
@@ -224,7 +224,7 @@ public class HOClientWorker implements Runnable {
     }
 
     /**
-     * übermittelt den Status des Client Screens
+     * Ã¼bermittelt den Status des Client Screens
      */
 
     /*    public void checkBereit()

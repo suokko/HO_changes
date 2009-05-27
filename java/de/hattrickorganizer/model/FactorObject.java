@@ -2,7 +2,7 @@
 /*
  * FactorObject.java
  *
- * Created on 18. März 2003, 07:44
+ * Created on 18. MÃ¤rz 2003, 07:44
  */
 package de.hattrickorganizer.model;
 

@@ -53,7 +53,7 @@ public interface IGUI {
     /**
      * Add a panel to the Option-Dialog where the User can set the settings for  this plugin
      *
-     * @param name Name für the Tab in the OptionDialog
+     * @param name Name fÃ¼r the Tab in the OptionDialog
      * @param optionpanel The panel with the options for the plugin
      */
     public void addOptionPanel(String name, javax.swing.JPanel optionpanel);
@@ -68,7 +68,7 @@ public interface IGUI {
     /**
      * Adds the Panel to the JTabbedPane on the HO!-Mainframe.
      *
-     * @param name Name für the Tab
+     * @param name Name fÃ¼r the Tab
      * @param panel The panel, you want to add
      */
     public void addTab(String name, JPanel panel);

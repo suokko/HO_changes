@@ -194,7 +194,7 @@ public class XMLPlayerParser {
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
+            //Daten fÃ¼llen
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
             fetchDate = parseDateFromString(ele.getFirstChild().getNodeValue());
 

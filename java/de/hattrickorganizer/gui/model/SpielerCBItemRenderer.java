@@ -2,7 +2,7 @@
 package de.hattrickorganizer.gui.model;
 
 /**
- * Renderer für eine Combobox mit SpielerCBItems
+ * Renderer fÃ¼r eine Combobox mit SpielerCBItems
  */
 public class SpielerCBItemRenderer implements javax.swing.ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------

@@ -169,7 +169,7 @@ public class HRFImport {
             //            {
             //                //Noch die alten Spieler hinzupacken
             //                homodel.setAllOldSpieler ( database.DBZugriff.instance ().getAllSpieler () );
-            //                //Spielplan übernehmen!
+            //                //Spielplan Ã¼bernehmen!
             //                homodel.setSpielplan ( model.HOVerwaltung.instance().getModel ().getSpielplan () );  
             //                //Letzet Importierte Anzeigen
             //                model.HOVerwaltung.instance().setModel( homodel );

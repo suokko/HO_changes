@@ -6,7 +6,7 @@ import de.hattrickorganizer.model.matches.Matchdetails;
 
 
 /**
- * Container für die SpielerMatchTable. Enthält die Daten des Spielers und des zugehörigen Matches
+ * Container fÃ¼r die SpielerMatchTable. EnthÃ¤lt die Daten des Spielers und des zugehÃ¶rigen Matches
  */
 public class SpielerMatchCBItem {
     //~ Instance fields ----------------------------------------------------------------------------

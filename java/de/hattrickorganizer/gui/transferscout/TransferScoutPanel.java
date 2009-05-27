@@ -64,7 +64,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
 
     //------------------------------------------------------------------------
     public final void addScoutEintrag(ScoutEintrag scouteintrag) {
-        //Wird nur durchgeführt, wenn der Eintrag schon vorhanden ist
+        //Wird nur durchgefÃ¼hrt, wenn der Eintrag schon vorhanden ist
         removeScoutEintrag(scouteintrag);
         m_jtTransferTable.getTransferTableModel().addScoutEintrag(scouteintrag);
 
@@ -87,7 +87,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
     public final void drucken() {
         try {
             //Damit nur bestimmte Spalten gedruckt werden ist eine spezielle Tabelle notwendig.
-            //Das Scrollpane benötigt man, damit die Spaltenbeschriftung auch angezeigt wird.
+            //Das Scrollpane benÃ¶tigt man, damit die Spaltenbeschriftung auch angezeigt wird.
             final TransferTable table = new TransferTable();
             final JScrollPane scrollPane = new JScrollPane(table);
             scrollPane.setPreferredSize(new Dimension(table.getPreferredSize().width + 10,

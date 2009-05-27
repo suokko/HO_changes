@@ -145,7 +145,7 @@ public class UpdateHelper {
             outStream.flush();
             outStream.close();
         } catch (Exception e) {
-            //handleException(e,"Can´t download "+urlName+"\n ");
+            //handleException(e,"CanÂ´t download "+urlName+"\n ");
             return false;
         }
 

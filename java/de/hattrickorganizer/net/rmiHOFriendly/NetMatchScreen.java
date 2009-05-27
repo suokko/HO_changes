@@ -128,10 +128,10 @@ public class NetMatchScreen implements de.hattrickorganizer.model.MatchScreen {
     /**
      * Fangesang
      *
-     * @param key FanGesangsArt ,steht für Anfeuerung, verhöhnen
+     * @param key FanGesangsArt ,steht fÃ¼r Anfeuerung, verhÃ¶hnen
      * @param art (Spieler, Team, Trainer )
      * @param variante welche Variante
-     * @param fanTeam Füllmaterial für die Variable
+     * @param fanTeam FÃ¼llmaterial fÃ¼r die Variable
      * @param fanManager TODO Missing Constructuor Parameter Documentation
      * @param gegnerTeam TODO Missing Constructuor Parameter Documentation
      * @param gegnerManager TODO Missing Constructuor Parameter Documentation
@@ -162,7 +162,7 @@ public class NetMatchScreen implements de.hattrickorganizer.model.MatchScreen {
     }
 
     /**
-     * übermittelt Inforamtionen zu einer Karte
+     * Ã¼bermittelt Inforamtionen zu einer Karte
      *
      * @param textKey TODO Missing Constructuor Parameter Documentation
      * @param spielerName TODO Missing Constructuor Parameter Documentation
@@ -332,7 +332,7 @@ public class NetMatchScreen implements de.hattrickorganizer.model.MatchScreen {
     }
 
     /**
-     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchießen, Spielende...
+     * Gibt einen Infotext wieder z.B: gleich geht's los, Halbzeit, ElferSchieÃŸen, Spielende...
      *
      * @param textKey == Info, Vortext usw.
      * @param variante TODO Missing Constructuor Parameter Documentation
@@ -353,7 +353,7 @@ public class NetMatchScreen implements de.hattrickorganizer.model.MatchScreen {
     }
 
     /**
-     * empfängt Msg und stellt sie dar
+     * empfÃ¤ngt Msg und stellt sie dar
      *
      * @param trainer TODO Missing Constructuor Parameter Documentation
      * @param msg TODO Missing Constructuor Parameter Documentation

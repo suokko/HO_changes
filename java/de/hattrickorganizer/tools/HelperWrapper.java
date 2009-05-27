@@ -2,7 +2,7 @@
 /*
  * HelperWrapper.java
  *
- * Created on 29. März 2004, 08:10
+ * Created on 29. MÃ¤rz 2004, 08:10
  */
 package de.hattrickorganizer.tools;
 

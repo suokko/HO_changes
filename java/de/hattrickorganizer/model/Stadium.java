@@ -4,7 +4,7 @@ package de.hattrickorganizer.model;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
- * Enth‰lt die Stadiendaten
+ * Enth√§lt die Stadiendaten
  */
 public class Stadium implements plugins.IStadium {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -24,13 +24,13 @@ public class Stadium implements plugins.IStadium {
     /** Ausbau Logen */
     private int m_iAusbauLogen;
 
-    /** Ausbau Sitzpl‰tze */
+    /** Ausbau Sitzpl√§tze */
     private int m_iAusbauSitzplaetze;
 
-    /** Ausbau Stehpl‰tze */
+    /** Ausbau Stehpl√§tze */
     private int m_iAusbauStehplaetze;
 
-    /** Ausbau ‹berdachte Sitzpl‰tze */
+    /** Ausbau √úberdachte Sitzpl√§tze */
     private int m_iAusbauUeberdachteSitzplaetze;
 
     /** Gesamtgroesse */
@@ -39,13 +39,13 @@ public class Stadium implements plugins.IStadium {
     /** Logen */
     private int m_iLogen;
 
-    /** Sitzpl‰tze */
+    /** Sitzpl√§tze */
     private int m_iSitzplaetze;
 
-    /** Stehpl‰tze */
+    /** Stehpl√§tze */
     private int m_iStehplaetze;
 
-    /** ‹berdachte Sitzpl‰tze */
+    /** √úberdachte Sitzpl√§tze */
     private int m_iUeberdachteSitzplaetze;
 
     //~ Constructors -------------------------------------------------------------------------------
