@@ -356,6 +356,32 @@ public class PlayerConverter {
             } else {
                 error = 2;
             }
+            
+          //-- check for line wage / season (since FoxTrick 0.4.8.2)
+            String wage = "";
+            p = 0;
+            tmp = lines.get(found_at_line+2).toString();
+            //extract spaces
+            tmp = tmp.replace(" ","");
+            //get first number
+            while (p < tmp.length()) {
+            	if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+            		break;
+            	}
+            	p++;
+            }
+            //stop after first non-number
+            while (p < tmp.length()) {
+            	if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+            		wage += tmp.charAt(p);
+            	} else break;
+            	p++;
+            }
+            if (!wage.equals("") && Integer.parseInt(wage) >= 500) {
+            	found_at_line++;
+            } else {
+                error = 2;
+            }
 
             //-- check bookings
             tmp = lines.get(found_at_line+2).toString();
@@ -364,7 +390,6 @@ public class PlayerConverter {
             		player.setBooked(tmp);
             	}
             } catch (Exception e) { /* ignore */ }
-
 
             //-- Get injury
             tmp = lines.get(found_at_line+3).toString();
