@@ -204,23 +204,16 @@ public class PlayerConverter {
             	tmp = lines.get(m).toString();
 
             	try {
-					if ((p = tmp.indexOf("(")) > -1 && (n = tmp.indexOf(")")) > -1 && Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()) > 100000) {
-						player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(")")).trim()));
+            		// Players from China etc. have Brackets in their names!!!
+            		// Therefore we need lastIndexOf
+            		// This also deals with player categories
+					if ((p = tmp.indexOf("(")) > -1 && (n = tmp.indexOf(")")) > -1 && Integer.parseInt(tmp.substring(tmp.lastIndexOf("(")+1, tmp.lastIndexOf(")")).trim()) > 100000) {
+						player.setPlayerID(Integer.parseInt(tmp.substring(tmp.lastIndexOf("(")+1, tmp.lastIndexOf(")")).trim()));
 						found_at_line = m;
 						break;
 					}
             	} catch (Exception e) {
 					if (p < 0) continue;
-				}
-            	try {
-					// handle categories: Player Name (TW) (123456789)
-					if (tmp.indexOf("(", p+1) > -1 && tmp.indexOf(")", n+1) > -1 && Integer.parseInt(tmp.substring(tmp.indexOf("(", p+1)+1, tmp.indexOf(")", n+1)).trim()) > 100000) {
-						player.setPlayerID(Integer.parseInt(tmp.substring(tmp.indexOf("(", p+1)+1, tmp.indexOf(")", n+1)).trim()));
-						found_at_line = m;
-						break;
-					}
-				} catch (Exception e) {
-					continue;
 				}
             }
 
@@ -379,8 +372,6 @@ public class PlayerConverter {
             }
             if (!wage.equals("") && Integer.parseInt(wage) >= 500) {
             	found_at_line++;
-            } else {
-                error = 2;
             }
 
             //-- check bookings
