@@ -328,6 +328,7 @@
 		<echo>Copy plugin: ${PLUGINNAME} (${basedir}/../HO-Plugin-${PLUGINNAME}/bin/hoplugins to ${build-dir}/hoplugins)</echo>
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
 			<fileset dir="${basedir}/../HO-Plugin-${PLUGINNAME}/bin/hoplugins" />
+			<fileset dir="${basedir}/../HO-Plugin-${PLUGINNAME}/conf/hoplugins" />
 		</copy>
 	</target>
 
