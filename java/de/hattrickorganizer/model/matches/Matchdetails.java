@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import plugins.IMatchHighlight;
 import plugins.ITeamLineup;
 import de.hattrickorganizer.model.TeamLineup;
 import de.hattrickorganizer.tools.HOLogger;
@@ -45,7 +46,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     private Timestamp m_clSpielDatum;
 
     /** TODO Missing Parameter Documentation */
-    private Vector<MatchHighlight> m_vHighlights = new Vector<MatchHighlight>();
+    private Vector<IMatchHighlight> m_vHighlights = new Vector<IMatchHighlight>();
 
     /** TODO Missing Parameter Documentation */
     private int m_iArenaID = -1;
@@ -629,7 +630,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @param m_vHighlights New value of property m_vHighlights.
      */
-    public final void setHighlights(Vector<MatchHighlight> m_vHighlights) {
+    public final void setHighlights(Vector<IMatchHighlight> m_vHighlights) {
         this.m_vHighlights = m_vHighlights;
     }
 
@@ -638,7 +639,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @return Value of property m_vHighlights.
      */
-    public final Vector<MatchHighlight> getHighlights() {
+    public final Vector<IMatchHighlight> getHighlights() {
         return m_vHighlights;
     }
 

@@ -4,7 +4,6 @@ package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
 
-import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.tools.HOLogger;
 

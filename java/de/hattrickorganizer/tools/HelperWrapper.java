@@ -30,6 +30,7 @@ import plugins.IHOMiniModel;
 import plugins.IHTCalendar;
 import plugins.IMP3Player;
 import plugins.IMatchHelper;
+import plugins.IPlugin;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
@@ -459,7 +460,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector getPlugins() {
+    public Vector<IPlugin> getPlugins() {
         return HOMainFrame.getPlugins();
     }
 
@@ -573,7 +574,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @param src TODO Missing Method Parameter Documentation
      * @param dest TODO Missing Method Parameter Documentation
      */
-    public void copyArray2Vector(Object[] src, java.util.Vector dest) {
+    public void copyArray2Vector(Object[] src, Vector dest) {
         MyHelper.copyArray2Vector(src, dest);
     }
 
@@ -583,7 +584,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @param src TODO Missing Method Parameter Documentation
      * @param dest TODO Missing Method Parameter Documentation
      */
-    public void copyVector2Array(java.util.Vector src, Object[] dest) {
+    public void copyVector2Array(Vector src, Object[] dest) {
         MyHelper.copyVector2Array(src, dest);
     }
 
@@ -594,7 +595,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public DefaultComboBoxModel createListModel(java.util.Vector vector) {
+    public DefaultComboBoxModel createListModel(Vector vector) {
         return Helper.createListModel(vector);
     }
 

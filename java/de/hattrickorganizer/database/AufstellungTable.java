@@ -71,8 +71,8 @@ public final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getAufstellungsListe(int hrfID) {
-		final Vector ret = new Vector();
+	public Vector<String> getAufstellungsListe(int hrfID) {
+		final Vector<String> ret = new Vector<String>();
 		ResultSet rs = null;
 		String sql = null;
 
@@ -99,10 +99,10 @@ public final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getUserAufstellungsListe() {
+	public Vector<String> getUserAufstellungsListe() {
 		ResultSet rs = null;
 		final String statement = "SELECT Aufstellungsname FROM "+getTableName()+" WHERE HRF_ID=" + Aufstellung.NO_HRF_VERBINDUNG;
-		final Vector ret = new Vector();
+		final Vector<String> ret = new Vector<String>();
 
 		try {
 			rs = adapter.executeQuery(statement);

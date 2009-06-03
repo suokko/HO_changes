@@ -119,8 +119,8 @@ public final class UserColumnController {
 	 * return all model as Vector
 	 * @return
 	 */
-	public Vector getAllModels(){
-		Vector v = new Vector();
+	public Vector<HOColumnModel> getAllModels(){
+		Vector<HOColumnModel> v = new Vector<HOColumnModel>();
 		
 		v.add( getPlayerOverviewModel() );
 		v.add( getLineupModel() );

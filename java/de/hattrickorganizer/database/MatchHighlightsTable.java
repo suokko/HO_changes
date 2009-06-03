@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import plugins.IMatchHighlight;
+
 import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
@@ -60,7 +62,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 
 			//saven
 			try {
-				final Vector vHighlights = details.getHighlights();
+				final Vector<IMatchHighlight> vHighlights = details.getHighlights();
 
 				HOLogger.instance().log(getClass(),"Anzahl an Highlights: " + vHighlights.size());
 
@@ -115,10 +117,10 @@ public final class MatchHighlightsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getMatchHighlights(int matchId) {
+	public Vector<IMatchHighlight> getMatchHighlights(int matchId) {
 		try {
 			//Highlights holen
-			final Vector vMatchHighlights = new Vector();
+			final Vector<IMatchHighlight> vMatchHighlights = new Vector<IMatchHighlight>();
 
 			String sql =
 				"SELECT * FROM "+getTableName()+" WHERE MatchId="
@@ -161,6 +163,6 @@ public final class MatchHighlightsTable extends AbstractTable {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getMatchDetails : " + e);
 			HOLogger.instance().log(getClass(),e);
 		}
-		return new Vector();
+		return new Vector<IMatchHighlight>();
 	}
 }

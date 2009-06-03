@@ -5,14 +5,22 @@ import gui.UserParameter;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import plugins.IFutureTrainingWeek;
+import plugins.IMatchHighlight;
+import plugins.IMatchLineupPlayer;
+import plugins.IPaarung;
+import plugins.ISpieler;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
+import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.HOColumnModel;
+import de.hattrickorganizer.gui.model.SpielerMatchCBItem;
 import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.Basics;
 import de.hattrickorganizer.model.FactorObject;
@@ -26,6 +34,7 @@ import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.Team;
+import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.model.XtraData;
@@ -63,7 +72,7 @@ public class DBZugriff {
 	private DBAdapter m_clDBAdapter = null;
 
 	/** all Tables */
-	private final Hashtable tables = new Hashtable();
+	private final Hashtable<String, AbstractTable> tables = new Hashtable<String, AbstractTable>();
 
 	/** Erster Start */
 	private boolean m_bFirstStart;
@@ -274,7 +283,7 @@ public class DBZugriff {
 	*
 	* @return TODO Missing Return Method Documentation
 	*/
-	public Vector getAllLevelUp(int skill, int m_iSpielerID) {
+	public Vector<Object[]> getAllLevelUp(int skill, int m_iSpielerID) {
 		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).getAllLevelUp(
 			skill,
 			m_iSpielerID);
@@ -303,7 +312,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<Spieler> getAllSpieler() {
+	public Vector<ISpieler> getAllSpieler() {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getAllSpieler();
 	}
 
@@ -326,7 +335,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<Spieler> getSpieler(int hrfID) {
+	public Vector<ISpieler> getSpieler(int hrfID) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpieler(hrfID);
 	}
 
@@ -404,7 +413,7 @@ public class DBZugriff {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSpieler(int hrfId, Vector spieler, Timestamp date) {
+	public void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
 		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, spieler, date);
 	}
 
@@ -517,7 +526,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getAlleBewertungen(int spielerid) {
+	public Vector<float[]> getAlleBewertungen(int spielerid) {
 		return (
 			(MatchLineupPlayerTable) getTable(
 				MatchLineupPlayerTable.TABLENAME)).getAlleBewertungen(
@@ -564,7 +573,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getMatchLineupPlayers(int matchID, int teamID) {
+	public Vector<IMatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		return (
 			(MatchLineupPlayerTable) getTable(
 				MatchLineupPlayerTable.TABLENAME)).getMatchLineupPlayers(
@@ -611,7 +620,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getAufstellungsListe(int hrfID) {
+	public Vector<String> getAufstellungsListe(int hrfID) {
 		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME)).getAufstellungsListe(
 			hrfID);
 	}
@@ -621,7 +630,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getUserAufstellungsListe() {
+	public Vector<String> getUserAufstellungsListe() {
 		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME)).getUserAufstellungsListe();
 	}
 
@@ -659,7 +668,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public java.util.Vector getCBItemHRFListe(Timestamp datum) {
+	public Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
 		return ((BasicsTable) getTable(BasicsTable.TABLENAME)).getCBItemHRFListe(datum);
 	}
 
@@ -1040,7 +1049,7 @@ public class DBZugriff {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param list TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveScoutList(Vector list) {
+	public void saveScoutList(Vector<ScoutEintrag> list) {
 		((ScoutTable) getTable(ScoutTable.TABLENAME)).saveScoutList(list);
 	}
 
@@ -1165,7 +1174,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public java.util.Vector getTrainingsVector() {
+	public Vector<TrainingPerWeek> getTrainingsVector() {
 		return ((TrainingsTable) getTable(TrainingsTable.TABLENAME)).getTrainingsVector();
 	}
 
@@ -1180,7 +1189,7 @@ public class DBZugriff {
 
 	//	------------------------------- FutureTrainingTable -------------------------------------------------
 
-	public List getFutureTrainingsVector() {
+	public List<IFutureTrainingWeek> getFutureTrainingsVector() {
 		return ((FutureTrainingTable) getTable(FutureTrainingTable.TABLENAME))
 			.getFutureTrainingsVector();
 	}
@@ -1315,7 +1324,7 @@ public class DBZugriff {
 	 * @param ligaId TODO Missing Constructuor Parameter Documentation
 	 * @param saison TODO Missing Constructuor Parameter Documentation
 	 */
-	protected void storePaarung(Vector paarungen, int ligaId, int saison) {
+	protected void storePaarung(Vector<IPaarung> paarungen, int ligaId, int saison) {
 		((PaarungTable) getTable(PaarungTable.TABLENAME)).storePaarung(paarungen, ligaId, saison);
 	}
 
@@ -1351,7 +1360,6 @@ public class DBZugriff {
 	public void storeMatchDetails(Matchdetails details) {
 		((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).storeMatchDetails(details);
 	}
-
 	//	------------------------------- MatchHighlightsTable -------------------------------------------------
 
 	/**
@@ -1361,7 +1369,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected Vector getMatchHighlights(int matchId) {
+	protected Vector<IMatchHighlight> getMatchHighlights(int matchId) {
 		return (
 			(MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlights(
 			matchId);
@@ -1446,12 +1454,12 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getSpieler4Matches(int spielerid) {
-		final Vector spielerMatchCBItems = new Vector();
+	public Vector<SpielerMatchCBItem> getSpieler4Matches(int spielerid) {
+		final Vector<SpielerMatchCBItem> spielerMatchCBItems = new Vector<SpielerMatchCBItem>();
 
 		//Liste aller Matchplayer mit der spielerid holen
 		try {
-			final Vector tempSpielerMatchCBItems = new Vector();
+			final Vector<SpielerMatchCBItem> tempSpielerMatchCBItems = new Vector<SpielerMatchCBItem>();
 
 			final String sql =
 				"SELECT DISTINCT MATCHLINEUPPLAYER.MatchID, MATCHLINEUPPLAYER.MatchID, MATCHLINEUPPLAYER.Rating, MATCHLINEUP.MatchDate, MATCHLINEUP.HeimName, MATCHLINEUP.HeimID, MATCHLINEUP.GastName, MATCHLINEUP.GastID, MATCHLINEUPPLAYER.HoPosCode, MATCHLINEUP.MatchTyp FROM MATCHLINEUPPLAYER, MATCHLINEUP WHERE MATCHLINEUPPLAYER.SpielerID="
@@ -1481,11 +1489,11 @@ public class DBZugriff {
 			}
 
 			final java.text.SimpleDateFormat simpleFormat =
-				new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.GERMANY);
+				new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY);
 			final java.text.SimpleDateFormat simpleFormat2 =
-				new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.GERMANY);
+				new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 			Timestamp filter = null;
-			java.util.Date datum = null;
+			Date datum = null;
 
 			//Die Spielerdaten zu den Matches holen
 			for (int i = 0; i < tempSpielerMatchCBItems.size(); i++) {

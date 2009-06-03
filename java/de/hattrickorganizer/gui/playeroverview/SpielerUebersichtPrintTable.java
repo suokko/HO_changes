@@ -14,7 +14,10 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author TODO Author Name
  */
 public class SpielerUebersichtPrintTable extends JTable {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = -523733130618224089L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     //TableSorter sorter;
     private PlayerOverviewModel m_clTableModel;

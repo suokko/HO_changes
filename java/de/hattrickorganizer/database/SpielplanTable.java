@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import plugins.ISpielplan;
+
 import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
@@ -34,7 +36,7 @@ public final class SpielplanTable extends AbstractTable {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spielplan[] getAllSpielplaene(boolean mitPaarungen) {
-		final Vector vec = new Vector();
+		final Vector<ISpielplan> vec = new Vector<ISpielplan>();
 		Spielplan plan = null;
 		Spielplan[] plaene = null;
 		String sql = null;

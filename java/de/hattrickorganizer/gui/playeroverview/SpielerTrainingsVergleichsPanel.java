@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui.playeroverview;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -14,7 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
+import plugins.ISpieler;
+
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.model.AufstellungsListRenderer;
+import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
@@ -24,9 +29,12 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 public class SpielerTrainingsVergleichsPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, ListSelectionListener, ActionListener
 {
-    //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static java.util.Vector vergleichsSpieler = new java.util.Vector();
+	private static final long serialVersionUID = 7090555271664890027L;
+	
+	//~ Static fields/initializers -----------------------------------------------------------------
+
+    private static Vector<ISpieler> vergleichsSpieler = new Vector<ISpieler>();
     private static boolean vergleichsMarkierung;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -63,7 +71,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.util.Vector getVergleichsSpieler() {
+    public static Vector<ISpieler> getVergleichsSpieler() {
         return vergleichsSpieler;
     }
 
@@ -96,7 +104,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
         if (value == JOptionPane.OK_OPTION) {
             for (int i = 0; i < hrfs.length; i++) {
-                de.hattrickorganizer.database.DBZugriff.instance().deleteHRF(((de.hattrickorganizer.gui.model.CBItem) hrfs[i])
+                DBZugriff.instance().deleteHRF(((CBItem) hrfs[i])
                                                                              .getId());
             }
 
@@ -134,7 +142,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
     public final void valueChanged(javax.swing.event.ListSelectionEvent listSelectionEvent) {
         //Markierung vorhanden
         if (m_jlHRFs.getSelectedValue() != null) {
-            vergleichsSpieler = de.hattrickorganizer.database.DBZugriff.instance().getSpieler(((de.hattrickorganizer.gui.model.CBItem) m_jlHRFs
+            vergleichsSpieler = DBZugriff.instance().getSpieler(((CBItem) m_jlHRFs
                                                                                                .getSelectedValue())
                                                                                               .getId());
             vergleichsMarkierung = true;
@@ -170,7 +178,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
         m_jlHRFs.setOpaque(false);
 
-        final de.hattrickorganizer.gui.model.AufstellungsListRenderer renderer = new de.hattrickorganizer.gui.model.AufstellungsListRenderer();
+        final AufstellungsListRenderer renderer = new AufstellungsListRenderer();
         m_jlHRFs.setCellRenderer(renderer);
 
         //.SINGLE_SELECTION );
@@ -189,8 +197,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      * @param init TODO Missing Method Parameter Documentation
      */
     private void loadHRFListe(boolean init) {
-        final java.util.Vector hrfListe = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                 .getCBItemHRFListe(new Timestamp(0));
+        final Vector<CBItem> hrfListe = DBZugriff.instance().getCBItemHRFListe(new Timestamp(0));
 
         m_jlHRFs.removeListSelectionListener(this);
 

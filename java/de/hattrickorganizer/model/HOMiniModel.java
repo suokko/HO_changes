@@ -89,7 +89,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<Spieler> getAllOldSpieler() {
+    public Vector<ISpieler> getAllOldSpieler() {
         return getModel().getAllOldSpieler();
     }
 
@@ -100,7 +100,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<Spieler> getAllSpieler() {
+    public Vector<ISpieler> getAllSpieler() {
         return getModel().getAllSpieler();
     }
 
@@ -447,12 +447,12 @@ public class HOMiniModel implements IHOMiniModel {
 		return ftm;
 	}
 
-	public List<FutureTrainingWeek> getFutureTrainingWeeks() {
-		return de.hattrickorganizer.database.DBZugriff.instance().getFutureTrainingsVector();
+	public List<IFutureTrainingWeek> getFutureTrainingWeeks() {
+		return DBZugriff.instance().getFutureTrainingsVector();
 	}
 
 	public void saveFutureTraining(IFutureTrainingWeek training) {
-		de.hattrickorganizer.database.DBZugriff.instance().saveFutureTraining(training);
+		DBZugriff.instance().saveFutureTraining(training);
 	}
 
 	public ISpieler createPlayer(IPlayerData data) {

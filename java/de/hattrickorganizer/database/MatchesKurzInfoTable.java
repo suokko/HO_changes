@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
@@ -54,7 +55,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		MatchKurzInfo match = null;
 		String sql = null;
 		ResultSet rs = null;
-		final Vector liste = new Vector();
+		final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
 
 		//Ohne Matchid nur AlleSpiele möglich!
 		if ((teamId < 0) && (matchtyp != ISpielePanel.ALLE_SPIELE)) {
@@ -192,7 +193,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		MatchKurzInfo match = null;
 		String sql = null;
 		ResultSet rs = null;
-		final Vector liste = new Vector();
+		final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
 
 		try {
 			sql = "SELECT * FROM "+getTableName();

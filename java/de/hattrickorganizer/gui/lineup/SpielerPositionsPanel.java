@@ -23,7 +23,6 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.model.Aufstellung;
-import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -317,7 +316,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public void refresh(Vector<Spieler> spieler) {
+    public void refresh(Vector<ISpieler> spieler) {
         Spieler aktuellerSpieler = null;
 		playerId = -1;
         if (m_iPositionsID == STANDARD) {
@@ -368,7 +367,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
      * @param spielerListe TODO Missing Constructuor Parameter Documentation
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
-    protected void setSpielerListe(Vector<Spieler> spielerListe, Spieler aktuellerSpieler) {
+    protected void setSpielerListe(Vector<ISpieler> spielerListe, Spieler aktuellerSpieler) {
         //Listener entfernen
         m_jcbSpieler.removeItemListener(this);
 

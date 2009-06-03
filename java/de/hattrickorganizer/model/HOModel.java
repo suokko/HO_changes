@@ -40,8 +40,8 @@ public class HOModel {
     private Spielplan m_clSpielplan;
     private Stadium m_clStadium;
     private Team m_clTeam;
-    private Vector<Spieler> m_vOldSpieler = new Vector<Spieler>();
-    private Vector<Spieler> m_vSpieler = new Vector<Spieler>();
+    private Vector<ISpieler> m_vOldSpieler = new Vector<ISpieler>();
+    private Vector<ISpieler> m_vSpieler = new Vector<ISpieler>();
     private Verein m_clVerein;
     private XtraData m_clXtraDaten;
     private int m_iID = -1;
@@ -65,7 +65,7 @@ public class HOModel {
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAllOldSpieler(Vector<Spieler> spielerVector) {
+    public final void setAllOldSpieler(Vector<ISpieler> spielerVector) {
         for (int i = 0; i < spielerVector.size(); i++) {
             //Auf alt setzen, die neuen werden gleich entfernt
             ((Spieler) spielerVector.get(i)).setOld(true);
@@ -90,7 +90,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<Spieler> getAllOldSpieler() {
+    public final Vector<ISpieler> getAllOldSpieler() {
         return m_vOldSpieler;
     }
 
@@ -101,7 +101,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<Spieler> getAllSpieler() {
+    public final Vector<ISpieler> getAllSpieler() {
         return m_vSpieler;
     }
 
@@ -246,7 +246,7 @@ public class HOModel {
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
-    public final void setSpieler(Vector<Spieler> spielerVector) {
+    public final void setSpieler(Vector<ISpieler> spielerVector) {
         m_vSpieler = spielerVector;
     }
 
@@ -400,7 +400,7 @@ public class HOModel {
      * berechnet die Subskills zu allen Spielern players calc subskill func
      */
     public final void calcSubskills() {
-        final Vector<Spieler> vSpieler = getAllSpieler();
+        final Vector<ISpieler> vSpieler = getAllSpieler();
         final java.sql.Timestamp calcDate = m_clBasics.getDatum();
 
         /*
@@ -443,7 +443,7 @@ public class HOModel {
 
         final Map<String,ISpieler> players = new HashMap<String,ISpieler>();
 
-        for (Iterator<Spieler> iter = DBZugriff.instance().getSpieler(previousHrfId).iterator();
+        for (Iterator<ISpieler> iter = DBZugriff.instance().getSpieler(previousHrfId).iterator();
              iter.hasNext();) {
             final ISpieler element = (ISpieler) iter.next();
             players.put(element.getSpielerID() + "", element);

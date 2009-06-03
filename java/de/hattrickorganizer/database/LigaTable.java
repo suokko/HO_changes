@@ -60,7 +60,7 @@ public final class LigaTable extends AbstractTable {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Integer[] getAllLigaIDs() {
-		final Vector vligaids = new Vector();
+		final Vector<Integer> vligaids = new Vector<Integer>();
 		Integer[] ligaids = null;
 
 		try {

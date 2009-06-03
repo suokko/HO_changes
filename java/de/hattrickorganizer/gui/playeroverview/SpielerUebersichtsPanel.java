@@ -21,9 +21,13 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 
 /**
  * Bietet Übersicht über alle Spieler
+ * (main class of the package)
  */
 public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener, KeyListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = -5795792661614081193L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     //Die Namen sind nicht mehr aktuelle!!
     //private JSplitPane                      horizontalLeftSplitPane             = null;

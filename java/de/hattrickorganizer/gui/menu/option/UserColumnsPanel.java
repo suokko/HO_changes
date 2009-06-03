@@ -78,9 +78,9 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 		return (HOColumnModel)m_jcbColumnModel.getSelectedItem();
 	}
     /**
-     * TODO Missing Method Documentation
+     * Creates a table with checkboxes for UserColumns of the selected model
      *
-     * @return TODO Missing Return Method Documentation
+     * @return JScrollPane including the table
      */
     protected JScrollPane createTable() {
         table = new JTable(getModel(getSelectedModel().getColumns()));

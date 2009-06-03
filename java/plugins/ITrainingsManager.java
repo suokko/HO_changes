@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
+import plugins.ITrainingWeek;
+
 
 /**
  * DOCUMENT ME!
@@ -66,7 +68,7 @@ public interface ITrainingsManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector getTrainingsVector();
+    public Vector<ITrainingWeek> getTrainingsVector();
 
 
     ///////////////////////// Lower API, just call if you know what you'return doing :) ///////////////////////////
@@ -79,7 +81,7 @@ public interface ITrainingsManager {
      *
      * @return Vector of trainingweeks
      */
-    public Vector calculateTrainings(Vector inputTrainings);
+    public Vector<ITrainingWeek> calculateTrainings(Vector<?> inputTrainings);
 
     /**
      * Method to force a recalculation of decimal subskills
@@ -110,7 +112,7 @@ public interface ITrainingsManager {
      * @param trainingDate	use this trainingDate
      * @return	list of matchIds (type Integer)
      */
-    public List getMatchesForTraining (Calendar trainingDate);
+    public List<Integer> getMatchesForTraining (Calendar trainingDate);
     
     /**
      * Returns the base points a player gets for this training type 

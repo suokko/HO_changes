@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import plugins.IMatchLineupPlayer;
+
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.tools.HOLogger;
@@ -50,8 +52,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getAlleBewertungen(int spielerid) {
-		final Vector bewertung = new Vector();
+	public Vector<float[]> getAlleBewertungen(int spielerid) {
+		final Vector<float[]> bewertung = new Vector<float[]>();
 
 		//Alle Möglichen Kombos durchlaufen
 		for (byte i = 0; i <= SpielerPosition.STURM_AUS; i++) {
@@ -236,9 +238,9 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getMatchLineupPlayers(int matchID, int teamID) {
+	public Vector<IMatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		MatchLineupPlayer player = null;
-		final Vector vec = new Vector();
+		final Vector<IMatchLineupPlayer> vec = new Vector<IMatchLineupPlayer>();
 		String sql = null;
 		ResultSet rs = null;
 		int roleID;

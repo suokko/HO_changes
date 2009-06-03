@@ -7,6 +7,7 @@
 package plugins;
 
 import java.util.List;
+import java.util.Vector;
 
 
 /**
@@ -203,7 +204,7 @@ public interface IMatchDetails {
      *
      * @return Value of property m_vHighlights.
      */
-    public java.util.Vector getHighlights();
+    public Vector<IMatchHighlight> getHighlights();
 
     /**
      * Getter for property m_iHomeEinstellung.
@@ -289,7 +290,7 @@ public interface IMatchDetails {
      *
      * @return The list of last names that started the match
      */
-    public List getLineup(boolean home);
+    public List<String> getLineup(boolean home);
 
     /**
      * Getter for property m_iMatchID.
