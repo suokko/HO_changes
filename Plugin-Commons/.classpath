@@ -5,6 +5,7 @@
 	<classpathentry exported="true" kind="src" path="/Core">
 		<accessrules>
 			<accessrule kind="accessible" pattern="plugins/**"/>
+			<accessrule kind="accessible" pattern="gui/**"/>
 			<accessrule kind="nonaccessible" pattern="**"/>
 		</accessrules>
 	</classpathentry>
