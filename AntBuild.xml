@@ -118,7 +118,7 @@
 	<property name="svn-command" value="svn" />
 
 	<!-- property name="allPlugins" value="" /-->
-	
+
 	<if>
 		<and>
 			<equals arg1="${dev}" arg2="" />
