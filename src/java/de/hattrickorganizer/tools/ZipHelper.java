@@ -1,0 +1,143 @@
+package de.hattrickorganizer.tools;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+
+public class ZipHelper {
+
+	/* local reference to the JarFile */
+	private static ZipFile zipFile = null;
+
+	public ZipHelper(String filename) throws Exception {
+		try {
+			zipFile = new ZipFile(new File(filename));
+		} catch (Exception e) {
+			throw new Exception("The JarFile cannot be located");
+		}
+	}
+
+	public ZipHelper(File file) throws Exception {
+		try {
+			zipFile = new ZipFile(file);
+		} catch (Exception e) {
+			throw new Exception("The JarFile cannot be located");
+		}
+	}
+	
+	public boolean extractFile(String fileToExtract, String destDir) {
+		File file = new File(destDir);
+		file.mkdirs();
+		try {
+			Enumeration e = zipFile.entries();
+
+			while (e.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) e.nextElement();
+				String fileName = destDir + File.separatorChar + entry.getName();
+				if (fileName.toUpperCase().endsWith(fileToExtract.toUpperCase())) {
+					saveEntry(entry, fileName);
+				}
+
+			}
+		} catch (Exception e1) {
+			return false;
+		}
+		return true;
+
+	}
+
+	public InputStream getFile(String fileToExtract) {
+		Enumeration e = zipFile.entries();
+
+		try {
+			while (e.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) e.nextElement();
+				String fileName = entry.getName();
+				if (fileName.toUpperCase().endsWith(fileToExtract.toUpperCase())) {
+					return zipFile.getInputStream(entry);
+				}
+			}
+		} catch (IOException e1) {
+		}
+		return null;
+	}
+
+	public void close() {
+		try {
+			zipFile.close();
+		} catch (IOException e) {
+		}
+	}
+
+	/**
+	 * unzip a file
+	 *
+	 * @param tmpZipFile TODO Missing Constructuor Parameter Documentation
+	 * @param destDir TODO Missing Constructuor Parameter Documentation
+	 *
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public boolean unzip(String destDir) {
+		File file = new File(destDir);
+		file.mkdirs();
+
+		try {
+
+			Enumeration e = zipFile.entries();
+
+			while (e.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) e.nextElement();
+				String fileName = destDir + File.separatorChar + entry.getName();
+				saveEntry(entry, fileName);
+			}
+
+			zipFile.close();
+		} catch (Exception e1) {
+			return false;
+		}
+		return true;
+	}
+
+	private void saveEntry(ZipEntry entry, String fileName) throws IOException, FileNotFoundException {
+		File f = new File(fileName);
+
+		if (!f.getParentFile().exists()) {
+			f.getParentFile().mkdirs();
+		}
+
+		if (entry.isDirectory()) {
+			f.mkdir();
+		}
+
+		if (!f.exists()) {
+			f.createNewFile();
+		}
+
+		InputStream is = zipFile.getInputStream(entry);
+		byte[] buffer = new byte[2048];
+
+		if (!f.isDirectory()) {
+			FileOutputStream fos = new FileOutputStream(f);
+
+			int len = 0;
+
+			while ((len = is.read(buffer)) != -1) {
+				fos.write(buffer, 0, len);
+			}
+
+			fos.flush();
+
+			fos.close();
+			is.close();
+		}
+	}
+	
+	public Enumeration getFileList() {
+		return zipFile.entries();
+	}
+}
