@@ -65,7 +65,7 @@
 	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
-			<pathelement location="${src-dir}/contrib/libs/ant-contrib-1.0b3.jar" />
+			<pathelement location="contrib/libs/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
 
@@ -117,6 +117,8 @@
 	-->
 	<property name="svn-command" value="svn" />
 
+	<property name="allPlugins" value="" />
+	
 	<if>
 		<and>
 			<equals arg1="${dev}" arg2="" />
@@ -420,6 +422,7 @@
 
 		<!-- Create Installer for HO only -->
 		<echo>Creating win32 installer at ${nsis-installerName} using NSIS...</echo>
+		<echo>${nsis-command} ${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}</echo>
 		<exec command="${nsis-command}">
 			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}" />
 		</exec>
