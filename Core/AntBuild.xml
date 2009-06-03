@@ -117,7 +117,7 @@
 	-->
 	<property name="svn-command" value="svn" />
 
-	<property name="allPlugins" value="" />
+	<!-- property name="allPlugins" value="" /-->
 	
 	<if>
 		<and>
@@ -329,8 +329,8 @@
 	<target name="copySinglePlugin" description="Copy a single ho plugin to build/hoplugins">
 		<echo>Copy plugin: ${PLUGINNAME} (${basedir}/../HO-Plugin-${PLUGINNAME}/bin/hoplugins to ${build-dir}/hoplugins)</echo>
 		<copy todir="${build-dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../HO-Plugin-${PLUGINNAME}/bin/hoplugins" />
-			<fileset dir="${basedir}/../HO-Plugin-${PLUGINNAME}/conf/hoplugins" />
+			<fileset dir="${basedir}/../Plugin-${PLUGINNAME}/bin/hoplugins" />
+			<fileset dir="${basedir}/../Plugin-${PLUGINNAME}/src/conf/hoplugins" />
 		</copy>
 	</target>
 
