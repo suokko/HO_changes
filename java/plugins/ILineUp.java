@@ -109,7 +109,7 @@ public interface ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getAWTeamStk(Vector<Spieler> spieler, boolean mitForm);
+    public float getAWTeamStk(Vector<ISpieler> spieler, boolean mitForm);
 
     /**
      * Setter for property m_iAttitude.
@@ -130,14 +130,14 @@ public interface ILineUp {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public void setAutoKapitaen(Vector<Spieler> spieler);
+    public void setAutoKapitaen(Vector<ISpieler> spieler);
 
     /**
      * assistent sets Kicker
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public void setAutoKicker(Vector<Spieler> spieler);
+    public void setAutoKicker(Vector<ISpieler> spieler);
 
     /**
      * Get the average experience of all players in lineup
@@ -192,7 +192,7 @@ public interface ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getGesamtStaerke(Vector<Spieler> spieler, boolean mitForm);
+    public float getGesamtStaerke(Vector<ISpieler> spieler, boolean mitForm);
 
     /**
      * Calc HatStats for currentlineup
@@ -285,7 +285,7 @@ public interface ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getMFTeamStk(Vector<Spieler> spieler, boolean mitForm);
+    public float getMFTeamStk(Vector<ISpieler> spieler, boolean mitForm);
 
     /////////////////////////////////////////////////////////////////////////////////    
     //    Ratings
@@ -329,7 +329,7 @@ public interface ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getSTTeamStk(Vector<Spieler> spieler, boolean mitForm);
+    public float getSTTeamStk(Vector<ISpieler> spieler, boolean mitForm);
 
     /**
      * sets a Player at given Positione with given tactic example setSpielerAtPosition (
@@ -388,7 +388,7 @@ public interface ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getTWTeamStk(Vector<Spieler> spieler, boolean mitForm);
+    public float getTWTeamStk(Vector<ISpieler> spieler, boolean mitForm);
 
     /**
      * gets tactic for a specified Position
@@ -455,7 +455,7 @@ public interface ILineUp {
      *        IHOMiniModel.getUserSettings().WetterEffektBonus
      * @param wetter wheather type ( ISpieler.SONNIG)
      */
-    public void doAufstellung(Vector<Spieler> spieler, byte reihenfolge, boolean mitForm,
+    public void doAufstellung(Vector<ISpieler> spieler, byte reihenfolge, boolean mitForm,
                               boolean idealPosFirst, boolean ignoreVerletzung,
                               boolean ignoreSperren, float wetterBonus, int wetter);
 

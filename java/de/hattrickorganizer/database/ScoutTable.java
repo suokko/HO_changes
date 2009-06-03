@@ -47,7 +47,7 @@ public final class ScoutTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param list TODO Missing Constructuor Parameter Documentation
 	 */
-	protected void saveScoutList(Vector list) {
+	protected void saveScoutList(Vector<ScoutEintrag> list) {
 		String sql = "";
 		String bool = "0";
 
@@ -125,8 +125,8 @@ public final class ScoutTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector getScoutList() {
-		final Vector ret = new Vector();
+	public Vector<ScoutEintrag> getScoutList() {
+		final Vector<ScoutEintrag> ret = new Vector<ScoutEintrag>();
 
 		try {
 			final String sql =

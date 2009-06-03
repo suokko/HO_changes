@@ -21,7 +21,7 @@ import de.hattrickorganizer.tools.updater.UpdateHelper;
 public class User {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
-	private static ArrayList users = null;
+	private static ArrayList<User> users = null;
 
 	/** TODO Missing Parameter Documentation */
 	private static final String FILENAME = "user.xml";
@@ -53,7 +53,7 @@ public class User {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public static ArrayList getAllUser() {
+	public static ArrayList<User> getAllUser() {
 		try {
 			if (users == null) {
 				load();
@@ -125,7 +125,7 @@ public class User {
 	 */
 	public static void load() throws Exception {
 		File file = getFile();
-		users = new ArrayList();
+		users = new ArrayList<User>();
 
 		if (file.exists()) {
 			Document doc = UpdateHelper.instance().getDocument(file);

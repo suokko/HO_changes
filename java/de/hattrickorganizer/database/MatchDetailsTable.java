@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import plugins.IMatchHighlight;
+
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -110,7 +112,7 @@ public final class MatchDetailsTable extends AbstractTable {
 				details.setWetterId(rs.getInt("WetterId"));
 				details.setZuschauer(rs.getInt("Zuschauer"));
 				details.setMatchreport(DBZugriff.deleteEscapeSequences(rs.getString("Matchreport")));
-				Vector vMatchHighlights = DBZugriff.instance().getMatchHighlights(matchId);
+				Vector<IMatchHighlight> vMatchHighlights = DBZugriff.instance().getMatchHighlights(matchId);
 				//Alle Highlights in die Details packen
 				details.setHighlights(vMatchHighlights);
 			}

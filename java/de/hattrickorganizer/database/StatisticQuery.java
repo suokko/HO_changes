@@ -7,6 +7,7 @@ import java.util.Vector;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
+import plugins.ITrainingWeek;
 import de.hattrickorganizer.gui.model.ArenaStatistikModel;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -27,7 +28,7 @@ public class StatisticQuery {
 	 */
 	public static double[][] getSpielerDaten4Statistik(int spielerId, int anzahlHRF) {
 
-		Vector trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 		final int anzahlSpalten = 15;
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
@@ -268,7 +269,7 @@ public class StatisticQuery {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
-		Vector trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 		final int anzahlSpalten = 12;
 
 		//int minid = model.HOVerwaltung.instance ().getModel ().getID () - anzahlHRF;
@@ -391,7 +392,7 @@ public class StatisticQuery {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static double[][] getFinanzen4Statistik(int anzahlHRF) {
-		Vector trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 		final int anzahlSpalten = 17;
 
 		final double[][] marktwerte = getMarktwert4Statistik(anzahlHRF);
@@ -507,7 +508,7 @@ public class StatisticQuery {
 	 * TODO Missing Method Documentation
 	 */
 	public static double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
-		Vector trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 		final int anzahlSpalten = 3;
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
@@ -559,7 +560,7 @@ public class StatisticQuery {
 	 */
 	private static double[][] getMarktwert4Statistik(int anzahlHRF) {
 
-		Vector trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 		final int anzahlSpalten = 2;
 
 		double[][] returnWerte = new double[0][0];
@@ -606,7 +607,7 @@ public class StatisticQuery {
 		return returnWerte;
 	}
 
-	private static String getInClause(int anzahlHRF, Vector trainings) {
+	private static String getInClause(int anzahlHRF, Vector<ITrainingWeek> trainings) {
 		StringBuffer inClause = new StringBuffer();
 		int start = trainings.size()-anzahlHRF;
 		if (start<0) {

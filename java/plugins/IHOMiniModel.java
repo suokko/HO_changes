@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Vector;
 
 import de.hattrickorganizer.logik.exporter.ExportMatchData;
-import de.hattrickorganizer.model.FutureTrainingWeek;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.TrainingPerWeek;
 
 
@@ -40,14 +37,14 @@ public interface IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<Spieler> getAllOldSpieler();
+    public Vector<ISpieler> getAllOldSpieler();
 
     /**
      * Returns all Player of the actual HRF
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<Spieler> getAllSpieler();
+    public Vector<ISpieler> getAllSpieler();
 
     //----------Basics----------------------------------------
 
@@ -319,7 +316,7 @@ public interface IHOMiniModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public List<FutureTrainingWeek> getFutureTrainingWeeks();
+	public List<IFutureTrainingWeek> getFutureTrainingWeeks();
 
 	/**
 	 * stores FutureTrainingWeek in database

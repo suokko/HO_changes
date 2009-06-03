@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.PlayerOverviewModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
@@ -20,9 +21,12 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author Thorsten Dietz
  */
 public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.gui.Refreshable {
+	
+	private static final long serialVersionUID = -6074136156090331418L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private PlayerOverviewModel m_clTableModel;
+	
+	private PlayerOverviewModel m_clTableModel;
     private TableSorter m_clTableSorter;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -33,7 +37,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
         setDefaultRenderer(java.lang.Object.class,
                            new SpielerTableRenderer());
         setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
     }
 
     //~ Methods ------------------------------------------------------------------------------------

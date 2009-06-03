@@ -14,7 +14,10 @@ import de.hattrickorganizer.gui.utils.TableSorter;
 public class SpielerUebersichtNamenTable extends JTable
     implements de.hattrickorganizer.gui.Refreshable
 {
-    //~ Instance fields ----------------------------------------------------------------------------
+
+	private static final long serialVersionUID = -7686660400379157142L;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 
     //TableSorter sorter;
     private TableSorter m_clTableSorter;
@@ -83,7 +86,7 @@ public class SpielerUebersichtNamenTable extends JTable
      * Initialisiert das Model für die Namen
      */
     private void initModelNamen() {
-        setAutoResizeMode(this.AUTO_RESIZE_OFF);
+        setAutoResizeMode(AUTO_RESIZE_OFF);
         setSelectionMode(0);
         setRowSelectionAllowed(true);
         getColumnModel().getColumn(0).setMinWidth(167);

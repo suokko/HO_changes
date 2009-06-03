@@ -2,7 +2,9 @@ package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.Vector;
 
+import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.tools.HOLogger;
 
 public final class TrainingsTable extends AbstractTable {
@@ -48,8 +50,8 @@ public final class TrainingsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public java.util.Vector getTrainingsVector() {
-		final java.util.Vector vTrainings = new java.util.Vector();
+	public Vector<TrainingPerWeek> getTrainingsVector() {
+		final Vector<TrainingPerWeek> vTrainings = new Vector<TrainingPerWeek>();
 
 		final String statement = "SELECT * FROM "+getTableName()+" ORDER BY year, week ASC";
 
@@ -60,7 +62,7 @@ public final class TrainingsTable extends AbstractTable {
 				rs.beforeFirst();
 
 				while (rs.next()) {
-					vTrainings.add(new de.hattrickorganizer.model.TrainingPerWeek(rs.getInt("week"), rs.getInt("year"), rs.getInt("Typ"), rs.getInt("Intensity"), rs.getInt("StaminaTrainingPart")));
+					vTrainings.add(new TrainingPerWeek(rs.getInt("week"), rs.getInt("year"), rs.getInt("Typ"), rs.getInt("Intensity"), rs.getInt("StaminaTrainingPart")));
 				}
 			}
 		} catch (Exception e) {

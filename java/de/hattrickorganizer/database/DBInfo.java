@@ -56,7 +56,7 @@ final public  class DBInfo {
 		String[] types = new String[2];
         types[0] = "TABLES"; //some DB want Tables
         types[1] = "TABLE"; // other Table
-        ArrayList tables = new ArrayList();
+        ArrayList<String> tables = new ArrayList<String>();
         try { 
             final ResultSet rs = databaseMetaData.getTables(null, null, "%", types);
             while(rs.next()){

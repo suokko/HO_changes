@@ -17,7 +17,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 
 	/** tablename **/						
 	public final static String TABLENAME = "SPIELERSKILLUP";
-	private static Map playerSkillup = null;
+	private static Map<String,Vector<Object[]>> playerSkillup = null;
 
 	protected SpielerSkillupTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);					
@@ -76,15 +76,15 @@ public final class SpielerSkillupTable extends AbstractTable {
 				+ " )");
 		adapter.executeUpdate(statement);
 		if (reload) {
-			Vector data = getSpielerSkillUp(spielerId);
+			Vector<Object[]> data = getSpielerSkillUp(spielerId);
 			data.clear();
 			data.addAll(loadSpieler(spielerId));						
 		}				
 	}
 
 	public Object[] getLastLevelUp(int skillCode, int spielerId) {
-		Vector data = getSpielerSkillUp(spielerId);
-		for (Iterator iter = data.iterator(); iter.hasNext();) {
+		Vector<Object[]> data = getSpielerSkillUp(spielerId);
+		for (Iterator<Object[]> iter = data.iterator(); iter.hasNext();) {
 			Object[] element = (Object[]) iter.next();
 			int code = ((Integer) element[4]).intValue();			
 			if (code==skillCode) {
@@ -94,10 +94,10 @@ public final class SpielerSkillupTable extends AbstractTable {
 		return new Object[] { new Timestamp(System.currentTimeMillis()), new Boolean(false)};						
 	}
 
-	public Vector getAllLevelUp(int skillCode, int spielerId) {		
-		Vector data = getSpielerSkillUp(spielerId);
-		Vector v = new Vector();
-		for (Iterator iter = data.iterator(); iter.hasNext();) {
+	public Vector<Object[]> getAllLevelUp(int skillCode, int spielerId) {		
+		Vector<Object[]> data = getSpielerSkillUp(spielerId);
+		Vector<Object[]> v = new Vector<Object[]>();
+		for (Iterator<Object[]> iter = data.iterator(); iter.hasNext();) {
 			Object[] element = (Object[]) iter.next();
 			int code = ((Integer) element[4]).intValue();			
 			if (code==skillCode) {
@@ -107,13 +107,13 @@ public final class SpielerSkillupTable extends AbstractTable {
 		return v;
 	}
 
-	private Vector getSpielerSkillUp(int spielerId) {
+	private Vector<Object[]> getSpielerSkillUp(int spielerId) {
 		if (playerSkillup==null) {
 			populate();
 		}
-		Vector v = (Vector) playerSkillup.get(""+spielerId);
+		Vector<Object[]> v = playerSkillup.get(""+spielerId);
 		if (v==null) {
-			v = new Vector();
+			v = new Vector<Object[]>();
 			playerSkillup.put(""+spielerId,v);	
 		}
 		return v;
@@ -121,21 +121,21 @@ public final class SpielerSkillupTable extends AbstractTable {
 	
 	private void populate() {
 
-		Vector idVector = getPlayerList();
+		Vector<Integer> idVector = getPlayerList();
 		if (idVector.size()==0) {
 			importFromSpieler();
 			idVector = getPlayerList();			
 		}  
-		playerSkillup = new HashMap();				
-		for (Iterator iter = idVector.iterator(); iter.hasNext();) {
+		playerSkillup = new HashMap<String,Vector<Object[]>>();				
+		for (Iterator<Integer> iter = idVector.iterator(); iter.hasNext();) {
 			Integer element = (Integer) iter.next();
 			playerSkillup.put(""+element.intValue(),loadSpieler(element.intValue()));
 		}
 		
 	}
 
-	private Vector getPlayerList() {
-		Vector idVector = new Vector();
+	private Vector<Integer> getPlayerList() {
+		Vector<Integer> idVector = new Vector<Integer>();
 		ResultSet rs;
 		String sql = "SELECT DISTINCT SpielerID FROM "+getTableName();
 		try {
@@ -153,8 +153,8 @@ public final class SpielerSkillupTable extends AbstractTable {
 		return idVector;
 	}
 
-	private Vector loadSpieler(int spielerId) {		
-		Vector v = new Vector();				
+	private Vector<Object[]> loadSpieler(int spielerId) {		
+		Vector<Object[]> v = new Vector<Object[]>();				
 		try {
 			String sql = "SELECT * FROM "+getTableName()+" WHERE SpielerID=" + spielerId + " Order By Datum DESC";
 			ResultSet rs = adapter.executeQuery(sql);
@@ -171,8 +171,8 @@ public final class SpielerSkillupTable extends AbstractTable {
 	// -------------------------------- Importing PArt ----------------------------------------------
 
 	public void importNewSkillup(HOModel homodel) {
-		Vector players = homodel.getAllSpieler();
-		for (Iterator iter = players.iterator(); iter.hasNext();) {
+		Vector<ISpieler> players = homodel.getAllSpieler();
+		for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
 			ISpieler nPlayer = (ISpieler) iter.next();
 			ISpieler oPlayer = HOVerwaltung.instance().getModel().getSpieler(nPlayer.getSpielerID());
 			if (oPlayer!=null) {
@@ -202,7 +202,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		playerSkillup = null;
 		ResultSet rs = null;
 		String sql = "SELECT DISTINCT SpielerID FROM SPIELER";
-		final Vector idVector = new Vector();
+		final Vector<Integer> idVector = new Vector<Integer>();
 		try {
 			rs = adapter.executeQuery(sql);			
 			if (rs != null) {
@@ -216,7 +216,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getSpieler: " + e);
 		}	
 		adapter.executeUpdate("DELETE FROM "+getTableName());
-		for (Iterator iter = idVector.iterator(); iter.hasNext();) {
+		for (Iterator<Integer> iter = idVector.iterator(); iter.hasNext();) {
 			Integer element = (Integer) iter.next();
 			importSpieler(element.intValue());
 		}
@@ -244,7 +244,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			if (rs.next()) {
 				lastValue = rs.getInt(key);
 			}
-			Vector v = new Vector();					
+			Vector<Object[]> v = new Vector<Object[]>();					
 			while (rs.next()) {
 				int value = rs.getInt(key);
 				if (value > lastValue) {
@@ -252,7 +252,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 				}
 				lastValue = value;
 			}
-			for (Iterator iter = v.iterator(); iter.hasNext();) {
+			for (Iterator<Object[]> iter = v.iterator(); iter.hasNext();) {
 				Object[] element = (Object[]) iter.next();
 				storeSkillup(((Integer)element[0]).intValue(),((Integer)element[1]).intValue(),((Timestamp)element[2]),((Integer)element[3]).intValue(),((Integer)element[4]).intValue(),false);
 			}

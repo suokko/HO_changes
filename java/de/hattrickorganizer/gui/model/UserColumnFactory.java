@@ -222,9 +222,10 @@ final public class UserColumnFactory {
             0f, false, false);
 			}
 			public boolean isEditable(){
-				return false;
+				return true; //false
 			}
 		};
+		playerBasicArray[0].setDisplay(false);
 		
 		playerBasicArray[1] = new PlayerColumn(ID,"ID",0){
 			public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
@@ -234,14 +235,16 @@ final public class UserColumnFactory {
                         ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 			}
 			public boolean isEditable(){
-				return false;
+				return true; //false
 			}
 			
 			public void setSize(TableColumn column){
+				// Column ID is not shown!
 				column.setMinWidth(0);
 				column.setPreferredWidth(0);
 			} 
 		};
+		playerBasicArray[1].setDisplay(false);
 		return playerBasicArray;
 	}
 	

@@ -17,8 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
+import plugins.ISpieler;
+
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
@@ -220,12 +221,12 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
     private void gruppenMarkierung() {
         //Von beiden Gruppen ein Button selektiert
         if ((getSelectedButton(true) != null) && (getSelectedButton(false) != null)) {
-            final Vector<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+            final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
             final String suchName = getName4Button(getSelectedButton(true));
             final String ersatzName = getName4Button(getSelectedButton(false));
 
             for (int i = 0; i < alleSpieler.size(); i++) {
-                final Spieler spieler = alleSpieler.get(i);
+                final ISpieler spieler = alleSpieler.get(i);
 
                 //Spieler in der Gruppe
                 if (spieler.getTeamInfoSmilie().equals(suchName)) {

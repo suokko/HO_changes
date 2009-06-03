@@ -28,7 +28,6 @@ import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.tools.PlayerHelper;
@@ -249,7 +248,7 @@ final class AufstellungsDetailPanel extends ImagePanel
     private void setLabels() {
         if (HOVerwaltung.instance().getModel().getTeam() != null) {
             final HOModel homodel = HOVerwaltung.instance().getModel();
-            final Vector<Spieler> allSpieler = homodel.getAllSpieler();
+            final Vector<ISpieler> allSpieler = homodel.getAllSpieler();
             final Aufstellung aufstellung = homodel.getAufstellung();
 
             //AufstellungCBItem   avergleich  = AufstellungsVergleichHistoryPanel.getVergleichsAufstellung ();

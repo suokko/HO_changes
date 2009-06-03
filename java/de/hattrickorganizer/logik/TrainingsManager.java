@@ -48,7 +48,7 @@ public class TrainingsManager implements ITrainingsManager {
 
     /** HO Model */
     private IHOMiniModel p_IHMM_HOMiniModel;
-    private Map matchMap;
+    private Map<String,Map<Integer,Integer>> matchMap;
 
     private TrainingsWeekManager weekManager;
     static final public boolean TRAININGDEBUG = false;
@@ -61,7 +61,7 @@ public class TrainingsManager implements ITrainingsManager {
     private TrainingsManager() {
         this.p_IHMM_HOMiniModel = HOMiniModel.instance();
         this.weekManager = TrainingsWeekManager.instance();
-        this.matchMap = new HashMap();
+        this.matchMap = new HashMap<String,Map<Integer,Integer>>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ public class TrainingsManager implements ITrainingsManager {
     }
 
     // ------------------------------ Training Week Calculation ----------------------------------------------------
-    public Vector getTrainingsVector() {
+    public Vector<ITrainingWeek> getTrainingsVector() {
         return this.weekManager.getTrainingsVector();
     }
 
@@ -154,7 +154,7 @@ public class TrainingsManager implements ITrainingsManager {
      * @return TrainingPerPlayer
      */
     public ITrainingPerPlayer calculateFullTrainingForPlayer(ISpieler inputSpieler,
-                                                             Vector inputTrainings,
+                                                             Vector<ITrainingWeek> inputTrainings,
                                                              Timestamp timestamp) {
         //playerID HIER SETZEN
         final ISpieler spieler = inputSpieler;
@@ -172,7 +172,7 @@ public class TrainingsManager implements ITrainingsManager {
 
         //alle Trainings durchlaufen
         //run through all trainings
-        Iterator i = inputTrainings.iterator();
+        Iterator<ITrainingWeek> i = inputTrainings.iterator();
         while (i.hasNext()) {
         	TrainingPerPlayer curTraining = new TrainingPerPlayer();
             //holen des gerade abzuarbeitenden trainings
@@ -207,7 +207,7 @@ public class TrainingsManager implements ITrainingsManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector calculateTrainings(Vector inputTrainings) {
+    public Vector<ITrainingWeek> calculateTrainings(Vector<?> inputTrainings) {
         return this.weekManager.calculateTrainings(inputTrainings);
     }
 
@@ -261,7 +261,7 @@ public class TrainingsManager implements ITrainingsManager {
         Calendar trainingDate = train.getTrainingDate();
 
         try {
-        	List matches = getMatchesForTraining(trainingDate);
+        	List<Integer> matches = getMatchesForTraining(trainingDate);
 
         	for (int i=0; i<matches.size(); i++) {
                 final int matchId = ((Integer)matches.get(i)).intValue();
@@ -343,7 +343,7 @@ public class TrainingsManager implements ITrainingsManager {
     			posId == PLAYERSTATUS_NO_MATCHDETAILS)
     		return 0;
        	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
-        Vector highlights = details.getHighlights();
+        Vector<IMatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
         	IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
        		if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
@@ -415,8 +415,8 @@ public class TrainingsManager implements ITrainingsManager {
      * @param trainingDate	use this trainingDate
      * @return	list of matchIds (type Integer)
      */
-    public List getMatchesForTraining (Calendar trainingDate) {
-        List matches = new ArrayList();
+    public List<Integer> getMatchesForTraining (Calendar trainingDate) {
+        List<Integer> matches = new ArrayList<Integer>();
 
         try {
         	final ResultSet matchRS = p_IHMM_HOMiniModel.getAdapter().executeQuery(createQuery(trainingDate));
@@ -446,7 +446,7 @@ public class TrainingsManager implements ITrainingsManager {
      * @return	player status
      */
     public int getPlayerStatus (int matchId, int playerId) {
-    	Map matchData = getMatchLineup(matchId);
+    	Map<Integer,Integer> matchData = getMatchLineup(matchId);
     	// No Lineup for this match
     	if (matchData == null)
     		return PLAYERSTATUS_NO_MATCHDATA;
@@ -458,7 +458,7 @@ public class TrainingsManager implements ITrainingsManager {
     	// Player not in lineup
     	if (posId == null) {
     		// Check if he got a red card
-            Vector highlights = details.getHighlights();
+            Vector<IMatchHighlight> highlights = details.getHighlights();
             for (int i=0; i<highlights.size(); i++) {
             	IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
            		if (curHighlight.getSpielerID() == playerId &&
@@ -486,7 +486,7 @@ public class TrainingsManager implements ITrainingsManager {
     public int getMatchPosition (int matchId, int playerId) {
     	int playerStatus = getPlayerStatus(matchId, playerId);
     	if (playerStatus == PLAYERSTATUS_OK) {
-        	Map matchData = getMatchLineup(matchId);
+        	Map<Integer,Integer> matchData = getMatchLineup(matchId);
         	Integer posId = (Integer)matchData.get(new Integer(playerId));
         	return posId.intValue();
     	} else {
@@ -501,11 +501,11 @@ public class TrainingsManager implements ITrainingsManager {
      * @param matchId	match id
      * @return	Map	(playerId -> posId) of a match lineup
      */
-    private Map getMatchLineup(int matchId) {
-        Map matchData = (Map) this.matchMap.get("" + matchId);
+    private Map<Integer,Integer> getMatchLineup(int matchId) {
+        Map<Integer,Integer> matchData = this.matchMap.get("" + matchId);
 
         if (matchData == null) {
-            matchData = new HashMap();
+            matchData = new HashMap<Integer,Integer>();
 
             final String query =
                 "select SPIELERID,FieldPos from MATCHLINEUPPLAYER where FIELDPOS>-1 AND MATCHID = "

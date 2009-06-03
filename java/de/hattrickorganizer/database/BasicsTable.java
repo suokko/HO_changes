@@ -3,7 +3,9 @@ package de.hattrickorganizer.database;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Vector;
 
+import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.model.Basics;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -112,10 +114,10 @@ public final class BasicsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public java.util.Vector getCBItemHRFListe(Timestamp datum) {
+	public Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
 		ResultSet rs = null;
 		final String statement = "SELECT * FROM "+getTableName()+" WHERE Datum >='" + datum.toString() + "' ORDER BY Datum DESC";
-		final java.util.Vector hrfs = new java.util.Vector();
+		final Vector<CBItem> hrfs = new Vector<CBItem>();
 
 		try {
 			rs = adapter.executeQuery(statement);

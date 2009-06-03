@@ -269,7 +269,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getAWTeamStk(Vector<Spieler> spieler, boolean mitForm) {
+    public final float getAWTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         float stk = 0.0f;
         stk += calcTeamStk(spieler, ISpielerPosition.INNENVERTEIDIGER, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.AUSSENVERTEIDIGER_OFF, mitForm);
@@ -305,7 +305,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAutoKapitaen(Vector<Spieler> spieler) {
+    public final void setAutoKapitaen(Vector<ISpieler> spieler) {
         Spieler player = null;
         float maxValue = -1;
 
@@ -332,7 +332,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAutoKicker(Vector<Spieler> spieler) {
+    public final void setAutoKicker(Vector<ISpieler> spieler) {
         int maxStandard = -1;
         int form = -1;
         Spieler player = null;
@@ -376,7 +376,7 @@ public  class Aufstellung implements plugins.ILineUp {
     	try {
     		Spieler pl = null;
     		Spieler captain = null;
-    		Vector<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+    		Vector<ISpieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
 
     		for (int i = 0; (players != null) && (i < players.size()); i++) {
     			pl = (Spieler) players.elementAt(i);
@@ -461,7 +461,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getGesamtStaerke(Vector<Spieler> spieler, boolean mitForm) {
+    public final float getGesamtStaerke(Vector<ISpieler> spieler, boolean mitForm) {
         return de.hattrickorganizer.tools.Helper.round(getTWTeamStk(spieler, mitForm)
                                                        + getAWTeamStk(spieler, mitForm)
                                                        + getMFTeamStk(spieler, mitForm)
@@ -677,7 +677,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getMFTeamStk(Vector<Spieler> spieler, boolean mitForm) {
+    public final float getMFTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         float stk = 0.0f;
         stk += calcTeamStk(spieler, ISpielerPosition.MITTELFELD, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.FLUEGELSPIEL, mitForm);
@@ -947,7 +947,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getSTTeamStk(Vector<Spieler> spieler, boolean mitForm) {
+    public final float getSTTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         float stk = 0.0f;
         stk += calcTeamStk(spieler, ISpielerPosition.STURM, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.STURM_DEF, mitForm);
@@ -1067,7 +1067,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getTWTeamStk(Vector<Spieler> spieler, boolean mitForm) {
+    public final float getTWTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         return calcTeamStk(spieler, ISpielerPosition.TORWART, mitForm);
     }
 
@@ -1221,7 +1221,7 @@ public  class Aufstellung implements plugins.ILineUp {
      * @param wetterBonus TODO Missing Constructuor Parameter Documentation
      * @param wetter TODO Missing Constructuor Parameter Documentation
      */
-    public final void doAufstellung(Vector<Spieler> spieler, byte reihenfolge, boolean mitForm,
+    public final void doAufstellung(Vector<ISpieler> spieler, byte reihenfolge, boolean mitForm,
                                     boolean idealPosFirst, boolean ignoreVerletzung,
                                     boolean ignoreSperren, float wetterBonus, int wetter) {
         m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst,
@@ -1613,7 +1613,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcPlayerStk(Vector<Spieler> spieler, int spielerId, byte position, boolean mitForm) {
+    private float calcPlayerStk(Vector<ISpieler> spieler, int spielerId, byte position, boolean mitForm) {
         Spieler player = null;
 
         for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
@@ -1636,7 +1636,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcTeamStk(Vector<Spieler> spieler, byte position, boolean mitForm) {
+    private float calcTeamStk(Vector<ISpieler> spieler, byte position, boolean mitForm) {
         float stk = 0.0f;
         de.hattrickorganizer.model.SpielerPosition pos = null;
 

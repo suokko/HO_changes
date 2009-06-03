@@ -5,6 +5,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
@@ -30,8 +31,8 @@ public final class FutureTrainingTable extends AbstractTable {
 		columns[4] = new ColumnDescriptor("STAMINATRAININGPART",Types.INTEGER,false);
 	}
 	
-	public List getFutureTrainingsVector() {
-		final java.util.Vector vTrainings = new java.util.Vector();
+	public List<IFutureTrainingWeek> getFutureTrainingsVector() {
+		final Vector<IFutureTrainingWeek> vTrainings = new Vector<IFutureTrainingWeek>();
 		String query = "select * from "+getTableName();
 		ResultSet rs = adapter.executeQuery(query);
 
@@ -53,7 +54,7 @@ public final class FutureTrainingTable extends AbstractTable {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getTraining " + e);
 		}
 		
-		List futures = new ArrayList();
+		List<IFutureTrainingWeek> futures = new ArrayList<IFutureTrainingWeek>();
 
 		int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
 		int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
@@ -84,7 +85,7 @@ public final class FutureTrainingTable extends AbstractTable {
 			// load the training from DB
 			IFutureTrainingWeek train = null;
 
-			for (Iterator iter = vTrainings.iterator(); iter.hasNext();) {
+			for (Iterator<IFutureTrainingWeek> iter = vTrainings.iterator(); iter.hasNext();) {
 				FutureTrainingWeek tmp = (FutureTrainingWeek) iter.next();
 				if ((tmp.getWeek() == week) && (tmp.getSeason() == season)) {
 					train = tmp;
