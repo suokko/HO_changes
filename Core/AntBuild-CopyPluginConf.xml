@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="hoplugins" default="copyconf2build">
+<project name="hoplugins" default="copyPluginToCoreBuild">
+	<property name="core-build-dir" value="../Core/build"/>
 	<property name="build-dir" value="${basedir}/bin"/>
 	<property name="conf-dir" value="${basedir}/src/conf"/>
-	
+
 	<!-- ================================= 
           target: copyconf2build              
          ================================= -->
@@ -12,4 +13,10 @@
 			<fileset dir="${conf-dir}/hoplugins"/>
 		</copy>
 	</target>
-</project> 
+
+	<target name="copyPluginToCoreBuild">
+		<copy todir="${core-build-dir}/hoplugins" preservelastmodified="true" failonerror="true">
+			<fileset dir="${build-dir}/hoplugins"/>
+		</copy>
+	</target>
+</project>
