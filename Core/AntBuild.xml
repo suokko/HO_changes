@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Ant Build file for HO by flattermann <HO@flattermann.net> - 2009-05-19
+	
+	- created for personal use, but perhaps it may be useful for other, too -
+	 
+	This ant file expects the following file system structure:
+	
+	workspace.ho1						(Eclipse workspace directory)
+		+-> HO1								HO1 Main Project
+		|	+-> bin							Compiled .class files go here
+		|	+-> build						The full HO build with supplementary files is created here
+		|	+-> debug						A copy of the HO build dir is created here (for the Eclipse debugger)
+		|	+-> export-dmg					The MacOS Builds (DMG) are created here [please see note 1, below]
+		|	+-> export-zip					The ZIP-Builds are created here
+		|	+-> export-w32installer			The Win32-Installer (NSIS) are created here
+		|	+-> java.dist					The Win32-JRE to be distributed with the Installer needs to be placed here
+		|	+-> src							
+		|	|	+-> java					The source code is here
+		|	|	+-> conf					Supplementary files
+		|	|	|	+-> addToJar			These files will be added to ho.jar
+		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
+		|	|	|	+-> nsis				NSIS directory for Win32 installer creation
+		|	|	|	|	+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation [please see note 2, below]
+		|	|	|	|	+-> localLang		Local language files for NSIS
+		|	|	|	+-> MANIFEST.MF			The manifest file for ho.jar
+		|	|	+-> contrib
+		|	|		+-> libs				This is the place for supplemental libs like ant-contrib-*.jar
+		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
+		|	|	
+		|	+-> AntBuild.xml				This file
+		|	+-> AntBuild-CopyPluginConf.xml	Ant file that copies the cvs/conf/*.* to the bin dir (for plugins)
+		|	
+		+-> HO-Plugin-Commons				HO Plugin Project "Commons"
+		|	+-> bin							Compiled .class files go here
+		|	+-> src							The source code is here
+		|	
+		+-> HO-Plugin-Feedback				HO Plugin Project "Feedback"
+		|	+-> bin							Compiled .class files go here
+		|	+-> src							The source code is here
+		|	
+		+-> HO-Plugin-XYZ					HO Plugin Project "XYZ"
+			+-> bin							Compiled .class files go here
+			+-> src							The source code is here
+	    	
+	    	
+	Note 1: (How to create DMG-Builds with Linux)
+	- still missing, try to figure it out yourself ;-) or send a mail to HO@flattermann.net -
+	
+	Note 2: NSIS Win32-Installer
+	- To build the Win32 Installer, you need the NSIS *Unicode* from http://www.scratchpaper.com/,
+		because the NSIS main trunk does not support unicode, yet.
+		Unfortunately, the unicode source only builds under Windows, therefore a linux build does not exist.
+		For Linux, please install Wine and run the makensis.exe using wine.
+	- You need the additional NSIS plugin "AccessControl" 
+		Download it from http://nsis.sourceforge.net/AccessControl_plug-in and unpack the AccessControl.dll
+		into your NSIS plugin directory
+-->
+
+<project name="HO1-AntBuild" default="copy2build" basedir=".">
+
+	<property name="src.dir" value="${basedir}/src" />
+
+	<!-- Define ant-contrib (for <if>...<then>...</then></if>) -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="contrib/libs/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<!-- 
+		Put your local properties into this file
+		If this file exists, the properties in it have higher precedence than the
+		default properties
+		This file should not be sync'ed via SVN
+	-->
+	<property file="AntBuild-Local.properties" />
+	<!--
+		Default properties (in SVN)
+	-->
+	<property file="AntBuild.properties" />
+
+	<!-- =================================
+          target: ant-compile
+          This target is used by automatic build scripts
+         ================================= -->
+	<target name="ant-compile" description="Compile source via Ant (not necessary when building in Eclipse)">
+		<echo>src.dir is ${src.dir}</echo>
+		<echo>bin.dir is ${bin.dir}</echo>
+		<property name="java.SourcePath" value="${src.dir}/java" />
+		<echo>javaSourcePath is ${javaSourcePath}</echo>
+		<!-- Read classpath from MANIFEST.MF -->
+		<loadfile property="compile.Classpath" srcfile="${manifestFile}">
+			<filterchain>
+				<linecontains>
+					<contains value="Class-Path:" />
+				</linecontains>
+				<replaceregex pattern="Class-Path:\w*" replace="" />
+				<replaceregex pattern="\.\s" replace=" " flags="g" />
+				<replaceregex pattern="\./\s" replace=" " flags="g" />
+				<replaceregex pattern="\./hoplugins" replace="" flags="g" />
+				<replaceregex pattern="\./" replace="${src.dir}/conf/addToZip/" flags="g" />
+				<replaceregex pattern="^\s+" replace="" />
+				<replaceregex pattern="\s+" replace=":" flags="g" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<!--
+		<echo>Removing old build</echo>
+		<delete>
+			<fileset dir="antbuild"/>
+		</delete>
+		-->
+		<mkdir dir="${bin.dir}" />
+		<echo>compileClasspath (from ${manifestFile}) is ${compileClasspath}</echo>
+		<echo>Building now</echo>
+		<javac srcdir="${java.SourcePath}" destdir="${bin.dir}" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
+			<compilerarg value="-Xlint" />
+			<classpath path="${compile.Classpath}" />
+		</javac>
+	</target>
+
+	<!-- ================================= 
+          target: makeAll              
+         ================================= -->
+	<target name="makeAll" description="Create ho.jar, HO.zip and HO.dmg">
+		<antcall target="makeJar" />
+		<antcall target="makeZip" />
+		<antcall target="makeDmgImage" />
+		<antcall target="makeNSIS" />
+	</target>
+
+	<!-- ================================= 
+          target: init              
+         ================================= -->
+	<target name="init" description="create tmp dirs and get HO Version">
+		<mkdir dir="${tmp.target}" />
+		<mkdir dir="${export.dmg.targetdir}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${debug.dir}" />
+		<loadfile property="hoversion" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+			<filterchain>
+				<linecontains>
+					<contains value=" VERSION =" />
+				</linecontains>
+				<replaceregex pattern=".*=\D*" replace="" />
+				<replaceregex pattern="\D*$" replace="" />
+				<replaceregex pattern="\." replace="" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<loadfile property="dev" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+			<filterchain>
+				<linecontains>
+					<contains value=" DEVELOPMENT =" />
+				</linecontains>
+				<replaceregex pattern='.*= ' replace="" />
+				<replaceregex pattern=';\w*$' replace="" />
+				<replaceregex pattern='true' replace="_BETA" />
+				<replaceregex pattern='false' replace="" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<!-- if the file "svn/isPrivateBuild" exists, set ${private} to "-PRIVATE"... -->
+		<condition property="private" value="_PRIVATE">
+			<available file="${src.dir}/isPrivateBuild" />
+		</condition>
+		<!-- ... else ${private} defaults to "" -->
+		<condition property="private" value="">
+			<not>
+				<isset property="private" />
+			</not>
+		</condition>
+		<!-- if ${dev} is set (i.e. development version), set ${debug} to "DEBUG"... -->
+		<condition property="debug" value="DEBUG">
+			<isset property="dev" />
+		</condition>
+		<!-- ... else set ${debug} to ""... -->
+		<condition property="debug" value="">
+			<not>
+				<isset property="debug" />
+			</not>
+		</condition>
+		<!-- ${dev} defaults to "" -->
+		<condition property="dev" value="">
+			<not>
+				<isset property="dev" />
+			</not>
+		</condition>
+		<!-- get current SVN version / release -->
+		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
+			<arg value="info" />
+			<redirector outputproperty="svninfo">
+				<outputfilterchain>
+					<containsregex pattern="^Revision" />
+					<replaceregex pattern="^Revision\D*(\d*)" replace="_r\1" />
+				</outputfilterchain>
+			</redirector>
+		</exec>
+		<!-- ${svninfo} defaults to "" -->
+		<condition property="svninfo" value="">
+			<not>
+				<isset property="svninfo" />
+			</not>
+		</condition>
+		<tstamp>
+			<format property="curDate" pattern="yyyyMMdd" />
+		</tstamp>
+
+		<property name="buildinfo" value="${dev}${svninfo}_${curDate}${private}" />
+
+		<!-- For dev and private builds, include more informations in ${hofullversion} -->
+		<if>
+			<and>
+				<equals arg1="${dev}" arg2="" />
+				<equals arg1="${private}" arg2="" />
+			</and>
+			<then>
+				<property name="hofullversion" value="${hoversion}" />
+			</then>
+			<else>
+				<property name="hofullversion" value="${hoversion}${buildinfo}" />
+			</else>
+		</if>
+
+		<echo>HOVERSION=${hoversion}, DEV=${dev}, SVNREV=${svninfo}, CURDATE=${curDate}, PRIVATE=${private}, DEBUG=${debug}</echo>
+		<echo>HOFULLVERSION=${hofullversion} (used in file names)</echo>
+	</target>
+
+	<!-- ================================= 
+          target: makeJar              
+         ================================= -->
+	<target name="makeJar" depends="init" description="Create JAR File">
+		<mkdir dir="${tmp.target}" />
+		<copy todir="${tmp.target}" preservelastmodified="yes">
+			<fileset dir="${bin.dir}" />
+		</copy>
+		<copy todir="${tmp.target}" preservelastmodified="yes">
+			<fileset dir="${src.dir}/conf/addToJar" />
+		</copy>
+		<jar manifest="${manifestFile}" destfile="${build.dir}/ho.jar" basedir="${tmp.target}" />
+	</target>
+
+
+	<!-- ================================= 
+          target: copy2build              
+         ================================= -->
+	<target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
+		<mkdir dir="${build.dir}" />
+		<copy todir="${build.dir}" overwrite="true">
+			<fileset dir="${src.dir}/conf/addToZip" />
+			<fileset file="${tmp.target}/HOLauncher.class" />
+		</copy>
+		<antcall target="copyAllPlugins" />
+		<antcall target="copyBuild2debug" />
+	</target>
+
+	<!-- ================================= 
+          target: copyBuild2debug              
+         ================================= -->
+	<target name="copyBuild2debug" description="Copy build dir to debug">
+		<mkdir dir="${debug.dir}" />
+		<copy todir="${debug.dir}" overwrite="true">
+			<fileset dir="${build.dir}" />
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: copySinglePlugin            
+         ================================= -->
+	<target name="copySinglePlugin" description="Copy a single ho plugin to build/hoplugins">
+		<echo>Copy plugin: ${PLUGINNAME} (${basedir}/../Plugin-${PLUGINNAME}/bin/hoplugins to ${build.dir}/hoplugins)</echo>
+		<copy todir="${build.dir}/hoplugins" preservelastmodified="yes">
+			<fileset dir="${basedir}/../Plugin-${PLUGINNAME}/bin/hoplugins" />
+			<fileset dir="${basedir}/../Plugin-${PLUGINNAME}/src/conf/hoplugins" />
+		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: copyAllPlugins              
+         ================================= -->
+	<target name="copyAllPlugins" description="Copy all hoplugins to builddir">
+		<if>
+			<and>
+				<equals arg1="${dev}" arg2="" />
+				<equals arg1="${private}" arg2="" />
+			</and>
+			<then>
+				<property name="allPlugins" value="${allPlugins.Release}" />
+			</then>
+			<else>
+				<property name="allPlugins" value="${allPlugins.Dev}" />
+			</else>
+		</if>
+		<echo>Installing the following plugins: ${allPlugins}</echo>
+		<foreach list="${allPlugins}" target="copySinglePlugin" param="PLUGINNAME" />
+	</target>
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="Remove temp dirs">
+		<echo>Removing temp files and dirs</echo>
+		<delete includeemptydirs="true" failonerror="false" verbose="true">
+			<fileset dir="${tmp}" />
+			<fileset dir="${export.dmg.targetdir}" />
+			<fileset dir="${build.dir}" />
+			<fileset dir="${debug.dir}" />
+		</delete>
+	</target>
+
+	<!-- ================================= 
+          target: makeZip              
+         ================================= -->
+	<target name="makeZip" depends="init,makeJar,copy2build" description="Creates the full HO.zip">
+		<mkdir dir="${export.zip.dir}" />
+		<zip destfile="${export.zip.dir}/HO_${hofullversion}.zip">
+			<fileset dir="${build.dir}" />
+		</zip>
+	</target>
+
+	<!-- ================================= 
+          target: makeDmg              
+         ================================= -->
+	<target name="makeDmg" depends="init,makeJar,copy2build" description="Create OSX DMG dir">
+		<property name="InfoSrc" value="${export.dmg.sourcedir}/Hattrick Organizer.app/Contents/Info.plist" />
+		<property name="InfoTarget" value="${export.dmg.targetdir}/Hattrick Organizer.app/Contents/Info.plist" />
+
+		<mkdir dir="${export.dmg.targetdir}" />
+
+		<copy todir="${export.dmg.targetdir}" preservelastmodified="yes">
+			<fileset dir="${export.dmg.sourcedir}" />
+		</copy>
+		<copy todir="${export.dmg.targetdir}/Hattrick Organizer.app/Contents/Resources/Java" preservelastmodified="yes">
+			<fileset dir="${build.dir}" />
+		</copy>
+		<copy file="${export.dmg.targetdir}/Hattrick Organizer.app/Contents/Resources/Java/changelog.txt" tofile="${export.dmg.targetdir}/ChangeLog.txt" preservelastmodified="true" />
+		<echo>Setting HOVERSION=${hoversion} in ${InfoTarget}</echo>
+		<copy file="${InfoSrc}" tofile="${InfoTarget}" overwrite="true">
+			<filterchain>
+				<replacestring from="HOVERSION" to="${hoversion}" />
+			</filterchain>
+		</copy>
+		<copy file="${export.dmg.backgrounddir}/Back${dev}.png" tofile="${export.dmg.targetdir}/.Back.png" preservelastmodified="true" />
+	</target>
+
+	<!-- ================================= 
+          target: makeDmgImage              
+         ================================= -->
+	<target name="makeDmgImage" depends="makeDmg" description="Creates the DMG image">
+		<echo>Trying to unmount DMG, just to be sure</echo>
+		<exec executable="${export.dmg.basedir}/umountDmg" resolveexecutable="true" />
+		<echo>Copying template DMG</echo>
+		<copy file="${export.dmg.templatefile}" tofile="${export.dmg.targetfile}" overwrite="true" />
+		<exec executable="${export.dmg.basedir}/mountDmg" resolveexecutable="true" />
+		<echo>Updating dmg image...</echo>
+		<copy todir="${export.dmg.mountdir}" preservelastmodified="yes">
+			<fileset dir="${export.dmg.targetdir}" />
+		</copy>
+		<exec executable="${export.dmg.basedir}/umountDmg" resolveexecutable="true" />
+		<copy file="${export.dmg.targetfile}" tofile="${export.dmg.imagedir}/HO_${hofullversion}.dmg" overwrite="true" verbose="true" />
+		<zip destfile="${export.dmg.imagedir}/HO_${hofullversion}_MacOS_DMG.zip">
+			<fileset file="${export.dmg.imagedir}/HO_${hofullversion}.dmg" />
+		</zip>
+	</target>
+
+	<!-- ================================= 
+          target: makeNSIS
+         ================================= -->
+	<target name="makeNSIS" depends="init,makeJar,copy2build" description="Create Win32-Installer using NSIS">
+		<mkdir dir="${nsis.export.dir}" />
+		<property name="nsis.installerName" value="${nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
+		<property name="nsis.installerName.WithJRE" value="${nsis.export.dir}/HO_${hofullversion}_Win32_Installer_with_JRE-${nsis.JRE.Version}.exe" />
+
+		<property name="nsis.default.args" value="-V2 -NOCD -DBUILDDIR='${build.dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${nsis.confPath}'" />
+
+		<!-- Create Installer for HO only -->
+		<echo>Creating win32 installer at ${nsis.installerName} using NSIS...</echo>
+		<exec command="${nsis.command}">
+			<arg line="${nsis.default.args} -DOUTFILE='${nsis.installerName}' ${nsis.scriptName}" />
+		</exec>
+
+		<!-- Create ZIP files for esnips.com (executables are not allowed) -->
+		<zip destfile="${nsis.installerName}.zip">
+			<fileset file="${nsis.installerName}" />
+		</zip>
+
+		<if>
+			<available file="${nsis.JRE.DistPath}/${nsis.JRE.DistFile}" />
+			<then>
+				<!-- Create Installer for HO bundled with JRE -->
+				<echo>Creating win32 installer at ${nsis.installerName.WithJRE} with JRE ${nsis.JRE.Version} using NSIS...</echo>
+				<exec command="${nsis.command}">
+					<arg line="${nsis.default.args} -DOUTFILE='${nsis.installerName.WithJRE}' -DWITHJRE=${nsis.JRE.Version} -DJREPATH=${nsis.JRE.DistPath} -DJREFILE=${nsis.JRE.DistFile} ${nsis.scriptName}" />
+				</exec>
+				<zip destfile="${nsis.installerName.WithJRE}.zip">
+					<fileset file="${nsis.installerName.WithJRE}" />
+				</zip>
+			</then>
+			<else>
+				<echo>Not creating JRE bundled version because ${nsis.JRE.DistPath}/${nsis.JRE.DistFile} is not available...</echo>
+			</else>
+		</if>
+
+	</target>
+</project>
