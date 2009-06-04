@@ -19,8 +19,8 @@ public class JokePanel extends InfoPanel {
     static {
         if (Commons.getModel().getHelper().getLanguageName().equalsIgnoreCase("Italiano")) {
             messages[0] = "Mi dispiace ma utilizzare il presente software ";
-            messages[1] = "per analizzare la squadra del creatore è considerato ";
-            messages[2] = "atto di pirateria e non può essere processato :) ";
+            messages[1] = "per analizzare la squadra del creatore Ã¨ considerato ";
+            messages[2] = "atto di pirateria e non puÃ² essere processato :) ";
             messages[3] = "eh eh eh eh";
         } else {
             messages[0] = "I am sorry but use this software ";

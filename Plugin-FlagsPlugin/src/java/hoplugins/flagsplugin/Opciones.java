@@ -2,7 +2,7 @@ package hoplugins.flagsplugin;
 /**
  * Opciones.java
  *
- * @author Daniel Gonz·lez Fisher
+ * @author Daniel Gonz√°lez Fisher
  */
 
 import java.io.*;

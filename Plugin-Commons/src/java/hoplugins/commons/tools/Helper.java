@@ -14,7 +14,7 @@ public class Helper {
     }
 
     /**
-     * Rundet den übergeben wert auf eine bestimmte nachkommastellen-Anzahl
+     * Rundet den Ã¼bergeben wert auf eine bestimmte nachkommastellen-Anzahl
      */
     public static float round(double wert, int nachkommastellen) {
         //Wert mit 10^nachkommastellen multiplizieren
@@ -24,7 +24,7 @@ public class Helper {
 //        final long lwert = Math.round(dwert);
         final double lwert = Math.floor(dwert);
 
-        //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
+        //Wert wieder durch 10^nachkommastellen teilen und zurÃ¼ckgeben
         return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
     }
 

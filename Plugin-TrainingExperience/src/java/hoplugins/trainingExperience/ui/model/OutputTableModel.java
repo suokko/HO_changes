@@ -18,8 +18,8 @@ import javax.swing.table.AbstractTableModel;
 /**
  * Table Model for the main table showing training results
  *
- * @author Mag. Bernhard Hödl  AH - Solutions Augsten & Hödl OEG Neubachgasse 12 A - 2325 Himberg
- *         Tabellenmodel und Daten für die dargestellte Tabelle für das HO Plungin
+ * @author Mag. Bernhard HÃ¶dl  AH - Solutions Augsten & HÃ¶dl OEG Neubachgasse 12 A - 2325 Himberg
+ *         Tabellenmodel und Daten fÃ¼r die dargestellte Tabelle fÃ¼r das HO Plungin
  */
 public class OutputTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -36,7 +36,7 @@ public class OutputTableModel extends AbstractTableModel {
     //private ITrainingsManager p_ITM_trainingsManager = null;
     private Vector p_V_columnNames = null; // entrys: Strings mit Spaltenname
 
-    //data enthält die berechneten Werte aller Spieler, wieviel Training sie schon hattenn
+    //data enthÃ¤lt die berechneten Werte aller Spieler, wieviel Training sie schon hattenn
     private Vector p_V_data = null; //entrys: TrainingsManagerObjekte
 
     //~ Constructors -------------------------------------------------------------------------------

@@ -442,7 +442,7 @@ public class RatingsPanel {
         jlabel.setFont(jlabel.getFont().deriveFont(Font.BOLD));
         p3b.add(jlabel, gbc);
 
-        // Taktikst‰rke
+        // Taktikst√§rke
         gbc.gridx = 1;
         gbc.gridy = zeile;
         jlabel = this.Team1Tacticskill = new JLabel("");
@@ -465,7 +465,7 @@ public class RatingsPanel {
         jlabel.setFont(jlabel.getFont().deriveFont(Font.BOLD));
         p3b.add(jlabel, gbc);
 
-        // Heim/Ausw‰rts
+        // Heim/Ausw√§rts
         gbc.gridx = 1;
         gbc.gridy = zeile;
         jlabel = this.Team1HomeAway = new JLabel("");

@@ -4,27 +4,27 @@
  * by Bernhard
  *
  * Klassen:
- *    Hauptwörter, ohne Abstände, Wortanfangsbuchstaben groß, eigene Klassen beginnen mit "My"
+ *    HauptwÃ¶rter, ohne AbstÃ¤nde, Wortanfangsbuchstaben groÃŸ, eigene Klassen beginnen mit "My"
  *    Bsp: MyFitnessCenter,MyMainPanel
  *
  *
  * Interfaces:
- *    beginnen mit "I", Hauptwörter, ohne Abstände, Wortanfangsbuchstaben groß
+ *    beginnen mit "I", HauptwÃ¶rter, ohne AbstÃ¤nde, Wortanfangsbuchstaben groÃŸ
  *    Bsp: IKunden, IPlan
  *
- * Methoden: - Für Parameter gelten die gleichen Richtlinien wie für lokale Variablen
- *    Verben, mit kleinem Anfangsbuchstaben, Folgewörter mit großem Anfangsbuchstaben
+ * Methoden: - FÃ¼r Parameter gelten die gleichen Richtlinien wie fÃ¼r lokale Variablen
+ *    Verben, mit kleinem Anfangsbuchstaben, FolgewÃ¶rter mit groÃŸem Anfangsbuchstaben
  *    Bsp: getKunde, initialize
  *
  *
  * globale Variablen in einer Klasse:
- *    Wörter, die die aufnehmenden Daten oder die Funktion der Variablen beschreiben,
- *    kleiner Anfangsbuchstabe, Folgewörter groß,
+ *    WÃ¶rter, die die aufnehmenden Daten oder die Funktion der Variablen beschreiben,
+ *    kleiner Anfangsbuchstabe, FolgewÃ¶rter groÃŸ,
  *    je nach Sichtbarkeit mit Suffix:
  *        private: p_
  *        protected: pr_
  *        public: pub_
- *    je nach Typ sollten sie mit folgenden Einschub ergänzt werden:
+ *    je nach Typ sollten sie mit folgenden Einschub ergÃ¤nzt werden:
  *        int: i_
  *        Integer: I_
  *        double: d_
@@ -35,13 +35,13 @@
  *        Vector: V_
  *        Hashtable: Ht_
  *        HashSet: HS_
- *        bzw. je nach Typ ein Kürzel (Bsp: p_IK_Kunde = private InterfaceKunde mit Namen Kunde)
+ *        bzw. je nach Typ ein KÃ¼rzel (Bsp: p_IK_Kunde = private InterfaceKunde mit Namen Kunde)
  *    ist die Variable ein Array, dann wird noch ein a vor den Einschub mit der Typbezeichnung gestellt
  *
  * lokale Variable in einer Methode:
- *    sind frei von jedem Suffix, sollen nur möglichst gut die Funktion beschreiben, zu der sie verwendet werden
+ *    sind frei von jedem Suffix, sollen nur mÃ¶glichst gut die Funktion beschreiben, zu der sie verwendet werden
  *
- * Konstanten: alles mit Großbuchstaben
+ * Konstanten: alles mit GroÃŸbuchstaben
  */
 package hoplugins.trainingExperience.ui;
 
@@ -132,7 +132,7 @@ public class OutputTable extends JTable {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    //Methode für ToolTipText des Trainingstable
+    //Methode fÃ¼r ToolTipText des Trainingstable
     public String getToolTipText(MouseEvent e) {
         OutputTableSorter tableModel = (OutputTableSorter) getModel();
         java.awt.Point p = e.getPoint();
