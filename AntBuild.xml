@@ -89,7 +89,7 @@
 		<echo>src.dir is ${src.dir}</echo>
 		<echo>bin.dir is ${bin.dir}</echo>
 		<property name="java.SourcePath" value="${src.dir}/java" />
-		<echo>javaSourcePath is ${javaSourcePath}</echo>
+		<echo>java.SourcePath is ${java.SourcePath}</echo>
 		<!-- Read classpath from MANIFEST.MF -->
 		<loadfile property="compile.Classpath" srcfile="${manifestFile}">
 			<filterchain>
@@ -113,7 +113,7 @@
 		</delete>
 		-->
 		<mkdir dir="${bin.dir}" />
-		<echo>compileClasspath (from ${manifestFile}) is ${compileClasspath}</echo>
+		<echo>compile.Classpath (from ${manifestFile}) is ${compile.Classpath}</echo>
 		<echo>Building now</echo>
 		<javac srcdir="${java.SourcePath}" destdir="${bin.dir}" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
 			<compilerarg value="-Xlint" />
