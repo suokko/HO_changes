@@ -2,7 +2,7 @@ package hoplugins;
 /**
  * FlagsPlugin.java
  *
- * @author Daniel González Fisher
+ * @author Daniel Gonzï¿½lez Fisher
  */
 
 import hoplugins.flagsplugin.FlagCollection;
@@ -59,7 +59,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
     public static final double HO_VERSION = 1.400;
     //public static final double VERSION = HO_VERSION + (INTERNAL_VERSION / 1000.0);
     public static final double VERSION = INTERNAL_VERSION;
-    public static final String AUTHOR = "Daniel González F. (Danthor)";
+    public static final String AUTHOR = "Daniel Gonzï¿½lez F. (Danthor)";
     public static final int PLUGIN_ID = 20;
     public static final String FILENAME_FCAWAY = "flagdata.obj";
     public static final String FILENAME_FCHOME = "flagdata2.obj";
@@ -144,9 +144,9 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         jmiAutoUpdateFlags.addActionListener(this);
         jmiUpdateCoolness = new JMenuItem("Update Coolness Ranking");
         jmiUpdateCoolness.addActionListener(this);
-        jmiOptions = new JMenuItem(hoModel.getLanguageString("Optionen","Options"));
+        jmiOptions = new JMenuItem(hoModel.getLanguageString("Optionen"));
         jmiOptions.addActionListener(this);
-        jmiCredits = new JMenuItem(hoModel.getLanguageString("Credits","Credits"));
+        jmiCredits = new JMenuItem(hoModel.getLanguageString("Credits"));
         jmiCredits.addActionListener(this);
 
         menu.add(jmiAutoUpdateFlags);
@@ -607,7 +607,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         else if (e.getSource().equals(jmiCredits)) {
             String creditos = NAME + " v" + VERSION + "\nby " + AUTHOR +
             		"\n\nCoolness Ranking page by CHPP-ste1n\n" + COOLNESS_URL;
-            JOptionPane.showMessageDialog(hoModel.getGUI().getOwner4Dialog(), creditos, hoModel.getLanguageString("Credits","Credits"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(hoModel.getGUI().getOwner4Dialog(), creditos, hoModel.getLanguageString("Credits"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
     /* ********************** Interface WindowListener ******************************** */
