@@ -70,73 +70,16 @@
 	</taskdef>
 
 	<!-- 
-		Where do all outputs go to, this is normally the $basedir
-		Can be overridden via Ant command line (-Doutput-basedir=xxx) if needed
+		Put your local properties into this file
+		If this file exists, the properties in it have higher precedence than the
+		default properties
+		This file should not be sync'ed via SVN
 	-->
-	<property name="output-basedir" value="${basedir}" />
-
-	<property name="tmp" value="${java.io.tmpdir}/build.tmp-eclipse-HO1" />
-	<property name="tmp-target" value="${tmp}/target" />
-
-	<property name="bin-dir" value="${output-basedir}/bin" />
-	<property name="build-dir" value="${output-basedir}/build" />
-	<property name="debug-dir" value="${output-basedir}/debug" />
-
-	<property name="export-zip-dir" value="${output-basedir}/export-zip" />
-
-	<property name="export-dmg-basedir" value="${output-basedir}/export-dmg" />
-	<property name="export-dmg-templatefile" value="${export-dmg-basedir}/HO.template.dmg" />
-	<property name="export-dmg-targetfile" value="${export-dmg-basedir}/HO.dmg" />
-	<property name="export-dmg-sourcedir" value="${export-dmg-basedir}/source" />
-	<property name="export-dmg-backgrounddir" value="${export-dmg-basedir}/background" />
-	<property name="export-dmg-targetdir" value="${export-dmg-basedir}/target" />
-	<property name="export-dmg-imagedir" value="${export-dmg-basedir}/images" />
-	<property name="export-dmg-mountdir" value="${export-dmg-basedir}/hfsmount" />
-
-	<!-- 
-		NSIS Properties:
-		We use the unicode version of NSIS. Unfortunately, it does not compile for linux, 
-		therefore we need to emulate a windows environment using wine for linux
-		
-		windows: nsis-command = "c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
-		linux:   nsis-command = "wine c:/<PATH_TO_UNICODE_NSIS>/makensis.exe"/>
-	-->
-	<property name="nsis-command" value="wine c:/Programme/NSIS/Unicode/makensis.exe" />
-	<property name="nsis-directory" value="${src-dir}/conf/nsis" />
-	<property name="nsis-scriptName" value="${nsis-directory}/makeWinInstaller.nsi" />
-	<property name="nsis-confPath" value="${nsis-directory}" />
-	<property name="nsis-export-dir" value="${output-basedir}/export-w32installer" />
-	<property name="nsis-JRE-DistPath" value="java.dist" />
-	<property name="nsis-JRE-Version" value="6u11" />
-	<property name="nsis-JRE-DistFile" value="jre-${nsis-JRE-Version}-windows-i586-p-s.exe" />
-	<property name="manifestFile" value="${src-dir}/conf/MANIFEST.MF" />
-
+	<property file="AntBuild-Local.properties" />
 	<!--
-		If svn is not in your path, please adjust the following property
-		(i.e. add the path like "/usr/bin/svn")
+		Default properties (in SVN)
 	-->
-	<property name="svn-command" value="svn" />
-
-	<!-- property name="allPlugins" value="" /-->
-
-	<if>
-		<and>
-			<equals arg1="${dev}" arg2="" />
-			<equals arg1="${private}" arg2="" />
-		</and>
-		<then>
-			<!-- 
-				These default plugins are always build for a HO release
-				Of course, you can comment them out if you want to skip
-				some or all of them
-			-->
-			<property name="allPlugins" value="Commons,Feedback,TeamAnalyzer,TrainingExperience,Transfers" />
-		</then>
-		<else>
-			<!-- Add additional plugins if we build a DEV or PRIVATE build -->
-			<property name="allPlugins" value="Commons,Feedback,TeamAnalyzer,TrainingExperience,Transfers,EvilCard,ExperienceViewer,SpecialEvents" />
-		</else>
-	</if>
+	<property file="AntBuild.properties" />
 
 	<!-- =================================
           target: ant-compile
@@ -338,6 +281,18 @@
           target: copyAllPlugins              
          ================================= -->
 	<target name="copyAllPlugins" description="Copy all hoplugins to builddir">
+		<if>
+			<and>
+				<equals arg1="${dev}" arg2="" />
+				<equals arg1="${private}" arg2="" />
+			</and>
+			<then>
+				<property name="allPlugins" value="${allPlugins.Release}" />
+			</then>
+			<else>
+				<property name="allPlugins" value="${allPlugins.Dev}" />
+			</else>
+		</if>
 		<echo>Installing the following plugins: ${allPlugins}</echo>
 		<foreach list="${allPlugins}" target="copySinglePlugin" param="PLUGINNAME" />
 	</target>
@@ -422,7 +377,6 @@
 
 		<!-- Create Installer for HO only -->
 		<echo>Creating win32 installer at ${nsis-installerName} using NSIS...</echo>
-		<echo>${nsis-command} ${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}</echo>
 		<exec command="${nsis-command}">
 			<arg line="${nsis-default-args} -DOUTFILE='${nsis-installerName}' ${nsis-scriptName}" />
 		</exec>
