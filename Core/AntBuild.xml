@@ -36,7 +36,7 @@
 		<isset property="isAutoBuild"/>
 		<then>
 			<property name="tmp" value="${java.io.tmpdir}/build.tmp-autobuild-HO1"/>
-			<echo>This is an AutoBuild, using as tmp: ${tmp}</echo>
+			<!--echo>This is an AutoBuild, using as tmp: ${tmp}</echo-->
 		</then>
 	</if>
 
@@ -326,12 +326,12 @@
 				<echo>deploy.sf.username=${deploy.sf.username}</echo>
 				<echo>deploy.sf.path=${deploy.sf.path}</echo>
 				<echo>Removing old nightlies from SF</echo>
-				<exec executable="sftp" inputstring="rm ${deploy.sf.path}/*">
+				<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
 					<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
 				</exec>
 
 				<echo>Uploading new nightly (HO_${hofullversion}.zip) to SF</echo>
-				<exec executable="scp">
+				<exec executable="${scp.command}" failonerror="true">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip"/>
 					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}"/>
 				</exec>
