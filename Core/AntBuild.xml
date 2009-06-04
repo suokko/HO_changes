@@ -4,47 +4,9 @@
 	Ant Build file for HO by flattermann <HO@flattermann.net> - 2009-05-19
 	
 	- created for personal use, but perhaps it may be useful for other, too -
-	 
-	This ant file expects the following file system structure:
-	
-	workspace.ho1						(Eclipse workspace directory)
-		+-> HO1								HO1 Main Project
-		|	+-> bin							Compiled .class files go here
-		|	+-> build						The full HO build with supplementary files is created here
-		|	+-> debug						A copy of the HO build dir is created here (for the Eclipse debugger)
-		|	+-> export-dmg					The MacOS Builds (DMG) are created here [please see note 1, below]
-		|	+-> export-zip					The ZIP-Builds are created here
-		|	+-> export-w32installer			The Win32-Installer (NSIS) are created here
-		|	+-> java.dist					The Win32-JRE to be distributed with the Installer needs to be placed here
-		|	+-> src							
-		|	|	+-> java					The source code is here
-		|	|	+-> conf					Supplementary files
-		|	|	|	+-> addToJar			These files will be added to ho.jar
-		|	|	|	+-> addToZip			These files will be added to the HO root directory (i.e. in the ZIP root dir)
-		|	|	|	+-> nsis				NSIS directory for Win32 installer creation
-		|	|	|	|	+-> makeWinInstaller.nsi	NSIS file for Win32 installer creation [please see note 2, below]
-		|	|	|	|	+-> localLang		Local language files for NSIS
-		|	|	|	+-> MANIFEST.MF			The manifest file for ho.jar
-		|	|	+-> contrib
-		|	|		+-> libs				This is the place for supplemental libs like ant-contrib-*.jar
-		|	|	+-> isPrivateBuild			If this file exists, the build is considered as private Build ('-PRIVATE' will be appended to the filename)
-		|	|	
-		|	+-> AntBuild.xml				This file
-		|	+-> AntBuild-CopyPluginConf.xml	Ant file that copies the cvs/conf/*.* to the bin dir (for plugins)
-		|	
-		+-> HO-Plugin-Commons				HO Plugin Project "Commons"
-		|	+-> bin							Compiled .class files go here
-		|	+-> src							The source code is here
-		|	
-		+-> HO-Plugin-Feedback				HO Plugin Project "Feedback"
-		|	+-> bin							Compiled .class files go here
-		|	+-> src							The source code is here
-		|	
-		+-> HO-Plugin-XYZ					HO Plugin Project "XYZ"
-			+-> bin							Compiled .class files go here
-			+-> src							The source code is here
 	    	
-	    	
+	Visit http://www.flattermann.net/hotrac/wiki/HowToBuild for more informations
+		
 	Note 1: (How to create DMG-Builds with Linux)
 	- still missing, try to figure it out yourself ;-) or send a mail to HO@flattermann.net -
 	
@@ -68,6 +30,15 @@
 			<pathelement location="contrib/libs/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
+
+	<!-- Use another tmp directory for Ant Bitten AutoBuilds (used by Trac) -->
+	<if>
+		<isset property="isAutoBuild"/>
+		<then>
+			<property name="tmp" value="${java.io.tmpdir}/build.tmp-autobuild-HO1"/>
+			<echo>This is an AutoBuild, using as tmp: ${tmp}</echo>
+		</then>
+	</if>
 
 	<!-- 
 		Put your local properties into this file
@@ -116,7 +87,7 @@
 		<echo>compile.Classpath (from ${manifestFile}) is ${compile.Classpath}</echo>
 		<echo>Building now</echo>
 		<javac srcdir="${java.SourcePath}" destdir="${bin.dir}" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
-			<compilerarg value="-Xlint" />
+			<compilerarg value="${javac.args}" />
 			<classpath path="${compile.Classpath}" />
 		</javac>
 	</target>
@@ -246,7 +217,7 @@
 	<!-- ================================= 
           target: copy2build              
          ================================= -->
-	<target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
+	<target name="copy2build" depends="makeJar,buildAllPlugins" description="Copy conf files to builddir">
 		<mkdir dir="${build.dir}" />
 		<copy todir="${build.dir}" overwrite="true">
 			<fileset dir="${src.dir}/conf/addToZip" />
@@ -264,6 +235,38 @@
 		<copy todir="${debug.dir}" overwrite="true">
 			<fileset dir="${build.dir}" />
 		</copy>
+	</target>
+
+	<!-- ================================= 
+          target: buildSinglePlugin            
+         ================================= -->
+	<target name="buildSinglePlugin" description="Build a single ho plugin">
+		<property name="plugin.basedir" value="${basedir}/../Plugin-${PLUGINNAME}"/>
+		<echo>Building plugin ${PLUGINNAME}</echo>
+		<javac srcdir="${plugin.basedir}/src" destdir="${plugin.basedir}/bin" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
+			<compilerarg value="${javac.args}" />
+			<classpath path="${bin.dir}:${basedir}/../Plugin-Commons/bin" />
+		</javac>
+	</target>
+
+	<!-- ================================= 
+          target: buildAllPlugins              
+         ================================= -->
+	<target name="buildAllPlugins" description="Build all hoplugins">
+		<if>
+			<and>
+				<equals arg1="${dev}" arg2="" />
+				<equals arg1="${private}" arg2="" />
+			</and>
+			<then>
+				<property name="allPlugins" value="${allPlugins.Release}" />
+			</then>
+			<else>
+				<property name="allPlugins" value="${allPlugins.Dev}" />
+			</else>
+		</if>
+		<echo>Building the following plugins: ${allPlugins}</echo>
+		<foreach list="${allPlugins}" target="buildSinglePlugin" param="PLUGINNAME" />
 	</target>
 
 	<!-- ================================= 
@@ -298,6 +301,48 @@
 	</target>
 
 	<!-- ================================= 
+          target: deployNightly              
+         ================================= -->
+	<!-- To make this work, you need to have a private key auth for Sourceforge work -->
+	<target name="deployNightly" depends="init" description="Deploy the current nightly build to Sourceforge.net">
+		<echo>deploy.sf.enable=${deploy.sf.enable}</echo>
+		<echo>deploy.OS.only=${deploy.OS.only}</echo>
+		<echo>os.name=${os.name}</echo>
+		<!-- Deploy only if enabled and OS does match
+			Both is normally set by the Bitten AutoBuilder recipe via command line 
+			but can also be set via AntBuild-local.properties
+		-->
+		<if>
+			<and>
+				<equals arg1="${deploy.sf.enable}" arg2="true" />
+				<or>
+					<equals arg1="${deploy.OS.only}" arg2="${os.name}" />
+					<equals arg1="${deploy.OS.only}" arg2="ALL" />
+				</or>
+			</and>
+			<then>
+				<echo>deploy.sf.server=${deploy.sf.server}</echo>
+				<echo>deploy.sf.project=${deploy.sf.project}</echo>
+				<echo>deploy.sf.username=${deploy.sf.username}</echo>
+				<echo>deploy.sf.path=${deploy.sf.path}</echo>
+				<echo>Removing old nightlies from SF</echo>
+				<exec executable="sftp" inputstring="rm ${deploy.sf.path}/*">
+					<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
+				</exec>
+
+				<echo>Uploading new nightly (HO_${hofullversion}.zip) to SF</echo>
+				<exec executable="scp">
+					<arg value="${export.zip.dir}/HO_${hofullversion}.zip"/>
+					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}"/>
+				</exec>
+			</then>
+			<else>
+				<echo>Deployment is disabled</echo>
+			</else>
+		</if>
+	</target>
+
+	<!-- ================================= 
           target: clean              
          ================================= -->
 	<target name="clean" description="Remove temp dirs">
@@ -313,7 +358,7 @@
 	<!-- ================================= 
           target: makeZip              
          ================================= -->
-	<target name="makeZip" depends="init,makeJar,copy2build" description="Creates the full HO.zip">
+	<target name="makeZip" depends="copy2build,buildAllPlugins,copyAllPlugins" description="Creates the full HO.zip">
 		<mkdir dir="${export.zip.dir}" />
 		<zip destfile="${export.zip.dir}/HO_${hofullversion}.zip">
 			<fileset dir="${build.dir}" />
@@ -323,7 +368,7 @@
 	<!-- ================================= 
           target: makeDmg              
          ================================= -->
-	<target name="makeDmg" depends="init,makeJar,copy2build" description="Create OSX DMG dir">
+	<target name="makeDmg" depends="copy2build" description="Create OSX DMG dir">
 		<property name="InfoSrc" value="${export.dmg.sourcedir}/Hattrick Organizer.app/Contents/Info.plist" />
 		<property name="InfoTarget" value="${export.dmg.targetdir}/Hattrick Organizer.app/Contents/Info.plist" />
 
@@ -368,7 +413,7 @@
 	<!-- ================================= 
           target: makeNSIS
          ================================= -->
-	<target name="makeNSIS" depends="init,makeJar,copy2build" description="Create Win32-Installer using NSIS">
+	<target name="makeNSIS" depends="copy2build" description="Create Win32-Installer using NSIS">
 		<mkdir dir="${nsis.export.dir}" />
 		<property name="nsis.installerName" value="${nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
 		<property name="nsis.installerName.WithJRE" value="${nsis.export.dir}/HO_${hofullversion}_Win32_Installer_with_JRE-${nsis.JRE.Version}.exe" />
