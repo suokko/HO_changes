@@ -1,0 +1,1 @@
+/usr/bin/oowriter -view ./hoplugins/teamAnalyzer/guide/"$1".doc

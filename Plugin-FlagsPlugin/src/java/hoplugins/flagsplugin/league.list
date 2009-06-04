@@ -1,0 +1,251 @@
+# from worldDetails.asp
+# leagueID=countryID
+
+# Sverige
+1=1
+# England
+2=2
+# Deutschland
+3=3
+# Italia
+4=4
+# France
+5=5
+# México
+6=6
+# Argentina
+7=7
+# USA
+8=8
+# Norge
+9=9
+# Danmark
+11=10
+# Suomi
+12=11
+# Nederland
+14=12
+# Oceania
+15=13
+# Brasil
+16=22
+# Canada
+17=14
+# Chile
+18=17
+# Colombia
+19=18
+# India
+20=27
+# Ireland
+21=16
+# Nippon
+22=25
+# Perú
+23=21
+# Polska
+24=26
+# Portugal
+25=23
+# Scotland
+26=15
+# South Africa
+27=24
+# Uruguay
+28=19
+# Venezuela
+29=20
+# Hanguk
+30=29
+# Prathet Thai
+31=30
+# Türkiye
+32=31
+# Misr
+33=32
+# China
+34=28
+# Rossiya
+35=34
+# España
+36=35
+# România
+37=36
+# Ísland
+38=37
+# Österreich
+39=33
+# België
+44=38
+# Malaysia
+45=39
+# Schweiz
+46=40
+# Singapore
+47=41
+# Hellas
+50=45
+# Magyarorszag
+51=44
+# ?eská republika
+52=46
+# Latvija
+53=48
+# Indonesia
+54=49
+# Philippines
+55=50
+# Eesti
+56=47
+# Srbija
+57=43
+# Hrvatska
+58=42
+# Hong Kong SAR
+59=53
+# Chinese Taipei
+60=52
+# Cymru
+61=56
+# Bulgaria
+62=55
+# Israel
+63=51
+# Slovenija
+64=57
+# Lietuva
+66=61
+# Slovensko
+67=66
+# Ukraina
+68=62
+# Bosna i Hercegovina
+69=63
+# Vietnam
+70=65
+# Pakistan
+71=64
+# Paraguay
+72=67
+# Ecuador
+73=68
+# Bolivia
+74=69
+# Nigeria
+75=70
+# Føroyar
+76=71
+# Al Maghrib
+77=72
+# Saudi Arabia
+79=75
+# Tounes
+80=76
+# Costa Rica
+81=77
+# United Arab Emirates
+83=78
+# Lëtzebuerg
+84=79
+# Iran
+85=80
+# Republica Dominicana
+88=83
+# Cyprus
+89=82
+# Byelarus
+91=87
+# N. Ireland
+93=88
+# Jamaica
+94=89
+# Kenya
+95=90
+# Panama
+96=91
+# Makedonija
+97=92
+# Shqiperia
+98=94
+# Honduras
+99=95
+# El Salvador
+100=96
+# Malta
+101=97
+# Kyrgyzstan
+102=98
+# Moldova
+103=99
+# Sakartvelo
+104=100
+# Andorra
+105=101
+# Al Urdun
+106=103
+# Guatemala
+107=102
+# Trinidad & Tobago
+110=105
+# Nicaragua
+111=121
+# Kazakhstan
+112=122
+# Suriname
+113=123
+# Liechtenstein
+117=125
+# Algeria
+118=126
+# Mongol Uls
+119=127
+# Lebanon
+120=128
+# Senegal
+121=86
+# Armenia
+122=104
+# Bahrein
+123=129
+# Barbados
+124=130
+# Cabo Verde
+125=131
+# Côte d'Ivoire
+126=132
+#Al Kuwayt
+127=134
+# Al Iraq
+128=135
+# Azerbaijan
+129=133
+# Angola
+130=137
+# Crna Gora
+131=136
+# Bangladesh
+132=138
+# Al Yaman
+133=139
+# Uman
+134=140
+# Mozambique
+135=142
+# Brunei
+136=143
+# Ghana
+137=144
+# Prateh Kampuchea
+138=145
+#Benin
+139=147
+#Suriyah
+140=148
+#Qatar
+141=149
+#Tanzania
+142=150
+#Uganda
+143=153
+#Maldives
+144=154
