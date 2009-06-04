@@ -260,8 +260,8 @@ public class VTextIcon implements Icon, PropertyChangeListener {
      * ROTATE_RIGHT) This is public static so you can use it to test a string without creating a
      * VTextIcon from http://www.unicode.org/unicode/reports/tr9/tr9-3.html When setting text
      * using the Arabic script in vertical lines,  it is more common to employ a horizontal
-     * baseline that  is rotated by 90ก counterclockwise so that the characters  are ordered from
-     * top to bottom. Latin text and numbers  may be rotated 90ก clockwise so that the characters
+     * baseline that  is rotated by 90ยก counterclockwise so that the characters  are ordered from
+     * top to bottom. Latin text and numbers  may be rotated 90ยก clockwise so that the characters
      * are also ordered from top to bottom. Rotation rules     - Roman can rotate left, right, or
      * none - default right (counterclockwise) - CJK can't rotate - Arabic must rotate - default
      * left (clockwise) from the online edition of _The Unicode Standard, Version 3.0_, file

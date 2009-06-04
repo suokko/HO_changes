@@ -1,6 +1,6 @@
 /* TODO:
- * Manuelles Auswählen der Formation (Lineuppanel lässt sich nicht ändern,
- * aber ähnliche Funktion wie beim normalen Aufstellungspanel wäre möglich
+ * Manuelles AuswÃ¤hlen der Formation (Lineuppanel lÃ¤sst sich nicht Ã¤ndern,
+ * aber Ã¤hnliche Funktion wie beim normalen Aufstellungspanel wÃ¤re mÃ¶glich
  * 
  * done: Taktik, die der einzelne Spieler benutzt hat anzeigen (Off/Def/Normal)
  * Liste mit Tore pro Spieler pro Spieltag
@@ -13,14 +13,14 @@ ich hab mich gewundert, weil ich jetzt (in Matchweek 4) nur eine
 
 POTW des ersten Spieltags bekomme, und dann hab ich mir die Mannschaften 
 angeschaut: 
-es ist eine andere Liga. Ich hab nämlich für den ersten Spieltag auch die 
+es ist eine andere Liga. Ich hab nÃ¤mlich fÃ¼r den ersten Spieltag auch die 
 Liga, in der mein alter 
 Mitstreiter aus der VII. Liga jetzt spielt, geladen. D.h. ich hab unter 
 "Ligatabelle" mehrere Ligen 
 zur Auswahl. 
 Kann man es vielleicht einrichten, dass man 
 in Deinem Plugin auch noch die 
-Liga angibt, für die die POTW errechnet 
+Liga angibt, fÃ¼r die die POTW errechnet 
 werden? 
  
 
@@ -349,9 +349,9 @@ public class PotW implements ActionListener,IPlugin,ChangeListener, plugins.IRef
 				while (p.hasNext()) {
 					MatchLineupPlayer mlp = (MatchLineupPlayer) p.next();
 					if ((mlp.PositionCode == ISpielerPosition.TORWART) && (mlp.Rating > g.Rating)) { g = mlp;	}
-					//Außenverteidiger
+					//AuÃŸenverteidiger
 					if ((mlp.PositionCode >= 4) && (mlp.PositionCode <= 7) && (mlp.Rating > lwb.Rating)) { if (mlp.Rating > rwb.Rating) { lwb = rwb; rwb = mlp; } else { lwb = mlp; }	 }			
-					//Flügel
+					//FlÃ¼gel
 					if ((mlp.PositionCode >= 12) && (mlp.PositionCode <= 15) && (mlp.Rating > lw.Rating)) { if (mlp.Rating > rw.Rating) { lw = rw; rw = mlp; } else { lw = mlp; } }
 					//Mittelfeld
 					if ((mlp.PositionCode >= 8) && (mlp.PositionCode <= 11) && (mlp.Rating > im1.Rating)) { if (mlp.Rating > im2.Rating) { im1 = im2; im2 = mlp; } else { im1 = mlp; }}				

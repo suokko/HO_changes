@@ -2,7 +2,7 @@ package hoplugins.flagsplugin;
 /**
  * FlagRenderer.java
  *
- * @author Daniel Gonz·lez Fisher
+ * @author Daniel Gonz√°lez Fisher
  */
 
 import hoplugins.FlagsPlugin;

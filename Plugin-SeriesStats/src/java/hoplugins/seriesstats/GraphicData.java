@@ -2,7 +2,7 @@ package hoplugins.seriesstats;
 
 
 /**
- * Model für das StatistikPanel
+ * Model fÃ¼r das StatistikPanel
  */
 
 public class GraphicData

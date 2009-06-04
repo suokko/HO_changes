@@ -167,7 +167,7 @@ public class DetailsTable extends JTable {
             risultato += testo.charAt(i);
 
             if (troncamento >= 40) {
-                // andare a capo se c'è uno spazio dopo
+                // andare a capo se c'Ã¨ uno spazio dopo
                 if (testo.charAt(i + 1) == ' ') {
                     risultato += aCapo();
                     troncamento = 0;

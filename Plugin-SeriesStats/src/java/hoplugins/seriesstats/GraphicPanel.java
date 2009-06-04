@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class GraphicPanel extends JPanel
 {
-    //Seitenabstände bis zum Koordinatenkreuzanfang
+    //SeitenabstÃ¤nde bis zum Koordinatenkreuzanfang
     private int SL = 60; //Dynamisch berechnen
     public int SR = 25;
     public int SU = 50;
@@ -54,7 +54,7 @@ public class GraphicPanel extends JPanel
      * @param yBezeichner Bezeichnung der y-Achse
      * @param beschriftung Beschriftung des Graphen
      * @param hilflinien Vertikale und Horizontale Linien durch den Graphen
-     * @param startwert Wert, mit der die x-Achse zu zählen anfängt
+     * @param startwert Wert, mit der die x-Achse zu zÃ¤hlen anfÃ¤ngt
      * @param abstand Der Wertabstand der x-Achse zwischen 2 Werten
      * @param farbe Farbe des Graphen
      */
@@ -196,7 +196,7 @@ public class GraphicPanel extends JPanel
 		g.drawString(yBezeichner,8,18);
 		g.drawString(xBezeichner,b-150,h-8);
 		
-		//Höchster Wert in der Menge
+		//HÃ¶chster Wert in der Menge
 		double max=20;
 		double min=0;
                 double maxohneFaktor=20;
@@ -212,9 +212,9 @@ public class GraphicPanel extends JPanel
                 maxohneFaktor = maxFinder( false );
                 minohneFaktor = minFinder( false );
                 
-		//Höhe der x-Achse bestimmen
+		//HÃ¶he der x-Achse bestimmen
 		int xHoehe=(int)((h-SU-SO)/2+SO+(max+min)*(((h-SU-SO)/2)/(max-min)));
-		//#############SL abhängig von max###############################+++++++++++++
+		//#############SL abhÃ¤ngig von max###############################+++++++++++++
 		
                 
                 if ( m_clStatistikModel != null && m_clStatistikModel.length > 0 && m_clStatistikModel[0] != null  )
@@ -239,7 +239,7 @@ public class GraphicPanel extends JPanel
                                      (int)( ( g.getFontMetrics ().stringWidth ( m_clYAchseFormat.format ( min ) ) + 10 )  ) );
                     for (int i=yStriche;i>=0;i--)
                     {
-                            //Striche y zeichnen: Höhe - Abstand vom unteren Rand - Vielfaches des Strichabstandes
+                            //Striche y zeichnen: HÃ¶he - Abstand vom unteren Rand - Vielfaches des Strichabstandes
                             if (hilfslinien) 
                             {
                                     g.setColor(Color.lightGray);
@@ -439,7 +439,7 @@ public class GraphicPanel extends JPanel
 	}
 
         
-	// gibt ein String zurück, der einen double-Wert mit n Nachkommastellen repräsentiert
+	// gibt ein String zurÃ¼ck, der einen double-Wert mit n Nachkommastellen reprÃ¤sentiert
 	public String formatedDouble(double d, byte n)
 	{
 		

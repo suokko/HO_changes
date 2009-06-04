@@ -2,7 +2,7 @@ package hoplugins.flagsplugin;
 /**
  * FlagLabel.java
  *
- * @author Daniel Gonz·lez Fisher
+ * @author Daniel Gonz√°lez Fisher
  */
 
 import javax.swing.JLabel;

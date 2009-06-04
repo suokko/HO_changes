@@ -2,10 +2,10 @@
 /*
  * Created on 13.04.2004
  *
- * Mag. Bernhard Hödl
+ * Mag. Bernhard HÃ¶dl
  *
  * AH - Solutions
- * Augsten & Hödl OEG
+ * Augsten & HÃ¶dl OEG
  * Neubachgasse 12
  * A - 2325 Himberg
  */
@@ -29,8 +29,8 @@ import plugins.ISpieler;
 /**
  * DOCUMENT ME!
  *
- * @author Mag. Bernhard Hödl AH - Solutions Augsten & Hödl OEG Neubachgasse 12 A - 2325 Himberg
- *         Tabellenmodel und Daten für die dargestellte Tabelle für das HO Plungin
+ * @author Mag. Bernhard HÃ¶dl AH - Solutions Augsten & HÃ¶dl OEG Neubachgasse 12 A - 2325 Himberg
+ *         Tabellenmodel und Daten fÃ¼r die dargestellte Tabelle fÃ¼r das HO Plungin
  */
 public class PlayersTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------

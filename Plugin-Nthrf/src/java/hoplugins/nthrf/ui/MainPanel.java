@@ -59,7 +59,7 @@ public class MainPanel extends JPanel implements ActionListener {
     	ta.setEditable(false);
     	doc.add(ta, BorderLayout.CENTER);
 
-    	doc.add(new JLabel(" "), BorderLayout.SOUTH);
+    	doc.add(new JLabel("Â "), BorderLayout.SOUTH);
 //    	doc.setMinimumSize(new Dimension(250, 50));
 //    	doc.setPreferredSize(new Dimension(250, 60));
     	msg.add(doc, BorderLayout.SOUTH);

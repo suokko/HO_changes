@@ -13,7 +13,7 @@ import javax.swing.JComponent;
 
 
 /**
- * Statusbalken für Trefferpunkte, Ausdauer und Erfahrung The bar is composed of 3 different bars
+ * Statusbalken fÃ¼r Trefferpunkte, Ausdauer und Erfahrung The bar is composed of 3 different bars
  * one over the other, each one of 3 different colors
  *
  * @author Volker Fischer

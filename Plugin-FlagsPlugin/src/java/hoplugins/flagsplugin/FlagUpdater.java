@@ -2,7 +2,7 @@ package hoplugins.flagsplugin;
 /**
  * FlagUpdater.java
  *
- * @author Daniel González Fisher
+ * @author Daniel GonzÃ¡lez Fisher
  */
 
 import java.io.*;
@@ -78,7 +78,7 @@ public class FlagUpdater {
                 // 7 Not currently in use, but reserved for international competition matches with cup rules
                 continue;
             }
-            //debug.append("¬ "+matchId+"&nbsp;&nbsp; ST:"+partidos[i].getMatchStatus() + "&nbsp;&nbsp; Type:" + partidos[i].getMatchTyp() + (visited?"AWAY":"HOSTED") +":("+partidos[i].getHeimID() +"/"+ partidos[i].getGastID()+") @:" + countryId +"," + FlagsPlugin.getCountryName(countryId)); //DEBUG!!!
+            //debug.append("Â¬ "+matchId+"&nbsp;&nbsp; ST:"+partidos[i].getMatchStatus() + "&nbsp;&nbsp; Type:" + partidos[i].getMatchTyp() + (visited?"AWAY":"HOSTED") +":("+partidos[i].getHeimID() +"/"+ partidos[i].getGastID()+") @:" + countryId +"," + FlagsPlugin.getCountryName(countryId)); //DEBUG!!!
         }
 
         /* get new flags */
