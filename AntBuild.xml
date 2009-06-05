@@ -162,24 +162,34 @@
 		<!-- get current SVN version / release -->
 		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
 			<arg value="info" />
-			<redirector outputproperty="svninfo">
+			<redirector outputproperty="svninfo.rev">
 				<outputfilterchain>
 					<containsregex pattern="^Revision" />
 					<replaceregex pattern="^Revision\D*(\d*)" replace="_r\1" />
 				</outputfilterchain>
 			</redirector>
 		</exec>
-		<!-- ${svninfo} defaults to "" -->
-		<condition property="svninfo" value="">
-			<not>
-				<isset property="svninfo" />
-			</not>
-		</condition>
+		<!-- get current SVN URL -->
+		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
+			<arg value="info" />
+			<redirector outputproperty="svninfo.url">
+				<outputfilterchain>
+					<containsregex pattern="^URL" />
+					<!-- URL is in format <branch>/Core/src, extract the branch part -->
+					<replaceregex pattern=".*/(.*?)/Core/src/?" replace="_\1" />
+				</outputfilterchain>
+			</redirector>
+		</exec>
+		<!-- ${svninfo.rev} defaults to "" -->
+		<property name="svninfo.rev" value=""/>
+		<!-- ${svninfo.url} defaults to "" -->
+		<property name="svninfo.url" value=""/>
+
 		<tstamp>
 			<format property="curDate" pattern="yyyyMMdd" />
 		</tstamp>
 
-		<property name="buildinfo" value="${dev}${svninfo}_${curDate}${private}" />
+		<property name="buildinfo" value="${dev}${svninfo.url}${svninfo.rev}_${curDate}${private}" />
 
 		<!-- For dev and private builds, include more informations in ${hofullversion} -->
 		<if>
@@ -195,7 +205,7 @@
 			</else>
 		</if>
 
-		<echo>HOVERSION=${hoversion}, DEV=${dev}, SVNREV=${svninfo}, CURDATE=${curDate}, PRIVATE=${private}, DEBUG=${debug}</echo>
+		<echo>HOVERSION=${hoversion}, DEV=${dev}, SVNURL=${svninfo.url}, SVNREV=${svninfo.rev}, CURDATE=${curDate}, PRIVATE=${private}, DEBUG=${debug}</echo>
 		<echo>HOFULLVERSION=${hofullversion} (used in file names)</echo>
 	</target>
 
@@ -325,11 +335,16 @@
 				<echo>deploy.sf.project=${deploy.sf.project}</echo>
 				<echo>deploy.sf.username=${deploy.sf.username}</echo>
 				<echo>deploy.sf.path=${deploy.sf.path}</echo>
-				<echo>Removing old nightlies from SF</echo>
-				<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
-					<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
-				</exec>
-
+				<echo>deploy.sf.removeOld=${deploy.sf.removeOld}}</echo>
+				<if>
+					<equals arg1="${deploy.sf.removeOld}" arg2="true" />
+					<then>
+						<echo>Removing old nightlies from SF</echo>
+						<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
+							<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
+						</exec>
+					</then>
+				</if>
 				<echo>Uploading new nightly (HO_${hofullversion}.zip) to SF</echo>
 				<exec executable="${scp.command}" failonerror="true">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip"/>
