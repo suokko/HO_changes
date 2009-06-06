@@ -348,12 +348,12 @@
 					<equals arg1="${deploy.sf.removeOld}" arg2="true" />
 					<then>
 						<echo>Creating SF shell session</echo>
-						<exec executable="${ssh.command}" timeout="20000" failonerror="false">
+						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
 							<arg value="create"/>
 						</exec>
 						<echo>Removing old nightlies from SF</echo>
-						<exec executable="${ssh.command}" timeout="20000" failonerror="false">
+						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
 							<arg value="${deploy.sf.sshRemoveCommand}"/>
 						</exec>
