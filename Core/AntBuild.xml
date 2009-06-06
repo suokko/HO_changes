@@ -343,14 +343,25 @@
 				<echo>deploy.sf.project=${deploy.sf.project}</echo>
 				<echo>deploy.sf.username=${deploy.sf.username}</echo>
 				<echo>deploy.sf.path=${deploy.sf.path}</echo>
-				<echo>deploy.sf.removeOld=${deploy.sf.removeOld}}</echo>
+				<echo>deploy.sf.removeOld=${deploy.sf.removeOld}</echo>
 				<if>
 					<equals arg1="${deploy.sf.removeOld}" arg2="true" />
 					<then>
+						<echo>Creating SF shell session</echo>
+						<exec executable="${ssh.command}" timeout="20000" failonerror="false">
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
+							<arg value="create"/>
+						</exec>
 						<echo>Removing old nightlies from SF</echo>
+						<exec executable="${ssh.command}" timeout="20000" failonerror="false">
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
+							<arg value="${deploy.sf.sshRemoveCommand}"/>
+						</exec>
+<!--
 						<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
 							<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
 						</exec>
+-->
 					</then>
 				</if>
 				<echo>Uploading new nightly (HO_${hofullversion}.zip) to SF</echo>
