@@ -2,61 +2,65 @@
 package de.hattrickorganizer.gui.utils;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.MediaTracker;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.templates.BackgroundImageContentPane;
 import de.hattrickorganizer.tools.HOLogger;
 
-
 /**
- * Zentriertes Bild in der Bildschirmmitte
+ * Creates a centered splash screen
+ * Using BackgroundImageContentPane(String resName)
  *
- * @author Volker Fischer
- * @version 0.2a 28.08.01
+ * @author flattermann <HO@flattermann.net>
  */
-public class InterruptionWindow extends javax.swing.JWindow {
-    //~ Instance fields ----------------------------------------------------------------------------
+public class InterruptionWindow extends JFrame {
 
-    private Image background;
-    private String m_sInfotext = "";
+    //~ Static fields/initializers -----------------------------------------------------------------
+
+	private static final long serialVersionUID = -3080485740270436531L;
+
+	//~ Instance fields ----------------------------------------------------------------------------
+
+	private JLabel infoText;
 
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
-     * Creates a new InterruptionWindow object.
-     *
-     * @param component TODO Missing Constructuor Parameter Documentation
+     * Creates a new splash screen frame
      */
-    public InterruptionWindow(Component component) {
+    public InterruptionWindow() {
+    	super ("HO! is starting...");
         try {
-            final java.net.URL resource = component.getClass().getClassLoader().getResource("gui/bilder/intro.jpg");
-            background = javax.imageio.ImageIO.read(resource);
+            setUndecorated(true);
+            
+            infoText = new JLabel("", JLabel.CENTER);
 
-            final MediaTracker tracker = new MediaTracker(component);
-            tracker.addImage(background, 1);
+            BackgroundImageContentPane contentPane = new BackgroundImageContentPane("gui/bilder/intro-new.png", true);
+            setContentPane(contentPane);
+            getContentPane().setLayout(null);
 
-            try {
-                tracker.waitForAll();
-            } catch (InterruptedException ie) {
-            }
+            infoText.setBounds(11, 20, contentPane.getWidth()-2*11, 30);
+            infoText.setBackground(new Color(254, 249, 227));
+            infoText.setOpaque(true);
 
-            background = makeColorTransparent(background, new Color(255, 0, 0));
-            tracker.addImage(background, 1);
+            getContentPane().add(infoText);
+            
+            JLabel versionLabel = new JLabel("HO! " + HOMainFrame.getVersionString());
 
-            try {
-                tracker.waitForAll();
-            } catch (InterruptedException ie) {
-            }
+            versionLabel.setForeground(Color.WHITE);
+            versionLabel.setBounds(contentPane.getWidth()-versionLabel.getPreferredSize().width-5, 
+            		contentPane.getHeight()-versionLabel.getPreferredSize().height-5, 
+            		versionLabel.getPreferredSize().width, 
+            		versionLabel.getPreferredSize().height);
+            getContentPane().add(versionLabel);
 
-            //background.getWidth ( null ), background.getHeight ( null ) );
-            setSize(480, 160);
+            setSize(contentPane.getWidth(), contentPane.getHeight());
             setLocation((getToolkit().getScreenSize().width / 2) - (getSize().width / 2),
                         (getToolkit().getScreenSize().height / 2) - (getSize().height / 2));
 
-            //repaint();
             setVisible(true);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"InterruptionWindow.<init> : " + e);
@@ -67,77 +71,11 @@ public class InterruptionWindow extends javax.swing.JWindow {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
+     * Set the info text of the splash screen
      *
-     * @param text TODO Missing Method Parameter Documentation
+     * @param text info text to be shown
      */
     public final void setInfoText(String text) {
-        m_sInfotext = text;
-        repaint();
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param g TODO Missing Method Parameter Documentation
-     */
-    public final void paint(Graphics g) {
-        final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
-
-        //Antialiasing einschalten
-        g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
-                             java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-        //Hintergrundgrafik zeichnen
-        g2d.drawImage(background, (getSize().width / 2) - (background.getWidth(null) / 2), 15, null);
-
-        //Schriftzug
-        //                g2d.setColor ( Color.black );
-        //                g2d.setFont ( new javax.swing.plaf.FontUIResource("SansSerif",Font.BOLD,25) );
-        //                g2d.drawString ( "Hattrick Organizer", 15, 125 );
-        //Rahmen
-        g2d.drawRect(0, 0, getSize().width - 1, getSize().height - 1);
-        g2d.setColor(Color.darkGray);
-        g2d.drawRect(1, 1, getSize().width - 3, getSize().height - 3);
-        g2d.setColor(Color.gray);
-        g2d.drawRect(2, 2, getSize().width - 5, getSize().height - 5);
-        g2d.setColor(Color.lightGray);
-        g2d.drawRect(3, 3, getSize().width - 7, getSize().height - 7);
-
-        //Infotext
-        g2d.setColor(Color.black);
-        g2d.setFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 10));
-        g2d.drawString(m_sInfotext, 145, 25);
-    }
-
-    /**
-     * Tauscht eine Farbe im Image durch eine andere
-     *
-     * @param im TODO Missing Constructuor Parameter Documentation
-     * @param original TODO Missing Constructuor Parameter Documentation
-     * @param change TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private java.awt.Image changeColor(java.awt.Image im, java.awt.Color original,
-                                       java.awt.Color change) {
-        final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im.getSource(),
-                                                                                       new de.hattrickorganizer.tools.ColorChangeFilter(original,
-                                                                                                                                        change));
-        return java.awt.Toolkit.getDefaultToolkit().createImage(ip);
-    }
-
-    /**
-     * Macht eine Farbe in dem Bild transparent
-     *
-     * @param im TODO Missing Constructuor Parameter Documentation
-     * @param color TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private java.awt.Image makeColorTransparent(java.awt.Image im, java.awt.Color color) {
-        final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im.getSource(),
-                                                                                       new de.hattrickorganizer.tools.TransparentFilter(color));
-        return java.awt.Toolkit.getDefaultToolkit().createImage(ip);
+    	infoText.setText(text);
     }
 }
