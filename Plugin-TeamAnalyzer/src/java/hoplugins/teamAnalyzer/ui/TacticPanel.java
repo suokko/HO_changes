@@ -1,0 +1,150 @@
+// %1654063142:hoplugins.teamAnalyzer.ui%
+/*
+ * Created on Sep 20, 2004
+ *
+ * To change the template for this generated file go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+package hoplugins.teamAnalyzer.ui;
+
+import hoplugins.Commons;
+
+import hoplugins.commons.ui.BaseTableModel;
+
+import hoplugins.teamAnalyzer.report.TacticReport;
+
+import java.awt.BorderLayout;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
+
+
+/**
+ * DOCUMENT ME!
+ *
+ * @author mamato To change the template for this generated type comment go to
+ *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+public class TacticPanel extends JPanel {
+    //~ Instance fields ----------------------------------------------------------------------------
+
+    private DefaultTableModel tableModel;
+    private JTable table;
+    private NumberFormat f = new DecimalFormat("#.#");
+
+    //~ Constructors -------------------------------------------------------------------------------
+
+    /**
+     * Creates a new TacticPanel object.
+     */
+    public TacticPanel() {
+        jbInit();
+    }
+
+    //~ Methods ------------------------------------------------------------------------------------
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @param number TODO Missing Method Parameter Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public String format(double number) {
+        return f.format(number);
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @param list TODO Missing Method Parameter Documentation
+     */
+    public void reload(List list) {
+        tableModel = new BaseTableModel(new Vector(),
+                                        new Vector(Arrays.asList(new Object[]{
+                                                                     "COL_A", "COL_B", "COL_C"
+                                                                 })));
+        table.setModel(tableModel);
+
+        Vector rowData;
+        int row = 0;
+
+        for (Iterator iter = list.iterator(); iter.hasNext();) {
+            TacticReport report = (TacticReport) iter.next();
+
+            rowData = new Vector();
+            rowData.add(getTacticalRoleDesc(report.getTacticCode()));
+            rowData.add("" + report.getAppearance());
+            rowData.add(format(report.getRating()));
+            tableModel.addRow(rowData);
+            row++;
+
+            if (row == 3) {
+                break;
+            }
+        }
+
+        if (row > 0) {
+            this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
+            for (; row < 3; row++) {
+                tableModel.addRow(emptyLine());
+            }
+        } else {
+            this.setBorder(null);
+        }
+
+        table.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(30);
+        table.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(30);
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @param position TODO Missing Method Parameter Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    private String getTacticalRoleDesc(int position) {
+        return Commons.getModel().getHelper().getNameForPosition((byte) position);
+    }
+
+    /**
+     *
+     */
+    private Vector emptyLine() {
+        Vector v = new Vector();
+
+        return v;
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     */
+    private void jbInit() {
+        Vector data = new Vector();
+
+        tableModel = new BaseTableModel(data,
+                                        new Vector(Arrays.asList(new Object[]{
+                                                                     "COL_A", "COL_B", "COL_C"
+                                                                 })));
+        table = new JTable(tableModel);
+        table.setRowSelectionAllowed(false);
+        table.setColumnSelectionAllowed(false);
+        this.setLayout(new BorderLayout());
+        this.add(table, BorderLayout.CENTER);
+        table.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(30);
+        table.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(30);
+    }
+}
