@@ -152,7 +152,7 @@
 			<arg value="info" />
 			<redirector outputproperty="svninfo.rev">
 				<outputfilterchain>
-					<!-- Extract from "Last changed Rev: XXX -->
+					<!-- Extract from "Revision: XXX" -->
 					<containsregex pattern="^Revision:" />
 					<replaceregex pattern="^Revision\D*(\d*)" replace="_r\1" />
 				</outputfilterchain>
