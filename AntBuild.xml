@@ -152,8 +152,9 @@
 			<arg value="info" />
 			<redirector outputproperty="svninfo.rev">
 				<outputfilterchain>
-					<containsregex pattern="^Revision" />
-					<replaceregex pattern="^Revision\D*(\d*)" replace="_r\1" />
+					<!-- Extract from "Last changed Rev: XXX -->
+					<containsregex pattern="Rev:" />
+					<replaceregex pattern=".*Rev:\D*(\d*)" replace="_r\1" />
 				</outputfilterchain>
 			</redirector>
 		</exec>
@@ -328,7 +329,7 @@
 		<echo>os.name=${os.name}</echo>
 		<!-- Deploy only if enabled and OS does match
 			Both is normally set by the Bitten AutoBuilder recipe via command line 
-			but can also be set via AntBuild-local.properties
+			but can also be set via AntBuild-Local.properties
 		-->
 		<if>
 			<and>
