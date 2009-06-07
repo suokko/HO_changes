@@ -6,6 +6,8 @@ import hoplugins.nthrf.util.NthrfUtil;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -52,19 +54,15 @@ public class MainPanel extends JPanel implements ActionListener {
     	msg.add(new JLabel("Use a secondary installation only."), BorderLayout.CENTER);
 
     	JTextArea ta = new JTextArea();
-    	ta.append("After a successful download you'll find the created HRF file\n");
-    	ta.append("in your root folder, e.g. C:\\nt_1234_20090525_221000.hrf\n");
+    	ta.append("This plugin can be used by elected NT/U20 managers only!\n");
+    	ta.append("Press 'Start' to download your national team's data.\n");
     	ta.append("\n");
     	ta.append("Contact user 'aYcon' in HT if you have any questions.");
     	ta.setEditable(false);
     	doc.add(ta, BorderLayout.CENTER);
 
     	doc.add(new JLabel(" "), BorderLayout.SOUTH);
-//    	doc.setMinimumSize(new Dimension(250, 50));
-//    	doc.setPreferredSize(new Dimension(250, 60));
     	msg.add(doc, BorderLayout.SOUTH);
-//    	msg.setMinimumSize(new Dimension(300, 80));
-//    	msg.setPreferredSize(new Dimension(300, 100));
     	add(msg, BorderLayout.NORTH);
     	btnStart = new JButton("Start");
     	btnStart.addActionListener(this);
@@ -91,18 +89,34 @@ public class MainPanel extends JPanel implements ActionListener {
 		try {
 			IHOMiniModel mm = Nthrf.getMiniModel();
 
-			long[] teamIds = NthrfUtil.getNtTeamIds(mm);
-			if (teamIds == null || teamIds.length<1) {
+			List<String[]> teams = NthrfUtil.getNtTeams(mm);
+			if (teams == null || teams.size() < 1 || teams.get(0)[0] == null || teams.get(0)[0].length() < 1) {
 				debug("No NT manager! Stopping...");
 				if (!Nthrf.DEBUG) {
 					return false;
 				} else {
-					teamIds = new long[]{3216}; // 526156 - 3216
+					teams = new ArrayList<String[]>();
+					teams.add(new String[]{"526156", "Club Team"});
+					teams.add(new String[]{"3216", "National Team"});
 				}
 			}
-			long teamId = teamIds[0]; // TODO: handle more than one NT team for a manager
+			final long teamId;
+			if (teams.size() > 1) {
+				NtTeamChooser chooser = new NtTeamChooser(teams);
+				chooser.setModal(true);
+				chooser.setVisible(true);
+				teamId = chooser.getSelectedTeamId();
+				System.out.println("Result is: " + chooser.getSelectedTeamId());
+				chooser.dispose();
+			} else {
+				teamId = Long.parseLong(teams.get(0)[0]);
+			}
 			debug("Compute for team " + teamId);
 
+			if (teamId < 0) {
+				btnStart.setEnabled(true);
+				return false;
+			}
 			if (!isAllowedTeam(teamId)) {
 				debug("Wrong team (id " + teamId + "), can't continue!");
 				return false;
@@ -117,14 +131,7 @@ public class MainPanel extends JPanel implements ActionListener {
 	}
 
 	private boolean isAllowedTeam(long teamId) {
-		if (true) return true; // now allow all team
-
-		return (teamId == 3002 || teamId == 3043 // Germany NT + U20
-				|| teamId == 3245 || teamId == 3246 // Qatar NT + U20
-				|| teamId == 3216 || teamId == 3217 // Iraq NT + U20
-				|| teamId == 3024 || teamId == 3065 // Brasil NT + U20
-				|| teamId == 3036 || teamId == 3077 // Singapore
-				|| teamId == 526156); // Debug
+		return true; // now allow all team
 	}
 
 	private void debug(String txt) {
