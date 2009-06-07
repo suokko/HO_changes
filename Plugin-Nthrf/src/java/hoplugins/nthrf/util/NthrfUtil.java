@@ -8,9 +8,11 @@ import hoplugins.nthrf.ui.MainPanel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -93,15 +95,16 @@ public class NthrfUtil {
     }
 
     /**
-     * Get the teamIDs of all national teams of the authenticated manager.
-     * TODO: add handling for multiple teams
+     * Get the teamIDs and names of all national teams of the authenticated manager.
      */
-    public static long[] getNtTeamIds(IHOMiniModel mm) {
+    public static List<String[]> getNtTeams(IHOMiniModel mm) {
+    	List<String[]> ret = new ArrayList<String[]>();
         try {
             String xmldata = mm.getDownloadHelper().getHattrickXMLFile("/chppxml.axd?file=team");
             final Document doc = mm.getXMLParser().parseString(xmldata);
             Element ele = null;
             Element root = null;
+            Element nt = null;
 
             if (doc == null) {
                 return null;
@@ -110,20 +113,25 @@ public class NthrfUtil {
             root = (Element) root.getElementsByTagName("User").item(0);
             root = (Element) root.getElementsByTagName("NationalTeamCoach").item(0);
             try {
-                root = (Element) root.getElementsByTagName("NationalTeam").item(0);
-                ele = (Element) root.getElementsByTagName("NationalTeamID").item(0);
-                String tid = mm.getXMLParser().getFirstChildNodeValue(ele);
-                // TODO: add handling for multiple teams
-                if (tid != null && tid.length()>0) {
-                    return new long[] {Long.parseLong(tid)};
-                }
+            	int length = root.getElementsByTagName("NationalTeam").getLength();
+            	for (int m=0; m<length; m++) {
+            		nt = (Element) root.getElementsByTagName("NationalTeam").item(m);
+            		ele = (Element) nt.getElementsByTagName("NationalTeamID").item(0);
+            		Element eName = (Element) nt.getElementsByTagName("NationalTeamName").item(0);
+            		String tid = mm.getXMLParser().getFirstChildNodeValue(ele);
+            		String name = mm.getXMLParser().getFirstChildNodeValue(eName);
+            		if (tid != null && tid.length() > 0) {
+						ret.add(new String[] { tid, name });
+					}
+            	}
             } catch (Exception x) {
                 /* nothing */
+            	x.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return ret;
     }
 
     /**
