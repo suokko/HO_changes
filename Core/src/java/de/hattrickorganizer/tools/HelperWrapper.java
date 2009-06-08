@@ -892,17 +892,31 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Round a double value
      *
-     * @param wert TODO Missing Method Parameter Documentation
-     * @param nachkommastellen TODO Missing Method Parameter Documentation
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
      *
-     * @return TODO Missing Return Method Documentation
+     * @return rounded value
      */
-    public float round(double wert, int nachkommastellen) {
+    public double round(double wert, int nachkommastellen) {
         return Helper.round(wert, nachkommastellen);
     }
 
+    /**
+     * Round a float value
+     *
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
+     *
+     * @return rounded value
+     * 
+     * @deprecated use round (double, int)
+     */
+    public float round(float wert, int nachkommastellen) {
+        return Helper.round(wert, nachkommastellen);
+    }
+    
     /**
      * TODO Missing Method Documentation
      *
