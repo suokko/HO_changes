@@ -489,18 +489,15 @@ final public class UserColumnFactory {
 			playerAdditionalArray[3] =new PlayerColumn(40,"BestePosition",100){
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					
-					ColorLabelEntry tmp = new ColorLabelEntry(-SpielerPosition.getSortId(player
-											                            .getIdealPosition(),
-											                            false)
-											 - (player.getIdealPosStaerke(true) / 100.0f),
-											 SpielerPosition.getNameForPosition(player
-											                                    .getIdealPosition())
-											 + " ("
-											 + player.calcPosValue(player
-											                                 .getIdealPosition(),
-											                                 true) + ")",
-											 ColorLabelEntry.FG_STANDARD,
-											 ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+					ColorLabelEntry tmp = new ColorLabelEntry(
+							-SpielerPosition.getSortId(player.getIdealPosition(), false)
+								- (player.getIdealPosStaerke(true) / 100.0f),
+							SpielerPosition.getNameForPosition(player.getIdealPosition()) 
+								+ " (" 
+								+ player.getIdealPosStaerke(true) 
+								+ ")",
+							ColorLabelEntry.FG_STANDARD,
+							ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 					
 					tmp.setIcon((player.getUserPosFlag() < 0)?Helper.ZAHNRAD:Helper.MANUELL);
 					return tmp;
