@@ -2356,30 +2356,52 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static float round(double wert) {
+    public static double round(double wert) {
         return Helper.round(wert, 1);
     }
 
     /**
-     * Rundet den übergeben wert auf eine bestimmte nachkommastellen-Anzahl
+     * Round a double value
      *
-     * @param wert Der zu rundene Wert
-     * @param nachkommastellen Anzahl der Nachkommastellen
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
      *
-     * @return TODO Missing Return Method Documentation
+     * @return rounded value
      */
-    public static float round(double wert, int nachkommastellen) {
+    public static double round(double wert, int nachkommastellen) {
         //Wert mit 10^nachkommastellen multiplizieren
-        final double dwert = wert * Math.pow(10.0, (double) nachkommastellen);
+        final double dwert = wert * Math.pow(10.0, nachkommastellen);
 
         //Nachkommastellen abschneiden
 //        final long lwert = Math.round(dwert);
-        final double lwert = Math.floor(dwert);
+        final double lwert = (int) dwert;
 
         //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
-        return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
+        return (lwert / Math.pow(10.0, nachkommastellen));
     }
 
+    /**
+     * Round a float value
+     *
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
+     *
+     * @return rounded value
+     * 
+     * @deprecated use round (double, int)
+     */
+    public static float round(float wert, int nachkommastellen) {
+        //Wert mit 10^nachkommastellen multiplizieren
+        final float dwert = wert * (int)Math.pow(10.0, nachkommastellen);
+
+        //Nachkommastellen abschneiden
+//        final long lwert = Math.round(dwert);
+        final float lwert = (int) dwert;
+
+        //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
+        return (lwert / (int)Math.pow(10.0, nachkommastellen));
+    }
+    
     /**
      * Zeigt eine Meldung per JOptionPane an, aber immer nur eine!
      *

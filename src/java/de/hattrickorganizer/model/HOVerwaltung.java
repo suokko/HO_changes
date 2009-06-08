@@ -76,7 +76,7 @@ public class HOVerwaltung {
      *
      * @return average TSI
      */
-    public float getAvgTSI() {
+    public double getAvgTSI() {
         int numPlayers = getModel().getAllSpieler().size();
         //Trainer abziehen // without trainer
         if (numPlayers <= 1)
@@ -91,7 +91,7 @@ public class HOVerwaltung {
      *
      * @return average EPV
      */
-    public float getAvgEPV() {
+    public double getAvgEPV() {
         int numPlayers = getModel().getAllSpieler().size();
         //Trainer abziehen // without trainer
         if (numPlayers <= 1)
@@ -105,7 +105,7 @@ public class HOVerwaltung {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public float getDurchschnittsAlter() {
+    public double getDurchschnittsAlter() {
         float summe = 0;
         final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
 

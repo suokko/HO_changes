@@ -512,14 +512,26 @@ public interface IHelper {
     public java.sql.Timestamp parseDate(String date);
 
     /**
-     * Round a value wert
+     * Round a double value
      *
-     * @param wert TODO Missing Constructuor Parameter Documentation
-     * @param nachkommastellen TODO Missing Constructuor Parameter Documentation
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
      *
-     * @return TODO Missing Return Method Documentation
+     * @return rounded value
      */
-    public float round(double wert, int nachkommastellen);
+    public double round(double wert, int nachkommastellen);
+
+    /**
+     * Round a float value
+     *
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
+     *
+     * @return rounded value
+     * 
+     * @deprecated use round (double, int)
+     */
+    public float round(float wert, int nachkommastellen);
 
     /**
      * Shows an MessageDialog JOptionPane only, if there is not still an other MessageDialog shown
