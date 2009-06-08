@@ -74,15 +74,15 @@ public class Ball {
         }
 
         if (goRight) {
-            x += ((float) vergangeneZeit / 5.0f);
+            x += (vergangeneZeit / 5.0f);
         } else {
-            x -= ((float) vergangeneZeit / 5.0f);
+            x -= (vergangeneZeit / 5.0f);
         }
 
         if (goDown) {
-            y += ((float) vergangeneZeit / 5.0f);
+            y += (vergangeneZeit / 5.0f);
         } else {
-            y -= ((float) vergangeneZeit / 5.0f);
+            y -= (vergangeneZeit / 5.0f);
         }
     }
 

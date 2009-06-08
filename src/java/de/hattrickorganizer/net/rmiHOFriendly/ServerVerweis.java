@@ -134,7 +134,8 @@ public class ServerVerweis {
     }
 
     ///////////////////Overwrite////////////////////////////////////////////////7
-    public final String toString() {
+    @Override
+	public final String toString() {
         return m_sInfo;
     }
 }

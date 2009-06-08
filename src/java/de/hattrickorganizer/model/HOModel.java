@@ -445,14 +445,14 @@ public class HOModel {
 
         for (Iterator<ISpieler> iter = DBZugriff.instance().getSpieler(previousHrfId).iterator();
              iter.hasNext();) {
-            final ISpieler element = (ISpieler) iter.next();
+            final ISpieler element = iter.next();
             players.put(element.getSpielerID() + "", element);
         }
 
         for (int i = 0; i < vSpieler.size(); i++) {
             try {
                 final Spieler player = (de.hattrickorganizer.model.Spieler) vSpieler.get(i);
-                ISpieler old = (ISpieler) players.get("" + player.getSpielerID());
+                ISpieler old = players.get("" + player.getSpielerID());
 
                 if (old == null) {
                 	if (TrainingsManager.TRAININGDEBUG)

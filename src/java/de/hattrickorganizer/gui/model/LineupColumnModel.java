@@ -7,6 +7,10 @@ import de.hattrickorganizer.tools.HOLogger;
 
 public class LineupColumnModel extends HOColumnModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6706783648812506363L;
 	private Vector m_vPlayers;
 	
 	protected LineupColumnModel(int id){
@@ -42,6 +46,7 @@ public class LineupColumnModel extends HOColumnModel {
 		columns[3] = add[2];
 		
 		columns[4] = new BooleanColumn(UserColumnFactory.AUTO_LINEUP," ","AutoAufstellung",28){
+								@Override
 								public boolean isEditable(){
 											return false;
 										}};
@@ -62,7 +67,8 @@ public class LineupColumnModel extends HOColumnModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         if (getValueAt(row, col) instanceof Boolean) {
             return true;
         } 
@@ -138,7 +144,8 @@ public class LineupColumnModel extends HOColumnModel {
     /**
      * create a data[][] from player-Vector
      */
-    protected void initData() {
+    @Override
+	protected void initData() {
     	UserColumn [] tmpDisplayedColumns = getDisplayedColumns();
     	m_clData = new Object[m_vPlayers.size()][tmpDisplayedColumns.length];
     	

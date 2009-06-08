@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -36,12 +37,14 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class MatchEnginePanel extends ImagePanel implements plugins.IMatchPredictionPanel,
                                                             ActionListener
 {
+	private static final long serialVersionUID = 4911590394636764762L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
     JButton m_jbButton = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Simulate"));
                                                                             
-	private JSlider slider = new JSlider(JSlider.HORIZONTAL,0,100,0);
+	private JSlider slider = new JSlider(SwingConstants.HORIZONTAL,0,100,0);
     private MatchResultTable m_jtMatchResultTable;
 	private MatchScoreDiffTable m_jtMatchScoreDiffTable;    
     private MatchScoreTable m_jtMatchScoreTable;
@@ -133,7 +136,7 @@ public class MatchEnginePanel extends ImagePanel implements plugins.IMatchPredic
             final TeamData team1 = myTeamPanel.getTeamData();
             final TeamData team2 = opponentTeamPanel.getTeamData();
             result.addMatchResult(MatchPredictionManager.instance().calculateMatchResult(team1, team2));
-            waitDialog.setValue((int) (((double) i * 100d) / (double) match));
+            waitDialog.setValue((int) ((i * 100d) / match));
         }
 
         waitDialog.setVisible(false);

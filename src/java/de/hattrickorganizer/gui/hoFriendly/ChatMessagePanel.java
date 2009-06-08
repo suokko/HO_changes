@@ -6,6 +6,7 @@ import java.awt.Color;
 
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -20,7 +21,11 @@ import de.hattrickorganizer.tools.HOLogger;
 public class ChatMessagePanel extends ImagePanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String HTMLKOPF = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Frameset//EN\"\"http://www.w3.org/TR/REC-html40/frameset.dtd\"><html><head><title></title></head><body>";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2885090836223147286L;
+	private static String HTMLKOPF = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Frameset//EN\"\"http://www.w3.org/TR/REC-html40/frameset.dtd\"><html><head><title></title></head><body>";
     private static String HTMLFUSS = "</body></html>";
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -76,7 +81,7 @@ public class ChatMessagePanel extends ImagePanel {
 
         //m_jepTextModusEditorPane.addHyperlinkListener(this);
         m_jscTextModusScrollPane = new JScrollPane(m_jepTextModusEditorPane);
-        m_jscTextModusScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        m_jscTextModusScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(m_jscTextModusScrollPane, BorderLayout.CENTER);
     }
 }

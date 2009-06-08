@@ -448,6 +448,7 @@ public class EPVData implements Cloneable, IEPVData {
 		return wing;
 	}
 	
+	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
@@ -498,6 +499,7 @@ public class EPVData implements Cloneable, IEPVData {
 	 * @author info.vancauwenberge.tostring plugin
 	
 	 */
+	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("EPVData[");

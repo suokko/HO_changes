@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import plugins.ILineUp;
+import plugins.ISpieler;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
@@ -31,9 +33,12 @@ import de.hattrickorganizer.tools.Helper;
  * Die automatische Aufstellung wird hier konfiguriert und gestartet
  */
 public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener {
+	
+	private static final long serialVersionUID = 5271343329674809429L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbElfmeter = new JButton(new ImageIcon(Helper.changeColor(Helper.loadImage("gui/bilder/credits/Ball.png"),
+	private JButton m_jbElfmeter = new JButton(new ImageIcon(Helper.changeColor(Helper.loadImage("gui/bilder/credits/Ball.png"),
                                                                                                            Color.red,
                                                                                                            Color.white)
                                                                                               .getScaledInstance(24,
@@ -204,8 +209,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
             //gui.RefreshManager.instance ().doRefresh ();
         } else if (actionEvent.getSource().equals(m_jbOK)) {
-            final java.util.Vector vSpieler = new java.util.Vector();
-            final java.util.Vector alleSpieler = hoModel.getAllSpieler();
+            final Vector<ISpieler> vSpieler = new Vector<ISpieler>();
+            final Vector<ISpieler> alleSpieler = hoModel.getAllSpieler();
 
             for (int i = 0; i < alleSpieler.size(); i++) {
                 final de.hattrickorganizer.model.Spieler spieler = (de.hattrickorganizer.model.Spieler) alleSpieler

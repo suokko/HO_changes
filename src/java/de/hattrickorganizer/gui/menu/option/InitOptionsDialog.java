@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 
 /**
@@ -30,7 +31,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
      */
     public InitOptionsDialog() {
         super(new JFrame(), "Please select your language", true);
-        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         initComponents();
     }

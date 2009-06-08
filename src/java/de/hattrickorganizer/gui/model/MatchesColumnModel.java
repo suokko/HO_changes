@@ -7,7 +7,12 @@ import de.hattrickorganizer.model.matches.MatchKurzInfo;
 
 public final class MatchesColumnModel extends HOColumnModel {
 
-	 private MatchKurzInfo[] m_clMatches;
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2148644586671286752L;
+
+	private MatchKurzInfo[] m_clMatches;
 
 	/** TODO Missing Parameter Documentation */
 	
@@ -121,7 +126,8 @@ public final class MatchesColumnModel extends HOColumnModel {
     /**
      * Erzeugt einen Data[][] aus dem Spielervector
      */
-    protected void initData() {
+    @Override
+	protected void initData() {
     	UserColumn [] tmpDisplayedColumns = getDisplayedColumns();
     	m_clData = new Object[m_clMatches.length][tmpDisplayedColumns.length];
  

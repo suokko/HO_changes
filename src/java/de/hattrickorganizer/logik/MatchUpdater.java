@@ -36,14 +36,14 @@ public class MatchUpdater {
         }
 
         final MatchPlayerRetriever updater = new MatchPlayerRetriever(model);
-        final List matchPlayers = updater.getMatchData(matchId);
+        final List<MatchPosition> matchPlayers = updater.getMatchData(matchId);
 
         //HOLogger.instance().log(getClass(),matchPlayers);
         final String query =
             "select ROLEID, SPIELERID,PositionCode from MATCHLINEUPPLAYER where MATCHID = "
             + matchId + "  and TEAMID = " + model.getBasics().getTeamId();
         final ResultSet rs = model.getAdapter().executeQuery(query);
-        final List updates = new ArrayList();
+        final List<String> updates = new ArrayList<String>();
 
         try {
             while (rs.next()) {
@@ -65,8 +65,8 @@ public class MatchUpdater {
                         }
 
                         if (role > 18) {
-                            for (Iterator iter = matchPlayers.iterator(); iter.hasNext();) {
-                                final MatchPosition position = (MatchPosition) iter.next();
+                            for (Iterator<MatchPosition> iter = matchPlayers.iterator(); iter.hasNext();) {
+                                final MatchPosition position = iter.next();
 
                                 if (position != null && position.getPlayerID() == id) {
                                     updates.add("UPDATE MATCHLINEUPPLAYER SET SPIELERID="
@@ -85,8 +85,8 @@ public class MatchUpdater {
                 }
             }
 
-            for (Iterator iter = updates.iterator(); iter.hasNext();) {
-                final String queryUpdate = (String) iter.next();
+            for (Iterator<String> iter = updates.iterator(); iter.hasNext();) {
+                final String queryUpdate = iter.next();
                 model.getAdapter().executeUpdate(queryUpdate);
             }
         } catch (SQLException e) {

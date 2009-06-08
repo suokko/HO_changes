@@ -13,9 +13,13 @@ import javax.swing.JPanel;
  * @author TODO Author Name
  */
 public class DoppelLabel extends JPanel {
+	
+	private static final long serialVersionUID = 4801107348466403035L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JLabel m_jlLinks;
+	
+	private JLabel m_jlLinks;
     private JLabel m_jlRechts;
 
     //~ Constructors -------------------------------------------------------------------------------

@@ -5,11 +5,12 @@ import java.util.Hashtable;
 import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
+import plugins.ISpieler;
 
 
 public class ExportMatchData implements IExportMatchData {
 	
-	private Hashtable players;
+	private Hashtable<Integer,ISpieler> players;
 	private IMatchDetails details;
 	private IMatchKurzInfo info;
 
@@ -21,7 +22,7 @@ public class ExportMatchData implements IExportMatchData {
 		return info;
 	}
 
-	public Hashtable getPlayers() {
+	public Hashtable<Integer,ISpieler> getPlayers() {
 		return players;
 	}
 
@@ -33,7 +34,7 @@ public class ExportMatchData implements IExportMatchData {
 		this.info = info;
 	}
 
-	public void setPlayers(Hashtable hashtable) {
+	public void setPlayers(Hashtable<Integer,ISpieler> hashtable) {
 		players = hashtable;
 	}
 

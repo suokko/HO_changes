@@ -12,14 +12,23 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import plugins.IMatchDetails;
+import plugins.IMatchKurzInfo;
+import plugins.IMatchLineupPlayer;
+import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.Matchdetails;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -27,6 +36,9 @@ import de.hattrickorganizer.tools.PlayerHelper;
  * Zeigt die Stärken eines Matches an
  */
 public class StaerkenvergleichPanel extends ImagePanel {
+	
+	private static final long serialVersionUID = -4203763992583137178L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
@@ -129,7 +141,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Zuschauer"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -149,7 +161,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(m_clZuschauer, constraints);
         panel.add(m_clZuschauer);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wetter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Wetter"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -181,9 +193,9 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -193,9 +205,9 @@ public class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -206,7 +218,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(label);
 
         //Teams mit Ergebnis
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ergebnis"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -254,7 +266,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTeamTore);
 
         //Sterne
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Bewertung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -299,7 +311,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastSterne);
 
         //Einstellung
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Einstellung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Einstellung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -328,7 +340,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastEinstellung);
 
         //Taktiktyp
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Taktik"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktik"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -357,7 +369,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTaktik);
 
         //Taktikskill
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -386,7 +398,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTaktikskill);
 
         //Stimmung
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -415,7 +427,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastStimmung);
 
         //Selbstvertrauen
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Selbstvertrauen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen"));
         label.setPreferredSize(new Dimension(label.getPreferredSize().width + 10,
                                              label.getPreferredSize().height));
         constraints.anchor = GridBagConstraints.WEST;
@@ -505,16 +517,16 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
         String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
 
-        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
             name4matchtyp += (" ( "
-            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Reload_Match")
+            + HOVerwaltung.instance().getLanguageString("Reload_Match")
             + " )");
         }
 
         m_clMatchtyp.setText(name4matchtyp);
 
         //Teams
-        final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getBasics()
+        final int teamid = HOVerwaltung.instance().getModel().getBasics()
                                                                   .getTeamId();
 
         m_clHeimTeamName.setText(info.getHeimName());
@@ -535,17 +547,11 @@ public class StaerkenvergleichPanel extends ImagePanel {
             m_clGastTeamName.setForeground(java.awt.Color.black);
         }
 
-        if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
-            final Vector heimteam = DBZugriff.instance()
-                                                                           .getMatchLineupPlayers(info
-                                                                                                  .getMatchID(),
-                                                                                                  info
-                                                                                                  .getHeimID());
-            final Vector gastteam = DBZugriff.instance()
-                                                                           .getMatchLineupPlayers(info
-                                                                                                  .getMatchID(),
-                                                                                                  info
-                                                                                                  .getGastID());
+        if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+            final Vector<IMatchLineupPlayer> heimteam = DBZugriff.instance().getMatchLineupPlayers(info.getMatchID(),
+                                                                               info.getHeimID());
+            final Vector<IMatchLineupPlayer> gastteam = DBZugriff.instance().getMatchLineupPlayers(info.getMatchID(),
+                                                                               info.getGastID());
 
             float heimSterne = 0;
             float gastSterne = 0;
@@ -554,7 +560,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
             for (int i = 0; i < heimteam.size(); i++) {
                 final MatchLineupPlayer player = (MatchLineupPlayer) heimteam.get(i);
 
-                if (player.getId() < de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
+                if (player.getId() < ISpielerPosition.beginnReservere) {
                     float rating = (float) player.getRating();
 
                     if (rating > 0) {
@@ -567,7 +573,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
             for (int i = 0; i < gastteam.size(); i++) {
                 final MatchLineupPlayer player = (MatchLineupPlayer) gastteam.get(i);
 
-                if (player.getId() < de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
+                if (player.getId() < ISpielerPosition.beginnReservere) {
                     float rating = (float) player.getRating();
 
                     if (rating > 0) {
@@ -578,23 +584,23 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
             //--updaten--
             //Sterne für Sieger!
-            if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
+            if (info.getMatchStatus() != IMatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {
-                m_clHeimTeamName.setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() < info.getGastTore()) {
                 m_clHeimTeamName.setIcon(null);
-                m_clGastTeamName.setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
+                m_clGastTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
             } else {
-                m_clHeimTeamName.setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
-                m_clGastTeamName.setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(Helper.GREYSTARIMAGEICON);
+                m_clGastTeamName.setIcon(Helper.GREYSTARIMAGEICON);
             }
 
             //Sterneanzahl
-            m_clHeimSterne.setText(de.hattrickorganizer.tools.Helper.round(heimSterne, 2) + " ");
-            m_clGastSterne.setText(de.hattrickorganizer.tools.Helper.round(gastSterne, 2) + " ");
+            m_clHeimSterne.setText(Helper.round(heimSterne, 2) + " ");
+            m_clGastSterne.setText(Helper.round(gastSterne, 2) + " ");
 
             m_clHeimTeamRating.setRating(heimSterne * 2);
             m_clGastTeamRating.setRating(gastSterne * 2);
@@ -604,16 +610,16 @@ public class StaerkenvergleichPanel extends ImagePanel {
             String gastEinstellung = "";
 
             switch (details.getHomeEinstellung()) {
-                case Matchdetails.EINSTELLUNG_NORMAL:
-                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal");
+                case IMatchDetails.EINSTELLUNG_NORMAL:
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("Normal");
                     break;
 
-                case Matchdetails.EINSTELLUNG_PIC:
-                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC");
+                case IMatchDetails.EINSTELLUNG_PIC:
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("PIC");
                     break;
 
-                case Matchdetails.EINSTELLUNG_MOTS:
-                    heimEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS");
+                case IMatchDetails.EINSTELLUNG_MOTS:
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("MOTS");
                     break;
 
                 default:
@@ -621,16 +627,16 @@ public class StaerkenvergleichPanel extends ImagePanel {
             }
 
             switch (details.getGuestEinstellung()) {
-                case Matchdetails.EINSTELLUNG_NORMAL:
-                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal");
+                case IMatchDetails.EINSTELLUNG_NORMAL:
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("Normal");
                     break;
 
-                case Matchdetails.EINSTELLUNG_PIC:
-                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC");
+                case IMatchDetails.EINSTELLUNG_PIC:
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("PIC");
                     break;
 
-                case Matchdetails.EINSTELLUNG_MOTS:
-                    gastEinstellung = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS");
+                case IMatchDetails.EINSTELLUNG_MOTS:
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("MOTS");
                     break;
 
                 default:

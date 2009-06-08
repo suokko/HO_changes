@@ -6,8 +6,6 @@
  */
 package de.hattrickorganizer.gui.model;
 
-import java.util.Vector;
-
 import javax.swing.JProgressBar;
 import javax.swing.table.AbstractTableModel;
 
@@ -19,7 +17,11 @@ import plugins.IMatchResult;
  * @author Pirania
  */
 public abstract class AbstractMatchTableModel extends AbstractTableModel {
+
+	private static final long serialVersionUID = -7810048787047274663L;
+	
 	//~ Instance fields ----------------------------------------------------------------------------
+
 
 	/** TODO Missing Parameter Documentation */
 	protected Object[][] m_clData;
@@ -52,6 +54,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
+	@Override
 	public final boolean isCellEditable(int row, int col) {
 		return false;
 	}
@@ -63,6 +66,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
+	@Override
 	public final Class getColumnClass(int columnIndex) {
 		final Object obj = getValueAt(0, columnIndex);
 
@@ -86,6 +90,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
+	@Override
 	public final String getColumnName(int columnIndex) {
 		if ((getColumnNames() != null) && (getColumnNames().length > columnIndex)) {
 			return getColumnNames()[columnIndex];
@@ -139,6 +144,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	 * @param row TODO Missing Method Parameter Documentation
 	 * @param column TODO Missing Method Parameter Documentation
 	 */
+	@Override
 	public final void setValueAt(Object value, int row, int column) {
 		m_clData[row][column] = value;
 	}

@@ -181,7 +181,8 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("TrainingPerWeek[");
         buffer.append("intensity = " + intensity);

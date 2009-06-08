@@ -3,7 +3,6 @@ package de.hattrickorganizer.tools;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -187,7 +186,8 @@ public class HOLogger {
      *
      * @throws Throwable TODO Missing Method Exception Documentation
      */
-    protected void finalize() throws Throwable {
+    @Override
+	protected void finalize() throws Throwable {
         super.finalize();
 
         try {

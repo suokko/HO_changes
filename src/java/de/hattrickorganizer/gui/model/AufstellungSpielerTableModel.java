@@ -28,9 +28,12 @@ import de.hattrickorganizer.tools.Helper;
  * @version 0.2a    31.10.2001
  */
 public class AufstellungSpielerTableModel extends AbstractTableModel {
+	
+	private static final long serialVersionUID = -8616275278600943349L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     public final String[] m_sToolTipStrings = {
                                             HOVerwaltung.instance().getLanguageString("Name"),
  
@@ -269,7 +272,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     HOVerwaltung.instance().getLanguageString("ID")
     };
     
-    private Vector m_vSpieler;
+    private Vector<ISpieler> m_vSpieler;
 //    private Vector m_vVergleichsSpieler = new Vector();
     private int m_iIDSpalte = 38;
 
@@ -280,7 +283,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public AufstellungSpielerTableModel(Vector spieler) {
+    public AufstellungSpielerTableModel(Vector<ISpieler> spieler) {
         m_vSpieler = spieler;
         initData();
     }
@@ -295,7 +298,8 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         if (getValueAt(row, col) instanceof Boolean) {
             return true;
         } 
@@ -311,7 +315,8 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -340,7 +345,8 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
             return m_sColumnNames[columnIndex];
         } 
@@ -434,7 +440,8 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 
@@ -459,7 +466,7 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector spieler) {
+    public final void setValues(Vector<ISpieler> spieler) {
         m_vSpieler = spieler;
         initData();
     }

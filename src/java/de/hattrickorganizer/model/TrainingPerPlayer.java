@@ -261,7 +261,8 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
      *
      * @return
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return spieler.getSpielerID() + ":" + TW + ":" + VE + ":" + SA + ":" + PS + ":" + FL + ":"
                + TS + ":" + ST;
     }

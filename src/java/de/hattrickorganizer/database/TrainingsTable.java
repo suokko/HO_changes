@@ -16,6 +16,7 @@ public final class TrainingsTable extends AbstractTable {
 		super(TABLENAME, adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[5];
 		columns[0]= new ColumnDescriptor("Week",Types.INTEGER,false);

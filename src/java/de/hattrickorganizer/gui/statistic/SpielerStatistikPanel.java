@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -21,11 +23,17 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
+import plugins.ISpieler;
+
+import de.hattrickorganizer.gui.model.SpielerCBItem;
+import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -34,9 +42,11 @@ import de.hattrickorganizer.tools.HOLogger;
 public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener, FocusListener, de.hattrickorganizer.gui.Refreshable, ItemListener
 {
+	private static final long serialVersionUID = -5003282359250534295L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Color FUEHRUNG = Color.gray;
+	private static Color FUEHRUNG = Color.gray;
     private static Color ERFAHRUNG = Color.darkGray;
     private static Color FORM = Color.pink;
     private static Color KONDITION = Color.magenta;
@@ -57,68 +67,53 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchBewertung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(BEWERTUNG),
+    private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Bewertung"),
+                                                             Helper.getImageIcon4Color(BEWERTUNG),
                                                              gui.UserParameter.instance().statistikBewertung);
-    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(ERFAHRUNG),
+    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Erfahrung"),
+                                                             Helper.getImageIcon4Color(ERFAHRUNG),
                                                              gui.UserParameter.instance().statistikErfahrung);
-    private ImageCheckbox m_jchFluegel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                                           de.hattrickorganizer.tools.Helper
-                                                           .getImageIcon4Color(FLUEGEL),
+    private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+                                                           Helper.getImageIcon4Color(FLUEGEL),
                                                            gui.UserParameter.instance().statistikFluegel);
-    private ImageCheckbox m_jchForm = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form"),
-                                                        de.hattrickorganizer.tools.Helper
-                                                        .getImageIcon4Color(FORM),
+    private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
+                                                        Helper.getImageIcon4Color(FORM),
                                                         gui.UserParameter.instance().statistikForm);
-    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fuehrung"),
-                                                            de.hattrickorganizer.tools.Helper
-                                                            .getImageIcon4Color(FUEHRUNG),
+    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
+                                                            Helper.getImageIcon4Color(FUEHRUNG),
                                                             gui.UserParameter.instance().statistikFuehrung);
-    private ImageCheckbox m_jchGehalt = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gehalt"),
-                                                          de.hattrickorganizer.tools.Helper
-                                                          .getImageIcon4Color(GEHALT),
+    private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gehalt"),
+                                                          Helper.getImageIcon4Color(GEHALT),
                                                           gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
-    private ImageCheckbox m_jchKondition = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(KONDITION),
+    private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Kondition"),
+                                                             Helper.getImageIcon4Color(KONDITION),
                                                              gui.UserParameter.instance().statistikKondition);
     private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(MARKTWERT),
+                                                             Helper.getImageIcon4Color(MARKTWERT),
                                                              gui.UserParameter.instance().statistikSpielerFinanzenMarktwert);
-    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
-                                                            de.hattrickorganizer.tools.Helper
-                                                            .getImageIcon4Color(PASSPIEL),
+    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Passpiel"),
+                                                            Helper.getImageIcon4Color(PASSPIEL),
                                                             gui.UserParameter.instance().statistikPasspiel);
-    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
-                                                               de.hattrickorganizer.tools.Helper
-                                                               .getImageIcon4Color(SPIELAUFBAU),
+    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Spielaufbau"),
+                                                               Helper.getImageIcon4Color(SPIELAUFBAU),
                                                                gui.UserParameter.instance().statistikSpielaufbau);
-    private ImageCheckbox m_jchStandards = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(STANDARDS),
+    private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Standards"),
+                                                             Helper.getImageIcon4Color(STANDARDS),
                                                              gui.UserParameter.instance().statistikStandards);
-    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(TORSCHUSS),
+    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Torschuss"),
+                                                             Helper.getImageIcon4Color(TORSCHUSS),
                                                              gui.UserParameter.instance().statistikTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
-                                                           de.hattrickorganizer.tools.Helper
-                                                           .getImageIcon4Color(TORWART),
+    private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Torwart"),
+                                                           Helper.getImageIcon4Color(TORWART),
                                                            gui.UserParameter.instance().statistikTorwart);
-    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
-                                                                de.hattrickorganizer.tools.Helper
-                                                                .getImageIcon4Color(VERTEIDIGUNG),
+    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Verteidigung"),
+                                                                Helper.getImageIcon4Color(VERTEIDIGUNG),
                                                                 gui.UserParameter.instance().statistikVerteidigung);
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikHilfslinien);
     private JComboBox m_jcbSpieler = new JComboBox();
     private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikAnzahlHRF
@@ -152,8 +147,8 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         final ComboBoxModel model = m_jcbSpieler.getModel();
 
         for (int i = 0; i < model.getSize(); ++i) {
-            if (model.getElementAt(i) instanceof de.hattrickorganizer.gui.model.SpielerCBItem) {
-                if (((de.hattrickorganizer.gui.model.SpielerCBItem) model.getElementAt(i)).getSpieler()
+            if (model.getElementAt(i) instanceof SpielerCBItem) {
+                if (((SpielerCBItem) model.getElementAt(i)).getSpieler()
                      .getSpielerID() == spielerid) {
                     //Spieler gefunden -> Auswählen und fertig
                     m_jcbSpieler.setSelectedIndex(i);
@@ -199,8 +194,8 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            if (((de.hattrickorganizer.gui.model.SpielerCBItem) m_jcbSpieler.getSelectedItem() != null)) {
-                final String name = ((de.hattrickorganizer.gui.model.SpielerCBItem) m_jcbSpieler
+            if (((SpielerCBItem) m_jcbSpieler.getSelectedItem() != null)) {
+                final String name = ((SpielerCBItem) m_jcbSpieler
                                      .getSelectedItem()).getSpieler().getName();
                 m_clStatistikPanel.doPrint(name);
             }
@@ -278,7 +273,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
      * @param focusEvent TODO Missing Method Parameter Documentation
      */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
+        Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 
@@ -339,13 +334,13 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Wochen"));
         constraints2.gridwidth = 1;
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
@@ -353,7 +348,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         constraints2.gridy = 1;
         layout2.setConstraints(label, constraints2);
         panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(JTextField.RIGHT);
+        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
         m_jtfAnzahlHRF.addFocusListener(this);
         constraints2.gridx = 1;
         constraints2.gridy = 1;
@@ -363,13 +358,13 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         constraints2.gridx = 0;
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         layout2.setConstraints(m_jbUbernehmen, constraints2);
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieler"));
-        label.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_Spieler"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spieler"));
+        label.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_Spieler"));
         constraints2.gridx = 0;
         constraints2.gridy = 3;
         constraints2.gridwidth = 2;
@@ -377,8 +372,8 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         panel2.add(label);
         constraints2.gridx = 0;
         constraints2.gridy = 4;
-        m_jcbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_Spieler"));
-        m_jcbSpieler.setRenderer(new de.hattrickorganizer.gui.model.SpielerCBItemRenderer());
+        m_jcbSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_Spieler"));
+        m_jcbSpieler.setRenderer(new SpielerCBItemRenderer());
         m_jcbSpieler.setBackground(Color.white);
         m_jcbSpieler.setMaximumRowCount(25);
         m_jcbSpieler.addItemListener(this);
@@ -549,41 +544,28 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
      * TODO Missing Method Documentation
      */
     private void initSpielerCB() {
-        final java.util.Vector spieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getModel()
-                                                                                .getAllSpieler();
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] spielerCBItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spieler
-                                                                                                                               .size()];
+        final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler.size()];
 
         for (int i = 0; i < spieler.size(); i++) {
-            spielerCBItems[i] = new de.hattrickorganizer.gui.model.SpielerCBItem(((Spieler) spieler
-                                                                                  .get(i)).getName(),
-                                                                                 0f,
-                                                                                 (Spieler) spieler
-                                                                                 .get(i));
+            spielerCBItems[i] = new SpielerCBItem((spieler.get(i)).getName(),0f,spieler.get(i));
         }
 
-        java.util.Arrays.sort(spielerCBItems);
+        Arrays.sort(spielerCBItems);
 
         //Alte Spieler
-        final java.util.Vector allSpieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getModel()
-                                                                                   .getAllOldSpieler();
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] spielerAllCBItems = new de.hattrickorganizer.gui.model.SpielerCBItem[allSpieler
+        final Vector<ISpieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
+        final SpielerCBItem[] spielerAllCBItems = new SpielerCBItem[allSpieler
                                                                                                                                   .size()];
 
         for (int i = 0; i < allSpieler.size(); i++) {
-            spielerAllCBItems[i] = new de.hattrickorganizer.gui.model.SpielerCBItem(((Spieler) allSpieler
-                                                                                     .get(i))
-                                                                                    .getName(), 0f,
-                                                                                    (Spieler) allSpieler
-                                                                                    .get(i));
+            spielerAllCBItems[i] = new SpielerCBItem((allSpieler.get(i)).getName(), 0f,allSpieler.get(i));
         }
 
-        java.util.Arrays.sort(spielerAllCBItems);
+        Arrays.sort(spielerAllCBItems);
 
         //Zusammenfügen
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] cbItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spielerCBItems.length
+        final SpielerCBItem[] cbItems = new SpielerCBItem[spielerCBItems.length
                                                                        + spielerAllCBItems.length
                                                                        + 1];
         int i = 0;
@@ -622,12 +604,12 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
 
             gui.UserParameter.instance().statistikAnzahlHRF = anzahlHRF;
 
-            final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT;
+            final java.text.NumberFormat format = Helper.DEFAULTDEZIMALFORMAT;
             final java.text.NumberFormat format2 = java.text.NumberFormat.getCurrencyInstance();
 
             if (m_jcbSpieler.getSelectedItem() != null) {
                 final double[][] statistikWerte = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                         .getSpielerDaten4Statistik(((de.hattrickorganizer.gui.model.SpielerCBItem) m_jcbSpieler
+                                                                                         .getSpielerDaten4Statistik(((SpielerCBItem) m_jcbSpieler
                                                                                                                      .getSelectedItem()).getSpieler()
                                                                                                                      .getSpielerID(),
                                                                                                                     anzahlHRF);
@@ -670,16 +652,16 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
                                                     m_jchBewertung.isSelected(), BEWERTUNG, format);
                 }
 
-                final String[] yBezeichnungen = de.hattrickorganizer.tools.Helper
+                final String[] yBezeichnungen = Helper
                                                 .convertTimeMillisToFormatString(statistikWerte[14]);
 
                 m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                HOVerwaltung.instance().getLanguageString("Wochen"),
                                                 "", m_jchBeschriftung.isSelected(),
                                                 m_jchHilflinien.isSelected());
             } else {
                 m_clStatistikPanel.setAllValues(null, new String[0], format,
-                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                HOVerwaltung.instance().getLanguageString("Wochen"),
                                                 "", m_jchBeschriftung.isSelected(),
                                                 m_jchHilflinien.isSelected());
             }

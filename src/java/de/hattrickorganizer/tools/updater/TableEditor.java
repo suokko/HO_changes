@@ -31,7 +31,12 @@ import de.hattrickorganizer.tools.HOLogger;
 public final class TableEditor extends AbstractCellEditor implements TableCellEditor {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 204969955618566382L;
+
+	/** TODO Missing Parameter Documentation */
     protected HashMap editors;
 
     /** TODO Missing Parameter Documentation */
@@ -132,14 +137,16 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
      *
      * @param l TODO Missing Method Parameter Documentation
      */
-    public void addCellEditorListener(CellEditorListener l) {
+    @Override
+	public void addCellEditorListener(CellEditorListener l) {
         editor.addCellEditorListener(l);
     }
 
     /**
      * TODO Missing Method Documentation
      */
-    public void cancelCellEditing() {
+    @Override
+	public void cancelCellEditing() {
         super.cancelCellEditing();
     }
 
@@ -148,7 +155,8 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
      *
      * @param l TODO Missing Method Parameter Documentation
      */
-    public void removeCellEditorListener(CellEditorListener l) {
+    @Override
+	public void removeCellEditorListener(CellEditorListener l) {
         editor.removeCellEditorListener(l);
     }
 
@@ -159,7 +167,8 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
      *
      * @return TODO Missing Return Method Documentation
      */
-    public boolean shouldSelectCell(EventObject anEvent) {
+    @Override
+	public boolean shouldSelectCell(EventObject anEvent) {
         return super.shouldSelectCell(anEvent);
     }
 
@@ -168,7 +177,8 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
      *
      * @return TODO Missing Return Method Documentation
      */
-    public boolean stopCellEditing() {
+    @Override
+	public boolean stopCellEditing() {
         return super.stopCellEditing();
     }
 }

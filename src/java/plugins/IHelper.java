@@ -288,7 +288,8 @@ public interface IHelper {
      *
      * @deprecated
      */
-    public Vector<IPlugin> getPlugins();
+    @Deprecated
+	public Vector<IPlugin> getPlugins();
 
     /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is

@@ -1,8 +1,6 @@
 // %119160480:de.hattrickorganizer.gui%
 package de.hattrickorganizer.gui;
 
-import gui.UserParameter;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -22,7 +20,12 @@ import de.hattrickorganizer.model.HOParameter;
 public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4902186890362152556L;
+
+	/** TODO Missing Parameter Documentation */
     public static final Color FEHLERFARBE = Color.red;
 
     /** TODO Missing Parameter Documentation */

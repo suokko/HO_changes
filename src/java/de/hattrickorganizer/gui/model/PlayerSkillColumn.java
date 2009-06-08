@@ -46,6 +46,7 @@ class PlayerSkillColumn extends PlayerColumn {
 	/**
 	 * overwritten by created columns
 	 */
+	@Override
 	public TableEntry getTableEntry(Spieler player,Spieler comparePlayer){
 		return new DoppelLabelEntry(getSkillValue(player),getCompareValue(player,comparePlayer));
 	}
@@ -117,6 +118,7 @@ class PlayerSkillColumn extends PlayerColumn {
 	/**
 	 * overwrite the method from UserColumn
 	 */
+	@Override
 	public void setSize(TableColumn column){
 		final int breite = (int) (55d * (1d + ((gui.UserParameter.instance().anzahlNachkommastellen - 1) / 4.5d)));
 		column.setMinWidth(20);

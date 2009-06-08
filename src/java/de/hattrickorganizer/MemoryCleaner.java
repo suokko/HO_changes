@@ -39,6 +39,7 @@ public class MemoryCleaner implements Runnable {
 	/**
 	 * TODO Missing Method Documentation
 	 */
+	@Override
 	protected final void finalize() {
 	}
 

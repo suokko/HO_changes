@@ -18,7 +18,11 @@ import javax.swing.table.TableColumnModel;
 public class GroupableTableHeader extends JTableHeader {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3171206308970166009L;
+	/** TODO Missing Parameter Documentation */
     /** TODO Missing Parameter Documentation */
     protected Vector columnGroups;
 
@@ -53,7 +57,7 @@ public class GroupableTableHeader extends JTableHeader {
 
         while (enumi.hasMoreElements()) {
             final ColumnGroup cGroup = (ColumnGroup) enumi.nextElement();
-            final Vector v_ret = (Vector) cGroup.getColumnGroups(col, new Vector());
+            final Vector v_ret = cGroup.getColumnGroups(col, new Vector());
 
             if (v_ret != null) {
                 return v_ret.elements();
@@ -85,7 +89,8 @@ public class GroupableTableHeader extends JTableHeader {
      *
      * @param b TODO Missing Method Parameter Documentation
      */
-    public final void setReorderingAllowed(boolean b) {
+    @Override
+	public final void setReorderingAllowed(boolean b) {
         reorderingAllowed = false;
     }
 

@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
+import plugins.ISpielePanel;
+
 import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -28,21 +30,23 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 public class ArenaStatistikPanel extends ImagePanel implements MouseListener, KeyListener,
                                                                ItemListener
 {
+	private static final long serialVersionUID = 2679088584924124183L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ArenaStatistikTable m_jtArenaStatistikTable;
+	private ArenaStatistikTable m_jtArenaStatistikTable;
     private JComboBox m_jcbSpieleFilter;
     private CBItem[] SPIELEFILTER = {
                                         new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
-                                                   SpielePanel.NUR_EIGENE_SPIELE),
+                                                   ISpielePanel.NUR_EIGENE_SPIELE),
                                         new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
-                                                   SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
+                                                   ISpielePanel.NUR_EIGENE_PFLICHTSPIELE),
                                         new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
-                                                   SpielePanel.NUR_EIGENE_POKALSPIELE),
+                                                   ISpielePanel.NUR_EIGENE_POKALSPIELE),
                                         new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
-                                                   SpielePanel.NUR_EIGENE_LIGASPIELE),
+                                                   ISpielePanel.NUR_EIGENE_LIGASPIELE),
                                         new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
-                                                   SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
+                                                   ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
                                     };
     private boolean m_bInitialisiert;
 

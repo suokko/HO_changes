@@ -19,6 +19,9 @@ import de.hattrickorganizer.model.HOVerwaltung;
  * @author TODO Author Name
  */
 final class MatchesTable extends JTable {
+	
+	private static final long serialVersionUID = -8724051830928497450L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private MatchesColumnModel m_clTableModel;

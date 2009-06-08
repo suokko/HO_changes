@@ -18,6 +18,7 @@ public final class BasicsTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
         columns = new ColumnDescriptor[10];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
@@ -32,6 +33,7 @@ public final class BasicsTable extends AbstractTable {
 		columns[9]= new ColumnDescriptor("Region",Types.INTEGER,false);
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IBASICS_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")",

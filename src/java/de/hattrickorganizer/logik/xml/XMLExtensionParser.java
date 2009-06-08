@@ -78,6 +78,6 @@ public class XMLExtensionParser {
 
 	private String getTagValue(Element root, String tag) {
 		final Element ele = (Element) root.getElementsByTagName(tag).item(0);
-		return (String) (XMLManager.instance().getFirstChildNodeValue(ele));
+		return (XMLManager.instance().getFirstChildNodeValue(ele));
 	}
 }

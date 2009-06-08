@@ -50,7 +50,8 @@ public class TrickotCacheKey {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         if (obj instanceof TrickotCacheKey) {
             if ((((TrickotCacheKey) obj).getId() == getId())
                 && (((TrickotCacheKey) obj).getTaktik() == getTaktik())) {
@@ -66,7 +67,8 @@ public class TrickotCacheKey {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int hashCode() {
-        return (int) m_iId + (int) m_bTaktik;
+    @Override
+	public final int hashCode() {
+        return m_iId + m_bTaktik;
     }
 }

@@ -12,9 +12,12 @@ import de.hattrickorganizer.model.HOVerwaltung;
  * @author draghetto
  */
 public class DoctorPanel extends AbstractInjuryPanel {
+	
+	private static final long serialVersionUID = 1843273716445393647L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private String msg = HOVerwaltung.instance().getLanguageString("DoctorsNeeded");
+	private String msg = HOVerwaltung.instance().getLanguageString("DoctorsNeeded");
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -33,7 +36,8 @@ public class DoctorPanel extends AbstractInjuryPanel {
     /**
      * Action to be executed when the button is pressed Calculates the result using the parameters
      */
-    public final void doAction() {
+    @Override
+	public final void doAction() {
         final int updates = getInput();
 
         final double doctors = InjuryCalculator.getDoctorNumber(getDetail().getAge(),

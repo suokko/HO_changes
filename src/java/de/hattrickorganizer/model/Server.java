@@ -10,6 +10,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
+import plugins.ISpielerPosition;
+
 import de.hattrickorganizer.logik.SpielLogik;
 import de.hattrickorganizer.net.rmiHOFriendly.HOServerImp;
 import de.hattrickorganizer.tools.HOLogger;
@@ -514,12 +516,12 @@ public class Server implements java.lang.Runnable {
             txt[i] = pl.getName() + " spielt "
                      + SpielerPosition.getNameForPosition(sp[i].getPosition()) + " mit STK : "
                      + pl.getStk(sp[i].getPosition()) + ", TW: "
-                     + pl.getStk(SpielerPosition.TORWART) + ", IV: "
-                     + pl.getStk(SpielerPosition.INNENVERTEIDIGER) + ", AV: "
-                     + pl.getStk(SpielerPosition.AUSSENVERTEIDIGER) + ", FL: "
-                     + pl.getStk(SpielerPosition.FLUEGELSPIEL) + ", IM: "
-                     + pl.getStk(SpielerPosition.MITTELFELD) + ", ST: "
-                     + pl.getStk(SpielerPosition.STURM);
+                     + pl.getStk(ISpielerPosition.TORWART) + ", IV: "
+                     + pl.getStk(ISpielerPosition.INNENVERTEIDIGER) + ", AV: "
+                     + pl.getStk(ISpielerPosition.AUSSENVERTEIDIGER) + ", FL: "
+                     + pl.getStk(ISpielerPosition.FLUEGELSPIEL) + ", IM: "
+                     + pl.getStk(ISpielerPosition.MITTELFELD) + ", ST: "
+                     + pl.getStk(ISpielerPosition.STURM);
         }
 
         if (sp != null) {

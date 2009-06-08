@@ -7,8 +7,12 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Vector;
 
 import javax.swing.JLabel;
+
+import plugins.IMatchLineupPlayer;
+import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.gui.templates.RasenPanel;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -20,9 +24,12 @@ import de.hattrickorganizer.tools.HOLogger;
  * Zeigt die Stärken und Aufstellung einer Mannschaft an
  */
 public class AufstellungsSternePanel extends RasenPanel {
+	
+	private static final long serialVersionUID = 7568934875331878466L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JLabel m_jlTeamName;
+	private JLabel m_jlTeamName;
     private SpielerSternePanel m_clAusgewechselt1;
     private SpielerSternePanel m_clAusgewechselt2;
     private SpielerSternePanel m_clAusgewechselt3;
@@ -128,113 +135,113 @@ public class AufstellungsSternePanel extends RasenPanel {
         if (lineupteam != null) {
             m_jlTeamName.setText(lineupteam.getTeamName() + " (" + lineupteam.getTeamID() + ")");
 
-            final java.util.Vector aufstellung = lineupteam.getAufstellung();
+            final Vector<IMatchLineupPlayer> aufstellung = lineupteam.getAufstellung();
 
             for (int i = 0; i < aufstellung.size(); i++) {
                 final MatchLineupPlayer player = (MatchLineupPlayer) aufstellung.get(i);
 
                 switch (player.getId()) {
-                    case SpielerPosition.keeper: {
+                    case ISpielerPosition.keeper: {
                         m_clTorwart.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.rightBack: {
+                    case ISpielerPosition.rightBack: {
                         m_clRechteAussenVerteidiger.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.leftBack: {
+                    case ISpielerPosition.leftBack: {
                         m_clLinkeAussenVerteidiger.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.insideBack1: {
+                    case ISpielerPosition.insideBack1: {
                         m_clRechteInnenVerteidiger.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.insideBack2: {
+                    case ISpielerPosition.insideBack2: {
                         m_clLinkeInnenVerteidiger.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.insideMid1: {
+                    case ISpielerPosition.insideMid1: {
                         m_clRechteMittelfeld.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.insideMid2: {
+                    case ISpielerPosition.insideMid2: {
                         m_clLinkeMittelfeld.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.leftWinger: {
+                    case ISpielerPosition.leftWinger: {
                         m_clLinkeFluegel.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.rightWinger: {
+                    case ISpielerPosition.rightWinger: {
                         m_clRechteFluegel.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.forward1: {
+                    case ISpielerPosition.forward1: {
                         m_clLinkerSturm.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.forward2: {
+                    case ISpielerPosition.forward2: {
                         m_clRechterSturm.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.substBack: {
+                    case ISpielerPosition.substBack: {
                         m_clReserveVerteidiger.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.substForward: {
+                    case ISpielerPosition.substForward: {
                         m_clReserveSturm.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.substInsideMid: {
+                    case ISpielerPosition.substInsideMid: {
                         m_clReserveMittelfeld.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.substKeeper: {
+                    case ISpielerPosition.substKeeper: {
                         m_clReserveTorwart.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.substWinger: {
+                    case ISpielerPosition.substWinger: {
                         m_clReserveFluegel.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.spielfuehrer: {
+                    case ISpielerPosition.spielfuehrer: {
                         m_clSpielfuehrer.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.standard: {
+                    case ISpielerPosition.standard: {
                         m_clStandard.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.ausgewechselt: {
+                    case ISpielerPosition.ausgewechselt: {
                         m_clAusgewechselt1.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.ausgewechselt + 1: {
+                    case ISpielerPosition.ausgewechselt + 1: {
                         m_clAusgewechselt2.refresh(lineup, player);
                         break;
                     }
 
-                    case SpielerPosition.ausgewechselt + 2: {
+                    case ISpielerPosition.ausgewechselt + 2: {
                         m_clAusgewechselt3.refresh(lineup, player);
                         break;
                     }
@@ -296,7 +303,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 4;
         }
 
-        m_clTorwart = new SpielerSternePanel(SpielerPosition.keeper, m_bPrint);
+        m_clTorwart = new SpielerSternePanel(ISpielerPosition.keeper, m_bPrint);
         layout.setConstraints(m_clTorwart, constraints);
         centerPanel.add(m_clTorwart);
 
@@ -310,7 +317,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteAussenVerteidiger = new SpielerSternePanel(SpielerPosition.rightBack, m_bPrint);
+        m_clRechteAussenVerteidiger = new SpielerSternePanel(ISpielerPosition.rightBack, m_bPrint);
         layout.setConstraints(m_clRechteAussenVerteidiger, constraints);
         centerPanel.add(m_clRechteAussenVerteidiger);
 
@@ -324,7 +331,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteInnenVerteidiger = new SpielerSternePanel(SpielerPosition.insideBack1, m_bPrint);
+        m_clRechteInnenVerteidiger = new SpielerSternePanel(ISpielerPosition.insideBack1, m_bPrint);
         layout.setConstraints(m_clRechteInnenVerteidiger, constraints);
         centerPanel.add(m_clRechteInnenVerteidiger);
 
@@ -338,7 +345,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeInnenVerteidiger = new SpielerSternePanel(SpielerPosition.insideBack2, m_bPrint);
+        m_clLinkeInnenVerteidiger = new SpielerSternePanel(ISpielerPosition.insideBack2, m_bPrint);
         layout.setConstraints(m_clLinkeInnenVerteidiger, constraints);
         centerPanel.add(m_clLinkeInnenVerteidiger);
 
@@ -352,7 +359,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeAussenVerteidiger = new SpielerSternePanel(SpielerPosition.leftBack, m_bPrint);
+        m_clLinkeAussenVerteidiger = new SpielerSternePanel(ISpielerPosition.leftBack, m_bPrint);
         layout.setConstraints(m_clLinkeAussenVerteidiger, constraints);
         centerPanel.add(m_clLinkeAussenVerteidiger);
 
@@ -366,7 +373,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteFluegel = new SpielerSternePanel(SpielerPosition.rightWinger, m_bPrint);
+        m_clRechteFluegel = new SpielerSternePanel(ISpielerPosition.rightWinger, m_bPrint);
         layout.setConstraints(m_clRechteFluegel, constraints);
         centerPanel.add(m_clRechteFluegel);
 
@@ -380,7 +387,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteMittelfeld = new SpielerSternePanel(SpielerPosition.insideMid1, m_bPrint);
+        m_clRechteMittelfeld = new SpielerSternePanel(ISpielerPosition.insideMid1, m_bPrint);
         layout.setConstraints(m_clRechteMittelfeld, constraints);
         centerPanel.add(m_clRechteMittelfeld);
 
@@ -394,7 +401,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeMittelfeld = new SpielerSternePanel(SpielerPosition.insideMid2, m_bPrint);
+        m_clLinkeMittelfeld = new SpielerSternePanel(ISpielerPosition.insideMid2, m_bPrint);
         layout.setConstraints(m_clLinkeMittelfeld, constraints);
         centerPanel.add(m_clLinkeMittelfeld);
 
@@ -408,7 +415,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeFluegel = new SpielerSternePanel(SpielerPosition.leftWinger, m_bPrint);
+        m_clLinkeFluegel = new SpielerSternePanel(ISpielerPosition.leftWinger, m_bPrint);
         layout.setConstraints(m_clLinkeFluegel, constraints);
         centerPanel.add(m_clLinkeFluegel);
 
@@ -422,7 +429,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkerSturm = new SpielerSternePanel(SpielerPosition.forward1, m_bPrint);
+        m_clLinkerSturm = new SpielerSternePanel(ISpielerPosition.forward1, m_bPrint);
         layout.setConstraints(m_clLinkerSturm, constraints);
         centerPanel.add(m_clLinkerSturm);
 
@@ -436,7 +443,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechterSturm = new SpielerSternePanel(SpielerPosition.forward2, m_bPrint);
+        m_clRechterSturm = new SpielerSternePanel(ISpielerPosition.forward2, m_bPrint);
         layout.setConstraints(m_clRechterSturm, constraints);
         centerPanel.add(m_clRechterSturm);
 
@@ -450,7 +457,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clStandard = new SpielerSternePanel(SpielerPosition.standard, m_bPrint);
+        m_clStandard = new SpielerSternePanel(ISpielerPosition.standard, m_bPrint);
         layout.setConstraints(m_clStandard, constraints);
         centerPanel.add(m_clStandard);
 
@@ -464,7 +471,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 2;
         }
 
-        m_clReserveTorwart = new SpielerSternePanel(SpielerPosition.substKeeper, m_bPrint);
+        m_clReserveTorwart = new SpielerSternePanel(ISpielerPosition.substKeeper, m_bPrint);
         layout.setConstraints(m_clReserveTorwart, constraints);
         centerPanel.add(m_clReserveTorwart);
 
@@ -478,7 +485,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clSpielfuehrer = new SpielerSternePanel(SpielerPosition.spielfuehrer, m_bPrint);
+        m_clSpielfuehrer = new SpielerSternePanel(ISpielerPosition.spielfuehrer, m_bPrint);
         layout.setConstraints(m_clSpielfuehrer, constraints);
         centerPanel.add(m_clSpielfuehrer);
 
@@ -492,7 +499,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveVerteidiger = new SpielerSternePanel(SpielerPosition.substBack, m_bPrint);
+        m_clReserveVerteidiger = new SpielerSternePanel(ISpielerPosition.substBack, m_bPrint);
         layout.setConstraints(m_clReserveVerteidiger, constraints);
         centerPanel.add(m_clReserveVerteidiger);
 
@@ -506,7 +513,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveMittelfeld = new SpielerSternePanel(SpielerPosition.substInsideMid, m_bPrint);
+        m_clReserveMittelfeld = new SpielerSternePanel(ISpielerPosition.substInsideMid, m_bPrint);
         layout.setConstraints(m_clReserveMittelfeld, constraints);
         centerPanel.add(m_clReserveMittelfeld);
 
@@ -520,7 +527,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveSturm = new SpielerSternePanel(SpielerPosition.substForward, m_bPrint);
+        m_clReserveSturm = new SpielerSternePanel(ISpielerPosition.substForward, m_bPrint);
         layout.setConstraints(m_clReserveSturm, constraints);
         centerPanel.add(m_clReserveSturm);
 
@@ -534,7 +541,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveFluegel = new SpielerSternePanel(SpielerPosition.substWinger, m_bPrint);
+        m_clReserveFluegel = new SpielerSternePanel(ISpielerPosition.substWinger, m_bPrint);
         layout.setConstraints(m_clReserveFluegel, constraints);
         centerPanel.add(m_clReserveFluegel);
 
@@ -563,7 +570,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clAusgewechselt1 = new SpielerSternePanel(SpielerPosition.ausgewechselt, m_bPrint);
+        m_clAusgewechselt1 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint);
         layout.setConstraints(m_clAusgewechselt1, constraints);
         centerPanel.add(m_clAusgewechselt1);
 
@@ -577,7 +584,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clAusgewechselt2 = new SpielerSternePanel(SpielerPosition.ausgewechselt, m_bPrint);
+        m_clAusgewechselt2 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint);
         layout.setConstraints(m_clAusgewechselt2, constraints);
         centerPanel.add(m_clAusgewechselt2);
 
@@ -591,7 +598,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clAusgewechselt3 = new SpielerSternePanel(SpielerPosition.ausgewechselt, m_bPrint);
+        m_clAusgewechselt3 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint);
         layout.setConstraints(m_clAusgewechselt3, constraints);
         centerPanel.add(m_clAusgewechselt3);
 

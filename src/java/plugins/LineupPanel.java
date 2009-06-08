@@ -18,7 +18,12 @@ import javax.swing.JPanel;
 public class LineupPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Shows the Lineup with Keeper on top */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1373544624896628833L;
+
+	/** Shows the Lineup with Keeper on top */
     public static boolean LINEUP_NORMAL_SEQUENCE = true;
 
     /** TODO Missing Parameter Documentation */

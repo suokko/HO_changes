@@ -15,9 +15,12 @@ import javax.swing.JPanel;
  * Zeigt den Tabellenverlauf der Saison als Grafik an
  */
 final class TabellenverlaufStatistikPanel extends JPanel {
+	
+	private static final long serialVersionUID = -8411572558790555924L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     private final Color[] COLOR4LINES = {
                                             Color.green, Color.cyan, Color.gray, Color.black,
                                             Color.orange, Color.PINK, Color.red, Color.MAGENTA
@@ -45,7 +48,8 @@ final class TabellenverlaufStatistikPanel extends JPanel {
      *
      * @param g TODO Missing Method Parameter Documentation
      */
-    public void paint(Graphics g) {
+    @Override
+	public void paint(Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
 
         //Antialiasing
@@ -137,7 +141,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
             //Spieltage
             for (int i = 1; i <= anzahlSpieltage; i++) {
                 g2d.setColor(Color.black);
-                g2d.drawString(i + ".", (((int) abstandHorizontal * (i - 0.5f)) - 2),
+                g2d.drawString(i + ".", ((abstandHorizontal * (i - 0.5f)) - 2),
                                abstandVertikal - 2);
             }
 

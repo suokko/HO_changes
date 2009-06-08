@@ -14,9 +14,12 @@ import javax.swing.JDialog;
  * Druckt eine Componente und sorgt dafür, dass sie komplett auf die Seite passt
  */
 public class ComponentPrintObject extends PrintObject {
+	
+	private static final long serialVersionUID = -4313912069362326800L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     public static int SICHTBAR;
 
     /** TODO Missing Parameter Documentation */
@@ -61,7 +64,8 @@ public class ComponentPrintObject extends PrintObject {
      *
      * @param g2 TODO Missing Method Parameter Documentation
      */
-    protected final void paintMe(java.awt.Graphics2D g2) {
+    @Override
+	protected final void paintMe(java.awt.Graphics2D g2) {
         JDialog dialog = null;
 
         if (m_iSichtbar != SICHTBAR) {

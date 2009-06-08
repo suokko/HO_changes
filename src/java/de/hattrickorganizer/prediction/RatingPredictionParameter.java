@@ -43,7 +43,7 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
 						// new Section
 						String sectionName = line.replaceFirst ("^\\[(.*)\\].*", "$1");
 						if (allProps.containsKey(sectionName)) {
-							curProperties = (Properties)allProps.get(sectionName);
+							curProperties = allProps.get(sectionName);
 						} else {
 							curProperties = new Properties();
 							allProps.put(sectionName, curProperties);
@@ -75,9 +75,9 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
     	Hashtable<String, Properties> sections = new Hashtable<String, Properties>();
     	Enumeration<String> allKeys = allProps.keys();
     	while (allKeys.hasMoreElements()) {
-    		String curName = (String)allKeys.nextElement();
+    		String curName = allKeys.nextElement();
     		if (!curName.equals(GENERAL)) {
-    			Properties curSection = (Properties)allProps.get(curName);
+    			Properties curSection = allProps.get(curName);
     			sections.put(curName, curSection);
     		}
     	}
@@ -100,7 +100,7 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
     	key = key.toLowerCase();
     	section = section.toLowerCase();
     	if (allProps.containsKey(section)) {
-    		Properties props = (Properties)allProps.get(section);
+    		Properties props = allProps.get(section);
     		String propString = props.getProperty(key, "" + defVal);
     		if (propString != "") {
     			return Double.parseDouble(propString);

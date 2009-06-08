@@ -12,6 +12,7 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -24,32 +25,32 @@ public class BasicsPanel extends JPanel implements de.hattrickorganizer.gui.Refr
 	//~ Instance fields ----------------------------------------------------------------------------
 
     private ColorLabelEntry m_jpLiga = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                           ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
+                                                           ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
     private ColorLabelEntry m_jpManagername = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                   ColorLabelEntry.BG_STANDARD,
-                                                                  JLabel.LEFT);
+                                                                  SwingConstants.LEFT);
     private ColorLabelEntry m_jpPlatzierung = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                   ColorLabelEntry.BG_STANDARD,
-                                                                  JLabel.LEFT);
+                                                                  SwingConstants.LEFT);
     private ColorLabelEntry m_jpPunkte = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                              ColorLabelEntry.BG_STANDARD,
-                                                             JLabel.LEFT);
+                                                             SwingConstants.LEFT);
     private ColorLabelEntry m_jpSeason = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                              ColorLabelEntry.BG_STANDARD,
-                                                             JLabel.LEFT);
+                                                             SwingConstants.LEFT);
     private ColorLabelEntry m_jpSpieltag = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                ColorLabelEntry.BG_STANDARD,
-                                                               JLabel.LEFT);
+                                                               SwingConstants.LEFT);
     private ColorLabelEntry m_jpStadion = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                               ColorLabelEntry.BG_STANDARD,
-                                                              JLabel.LEFT);
+                                                              SwingConstants.LEFT);
     private ColorLabelEntry m_jpTeamname = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                ColorLabelEntry.BG_STANDARD,
-                                                               JLabel.LEFT);
+                                                               SwingConstants.LEFT);
     private ColorLabelEntry m_jpTorverhaeltnis = new ColorLabelEntry("",
                                                                      ColorLabelEntry.FG_STANDARD,
                                                                      ColorLabelEntry.BG_STANDARD,
-                                                                     JLabel.LEFT);
+                                                                     SwingConstants.LEFT);
 
     //~ Constructors -------------------------------------------------------------------------------
 

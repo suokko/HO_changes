@@ -14,9 +14,13 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
  * Zeigt die Arena
  */
 public final class ArenaSizerPanel extends ImagePanel {
+	
+	private static final long serialVersionUID = -675326023014634404L;
+	
     //~ Constructors -------------------------------------------------------------------------------
+	
 
-    /**
+	/**
      * Creates a new ArenaSizerPanel object.
      */
     public ArenaSizerPanel() {

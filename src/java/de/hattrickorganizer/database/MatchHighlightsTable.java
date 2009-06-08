@@ -19,6 +19,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 		super(TABLENAME, adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[14];
 		columns[0] = new ColumnDescriptor("MatchID", Types.INTEGER, false);
@@ -38,6 +39,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX iMATCHHIGHLIGHTS_1 ON "

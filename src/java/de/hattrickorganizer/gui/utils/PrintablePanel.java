@@ -12,7 +12,12 @@ import java.awt.image.BufferedImage;
 public class PrintablePanel extends javax.swing.JPanel implements java.awt.print.Printable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7768908750832271705L;
+
+	/** TODO Missing Parameter Documentation */
     protected AffineTransform printTransform;
 
     /** TODO Missing Parameter Documentation */

@@ -18,9 +18,12 @@ import javax.swing.JScrollPane;
  * Zeigt die allgemeinen Informationen
  */
 public class InformationsPanel extends ImagePanel {
+	
+	private static final long serialVersionUID = 1218148161116371590L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private BasicsPanel m_jpBasics;
+	private BasicsPanel m_jpBasics;
     private FinanzenPanel m_jpAktuelleFinanzen;
     private FinanzenPanel m_jpVorwochenFinanzen;
     private SonstigesPanel m_jpSonstiges;

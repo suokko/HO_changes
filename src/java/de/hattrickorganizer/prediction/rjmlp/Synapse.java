@@ -20,6 +20,7 @@ class Synapse {
 		return fromNeuron;
 	}
 
+	@Override
 	public String toString () {
 		return "[SynWeight="+weight+"]";
 	}

@@ -1,6 +1,8 @@
 // %2843598420:de.hattrickorganizer.gui.playeroverview%
 package de.hattrickorganizer.gui.playeroverview;
 
+import javax.swing.SwingConstants;
+
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.tools.Helper;
@@ -14,10 +16,10 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
 
     private ColorLabelEntry verletzung = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                              ColorLabelEntry.BG_STANDARD,
-                                                             javax.swing.JLabel.RIGHT);
+                                                             SwingConstants.RIGHT);
     private ColorLabelEntry verwarnungen = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                ColorLabelEntry.BG_STANDARD,
-                                                               javax.swing.JLabel.LEFT);
+                                                               SwingConstants.LEFT);
     private de.hattrickorganizer.model.ServerSpieler serverspieler;
     private de.hattrickorganizer.model.Spieler spieler;
 
@@ -78,7 +80,8 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof SpielerStatusLabelEntry) {
             final SpielerStatusLabelEntry entry = (SpielerStatusLabelEntry) obj;
 
@@ -116,7 +119,8 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         if (spieler != null) {
             if (spieler.isGesperrt()) {
                 getLinks().setIcon(Helper.ROTEKARTE);

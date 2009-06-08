@@ -12,6 +12,8 @@ import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import plugins.IMatchKurzInfo;
+
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.LoginDialog;
@@ -110,21 +112,21 @@ public class OnlineWorker {
             return false;
         }
 
-        final java.util.GregorianCalendar calendar = (java.util.GregorianCalendar) java.util.GregorianCalendar
+        final java.util.GregorianCalendar calendar = (java.util.GregorianCalendar) Calendar
                                                      .getInstance();
-        String month = ((calendar.get(java.util.GregorianCalendar.MONTH)) + 1) + "";
+        String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
 
         if (month.length() < 2) {
             month = "0" + month;
         }
 
-        String day = calendar.get(java.util.GregorianCalendar.DAY_OF_MONTH) + "";
+        String day = calendar.get(Calendar.DAY_OF_MONTH) + "";
 
         if (day.length() < 2) {
             day = "0" + day;
         }
 
-        final String name = calendar.get(java.util.GregorianCalendar.YEAR) + "-" + month + "-"
+        final String name = calendar.get(Calendar.YEAR) + "-" + month + "-"
                             + day + ".hrf";
 
         final java.io.File pfad = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath);
@@ -421,7 +423,7 @@ public class OnlineWorker {
                                                                                      .getMatchID()))
                 && (!de.hattrickorganizer.database.DBZugriff.instance().isMatchLineupVorhanden(matches[i]
                                                                                                .getMatchID()))
-                && (matches[i].getMatchStatus() == MatchKurzInfo.FINISHED)) {
+                && (matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED)) {
                 getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
                                matches[i].getGastID());
                 getMatchDetails(matches[i].getMatchID());
@@ -545,7 +547,7 @@ public class OnlineWorker {
             //Match noch nicht in der DB
         	
             if (DBZugriff.instance().isMatchVorhanden(curMatchId)
-            		&& matches[i].getMatchStatus() == MatchKurzInfo.FINISHED
+            		&& matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED
             		&& (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId) ||
             				curDetails == null ||
             				curDetails.getMatchreport() == null ||
@@ -716,21 +718,21 @@ public class OnlineWorker {
      * @return TODO Missing Return Method Documentation
      */
     protected final String getDate() {
-        final java.util.GregorianCalendar calendar = (java.util.GregorianCalendar) java.util.GregorianCalendar
+        final java.util.GregorianCalendar calendar = (java.util.GregorianCalendar) Calendar
                                                      .getInstance();
-        String month = ((calendar.get(java.util.GregorianCalendar.MONTH)) + 1) + "";
+        String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
 
         if (month.length() < 2) {
             month = "0" + month;
         }
 
-        String day = calendar.get(java.util.GregorianCalendar.DAY_OF_MONTH) + "";
+        String day = calendar.get(Calendar.DAY_OF_MONTH) + "";
 
         if (day.length() < 2) {
             day = "0" + day;
         }
 
-        return calendar.get(java.util.GregorianCalendar.YEAR) + "-" + month + "-" + day;
+        return calendar.get(Calendar.YEAR) + "-" + month + "-" + day;
     }
 
     ////////////////////////////////////////////////////////////////////////////////

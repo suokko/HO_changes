@@ -540,7 +540,8 @@ public class ScoutEintrag {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         if (obj instanceof ScoutEintrag) {
             return ((ScoutEintrag) obj).getPlayerID() == getPlayerID();
         }
@@ -553,7 +554,8 @@ public class ScoutEintrag {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int hashCode() {
+    @Override
+	public final int hashCode() {
         return getPlayerID();
     }
 }

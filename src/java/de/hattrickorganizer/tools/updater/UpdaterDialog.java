@@ -46,7 +46,12 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
     //	protected String PROP_NO_SERVER		= HOVerwaltung.instance().getLanguageString("KeinServer");
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -991600939074866793L;
+
+	/** TODO Missing Parameter Documentation */
     protected JTable table;
 
     /** TODO Missing Parameter Documentation */

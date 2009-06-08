@@ -116,7 +116,8 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Implement getComponent().
      */
-    public final javax.swing.JComponent getComponent(boolean isSelected) {
+    @Override
+	public final javax.swing.JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clProgressbar.setOpaque(true);
             m_clProgressbar.setBackground(SpielerTableRenderer.SELECTION_BG);
@@ -218,7 +219,8 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Clear value.
      */
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_clProgressbar.setString("");
         m_clProgressbar.setValue(0);
     }
@@ -226,7 +228,8 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Implement compareTo() for sorting.
      */
-    public final int compareTo(Object o) {
+    @Override
+	public final int compareTo(Object o) {
         if (o instanceof ProgressbarTableEntry) {
             final ProgressbarTableEntry entry = (ProgressbarTableEntry) o;
 
@@ -245,7 +248,8 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Create the component and set the text.
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         m_clProgressbar = new JProgressBar();
         m_clProgressbar.setStringPainted(true);
         updateComponent();
@@ -254,7 +258,8 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Update label text.
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         m_clProgressbar.setMinimum(m_iMinWert);
         m_clProgressbar.setMaximum(m_iMaxWert);
         m_clProgressbar.setValue(m_iAktuellerWert);

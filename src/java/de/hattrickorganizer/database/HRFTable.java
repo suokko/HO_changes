@@ -20,6 +20,7 @@ public final class HRFTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[3];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
@@ -27,6 +28,7 @@ public final class HRFTable extends AbstractTable {
 		columns[2]= new ColumnDescriptor("Datum",Types.TIMESTAMP,false);
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements(){
 		return new String[]{
 			"CREATE INDEX iHRF_1 ON "+getTableName()+"("+columns[2].getColumnName()+")"

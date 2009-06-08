@@ -18,9 +18,12 @@ import de.hattrickorganizer.tools.HOLogger;
  * @version 0.2a 28.08.01
  */
 public class InterruptionWindow extends javax.swing.JWindow {
+	
+	private static final long serialVersionUID = -4948885175460734368L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Image background;
+	private Image background;
     private String m_sInfotext = "";
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -81,7 +84,8 @@ public class InterruptionWindow extends javax.swing.JWindow {
      *
      * @param g TODO Missing Method Parameter Documentation
      */
-    public final void paint(Graphics g) {
+    @Override
+	public final void paint(Graphics g) {
         final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
 
         //Antialiasing einschalten
@@ -119,13 +123,13 @@ public class InterruptionWindow extends javax.swing.JWindow {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private java.awt.Image changeColor(java.awt.Image im, java.awt.Color original,
+    /*private java.awt.Image changeColor(java.awt.Image im, java.awt.Color original,
                                        java.awt.Color change) {
         final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im.getSource(),
                                                                                        new de.hattrickorganizer.tools.ColorChangeFilter(original,
                                                                                                                                         change));
         return java.awt.Toolkit.getDefaultToolkit().createImage(ip);
-    }
+    }*/
 
     /**
      * Macht eine Farbe in dem Bild transparent

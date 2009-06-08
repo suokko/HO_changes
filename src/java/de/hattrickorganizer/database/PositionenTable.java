@@ -17,6 +17,7 @@ public final class PositionenTable extends AbstractTable {
 	}
 	
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[5];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false);

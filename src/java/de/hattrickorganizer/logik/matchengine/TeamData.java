@@ -128,7 +128,8 @@ public class TeamData implements plugins.IMPTeamData {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("TeamData[");
         buffer.append("actions = " + actions);

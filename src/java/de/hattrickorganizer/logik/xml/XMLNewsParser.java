@@ -113,7 +113,7 @@ public class XMLNewsParser {
 
 	private String getTagValue(Element root, String tag) {
 		final Element ele = (Element) root.getElementsByTagName(tag).item(0);
-		return (String) (XMLManager.instance().getFirstChildNodeValue(ele));
+		return (XMLManager.instance().getFirstChildNodeValue(ele));
 	}
 	
 	private int getIntTagValue(Element root, String tag) {

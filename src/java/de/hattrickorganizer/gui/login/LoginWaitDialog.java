@@ -8,19 +8,24 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
+import javax.swing.SwingConstants;
 
 
 /**
  * Dialog beim Download der HRF Datei
  */
 public class LoginWaitDialog extends JWindow implements Runnable {
+	
+	private static final long serialVersionUID = 2737470419222145110L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
 
     //    public static boolean WAIT_AUTOPROGRESSBAR = true;
 
-    /** TODO Missing Parameter Documentation */
+
+	/** TODO Missing Parameter Documentation */
 
     //    public static boolean WAIT_MANUELLPROGRESSBAR;
     private JProgressBar m_jpbProgressBar;
@@ -61,7 +66,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         getContentPane().setLayout(layout);
 
         final JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BitteWarten"),
-                                        JLabel.CENTER);
+                                        SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(java.awt.Font.BOLD, 24f));
         label.setForeground(java.awt.Color.white);
         constraints.gridx = 0;
@@ -109,7 +114,8 @@ public class LoginWaitDialog extends JWindow implements Runnable {
      *
      * @param sichtbar TODO Missing Constructuor Parameter Documentation
      */
-    public final void setVisible(boolean sichtbar) {
+    @Override
+	public final void setVisible(boolean sichtbar) {
         if (sichtbar) {
             m_bEnde = false;
             new Thread(this).start();

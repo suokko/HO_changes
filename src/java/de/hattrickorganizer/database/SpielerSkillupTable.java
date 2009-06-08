@@ -23,6 +23,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		super(TABLENAME, adapter);					
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[5];
 		columns[0] = new ColumnDescriptor("HRF_ID", Types.INTEGER, false);
@@ -33,6 +34,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX iSkillup_1 ON " + getTableName() + "(" + columns[2].getColumnName() + ")",
@@ -85,7 +87,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 	public Object[] getLastLevelUp(int skillCode, int spielerId) {
 		Vector<Object[]> data = getSpielerSkillUp(spielerId);
 		for (Iterator<Object[]> iter = data.iterator(); iter.hasNext();) {
-			Object[] element = (Object[]) iter.next();
+			Object[] element = iter.next();
 			int code = ((Integer) element[4]).intValue();			
 			if (code==skillCode) {
 				return new Object[] { element[2], new Boolean(true)};									
@@ -98,7 +100,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		Vector<Object[]> data = getSpielerSkillUp(spielerId);
 		Vector<Object[]> v = new Vector<Object[]>();
 		for (Iterator<Object[]> iter = data.iterator(); iter.hasNext();) {
-			Object[] element = (Object[]) iter.next();
+			Object[] element = iter.next();
 			int code = ((Integer) element[4]).intValue();			
 			if (code==skillCode) {
 				v.add(new Object[] { element[2], new Boolean(true)});						
@@ -128,7 +130,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		}  
 		playerSkillup = new HashMap<String,Vector<Object[]>>();				
 		for (Iterator<Integer> iter = idVector.iterator(); iter.hasNext();) {
-			Integer element = (Integer) iter.next();
+			Integer element = iter.next();
 			playerSkillup.put(""+element.intValue(),loadSpieler(element.intValue()));
 		}
 		
@@ -173,7 +175,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 	public void importNewSkillup(HOModel homodel) {
 		Vector<ISpieler> players = homodel.getAllSpieler();
 		for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
-			ISpieler nPlayer = (ISpieler) iter.next();
+			ISpieler nPlayer = iter.next();
 			ISpieler oPlayer = HOVerwaltung.instance().getModel().getSpieler(nPlayer.getSpielerID());
 			if (oPlayer!=null) {
 				checkNewSkillup(nPlayer,nPlayer.getTorwart(),oPlayer.getTorwart(),ISpieler.SKILL_TORWART,homodel.getID());	
@@ -217,7 +219,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		}	
 		adapter.executeUpdate("DELETE FROM "+getTableName());
 		for (Iterator<Integer> iter = idVector.iterator(); iter.hasNext();) {
-			Integer element = (Integer) iter.next();
+			Integer element = iter.next();
 			importSpieler(element.intValue());
 		}
 	}
@@ -253,7 +255,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 				lastValue = value;
 			}
 			for (Iterator<Object[]> iter = v.iterator(); iter.hasNext();) {
-				Object[] element = (Object[]) iter.next();
+				Object[] element = iter.next();
 				storeSkillup(((Integer)element[0]).intValue(),((Integer)element[1]).intValue(),((Timestamp)element[2]),((Integer)element[3]).intValue(),((Integer)element[4]).intValue(),false);
 			}
 		} catch (Exception e) {

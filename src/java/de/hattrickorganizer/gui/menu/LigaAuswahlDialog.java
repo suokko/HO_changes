@@ -22,9 +22,12 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
  * Auswahl der Liga zu einer Season, um den richtigen Spielplan zu ziehen
  */
 public class LigaAuswahlDialog extends JDialog implements ActionListener {
+	
+	private static final long serialVersionUID = 6165662981528850898L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+	private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private JButton m_jbOk = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"));
     private JComboBox m_jcbLiga;
     private JRadioButton m_jrbLigaAktuell = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleLiga"),

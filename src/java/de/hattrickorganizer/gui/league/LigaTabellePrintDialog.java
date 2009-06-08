@@ -16,9 +16,12 @@ import de.hattrickorganizer.tools.HOLogger;
  * Dialog zum Drucken der Ligatabelle
  */
 public class LigaTabellePrintDialog extends JDialog {
+	
+	private static final long serialVersionUID = 2345698230109077443L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private LigaTabelle m_jpLigaTabelle;
+	private LigaTabelle m_jpLigaTabelle;
     private SpieltagPanel m_jpSpielPlan1;
     private SpieltagPanel m_jpSpielPlan2;
     private TabellenverlaufStatistikPanel m_jpTabellenverlaufStatistik;

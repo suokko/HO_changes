@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.model.matches;
 
+import plugins.IMatchLineup;
 import plugins.IMatchLineupTeam;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -299,40 +300,40 @@ public class MatchLineup implements plugins.IMatchLineup {
      */
     public static String getName4MatchTyp(int typ) {
         switch (typ) {
-            case MatchLineup.LIGASPIEL:
+            case IMatchLineup.LIGASPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LigaSpiel");
 
-            case MatchLineup.POKALSPIEL:
+            case IMatchLineup.POKALSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PokalSpiel");
 
-            case MatchLineup.QUALISPIEL:
+            case IMatchLineup.QUALISPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("QualifikationSpiel");
 
-            case MatchLineup.LAENDERCUPSPIEL:
+            case IMatchLineup.LAENDERCUPSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LaenderCupSpiel");
 
-            case MatchLineup.INTCUPSPIEL:
+            case IMatchLineup.INTCUPSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntCupSpiel");
 
-            case MatchLineup.LAENDERSPIEL:
+            case IMatchLineup.LAENDERSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LaenderSpiel");
 
-            case MatchLineup.INTSPIEL:
+            case IMatchLineup.INTSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntSpiel");
 
-            case MatchLineup.INT_TESTCUPSPIEL:
+            case IMatchLineup.INT_TESTCUPSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntFriendlyCupSpiel");
 
-            case MatchLineup.INT_TESTSPIEL:
+            case IMatchLineup.INT_TESTSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IntFriendlySpiel");
 
-            case MatchLineup.TESTLAENDERSPIEL:
+            case IMatchLineup.TESTLAENDERSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LaenderFriendlySpiel");
 
-            case MatchLineup.TESTPOKALSPIEL:
+            case IMatchLineup.TESTPOKALSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FriendlyCupSpiel");
 
-            case MatchLineup.TESTSPIEL:
+            case IMatchLineup.TESTSPIEL:
                 return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FriendlySpiel");
 
             //Fehler?

@@ -79,7 +79,7 @@ public class User {
 			HOLogger.instance().log(User.class,ex);
 		}
 
-		return (User) users.get(INDEX);
+		return users.get(INDEX);
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class User {
 			fileWriter.write("<HoUsers>\r\n");
 
 			for (int i = 0; i < users.size(); i++) {
-				User user = (User) users.get(i);
+				User user = users.get(i);
 				fileWriter.write(" <User>\r\n");
 				fileWriter.write("   <Name>" + user.name + "</Name>\r\n");
 				fileWriter.write("   <Url>" + user.url + "</Url>\r\n");
@@ -266,6 +266,7 @@ public class User {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
+	@Override
 	public String toString() {
 		return name;
 	}

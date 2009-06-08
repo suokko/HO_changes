@@ -29,7 +29,7 @@ public class TrainingPoint implements ITrainingPoint {
 	 * @author flattermann <drake79@users.sourceforge.net>
 	 *
 	 */
-	private class MatchForTraining implements Comparable {
+	private class MatchForTraining implements Comparable<Object> {
 		private int minutes;
 		private double basePoints;
 		
@@ -66,44 +66,44 @@ public class TrainingPoint implements ITrainingPoint {
 
     //Properties of matches to process for this training (minutes & basePoints)
     //The list is automatically sorted by basePoints (high to low)
-    private ArrayList matchesForTraining = new ArrayList();
+    private ArrayList<MatchForTraining> matchesForTraining = new ArrayList<MatchForTraining>();
 
     //	Abwehrverhalten alle Verteidiger und Mittelfeldspieler in Verteidigung mit 50% 
     //Defensive Positions: all defenders and playmakers 50% defense
-    private Hashtable AV;
+    private Hashtable<Integer,Double> AV;
 
     //	Chancenauswertung -> Torschuss 100% St?rmer 
     //Scoring: 100% scoring forwards 
-    private Hashtable CA;
+    private Hashtable<Integer,Double> CA;
 
-    private Hashtable LATOFF = null; //External Attacker
+    private Hashtable<Integer,Double> LATOFF = null; //External Attacker
     
     //Flankel?ufe // Wing
-    private Hashtable FL;
+    private Hashtable<Integer,Double> FL;
 
     //Passspiel //Passing
-    private Hashtable PS;
+    private Hashtable<Integer,Double> PS;
 
     //Spielaufbau // playmaking
-    private Hashtable SA;
+    private Hashtable<Integer,Double> SA;
 
     //scoring
-    private Hashtable SCHT;
+    private Hashtable<Integer,Double> SCHT;
 
     //Steilpaesse : Passspiel f?r alle Verteidiger und MFler mit 85% // Through passess: passing for all defenders and midfielders with 85%
-    private Hashtable SP;
+    private Hashtable<Integer,Double> SP;
 
     //Torwart //Keeper
-    private Hashtable TW;
+    private Hashtable<Integer,Double> TW;
 
     //Verteidigung //Defense
-    private Hashtable VE;
+    private Hashtable<Integer,Double> VE;
     
     //Standards //Set Pieces
-    private Hashtable SETPIECES;
+    private Hashtable<Integer,Double> SETPIECES;
 
     //Order is the same as in Data. As value only SpielerIDS (do i have to translate this?) -> same index for same players
-    private Hashtable p_Ht_trainPositionen = new Hashtable();
+    private Hashtable<Integer,Hashtable<Integer,Double>> p_Ht_trainPositionen = new Hashtable<Integer,Hashtable<Integer,Double>>();
 
 	private ITrainingWeek trainWeek;
 
@@ -135,13 +135,13 @@ public class TrainingPoint implements ITrainingPoint {
      * @return training points earned in that match
      */
     public final Double getTrainingPoint(int trtype, Integer playerMatchPosition) {
-        final Hashtable positions = (Hashtable) p_Ht_trainPositionen.get(new Integer(trtype));
+        final Hashtable<Integer,Double> positions = p_Ht_trainPositionen.get(new Integer(trtype));
 
         if (positions == null) {
             return new Double(0);
         }
 
-        Double value = (Double) positions.get(playerMatchPosition);
+        Double value = positions.get(playerMatchPosition);
 
         if (value == null) {
             value = new Double(0);
@@ -156,25 +156,25 @@ public class TrainingPoint implements ITrainingPoint {
     private void init() {
         //F?r jedes TRainingsart die Positionen und Werte festlegen
         //for every traintype position and values definition
-        SA = new Hashtable();
+        SA = new Hashtable<Integer,Double>();
         SA.put(new Integer(6), new Double(0.5));
         SA.put(new Integer(7), new Double(1.0));
         SA.put(new Integer(8), new Double(1.0));
         SA.put(new Integer(9), new Double(0.5));
 
-        FL = new Hashtable();
+        FL = new Hashtable<Integer,Double>();
         FL.put(new Integer(2), new Double(0.5));
         FL.put(new Integer(5), new Double(0.5));
         FL.put(new Integer(6), new Double(1.0));
         FL.put(new Integer(9), new Double(1.0));
 
-        VE = new Hashtable();
+        VE = new Hashtable<Integer,Double>();
         VE.put(new Integer(2), new Double(1.0));
         VE.put(new Integer(3), new Double(1.0));
         VE.put(new Integer(4), new Double(1.0));
         VE.put(new Integer(5), new Double(1.0));
 
-        PS = new Hashtable();
+        PS = new Hashtable<Integer,Double>();
         PS.put(new Integer(6), new Double(1.0));
         PS.put(new Integer(7), new Double(1.0));
         PS.put(new Integer(8), new Double(1.0));
@@ -182,14 +182,14 @@ public class TrainingPoint implements ITrainingPoint {
         PS.put(new Integer(10), new Double(1.0));
         PS.put(new Integer(11), new Double(1.0));
 
-        TW = new Hashtable();
+        TW = new Hashtable<Integer,Double>();
         TW.put(new Integer(1), new Double(1.0));
 
-        CA = new Hashtable();
+        CA = new Hashtable<Integer,Double>();
         CA.put(new Integer(10), new Double(1.0));
         CA.put(new Integer(11), new Double(1.0));
 
-        SCHT = new Hashtable();
+        SCHT = new Hashtable<Integer,Double>();
         SCHT.put(new Integer(2), new Double(0.6));
         SCHT.put(new Integer(3), new Double(0.6));
         SCHT.put(new Integer(4), new Double(0.6));
@@ -201,7 +201,7 @@ public class TrainingPoint implements ITrainingPoint {
         SCHT.put(new Integer(10), new Double(0.6));
         SCHT.put(new Integer(11), new Double(0.6));
 
-        AV = new Hashtable();
+        AV = new Hashtable<Integer,Double>();
         AV.put(new Integer(1), new Double(0.5));
         AV.put(new Integer(2), new Double(0.5));
         AV.put(new Integer(3), new Double(0.5));
@@ -212,7 +212,7 @@ public class TrainingPoint implements ITrainingPoint {
         AV.put(new Integer(8), new Double(0.5));
         AV.put(new Integer(9), new Double(0.5));
 
-        SP = new Hashtable();
+        SP = new Hashtable<Integer,Double>();
         SP.put(new Integer(2), new Double(0.85));
         SP.put(new Integer(3), new Double(0.85));
         SP.put(new Integer(4), new Double(0.85));
@@ -222,14 +222,14 @@ public class TrainingPoint implements ITrainingPoint {
         SP.put(new Integer(8), new Double(0.85));
         SP.put(new Integer(9), new Double(0.85));
 
-        LATOFF = new Hashtable();
+        LATOFF = new Hashtable<Integer,Double>();
         LATOFF.put(new Integer(6), new Double(0.6));
         LATOFF.put(new Integer(9), new Double(0.6));        
         LATOFF.put(new Integer(10), new Double(0.6));
         LATOFF.put(new Integer(11), new Double(0.6));
         
         // TODO flattermann: The default SetPieces taker gets 25% bonus as well
-        SETPIECES = new Hashtable();
+        SETPIECES = new Hashtable<Integer,Double>();
         SETPIECES.put(new Integer(1), new Double(1.25)); // Goalkeepers train 25% faster
         SETPIECES.put(new Integer(2), new Double(1.0));
         SETPIECES.put(new Integer(3), new Double(1.0));
@@ -285,9 +285,9 @@ public class TrainingPoint implements ITrainingPoint {
     	int minutesLeft = 90;
     	double points = 0;
     	// matchesForTraining is already sorted by baseLength in descending order 
-    	Iterator iter = matchesForTraining.iterator();
+    	Iterator<MatchForTraining> iter = matchesForTraining.iterator();
     	while (iter.hasNext() && minutesLeft > 0) {
-    		MatchForTraining curMatch = (MatchForTraining)iter.next();
+    		MatchForTraining curMatch = iter.next();
     		double curBasePoints = curMatch.getBasePoints();
     		int curMinutes = curMatch.getMinutes();
     		// use up to minutesLeft mins

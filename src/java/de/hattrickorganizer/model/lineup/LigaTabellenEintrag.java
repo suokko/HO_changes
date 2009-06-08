@@ -713,7 +713,8 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
     /////////////////////////////////////////////////////////////////////////////////
     //Overwrite
     ////////////////////////////////////////////////////////////////////////////////7    
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         LigaTabellenEintrag lte = null;
 
         if (obj instanceof LigaTabellenEintrag) {

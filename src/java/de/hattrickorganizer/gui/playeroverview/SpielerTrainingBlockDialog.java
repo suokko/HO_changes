@@ -167,7 +167,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	 */
 	private boolean isBlockedAt (Timestamp date) {
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
-			SingleTrainingBlock curBlock = (SingleTrainingBlock)allTrainingBlocks.get(i);
+			SingleTrainingBlock curBlock = allTrainingBlocks.get(i);
 			Date blockStart = curBlock.getBlockStart();
 			Date blockEnd = curBlock.getBlockEnd();
 			
@@ -188,7 +188,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	public final void actionPerformed(ActionEvent actionEvent) {
 		if (actionEvent.getSource().equals(m_jbOK)) {
 			for (int i=0; i<allTrainingBlocks.size(); i++) {
-				SingleTrainingBlock curBlock = (SingleTrainingBlock)allTrainingBlocks.get(i);
+				SingleTrainingBlock curBlock = allTrainingBlocks.get(i);
 				HOLogger.instance().log(getClass(), 
 						"Block found from: "+curBlock.getBlockStart().toLocaleString()+" to:"+curBlock.getBlockEnd().toLocaleString());
 			}
@@ -214,7 +214,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		} else {
 			// Check for remove event
 			for (int i=0; i < allTrainingBlocks.size(); i++) {
-				SingleTrainingBlock curBlock = (SingleTrainingBlock)allTrainingBlocks.get(i);
+				SingleTrainingBlock curBlock = allTrainingBlocks.get(i);
 				if (actionEvent.getSource().equals(curBlock.getRemoveButton())) {
 					allTrainingBlocks.remove(curBlock);
 					removeBlock (curBlock);
@@ -266,7 +266,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
-			addBlock((SingleTrainingBlock)allTrainingBlocks.get(i));
+			addBlock(allTrainingBlocks.get(i));
 		}
 
 		constraints.anchor = GridBagConstraints.WEST;

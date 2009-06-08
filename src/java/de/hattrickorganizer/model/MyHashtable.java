@@ -15,6 +15,11 @@ public class MyHashtable extends java.util.Hashtable {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4952614135098302927L;
+
+	/**
      * Creates a new instance of MyHashtable
      */
     public MyHashtable() {
@@ -31,7 +36,8 @@ public class MyHashtable extends java.util.Hashtable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Object put(Object key, Object value) {
+    @Override
+	public final Object put(Object key, Object value) {
         return (value != null) ? super.put(key, value) : super.put(key, "");
     }
 }

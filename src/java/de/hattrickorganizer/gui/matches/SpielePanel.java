@@ -18,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,12 +30,22 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
 
+import plugins.IMatchKurzInfo;
+import plugins.IMatchLineupPlayer;
+import plugins.ISpielerPosition;
+
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.SpielerPosition;
+import de.hattrickorganizer.model.matches.MatchKurzInfo;
+import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -45,6 +56,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                                              Refreshable, ItemListener,
                                                              ActionListener, plugins.ISpielePanel
 {
+	private static final long serialVersionUID = -6337569355347545083L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private AufstellungsSternePanel m_jpAufstellungGastPanel;
@@ -214,24 +227,19 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             }
         } else if (e.getSource().equals(m_jbAufstellungUebernehmen)) {
             if ((m_clMatchKurzInfo != null)
-                && (m_clMatchKurzInfo.getMatchStatus() == de.hattrickorganizer.model.matches.MatchKurzInfo.FINISHED)) {
-                final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getTeamId();
-                final java.util.Vector vteamspieler = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                             .getMatchLineupPlayers(m_clMatchKurzInfo
-                                                                                                                    .getMatchID(),
-                                                                                                                    teamid);
-                final de.hattrickorganizer.model.Aufstellung aufstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                  .getModel()
-                                                                                                                  .getAufstellung();
+                && (m_clMatchKurzInfo.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
+                final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+                final Vector<IMatchLineupPlayer> vteamspieler = DBZugriff.instance().getMatchLineupPlayers(m_clMatchKurzInfo.getMatchID(),
+                                                                                       teamid);
+                final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
                 for (int i = 0; (vteamspieler != null) && (i < vteamspieler.size()); i++) {
-                    final de.hattrickorganizer.model.matches.MatchLineupPlayer player = (de.hattrickorganizer.model.matches.MatchLineupPlayer) vteamspieler
+                    final MatchLineupPlayer player = (MatchLineupPlayer) vteamspieler
                                                                                         .get(i);
 
-                    if (player.getId() == de.hattrickorganizer.model.SpielerPosition.standard) {
+                    if (player.getId() == ISpielerPosition.standard) {
                         aufstellung.setKicker(player.getSpielerId());
-                    } else if (player.getId() == de.hattrickorganizer.model.SpielerPosition.spielfuehrer) {
+                    } else if (player.getId() == ISpielerPosition.spielfuehrer) {
                         aufstellung.setKapitaen(player.getSpielerId());
                     } else {
                         aufstellung.setSpielerAtPosition(player.getId(), player.getSpielerId(),
@@ -458,22 +466,22 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
         //Allgemein
         m_jpStaerkenvergleichsPanel = new StaerkenvergleichPanel();
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Allgemein"),
+        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Allgemein"),
                                  new JScrollPane(m_jpStaerkenvergleichsPanel));
 
         //Bewertung
         m_jpManschaftsBewertungsPanel = new ManschaftsBewertungsPanel();
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"),
+        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Bewertung"),
                                  new JScrollPane(m_jpManschaftsBewertungsPanel));
 
         //Highlights
         m_jpSpielHighlightPanel = new SpielHighlightPanel();
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Highlights"),
+        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Highlights"),
                                  new JScrollPane(m_jpSpielHighlightPanel));
 
         //Matchbericht
         m_jpMatchberichtPanel = new MatchberichtPanel(true);
-        m_jtpSpieldetails.addTab(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Matchbericht"),
+        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Matchbericht"),
                                  m_jpMatchberichtPanel);
 
         mainconstraints.gridx = 0;
@@ -492,7 +500,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonPanel.setLayout(buttonlayout);
 
         //Reloadbutton
-        m_jbReloadMatch.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_reload"));
+        m_jbReloadMatch.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_reload"));
         m_jbReloadMatch.addActionListener(this);
         m_jbReloadMatch.setPreferredSize(new Dimension(24, 24));
         m_jbReloadMatch.setEnabled(false);
@@ -501,7 +509,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonlayout.setConstraints(m_jbReloadMatch, buttonconstraints);
         buttonPanel.add(m_jbReloadMatch);
 
-        m_jbLoeschen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_loeschen"));
+        m_jbLoeschen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_loeschen"));
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setPreferredSize(new Dimension(24, 24));
         m_jbLoeschen.setEnabled(false);
@@ -510,7 +518,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonlayout.setConstraints(m_jbLoeschen, buttonconstraints);
         buttonPanel.add(m_jbLoeschen);
 
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_drucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_drucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setPreferredSize(new Dimension(24, 24));
         m_jbDrucken.setEnabled(false);
@@ -519,7 +527,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonlayout.setConstraints(m_jbDrucken, buttonconstraints);
         buttonPanel.add(m_jbDrucken);
 
-        m_jbAufstellungUebernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_aufstellunguebernehmen"));
+        m_jbAufstellungUebernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_aufstellunguebernehmen"));
         m_jbAufstellungUebernehmen.addActionListener(this);
         m_jbAufstellungUebernehmen.setPreferredSize(new Dimension(24, 24));
         m_jbAufstellungUebernehmen.setEnabled(false);
@@ -569,7 +577,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * TODO Missing Method Documentation
      */
-    private void manageSelectionRow() {
+/*    private void manageSelectionRow() {
         final int row = m_jtSpieleTable.getSelectedRow();
 
         if (row > -1) {
@@ -579,7 +587,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             m_jtSpieleTable.clearSelection();
             newSelectionInform();
         }
-    }
+    }*/
 
     //----------------------------------------------------    
     private void newSelectionInform() {
@@ -588,11 +596,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         if (row > -1) {
             //Selektiertes Spiel des Models holen und alle 3 Panel informieren 
             try {
-                final de.hattrickorganizer.model.matches.MatchKurzInfo info = ((MatchesColumnModel) m_jtSpieleTable.getSorter()
-                                                                                                                                                .getModel())
-                                                                              .getMatch((int) ((ColorLabelEntry) m_jtSpieleTable.getSorter()
-                                                                                                                                .getValueAt(row,
-                                                                                                                                            5))
+                final MatchKurzInfo info = ((MatchesColumnModel) m_jtSpieleTable.getSorter().getModel())
+                                                                .getMatch((int) ((ColorLabelEntry) m_jtSpieleTable.getSorter().getValueAt(row,5))
                                                                                         .getZahl());
                 refresh(info);
                 m_jpStaerkenvergleichsPanel.refresh(info);
@@ -600,7 +605,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 m_jpSpielHighlightPanel.refresh(info);
                 m_jpMatchberichtPanel.refresh(info);
 
-                if (info.getMatchStatus() == de.hattrickorganizer.model.matches.MatchKurzInfo.FINISHED) {
+                if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
                     m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
                 } else {
@@ -635,7 +640,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
      *
      * @param info TODO Missing Constructuor Parameter Documentation
      */
-    private void refresh(de.hattrickorganizer.model.matches.MatchKurzInfo info) {
+    private void refresh(MatchKurzInfo info) {
         m_clMatchKurzInfo = info;
 
         m_jbLoeschen.setEnabled(true);
@@ -655,7 +660,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         }
 
         //Eigenes Spiel dabei
-        final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getBasics()
+        final int teamid = HOVerwaltung.instance().getModel().getBasics()
                                                                   .getTeamId();
 
         if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {

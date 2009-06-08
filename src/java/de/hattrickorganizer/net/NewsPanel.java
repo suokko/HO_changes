@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.News;
@@ -25,7 +26,11 @@ import de.hattrickorganizer.model.News;
  */
 public class NewsPanel extends JPanel {
 	
-	private JLabel header = new JLabel("",JLabel.LEFT); 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6950711476669887530L;
+	private JLabel header = new JLabel("",SwingConstants.LEFT); 
 	private JButton b3 = new JButton("");
 	private boolean linkEnabled = false;
 
@@ -60,7 +65,7 @@ public class NewsPanel extends JPanel {
 		setLayout(new GridLayout(dim, 1));
 		add(header);
 		for (int i = 0; i < news.getMessages().size(); i++) {
-			JLabel l = new JLabel(""+news.getMessages().get(i),JLabel.LEFT);
+			JLabel l = new JLabel(""+news.getMessages().get(i),SwingConstants.LEFT);
 			add(l);
 		}
 		if (linkEnabled) {

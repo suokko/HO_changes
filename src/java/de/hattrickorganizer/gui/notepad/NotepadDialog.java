@@ -27,7 +27,9 @@ import de.hattrickorganizer.tools.Helper;
 
 public class NotepadDialog extends JDialog implements ActionListener{
 
-    private final int dialogWidth = 480;
+	private static final long serialVersionUID = 7998858836260564800L;
+	
+	private final int dialogWidth = 480;
 	private final int dialogHeight = 320;
 	private final JTextArea textArea = new JTextArea();
 	private File file = null;

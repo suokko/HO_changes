@@ -30,9 +30,11 @@ import javax.swing.JTextField;
 public class ProxyDialog extends JDialog implements ActionListener, FocusListener, KeyListener,
                                                     WindowListener
 {
+	private static final long serialVersionUID = -2112562621278224332L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    private static LoginWaitDialog loginWaitDialog;
+    
+	//private static LoginWaitDialog loginWaitDialog;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -60,7 +62,7 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
 
         this.m_clMainFrame = mainFrame;
 
-        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();
 
         //Um den Focus weiterzusetzen        
@@ -334,7 +336,7 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
 
         setResizable(false);
 
-        loginWaitDialog = new LoginWaitDialog(this);
+        new LoginWaitDialog(this);
     }
 
     //------------------------------------------------------------    

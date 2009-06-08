@@ -15,6 +15,7 @@ public final class XtraDataTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 	
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[9];
 		columns[0]= new ColumnDescriptor( "HRF_ID",				Types.INTEGER,	false, true );
@@ -28,6 +29,7 @@ public final class XtraDataTable extends AbstractTable {
 		columns[8]= new ColumnDescriptor( "LeagueLevelUnitID",	Types.INTEGER,	false );
 	}
 	
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IXTRADATA_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import plugins.IMatchDetails;
 import de.hattrickorganizer.logik.matchengine.TeamData;
 import de.hattrickorganizer.logik.matchengine.TeamRatings;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -29,9 +30,9 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
     //~ Instance fields ----------------------------------------------------------------------------
 	private GridBagConstraints m_clConstraints;
     private GridBagLayout m_clLayout;
-    private List levels;
-    private List subLevels;
-    private List tactics;
+    private List<RatingItem> levels;
+    private List<RatingItem> subLevels;
+    private List<RatingItem> tactics;
     private String teamName;
     private JComboBox[][] values = new JComboBox[8][2];
     private int row;
@@ -234,10 +235,9 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
      * TODO Missing Method Documentation
      */
     private void initLevel() {
-        subLevels = new ArrayList();
+        subLevels = new ArrayList<RatingItem>();
 
-        final de.hattrickorganizer.model.HOVerwaltung verwaltung = de.hattrickorganizer.model.HOVerwaltung
-                                                                   .instance();
+        final HOVerwaltung verwaltung = HOVerwaltung.instance();
         subLevels.add(new RatingItem(verwaltung.getLanguageString("verylow"), 0));
         subLevels.add(new RatingItem(verwaltung.getLanguageString("low"), 1));
         subLevels.add(new RatingItem(verwaltung.getLanguageString("high"), 2));
@@ -248,7 +248,7 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
      * TODO Missing Method Documentation
      */
     private void initSubLevel() {
-        levels = new ArrayList();
+        levels = new ArrayList<RatingItem>();
 
         for (int i = 1; i < 21; i++) {
             levels.add(new RatingItem(PlayerHelper.getNameForSkill(i, false), i));
@@ -259,7 +259,7 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
      * TODO Missing Method Documentation
      */
     private void initTactics() {
-        tactics = new ArrayList();
+        tactics = new ArrayList<RatingItem>();
         tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL),
                                    IMatchDetails.TAKTIK_NORMAL));
         tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING),

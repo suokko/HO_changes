@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import plugins.ILigaTabellenEintrag;
+
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -28,9 +30,12 @@ import de.hattrickorganizer.tools.Helper;
  * Panel mit JTabel für die Arena anzeige und zum Testen
  */
 public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
+	
+	private static final long serialVersionUID = -7087165908899999232L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+   /** TODO Missing Parameter Documentation */
     public static final Color BG_AUFSTIEGSPLATZ = new Color(220, 255, 220);
 
     /** TODO Missing Parameter Documentation */
@@ -138,12 +143,14 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
      *
      * @param listener TODO Missing Method Parameter Documentation
      */
-    public final void addKeyListener(KeyListener listener) {
+    @Override
+	public final void addKeyListener(KeyListener listener) {
         m_jtLigaTabelle.addKeyListener(listener);
     }
 
     //--Listener an Tabelle binden!------------------
-    public final void addMouseListener(MouseListener listener) {
+    @Override
+	public final void addMouseListener(MouseListener listener) {
         m_jtLigaTabelle.addMouseListener(listener);
     }
 
@@ -397,7 +404,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
                                                      gui.UserParameter.instance().schriftGroesse
                                                      + 1);
 
-                final Vector tabelleneintraege = LigaTabellePanel.getAktuellerSpielPlan()
+                final Vector<ILigaTabellenEintrag> tabelleneintraege = LigaTabellePanel.getAktuellerSpielPlan()
                                                                  .getTabelle().getEintraege();
                 final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamId();
