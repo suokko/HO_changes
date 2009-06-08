@@ -112,7 +112,7 @@ public class TeamPlanner implements IPlugin, IRefreshable, IOfficialPlugin {
      * @return the plugin version
      */
     public final double getVersion() {
-        return 0.1;
+        return 0.101;
     }
 
     /**

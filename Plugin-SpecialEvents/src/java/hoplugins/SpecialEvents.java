@@ -27,7 +27,7 @@ public class SpecialEvents
 
     private static final String PLUGIN_NAME = "Special Events";
     private static final String PLUGIN_PACKAGE = "specialEvents";
-    private static final double PLUGIN_VERSION = 1.22D;
+    private static final double PLUGIN_VERSION = 1.221D;
     private static final int PLUGIN_ID = 33;
     private JPanel mainPanel;
     public static IHOMiniModel miniModel = null;
