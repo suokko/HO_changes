@@ -1937,8 +1937,7 @@ public final class HOMainFrame extends JFrame
 
 		// Splash screen
 		final InterruptionWindow interuptionsWindow =
-			new InterruptionWindow(
-				new ImagePanel());
+			new InterruptionWindow();
 
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {
