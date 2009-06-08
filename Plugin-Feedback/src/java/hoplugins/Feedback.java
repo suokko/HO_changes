@@ -42,7 +42,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Plugin version constant */
-    public static final double PLUGIN_VERSION = 0.421;
+    public static final double PLUGIN_VERSION = 0.422;
 
     /** Plugin Id */
     private static final int PLUGIN_ID = 42;

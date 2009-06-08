@@ -90,7 +90,7 @@ public class SeriesStats implements IPlugin, IRefreshable, IOfficialPlugin {
      * @return TODO Missing Return Method Documentation
      */
     public double getVersion() {
-        return 1.0;
+        return 1.01;
     }
 
     /**

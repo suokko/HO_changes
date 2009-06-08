@@ -20,7 +20,7 @@ public class Commons implements ILib, IOfficialPlugin {
     private static IHOMiniModel model;
 
     /** Plugin version identifier */
-    private static final double PLUGIN_VERSION = 1.071d;
+    private static final double PLUGIN_VERSION = 1.072d;
 
     /** TODO Missing Parameter Documentation */
     private static final String PLUGIN_NAME = "Commons";

@@ -32,7 +32,7 @@ public class ExperienceViewer implements IPlugin, IOfficialPlugin, IRefreshable 
 	}
 
 	public double getVersion() {
-		return 0.51D;
+		return 0.511D;
 	}
 
 	public String getName() {
