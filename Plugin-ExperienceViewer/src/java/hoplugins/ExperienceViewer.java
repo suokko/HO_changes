@@ -1,5 +1,6 @@
 package hoplugins;
 
+import hoplugins.commons.utils.PluginProperty;
 import hoplugins.experienceViewer.Spielereingabe;
 import hoplugins.experienceViewer.Spielertabelle;
 
@@ -22,6 +23,8 @@ public class ExperienceViewer implements IPlugin, IOfficialPlugin, IRefreshable 
 	private JPanel m_jpPanel;
 	private Spielertabelle spielertabelle;
 
+    private static final String PLUGIN_PACKAGE = "experienceViewer";
+	
 	public ExperienceViewer() {
 		m_clModel = null;
 		m_jpPanel = null;
@@ -50,6 +53,7 @@ public class ExperienceViewer implements IPlugin, IOfficialPlugin, IRefreshable 
 
 	public void start(IHOMiniModel arg0) {
 		m_clModel = arg0;
+		PluginProperty.loadPluginProperties(PLUGIN_PACKAGE);
 		m_jpPanel = m_clModel.getGUI().createGrassPanel();
 		m_jpPanel.setLayout(new BorderLayout());
 		spielertabelle = new Spielertabelle(m_clModel);
@@ -68,8 +72,7 @@ public class ExperienceViewer implements IPlugin, IOfficialPlugin, IRefreshable 
 		sp.setOneTouchExpandable(true);
 		sp.setContinuousLayout(true);
 		m_jpPanel.add(sp);
-		String sTabName = spielertabelle.getProperty("Erfahrung") + " V"
-				+ getVersion();
+		String sTabName = getPluginName();
 		m_clModel.getGUI().addTab(sTabName, m_jpPanel);
 		m_clModel.getGUI().registerRefreshable(this);
 		m_clModel.getGUI().addMainFrameListener(

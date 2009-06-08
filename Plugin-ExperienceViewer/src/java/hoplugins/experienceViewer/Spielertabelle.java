@@ -1,5 +1,7 @@
 package hoplugins.experienceViewer;
 
+import hoplugins.commons.utils.PluginProperty;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -173,11 +175,13 @@ public class Spielertabelle extends JTable {
 
 		public void SpalteHinzufuegen(int index, String text, int weite) {
 			TableColumn col = new TableColumn(index, weite);
-			String t = properties.getProperty(text);
+//			String t = properties.getProperty(text);
+			String t = PluginProperty.getString(text);
 			String tipp;
 			if (index > 8 && index < 21) {
-				String zusatz = properties
-						.getProperty("EINSATZSPALTENERKLAERUNG");
+//				String zusatz = properties
+//						.getProperty("EINSATZSPALTENERKLAERUNG");
+				String zusatz = PluginProperty.getString("EINSATZSPALTENERKLAERUNG");
 				tipp = "<html>" + t + "<br>" + zusatz + "</html>";
 			} else {
 				tipp = t;
@@ -504,7 +508,7 @@ public class Spielertabelle extends JTable {
 	private int sortierspalte;
 	private AbstractTableModel tm;
 	private MouseListener mouseListener;
-	private Properties properties;
+//	private Properties properties;
 	private WindowClosingAdapter windowClosingAdapter;
 	protected static String experienceViewerVerzeichnis;
 	protected static String spracheVerzeichnis;
@@ -518,10 +522,10 @@ public class Spielertabelle extends JTable {
 		sortierspalte = 0;
 		tm = null;
 		mouseListener = null;
-		properties = null;
+//		properties = null;
 		windowClosingAdapter = null;
 		model = m;
-		initRessourcen();
+//		initRessourcen();
 		aktualisieren();
 		cm = new SpielertabellenSpalte();
 		Spaltenkonfiguration spaltenkonfiguration[] = KonfigurationLaden();
@@ -611,28 +615,28 @@ public class Spielertabelle extends JTable {
 		tm.fireTableDataChanged();
 	}
 
-	private void initRessourcen() {
-		properties = new Properties();
-		properties.putAll(model.getResource());
-		File languagefile = new File(spracheVerzeichnis + File.separator
-				+ model.getHelper().getLanguageName() + ".properties");
-		if (!languagefile.exists())
-			languagefile = new File(spracheVerzeichnis + File.separator
-					+ "English.properties");
-		if (languagefile.exists()) {
-			Properties props = new Properties();
-			try {
-				props.load(new FileInputStream(languagefile));
-				properties.putAll(props);
-			} catch (IOException e) {
-				ErrorLog.write(e);
-			}
-		}
-	}
+//	private void initRessourcen() {
+//		properties = new Properties();
+//		properties.putAll(model.getResource());
+//		File languagefile = new File(spracheVerzeichnis + File.separator
+//				+ model.getHelper().getLanguageName() + ".properties");
+//		if (!languagefile.exists())
+//			languagefile = new File(spracheVerzeichnis + File.separator
+//					+ "English.properties");
+//		if (languagefile.exists()) {
+//			Properties props = new Properties();
+//			try {
+//				props.load(new FileInputStream(languagefile));
+//				properties.putAll(props);
+//			} catch (IOException e) {
+//				ErrorLog.write(e);
+//			}
+//		}
+//	}
 
-	public String getProperty(String key) {
-		return properties.getProperty(key);
-	}
+//	public String getProperty(String key) {
+//		return properties.getProperty(key);
+//	}
 
 	private String gibKonfigurationsdateiname() {
 		return experienceViewerVerzeichnis + File.separator

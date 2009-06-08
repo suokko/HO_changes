@@ -131,7 +131,7 @@ public class SeriesPanelTab extends JPanel implements RefreshablePanel {
 			ax[7] = new GraphicData(x, "LinkerAngriff", false, Color.black, format);
 
 			String[] as = { "String1", "String2" };
-			PanelDivisionGP.setAllValues(ax, as, format, Commons.getModel().getResource().getProperty("Spiele") + "", "", true, true);
+			PanelDivisionGP.setAllValues(ax, as, format, Commons.getModel().getLanguageString("Spiele") + "", "", true, true);
 			
 		} catch (Exception e) {
 			if (true) {

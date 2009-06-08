@@ -47,14 +47,14 @@ public class Opciones implements ActionListener, Serializable {
 
     public JDialog createDialogoOpciones() {
         //JDialog dialog = new JDialog(owner, FlagsPlugin.ISFAC.getString(IconStringFactory.S_MENU_OPTIONS), true);
-        JDialog dialog = new JDialog(FlagsPlugin.HOM.getGUI().getOwner4Dialog(), FlagsPlugin.NAME + " " + FlagsPlugin.HOM.getResource().getProperty("Optionen","Options"), true);
+        JDialog dialog = new JDialog(FlagsPlugin.HOM.getGUI().getOwner4Dialog(), FlagsPlugin.NAME + " " + FlagsPlugin.HOM.getLanguageString("Optionen"), true);
         Container cp = dialog.getContentPane();
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gc = new GridBagConstraints();
         cp.setLayout(gbl);
 
-        jbSave = new JButton(FlagsPlugin.HOM.getResource().getProperty("Speichern","Save"));
-        jbCancel = new JButton(FlagsPlugin.HOM.getResource().getProperty("Abbrechen","Cancel"));
+        jbSave = new JButton(FlagsPlugin.HOM.getLanguageString("Speichern"));
+        jbCancel = new JButton(FlagsPlugin.HOM.getLanguageString("Abbrechen"));
         jbSave.addActionListener(this);
         jbCancel.addActionListener(this);
 

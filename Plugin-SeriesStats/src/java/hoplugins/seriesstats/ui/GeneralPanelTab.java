@@ -136,7 +136,7 @@ public class GeneralPanelTab extends JPanel implements RefreshablePanel {
 
             String[] as = {"String1", "String2"};
             PanelGeneralGP.setAllValues(ax, as, format,
-                             Commons.getModel().getResource().getProperty("Spiele") + "", "", true,
+                             Commons.getModel().getLanguageString("Spiele") + "", "", true,
                              true);
         } catch (Exception e) {
             if (true) {

@@ -228,7 +228,7 @@ public class SettingPanel extends JPanel {
 
         //mainPanel.add(createPanel(PluginProperty.getString("SettingPanel.ShowUnavailable"), unavailable));
         mainPanel.add(createPanel(PluginProperty.getString("RecapPanel.Stars"), stars));
-        mainPanel.add(createPanel(Commons.getModel().getResource().getProperty("Gesamtstaerke"),
+        mainPanel.add(createPanel(Commons.getModel().getLanguageString("Gesamtstaerke"),
                                   totalStrength));
         mainPanel.add(createPanel(PluginProperty.getString("Squad"), squad));
         mainPanel.add(createPanel(PluginProperty.getString("SmartSquad"), smartSquad));

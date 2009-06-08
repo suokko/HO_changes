@@ -35,10 +35,10 @@ public class FavouriteMenu extends JMenu {
     public FavoritesDAO dao = new FavoritesDAO();
 
     /** Add menu item */
-    public JMenuItem itemAdd = new JMenuItem(Commons.getModel().getResource().getProperty("Hinzufuegen"));
+    public JMenuItem itemAdd = new JMenuItem(Commons.getModel().getLanguageString("Hinzufuegen"));
 
     /** Delete menu item */
-    public JMenuItem itemDelete = new JMenuItem(Commons.getModel().getResource().getProperty("loeschen"));
+    public JMenuItem itemDelete = new JMenuItem(Commons.getModel().getLanguageString("loeschen"));
 
     /** List of favourite team menu items */
     public List items;
@@ -90,9 +90,9 @@ public class FavouriteMenu extends JMenu {
                 public void actionPerformed(ActionEvent arg0) {
                     JOptionPane.showMessageDialog(SystemManager.getPlugin().getPluginPanel(),
                                                   new DeletePanel(me),
-                                                  Commons.getModel().getResource().getProperty("loeschen")
+                                                  Commons.getModel().getLanguageString("loeschen")
                                                   + " "
-                                                  + Commons.getModel().getResource().getProperty("Verein"),
+                                                  + Commons.getModel().getLanguageString("Verein"),
                                                   JOptionPane.PLAIN_MESSAGE);
                     ;
                 }
@@ -102,9 +102,9 @@ public class FavouriteMenu extends JMenu {
                 public void actionPerformed(ActionEvent arg0) {
                     JOptionPane.showMessageDialog(SystemManager.getPlugin().getPluginPanel(),
                                                   new AddPanel(me),
-                                                  Commons.getModel().getResource().getProperty("Hinzufuegen")
+                                                  Commons.getModel().getLanguageString("Hinzufuegen")
                                                   + " "
-                                                  + Commons.getModel().getResource().getProperty("Verein"),
+                                                  + Commons.getModel().getLanguageString("Verein"),
                                                   JOptionPane.PLAIN_MESSAGE);
                     ;
                 }

@@ -60,42 +60,32 @@ public class LegendaPanel extends JPanel implements ActionListener {
         this.refreshablePanel = tab;
 
         LCBGeneral = new LegendeCheckBox[10];
-        LCBGeneral[0] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("Hilflinien"));
+        LCBGeneral[0] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("Hilflinien"));
         LCBGeneral[0].aAL(this);
-        LCBGeneral[1] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("Beschriftung"));
+        LCBGeneral[1] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("Beschriftung"));
         LCBGeneral[1].aAL(this);
-        LCBGeneral[2] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("Bewertung"),
+        LCBGeneral[2] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("Bewertung"),
                                                                   Colors.Black);
         LCBGeneral[2].aAL(this);
-        LCBGeneral[3] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("MatchMittelfeld"),
+        LCBGeneral[3] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("MatchMittelfeld"),
                                                                   Colors.Yellow);
         LCBGeneral[3].aAL(this);
-        LCBGeneral[4] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("rechteAbwehrseite"),
+        LCBGeneral[4] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("rechteAbwehrseite"),
                                                                   Colors.Green.darker());
         LCBGeneral[4].aAL(this);
-        LCBGeneral[5] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("Abwehrzentrum"),
+        LCBGeneral[5] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("Abwehrzentrum"),
                                                                   Colors.Blue);
         LCBGeneral[5].aAL(this);
-        LCBGeneral[6] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("linkeAbwehrseite"),
+        LCBGeneral[6] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("linkeAbwehrseite"),
                                                                   Colors.Green.brighter());
         LCBGeneral[6].aAL(this);
-        LCBGeneral[7] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("rechteAngriffsseite"),
+        LCBGeneral[7] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("rechteAngriffsseite"),
                                                                   Colors.Orange.darker());
         LCBGeneral[7].aAL(this);
-        LCBGeneral[8] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("Angriffszentrum"),
+        LCBGeneral[8] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("Angriffszentrum"),
                                                                   Colors.Red);
         LCBGeneral[8].aAL(this);
-        LCBGeneral[9] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getResource()
-                                                                         .getProperty("linkeAngriffsseite"),
+        LCBGeneral[9] = new hoplugins.seriesstats.LegendeCheckBox(Commons.getModel().getLanguageString("linkeAngriffsseite"),
                                                                   Colors.Orange.brighter());
         LCBGeneral[9].aAL(this);
 
@@ -357,7 +347,7 @@ public class LegendaPanel extends JPanel implements ActionListener {
      * @return TODO Missing Return Method Documentation
      */
     private String prepareLigaString(int s, String l, int lid) {
-        return Commons.getModel().getResource().getProperty("Season") + " " + s + " "
-               + Commons.getModel().getResource().getProperty("Liga") + " " + l + " (" + lid + ")";
+        return Commons.getModel().getLanguageString("Season") + " " + s + " "
+               + Commons.getModel().getLanguageString("Liga") + " " + l + " (" + lid + ")";
     }
 }

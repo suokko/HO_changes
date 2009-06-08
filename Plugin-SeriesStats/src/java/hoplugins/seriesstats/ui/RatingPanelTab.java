@@ -210,10 +210,10 @@ public class RatingPanelTab extends JPanel implements ActionListener {
                 JCBDate1.addItem(v.elementAt(0));
             }
 
-            JCBDate1.addItem("(" + Commons.getModel().getResource().getProperty("Durchschnitt")
+            JCBDate1.addItem("(" + Commons.getModel().getLanguageString("Durchschnitt")
                              + ")");
-            JCBDate1.addItem("(" + Commons.getModel().getResource().getProperty("Minimal") + ")");
-            JCBDate1.addItem("(" + Commons.getModel().getResource().getProperty("Maximal") + ")");
+            JCBDate1.addItem("(" + Commons.getModel().getLanguageString("Minimal") + ")");
+            JCBDate1.addItem("(" + Commons.getModel().getLanguageString("Maximal") + ")");
 
             //tmd = t.getTeamMatchesDates(t.getTeamID(JCBTeam2.getSelectedItem().toString()));
             tmd = new Vector();
@@ -223,10 +223,10 @@ public class RatingPanelTab extends JPanel implements ActionListener {
                 JCBDate2.addItem(v.elementAt(0));
             }
 
-            JCBDate2.addItem("(" + Commons.getModel().getResource().getProperty("Durchschnitt")
+            JCBDate2.addItem("(" + Commons.getModel().getLanguageString("Durchschnitt")
                              + ")");
-            JCBDate2.addItem("(" + Commons.getModel().getResource().getProperty("Maximal") + ")");
-            JCBDate2.addItem("(" + Commons.getModel().getResource().getProperty("Minimal") + ")");
+            JCBDate2.addItem("(" + Commons.getModel().getLanguageString("Maximal") + ")");
+            JCBDate2.addItem("(" + Commons.getModel().getLanguageString("Minimal") + ")");
 
             if ((JCBDate1.getItemCount() > 0) && (JCBDate2.getItemCount() > 0)) {
                 JCBDate1.setSelectedItem(d1);

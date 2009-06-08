@@ -1,5 +1,6 @@
 package hoplugins;
 
+import hoplugins.commons.utils.PluginProperty;
 import hoplugins.specialEvents.FilterPanel;
 import hoplugins.specialEvents.SpecialEventsPanel;
 
@@ -24,9 +25,10 @@ public class SpecialEvents
     implements IPlugin, IRefreshable, IOfficialPlugin
 {
 
-    private final String PLUGIN_NAME = "Special Events";
-    private final double PLUGIN_VERSION = 1.22D;
-    private final int PLUGIN_ID = 33;
+    private static final String PLUGIN_NAME = "Special Events";
+    private static final String PLUGIN_PACKAGE = "specialEvents";
+    private static final double PLUGIN_VERSION = 1.22D;
+    private static final int PLUGIN_ID = 33;
     private JPanel mainPanel;
     public static IHOMiniModel miniModel = null;
     public static Properties props;
@@ -44,14 +46,18 @@ public class SpecialEvents
 
     private void mpInit(IHOMiniModel hOMiniModel)
     {
-        String sTabName = "Special Events";
+        String sTabName = PLUGIN_NAME;
         miniModel = hOMiniModel;
+		PluginProperty.loadPluginProperties(PLUGIN_PACKAGE);
         mainPanel = hOMiniModel.getGUI().createImagePanel();
         mainPanel.setLayout(new BorderLayout());
-        props = getProperties();
-        JPanel filterPanel = new FilterPanel(miniModel, props);
-        specialEventsTable = new SpecialEventsPanel(miniModel, props);
-        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel, props));
+//        props = getProperties();
+//        JPanel filterPanel = new FilterPanel(miniModel, props);
+//        specialEventsTable = new SpecialEventsPanel(miniModel, props);
+//        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel, props));
+        JPanel filterPanel = new FilterPanel(miniModel);
+        specialEventsTable = new SpecialEventsPanel(miniModel);
+        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel));
         JScrollPane matchArea = new JScrollPane(specialEventsTable);
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filterPanel, matchArea);
         splitPane.setDividerLocation(60);
@@ -62,31 +68,31 @@ public class SpecialEvents
         miniModel.getGUI().registerRefreshable(this);
     }
 
-    private Properties getProperties()
-    {
-        Properties props = null;
-        try
-        {
-            File languagefile = new File("hoplugins/specialEvents/sprache/" + miniModel.getHelper().getLanguageName() + ".properties");
-            if(languagefile.exists())
-            {
-                props = new Properties();
-                props.load(new FileInputStream(languagefile));
-            } else
-            {
-                languagefile = new File("hoplugins/specialEvents/sprache/English.properties");
-                props = new Properties();
-                props.load(new FileInputStream(languagefile));
-            }
-        }
-        catch(Exception ex)
-        {
-            IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
-            debugWindow.setVisible(true);
-            debugWindow.append(ex);
-        }
-        return props;
-    }
+//    private Properties getProperties()
+//    {
+//        Properties props = null;
+//        try
+//        {
+//            File languagefile = new File("hoplugins/specialEvents/sprache/" + miniModel.getHelper().getLanguageName() + ".properties");
+//            if(languagefile.exists())
+//            {
+//                props = new Properties();
+//                props.load(new FileInputStream(languagefile));
+//            } else
+//            {
+//                languagefile = new File("hoplugins/specialEvents/sprache/English.properties");
+//                props = new Properties();
+//                props.load(new FileInputStream(languagefile));
+//            }
+//        }
+//        catch(Exception ex)
+//        {
+//            IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
+//            debugWindow.setVisible(true);
+//            debugWindow.append(ex);
+//        }
+//        return props;
+//    }
 
     public void refresh()
     {
@@ -96,7 +102,7 @@ public class SpecialEvents
     public static void newTableModel()
     {
         specialEventsTable.removeAll();
-        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel, props));
+        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel));
     }
 
     public double getVersion()

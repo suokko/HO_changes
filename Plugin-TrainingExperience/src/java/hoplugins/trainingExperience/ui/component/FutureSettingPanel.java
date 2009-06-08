@@ -83,7 +83,7 @@ public class FutureSettingPanel extends JPanel {
         staminaTrainingPart = new IntensityComboBox();
         staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaTrainingPart());
 
-        JButton button = new JButton(Commons.getModel().getResource().getProperty("Aendern")); //$NON-NLS-1$
+        JButton button = new JButton(Commons.getModel().getLanguageString("Aendern")); //$NON-NLS-1$
 
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {

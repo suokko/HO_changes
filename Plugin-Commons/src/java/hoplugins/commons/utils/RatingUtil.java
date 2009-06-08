@@ -45,16 +45,16 @@ public final class RatingUtil {
 	        subLevel = st2.nextToken();
         }
 
-        if (subLevel.indexOf(model.getResource().getProperty("veryhigh")) > -1) {
+        if (subLevel.indexOf(model.getLanguageString("veryhigh")) > -1) {
             level = level + "++";
         }
-        else if (subLevel.indexOf(model.getResource().getProperty("high")) > -1) {
+        else if (subLevel.indexOf(model.getLanguageString("high")) > -1) {
             level = level + "+";
         }
-        else if (subLevel.indexOf(model.getResource().getProperty("verylow")) > -1) {
+        else if (subLevel.indexOf(model.getLanguageString("verylow")) > -1) {
             level = level + "--";
         }
-        else if (subLevel.indexOf(model.getResource().getProperty("low")) > -1) {
+        else if (subLevel.indexOf(model.getLanguageString("low")) > -1) {
             level = level + "-";
         }
 

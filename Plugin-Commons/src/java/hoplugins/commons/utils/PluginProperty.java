@@ -94,7 +94,7 @@ public final class PluginProperty {
 
         // Not found? Try HO properties.
         if (value == null) {
-            value = Commons.getModel().getResource().getProperty(key);
+            value = Commons.getModel().getLanguageString(key);
 
             // Property still not found?
             if (value == null) {

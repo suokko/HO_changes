@@ -1,12 +1,11 @@
 package hoplugins.specialEvents;
 
-import hoplugins.SpecialEvents;
+import hoplugins.commons.utils.PluginProperty;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JTable;
@@ -38,15 +37,15 @@ public class SpecialEventsPanel extends JTable
     public static final int HIDDENCOLUMN     = 14;
     public static final int NUMCOLUMNS       = 15;
     
-    private Properties props;
+//    private Properties props;
     private IHOMiniModel miniModel;
     private String columnNames[];
     private Vector highlightTexte;
 
-    public SpecialEventsPanel(IHOMiniModel miniModel, Properties props)
+    public SpecialEventsPanel(IHOMiniModel miniModel)
     {
         columnNames = new String[NUMCOLUMNS];
-        this.props = props;
+//        this.props = props;
         this.miniModel = miniModel;
         setColumnHeaders();
         setAutoResizeMode(0);
@@ -54,7 +53,7 @@ public class SpecialEventsPanel extends JTable
         try
         {
             setDefaultRenderer(java.lang.Object.class, new SpecialEventsTableRenderer());
-            TableModel table = getSEModel(miniModel, props);
+            TableModel table = getSEModel(miniModel);
             setModel(table);
         }
         catch(RuntimeException e)
@@ -65,20 +64,20 @@ public class SpecialEventsPanel extends JTable
 
     private void setColumnHeaders()
     {
-        columnNames[MATCHDATECOLUMN] = props.getProperty("Datum");
-        columnNames[MATCHIDCOLUMN] = props.getProperty("MatchId");
-        columnNames[HOMETACTICCOLUMN] = props.getProperty("Taktik");
+        columnNames[MATCHDATECOLUMN] = PluginProperty.getString("Datum");
+        columnNames[MATCHIDCOLUMN] = PluginProperty.getString("MatchId");
+        columnNames[HOMETACTICCOLUMN] = PluginProperty.getString("Taktik");
         columnNames[HOMEEVENTCOLUMN] = "";
-        columnNames[HOMETEAMCOLUMN] = props.getProperty("Heim");
+        columnNames[HOMETEAMCOLUMN] = PluginProperty.getString("Heim");
         columnNames[RESULTCOLUMN] = "";
-        columnNames[AWAYTEAMCOLUMN] = props.getProperty("Gast");
+        columnNames[AWAYTEAMCOLUMN] = PluginProperty.getString("Gast");
         columnNames[AWAYEVENTCOLUMN] = "";
-        columnNames[AWAYTACTICCOLUMN] = props.getProperty("Taktik");
-        columnNames[MINUTECOLUMN] = props.getProperty("Min");
+        columnNames[AWAYTACTICCOLUMN] = PluginProperty.getString("Taktik");
+        columnNames[MINUTECOLUMN] = PluginProperty.getString("Min");
         columnNames[CHANCECOLUMN] = "";
         columnNames[EVENTTYPCOLUMN] = "";
-        columnNames[SETEXTCOLUMN] = props.getProperty("Event");
-        columnNames[NAMECOLUMN] = props.getProperty("Spieler");
+        columnNames[SETEXTCOLUMN] = PluginProperty.getString("Event");
+        columnNames[NAMECOLUMN] = PluginProperty.getString("Spieler");
         columnNames[HIDDENCOLUMN] = "";
     }
 
@@ -94,7 +93,7 @@ public class SpecialEventsPanel extends JTable
                 int realIndex = columnModel.getColumn(index).getModelIndex();
                 if(realIndex == HOMEEVENTCOLUMN || realIndex == AWAYEVENTCOLUMN)
                 {
-                    tip = props.getProperty("Tip4");
+                    tip = PluginProperty.getString("Tip4");
                 }
                 return tip;
             }
@@ -102,9 +101,9 @@ public class SpecialEventsPanel extends JTable
         };
     }
 
-    public TableModel getSEModel(IHOMiniModel miniModel, Properties props)
+    public TableModel getSEModel(IHOMiniModel miniModel)
     {
-        SpecialEventsDM specialEventsDM = new SpecialEventsDM(props, miniModel);
+        SpecialEventsDM specialEventsDM = new SpecialEventsDM(miniModel);
         Vector matches = specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(), FilterPanel.getSaisonTyp(), FilterPanel.showFriendlies());
         highlightTexte = specialEventsDM.getHighlightText();
         TableModel tableModel = new SpecialEventsTableModel(matches, new Vector(Arrays.asList(columnNames)));
@@ -120,11 +119,11 @@ public class SpecialEventsPanel extends JTable
         int realColumnIndex = convertColumnIndexToModel(colIndex);
         if(realColumnIndex == HOMEEVENTCOLUMN || realColumnIndex == AWAYEVENTCOLUMN)
         {
-            tip = SpecialEvents.props.getProperty("Tip4");
+            tip = PluginProperty.getString("Tip4");
         }
         if(realColumnIndex == NAMECOLUMN)
         {
-            tip = SpecialEvents.props.getProperty("TipName");
+            tip = PluginProperty.getString("TipName");
         }
         if(realColumnIndex == EVENTTYPCOLUMN)
         {

@@ -31,8 +31,8 @@ public class TeamBookmarksTableModel extends AbstractTableModel {
     public TeamBookmarksTableModel(List values) {
         super();
 
-        this.colNames[0] = Commons.getModel().getResource().getProperty("ID"); //$NON-NLS-1$
-        this.colNames[1] = Commons.getModel().getResource().getProperty("Name"); //$NON-NLS-1$
+        this.colNames[0] = Commons.getModel().getLanguageString("ID"); //$NON-NLS-1$
+        this.colNames[1] = Commons.getModel().getLanguageString("Name"); //$NON-NLS-1$
 
         this.values = values;
     }

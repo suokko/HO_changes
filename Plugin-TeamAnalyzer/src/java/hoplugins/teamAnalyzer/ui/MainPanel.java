@@ -68,7 +68,7 @@ public class MainPanel extends JPanel {
         pane.setOpaque(false);
         setOpaque(false);
         setLayout(new BorderLayout());
-        pane.add(Commons.getModel().getResource().getProperty("Aufstellung"), teamPanel);
+        pane.add(Commons.getModel().getLanguageString("Aufstellung"), teamPanel);
 //        pane.add(PluginProperty.getString("Players"), rosterPanel);
         add(pane, BorderLayout.CENTER);
     }

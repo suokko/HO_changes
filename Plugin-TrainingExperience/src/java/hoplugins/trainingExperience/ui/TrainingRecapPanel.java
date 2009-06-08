@@ -140,8 +140,8 @@ public class TrainingRecapPanel extends JPanel {
     private Vector getColumns() {
         Vector columns = new Vector();
 
-        columns.add(Commons.getModel().getResource().getProperty("Spieler")); //$NON-NLS-1$
-        columns.add(Commons.getModel().getResource().getProperty("Alter")); //$NON-NLS-1$
+        columns.add(Commons.getModel().getLanguageString("Spieler")); //$NON-NLS-1$
+        columns.add(Commons.getModel().getLanguageString("Alter")); //$NON-NLS-1$
 
         int actualSeason = Commons.getModel().getBasics().getSeason();
         int actualWeek = Commons.getModel().getBasics().getSpieltag();
@@ -172,7 +172,7 @@ public class TrainingRecapPanel extends JPanel {
             columns.add(season + " " + week); //$NON-NLS-1$
         }
 
-        columns.add(Commons.getModel().getResource().getProperty("ID")); //$NON-NLS-1$
+        columns.add(Commons.getModel().getLanguageString("ID")); //$NON-NLS-1$
 
         return columns;
     }

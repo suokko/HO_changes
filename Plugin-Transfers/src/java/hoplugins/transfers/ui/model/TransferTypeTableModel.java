@@ -38,8 +38,8 @@ public class TransferTypeTableModel extends AbstractTableModel {
     public TransferTypeTableModel(List values) {
         super();
 
-        this.colNames[0] = Commons.getModel().getResource().getProperty("ID");
-        this.colNames[1] = Commons.getModel().getResource().getProperty("Name");
+        this.colNames[0] = Commons.getModel().getLanguageString("ID");
+        this.colNames[1] = Commons.getModel().getLanguageString("Name");
         this.colNames[2] = PluginProperty.getString("Type");
         this.colNames[3] = PluginProperty.getString("Income");
 
