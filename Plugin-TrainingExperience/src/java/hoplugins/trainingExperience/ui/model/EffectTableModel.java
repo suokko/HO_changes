@@ -45,12 +45,12 @@ public class EffectTableModel extends AbstractTableModel {
         FORMATTER.setMinimumFractionDigits(2);
 
         this.colNames[0] = PluginProperty.getString("Week"); //$NON-NLS-1$
-        this.colNames[1] = Commons.getModel().getResource().getProperty("Season"); //$NON-NLS-1$
+        this.colNames[1] = Commons.getModel().getLanguageString("Season"); //$NON-NLS-1$
         this.colNames[2] = PluginProperty.getString("TSI"); //$NON-NLS-1$
         this.colNames[3] = PluginProperty.getString("AVGTSI"); //$NON-NLS-1$
         this.colNames[4] = PluginProperty.getString("TSI") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
         this.colNames[5] = PluginProperty.getString("AVGFORM"); //$NON-NLS-1$
-        this.colNames[6] = Commons.getModel().getResource().getProperty("Form") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
+        this.colNames[6] = Commons.getModel().getLanguageString("Form") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
         this.colNames[7] = PluginProperty.getString("Skillups"); //$NON-NLS-1$
         this.colNames[8] = PluginProperty.getString("Skill"); //$NON-NLS-1$
 

@@ -132,11 +132,11 @@ public class PlayersTableModel extends AbstractTableModel {
         columnNames = new String[cols];
 
         // Riempimento valori
-        columnNames[COL_ID] = Commons.getModel().getResource().getProperty("ID");
-        columnNames[COL_NAME] = Commons.getModel().getResource().getProperty("Spieler");
-        columnNames[COL_AGREEABILITY] = Commons.getModel().getResource().getProperty("Ansehen");
-        columnNames[COL_AGGRESSIVITY] = Commons.getModel().getResource().getProperty("Aggressivitaet");
-        columnNames[COL_HONESTY] = Commons.getModel().getResource().getProperty("Charakter");
+        columnNames[COL_ID] = Commons.getModel().getLanguageString("ID");
+        columnNames[COL_NAME] = Commons.getModel().getLanguageString("Spieler");
+        columnNames[COL_AGREEABILITY] = Commons.getModel().getLanguageString("Ansehen");
+        columnNames[COL_AGGRESSIVITY] = Commons.getModel().getLanguageString("Aggressivitaet");
+        columnNames[COL_HONESTY] = Commons.getModel().getLanguageString("Charakter");
         columnNames[COL_CARDS] = PluginProperty.getString("column.CardsTotal");
         columnNames[COL_DIRECT_RED_CARDS] = PluginProperty.getString("column.RedCards");
         columnNames[COL_WARNINGS] = PluginProperty.getString("column.Warnings");

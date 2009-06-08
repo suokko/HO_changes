@@ -65,21 +65,21 @@ public class RecapPanel extends JPanel {
     PluginProperty.getString("Type"), //$NON-NLS-1$
     PluginProperty.getString("RecapPanel.Result"), //$NON-NLS-1$
     PluginProperty.getString("Week"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("Season"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("MatchMittelfeld"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("rechteAbwehrseite"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("Abwehrzentrum"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("linkeAbwehrseite"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("rechteAngriffsseite"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("Angriffszentrum"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("linkeAngriffsseite"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("Season"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("MatchMittelfeld"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("rechteAbwehrseite"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("Abwehrzentrum"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("linkeAbwehrseite"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("rechteAngriffsseite"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("Angriffszentrum"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("linkeAngriffsseite"), //$NON-NLS-1$
     PluginProperty.getString("RecapPanel.Stars"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("Gesamtstaerke"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("Gesamtstaerke"), //$NON-NLS-1$
     PluginProperty.getString("Squad"), //$NON-NLS-1$
     PluginProperty.getString("SmartSquad"), //$NON-NLS-1$
     "LoddarStats", //$NON-NLS-1$
     PluginProperty.getString("RecapPanel.Tactic"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("Taktikstaerke"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("Taktikstaerke"), //$NON-NLS-1$
     PluginProperty.getString("RecapPanel.Formation"), //$NON-NLS-1$
     "", //$NON-NLS-1$
     "" //$NON-NLS-1$

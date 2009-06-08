@@ -33,7 +33,7 @@ public class AddPanel extends JPanel {
     FavouriteMenu menu;
 
     /** The add button */
-    JButton addButton = new JButton(Commons.getModel().getResource().getProperty("Hinzufuegen"));
+    JButton addButton = new JButton(Commons.getModel().getLanguageString("Hinzufuegen"));
 
     /** A status label */
     JLabel status = new JLabel();
@@ -104,7 +104,7 @@ public class AddPanel extends JPanel {
                     }
 
                     status.setText(team.getName() + " "
-                                   + Commons.getModel().getResource().getProperty("hinzugefuegt"));
+                                   + Commons.getModel().getLanguageString("hinzugefuegt"));
                     menu.teams.add(team);
 
                     JMenuItem item = new JMenuItem(team.getName());

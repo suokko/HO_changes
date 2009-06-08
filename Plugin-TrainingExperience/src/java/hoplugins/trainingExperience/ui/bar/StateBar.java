@@ -63,7 +63,7 @@ public class StateBar extends JComponent {
         String desc = ""; //$NON-NLS-1$
 
         if (lvl1 > 0) {
-            desc = desc + Commons.getModel().getResource().getProperty("Aktuell") + lvl1 + "% "; //$NON-NLS-1$ //$NON-NLS-2$
+            desc = desc + Commons.getModel().getLanguageString("Aktuell") + lvl1 + "% "; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (lvl2 > 0) {

@@ -125,11 +125,11 @@ public class SeriesStats implements IPlugin, IRefreshable, IOfficialPlugin {
             PanelOuter.setLayout(new BorderLayout());
 
             PanelOuterTabbed = new JTabbedPane();
-            PanelOuterTabbed.addTab(myhOMiniModel.getResource().getProperty("Allgemein"),
+            PanelOuterTabbed.addTab(myhOMiniModel.getLanguageString("Allgemein"),
                                     new GeneralPanelTab());
-            PanelOuterTabbed.addTab(myhOMiniModel.getResource().getProperty("Bewertung"),
+            PanelOuterTabbed.addTab(myhOMiniModel.getLanguageString("Bewertung"),
                                     new RatingPanelTab());
-            PanelOuterTabbed.addTab(myhOMiniModel.getResource().getProperty("Liga"),
+            PanelOuterTabbed.addTab(myhOMiniModel.getLanguageString("Liga"),
                                     new SeriesPanelTab());
             PanelOuter.add(PanelOuterTabbed, BorderLayout.CENTER);
 

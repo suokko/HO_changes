@@ -35,8 +35,8 @@ public class ChangesTableModel extends AbstractTableModel {
     public ChangesTableModel(List values) {
         super();
         this.colNames[0] = PluginProperty.getString("Week"); //$NON-NLS-1$
-        this.colNames[1] = Commons.getModel().getResource().getProperty("Season"); //$NON-NLS-1$
-        this.colNames[2] = Commons.getModel().getResource().getProperty("Spieler"); //$NON-NLS-1$
+        this.colNames[1] = Commons.getModel().getLanguageString("Season"); //$NON-NLS-1$
+        this.colNames[2] = Commons.getModel().getLanguageString("Spieler"); //$NON-NLS-1$
         this.colNames[3] = PluginProperty.getString("Skill"); //$NON-NLS-1$
         this.colNames[4] = PluginProperty.getString("TO"); //$NON-NLS-1$
         this.colNames[5] = "isOld"; //$NON-NLS-1$

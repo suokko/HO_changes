@@ -1,21 +1,19 @@
 package hoplugins.specialEvents;
 
 import hoplugins.SpecialEvents;
+import hoplugins.commons.utils.PluginProperty;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
 import plugins.IDebugWindow;
 import plugins.IHOMiniModel;
@@ -40,7 +38,7 @@ public class FilterPanel extends JPanel
     public static final int SAISONLAST2 = 2;
     public static final int SAISONACT = 3;
     IHOMiniModel miniModel;
-    Properties props;
+//    Properties props;
     Object matches[][];
     private static ButtonGroup saisonGroup = new ButtonGroup();
     private static JRadioButton saisonAct;
@@ -58,10 +56,10 @@ public class FilterPanel extends JPanel
     private static JCheckBox ifk;
     private static JCheckBox longshot;
 
-    public FilterPanel(IHOMiniModel arg0, Properties props)
+    public FilterPanel(IHOMiniModel arg0)
     {
-        this.props = null;
-        initialize(arg0, props);
+//        this.props = null;
+        initialize(arg0);
     }
 
     public static int getSaisonTyp()
@@ -78,51 +76,51 @@ public class FilterPanel extends JPanel
         return saison;
     }
 
-    public void initialize(IHOMiniModel arg0, Properties props)
+    public void initialize(IHOMiniModel arg0)
     {
-        this.props = props;
+//        this.props = props;
         try
         {
             miniModel = arg0;
-            gameTypSE = new JRadioButton(props.getProperty("SpieleMitSEs"));
+            gameTypSE = new JRadioButton(PluginProperty.getString("SpieleMitSEs"));
             gameTypSE.addActionListener(new OptionFieldActionListener());
-            gameTypAll = new JRadioButton(props.getProperty("AlleSpiele"));
+            gameTypAll = new JRadioButton(PluginProperty.getString("AlleSpiele"));
             gameTypAll.addActionListener(new OptionFieldActionListener());
             gameTypGroup.add(gameTypSE);
             gameTypGroup.add(gameTypAll);
             gameTypSE.setSelected(true);
-            saisonAct = new JRadioButton(props.getProperty("AktSaison"));
+            saisonAct = new JRadioButton(PluginProperty.getString("AktSaison"));
             saisonAct.addActionListener(new OptionFieldActionListener());
-            saisonLastTwo = new JRadioButton(props.getProperty("2Saison"));
+            saisonLastTwo = new JRadioButton(PluginProperty.getString("2Saison"));
             saisonLastTwo.addActionListener(new OptionFieldActionListener());
-            saisonAll = new JRadioButton(props.getProperty("AllSaison"));
+            saisonAll = new JRadioButton(PluginProperty.getString("AllSaison"));
             saisonAll.addActionListener(new OptionFieldActionListener());
             saisonGroup.add(saisonAct);
             saisonGroup.add(saisonLastTwo);
             saisonGroup.add(saisonAll);
             saisonLastTwo.setSelected(true);
-            friendlies = new JCheckBox(props.getProperty("FRIENDLIES"));
+            friendlies = new JCheckBox(PluginProperty.getString("FRIENDLIES"));
             friendlies.setSelected(true);
             friendlies.addActionListener(this);
-            specialtySE = new JCheckBox(props.getProperty("SPECIALTYSE"));
+            specialtySE = new JCheckBox(PluginProperty.getString("SPECIALTYSE"));
             specialtySE.setSelected(true);
             specialtySE.addActionListener(this);
-            weatherSE = new JCheckBox(props.getProperty("WEATHERSE"));
+            weatherSE = new JCheckBox(PluginProperty.getString("WEATHERSE"));
             weatherSE.setSelected(true);
             weatherSE.addActionListener(this);
-            counter = new JCheckBox(props.getProperty("COUNTER"));
+            counter = new JCheckBox(PluginProperty.getString("COUNTER"));
             counter.setSelected(true);
             counter.addActionListener(this);
-            freekick = new JCheckBox(props.getProperty("FREEKICK"));
+            freekick = new JCheckBox(PluginProperty.getString("FREEKICK"));
             freekick.setSelected(true);
             freekick.addActionListener(this);
-            penalty = new JCheckBox(props.getProperty("PENALTY"));
+            penalty = new JCheckBox(PluginProperty.getString("PENALTY"));
             penalty.setSelected(true);
             penalty.addActionListener(this);
-            ifk = new JCheckBox(props.getProperty("IFK"));
+            ifk = new JCheckBox(PluginProperty.getString("IFK"));
             ifk.setSelected(true);
             ifk.addActionListener(this);
-            longshot = new JCheckBox(props.getProperty("LONGSHOT"));
+            longshot = new JCheckBox(PluginProperty.getString("LONGSHOT"));
             longshot.setSelected(true);
             longshot.addActionListener(this);
 

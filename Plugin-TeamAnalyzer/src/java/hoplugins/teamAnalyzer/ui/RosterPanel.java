@@ -49,13 +49,13 @@ public class RosterPanel extends JPanel {
     private Map players = new HashMap();
     private UiRosterTableModel tableModel;
     private String[] columns = {
-                                   Commons.getModel().getResource().getProperty("Name"),
+                                   Commons.getModel().getLanguageString("Name"),
                                    PluginProperty.getString("Role"),
                                    PluginProperty.getString("Position"),
                                    PluginProperty.getString("Secondary"),
                                    PluginProperty.getString("GamesCode"),
-                                   Commons.getModel().getResource().getProperty("Alter"),
-                                   Commons.getModel().getResource().getProperty("Form"),
+                                   Commons.getModel().getLanguageString("Alter"),
+                                   Commons.getModel().getLanguageString("Form"),
                                    PluginProperty.getString("EXPCode"),
                                    PluginProperty.getString("TSI"),
                                    PluginProperty.getString("SpecialEvent"),
