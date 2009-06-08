@@ -38,7 +38,7 @@ import java.awt.Color;
 import java.awt.event.*;
 
 public class PotW implements ActionListener,IPlugin,ChangeListener, plugins.IRefreshable {
-	private double version = 0.22; 
+	private double version = 0.221; 
 	
 	private javax.swing.JPanel      m_jpPanel       =   null;
 	private plugins.IHOMiniModel    m_clModel       =   null;

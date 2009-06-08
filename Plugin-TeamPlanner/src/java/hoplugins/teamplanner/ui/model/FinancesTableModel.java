@@ -36,23 +36,23 @@ public class FinancesTableModel extends AbstractTableModel {
         this.values = null;
         colNames = new Vector();
         this.values = values;
-        colNames.add(Commons.getModel().getResource().getProperty("Datum"));
-        colNames.add(Commons.getModel().getResource().getProperty("Season") + " / "
+        colNames.add(Commons.getModel().getLanguageString("Datum"));
+        colNames.add(Commons.getModel().getLanguageString("Season") + " / "
                      + PluginProperty.getString("Week"));
-        colNames.add(Commons.getModel().getResource().getProperty("Kontostand"));
-        colNames.add(Commons.getModel().getResource().getProperty("Zuschauer"));
-        colNames.add(Commons.getModel().getResource().getProperty("Sponsoren"));
-        colNames.add(Commons.getModel().getResource().getProperty("Zinsertraege"));
-        colNames.add(Commons.getModel().getResource().getProperty("Sonstiges"));
-        colNames.add(Commons.getModel().getResource().getProperty("Gesamteinnahmen"));
-        colNames.add(Commons.getModel().getResource().getProperty("Stadion"));
-        colNames.add(Commons.getModel().getResource().getProperty("Spielergehaelter"));
-        colNames.add(Commons.getModel().getResource().getProperty("Zinsaufwendungen"));
-        colNames.add(Commons.getModel().getResource().getProperty("Sonstiges"));
-        colNames.add(Commons.getModel().getResource().getProperty("Trainerstab"));
-        colNames.add(Commons.getModel().getResource().getProperty("Jugend"));
-        colNames.add(Commons.getModel().getResource().getProperty("Gesamtausgaben"));
-        colNames.add(Commons.getModel().getResource().getProperty("ErwarteterGewinnVerlust"));
+        colNames.add(Commons.getModel().getLanguageString("Kontostand"));
+        colNames.add(Commons.getModel().getLanguageString("Zuschauer"));
+        colNames.add(Commons.getModel().getLanguageString("Sponsoren"));
+        colNames.add(Commons.getModel().getLanguageString("Zinsertraege"));
+        colNames.add(Commons.getModel().getLanguageString("Sonstiges"));
+        colNames.add(Commons.getModel().getLanguageString("Gesamteinnahmen"));
+        colNames.add(Commons.getModel().getLanguageString("Stadion"));
+        colNames.add(Commons.getModel().getLanguageString("Spielergehaelter"));
+        colNames.add(Commons.getModel().getLanguageString("Zinsaufwendungen"));
+        colNames.add(Commons.getModel().getLanguageString("Sonstiges"));
+        colNames.add(Commons.getModel().getLanguageString("Trainerstab"));
+        colNames.add(Commons.getModel().getLanguageString("Jugend"));
+        colNames.add(Commons.getModel().getLanguageString("Gesamtausgaben"));
+        colNames.add(Commons.getModel().getLanguageString("ErwarteterGewinnVerlust"));
     }
 
     //~ Methods ------------------------------------------------------------------------------------

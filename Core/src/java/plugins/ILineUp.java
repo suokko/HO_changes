@@ -8,8 +8,6 @@ package plugins;
 
 import java.util.Vector;
 
-import de.hattrickorganizer.model.Spieler;
-
 
 /**
  * DOCUMENT ME!

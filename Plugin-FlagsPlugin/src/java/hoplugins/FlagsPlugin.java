@@ -55,7 +55,7 @@ import plugins.IXMLParser;
 
 public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListener, plugins.IOfficialPlugin, plugins.IRefreshable {
     public static final String NAME = "Flags Collector Plugin";
-    public static final double INTERNAL_VERSION = 3.21;
+    public static final double INTERNAL_VERSION = 3.22;
     public static final double HO_VERSION = 1.400;
     //public static final double VERSION = HO_VERSION + (INTERNAL_VERSION / 1000.0);
     public static final double VERSION = INTERNAL_VERSION;

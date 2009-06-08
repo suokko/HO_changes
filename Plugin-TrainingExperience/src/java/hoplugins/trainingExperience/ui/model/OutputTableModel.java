@@ -2,17 +2,16 @@
 package hoplugins.trainingExperience.ui.model;
 
 import hoplugins.TrainingExperience;
-
 import hoplugins.trainingExperience.constants.Skills;
 import hoplugins.trainingExperience.ui.bar.VerticalIndicator;
-
-import plugins.IHOMiniModel;
-import plugins.ISpieler;
 
 import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
+
+import plugins.IHOMiniModel;
+import plugins.ISpieler;
 
 
 /**
@@ -34,10 +33,10 @@ public class OutputTableModel extends AbstractTableModel {
     private IHOMiniModel p_IHMM_HOMiniModel = null;
 
     //private ITrainingsManager p_ITM_trainingsManager = null;
-    private Vector p_V_columnNames = null; // entrys: Strings mit Spaltenname
+    private Vector<String> p_V_columnNames = null; // entrys: Strings mit Spaltenname
 
     //data enthält die berechneten Werte aller Spieler, wieviel Training sie schon hattenn
-    private Vector p_V_data = null; //entrys: TrainingsManagerObjekte
+    private Vector<ISpieler> p_V_data = null; //entrys: TrainingsManagerObjekte
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -51,7 +50,7 @@ public class OutputTableModel extends AbstractTableModel {
 
         p_V_data = p_IHMM_HOMiniModel.getAllSpieler();
 
-        p_V_columnNames = new Vector();
+        p_V_columnNames = new Vector<String>();
 
         //Spaltennamen festlegen
         p_V_columnNames.add(new String(this.p_IHMM_HOMiniModel.getLanguageString("Spieler"))); //$NON-NLS-1$
@@ -73,7 +72,7 @@ public class OutputTableModel extends AbstractTableModel {
     /* (non-Javadoc)
      * @see javax.swing.table.TableModel#getColumnClass(int)
      */
-    public Class getColumnClass(int c) {
+    public Class<?> getColumnClass(int c) {
         if ((c > 2) && (c < 11)) {
             return JPanel.class;
         }

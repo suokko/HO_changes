@@ -198,25 +198,15 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
     /** Speciality */
     public static final CBItem[] EINSTUFUNG_SPECIALITY = {
                                                              new CBItem("", 0),
-                                                             new CBItem(Commons.getModel()
-                                                                               .getResource()
-                                                                               .getProperty("sp_Technical"),
+                                                             new CBItem(Commons.getModel().getLanguageString("sp_Technical"),
                                                                         1),
-                                                             new CBItem(Commons.getModel()
-                                                                               .getResource()
-                                                                               .getProperty("sp_Quick"),
+                                                             new CBItem(Commons.getModel().getLanguageString("sp_Quick"),
                                                                         2),
-                                                             new CBItem(Commons.getModel()
-                                                                               .getResource()
-                                                                               .getProperty("sp_Powerful"),
+                                                             new CBItem(Commons.getModel().getLanguageString("sp_Powerful"),
                                                                         3),
-                                                             new CBItem(Commons.getModel()
-                                                                               .getResource()
-                                                                               .getProperty("sp_Unpredictable"),
+                                                             new CBItem(Commons.getModel().getLanguageString("sp_Unpredictable"),
                                                                         4),
-                                                             new CBItem(Commons.getModel()
-                                                                               .getResource()
-                                                                               .getProperty("sp_Head"),
+                                                             new CBItem(Commons.getModel().getLanguageString("sp_Head"),
                                                                         5)
                                                          };
 
@@ -387,7 +377,7 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
         panel = Commons.getModel().getGUI().createImagePanel();
         panel.setLayout(new GridLayout(9, 4, 4, 4));
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Alter"));
+        label = new JLabel(Commons.getModel().getLanguageString("Alter"));
         panel.add(label);
         jtfAge.setHorizontalAlignment(JLabel.RIGHT);
         jtfAge.addFocusListener(this);
@@ -399,7 +389,7 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
         jtfTSI.addFocusListener(this);
         panel.add(jtfTSI);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Spezialitaet"));
+        label = new JLabel(Commons.getModel().getLanguageString("Spezialitaet"));
         panel.add(label);
         jcbSpeciality.addItemListener(this);
         panel.add(jcbSpeciality);
@@ -408,52 +398,52 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
         panel.add(label);
         panel.add(jtfEPV);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Erfahrung"));
+        label = new JLabel(Commons.getModel().getLanguageString("Erfahrung"));
         panel.add(label);
         jcbExperience.addItemListener(this);
         panel.add(jcbExperience);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Form"));
+        label = new JLabel(Commons.getModel().getLanguageString("Form"));
         panel.add(label);
         jcbForm.addItemListener(this);
         panel.add(jcbForm);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Kondition"));
+        label = new JLabel(Commons.getModel().getLanguageString("Kondition"));
         panel.add(label);
         jcbStamina.addItemListener(this);
         panel.add(jcbStamina);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Torwart"));
+        label = new JLabel(Commons.getModel().getLanguageString("Torwart"));
         panel.add(label);
         jcbKeeper.addItemListener(this);
         panel.add(jcbKeeper);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Spielaufbau"));
+        label = new JLabel(Commons.getModel().getLanguageString("Spielaufbau"));
         panel.add(label);
         jcbPlaymaking.addItemListener(this);
         panel.add(jcbPlaymaking);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Passpiel"));
+        label = new JLabel(Commons.getModel().getLanguageString("Passpiel"));
         panel.add(label);
         jcbPassing.addItemListener(this);
         panel.add(jcbPassing);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Fluegelspiel"));
+        label = new JLabel(Commons.getModel().getLanguageString("Fluegelspiel"));
         panel.add(label);
         jcbWinger.addItemListener(this);
         panel.add(jcbWinger);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Verteidigung"));
+        label = new JLabel(Commons.getModel().getLanguageString("Verteidigung"));
         panel.add(label);
         jcbDefense.addItemListener(this);
         panel.add(jcbDefense);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Torschuss"));
+        label = new JLabel(Commons.getModel().getLanguageString("Torschuss"));
         panel.add(label);
         jcbAttacking.addItemListener(this);
         panel.add(jcbAttacking);
 
-        label = new JLabel(Commons.getModel().getResource().getProperty("Standards"));
+        label = new JLabel(Commons.getModel().getLanguageString("Standards"));
         panel.add(label);
         jcbStandards.addItemListener(this);
         panel.add(jcbStandards);

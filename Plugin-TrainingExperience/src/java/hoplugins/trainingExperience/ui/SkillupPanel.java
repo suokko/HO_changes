@@ -35,7 +35,7 @@ public class SkillupPanel extends JPanel {
     private String[] columns = {
                                    PluginProperty.getString("Type"), //$NON-NLS-1$
     PluginProperty.getString("Week"), //$NON-NLS-1$
-    Commons.getModel().getResource().getProperty("Season"), //$NON-NLS-1$
+    Commons.getModel().getLanguageString("Season"), //$NON-NLS-1$
     "", "", "" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                };
 

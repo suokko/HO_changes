@@ -32,10 +32,10 @@ public class DeletePanel extends JPanel {
     FavouriteMenu menu;
 
     /** The add button */
-    JButton addButton = new JButton(Commons.getModel().getResource().getProperty("Hinzufuegen"));
+    JButton addButton = new JButton(Commons.getModel().getLanguageString("Hinzufuegen"));
 
     /** The delete button */
-    JButton deletebutton = new JButton(Commons.getModel().getResource().getProperty("loeschen"));
+    JButton deletebutton = new JButton(Commons.getModel().getLanguageString("loeschen"));
 
     /** ComboBox with the list of favourite teams */
     JComboBox teams = new JComboBox();

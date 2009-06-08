@@ -20,7 +20,7 @@ import de.hattrickorganizer.tools.HOLogger;
  *
  * @author thomas.werth
  */
-public class SpielerPosition implements java.io.Serializable, Comparable, plugins.ISpielerPosition {
+public class SpielerPosition implements java.io.Serializable, Comparable<ISpielerPosition>, plugins.ISpielerPosition {
 
 	private static final long serialVersionUID = -4822360078242315135L;
 
@@ -796,7 +796,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
            return SpielerPosition.KEIN_TE;
        }
      */
-    public final int compareTo(Object obj) {
+    public final int compareTo(ISpielerPosition obj) {
         if (obj instanceof SpielerPosition) {
             final SpielerPosition position = (SpielerPosition) obj;
 

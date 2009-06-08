@@ -1,6 +1,7 @@
 package plugins;
 
 import java.util.Hashtable;
+import java.util.Properties;
 
 public interface IRatingPredictionParameter 
 {
@@ -13,7 +14,7 @@ public interface IRatingPredictionParameter
 
     public static final String GENERAL = "general";
 
-    public Hashtable getAllSections ();
+    public Hashtable<String, Properties> getAllSections ();
     public boolean hasSection (String section);
 
     public double getParam (String key);

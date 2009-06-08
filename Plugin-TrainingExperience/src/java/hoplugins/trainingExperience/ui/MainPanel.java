@@ -76,7 +76,7 @@ public class MainPanel extends JPanel {
 
         JTabbedPane pane = new JTabbedPane();
 
-        pane.addTab(Commons.getModel().getResource().getProperty("Training"), output);
+        pane.addTab(Commons.getModel().getLanguageString("Training"), output);
         pane.addTab(PluginProperty.getString("MainPanel.Prediction"), recap);
         pane.addTab(PluginProperty.getString("MainPanel.Analyzer"), analyzer);
         pane.addTab(PluginProperty.getString("MainPanel.Effect"), effect);

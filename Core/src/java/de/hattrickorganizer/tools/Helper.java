@@ -1,11 +1,15 @@
 // %1586804725:de.hattrickorganizer.tools%
 package de.hattrickorganizer.tools;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageProducer;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -13,6 +17,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -23,6 +28,7 @@ import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.CBItem;
+import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -39,25 +45,25 @@ public class Helper extends LanguageFiles {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** Componente zum Grafikenladen */
-    public static de.hattrickorganizer.gui.templates.ImagePanel LADECOMPONENTE = new de.hattrickorganizer.gui.templates.ImagePanel();
+    public static ImagePanel LADECOMPONENTE = new de.hattrickorganizer.gui.templates.ImagePanel();
 
     /** yellow star */
-    public static javax.swing.ImageIcon YELLOWSTARIMAGEICON;
+    public static ImageIcon YELLOWSTARIMAGEICON;
 
     /** grey star */
-    public static javax.swing.ImageIcon GREYSTARIMAGEICON;
+    public static ImageIcon GREYSTARIMAGEICON;
 
     /** no icon */
-    public static javax.swing.ImageIcon NOIMAGEICON;
+    public static ImageIcon NOIMAGEICON;
 
     /** no match icon */
-    public static javax.swing.ImageIcon NOMATCHICON;
+    public static ImageIcon NOMATCHICON;
 
     /** donload icon */
-    public static javax.swing.ImageIcon DOWNLOADMATCHICON;
+    public static ImageIcon DOWNLOADMATCHICON;
 
     /** show match icon */
-    public static javax.swing.ImageIcon SHOWMATCHICON;
+    public static ImageIcon SHOWMATCHICON;
 
     /** red card */
     public static ImageIcon ROTEKARTE;
@@ -357,69 +363,69 @@ public class Helper extends LanguageFiles {
                                           };
 
     /** shirt colors */
-    public static java.awt.Color TRICKOT_TORWART = java.awt.Color.black;
+    public static Color TRICKOT_TORWART = Color.black;
 
     /** shirt - CD */
-    public static java.awt.Color TRICKOT_INNENVERTEIDIGER = new java.awt.Color(0, 0, 220);
+    public static Color TRICKOT_INNENVERTEIDIGER = new Color(0, 0, 220);
 
     /** shirt - WB */
-    public static java.awt.Color TRICKOT_AUSSENVERTEIDIGER = new java.awt.Color(0, 220, 0);
+    public static Color TRICKOT_AUSSENVERTEIDIGER = new Color(0, 220, 0);
 
     /** shirt - inner mid */
-    public static java.awt.Color TRICKOT_MITTELFELD = new java.awt.Color(220, 220, 0);
+    public static Color TRICKOT_MITTELFELD = new Color(220, 220, 0);
 
     /** shirt - winger */
-    public static java.awt.Color TRICKOT_FLUEGEL = new java.awt.Color(220, 140, 0);
+    public static Color TRICKOT_FLUEGEL = new Color(220, 140, 0);
 
     /** shirt - striker */
-    public static java.awt.Color TRICKOT_STURM = new java.awt.Color(220, 0, 0);
+    public static Color TRICKOT_STURM = new Color(220, 0, 0);
 
     /** shirt - spare keeper */
-    public static java.awt.Color TRICKOT_RESERVE_TORWART = new java.awt.Color(200, 200, 200);
+    public static Color TRICKOT_RESERVE_TORWART = new Color(200, 200, 200);
 
     /** shirt - spare CD */
-    public static java.awt.Color TRICKOT_RESERVE_INNENVERTEIDIGER = new java.awt.Color(200, 200, 255);
+    public static Color TRICKOT_RESERVE_INNENVERTEIDIGER = new Color(200, 200, 255);
 
     /** shirt - spare inner */
-    public static java.awt.Color TRICKOT_RESERVE_MITTELFELD = new java.awt.Color(255, 255, 180);
+    public static Color TRICKOT_RESERVE_MITTELFELD = new Color(255, 255, 180);
 
     /** shirt - spare winger */
-    public static java.awt.Color TRICKOT_RESERVE_FLUEGEL = new java.awt.Color(255, 225, 180);
+    public static Color TRICKOT_RESERVE_FLUEGEL = new Color(255, 225, 180);
 
     /** shirt - spare striker */
-    public static java.awt.Color TRICKOT_RESERVE_STURM = new java.awt.Color(255, 200, 200);
+    public static Color TRICKOT_RESERVE_STURM = new Color(255, 200, 200);
 
     /** shirt - none */
-    public static java.awt.Color TRICKOT_NONE = new java.awt.Color(230, 230, 230);
+    public static Color TRICKOT_NONE = new Color(230, 230, 230);
 
     /** Images */
     public static ExtendedImageIcon EMPTYIMAGE;
 
     /** bad weather */
-    public static javax.swing.ImageIcon WETTERSCHLECHT;
+    public static ImageIcon WETTERSCHLECHT;
 
     /** good weather */
-    public static javax.swing.ImageIcon WETTERGUT;
+    public static ImageIcon WETTERGUT;
 
     /** sunny */
-    public static javax.swing.ImageIcon SONNIG;
+    public static ImageIcon SONNIG;
 
     /** clouds */
-    public static javax.swing.ImageIcon WOLKIG;
+    public static ImageIcon WOLKIG;
 
     /** partial clouded */
-    public static javax.swing.ImageIcon BEWOELKT;
+    public static ImageIcon BEWOELKT;
 
     /** rain */
-    public static javax.swing.ImageIcon REGEN;
+    public static ImageIcon REGEN;
 
     //14px
     /** empty 14px */
-    public static javax.swing.ImageIcon LEER = new javax.swing.ImageIcon(new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB));
+    public static ImageIcon LEER = new ImageIcon(new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB));
 
     //8px
     /** empty small 8px */
-    public static javax.swing.ImageIcon MINILEER = new javax.swing.ImageIcon(new BufferedImage(8, 8, BufferedImage.TYPE_INT_ARGB));
+    public static ImageIcon MINILEER = new ImageIcon(new BufferedImage(8, 8, BufferedImage.TYPE_INT_ARGB));
 
 	public static NumberFormat CURRENCYFORMAT = java.text.NumberFormat.getCurrencyInstance();
 
@@ -474,13 +480,13 @@ public class Helper extends LanguageFiles {
         NOMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/NoMatch.png"), Color.white));
         DOWNLOADMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/DownloadMatch.png"), Color.white));
         SHOWMATCHICON = new ImageIcon(Helper.makeColorTransparent( Helper.loadImage("gui/bilder/ShowMatch.png"), Color.white));
-        ROTEKARTE = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.gif"), Color.white));
-        GELBEKARTE = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.gif"), Color.white));
-        DOPPELGELB = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.gif"), Color.white));
-        ANGESCHLAGEN = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.gif"), Color.white));
-        VERLETZT = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.gif"),  Color.white));
-        ANGESCHLAGEN_KLEIN = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen_klein.png"), Color.red));
-        VERLETZT_KLEIN = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt_klein.png"), Color.white));
+        ROTEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.gif"), Color.white));
+        GELBEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.gif"), Color.white));
+        DOPPELGELB = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.gif"), Color.white));
+        ANGESCHLAGEN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.gif"), Color.white));
+        VERLETZT = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.gif"),  Color.white));
+        ANGESCHLAGEN_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen_klein.png"), Color.red));
+        VERLETZT_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt_klein.png"), Color.white));
 
         TOR = new ImageIcon(Helper.makeColorTransparent(
         		Helper.loadImage("gui/bilder/Fussball.png"), new Color(255,0, 0))
@@ -603,7 +609,7 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImage4Position(de.hattrickorganizer.model.SpielerPosition position,
+    public static ImageIcon getImage4Position(de.hattrickorganizer.model.SpielerPosition position,
                                                           int trickotnummer) {
         if (position == null) {
             return getImage4Position(0, (byte) 0, trickotnummer);
@@ -621,25 +627,25 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImage4Position(int posid, byte taktik, int trickotnummer) {
-        java.awt.Color trickotfarbe = null;
-        java.awt.Image trickotImage = null;
+    public static ImageIcon getImage4Position(int posid, byte taktik, int trickotnummer) {
+        Color trickotfarbe = null;
+        Image trickotImage = null;
 
-        //       java.awt.Image taktikImage = null;
-        java.awt.Image zusammenImage = null;
+        //       Image taktikImage = null;
+        Image zusammenImage = null;
 
-        //       java.awt.Image scaleImage = null;
-        javax.swing.ImageIcon komplettIcon = null;
+        //       Image scaleImage = null;
+        ImageIcon komplettIcon = null;
 
         //Im Cache nachsehen
-        komplettIcon = (javax.swing.ImageIcon) m_clTrickotCache.get(new TrickotCacheKey(posid,
+        komplettIcon = (ImageIcon) m_clTrickotCache.get(new TrickotCacheKey(posid,
                                                                                         taktik));
 
         //       if ( posid < 0 )
         //       {
         //           if ( EMPTYIMAGE == null )
         //           {
-        //               EMPTYIMAGE = new javax.swing.ImageIcon( new java.awt.image.BufferedImage( 14, 14, java.awt.image.BufferedImage.TYPE_INT_ARGB ) );
+        //               EMPTYIMAGE = new ImageIcon( new BufferedImage( 14, 14, BufferedImage.TYPE_INT_ARGB ) );
         //           }
         //           komplettIcon = EMPTYIMAGE;
         //       }
@@ -711,19 +717,19 @@ public class Helper extends LanguageFiles {
             }
 
             switch (taktik) {
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_Defensiv.png" ), java.awt.Color.white );
+                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_Defensiv.png" ), Color.white );
                 case ISpielerPosition.DEFENSIV:
                     break;
 
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_Offensiv.png" ), java.awt.Color.white );
+                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_Offensiv.png" ), Color.white );
                 case ISpielerPosition.OFFENSIV:
                     break;
 
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_NachAussen.png" ), java.awt.Color.white );
+                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_NachAussen.png" ), Color.white );
                 case ISpielerPosition.NACH_AUSSEN:
                     break;
 
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_ZurMitte.png" ), java.awt.Color.white );
+                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_ZurMitte.png" ), Color.white );
                 case ISpielerPosition.ZUR_MITTE:
                     break;
 
@@ -746,9 +752,9 @@ public class Helper extends LanguageFiles {
             //Bild laden, transparenz hinzu, trikofarbe wechseln
             trickotImage = Helper.changeColor(Helper.changeColor(Helper.makeColorTransparent(Helper
                                                                                              .loadImage("gui/bilder/Trickot.png"),
-                                                                                             java.awt.Color.white),
-                                                                 java.awt.Color.black, trickotfarbe),
-                                              new java.awt.Color(100, 100, 100),
+                                                                                             Color.white),
+                                                                 Color.black, trickotfarbe),
+                                              new Color(100, 100, 100),
                                               trickotfarbe.brighter());
 
             //trickotImage = Helper.loadImage( component, "gui/bilder/Trickot.png" );
@@ -787,7 +793,7 @@ public class Helper extends LanguageFiles {
             zusammenImage = trickotImage;
 
             /* BUG in JVM!
-               scaleImage = zusammenImage.getScaledInstance ( 14, 14, java.awt.Image.SCALE_SMOOTH );
+               scaleImage = zusammenImage.getScaledInstance ( 14, 14, Image.SCALE_SMOOTH );
                //Warten, bis die Grafik geladen worden ist
                 java.awt.MediaTracker tracker = new java.awt.MediaTracker(component);
                 tracker.addImage(scaleImage,1);
@@ -799,7 +805,7 @@ public class Helper extends LanguageFiles {
                 {
                 }
              */
-            komplettIcon = new javax.swing.ImageIcon(zusammenImage);
+            komplettIcon = new ImageIcon(zusammenImage);
 
             //In den Cache hinzufügen
             m_clTrickotCache.put(new TrickotCacheKey(posid, taktik), komplettIcon);
@@ -809,7 +815,7 @@ public class Helper extends LanguageFiles {
             //HOLogger.instance().log(Helper.class, "Cache Grafik: "+ position.getPosition () + "/" + position.getTaktik () );
         }
 
-        //return new java.awt.image.BufferedImage( 1, 1, java.awt.image.BufferedImage.TYPE_INT_ARGB );
+        //return new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB );
         //Trickotnummer
         if ((trickotnummer > 0) && (trickotnummer < 100)) {
             BufferedImage image = new BufferedImage(24, 14, BufferedImage.TYPE_INT_ARGB);
@@ -821,7 +827,7 @@ public class Helper extends LanguageFiles {
             final java.awt.Graphics2D g2d = (java.awt.Graphics2D) image.getGraphics();
 
             //Wert eintragen
-            //g2d.setComposite ( java.awt.AlphaComposite.getInstance( java.awt.AlphaComposite.SRC_OVER, 1.0f ) );
+            //g2d.setComposite ( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1.0f ) );
             g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.BOLD, 10));
 
             //Position bei grossen Zahlen weiter nach vorne
@@ -837,7 +843,7 @@ public class Helper extends LanguageFiles {
                                                                           image);
 
             //Icon erstellen und in den Cache packen
-            komplettIcon = new javax.swing.ImageIcon(image);
+            komplettIcon = new ImageIcon(image);
         }
 
         return komplettIcon;
@@ -850,8 +856,8 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image getImageDurchgestrichen(java.awt.Image image) {
-        return getImageDurchgestrichen(image, java.awt.Color.lightGray, java.awt.Color.darkGray);
+    public static Image getImageDurchgestrichen(Image image) {
+        return getImageDurchgestrichen(image, Color.lightGray, Color.darkGray);
     }
 
     /**
@@ -863,9 +869,9 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image getImageDurchgestrichen(java.awt.Image image,
-                                                         java.awt.Color helleFarbe,
-                                                         java.awt.Color dunkleFarbe) {
+    public static Image getImageDurchgestrichen(Image image,
+                                                         Color helleFarbe,
+                                                         Color dunkleFarbe) {
         try {
             final BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
@@ -887,7 +893,7 @@ public class Helper extends LanguageFiles {
     }
 
     //TODO Geht noch nicht richtig
-    public static javax.swing.ImageIcon getImageIcon4Color(java.awt.Color color) {
+    public static ImageIcon getImageIcon4Color(Color color) {
         final BufferedImage bufferedImage = new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB);
 
         final java.awt.Graphics2D g2d = (java.awt.Graphics2D) bufferedImage.getGraphics();
@@ -895,7 +901,7 @@ public class Helper extends LanguageFiles {
         g2d.setColor(color);
         g2d.fillRect(0, 0, 13, 13);
 
-        return new javax.swing.ImageIcon(bufferedImage);
+        return new ImageIcon(bufferedImage);
     }
 
     /**
@@ -906,7 +912,7 @@ public class Helper extends LanguageFiles {
      * @return TODO Missing Return Method Documentation
      */
     public static ImageIcon getImageIcon4Country(int country) {
-        return new javax.swing.ImageIcon(Helper.loadImage("flags/"+ country + "flag.png"));
+        return new ImageIcon(Helper.loadImage("flags/"+ country + "flag.png"));
     }
 
     /**
@@ -916,8 +922,8 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4GruppeSmilie(String gruppe) {
-        javax.swing.ImageIcon gruppenicon = null;
+    public static ImageIcon getImageIcon4GruppeSmilie(String gruppe) {
+        ImageIcon gruppenicon = null;
 
         //Keine Gruppe / Smilie
         if (gruppe.trim().equals("")) {
@@ -925,13 +931,12 @@ public class Helper extends LanguageFiles {
         }
 
         if (m_clGruppenCache.containsKey(gruppe)) {
-            gruppenicon = (javax.swing.ImageIcon) m_clGruppenCache.get(gruppe);
+            gruppenicon = (ImageIcon) m_clGruppenCache.get(gruppe);
         } else {
-            gruppenicon = new javax.swing.ImageIcon(Helper.makeColorTransparent(de.hattrickorganizer.tools.Helper
-                                                                          .loadImage("gui/bilder/smilies/"
-                                                                                     + gruppe),
-                                                                          new java.awt.Color(209,
-                                                                                             41, 144)));
+            gruppenicon = new ImageIcon(
+            		Helper.makeColorTransparent(
+            				de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/smilies/" + gruppe),
+            				new Color(209, 41, 144)));
             m_clGruppenCache.put(gruppe, gruppenicon);
         }
 
@@ -945,8 +950,8 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4MiniGruppe(String gruppe) {
-        javax.swing.ImageIcon gruppenicon = null;
+    public static ImageIcon getImageIcon4MiniGruppe(String gruppe) {
+        ImageIcon gruppenicon = null;
 
         //Keine Gruppe / Smilie
         if (gruppe.trim().equals("")) {
@@ -954,14 +959,14 @@ public class Helper extends LanguageFiles {
         }
 
         if (m_clMiniGruppenCache.containsKey(gruppe)) {
-            gruppenicon = (javax.swing.ImageIcon) m_clMiniGruppenCache.get(gruppe);
+            gruppenicon = (ImageIcon) m_clMiniGruppenCache.get(gruppe);
         } else {
-            gruppenicon = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/smilies/"
+            gruppenicon = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/smilies/"
                                                                                                                       + gruppe)
                                                                                                            .getScaledInstance(8,
                                                                                                                               8,
                                                                                                                               Image.SCALE_SMOOTH),
-                                                                          new java.awt.Color(209,
+                                                                          new Color(209,
                                                                                              41, 144)));
             m_clMiniGruppenCache.put(gruppe, gruppenicon);
         }
@@ -976,7 +981,7 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4Spezialitaet(int wert) {
+    public static ImageIcon getImageIcon4Spezialitaet(int wert) {
         ExtendedImageIcon icon = null;
         final Integer keywert = new Integer(wert);
 
@@ -1017,8 +1022,8 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
-        javax.swing.ImageIcon icon = null;
+    public static ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
+        ImageIcon icon = null;
 
         if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
             if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
@@ -1288,89 +1293,89 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4Spieltyp(int spieltyp) {
-        javax.swing.ImageIcon spieltypicon = null;
+    public static ImageIcon getImageIcon4Spieltyp(int spieltyp) {
+        ImageIcon spieltypicon = null;
         final Integer key = new Integer(spieltyp);
 
         if (m_clSpieltypCache.containsKey(key)) {
-            spieltypicon = (javax.swing.ImageIcon) m_clSpieltypCache.get(key);
+            spieltypicon = (ImageIcon) m_clSpieltypCache.get(key);
         } else {
             switch (spieltyp) {
                 case IMatchLineup.LIGASPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/Meisterschale.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/Meisterschale.png"),
                                                                                   230, 0, 135, 240,
                                                                                   5, 240));
                     break;
 
                 case IMatchLineup.POKALSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/Pokal.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/Pokal.png"),
                                                                                   230, 0, 135, 240,
                                                                                   5, 240));
                     break;
 
                 case IMatchLineup.QUALISPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/relegation.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/relegation.png"),
                                                                                   250, 250, 250,
                                                                                   255, 255, 255));
                     break;
 
                 case IMatchLineup.LAENDERCUPSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/Meisterschale2.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/Meisterschale2.png"),
                                                                                   230, 0, 135, 240,
                                                                                   5, 240));
                     break;
 
                 case IMatchLineup.INTCUPSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/Pokal2.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/Pokal2.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 case IMatchLineup.LAENDERSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/Meisterschale2.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/Meisterschale2.png"),
                                                                                   230, 0, 135, 240,
                                                                                   5, 240));
                     break;
 
                 case IMatchLineup.INTSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/Pokal2.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/Pokal2.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 case IMatchLineup.INT_TESTCUPSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/freunschaft_intern.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/freunschaft_intern.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 case IMatchLineup.INT_TESTSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/freunschaft_intern.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/freunschaft_intern.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 case IMatchLineup.TESTLAENDERSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/freundschaft.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/freundschaft.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 case IMatchLineup.TESTPOKALSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/freundschaft.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/freundschaft.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 case IMatchLineup.TESTSPIEL:
-                    spieltypicon = new javax.swing.ImageIcon(makeColorTransparent(loadImage("gui/bilder/freundschaft.png"),
+                    spieltypicon = new ImageIcon(makeColorTransparent(loadImage("gui/bilder/freundschaft.png"),
                                                                                   230, 0, 135, 240,
                                                                                   10, 240));
                     break;
 
                 //Fehler?
                 default:
-                    spieltypicon = new javax.swing.ImageIcon(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB));
+                    spieltypicon = new ImageIcon(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB));
                     break;
             }
 
@@ -1387,8 +1392,8 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4Trickotnummer(int wert) {
-        javax.swing.ImageIcon icon = null;
+    public static ImageIcon getImageIcon4Trickotnummer(int wert) {
+        ImageIcon icon = null;
         final Integer keywert = new Integer(wert);
         int xPosText = 5;
 
@@ -1401,14 +1406,12 @@ public class Helper extends LanguageFiles {
 
             //g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
             if ((wert > 0) && (wert < 100)) {
-                final Image trickotImage = Helper.changeColor(Helper.makeColorTransparent(Helper
-                                                                                          .loadImage("gui/bilder/Trickot.png"),
-                                                                                          java.awt.Color.white),
-                                                              java.awt.Color.black,
-                                                              new java.awt.Color(200, 200, 200));
+                final Image trickotImage = Helper.changeColor(
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Trickot.png"),
+                				Color.white), Color.black, new Color(200, 200, 200));
 
                 //Wert eintragen
-                //g2d.setComposite ( java.awt.AlphaComposite.getInstance( java.awt.AlphaComposite.SRC_OVER, 1.0f ) );
+                //g2d.setComposite ( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1.0f ) );
                 g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.PLAIN, 10));
 
                 //Position bei grossen Zahlen weiter nach vorne
@@ -1416,9 +1419,9 @@ public class Helper extends LanguageFiles {
                     xPosText = 1;
                 }
 
-                g2d.setColor(java.awt.Color.darkGray);
+                g2d.setColor(Color.darkGray);
                 g2d.drawString(wert + "", xPosText, 11);
-                g2d.setColor(java.awt.Color.black);
+                g2d.setColor(Color.black);
                 g2d.drawString(wert + "", xPosText - 1, 11);
 
                 image = (BufferedImage) Helper.zusammenfuehren(trickotImage, image);
@@ -1426,12 +1429,12 @@ public class Helper extends LanguageFiles {
 
             //Zusammenführen
             //Icon erstellen und in den Cache packen
-            icon = new javax.swing.ImageIcon(image);
+            icon = new ImageIcon(image);
             m_clTrickotnummerCache.put(keywert, icon);
         }
         //Im Cache
         else {
-            icon = (javax.swing.ImageIcon) m_clTrickotnummerCache.get(keywert);
+            icon = (ImageIcon) m_clTrickotnummerCache.get(keywert);
         }
 
         return icon;
@@ -1444,7 +1447,7 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4Veraenderung(int wert) {
+    public static ImageIcon getImageIcon4Veraenderung(int wert) {
         return getImageIcon4Veraenderung(wert, true);
     }
 
@@ -1456,7 +1459,7 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4Veraenderung(int wert, boolean aktuell) {
+    public static ImageIcon getImageIcon4Veraenderung(int wert, boolean aktuell) {
         ExtendedImageIcon icon = null;
         final Integer keywert = new Integer(wert);
         int xPosText = 3;
@@ -1471,7 +1474,7 @@ public class Helper extends LanguageFiles {
 
             //g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
             if (wert == 0) {
-                //                g2d.setColor ( java.awt.Color.darkGray );
+                //                g2d.setColor ( Color.darkGray );
                 //                g2d.drawLine ( 3, 8, 9, 8 );
             } else if (wert > 0) {
                 final int[] xpoints = {0, 6, 7, 13, 10, 10, 3, 3, 0};
@@ -1479,32 +1482,30 @@ public class Helper extends LanguageFiles {
 
                 //Polygon füllen
                 if (!aktuell) {
-                    g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER,
-                                                                         0.4f));
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
                 }
 
                 int farbwert = Math.min(240, 90 + (50 * wert));
-                g2d.setColor(new java.awt.Color(0, farbwert, 0));
+                g2d.setColor(new Color(0, farbwert, 0));
                 g2d.fillPolygon(xpoints, ypoints, xpoints.length);
 
                 //Polygonrahmen
                 farbwert = Math.min(255, 105 + (50 * wert));
-                g2d.setColor(new java.awt.Color(40, farbwert, 40));
+                g2d.setColor(new Color(40, farbwert, 40));
                 g2d.drawPolygon(xpoints, ypoints, xpoints.length);
 
                 //Wert eintragen
                 if (!aktuell) {
-                    g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER,
-                                                                         1.0f));
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
                 }
 
                 g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.PLAIN, 10));
 
                 //Für 1 und 2 Weisse Schrift oben
                 if (wert < 3) {
-                    g2d.setColor(java.awt.Color.black);
+                    g2d.setColor(Color.black);
                     g2d.drawString(wert + "", xPosText, 11);
-                    g2d.setColor(java.awt.Color.white);
+                    g2d.setColor(Color.white);
                     g2d.drawString(wert + "", xPosText + 1, 11);
                 }
                 //Sonst Schwarze Schrift oben (nur bei Positiven Veränderungen)
@@ -1514,9 +1515,9 @@ public class Helper extends LanguageFiles {
                         xPosText = 0;
                     }
 
-                    g2d.setColor(java.awt.Color.white);
+                    g2d.setColor(Color.white);
                     g2d.drawString(wert + "", xPosText, 11);
-                    g2d.setColor(java.awt.Color.black);
+                    g2d.setColor(Color.black);
                     g2d.drawString(wert + "", xPosText + 1, 11);
                 }
             } else if (wert < 0) {
@@ -1525,23 +1526,21 @@ public class Helper extends LanguageFiles {
 
                 //Polygon füllen
                 if (!aktuell) {
-                    g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER,
-                                                                         0.4f));
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
                 }
 
                 int farbwert = Math.min(240, 90 - (50 * wert));
-                g2d.setColor(new java.awt.Color(farbwert, 0, 0));
+                g2d.setColor(new Color(farbwert, 0, 0));
                 g2d.fillPolygon(xpoints, ypoints, xpoints.length);
 
                 //Polygonrahmen
                 farbwert = Math.min(255, 105 - (50 * wert));
-                g2d.setColor(new java.awt.Color(farbwert, 40, 40));
+                g2d.setColor(new Color(farbwert, 40, 40));
                 g2d.drawPolygon(xpoints, ypoints, xpoints.length);
 
                 //Wert eintragen
                 if (!aktuell) {
-                    g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER,
-                                                                         1.0f));
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
                 }
 
                 g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.PLAIN, 10));
@@ -1551,9 +1550,9 @@ public class Helper extends LanguageFiles {
                     xPosText = 0;
                 }
 
-                g2d.setColor(java.awt.Color.black);
+                g2d.setColor(Color.black);
                 g2d.drawString(Math.abs(wert) + "", xPosText, 11);
-                g2d.setColor(java.awt.Color.white);
+                g2d.setColor(Color.white);
                 g2d.drawString(Math.abs(wert) + "", xPosText + 1, 11);
             }
 
@@ -1595,38 +1594,40 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.ImageIcon getImageIcon4Wetter(int wert) {
-        javax.swing.ImageIcon icon = null;
+    public static ImageIcon getImageIcon4Wetter(int wert) {
+        ImageIcon icon = null;
 
         if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_SONNE) {
             if (SONNIG == null) {
-                SONNIG = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/sonnig.gif"),
-                                                                                                          java.awt.Color.white)
-                                                                                    .getScaledInstance(18, 18, java.awt.Image.SCALE_SMOOTH));
+                SONNIG = new ImageIcon(
+                		Helper.makeColorTransparent(
+                				Helper.loadImage("gui/bilder/wetter/sonnig.gif"), Color.white)
+                				.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = SONNIG;
         } else if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_WOLKIG) {
             if (WOLKIG == null) {
-                WOLKIG = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/leichtbewoelkt.gif"),
-                                                                                                          java.awt.Color.white)
-                                                                                    .getScaledInstance(18, 18, java.awt.Image.SCALE_SMOOTH));
+                WOLKIG = new ImageIcon(
+                		Helper.makeColorTransparent(
+                				Helper.loadImage("gui/bilder/wetter/leichtbewoelkt.gif"), Color.white)
+                				.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = WOLKIG;
         } else if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_BEWOELKT) {
             if (BEWOELKT == null) {
-                BEWOELKT = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/bewoelkt.gif"),
-                                                                                                            java.awt.Color.white)
-                                                                                      .getScaledInstance(18, 18, java.awt.Image.SCALE_SMOOTH));
+                BEWOELKT = new ImageIcon(
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/bewoelkt.gif"), Color.white)
+                		.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = BEWOELKT;
         } else if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_REGEN) {
             if (REGEN == null) {
-                REGEN = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/regen.gif"),
-                                                                                                         java.awt.Color.white)
-                                                                                   .getScaledInstance(18, 18, java.awt.Image.SCALE_SMOOTH));
+                REGEN = new ImageIcon(
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/regen.gif"), Color.white)
+                		.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = REGEN;
@@ -1638,20 +1639,22 @@ public class Helper extends LanguageFiles {
     /**
      * Get the icon for a certain weather effect.
      */
-    public static javax.swing.ImageIcon getImageIcon4WetterEffekt(int wert) {
-        javax.swing.ImageIcon icon = null;
+    public static ImageIcon getImageIcon4WetterEffekt(int wert) {
+        ImageIcon icon = null;
 
         if (wert < 0) {
             if (WETTERSCHLECHT == null) {
-                WETTERSCHLECHT = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/schlecht.png"),
-                                                                                 java.awt.Color.WHITE));
+                WETTERSCHLECHT = new ImageIcon(
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/schlecht.png"),
+                				Color.WHITE));
             }
 
             icon = WETTERSCHLECHT;
         } else if (wert > 0) {
             if (WETTERGUT == null) {
-                WETTERGUT = new javax.swing.ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/gut.png"),
-                                                                            java.awt.Color.WHITE));
+                WETTERGUT = new ImageIcon(
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/gut.png"),
+                				Color.WHITE));
             }
 
             icon = WETTERGUT;
@@ -1950,12 +1953,11 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image changeColor(java.awt.Image im, java.awt.Color original,
-                                             java.awt.Color change) {
-        final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im.getSource(),
-                                                                                       new ColorChangeFilter(original,
-                                                                                                             change));
-        return java.awt.Toolkit.getDefaultToolkit().createImage(ip);
+    public static Image changeColor(Image im, Color original,
+                                             Color change) {
+        final ImageProducer ip = new FilteredImageSource(im.getSource(),
+        		new ColorChangeFilter(original, change));
+        return Toolkit.getDefaultToolkit().createImage(ip);
     }
 
     /**
@@ -1982,8 +1984,8 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static javax.swing.DefaultComboBoxModel createListModel(Vector<Object> vector) {
-        final javax.swing.DefaultComboBoxModel model = new javax.swing.DefaultComboBoxModel();
+    public static DefaultComboBoxModel createListModel(Vector<Object> vector) {
+        final DefaultComboBoxModel model = new DefaultComboBoxModel();
 
         for (int i = 0; i < vector.size(); i++) {
             model.addElement(vector.get(i));
@@ -2118,11 +2120,11 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.image.BufferedImage loadImage(String datei) {
-        java.awt.image.BufferedImage image = null;
+    public static BufferedImage loadImage(String datei) {
+        BufferedImage image = null;
 
         //Cache durchsuchen
-        image = (java.awt.image.BufferedImage) m_clBilderCache.get(datei);
+        image = (BufferedImage) m_clBilderCache.get(datei);
 
         //Nicht im Cache -> laden
         if (image == null) {
@@ -2168,18 +2170,16 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image makeColorTransparent(java.awt.Image im, java.awt.Color color) {
-        java.awt.Image image = null;
+    public static Image makeColorTransparent(Image im, Color color) {
+        Image image = null;
 
         //Cache durchsuchen
-        image = (java.awt.Image) m_clTransparentsCache.get(im);
+        image = (Image) m_clTransparentsCache.get(im);
 
         //Nicht im Cache -> laden
         if (image == null) {
-            final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im
-                                                                                           .getSource(),
-                                                                                           new TransparentFilter(color));
-            image = java.awt.Toolkit.getDefaultToolkit().createImage(ip);
+            final ImageProducer ip = new FilteredImageSource(im.getSource(), new TransparentFilter(color));
+            image = Toolkit.getDefaultToolkit().createImage(ip);
 
             //Bild in den Cache hinzufügen
             m_clTransparentsCache.put(im, image);
@@ -2201,17 +2201,12 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image makeColorTransparent(java.awt.Image im, int minred, int mingreen,
+    public static Image makeColorTransparent(Image im, int minred, int mingreen,
                                                       int minblue, int maxred, int maxgreen,
                                                       int maxblue) {
-        final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im.getSource(),
-                                                                                       new FuzzyTransparentFilter(minred,
-                                                                                                                  mingreen,
-                                                                                                                  minblue,
-                                                                                                                  maxred,
-                                                                                                                  maxgreen,
-                                                                                                                  maxblue));
-        return java.awt.Toolkit.getDefaultToolkit().createImage(ip);
+        final ImageProducer ip = new FilteredImageSource(im.getSource(),
+        		new FuzzyTransparentFilter(minred, mingreen, minblue, maxred, maxgreen, maxblue));
+        return Toolkit.getDefaultToolkit().createImage(ip);
     }
 
     /**
@@ -2222,10 +2217,9 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image makeGray(java.awt.Image im, float value) {
-        final java.awt.image.ImageProducer ip = new java.awt.image.FilteredImageSource(im.getSource(),
-                                                                                       new LightGrayFilter(value));
-        return java.awt.Toolkit.getDefaultToolkit().createImage(ip);
+    public static Image makeGray(Image im, float value) {
+        final ImageProducer ip = new FilteredImageSource(im.getSource(), new LightGrayFilter(value));
+        return Toolkit.getDefaultToolkit().createImage(ip);
     }
 
     /**
@@ -2350,36 +2344,67 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Runden auf eine Nachkommastelle
+     * Round to one fraction digit
      *
-     * @param wert TODO Missing Constructuor Parameter Documentation
+     * @param wert value to round
      *
-     * @return TODO Missing Return Method Documentation
+     * @return rounded value
      */
-    public static float round(double wert) {
+    public static double round(double wert) {
         return Helper.round(wert, 1);
     }
 
     /**
-     * Rundet den übergeben wert auf eine bestimmte nachkommastellen-Anzahl
+     * Round to one fraction digit
      *
-     * @param wert Der zu rundene Wert
-     * @param nachkommastellen Anzahl der Nachkommastellen
+     * @param wert value to round
      *
-     * @return TODO Missing Return Method Documentation
+     * @return rounded value
      */
-    public static float round(double wert, int nachkommastellen) {
+    public static float round(float wert) {
+        return Helper.round(wert, 1);
+    }
+
+    /**
+     * Round a double value
+     *
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
+     *
+     * @return rounded value
+     */
+    public static double round(double wert, int nachkommastellen) {
         //Wert mit 10^nachkommastellen multiplizieren
-        final double dwert = wert * Math.pow(10.0, (double) nachkommastellen);
+        final double dwert = wert * Math.pow(10.0, nachkommastellen);
 
         //Nachkommastellen abschneiden
 //        final long lwert = Math.round(dwert);
-        final double lwert = Math.floor(dwert);
+        final double lwert = (int) dwert;
 
         //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
-        return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
+        return (lwert / Math.pow(10.0, nachkommastellen));
     }
 
+    /**
+     * Round a float value
+     *
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
+     *
+     * @return rounded value
+     */
+    public static float round(float wert, int nachkommastellen) {
+        //Wert mit 10^nachkommastellen multiplizieren
+        final float dwert = wert * (int)Math.pow(10.0, nachkommastellen);
+
+        //Nachkommastellen abschneiden
+//        final long lwert = Math.round(dwert);
+        final float lwert = (int) dwert;
+
+        //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
+        return (lwert / (int)Math.pow(10.0, nachkommastellen));
+    }
+    
     /**
      * Zeigt eine Meldung per JOptionPane an, aber immer nur eine!
      *
@@ -2450,13 +2475,9 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static java.awt.Image zusammenfuehren(java.awt.Image background,
-                                                 java.awt.Image foreground) {
-        final java.awt.image.BufferedImage image = new java.awt.image.BufferedImage(background
-                                                                                    .getWidth(null),
-                                                                                    background
-                                                                                    .getHeight(null),
-                                                                                    java.awt.image.BufferedImage.TYPE_INT_ARGB);
+    public static Image zusammenfuehren(Image background, Image foreground) {
+        final BufferedImage image = new BufferedImage(
+        		background.getWidth(null), background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         image.getGraphics().drawImage(background, 0, 0, null);
         image.getGraphics().drawImage(foreground, 0, 0, null);
 

@@ -27,7 +27,9 @@ import de.hattrickorganizer.tools.PlayerHelper;
 public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	private static final long serialVersionUID = 1835093736247065469L;
+
+	/** TODO Missing Parameter Documentation */
     public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -675,69 +677,32 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
 
         //Spiel noch nicht gespielt
         else {
-            m_clHeimTeamName.setText(" ");
-            m_clGastTeamName.setText(" ");
-            m_clHeimTeamTore.setText(" ");
-            m_clGastTeamTore.setText(" ");
-            m_clHeimTeamName.setIcon(null);
-            m_clGastTeamName.setIcon(null);
-
-            m_clHeimGesamt.setText("");
-            m_clGastGesamt.setText("");
-            m_clHeimMidfield.setText("");
-            m_clGastMidfield.setText("");
-            m_clHeimRightDef.setText("");
-            m_clGastRightDef.setText("");
-            m_clHeimCenterDef.setText("");
-            m_clGastCenterDef.setText("");
-            m_clHeimLeftDef.setText("");
-            m_clGastLeftDef.setText("");
-            m_clHeimRightAtt.setText("");
-            m_clGastRightAtt.setText("");
-            m_clHeimCenterAtt.setText("");
-            m_clGastCenterAtt.setText("");
-            m_clHeimLeftAtt.setText("");
-            m_clGastLeftAtt.setText("");
-
-            m_clHeimGesamt.setIcon(null);
-            m_clGastGesamt.setIcon(null);
-            m_clHeimRightDef.setIcon(null);
-            m_clGastRightDef.setIcon(null);
-            m_clHeimCenterDef.setIcon(null);
-            m_clGastCenterDef.setIcon(null);
-            m_clHeimLeftDef.setIcon(null);
-            m_clGastLeftDef.setIcon(null);
-            m_clHeimRightAtt.setIcon(null);
-            m_clGastRightAtt.setIcon(null);
-            m_clHeimCenterAtt.setIcon(null);
-            m_clGastCenterAtt.setIcon(null);
-            m_clHeimLeftAtt.setIcon(null);
-            m_clGastLeftAtt.setIcon(null);
+        	clear();
         }
 
         repaint();
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    private int getDifferenz(int home, String homesub, int guest, String guestsub) {
-        int realhome = 3 * home;
-
-        if ((homesub == null) || homesub.trim().equals("")) {
-            realhome--;
-        } else if (homesub.equals("-")) {
-            realhome--;
-            realhome--;
-        }
-
-        int realguest = 3 * guest;
-
-        if ((guestsub == null) || guestsub.trim().equals("")) {
-            realguest--;
-        } else if (guestsub.equals("-")) {
-            realguest--;
-            realguest--;
-        }
-
-        return (realhome - realguest);
-    }
+//    private int getDifferenz(int home, String homesub, int guest, String guestsub) {
+//        int realhome = 3 * home;
+//
+//        if ((homesub == null) || homesub.trim().equals("")) {
+//            realhome--;
+//        } else if (homesub.equals("-")) {
+//            realhome--;
+//            realhome--;
+//        }
+//
+//        int realguest = 3 * guest;
+//
+//        if ((guestsub == null) || guestsub.trim().equals("")) {
+//            realguest--;
+//        } else if (guestsub.equals("-")) {
+//            realguest--;
+//            realguest--;
+//        }
+//
+//        return (realhome - realguest);
+//    }
 }

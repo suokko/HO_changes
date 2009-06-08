@@ -72,7 +72,7 @@ public class TotalsPanel extends JPanel {
                                                          titel));
 
         panel.add(new JLabel(PluginProperty.getString("Total"), SwingConstants.CENTER), "3, 0"); //$NON-NLS-1$ //$NON-NLS-2$
-        panel.add(new JLabel(Commons.getModel().getResource().getProperty("Durchschnitt"),
+        panel.add(new JLabel(Commons.getModel().getLanguageString("Durchschnitt"),
                              SwingConstants.CENTER), "5, 0"); //$NON-NLS-1$ //$NON-NLS-2$
 
         panel.add(new JLabel(PluginProperty.getString("Purchases"), SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$ //$NON-NLS-2$

@@ -53,9 +53,9 @@ public class PlayerInfoPanel extends JPanel {
         this.setLayout(new GridBagLayout());
 
         //this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        addInfo(Commons.getModel().getResource().getProperty("Alter"), ageLabel, 0, 0);
+        addInfo(Commons.getModel().getLanguageString("Alter"), ageLabel, 0, 0);
         addInfo(PluginProperty.getString("TSI"), tsiLabel, 0, 1);
-        addInfo(Commons.getModel().getResource().getProperty("Form"), formLabel, 1, 0);
+        addInfo(Commons.getModel().getLanguageString("Form"), formLabel, 1, 0);
         addInfo(PluginProperty.getString("EXPCode"), expLabel, 1, 1);
     }
 

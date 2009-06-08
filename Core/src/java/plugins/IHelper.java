@@ -6,15 +6,16 @@
  */
 package plugins;
 
+import java.awt.Color;
 import java.awt.Component;
-
 import java.sql.Timestamp;
 import java.text.ParseException;
-
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Vector;
 
-import de.hattrickorganizer.tools.HTCalendar;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -39,7 +40,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.awt.Color getColor4SpielHighlight(int typ, int subtyp);
+    public Color getColor4SpielHighlight(int typ, int subtyp);
 
     /**
      * TODO Missing Method Documentation
@@ -61,7 +62,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImage4Position(int posid, byte taktik);
+    public ImageIcon getImage4Position(int posid, byte taktik);
 
     /**
      * Returns the Flag-Image for a player ( ISpieler.getNationalitaet() )
@@ -70,7 +71,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Country(int country);
+    public ImageIcon getImageIcon4Country(int country);
 
     /**
      * Returns an Image represent the special ablility of a player
@@ -79,7 +80,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Spezialitaet(int wert);
+    public ImageIcon getImageIcon4Spezialitaet(int wert);
 
     /**
      * Returns an Image represent the Matchhighlight
@@ -89,7 +90,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp);
+    public ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp);
 
     /**
      * Returns an Image für the Matchtyp
@@ -98,7 +99,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Spieltyp(int spieltyp);
+    public ImageIcon getImageIcon4Spieltyp(int spieltyp);
 
     /**
      * Returns an ArrowImage, green up für pos values, red down für neg values and a - for 0 values
@@ -107,7 +108,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Veraenderung(int wert);
+    public ImageIcon getImageIcon4Veraenderung(int wert);
 
     /**
      * Returns an Image for the weather
@@ -116,7 +117,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4Wetter(int wert);
+    public ImageIcon getImageIcon4Wetter(int wert);
 
     /**
      * Returns an Image for the Effect of the weather for a player
@@ -125,7 +126,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.ImageIcon getImageIcon4WetterEffekt(int wert);
+    public ImageIcon getImageIcon4WetterEffekt(int wert);
 
     //--Languageinformations
 
@@ -287,7 +288,7 @@ public interface IHelper {
      *
      * @deprecated
      */
-    public java.util.Vector getPlugins();
+    public Vector<IPlugin> getPlugins();
 
     /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is
@@ -341,7 +342,7 @@ public interface IHelper {
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
      */
-    public void copyArray2Vector(Object[] src, java.util.Vector dest);
+    public void copyArray2Vector(Object[] src, Vector<Object> dest);
 
     /**
      * Copy the values for a vector to an array
@@ -349,7 +350,7 @@ public interface IHelper {
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
      */
-    public void copyVector2Array(java.util.Vector src, Object[] dest);
+    public void copyVector2Array(Vector<Object> src, Object[] dest);
 
     /**
      * Puts the vectorelements in a ComboBoxModel
@@ -358,7 +359,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public javax.swing.DefaultComboBoxModel createListModel(java.util.Vector vector);
+    public DefaultComboBoxModel createListModel(Vector<Object> vector);
 
     //--------------------------------------------------------------------------
 
@@ -512,14 +513,24 @@ public interface IHelper {
     public java.sql.Timestamp parseDate(String date);
 
     /**
-     * Round a value wert
+     * Round a double value
      *
-     * @param wert TODO Missing Constructuor Parameter Documentation
-     * @param nachkommastellen TODO Missing Constructuor Parameter Documentation
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
      *
-     * @return TODO Missing Return Method Documentation
+     * @return rounded value
      */
-    public float round(double wert, int nachkommastellen);
+    public double round(double wert, int nachkommastellen);
+
+    /**
+     * Round a float value
+     *
+     * @param wert value to round
+     * @param nachkommastellen number of fraction digits
+     *
+     * @return rounded value
+     */
+    public float round(float wert, int nachkommastellen);
 
     /**
      * Shows an MessageDialog JOptionPane only, if there is not still an other MessageDialog shown

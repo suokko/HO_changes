@@ -77,9 +77,9 @@ public class TrainingRecapRenderer extends DefaultTableCellRenderer {
             	int calcPlayerAgeThisCol = (int) (realPlayerAge + (column+1)*7d/112d);
             	// Birthday in this week! Set BG color
             	if (calcPlayerAgePrevCol < calcPlayerAgeThisCol) {
-            		String ageText = Commons.getModel().getResource().getProperty("age.birthday") 
+            		String ageText = Commons.getModel().getLanguageString("age.birthday") 
     								+ " (" + calcPlayerAgeThisCol + " "
-    								+ Commons.getModel().getResource().getProperty("age.years") 
+    								+ Commons.getModel().getLanguageString("age.years") 
     								+ ")";
 
             		if (text == null || text.length() == 0) {

@@ -38,11 +38,11 @@ public class BottomPanel extends JTabbedPane {
         this.GeneralMax = new MiniPanel(Commons.getModel());
         this.GeneralMin = new MiniPanel(Commons.getModel());
 
-        addTab(Commons.getModel().getResource().getProperty("Durchschnitt"),
+        addTab(Commons.getModel().getLanguageString("Durchschnitt"),
                new JScrollPane(this.GeneralAverage.getPanel()));
-        addTab(Commons.getModel().getResource().getProperty("Maximal"),
+        addTab(Commons.getModel().getLanguageString("Maximal"),
                new JScrollPane(this.GeneralMax.getPanel()));
-        addTab(Commons.getModel().getResource().getProperty("Minimal"),
+        addTab(Commons.getModel().getLanguageString("Minimal"),
                new JScrollPane(this.GeneralMin.getPanel()));
     }
 }

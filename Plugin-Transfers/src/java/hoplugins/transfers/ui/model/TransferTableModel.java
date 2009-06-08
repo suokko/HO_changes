@@ -39,25 +39,25 @@ public class TransferTableModel extends AbstractTableModel {
     public TransferTableModel(List values) {
         super();
 
-        this.colNames[0] = Commons.getModel().getResource().getProperty("Datum"); //$NON-NLS-1$
-        this.colNames[1] = Commons.getModel().getResource().getProperty("Season"); //$NON-NLS-1$
+        this.colNames[0] = Commons.getModel().getLanguageString("Datum"); //$NON-NLS-1$
+        this.colNames[1] = Commons.getModel().getLanguageString("Season"); //$NON-NLS-1$
         this.colNames[2] = PluginProperty.getString("Week"); //$NON-NLS-1$
-        this.colNames[3] = Commons.getModel().getResource().getProperty("Spieler"); //$NON-NLS-1$
+        this.colNames[3] = Commons.getModel().getLanguageString("Spieler"); //$NON-NLS-1$
         this.colNames[4] = ""; //$NON-NLS-1$
         this.colNames[5] = PluginProperty.getString("FromTo"); //$NON-NLS-1$
         this.colNames[6] = PluginProperty.getString("Price"); //$NON-NLS-1$
         this.colNames[7] = PluginProperty.getString("TSI"); //$NON-NLS-1$
-        this.colNames[8] = Commons.getModel().getResource().getProperty("FUE");
-        this.colNames[9] = Commons.getModel().getResource().getProperty("ER");
-        this.colNames[10] = Commons.getModel().getResource().getProperty("FO");
-        this.colNames[11] = Commons.getModel().getResource().getProperty("KO");
-        this.colNames[12] = Commons.getModel().getResource().getProperty("TW");
-        this.colNames[13] = Commons.getModel().getResource().getProperty("VE");
-        this.colNames[14] = Commons.getModel().getResource().getProperty("SA");
-        this.colNames[15] = Commons.getModel().getResource().getProperty("PS");
-        this.colNames[16] = Commons.getModel().getResource().getProperty("FL");
-        this.colNames[17] = Commons.getModel().getResource().getProperty("TS");
-        this.colNames[18] = Commons.getModel().getResource().getProperty("ST");
+        this.colNames[8] = Commons.getModel().getLanguageString("FUE");
+        this.colNames[9] = Commons.getModel().getLanguageString("ER");
+        this.colNames[10] = Commons.getModel().getLanguageString("FO");
+        this.colNames[11] = Commons.getModel().getLanguageString("KO");
+        this.colNames[12] = Commons.getModel().getLanguageString("TW");
+        this.colNames[13] = Commons.getModel().getLanguageString("VE");
+        this.colNames[14] = Commons.getModel().getLanguageString("SA");
+        this.colNames[15] = Commons.getModel().getLanguageString("PS");
+        this.colNames[16] = Commons.getModel().getLanguageString("FL");
+        this.colNames[17] = Commons.getModel().getLanguageString("TS");
+        this.colNames[18] = Commons.getModel().getLanguageString("ST");
 
         this.values = values;
     }

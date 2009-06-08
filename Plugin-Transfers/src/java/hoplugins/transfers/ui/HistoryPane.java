@@ -84,7 +84,7 @@ public class HistoryPane extends JSplitPane {
         rb1.setFocusable(false);
         rb1.setOpaque(false);
 
-        final JRadioButton rb2 = new JRadioButton(Commons.getModel().getResource().getProperty("Season")); //$NON-NLS-1$
+        final JRadioButton rb2 = new JRadioButton(Commons.getModel().getLanguageString("Season")); //$NON-NLS-1$
         spinSeason = rb2.getModel();
         rb2.setFocusable(false);
         rb2.setOpaque(false);

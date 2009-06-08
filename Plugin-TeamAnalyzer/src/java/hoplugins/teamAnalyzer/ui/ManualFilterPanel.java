@@ -52,9 +52,7 @@ public class ManualFilterPanel extends JPanel {
                                                                             .getString("RecapPanel.Result"),
                                                                             PluginProperty
                                                                             .getString("Week"),
-                                                                            Commons.getModel()
-                                                                                   .getResource()
-                                                                                   .getProperty("Season"),
+                                                                            Commons.getModel().getLanguageString("Season"),
                                                                             "", ""
                                                                         }));
 

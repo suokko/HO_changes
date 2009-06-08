@@ -1,5 +1,7 @@
 package hoplugins.teamAnalyzer.ui.renderer;
 
+import hoplugins.commons.utils.PluginProperty;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -29,22 +31,28 @@ public class RatingTableCellRenderer extends DefaultTableCellRenderer {
 		  if (column == 3) {
 			  String curText = value.toString();
 			  this.setIcon(null);
-			  this.setText(curText);
 			  this.setHorizontalAlignment(SwingConstants.TRAILING);
+			  this.setToolTipText(PluginProperty.getString("TeamAnalyzer.RatingPanel.Relative.Tooltip"));
 			  if (curText != null) {
 				  if (curText.startsWith("+")) {
 					  this.setForeground(Color.GREEN.darker().darker());
+					  // Remove +
+					  curText = curText.substring(1);
 				  } else if (curText.startsWith("-")) {
 					  this.setForeground(Color.RED.darker());
+					  // Remove -
+					  curText = curText.substring(1);
 				  } else {
 					  this.setForeground(Color.BLACK);
 				  }
 			  }
+			  this.setText(curText);
 			  return this;
 		  } else {
 			  this.setIcon(null);
 			  this.setText(null);
 			  this.setForeground(Color.BLACK);
+			  this.setToolTipText(null);
 			  if (column == 0)
 				  // area is left aligned
 				  this.setHorizontalAlignment(SwingConstants.LEADING);
