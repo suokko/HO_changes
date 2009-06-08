@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -16,7 +17,6 @@ import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.InputMap;
@@ -26,13 +26,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import plugins.IPlugin;
 import plugins.ISpieler;
 
 import com.jgoodies.looks.FontPolicies;
@@ -60,8 +63,12 @@ import de.hattrickorganizer.gui.notepad.NotepadDialog;
 import de.hattrickorganizer.gui.playeranalysis.SpielerAnalyseMainPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
+import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
+import de.hattrickorganizer.gui.utils.HOTheme;
+import de.hattrickorganizer.gui.utils.InterruptionWindow;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
+import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.User;
@@ -115,7 +122,7 @@ public final class HOMainFrame extends JFrame
 
 	/** TODO Missing Parameter Documentation */
 	private static final String LIMITED_DATE = "2004-09-01 00:00:00.0";
-	private static Vector m_vPlugins = new Vector();
+	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
 
 	//---------Konstanten----------------------
 
@@ -268,8 +275,8 @@ public final class HOMainFrame extends JFrame
 	private StatistikMainPanel m_jpStatistikPanel;
 	private String m_sToRemoveTabName;
 	private TransferScoutPanel m_jpTransferScout;
-	private java.util.Vector m_vOptionPanelNames = new java.util.Vector();
-	private java.util.Vector m_vOptionPanels = new java.util.Vector();
+	private Vector<String> m_vOptionPanelNames = new Vector<String>();
+	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -327,11 +334,11 @@ public final class HOMainFrame extends JFrame
 		HOLogger.instance().debug(getClass(), "Mac OS detected. Activating specific listeners...");
 		try {
 			// Create the Application
-			Class applicationClass = Class.forName("com.apple.eawt.Application");
+			Class<?> applicationClass = Class.forName("com.apple.eawt.Application");
 			Object appleApp = applicationClass.newInstance();
 
 			// Create the ApplicationListener
-			Class applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
+			Class<?> applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
 			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] { applicationListenerClass },
 				new InvocationHandler() {
 					public Object invoke (Object proxy, Method method, Object[] args) {
@@ -433,7 +440,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public static Vector getPlugins() {
+	public static Vector<IPlugin> getPlugins() {
 		return m_vPlugins;
 	}
 
@@ -835,15 +842,15 @@ public final class HOMainFrame extends JFrame
 		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
 
 		//Disconnect
-		de.hattrickorganizer.database.DBZugriff.instance().disconnect();
+		DBZugriff.instance().disconnect();
 
 		HOLogger.instance().debug(getClass(), "Disconnected");
 
 		//Ausloggen
 		try {
 			if ((UserParameter.instance().logoutOnExit)
-				&& (de.hattrickorganizer.net.MyConnector.instance().isAuthenticated())) {
-				de.hattrickorganizer.net.MyConnector.instance().logout();
+				&& (MyConnector.instance().isAuthenticated())) {
+				MyConnector.instance().logout();
 			}
 		} catch (Exception e) {
 		}
@@ -904,7 +911,7 @@ public final class HOMainFrame extends JFrame
 	public void initComponents() {
 		javax.swing.ToolTipManager.sharedInstance().setDismissDelay(5000);
 
-		setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());
+		setContentPane(new ImagePanel());
 		getContentPane().setLayout(new BorderLayout());
 
 		m_jtpTabbedPane = new JTabbedPane();
@@ -1207,19 +1214,19 @@ public final class HOMainFrame extends JFrame
 	 */
 	public void initProxy() {
 		if (gui.UserParameter.instance().ProxyAktiv) {
-			de.hattrickorganizer.net.MyConnector.instance().setProxyHost(
+			MyConnector.instance().setProxyHost(
 				gui.UserParameter.instance().ProxyHost);
-			de.hattrickorganizer.net.MyConnector.instance().setUseProxy(
+			MyConnector.instance().setUseProxy(
 				gui.UserParameter.instance().ProxyAktiv);
-			de.hattrickorganizer.net.MyConnector.instance().setProxyPort(
+			MyConnector.instance().setProxyPort(
 				gui.UserParameter.instance().ProxyPort);
-			de.hattrickorganizer.net.MyConnector.instance().setProxyAuthentifactionNeeded(
+			MyConnector.instance().setProxyAuthentifactionNeeded(
 				gui.UserParameter.instance().ProxyAuthAktiv);
-			de.hattrickorganizer.net.MyConnector.instance().setProxyUserName(
+			MyConnector.instance().setProxyUserName(
 				gui.UserParameter.instance().ProxyAuthName);
-			de.hattrickorganizer.net.MyConnector.instance().setProxyUserPWD(
+			MyConnector.instance().setProxyUserPWD(
 				gui.UserParameter.instance().ProxyAuthPassword);
-			de.hattrickorganizer.net.MyConnector.instance().enableProxy();
+			MyConnector.instance().enableProxy();
 		}
 	}
 
@@ -1228,7 +1235,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public java.util.Vector getOptionPanelNames() {
+	public Vector<String> getOptionPanelNames() {
 		return m_vOptionPanelNames;
 	}
 
@@ -1237,7 +1244,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public java.util.Vector getOptionPanels() {
+	public Vector<JPanel> getOptionPanels() {
 		return m_vOptionPanels;
 	}
 
@@ -1247,7 +1254,7 @@ public final class HOMainFrame extends JFrame
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 * @param optionpanel TODO Missing Constructuor Parameter Documentation
 	 */
-	public void addOptionPanel(String name, javax.swing.JPanel optionpanel) {
+	public void addOptionPanel(String name, JPanel optionpanel) {
 		m_vOptionPanels.add(optionpanel);
 		m_vOptionPanelNames.add(name);
 	}
@@ -1402,7 +1409,7 @@ public final class HOMainFrame extends JFrame
 	//helper
 	/////////////////////////////////////////////////////////////////////////////////////////////////77
 	public void startPluginModuls(
-		de.hattrickorganizer.gui.utils.InterruptionWindow interuptionWindow) {
+		InterruptionWindow interuptionWindow) {
 		try {
 			//Den Ordner mit den Plugins holen
 			final java.io.File folder = new java.io.File("hoplugins");
@@ -1427,7 +1434,7 @@ public final class HOMainFrame extends JFrame
 					final String name =
 						"hoplugins."
 							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-					final Class fileclass = Class.forName(name);
+					final Class<?> fileclass = Class.forName(name);
 					//Das Class-Object definiert kein Interface ...
 					if (!fileclass.isInterface()) {
 						//... und ist von ILib abgeleitet
@@ -1468,7 +1475,7 @@ public final class HOMainFrame extends JFrame
 					final String name =
 						"hoplugins."
 							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-					final Class fileclass = Class.forName(name);
+					final Class<?> fileclass = Class.forName(name);
 					//Das Class-Object definiert kein Interface ...
 					if (!fileclass.isInterface()) {
 						//... und ist von IPlugin abgeleitet, nicht die Libs nochmal starten!
@@ -1540,7 +1547,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	//----------------Unused Listener----------------------------
-	public void windowActivated(java.awt.event.WindowEvent windowEvent) {
+	public void windowActivated(WindowEvent windowEvent) {
 	}
 
 	/**
@@ -1548,7 +1555,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @param windowEvent TODO Missing Method Parameter Documentation
 	 */
-	public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+	public void windowClosed(WindowEvent windowEvent) {
 		//Wird von dem dispose im beenden aufgerufen, wenn alle windowClosing durch sind
 		System.exit(0);
 	}
@@ -1560,7 +1567,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @param windowEvent TODO Missing Constructuor Parameter Documentation
 	 */
-	public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+	public void windowClosing(WindowEvent windowEvent) {
 		beenden();
 	}
 
@@ -1569,7 +1576,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @param windowEvent TODO Missing Method Parameter Documentation
 	 */
-	public void windowDeactivated(java.awt.event.WindowEvent windowEvent) {
+	public void windowDeactivated(WindowEvent windowEvent) {
 	}
 
 	/**
@@ -1577,7 +1584,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @param windowEvent TODO Missing Method Parameter Documentation
 	 */
-	public void windowDeiconified(java.awt.event.WindowEvent windowEvent) {
+	public void windowDeiconified(WindowEvent windowEvent) {
 	}
 
 	/**
@@ -1585,7 +1592,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @param windowEvent TODO Missing Method Parameter Documentation
 	 */
-	public void windowIconified(java.awt.event.WindowEvent windowEvent) {
+	public void windowIconified(WindowEvent windowEvent) {
 	}
 
 	/**
@@ -1593,7 +1600,7 @@ public final class HOMainFrame extends JFrame
 	 *
 	 * @param windowEvent TODO Missing Method Parameter Documentation
 	 */
-	public void windowOpened(java.awt.event.WindowEvent windowEvent) {
+	public void windowOpened(WindowEvent windowEvent) {
 	}
 
 	/**
@@ -1878,9 +1885,9 @@ public final class HOMainFrame extends JFrame
 
 		////Spoofing test
 		try {
-			final java.io.BufferedReader buffy =
-				new java.io.BufferedReader(new java.io.FileReader("ident.txt"));
-			final java.util.Vector ids = new java.util.Vector();
+			final BufferedReader buffy =
+				new BufferedReader(new java.io.FileReader("ident.txt"));
+			final Vector<String> ids = new Vector<String>();
 			String tmp = "";
 
 			while (buffy.ready()) {
@@ -1895,7 +1902,7 @@ public final class HOMainFrame extends JFrame
 
 			if (ids.size() > 0) {
 				//Math.floor(Math.random()*10)
-				de.hattrickorganizer.net.MyConnector.m_sIDENTIFIER =
+				MyConnector.m_sIDENTIFIER =
 					ids.get((int) Math.floor(Math.random() * ids.size())).toString();
 			}
 		} catch (Exception e) {
@@ -1903,34 +1910,35 @@ public final class HOMainFrame extends JFrame
 
 		// Check if this HO version is (soft) expired
 		if (!DEVELOPMENT && WARN_DATE != null && WARN_DATE.length() > 0) {
-			final java.sql.Timestamp datum = new java.sql.Timestamp(System.currentTimeMillis());
+			final Timestamp datum = new Timestamp(System.currentTimeMillis());
 
 			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
-				javax.swing.JOptionPane.showMessageDialog(
+				JOptionPane.showMessageDialog(
 					null,
 					"Your HO version is very old!\nPlease download a new version at "+ MyConnector.getHOSite(),
 					"Update strongly recommended",
-					javax.swing.JOptionPane.WARNING_MESSAGE);
+					JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
 		// Check if this HO version is (hard) expired
 		if (LIMITED) {
-			final java.sql.Timestamp datum = new java.sql.Timestamp(System.currentTimeMillis());
+			final Timestamp datum = new Timestamp(System.currentTimeMillis());
 
 			if (datum.after(Timestamp.valueOf(LIMITED_DATE))) {
-				javax.swing.JOptionPane.showMessageDialog(
+				JOptionPane.showMessageDialog(
 					null,
 					"Download new Version at "+ MyConnector.getHOSite(),
 					"Update required",
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+					JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			}
 		}
 
 		// Splash screen
-		final de.hattrickorganizer.gui.utils.InterruptionWindow interuptionsWindow =
-			new de.hattrickorganizer.gui.utils.InterruptionWindow();
+		final InterruptionWindow interuptionsWindow =
+			new InterruptionWindow(
+				new ImagePanel());
 
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {
@@ -1940,7 +1948,7 @@ public final class HOMainFrame extends JFrame
 
 		//Standardparameter aus der DB holen
 		interuptionsWindow.setInfoText("Initialize Database");
-		de.hattrickorganizer.database.DBZugriff.instance().loadUserParameter();
+		DBZugriff.instance().loadUserParameter();
 
 		//Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
@@ -1949,7 +1957,7 @@ public final class HOMainFrame extends JFrame
 		HOVerwaltung.instance();
 
 		//Beim ersten Start Sprache erfragen
-		if (de.hattrickorganizer.database.DBZugriff.instance().isFirstStart()) {
+		if (DBZugriff.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
 			JOptionPane.showMessageDialog(
@@ -1975,7 +1983,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		final ClassLoader loader =
-			new de.hattrickorganizer.gui.templates.ImagePanel().getClass().getClassLoader();
+			new ImagePanel().getClass().getClassLoader();
 
 		//java.net.URL    url     =   loader.getResource ("sprache/"+UserParameter.instance ().sprachDatei+".properties");
 		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei, loader);
@@ -1998,8 +2006,8 @@ public final class HOMainFrame extends JFrame
 		interuptionsWindow.setInfoText("Initialize Training");
 
 		//Training erstellen -> dabei Trainingswochen berechnen auf Grundlage der manuellen DB Einträge
-		de.hattrickorganizer.logik.TrainingsManager.instance().calculateTrainings(
-			de.hattrickorganizer.database.DBZugriff.instance().getTrainingsVector());
+		TrainingsManager.instance().calculateTrainings(
+			DBZugriff.instance().getTrainingsVector());
 
 		//INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich selbst aufruft!
 		interuptionsWindow.setInfoText("Starting Plugins");

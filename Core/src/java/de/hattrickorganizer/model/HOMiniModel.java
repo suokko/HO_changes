@@ -283,10 +283,11 @@ public class HOMiniModel implements IHOMiniModel {
      * !!!PLEASE USE getLanguageString from now on!!!
      *
      * @return Value of property m_clResource. usage
-     *         minimodel.getResource().getProperty("Download") to get Name for download in current
+     *         minimodel.getLanguageString("Download") to get Name for download in current
      *         language
+     *         
+     * @deprecated use getLanguageString()
      */
-    @Deprecated
     public java.util.Properties getResource() {
         return HOVerwaltung.instance().getResource();
     }

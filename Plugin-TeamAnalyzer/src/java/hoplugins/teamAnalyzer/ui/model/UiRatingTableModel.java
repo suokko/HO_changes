@@ -30,7 +30,7 @@ public class UiRatingTableModel extends BaseTableModel {
      * @param vector Vector of table data
      * @param vector2 Vector of column names
      */
-    public UiRatingTableModel(Vector vector, Vector vector2) {
+    public UiRatingTableModel(Vector<Object> vector, Vector<String> vector2) {
         super(vector, vector2);
     }
 
@@ -50,7 +50,7 @@ public class UiRatingTableModel extends BaseTableModel {
      *
      * @return
      */
-    public Class getColumnClass(int column) {
+    public Class<?> getColumnClass(int column) {
         if (column == 2) {
             return ImageIcon.class;
         }

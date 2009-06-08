@@ -29,7 +29,7 @@ public class EvilCard implements plugins.IPlugin, plugins.IRefreshable, IOfficia
     private static final String PLUGIN_NAME = "Evil Card";
 
     /** TODO Missing Parameter Documentation */
-    private static final double PLUGIN_VERSION = 0.953d;
+    private static final double PLUGIN_VERSION = 0.954d;
 
     /** TODO Missing Parameter Documentation */
     private static final String PLUGIN_PACKAGE = "evilCard";

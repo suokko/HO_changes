@@ -184,10 +184,12 @@ public interface IHOMiniModel {
     public String getLanguageString(String key);
 
     /**
-     * Getter for property m_clResource. usage minimodel.getResource().getProperty("Download") to
+     * Getter for property m_clResource. usage minimodel.getLanguageString("Download") to
      * get Name for download in current language
      *
      * @return Value of property m_clResource.
+     * 
+     * @deprecated use getLanguageString()
      */
     public java.util.Properties getResource();
 

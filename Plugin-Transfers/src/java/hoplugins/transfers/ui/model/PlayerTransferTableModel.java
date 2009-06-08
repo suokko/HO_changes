@@ -39,8 +39,8 @@ public class PlayerTransferTableModel extends AbstractTableModel {
     public PlayerTransferTableModel(List values) {
         super();
 
-        this.colNames[0] = Commons.getModel().getResource().getProperty("Datum"); //$NON-NLS-1$
-        this.colNames[1] = Commons.getModel().getResource().getProperty("Season"); //$NON-NLS-1$
+        this.colNames[0] = Commons.getModel().getLanguageString("Datum"); //$NON-NLS-1$
+        this.colNames[1] = Commons.getModel().getLanguageString("Season"); //$NON-NLS-1$
         this.colNames[2] = PluginProperty.getString("Week"); //$NON-NLS-1$
         this.colNames[3] = PluginProperty.getString("Buyer"); //$NON-NLS-1$
         this.colNames[4] = ""; //$NON-NLS-1$

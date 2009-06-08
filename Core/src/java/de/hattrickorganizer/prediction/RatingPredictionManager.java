@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Properties;
 
 import plugins.ILineUp;
 import plugins.IMatchDetails;
@@ -39,10 +40,14 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static final int PLAYMAKING = ISpieler.SKILL_SPIELAUFBAU; // 3
     private static final int SCORING = ISpieler.SKILL_TORSCHUSS; // 4
     private static final int PASSING = ISpieler.SKILL_PASSSPIEL; // 5
-    private static final int STAMINA = ISpieler.SKILL_KONDITION; // 6
+    @SuppressWarnings("unused")
+	private static final int STAMINA = ISpieler.SKILL_KONDITION; // 6
+    @SuppressWarnings("unused")
     private static final int FORM = ISpieler.SKILL_FORM; // 7
     private static final int SETPIECES = ISpieler.SKILL_STANDARDS; // 8
+    @SuppressWarnings("unused")
     private static final int EXPERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
+    @SuppressWarnings("unused")
     private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
     
     public static final int SPEC_NONE = ISpieler.NO_SPECIALTY; // 0
@@ -121,8 +126,8 @@ public class RatingPredictionManager implements IRatingPredictionManager
 		default:
 			return 0;
 		}
-    	Hashtable allSections = params.getAllSections();
-    	Enumeration allKeys = allSections.keys();
+    	Hashtable<String, Properties> allSections = params.getAllSections();
+    	Enumeration<String> allKeys = allSections.keys();
     	double retVal = 0;
     	while (allKeys.hasMoreElements()) {
     		String sectionName = (String)allKeys.nextElement();
@@ -286,27 +291,27 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return retVal;
     }
 
-    private static int getSpecialtyByName (String specialtyName) {
-    	specialtyName = specialtyName.toLowerCase();
-    	if (specialtyName.equals("none"))
-    		return SPEC_NONE;
-    	else if (specialtyName.equals("technical"))
-    		return SPEC_TECHNICAL;
-    	else if (specialtyName.equals("quick"))
-    		return SPEC_QUICK;
-    	else if (specialtyName.equals("powerful"))
-    		return SPEC_POWERFUL;
-    	else if (specialtyName.equals("unpredictable"))
-    		return SPEC_UNPREDICTABLE;
-    	else if (specialtyName.equals("header"))
-    		return SPEC_HEADER;
-    	else if (specialtyName.equals("regainer"))
-    		return SPEC_REGAINER;
-    	else if (specialtyName.equals("all") || specialtyName.equals(""))
-    		return SPEC_ALL;
-    	else
-    		return -1;
-    }
+//    private static int getSpecialtyByName (String specialtyName) {
+//    	specialtyName = specialtyName.toLowerCase();
+//    	if (specialtyName.equals("none"))
+//    		return SPEC_NONE;
+//    	else if (specialtyName.equals("technical"))
+//    		return SPEC_TECHNICAL;
+//    	else if (specialtyName.equals("quick"))
+//    		return SPEC_QUICK;
+//    	else if (specialtyName.equals("powerful"))
+//    		return SPEC_POWERFUL;
+//    	else if (specialtyName.equals("unpredictable"))
+//    		return SPEC_UNPREDICTABLE;
+//    	else if (specialtyName.equals("header"))
+//    		return SPEC_HEADER;
+//    	else if (specialtyName.equals("regainer"))
+//    		return SPEC_REGAINER;
+//    	else if (specialtyName.equals("all") || specialtyName.equals(""))
+//    		return SPEC_ALL;
+//    	else
+//    		return -1;
+//    }
     
     private static String getSkillName (int skill) {
     	switch (skill) {

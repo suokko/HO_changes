@@ -8,18 +8,18 @@ import plugins.IUserConfiguration;
 
 public abstract class Configuration implements IUserConfiguration {
 
-	public String getStringValue(HashMap values,String key) {
+	public String getStringValue(HashMap<String, String> values,String key) {
 		return String.valueOf(values.get(key)); 
 	}
 	
-	public boolean getBooleanValue(HashMap values,String key) {
+	public boolean getBooleanValue(HashMap<String, String> values,String key) {
 		String value = String.valueOf(values.get(key));
 		if (value.equalsIgnoreCase("true"))
 			return true;
 		return false;
 	}
 
-	public int getIntValue(HashMap values,String key) {
+	public int getIntValue(HashMap<String, String> values,String key) {
 		String value = String.valueOf(values.get(key));
 		try {
 			return Integer.parseInt(value);
@@ -28,7 +28,7 @@ public abstract class Configuration implements IUserConfiguration {
 		return 0;
 	}
 
-	public float getFloatValue(HashMap values,String key) {
+	public float getFloatValue(HashMap<String, String> values,String key) {
 		String value = String.valueOf(values.get(key));
 		try {
 			return Float.parseFloat(value);
@@ -37,7 +37,7 @@ public abstract class Configuration implements IUserConfiguration {
 		return 0f;
 	}
 	
-	public Color getColorValue(HashMap values, String key) {
+	public Color getColorValue(HashMap<String, String> values, String key) {
 		String value = String.valueOf(values.get(key));
 		try {
 			return new Color(Integer.parseInt(value));

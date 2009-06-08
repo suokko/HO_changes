@@ -56,6 +56,8 @@ public class TeamPlanner implements IPlugin, IRefreshable, IOfficialPlugin {
 
     /** Missing Parameter Documentation */
     private static FansPane fansPane = null;
+    
+    private static final String PLUGIN_PACKAGE = "teamplanner";
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -110,7 +112,7 @@ public class TeamPlanner implements IPlugin, IRefreshable, IOfficialPlugin {
      * @return the plugin version
      */
     public final double getVersion() {
-        return 0.1;
+        return 0.101;
     }
 
     /**
@@ -126,6 +128,7 @@ public class TeamPlanner implements IPlugin, IRefreshable, IOfficialPlugin {
      */
     public final void start(IHOMiniModel hoMiniModel) {
         try {
+    		PluginProperty.loadPluginProperties(PLUGIN_PACKAGE);
             JTabbedPane tabPane = new JTabbedPane();
             futurePane = new FutureSettingsPane();
             fansPane = new FansPane();

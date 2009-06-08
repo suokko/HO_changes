@@ -9,14 +9,14 @@ package de.hattrickorganizer.model;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Vector;
 import java.util.Properties;
+import java.util.Vector;
 
 import plugins.ISpieler;
-
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -82,7 +82,7 @@ public class HOVerwaltung {
         if (numPlayers <= 1)
         	return 0;
         else
-        	return de.hattrickorganizer.tools.Helper.round(getSumTSI() / (numPlayers - 1));
+        	return Helper.round(getSumTSI() / (numPlayers - 1));
     }
 
     /**
@@ -97,7 +97,7 @@ public class HOVerwaltung {
         if (numPlayers <= 1)
         	return 0;
         else
-        	return de.hattrickorganizer.tools.Helper.round(getSumEPV() / (numPlayers - 1));
+        	return Helper.round(getSumEPV() / (numPlayers - 1));
     }
 
     /**
@@ -111,16 +111,16 @@ public class HOVerwaltung {
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
-            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
+            if (!( vSpieler.get(i)).isTrainer()) {
             	// Age Years
-                summe += ((Spieler) vSpieler.get(i)).getAlter();
+                summe += (vSpieler.get(i)).getAlter();
                 // Age Days
-                summe += (float)((Spieler) vSpieler.get(i)).getAgeDays()/112;
+                summe += (vSpieler.get(i)).getAgeDays()/112.0;
             }
         }
 
         //Trainer abziehen
-        return de.hattrickorganizer.tools.Helper.round(summe / (vSpieler.size() - 1));
+        return Helper.round(summe / (vSpieler.size() - 1));
     }
 
     /**
@@ -134,13 +134,13 @@ public class HOVerwaltung {
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
-            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
-                summe += ((Spieler) vSpieler.get(i)).getErfahrung();
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getErfahrung();
             }
         }
 
         //Trainer abziehen
-        return de.hattrickorganizer.tools.Helper.round(summe / (vSpieler.size() - 1), 3);
+        return Helper.round(summe / (vSpieler.size() - 1), 3);
     }
 
     /**
@@ -154,13 +154,13 @@ public class HOVerwaltung {
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
-            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
-                summe += ((Spieler) vSpieler.get(i)).getForm();
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getForm();
             }
         }
 
         //Trainer abziehen
-        return de.hattrickorganizer.tools.Helper.round(summe / (vSpieler.size() - 1), 3);
+        return Helper.round(summe / (vSpieler.size() - 1), 3);
     }
 
     /**
@@ -175,8 +175,8 @@ public class HOVerwaltung {
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
-            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
-                summe += ((Spieler) vSpieler.get(i)).getTSI();
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getTSI();
             }
         }
 
@@ -190,17 +190,17 @@ public class HOVerwaltung {
      * @return TODO Missing Return Method Documentation
      */
     public float getSumEPV() {
-        double summe = 0;
+        float summe = 0;
         final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
-            if (!((Spieler) vSpieler.get(i)).isTrainer()) {
-                summe += ((Spieler) vSpieler.get(i)).getEPV();
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getEPV();
             }
         }
 
-        return (float)summe;
+        return summe;
     }
 
     /**
@@ -337,7 +337,7 @@ public class HOVerwaltung {
         for (int i = 0; i < hrfListe.size(); i++) {
             try {
                 if (showWait) {
-                    waitDialog.setValue((int) (((double) i * 100d) / (double) hrfListe.size()));
+                    waitDialog.setValue((int) (((float) i * 100d) / (float) hrfListe.size()));
                 }
                 s1 = System.currentTimeMillis();
                 final HOModel model = this.loadModel(((CBItem) hrfListe.get(i)).getId());

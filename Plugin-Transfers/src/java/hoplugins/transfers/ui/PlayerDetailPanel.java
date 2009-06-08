@@ -115,10 +115,10 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         final TableLayout layout = new TableLayout(sizes);
         detailPanel.setLayout(layout);
 
-        detailPanel.add(new JLabel(Commons.getModel().getResource().getProperty("Name"),
+        detailPanel.add(new JLabel(Commons.getModel().getLanguageString("Name"),
                                    SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$ //$NON-NLS-2$
         detailPanel.add(name, "2, 0"); //$NON-NLS-1$
-        detailPanel.add(new JLabel(Commons.getModel().getResource().getProperty("Alter"),
+        detailPanel.add(new JLabel(Commons.getModel().getLanguageString("Alter"),
                                    SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$ //$NON-NLS-2$
         detailPanel.add(age, "2, 1"); //$NON-NLS-1$
         detailPanel.add(new JLabel(PluginProperty.getString("Income"), SwingConstants.LEFT), "1, 2"); //$NON-NLS-1$ //$NON-NLS-2$

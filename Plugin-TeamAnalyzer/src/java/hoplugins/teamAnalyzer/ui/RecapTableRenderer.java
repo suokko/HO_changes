@@ -66,9 +66,9 @@ public class RecapTableRenderer extends DefaultTableCellRenderer {
                     tipText.append(" - "); //$NON-NLS-1$
 
                     if (isHomeMatch) {
-                        tipText.append(Commons.getModel().getResource().getProperty("Heim")); //$NON-NLS-1$
+                        tipText.append(Commons.getModel().getLanguageString("Heim")); //$NON-NLS-1$
                     } else {
-                        tipText.append(Commons.getModel().getResource().getProperty("Gast")); //$NON-NLS-1$
+                        tipText.append(Commons.getModel().getLanguageString("Gast")); //$NON-NLS-1$
                     }
 
                     this.setToolTipText(tipText.toString());

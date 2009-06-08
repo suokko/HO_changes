@@ -1,11 +1,12 @@
 package hoplugins.specialEvents;
 
+import hoplugins.commons.utils.PluginProperty;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -22,7 +23,7 @@ import plugins.IMatchLineupTeam;
 public class SpecialEventsDM
 {
 
-    private Properties props;
+//    private Properties props;
     private IHOMiniModel miniModel;
     private static ImageIcon goalIcon;
     private static ImageIcon chanceIcon;
@@ -55,9 +56,9 @@ public class SpecialEventsDM
     public static final int PENALTY = 6;
 
     
-    public SpecialEventsDM(Properties props, IHOMiniModel miniModel)
+    public SpecialEventsDM(IHOMiniModel miniModel)
     {
-        this.props = props;
+//        this.props = props;
         this.miniModel = miniModel;
         homeEventIcon = createImageIcon(this, "/hoplugins/specialEvents/img/prechts.gif");
         guestEventIcon = createImageIcon(this, "/hoplugins/specialEvents/img/plinks.gif");
@@ -514,17 +515,17 @@ public class SpecialEventsDM
     	if (isWeatherSE(highlight)) {
     		switch (highlight.getHighlightSubTyp()) {
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY:
-    			return props.getProperty("WEATHER_TECHNICAL_RAINY");
+    			return PluginProperty.getString("WEATHER_TECHNICAL_RAINY");
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY:
-    			return props.getProperty("WEATHER_POWERFUL_RAINY");
+    			return PluginProperty.getString("WEATHER_POWERFUL_RAINY");
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY:
-    			return props.getProperty("WEATHER_TECHNICAL_SUNNY");
+    			return PluginProperty.getString("WEATHER_TECHNICAL_SUNNY");
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY:
-    			return props.getProperty("WEATHER_POWERFUL_SUNNY");
+    			return PluginProperty.getString("WEATHER_POWERFUL_SUNNY");
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY:
-    			return props.getProperty("WEATHER_QUICK_RAINY");
+    			return PluginProperty.getString("WEATHER_QUICK_RAINY");
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY:
-    			return props.getProperty("WEATHER_QUICK_SUNNY");
+    			return PluginProperty.getString("WEATHER_QUICK_SUNNY");
     		}
     	} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
     			|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN ) {
@@ -532,56 +533,56 @@ public class SpecialEventsDM
     		switch (highlight.getHighlightSubTyp())
     		{
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
-    			return props.getProperty("UNVORHERSEHBAR_PASS_VORLAGE_TOR");
+    			return PluginProperty.getString("UNVORHERSEHBAR_PASS_VORLAGE_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-    			return props.getProperty("UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR");
+    			return PluginProperty.getString("UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
-    			return props.getProperty("WEITSCHUSS_TOR");
+    			return PluginProperty.getString("WEITSCHUSS_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
-    			return props.getProperty("UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR");
+    			return PluginProperty.getString("UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
-    			return props.getProperty("UNVORHERSEHBAR_BALLVERLUST_TOR");
+    			return PluginProperty.getString("UNVORHERSEHBAR_BALLVERLUST_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
-    			return props.getProperty("SCHNELLER_ANGREIFER_TOR");
+    			return PluginProperty.getString("SCHNELLER_ANGREIFER_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
-    			return props.getProperty("SCHNELLER_ANGREIFER_PASS_TOR");
+    			return PluginProperty.getString("SCHNELLER_ANGREIFER_PASS_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
-    			return props.getProperty("SCHLECHTE_KONDITION_BALLVERLUST_TOR");
+    			return PluginProperty.getString("SCHLECHTE_KONDITION_BALLVERLUST_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-    			return props.getProperty("ECKBALL_TOR");
+    			return PluginProperty.getString("ECKBALL_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
-    			return props.getProperty("ECKBALL_KOPFTOR");
+    			return PluginProperty.getString("ECKBALL_KOPFTOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
-    			return props.getProperty("ERFAHRENER_ANGREIFER_TOR");
+    			return PluginProperty.getString("ERFAHRENER_ANGREIFER_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
-    			return props.getProperty("UNERFAHREN_TOR");
+    			return PluginProperty.getString("UNERFAHREN_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
-    			return props.getProperty("QUERPASS_TOR");
+    			return PluginProperty.getString("QUERPASS_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
-    			return props.getProperty("AUSSERGEWOEHNLICHER_PASS_TOR");
+    			return PluginProperty.getString("AUSSERGEWOEHNLICHER_PASS_TOR");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-    			return props.getProperty("TECHNIKER_ANGREIFER_TOR");
+    			return PluginProperty.getString("TECHNIKER_ANGREIFER_TOR");
     			
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-    			return props.getProperty("COUNTER");
+    			return PluginProperty.getString("COUNTER");
     			
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
@@ -591,7 +592,7 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-    			return props.getProperty("FREEKICK");
+    			return PluginProperty.getString("FREEKICK");
     			
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
@@ -601,19 +602,19 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-    			return props.getProperty("PENALTY");
+    			return PluginProperty.getString("PENALTY");
     			
     		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
-    			return props.getProperty("IFK");
+    			return PluginProperty.getString("IFK");
     			
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-    			return props.getProperty("LONGSHOT");
+    			return PluginProperty.getString("LONGSHOT");
     		}
     		
     		
     	}
-//		return props.getProperty("Unbekannt");   			
+//		return PluginProperty.getString("Unbekannt");   			
 		return "unknown";   			
     }
 

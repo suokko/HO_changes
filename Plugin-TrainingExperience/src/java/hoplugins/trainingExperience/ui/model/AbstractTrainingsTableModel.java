@@ -39,10 +39,10 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
         p_IHMM_miniModel = miniModel;
         columnNames = new String[5];
         columnNames[0] = PluginProperty.getString("Week"); //$NON-NLS-1$
-        columnNames[1] = miniModel.getResource().getProperty("Season"); //$NON-NLS-1$
+        columnNames[1] = miniModel.getLanguageString("Season"); //$NON-NLS-1$
         columnNames[2] = PluginProperty.getString("Type"); //$NON-NLS-1$
-        columnNames[3] = miniModel.getResource().getProperty("Intensitaet"); //$NON-NLS-1$
-        columnNames[4] = miniModel.getResource().getProperty("Kondition"); //$NON-NLS-1$
+        columnNames[3] = miniModel.getLanguageString("Intensitaet"); //$NON-NLS-1$
+        columnNames[4] = miniModel.getLanguageString("Kondition"); //$NON-NLS-1$
     }
 
     //~ Methods ------------------------------------------------------------------------------------

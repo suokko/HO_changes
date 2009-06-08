@@ -15,8 +15,9 @@ import javax.swing.JPanel;
 public class VerticalIndicator extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private float actual;
-    private float total;
+	private static final long serialVersionUID = -842820146458960696L;
+	private double actual;
+    private double total;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -26,7 +27,7 @@ public class VerticalIndicator extends JPanel {
      * @param _actual actual points
      * @param _total skillup points
      */
-    public VerticalIndicator(float _actual, float _total) {
+    public VerticalIndicator(double _actual, double _total) {
         super();
         setLayout(new BorderLayout());
         setOpaque(false);

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.SpielerPosition;
+import plugins.ISpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
 
 public final class PositionenTable extends AbstractTable {
@@ -34,11 +34,11 @@ public final class PositionenTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<SpielerPosition> getSystemPositionen(int hrfID, String sysName) {
+	public Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		ResultSet rs = null;
 		de.hattrickorganizer.model.SpielerPosition pos = null;
 		String sql = null;
-		final Vector<SpielerPosition> ret = new Vector<SpielerPosition>();
+		final Vector<ISpielerPosition> ret = new Vector<ISpielerPosition>();
 
 		sql = "SELECT * FROM "+getTableName()+" WHERE HRF_ID = " + hrfID + " AND Aufstellungsname ='" + sysName + "'";
 		rs = adapter.executeQuery(sql);
@@ -69,7 +69,7 @@ public final class PositionenTable extends AbstractTable {
 	 * @param positionen TODO Missing Constructuor Parameter Documentation
 	 * @param sysName TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSystemPositionen(int hrfId, Vector<SpielerPosition> positionen, String sysName) {
+	public void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
 		String statement = null;
 		de.hattrickorganizer.model.SpielerPosition pos = null;
 
