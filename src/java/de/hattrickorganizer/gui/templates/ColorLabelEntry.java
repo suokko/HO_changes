@@ -251,7 +251,7 @@ public class ColorLabelEntry extends TableEntry {
                            boolean farbeInvertieren, int nachkommastellen) {
     	m_iAusrichtung = SwingConstants.RIGHT;
         createComponent();
-    	setValueAsText((double)zahl, bg_color, currencyformat, farbeInvertieren, 
+    	setValueAsText(zahl, bg_color, currencyformat, farbeInvertieren, 
     			nachkommastellen, true);
     }
 
