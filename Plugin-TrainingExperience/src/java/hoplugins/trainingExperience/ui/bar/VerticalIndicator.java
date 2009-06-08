@@ -15,7 +15,8 @@ import javax.swing.JPanel;
 public class VerticalIndicator extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private double actual;
+	private static final long serialVersionUID = -842820146458960696L;
+	private double actual;
     private double total;
 
     //~ Constructors -------------------------------------------------------------------------------

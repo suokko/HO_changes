@@ -14,11 +14,11 @@ public interface IUserConfiguration {
 	 * 
 	 * @return HashMap
 	 */
-	public HashMap getValues();
+	public HashMap<String, String> getValues();
 	
 	/**
 	 * load values to set properties in object
 	 * @param values
 	 */
-	public void setValues(HashMap values);
+	public void setValues(HashMap<String, String> values);
 }

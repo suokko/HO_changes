@@ -292,7 +292,7 @@ public interface ISpieler {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.util.Vector getAllLevelUp(int skill);
+    public java.util.Vector<Object[]> getAllLevelUp(int skill);
 
     /**
      * Setter for property m_iAlter.
