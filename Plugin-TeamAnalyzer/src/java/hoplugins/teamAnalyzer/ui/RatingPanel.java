@@ -54,7 +54,7 @@ public class RatingPanel extends JPanel {
      * @param lineup TODO Missing Method Parameter Documentation
      */
     public void reload(TeamLineup lineup) {
-        tableModel = new UiRatingTableModel(new Vector(), new Vector(Arrays.asList(columns)));
+        tableModel = new UiRatingTableModel(new Vector<Object>(), new Vector<String>(Arrays.asList(columns)));
         table.setModel(tableModel);
 
         if ((lineup == null) || (!SystemManager.getConfig().isLineup())) {
@@ -108,8 +108,8 @@ public class RatingPanel extends JPanel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private Vector getRow(String label, double myRating, double opponentRating) {
-        Vector rowData = new Vector();
+    private Vector<Object> getRow(String label, double myRating, double opponentRating) {
+        Vector<Object> rowData = new Vector<Object>();
 
         rowData.add(label); //$NON-NLS-1$
         rowData.add("" + getRating((int) myRating));
@@ -122,7 +122,7 @@ public class RatingPanel extends JPanel {
         else
         	relativeVal = 0;
         
-        System.out.println ("mR="+myRating+", oR="+opponentRating+", rV="+relativeVal);
+//        System.out.println ("mR="+myRating+", oR="+opponentRating+", rV="+relativeVal);
         String relValString = (int)(relativeVal * 100) + "%";
         
         // Add a character indicating more or less than 50%
@@ -144,10 +144,10 @@ public class RatingPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     private void jbInit() {
-        Vector data = new Vector();
+        Vector<Object> data = new Vector<Object>();
 
         //JPanel main = Commons.getModel().getGUI().createImagePanel();
-        tableModel = new UiRatingTableModel(data, new Vector(Arrays.asList(columns)));
+        tableModel = new UiRatingTableModel(data, new Vector<String>(Arrays.asList(columns)));
         table = new JTable(tableModel);
 
         table.setDefaultRenderer(Object.class, new RatingTableCellRenderer());

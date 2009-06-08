@@ -45,7 +45,7 @@ public  class Aufstellung implements plugins.ILineUp {
     private Aufstellungsassistent m_clAssi = new Aufstellungsassistent();
 
     /** hï¿½lt die Positionen */
-    private Vector<SpielerPosition> m_vPositionen = new Vector<SpielerPosition>();
+    private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
 
     /** Attitude */
     private int m_iAttitude;
@@ -880,7 +880,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @param m_vPositionen New value of property m_vPositionen.
      */
-    public final void setPositionen(java.util.Vector<SpielerPosition> m_vPositionen) {
+    public final void setPositionen(Vector<ISpielerPosition> m_vPositionen) {
         this.m_vPositionen = m_vPositionen;
 
         //m_clAssi.setPositionen ( m_vPositionen );
@@ -895,7 +895,7 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return Value of property m_vPositionen.
      */
-    public final java.util.Vector<SpielerPosition> getPositionen() {
+    public final Vector<ISpielerPosition> getPositionen() {
         return m_vPositionen;
     }
 
@@ -1407,7 +1407,7 @@ public  class Aufstellung implements plugins.ILineUp {
      * TODO Missing Method Documentation
      */
     public final void flipSide() {
-        Vector<SpielerPosition> tmp = new Vector<SpielerPosition>(m_vPositionen);
+        Vector<ISpielerPosition> tmp = new Vector<ISpielerPosition>(m_vPositionen);
         m_vPositionen.removeAllElements();
         m_vPositionen.add(tmp.get(0));
         m_vPositionen.add(swap(tmp.get(1), tmp.get(4)));
@@ -1490,7 +1490,7 @@ public  class Aufstellung implements plugins.ILineUp {
      */
     public final void resetReserveBank() {
         //Nur Reservespieler
-        final Vector<SpielerPosition> vReserve = new Vector<SpielerPosition>();
+        final Vector<ISpielerPosition> vReserve = new Vector<ISpielerPosition>();
 
         for (int i = 0; i < m_vPositionen.size(); i++) {
             if (((SpielerPosition) m_vPositionen.get(i)).getId() >= ISpielerPosition.beginnReservere) {
@@ -1703,7 +1703,7 @@ public  class Aufstellung implements plugins.ILineUp {
         if (m_vPositionen != null) {
             m_vPositionen.removeAllElements();
         } else {
-            m_vPositionen = new Vector<SpielerPosition>();
+            m_vPositionen = new Vector<ISpielerPosition>();
         }
 
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
@@ -1736,7 +1736,7 @@ public  class Aufstellung implements plugins.ILineUp {
         if (m_vPositionen != null) {
             m_vPositionen.removeAllElements();
         } else {
-            m_vPositionen = new Vector<SpielerPosition>();
+            m_vPositionen = new Vector<ISpielerPosition>();
         }
 
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));

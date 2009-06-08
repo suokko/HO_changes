@@ -684,25 +684,25 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    private int getDifferenz(int home, String homesub, int guest, String guestsub) {
-        int realhome = 3 * home;
-
-        if ((homesub == null) || homesub.trim().equals("")) {
-            realhome--;
-        } else if (homesub.equals("-")) {
-            realhome--;
-            realhome--;
-        }
-
-        int realguest = 3 * guest;
-
-        if ((guestsub == null) || guestsub.trim().equals("")) {
-            realguest--;
-        } else if (guestsub.equals("-")) {
-            realguest--;
-            realguest--;
-        }
-
-        return (realhome - realguest);
-    }
+//    private int getDifferenz(int home, String homesub, int guest, String guestsub) {
+//        int realhome = 3 * home;
+//
+//        if ((homesub == null) || homesub.trim().equals("")) {
+//            realhome--;
+//        } else if (homesub.equals("-")) {
+//            realhome--;
+//            realhome--;
+//        }
+//
+//        int realguest = 3 * guest;
+//
+//        if ((guestsub == null) || guestsub.trim().equals("")) {
+//            realguest--;
+//        } else if (guestsub.equals("-")) {
+//            realguest--;
+//            realguest--;
+//        }
+//
+//        return (realhome - realguest);
+//    }
 }

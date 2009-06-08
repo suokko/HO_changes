@@ -574,7 +574,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @param src TODO Missing Method Parameter Documentation
      * @param dest TODO Missing Method Parameter Documentation
      */
-    public void copyArray2Vector(Object[] src, Vector dest) {
+    public void copyArray2Vector(Object[] src, Vector<Object> dest) {
         MyHelper.copyArray2Vector(src, dest);
     }
 
@@ -584,7 +584,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @param src TODO Missing Method Parameter Documentation
      * @param dest TODO Missing Method Parameter Documentation
      */
-    public void copyVector2Array(Vector src, Object[] dest) {
+    public void copyVector2Array(Vector<Object> src, Object[] dest) {
         MyHelper.copyVector2Array(src, dest);
     }
 
@@ -595,7 +595,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public DefaultComboBoxModel createListModel(Vector vector) {
+    public DefaultComboBoxModel createListModel(Vector<Object> vector) {
         return Helper.createListModel(vector);
     }
 
@@ -910,8 +910,6 @@ public class HelperWrapper implements plugins.IHelper {
      * @param nachkommastellen number of fraction digits
      *
      * @return rounded value
-     * 
-     * @deprecated use round (double, int)
      */
     public float round(float wert, int nachkommastellen) {
         return Helper.round(wert, nachkommastellen);
