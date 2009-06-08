@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,7 +21,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
+import plugins.IMatchLineupPlayer;
+import plugins.ISpielePanel;
+import plugins.ISpielerPosition;
+
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
@@ -36,9 +43,11 @@ import de.hattrickorganizer.tools.PlayerHelper;
 public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener, FocusListener, ItemListener, de.hattrickorganizer.gui.Refreshable
 {
+	private static final long serialVersionUID = 3954095099686666846L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Color BEWERTUNG = Color.black;
+	private static Color BEWERTUNG = Color.black;
     private static Color MITTELFELD = de.hattrickorganizer.tools.Helper.TRICKOT_MITTELFELD;
     private static Color RECHTEABWEHR = de.hattrickorganizer.tools.Helper.TRICKOT_AUSSENVERTEIDIGER
                                         .darker();
@@ -111,20 +120,20 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
     private StatistikPanel m_clStatistikPanel;
     private de.hattrickorganizer.gui.model.CBItem[] SPIELEFILTER = {
                                                                        new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
-                                                                                                                 de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_SPIELE
-                                                                                                                 + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
+                                                                                                                 ISpielePanel.NUR_EIGENE_SPIELE
+                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
                                                                        new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
-                                                                                                                 de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_PFLICHTSPIELE
-                                                                                                                 + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
+                                                                                                                 ISpielePanel.NUR_EIGENE_PFLICHTSPIELE
+                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
                                                                        new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
-                                                                                                                 de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_POKALSPIELE
-                                                                                                                 + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
+                                                                                                                 ISpielePanel.NUR_EIGENE_POKALSPIELE
+                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
                                                                        new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
-                                                                                                                 de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_LIGASPIELE
-                                                                                                                 + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE),
+                                                                                                                 ISpielePanel.NUR_EIGENE_LIGASPIELE
+                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
                                                                        new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
-                                                                                                                 de.hattrickorganizer.gui.matches.SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
-                                                                                                                 + de.hattrickorganizer.gui.matches.SpielePanel.NUR_GESPIELTEN_SPIELE)
+                                                                                                                 ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
+                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE)
                                                                    };
     private boolean m_bInitialisiert;
 
@@ -323,7 +332,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridwidth = 1;
         layout2.setConstraints(label, constraints2);
         panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(JTextField.RIGHT);
+        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
         m_jtfAnzahlHRF.addFocusListener(this);
         constraints2.gridx = 1;
         constraints2.gridy = 1;
@@ -541,43 +550,43 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeMidfield() - 1) / 4) + 1;
-                    statistikWerte[1][i] = (double) bewertungwert
+                    statistikWerte[1][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeRightDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeRightDef() - 1) / 4) + 1;
-                    statistikWerte[2][i] = (double) bewertungwert
+                    statistikWerte[2][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeMidDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeMidDef() - 1) / 4) + 1;
-                    statistikWerte[3][i] = (double) bewertungwert
+                    statistikWerte[3][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeLeftDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeLeftDef() - 1) / 4) + 1;
-                    statistikWerte[4][i] = (double) bewertungwert
+                    statistikWerte[4][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeRightAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeRightAtt() - 1) / 4) + 1;
-                    statistikWerte[5][i] = (double) bewertungwert
+                    statistikWerte[5][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeMidAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeMidAtt() - 1) / 4) + 1;
-                    statistikWerte[6][i] = (double) bewertungwert
+                    statistikWerte[6][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeLeftAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getHomeLeftAtt() - 1) / 4) + 1;
-                    statistikWerte[7][i] = (double) bewertungwert
+                    statistikWerte[7][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     temp = details.getHomeGesamtstaerke(false);
                     sublevel = ((int) temp) % 4;
@@ -588,43 +597,43 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestMidfield() - 1) / 4) + 1;
-                    statistikWerte[1][i] = (double) bewertungwert
+                    statistikWerte[1][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestRightDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestRightDef() - 1) / 4) + 1;
-                    statistikWerte[2][i] = (double) bewertungwert
+                    statistikWerte[2][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestMidDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestMidDef() - 1) / 4) + 1;
-                    statistikWerte[3][i] = (double) bewertungwert
+                    statistikWerte[3][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestLeftDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestLeftDef() - 1) / 4) + 1;
-                    statistikWerte[4][i] = (double) bewertungwert
+                    statistikWerte[4][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestRightAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestRightAtt() - 1) / 4) + 1;
-                    statistikWerte[5][i] = (double) bewertungwert
+                    statistikWerte[5][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestMidAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestMidAtt() - 1) / 4) + 1;
-                    statistikWerte[6][i] = (double) bewertungwert
+                    statistikWerte[6][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestLeftAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
                     bewertungwert = ((details.getGuestLeftAtt() - 1) / 4) + 1;
-                    statistikWerte[7][i] = (double) bewertungwert
+                    statistikWerte[7][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     temp = details.getGuestGesamtstaerke(false);
                     sublevel = ((int) temp) % 4;
@@ -646,8 +655,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                 statistikWerte[11][i] = matchkurzinfos[matchkurzinfos.length - i - 1].getMatchDateAsTimestamp()
                                                                                      .getTime();
 
-                final java.util.Vector team = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                     .getMatchLineupPlayers(matchkurzinfos[matchkurzinfos.length
+                final Vector<IMatchLineupPlayer> team = DBZugriff.instance().getMatchLineupPlayers(matchkurzinfos[matchkurzinfos.length
                                                                                                             - i
                                                                                                             - 1]
                                                                                                             .getMatchID(),
@@ -658,7 +666,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                 for (int j = 0; j < team.size(); j++) {
                     final MatchLineupPlayer player = (MatchLineupPlayer) team.get(j);
 
-                    if (player.getId() < de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
+                    if (player.getId() < ISpielerPosition.beginnReservere) {
                         float rating = (float) player.getRating();
 
                         if (rating > 0) {

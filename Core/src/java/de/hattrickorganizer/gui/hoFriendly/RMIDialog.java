@@ -32,7 +32,11 @@ public class RMIDialog extends JDialog implements ActionListener, KeyListener,
 {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbAbbrechen;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4219452011230336305L;
+	private JButton m_jbAbbrechen;
     private JButton m_jbClient;
     private JButton m_jbRefreshList;
     private JButton m_jbServer;

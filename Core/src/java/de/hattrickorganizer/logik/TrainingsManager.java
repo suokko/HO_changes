@@ -177,7 +177,7 @@ public class TrainingsManager implements ITrainingsManager {
         	TrainingPerPlayer curTraining = new TrainingPerPlayer();
             //holen des gerade abzuarbeitenden trainings
             //get training to consider this round of the loop
-            final ITrainingWeek train = (ITrainingWeek) i.next();
+            final ITrainingWeek train = i.next();
 
             if (train.getTyp() == -1) {
                 continue;
@@ -264,7 +264,7 @@ public class TrainingsManager implements ITrainingsManager {
         	List<Integer> matches = getMatchesForTraining(trainingDate);
 
         	for (int i=0; i<matches.size(); i++) {
-                final int matchId = ((Integer)matches.get(i)).intValue();
+                final int matchId = (matches.get(i)).intValue();
                 int playerPos = getMatchPosition(matchId, playerID);
                 // TODO if the player got a red card, playerPos is PLAYERSTATUS_RED_CARD
                 // Perhaps we could try to guess the real position using the
@@ -345,7 +345,7 @@ public class TrainingsManager implements ITrainingsManager {
        	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
         Vector<IMatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
-        	IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
+        	IMatchHighlight curHighlight = highlights.get(i);
        		if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
        			// Player left the field because of an injury
        			switch (curHighlight.getHighlightSubTyp()) {
@@ -454,13 +454,13 @@ public class TrainingsManager implements ITrainingsManager {
     	if (details == null)
     		// No Matchdetails found, probably not downloaded...
     		return PLAYERSTATUS_NO_MATCHDETAILS;
-    	Integer posId = (Integer)matchData.get(new Integer(playerId));
+    	Integer posId = matchData.get(new Integer(playerId));
     	// Player not in lineup
     	if (posId == null) {
     		// Check if he got a red card
             Vector<IMatchHighlight> highlights = details.getHighlights();
             for (int i=0; i<highlights.size(); i++) {
-            	IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
+            	IMatchHighlight curHighlight = highlights.get(i);
            		if (curHighlight.getSpielerID() == playerId &&
            				curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN &&
            					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ ||
@@ -487,7 +487,7 @@ public class TrainingsManager implements ITrainingsManager {
     	int playerStatus = getPlayerStatus(matchId, playerId);
     	if (playerStatus == PLAYERSTATUS_OK) {
         	Map<Integer,Integer> matchData = getMatchLineup(matchId);
-        	Integer posId = (Integer)matchData.get(new Integer(playerId));
+        	Integer posId = matchData.get(new Integer(playerId));
         	return posId.intValue();
     	} else {
     		return playerStatus;

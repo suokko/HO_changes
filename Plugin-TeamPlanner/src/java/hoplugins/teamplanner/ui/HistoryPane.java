@@ -1,6 +1,7 @@
 // %1740020060:hoplugins.teamplanner.ui%
 package hoplugins.teamplanner.ui;
 
+import hoplugins.commons.ui.sorter.AbstractTableSorter;
 import hoplugins.teamplanner.dao.FinanzenDAO;
 import hoplugins.teamplanner.ui.model.FinancesTableModel;
 import hoplugins.teamplanner.vo.HTWeek;
@@ -22,12 +23,17 @@ import javax.swing.JTable;
  *
  * @deprecated
  */
+@Deprecated
 public class HistoryPane extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private FinancesTableModel historyTableModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3391672999457732272L;
+	private FinancesTableModel historyTableModel;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -45,7 +51,7 @@ public class HistoryPane extends JPanel {
         sorter.setSortingStatus(1, -1);
 
 
-        sorter.setColumnComparator(HTWeek.class, BasicSorter.COMPARABLE_COMAPRATOR);
+        sorter.setColumnComparator(HTWeek.class, AbstractTableSorter.COMPARABLE_COMAPRATOR);
         setLayout(new BorderLayout());
         add(new JScrollPane(historyTable), "Center");
         refresh();

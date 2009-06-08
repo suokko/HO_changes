@@ -122,6 +122,7 @@ public abstract class UserColumn {
 	 * String representation
 	 * use in UserColumnsPanel in OptionsPanel
 	 */
+	@Override
 	public String toString(){
 		return getTooltip();
 	}

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -29,11 +30,16 @@ import javax.swing.JPanel;
 public class PlayerPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
-    protected JLabel appearanceField = new JLabel("", JLabel.RIGHT);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1838357704496299083L;
+
+	/** TODO Missing Parameter Documentation */
+    protected JLabel appearanceField = new JLabel("", SwingConstants.RIGHT);
 
     /** TODO Missing Parameter Documentation */
-    protected JLabel nameField = new JLabel("", JLabel.LEFT);
+    protected JLabel nameField = new JLabel("", SwingConstants.LEFT);
 
     /** TODO Missing Parameter Documentation */
     protected JLabel positionField = createLabel("", Color.BLACK, 0);

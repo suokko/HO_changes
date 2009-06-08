@@ -18,6 +18,11 @@ public class DefaultTableSorter extends AbstractTableSorter {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2329161467834277249L;
+
+	/**
      * Creates a new DefaultTableSorter object.
      */
     public DefaultTableSorter() {
@@ -52,7 +57,8 @@ public class DefaultTableSorter extends AbstractTableSorter {
      *
      * @return
      */
-    public Comparator getCustomComparator(int column) {
+    @Override
+	public Comparator getCustomComparator(int column) {
         return null;
     }
 
@@ -61,7 +67,8 @@ public class DefaultTableSorter extends AbstractTableSorter {
      *
      * @return
      */
-    public boolean hasHeaderLine() {
+    @Override
+	public boolean hasHeaderLine() {
         return false;
     }
 
@@ -70,7 +77,8 @@ public class DefaultTableSorter extends AbstractTableSorter {
      *
      * @return
      */
-    public int minSortableColumn() {
+    @Override
+	public int minSortableColumn() {
         return 0;
     }
 }

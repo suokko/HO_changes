@@ -34,6 +34,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -46,7 +47,12 @@ import javax.swing.event.TableModelListener;
 public abstract class AbstractOperationPane extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3465500372855821956L;
+
+	/** Missing Parameter Documentation */
     private static final int MIN_COLUMN_WIDTH = 50;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -259,8 +265,8 @@ public abstract class AbstractOperationPane extends JPanel {
 
         JScrollPane pane = new JScrollPane(table);
 
-        pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         tabPanel.add(pane, BorderLayout.CENTER);
 
         Util.setRowHeader(table, rowHeader);
@@ -283,7 +289,8 @@ public abstract class AbstractOperationPane extends JPanel {
          *
          * @param e Missing Method Parameter Documentation
          */
-        public void mouseClicked(MouseEvent e) {
+        @Override
+		public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
                 int row = table.getSelectedRow();
 

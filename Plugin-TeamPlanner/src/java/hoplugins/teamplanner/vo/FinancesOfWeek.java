@@ -102,7 +102,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getArenaExpenses() {
-        return Math.round((float) arenaExpenses / currencyRate);
+        return Math.round(arenaExpenses / currencyRate);
     }
 
     /**
@@ -120,7 +120,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getCash() {
-        return Math.round((float) cash / currencyRate);
+        return Math.round(cash / currencyRate);
     }
 
     /**
@@ -167,7 +167,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getExpectedProfitOrLoss() {
-        return Math.round((float) expectedProfitOrLoss / currencyRate);
+        return Math.round(expectedProfitOrLoss / currencyRate);
     }
 
     /**
@@ -203,7 +203,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getInterestExpenses() {
-        return Math.round((float) interestExpenses / currencyRate);
+        return Math.round(interestExpenses / currencyRate);
     }
 
     /**
@@ -221,7 +221,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getInterestIncome() {
-        return Math.round((float) interestIncome / currencyRate);
+        return Math.round(interestIncome / currencyRate);
     }
 
     /**
@@ -239,7 +239,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getSalaries() {
-        return Math.round((float) salaries / currencyRate);
+        return Math.round(salaries / currencyRate);
     }
 
     /**
@@ -257,7 +257,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getSpectatorsIncome() {
-        return Math.round((float) spectatorsIncome / currencyRate);
+        return Math.round(spectatorsIncome / currencyRate);
     }
 
     /**
@@ -275,7 +275,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getSponsorsIncome() {
-        return Math.round((float) sponsorsIncome / currencyRate);
+        return Math.round(sponsorsIncome / currencyRate);
     }
 
     /**
@@ -293,7 +293,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getStaffExpenses() {
-        return Math.round((float) staffExpenses / currencyRate);
+        return Math.round(staffExpenses / currencyRate);
     }
 
     /**
@@ -311,7 +311,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getTemporaryExpenses() {
-        return Math.round((float) temporaryExpenses / currencyRate);
+        return Math.round(temporaryExpenses / currencyRate);
     }
 
     /**
@@ -329,7 +329,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getTemporaryIncome() {
-        return Math.round((float) temporaryIncome / currencyRate);
+        return Math.round(temporaryIncome / currencyRate);
     }
 
     /**
@@ -356,7 +356,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getTotalExpenses() {
-        return Math.round((float) totalExpenses / currencyRate);
+        return Math.round(totalExpenses / currencyRate);
     }
 
     /**
@@ -374,7 +374,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getTotalIncome() {
-        return Math.round((float) totalIncome / currencyRate);
+        return Math.round(totalIncome / currencyRate);
     }
 
     /**
@@ -392,7 +392,7 @@ public class FinancesOfWeek implements Comparable {
      * @return Missing Return Method Documentation
      */
     public int getYouthSquadExpenses() {
-        return Math.round((float) youthSquadExpenses / currencyRate);
+        return Math.round(youthSquadExpenses / currencyRate);
     }
 
     /**

@@ -4,11 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -87,7 +82,7 @@ public class TeamCreator extends XMLCreator {
 	public static Timestamp getFirstUnplayed(IMatchKurzInfo[] matches) {
 
 		for (int i = 0; i < matches.length; i++) {
-			IMatchKurzInfo match = (IMatchKurzInfo) matches[i];
+			IMatchKurzInfo match = matches[i];
 
 			if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
 				return match.getMatchDateAsTimestamp();

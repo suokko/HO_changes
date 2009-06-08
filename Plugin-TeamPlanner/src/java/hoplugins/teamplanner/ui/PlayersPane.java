@@ -36,7 +36,12 @@ import javax.swing.JOptionPane;
 public class PlayersPane extends AbstractOperationPane {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7018115766401880271L;
+
+	/** Missing Parameter Documentation */
     public static final int TRAINEES_ROW = 0;
 
     /** Missing Parameter Documentation */
@@ -65,7 +70,8 @@ public class PlayersPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getBaseBalance(HTWeek week) {
+    @Override
+	public int getBaseBalance(HTWeek week) {
         int columnIndex = getColumnIndex(week);
         return Util.getOperationCell(model, SALARY_ROW, columnIndex).getBalance();
     }
@@ -77,7 +83,8 @@ public class PlayersPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getFullBalance(HTWeek week) {
+    @Override
+	public int getFullBalance(HTWeek week) {
         int total = getBaseBalance(week);
         int columnIndex = getColumnIndex(week);
 
@@ -148,7 +155,8 @@ public class PlayersPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    public void onChange() {
+    @Override
+	public void onChange() {
         TeamPlanner.getRecapPane().refreshTable();
     }
 
@@ -201,7 +209,8 @@ public class PlayersPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    protected void setRows() {
+    @Override
+	protected void setRows() {
         addInputRow("Trainees", new TraineesListener(), true, new PlayersInner());
         addInputRow("Buy", new BuyPlayerListener(), true, new PlayersInner());
         addInputRow("Sell", new SellPlayerListener(), true, new PlayersInner());
@@ -213,7 +222,8 @@ public class PlayersPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    protected void loadInputData() {
+    @Override
+	protected void loadInputData() {
         refreshSkillups();
     }
 

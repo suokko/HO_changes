@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -31,6 +32,8 @@ import de.hattrickorganizer.tools.HOLogger;
 public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener, FocusListener, ItemListener, de.hattrickorganizer.gui.Refreshable
 {
+	private static final long serialVersionUID = -6588840565958987842L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static Color FUEHRUNG = Color.gray;
@@ -279,7 +282,7 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridwidth = 1;
         layout2.setConstraints(label, constraints2);
         panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(JTextField.RIGHT);
+        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
         m_jtfAnzahlHRF.addFocusListener(this);
         constraints2.gridx = 1;
         constraints2.gridy = 1;

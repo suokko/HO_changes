@@ -31,7 +31,7 @@ public class MatchPlayerRetriever {
     private IHOMiniModel model;
 
     // key MatchId -- Value Hashtable
-    private Map matches;
+    private Map<Integer,List<MatchPosition>> matches;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ public class MatchPlayerRetriever {
      * @param miniModel the HO model
      */
     public MatchPlayerRetriever(IHOMiniModel miniModel) {
-        matches = new Hashtable();
+        matches = new Hashtable<Integer,List<MatchPosition>>();
         model = miniModel;
     }
 
@@ -83,7 +83,7 @@ public class MatchPlayerRetriever {
 			HOLogger.instance().log(getClass(),e);
         } finally {
             try {
-                rs.close();
+            	if (rs != null) rs.close();
             } catch (SQLException e1) {
             }
         }
@@ -97,8 +97,8 @@ public class MatchPlayerRetriever {
      *
      * @return The Hashtable of playerID/position
      */
-    public final List getMatchData(int matchId) {
-        final List p = (List) matches.get(new Integer(matchId));
+    public final List<MatchPosition> getMatchData(int matchId) {
+        final List<MatchPosition> p = matches.get(new Integer(matchId));
 
         if (p == null) {
             return loadMatch(matchId);
@@ -111,7 +111,7 @@ public class MatchPlayerRetriever {
      * Clean the matches hashtable where previous calculation are stored
      */
     public final void clear() {
-        matches = new Hashtable();
+        matches = new Hashtable<Integer,List<MatchPosition>>();
     }
 
     /**
@@ -127,7 +127,7 @@ public class MatchPlayerRetriever {
         int area = 0;
 
         for (int ar = 0; ar < 4; ar++) {
-            final List areaList = matchLineup.getArea(ar);
+            final List<String> areaList = matchLineup.getArea(ar);
 
             if (areaList.contains("" + playerId)) {
                 area = ar;
@@ -170,7 +170,7 @@ public class MatchPlayerRetriever {
      *
      * @return Lineup object
      */
-    private ITeamLineup getLineup(int matchId, Map playerIds) {
+    private ITeamLineup getLineup(int matchId, Map<String,String> playerIds) {
         final TeamLineup lineup = new TeamLineup();
         final IMatchDetails match = model.getMatchDetails(matchId);
         boolean isHome = false;
@@ -182,10 +182,10 @@ public class MatchPlayerRetriever {
         final ITeamLineup temp = match.getTeamLineup(isHome);
 
         for (int i = 0; i < 4; i++) {
-            final List l2 = temp.getArea(i);
+            final List<String> l2 = temp.getArea(i);
 
-            for (Iterator iter = l2.iterator(); iter.hasNext();) {
-                final String name = (String) iter.next();
+            for (Iterator<String> iter = l2.iterator(); iter.hasNext();) {
+                final String name = iter.next();
                 lineup.add("" + getPlayerId(name, playerIds), i);
             }
         }
@@ -248,13 +248,13 @@ public class MatchPlayerRetriever {
      *
      * @return the playerId
      */
-    private int getPlayerId(String lastName, Map ids) {
+    private int getPlayerId(String lastName, Map<String,String> ids) {
         int count = 0;
         int id = 0;
 
-        for (Iterator iter = ids.keySet().iterator(); iter.hasNext();) {
-            final String key = (String) iter.next();
-            final String playerName = (String) ids.get(key);
+        for (Iterator<String> iter = ids.keySet().iterator(); iter.hasNext();) {
+            final String key = iter.next();
+            final String playerName = ids.get(key);
 
             if (playerName.indexOf(lastName) > -1) {
                 count++;
@@ -281,7 +281,7 @@ public class MatchPlayerRetriever {
      * @return updated position object
      */
     private MatchPosition getSentOffPLayer(int matchId, MatchPosition[] lineup, int position,
-                                           ITeamLineup startingLineup, Map playerIds) {
+                                           ITeamLineup startingLineup, Map<String,String> playerIds) {
         final MatchPosition matchPosition = lineup[position];
 
         if (matchPosition == null) return null;
@@ -312,15 +312,15 @@ public class MatchPlayerRetriever {
                     }
 
                     final int area = getAreaOfPlayer(startingLineup, id);
-                    final Iterator it = startingLineup.getArea(area).iterator();
+                    final Iterator<String> it = startingLineup.getArea(area).iterator();
 
                     while (it.hasNext()) {
-                        final String tmpId = (String) it.next();
+                        final String tmpId = it.next();
 
                         if (tmpId.equalsIgnoreCase("" + id)) {
                             matchPosition.setPlayerID(id);
 
-                            final String name = (String) playerIds.get("" + id);
+                            final String name = playerIds.get("" + id);
 
                             matchPosition.setName(name);
 
@@ -371,8 +371,8 @@ public class MatchPlayerRetriever {
      *
      * @return Map of playersId
      */
-    private Map getTeamPlayers(int hrf) {
-        final Map list = new Hashtable();
+    private Map<String,String> getTeamPlayers(int hrf) {
+        final Map<String,String> list = new Hashtable<String,String>();
         final String query = "select SPIELERID,NAME from SPIELER where HRF_ID=" + hrf;
         final ResultSet rs = model.getAdapter().executeQuery(query);
 
@@ -399,8 +399,8 @@ public class MatchPlayerRetriever {
      *
      * @return Hashtable of PlayerID/PositionCode
      */
-    private List loadMatch(int matchId) {
-        final List players = process(matchId);
+    private List<MatchPosition> loadMatch(int matchId) {
+        final List<MatchPosition> players = process(matchId);
         matches.put(new Integer(matchId), players);
         return players;
     }
@@ -412,10 +412,10 @@ public class MatchPlayerRetriever {
      *
      * @return Hashtable of PlayerID/PositionCode
      */
-    private List process(int matchId) {
+    private List<MatchPosition> process(int matchId) {
         final int hrf = getHrf(matchId);
-        final Map playerIds = getTeamPlayers(hrf);
-        final List players = new ArrayList();
+        final Map<String,String> playerIds = getTeamPlayers(hrf);
+        final List<MatchPosition> players = new ArrayList<MatchPosition>();
 
         final ITeamLineup matchLineup = getLineup(matchId, playerIds);
 
@@ -445,18 +445,18 @@ public class MatchPlayerRetriever {
                 final int area = getAreaOfPlayer(matchLineup, subsid);
 
                 // Get starting players in that area
-                final List startingLineup = matchLineup.getArea(area);
+                final List<String> startingLineup = matchLineup.getArea(area);
 
                 // Cycle thru all the players that ended the match / + red cards already included
                 for (int index = 0; index < 11; index++) {
                 	// if player played in the same area as the injured player
                 	if (matchPosition[index] != null && area == getAreaOfPosition(matchPosition[index].getPosition())) {
                 		boolean isFound = false;
-                		final Iterator it = startingLineup.iterator();
+                		final Iterator<String> it = startingLineup.iterator();
 
                 		// search for him in the starting lineup
                 		while (it.hasNext()) {
-                			final String tmpId = (String) it.next();
+                			final String tmpId = it.next();
 
                 			if (tmpId.equalsIgnoreCase("" + matchPosition[index].getPlayerID())) {
                 				isFound = true;

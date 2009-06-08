@@ -20,6 +20,11 @@ public class ComboBoxRenderer extends DefaultListCellRenderer {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3551665867069804794L;
+
+	/**
      * Creates a new ComboBoxRenderer object.
      */
     public ComboBoxRenderer() {
@@ -32,7 +37,8 @@ public class ComboBoxRenderer extends DefaultListCellRenderer {
      * to the selected value and returns the label, set up
      * to display the text and image.
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index,
+    @Override
+	public Component getListCellRendererComponent(JList list, Object value, int index,
                                                   boolean isSelected, boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 

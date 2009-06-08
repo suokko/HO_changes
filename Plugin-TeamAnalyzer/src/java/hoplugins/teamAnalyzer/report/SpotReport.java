@@ -59,7 +59,8 @@ public class SpotReport extends Report {
      *
      * @param pp
      */
-    public void addPerformance(PlayerPerformance pp) {
+    @Override
+	public void addPerformance(PlayerPerformance pp) {
         super.addPerformance(pp);
         updatePositionDetails(pp);
         updatePlayerAppearance(pp);

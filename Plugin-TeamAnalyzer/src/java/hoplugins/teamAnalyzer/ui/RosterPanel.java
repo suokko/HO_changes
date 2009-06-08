@@ -34,6 +34,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 
 /**
@@ -44,7 +45,11 @@ import javax.swing.ListSelectionModel;
 public class RosterPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JTable table;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3867854224503291836L;
+	private JTable table;
     private List oldPlayersInfo = new ArrayList();
     private Map players = new HashMap();
     private UiRosterTableModel tableModel;
@@ -281,8 +286,8 @@ public class RosterPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         add(scrollPane);
     }
 }

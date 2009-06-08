@@ -44,7 +44,8 @@ final class HPLanguageInfo {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public String toString() {
+    @Override
+	public String toString() {
         if (version == null) {
             return "-";
         }

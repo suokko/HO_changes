@@ -85,7 +85,8 @@ public class PlayerItem {
      *
      * @return The String to show in the combo
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return name;
     }
 }

@@ -37,7 +37,7 @@ public class DividerDAO {
      */
     public static void setDividerPosition(String key, int position) {
         String query = "update TRAININGEXPERIENCE_DIVIDER set POSITIONE = "
-                       + position //$NON-NLS-1$
+                       + position 
                        + " where NAME = '" + key + "'"; //$NON-NLS-1$ //$NON-NLS-2$
         int count = Commons.getModel().getAdapter().executeUpdate(query);
 

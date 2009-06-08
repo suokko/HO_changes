@@ -6,9 +6,7 @@ import java.util.HashMap;
 
 import plugins.ILineUp;
 import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.Configuration;
-import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
 
 
@@ -136,7 +134,8 @@ public final class UserParameter extends Configuration {
     //Einzelnen Positionen in den Tabellen anzeigen
 
     /** @deprecated since HO! 1.36 columns configurable */
-    public boolean einzelnePositionenAnzeigen = true;
+    @Deprecated
+	public boolean einzelnePositionenAnzeigen = true;
 
     //Logout
 
@@ -484,7 +483,8 @@ public final class UserParameter extends Configuration {
     /** @deprecated column width configurable
      * @since 1.361 
      * */
-    public int bestPostWidth = 140;
+    @Deprecated
+	public int bestPostWidth = 140;
 
     //Wecker vor der Deadliniezeit
 
@@ -655,8 +655,8 @@ public final class UserParameter extends Configuration {
     	m_clTemp = null;
     }
 
-	public HashMap getValues() {
-		HashMap map = new HashMap();
+	public HashMap<String,String> getValues() {
+		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("FG_ANGESCHLAGEN",String.valueOf(FG_ANGESCHLAGEN.getRGB()));
 		map.put("FG_GESPERRT",String.valueOf(FG_GESPERRT.getRGB()));
 		map.put("FG_STANDARD",String.valueOf(FG_STANDARD.getRGB()));

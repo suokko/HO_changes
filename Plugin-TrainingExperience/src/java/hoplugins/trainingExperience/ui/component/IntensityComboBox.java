@@ -13,6 +13,11 @@ public class IntensityComboBox extends JComboBox {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4612244092459687360L;
+
+	/**
      * Creates a new IntensityComboBox object.
      */
     public IntensityComboBox() {

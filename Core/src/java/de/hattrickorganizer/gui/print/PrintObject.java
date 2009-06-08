@@ -17,11 +17,14 @@ import javax.swing.JPanel;
  * @author Thorsten Schmidt Alte Klasse muss noch ein bisschen angepasst werden
  */
 public abstract class PrintObject extends JPanel implements Printable {
+	
+	private static final long serialVersionUID = 5459294801833127527L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     // Drucker
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     protected PageFormat pf;
 
     // Druckbereich (obere linke Ecke, Breite, Höhe)

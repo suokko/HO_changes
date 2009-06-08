@@ -68,7 +68,8 @@ public class RatingItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return description;
     }
 }

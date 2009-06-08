@@ -94,6 +94,7 @@ public class FuturePlayer implements IFuturePlayer {
 	 * @author info.vancauwenberge.tostring plugin
 	
 	 */
+	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("FuturePlayer[");

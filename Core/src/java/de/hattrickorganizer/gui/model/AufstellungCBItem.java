@@ -91,7 +91,8 @@ public class AufstellungCBItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         if (obj instanceof AufstellungCBItem) {
             final AufstellungCBItem temp = (AufstellungCBItem) obj;
 
@@ -108,7 +109,8 @@ public class AufstellungCBItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return m_sText;
     }
 }

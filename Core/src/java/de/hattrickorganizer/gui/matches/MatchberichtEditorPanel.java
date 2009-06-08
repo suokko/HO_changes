@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.StyleSheet;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -15,6 +16,9 @@ import de.hattrickorganizer.tools.HOLogger;
  * Zeigt den Spielstand an
  */
 public class MatchberichtEditorPanel extends ImagePanel {
+	
+	private static final long serialVersionUID = -6744361289975460222L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private JEditorPane m_jepTextModusEditorPane;
@@ -76,8 +80,8 @@ public class MatchberichtEditorPanel extends ImagePanel {
         //m_jepTextModusEditorPane.setBackground ( new Color( 240, 240, 230 ) );
         //m_jepTextModusEditorPane.addHyperlinkListener(this);
         m_jscTextModusScrollPane = new JScrollPane(m_jepTextModusEditorPane);
-        m_jscTextModusScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        m_jscTextModusScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        m_jscTextModusScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        m_jscTextModusScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         add(m_jscTextModusScrollPane, BorderLayout.CENTER);
     }
 }

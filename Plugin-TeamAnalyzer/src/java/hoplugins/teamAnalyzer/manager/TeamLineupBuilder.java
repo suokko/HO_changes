@@ -44,7 +44,7 @@ public class TeamLineupBuilder {
         teamLineup.setStars(teamReport.getStars());
 
         for (int spot = 1; spot < 12; spot++) {
-            SpotReport spotReport = (SpotReport) teamReport.getSpotReport(spot);
+            SpotReport spotReport = teamReport.getSpotReport(spot);
 
             if (spotReport != null) {
                 SpotLineup spotLineup = buildSpotLineup(spotReport);

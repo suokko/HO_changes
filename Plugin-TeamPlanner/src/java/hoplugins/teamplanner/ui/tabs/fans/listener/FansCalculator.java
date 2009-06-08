@@ -40,7 +40,8 @@ public class FansCalculator extends Calculator {
      * @param row Missing Method Parameter Documentation
      * @param model Missing Method Parameter Documentation
      */
-    public void doCalculate(int row, TableModel model) {
+    @Override
+	public void doCalculate(int row, TableModel model) {
         int fans = Commons.getModel().getVerein().getFans();
         int season = TeamPlanner.ACTUALWEEK.getSeason();
         int weekNumber = TeamPlanner.ACTUALWEEK.getWeek();

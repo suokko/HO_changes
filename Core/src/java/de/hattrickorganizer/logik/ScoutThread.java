@@ -53,7 +53,7 @@ public class ScoutThread implements Runnable {
             for (int i = 0;
                  (m_vScoutEintraege != null) && !m_vScoutEintraege.isEmpty()
                  && (i < m_vScoutEintraege.size()); ++i) {
-                se = (de.hattrickorganizer.model.ScoutEintrag) m_vScoutEintraege.elementAt(i);
+                se = m_vScoutEintraege.elementAt(i);
                 ts2.setTime(se.getDeadline().getTime() - gui.UserParameter.instance().deadlineFrist
                             + difference);
 

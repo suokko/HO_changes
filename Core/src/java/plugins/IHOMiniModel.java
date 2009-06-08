@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.model.TrainingPerWeek;
 
 
@@ -310,7 +309,7 @@ public interface IHOMiniModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List trainings, int cotrainer, int keeper, int trainerLvl);
+	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl);
 
 
 	/**
@@ -344,5 +343,5 @@ public interface IHOMiniModel {
 	 *
 	 * @return List of IExportMatchData objects
 	 */
-	public List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
+	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
 }

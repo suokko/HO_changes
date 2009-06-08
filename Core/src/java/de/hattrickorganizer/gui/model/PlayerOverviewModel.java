@@ -12,6 +12,10 @@ import de.hattrickorganizer.model.Spieler;
  */
 public final  class PlayerOverviewModel extends HOColumnModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5149408240369536138L;
 	/** all players **/
 	private Vector m_vPlayers;
 	
@@ -167,7 +171,8 @@ public final  class PlayerOverviewModel extends HOColumnModel {
     /**
      * create a data[][] from player-Vector
      */
-    protected void initData() {
+    @Override
+	protected void initData() {
     	UserColumn [] tmpDisplayedColumns = getDisplayedColumns();
     	m_clData = new Object[m_vPlayers.size()][tmpDisplayedColumns.length];
     	

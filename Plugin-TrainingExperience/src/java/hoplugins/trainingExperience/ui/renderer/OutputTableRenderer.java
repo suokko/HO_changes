@@ -24,10 +24,16 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class OutputTableRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
-    /* (non-Javadoc)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7179773036740605371L;
+
+	/* (non-Javadoc)
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                                                              row, column);

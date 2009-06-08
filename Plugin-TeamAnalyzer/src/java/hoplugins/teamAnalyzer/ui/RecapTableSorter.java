@@ -25,7 +25,11 @@ import javax.swing.table.TableModel;
 public class RecapTableSorter extends AbstractTableSorter {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List skills;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3606200720032237171L;
+	private List skills;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -52,10 +56,12 @@ public class RecapTableSorter extends AbstractTableSorter {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Comparator getCustomComparator(int column) {
+    @Override
+	public Comparator getCustomComparator(int column) {
         if ((column > 4) && (column < 12)) {
             return new Comparator() {
-                    public boolean equals(Object arg0) {
+                    @Override
+					public boolean equals(Object arg0) {
                         return false;
                     }
 
@@ -93,7 +99,8 @@ public class RecapTableSorter extends AbstractTableSorter {
             return new Comparator() {
                     private DecimalFormat df = new DecimalFormat("###.#");
 
-                    public boolean equals(Object arg0) {
+                    @Override
+					public boolean equals(Object arg0) {
                         return false;
                     }
 
@@ -122,7 +129,8 @@ public class RecapTableSorter extends AbstractTableSorter {
             return new Comparator() {
                     private DecimalFormat df = new DecimalFormat("###.##");
 
-                    public boolean equals(Object arg0) {
+                    @Override
+					public boolean equals(Object arg0) {
                         return false;
                     }
 
@@ -149,7 +157,8 @@ public class RecapTableSorter extends AbstractTableSorter {
 
         if (column == 18) {
             return new Comparator() {
-                    public boolean equals(Object arg0) {
+                    @Override
+					public boolean equals(Object arg0) {
                         return false;
                     }
 
@@ -181,7 +190,8 @@ public class RecapTableSorter extends AbstractTableSorter {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public boolean hasHeaderLine() {
+    @Override
+	public boolean hasHeaderLine() {
         return true;
     }
 
@@ -190,7 +200,8 @@ public class RecapTableSorter extends AbstractTableSorter {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public int minSortableColumn() {
+    @Override
+	public int minSortableColumn() {
         return 3;
     }
 }

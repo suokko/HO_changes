@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -25,9 +26,12 @@ import javax.swing.JTextField;
  * @author draghetto
  */
 public class ManualPanel extends JPanel {
+	
+	private static final long serialVersionUID = -4449286683961509922L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox form = new JComboBox();
+	private JComboBox form = new JComboBox();
     private JTextField tsi = new JTextField(10);
     private ResultPanel target;
     private int formValue;
@@ -106,7 +110,7 @@ public class ManualPanel extends JPanel {
      * @return the built component
      */
     private Component label(String string) {
-        final JLabel label = new JLabel(string, JLabel.CENTER);
+        final JLabel label = new JLabel(string, SwingConstants.CENTER);
         label.setOpaque(false);
         return label;
     }

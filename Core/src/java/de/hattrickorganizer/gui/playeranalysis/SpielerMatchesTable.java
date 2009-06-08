@@ -17,9 +17,12 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author TODO Author Name
  */
 final class SpielerMatchesTable extends JTable {
+	
+	private static final long serialVersionUID = 5959815846371146851L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    //TableSorter sorter;
+	//TableSorter sorter;
     private PlayerAnalysisModel m_clTableModel;
     private TableSorter m_clTableSorter;
 

@@ -25,7 +25,12 @@ import javax.swing.SwingConstants;
 public class TotalsPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static final NumberFormat FORMAT = NumberFormat.getIntegerInstance();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 957113178669933183L;
+
+	private static final NumberFormat FORMAT = NumberFormat.getIntegerInstance();
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -73,7 +78,7 @@ public class TotalsPanel extends JPanel {
 
         panel.add(new JLabel(PluginProperty.getString("Total"), SwingConstants.CENTER), "3, 0"); //$NON-NLS-1$ //$NON-NLS-2$
         panel.add(new JLabel(Commons.getModel().getLanguageString("Durchschnitt"),
-                             SwingConstants.CENTER), "5, 0"); //$NON-NLS-1$ //$NON-NLS-2$
+                             SwingConstants.CENTER), "5, 0"); //$NON-NLS-1$ 
 
         panel.add(new JLabel(PluginProperty.getString("Purchases"), SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$ //$NON-NLS-2$
         panel.add(new JLabel(currency, SwingConstants.RIGHT), "2, 1"); //$NON-NLS-1$

@@ -117,7 +117,7 @@ final class XMLParser {
                             }
                         }
 
-                        playerTranfer.setDate(new Timestamp(transferDate.getTime())); //$NON-NLS-1$
+                        playerTranfer.setDate(new Timestamp(transferDate.getTime())); 
                         htcal.setTime(playerTranfer.getDate());
                         playerTranfer.setSeason(htcal.getHTSeason());
                         playerTranfer.setWeek(htcal.getHTWeek());
@@ -164,7 +164,7 @@ final class XMLParser {
         boolean stop = false;
         int page = 0;
         while (stop == false) {
-	        final String xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(url+page); //$NON-NLS-1$
+	        final String xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(url+page); 
 
 	        final IXMLParser parser = Commons.getModel().getXMLParser();
 	        final Document doc = parser.parseString(xml);
@@ -287,7 +287,7 @@ final class XMLParser {
                         if (transferDate.before(activatedDate)) continue;
                         if (transferDate.after(endDate)) continue;
 
-                        playerTranfer.setDate(new Timestamp(transferDate.getTime())); //$NON-NLS-1$
+                        playerTranfer.setDate(new Timestamp(transferDate.getTime())); 
                         htcal.setTime(playerTranfer.getDate());
                         playerTranfer.setSeason(htcal.getHTSeason());
                         playerTranfer.setWeek(htcal.getHTWeek());

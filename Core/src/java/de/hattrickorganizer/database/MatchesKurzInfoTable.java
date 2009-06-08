@@ -20,6 +20,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 	
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[11];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false,true);
@@ -36,6 +37,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IMATCHKURZINFO_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
@@ -77,7 +79,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 			if (matchtyp >= 10) {
 				matchtyp = matchtyp - 10;
 
-				sql += (" AND Status=" + MatchKurzInfo.FINISHED);
+				sql += (" AND Status=" + IMatchKurzInfo.FINISHED);
 			}
 
 			//Matchtypen

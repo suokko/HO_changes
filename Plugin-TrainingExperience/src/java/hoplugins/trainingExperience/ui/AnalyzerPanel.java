@@ -39,6 +39,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -51,7 +52,12 @@ import javax.swing.event.ChangeListener;
 public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2152169077412317532L;
+
+	/** TODO Missing Parameter Documentation */
     private static final String CMD_SELECT_ALL = "selectAll"; //$NON-NLS-1$
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -324,8 +330,8 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 
         JScrollPane sidePane = new JScrollPane(sidePanel);
 
-        sidePane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        sidePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        sidePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        sidePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         sidePane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         mainpanel.add(sidePane, BorderLayout.WEST);

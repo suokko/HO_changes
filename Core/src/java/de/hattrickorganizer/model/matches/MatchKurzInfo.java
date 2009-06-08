@@ -299,7 +299,8 @@ public class MatchKurzInfo implements plugins.IMatchKurzInfo {
      * 
      * @deprecated use getMatchDateAsTimestamp()
      */
-    public final java.sql.Timestamp getTimestampMatchDate() {
+    @Deprecated
+	public final java.sql.Timestamp getTimestampMatchDate() {
     	return getMatchDateAsTimestamp();
     }
 

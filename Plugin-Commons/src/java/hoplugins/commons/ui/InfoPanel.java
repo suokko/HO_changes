@@ -15,6 +15,11 @@ import java.awt.Insets;
  */
 public class InfoPanel extends JPanel {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -983845737480059931L;
+
+	/**
      * Constructs a new instance.
      *
      * @param messages TODO Missing Constructuor Parameter Documentation

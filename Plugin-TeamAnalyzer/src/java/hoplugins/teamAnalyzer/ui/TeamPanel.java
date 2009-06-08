@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 
 /**
@@ -30,7 +31,11 @@ import javax.swing.JScrollPane;
 public class TeamPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private FormationPanel lineupPanel = new FormationPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4778556838500877114L;
+	private FormationPanel lineupPanel = new FormationPanel();
     private PlayerPanel keeper = new PlayerPanel();
     private PlayerPanel leftAttacker = new PlayerPanel();
     private PlayerPanel leftBack = new PlayerPanel();
@@ -96,8 +101,8 @@ public class TeamPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(grassPanel);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
     }
 

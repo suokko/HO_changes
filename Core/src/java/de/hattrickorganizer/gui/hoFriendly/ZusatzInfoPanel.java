@@ -16,7 +16,11 @@ import de.hattrickorganizer.gui.templates.RasenPanel;
 public class ZusatzInfoPanel extends RasenPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ChatPanel m_jpChatPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4300218517700903425L;
+	private ChatPanel m_jpChatPanel;
     private HOFriendlyDialog m_clHOFriendlyDialog;
     private TrainerPanel m_jpGastTrainer;
     private TrainerPanel m_jpHeimTrainer;

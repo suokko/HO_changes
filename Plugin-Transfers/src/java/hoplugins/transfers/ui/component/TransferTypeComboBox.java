@@ -15,6 +15,11 @@ public class TransferTypeComboBox extends JComboBox {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1931409243964094858L;
+
+	/**
      * Creates a new TrainingComboBox object.
      */
     public TransferTypeComboBox() {

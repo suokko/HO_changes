@@ -12,6 +12,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 
 
@@ -92,8 +93,8 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
      */
     public final float getValue() {
         HOLogger.instance().log(getClass(),(float) m_jslSlider.getValue() + " : "
-                           + ((float) m_jslSlider.getValue() / m_fFaktor));
-        return (float) m_jslSlider.getValue() / m_fFaktor;
+                           + (m_jslSlider.getValue() / m_fFaktor));
+        return m_jslSlider.getValue() / m_fFaktor;
     }
 
     /**
@@ -142,7 +143,7 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
 
         setLayout(layout);
 
-        m_jlLabel = new JLabel(text, JLabel.LEFT);
+        m_jlLabel = new JLabel(text, SwingConstants.LEFT);
         m_jlLabel.setMaximumSize(new Dimension(m_iTextbreite, 35));
         m_jlLabel.setPreferredSize(m_jlLabel.getMaximumSize());
         constraints.anchor = GridBagConstraints.WEST;
@@ -171,7 +172,7 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
                                                                                 .getValue() * m_fTextfeldFaktor,decimals)
                                         + "", 4);
         m_jtfTextfield.setEditable(false);
-        m_jtfTextfield.setHorizontalAlignment(JTextField.RIGHT);
+        m_jtfTextfield.setHorizontalAlignment(SwingConstants.RIGHT);
         constraints.anchor = GridBagConstraints.EAST;
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;

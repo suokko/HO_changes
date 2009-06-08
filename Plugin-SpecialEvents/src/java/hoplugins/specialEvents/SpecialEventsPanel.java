@@ -81,11 +81,13 @@ public class SpecialEventsPanel extends JTable
         columnNames[HIDDENCOLUMN] = "";
     }
 
-    protected JTableHeader createDefaultTableHeader()
+    @Override
+	protected JTableHeader createDefaultTableHeader()
     {
         return new JTableHeader(columnModel) {
 
-            public String getToolTipText(MouseEvent e)
+            @Override
+			public String getToolTipText(MouseEvent e)
             {
                 String tip = null;
                 Point p = e.getPoint();
@@ -110,7 +112,8 @@ public class SpecialEventsPanel extends JTable
         return tableModel;
     }
 
-    public String getToolTipText(MouseEvent e)
+    @Override
+	public String getToolTipText(MouseEvent e)
     {
         String tip = null;
         Point p = e.getPoint();
@@ -169,7 +172,8 @@ public class SpecialEventsPanel extends JTable
         getColumnModel().getColumn(col).setPreferredWidth(width);
     }
 
-    public boolean isCellEditable(int rowIndex, int mColIndex)
+    @Override
+	public boolean isCellEditable(int rowIndex, int mColIndex)
     {
         return false;
     }

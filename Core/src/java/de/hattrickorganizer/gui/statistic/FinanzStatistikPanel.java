@@ -17,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -29,9 +30,11 @@ import de.hattrickorganizer.tools.HOLogger;
 public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener, FocusListener, de.hattrickorganizer.gui.Refreshable
 {
+	private static final long serialVersionUID = 5245162268414878290L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Color KONTOSTAND = Color.black;
+	private static Color KONTOSTAND = Color.black;
     private static Color GEWINNVERLUST = Color.gray;
     private static Color GESAMTEINNAHMEN = Color.green;
     private static Color GESAMTAUSGABEN = Color.red;
@@ -310,7 +313,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridwidth = 1;
         layout2.setConstraints(label, constraints2);
         panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(JTextField.RIGHT);
+        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
         m_jtfAnzahlHRF.addFocusListener(this);
         constraints2.gridx = 1;
         constraints2.gridy = 1;

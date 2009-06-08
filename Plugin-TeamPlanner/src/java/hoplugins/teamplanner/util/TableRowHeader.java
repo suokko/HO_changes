@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.JTableHeader;
 
 
@@ -19,7 +20,11 @@ import javax.swing.table.JTableHeader;
 public class TableRowHeader extends JList {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JTable table;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 850256662372653780L;
+	private JTable table;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -49,7 +54,8 @@ public class TableRowHeader extends JList {
      *
      * @return the bounds of the indexed cells in pixels
      */
-    public Rectangle getCellBounds(int index0, int index1) {
+    @Override
+	public Rectangle getCellBounds(int index0, int index1) {
         Rectangle rect0 = table.getCellRect(index0, 0, true);
         Rectangle rect1 = table.getCellRect(index1, 0, true);
         int y;
@@ -74,7 +80,7 @@ public class TableRowHeader extends JList {
         longestRowLabel.setBorder(header.getBorder());
 
         //UIManager.getBorder("TableHeader.cellBorder")); 
-        longestRowLabel.setHorizontalAlignment(JLabel.CENTER);
+        longestRowLabel.setHorizontalAlignment(SwingConstants.CENTER);
         longestRowLabel.setFont(header.getFont());
 
         return longestRowLabel.getPreferredSize().width;

@@ -19,7 +19,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class ChangeTableRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8664774318961127994L;
+	/** TODO Missing Parameter Documentation */
     private static final Color SILVER = new Color(239, 239, 239);
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -28,7 +32,8 @@ public class ChangeTableRenderer extends DefaultTableCellRenderer {
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 

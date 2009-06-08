@@ -30,6 +30,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -41,7 +42,12 @@ import javax.swing.table.DefaultTableModel;
 public class ManualFilterPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9029680013941604647L;
+
+	/** TODO Missing Parameter Documentation */
     private static final Vector COLUMN_NAMES = new Vector(Arrays.asList(new Object[]{
                                                                             "",
                                                                             PluginProperty
@@ -171,7 +177,8 @@ public class ManualFilterPanel extends JPanel {
      */
     private void addTableListener() {
         table.addMouseListener(new MouseAdapter() {
-                public void mouseReleased(MouseEvent e) {
+                @Override
+				public void mouseReleased(MouseEvent e) {
                     if (e.getClickCount() == 2) {
                         boolean downloadDone = false;
                         int row = table.getSelectedRow();
@@ -217,8 +224,8 @@ public class ManualFilterPanel extends JPanel {
         
         JScrollPane scrollPane = new JScrollPane(main);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         add(scrollPane);
     }

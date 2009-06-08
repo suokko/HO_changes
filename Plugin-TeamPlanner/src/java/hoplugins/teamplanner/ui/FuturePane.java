@@ -20,10 +20,15 @@ import javax.swing.JTable;
  *
  * @deprecated
  */
+@Deprecated
 public class FuturePane extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private FinancesTableModel futureTableModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7121742552351716621L;
+	private FinancesTableModel futureTableModel;
 
     //~ Constructors -------------------------------------------------------------------------------
 

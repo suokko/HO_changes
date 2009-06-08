@@ -23,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SwingConstants;
 
 import plugins.IEPVData;
 import de.hattrickorganizer.gui.model.CBItem;
@@ -68,7 +69,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     private JTextField jtfPlayerID = new JTextField("0");
     private JTextField jtfPrice = new JTextField("0");
     private JTextField jtfTSI = new JTextField("1000");
-    private JLabel jtfEPV = new JLabel("",JLabel.RIGHT);
+    private JLabel jtfEPV = new JLabel("",SwingConstants.RIGHT);
     private SpinnerDateModel clSpinnerModel = new SpinnerDateModel();
     private JSpinner jsSpinner = new JSpinner(clSpinnerModel);
     private TransferEingabePanel clOwner;
@@ -95,7 +96,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      *
      * @param isVisible visible when isVisible equals true
      */
-    public final void setVisible(boolean isVisible) {
+    @Override
+	public final void setVisible(boolean isVisible) {
         super.setVisible(isVisible);
 
         if (!isVisible) {
@@ -320,7 +322,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
 
         label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"));
         panel.add(label);
-        jtfPlayerID.setHorizontalAlignment(JLabel.RIGHT);
+        jtfPlayerID.setHorizontalAlignment(SwingConstants.RIGHT);
         jtfPlayerID.addFocusListener(this);
         panel.add(jtfPlayerID);
 
@@ -331,19 +333,19 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
 
         label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Alter"));
         panel.add(label);
-        jtfAge.setHorizontalAlignment(JLabel.RIGHT);
+        jtfAge.setHorizontalAlignment(SwingConstants.RIGHT);
         jtfAge.addFocusListener(this);
         panel.add(jtfAge);
 
         label = new JLabel("TSI");
         panel.add(label);
-        jtfTSI.setHorizontalAlignment(JLabel.RIGHT);
+        jtfTSI.setHorizontalAlignment(SwingConstants.RIGHT);
         jtfTSI.addFocusListener(this);
         panel.add(jtfTSI);
 
         label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_price"));
         panel.add(label);
-        jtfPrice.setHorizontalAlignment(JLabel.RIGHT);
+        jtfPrice.setHorizontalAlignment(SwingConstants.RIGHT);
         jtfPrice.addFocusListener(this);
         panel.add(jtfPrice);
 
@@ -422,11 +424,11 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition")
                            + ":");
         label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize() + 2));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(label);
         jlRating.setFont(new Font(jlRating.getFont().getName(), Font.BOLD,
                                   jlRating.getFont().getSize() + 2));
-        jlRating.setHorizontalAlignment(JLabel.LEFT);
+        jlRating.setHorizontalAlignment(SwingConstants.LEFT);
         panel.add(jlRating);
 
         constraints.fill = GridBagConstraints.BOTH;

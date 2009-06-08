@@ -25,7 +25,12 @@ import plugins.IFutureTrainingManager;
 public class StadiumPane extends AbstractOperationPane {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7412699016356489259L;
+
+	/** Missing Parameter Documentation */
     public static final int SIZE_ROW = 0;
 
     /** Missing Parameter Documentation */
@@ -46,7 +51,8 @@ public class StadiumPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getBaseBalance(HTWeek week) {
+    @Override
+	public int getBaseBalance(HTWeek week) {
         int columnIndex = getColumnIndex(week);
         int total = Util.getOperationCell(model, MAINTENANCE_ROW, columnIndex).getBalance();
         total = total + Util.getOperationCell(model, INCOME_ROW, columnIndex).getBalance();
@@ -60,7 +66,8 @@ public class StadiumPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getFullBalance(HTWeek week) {
+    @Override
+	public int getFullBalance(HTWeek week) {
         int total = getBaseBalance(week);
         total = total
                 + Util.getOperationCell(model, EXPENSE_ROW, getColumnIndex(week)).getBalance();
@@ -83,14 +90,16 @@ public class StadiumPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    public void onChange() {
+    @Override
+	public void onChange() {
         TeamPlanner.getRecapPane().refreshTable();
     }
 
     /**
      * Missing Method Documentation
      */
-    protected void setRows() {
+    @Override
+	protected void setRows() {
         addInputRow("Size Change", new StadiumExpansionListener(), false,
                     new StadiumExpansionInner());
         addCalculatedRow("Maintenance", new StadiumMaintenanceCalculator());
@@ -101,7 +110,8 @@ public class StadiumPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    protected void loadInputData() {
+    @Override
+	protected void loadInputData() {
         for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
             StadiumExpansionInner inner = (StadiumExpansionInner) Util.getOperationData(model,
                                                                                         SIZE_ROW, i)

@@ -15,6 +15,7 @@ public final class MatchLineupTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[10];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false,true);
@@ -30,6 +31,7 @@ public final class MatchLineupTable extends AbstractTable {
 
 	}
 	
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IMATCHLINEUP_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

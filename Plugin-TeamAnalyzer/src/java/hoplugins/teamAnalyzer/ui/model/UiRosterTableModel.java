@@ -15,6 +15,11 @@ public class UiRosterTableModel extends BaseTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2333079334884026403L;
+
+	/**
      * Creates a new UiRecapTableModel object.
      *
      * @param vector Vector of table data
@@ -41,7 +46,8 @@ public class UiRosterTableModel extends BaseTableModel {
      *
      * @return true if editable, false if not
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         if ((column > 4) && (column < 9)) {
             return true;
         }

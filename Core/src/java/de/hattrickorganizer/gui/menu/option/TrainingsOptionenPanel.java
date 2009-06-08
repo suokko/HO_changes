@@ -122,7 +122,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                            
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
-        m_jslAlterFaktor.setValue((float) gui.UserParameter.temp().AlterFaktor);
+        m_jslAlterFaktor.setValue(gui.UserParameter.temp().AlterFaktor);
         m_jslAlterFaktor.addChangeListener(this);
         add(m_jslAlterFaktor);
 
@@ -130,7 +130,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                              
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
-        m_jslTrainerFaktor.setValue((float) gui.UserParameter.temp().TrainerFaktor);
+        m_jslTrainerFaktor.setValue(gui.UserParameter.temp().TrainerFaktor);
         m_jslTrainerFaktor.addChangeListener(this);
         add(m_jslTrainerFaktor);
 
@@ -138,7 +138,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                                
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
-        m_jslCoTrainerFaktor.setValue((float) gui.UserParameter.temp().CoTrainerFaktor);
+        m_jslCoTrainerFaktor.setValue(gui.UserParameter.temp().CoTrainerFaktor);
         m_jslCoTrainerFaktor.addChangeListener(this);
         add(m_jslCoTrainerFaktor);
 
@@ -146,7 +146,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                                  
         //faktor optimal 1.0
         200, 0, 100.0f, 1.0f, 120);
-        m_jslIntensitaetFaktor.setValue((float) gui.UserParameter.temp().IntensitaetFaktor);
+        m_jslIntensitaetFaktor.setValue(gui.UserParameter.temp().IntensitaetFaktor);
         m_jslIntensitaetFaktor.addChangeListener(this);
         add(m_jslIntensitaetFaktor);
     }

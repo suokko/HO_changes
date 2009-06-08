@@ -21,14 +21,19 @@ import plugins.ISpieler;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class TrainingRecapRenderer extends DefaultTableCellRenderer {
-    private static final Color SELECTION_BG = new java.awt.Color(210, 210, 210); 
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4088001127909689247L;
+	private static final Color SELECTION_BG = new java.awt.Color(210, 210, 210); 
     private static final Color BIRTHDAY_BG = new java.awt.Color(255, 240, 175); 
     //~ Methods ------------------------------------------------------------------------------------
 
     /* (non-Javadoc)
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 

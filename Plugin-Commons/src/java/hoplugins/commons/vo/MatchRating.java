@@ -268,7 +268,8 @@ public class MatchRating {
     /**
      * {@inheritDoc}
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
 
         buffer.append("MatchRating[");

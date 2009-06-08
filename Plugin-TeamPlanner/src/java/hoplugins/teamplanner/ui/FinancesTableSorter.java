@@ -14,6 +14,11 @@ public class FinancesTableSorter extends BasicSorter {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -248682705140932131L;
+
+	/**
      * Creates a new FinancesTableSorter object.
      *
      * @param model Missing Constructuor Parameter Documentation
@@ -31,7 +36,8 @@ public class FinancesTableSorter extends BasicSorter {
      *
      * @return Missing Return Method Documentation
      */
-    public Comparator getCustomComparator(int column) {
+    @Override
+	public Comparator getCustomComparator(int column) {
         if (column == 1) {
             return new HTWeekComparator();
         } else {
@@ -71,7 +77,8 @@ public class FinancesTableSorter extends BasicSorter {
          *
          * @return Missing Return Method Documentation
          */
-        public boolean equals(Object arg0) {
+        @Override
+		public boolean equals(Object arg0) {
             return false;
         }
     }

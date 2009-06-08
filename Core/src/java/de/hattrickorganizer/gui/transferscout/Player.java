@@ -469,7 +469,8 @@ public class Player {
      *
      * @return Returns a string representation of the object
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("playerName = " + playerName);
         buffer.append(", price = " + price);

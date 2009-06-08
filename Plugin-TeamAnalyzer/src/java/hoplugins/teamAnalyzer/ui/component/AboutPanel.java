@@ -14,7 +14,11 @@ import hoplugins.teamAnalyzer.SystemManager;
 public class AboutPanel extends InfoPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String[] messages = new String[4];
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2793573846247148215L;
+	private static String[] messages = new String[4];
 
     static {
         messages[0] = SystemManager.getPlugin().getPluginName();

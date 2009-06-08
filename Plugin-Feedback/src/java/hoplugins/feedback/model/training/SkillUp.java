@@ -3,6 +3,7 @@ package hoplugins.feedback.model.training;
 import hoplugins.Commons;
 import hoplugins.Feedback;
 import hoplugins.commons.utils.HTCalendar;
+import hoplugins.feedback.model.FeedbackObject;
 import hoplugins.feedback.model.Training;
 import hoplugins.feedback.util.FeedbackHelper;
 
@@ -124,6 +125,7 @@ public class SkillUp {
 		return htdate.getHTWeek();
 	}
 
+	@Override
 	public String toString () {
 		return ("Skillup: ("+(lastSkillup==null?"?":lastSkillup.toLocaleString())+" -> "+timestamp.toLocaleString()+", "+ getHtSeason()+"."+getHtWeek()+", hrfId="+hrfId+") playerId="+player.getSpielerID()+", skill="+skill+", value="+value+", length="+getLength()+", avgAge="+getAvgPlayerAge()+", avgAssis="+getAvgAssistants());
 	}
@@ -136,7 +138,7 @@ public class SkillUp {
 					+ "&len=" + getLength() + "&age=" + getAvgPlayerAge() 
 					+ "&assi="+getAvgAssistants() + "&trainer="+getAvgTrainer()
 					+ "&info="+getTrainings()
-					+ "&ver="+Training.getFeedbackVersion());
+					+ "&ver="+FeedbackObject.getFeedbackVersion());
 	}
 	
 	public double getAvgPlayerAge () {

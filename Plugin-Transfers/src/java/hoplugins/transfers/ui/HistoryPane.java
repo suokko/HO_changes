@@ -4,6 +4,7 @@ package hoplugins.transfers.ui;
 import hoplugins.Commons;
 
 import hoplugins.commons.ui.info.clearthought.layout.TableLayout;
+import hoplugins.commons.ui.info.clearthought.layout.TableLayoutConstants;
 import hoplugins.commons.utils.PluginProperty;
 
 import hoplugins.transfers.dao.DividerDAO;
@@ -25,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
@@ -39,7 +41,11 @@ import javax.swing.event.ChangeListener;
 public class HistoryPane extends JSplitPane {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ButtonModel spinSeason;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5465572622813044852L;
+	private ButtonModel spinSeason;
     private JLabel amountTransfers = new JLabel("", SwingConstants.RIGHT);
     private JLabel amountTransfersIn = new JLabel("", SwingConstants.RIGHT);
     private JLabel amountTransfersOut = new JLabel("", SwingConstants.RIGHT);
@@ -60,11 +66,11 @@ public class HistoryPane extends JSplitPane {
 
         // Create side panel
         final double[][] sizes = {
-                               {TableLayout.PREFERRED, TableLayout.FILL},
+                               {TableLayoutConstants.PREFERRED, TableLayoutConstants.FILL},
                                {
-                                   TableLayout.PREFERRED, 10, TableLayout.PREFERRED,
-                                   TableLayout.FILL, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                                   TableLayout.PREFERRED
+                                   TableLayoutConstants.PREFERRED, 10, TableLayoutConstants.PREFERRED,
+                                   TableLayoutConstants.FILL, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED,
+                                   TableLayoutConstants.PREFERRED
                                }
                            };
         final JPanel sidePanel = Commons.getModel().getGUI().createImagePanel();
@@ -74,10 +80,10 @@ public class HistoryPane extends JSplitPane {
         final JPanel filterPanel = Commons.getModel().getGUI().createImagePanel();
         filterPanel.setLayout(new TableLayout(new double[][]{
                                                   {
-                                                      10, TableLayout.PREFERRED, 50,
-                                                      TableLayout.FILL, 10
+                                                      10, TableLayoutConstants.PREFERRED, 50,
+                                                      TableLayoutConstants.FILL, 10
                                                   },
-                                                  {10, TableLayout.PREFERRED, TableLayout.PREFERRED}
+                                                  {10, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED}
                                               }));
 
         final JRadioButton rb1 = new JRadioButton(PluginProperty.getString("AllSeason")); //$NON-NLS-1$
@@ -147,7 +153,7 @@ public class HistoryPane extends JSplitPane {
         amountPanel.add(amountTransfersOut, "5, 2");
 
         pricePanel = new TotalsPanel(PluginProperty.getString("Price"),
-                                     Commons.getModel().getXtraDaten().getCurrencyName()); //$NON-NLS-1$
+                                     Commons.getModel().getXtraDaten().getCurrencyName()); 
         tsiPanel = new TotalsPanel(PluginProperty.getString("TSI")); //$NON-NLS-1$
 
         sidePanel.add(filterPanel, "0, 0");
@@ -157,8 +163,8 @@ public class HistoryPane extends JSplitPane {
         sidePanel.add(tsiPanel, "0, 6");
 
         final JScrollPane sidePane = new JScrollPane(sidePanel);
-        sidePane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        sidePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        sidePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        sidePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         sidePane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         // Create the top panel and add it to the split pane

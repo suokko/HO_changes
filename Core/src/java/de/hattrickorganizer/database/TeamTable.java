@@ -20,6 +20,7 @@ public final class TeamTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[15];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
@@ -39,6 +40,7 @@ public final class TeamTable extends AbstractTable {
 		columns[14]= new ColumnDescriptor("StaminaTrainingPart",Types.INTEGER,false);
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX ITEAM_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

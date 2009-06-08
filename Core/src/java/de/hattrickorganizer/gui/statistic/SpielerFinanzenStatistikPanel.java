@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,11 +22,17 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
+import plugins.ISpieler;
+
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -33,23 +41,24 @@ import de.hattrickorganizer.tools.HOLogger;
 public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener, FocusListener, de.hattrickorganizer.gui.Refreshable, ItemListener
 {
+	private static final long serialVersionUID = 6650993425804531840L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    private static Color MARKTWERT = Color.blue;
+	
+	private static Color MARKTWERT = Color.blue;
     private static Color GEHALT = Color.red;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikSpielerFinanzenBeschriftung);
-    private JCheckBox m_jchGehalt = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gehalt"),
+    private JCheckBox m_jchGehalt = new JCheckBox(HOVerwaltung.instance().getLanguageString("Gehalt"),
                                                   gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien);
-    private JCheckBox m_jchMarktwert = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Marktwert"),
+    private JCheckBox m_jchMarktwert = new JCheckBox(HOVerwaltung.instance().getLanguageString("Marktwert"),
                                                      gui.UserParameter.instance().statistikSpielerFinanzenMarktwert);
     private JComboBox m_jcbSpieler = new JComboBox();
     private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikSpielerFinanzenAnzahlHRF
@@ -78,8 +87,8 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieler")
-                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Finanzen"));
+            m_clStatistikPanel.doPrint(HOVerwaltung.instance().getLanguageString("Spieler")
+                                       + HOVerwaltung.instance().getLanguageString("Finanzen"));
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
             gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien = m_jchHilflinien
@@ -112,7 +121,7 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
      * @param focusEvent TODO Missing Method Parameter Documentation
      */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
+        Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 
@@ -171,13 +180,13 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AnzahlHRF"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("AnzahlHRF"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -185,7 +194,7 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         constraints2.gridwidth = 1;
         layout2.setConstraints(label, constraints2);
         panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(JTextField.RIGHT);
+        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
         m_jtfAnzahlHRF.addFocusListener(this);
         constraints2.gridx = 1;
         constraints2.gridy = 1;
@@ -195,12 +204,12 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
         constraints2.gridx = 0;
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         layout2.setConstraints(m_jbUbernehmen, constraints2);
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieler"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spieler"));
         constraints2.gridx = 0;
         constraints2.gridy = 3;
         constraints2.gridwidth = 2;
@@ -289,41 +298,28 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
      * TODO Missing Method Documentation
      */
     private void initSpielerCB() {
-        final java.util.Vector spieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getModel()
-                                                                                .getAllSpieler();
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] spielerCBItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spieler
+        final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler
                                                                                                                                .size()];
 
         for (int i = 0; i < spieler.size(); i++) {
-            spielerCBItems[i] = new de.hattrickorganizer.gui.model.SpielerCBItem(((Spieler) spieler
-                                                                                  .get(i)).getName(),
-                                                                                 0f,
-                                                                                 (Spieler) spieler
-                                                                                 .get(i));
+            spielerCBItems[i] = new SpielerCBItem((spieler.get(i)).getName(),0f,spieler.get(i));
         }
 
-        java.util.Arrays.sort(spielerCBItems);
+        Arrays.sort(spielerCBItems);
 
         //Alte Spieler
-        final java.util.Vector allSpieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getModel()
-                                                                                   .getAllOldSpieler();
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] spielerAllCBItems = new de.hattrickorganizer.gui.model.SpielerCBItem[allSpieler
-                                                                                                                                  .size()];
+        final Vector<ISpieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
+        final SpielerCBItem[] spielerAllCBItems = new SpielerCBItem[allSpieler.size()];
 
         for (int i = 0; i < allSpieler.size(); i++) {
-            spielerAllCBItems[i] = new de.hattrickorganizer.gui.model.SpielerCBItem(((Spieler) allSpieler
-                                                                                     .get(i))
-                                                                                    .getName(), 0f,
-                                                                                    (Spieler) allSpieler
-                                                                                    .get(i));
+            spielerAllCBItems[i] = new SpielerCBItem((allSpieler.get(i)).getName(), 0f,allSpieler.get(i));
         }
 
-        java.util.Arrays.sort(spielerAllCBItems);
+        Arrays.sort(spielerAllCBItems);
 
         //Zusammenfügen
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] cbItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spielerCBItems.length
+        final SpielerCBItem[] cbItems = new SpielerCBItem[spielerCBItems.length
                                                                        + spielerAllCBItems.length
                                                                        + 1];
         int i = 0;
@@ -360,8 +356,7 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
             final java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance();
 
             if (m_jcbSpieler.getSelectedItem() != null) {
-                final double[][] statistikWerte = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                         .getSpielerFinanzDaten4Statistik(((de.hattrickorganizer.gui.model.SpielerCBItem) m_jcbSpieler
+                final double[][] statistikWerte = DBZugriff.instance().getSpielerFinanzDaten4Statistik(((SpielerCBItem) m_jcbSpieler
                                                                                                                            .getSelectedItem()).getSpieler()
                                                                                                                            .getSpielerID(),
                                                                                                                           anzahlHRF);
@@ -375,11 +370,11 @@ public class SpielerFinanzenStatistikPanel extends de.hattrickorganizer.gui.temp
                                                    m_jchGehalt.isSelected(), GEHALT, format);
                 }
 
-                final String[] yBezeichnungen = de.hattrickorganizer.tools.Helper
+                final String[] yBezeichnungen = Helper
                                                 .convertTimeMillisToFormatString(statistikWerte[2]);
 
                 m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                HOVerwaltung.instance().getLanguageString("Wochen"),
                                                 "", m_jchBeschriftung.isSelected(),
                                                 m_jchHilflinien.isSelected());
             }

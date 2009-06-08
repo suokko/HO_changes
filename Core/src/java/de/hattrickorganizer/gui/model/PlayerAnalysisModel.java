@@ -13,6 +13,10 @@ import de.hattrickorganizer.model.matches.Matchdetails;
  */
 public class PlayerAnalysisModel extends HOColumnModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2953738895366809237L;
 	private Vector m_vSpielerMatchCBItem;
 
 	
@@ -108,6 +112,7 @@ public class PlayerAnalysisModel extends HOColumnModel {
     /**
      * create a data[][] from player-Vector
      */
+	@Override
 	protected void initData() {
     	UserColumn [] tmpDisplayedColumns = getDisplayedColumns();
     	m_clData = new Object[m_vSpielerMatchCBItem.size()][tmpDisplayedColumns.length];

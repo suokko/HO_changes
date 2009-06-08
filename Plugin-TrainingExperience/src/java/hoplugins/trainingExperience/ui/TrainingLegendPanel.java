@@ -22,6 +22,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -39,12 +40,17 @@ public class TrainingLegendPanel extends JPanel {
     //    static final Color LIGHT_GREEN = new Color(40, 155, 40);
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7019803928403346886L;
+
+	/**
      * Default constructor.
      */
     public TrainingLegendPanel() {
         this.setLayout(new GridLayout(2, 5));
 
-        JLabel title = new JLabel(PluginProperty.getString("Legenda"), JLabel.LEFT); //$NON-NLS-1$
+        JLabel title = new JLabel(PluginProperty.getString("Legenda"), SwingConstants.LEFT); //$NON-NLS-1$
 
         title.setForeground(Color.BLACK);
         this.add(title);
@@ -77,7 +83,7 @@ public class TrainingLegendPanel extends JPanel {
     public static final JLabel getSkillupLabel(String title, int skill) {
         Icon icon = getSkillupTypeIcon(skill, 1);
 
-        return new JLabel(title, icon, JLabel.LEFT);
+        return new JLabel(title, icon, SwingConstants.LEFT);
     }
 
     /**
@@ -125,12 +131,12 @@ public class TrainingLegendPanel extends JPanel {
      */
     public static Image ReplaceImageColor(Image image, Color oldColor, Color newColor) {
         FilteredImageSource filteredimagesource = new FilteredImageSource(image.getSource(),
-                                                                          ((java.awt.image.ImageFilter) (new ColorReplaceFilter(oldColor,
+                                                                          ((new ColorReplaceFilter(oldColor,
                                                                                                                                 newColor,
                                                                                                                                 null))));
 
         //Color.WHITE))));
-        return Toolkit.getDefaultToolkit().createImage(((java.awt.image.ImageProducer) (filteredimagesource)));
+        return Toolkit.getDefaultToolkit().createImage(((filteredimagesource)));
     }
 
     //~ Inner Classes ------------------------------------------------------------------------------
@@ -183,7 +189,8 @@ public class TrainingLegendPanel extends JPanel {
          *
          * @return TODO Missing Return Method Documentation
          */
-        public int filterRGB(int x, int y, int rgb) {
+        @Override
+		public int filterRGB(int x, int y, int rgb) {
             if (transparency && ((rgb | 0xff000000) == transparentColor)) {
                 return 0;
             } else if (rgb == oldColor) {

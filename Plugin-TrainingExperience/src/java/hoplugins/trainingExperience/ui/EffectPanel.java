@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -27,7 +28,11 @@ import javax.swing.JTable;
 public class EffectPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JTable effectTable = new JTable();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6139712209582341384L;
+	private JTable effectTable = new JTable();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -84,7 +89,7 @@ public class EffectPanel extends JPanel {
         p.setOpaque(false);
         p.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel(PluginProperty.getString("TAB_EFFECT"), JLabel.CENTER); //$NON-NLS-1$
+        JLabel label = new JLabel(PluginProperty.getString("TAB_EFFECT"), SwingConstants.CENTER); //$NON-NLS-1$
 
         label.setOpaque(false);
         p.add(label, BorderLayout.NORTH);

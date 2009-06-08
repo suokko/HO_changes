@@ -17,6 +17,7 @@ import java.util.Iterator;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -25,9 +26,12 @@ import javax.swing.JPanel;
  * @author draghetto
  */
 public class ScoutPanel extends JPanel {
+	
+	private static final long serialVersionUID = 3226277012489531392L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox players = new JComboBox();
+	private JComboBox players = new JComboBox();
     private ResultPanel target;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -51,13 +55,13 @@ public class ScoutPanel extends JPanel {
         players.removeAllItems();
         players.addItem(new PlayerItem());
 
-        final TransferTableModel model = (TransferTableModel) HOMainFrame.instance()
+        final TransferTableModel model = HOMainFrame.instance()
                                                                          .getTransferScoutPanel()
                                                                          .getTransferTable()
                                                                          .getTransferTableModel();
 
-        for (Iterator iter = model.getScoutListe().iterator(); iter.hasNext();) {
-            final ScoutEintrag element = (ScoutEintrag) iter.next();
+        for (Iterator<ScoutEintrag> iter = model.getScoutListe().iterator(); iter.hasNext();) {
+            final ScoutEintrag element = iter.next();
 
             if (element.getTorwart() > 4) {
                 players.addItem(new PlayerItem(element));
@@ -121,7 +125,7 @@ public class ScoutPanel extends JPanel {
      * @return the built component
      */
     private Component label(String string) {
-        final JLabel label = new JLabel(string, JLabel.CENTER);
+        final JLabel label = new JLabel(string, SwingConstants.CENTER);
         label.setOpaque(false);
         return label;
     }

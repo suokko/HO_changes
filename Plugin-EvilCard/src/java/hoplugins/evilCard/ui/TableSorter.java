@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -82,7 +83,12 @@ import javax.swing.table.TableModel;
 public class TableSorter extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8174876181452800423L;
+
+	/** TODO Missing Parameter Documentation */
     public static final int DESCENDING = -1;
 
     /** TODO Missing Parameter Documentation */
@@ -161,7 +167,8 @@ public class TableSorter extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         return tableModel.isCellEditable(modelIndex(row), column);
     }
 
@@ -172,7 +179,8 @@ public class TableSorter extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 
@@ -206,7 +214,8 @@ public class TableSorter extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         return tableModel.getColumnName(column);
     }
 
@@ -334,7 +343,8 @@ public class TableSorter extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public void setValueAt(Object aValue, int row, int column) {
+    @Override
+	public void setValueAt(Object aValue, int row, int column) {
         tableModel.setValueAt(aValue, modelIndex(row), column);
     }
 
@@ -621,7 +631,8 @@ public class TableSorter extends AbstractTableModel {
          *
          * @param e TODO Missing Method Parameter Documentation
          */
-        public void mouseClicked(MouseEvent e) {
+        @Override
+		public void mouseClicked(MouseEvent e) {
             JTableHeader h = (JTableHeader) e.getSource();
             TableColumnModel columnModel = h.getColumnModel();
             int viewColumn = columnModel.getColumnIndexAtX(e.getX());
@@ -744,7 +755,7 @@ public class TableSorter extends AbstractTableModel {
 
             if (c instanceof JLabel) {
                 JLabel l = (JLabel) c;
-                l.setHorizontalTextPosition(JLabel.LEFT);
+                l.setHorizontalTextPosition(SwingConstants.LEFT);
 
                 int modelColumn = table.convertColumnIndexToModel(column);
                 l.setIcon(getHeaderRendererIcon(modelColumn, l.getFont().getSize()));

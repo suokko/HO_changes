@@ -225,7 +225,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @return TODO Missing Return Method Documentation
      */
     public JPanel createStarPanel(int starcount, boolean yellowstar) {
-        return (JPanel) new de.hattrickorganizer.gui.templates.RatingTableEntry((float) starcount,
+        return (JPanel) new de.hattrickorganizer.gui.templates.RatingTableEntry(starcount,
                                                                                 yellowstar)
                .getComponent(false);
     }

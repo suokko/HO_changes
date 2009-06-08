@@ -12,9 +12,12 @@ import de.hattrickorganizer.model.HOVerwaltung;
  * @author draghetto
  */
 public class UpdateTSIPanel extends AbstractInjuryPanel {
+	
+	private static final long serialVersionUID = 1067981692979047647L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private String msg = HOVerwaltung.instance().getLanguageString("UpdatesNeeded");
+	private String msg = HOVerwaltung.instance().getLanguageString("UpdatesNeeded");
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -33,7 +36,8 @@ public class UpdateTSIPanel extends AbstractInjuryPanel {
     /**
      * Action to be executed when the button is pressed Calculates the result using the parameters
      */
-    public final void doAction() {
+    @Override
+	public final void doAction() {
         final int tsi = getInput();
 
         final double updates = InjuryCalculator.getUpdateTSINumber(getDetail().getTSIPre(),

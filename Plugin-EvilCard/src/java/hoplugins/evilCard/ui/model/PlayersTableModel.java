@@ -17,7 +17,6 @@ import hoplugins.commons.utils.PluginProperty;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
@@ -35,7 +34,12 @@ import plugins.ISpieler;
 public class PlayersTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 146702588079846156L;
+
+	/** TODO Missing Parameter Documentation */
     public static final int COL_ID = 0;
 
     /** TODO Missing Parameter Documentation */
@@ -160,7 +164,8 @@ public class PlayersTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Class getColumnClass(int c) {
+    @Override
+	public Class getColumnClass(int c) {
         return getValueAt(0, c).getClass();
 
         // return Object.class;
@@ -182,7 +187,8 @@ public class PlayersTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public String getColumnName(int c) {
+    @Override
+	public String getColumnName(int c) {
         return columnNames[c];
     }
 

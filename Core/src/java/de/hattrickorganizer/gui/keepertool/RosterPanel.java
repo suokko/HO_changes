@@ -17,6 +17,7 @@ import java.util.Iterator;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -25,9 +26,12 @@ import javax.swing.JPanel;
  * @author draghetto
  */
 public class RosterPanel extends JPanel {
+	
+	private static final long serialVersionUID = 4174378650521941024L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox players = new JComboBox();
+	private JComboBox players = new JComboBox();
     private ResultPanel target;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -51,9 +55,9 @@ public class RosterPanel extends JPanel {
         players.removeAllItems();
         players.addItem(new PlayerItem());
 
-        for (Iterator iter = HOVerwaltung.instance().getModel().getAllSpieler().iterator();
+        for (Iterator<ISpieler> iter = HOVerwaltung.instance().getModel().getAllSpieler().iterator();
              iter.hasNext();) {
-            final ISpieler element = (ISpieler) iter.next();
+            final ISpieler element = iter.next();
 
             if (element.getTorwart() > 4) {
                 players.addItem(new PlayerItem(element));
@@ -121,7 +125,7 @@ public class RosterPanel extends JPanel {
      * @return the built component
      */
     private Component label(String string) {
-        final JLabel label = new JLabel(string, JLabel.CENTER);
+        final JLabel label = new JLabel(string, SwingConstants.CENTER);
         label.setOpaque(false);
         return label;
     }

@@ -27,7 +27,11 @@ import de.hattrickorganizer.tools.HelperWrapper;
 public final class DeleteDialog extends UpdaterDialog {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String PROP_DELETE = HOVerwaltung.instance().getLanguageString("loeschen");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6602146630761684946L;
+	private static String PROP_DELETE = HOVerwaltung.instance().getLanguageString("loeschen");
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -53,7 +57,8 @@ public final class DeleteDialog extends UpdaterDialog {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected TableModel getModel(boolean selected, String[] columnNames2) {
+    @Override
+	protected TableModel getModel(boolean selected, String[] columnNames2) {
         Object[][] value = new Object[object.length][4];
         boolean isEnabled = true;
         IPlugin tmp = null;
@@ -71,7 +76,8 @@ public final class DeleteDialog extends UpdaterDialog {
     /**
      * TODO Missing Method Documentation
      */
-    protected void action() {
+    @Override
+	protected void action() {
         boolean selected = false;
 
         if (table != null) {

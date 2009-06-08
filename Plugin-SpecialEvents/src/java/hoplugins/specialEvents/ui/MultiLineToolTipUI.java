@@ -26,7 +26,8 @@ class MultiLineToolTipUI extends MetalToolTipUI
         maxWidth = 0;
     }
 
-    public void paint(Graphics g, JComponent c)
+    @Override
+	public void paint(Graphics g, JComponent c)
     {
         FontMetrics metrics = Toolkit.getDefaultToolkit().getFontMetrics(g.getFont());
         Dimension size = c.getSize();
@@ -43,7 +44,8 @@ class MultiLineToolTipUI extends MetalToolTipUI
         }
     }
 
-    public Dimension getPreferredSize(JComponent c)
+    @Override
+	public Dimension getPreferredSize(JComponent c)
     {
         FontMetrics metrics = Toolkit.getDefaultToolkit().getFontMetrics(c.getFont());
         String tipText = ((JToolTip)c).getTipText();

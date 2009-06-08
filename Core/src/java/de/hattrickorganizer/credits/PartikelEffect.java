@@ -275,10 +275,10 @@ class Partikel {
             faktor = 1;
         }
 
-        positionX = (int) ((float) zielX
-                    - (((float) zielX - _positionX) * ((float) faktor / (float) dauer)));
-        positionY = (int) ((float) zielY
-                    - (((float) zielY - _positionY) * ((float) faktor / (float) dauer)));
+        positionX = (int) (zielX
+                    - ((zielX - _positionX) * ((float) faktor / (float) dauer)));
+        positionY = (int) (zielY
+                    - ((zielY - _positionY) * ((float) faktor / (float) dauer)));
 
         //positionX += ( ((float)zielX - _positionX) / (dauer) ) ;
         //positionY += ( ((float)zielY - _positionY) / (dauer) ) ;

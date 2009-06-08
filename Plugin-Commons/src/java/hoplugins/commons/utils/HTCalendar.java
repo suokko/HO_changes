@@ -44,6 +44,7 @@ import java.util.GregorianCalendar;
  * @deprecated Use the interface plugins.IHTCalendar and the implementation in de.hattrickorganizer.tools.HTCalendar
  * 				Even better: Use the methods from IHelper [e.g. HOMiniModel.getHelper().getHTSeason()].
  */
+@Deprecated
 public class HTCalendar {
     /** Number of weeks in a HT season */
     private static final int WEEK_IN_SEASON = 16;

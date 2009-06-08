@@ -5,8 +5,6 @@ import hoplugins.Commons;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Properties;
-
 import plugins.IHOMiniModel;
 import plugins.ISpielerPosition;
 

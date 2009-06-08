@@ -33,7 +33,11 @@ import javax.swing.JPanel;
 public class GeneralPanelTab extends JPanel implements RefreshablePanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    // General Panel
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8917731727723155057L;
+	// General Panel
     private GraphicPanel PanelGeneralGP;
 
     //~ Constructors -------------------------------------------------------------------------------

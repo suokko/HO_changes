@@ -25,7 +25,11 @@ import de.hattrickorganizer.tools.HOLogger;
 public class TableSorter extends TableMap {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector sortingColumns;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1132334126127788944L;
+	private Vector<Integer> sortingColumns;
     private int[] indexes;
     private boolean ascending;
     private int compares;
@@ -39,7 +43,7 @@ public class TableSorter extends TableMap {
      * Creates a new TableSorter object.
      */
     public TableSorter() {
-        sortingColumns = new Vector();
+        sortingColumns = new Vector<Integer>();
         ascending = false;
         currentColumn = -1;
         indexes = new int[0];
@@ -55,7 +59,7 @@ public class TableSorter extends TableMap {
     public TableSorter(TableModel tablemodel, int idSpalte, int initsortcolumnindex) {
         this.idSpalte = idSpalte;
         this.m_iInitSortColumnIndex = initsortcolumnindex;
-        sortingColumns = new Vector();
+        sortingColumns = new Vector<Integer>();
         ascending = false;
         currentColumn = -1;
         setModel(tablemodel);
@@ -68,7 +72,8 @@ public class TableSorter extends TableMap {
      *
      * @param tablemodel TODO Missing Method Parameter Documentation
      */
-    public final void setModel(TableModel tablemodel) {
+    @Override
+	public final void setModel(TableModel tablemodel) {
         super.setModel(tablemodel);
         reallocateIndexes();
     }
@@ -183,7 +188,8 @@ public class TableSorter extends TableMap {
      * @param i TODO Missing Method Parameter Documentation
      * @param j TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object obj, int i, int j) {
+    @Override
+	public final void setValueAt(Object obj, int i, int j) {
         checkModel();
         model.setValueAt(obj, indexes[i], j);
     }
@@ -196,7 +202,8 @@ public class TableSorter extends TableMap {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Object getValueAt(int i, int j) {
+    @Override
+	public final Object getValueAt(int i, int j) {
         checkModel();
 
         if ((i < 0) || (j < 0)) {
@@ -226,7 +233,8 @@ public class TableSorter extends TableMap {
         tableView.setColumnSelectionAllowed(false);
 
         final MouseAdapter mouseadapter = new MouseAdapter() {
-            public void mouseClicked(MouseEvent mouseevent) {
+            @Override
+			public void mouseClicked(MouseEvent mouseevent) {
                 final TableColumnModel tablecolumnmodel = tableView.getColumnModel();
                 final int i = tablecolumnmodel.getColumnIndexAtX(mouseevent.getX());
                 final int j = tableView.convertColumnIndexToModel(i);
@@ -409,7 +417,7 @@ public class TableSorter extends TableMap {
     private final void sort(Object obj) {
         checkModel();
         compares = 0;
-        shuttlesort((int[]) indexes.clone(), indexes, 0, indexes.length);
+        shuttlesort(indexes.clone(), indexes, 0, indexes.length);
     }
 
 //    /**
@@ -442,18 +450,19 @@ public class TableSorter extends TableMap {
      * @param i TODO Missing Method Parameter Documentation
      * @param j TODO Missing Method Parameter Documentation
      */
-    private final void swap(int i, int j) {
+/*    private final void swap(int i, int j) {
         int k = indexes[i];
         indexes[i] = indexes[j];
         indexes[j] = k;
-    }
+    }*/
 
     /**
      * TODO Missing Method Documentation
      *
      * @param tablemodelevent TODO Missing Method Parameter Documentation
      */
-    public final void tableChanged(TableModelEvent tablemodelevent) {
+    @Override
+	public final void tableChanged(TableModelEvent tablemodelevent) {
         reallocateIndexes();
         super.tableChanged(tablemodelevent);
     }

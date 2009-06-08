@@ -20,6 +20,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 
 /**
@@ -30,7 +31,11 @@ import javax.swing.JScrollPane;
 public class AutoFilterPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JCheckBox awayGames = new JCheckBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 980373632967180587L;
+	private JCheckBox awayGames = new JCheckBox();
     private JCheckBox cup = new JCheckBox();
     private JCheckBox defeat = new JCheckBox();
     private JCheckBox draw = new JCheckBox();
@@ -152,8 +157,8 @@ public class AutoFilterPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(main);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         add(scrollPane);
 

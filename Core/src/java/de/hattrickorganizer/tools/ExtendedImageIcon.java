@@ -14,6 +14,10 @@ import javax.swing.ImageIcon;
  */
 class ExtendedImageIcon extends ImageIcon {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7530860010917204092L;
 	public String description;
 	
 	public ExtendedImageIcon(String arg0, String arg1) {
@@ -61,6 +65,7 @@ class ExtendedImageIcon extends ImageIcon {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Override
 	public String toString() {
 		return description;
 	}

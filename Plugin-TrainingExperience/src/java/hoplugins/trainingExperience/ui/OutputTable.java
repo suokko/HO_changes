@@ -64,6 +64,11 @@ public class OutputTable extends JTable {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1089805262735794338L;
+
+	/**
      *
      */
     public OutputTable() {
@@ -133,7 +138,8 @@ public class OutputTable extends JTable {
     //~ Methods ------------------------------------------------------------------------------------
 
     //Methode für ToolTipText des Trainingstable
-    public String getToolTipText(MouseEvent e) {
+    @Override
+	public String getToolTipText(MouseEvent e) {
         OutputTableSorter tableModel = (OutputTableSorter) getModel();
         java.awt.Point p = e.getPoint();
         int rowIndex = rowAtPoint(p);

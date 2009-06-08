@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.lineup;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,9 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -22,9 +25,11 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
  * gewünscht
  */
 final class AufstellungsNameDialog extends JDialog implements ActionListener {
+	
+	private static final long serialVersionUID = 7318780000118008882L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private Aufstellung m_clAufstellung;
+	private Aufstellung m_clAufstellung;
     private JButton m_jbAbbrechen;
     private JButton m_jbOK;
     private JTextField m_jtfAufstellungsName;
@@ -139,17 +144,16 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
     //Name noch nicht in DB oder Aktuelle Aufstellung
     private boolean checkName(String name, boolean dbcheck) {
-        java.util.Vector aufstellungsNamen = new java.util.Vector();
+        Vector<String> aufstellungsNamen = new Vector<String>();
 
         //nicht schon vorhanden
         if (dbcheck) {
-            aufstellungsNamen = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                       .getAufstellungsListe(de.hattrickorganizer.model.Aufstellung.NO_HRF_VERBINDUNG);
+            aufstellungsNamen = DBZugriff.instance().getAufstellungsListe(Aufstellung.NO_HRF_VERBINDUNG);
         }
 
         //nicht Aktuelle Aufstellung
-        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"));
-        aufstellungsNamen.add(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("LetzteAufstellung"));
+        aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"));
+        aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"));
 
         //nicht HO!
         aufstellungsNamen.add(Aufstellung.DEFAULT_NAME);

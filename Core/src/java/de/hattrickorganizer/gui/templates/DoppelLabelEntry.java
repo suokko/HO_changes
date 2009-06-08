@@ -56,7 +56,8 @@ public class DoppelLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final javax.swing.JComponent getComponent(boolean isSelected) {
+    @Override
+	public final javax.swing.JComponent getComponent(boolean isSelected) {
         m_clComponent.removeAll();
         m_clComponent.setOpaque(false);
 
@@ -120,7 +121,8 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_clLinks.clear();
         m_clRechts.clear();
     }
@@ -132,7 +134,8 @@ public class DoppelLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public int compareTo(Object obj) {
+    @Override
+	public int compareTo(Object obj) {
         if (obj instanceof DoppelLabelEntry) {
             final DoppelLabelEntry entry = (DoppelLabelEntry) obj;
             return getTableEntryLinks().compareTo(entry.getTableEntryLinks());
@@ -144,7 +147,8 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         DoppelLabel panel = new DoppelLabel();
 
         m_clComponent = panel;
@@ -153,7 +157,8 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public void updateComponent() {
+    @Override
+	public void updateComponent() {
         m_clLinks.updateComponent();
         m_clRechts.updateComponent();
     }

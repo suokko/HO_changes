@@ -156,7 +156,8 @@ public class HTWeek implements Comparable {
      *
      * @return Missing Return Method Documentation
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         HTWeek week2 = (HTWeek) obj;
 
         if ((this.season == week2.season) && (this.week == week2.week)) {
@@ -171,7 +172,8 @@ public class HTWeek implements Comparable {
      *
      * @return Missing Return Method Documentation
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return season + SEASON_WEEK_SEPARATOR + week;
     }
 }

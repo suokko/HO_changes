@@ -74,7 +74,7 @@ public class UserPanel extends ImagePanel implements ActionListener {
     			ArrayList<User> users = User.getAllUser();
     			
     			for (int i = 0; i < table.getRowCount(); i++) {
-    				User user = (User)users.get(i);
+    				User user = users.get(i);
     				
     				if(Helper.isAlpha(table.getValueAt(i,0).toString()))
     						user.setName(table.getValueAt(i,0).toString());

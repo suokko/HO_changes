@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -33,7 +34,11 @@ import javax.swing.JPanel;
 public class PlayerDetailPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JLabel playerLabel = new JLabel("", JLabel.CENTER); //$NON-NLS-1$
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6606934473344186243L;
+	private JLabel playerLabel = new JLabel("", SwingConstants.CENTER); //$NON-NLS-1$
     private ColorBar[] levelBar = new ColorBar[8];
     private JLabel[] skillLabel = new JLabel[8];
 

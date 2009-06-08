@@ -40,7 +40,11 @@ import javax.swing.JPanel;
 public class LegendaPanel extends JPanel implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox JCBDivision;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6929568231860428591L;
+	private JComboBox JCBDivision;
     private JComboBox JCBTeam;
     private JComboBox JCBType;
     private Map MapDivisions;
@@ -280,7 +284,7 @@ public class LegendaPanel extends JPanel implements ActionListener {
             this.JCBTeam.removeAllItems();
 
             // Get season and division
-            Vector LigaSeas = (Vector) this.MapDivisions.get((String) this.JCBDivision
+            Vector LigaSeas = (Vector) this.MapDivisions.get(this.JCBDivision
                                                              .getSelectedItem());
 
             // Get teams and team ids

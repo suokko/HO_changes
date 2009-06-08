@@ -13,12 +13,16 @@ import hoplugins.commons.utils.PluginProperty;
 public class DisablePanel extends InfoPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String[] messages = {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8375936917139631915L;
+	private static String[] messages = {
                                            PluginProperty.getString("DisablePanel.0"), //$NON-NLS-1$
     PluginProperty.getString("DisablePanel.1"), //$NON-NLS-1$
     PluginProperty.getString("DisablePanel.2"), //$NON-NLS-1$
     PluginProperty.getString("DisablePanel.3")
-                                       }; //$NON-NLS-1$
+                                       }; 
 
     //~ Constructors -------------------------------------------------------------------------------
 

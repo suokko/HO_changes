@@ -1,8 +1,6 @@
 // %3267207196:de.hattrickorganizer.gui.matchprediction%
 package de.hattrickorganizer.gui.matchprediction;
 
-import java.util.Vector;
-
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
@@ -17,6 +15,9 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author TODO Author Name
  */
 public class MatchScoreDiffTable extends JTable {
+	
+	private static final long serialVersionUID = -6343540652634219571L;
+	
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private MatchScoreDiffTableModel m_clTableModel;

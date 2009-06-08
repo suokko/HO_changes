@@ -28,7 +28,12 @@ import javax.swing.JPanel;
 public class DeletePanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** The Favourite Menu itself */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3360500719618041012L;
+
+	/** The Favourite Menu itself */
     FavouriteMenu menu;
 
     /** The add button */

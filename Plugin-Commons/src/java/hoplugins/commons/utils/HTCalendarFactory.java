@@ -14,6 +14,7 @@ import java.util.Date;
  * @deprecated Use the functions from HOMiniModel.getHelper() instead, 
  * 				the new implementation can be found in de.hattrickorganizer.tools.HTCalendar
  */
+@Deprecated
 public final class HTCalendarFactory {
     /**
      * Constructs a HTCalendar.

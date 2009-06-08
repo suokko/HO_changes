@@ -23,6 +23,11 @@ public class OperationDataCellRenderer extends JTextArea implements TableCellRen
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4377350654433371118L;
+
+	/**
      * Constructor
      */
     public OperationDataCellRenderer() {
@@ -30,7 +35,7 @@ public class OperationDataCellRenderer extends JTextArea implements TableCellRen
 
         //this.setLineWrap(true);
         //this.setWrapStyleWord(true);
-        this.setAlignmentY(TextAreaCellRenderer.CENTER_ALIGNMENT);
+        this.setAlignmentY(Component.CENTER_ALIGNMENT);
         this.setMargin(new Insets(0, 1, 0, 1));
     }
 

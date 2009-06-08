@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.TableEntry;
 
@@ -46,7 +47,7 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
 
             return component;
         } else if (value instanceof Integer) {
-            final JComponent component = new JLabel(value.toString(), JLabel.LEFT);
+            final JComponent component = new JLabel(value.toString(), SwingConstants.LEFT);
             component.setOpaque(true);
 
             if (isSelected) {

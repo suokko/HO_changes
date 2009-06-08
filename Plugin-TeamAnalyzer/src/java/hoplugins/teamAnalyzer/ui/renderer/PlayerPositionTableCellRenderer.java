@@ -55,7 +55,8 @@ public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int col) {
         if (value instanceof Integer) {
             super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, col);

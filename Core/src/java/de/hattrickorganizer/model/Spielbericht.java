@@ -24,7 +24,12 @@ import de.hattrickorganizer.tools.HOLogger;
 public class Spielbericht implements java.io.Serializable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 112295146199412887L;
+
+	/** TODO Missing Parameter Documentation */
     ServerTeam m_clGast;
 
     //!Memeber

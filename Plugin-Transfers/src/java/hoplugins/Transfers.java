@@ -11,8 +11,6 @@ import hoplugins.transfers.dao.TransferStatusDAO;
 import hoplugins.transfers.dao.TransfersDAO;
 import hoplugins.transfers.ui.HistoryPane;
 import hoplugins.transfers.ui.TransferTypePane;
-import hoplugins.transfers.ui.component.OptionPanel;
-import hoplugins.transfers.ui.component.StartingPanel;
 import hoplugins.transfers.vo.PlayerTransfer;
 
 import plugins.IHOMiniModel;
@@ -87,7 +85,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      * {@inheritDoc}
      */
     public final String getPluginName() {
-        return PLUGIN_NAME; //$NON-NLS-1$
+        return PLUGIN_NAME; 
     }
 
     /**
@@ -225,7 +223,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         hoMiniModel.getGUI().addTab(getPluginName(), pluginPanel);
         hoMiniModel.getGUI().registerRefreshable(this);
 
-        final JMenu menu = new JMenu(getPluginName()); //$NON-NLS-1$
+        final JMenu menu = new JMenu(getPluginName()); 
         final JMenuItem item = new JMenuItem(PluginProperty.getString("Menu.refreshData")); //$NON-NLS-1$
         item.addActionListener(this);
         menu.add(item);
@@ -298,33 +296,33 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
 
         final StringBuffer url = new StringBuffer();
         url.append("http://URL_TO_EPV_SERVER/ho.php?cmd=addTransfer");
-        url.append("&id=" + pt.getTransferID()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&age=" + spieler.getAlter()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&for=" + spieler.getForm()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&inj=" + spieler.getVerletzt()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&exp=" + spieler.getErfahrung()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&lea=" + spieler.getFuehrung()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&tsi=" + pt.getTsi()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&sta=" + spieler.getKondition()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&kee=" + spieler.getTorwart()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&pla=" + spieler.getSpielaufbau()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&pas=" + spieler.getPasspiel()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&win=" + spieler.getFluegelspiel()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&def=" + spieler.getVerteidigung()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&att=" + spieler.getTorschuss()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&set=" + spieler.getStandards()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&spe=" + spieler.getSpezialitaet()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&agg=" + spieler.getAgressivitaet()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&pop=" + spieler.getCharakter()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&hon=" + spieler.getAnsehen()); //$NON-NLS-1$ //$NON-NLS-2$
+        url.append("&id=" + pt.getTransferID()); //$NON-NLS-1$ 
+        url.append("&age=" + spieler.getAlter()); //$NON-NLS-1$ 
+        url.append("&for=" + spieler.getForm()); //$NON-NLS-1$ 
+        url.append("&inj=" + spieler.getVerletzt()); //$NON-NLS-1$ 
+        url.append("&exp=" + spieler.getErfahrung()); //$NON-NLS-1$ 
+        url.append("&lea=" + spieler.getFuehrung()); //$NON-NLS-1$ 
+        url.append("&tsi=" + pt.getTsi()); //$NON-NLS-1$ 
+        url.append("&sta=" + spieler.getKondition()); //$NON-NLS-1$ 
+        url.append("&kee=" + spieler.getTorwart()); //$NON-NLS-1$ 
+        url.append("&pla=" + spieler.getSpielaufbau()); //$NON-NLS-1$ 
+        url.append("&pas=" + spieler.getPasspiel()); //$NON-NLS-1$ 
+        url.append("&win=" + spieler.getFluegelspiel()); //$NON-NLS-1$ 
+        url.append("&def=" + spieler.getVerteidigung()); //$NON-NLS-1$ 
+        url.append("&att=" + spieler.getTorschuss()); //$NON-NLS-1$ 
+        url.append("&set=" + spieler.getStandards()); //$NON-NLS-1$ 
+        url.append("&spe=" + spieler.getSpezialitaet()); //$NON-NLS-1$ 
+        url.append("&agg=" + spieler.getAgressivitaet()); //$NON-NLS-1$ 
+        url.append("&pop=" + spieler.getCharakter()); //$NON-NLS-1$ 
+        url.append("&hon=" + spieler.getAnsehen()); //$NON-NLS-1$ 
 
         final double curr_rate = Commons.getModel().getXtraDaten().getCurrencyRate();
         final double price = (pt.getPrice() * curr_rate) / 10;
-        url.append("&pri=" + (int) price); //$NON-NLS-1$ //$NON-NLS-2$
+        url.append("&pri=" + (int) price); //$NON-NLS-1$ 
 
         final HTCalendar globalDate = HTCalendarFactory.createGlobalCalendar(pt.getDate());
-        url.append("&wee=" + globalDate.getHTWeek()); //$NON-NLS-1$ //$NON-NLS-2$
-        url.append("&sea=" + globalDate.getHTSeason()); //$NON-NLS-1$ //$NON-NLS-2$
+        url.append("&wee=" + globalDate.getHTWeek()); //$NON-NLS-1$ 
+        url.append("&sea=" + globalDate.getHTSeason()); //$NON-NLS-1$ 
 
         final Calendar c = Calendar.getInstance();
         c.setTimeInMillis(pt.getDate().getTime());

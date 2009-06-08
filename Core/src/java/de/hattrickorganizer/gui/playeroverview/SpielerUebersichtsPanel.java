@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
+import javax.swing.ScrollPaneConstants;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
 
@@ -425,13 +426,13 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
         //scrollpane2.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
         scrollpane2.setPreferredSize(new Dimension(170, 100));
 
-        scrollpane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollpane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         //Weil auch im scrollpane immer!
-        scrollpane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollpane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         //Weil auch im scrollpane2 immer!
-        scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         // Make horizontal scrollbar move top table also
         final JScrollBar bar1 = scrollpane2.getVerticalScrollBar();

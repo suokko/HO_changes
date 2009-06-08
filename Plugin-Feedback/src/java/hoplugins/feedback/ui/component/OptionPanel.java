@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 public class OptionPanel extends JPanel {
@@ -21,7 +22,11 @@ public class OptionPanel extends JPanel {
 //										+ PluginProperty.getString("StartingPanel.3") + " "
 //										+ PluginProperty.getString("StartingPanel.4"));
 	
-    private JCheckBox[] automatic = new JCheckBox[3];
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3050637321398637183L;
+	private JCheckBox[] automatic = new JCheckBox[3];
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -57,7 +62,7 @@ public class OptionPanel extends JPanel {
 
         //innerPanel.setLayout(new BorderLayout());
         innerPanel.add(checkBox);
-        innerPanel.add(new JLabel(string, JLabel.LEFT));
+        innerPanel.add(new JLabel(string, SwingConstants.LEFT));
         innerPanel.setOpaque(false);
         panel.add(innerPanel, BorderLayout.WEST);
         return panel;

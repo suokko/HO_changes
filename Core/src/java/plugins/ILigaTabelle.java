@@ -22,7 +22,7 @@ public interface ILigaTabelle {
      *
      * @return vector with ILigaTabellenEintrag
      */
-    public Vector getEintraege();
+    public Vector<ILigaTabellenEintrag> getEintraege();
 
     /**
      * liefert den Eintrag zu einem Team

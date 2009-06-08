@@ -16,7 +16,6 @@ import java.util.Vector;
 import plugins.IDBAdapter;
 import plugins.IExportMatchData;
 import plugins.IHOMiniModel;
-import plugins.IHelper;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
@@ -65,6 +64,7 @@ public class Rating extends FeedbackObject {
 		return (newList);
 	}
 
+	@Override
 	public String createUrl() {
 		try {
 			IHOMiniModel miniModel = getMiniModel();

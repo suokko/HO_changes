@@ -33,7 +33,11 @@ import javax.swing.JPanel;
 public class SellDialog extends JDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    // ----------------------------------------------------------------------------
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5742156913550903426L;
+	// ----------------------------------------------------------------------------
     private CallableListener caller;
     private HTWeek week;
     private JPanel panel = new JPanel();

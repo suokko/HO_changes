@@ -1,8 +1,6 @@
 package hoplugins.feedback.model;
 
 import hoplugins.Feedback;
-import hoplugins.feedback.constants.FeedbackConstants;
-
 import java.util.List;
 import java.util.Vector;
 

@@ -336,7 +336,8 @@ public class ColorLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final JComponent getComponent(boolean isSelected) {
+    @Override
+	public final JComponent getComponent(boolean isSelected) {
         m_clComponent.setOpaque(true);
         if (isSelected) {
             m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
@@ -564,7 +565,8 @@ public class ColorLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_sText = "";
         m_clIcon = null;
         updateComponent();
@@ -577,7 +579,8 @@ public class ColorLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof ColorLabelEntry) {
             final ColorLabelEntry entry = (ColorLabelEntry) obj;
 
@@ -607,7 +610,8 @@ public class ColorLabelEntry extends TableEntry {
     /**
      * Erstellt eine passende Komponente
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         JLabel label;
 
         if (m_clIcon != null) {
@@ -627,7 +631,8 @@ public class ColorLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         ((JLabel) m_clComponent).setText(m_sText);
         ((JLabel) m_clComponent).setIcon(m_clIcon);
         ((JLabel) m_clComponent).setHorizontalAlignment(m_iAusrichtung);

@@ -20,6 +20,11 @@ public class SkillupTable extends JTable {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8692544698980743170L;
+
+	/**
      * Creates a new SkillupTable object.
      *
      * @param tableModel The table model to be used
@@ -37,8 +42,9 @@ public class SkillupTable extends JTable {
      *
      * @return String toolTip for active skillup
      */
-    public String getToolTipText(MouseEvent e) {
-        TableModel tableModel = (TableModel) getModel();
+    @Override
+	public String getToolTipText(MouseEvent e) {
+        TableModel tableModel = getModel();
         java.awt.Point p = e.getPoint();
         int rowIndex = rowAtPoint(p);
         int type = ISkillup.SKILLUP_FUTURE;

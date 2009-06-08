@@ -4,6 +4,7 @@ package hoplugins.transfers.ui;
 import hoplugins.Commons;
 import hoplugins.commons.ui.DefaultTableSorter;
 import hoplugins.commons.ui.info.clearthought.layout.TableLayout;
+import hoplugins.commons.ui.info.clearthought.layout.TableLayoutConstants;
 import hoplugins.commons.utils.PluginProperty;
 import hoplugins.transfers.dao.TransfersDAO;
 import hoplugins.transfers.ui.model.PlayerTransferTableModel;
@@ -55,7 +56,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     private JButton updBtn = new JButton();
     private JLabel age = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
     private JLabel currTSI = new JLabel(PluginProperty.getString("PlayerDetail.NotAvail"),
-                                        SwingConstants.LEFT); //$NON-NLS-1$
+                                        SwingConstants.LEFT); 
     private JLabel income = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
     private JLabel name = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
     
@@ -101,7 +102,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
 
         final double[][] sizes = {
                                {
-                                   10, 50, 150, 20, 75, 50, TableLayout.FILL, 30, 100, 30, 100, 30,
+                                   10, 50, 150, 20, 75, 50, TableLayoutConstants.FILL, 30, 100, 30, 100, 30,
                                    100, 50, 100, 10
                                },
                                {20, 20, 20}
@@ -116,10 +117,10 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         detailPanel.setLayout(layout);
 
         detailPanel.add(new JLabel(Commons.getModel().getLanguageString("Name"),
-                                   SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$ //$NON-NLS-2$
+                                   SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$ 
         detailPanel.add(name, "2, 0"); //$NON-NLS-1$
         detailPanel.add(new JLabel(Commons.getModel().getLanguageString("Alter"),
-                                   SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$ //$NON-NLS-2$
+                                   SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$ 
         detailPanel.add(age, "2, 1"); //$NON-NLS-1$
         detailPanel.add(new JLabel(PluginProperty.getString("Income"), SwingConstants.LEFT), "1, 2"); //$NON-NLS-1$ //$NON-NLS-2$
         detailPanel.add(income, "2, 2"); //$NON-NLS-1$

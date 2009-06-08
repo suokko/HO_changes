@@ -13,7 +13,11 @@ import javax.swing.JTable;
 public class TableRowHeaderModel extends AbstractListModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JTable table;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1229697284058684876L;
+	private JTable table;
 
     //~ Constructors -------------------------------------------------------------------------------
 

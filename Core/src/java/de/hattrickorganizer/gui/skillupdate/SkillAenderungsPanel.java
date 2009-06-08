@@ -17,6 +17,8 @@ import javax.swing.JScrollPane;
 public class SkillAenderungsPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ActionListener
 {
+	private static final long serialVersionUID = -2695740054393344382L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private JButton m_bBerechnen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tabelle_berechnen"));

@@ -307,7 +307,8 @@ public class HoClientImp implements Chat {
     /**
      * TODO Missing Method Documentation
      */
-    protected final void finalize() {
+    @Override
+	protected final void finalize() {
         shutdown();
     }
 

@@ -16,6 +16,7 @@ public final class MatchLineupTeamTable extends AbstractTable {
 		super(TABLENAME, adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[4];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false);

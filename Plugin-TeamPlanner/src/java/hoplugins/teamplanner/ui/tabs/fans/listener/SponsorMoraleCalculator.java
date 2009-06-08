@@ -27,7 +27,8 @@ public class SponsorMoraleCalculator extends Calculator {
      * @param row Missing Method Parameter Documentation
      * @param model Missing Method Parameter Documentation
      */
-    public void doCalculate(int row, TableModel model) {
+    @Override
+	public void doCalculate(int row, TableModel model) {
         // TODO load actual sponsor Morale
         double sponsorMorale = 4;
         int weekNumber = TeamPlanner.ACTUALWEEK.getWeek();

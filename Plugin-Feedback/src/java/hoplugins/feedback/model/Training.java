@@ -455,6 +455,7 @@ public class Training extends FeedbackObject {
 		return null;
 	}
 	
+	@Override
 	public String createUrl() {
 		return baseUrl + skillUp.toUrl();
 	}

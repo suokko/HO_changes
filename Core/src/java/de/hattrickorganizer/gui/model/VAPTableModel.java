@@ -13,7 +13,12 @@ import javax.swing.table.AbstractTableModel;
 public class VAPTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8731149650305126908L;
+
+	/** TODO Missing Parameter Documentation */
     private String[] columnNames;
 
     /** TODO Missing Parameter Documentation */
@@ -66,7 +71,8 @@ public class VAPTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         return editable;
     }
 
@@ -77,7 +83,8 @@ public class VAPTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         return (obj != null) ? obj.getClass() : "".getClass();
@@ -99,7 +106,8 @@ public class VAPTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if ((columnNames != null) && (columnNames.length > columnIndex)) {
             return columnNames[columnIndex];
         }
@@ -145,7 +153,8 @@ public class VAPTableModel extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         data[row][column] = value;
     }
 

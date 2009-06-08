@@ -26,9 +26,12 @@ import javax.swing.JTextField;
  * @author draghetto
  */
 public abstract class AbstractInjuryPanel extends JPanel {
+	
+	private static final long serialVersionUID = 4820048885216403402L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private DecimalFormat df = new DecimalFormat("00.00");
+	private DecimalFormat df = new DecimalFormat("00.00");
     private InjuryDialog parent;
     private JLabel header = new JLabel();
     private JLabel inputMsg = new JLabel();

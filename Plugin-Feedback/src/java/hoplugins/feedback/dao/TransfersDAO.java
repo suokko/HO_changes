@@ -78,7 +78,7 @@ public final class TransfersDAO {
         try {
             while (rs.next()) {
                 PlayerTransfer transfer = new PlayerTransfer(rs.getInt("transferid"),
-                                                             rs.getInt("playerid"));  //$NON-NLS-2$
+                                                             rs.getInt("playerid"));  
                 transfer.setPlayerName(Commons.getModel().getHelper().decodeStringFromDatabase(rs
                                                                                                .getString("playername"))); 
                 transfer.setDate(rs.getTimestamp("date")); 

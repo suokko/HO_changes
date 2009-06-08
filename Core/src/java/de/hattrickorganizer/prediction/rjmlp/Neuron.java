@@ -133,6 +133,7 @@ class Neuron {
 		this.multi = multi;
 	}
 
+	@Override
 	public String toString () {
 		String retVal = "";
 		retVal += "[Neuron: ";

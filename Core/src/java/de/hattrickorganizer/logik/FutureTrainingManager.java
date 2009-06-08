@@ -30,8 +30,8 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 
 	/** Active player */
 	private ISpieler player;
-	private List futureTrainings;
-	private List futureSkillups;
+	private List<IFutureTrainingWeek> futureTrainings;
+	private List<ISkillup> futureSkillups;
 	private int weeksPassed = 0;
 
 	private int keeperTrainer;
@@ -44,9 +44,9 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	* @param p The active player
 	* @param trainings The future trainings
 	*/
-	public FutureTrainingManager(ISpieler p, List trainings, int cotrainer, int keeper, int trainerLvl) {
+	public FutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl) {
 		this.player = p;
-		this.futureSkillups = new ArrayList();
+		this.futureSkillups = new ArrayList<ISkillup>();
 		this.keeperTrainer = keeper;
 		this.coTrainer = cotrainer;
 		this.trainer = trainerLvl;
@@ -56,7 +56,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 
 	public IFuturePlayer previewPlayer(int startWeekNumber,int finalWeekNumber) {
 
-		this.futureSkillups = new ArrayList();
+		this.futureSkillups = new ArrayList<ISkillup>();
 				
 		// Sets the actual training levels
 		actual[0] = getOffset(ISpieler.SKILL_TORWART);
@@ -79,7 +79,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		// Iterate thru all the future training weeks
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
 			weeksPassed++;
-			IFutureTrainingWeek tw = (IFutureTrainingWeek) this.futureTrainings.get(index-1);
+			IFutureTrainingWeek tw = this.futureTrainings.get(index-1);
 			
 			double point = HOMiniModel.instance().getTrainingsManager().getTrainingPoint().getTrainingPoint(tw.getTyp(), new Integer(position)).doubleValue();
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
@@ -146,7 +146,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	*
 	* @return List of Skillups
 	*/
-	public List getFutureSkillups() {
+	public List<ISkillup> getFutureSkillups() {
 		return futureSkillups;
 	}
 

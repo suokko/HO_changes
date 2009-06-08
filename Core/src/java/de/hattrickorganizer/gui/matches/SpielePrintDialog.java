@@ -12,6 +12,8 @@ import java.awt.Toolkit;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import plugins.IMatchKurzInfo;
+
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -19,6 +21,9 @@ import de.hattrickorganizer.tools.HOLogger;
  * Dialog um ein Spiel mit allen Infos zu Drucken
  */
 public class SpielePrintDialog extends JDialog {
+	
+	private static final long serialVersionUID = 1259449929345060213L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private AufstellungsSternePanel m_jpAufstellungGastPanel;
@@ -155,7 +160,7 @@ public class SpielePrintDialog extends JDialog {
                 m_jpManschaftsBewertungsPanel.refresh(info);
                 m_jpSpielHighlightPanel.refresh(info);
 
-                if (info.getMatchStatus() == de.hattrickorganizer.model.matches.MatchKurzInfo.FINISHED) {
+                if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
                     m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
                 } else {

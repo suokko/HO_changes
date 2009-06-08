@@ -13,9 +13,12 @@ import javax.swing.table.TableModel;
  * @author TODO Author Name
  */
 public class TableMap extends AbstractTableModel implements TableModelListener {
+	
+	private static final long serialVersionUID = 5022212679370349761L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     protected TableModel model;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -36,7 +39,8 @@ public class TableMap extends AbstractTableModel implements TableModelListener {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int i, int j) {
+    @Override
+	public final boolean isCellEditable(int i, int j) {
         return model.isCellEditable(i, j);
     }
 
@@ -47,7 +51,8 @@ public class TableMap extends AbstractTableModel implements TableModelListener {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int i) {
+    @Override
+	public final Class<?> getColumnClass(int i) {
         return model.getColumnClass(i);
     }
 
@@ -67,7 +72,8 @@ public class TableMap extends AbstractTableModel implements TableModelListener {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int i) {
+    @Override
+	public final String getColumnName(int i) {
         return model.getColumnName(i);
     }
 
@@ -106,7 +112,8 @@ public class TableMap extends AbstractTableModel implements TableModelListener {
      * @param i TODO Missing Method Parameter Documentation
      * @param j TODO Missing Method Parameter Documentation
      */
-    public void setValueAt(Object obj, int i, int j) {
+    @Override
+	public void setValueAt(Object obj, int i, int j) {
         model.setValueAt(obj, i, j);
     }
 

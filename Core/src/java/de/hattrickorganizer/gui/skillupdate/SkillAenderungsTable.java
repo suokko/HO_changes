@@ -12,6 +12,8 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
+import plugins.ISpieler;
+
 
 /**
  * TODO Missing Class Documentation
@@ -19,9 +21,12 @@ import javax.swing.table.TableColumnModel;
  * @author TODO Author Name
  */
 public class SkillAenderungsTable extends JTable implements de.hattrickorganizer.gui.Refreshable {
+	
+	private static final long serialVersionUID = 3202436484641379405L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private SkillAenderungsTableModel m_clTableModel;
+	private SkillAenderungsTableModel m_clTableModel;
     private TableSorter m_clTableSorter;
     private boolean m_bInitModel;
 
@@ -95,7 +100,7 @@ public class SkillAenderungsTable extends JTable implements de.hattrickorganizer
 
         if (m_clTableModel == null) {
             /*model.HOVerwaltung.instance().getModel().getAllSpieler()*/
-            m_clTableModel = new SkillAenderungsTableModel(new Vector());
+            m_clTableModel = new SkillAenderungsTableModel(new Vector<ISpieler>());
             m_clTableSorter = new TableSorter(m_clTableModel, 11, 2);
 
             final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
@@ -133,12 +138,12 @@ public class SkillAenderungsTable extends JTable implements de.hattrickorganizer
                 m_clTableSorter.reallocateIndexes();
             } else {
                 //Werte wieder leeren
-                m_clTableModel.setValues(new Vector());
+                m_clTableModel.setValues(new Vector<ISpieler>());
                 m_clTableSorter.reallocateIndexes();
             }
         }
 
-        setAutoResizeMode(this.AUTO_RESIZE_OFF);
+        setAutoResizeMode(AUTO_RESIZE_OFF);
 
         final TableColumnModel tableColumnModel = getColumnModel();
         tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0)))

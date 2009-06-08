@@ -24,7 +24,11 @@ import javax.swing.JPanel;
 public class FilterPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox chooseMatchTypeComboBox = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5993279445476499431L;
+	private JComboBox chooseMatchTypeComboBox = null;
     private JComboBox choosePlayersComboBox = null;
     private JComboBox fromSeasonComboBox = null;
     private JComboBox toSeasonComboBox = null;

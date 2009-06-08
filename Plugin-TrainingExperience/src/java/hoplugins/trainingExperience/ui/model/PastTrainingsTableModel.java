@@ -19,6 +19,11 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4741270987836161270L;
+
+	/**
      * Creates a new PastTrainingsTableModel object.
      *
      * @param miniModel
@@ -37,7 +42,8 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
      * @param row
      * @param col
      */
-    public void setValueAt(Object value, int row, int col) {
+    @Override
+	public void setValueAt(Object value, int row, int col) {
         Object[] aobj = (Object[]) p_V_data.get(row);
 
         aobj[col] = value;
@@ -69,7 +75,8 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
     /**
      * Populate the table with the old trainings week loaded from HO API
      */
-    public void populate() {
+    @Override
+	public void populate() {
         p_V_data = new Vector();
 
         // Stores ho trainings into training vector
@@ -91,7 +98,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
                    });
 
             // add the data object into the table model
-            p_V_data.add(0, (Object) aobj);
+            p_V_data.add(0, aobj);
         }
 
         fireTableDataChanged();

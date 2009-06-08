@@ -15,6 +15,11 @@ public class MixedLineupPanel extends LineupStylePanel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5452888995528327059L;
+
+	/**
      * Constructor
      *
      * @param _mainPanel the main formation planel
@@ -30,7 +35,8 @@ public class MixedLineupPanel extends LineupStylePanel {
     /**
      * Setup the layout, with 2 teams displayed
      */
-    public void initCompare() {
+    @Override
+	public void initCompare() {
         centerPanel.removeAll();
         setLayout(new BorderLayout());
         setOpaque(false);
@@ -67,7 +73,8 @@ public class MixedLineupPanel extends LineupStylePanel {
     /**
      * Setup the layout, with only 1 team displayed
      */
-    public void initSingle() {
+    @Override
+	public void initSingle() {
         centerPanel.removeAll();
 
         setLayout(new BorderLayout());

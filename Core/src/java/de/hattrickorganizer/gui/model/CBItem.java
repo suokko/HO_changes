@@ -76,7 +76,8 @@ public class CBItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         if (obj instanceof CBItem) {
             final CBItem temp = (CBItem) obj;
 
@@ -93,7 +94,8 @@ public class CBItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return m_sText;
     }
 }

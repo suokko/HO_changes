@@ -31,6 +31,9 @@ import de.hattrickorganizer.gui.templates.RasenPanel;
  * @author Pirania
  */
 final class AufstellungsRatingPanel extends RasenPanel {
+	
+	private static final long serialVersionUID = -8938268226990652913L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */

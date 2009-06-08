@@ -18,12 +18,17 @@ public class TextAreaRenderer extends JEditorPane implements TableCellRenderer {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1819164140033081924L;
+
+	/**
      *
      */
     public TextAreaRenderer() {
         super();
         this.setContentType("text/html");
-        this.setAlignmentY(TextAreaRenderer.CENTER_ALIGNMENT);
+        this.setAlignmentY(Component.CENTER_ALIGNMENT);
         this.setMargin(new Insets(0, 1, 0, 1));
     }
 

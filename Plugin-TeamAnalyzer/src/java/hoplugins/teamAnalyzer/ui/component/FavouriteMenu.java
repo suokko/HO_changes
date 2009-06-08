@@ -31,7 +31,12 @@ import javax.swing.JSeparator;
 public class FavouriteMenu extends JMenu {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** The DB Access object */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3404254214435543226L;
+
+	/** The DB Access object */
     public FavoritesDAO dao = new FavoritesDAO();
 
     /** Add menu item */

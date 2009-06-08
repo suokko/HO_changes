@@ -17,8 +17,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class IconCellRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
-    /** {@inheritDoc} */
-    public final Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -57196039372860581L;
+
+	/** {@inheritDoc} */
+    @Override
+	public final Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
 

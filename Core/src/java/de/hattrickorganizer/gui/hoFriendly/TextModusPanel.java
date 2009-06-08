@@ -7,6 +7,7 @@ import java.awt.Dimension;
 
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -22,7 +23,11 @@ import de.hattrickorganizer.tools.HOLogger;
 public class TextModusPanel extends ImagePanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JEditorPane m_jepTextModusEditorPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7932485674476438111L;
+	private JEditorPane m_jepTextModusEditorPane;
     private JScrollPane m_jscTextModusScrollPane;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -85,7 +90,7 @@ public class TextModusPanel extends ImagePanel {
 
         //m_jepTextModusEditorPane.addHyperlinkListener(this);
         m_jscTextModusScrollPane = new JScrollPane(m_jepTextModusEditorPane);
-        m_jscTextModusScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        m_jscTextModusScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(m_jscTextModusScrollPane, BorderLayout.CENTER);
     }
 }

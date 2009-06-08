@@ -422,7 +422,8 @@ public interface ISpieler {
     /**
      * @deprecated use getTrainingLength instead
      */
-    public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
+    @Deprecated
+	public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
                                 int intensitaet, int staminaTrainingPart);
 
 	public double getTrainingLength(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
@@ -639,7 +640,8 @@ public interface ISpieler {
      * @param m_iTSI New value of property m_iMarkwert.
      * @deprecated Use setTSI()
      */
-    public void setMarkwert(int m_iTSI);
+    @Deprecated
+	public void setMarkwert(int m_iTSI);
 
     /**
      * Returns the TSI (aka Marktwert)
@@ -647,7 +649,8 @@ public interface ISpieler {
      * @return Value of property m_iMarkwert.
      * @deprecated use getTSI()
      */
-    public int getMarkwert();
+    @Deprecated
+	public int getMarkwert();
 
     /**
      * Sets the TSI

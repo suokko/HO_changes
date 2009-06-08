@@ -22,6 +22,8 @@ import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -30,7 +32,11 @@ import javax.swing.JScrollPane;
 public class SkillupPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private BaseTableModel tableModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 57377377617909870L;
+	private BaseTableModel tableModel;
     private SkillupTable table;
     private String[] columns = {
                                    PluginProperty.getString("Type"), //$NON-NLS-1$
@@ -133,14 +139,14 @@ public class SkillupPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         JPanel headerPanel = Commons.getModel().getGUI().createImagePanel();
 
         headerPanel.setOpaque(false);
 
-        JLabel l = new JLabel(PluginProperty.getString("TrainingHistory"), JLabel.CENTER); //$NON-NLS-1$
+        JLabel l = new JLabel(PluginProperty.getString("TrainingHistory"), SwingConstants.CENTER); //$NON-NLS-1$
 
         l.setOpaque(false);
         headerPanel.add(l, BorderLayout.CENTER);

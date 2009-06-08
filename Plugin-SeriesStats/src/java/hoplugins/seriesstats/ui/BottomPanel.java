@@ -24,7 +24,11 @@ import javax.swing.JTabbedPane;
 public class BottomPanel extends JTabbedPane {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private MiniPanel GeneralAverage;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3872059255348104027L;
+	private MiniPanel GeneralAverage;
     private MiniPanel GeneralMax;
     private MiniPanel GeneralMin;
 

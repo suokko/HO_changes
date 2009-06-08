@@ -630,7 +630,8 @@ public class HOServerImp implements Chat {
     /**
      * TODO Missing Method Documentation
      */
-    protected final void finalize() {
+    @Override
+	protected final void finalize() {
         //Clean up
         shutdown();
     }

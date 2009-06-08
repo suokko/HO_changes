@@ -91,7 +91,7 @@ public class RatingPredictionConfig
     			HOLogger.instance().debug(RatingPredictionConfig.class, "Found predictionTypes: "+list);
     			allPredictionNames = new String[list.size()];
     			for (int i=0; i < allPredictionNames.length; i++) {
-    				allPredictionNames[i] = (String)list.get(i);
+    				allPredictionNames[i] = list.get(i);
     			}
     		} catch (FileNotFoundException e) {
     			HOLogger.instance().error(RatingPredictionConfig.class, "File not found: "+predConfigFile);

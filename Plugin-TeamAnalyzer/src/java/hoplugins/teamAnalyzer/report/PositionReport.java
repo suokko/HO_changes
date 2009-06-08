@@ -46,7 +46,8 @@ public class PositionReport extends Report {
      *
      * @param pp
      */
-    public void addPerformance(PlayerPerformance pp) {
+    @Override
+	public void addPerformance(PlayerPerformance pp) {
         super.addPerformance(pp);
         updateTacticDetails(pp);
     }
@@ -56,7 +57,8 @@ public class PositionReport extends Report {
      *
      * @return the String representation
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append("PositionReport[");

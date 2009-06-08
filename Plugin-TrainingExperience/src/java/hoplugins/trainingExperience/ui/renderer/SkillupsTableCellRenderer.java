@@ -18,10 +18,16 @@ public class SkillupsTableCellRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2836512590615874682L;
+
+	/**
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 

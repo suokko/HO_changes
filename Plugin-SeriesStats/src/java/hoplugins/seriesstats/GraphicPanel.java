@@ -7,7 +7,11 @@ import javax.swing.*;
  */
 public class GraphicPanel extends JPanel
 {
-    //Seitenabstände bis zum Koordinatenkreuzanfang
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6661975522674738207L;
+	//Seitenabstände bis zum Koordinatenkreuzanfang
     private int SL = 60; //Dynamisch berechnen
     public int SR = 25;
     public int SU = 50;
@@ -156,7 +160,8 @@ public class GraphicPanel extends JPanel
             
 //#####################################################################
 
-        public void print( Graphics g )
+        @Override
+		public void print( Graphics g )
         {
                 update(g);
         }
@@ -164,6 +169,7 @@ public class GraphicPanel extends JPanel
 /**
  * Zeichnet die GComponent
  */
+	@Override
 	public void paint(Graphics g)
 	{
 		update(g);
@@ -172,6 +178,7 @@ public class GraphicPanel extends JPanel
 /**
  * Zeichnet die GComponent
  */
+	@Override
 	public void update(Graphics g)
 	{
             if ( g != null )
@@ -223,7 +230,7 @@ public class GraphicPanel extends JPanel
                     //Menge der y-Striche bestimmen
                     int f = 1;
                     if ( print ) f = 2;
-                    int yStriche=(int)((h-SU-SO)/(SA/f));
+                    int yStriche=((h-SU-SO)/(SA/f));
                     if (yStriche==0) yStriche=1;
                     //Abstand der einzelnen Striche voneinander
                     double yAbstand=(((double)(h-SU-SO))/yStriche);
@@ -235,8 +242,8 @@ public class GraphicPanel extends JPanel
                     g.setFont(new Font("SansSerif",Font.BOLD,smallschriftgroesse));
                     //Seitenabstand berechnen
                     SL = smallschriftgroesse 
-                         + Math.max( (int)( ( g.getFontMetrics ().stringWidth ( m_clYAchseFormat.format ( max ) ) + 10 )  ), 
-                                     (int)( ( g.getFontMetrics ().stringWidth ( m_clYAchseFormat.format ( min ) ) + 10 )  ) );
+                         + Math.max( ( ( g.getFontMetrics ().stringWidth ( m_clYAchseFormat.format ( max ) ) + 10 )  ), 
+                                     ( ( g.getFontMetrics ().stringWidth ( m_clYAchseFormat.format ( min ) ) + 10 )  ) );
                     for (int i=yStriche;i>=0;i--)
                     {
                             //Striche y zeichnen: Höhe - Abstand vom unteren Rand - Vielfaches des Strichabstandes
@@ -250,7 +257,7 @@ public class GraphicPanel extends JPanel
                             g.drawLine(SL-5,(int)(h-SU-yAbstand*i),SL+5,(int)(h-SU-yAbstand*i));
                             //Wert pro Strich
                             int ypos = (int)(h-SU+smallschriftgroesse/2-yAbstand*i);
-                            g.drawString(m_clYAchseFormat.format(((double)(max-min)/(yStriche)*i+min)),smallschriftgroesse,ypos);
+                            g.drawString(m_clYAchseFormat.format(((max-min)/(yStriche)*i+min)),smallschriftgroesse,ypos);
                     }
 
                      //Menge der x-Striche bestimmen - Wird jetzt bei der BeschriftungXAchse gemacht
@@ -281,8 +288,8 @@ public class GraphicPanel extends JPanel
                     int schriftbreite = 0;
                     if ( m_clStatistikModel[0].getWerte ().length > 0 )
                     {
-                        schriftbreite = Math.max( (int)( ( g.getFontMetrics ().stringWidth ( m_clStatistikModel[0].getFormat ().format ( maxohneFaktor ) ) + 10 )  ), 
-                                                  (int)( ( g.getFontMetrics ().stringWidth ( m_clStatistikModel[0].getFormat ().format ( minohneFaktor ) ) + 10 )  ) );
+                        schriftbreite = Math.max( ( ( g.getFontMetrics ().stringWidth ( m_clStatistikModel[0].getFormat ().format ( maxohneFaktor ) ) + 10 )  ), 
+                                                  ( ( g.getFontMetrics ().stringWidth ( m_clStatistikModel[0].getFormat ().format ( minohneFaktor ) ) + 10 )  ) );
                     }
                     
                     //Beschriftung XAchse
@@ -306,12 +313,12 @@ public class GraphicPanel extends JPanel
             if ( werte.length > 0 )
             {
 		int x1,x2,y1,y2;
-		int mengeBeschriftung=(int)((b-SL-SR)/schriftbreite)-1;
+		int mengeBeschriftung=((b-SL-SR)/schriftbreite)-1;
 		if (mengeBeschriftung==0) mengeBeschriftung=1;
-		int abstandBeschriftung=(int)(werte.length/mengeBeschriftung);
+		int abstandBeschriftung=(werte.length/mengeBeschriftung);
 		if (abstandBeschriftung==0) abstandBeschriftung=1;
 
-		y2=(int)((h-SU-((double)(h-SU-SO)/(max-min)*(werte[werte.length-1]*faktor-min))));
+		y2=(int)((h-SU-((h-SU-SO)/(max-min)*(werte[werte.length-1]*faktor-min))));
 		x2=SL;//(int)(((double)(b-SL-SR))/(werte.length)*(werte.length-1)+SL);
 //		if (beschriftung && 0%abstandBeschriftung==0)
 //		{
@@ -322,7 +329,7 @@ public class GraphicPanel extends JPanel
 		{
 			x1=x2;
 			y1=y2;
-			y2=(int)((h-SU-((double)(h-SU-SO)/(max-min)*(werte[werte.length-i-1]*faktor-min))));
+			y2=(int)((h-SU-((h-SU-SO)/(max-min)*(werte[werte.length-i-1]*faktor-min))));
 			x2=(int)(((double)(b-SL-SR))/(werte.length)*(i)+SL);
 //			y2=(int)((h-SU-((double)(h-SU-SO)/(max-min)*(werte[i]-min))));
 //			x2=(int)(((double)(b-SL-SR))/(werte.length)*(i)+SL);
@@ -352,9 +359,9 @@ public class GraphicPanel extends JPanel
                 
                 
 		int x1,x2,y1,y2;
-		int mengeBeschriftung=(int)((b-SL-SR)/schriftbreite);
+		int mengeBeschriftung=((b-SL-SR)/schriftbreite);
 		if (mengeBeschriftung==0) mengeBeschriftung=1;
-		int abstandBeschriftung=(int)(m_clYAchseBeschriftung.length/mengeBeschriftung);
+		int abstandBeschriftung=(m_clYAchseBeschriftung.length/mengeBeschriftung);
 		if (abstandBeschriftung==0) abstandBeschriftung=1;
 
 		y2=this.getHeight ()-SU+25;

@@ -33,7 +33,12 @@ import de.hattrickorganizer.tools.SprachFileFilter;
 public final class LanguagesDialog extends UpdaterDialog {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8429766970834045846L;
+
+	/** TODO Missing Parameter Documentation */
     private static final String PROP_LANGUAGEFILE = HOVerwaltung.instance().getLanguageString("Sprachdatei");
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -78,7 +83,8 @@ public final class LanguagesDialog extends UpdaterDialog {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected TableModel getModel(boolean selected, String[] columnNames2) {
+    @Override
+	protected TableModel getModel(boolean selected, String[] columnNames2) {
         Object[][] updates = new Object[object.length][4];
         TableModel model = null;
         Properties props = null;
@@ -132,7 +138,8 @@ public final class LanguagesDialog extends UpdaterDialog {
     /**
      * TODO Missing Method Documentation
      */
-    protected void action() {
+    @Override
+	protected void action() {
         if (table != null) {
             int i = 0;
 

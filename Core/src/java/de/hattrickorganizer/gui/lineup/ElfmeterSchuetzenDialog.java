@@ -16,9 +16,12 @@ import de.hattrickorganizer.gui.model.SpielerCBItem;
  * Zeigt die besten Elfmeterschützen für die aktuelle Aufstellung an
  */
 public class ElfmeterSchuetzenDialog extends JDialog {
+	
+	private static final long serialVersionUID = -7330144318224339032L;
+	
     //~ Constructors -------------------------------------------------------------------------------
 
-    /**
+	/**
      * Creates a new ElfmeterSchuetzenDialog object.
      *
      * @param owner TODO Missing Constructuor Parameter Documentation

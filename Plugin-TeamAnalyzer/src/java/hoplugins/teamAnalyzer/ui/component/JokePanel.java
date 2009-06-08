@@ -14,7 +14,11 @@ import hoplugins.commons.ui.InfoPanel;
 public class JokePanel extends InfoPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String[] messages = new String[4];
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3188758998536694991L;
+	private static String[] messages = new String[4];
 
     static {
         if (Commons.getModel().getHelper().getLanguageName().equalsIgnoreCase("Italiano")) {

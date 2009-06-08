@@ -310,7 +310,8 @@ public class Paarung implements plugins.IPaarung {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         if (obj instanceof Paarung) {
             final Paarung spiel = (Paarung) obj;
 

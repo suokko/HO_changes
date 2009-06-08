@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -26,7 +27,11 @@ import javax.swing.JTextField;
 public class StadiumExpansionDialog extends JDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private StadiumExpansionInner original;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6077616158749360584L;
+	private StadiumExpansionInner original;
     private StadiumExpansionListener caller;
     private JTextField[] newValues = new JTextField[4];
 
@@ -60,28 +65,28 @@ public class StadiumExpansionDialog extends JDialog {
         JPanel p = new JPanel();
         p.setLayout(new GridLayout(5, 2));
 
-        JLabel l = new JLabel((total.getTerraces() - inner.getTerraces()) + "", JLabel.LEFT);
+        JLabel l = new JLabel((total.getTerraces() - inner.getTerraces()) + "", SwingConstants.LEFT);
         l.setEnabled(false);
         p.add(l);
 
         newValues[0] = new JTextField(inner.getTerraces() + "");
         p.add(newValues[0]);
 
-        JLabel l2 = new JLabel((total.getSeats() - inner.getSeats()) + "", JLabel.LEFT);
+        JLabel l2 = new JLabel((total.getSeats() - inner.getSeats()) + "", SwingConstants.LEFT);
         l2.setEnabled(false);
         p.add(l2);
 
         newValues[1] = new JTextField(inner.getSeats() + "");
         p.add(newValues[1]);
 
-        JLabel l3 = new JLabel((total.getRoofs() - inner.getRoofs()) + "", JLabel.LEFT);
+        JLabel l3 = new JLabel((total.getRoofs() - inner.getRoofs()) + "", SwingConstants.LEFT);
         l3.setEnabled(false);
         p.add(l3);
 
         newValues[2] = new JTextField(inner.getRoofs() + "");
         p.add(newValues[2]);
 
-        JLabel l4 = new JLabel((total.getVips() - inner.getVips()) + "", JLabel.LEFT);
+        JLabel l4 = new JLabel((total.getVips() - inner.getVips()) + "", SwingConstants.LEFT);
         l4.setEnabled(false);
         p.add(l4);
 

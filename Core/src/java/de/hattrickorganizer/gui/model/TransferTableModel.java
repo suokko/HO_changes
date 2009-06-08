@@ -4,7 +4,10 @@ package de.hattrickorganizer.gui.model;
 import java.util.Vector;
 
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
+
+import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
@@ -333,7 +336,8 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         return false;
     }
 
@@ -344,7 +348,8 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -373,7 +378,8 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
             return m_sColumnNames[columnIndex];
         } else {
@@ -403,8 +409,8 @@ public class TransferTableModel extends AbstractTableModel {
      */
     public final ScoutEintrag getScoutEintrag(int playerID) {
         for (int i = 0; i < m_vScoutEintraege.size(); i++) {
-            if (((ScoutEintrag) m_vScoutEintraege.get(i)).getPlayerID() == playerID) {
-                return ((ScoutEintrag) m_vScoutEintraege.get(i)).duplicate();
+            if ((m_vScoutEintraege.get(i)).getPlayerID() == playerID) {
+                return (m_vScoutEintraege.get(i)).duplicate();
             }
         }
 
@@ -449,7 +455,8 @@ public class TransferTableModel extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 
@@ -520,7 +527,7 @@ public class TransferTableModel extends AbstractTableModel {
         m_clData = new Object[m_vScoutEintraege.size()][m_sColumnNames.length];
 
         for (int i = 0; i < m_vScoutEintraege.size(); i++) {
-            final ScoutEintrag aktuellerScoutEintrag = (ScoutEintrag) m_vScoutEintraege.get(i);
+            final ScoutEintrag aktuellerScoutEintrag = m_vScoutEintraege.get(i);
             final Spieler aktuellerSpieler = new Spieler();
             aktuellerSpieler.setName(aktuellerScoutEintrag.getName());
             aktuellerSpieler.setSpezialitaet(aktuellerScoutEintrag.getSpeciality());
@@ -538,7 +545,7 @@ public class TransferTableModel extends AbstractTableModel {
             //ID
             m_clData[i][0] = new ColorLabelEntry(aktuellerScoutEintrag.getPlayerID(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
+                                                 ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
             //Name
             m_clData[i][1] = new SpielerLabelEntry(aktuellerSpieler, null, 0f, false, false);
@@ -546,14 +553,14 @@ public class TransferTableModel extends AbstractTableModel {
             //Price
             m_clData[i][2] = new ColorLabelEntry(aktuellerScoutEintrag.getPrice(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_STANDARD, JLabel.RIGHT);
+                                                 ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 
             //Ablaufdatum
             m_clData[i][3] = new ColorLabelEntry(aktuellerScoutEintrag.getDeadline().getTime(),
                                                  java.text.DateFormat.getDateTimeInstance().format(aktuellerScoutEintrag
                                                                                                    .getDeadline()),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_STANDARD, JLabel.RIGHT);
+                                                 ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 
             //Beste Position
             m_clData[i][4] = new ColorLabelEntry(SpielerPosition.getSortId(aktuellerSpieler
@@ -567,83 +574,83 @@ public class TransferTableModel extends AbstractTableModel {
                                                                                  .getIdealPosition(),
                                                                                  true) + ")",
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
+                                                 ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
             //Alter
             m_clData[i][5] = new ColorLabelEntry(aktuellerScoutEintrag.getAlterWithAgeDays(), aktuellerScoutEintrag.getAlterWithAgeDaysAsString(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_STANDARD, JLabel.CENTER);
+                                                 ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 
             //Marktwert
             m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getTSI(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_STANDARD, JLabel.RIGHT);
+                                                 ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 
             //Erfahrung
             m_clData[i][7] = new ColorLabelEntry(aktuellerSpieler.getErfahrung(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_SPIELERSONDERWERTE, JLabel.RIGHT);
+                                                 ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
 
             //Form
             m_clData[i][8] = new ColorLabelEntry(aktuellerSpieler.getForm(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_SPIELERSONDERWERTE, JLabel.RIGHT);
+                                                 ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
 
             //Kondition
             m_clData[i][9] = new ColorLabelEntry(aktuellerSpieler.getKondition(),
                                                  ColorLabelEntry.FG_STANDARD,
-                                                 ColorLabelEntry.BG_SPIELEREINZELWERTE, JLabel.RIGHT);
+                                                 ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.RIGHT);
 
             //Torwart
             m_clData[i][10] = new ColorLabelEntry(aktuellerSpieler.getTorwart(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Verteidigung
             m_clData[i][11] = new ColorLabelEntry(aktuellerSpieler.getVerteidigung(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Spielaufbau
             m_clData[i][12] = new ColorLabelEntry(aktuellerSpieler.getSpielaufbau(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Passpiel
             m_clData[i][13] = new ColorLabelEntry(aktuellerSpieler.getPasspiel(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Flügelspiel
             m_clData[i][14] = new ColorLabelEntry(aktuellerSpieler.getFluegelspiel(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Torschuss
             m_clData[i][15] = new ColorLabelEntry(aktuellerSpieler.getTorschuss(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Standards
             m_clData[i][16] = new ColorLabelEntry(aktuellerSpieler.getStandards(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Wert Torwart
-            m_clData[i][17] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.TORWART,
+            m_clData[i][17] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.TORWART,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Innnenverteidiger
-            m_clData[i][18] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.INNENVERTEIDIGER,
+            m_clData[i][18] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);

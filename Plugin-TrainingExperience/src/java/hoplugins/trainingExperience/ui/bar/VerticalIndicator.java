@@ -74,7 +74,8 @@ public class VerticalIndicator extends JPanel {
      *
      * @return
      */
-    public String getToolTipText() {
+    @Override
+	public String getToolTipText() {
         return actual + "(" + total + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 

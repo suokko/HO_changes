@@ -12,9 +12,12 @@ import javax.swing.JDialog;
  * DebugWindow
  */
 public class DebugWindow extends JDialog implements plugins.IDebugWindow {
+	
+	private static final long serialVersionUID = 4026001586092998743L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private DebugMessagePanel m_jpText = new DebugMessagePanel();
+	private DebugMessagePanel m_jpText = new DebugMessagePanel();
 
     //~ Constructors -------------------------------------------------------------------------------
 

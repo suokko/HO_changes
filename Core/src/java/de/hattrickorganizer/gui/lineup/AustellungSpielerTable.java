@@ -21,9 +21,13 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
                                                                     java.awt.event.KeyListener,
                                                                     de.hattrickorganizer.gui.Refreshable
 {
+	
+	private static final long serialVersionUID = -8295456454328467793L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    //TableSorter sorter;
+	
+	//TableSorter sorter;
     private LineupColumnModel m_clTableModel;
     private TableSorter m_clTableSorter;
 

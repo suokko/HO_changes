@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import plugins.IMatchKurzInfo;
+
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
@@ -545,9 +547,9 @@ public class ManschaftsBewertungsPanel extends ImagePanel implements ActionListe
             m_clGastTeamName.setForeground(java.awt.Color.black);
         }
 
-        if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
+        if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
             //Sterne für Sieger!
-            if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
+            if (info.getMatchStatus() != IMatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {

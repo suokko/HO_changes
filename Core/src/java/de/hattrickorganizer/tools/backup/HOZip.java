@@ -16,7 +16,11 @@ import java.util.zip.ZipOutputStream;
 public class HOZip extends File {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ZipOutputStream zOut;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2172587062884736633L;
+	private ZipOutputStream zOut;
     private int fileCount = 0;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -97,7 +101,8 @@ public class HOZip extends File {
      *
      * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    public void finalize() throws Exception {
+    @Override
+	public void finalize() throws Exception {
         if (zOut != null) {
             zOut.finish();
             zOut.close();

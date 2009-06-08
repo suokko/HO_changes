@@ -18,12 +18,17 @@ public class HtmlCellRenderer extends JEditorPane implements TableCellRenderer {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2237371473033852394L;
+
+	/**
      * Constructor
      */
     public HtmlCellRenderer() {
         super();
         this.setContentType("text/html");
-        this.setAlignmentY(HtmlCellRenderer.CENTER_ALIGNMENT);
+        this.setAlignmentY(Component.CENTER_ALIGNMENT);
         this.setMargin(new Insets(0, 1, 0, 1));
     }
 

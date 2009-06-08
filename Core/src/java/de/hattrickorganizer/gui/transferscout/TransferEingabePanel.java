@@ -25,6 +25,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SwingConstants;
 
 import plugins.IEPVData;
 import plugins.ISpielerPosition;
@@ -55,7 +56,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ColorLabelEntry jpBestPos = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                            ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
+                                                            ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
     private DoppelLabelEntry jpWertAussenVert = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private DoppelLabelEntry jpWertAussenVertDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpWertAussenVertIn = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
@@ -102,7 +103,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JTextField jtfAlter = new JTextField("17.0");
     private JTextField jtfTSI = new JTextField("1000");
     private JTextField jtfPrice = new JTextField("0");
-	private JLabel jtfEPV = new JLabel("",JLabel.RIGHT);
+	private JLabel jtfEPV = new JLabel("",SwingConstants.RIGHT);
     private ScoutEintrag clScoutEintrag;
     private SpinnerDateModel clSpinnerModel = new SpinnerDateModel();
     private JSpinner jsSpinner = new JSpinner(clSpinnerModel);

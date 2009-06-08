@@ -52,7 +52,7 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
 {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Hashtable filters;
+    private Hashtable<String,ExampleFileFilter> filters;
     private String description;
     private String fullDescription;
     private boolean useExtensionsInDescription = true;
@@ -66,7 +66,7 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * @see #addExtension
      */
     public ExampleFileFilter() {
-        this.filters = new Hashtable();
+        this.filters = new Hashtable<String,ExampleFileFilter>();
     }
 
     /**
@@ -156,13 +156,14 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * @see isExtensionListInDescription
      * @see FileFilter#getDescription
      */
-    public final String getDescription() {
+    @Override
+	public final String getDescription() {
         if (fullDescription == null) {
             if ((description == null) || isExtensionListInDescription()) {
                 fullDescription = (description == null) ? "(" : (description + " (");
 
                 // build the description from the extension list
-                final Enumeration extensions = filters.keys();
+                final Enumeration<String> extensions = filters.keys();
 
                 if (extensions != null) {
                     fullDescription += ("." + (String) extensions.nextElement());
@@ -248,7 +249,8 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * @see #getExtension
      * @see FileFilter#accepts
      */
-    public final boolean accept(File f) {
+    @Override
+	public final boolean accept(File f) {
         if (f != null) {
             if (f.isDirectory() && !ignoreDirectories) {
                 return true;
@@ -277,7 +279,7 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      */
     public final void addExtension(String extension) {
         if (filters == null) {
-            filters = new Hashtable(5);
+            filters = new Hashtable<String,ExampleFileFilter>(5);
         }
 
         filters.put(extension.toLowerCase(), this);

@@ -19,6 +19,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import plugins.IExportMatchData;
 import plugins.ILineUp;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
@@ -169,7 +170,7 @@ public class XMLExporter  {
 	public void saveXML(String filename, Timestamp startingDate) {
 				
 		//Alle Matches holen			
-		List matches = MatchExporter.getDataUsefullMatches(startingDate);
+		List<IExportMatchData> matches = MatchExporter.getDataUsefullMatches(startingDate);
 		
 		//XML schreiben
 		try {
@@ -197,7 +198,7 @@ public class XMLExporter  {
 			root.appendChild(tmpEle);
 			tmpEle.appendChild(doc.createTextNode("1.05"));
 
-			for (Iterator iter = matches.iterator(); iter.hasNext();) {
+			for (Iterator<IExportMatchData> iter = matches.iterator(); iter.hasNext();) {
 				ExportMatchData matchData = (ExportMatchData) iter.next();
 
 				//Matchdaten

@@ -31,7 +31,11 @@ import javax.swing.JPanel;
 public class TraineesDialog extends JDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private CallableListener caller;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4688213301998533458L;
+	private CallableListener caller;
     private JPanel p = new JPanel();
     private List players;
     private int row;

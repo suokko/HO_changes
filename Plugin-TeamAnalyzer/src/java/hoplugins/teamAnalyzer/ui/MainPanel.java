@@ -18,7 +18,11 @@ import javax.swing.JTabbedPane;
 public class MainPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private RosterPanel rosterPanel = new RosterPanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6374854816698657464L;
+	private RosterPanel rosterPanel = new RosterPanel();
     private TeamPanel teamPanel = new TeamPanel();
 
     //~ Constructors -------------------------------------------------------------------------------

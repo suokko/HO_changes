@@ -33,7 +33,12 @@ public final class ServerSpieler implements java.io.Serializable {
 
     //Posotionscodierungen! für alle Positionen auf dem Spielfeld gilt die Codierung der Spielerposition!!
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4364906341773690386L;
+
+	/** TODO Missing Parameter Documentation */
     public static final byte BANK_TW = -1;
 
     /** TODO Missing Parameter Documentation */

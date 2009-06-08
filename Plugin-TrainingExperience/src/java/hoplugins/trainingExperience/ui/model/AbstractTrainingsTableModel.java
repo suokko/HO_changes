@@ -16,7 +16,12 @@ import javax.swing.table.AbstractTableModel;
 public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** HO Model */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5399479264645517270L;
+
+	/** HO Model */
     protected IHOMiniModel p_IHMM_miniModel;
 
     /** Vector of ITrainingPerPlayer object */
@@ -55,7 +60,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         return (column == 2 || column == 3 || column == 4);
     }
 
@@ -66,7 +72,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         return getValueAt(0, column).getClass();
     }
 
@@ -86,7 +93,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return column header
      */
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         return columnNames[column];
     }
 

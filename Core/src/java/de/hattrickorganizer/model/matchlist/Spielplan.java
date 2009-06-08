@@ -44,7 +44,7 @@ public class Spielplan implements plugins.ISpielplan {
     protected Timestamp m_clFetchDate;
 
     /** TODO Missing Parameter Documentation */
-    protected Vector m_vEintraege = new Vector();
+    protected Vector<IPaarung> m_vEintraege = new Vector<IPaarung>();
 
     /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
@@ -69,7 +69,7 @@ public class Spielplan implements plugins.ISpielplan {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector getEintraege() {
+    public final Vector<IPaarung> getEintraege() {
         return m_vEintraege;
     }
 
@@ -134,8 +134,8 @@ public class Spielplan implements plugins.ISpielplan {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector getPaarungenBySpieltag(int spieltag) {
-        final Vector spiele = new Vector();
+    public final Vector<IPaarung> getPaarungenBySpieltag(int spieltag) {
+        final Vector<IPaarung> spiele = new Vector<IPaarung>();
         Paarung tmp = null;
 
         for (int i = 0; i < m_vEintraege.size(); i++) {
@@ -162,7 +162,7 @@ public class Spielplan implements plugins.ISpielplan {
      */
     public final IPaarung[] getPaarungenByTeamId(int id) {
         Paarung tmp = null;
-        final Vector spiele = new Vector();
+        final Vector<IPaarung> spiele = new Vector<IPaarung>();
         Paarung[] aSpiele = null;
 
         for (int i = 0; i < m_vEintraege.size(); i++) {
@@ -244,7 +244,8 @@ public class Spielplan implements plugins.ISpielplan {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean equals(Object o) {
+    @Override
+	public final boolean equals(Object o) {
         if (o instanceof Spielplan) {
             if ((m_iLigaId == ((Spielplan) o).getLigaId())
                 && (m_iSaison == ((Spielplan) o).getSaison())) {
@@ -260,7 +261,8 @@ public class Spielplan implements plugins.ISpielplan {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season")
                + " " + getSaison() + " "
                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Liga")
@@ -309,7 +311,7 @@ public class Spielplan implements plugins.ISpielplan {
      */
     protected final LigaTabelle berechneTabelle(int maxSpieltag) {
         final LigaTabelle tmp = new LigaTabelle();
-        final Vector spieltag = getPaarungenBySpieltag(maxSpieltag);
+        final Vector<IPaarung> spieltag = getPaarungenBySpieltag(maxSpieltag);
 
         //vorabInfos
         tmp.setLigaId(m_iLigaId);
@@ -377,7 +379,7 @@ public class Spielplan implements plugins.ISpielplan {
                     //Sieg
                     if (spiele[i].getToreHeim() > spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 LigaTabellenEintrag.H_SIEG);
+                                                 ILigaTabellenEintrag.H_SIEG);
                         hPunkte += 3;
                         hSieg += 1;
                         hToreGegen += spiele[i].getToreGast();
@@ -386,7 +388,7 @@ public class Spielplan implements plugins.ISpielplan {
                     //Unentschieden
                     else if (spiele[i].getToreHeim() == spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 LigaTabellenEintrag.H_UN);
+                                                 ILigaTabellenEintrag.H_UN);
                         hPunkte += 1;
                         hUn += 1;
                         hToreGegen += spiele[i].getToreGast();
@@ -395,7 +397,7 @@ public class Spielplan implements plugins.ISpielplan {
                     //Niederlage
                     else if (spiele[i].getToreHeim() < spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 LigaTabellenEintrag.H_NIED);
+                                                 ILigaTabellenEintrag.H_NIED);
                         hNied += 1;
                         hToreGegen += spiele[i].getToreGast();
                         hToreFuer += spiele[i].getToreHeim();
@@ -406,7 +408,7 @@ public class Spielplan implements plugins.ISpielplan {
                     //Niederlage
                     if (spiele[i].getToreHeim() > spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 LigaTabellenEintrag.A_NIED);
+                                                 ILigaTabellenEintrag.A_NIED);
 
                         aNied += 1;
                         aToreGegen += spiele[i].getToreHeim();
@@ -415,7 +417,7 @@ public class Spielplan implements plugins.ISpielplan {
                     //Unentschieden
                     else if (spiele[i].getToreHeim() == spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 LigaTabellenEintrag.A_UN);
+                                                 ILigaTabellenEintrag.A_UN);
 
                         aPunkte += 1;
                         aUn += 1;
@@ -425,7 +427,7 @@ public class Spielplan implements plugins.ISpielplan {
                     //Sieg
                     else if (spiele[i].getToreHeim() < spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 LigaTabellenEintrag.A_SIEG);
+                                                 ILigaTabellenEintrag.A_SIEG);
 
                         aPunkte += 3;
                         aSieg += 1;

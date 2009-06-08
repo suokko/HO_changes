@@ -1,19 +1,14 @@
 // %4038744218:hoplugins.teamAnalyzer.ui%
 package hoplugins.teamAnalyzer.ui;
 
-import gui.UserParameter;
-
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 import hoplugins.commons.utils.PluginProperty;
 import hoplugins.commons.utils.RatingUtil;
 import hoplugins.commons.vo.MatchRating;
 
 import hoplugins.teamAnalyzer.SystemManager;
 import hoplugins.teamAnalyzer.manager.MatchPopulator;
-import hoplugins.teamAnalyzer.manager.ReportManager;
 import hoplugins.teamAnalyzer.ui.controller.RecapListSelectionListener;
 import hoplugins.teamAnalyzer.ui.model.UiRecapTableModel;
 import hoplugins.teamAnalyzer.util.MatchUtil;
@@ -26,7 +21,6 @@ import java.awt.BorderLayout;
 import java.text.DecimalFormat;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -36,8 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.ScrollPaneConstants;
 
 
 /**
@@ -48,7 +41,12 @@ import javax.swing.event.ListSelectionListener;
 public class RecapPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 486150690031160261L;
+
+	/** TODO Missing Parameter Documentation */
     public static final String VALUE_NA = "---"; //$NON-NLS-1$
 
     /** TODO Missing Parameter Documentation */
@@ -339,8 +337,8 @@ public class RecapPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         add(scrollPane);
     }
 

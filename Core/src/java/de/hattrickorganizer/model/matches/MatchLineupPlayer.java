@@ -18,7 +18,12 @@ import de.hattrickorganizer.model.SpielerPosition;
 public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatchLineupPlayer {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5986419471284091148L;
+
+	/** TODO Missing Parameter Documentation */
     private String m_sNickName = "";
 
     /** TODO Missing Parameter Documentation */
@@ -146,7 +151,8 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
     ////////////////////////////////////////////////////////////////////////////////
     //Overwrite
     ////////////////////////////////////////////////////////////////////////////////    
-    public final byte getPosition() {
+    @Override
+	public final byte getPosition() {
         byte ret = super.getPosition();
 
         ///wenn pos nicht bestimmt werden kann dann die roleID zurückwerfen

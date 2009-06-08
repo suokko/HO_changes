@@ -73,7 +73,7 @@ public class TrainingExperience implements IPlugin, IRefreshable, IOfficialPlugi
      * @return plugin name
      */
     public String getPluginName() {
-        return PLUGINNAME; //$NON-NLS-1$
+        return PLUGINNAME; 
     }
 
     /**

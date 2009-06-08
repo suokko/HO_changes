@@ -21,7 +21,10 @@ import de.hattrickorganizer.model.SpielerPosition;
  * @author Volker Fischer
  */
 public class SkillAenderungsTableModel extends AbstractTableModel {
-    //~ Instance fields ----------------------------------------------------------------------------
+ 
+	private static final long serialVersionUID = 5881124179142947310L;
+
+	//~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
@@ -123,7 +126,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
     //ID
     de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
                                         };
-    private Vector m_vSpieler;
+    private Vector<ISpieler> m_vSpieler;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -132,7 +135,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public SkillAenderungsTableModel(Vector spieler) {
+    public SkillAenderungsTableModel(Vector<ISpieler> spieler) {
         m_vSpieler = spieler;
         initData();
     }
@@ -147,7 +150,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         return false;
     }
 
@@ -158,7 +162,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class<?> getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -187,7 +192,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
             return m_sColumnNames[columnIndex];
         }
@@ -252,7 +258,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 
@@ -277,7 +284,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector spieler) {
+    public final void setValues(Vector<ISpieler> spieler) {
         m_vSpieler = spieler;
         initData();
     }
@@ -351,8 +358,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.LEFT),
-                                                  new ColorLabelEntry((int) (aktuellerSpieler
-                                                                             .getLastLevelUpInTage(Spieler.SKILL_TORWART) / 7)
+                                                  new ColorLabelEntry((aktuellerSpieler
+                                                                             .getLastLevelUpInTage(ISpieler.SKILL_TORWART) / 7)
                                                                       + " "
                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
@@ -369,8 +376,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.LEFT),
-                                                  new ColorLabelEntry((int) (aktuellerSpieler
-                                                                             .getLastLevelUpInTage(Spieler.SKILL_VERTEIDIGUNG) / 7)
+                                                  new ColorLabelEntry((aktuellerSpieler
+                                                                             .getLastLevelUpInTage(ISpieler.SKILL_VERTEIDIGUNG) / 7)
                                                                       + " "
                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
@@ -387,8 +394,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.LEFT),
-                                                  new ColorLabelEntry((int) (aktuellerSpieler
-                                                                             .getLastLevelUpInTage(Spieler.SKILL_SPIELAUFBAU) / 7)
+                                                  new ColorLabelEntry((aktuellerSpieler
+                                                                             .getLastLevelUpInTage(ISpieler.SKILL_SPIELAUFBAU) / 7)
                                                                       + " "
                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
@@ -405,8 +412,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.LEFT),
-                                                  new ColorLabelEntry((int) (aktuellerSpieler
-                                                                             .getLastLevelUpInTage(Spieler.SKILL_PASSSPIEL) / 7)
+                                                  new ColorLabelEntry((aktuellerSpieler
+                                                                             .getLastLevelUpInTage(ISpieler.SKILL_PASSSPIEL) / 7)
                                                                       + " "
                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
@@ -423,8 +430,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.LEFT),
-                                                  new ColorLabelEntry((int) (aktuellerSpieler
-                                                                             .getLastLevelUpInTage(Spieler.SKILL_FLUEGEL) / 7)
+                                                  new ColorLabelEntry((aktuellerSpieler
+                                                                             .getLastLevelUpInTage(ISpieler.SKILL_FLUEGEL) / 7)
                                                                       + " "
                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
@@ -441,8 +448,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.LEFT),
-                                                  new ColorLabelEntry((int) (aktuellerSpieler
-                                                                             .getLastLevelUpInTage(Spieler.SKILL_TORSCHUSS) / 7)
+                                                  new ColorLabelEntry((aktuellerSpieler
+                                                                             .getLastLevelUpInTage(ISpieler.SKILL_TORSCHUSS) / 7)
                                                                       + " "
                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
@@ -459,8 +466,8 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                                        foreground,
                                                                        ColorLabelEntry.BG_STANDARD,
                                                                        SwingConstants.LEFT),
-                                                   new ColorLabelEntry((int) (aktuellerSpieler
-                                                                              .getLastLevelUpInTage(Spieler.SKILL_STANDARDS) / 7)
+                                                   new ColorLabelEntry((aktuellerSpieler
+                                                                              .getLastLevelUpInTage(ISpieler.SKILL_STANDARDS) / 7)
                                                                        + " "
                                                                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                        foreground,

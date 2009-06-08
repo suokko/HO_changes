@@ -31,7 +31,11 @@ import javax.swing.table.TableModel;
 public class TeamTransfersPane extends JPanel implements ListSelectionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JTable transferTable;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5180919662981139849L;
+	private JTable transferTable;
     private List transfers = new ArrayList();
     private PlayerDetailPanel playerDetailPanel;
 

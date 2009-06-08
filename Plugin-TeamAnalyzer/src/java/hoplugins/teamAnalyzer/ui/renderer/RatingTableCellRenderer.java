@@ -23,7 +23,8 @@ public class RatingTableCellRenderer extends DefaultTableCellRenderer {
 	/*
 	   * @see TableCellRenderer#getTableCellRendererComponent(JTable, Object, boolean, boolean, int, int)
 	   */
-	  public Component getTableCellRendererComponent(JTable table, Object value,
+	  @Override
+	public Component getTableCellRendererComponent(JTable table, Object value,
 	                                                 boolean isSelected, boolean hasFocus, 
 	                                                 int row, int column) {
 		  // Column 3 is the relative rating diff in %

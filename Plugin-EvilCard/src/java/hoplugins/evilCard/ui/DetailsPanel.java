@@ -4,8 +4,6 @@
  */
 package hoplugins.evilCard.ui;
 
-import hoplugins.evilCard.ui.model.DetailsTableModel;
-
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -20,7 +18,11 @@ import javax.swing.JScrollPane;
 public class DetailsPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private DetailsTable detailsTable = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8385208467445931375L;
+	private DetailsTable detailsTable = null;
 
     //~ Constructors -------------------------------------------------------------------------------
 

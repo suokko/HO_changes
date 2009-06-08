@@ -337,10 +337,10 @@ public class HOVerwaltung {
         for (int i = 0; i < hrfListe.size(); i++) {
             try {
                 if (showWait) {
-                    waitDialog.setValue((int) (((float) i * 100d) / (float) hrfListe.size()));
+                    waitDialog.setValue((int) ((i * 100d) / hrfListe.size()));
                 }
                 s1 = System.currentTimeMillis();
-                final HOModel model = this.loadModel(((CBItem) hrfListe.get(i)).getId());
+                final HOModel model = this.loadModel((hrfListe.get(i)).getId());
                 lSum += (System.currentTimeMillis()-s1);
                 s2 = System.currentTimeMillis();
                 model.calcSubskills();

@@ -17,6 +17,11 @@ public class UiFilterTableModel extends BaseTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 327827808706196143L;
+
+	/**
      * Creates a new instance of UiFilterTableModel
      */
     public UiFilterTableModel() {
@@ -43,7 +48,8 @@ public class UiFilterTableModel extends BaseTableModel {
      *
      * @return
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         if (column != 0) {
             return false;
         }
@@ -64,7 +70,8 @@ public class UiFilterTableModel extends BaseTableModel {
      *
      * @return
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         if (column == 2) {
             return ImageIcon.class;
         }

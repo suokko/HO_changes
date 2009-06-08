@@ -16,7 +16,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class ColorCellRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1321123377332061442L;
+
+	/** TODO Missing Parameter Documentation */
     public static final Color GREEN = new Color(220, 255, 220);
 
     /** TODO Missing Parameter Documentation */
@@ -41,7 +46,8 @@ public class ColorCellRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
     /** {@inheritDoc} */
-    public final Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public final Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
