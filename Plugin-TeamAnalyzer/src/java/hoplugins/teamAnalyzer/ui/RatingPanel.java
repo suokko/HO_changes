@@ -32,9 +32,9 @@ public class RatingPanel extends JPanel {
     private UiRatingTableModel tableModel;
     private String[] columns = {
                                    PluginProperty.getString("RatingPanel.Area"),
-                                   Commons.getModel().getResource().getProperty("Bewertung"),
-                                   Commons.getModel().getResource().getProperty("Differenz_kurz"),
-                                   Commons.getModel().getResource().getProperty("Differenz_kurz") + "%"
+                                   Commons.getModel().getLanguageString("Bewertung"),
+                                   Commons.getModel().getLanguageString("Differenz_kurz"),
+                                   PluginProperty.getString("TeamAnalyzer.RatingPanel.Relative")
                                }; //$NON-NLS-1$
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -65,19 +65,19 @@ public class RatingPanel extends JPanel {
         TeamLineupData opponentTeam = SystemManager.getPlugin().getMainPanel()
                                                    .getOpponentTeamLineupPanel();
 
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("MatchMittelfeld"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("MatchMittelfeld"),
                                  myTeam.getMidfield(), opponentTeam.getMidfield()));
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("rechteAbwehrseite"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("rechteAbwehrseite"),
                                  myTeam.getRightDefence(), opponentTeam.getLeftAttack()));
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("Abwehrzentrum"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("Abwehrzentrum"),
                                  myTeam.getMiddleDefence(), opponentTeam.getMiddleAttack()));
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("linkeAbwehrseite"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("linkeAbwehrseite"),
                                  myTeam.getLeftDefence(), opponentTeam.getRightAttack()));
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("rechteAngriffsseite"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("rechteAngriffsseite"),
                                  myTeam.getRightAttack(), opponentTeam.getLeftDefence()));
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("Angriffszentrum"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("Angriffszentrum"),
                                  myTeam.getMiddleAttack(), opponentTeam.getMiddleDefence()));
-        tableModel.addRow(getRow(Commons.getModel().getResource().getProperty("linkeAngriffsseite"),
+        tableModel.addRow(getRow(Commons.getModel().getLanguageString("linkeAngriffsseite"),
                                  myTeam.getLeftAttack(), opponentTeam.getRightDefence()));
 
         table.getTableHeader().getColumnModel().getColumn(0).setWidth(130);
@@ -116,19 +116,26 @@ public class RatingPanel extends JPanel {
 
         int diff = (int) myRating - (int) opponentRating;
 
-        double relDiff;
-        if (opponentRating == myRating)
-        	relDiff = 0;
-        else if (opponentRating != 0)
-        	relDiff = Commons.getModel().getHelper().round(myRating/opponentRating,2) - 1;
+        double relativeVal;
+        if (myRating != 0 || opponentRating != 0)
+        	relativeVal = Commons.getModel().getHelper().round(myRating/(myRating+opponentRating),2);
         else
-        	relDiff = 1;
-        String relDiffString = (relDiff>0?"+":"") + (int)(relDiff * 100) + "%";
+        	relativeVal = 0;
+        
+        System.out.println ("mR="+myRating+", oR="+opponentRating+", rV="+relativeVal);
+        String relValString = (int)(relativeVal * 100) + "%";
+        
+        // Add a character indicating more or less than 50%
+        // will be used in RatingTableCellRenderer to set the foreground color
+        if (relativeVal > 0.5)
+        	relValString = "+" + relValString;
+        else if (relativeVal < 0.5)
+        	relValString = "-" + relValString;
 
         // Add difference as icon
         rowData.add(Commons.getModel().getHelper().getImageIcon4Veraenderung(diff));
         // Add relative difference [%]
-        rowData.add(relDiffString);
+        rowData.add(relValString);
 
         return rowData;
     }
