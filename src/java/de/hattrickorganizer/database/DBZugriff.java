@@ -16,6 +16,7 @@ import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
 import plugins.IPaarung;
 import plugins.ISpieler;
+import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.gui.model.CBItem;
@@ -31,7 +32,6 @@ import de.hattrickorganizer.model.HRF;
 import de.hattrickorganizer.model.Liga;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.TrainingPerWeek;
@@ -1133,7 +1133,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<SpielerPosition> getSystemPositionen(int hrfID, String sysName) {
+	public Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		return ((PositionenTable) getTable(PositionenTable.TABLENAME)).getSystemPositionen(
 			hrfID,
 			sysName);
@@ -1146,7 +1146,7 @@ public class DBZugriff {
 	 * @param positionen TODO Missing Constructuor Parameter Documentation
 	 * @param sysName TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSystemPositionen(int hrfId, Vector<SpielerPosition> positionen, String sysName) {
+	public void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
 		((PositionenTable) getTable(PositionenTable.TABLENAME)).saveSystemPositionen(
 			hrfId,
 			positionen,

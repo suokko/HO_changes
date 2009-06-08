@@ -64,7 +64,7 @@ public class Aufstellungsassistent {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int getBestFreeElferKicker(int[] liste, Vector vSpieler, Vector positionen) {
+    public final int getBestFreeElferKicker(int[] liste, Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
         Spieler spieler = null;
         float maxValue = -1;
         float curValue = -1;
@@ -99,7 +99,7 @@ public class Aufstellungsassistent {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int[] setElferKicker(Vector vSpieler, Vector positionen) {
+    public final int[] setElferKicker(Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
         final int[] bestElfer = new int[11];
         int kicker = HOVerwaltung.instance().getModel().getAufstellung()
                                                             .getKicker();
@@ -127,7 +127,7 @@ public class Aufstellungsassistent {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isSpielerAufgestellt(int spielerId, Vector positionen) {
+    public final boolean isSpielerAufgestellt(int spielerId, Vector<ISpielerPosition> positionen) {
         for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
             if (((SpielerPosition) positionen.elementAt(i)).getSpielerId() == spielerId) {
                 return true;
@@ -145,7 +145,7 @@ public class Aufstellungsassistent {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isSpielerInAnfangsElf(int spielerId, Vector positionen) {
+    public final boolean isSpielerInAnfangsElf(int spielerId, Vector<ISpielerPosition> positionen) {
         for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
             if ((((SpielerPosition) positionen.elementAt(i)).getId() < ISpielerPosition.beginnReservere)
                 && (((SpielerPosition) positionen.elementAt(i))
@@ -188,7 +188,7 @@ public class Aufstellungsassistent {
      * @param wetterBonus Schwellwert der angibt an wie auf WetterEffekte reagiert werden soll
      * @param wetter das aktuelle Wetter
      */
-    public final void doAufstellung(Vector positionen, Vector spieler, byte reihenfolge,
+    public final void doAufstellung(Vector<ISpielerPosition> positionen, Vector<ISpieler> spieler, byte reihenfolge,
                                     boolean mitForm, boolean idealPosFirst,
                                     boolean ignoreVerletzung, boolean ignoreSperre,
                                     float wetterBonus, int wetter) {
@@ -500,7 +500,7 @@ public class Aufstellungsassistent {
      *
      * @param positionen TODO Missing Constructuor Parameter Documentation
      */
-    public final void resetPositionsbesetzungen(Vector positionen) {
+    public final void resetPositionsbesetzungen(Vector<ISpielerPosition> positionen) {
         for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
             ((de.hattrickorganizer.model.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
         }
@@ -523,8 +523,8 @@ public class Aufstellungsassistent {
                                                                       boolean mitForm,
                                                                       boolean ignoreVerletzung,
                                                                       boolean ignoreSperre,
-                                                                      Vector vSpieler,
-                                                                      Vector positionen) {
+                                                                      Vector<ISpieler> vSpieler,
+                                                                      Vector<ISpielerPosition> positionen) {
         de.hattrickorganizer.model.Spieler spieler = null;
         de.hattrickorganizer.model.Spieler bestSpieler = null;
         float bestStk = -1.0f;
@@ -567,8 +567,8 @@ public class Aufstellungsassistent {
                                                                                   boolean mitForm,
                                                                                   boolean ignoreVerletzung,
                                                                                   boolean ignoreSperre,
-                                                                                  Vector vSpieler,
-                                                                                  Vector positionen) {
+                                                                                  Vector<ISpieler> vSpieler,
+                                                                                  Vector<ISpielerPosition> positionen) {
         Spieler spieler = null;
         Spieler bestSpieler = null;
         float bestStk = -1.0f;
@@ -611,7 +611,7 @@ public class Aufstellungsassistent {
      */
     protected final void doReserveSpielerAufstellen(byte position, boolean mitForm,
                                                     boolean ignoreVerletzung, boolean ignoreSperre,
-                                                    Vector vSpieler, Vector positionen) {
+                                                    Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
 
@@ -650,8 +650,8 @@ public class Aufstellungsassistent {
      */
     protected final void doReserveSpielerAufstellenIdealPos(byte position, boolean mitForm,
                                                             boolean ignoreVerletzung,
-                                                            boolean ignoreSperre, Vector vSpieler,
-                                                            Vector positionen) {
+                                                            boolean ignoreSperre, Vector<ISpieler> vSpieler,
+                                                            Vector<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
 
@@ -690,10 +690,10 @@ public class Aufstellungsassistent {
      */
     protected final void doSpielerAufstellen(byte position, boolean mitForm,
                                              boolean ignoreVerletzung, boolean ignoreSperre,
-                                             Vector vSpieler, Vector positionen) {
+                                             Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
-        final Vector zusPos = new Vector();
+        final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
@@ -760,11 +760,11 @@ public class Aufstellungsassistent {
      */
     protected final void doSpielerAufstellenIdealPos(byte position, boolean mitForm,
                                                      boolean ignoreVerletzung,
-                                                     boolean ignoreSperre, Vector vSpieler,
-                                                     Vector positionen) {
+                                                     boolean ignoreSperre, Vector<ISpieler> vSpieler,
+                                                     Vector<ISpielerPosition> positionen) {
        SpielerPosition pos = null;
         Spieler spieler = null;
-        final Vector zusPos = new Vector();
+        final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
@@ -826,7 +826,7 @@ public class Aufstellungsassistent {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcAveragePosValue(Vector spieler) {
+    private float calcAveragePosValue(Vector<ISpieler> spieler) {
         float average = 0.0f;
         Spieler player = null;
 
