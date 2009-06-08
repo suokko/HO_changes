@@ -22,7 +22,11 @@ import javax.swing.JComponent;
 public class StateBar extends JComponent {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ColorModus bkgcolor = new ColorModus(Color.DARK_GRAY);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8224899657762127199L;
+	private ColorModus bkgcolor = new ColorModus(Color.DARK_GRAY);
     private ColorModus color1;
     private ColorModus color2;
     private int breite = 100;
@@ -80,7 +84,8 @@ public class StateBar extends JComponent {
      *
      * @param g
      */
-    public void paint(Graphics g) {
+    @Override
+	public void paint(Graphics g) {
         java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
 
         //Antialiasing einschalten
@@ -92,11 +97,11 @@ public class StateBar extends JComponent {
 
         //Set Background
         g2d.setColor(bkgcolor.dunkel);
-        g2d.fillRect(5, (int) (height / 3), width, (int) (height / 3));
+        g2d.fillRect(5, (height / 3), width, (height / 3));
         g2d.setColor(bkgcolor.mittel);
-        g2d.fillRect(6, (int) (height / 2.6f), width - 2, (int) (height / 5));
+        g2d.fillRect(6, (int) (height / 2.6f), width - 2, (height / 5));
         g2d.setColor(bkgcolor.hell);
-        g2d.fillRect(7, (int) (height / 2.3f), width - 3, (int) (height / 8));
+        g2d.fillRect(7, (int) (height / 2.3f), width - 3, (height / 8));
 
         //Foreground			
         setLevelBar(g2d, level2, color2);
@@ -113,13 +118,13 @@ public class StateBar extends JComponent {
     private void setLevelBar(java.awt.Graphics2D g2d, int level, ColorModus cm) {
         int height = getHeight();
         int width = getWidth() - 10;
-        int laenge = (int) ((float) width * ((float) level / 100f));
+        int laenge = (int) (width * (level / 100f));
 
         g2d.setColor(cm.dunkel);
-        g2d.fillRect(5, (int) (height / 3), laenge, (int) (height / 3));
+        g2d.fillRect(5, (height / 3), laenge, (height / 3));
         g2d.setColor(cm.mittel);
-        g2d.fillRect(6, (int) (height / 2.6f), laenge - 2, (int) (height / 5));
+        g2d.fillRect(6, (int) (height / 2.6f), laenge - 2, (height / 5));
         g2d.setColor(cm.hell);
-        g2d.fillRect(7, (int) (height / 2.3f), laenge - 3, (int) (height / 8));
+        g2d.fillRect(7, (int) (height / 2.3f), laenge - 3, (height / 8));
     }
 }

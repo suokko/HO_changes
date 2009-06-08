@@ -31,7 +31,12 @@ import javax.swing.table.TableCellRenderer;
 public class DetailsTable extends JTable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3276477756368710414L;
+
+	/** TODO Missing Parameter Documentation */
     protected String[] columnToolTips = null;
 
     /** TODO Missing Parameter Documentation */
@@ -88,7 +93,8 @@ public class DetailsTable extends JTable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public String getToolTipText(MouseEvent e) {
+    @Override
+	public String getToolTipText(MouseEvent e) {
         String tip = null;
         java.awt.Point p = e.getPoint();
         int rowIndex = rowAtPoint(p);
@@ -132,9 +138,11 @@ public class DetailsTable extends JTable {
     }
 
     //Implement table header tool tips.
-    protected JTableHeader createDefaultTableHeader() {
+    @Override
+	protected JTableHeader createDefaultTableHeader() {
         return new JTableHeader(columnModel) {
-                public String getToolTipText(MouseEvent e) {
+                @Override
+				public String getToolTipText(MouseEvent e) {
                     String tip = null;
                     java.awt.Point p = e.getPoint();
                     int index = columnModel.getColumnIndexAtX(p.x);

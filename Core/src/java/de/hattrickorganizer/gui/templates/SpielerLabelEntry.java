@@ -75,7 +75,8 @@ public final class SpielerLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final JComponent getComponent(boolean isSelected) {
+    @Override
+	public final JComponent getComponent(boolean isSelected) {
         //Alte Komponente wiederverwenden
         if (isSelected) {
             m_clComponent.setOpaque(true);
@@ -98,7 +99,8 @@ public final class SpielerLabelEntry extends TableEntry {
     }
 
     //----Zugriff----------------------------
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_clPlayer = null;
         m_clCurrentPlayerPosition = null;
         m_fPositionsbewertung = 0f;
@@ -112,7 +114,8 @@ public final class SpielerLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof SpielerLabelEntry) {
             final SpielerLabelEntry entry = (SpielerLabelEntry) obj;
 
@@ -127,7 +130,8 @@ public final class SpielerLabelEntry extends TableEntry {
     /**
      * Erstellt eine passende Komponente
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         m_clComponent = new JPanel();
 
         final GridBagLayout layout = new GridBagLayout();
@@ -216,7 +220,8 @@ public final class SpielerLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         if (m_clPlayer != null) {
             m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
 

@@ -1,8 +1,6 @@
 // %1378604643:de.hattrickorganizer.gui.matchprediction%
 package de.hattrickorganizer.gui.matchprediction;
 
-import java.util.Vector;
-
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
@@ -17,6 +15,9 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author TODO Author Name
  */
 public class MatchResultTable extends JTable {
+	
+	private static final long serialVersionUID = 8245352979596154576L;
+	
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private MatchResultTableModel m_clTableModel;
@@ -74,7 +75,7 @@ public class MatchResultTable extends JTable {
 			m_clTableSorter = new TableSorter(m_clTableModel, 1, -1);
 
 			final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
-			header.setToolTipStrings(m_clTableModel.columnNames);
+			header.setToolTipStrings(MatchResultTableModel.columnNames);
 			header.setToolTipText("");
 			setTableHeader(header);
 

@@ -1,8 +1,6 @@
 // %1126721330198:hoplugins.transfers.ui.component%
 package hoplugins.transfers.ui.component;
 
-import hoplugins.Commons;
-
 import hoplugins.commons.utils.PluginProperty;
 
 import hoplugins.transfers.dao.TransferSettingDAO;
@@ -13,8 +11,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -25,7 +23,11 @@ import javax.swing.JPanel;
 public class OptionPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JCheckBox automatic = new JCheckBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4090790339541526210L;
+	private JCheckBox automatic = new JCheckBox();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -58,7 +60,7 @@ public class OptionPanel extends JPanel {
 
         //innerPanel.setLayout(new BorderLayout());
         innerPanel.add(checkBox);
-        innerPanel.add(new JLabel(string, JLabel.LEFT));
+        innerPanel.add(new JLabel(string, SwingConstants.LEFT));
         innerPanel.setOpaque(false);
         panel.add(innerPanel, BorderLayout.WEST);
         return panel;

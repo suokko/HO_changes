@@ -180,7 +180,8 @@ public class TeamRatings implements plugins.IMPTeamRatings {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("TeamRatings[");
         buffer.append("leftDef = " + leftDef);

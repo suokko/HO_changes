@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -26,7 +27,11 @@ import javax.swing.JTextField;
 public class StaffDialog extends JDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private StaffInner original;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4273550051406968958L;
+	private StaffInner original;
     private StaffListener caller;
     private JTextField[] newValues = new JTextField[6];
 
@@ -60,34 +65,34 @@ public class StaffDialog extends JDialog {
         JPanel p = new JPanel();
         p.setLayout(new GridLayout(7, 3));
 
-        p.add(new JLabel("Assistant Coach", JLabel.LEFT));
+        p.add(new JLabel("Assistant Coach", SwingConstants.LEFT));
         p.add(new JLabel((total.getAssistantCoaches() - inner.getAssistantCoaches()) + "",
-                         JLabel.LEFT));
+                         SwingConstants.LEFT));
         newValues[0] = new JTextField(inner.getAssistantCoaches() + "");
         p.add(newValues[0]);
 
-        p.add(new JLabel("Assistant Keeper", JLabel.LEFT));
-        p.add(new JLabel((total.getAssistantKeeper() - inner.getAssistantKeeper()) + "", JLabel.LEFT));
+        p.add(new JLabel("Assistant Keeper", SwingConstants.LEFT));
+        p.add(new JLabel((total.getAssistantKeeper() - inner.getAssistantKeeper()) + "", SwingConstants.LEFT));
         newValues[1] = new JTextField(inner.getAssistantKeeper() + "");
         p.add(newValues[1]);
 
-        p.add(new JLabel("Phisio", JLabel.LEFT));
-        p.add(new JLabel((total.getPhisio() - inner.getPhisio()) + "", JLabel.LEFT));
+        p.add(new JLabel("Phisio", SwingConstants.LEFT));
+        p.add(new JLabel((total.getPhisio() - inner.getPhisio()) + "", SwingConstants.LEFT));
         newValues[2] = new JTextField(inner.getPhisio() + "");
         p.add(newValues[2]);
 
-        p.add(new JLabel("Psico", JLabel.LEFT));
-        p.add(new JLabel((total.getPsico() - inner.getPsico()) + "", JLabel.LEFT));
+        p.add(new JLabel("Psico", SwingConstants.LEFT));
+        p.add(new JLabel((total.getPsico() - inner.getPsico()) + "", SwingConstants.LEFT));
         newValues[3] = new JTextField(inner.getPsico() + "");
         p.add(newValues[3]);
 
-        p.add(new JLabel("Doctor", JLabel.LEFT));
-        p.add(new JLabel((total.getDoctor() - inner.getDoctor()) + "", JLabel.LEFT));
+        p.add(new JLabel("Doctor", SwingConstants.LEFT));
+        p.add(new JLabel((total.getDoctor() - inner.getDoctor()) + "", SwingConstants.LEFT));
         newValues[4] = new JTextField(inner.getDoctor() + "");
         p.add(newValues[4]);
 
-        p.add(new JLabel("Spokesman", JLabel.LEFT));
-        p.add(new JLabel((total.getSpokesman() - inner.getSpokesman()) + "", JLabel.LEFT));
+        p.add(new JLabel("Spokesman", SwingConstants.LEFT));
+        p.add(new JLabel((total.getSpokesman() - inner.getSpokesman()) + "", SwingConstants.LEFT));
         newValues[5] = new JTextField(inner.getSpokesman() + "");
         p.add(newValues[5]);
 

@@ -134,7 +134,7 @@ public class TableLayoutConstraints implements TableLayoutConstants {
 
             // Check if token means horizontally justification the component
             if ((tokenA.equalsIgnoreCase("L"))
-                || (tokenA.equalsIgnoreCase("LEFT"))) { //$NON-NLS-1$ //$NON-NLS-2$
+                || (tokenA.equalsIgnoreCase("LEFT"))) { //$NON-NLS-1$ 
                 hAlign = LEFT;
             }
             else if ((tokenA.equalsIgnoreCase("C")) //$NON-NLS-1$
@@ -163,7 +163,7 @@ public class TableLayoutConstraints implements TableLayoutConstants {
 
             // Check if token means horizontally justification the component
             if ((tokenB.equalsIgnoreCase("T"))
-                || (tokenB.equalsIgnoreCase("TOP"))) { //$NON-NLS-1$ //$NON-NLS-2$
+                || (tokenB.equalsIgnoreCase("TOP"))) { //$NON-NLS-1$ 
                 vAlign = TOP;
             }
             else if ((tokenB.equalsIgnoreCase("C")) //$NON-NLS-1$
@@ -243,7 +243,8 @@ public class TableLayoutConstraints implements TableLayoutConstants {
      * @return a string in the form "row 1, column 1, row 2, column 2, horizontal justification,
      *         vertical justification"
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(col1);
@@ -259,7 +260,7 @@ public class TableLayoutConstraints implements TableLayoutConstants {
         final String[] h = {
                 "left", "center", "full", "right", "leading", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
                 "trailing"
-            }; //$NON-NLS-1$
+            }; 
         final String[] v = { "top", "center", "full", "bottom" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
         buffer.append(h[hAlign]);

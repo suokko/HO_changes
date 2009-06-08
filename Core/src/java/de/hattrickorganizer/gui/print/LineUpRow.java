@@ -44,12 +44,6 @@ public class LineUpRow {
         }
     }
 
-    /**
-     * constructor
-     */
-    private LineUpRow() {
-    }
-
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -110,7 +104,7 @@ public class LineUpRow {
             oddNumbered = width / 2;
         }
 
-        final int x = (int) center - (((boxes.length / 2) * (width + margin)) + oddNumbered)
+        final int x = center - (((boxes.length / 2) * (width + margin)) + oddNumbered)
                       + (i * (width + margin));
 
         return new Point(x, y);

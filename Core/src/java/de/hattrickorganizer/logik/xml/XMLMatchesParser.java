@@ -12,6 +12,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.IMatchKurzInfo;
+
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
@@ -92,11 +94,11 @@ public class XMLMatchesParser {
      */
     protected final int getStatus(String status) {
         if (status.equalsIgnoreCase("FINISHED")) {
-            return MatchKurzInfo.FINISHED;
+            return IMatchKurzInfo.FINISHED;
         } else if (status.equalsIgnoreCase("ONGOING")) {
-            return MatchKurzInfo.ONGOING;
+            return IMatchKurzInfo.ONGOING;
         } else if (status.equalsIgnoreCase("UPCOMING")) {
-            return MatchKurzInfo.UPCOMING;
+            return IMatchKurzInfo.UPCOMING;
         }
 
         return -1;
@@ -156,12 +158,12 @@ public class XMLMatchesParser {
                 tmp = (Element) ele.getElementsByTagName("Status").item(0);
                 spiel.setMatchStatus(getStatus(tmp.getFirstChild().getNodeValue()));
 
-                if (spiel.getMatchStatus() == MatchKurzInfo.FINISHED) {
+                if (spiel.getMatchStatus() == IMatchKurzInfo.FINISHED) {
                     tmp = (Element) ele.getElementsByTagName("HomeGoals").item(0);
                     spiel.setHeimTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                     tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
                     spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
-                } else if (spiel.getMatchStatus() == MatchKurzInfo.UPCOMING) {
+                } else if (spiel.getMatchStatus() == IMatchKurzInfo.UPCOMING) {
                     tmp = (Element) ele.getElementsByTagName("OrdersGiven").item(0);
                     spiel.setAufstellung(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
                 }

@@ -25,7 +25,11 @@ import de.hattrickorganizer.gui.templates.RasenPanel;
 public class ChatPanel extends RasenPanel implements ActionListener, KeyListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ChatMessagePanel m_clChatMessagePanel = new ChatMessagePanel();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1624019111726212359L;
+	private ChatMessagePanel m_clChatMessagePanel = new ChatMessagePanel();
     private HOFriendlyDialog m_clChat;
     private JButton m_jbSenden = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                            .makeColorTransparent(de.hattrickorganizer.tools.Helper

@@ -17,6 +17,11 @@ public class TeamTransferSorter extends DefaultTableSorter {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8930143133882696457L;
+
+	/**
      * Create a TransferTypeSorter
      *
      * @param model Table model to sort.
@@ -34,10 +39,12 @@ public class TeamTransferSorter extends DefaultTableSorter {
      *
      * @return A custom comparator if any, null if not specified
      */
-    public final Comparator getCustomComparator(int column) {
+    @Override
+	public final Comparator getCustomComparator(int column) {
         if ((column == 1) || (column == 2) || (column >= 6)) {
             return new Comparator() {
-                    public boolean equals(Object arg0) {
+                    @Override
+					public boolean equals(Object arg0) {
                         return false;
                     }
 

@@ -30,7 +30,8 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Dimension getPreferredSize(JComponent c) {
+    @Override
+	public final Dimension getPreferredSize(JComponent c) {
         long width = 0;
         final Enumeration enumeration = header.getColumnModel().getColumns();
 
@@ -48,7 +49,8 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
      * @param g TODO Missing Method Parameter Documentation
      * @param c TODO Missing Method Parameter Documentation
      */
-    public final void paint(Graphics g, JComponent c) {
+    @Override
+	public final void paint(Graphics g, JComponent c) {
         final Rectangle clipBounds = g.getClipBounds();
 
         if (header.getColumnModel() == null) {

@@ -9,6 +9,7 @@ package hoplugins.commons.ui.sorter;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
@@ -64,7 +65,7 @@ class SortableHeaderRenderer implements TableCellRenderer {
         if (c instanceof JLabel) {
             JLabel l = (JLabel) c;
 
-            l.setHorizontalTextPosition(JLabel.LEFT);
+            l.setHorizontalTextPosition(SwingConstants.LEFT);
 
             int modelColumn = table.convertColumnIndexToModel(column);
 

@@ -25,7 +25,8 @@ public class TotalRecapCalculator extends Calculator {
      * @param row Missing Method Parameter Documentation
      * @param model Missing Method Parameter Documentation
      */
-    public void doCalculate(int row, TableModel model) {
+    @Override
+	public void doCalculate(int row, TableModel model) {
         int account = 10000;
 
         for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {

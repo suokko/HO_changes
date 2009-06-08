@@ -29,7 +29,11 @@ import javax.swing.JPanel;
 public class LegendeCheckBox extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3881907227164470390L;
+	/** TODO Missing Parameter Documentation */
     public boolean isSelected = true;
     private JCheckBox jcbBox; // a 
     private JLabel jlLabel; // _fldif

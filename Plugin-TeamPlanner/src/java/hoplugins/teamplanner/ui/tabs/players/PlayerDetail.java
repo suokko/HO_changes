@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -33,7 +34,12 @@ import javax.swing.JTextField;
 public class PlayerDetail extends JPanel implements ItemListener, ActionListener, FocusListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static DecimalFormat dfPrice = new DecimalFormat("#,###");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3072082825289516973L;
+
+	private static DecimalFormat dfPrice = new DecimalFormat("#,###");
 
     /** Gesamteinstufung */
     public static final CBItem[] EINSTUFUNG = {
@@ -224,7 +230,7 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
     private JComboBox jcbStandards = new JComboBox(EINSTUFUNG);
     private JComboBox jcbWinger = new JComboBox(EINSTUFUNG);
     private JTextField jtfAge = new JTextField("0");
-    private JTextField jtfEPV = new JTextField("", JLabel.RIGHT);
+    private JTextField jtfEPV = new JTextField("", SwingConstants.RIGHT);
     private JTextField jtfTSI = new JTextField("1000");
     private PlayerData tempSpieler = null;
 
@@ -379,13 +385,13 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
 
         label = new JLabel(Commons.getModel().getLanguageString("Alter"));
         panel.add(label);
-        jtfAge.setHorizontalAlignment(JLabel.RIGHT);
+        jtfAge.setHorizontalAlignment(SwingConstants.RIGHT);
         jtfAge.addFocusListener(this);
         panel.add(jtfAge);
 
         label = new JLabel("TSI");
         panel.add(label);
-        jtfTSI.setHorizontalAlignment(JLabel.RIGHT);
+        jtfTSI.setHorizontalAlignment(SwingConstants.RIGHT);
         jtfTSI.addFocusListener(this);
         panel.add(jtfTSI);
 

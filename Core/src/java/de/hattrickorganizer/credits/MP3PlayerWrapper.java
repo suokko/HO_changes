@@ -9,6 +9,7 @@ public class MP3PlayerWrapper extends Thread{
 	Player m_clPlayer	=	null;
 	String m_sFile		=	"";
 	
+	@Override
 	public void run()
 	{
 		try

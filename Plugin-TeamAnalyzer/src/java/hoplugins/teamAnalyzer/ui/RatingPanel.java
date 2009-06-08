@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 
 
 /**
@@ -35,7 +36,7 @@ public class RatingPanel extends JPanel {
                                    Commons.getModel().getLanguageString("Bewertung"),
                                    Commons.getModel().getLanguageString("Differenz_kurz"),
                                    PluginProperty.getString("TeamAnalyzer.RatingPanel.Relative")
-                               }; //$NON-NLS-1$
+                               }; 
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -111,7 +112,7 @@ public class RatingPanel extends JPanel {
     private Vector<Object> getRow(String label, double myRating, double opponentRating) {
         Vector<Object> rowData = new Vector<Object>();
 
-        rowData.add(label); //$NON-NLS-1$
+        rowData.add(label); 
         rowData.add("" + getRating((int) myRating));
 
         int diff = (int) myRating - (int) opponentRating;
@@ -156,8 +157,8 @@ public class RatingPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         //main.add(scrollPane);
         add(scrollPane);

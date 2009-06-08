@@ -169,7 +169,8 @@ public class HoServerWorker implements Runnable {
     /**
      * TODO Missing Method Documentation
      */
-    protected final void finalize() {
+    @Override
+	protected final void finalize() {
         //Clean up
         try {
             //in.close ();

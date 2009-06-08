@@ -12,6 +12,11 @@ import de.hattrickorganizer.model.HOVerwaltung;
  */
 public abstract class HOColumnModel extends AbstractTableModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -207230110294902139L;
+
 	/**id from ColumnModell, important for saving columns in db */
 	private int id;
 	
@@ -62,6 +67,7 @@ public abstract class HOColumnModel extends AbstractTableModel{
 	/**
 	 * return the language dependent name of this model
 	 */
+	@Override
 	public String toString(){
 		String tmp = HOVerwaltung.instance().getLanguageString(name);
 		return (instance == 0)?tmp:(tmp+instance);
@@ -170,7 +176,8 @@ public abstract class HOColumnModel extends AbstractTableModel{
      *
      * @return TODO Missing Return Method Documentation
      */
-    public boolean isCellEditable(int row, int col) {
+    @Override
+	public boolean isCellEditable(int row, int col) {
         return false;
     }
     
@@ -181,7 +188,8 @@ public abstract class HOColumnModel extends AbstractTableModel{
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -198,7 +206,8 @@ public abstract class HOColumnModel extends AbstractTableModel{
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if (getDisplayedColumnCount() > columnIndex) {
             return getColumnNames()[columnIndex];
         }
@@ -235,7 +244,8 @@ public abstract class HOColumnModel extends AbstractTableModel{
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
     

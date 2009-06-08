@@ -16,6 +16,11 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -685008864266149099L;
+
+	/**
      * TODO Missing Method Documentation
      *
      * @param table TODO Missing Method Parameter Documentation
@@ -27,7 +32,8 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
                                                              row, column);

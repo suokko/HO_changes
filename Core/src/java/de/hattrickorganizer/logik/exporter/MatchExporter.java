@@ -7,11 +7,13 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
+import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
+import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -31,7 +33,7 @@ public class MatchExporter {
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public static List getDataUsefullMatches (Date startingDate) {
+	public static List<IExportMatchData> getDataUsefullMatches (Date startingDate) {
 		return getDataUsefullMatches(startingDate, startingDate);
 	}
 	
@@ -43,9 +45,9 @@ public class MatchExporter {
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public static List getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {		
+	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {		
 		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
-		List export = new ArrayList();
+		List<IExportMatchData> export = new ArrayList<IExportMatchData>();
 
 		IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(HOMiniModel.instance().getBasics().getTeamId());
 
@@ -61,14 +63,14 @@ public class MatchExporter {
 					|| isValidMatch(matches[i], details, startingDate) && !isFriendly ) {				
 						
 				//Nun lineup durchlaufen und Spielerdaten holen
-				Vector aufstellung = DBZugriff.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
-				Hashtable lineUpISpieler = new Hashtable();
+				Vector<IMatchLineupPlayer> aufstellung = DBZugriff.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
+				Hashtable<Integer,ISpieler> lineUpISpieler = new Hashtable<Integer,ISpieler>();
 
 				boolean dataOK = true;
 				
 				for (int k = 0;(aufstellung != null) && (k < aufstellung.size()); k++) {
 					//MatchDaten zum Spieler holen
-					plugins.IMatchLineupPlayer player = (IMatchLineupPlayer) aufstellung.get(k);
+					plugins.IMatchLineupPlayer player = aufstellung.get(k);
 
 					//Alte Werte zum Spieler holen fï¿½r das Matchdate
 					plugins.ISpieler formerPlayerData = null;
@@ -118,7 +120,7 @@ public class MatchExporter {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Walk over");
 			return false;
 		}
-		Vector highlights = details.getHighlights();
+		Vector<IMatchHighlight> highlights = details.getHighlights();
 		//Aussortieren starten...
 		if (info.getMatchDateAsTimestamp().before(startingDate)) { //Zu alt !!!
 			return false;
@@ -130,7 +132,7 @@ public class MatchExporter {
 			{
 			//Highlights prüfen auf Verletzung, Rote Karte, Verwirrung, Unterschätzung
 			for (int j = 0;(highlights != null) && (j < highlights.size()); j++) {
-				plugins.IMatchHighlight hlight = (IMatchHighlight) highlights.get(j);
+				plugins.IMatchHighlight hlight = highlights.get(j);
 				// Check Highlights for our team only
 				if (hlight.getTeamID() == HOMiniModel.instance().getBasics().getTeamId()) {
 					//Karten check

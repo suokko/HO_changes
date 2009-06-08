@@ -65,7 +65,8 @@ public class FuzzyTransparentFilter extends RGBImageFilter {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int filterRGB(int x, int y, int rgb) {
+    @Override
+	public final int filterRGB(int x, int y, int rgb) {
         final Color rgbColor = new Color(rgb);
 
         if (((rgbColor.getRed() >= m_iMinRed) && (rgbColor.getRed() <= m_iMaxRed))

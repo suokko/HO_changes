@@ -29,7 +29,11 @@ import javax.swing.JPanel;
 public class PriceDialog extends JDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    // ----------------------------------------------------------------------------
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7927736864117483677L;
+	// ----------------------------------------------------------------------------
     private CallableListener caller;
     private HTWeek week;
     private ISpieler tp;

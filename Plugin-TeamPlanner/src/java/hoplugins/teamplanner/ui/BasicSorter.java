@@ -17,6 +17,11 @@ public class BasicSorter extends DefaultTableSorter {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6727663365988082402L;
+
+	/**
      * Creates a new BasicSorter object.
      *
      * @param model Missing Constructuor Parameter Documentation
@@ -34,7 +39,8 @@ public class BasicSorter extends DefaultTableSorter {
      *
      * @return Missing Return Method Documentation
      */
-    public Comparator getCustomComparator(int column) {
+    @Override
+	public Comparator getCustomComparator(int column) {
         return null;
     }
 }

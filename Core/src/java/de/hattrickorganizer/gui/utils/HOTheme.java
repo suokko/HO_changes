@@ -67,7 +67,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final FontUIResource getControlTextFont() {
+    @Override
+	public final FontUIResource getControlTextFont() {
         return TEXTFONT;
     }
 
@@ -76,7 +77,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final FontUIResource getMenuTextFont() {
+    @Override
+	public final FontUIResource getMenuTextFont() {
         return TEXTFONT;
     }
 
@@ -85,7 +87,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final FontUIResource getSubTextFont() {
+    @Override
+	public final FontUIResource getSubTextFont() {
         return TEXTFONT;
     }
 
@@ -94,7 +97,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final FontUIResource getSystemTextFont() {
+    @Override
+	public final FontUIResource getSystemTextFont() {
         return TEXTFONT;
     }
 
@@ -103,7 +107,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final FontUIResource getUserTextFont() {
+    @Override
+	public final FontUIResource getUserTextFont() {
         return TEXTFONT;
     }
 
@@ -112,12 +117,14 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final FontUIResource getWindowTitleFont() {
+    @Override
+	public final FontUIResource getWindowTitleFont() {
         return TEXTFONT;
     }
 
     // these are blue in Metal Default Theme
-    protected final ColorUIResource getPrimary1() {
+    @Override
+	protected final ColorUIResource getPrimary1() {
         return primary1;
     }
 
@@ -126,7 +133,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final ColorUIResource getPrimary2() {
+    @Override
+	protected final ColorUIResource getPrimary2() {
         return primary2;
     }
 
@@ -135,12 +143,14 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final ColorUIResource getPrimary3() {
+    @Override
+	protected final ColorUIResource getPrimary3() {
         return primary3;
     }
 
     // these are gray in Metal Default Theme
-    protected final ColorUIResource getSecondary1() {
+    @Override
+	protected final ColorUIResource getSecondary1() {
         return secondary1;
     }
 
@@ -149,7 +159,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final ColorUIResource getSecondary2() {
+    @Override
+	protected final ColorUIResource getSecondary2() {
         return secondary2;
     }
 
@@ -158,7 +169,8 @@ public class HOTheme extends DefaultMetalTheme {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final ColorUIResource getSecondary3() {
+    @Override
+	protected final ColorUIResource getSecondary3() {
         return secondary3;
     }
 }

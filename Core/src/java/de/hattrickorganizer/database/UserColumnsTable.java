@@ -20,6 +20,7 @@ public class UserColumnsTable extends AbstractTable {
 	}
 
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[4];
 		columns[0]= new ColumnDescriptor("COLUMN_ID",	Types.INTEGER,false,true);

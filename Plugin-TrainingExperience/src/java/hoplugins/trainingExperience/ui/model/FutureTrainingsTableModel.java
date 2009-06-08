@@ -21,6 +21,11 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5448249533827333037L;
+
+	/**
      * Creates a new FutureTrainingsTableModel object.
      *
      * @param miniModel
@@ -40,7 +45,8 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
      * @param row
      * @param col
      */
-    public void setValueAt(Object value, int row, int col) {
+    @Override
+	public void setValueAt(Object value, int row, int col) {
         Object[] aobj = (Object[]) p_V_data.get(row);
 
         aobj[col] = value;
@@ -74,7 +80,8 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
      * Populate the table with the future trainings stored in the db,  if not present, create it
      * new and saves it
      */
-    public void populate() {
+    @Override
+	public void populate() {
         p_V_data = new Vector();
         p_V_trainingsVector = new Vector();
 
@@ -113,7 +120,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
                    });
 
             // Add object to be visualized to the table model
-            p_V_data.add((Object) aobj);
+            p_V_data.add(aobj);
 
             // Add training object to the proper vector for external use
             p_V_trainingsVector.add(train);

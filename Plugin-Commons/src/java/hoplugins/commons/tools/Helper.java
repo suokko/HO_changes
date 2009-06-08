@@ -18,14 +18,14 @@ public class Helper {
      */
     public static float round(double wert, int nachkommastellen) {
         //Wert mit 10^nachkommastellen multiplizieren
-        final double dwert = wert * Math.pow(10.0, (double) nachkommastellen);
+        final double dwert = wert * Math.pow(10.0, nachkommastellen);
 
         //Nachkommastellen abschneiden
 //        final long lwert = Math.round(dwert);
         final double lwert = Math.floor(dwert);
 
         //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
-        return (float) (lwert / Math.pow(10.0, (double) nachkommastellen));
+        return (float) (lwert / Math.pow(10.0, nachkommastellen));
     }
 
 }

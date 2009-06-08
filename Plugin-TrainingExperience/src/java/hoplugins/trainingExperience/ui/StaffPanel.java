@@ -26,7 +26,12 @@ import javax.swing.JScrollPane;
 public class StaffPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** Number of Assistant ComboBox */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 562783276216709022L;
+
+	/** Number of Assistant ComboBox */
     private JComboBox coTrainer;
 
     /** Number of Keeper Assistant ComboBox */

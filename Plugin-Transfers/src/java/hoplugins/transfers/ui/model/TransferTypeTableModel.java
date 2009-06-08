@@ -7,10 +7,7 @@ import hoplugins.commons.utils.PluginProperty;
 
 import hoplugins.transfers.constants.TransferTypes;
 import hoplugins.transfers.dao.TransferTypeDAO;
-import hoplugins.transfers.utils.PlayerRetriever;
 import hoplugins.transfers.vo.TransferredPlayer;
-
-import plugins.ISpieler;
 
 import java.util.List;
 
@@ -25,7 +22,11 @@ import javax.swing.table.AbstractTableModel;
 public class TransferTypeTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List values;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2943508984461781906L;
+	private List values;
     private String[] colNames = new String[4];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -57,7 +58,8 @@ public class TransferTypeTableModel extends AbstractTableModel {
      *
      * @return <code>true</code> is cell is editable, <code>false</code> if not.
      */
-    public final boolean isCellEditable(int row, int column) {
+    @Override
+	public final boolean isCellEditable(int row, int column) {
         return column == 2;
     }
 
@@ -67,7 +69,8 @@ public class TransferTypeTableModel extends AbstractTableModel {
     }
 
     /** {@inheritDoc} */
-    public final String getColumnName(int column) {
+    @Override
+	public final String getColumnName(int column) {
         return colNames[column];
     }
 
@@ -84,7 +87,8 @@ public class TransferTypeTableModel extends AbstractTableModel {
      * @param row Row number
      * @param col Column number
      */
-    public final void setValueAt(Object value, int row, int col) {
+    @Override
+	public final void setValueAt(Object value, int row, int col) {
         if (col == 2) {
             final String type = value.toString();
             final Object id = getValueAt(row, 0);

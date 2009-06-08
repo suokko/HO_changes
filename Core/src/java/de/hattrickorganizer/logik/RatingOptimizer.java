@@ -10,17 +10,18 @@ package de.hattrickorganizer.logik;
 import java.text.NumberFormat;
 import java.util.List;
 
+import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
+import plugins.IRatingPredictionManager;
 import plugins.ISpieler;
+import plugins.ISpielerPosition;
 import plugins.ITeam;
 import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.AufstellungOld;
 import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
@@ -40,12 +41,12 @@ public class RatingOptimizer {
 		double[] linear = new double[7];
 		double[] quadratic = new double[7];
 		
-		List matches = MatchExporter.getDataUsefullMatches(RatingPredictionManager.LAST_CHANGE, RatingPredictionManager.LAST_CHANGE_FRIENDLY);
+		List<IExportMatchData> matches = MatchExporter.getDataUsefullMatches(IRatingPredictionManager.LAST_CHANGE, IRatingPredictionManager.LAST_CHANGE_FRIENDLY);
 
 		int i = 0;
 		int count = 0;
 		while ((count < maxNumber) && (i < matches.size())) {
-			ExportMatchData matchData = (ExportMatchData) matches.get(i);
+			IExportMatchData matchData =  matches.get(i);
 			i++;
 			double[] diff = getOffset(matchData);
 //			System.out.print ("Diffs for Match "+matchData.getInfo().getMatchID()+": ");
@@ -68,14 +69,14 @@ public class RatingOptimizer {
 
 		double[][] r = new double[8][2];
 		for (int j = 0; j < 7; j++) {
-			r[j][0] = linear[j] / ((double) count);
+			r[j][0] = linear[j] / (count);
 			if (count > 1) {
                                 // variance 
-				double var = Math.abs(quadratic[j] - (double) count * r[j][0] * r[j][0]) / ((double)(count-1));
+				double var = Math.abs(quadratic[j] - count * r[j][0] * r[j][0]) / ((count-1));
                                 // (sample) standard deviation
                                 double std = Math.sqrt(var);
 				// print error of average? 
-                                r[j][1] = std / Math.sqrt((double) count);
+                                r[j][1] = std / Math.sqrt(count);
                                 // or better the significance?
  				//r[j][1] = Math.abs(r[j][0]) / std * Math.sqrt((double) count);
                                 // or try to calculate the probability for that offset?
@@ -87,7 +88,7 @@ public class RatingOptimizer {
 		return r;
 	}
 
-	private static double[] getOffset(ExportMatchData matchData) {
+	private static double[] getOffset(IExportMatchData matchData) {
 
 
 		// Check for season reset lost		
@@ -116,9 +117,9 @@ public class RatingOptimizer {
 			IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
 			ISpieler playerData = (ISpieler) matchData.getPlayers().get(new Integer(playerMatch.getSpielerId()));
 			
-			if (playerMatch.getId() == SpielerPosition.standard) {
+			if (playerMatch.getId() == ISpielerPosition.standard) {
 				lineup.setKicker(playerMatch.getSpielerId());
-			} else if (playerMatch.getId() == SpielerPosition.spielfuehrer) {
+			} else if (playerMatch.getId() == ISpielerPosition.spielfuehrer) {
 				lineup.setKapitaen(playerMatch.getSpielerId());
 			} else {
 				lineup.setSpieler(playerMatch.getId(),playerMatch.getTaktik(),playerData);

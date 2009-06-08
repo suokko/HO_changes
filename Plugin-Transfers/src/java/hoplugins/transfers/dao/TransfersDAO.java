@@ -223,16 +223,16 @@ public final class TransfersDAO {
         sqlStmt.append("'"
                        + Commons.getModel().getHelper().encodeString4Database(transfer
                                                                               .getPlayerName())
-                       + "',"); //$NON-NLS-1$ //$NON-NLS-2$
+                       + "',"); //$NON-NLS-1$ 
         sqlStmt.append(transfer.getBuyerid() + ","); //$NON-NLS-1$
         sqlStmt.append("'"
                        + Commons.getModel().getHelper().encodeString4Database(transfer.getBuyerName())
-                       + "',"); //$NON-NLS-1$ //$NON-NLS-2$
+                       + "',"); //$NON-NLS-1$ 
         sqlStmt.append(transfer.getSellerid() + ","); //$NON-NLS-1$
         sqlStmt.append("'"
                        + Commons.getModel().getHelper().encodeString4Database(transfer
                                                                               .getSellerName())
-                       + "',"); //$NON-NLS-1$ //$NON-NLS-2$
+                       + "',"); //$NON-NLS-1$ 
         sqlStmt.append(transfer.getPrice() + ","); //$NON-NLS-1$
         sqlStmt.append(transfer.getMarketvalue() + ","); //$NON-NLS-1$
         sqlStmt.append(transfer.getTsi());
@@ -275,11 +275,11 @@ public final class TransfersDAO {
 
             Commons.getModel().getAdapter().executeUpdate(sqlStmt.toString());
             Commons.getModel().getAdapter().executeUpdate("CREATE INDEX pl_id ON " + TABLE_NAME
-                                                          + " (playerid)"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                          + " (playerid)"); //$NON-NLS-1$ 
             Commons.getModel().getAdapter().executeUpdate("CREATE INDEX buy_id ON " + TABLE_NAME
-                                                          + " (buyerid)"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                          + " (buyerid)"); //$NON-NLS-1$ 
             Commons.getModel().getAdapter().executeUpdate("CREATE INDEX sell_id ON " + TABLE_NAME
-                                                          + " (sellerid)"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                          + " (sellerid)"); //$NON-NLS-1$ 
 
             TransferSettingDAO.setCalendarFix();
         } else {
@@ -337,7 +337,7 @@ public final class TransfersDAO {
         try {
             while (rs.next()) {
                 PlayerTransfer transfer = new PlayerTransfer(rs.getInt("transferid"),
-                                                             rs.getInt("playerid")); //$NON-NLS-1$ //$NON-NLS-2$
+                                                             rs.getInt("playerid")); //$NON-NLS-1$ 
                 transfer.setPlayerName(Commons.getModel().getHelper().decodeStringFromDatabase(rs
                                                                                                .getString("playername"))); //$NON-NLS-1$
                 transfer.setDate(rs.getTimestamp("date")); //$NON-NLS-1$

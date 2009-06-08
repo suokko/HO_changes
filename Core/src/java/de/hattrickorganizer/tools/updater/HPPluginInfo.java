@@ -49,7 +49,8 @@ final class HPPluginInfo {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public String toString() {
+    @Override
+	public String toString() {
         if (name != null) {
             return name;
         }

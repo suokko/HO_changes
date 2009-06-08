@@ -69,7 +69,7 @@ public class LoginDialog extends JDialog
 
 		this.m_clMainFrame = mainFrame;
 
-		this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		initComponents();
 
 		//Um den Focus weiterzusetzen

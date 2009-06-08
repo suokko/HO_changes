@@ -39,6 +39,8 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
                                                             ActionListener, MouseListener,
                                                             KeyListener
 {
+	private static final long serialVersionUID = -5179683183917344230L;
+	
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */

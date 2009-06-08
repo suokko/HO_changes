@@ -72,7 +72,8 @@ public class OutputTableModel extends AbstractTableModel {
     /* (non-Javadoc)
      * @see javax.swing.table.TableModel#getColumnClass(int)
      */
-    public Class<?> getColumnClass(int c) {
+    @Override
+	public Class<?> getColumnClass(int c) {
         if ((c > 2) && (c < 11)) {
             return JPanel.class;
         }
@@ -90,8 +91,9 @@ public class OutputTableModel extends AbstractTableModel {
     /* (non-Javadoc)
      * @see javax.swing.table.TableModel#getColumnName(int)
      */
-    public String getColumnName(int c) {
-        return (String) p_V_columnNames.get(c);
+    @Override
+	public String getColumnName(int c) {
+        return p_V_columnNames.get(c);
     }
 
     /* (non-Javadoc)
@@ -120,7 +122,7 @@ public class OutputTableModel extends AbstractTableModel {
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            ISpieler spieler = (ISpieler) p_V_data.get(rowIndex);
+            ISpieler spieler = p_V_data.get(rowIndex);
 
             switch (columnIndex) {
                 case 0:

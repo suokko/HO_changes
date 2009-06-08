@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
@@ -27,7 +28,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class DetailsTableCellRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -640090984809074407L;
+
+	/** TODO Missing Parameter Documentation */
     public static final Color WARNINGS_TYPE1_COLOR = new Color(255, 255, 200);
 
     /** TODO Missing Parameter Documentation */
@@ -43,7 +49,7 @@ public class DetailsTableCellRenderer extends DefaultTableCellRenderer {
      */
     public DetailsTableCellRenderer() {
         super();
-        this.setVerticalAlignment(DetailsTableCellRenderer.CENTER);
+        this.setVerticalAlignment(SwingConstants.CENTER);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -54,35 +60,36 @@ public class DetailsTableCellRenderer extends DefaultTableCellRenderer {
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         switch (column) {
             case DetailsTableModel.COL_DIRECT_RED_CARDS:
                 this.setBackground(DIRECT_RED_COLOR);
-                this.setHorizontalAlignment(DetailsTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case DetailsTableModel.COL_WARNINGS_TYPE1:
             case DetailsTableModel.COL_WARNINGS_TYPE3:
                 this.setBackground(WARNINGS_TYPE1_COLOR);
-                this.setHorizontalAlignment(DetailsTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case DetailsTableModel.COL_WARNINGS_TYPE2:
             case DetailsTableModel.COL_WARNINGS_TYPE4:
                 this.setBackground(WARNINGS_TYPE1_COLOR);
-                this.setHorizontalAlignment(DetailsTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case DetailsTableModel.COL_MATCH_RESULT:
-                this.setHorizontalAlignment(DetailsTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             default:
                 this.setBackground(table.getBackground());
-                this.setHorizontalAlignment(DetailsTableCellRenderer.LEFT);
+                this.setHorizontalAlignment(SwingConstants.LEFT);
                 break;
         }
 

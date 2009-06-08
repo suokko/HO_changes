@@ -36,7 +36,12 @@ import javax.swing.JRadioButton;
 public class FilterPanel extends JPanel implements ActionListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2795086705715618810L;
+
+	/** TODO Missing Parameter Documentation */
     private static final String CARD_AUTOMATIC = "AUTOMATIC CARD";
 
     /** TODO Missing Parameter Documentation */

@@ -77,7 +77,8 @@ public class MatchPosition {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("MatchPosition[");
         buffer.append("name = " + name);

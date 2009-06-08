@@ -12,9 +12,12 @@ import java.awt.print.PageFormat;
  * @author Thorsten Schmidt Erzeugt ein Druckpanel mit der Spieleraustellung
  */
 public final class LineUp extends PrintObject {
+	
+	private static final long serialVersionUID = -111352367289407651L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private LineUpRow defence;
+	private LineUpRow defence;
     private LineUpRow forward;
     private LineUpRow goalkeeper;
     private LineUpRow midfield;
@@ -111,7 +114,8 @@ public final class LineUp extends PrintObject {
      *
      * @param g2 TODO Missing Method Parameter Documentation
      */
-    protected void paintMe(Graphics2D g2) {
+    @Override
+	protected void paintMe(Graphics2D g2) {
         int currentY = 0;
         final int margin = 20;
 

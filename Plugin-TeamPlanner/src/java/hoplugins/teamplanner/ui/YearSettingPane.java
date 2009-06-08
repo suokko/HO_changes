@@ -24,7 +24,11 @@ import javax.swing.JPanel;
 public class YearSettingPane extends JPanel implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox cupRound = new JComboBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3137968373090002868L;
+	private JComboBox cupRound = new JComboBox();
     private JComboBox leaguePosition = new JComboBox();
     private JComboBox seasonEvent = new JComboBox();
     private JComboBox seasonEventType = new JComboBox();

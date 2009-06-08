@@ -15,6 +15,11 @@ public class StandardLineupPanel extends LineupStylePanel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4628631085016401394L;
+
+	/**
      * Constructor
      *
      * @param _mainPanel Sequence
@@ -30,7 +35,8 @@ public class StandardLineupPanel extends LineupStylePanel {
     /**
      * Setup the layout, with 2 teams displayed
      */
-    public void initCompare() {
+    @Override
+	public void initCompare() {
         centerPanel.removeAll();
         setLayout(new BorderLayout());
         setOpaque(false);
@@ -60,7 +66,8 @@ public class StandardLineupPanel extends LineupStylePanel {
     /**
      * Setup the layout, with only one team displayed
      */
-    public void initSingle() {
+    @Override
+	public void initSingle() {
         centerPanel.removeAll();
         setLayout(new BorderLayout());
         setOpaque(false);

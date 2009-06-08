@@ -22,7 +22,12 @@ import hoplugins.teamplanner.vo.HTWeek;
 public class FansPane extends AbstractOperationPane {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7398621781460669688L;
+
+	/** Missing Parameter Documentation */
     public static final int SPONSORMORALE_ROW = 0;
 
     /** Missing Parameter Documentation */
@@ -40,7 +45,8 @@ public class FansPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getBaseBalance(HTWeek week) {
+    @Override
+	public int getBaseBalance(HTWeek week) {
         return 0;
     }
 
@@ -85,21 +91,24 @@ public class FansPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getFullBalance(HTWeek week) {
+    @Override
+	public int getFullBalance(HTWeek week) {
         return getBaseBalance(week);
     }
 
     /**
      * Missing Method Documentation
      */
-    public void onChange() {
+    @Override
+	public void onChange() {
         TeamPlanner.getStadiumPane().refreshTable();
     }
 
     /**
      * Missing Method Documentation
      */
-    protected void setRows() {
+    @Override
+	protected void setRows() {
         addCalculatedRow("Sponsor Morale", new SponsorMoraleCalculator());
         addCalculatedRow("Fans Morale", new FansMoraleCalculator());
         addCalculatedRow("Fans", new FansCalculator());
@@ -108,6 +117,7 @@ public class FansPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    protected void loadInputData() {
+    @Override
+	protected void loadInputData() {
     }
 }

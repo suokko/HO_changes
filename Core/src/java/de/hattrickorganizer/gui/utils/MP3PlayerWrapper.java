@@ -10,6 +10,7 @@ public class MP3PlayerWrapper extends Thread implements IMP3Player{
 	Player m_clPlayer	=	null;
 	String m_sFile		=	"";
 	
+	@Override
 	public void run()
 	{
 		if( ! m_sFile.equals( "" ) )

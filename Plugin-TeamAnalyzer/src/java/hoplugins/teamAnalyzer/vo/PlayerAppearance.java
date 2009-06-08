@@ -107,7 +107,8 @@ public class PlayerAppearance {
      *
      * @return the String representation
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append("Player[");

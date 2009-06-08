@@ -18,7 +18,11 @@ import javax.swing.table.AbstractTableModel;
 public class TeamBookmarksTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List values;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6409403277621787085L;
+	private List values;
     private String[] colNames = new String[2];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -45,7 +49,8 @@ public class TeamBookmarksTableModel extends AbstractTableModel {
     }
 
     /** {@inheritDoc} */
-    public final String getColumnName(int column) {
+    @Override
+	public final String getColumnName(int column) {
         return colNames[column];
     }
 

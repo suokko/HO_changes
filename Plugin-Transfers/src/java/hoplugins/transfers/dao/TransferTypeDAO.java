@@ -40,13 +40,13 @@ public final class TransferTypeDAO {
      */
     public static void setType(int playerId, int type) {
         final String query = "update " + TABLE_NAME + " set TYPE = " + type + " where PLAYER_ID ="
-                       + playerId; //$NON-NLS-1$ //$NON-NLS-2$
+                       + playerId; 
         final int count = Commons.getModel().getAdapter().executeUpdate(query);
 
         if (count == 0) {
             Commons.getModel().getAdapter().executeUpdate("insert into " + TABLE_NAME
                                                           + " (PLAYER_ID, TYPE) values ("
-                                                          + playerId + "," + type + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                                          + playerId + "," + type + ")"); //$NON-NLS-1$ //$NON-NLS-2$ 
         }
     }
 
@@ -75,13 +75,13 @@ public final class TransferTypeDAO {
     private static void checkTable() {
         try {
             final ResultSet rs = Commons.getModel().getAdapter().executeQuery("select * from "
-                                                                        + TABLE_NAME); //$NON-NLS-1$
+                                                                        + TABLE_NAME); 
             rs.next();
         } catch (Exception e) {
             Commons.getModel().getAdapter().executeUpdate("CREATE TABLE " + TABLE_NAME
-                                                          + " (PLAYER_ID INTEGER,TYPE INTEGER)"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                          + " (PLAYER_ID INTEGER,TYPE INTEGER)"); //$NON-NLS-1$ 
             Commons.getModel().getAdapter().executeUpdate("CREATE INDEX pltype_id ON " + TABLE_NAME
-                                                          + " (PLAYER_ID)"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                          + " (PLAYER_ID)"); //$NON-NLS-1$ 
         }
     }
 }

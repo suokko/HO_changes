@@ -15,7 +15,11 @@ import javax.swing.table.TableColumnModel;
 public class ToolTipHeader extends JTableHeader {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3459959650680988134L;
+	/** TODO Missing Parameter Documentation */
     String[] toolTips;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -47,7 +51,8 @@ public class ToolTipHeader extends JTableHeader {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getToolTipText(MouseEvent e) {
+    @Override
+	public final String getToolTipText(MouseEvent e) {
         final int col = columnAtPoint(e.getPoint());
         final int modelCol = getTable().convertColumnIndexToModel(col);
         String retStr;

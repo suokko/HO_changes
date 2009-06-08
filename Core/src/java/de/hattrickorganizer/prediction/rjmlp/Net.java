@@ -315,6 +315,7 @@ public class Net {
 	/**
 	 * Dump this network
 	 */
+	@Override
 	public String toString() {
 		String retVal = "";
 		retVal += "Network Dump\n";

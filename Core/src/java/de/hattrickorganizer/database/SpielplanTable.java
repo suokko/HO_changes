@@ -20,6 +20,7 @@ public final class SpielplanTable extends AbstractTable {
 	}
 	
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[4];
 		columns[0]= new ColumnDescriptor("LigaID",Types.INTEGER,false);

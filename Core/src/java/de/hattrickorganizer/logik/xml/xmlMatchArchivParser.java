@@ -12,6 +12,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.IMatchKurzInfo;
+
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
@@ -83,7 +85,7 @@ public class xmlMatchArchivParser {
      * @return TODO Missing Return Method Documentation
      */
     protected final int getStatus(String status) {
-        return MatchKurzInfo.FINISHED;
+        return IMatchKurzInfo.FINISHED;
     }
 
     /////////////////////////////////////////////////////////////////////////////////    
@@ -142,7 +144,7 @@ public class xmlMatchArchivParser {
                 tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
                 spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                 spiel.setAufstellung(true);
-                spiel.setMatchStatus(MatchKurzInfo.FINISHED);
+                spiel.setMatchStatus(IMatchKurzInfo.FINISHED);
 
                 //In Vector adden
                 liste.add(spiel);

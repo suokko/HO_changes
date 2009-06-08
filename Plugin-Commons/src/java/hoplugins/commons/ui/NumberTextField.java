@@ -12,7 +12,11 @@ import javax.swing.text.PlainDocument;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class NumberTextField extends JTextField {
-    private int _intDigits = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8515843904965462011L;
+	private int _intDigits = 0;
     private int _maxDigits = 0;
     private short _decDigits = 0;
 
@@ -126,7 +130,11 @@ public class NumberTextField extends JTextField {
      * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
      */
     private class DecimalFieldDocument extends PlainDocument {
-        private short decimal;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 5081324121361165478L;
+		private short decimal;
 
         /**
          * Creates a new DecimalFieldDocument object.
@@ -146,7 +154,8 @@ public class NumberTextField extends JTextField {
          *
          * @throws BadLocationException an exception is thrown if the new string is not a number
          */
-        public void insertString(int offs, String str, AttributeSet a)
+        @Override
+		public void insertString(int offs, String str, AttributeSet a)
             throws BadLocationException {
             if (str != null) {
                 if (!_validateNumberString(str.trim(), offs)) {

@@ -14,7 +14,8 @@ public class SpecialEventsTableModel extends DefaultTableModel
         super(data, columns);
     }
 
-    public Class getColumnClass(int col)
+    @Override
+	public Class getColumnClass(int col)
     {
         if(col == SpecialEventsPanel.HOMEEVENTCOLUMN ||
         		col == SpecialEventsPanel.AWAYEVENTCOLUMN || 

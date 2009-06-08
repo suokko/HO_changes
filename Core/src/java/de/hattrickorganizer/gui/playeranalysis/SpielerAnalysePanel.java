@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
@@ -19,11 +20,14 @@ import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
+import plugins.ISpieler;
+
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
+import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
@@ -34,6 +38,8 @@ import de.hattrickorganizer.tools.Helper;
 public class SpielerAnalysePanel extends ImagePanel implements Refreshable, ItemListener,
                                                                ActionListener
 {
+	private static final long serialVersionUID = 7705544952029589545L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private final JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
@@ -180,10 +186,9 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SpielerAnalyse")
+            final String titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse")
                                  + " - "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getTeamName()
+                                 + HOVerwaltung.instance().getModel().getBasics().getTeamName()
                                  + " - "
                                  + java.text.DateFormat.getDateTimeInstance().format(calendar
                                                                                      .getTime());
@@ -203,41 +208,28 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
      * TODO Missing Method Documentation
      */
     private void fillSpielerCB() {
-        final java.util.Vector spieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                .getModel()
-                                                                                .getAllSpieler();
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] spielerCBItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spieler
-                                                                                                                               .size()];
+        final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler.size()];
 
         for (int i = 0; i < spieler.size(); i++) {
-            spielerCBItems[i] = new de.hattrickorganizer.gui.model.SpielerCBItem(((Spieler) spieler
-                                                                                  .get(i)).getName(),
-                                                                                 0f,
-                                                                                 (Spieler) spieler
-                                                                                 .get(i));
+            spielerCBItems[i] = new SpielerCBItem((spieler.get(i)).getName(),0f,spieler.get(i));
         }
 
         java.util.Arrays.sort(spielerCBItems);
 
         //Alte Spieler
-        final java.util.Vector allSpieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getModel()
-                                                                                   .getAllOldSpieler();
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] spielerAllCBItems = new de.hattrickorganizer.gui.model.SpielerCBItem[allSpieler
+        final Vector<ISpieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
+        final SpielerCBItem[] spielerAllCBItems = new SpielerCBItem[allSpieler
                                                                                                                                   .size()];
 
         for (int i = 0; i < allSpieler.size(); i++) {
-            spielerAllCBItems[i] = new de.hattrickorganizer.gui.model.SpielerCBItem(((Spieler) allSpieler
-                                                                                     .get(i))
-                                                                                    .getName(), 0f,
-                                                                                    (Spieler) allSpieler
-                                                                                    .get(i));
+            spielerAllCBItems[i] = new SpielerCBItem((allSpieler.get(i)).getName(), 0f,allSpieler.get(i));
         }
 
         java.util.Arrays.sort(spielerAllCBItems);
 
         //Zusammenfügen
-        final de.hattrickorganizer.gui.model.SpielerCBItem[] cbItems = new de.hattrickorganizer.gui.model.SpielerCBItem[spielerCBItems.length
+        final SpielerCBItem[] cbItems = new SpielerCBItem[spielerCBItems.length
                                                                        + spielerAllCBItems.length
                                                                        + 1];
         int i = 0;
@@ -295,7 +287,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
         final ImagePanel panel = new ImagePanel(null);
 
         m_jcbSpieler = new JComboBox();
-        m_jcbSpieler.setRenderer(new de.hattrickorganizer.gui.model.SpielerCBItemRenderer());
+        m_jcbSpieler.setRenderer(new SpielerCBItemRenderer());
         m_jcbSpieler.setMaximumRowCount(25);
         m_jcbSpieler.addItemListener(this);
         m_jcbSpieler.setMaximumSize(new Dimension(200, 25));

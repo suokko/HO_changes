@@ -8,6 +8,7 @@ import java.util.Vector;
 import plugins.IBasics;
 import plugins.IDBAdapter;
 import plugins.IEPV;
+import plugins.IExportMatchData;
 import plugins.IFinanzen;
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
@@ -30,7 +31,6 @@ import plugins.IVerein;
 import plugins.IXtraData;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.FutureTrainingManager;
-import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 
 
@@ -443,7 +443,7 @@ public class HOMiniModel implements IHOMiniModel {
         return HOVerwaltung.instance().getModel();
     }
 
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List trainings, int cotrainer, int keeper, int trainerLvl) {
+	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl) {
 		FutureTrainingManager ftm = new FutureTrainingManager(p,trainings,cotrainer,keeper,trainerLvl);
 		return ftm;
 	}
@@ -500,7 +500,7 @@ public class HOMiniModel implements IHOMiniModel {
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
+	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
 		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies);
 	}
 

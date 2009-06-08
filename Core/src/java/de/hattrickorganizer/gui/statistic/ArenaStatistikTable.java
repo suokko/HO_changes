@@ -14,9 +14,12 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  * @author TODO Author Name
  */
 public class ArenaStatistikTable extends JTable {
+	
+	private static final long serialVersionUID = -6319111452810917050L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ArenaStatistikTableModel m_clTableModel;
+	private ArenaStatistikTableModel m_clTableModel;
     private TableSorter m_clTableSorter;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -100,7 +103,7 @@ public class ArenaStatistikTable extends JTable {
 
         m_clTableSorter.addMouseListenerToHeaderInTable(this);
 
-        setAutoResizeMode(this.AUTO_RESIZE_OFF);
+        setAutoResizeMode(AUTO_RESIZE_OFF);
         tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0)))
                         .setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(70));
         tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0))).setMinWidth(de.hattrickorganizer.tools.Helper

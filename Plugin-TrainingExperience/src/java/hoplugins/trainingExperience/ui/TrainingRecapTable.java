@@ -4,6 +4,7 @@ package hoplugins.trainingExperience.ui;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
 
 
@@ -15,7 +16,11 @@ import javax.swing.table.TableColumnModel;
 public class TrainingRecapTable extends JScrollPane {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JTable fixed;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7666144967819145973L;
+	private JTable fixed;
     private JTable scroll;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -61,7 +66,7 @@ public class TrainingRecapTable extends JScrollPane {
         //  Add the fixed table to the scroll pane
         fixed.setPreferredScrollableViewportSize(fixed.getPreferredSize());
         setRowHeaderView(fixed);
-        setCorner(JScrollPane.UPPER_LEFT_CORNER, fixed.getTableHeader());
+        setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, fixed.getTableHeader());
     }
 
     //~ Methods ------------------------------------------------------------------------------------

@@ -118,7 +118,7 @@ public class SimpleLineUp {
 	 */
 	public final float HQ(double x) {
 		// first convert to original HT rating (1...80)
-		x = (float) HTfloat2int(x);
+		x = HTfloat2int(x);
 
 		// and now LoddarStats Hattrick-Quality function (?)
 		double v = (2.0f * x) / (x + 80.0f);

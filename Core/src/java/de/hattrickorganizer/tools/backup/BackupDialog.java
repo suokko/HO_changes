@@ -26,6 +26,10 @@ import de.hattrickorganizer.tools.ZipHelper;
  *
  */
 public final class BackupDialog extends JDialog implements ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8021487086770633938L;
 	private JButton okButton = new JButton("restore");
 	private JButton cancelButton = new JButton("cancel");
 	

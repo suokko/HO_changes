@@ -172,7 +172,8 @@ public class Action implements plugins.IMPActions, Comparable {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
 
         if (homeTeam) {

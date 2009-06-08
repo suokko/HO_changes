@@ -22,9 +22,12 @@ import javax.swing.JPanel;
  * @author draghetto
  */
 public class InjuryDialog extends JDialog implements WindowListener {
+	
+	private static final long serialVersionUID = 5194730460165995230L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	/** TODO Missing Parameter Documentation */
     DoctorPanel doctorPanel;
 
     /** TODO Missing Parameter Documentation */

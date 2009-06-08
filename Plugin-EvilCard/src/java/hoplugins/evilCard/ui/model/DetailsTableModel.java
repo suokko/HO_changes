@@ -36,7 +36,12 @@ import javax.swing.table.AbstractTableModel;
 public class DetailsTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5909157286656017836L;
+
+	/** TODO Missing Parameter Documentation */
     public static final int cols = 10;
 
     /** TODO Missing Parameter Documentation */
@@ -120,7 +125,8 @@ public class DetailsTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Class getColumnClass(int c) {
+    @Override
+	public Class getColumnClass(int c) {
         //return getValueAt(0, c).getClass();
         return Object.class;
     }
@@ -141,7 +147,8 @@ public class DetailsTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public String getColumnName(int c) {
+    @Override
+	public String getColumnName(int c) {
         return (String) vColumnNames.get(c);
     }
 

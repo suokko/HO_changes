@@ -24,6 +24,9 @@ import de.hattrickorganizer.model.matches.Matchdetails;
  * @author TODO Author Name
  */
 public class MatchberichtPanel extends ImagePanel implements ActionListener {
+	
+	private static final long serialVersionUID = -9014579382145462648L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
     private JButton m_jbMaximieren = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper

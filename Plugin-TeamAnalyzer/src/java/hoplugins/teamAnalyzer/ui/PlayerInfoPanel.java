@@ -18,6 +18,7 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 
@@ -29,7 +30,12 @@ import javax.swing.border.EtchedBorder;
 public class PlayerInfoPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5338615169669058973L;
+
+	/** TODO Missing Parameter Documentation */
     protected JLabel ageLabel = new JLabel("");
 
     /** TODO Missing Parameter Documentation */
@@ -157,12 +163,12 @@ public class PlayerInfoPanel extends JPanel {
         JLabel titleLabel = new JLabel(title);
 
         titleLabel.setOpaque(false);
-        titleLabel.setHorizontalAlignment(JLabel.LEFT);
-        titleLabel.setHorizontalTextPosition(JLabel.LEFT);
+        titleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        titleLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 
         label.setOpaque(false);
-        label.setHorizontalAlignment(JLabel.RIGHT);
-        label.setHorizontalTextPosition(JLabel.RIGHT);
+        label.setHorizontalAlignment(SwingConstants.RIGHT);
+        label.setHorizontalTextPosition(SwingConstants.RIGHT);
 
         JPanel panel = Commons.getModel().getGUI().createImagePanel();
 

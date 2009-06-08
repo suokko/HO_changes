@@ -261,7 +261,7 @@ public class ArenaSizer {
      * @return TODO Missing Return Method Documentation
      */
     public final int calcOptimalSize(int fanFaktor, int anzahlFans) {
-        return (int) fanFaktor * anzahlFans;
+        return fanFaktor * anzahlFans;
     }
 
     /**

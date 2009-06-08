@@ -11,12 +11,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -31,9 +35,11 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
     implements de.hattrickorganizer.gui.Refreshable, de.hattrickorganizer.gui.Updateable,
                ActionListener
 {
+	
+	private static final long serialVersionUID = -9098199182886069003L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private AufstellungsPanel m_clAufstellungsPanel;
+	private AufstellungsPanel m_clAufstellungsPanel;
     private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                             .loadImage("gui/bilder/Drucken.png")));
     private JButton m_jbFlipSide = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
@@ -73,7 +79,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
 
         initComponentes();
 
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -90,7 +96,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
             new AufstellungsMiniPositionsFrame(m_clAufstellungsPanel, false, false);
         } else if (actionEvent.getSource().equals(m_jbFlipSide)) {
             HOVerwaltung.instance().getModel().getAufstellung().flipSide();
-            de.hattrickorganizer.gui.HOMainFrame.instance().getAufstellungsPanel().update();
+            HOMainFrame.instance().getAufstellungsPanel().update();
         } else {
             final AufstellungsMiniPositionsFrame frame = new AufstellungsMiniPositionsFrame(m_clAufstellungsPanel,
                                                                                             true,
@@ -128,10 +134,10 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
 
         //Alle SpielerPositionen Informieren
         //erste 11
-        final java.util.Vector aufgestellteSpieler = new java.util.Vector();
+        final Vector<ISpieler> aufgestellteSpieler = new Vector<ISpieler>();
 
-        final java.util.Vector alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
-        final java.util.Vector gefilterteSpieler = new java.util.Vector();
+        final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
         final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
         for (int i = 0; i < alleSpieler.size(); i++) {

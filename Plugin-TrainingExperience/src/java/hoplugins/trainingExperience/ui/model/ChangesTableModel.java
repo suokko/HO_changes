@@ -22,7 +22,11 @@ import javax.swing.table.AbstractTableModel;
 public class ChangesTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List values;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9082549798814304017L;
+	private List values;
     private String[] colNames = new String[7];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -57,7 +61,8 @@ public class ChangesTableModel extends AbstractTableModel {
     /**
      * @see javax.swing.table.TableModel#getColumnName(int)
      */
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         return colNames[column];
     }
 

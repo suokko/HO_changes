@@ -6,9 +6,8 @@
  */
 package de.hattrickorganizer.gui.model;
 
-import java.util.Vector;
-
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;
 
@@ -23,6 +22,10 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class MatchScoreTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2007343001155380888L;
 	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
 		{
@@ -46,6 +49,7 @@ public class MatchScoreTableModel extends AbstractMatchTableModel {
 	/**
 	 * Erzeugt einen Data[][] aus dem Spielervector
 	 */
+	@Override
 	protected void initData() {
 		m_clData = new Object[5][columnNames.length];
 		double number = matchResult.getMatchNumber();
@@ -69,7 +73,7 @@ public class MatchScoreTableModel extends AbstractMatchTableModel {
 					score,
 					ColorLabelEntry.FG_STANDARD,
 					ColorLabelEntry.BG_STANDARD,
-					JLabel.LEFT);
+					SwingConstants.LEFT);
 
 			m_clData[score][1] = getProgressBar(goal[score][0] / number);
 			m_clData[score][2] = getProgressBar(goal[score][1] / number);
@@ -77,6 +81,7 @@ public class MatchScoreTableModel extends AbstractMatchTableModel {
 		}
 	}
 
+	@Override
 	public String[] getColumnNames() {
 		return columnNames;
 	}

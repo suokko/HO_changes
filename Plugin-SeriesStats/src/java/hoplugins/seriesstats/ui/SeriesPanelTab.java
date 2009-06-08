@@ -32,6 +32,10 @@ import javax.swing.JPanel;
 public class SeriesPanelTab extends JPanel implements RefreshablePanel {
 	//~ Instance fields ----------------------------------------------------------------------------
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3053113988164851557L;
 	// Division Panel
 	private GraphicPanel PanelDivisionGP;
 

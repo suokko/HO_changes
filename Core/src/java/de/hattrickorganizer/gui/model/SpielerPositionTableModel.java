@@ -20,7 +20,12 @@ import de.hattrickorganizer.model.SpielerPosition;
 public class SpielerPositionTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4407511039452889638L;
+
+	/** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Position"),
                                             
@@ -80,7 +85,8 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         return false;
     }
 
@@ -91,7 +97,8 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -120,7 +127,8 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
             return m_sColumnNames[columnIndex];
         }
@@ -166,7 +174,8 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 

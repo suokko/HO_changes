@@ -56,7 +56,8 @@ public class HattrickDate {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("Skillup[");
         buffer.append("week = " + week);

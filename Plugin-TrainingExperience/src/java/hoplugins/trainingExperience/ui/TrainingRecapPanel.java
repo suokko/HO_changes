@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -38,7 +39,12 @@ import javax.swing.ListSelectionModel;
 public class TrainingRecapPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private BaseTableModel tableModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7240288702397251461L;
+
+	private BaseTableModel tableModel;
 
     //private HashMap playerRef;
     private TrainingRecapTable recapTable;
@@ -190,7 +196,7 @@ public class TrainingRecapPanel extends JPanel {
         panel.setOpaque(false);
         panel.setLayout(new BorderLayout());
 
-        JLabel title = new JLabel(PluginProperty.getString("Recap"), JLabel.CENTER); //$NON-NLS-1$
+        JLabel title = new JLabel(PluginProperty.getString("Recap"), SwingConstants.CENTER); //$NON-NLS-1$
 
         title.setOpaque(false);
         panel.add(title, BorderLayout.NORTH);

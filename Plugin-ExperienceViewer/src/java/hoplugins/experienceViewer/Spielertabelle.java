@@ -12,10 +12,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -23,7 +21,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -344,6 +341,7 @@ public class Spielertabelle extends JTable {
 
 	private class MouseHandler extends MouseAdapter {
 
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			JTableHeader h = (JTableHeader) e.getSource();
 			TableColumnModel columnModel = h.getColumnModel();
@@ -371,6 +369,7 @@ public class Spielertabelle extends JTable {
 				tips.put(col, tooltip);
 		}
 
+		@Override
 		public void mouseMoved(MouseEvent evt) {
 			TableColumn col = null;
 			JTableHeader header = (JTableHeader) evt.getSource();
@@ -483,6 +482,7 @@ public class Spielertabelle extends JTable {
 
 	public class WindowClosingAdapter extends WindowAdapter {
 
+		@Override
 		public void windowClosing(WindowEvent event) {
 			KonfigurationSpeichern();
 		}

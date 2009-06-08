@@ -13,7 +13,11 @@ import hoplugins.commons.utils.PluginProperty;
 public class StartingPanel extends InfoPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static String[] messages = {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2856979077539371969L;
+	private static String[] messages = {
                                            PluginProperty.getString("StartingPanel.0"), //$NON-NLS-1$
     PluginProperty.getString("StartingPanel.1"), //$NON-NLS-1$
     PluginProperty.getString("StartingPanel.2"), //$NON-NLS-1$

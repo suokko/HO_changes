@@ -19,6 +19,7 @@ public final class PaarungTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[11];
 		columns[0]= new ColumnDescriptor("LigaID",Types.INTEGER,false);

@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -25,7 +26,11 @@ import javax.swing.JPanel;
 public class SettingPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JCheckBox checkName = new JCheckBox();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5721035453587068724L;
+	private JCheckBox checkName = new JCheckBox();
     private JCheckBox descRating = new JCheckBox();
     private JCheckBox loddarStats = new JCheckBox();
     private JCheckBox mixedLineup = new JCheckBox();
@@ -95,7 +100,7 @@ public class SettingPanel extends JPanel {
 
         //innerPanel.setLayout(new BorderLayout());
         innerPanel.add(checkBox);
-        innerPanel.add(new JLabel(string, JLabel.LEFT));
+        innerPanel.add(new JLabel(string, SwingConstants.LEFT));
         innerPanel.setOpaque(false);
         panel.add(innerPanel, BorderLayout.WEST);
 

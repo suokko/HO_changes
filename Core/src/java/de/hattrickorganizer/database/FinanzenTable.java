@@ -17,6 +17,7 @@ public final class FinanzenTable extends AbstractTable {
 	}
 
 	
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[31];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
@@ -53,6 +54,7 @@ public final class FinanzenTable extends AbstractTable {
 		
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IFINANZEN_1 ON " + getTableName() + "(" + columns[0].getColumnName() + "," + columns[1].getColumnName() + ")",

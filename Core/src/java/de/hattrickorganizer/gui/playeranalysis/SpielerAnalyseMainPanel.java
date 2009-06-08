@@ -20,9 +20,12 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
  * @author TODO Author Name
  */
 public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListener {
+	
+	private static final long serialVersionUID = 5384638406362299060L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbDrehen;
+	private JButton m_jbDrehen;
     private JSplitPane m_jspSpielerAnalyseSplitPane;
     private SpielerAnalysePanel m_jpSpielerAnalysePanel1;
     private SpielerAnalysePanel m_jpSpielerAnalysePanel2;

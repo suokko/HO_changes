@@ -38,7 +38,8 @@ public class LightGrayFilter extends RGBImageFilter {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int filterRGB(int x, int y, int rgb) {
+    @Override
+	public final int filterRGB(int x, int y, int rgb) {
         final Color color = new Color(rgb);
         final Color color2 = new Color((int) (color.getRed() * graywert),
                                        (int) (color.getGreen() * graywert),

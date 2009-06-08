@@ -839,7 +839,7 @@ public class Aufstellungsassistent {
             average += player.calcPosValue(player.getIdealPosition(), true);
         }
 
-        average = de.hattrickorganizer.tools.Helper.round(average / (float) spieler.size(), 2);
+        average = de.hattrickorganizer.tools.Helper.round(average / spieler.size(), 2);
 
         return average;
     }

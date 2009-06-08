@@ -19,6 +19,11 @@ public class MannschaftsPanel extends ImagePanel {
     //private ServerTeam          m_clTeam            =   null;
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2360924414413125941L;
+
+	/**
      * Creates a new MannschaftsPanel object.
      */
     public MannschaftsPanel() {

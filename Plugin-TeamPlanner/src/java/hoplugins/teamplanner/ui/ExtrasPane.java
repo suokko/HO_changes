@@ -24,7 +24,12 @@ import plugins.IFutureTrainingManager;
 public class ExtrasPane extends AbstractOperationPane {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 712736126779796039L;
+
+	/** Missing Parameter Documentation */
     public static final int YOUTH_ROW = 0;
 
     /** Missing Parameter Documentation */
@@ -45,7 +50,8 @@ public class ExtrasPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getBaseBalance(HTWeek week) {
+    @Override
+	public int getBaseBalance(HTWeek week) {
         int columnIndex = getColumnIndex(week);
         int money = Util.getOperationCell(model, YOUTH_ROW, columnIndex).getBalance();
         money = money + Util.getOperationCell(model, STAFFSALARY_ROW, columnIndex).getBalance();
@@ -60,7 +66,8 @@ public class ExtrasPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getFullBalance(HTWeek week) {
+    @Override
+	public int getFullBalance(HTWeek week) {
         int bal = getBaseBalance(week);
         int columnIndex = getColumnIndex(week);
         bal += Util.getOperationCell(model, STAFF_ROW, columnIndex).getBalance();
@@ -83,14 +90,16 @@ public class ExtrasPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    public void onChange() {
+    @Override
+	public void onChange() {
         TeamPlanner.getRecapPane().refreshTable();
     }
 
     /**
      * Missing Method Documentation
      */
-    protected void setRows() {
+    @Override
+	protected void setRows() {
         addManualRow("Youth");
         addInputRow("Staff", new StaffListener(), false, new StaffInner());
         addCalculatedRow("Staff Expense", new StaffCalculator());
@@ -100,7 +109,8 @@ public class ExtrasPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    protected void loadInputData() {
+    @Override
+	protected void loadInputData() {
         int coTrainer = Commons.getModel().getVerein().getCoTrainer();
         int keeperTrainer = Commons.getModel().getVerein().getTorwartTrainer();
         int psico = Commons.getModel().getVerein().getPsychologen();

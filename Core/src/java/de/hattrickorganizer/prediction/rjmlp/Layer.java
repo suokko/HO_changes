@@ -64,6 +64,7 @@ class Layer {
 			System.out.println ("Invalid parameters for normalization: "+values);
 	}
 
+	@Override
 	public String toString() {
 		String retVal = "Layer-Dump:\n";
 		retVal += "\tNeurons:\n";

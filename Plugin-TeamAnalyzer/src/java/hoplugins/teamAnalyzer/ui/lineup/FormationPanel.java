@@ -16,7 +16,12 @@ import javax.swing.JPanel;
 public class FormationPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** Left Attack RatingBox */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2989171587658994483L;
+
+	/** Left Attack RatingBox */
     protected RatingBox leftAtt = new RatingBox();
 
     /** Left Defence RatingBox */

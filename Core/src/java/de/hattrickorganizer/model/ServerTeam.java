@@ -39,7 +39,12 @@ import de.hattrickorganizer.tools.HOLogger;
 public class ServerTeam implements java.io.Serializable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8226174493314770192L;
+
+	/** TODO Missing Parameter Documentation */
     private String m_sManagerName = "";
 
     /** TODO Missing Parameter Documentation */

@@ -5,6 +5,7 @@ import java.sql.Types;
 import java.util.Vector;
 
 import plugins.IMatchLineupPlayer;
+import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
@@ -19,6 +20,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[13];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false);
@@ -37,6 +39,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements(){
 		return new String[]{
 			"CREATE INDEX iMATCHLINEUPPLAYER_1 ON "+getTableName()+"("+columns[2].getColumnName()+")",
@@ -56,13 +59,13 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		final Vector<float[]> bewertung = new Vector<float[]>();
 
 		//Alle Möglichen Kombos durchlaufen
-		for (byte i = 0; i <= SpielerPosition.STURM_AUS; i++) {
+		for (byte i = 0; i <= ISpielerPosition.STURM_AUS; i++) {
 			final float[] temp = getBewertungen4PlayerUndPosition(spielerid, i);
 
 			//Min ein Wert für die Pos gefunden -> Max > 0
 			if (temp[0] > 0) {
 				//Erste Wert statt aktuellen wert mit der Posid füllen
-				temp[3] = (float) i;
+				temp[3] = i;
 
 				bewertung.add(temp);
 			}

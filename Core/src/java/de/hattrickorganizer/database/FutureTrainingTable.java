@@ -22,6 +22,7 @@ public final class FutureTrainingTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[5];
 		columns[0]= new ColumnDescriptor("TYPE",Types.INTEGER,false);

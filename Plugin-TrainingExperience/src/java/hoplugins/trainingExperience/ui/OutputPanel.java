@@ -42,7 +42,11 @@ import javax.swing.table.TableColumn;
 public class OutputPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JPanel m_jpPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7955126207696897546L;
+	private JPanel m_jpPanel;
     private JTable m_jtOutputTable;
     private OutputTableSorter sorter;
 
@@ -82,16 +86,16 @@ public class OutputPanel extends JPanel {
                 if (model.getHelper().downloadMatchData(matchID.intValue())) {
                     model.getHelper().showMessage(null, PluginProperty.getString("MatchImported"), //$NON-NLS-1$
                                                   PluginProperty.getString("ImportOK"), //$NON-NLS-1$
-                                                  1); //$NON-NLS-1$ //$NON-NLS-2$
+                                                  1); 
                     model.getGUI().doRefresh();
                 }
             } else {
                 model.getHelper().showMessage(null, PluginProperty.getString("NotUserMatch"), //$NON-NLS-1$
-                                              PluginProperty.getString("ImportError"), 1); //$NON-NLS-1$ //$NON-NLS-2$
+                                              PluginProperty.getString("ImportError"), 1); //$NON-NLS-1$ 
             }
         } catch (Exception e) {
             model.getHelper().showMessage(null, PluginProperty.getString("MatchNotImported"), //$NON-NLS-1$
-                                          PluginProperty.getString("ImportError"), 1); //$NON-NLS-1$ //$NON-NLS-2$
+                                          PluginProperty.getString("ImportError"), 1); //$NON-NLS-1$ 
         }
     }
 

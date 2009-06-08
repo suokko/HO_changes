@@ -13,4 +13,9 @@ import javax.swing.JPanel;
  * @author <a href="mailto:kenmooda@users.sourceforge.net">Tommi Rautava</a>
  */
 public class GraphPane extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6163480401359867824L;
 }

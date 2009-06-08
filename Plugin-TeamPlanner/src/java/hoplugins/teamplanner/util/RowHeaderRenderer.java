@@ -24,7 +24,11 @@ import javax.swing.table.JTableHeader;
 public class RowHeaderRenderer extends JLabel implements ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Border normalBorder;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8984290622169408462L;
+	private Border normalBorder;
     private Border selectedBorder;
     private Font normalFont;
     private Font selectedFont;

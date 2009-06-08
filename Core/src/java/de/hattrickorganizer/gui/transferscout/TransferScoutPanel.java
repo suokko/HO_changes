@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
+import javax.swing.ScrollPaneConstants;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.ScoutThread;
@@ -92,8 +93,8 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
             final JScrollPane scrollPane = new JScrollPane(table);
             scrollPane.setPreferredSize(new Dimension(table.getPreferredSize().width + 10,
                                                       table.getPreferredSize().height + 70));
-            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
             scrollPane.getViewport().setBackground(Color.white);
 
             final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController

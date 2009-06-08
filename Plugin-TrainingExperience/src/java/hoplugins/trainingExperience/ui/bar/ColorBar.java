@@ -16,7 +16,12 @@ import javax.swing.JFrame;
 public final class ColorBar extends JComponent {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4167591212962253628L;
+
+	/** TODO Missing Parameter Documentation */
     static final int RED = 0x1000000;
 
     /** TODO Missing Parameter Documentation */
@@ -127,7 +132,8 @@ public final class ColorBar extends JComponent {
     }
 
     /* draw a color bar */
-    public void paint(Graphics g) {    	
+    @Override
+	public void paint(Graphics g) {    	
         g.clearRect(0, 0, length, thickness);
 
         int x = 0;

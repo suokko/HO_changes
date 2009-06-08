@@ -19,7 +19,11 @@ import java.util.Vector;
 public class OperationTableModel extends BaseTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Map rowClass = new HashMap();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5834318479352507933L;
+	private Map rowClass = new HashMap();
     private Map rowEditable = new HashMap();
     private Map rowMulti = new HashMap();
 
@@ -52,7 +56,8 @@ public class OperationTableModel extends BaseTableModel {
      *
      * @return true if editable, false if not
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         String val = (String) rowEditable.get("" + row);
 
         if ((val != null) && (val.equalsIgnoreCase("true"))) {
@@ -133,7 +138,8 @@ public class OperationTableModel extends BaseTableModel {
      * @param row Missing Method Parameter Documentation
      * @param col Missing Method Parameter Documentation
      */
-    public void setValueAt(Object value, int row, int col) {
+    @Override
+	public void setValueAt(Object value, int row, int col) {
         if (value instanceof String) {
             int input = 0;
 

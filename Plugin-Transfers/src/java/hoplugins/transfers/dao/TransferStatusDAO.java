@@ -39,13 +39,13 @@ public final class TransferStatusDAO {
      */
     public static void setUploaded(int transferId) {
         final String query = "update " + TABLE_NAME + " set STATUS = TRUE where TRANSFER_ID ="
-                             + transferId; //$NON-NLS-1$ //$NON-NLS-2$
+                             + transferId; 
         final int count = Commons.getModel().getAdapter().executeUpdate(query);
 
         if (count == 0) {
             Commons.getModel().getAdapter().executeUpdate("insert into " + TABLE_NAME
                                                           + " (TRANSFER_ID, STATUS) values ("
-                                                          + transferId + ",TRUE)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                                          + transferId + ",TRUE)"); //$NON-NLS-1$ 
         }
     }
 
@@ -58,7 +58,7 @@ public final class TransferStatusDAO {
      */
     public static boolean isUploaded(int transferId) {
         final String query = "select STATUS from " + TABLE_NAME + " where TRANSFER_ID="
-                             + transferId; //$NON-NLS-1$ //$NON-NLS-2$
+                             + transferId; 
         final ResultSet rs = Commons.getModel().getAdapter().executeQuery(query);
 
         try {
@@ -73,7 +73,7 @@ public final class TransferStatusDAO {
      * Returns if the tranfer has been already uploaded to server or not
      */
     public static void resetTransfers() {
-        final String query = "DELETE from " + TABLE_NAME; //$NON-NLS-1$ //$NON-NLS-2$
+        final String query = "DELETE from " + TABLE_NAME; //$NON-NLS-1$ 
         Commons.getModel().getAdapter().executeUpdate(query);
     }
 
@@ -89,7 +89,7 @@ public final class TransferStatusDAO {
             Commons.getModel().getAdapter().executeUpdate("CREATE TABLE " + TABLE_NAME
                                                           + " (TRANSFER_ID INTEGER,STATUS BOOLEAN)");
             Commons.getModel().getAdapter().executeUpdate("CREATE INDEX plstatus_id ON "
-                                                          + TABLE_NAME + " (TRANSFER_ID)"); //$NON-NLS-1$ //$NON-NLS-2$
+                                                          + TABLE_NAME + " (TRANSFER_ID)"); //$NON-NLS-1$ 
         }
 
         try {

@@ -49,7 +49,12 @@ import java.util.Map;
  * @version 2.0 02/27/04
  */
 public abstract class AbstractTableSorter extends AbstractTableModel {
-    /**  */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1943995728912103888L;
+
+	/**  */
     /** TODO Missing Parameter Documentation */
     public static final int DESCENDING = -1;
 
@@ -127,7 +132,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      *
      * @return
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         return tableModel.isCellEditable(modelIndex(row), column);
     }
 
@@ -138,7 +144,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      *
      * @return
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 
@@ -173,7 +180,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      *
      * @return
      */
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         return tableModel.getColumnName(column);
     }
 
@@ -312,7 +320,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      * @param row
      * @param column
      */
-    public void setValueAt(Object aValue, int row, int column) {
+    @Override
+	public void setValueAt(Object aValue, int row, int column) {
         tableModel.setValueAt(aValue, modelIndex(row), column);
     }
 

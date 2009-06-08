@@ -6,9 +6,8 @@
  */
 package de.hattrickorganizer.gui.model;
 
-import java.util.Vector;
-
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;
 
@@ -23,6 +22,10 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class MatchResultTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5568369952809628251L;
 	/** TODO Missing Parameter Documentation */
 	public final static String[] columnNames = {
 		HOVerwaltung.instance().getLanguageString("Ergebnis"), 
@@ -47,6 +50,7 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 	/**
 	 * Erzeugt einen Data[][] aus dem Spielervector
 	 */
+	@Override
 	protected void initData() {
 		m_clData = new Object[25][getColumnNames().length];
 		double number = matchResult.getMatchNumber();
@@ -60,12 +64,12 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 				final int res = matchResult.getResultDetail()[(home * 5) + away];
 
 				// result
-				m_clData[(home * 5) + away][0] = new ColorLabelEntry("" + home + " - " + away, ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
+				m_clData[(home * 5) + away][0] = new ColorLabelEntry("" + home + " - " + away, ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
 				//Ergebnis
 				m_clData[(home * 5) + away][1] = getProgressBar(res / number * 1.0d);				
 
-				m_clData[(home * 5) + away][2] = new ColorLabelEntry(1, "", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
+				m_clData[(home * 5) + away][2] = new ColorLabelEntry(1, "", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
 				if (home > away) {
 					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
@@ -78,6 +82,7 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 		}
 	}
 
+	@Override
 	public String[] getColumnNames() {
 		return columnNames;
 	}

@@ -16,7 +16,12 @@ import hoplugins.teamplanner.vo.HTWeek;
 public class RecapPane extends AbstractOperationPane {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5058695077743091174L;
+
+	/** Missing Parameter Documentation */
     public static final int WEEKBASE_ROW = 0;
 
     /** Missing Parameter Documentation */
@@ -34,7 +39,8 @@ public class RecapPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getBaseBalance(HTWeek week) {
+    @Override
+	public int getBaseBalance(HTWeek week) {
         return 0;
     }
 
@@ -45,21 +51,24 @@ public class RecapPane extends AbstractOperationPane {
      *
      * @return Missing Return Method Documentation
      */
-    public int getFullBalance(HTWeek week) {
+    @Override
+	public int getFullBalance(HTWeek week) {
         return getBaseBalance(week);
     }
 
     /**
      * Missing Method Documentation
      */
-    public void onChange() {
+    @Override
+	public void onChange() {
         // No Panel need to be notified of this		
     }
 
     /**
      * Missing Method Documentation
      */
-    protected void setRows() {
+    @Override
+	protected void setRows() {
         addCalculatedRow("Week Base", new WeekBaseRecapCalculator());
         addCalculatedRow("Week Total", new WeekRecapCalculator());
         addCalculatedRow("Running Total", new TotalRecapCalculator());
@@ -68,6 +77,7 @@ public class RecapPane extends AbstractOperationPane {
     /**
      * Missing Method Documentation
      */
-    protected void loadInputData() {
+    @Override
+	protected void loadInputData() {
     }
 }

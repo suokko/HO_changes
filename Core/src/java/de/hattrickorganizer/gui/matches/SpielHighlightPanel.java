@@ -14,6 +14,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import plugins.IMatchHighlight;
+import plugins.IMatchKurzInfo;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.matches.MatchHighlight;
@@ -43,7 +47,7 @@ public class SpielHighlightPanel extends ImagePanel {
     private JLabel m_clHeimTeamTore = new JLabel();
     private JPanel panel = new JPanel(layout);
 //    private MatchKurzInfo m_clMatchKurzInfo;
-    private Vector m_vHighlightLabels = new Vector();
+    private Vector<Component> m_vHighlightLabels = new Vector<Component>();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -96,7 +100,7 @@ public class SpielHighlightPanel extends ImagePanel {
 
         label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -109,7 +113,7 @@ public class SpielHighlightPanel extends ImagePanel {
 
         label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -193,7 +197,7 @@ public class SpielHighlightPanel extends ImagePanel {
     public final void clear() {
         //Alle Highlights löschen
         for (int i = 0; i < m_vHighlightLabels.size(); i++) {
-            panel.remove((Component) m_vHighlightLabels.get(i));
+            panel.remove(m_vHighlightLabels.get(i));
         }
 
         m_clHeimTeamName.setText(" ");
@@ -239,18 +243,18 @@ public class SpielHighlightPanel extends ImagePanel {
 
         //Alle Highlights löschen
         for (int i = 0; i < m_vHighlightLabels.size(); i++) {
-            panel.remove((Component) m_vHighlightLabels.get(i));
+            panel.remove(m_vHighlightLabels.get(i));
         }
 
-        if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
+        if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
             //Highlights anzeigen
             JLabel playerlabel = null;
             JLabel resultlabel = null;
 
-            final Vector vMatchHighlights = details.getHighlights();
+            final Vector<IMatchHighlight> vMatchHighlights = details.getHighlights();
 
             for (int i = 0; i < vMatchHighlights.size(); i++) {
-                final MatchHighlight highlight = (MatchHighlight) vMatchHighlights.get(i);
+                final IMatchHighlight highlight =  vMatchHighlights.get(i);
 
                 //Label vorbereiten
                 final ImageIcon icon = Helper.getImageIcon4SpielHighlight(highlight.getHighlightTyp(),
@@ -266,7 +270,7 @@ public class SpielHighlightPanel extends ImagePanel {
                     }
 
                     spielername += (" (" + highlight.getMinute() + ".)");
-                    playerlabel = new JLabel(spielername, icon, JLabel.LEFT);
+                    playerlabel = new JLabel(spielername, icon, SwingConstants.LEFT);
                     playerlabel.setForeground(Helper.getColor4SpielHighlight(highlight.getHighlightTyp(),
                                                                        highlight.getHighlightSubTyp()));
                     if (Helper.isWeatherSEHighlight(highlight.getHighlightTyp(),
@@ -278,7 +282,7 @@ public class SpielHighlightPanel extends ImagePanel {
                     }
 
                     //Steht Müll drin!
-                    if (highlight.getHighlightTyp() == MatchHighlight.HIGHLIGHT_ERFOLGREICH) {
+                    if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
                         resultlabel = new JLabel(highlight.getHeimTore() + " : "
                                                  + highlight.getGastTore());
                     } else {
@@ -323,7 +327,7 @@ public class SpielHighlightPanel extends ImagePanel {
 
             //--updaten--
             //Sterne für Sieger!
-            if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
+            if (info.getMatchStatus() != IMatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {
@@ -342,7 +346,7 @@ public class SpielHighlightPanel extends ImagePanel {
         else {
             //Alle Highlights löschen
             for (int i = 0; i < m_vHighlightLabels.size(); i++) {
-                panel.remove((Component) m_vHighlightLabels.get(i));
+                panel.remove(m_vHighlightLabels.get(i));
             }
 
             m_clHeimTeamName.setText(" ");

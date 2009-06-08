@@ -25,7 +25,12 @@ import javax.swing.JPanel;
 public class DownloadPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** Download Button */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3212179990708350342L;
+
+	/** Download Button */
     JButton downloadButton = new JButton(PluginProperty.getString("Download"));
 
     /** Description label */

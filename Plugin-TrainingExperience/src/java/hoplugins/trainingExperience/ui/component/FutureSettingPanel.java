@@ -29,7 +29,11 @@ import javax.swing.JPanel;
 public class FutureSettingPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private FutureTrainingsTableModel futureModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4872598003436712955L;
+	private FutureTrainingsTableModel futureModel;
     private JComboBox intensity;
     private JComboBox staminaTrainingPart;
     private JComboBox training;

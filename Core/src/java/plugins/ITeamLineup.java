@@ -33,7 +33,7 @@ public interface ITeamLineup {
      *
      * @return list of players
      */
-    public abstract List getArea(int area);
+    public abstract List<String> getArea(int area);
 
     /**
      * Add a player to the lineup

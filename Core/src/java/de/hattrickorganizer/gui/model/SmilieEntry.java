@@ -1,6 +1,8 @@
 // %3364174802:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import javax.swing.SwingConstants;
+
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 
@@ -13,10 +15,10 @@ public class SmilieEntry extends DoppelLabelEntry {
 
     private ColorLabelEntry manuell = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                           ColorLabelEntry.BG_STANDARD,
-                                                          javax.swing.JLabel.RIGHT);
+                                                          SwingConstants.RIGHT);
     private ColorLabelEntry team = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                        ColorLabelEntry.BG_STANDARD,
-                                                       javax.swing.JLabel.LEFT);
+                                                       SwingConstants.LEFT);
     private de.hattrickorganizer.model.Spieler spieler;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -57,7 +59,8 @@ public class SmilieEntry extends DoppelLabelEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof SmilieEntry) {
             final SmilieEntry entry = (SmilieEntry) obj;
 
@@ -119,7 +122,8 @@ public class SmilieEntry extends DoppelLabelEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         if (spieler != null) {
             if ((spieler.getTeamInfoSmilie() != null) && !spieler.getTeamInfoSmilie().equals("")) {
                 team.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4GruppeSmilie(spieler

@@ -39,7 +39,8 @@ public class BaseTableModel extends DefaultTableModel {
      *
      * @return true if editable, false if not
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         return false;
     }
 
@@ -50,7 +51,8 @@ public class BaseTableModel extends DefaultTableModel {
      *
      * @return Object is column is empty, or the type of object we have in the column
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         if (getValueAt(0, column) == null) {
             return Object.class;
         }

@@ -16,6 +16,7 @@ public final class AufstellungTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 	
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[6];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false);

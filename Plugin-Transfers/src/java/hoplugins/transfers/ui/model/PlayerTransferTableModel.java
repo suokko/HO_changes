@@ -22,7 +22,12 @@ import javax.swing.table.AbstractTableModel;
 public class PlayerTransferTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd"); //$NON-NLS-1$
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3205025253995412306L;
+
+	private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd"); //$NON-NLS-1$
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -59,7 +64,8 @@ public class PlayerTransferTableModel extends AbstractTableModel {
     }
 
     /** {@inheritDoc} */
-    public final String getColumnName(int column) {
+    @Override
+	public final String getColumnName(int column) {
         return colNames[column];
     }
 

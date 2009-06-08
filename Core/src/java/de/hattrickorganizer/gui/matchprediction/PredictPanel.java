@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -70,8 +71,8 @@ public class PredictPanel extends JPanel {
      * @param guestteam TODO Missing Constructuor Parameter Documentation
      */
     public PredictPanel(String hometeam, String guestteam) {
-        m_jlHomeTeam = new JLabel(hometeam, JLabel.CENTER);
-        m_jlGuestTeam = new JLabel(guestteam, JLabel.CENTER);
+        m_jlHomeTeam = new JLabel(hometeam, SwingConstants.CENTER);
+        m_jlGuestTeam = new JLabel(guestteam, SwingConstants.CENTER);
         initComponents();
     }
 
@@ -207,7 +208,7 @@ public class PredictPanel extends JPanel {
 
         constraints.gridx = 1;
         constraints.gridy = 1;
-        m_jlGewonnen = new JLabel("", JLabel.CENTER);
+        m_jlGewonnen = new JLabel("", SwingConstants.CENTER);
         toppanel.add(m_jlGewonnen, constraints);
 
         constraints.gridx = 2;
@@ -218,7 +219,7 @@ public class PredictPanel extends JPanel {
 
         constraints.gridx = 3;
         constraints.gridy = 1;
-        m_jlUnendschieden = new JLabel("", JLabel.CENTER);
+        m_jlUnendschieden = new JLabel("", SwingConstants.CENTER);
         toppanel.add(m_jlUnendschieden, constraints);
 
         constraints.gridx = 4;
@@ -229,7 +230,7 @@ public class PredictPanel extends JPanel {
 
         constraints.gridx = 5;
         constraints.gridy = 1;
-        m_jlVerloren = new JLabel("", JLabel.CENTER);
+        m_jlVerloren = new JLabel("", SwingConstants.CENTER);
         toppanel.add(m_jlVerloren, constraints);
 
         constraints.gridx = 0;
@@ -290,14 +291,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_jlGesamtToreHome = new JLabel("", JLabel.RIGHT);
+        m_jlGesamtToreHome = new JLabel("", SwingConstants.RIGHT);
         m_jlGesamtToreHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlGesamtToreHome, constraints);
 
         constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_jlGesamtChancenHome = new JLabel("", JLabel.RIGHT);
+        m_jlGesamtChancenHome = new JLabel("", SwingConstants.RIGHT);
         m_jlGesamtChancenHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlGesamtChancenHome, constraints);
 
@@ -318,14 +319,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 5;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_jlGesamtToreGuest = new JLabel("", JLabel.RIGHT);
+        m_jlGesamtToreGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlGesamtToreGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlGesamtToreGuest, constraints);
 
         constraints.gridx = 6;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_jlGesamtChancenGuest = new JLabel("", JLabel.RIGHT);
+        m_jlGesamtChancenGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlGesamtChancenGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlGesamtChancenGuest, constraints);
 
@@ -346,14 +347,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_jlRechtsToreHome = new JLabel("", JLabel.RIGHT);
+        m_jlRechtsToreHome = new JLabel("", SwingConstants.RIGHT);
         m_jlRechtsToreHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlRechtsToreHome, constraints);
 
         constraints.gridx = 2;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_jlRechtsChancenHome = new JLabel("", JLabel.RIGHT);
+        m_jlRechtsChancenHome = new JLabel("", SwingConstants.RIGHT);
         m_jlRechtsChancenHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlRechtsChancenHome, constraints);
 
@@ -374,14 +375,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 5;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_jlRechtsToreGuest = new JLabel("", JLabel.RIGHT);
+        m_jlRechtsToreGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlRechtsToreGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlRechtsToreGuest, constraints);
 
         constraints.gridx = 6;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_jlRechtsChancenGuest = new JLabel("", JLabel.RIGHT);
+        m_jlRechtsChancenGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlRechtsChancenGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlRechtsChancenGuest, constraints);
 
@@ -402,14 +403,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 1;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_jlMitteToreHome = new JLabel("", JLabel.RIGHT);
+        m_jlMitteToreHome = new JLabel("", SwingConstants.RIGHT);
         m_jlMitteToreHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlMitteToreHome, constraints);
 
         constraints.gridx = 2;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_jlMitteChancenHome = new JLabel("", JLabel.RIGHT);
+        m_jlMitteChancenHome = new JLabel("", SwingConstants.RIGHT);
         m_jlMitteChancenHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlMitteChancenHome, constraints);
 
@@ -430,14 +431,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 5;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_jlMitteToreGuest = new JLabel("", JLabel.RIGHT);
+        m_jlMitteToreGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlMitteToreGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlMitteToreGuest, constraints);
 
         constraints.gridx = 6;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_jlMitteChancenGuest = new JLabel("", JLabel.RIGHT);
+        m_jlMitteChancenGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlMitteChancenGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlMitteChancenGuest, constraints);
 
@@ -458,14 +459,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 1;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_jlLinksToreHome = new JLabel("", JLabel.RIGHT);
+        m_jlLinksToreHome = new JLabel("", SwingConstants.RIGHT);
         m_jlLinksToreHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlLinksToreHome, constraints);
 
         constraints.gridx = 2;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_jlLinksChancenHome = new JLabel("", JLabel.RIGHT);
+        m_jlLinksChancenHome = new JLabel("", SwingConstants.RIGHT);
         m_jlLinksChancenHome.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlLinksChancenHome, constraints);
 
@@ -486,14 +487,14 @@ public class PredictPanel extends JPanel {
         constraints.gridx = 5;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_jlLinksToreGuest = new JLabel("", JLabel.RIGHT);
+        m_jlLinksToreGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlLinksToreGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlLinksToreGuest, constraints);
 
         constraints.gridx = 6;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_jlLinksChancenGuest = new JLabel("", JLabel.RIGHT);
+        m_jlLinksChancenGuest = new JLabel("", SwingConstants.RIGHT);
         m_jlLinksChancenGuest.setPreferredSize(new Dimension(25, 16));
         bottompanel.add(m_jlLinksChancenGuest, constraints);
 

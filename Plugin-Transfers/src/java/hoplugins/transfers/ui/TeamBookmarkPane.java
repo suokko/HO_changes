@@ -5,6 +5,7 @@ import hoplugins.Commons;
 
 import hoplugins.commons.ui.DefaultTableSorter;
 import hoplugins.commons.ui.info.clearthought.layout.TableLayout;
+import hoplugins.commons.ui.info.clearthought.layout.TableLayoutConstants;
 import hoplugins.commons.utils.PluginProperty;
 
 import hoplugins.transfers.dao.BookmarkDAO;
@@ -46,7 +47,11 @@ import javax.swing.table.TableModel;
 public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ButtonModel spinSeason;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8570913357830649878L;
+	private ButtonModel spinSeason;
     private JLabel amountTransfers = new JLabel("", SwingConstants.RIGHT);
     private JLabel amountTransfersIn = new JLabel("", SwingConstants.RIGHT);
     private JLabel amountTransfersOut = new JLabel("", SwingConstants.RIGHT);
@@ -71,9 +76,9 @@ public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
         final double[][] sizes = {
                                {300},
                                {
-                                   TableLayout.PREFERRED, 10, TableLayout.PREFERRED,
-                                   TableLayout.FILL, TableLayout.PREFERRED, TableLayout.PREFERRED,
-                                   TableLayout.PREFERRED
+                                   TableLayoutConstants.PREFERRED, 10, TableLayoutConstants.PREFERRED,
+                                   TableLayoutConstants.FILL, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED,
+                                   TableLayoutConstants.PREFERRED
                                }
                            };
         final JPanel sidePanel = Commons.getModel().getGUI().createImagePanel();
@@ -83,10 +88,10 @@ public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
         final JPanel filterPanel = Commons.getModel().getGUI().createImagePanel();
         filterPanel.setLayout(new TableLayout(new double[][]{
                                                   {
-                                                      10, TableLayout.PREFERRED, 50,
-                                                      TableLayout.FILL, 10
+                                                      10, TableLayoutConstants.PREFERRED, 50,
+                                                      TableLayoutConstants.FILL, 10
                                                   },
-                                                  {10, TableLayout.PREFERRED, TableLayout.PREFERRED}
+                                                  {10, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED}
                                               }));
 
         final JRadioButton rb1 = new JRadioButton(PluginProperty.getString("AllSeason")); //$NON-NLS-1$
@@ -156,7 +161,7 @@ public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
         amountPanel.add(amountTransfersOut, "5, 2");
 
         pricePanel = new TotalsPanel(PluginProperty.getString("Price"),
-                                     Commons.getModel().getXtraDaten().getCurrencyName()); //$NON-NLS-1$
+                                     Commons.getModel().getXtraDaten().getCurrencyName()); 
         tsiPanel = new TotalsPanel(PluginProperty.getString("TSI")); //$NON-NLS-1$
 
         final TableModel model = new TeamBookmarksTableModel(new Vector());

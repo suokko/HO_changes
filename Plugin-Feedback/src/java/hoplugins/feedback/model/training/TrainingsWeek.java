@@ -82,6 +82,7 @@ public class TrainingsWeek {
 		return cal.get(Calendar.WEEK_OF_YEAR);
 	}
 
+	@Override
 	public String toString () {
 		return ("TrainingsWeek: ("+timestamp.toLocaleString()+", "+ getHtSeason()+"."+getHtWeek()+", hrfId="+hrfId+"): TYP="+getTrainingType()+", TI="+getTrainingIntensity()+", SS="+getStaminaTrainingPart());
 	}

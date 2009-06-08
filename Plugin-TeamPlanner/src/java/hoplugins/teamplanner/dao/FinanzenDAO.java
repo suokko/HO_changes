@@ -46,7 +46,7 @@ public class FinanzenDAO {
         HashMap weekMap;
         ResultSet rs;
         //Date lastDay = new Date(Commons.getModel().getBasics().getDatum().getTime());
-        long diff = 0x240c8400L * (long) weeks;
+        long diff = 0x240c8400L * weeks;
 
         firstDay = new Date(Commons.getModel().getXtraDaten().getEconomyDate().getTime() - diff);
         weekMap = new HashMap();

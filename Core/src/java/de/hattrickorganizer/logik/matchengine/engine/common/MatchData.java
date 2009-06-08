@@ -109,7 +109,8 @@ public class MatchData implements plugins.IMPMatchData {
      *
      * @return the String representation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("Match[");
         buffer.append("generator = " + generator);

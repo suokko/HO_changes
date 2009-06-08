@@ -192,7 +192,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
              && (i < HOMainFrame.instance().getOptionPanels().size());
              ++i) {
             tabbedPane.addTab(HOMainFrame.instance().getOptionPanelNames().get(i).toString(),
-                              (javax.swing.JPanel)HOMainFrame.instance().getOptionPanels().get(i));
+                              HOMainFrame.instance().getOptionPanels().get(i));
         }
 
         getContentPane().add(tabbedPane, BorderLayout.CENTER);

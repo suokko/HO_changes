@@ -19,6 +19,11 @@ public class TrainerPanel extends JPanel implements Runnable {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6157365601351023876L;
+
+	/**
      * Der aktuelle Thread, damit er interupted werden kann, wenn ein andere Sequenz gespielt
      * werden soll
      */
@@ -65,7 +70,8 @@ public class TrainerPanel extends JPanel implements Runnable {
      *
      * @param g TODO Missing Method Parameter Documentation
      */
-    public final void paint(Graphics g) {
+    @Override
+	public final void paint(Graphics g) {
         render();
     }
 
@@ -80,7 +86,7 @@ public class TrainerPanel extends JPanel implements Runnable {
 
             //Je nach Bildsequenz warte
             try {
-                m_clWaitThread.sleep(m_clAktuellesImageSequenzItem.getWait());
+                Thread.sleep(m_clAktuellesImageSequenzItem.getWait());
             } catch (Exception e) {
                 //Nix
             }

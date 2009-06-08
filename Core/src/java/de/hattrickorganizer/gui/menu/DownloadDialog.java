@@ -31,9 +31,12 @@ import de.hattrickorganizer.tools.extension.StandingCreator;
  * Dialog, der den User den Download von verschiedenen Daten aus Hattrick heraus ermöglicht
  */
 public class DownloadDialog extends JDialog implements ActionListener {
+	
+	private static final long serialVersionUID = 7837303870465506844L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+	
+	private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private JButton m_jbDownload = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"));
     private JCheckBox m_jchAlterSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"),
                                                           false);

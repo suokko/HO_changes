@@ -43,6 +43,7 @@ public class ConnTest {
 	public void start(final JTextArea log) {
 		log.append("Starting "+steps+" tests..." + LS);
 		new Thread() {
+			@Override
 			public void run() {
 				printSystemInfos(log);
 				testNormalUrl(log);

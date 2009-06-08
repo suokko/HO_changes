@@ -154,7 +154,7 @@ public final class TransferSettingDAO {
 
         try {
             final ResultSet rs = Commons.getModel().getAdapter().executeQuery("select NAME from "
-                                                                              + TABLE_NAME); //$NON-NLS-1$
+                                                                              + TABLE_NAME); 
             rs.next();
         } catch (Exception e) {
             Commons.getModel().getAdapter().executeUpdate("ALTER TABLE " + TABLE_NAME

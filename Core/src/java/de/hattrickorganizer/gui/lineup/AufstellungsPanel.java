@@ -30,9 +30,11 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
 public class AufstellungsPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements MouseListener, KeyListener
 {
+	
+	private static final long serialVersionUID = -8522462525789028842L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private AufstellungsAssistentPanel m_jpAufstellungsAssistentPanel;
+	private AufstellungsAssistentPanel m_jpAufstellungsAssistentPanel;
     private AufstellungsDetailPanel m_jpAufstellungsDetailPanel;
     private AufstellungsPositionsPanel m_jpAufstellungsPositionsPanel;
     private AufstellungsVergleichHistoryPanel m_jpAufstellungsVergleichHistoryPanel;

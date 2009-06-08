@@ -18,6 +18,11 @@ public class TextAreaCellRenderer extends JTextArea implements TableCellRenderer
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7087240948541117550L;
+
+	/**
      * Constructor
      */
     public TextAreaCellRenderer() {
@@ -25,7 +30,7 @@ public class TextAreaCellRenderer extends JTextArea implements TableCellRenderer
 
         //this.setLineWrap(true);
         //this.setWrapStyleWord(true);
-        this.setAlignmentY(TextAreaCellRenderer.CENTER_ALIGNMENT);
+        this.setAlignmentY(Component.CENTER_ALIGNMENT);
         this.setMargin(new Insets(0, 1, 0, 1));
     }
 

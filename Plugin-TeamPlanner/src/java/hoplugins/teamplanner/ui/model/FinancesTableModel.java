@@ -22,7 +22,11 @@ import javax.swing.table.AbstractTableModel;
 public class FinancesTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector colNames;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7060311989341266730L;
+	private Vector colNames;
     private Vector values;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -65,7 +69,8 @@ public class FinancesTableModel extends AbstractTableModel {
      *
      * @return Missing Return Method Documentation
      */
-    public boolean isCellEditable(int row, int col) {
+    @Override
+	public boolean isCellEditable(int row, int col) {
         return false;
     }
 
@@ -85,7 +90,8 @@ public class FinancesTableModel extends AbstractTableModel {
      *
      * @return Missing Return Method Documentation
      */
-    public String getColumnName(int col) {
+    @Override
+	public String getColumnName(int col) {
         return (String) colNames.get(col);
     }
 

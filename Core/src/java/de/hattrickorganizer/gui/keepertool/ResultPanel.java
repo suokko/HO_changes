@@ -26,9 +26,12 @@ import javax.swing.JTextArea;
  * @author draghetto
  */
 public class ResultPanel extends JPanel {
+	
+	private static final long serialVersionUID = 272383166131665396L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private DecimalFormat df = new DecimalFormat("#.00");
+	private DecimalFormat df = new DecimalFormat("#.00");
     private JButton set = new JButton();
     private JDialog parent;
     private JTextArea result = new JTextArea();
@@ -130,7 +133,7 @@ public class ResultPanel extends JPanel {
                                                                                                                           .getBasics()
                                                                                                                           .getDatum());
                     de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
-                    parent.hide();
+                    parent.setVisible(false);
                     parent.dispose();
                 }
             });

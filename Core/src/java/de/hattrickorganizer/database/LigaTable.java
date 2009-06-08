@@ -16,6 +16,7 @@ public final class LigaTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 	
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[7];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
@@ -27,6 +28,7 @@ public final class LigaTable extends AbstractTable {
 		columns[6]= new ColumnDescriptor("Spieltag",Types.INTEGER,false);
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX ILIGA_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
@@ -77,7 +79,7 @@ public final class LigaTable extends AbstractTable {
 			ligaids = new Integer[vligaids.size()];
 
 			for (int i = 0; i < vligaids.size(); i++) {
-				ligaids[i] = (Integer) vligaids.get(i);
+				ligaids[i] = vligaids.get(i);
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getAllLigaIDs : " + e);

@@ -45,8 +45,8 @@ public class PositioningUtilities {
         int j = container.getY() - dimension.height;
         int k = dimension.width + dimension1.width;
         int l = dimension.height + dimension1.height;
-        int i1 = i + (int) (x * (double) k);
-        int j1 = j + (int) (y * (double) l);
+        int i1 = i + (int) (x * k);
+        int j1 = j + (int) (y * l);
         Dimension dimension2 = Toolkit.getDefaultToolkit().getScreenSize();
 
         i1 = Math.min(i1, dimension2.width - dimension.width);
@@ -68,8 +68,8 @@ public class PositioningUtilities {
         Dimension dimension1 = window.getSize();
         int i = Math.max(dimension.width - dimension1.width, 0);
         int j = Math.max(dimension.height - dimension1.height, 0);
-        int k = (int) (x * (double) i);
-        int l = (int) (y * (double) j);
+        int k = (int) (x * i);
+        int l = (int) (y * j);
 
         window.setBounds(k, l, dimension1.width, dimension1.height);
     }

@@ -14,6 +14,7 @@ import java.awt.Insets;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -92,7 +93,8 @@ public class SkillEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final JComponent getComponent(boolean isSelected) {
+    @Override
+	public final JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clComponent.setOpaque(true);
             m_clComponent.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
@@ -136,7 +138,8 @@ public class SkillEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_dZahl = 0d;
         updateComponent();
     }
@@ -148,7 +151,8 @@ public class SkillEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof SkillEntry) {
             final SkillEntry entry = (SkillEntry) obj;
 
@@ -171,7 +175,8 @@ public class SkillEntry extends TableEntry {
     /**
      * Erstellt eine passende Komponente
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -181,13 +186,13 @@ public class SkillEntry extends TableEntry {
 
         JPanel panel = new JPanel(layout);
 
-        m_jlLabel1 = new JLabel(m_sText, JLabel.RIGHT);
+        m_jlLabel1 = new JLabel(m_sText, SwingConstants.RIGHT);
         m_jlLabel1.setForeground(m_clFGColor);
         constraints.anchor = GridBagConstraints.EAST;
         layout.setConstraints(m_jlLabel1, constraints);
         panel.add(m_jlLabel1);
 
-        m_jlLabel2 = new JLabel(m_sNachkomma, JLabel.LEFT);
+        m_jlLabel2 = new JLabel(m_sNachkomma, SwingConstants.LEFT);
         m_jlLabel2.setForeground(m_clFGColor2);
         m_jlLabel2.setFont(m_jlLabel1.getFont().deriveFont(m_jlLabel1.getFont().getSize2D() - 1f));
         constraints.weightx = 0.0;
@@ -208,13 +213,13 @@ public class SkillEntry extends TableEntry {
         if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
             m_sNachkomma = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT.format(de.hattrickorganizer.tools.Helper
                                                                                          .round(m_dZahl
-                                                                                                - (double) (int) m_dZahl,
+                                                                                                - (int) m_dZahl,
                                                                                                 gui.UserParameter
                                                                                                 .instance().anzahlNachkommastellen));
         } else {
             m_sNachkomma = de.hattrickorganizer.tools.Helper.DEZIMALFORMAT_2STELLEN.format(de.hattrickorganizer.tools.Helper
                                                                                            .round(m_dZahl
-                                                                                                  - (double) (int) m_dZahl,
+                                                                                                  - (int) m_dZahl,
                                                                                                   gui.UserParameter
                                                                                                   .instance().anzahlNachkommastellen));
         }
@@ -233,7 +238,8 @@ public class SkillEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         m_jlLabel1.setText(m_sText);
         m_jlLabel2.setText(m_sNachkomma);
         m_jlLabel1.setBackground(m_clBGColor);

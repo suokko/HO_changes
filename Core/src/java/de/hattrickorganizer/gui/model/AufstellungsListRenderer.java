@@ -13,7 +13,9 @@ import javax.swing.ListCellRenderer;
 public class AufstellungsListRenderer extends JLabel implements ListCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+	private static final long serialVersionUID = 7059514707568786835L;
+
+	/** TODO Missing Parameter Documentation */
     public static Color bgColor = new Color(220, 220, 255);
 
     /** TODO Missing Parameter Documentation */

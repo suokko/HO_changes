@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -31,9 +32,12 @@ import javax.swing.JTextField;
  * @author draghetto
  */
 public class InjuryDetailPanel extends JPanel {
+	
+	private static final long serialVersionUID = -4123995368822577858L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox injuryType = new JComboBox();
+	private JComboBox injuryType = new JComboBox();
     private JComboBox players = new JComboBox();
     private JTextField age = new JTextField(8);
     private JTextField injury = new JTextField(8);
@@ -119,9 +123,9 @@ public class InjuryDetailPanel extends JPanel {
         players.removeAllItems();
         players.addItem(new PlayerItem());
 
-        for (Iterator iter = HOVerwaltung.instance().getModel().getAllSpieler().iterator();
+        for (Iterator<ISpieler> iter = HOVerwaltung.instance().getModel().getAllSpieler().iterator();
              iter.hasNext();) {
-            final ISpieler element = (ISpieler) iter.next();
+            final ISpieler element = iter.next();
 
             if (element.getVerletzt() > 0) {
                 players.addItem(new PlayerItem(element));
@@ -198,7 +202,7 @@ public class InjuryDetailPanel extends JPanel {
      * @return the GUI Component
      */
     private Component createLabel(String text) {
-        return new JLabel(text, JLabel.CENTER);
+        return new JLabel(text, SwingConstants.CENTER);
     }
 
     /**

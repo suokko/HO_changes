@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 
 
@@ -37,7 +39,11 @@ import javax.swing.table.TableCellEditor;
 public class TrainingPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** Future trainings table model */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5456485854278251422L;
+	/** Future trainings table model */
     private FutureTrainingsTableModel futureModel;
     private JTable futureTable;
 
@@ -98,8 +104,8 @@ public class TrainingPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(oldTable);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         //create and populate the future training table
         futureModel = new FutureTrainingsTableModel(model);
@@ -108,8 +114,8 @@ public class TrainingPanel extends JPanel {
 
         JScrollPane scrollPane2 = new JScrollPane(futureTable);
 
-        scrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         // Organize the panel layout
         JPanel panel2 = model.getGUI().createImagePanel();
@@ -117,7 +123,7 @@ public class TrainingPanel extends JPanel {
         panel2.setLayout(new BorderLayout());
         panel2.setOpaque(false);
 
-        JLabel l = new JLabel(PluginProperty.getString("FutureTrainings"), JLabel.CENTER); //$NON-NLS-1$
+        JLabel l = new JLabel(PluginProperty.getString("FutureTrainings"), SwingConstants.CENTER); //$NON-NLS-1$
 
         l.setOpaque(false);
 

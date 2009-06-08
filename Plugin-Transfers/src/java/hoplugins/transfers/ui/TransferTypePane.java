@@ -5,6 +5,7 @@ import hoplugins.Commons;
 
 import hoplugins.commons.ui.DefaultTableSorter;
 import hoplugins.commons.ui.info.clearthought.layout.TableLayout;
+import hoplugins.commons.ui.info.clearthought.layout.TableLayoutConstants;
 import hoplugins.commons.ui.info.clearthought.layout.TableLayoutConstraints;
 import hoplugins.commons.utils.PluginProperty;
 
@@ -43,6 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -60,7 +62,12 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
                                                             TableModelListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static final NumberFormat FORMAT = NumberFormat.getIntegerInstance();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4235843964542482924L;
+
+	private static final NumberFormat FORMAT = NumberFormat.getIntegerInstance();
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -84,8 +91,8 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
         sidePanel.setOpaque(false);
 
         final JScrollPane sidePane = new JScrollPane(sidePanel);
-        sidePane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        sidePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        sidePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        sidePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         sidePane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         // Create the top panel and add it to the split pane
@@ -172,21 +179,21 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
         this.sidePanel.removeAll();
 
         final double[][] sizes = {
-                               {10, 150, 10, 75, TableLayout.FILL, 10},
-                               {10, TableLayout.PREFERRED, 10}
+                               {10, 150, 10, 75, TableLayoutConstants.FILL, 10},
+                               {10, TableLayoutConstants.PREFERRED, 10}
                            };
         final TableLayout tLayout = new TableLayout(sizes);
         this.sidePanel.setLayout(tLayout);
 
         final TableLayoutConstraints c = new TableLayoutConstraints();
-        c.vAlign = TableLayout.CENTER;
+        c.vAlign = TableLayoutConstants.CENTER;
 
         c.row1 = 1;
         c.row2 = c.row1; 
 
         c.col1 = 1;
         c.col2 = c.col1;
-        c.hAlign = TableLayout.LEFT;
+        c.hAlign = TableLayoutConstants.LEFT;
 
         final JLabel type = new JLabel(PluginProperty.getString("Type"));
         type.setFont(new Font(type.getFont().getName(), Font.BOLD, type.getFont().getSize()));
@@ -195,7 +202,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
 
         c.col1 = 3;
         c.col2 = c.col1;
-        c.hAlign = TableLayout.LEFT;
+        c.hAlign = TableLayoutConstants.LEFT;
 
         final JLabel income = new JLabel(PluginProperty.getString("Income"));
         income.setFont(new Font(income.getFont().getName(), Font.BOLD, income.getFont().getSize()));
@@ -208,25 +215,25 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
             final TransferTypeRecap ttc = recap.getRecap(i);
 
             if ((ttc != null) && (ttc.getNumber() > 0)) {
-                tLayout.insertRow(++row, TableLayout.PREFERRED);
+                tLayout.insertRow(++row, TableLayoutConstants.PREFERRED);
                 c.row1 = row;
                 c.row2 = c.row1;
 
                 c.col1 = 1;
                 c.col2 = c.col1;
-                c.hAlign = TableLayout.LEFT;
+                c.hAlign = TableLayoutConstants.LEFT;
                 this.sidePanel.add(new JLabel(TransferTypes.getTransferDesc(i) + " ("
                                               + Integer.toString(ttc.getNumber()) + ")"), c);
 
                 c.col1 = 2;
                 c.col2 = c.col1;
-                c.hAlign = TableLayout.CENTER;
+                c.hAlign = TableLayoutConstants.CENTER;
                 this.sidePanel.add(new JLabel(Commons.getModel().getXtraDaten().getCurrencyName()),
                                    c);
 
                 c.col1 = 3;
                 c.col2 = c.col1;
-                c.hAlign = TableLayout.RIGHT;
+                c.hAlign = TableLayoutConstants.RIGHT;
                 this.sidePanel.add(new JLabel(FORMAT.format(ttc.getNetIncome())), c);
 
                 totalIncome += ttc.getNetIncome();
@@ -237,13 +244,13 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
         tLayout.insertRow(row, 10);
 
         row++;
-        tLayout.insertRow(row, TableLayout.PREFERRED);
+        tLayout.insertRow(row, TableLayoutConstants.PREFERRED);
         c.row1 = row;
         c.row2 = c.row1;
 
         c.col1 = 1;
         c.col2 = c.col1;
-        c.hAlign = TableLayout.CENTER;
+        c.hAlign = TableLayoutConstants.CENTER;
 
         final JLabel total = new JLabel(PluginProperty.getString("Total"));
         total.setFont(new Font(total.getFont().getName(), Font.BOLD, total.getFont().getSize()));
@@ -251,12 +258,12 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
 
         c.col1 = 2;
         c.col2 = c.col1;
-        c.hAlign = TableLayout.CENTER;
+        c.hAlign = TableLayoutConstants.CENTER;
         this.sidePanel.add(new JLabel(Commons.getModel().getXtraDaten().getCurrencyName()), c);
 
         c.col1 = 3;
         c.col2 = c.col1;
-        c.hAlign = TableLayout.RIGHT;
+        c.hAlign = TableLayoutConstants.RIGHT;
         this.sidePanel.add(new JLabel(FORMAT.format(totalIncome)), c);
 
         final DefaultTableSorter sorter = (DefaultTableSorter) transferTable.getModel();

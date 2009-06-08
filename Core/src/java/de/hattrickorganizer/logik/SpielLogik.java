@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.logik;
 
+import plugins.ISpielerPosition;
 import de.hattrickorganizer.model.ServerSpieler;
 import de.hattrickorganizer.model.ServerTeam;
 import de.hattrickorganizer.model.Spielbericht;
@@ -503,8 +504,8 @@ public class SpielLogik {
 
                             if (pschuetze == null) {
                                 pschuetze = spieler;
-                            } else if (pschuetze.getStk(de.hattrickorganizer.model.SpielerPosition.STURM) < spieler
-                                                                                                            .getStk(de.hattrickorganizer.model.SpielerPosition.STURM)) {
+                            } else if (pschuetze.getStk(ISpielerPosition.STURM) < spieler
+                                                                                                            .getStk(ISpielerPosition.STURM)) {
                                 pschuetze = spieler;
                             }
                         }
@@ -626,16 +627,16 @@ public class SpielLogik {
         float mittelfeld1;
         float mittelfeld2;
         boolean spiellaeuft;
-        boolean spielende;
+/*        boolean spielende;
         boolean bverlaengerung;
         boolean belfmeterschiessen;
-        boolean userspiel;
+        boolean userspiel*/;
 
         //Init
         m_clServer = server;
 
         //Live spiel ?
-        userspiel = true;
+        //userspiel = true;
         mittelfeld1 = spielbericht.Heim().getMFTeamStk();
         mittelfeld2 = spielbericht.Gast().getMFTeamStk();
         C1Heim = ESB_BerechneC(mittelfeld1, mittelfeld2, true);
@@ -649,9 +650,9 @@ public class SpielLogik {
         spielzeit = 45;
         minute = 1;
         spiellaeuft = true;
-        spielende = false;
-        bverlaengerung = false;
-        belfmeterschiessen = false;
+        //spielende = false;
+        //bverlaengerung = false;
+        //belfmeterschiessen = false;
 
         spielbericht.ToreHeim((byte) 0);
         spielbericht.ToreGast((byte) 0);
@@ -668,7 +669,7 @@ public class SpielLogik {
             byte torchancegast = -1;
             int verletzungsId = -1;
 
-            for (minute = minute; minute <= spielzeit; minute++) {
+            for ( ; minute <= spielzeit; minute++) {
                 torchanceheim = ESB_BerechneTorchanceHeim(C1Heim, spielbericht);
                 torchancegast = ESB_BerechneTorchanceGast(C1Gast, spielbericht);
 
@@ -1205,20 +1206,20 @@ public class SpielLogik {
         ServerSpieler player = null;
 
         for (int i = 0; i < sb.Heim().getStartAufstellung().size(); i++) {
-            player = (ServerSpieler) sb.Heim().getSpielerById(((Integer) sb.Heim()
+            player = sb.Heim().getSpielerById(((Integer) sb.Heim()
                                                                            .getStartAufstellung()
                                                                            .elementAt(i)).intValue());
-            Z1 += player.getStk(de.hattrickorganizer.model.SpielerPosition.INNENVERTEIDIGER);
+            Z1 += player.getStk(ISpielerPosition.INNENVERTEIDIGER);
         }
 
         for (int i = 0; i < sb.Gast().getStartAufstellung().size(); i++) {
-            player = (ServerSpieler) sb.Gast().getSpielerById(((Integer) sb.Gast()
+            player = sb.Gast().getSpielerById(((Integer) sb.Gast()
                                                                            .getStartAufstellung()
                                                                            .elementAt(i)).intValue());
-            Z2 += player.getStk(de.hattrickorganizer.model.SpielerPosition.INNENVERTEIDIGER);
+            Z2 += player.getStk(ISpielerPosition.INNENVERTEIDIGER);
         }
 
-        Summe1 = (byte) ((100 * (float) Z1) / (float) (Z1 + Z2));
+        Summe1 = (byte) ((100 * (float) Z1) / (Z1 + Z2));
         Summe2 = (byte) (100 - Summe1);
 
         if (sb.ToreHeim() != sb.ToreGast()) {
@@ -1357,11 +1358,11 @@ public class SpielLogik {
         int randWert;
 
         randWert = getZufallsZahl(3);
-        wert = randWert + sb.getAnzEckenHeim() + (int) ((float) sb.TorchancenHeim() / 2.2f);
+        wert = randWert + sb.getAnzEckenHeim() + (int) (sb.TorchancenHeim() / 2.2f);
         sb.setAnzEckenHeim((byte) wert);
 
         randWert = getZufallsZahl(3);
-        wert = randWert + sb.getAnzEckenGast() + (int) ((float) sb.TorchancenGast() / 2.2f);
+        wert = randWert + sb.getAnzEckenGast() + (int) (sb.TorchancenGast() / 2.2f);
         sb.setAnzEckenGast((byte) wert);
     }
 
@@ -1473,7 +1474,7 @@ public class SpielLogik {
             pos = verein.getSpielerPositionObjBySpielerID(id);
 
             // halbe Wahrscheinlichkeit beim TW
-            if (pos.getPosition() == de.hattrickorganizer.model.SpielerPosition.TORWART) {
+            if (pos.getPosition() == ISpielerPosition.TORWART) {
                 id = verein.getSpielerAufFeld((byte) (getZufallsZahl(verein
                                                                      .getAnzAufgestellteSpieler())))
                            .getID();
@@ -1532,7 +1533,7 @@ public class SpielLogik {
      * @return TODO Missing Return Method Documentation
      */
     protected final int doNachspielzeitBerechnen(Spielbericht sb) {
-        return getZufallsZahl(3) + (int) (sb.getAnzahlKarten() / 3);
+        return getZufallsZahl(3) + (sb.getAnzahlKarten() / 3);
     }
 
     /**
@@ -2197,11 +2198,11 @@ public class SpielLogik {
 
             //Angriff bei zu starker Fphrung abschwächen
             if ((spielbericht.ToreGast() - spielbericht.ToreHeim()) >= 3) {
-                angriff = Math.round(((float) angriff) / 2.0f);
+                angriff = Math.round((angriff) / 2.0f);
             }
 
             if (spielbericht.ToreGast() >= 4) {
-                angriff = Math.round(((float) angriff) / 2.0f);
+                angriff = Math.round((angriff) / 2.0f);
             }
 
             //Angriff erfolrecih wenn > Abwehr
@@ -2263,11 +2264,11 @@ public class SpielLogik {
 
             //Angriff bei zu starker Führung abschwächen
             if ((spielbericht.ToreHeim() - spielbericht.ToreGast()) >= 3) {
-                angriff = Math.round(((float) angriff) / 2.0f);
+                angriff = Math.round((angriff) / 2.0f);
             }
 
             if (spielbericht.ToreHeim() >= 4) {
-                angriff = Math.round(((float) angriff) / 2.0f);
+                angriff = Math.round((angriff) / 2.0f);
             }
 
             //Angriff erfolrecih wenn > Abwehr
@@ -2373,10 +2374,10 @@ public class SpielLogik {
         //Offensivgrenze anpassen
         if (teamstk1 > teamstk2) {
             m_bOffensivGrenze = (byte) Math.round(ESB_OFFENSIVGRENZE
-                                                  + (float) (ESB_OFFENSIVANPASSUNG * ((float) (teamstk1) / (float) (teamstk2))));
+                                                  + (ESB_OFFENSIVANPASSUNG * ((teamstk1) / (teamstk2))));
         } else if (teamstk1 < teamstk2) {
             m_bOffensivGrenze = (byte) Math.round(ESB_OFFENSIVGRENZE
-                                                  + (float) (ESB_OFFENSIVANPASSUNG * ((float) (teamstk2) / (float) (teamstk1))));
+                                                  + (ESB_OFFENSIVANPASSUNG * ((teamstk2) / (teamstk1))));
         }
 
         if (teamstk1 == teamstk2) {

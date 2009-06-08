@@ -73,7 +73,7 @@ public class VAPSchild implements DynamischesObjekt {
 
         //Transparenz fadeout
         if (gesamtZeit > 4500) {
-            float alphawert = Math.abs(((float) (gesamtZeit - 4500.0f) / 500.0f) - 1.0f);
+            float alphawert = Math.abs(((gesamtZeit - 4500.0f) / 500.0f) - 1.0f);
 
             if (alphawert > 1.0f) {
                 alphawert = 1.0f;

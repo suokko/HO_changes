@@ -14,6 +14,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[6];
 		columns[0]= new ColumnDescriptor("SpielerID",Types.INTEGER,false,true);
@@ -309,6 +310,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 		adapter.executeUpdate(statement);
 	}
 	
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX ISPIELERNOTIZ_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

@@ -28,7 +28,11 @@ import javax.swing.JPanel;
 public class FutureSettingsPane extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List futureYears = new ArrayList();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7287375759347138254L;
+	private List futureYears = new ArrayList();
 
     //~ Constructors -------------------------------------------------------------------------------
 

@@ -14,6 +14,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 
 /**
@@ -24,7 +26,12 @@ import javax.swing.JOptionPane;
 public class GebDialog extends javax.swing.JDialog implements java.awt.event.ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6032212484981424415L;
+
+	/** TODO Missing Parameter Documentation */
     de.hattrickorganizer.logik.GebChecker m_clGeb;
 
     /** TODO Missing Parameter Documentation */
@@ -40,7 +47,7 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
      */
     public GebDialog(JFrame owner, String bild) {
         super(owner, true);
-        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         initComponents(bild);
         setLocation((owner.getLocation().x + (owner.getWidth() / 2)) - (this.getWidth() / 2),
                     (owner.getLocation().y + (owner.getHeight() / 2)) - (this.getHeight() / 2));
@@ -82,7 +89,7 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
      * @param bild TODO Missing Method Parameter Documentation
      */
     protected final void initComponents(String bild) {
-        final JLabel label = new JLabel("", JLabel.CENTER);
+        final JLabel label = new JLabel("", SwingConstants.CENTER);
 
         setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel(new BorderLayout()));
 

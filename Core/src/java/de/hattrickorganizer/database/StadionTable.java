@@ -15,6 +15,7 @@ public final class StadionTable extends AbstractTable {
 		super(TABLENAME, adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[18];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
@@ -37,6 +38,7 @@ public final class StadionTable extends AbstractTable {
 		columns[17]= new ColumnDescriptor("ArenaID",Types.INTEGER,false);
 	}
 	
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX ISTADION_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

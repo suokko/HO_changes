@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -56,7 +57,8 @@ public class ColumnGroup {
     public ColumnGroup(TableCellRenderer renderer, String text) {
         if (renderer == null) {
             this.renderer = new DefaultTableCellRenderer() {
-                    public Component getTableCellRendererComponent(JTable table, Object value,
+                    @Override
+					public Component getTableCellRendererComponent(JTable table, Object value,
                                                                    boolean isSelected,
                                                                    boolean hasFocus, int row,
                                                                    int column) {
@@ -68,7 +70,7 @@ public class ColumnGroup {
                             setFont(header.getFont());
                         }
 
-                        setHorizontalAlignment(JLabel.CENTER);
+                        setHorizontalAlignment(SwingConstants.CENTER);
                         setText((value == null) ? "" : value.toString());
                         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
                         return this;
@@ -105,7 +107,7 @@ public class ColumnGroup {
             final Object obj = enumi.nextElement();
 
             if (obj instanceof ColumnGroup) {
-                final Vector groups = (Vector) ((ColumnGroup) obj).getColumnGroups(c,
+                final Vector groups = ((ColumnGroup) obj).getColumnGroups(c,
                                                                                    (Vector) g.clone());
 
                 if (groups != null) {

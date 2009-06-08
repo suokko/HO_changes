@@ -10,7 +10,12 @@ package de.hattrickorganizer.gui.templates;
 public class RasenPanel extends javax.swing.JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8146276344087586861L;
+
+	/** TODO Missing Parameter Documentation */
     public static java.awt.Image background;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -65,7 +70,8 @@ public class RasenPanel extends javax.swing.JPanel {
      *
      * @param g TODO Missing Method Parameter Documentation
      */
-    public final void paint(java.awt.Graphics g) {
+    @Override
+	public final void paint(java.awt.Graphics g) {
         final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
 
         paintComponent(g2d);

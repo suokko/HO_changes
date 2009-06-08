@@ -4,8 +4,10 @@ package de.hattrickorganizer.gui.model;
 import java.awt.Color;
 
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
+import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ProgressbarTableEntry;
@@ -222,7 +224,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isCellEditable(int row, int col) {
+    @Override
+	public final boolean isCellEditable(int row, int col) {
         return false;
     }
 
@@ -233,7 +236,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int columnIndex) {
+    @Override
+	public final Class getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -262,7 +266,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String getColumnName(int columnIndex) {
+    @Override
+	public final String getColumnName(int columnIndex) {
         if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
             return m_sColumnNames[columnIndex];
         } else {
@@ -327,7 +332,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      * @param row TODO Missing Method Parameter Documentation
      * @param column TODO Missing Method Parameter Documentation
      */
-    public final void setValueAt(Object value, int row, int column) {
+    @Override
+	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 
@@ -466,26 +472,26 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
                                                  java.text.DateFormat.getDateTimeInstance().format(match
                                                                                                    .getMatchDateAsTimestamp()),
                                                  ColorLabelEntry.FG_STANDARD, background,
-                                                 JLabel.LEFT);
+                                                 SwingConstants.LEFT);
 
             //Spielart
             m_clData[i][1] = new ColorLabelEntry(de.hattrickorganizer.tools.Helper
                                                  .getImageIcon4Spieltyp(match.getMatchTyp()),
                                                  match.getMatchTyp(), ColorLabelEntry.FG_STANDARD,
-                                                 background, JLabel.CENTER);
+                                                 background, SwingConstants.CENTER);
 
             //Gast
             m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
-                                                 background, JLabel.LEFT);
+                                                 background, SwingConstants.LEFT);
 
             //Ergebnis
             m_clData[i][3] = new ColorLabelEntry(createTorString(match.getHeimTore(),
                                                                  match.getGastTore()),
                                                  ColorLabelEntry.FG_STANDARD, background,
-                                                 JLabel.CENTER);
+                                                 SwingConstants.CENTER);
 
             //Sterne für Sieger!
-            if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
+            if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
                 ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
             } else if (match.getHeimTore() > match.getGastTore()) {
                 ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
@@ -499,12 +505,12 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
             m_clData[i][4] = new ColorLabelEntry(de.hattrickorganizer.tools.Helper
                                                  .getImageIcon4Wetter(match.getWetter()),
                                                  match.getWetter(), ColorLabelEntry.FG_STANDARD,
-                                                 background, JLabel.RIGHT);
+                                                 background, SwingConstants.RIGHT);
 
             //Matchid
             m_clData[i][5] = new ColorLabelEntry(match.getMatchID(), match.getMatchID() + "",
                                                  ColorLabelEntry.FG_STANDARD, background,
-                                                 JLabel.RIGHT);
+                                                 SwingConstants.RIGHT);
 
             //Stadiongroesse
             m_clData[i][6] = new ProgressbarTableEntry(match.getArenaGroesse(), 0,
@@ -530,7 +536,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
             float fanzuwachs = 0;
 
             if ((i + 1) < m_clMatches.length) {
-                fanzuwachs = ((float) (match.getFans() - m_clMatches[i + 1].getFans()) * 604800000f) / (match.getMatchDateAsTimestamp()
+                fanzuwachs = ((match.getFans() - m_clMatches[i + 1].getFans()) * 604800000f) / (match.getMatchDateAsTimestamp()
                                                                                                              .getTime()
                              - m_clMatches[i + 1].getMatchDateAsTimestamp().getTime());
             }
@@ -543,18 +549,18 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
                                                                                                                   .getFans(),
                                                                                           2) + "",
                                                   ColorLabelEntry.FG_STANDARD, background,
-                                                  JLabel.RIGHT);
+                                                  SwingConstants.RIGHT);
 
             //Fanstimmung
             m_clData[i][12] = new ColorLabelEntry(de.hattrickorganizer.model.Finanzen
                                                   .getNameForLevelFans(match.getFanZufriedenheit(), match.getMatchDateAsTimestamp()),
                                                   ColorLabelEntry.FG_STANDARD, background,
-                                                  JLabel.LEFT);
+                                                  SwingConstants.LEFT);
 
             //Ligaplatz
             m_clData[i][13] = new ColorLabelEntry(match.getLigaPlatz() + ".",
                                                   ColorLabelEntry.FG_STANDARD, background,
-                                                  JLabel.CENTER);
+                                                  SwingConstants.CENTER);
         }
     }
     

@@ -16,6 +16,7 @@ public final class ScoutTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[20];
 		columns[0]= new ColumnDescriptor("PlayerID",Types.INTEGER,false);
@@ -57,7 +58,7 @@ public final class ScoutTable extends AbstractTable {
 
 			delete( null,null );
 			for (int i = 0; i < list.size(); i++) {
-				final ScoutEintrag scout = (ScoutEintrag) list.elementAt(i);
+				final ScoutEintrag scout = list.elementAt(i);
 
 				if (scout.isWecker()) {
 					bool = "1";

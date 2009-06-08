@@ -36,7 +36,12 @@ import de.hattrickorganizer.tools.ZipHelper;
 final class RefreshDialog extends UpdaterDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7661955953578080637L;
+
+	/** TODO Missing Parameter Documentation */
     protected Hashtable infos = null;
 
     /** TODO Missing Parameter Documentation */
@@ -123,7 +128,8 @@ final class RefreshDialog extends UpdaterDialog {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected TableModel getModel(boolean selected, String[] columnNames2) {
+    @Override
+	protected TableModel getModel(boolean selected, String[] columnNames2) {
         Object[][] value = new Object[object.length][5];
         boolean isEnabled = true;
 
@@ -174,7 +180,8 @@ final class RefreshDialog extends UpdaterDialog {
     /**
      * TODO Missing Method Documentation
      */
-    protected void action() {
+    @Override
+	protected void action() {
         if (table != null) {
             int i = 0;
 

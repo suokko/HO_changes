@@ -4,24 +4,34 @@ package de.hattrickorganizer.gui.lineup;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import plugins.ISpieler;
+
+import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.Helper;
+
 
 /**
  * Hier lassen sich mit einem Klick alle aufgestellten Spieler einer Gruppe zuordnen
  */
 final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
+	
+	private static final long serialVersionUID = 955755336335567688L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton aGruppe = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/smilies/A-Team.png")));
-    private JButton bGruppe = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/smilies/B-Team.png")));
-    private JButton cGruppe = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/smilies/C-Team.png")));
-    private JButton dGruppe = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/smilies/D-Team.png")));
-    private JButton eGruppe = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/smilies/E-Team.png")));
+	private JButton aGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/A-Team.png")));
+    private JButton bGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/B-Team.png")));
+    private JButton cGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/C-Team.png")));
+    private JButton dGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/D-Team.png")));
+    private JButton eGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/E-Team.png")));
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -61,17 +71,14 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
      * @param gruppenName TODO Missing Method Parameter Documentation
      */
     private void gruppenMarkierung(String gruppenName) {
-        final java.util.Vector alleSpieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                    .getModel()
-                                                                                    .getAllSpieler();
-        final de.hattrickorganizer.model.Aufstellung aufstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
+        final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Aufstellung aufstellung = HOVerwaltung.instance()
                                                                                                           .getModel()
                                                                                                           .getAufstellung();
 
         //Alle Spieler auf der Gruppe entfernen und die neuen reinsetzen
         for (int i = 0; i < alleSpieler.size(); i++) {
-            final de.hattrickorganizer.model.Spieler spieler = (de.hattrickorganizer.model.Spieler) alleSpieler
-                                                               .get(i);
+            final ISpieler spieler = alleSpieler.get(i);
 
             //ein erste 11
             if (aufstellung.isSpielerInAnfangsElf(spieler.getSpielerID())) {
@@ -97,23 +104,23 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
 
         //Platzhalter
         add(new JLabel("   "));
-        aGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
+        aGruppe.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         aGruppe.setPreferredSize(new Dimension(18, 18));
         aGruppe.addActionListener(this);
         add(aGruppe);
-        bGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
+        bGruppe.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         bGruppe.setPreferredSize(new Dimension(18, 18));
         bGruppe.addActionListener(this);
         add(bGruppe);
-        cGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
+        cGruppe.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         cGruppe.setPreferredSize(new Dimension(18, 18));
         cGruppe.addActionListener(this);
         add(cGruppe);
-        dGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
+        dGruppe.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         dGruppe.setPreferredSize(new Dimension(18, 18));
         dGruppe.addActionListener(this);
         add(dGruppe);
-        eGruppe.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
+        eGruppe.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
         eGruppe.setPreferredSize(new Dimension(18, 18));
         eGruppe.addActionListener(this);
         add(eGruppe);

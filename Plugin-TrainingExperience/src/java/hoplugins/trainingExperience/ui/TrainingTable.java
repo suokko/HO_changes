@@ -19,7 +19,11 @@ import javax.swing.table.TableModel;
 public class TrainingTable extends JTable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private IHOMiniModel p_IHMM_HOMiniModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3824693600024962432L;
+	private IHOMiniModel p_IHMM_HOMiniModel;
 
     //~ Constructors -------------------------------------------------------------------------------
 

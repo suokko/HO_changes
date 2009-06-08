@@ -18,7 +18,11 @@ import javax.swing.JSplitPane;
 public class MainPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private DetailsPanel detailsPanel = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6129609746403702281L;
+	private DetailsPanel detailsPanel = null;
     private PlayersPanel playersPanel = null;
 
     //~ Constructors -------------------------------------------------------------------------------

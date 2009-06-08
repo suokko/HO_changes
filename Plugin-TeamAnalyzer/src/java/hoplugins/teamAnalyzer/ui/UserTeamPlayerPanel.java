@@ -19,7 +19,11 @@ import java.util.ArrayList;
 public class UserTeamPlayerPanel extends PlayerPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private UserTeamSpotLineup spotLineup;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7445084726999652737L;
+	private UserTeamSpotLineup spotLineup;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -28,7 +32,8 @@ public class UserTeamPlayerPanel extends PlayerPanel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Color getBackGround() {
+    @Override
+	public Color getBackGround() {
         return Color.LIGHT_GRAY;
     }
 
@@ -37,7 +42,8 @@ public class UserTeamPlayerPanel extends PlayerPanel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Dimension getDefaultSize() {
+    @Override
+	public Dimension getDefaultSize() {
         return new Dimension(180, 60);
     }
 

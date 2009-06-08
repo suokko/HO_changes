@@ -17,6 +17,11 @@ public class UiRecapTableModel extends BaseTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5858488972549437663L;
+
+	/**
      * Creates a new UiRecapTableModel object.
      *
      * @param vector Vector of table data
@@ -42,7 +47,8 @@ public class UiRecapTableModel extends BaseTableModel {
      *
      * @return
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         if (column == 1) {
             return ImageIcon.class;
         }

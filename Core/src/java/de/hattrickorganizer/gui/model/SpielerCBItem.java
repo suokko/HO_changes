@@ -190,7 +190,8 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean equals(Object obj) {
+    @Override
+	public final boolean equals(Object obj) {
         if (obj instanceof SpielerCBItem) {
             final SpielerCBItem temp = (SpielerCBItem) obj;
 
@@ -211,7 +212,8 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String toString() {
+    @Override
+	public final String toString() {
         return m_sText;
     }
 }

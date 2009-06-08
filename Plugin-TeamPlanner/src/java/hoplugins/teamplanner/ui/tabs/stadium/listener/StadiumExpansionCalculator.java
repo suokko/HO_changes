@@ -25,7 +25,8 @@ public class StadiumExpansionCalculator extends Calculator {
      * @param row Missing Method Parameter Documentation
      * @param model Missing Method Parameter Documentation
      */
-    public void doCalculate(int row, TableModel model) {
+    @Override
+	public void doCalculate(int row, TableModel model) {
         for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
             int money = Util.getOperationCell(model, StadiumPane.SIZE_ROW, i).getBalance();
             OperationCell cell = Util.getOperationCell(model, row, i);

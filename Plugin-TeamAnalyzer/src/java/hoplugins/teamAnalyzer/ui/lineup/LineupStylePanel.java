@@ -18,7 +18,12 @@ import javax.swing.JPanel;
 public abstract class LineupStylePanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** The main formation panel */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6857727877436754893L;
+
+	/** The main formation panel */
     protected FormationPanel mainPanel;
 
     /** GridBag Constraints */

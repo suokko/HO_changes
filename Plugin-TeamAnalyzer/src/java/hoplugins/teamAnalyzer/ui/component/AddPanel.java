@@ -29,7 +29,12 @@ import javax.swing.JPanel;
 public class AddPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** The Favourite Menu itself */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7424042069787091891L;
+
+	/** The Favourite Menu itself */
     FavouriteMenu menu;
 
     /** The add button */

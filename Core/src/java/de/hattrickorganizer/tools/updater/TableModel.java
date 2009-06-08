@@ -15,6 +15,11 @@ public final class TableModel extends DefaultTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3901370941644100246L;
+
+	/**
      * Creates a new TableModel object.
      *
      * @param daten TODO Missing Constructuor Parameter Documentation
@@ -34,7 +39,8 @@ public final class TableModel extends DefaultTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public boolean isCellEditable(int row, int col) {
+    @Override
+	public boolean isCellEditable(int row, int col) {
         return ((col == 0) || (col == 4)) ? true : false;
     }
 }

@@ -31,7 +31,8 @@ public class BuyPlayerListener extends InputListener implements CallableListener
      * @param cell Missing Method Parameter Documentation
      * @param week Missing Constructuor Parameter Documentation
      */
-    public void doExecute(OperationCell cell, HTWeek week) {
+    @Override
+	public void doExecute(OperationCell cell, HTWeek week) {
         this.week = week;
         dialog.reload(week);
         dialog.setVisible(true);

@@ -39,7 +39,11 @@ import javax.swing.JPanel;
 public class RatingPanelTab extends JPanel implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JComboBox JCBDate1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3199982683174903143L;
+	private JComboBox JCBDate1;
     private JComboBox JCBDate2;
 
     // Rating Panel

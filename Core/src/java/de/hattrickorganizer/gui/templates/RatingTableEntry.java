@@ -77,7 +77,8 @@ public class RatingTableEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final javax.swing.JComponent getComponent(boolean isSelected) {
+    @Override
+	public final javax.swing.JComponent getComponent(boolean isSelected) {
         m_clComponent.setBackground((isSelected)?SpielerTableRenderer.SELECTION_BG:Color.WHITE);
         m_clComponent.setOpaque(true);
         
@@ -155,7 +156,8 @@ public class RatingTableEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_clComponent.removeAll();
 
         //Platzhalter
@@ -172,7 +174,8 @@ public class RatingTableEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof RatingTableEntry) {
             final RatingTableEntry entry = (RatingTableEntry) obj;
 
@@ -191,7 +194,8 @@ public class RatingTableEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         float f = m_fRating / 2;
         JPanel renderer = new JPanel();
         renderer.setLayout(new BoxLayout(renderer, 0));
@@ -222,7 +226,8 @@ public class RatingTableEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         float f = m_fRating / 2;
         
         m_clComponent.removeAll();

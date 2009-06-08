@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -102,7 +103,7 @@ class ComboBoxPanel extends ImagePanel {
 
         setLayout(layout);
 
-        m_jlLabel = new JLabel(text, JLabel.LEFT);
+        m_jlLabel = new JLabel(text, SwingConstants.LEFT);
         m_jlLabel.setPreferredSize(new Dimension(m_iTextbreite, 35));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;

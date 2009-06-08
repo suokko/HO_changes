@@ -10,15 +10,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 /**
  * Checkbox mit einem Bild
  */
 public class ImageCheckbox extends JPanel {
+	
+	private static final long serialVersionUID = -1973860107178938746L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JCheckBox m_jchCheckbox = new JCheckBox();
+	private JCheckBox m_jchCheckbox = new JCheckBox();
     private JLabel m_jlLabel = new JLabel();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -38,7 +42,7 @@ public class ImageCheckbox extends JPanel {
      * @param selected TODO Missing Constructuor Parameter Documentation
      */
     public ImageCheckbox(String text, ImageIcon icon, boolean selected) {
-        this(text, icon, selected, JLabel.RIGHT);
+        this(text, icon, selected, SwingConstants.RIGHT);
     }
 
     /**

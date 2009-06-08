@@ -16,6 +16,7 @@ public final class FaktorenTable extends AbstractTable {
 		super(TABLENAME, adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[8];
 		columns[0]= new ColumnDescriptor("HOPosition",Types.INTEGER,false,true);

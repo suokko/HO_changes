@@ -17,6 +17,11 @@ import java.util.Comparator;
 public class OutputTableSorter extends DefaultTableSorter
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1277567983346788589L;
+
+	/**
 * Creates a new OutputTableSorter object.
 *
 * @param tableModel
@@ -33,13 +38,15 @@ public class OutputTableSorter extends DefaultTableSorter
 *
 * @return comparator
 */
-    public Comparator getCustomComparator(int column)
+    @Override
+	public Comparator getCustomComparator(int column)
     {
         if ((column > 2) && (column < 11))
         {
             return new Comparator()
                 {
-                    public boolean equals(Object arg0)
+                    @Override
+					public boolean equals(Object arg0)
                     {
                         return false;
                     }

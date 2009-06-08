@@ -15,6 +15,7 @@ public final class VereinTable extends AbstractTable {
 		super( TABLENAME, adapter );
 	}
 
+	@Override
 	protected void initColumns() {
 		columns 	= new ColumnDescriptor[12];
 		columns[0]	= new ColumnDescriptor( "HRF_ID",		Types.INTEGER,false, true );
@@ -31,6 +32,7 @@ public final class VereinTable extends AbstractTable {
 		columns[11]	= new ColumnDescriptor( "Fans",			Types.INTEGER,false );
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IVEREIN_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

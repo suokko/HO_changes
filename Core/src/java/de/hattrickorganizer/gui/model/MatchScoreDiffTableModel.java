@@ -6,9 +6,8 @@
  */
 package de.hattrickorganizer.gui.model;
 
-import java.util.Vector;
-
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;
 
@@ -23,6 +22,10 @@ import de.hattrickorganizer.model.HOVerwaltung;
 public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2114489862284776054L;
 	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
 		{
@@ -45,6 +48,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 	/**
 	 * Erzeugt einen Data[][] aus dem Spielervector
 	 */
+	@Override
 	protected void initData() {
 		m_clData = new Object[9][columnNames.length];
 		double number = matchResult.getMatchNumber();
@@ -75,7 +79,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 					homeWin +" "+ (i - 4),
 					ColorLabelEntry.FG_STANDARD,
 					ColorLabelEntry.BG_STANDARD,
-					JLabel.LEFT);
+					SwingConstants.LEFT);
 
 			m_clData[8 - i][1] = getProgressBar(result[i] / number);
 
@@ -86,7 +90,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 				HOVerwaltung.instance().getLanguageString("Unendschieden"),
 				ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD,
-				JLabel.LEFT);
+				SwingConstants.LEFT);
 
 		m_clData[4][1] = getProgressBar(result[4] / number);
 
@@ -97,7 +101,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 		awayWin + " " + (4 - i),
 					ColorLabelEntry.FG_STANDARD,
 					ColorLabelEntry.BG_STANDARD,
-					JLabel.LEFT);
+					SwingConstants.LEFT);
 
 			m_clData[8 - i][1] = getProgressBar(result[i] / number);
 
@@ -105,6 +109,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 
 	}
 
+	@Override
 	public String[] getColumnNames() {
 		return columnNames;
 	}

@@ -78,7 +78,8 @@ public class TorLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final javax.swing.JComponent getComponent(boolean isSelected) {
+    @Override
+	public final javax.swing.JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clComponent.setOpaque(true);
             m_clComponent.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
@@ -114,7 +115,8 @@ public class TorLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void clear() {
+    @Override
+	public final void clear() {
         m_clComponent.removeAll();
     }
 
@@ -125,7 +127,8 @@ public class TorLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof TorLabelEntry) {
             final TorLabelEntry entry = (TorLabelEntry) obj;
 
@@ -144,7 +147,8 @@ public class TorLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void createComponent() {
+    @Override
+	public final void createComponent() {
         JPanel renderer = new JPanel();
         renderer.setLayout(new BoxLayout(renderer, 0));
         renderer.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -168,7 +172,8 @@ public class TorLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    public final void updateComponent() {
+    @Override
+	public final void updateComponent() {
         m_clComponent.removeAll();
 
         for (float f = m_iTore; f > 0; f--) {

@@ -19,7 +19,11 @@ import javax.swing.JTabbedPane;
 public class MainPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private AnalyzerPanel analyzer;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8122222543546746654L;
+	private AnalyzerPanel analyzer;
     private EffectPanel effect;
     private OutputPanel output;
     private TrainingRecapPanel recap;

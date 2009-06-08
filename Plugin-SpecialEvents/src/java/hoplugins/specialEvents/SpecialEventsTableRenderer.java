@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class SpecialEventsTableRenderer extends DefaultTableCellRenderer
@@ -17,15 +18,16 @@ public class SpecialEventsTableRenderer extends DefaultTableCellRenderer
     {
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
     {
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if(column == SpecialEventsPanel.RESULTCOLUMN)
         {
-            setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+            setHorizontalAlignment(SwingConstants.CENTER);
         } else
         {
-            setHorizontalAlignment(DefaultTableCellRenderer.LEFT);
+            setHorizontalAlignment(SwingConstants.LEFT);
         }
         setForeground(Color.black);
         if(column == SpecialEventsPanel.NAMECOLUMN)

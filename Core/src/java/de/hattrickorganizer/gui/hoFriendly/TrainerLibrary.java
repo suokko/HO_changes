@@ -626,7 +626,7 @@ public class TrainerLibrary {
                                                                                                                 sourceImage
                                                                                                                 .getHeight(null) / 2),
                                                                                              java.awt.image.AffineTransformOp.TYPE_BILINEAR);
-        return (Image) bImageOp.filter(bImage, null);
+        return bImageOp.filter(bImage, null);
     }
 
     //Lädt Grafiken auch im jar-File

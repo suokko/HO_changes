@@ -24,9 +24,12 @@ import javax.swing.JRadioButton;
  * @author draghetto
  */
 public class KeeperToolDialog extends JDialog implements WindowListener, ActionListener {
+	
+	private static final long serialVersionUID = -7475169046243634752L;
+	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JPanel cards = new JPanel(new CardLayout());
+	private JPanel cards = new JPanel(new CardLayout());
     private JRadioButton rosterButton;
     private JRadioButton scoutButton;
     private ManualPanel manualPanel;

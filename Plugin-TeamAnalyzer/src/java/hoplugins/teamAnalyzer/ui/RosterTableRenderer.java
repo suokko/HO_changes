@@ -13,6 +13,7 @@ import java.awt.Component;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
@@ -24,13 +25,19 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class RosterTableRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
-    /*
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3338455733573545222L;
+
+	/*
      * (non-Javadoc)
      *
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -45,9 +52,9 @@ public class RosterTableRenderer extends DefaultTableCellRenderer {
             }
 
             if (column > 3) {
-                setHorizontalAlignment(JLabel.CENTER);
+                setHorizontalAlignment(SwingConstants.CENTER);
             } else {
-                setHorizontalAlignment(JLabel.LEFT);
+                setHorizontalAlignment(SwingConstants.LEFT);
             }
 
             if (column == 9) {

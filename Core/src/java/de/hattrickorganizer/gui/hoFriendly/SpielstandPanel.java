@@ -15,7 +15,11 @@ import javax.swing.JPanel;
 public class SpielstandPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Color GASTCOLOR = new Color(255, 0, 0);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5995776562681660931L;
+	private Color GASTCOLOR = new Color(255, 0, 0);
     private Color HEIMCOLOR = new Color(0, 0, 255);
     private Color STANDARDCOLOR = new Color(255, 255, 0);
     private Font m_clKleineFont = new Font("SansSerife", Font.BOLD, 10);
@@ -218,7 +222,8 @@ public class SpielstandPanel extends JPanel {
      *
      * @param g TODO Missing Method Parameter Documentation
      */
-    public final void paint(java.awt.Graphics g) {
+    @Override
+	public final void paint(java.awt.Graphics g) {
         final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
 
         paintComponent(g2d);

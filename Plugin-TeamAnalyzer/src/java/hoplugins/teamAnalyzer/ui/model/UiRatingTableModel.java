@@ -50,7 +50,8 @@ public class UiRatingTableModel extends BaseTableModel {
      *
      * @return
      */
-    public Class<?> getColumnClass(int column) {
+    @Override
+	public Class<?> getColumnClass(int column) {
         if (column == 2) {
             return ImageIcon.class;
         }

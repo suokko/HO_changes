@@ -32,7 +32,11 @@ import javax.swing.JPanel;
 public class BuyPlayerDialog extends JDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    // ----------------------------------------------------------------------------
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7735787983138954335L;
+	// ----------------------------------------------------------------------------
     private CallableListener caller;
     private HTWeek week;
     private JPanel panel = new JPanel();

@@ -136,7 +136,12 @@ public class TableLayout implements java.awt.LayoutManager2,
        either C or R.
      */
 
-    /** Default row/column size */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3520320698489212868L;
+
+	/** Default row/column size */
     protected static final double[][] defaultSize = {
             {  },
             {  }
@@ -731,7 +736,7 @@ public class TableLayout implements java.awt.LayoutManager2,
         // Make sure position is valid
         if ((i < 0) || (i > crSpec[z].length)) {
             throw new IllegalArgumentException("Parameter i is invalid.  i = "
-                + i + ".  Valid range is [0, " //$NON-NLS-1$ //$NON-NLS-2$
+                + i + ".  Valid range is [0, " //$NON-NLS-1$ 
                 + crSpec[z].length + "]."); //$NON-NLS-1$
         }
 
@@ -980,7 +985,8 @@ public class TableLayout implements java.awt.LayoutManager2,
      * @return a string representing the columns and row sizes in the form "{{col0, col1, col2,
      *         ..., colN}, {row0, row1, row2, ..., rowM}}"
      */
-    public String toString() {
+    @Override
+	public String toString() {
         int counter;
 
         String value = "TableLayout {{"; //$NON-NLS-1$
@@ -1683,7 +1689,7 @@ nextComponent:
         // Make sure position is valid
         if ((i < 0) || (i >= crSpec[z].length)) {
             throw new IllegalArgumentException("Parameter i is invalid.  i = "
-                + i + ".  Valid range is [0, " //$NON-NLS-1$ //$NON-NLS-2$
+                + i + ".  Valid range is [0, " //$NON-NLS-1$ 
                 + (crSpec[z].length - 1) + "]."); //$NON-NLS-1$
         }
 
@@ -1820,7 +1826,8 @@ nextComponent:
          *
          * @return a string in the form "(col1, row1, col2, row2, vAlign, hAlign) component"
          */
-        public String toString() {
+        @Override
+		public String toString() {
             TableLayoutConstraints c = new TableLayoutConstraints(cr1[C],
                     cr1[R], cr2[C], cr2[R], alignment[C], alignment[R]);
 

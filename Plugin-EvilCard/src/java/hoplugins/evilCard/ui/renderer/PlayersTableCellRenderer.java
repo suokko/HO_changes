@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
@@ -27,7 +28,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class PlayersTableCellRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8182314658725941668L;
+
+	/** TODO Missing Parameter Documentation */
     public static final Color WARNINGS_COLOR = new Color(255, 255, 200);
 
     /** TODO Missing Parameter Documentation */
@@ -50,7 +56,8 @@ public class PlayersTableCellRenderer extends DefaultTableCellRenderer {
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    @Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -60,34 +67,34 @@ public class PlayersTableCellRenderer extends DefaultTableCellRenderer {
             case PlayersTableModel.COL_RAW_AVERAGE:
             case PlayersTableModel.COL_WEIGHTED_AVERAGE:
                 this.setBackground(NUMBER_COLOR);
-                this.setHorizontalAlignment(PlayersTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case PlayersTableModel.COL_WARNINGS:
                 this.setBackground(WARNINGS_COLOR);
-                this.setHorizontalAlignment(PlayersTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case PlayersTableModel.COL_WARNINGS_TYPE1:
             case PlayersTableModel.COL_WARNINGS_TYPE3:
                 this.setBackground(WARNINGS_TYPE1_COLOR);
-                this.setHorizontalAlignment(PlayersTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case PlayersTableModel.COL_WARNINGS_TYPE2:
             case PlayersTableModel.COL_WARNINGS_TYPE4:
                 this.setBackground(WARNINGS_TYPE2_COLOR);
-                this.setHorizontalAlignment(PlayersTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             case PlayersTableModel.COL_DIRECT_RED_CARDS:
                 this.setBackground(DIRECT_RED_COLOR);
-                this.setHorizontalAlignment(PlayersTableCellRenderer.CENTER);
+                this.setHorizontalAlignment(SwingConstants.CENTER);
                 break;
 
             default:
                 this.setBackground(table.getBackground());
-                this.setHorizontalAlignment(PlayersTableCellRenderer.LEFT);
+                this.setHorizontalAlignment(SwingConstants.LEFT);
                 break;
         }
 

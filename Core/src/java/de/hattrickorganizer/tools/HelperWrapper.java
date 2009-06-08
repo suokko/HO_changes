@@ -7,6 +7,8 @@
 package de.hattrickorganizer.tools;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -30,6 +32,7 @@ import plugins.IHOMiniModel;
 import plugins.IHTCalendar;
 import plugins.IMP3Player;
 import plugins.IMatchHelper;
+import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
@@ -710,7 +713,7 @@ public class HelperWrapper implements plugins.IHelper {
                         info.setHeimTore(details.getHomeGoals());
                         info.setMatchDate(lineup.getStringSpielDate());
                         info.setMatchID(matchID);
-                        info.setMatchStatus(MatchKurzInfo.FINISHED);
+                        info.setMatchStatus(IMatchKurzInfo.FINISHED);
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};
@@ -848,7 +851,7 @@ public class HelperWrapper implements plugins.IHelper {
 			JPanel panel = new JPanel();
 			panel.add(new JLabel("Open this manually: "));
 			JTextField urlField = new JTextField();
-			urlField.setAlignmentX(JTextField.CENTER_ALIGNMENT);
+			urlField.setAlignmentX(Component.CENTER_ALIGNMENT);
 			urlField.setText(" " + MyConnector.getHOSite());
 			urlField.addKeyListener(new KeyListener() {
 
@@ -857,7 +860,7 @@ public class HelperWrapper implements plugins.IHelper {
 				}
 
 				public void keyPressed(KeyEvent event) {
-					if (!(event.getModifiers() == KeyEvent.CTRL_MASK)) {
+					if (!(event.getModifiers() == InputEvent.CTRL_MASK)) {
 						event.consume();
 					}
 				}

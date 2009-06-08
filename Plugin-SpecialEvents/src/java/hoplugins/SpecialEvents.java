@@ -5,17 +5,13 @@ import hoplugins.specialEvents.FilterPanel;
 import hoplugins.specialEvents.SpecialEventsPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.Properties;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import plugins.IDebugWindow;
 import plugins.IHOMiniModel;
 import plugins.IOfficialPlugin;
 import plugins.IPlugin;

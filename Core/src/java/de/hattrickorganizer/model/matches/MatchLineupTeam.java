@@ -26,7 +26,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
     protected String m_sTeamName;
 
     /** TODO Missing Parameter Documentation */
-    protected Vector m_vAufstellung = new Vector();
+    protected Vector<IMatchLineupPlayer> m_vAufstellung = new Vector<IMatchLineupPlayer>();
 
     /** TODO Missing Parameter Documentation */
     protected int m_iErfahrung;
@@ -58,7 +58,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @param m_vAufstellung New value of property m_vAufstellung.
      */
-    public final void setAufstellung(java.util.Vector m_vAufstellung) {
+    public final void setAufstellung(Vector<IMatchLineupPlayer> m_vAufstellung) {
         this.m_vAufstellung = m_vAufstellung;
     }
 
@@ -67,7 +67,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @return Value of property m_vAufstellung.
      */
-    public final java.util.Vector getAufstellung() {
+    public final Vector<IMatchLineupPlayer> getAufstellung() {
         return m_vAufstellung;
     }
 

@@ -22,7 +22,11 @@ import javax.swing.event.ListSelectionListener;
 public class PlayersPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private DetailsPanel detailsPanel = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5173473921072367115L;
+	private DetailsPanel detailsPanel = null;
     private PlayersTable playersTable = null;
 
     //~ Constructors -------------------------------------------------------------------------------

@@ -341,13 +341,15 @@ public interface IMatchHighlight {
     public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_1 = 85;
     
     /** @deprecated use HIGHLIGHT_SUB_INDIRECT_FREEKICK_1 */
-    public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_7 = 85;
+    @Deprecated
+	public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_7 = 85;
 
     /** indirect free kick, counter */
     public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_2 = 86;
 
     /** @deprecated use HIGHLIGHT_SUB_INDIRECT_FREEKICK_2 */
-    public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_8 = 86;
+    @Deprecated
+	public static final int HIGHLIGHT_SUB_INDIRECT_FREEKICK_8 = 86;
 
     /** long shot */
     public static final int HIGHLIGHT_SUB_LONGHSHOT_1 = 87;
@@ -391,13 +393,15 @@ public interface IMatchHighlight {
      * Negative weather SE for powerful players on sunny days
      * @deprecated	use HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY instead
      */
-    public static final int HIGHLIGHT_SUB_SPIELER_KANN_SICH_NICHT_DURCHSETZEN = 4;
+    @Deprecated
+	public static final int HIGHLIGHT_SUB_SPIELER_KANN_SICH_NICHT_DURCHSETZEN = 4;
 
     /**
      * Negative weather SE for quick players on sunny days
      * @deprecated	use HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY instead
      */
-    public static final int HIGHLIGHT_SUB_SPIELER_MUEDE = 6;
+    @Deprecated
+	public static final int HIGHLIGHT_SUB_SPIELER_MUEDE = 6;
 
     /** Tactic Pressing */
     public static final int HIGHLIGHT_SUB_SPIELT_PRESSING = 31;
