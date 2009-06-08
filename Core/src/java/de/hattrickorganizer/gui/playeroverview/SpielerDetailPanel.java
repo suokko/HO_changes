@@ -675,15 +675,13 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     }
 
     private void showNormal(DoppelLabelEntry labelEntry,byte playerPosition){
-    	labelEntry.getLinks().setText(Helper.round(m_clSpieler.calcPosValue(playerPosition,true),
-                gui.UserParameter.instance().anzahlNachkommastellen)+ "");
+    	labelEntry.getLinks().setText(m_clSpieler.calcPosValue(playerPosition,true) + "");
     	labelEntry.getRechts().clear();
     }
 
 
     private void showWithCompare(DoppelLabelEntry labelEntry,byte playerPosition){
-    	labelEntry.getLinks().setText(Helper.round(m_clSpieler.calcPosValue(playerPosition,true),
-                gui.UserParameter.instance().anzahlNachkommastellen)+ "");
+    	labelEntry.getLinks().setText(m_clSpieler.calcPosValue(playerPosition,true) + "");
 
     	labelEntry.getRechts().setSpezialNumber(m_clSpieler.calcPosValue(playerPosition,true)
     					- m_clVergleichsSpieler.calcPosValue(playerPosition,true),false);
