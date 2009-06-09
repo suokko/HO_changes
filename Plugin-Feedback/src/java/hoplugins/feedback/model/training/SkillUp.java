@@ -4,7 +4,6 @@ import hoplugins.Commons;
 import hoplugins.Feedback;
 import hoplugins.commons.utils.HTCalendar;
 import hoplugins.feedback.model.FeedbackObject;
-import hoplugins.feedback.model.Training;
 import hoplugins.feedback.util.FeedbackHelper;
 
 import java.sql.ResultSet;
@@ -28,7 +27,7 @@ public class SkillUp {
 	private static final int NUM_TRAINING_TYPES = 13; // see ITeam.TA_*
 	private int[] trTypes = new int[NUM_TRAINING_TYPES];
 	private int[] osmosis = new int[NUM_TRAINING_TYPES];
-	private List hrfList = new Vector(); 
+	private List<Integer> hrfList = new Vector<Integer>(); 
 	private static IHOMiniModel miniModel = Feedback.getMiniModel();
 	
 	public SkillUp(int hrfId, Timestamp timestamp,

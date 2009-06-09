@@ -8,6 +8,7 @@ import hoplugins.commons.utils.ListUtil;
 import hoplugins.teamAnalyzer.SystemManager;
 import hoplugins.teamAnalyzer.comparator.MatchComparator;
 import hoplugins.teamAnalyzer.vo.Match;
+import hoplugins.teamAnalyzer.vo.MatchDetail;
 
 import plugins.IMatchKurzInfo;
 import plugins.ISpielePanel;
@@ -38,7 +39,7 @@ public class MatchManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static List getAllMatches() {
+    public static List<Match> getAllMatches() {
         return matches.getMatches();
     }
 
@@ -47,8 +48,8 @@ public class MatchManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static List getMatchDetails() {
-        List filteredMatches = getSelectedMatches();
+    public static List<MatchDetail> getMatchDetails() {
+        List<Match> filteredMatches = getSelectedMatches();
         MatchPopulator matchPopulator = new MatchPopulator();
 
         return matchPopulator.populate(filteredMatches);
@@ -59,7 +60,7 @@ public class MatchManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static List getSelectedMatches() {
+    public static List<Match> getSelectedMatches() {
         if (matches == null) {
             loadActiveTeamMatchList();
         }
@@ -80,9 +81,9 @@ public class MatchManager {
     public static void loadActiveTeamMatchList() {
         matches = new MatchList();
 
-        SortedSet sortedMatches = loadMatchList();
+        SortedSet<Match> sortedMatches = loadMatchList();
 
-        for (Iterator iter = sortedMatches.iterator(); iter.hasNext();) {
+        for (Iterator<Match> iter = sortedMatches.iterator(); iter.hasNext();) {
             Match element = (Match) iter.next();
 
             matches.addMatch(element);
@@ -94,8 +95,8 @@ public class MatchManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private static List getTeamMatch() {
-        List teamMatches = new ArrayList();
+    private static List<Match> getTeamMatch() {
+        List<Match> teamMatches = new ArrayList<Match>();
         String oldName = SystemManager.getActiveTeamName();
 
         IMatchKurzInfo[] matchKurtzInfo = Commons.getModel().getMatchesKurzInfo(SystemManager
@@ -148,19 +149,19 @@ public class MatchManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private static SortedSet loadMatchList() {
-        Map matchIds = new HashMap();
+    private static SortedSet<Match> loadMatchList() {
+        Map<String,Match> matchIds = new HashMap<String,Match>();
 
-        for (Iterator iter = getTeamMatch().iterator(); iter.hasNext();) {
-            Match match = (Match) iter.next();
+        for (Iterator<Match> iter = getTeamMatch().iterator(); iter.hasNext();) {
+            Match match = iter.next();
 
             if (!matchIds.containsKey(match.getMatchId() + "")) {
                 matchIds.put(match.getMatchId() + "", match);
             }
         }
 
-        Collection matchList = matchIds.values();
-        SortedSet sorted = ListUtil.getSortedSet(matchList, new MatchComparator());
+        Collection<Match> matchList = matchIds.values();
+        SortedSet<Match> sorted = ListUtil.getSortedSet(matchList, new MatchComparator());
 
         return sorted;
     }

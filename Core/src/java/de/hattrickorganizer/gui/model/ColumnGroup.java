@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -31,8 +30,8 @@ public class ColumnGroup {
     /** TODO Missing Parameter Documentation */
     protected TableCellRenderer renderer;
 
-    /** TODO Missing Parameter Documentation */
-    protected Vector v;
+    /** Object = TableColumn or ColumnGroup */
+    protected Vector<Object> v;
 
     /** TODO Missing Parameter Documentation */
     protected int margin;
@@ -57,7 +56,10 @@ public class ColumnGroup {
     public ColumnGroup(TableCellRenderer renderer, String text) {
         if (renderer == null) {
             this.renderer = new DefaultTableCellRenderer() {
-                    @Override
+
+				private static final long serialVersionUID = 6042901464482052986L;
+
+					@Override
 					public Component getTableCellRendererComponent(JTable table, Object value,
                                                                    boolean isSelected,
                                                                    boolean hasFocus, int row,
@@ -81,7 +83,7 @@ public class ColumnGroup {
         }
 
         this.text = text;
-        v = new Vector();
+        v = new Vector<Object>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -94,21 +96,20 @@ public class ColumnGroup {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector getColumnGroups(TableColumn c, Vector g) {
+    public final Vector<ColumnGroup> getColumnGroups(TableColumn c, Vector<ColumnGroup> g) {
         g.addElement(this);
 
         if (v.contains(c)) {
             return g;
         }
 
-        final Enumeration enumi = v.elements();
+        final Enumeration<Object> enumi = v.elements();
 
         while (enumi.hasMoreElements()) {
             final Object obj = enumi.nextElement();
 
             if (obj instanceof ColumnGroup) {
-                final Vector groups = ((ColumnGroup) obj).getColumnGroups(c,
-                                                                                   (Vector) g.clone());
+                final Vector<ColumnGroup> groups = ((ColumnGroup) obj).getColumnGroups(c,(Vector<ColumnGroup>) g.clone());
 
                 if (groups != null) {
                     return groups;
@@ -127,7 +128,7 @@ public class ColumnGroup {
     public final void setColumnMargin(int margin) {
         this.margin = margin;
 
-        final Enumeration enumi = v.elements();
+        final Enumeration<Object> enumi = v.elements();
 
         while (enumi.hasMoreElements()) {
             final Object obj = enumi.nextElement();
@@ -179,7 +180,7 @@ public class ColumnGroup {
                                                                       false, false, -1, -1);
         final int height = comp.getPreferredSize().height;
         int width = 0;
-        final Enumeration enumi = v.elements();
+        final Enumeration<Object> enumi = v.elements();
 
         while (enumi.hasMoreElements()) {
             final Object obj = enumi.nextElement();

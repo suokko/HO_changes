@@ -40,8 +40,8 @@ public class Rating extends FeedbackObject {
 		this.matchData = matchData;
 	}
 
-	public static List rebuildList(Timestamp completedDate) {
-		List newList = new Vector();
+	public static List<FeedbackObject> rebuildList(Timestamp completedDate) {
+		List<FeedbackObject> newList = new Vector<FeedbackObject>();
 		try {
 			IHOMiniModel miniModel = getMiniModel();
 			Rating.completedDate = completedDate;
@@ -51,8 +51,8 @@ public class Rating extends FeedbackObject {
 				startDateLeague = completedDate;
 			if (startDateFriendly.getTime() < completedDate.getTime())
 				startDateFriendly = completedDate;
-			List matches = miniModel.getDataUsefullMatches(startDateLeague, startDateFriendly);
-			Iterator iter = matches.iterator();
+			List<IExportMatchData> matches = miniModel.getDataUsefullMatches(startDateLeague, startDateFriendly);
+			Iterator<IExportMatchData> iter = matches.iterator();
 			while (iter.hasNext()) {
 				IExportMatchData matchData = (IExportMatchData) iter.next();
 				newList.add(new Rating (matchData));
@@ -69,7 +69,7 @@ public class Rating extends FeedbackObject {
 		try {
 			IHOMiniModel miniModel = getMiniModel();
 			// Stars ratings are stored in a hash map (key=playerID, val=stars)
-			HashMap stars = new HashMap();
+			HashMap<Integer,Double> stars = new HashMap<Integer,Double>();
 			IMatchDetails det = matchData.getDetails();
 			boolean isHomeTeam;
 			IMatchLineupTeam lineupTeam = null;
@@ -115,7 +115,7 @@ public class Rating extends FeedbackObject {
 		return null;
 	}
 
-	public String createUrl(IMatchDetails det, ITeam team, SimpleLineUp lineup, short trainerType, boolean isHomeTeam, HashMap stars) {
+	public String createUrl(IMatchDetails det, ITeam team, SimpleLineUp lineup, short trainerType, boolean isHomeTeam, HashMap<Integer,Double> stars) {
 		try {
 			IHOMiniModel miniModel = getMiniModel();
 			StringBuffer url = new StringBuffer();
@@ -210,8 +210,8 @@ public class Rating extends FeedbackObject {
 	 * @return		minute of the DefendLead event
 	 */
 	private static int getDefendLeadMinute (IMatchDetails det) {
-		Vector highlights = det.getHighlights();
-		Iterator iter = highlights.iterator();
+		Vector<IMatchHighlight> highlights = det.getHighlights();
+		Iterator<IMatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
 			IMatchHighlight curHighlight = (IMatchHighlight) iter.next();
 			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION

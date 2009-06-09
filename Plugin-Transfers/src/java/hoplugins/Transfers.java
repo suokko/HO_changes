@@ -61,8 +61,8 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
     /** Plugin Id */
     private final int PLUGIN_ID = 25;
     private HistoryPane historyPane;
-    private List oldplayers;
-    private List players;
+    private List<ISpieler> oldplayers;
+    private List<ISpieler> players;
     private TransferTypePane transferTypePane;
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -149,10 +149,10 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         final JWindow waitWindow = model.getGUI().createWaitDialog(model.getGUI().getOwner4Dialog());
         waitWindow.show();
 
-        final List allOutdated = new Vector();
+        final List<ISpieler> allOutdated = new Vector<ISpieler>();
 
         // Check for outdated players.
-        final List tmp = new Vector();
+        final List<ISpieler> tmp = new Vector<ISpieler>();
         tmp.clear();
         tmp.addAll(model.getAllSpieler());
         tmp.removeAll(this.players);
@@ -164,10 +164,10 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         tmp.removeAll(this.oldplayers);
         allOutdated.addAll(tmp);
 
-        final List outdated = new ArrayList(allOutdated);
+        final List<ISpieler> outdated = new ArrayList<ISpieler>(allOutdated);
 
-        for (Iterator iter = allOutdated.iterator(); iter.hasNext();) {
-            final ISpieler player = (ISpieler) iter.next();
+        for (Iterator<ISpieler> iter = allOutdated.iterator(); iter.hasNext();) {
+            final ISpieler player = iter.next();
 
             if (player.getSpielerID() < 0) {
                 outdated.remove(player);
@@ -178,12 +178,12 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
             TransfersDAO.updateTeamTransfers(model.getBasics().getTeamId());
         }
 
-        for (Iterator iter = outdated.iterator(); iter.hasNext();) {
-            final ISpieler player = (ISpieler) iter.next();
+        for (Iterator<ISpieler> iter = outdated.iterator(); iter.hasNext();) {
+            final ISpieler player = iter.next();
             TransfersDAO.updatePlayerTransfers(player.getSpielerID());
         }
 
-        final List transfers = reloadData();
+        final List<PlayerTransfer> transfers = reloadData();
 
         // aik: workaround: instead of uploading player data we always set the state
         //		of all transfers to 'uploaded'
@@ -201,8 +201,8 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      * {@inheritDoc}
      */
     public final void start(IHOMiniModel hoMiniModel) {
-        this.players = new Vector(hoMiniModel.getAllSpieler());
-        this.oldplayers = new Vector(hoMiniModel.getAllOldSpieler());
+        this.players = new Vector<ISpieler>(hoMiniModel.getAllSpieler());
+        this.oldplayers = new Vector<ISpieler>(hoMiniModel.getAllOldSpieler());
 
         // Create the top panel
         final JTabbedPane tabPane = new JTabbedPane();
@@ -250,12 +250,12 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      *
      * @return List of transfers shown in the plugin
      */
-    private List reloadData() {
+    private List<PlayerTransfer> reloadData() {
         final IHOMiniModel model = Commons.getModel();
-        this.players = new Vector(model.getAllSpieler());
-        this.oldplayers = new Vector(model.getAllOldSpieler());
+        this.players = new Vector<ISpieler>(model.getAllSpieler());
+        this.oldplayers = new Vector<ISpieler>(model.getAllOldSpieler());
 
-        final List transfers = TransfersDAO.getTransfers(0, true, true);
+        final List<PlayerTransfer> transfers = TransfersDAO.getTransfers(0, true, true);
 
         historyPane.refresh();
         transferTypePane.refresh(transfers);
@@ -362,9 +362,9 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      *
      * @param transfers list of transfers to check for upload
      */
-    private void uploadTransfers(List transfers) {
-        for (Iterator iter = transfers.iterator(); iter.hasNext();) {
-            final PlayerTransfer pt = (PlayerTransfer) iter.next();
+    /*private void uploadTransfers(List<PlayerTransfer> transfers) {
+        for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+            final PlayerTransfer pt = iter.next();
 
             if (!TransferStatusDAO.isUploaded(pt.getTransferID())) {
                 if (upload(pt)) {
@@ -372,17 +372,17 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
                 }
             }
         }
-    }
+    }*/
 
     /**
      * Set the 'uploaded' state for all transfers.
      *
      * @param transfers list of transfers to check for upload
      */
-    private void setTransfersUploaded(List transfers) {
+    private void setTransfersUploaded(List<PlayerTransfer> transfers) {
     	if (transfers == null) return;
-        for (Iterator iter = transfers.iterator(); iter.hasNext();) {
-            PlayerTransfer pt = (PlayerTransfer) iter.next();
+        for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+            PlayerTransfer pt = iter.next();
             if (pt != null) {
             	TransferStatusDAO.setUploaded(pt.getTransferID());
             }

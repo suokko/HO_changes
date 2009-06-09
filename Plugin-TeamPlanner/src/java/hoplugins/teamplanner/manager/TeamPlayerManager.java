@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import plugins.IFuturePlayer;
 import plugins.IFutureTrainingManager;
+import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 
@@ -28,7 +29,7 @@ import plugins.ISpieler;
 public class TeamPlayerManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Map teamPlayers;
+    private static Map<String,TeamPlayerData> teamPlayers;
     private static TeamPlayerManager _me;
     private static int newPlayerId = -1000;
     private static int[] salary = new int[IFutureTrainingManager.FUTUREWEEKS];
@@ -39,7 +40,7 @@ public class TeamPlayerManager {
      * Creates a new TeamPlayerManager object.
      */
     private TeamPlayerManager() {
-        teamPlayers = new HashMap();
+        teamPlayers = new HashMap<String, TeamPlayerData>();
         loadTrainees();
         initSalary();
     }
@@ -78,11 +79,11 @@ public class TeamPlayerManager {
      *
      * @return Missing Return Method Documentation
      */
-    public List getBoughtPlayersForWeek(HTWeek week) {
-        List l = new ArrayList();
+    public List<ISpieler> getBoughtPlayersForWeek(HTWeek week) {
+        List<ISpieler> l = new ArrayList<ISpieler>();
 
-        for (Iterator iter = teamPlayers.values().iterator(); iter.hasNext();) {
-            TeamPlayerData element = (TeamPlayerData) iter.next();
+        for (Iterator<TeamPlayerData> iter = teamPlayers.values().iterator(); iter.hasNext();) {
+            TeamPlayerData element = iter.next();
 
             if (week.equals(element.getStartWeek())) {
                 l.add(element.getData());
@@ -107,11 +108,11 @@ public class TeamPlayerManager {
      *
      * @return Missing Return Method Documentation
      */
-    public List getPlayersAvailableAtWeek(HTWeek week) {
-        List l = new ArrayList();
+    public List<ISpieler> getPlayersAvailableAtWeek(HTWeek week) {
+        List<ISpieler> l = new ArrayList<ISpieler>();
 
-        for (Iterator iter = teamPlayers.values().iterator(); iter.hasNext();) {
-            TeamPlayerData element = (TeamPlayerData) iter.next();
+        for (Iterator<TeamPlayerData> iter = teamPlayers.values().iterator(); iter.hasNext();) {
+            TeamPlayerData element = iter.next();
 
             if ((element.getStartWeek().compareTo(week) <= 0)
                 && (element.getFinalWeek().compareTo(week) > 0)) {
@@ -140,7 +141,7 @@ public class TeamPlayerManager {
     	if (t != null) {
     		trainer = t.getTrainer();
     	}
-    	List futures = Commons.getModel().getFutureTrainingWeeks();
+    	List<IFutureTrainingWeek> futures = Commons.getModel().getFutureTrainingWeeks();
 
     	IFutureTrainingManager ftm = Commons.getModel().getFutureTrainingManager(spieler, futures,
     			coTrainer, keeperTrainer, trainer);
@@ -181,11 +182,11 @@ public class TeamPlayerManager {
      *
      * @return list
      */
-    public List getPredictedSkillup() {
-    	List sk = new ArrayList();
+    public List<List<String>> getPredictedSkillup() {
+    	List<List<String>> sk = new ArrayList<List<String>>();
 
     	for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
-    		sk.add(new ArrayList());
+    		sk.add(new ArrayList<String>());
     	}
 
     	int coTrainer = Commons.getModel().getVerein().getCoTrainer();
@@ -195,10 +196,10 @@ public class TeamPlayerManager {
     	if (t != null) {
     		trainer = t.getTrainer();
     	}
-    	List futures = Commons.getModel().getFutureTrainingWeeks();
+    	List<IFutureTrainingWeek> futures = Commons.getModel().getFutureTrainingWeeks();
 
-    	for (Iterator iter = teamPlayers.values().iterator(); iter.hasNext();) {
-    		TeamPlayerData player = (TeamPlayerData) iter.next();
+    	for (Iterator<TeamPlayerData> iter = teamPlayers.values().iterator(); iter.hasNext();) {
+    		TeamPlayerData player = iter.next();
     		IFutureTrainingManager ftm = Commons.getModel().getFutureTrainingManager(player.getData(),
     				futures,
     				coTrainer,
@@ -213,14 +214,14 @@ public class TeamPlayerManager {
 
     		ftm.previewPlayer(player.getStartWeek().getWeekNumber() - act, weeks);
 
-    		List futureSkillups = ftm.getFutureSkillups();
+    		List<ISkillup> futureSkillups = ftm.getFutureSkillups();
 
-    		for (Iterator iterator = futureSkillups.iterator(); iterator.hasNext();) {
-    			ISkillup skillup = (ISkillup) iterator.next();
+    		for (Iterator<ISkillup> iterator = futureSkillups.iterator(); iterator.hasNext();) {
+    			ISkillup skillup = iterator.next();
     			HTWeek week = new HTWeek(skillup.getHtSeason(), skillup.getHtWeek());
     			int col = week.getWeekNumber() - act;
 
-    			List l = (List) sk.get(col - 1);
+    			List<String> l = sk.get(col - 1);
     			l.add(player.getData().getSpielerID() + "");
     		}
     	}
@@ -252,11 +253,11 @@ public class TeamPlayerManager {
      *
      * @return Missing Return Method Documentation
      */
-    public List getSoldPlayersForWeek(HTWeek week) {
-        List l = new ArrayList();
+    public List<ISpieler> getSoldPlayersForWeek(HTWeek week) {
+        List<ISpieler> l = new ArrayList<ISpieler>();
 
-        for (Iterator iter = teamPlayers.values().iterator(); iter.hasNext();) {
-            TeamPlayerData element = (TeamPlayerData) iter.next();
+        for (Iterator<TeamPlayerData> iter = teamPlayers.values().iterator(); iter.hasNext();) {
+            TeamPlayerData element = iter.next();
             HTWeek pWeek = getSellingWeek(element.getData().getSpielerID());
 
             if ((pWeek != null) && (week.equals(pWeek))) {
@@ -346,8 +347,8 @@ public class TeamPlayerManager {
      * Missing Method Documentation
      */
     private void initSalary() {
-        for (Iterator iter = teamPlayers.values().iterator(); iter.hasNext();) {
-            TeamPlayerData tpd = (TeamPlayerData) iter.next();
+        for (Iterator<TeamPlayerData> iter = teamPlayers.values().iterator(); iter.hasNext();) {
+            TeamPlayerData tpd = iter.next();
             updateSalaries(tpd.getStartWeek(), tpd.getData(), false);
         }
     }
@@ -356,10 +357,10 @@ public class TeamPlayerManager {
      * Missing Method Documentation
      */
     private void loadTrainees() {
-        Vector players = Commons.getModel().getAllSpieler();
+        Vector<ISpieler> players = Commons.getModel().getAllSpieler();
 
-        for (Iterator iter = players.iterator(); iter.hasNext();) {
-            ISpieler player = (ISpieler) iter.next();
+        for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
+            ISpieler player = iter.next();
             TeamPlayerData tp = getTeamPlayer(player.getSpielerID());
             tp.setData(player);
         }

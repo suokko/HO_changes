@@ -2,15 +2,12 @@ package hoplugins.specialEvents;
 
 import hoplugins.SpecialEvents;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import plugins.IDebugWindow;
 import plugins.IMatchKurzInfo;
 
 public class SpecialEventsDataAccess
@@ -18,8 +15,8 @@ public class SpecialEventsDataAccess
 
     private static final SpecialEventsDataAccess CURRENT = new SpecialEventsDataAccess();
     private static int saveSeasons = 0;
-    private static Vector kurzInfos = null;
-    private static Vector aktKurzInfos = null;
+    private static Vector<IMatchKurzInfo> kurzInfos = null;
+    private static Vector<IMatchKurzInfo> aktKurzInfos = null;
 
     public static SpecialEventsDataAccess getCurrent()
     {
@@ -30,16 +27,16 @@ public class SpecialEventsDataAccess
     {
     }
 
-    private void getMatchKurzInfos(int saisons)
+    /*private void getMatchKurzInfos(int saisons)
     {
         if(saisons != saveSeasons)
         {
             getMatchKurzInfosForSaisons(saisons);
         }
         saveSeasons = saisons;
-    }
+    }*/
 
-    public Vector getAktMatchKurzInfos(int saisons, boolean friendlies)
+    public Vector<IMatchKurzInfo> getAktMatchKurzInfos(int saisons, boolean friendlies)
     {
         if(saisons != saveSeasons)
         {
@@ -48,15 +45,15 @@ public class SpecialEventsDataAccess
         return filterMatches(friendlies);
     }
 
-    private Vector filterMatches(boolean friendlies)
+    private Vector<IMatchKurzInfo> filterMatches(boolean friendlies)
     {
         if(friendlies)
         {
             aktKurzInfos = kurzInfos;
             return kurzInfos;
         }
-        aktKurzInfos = new Vector();
-        for(Iterator iter = kurzInfos.iterator(); iter.hasNext();)
+        aktKurzInfos = new Vector<IMatchKurzInfo>();
+        for(Iterator<IMatchKurzInfo> iter = kurzInfos.iterator(); iter.hasNext();)
         {
             IMatchKurzInfo element = (IMatchKurzInfo)iter.next();
             if(element.getMatchTyp() != 4 
@@ -75,7 +72,7 @@ public class SpecialEventsDataAccess
     {
         Timestamp datumAb = getDatumAb(saisons);
         IMatchKurzInfo modelKurzInfos[] = SpecialEvents.miniModel.getMatchesKurzInfo(SpecialEvents.miniModel.getBasics().getTeamId());
-        kurzInfos = new Vector();
+        kurzInfos = new Vector<IMatchKurzInfo>();
         for(int i = 0; i < modelKurzInfos.length; i++)
         {
             if(datumAb != null)
@@ -120,11 +117,11 @@ public class SpecialEventsDataAccess
         return new Timestamp(date.getTime());
     }
 
-    private void showDebug(String s)
+    /*private void showDebug(String s)
     {
         IDebugWindow debugWindow = SpecialEvents.miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
         debugWindow.setVisible(true);
         debugWindow.append(s);
-    }
+    }*/
 
 }

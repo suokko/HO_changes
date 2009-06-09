@@ -88,9 +88,9 @@ public class PlayerDataManager {
      *
      * @param players TODO Missing Method Parameter Documentation
      */
-    public static void update(List players) {
-        for (Iterator iter = players.iterator(); iter.hasNext();) {
-            PlayerInfo parsedPlayer = (PlayerInfo) iter.next();
+    public static void update(List<PlayerInfo> players) {
+        for (Iterator<PlayerInfo> iter = players.iterator(); iter.hasNext();) {
+            PlayerInfo parsedPlayer = iter.next();
             setPlayer(parsedPlayer);
         }
     }

@@ -58,7 +58,7 @@ public final class TransfersDAO {
      *
      * @return List of transfers.
      */
-    public static List getTransfers(int playerid, boolean allTransfers) {
+    public static List<PlayerTransfer> getTransfers(int playerid, boolean allTransfers) {
         final StringBuffer sqlStmt = new StringBuffer("SELECT * FROM " + TABLE_NAME); //$NON-NLS-1$
         sqlStmt.append(" WHERE playerid = " + playerid); //$NON-NLS-1$
 
@@ -82,7 +82,7 @@ public final class TransfersDAO {
      *
      * @return List of transfers.
      */
-    public static List getTransfers(int season, boolean bought, boolean sold) {
+    public static List<PlayerTransfer> getTransfers(int season, boolean bought, boolean sold) {
         final int teamid = Commons.getModel().getBasics().getTeamId();
         return getTransfers(teamid, season, bought, sold);
     }
@@ -97,7 +97,7 @@ public final class TransfersDAO {
      *
      * @return List of transfers.
      */
-    public static List getTransfers(int teamid, int season, boolean bought, boolean sold) {
+    public static List<PlayerTransfer> getTransfers(int teamid, int season, boolean bought, boolean sold) {
         final StringBuffer sqlStmt = new StringBuffer("SELECT * FROM " + TABLE_NAME); //$NON-NLS-1$
         sqlStmt.append(" WHERE 1=1"); //$NON-NLS-1$
 
@@ -149,11 +149,11 @@ public final class TransfersDAO {
      */
     public static void updatePlayerTransfers(int playerId) {
         try {
-            final List transfers = XMLParser.getAllPlayerTransfers(playerId);
+            final List<PlayerTransfer> transfers = XMLParser.getAllPlayerTransfers(playerId);
 
             if (transfers.size() > 0) {
-                for (Iterator iter = transfers.iterator(); iter.hasNext();) {
-                    final PlayerTransfer transfer = (PlayerTransfer) iter.next();
+                for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+                    final PlayerTransfer transfer = iter.next();
                     addTransfer(transfer);
                 }
             } else {
@@ -181,16 +181,16 @@ public final class TransfersDAO {
      */
     public static void updateTeamTransfers(int teamid) {
         try {
-            final List players = new Vector();
+            final List<ISpieler> players = new Vector<ISpieler>();
 
             final Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_MONTH, 1);
 
-            final List transfers = XMLParser.getAllTeamTransfers(teamid,
+            final List<PlayerTransfer> transfers = XMLParser.getAllTeamTransfers(teamid,
                                                                  DateUtil.resetDay(cal.getTime()));
 
-            for (Iterator iter = transfers.iterator(); iter.hasNext();) {
-                PlayerTransfer transfer = (PlayerTransfer) iter.next();
+            for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+                PlayerTransfer transfer = iter.next();
                 addTransfer(transfer);
 
                 final ISpieler player = PlayerRetriever.getPlayer(transfer.getPlayerId());
@@ -287,7 +287,7 @@ public final class TransfersDAO {
             final boolean calendarfix = TransferSettingDAO.isCalendarFix();
 
             if (!calendarfix) {
-                final Map map = new HashMap();
+                final Map<Integer,Timestamp> map = new HashMap<Integer,Timestamp>();
 
                 try {
                     while (rs.next()) {
@@ -296,8 +296,8 @@ public final class TransfersDAO {
 
                     final HTCalendar cal = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
 
-                    for (Iterator iter = map.keySet().iterator(); iter.hasNext();) {
-                        final Integer transferId = (Integer) iter.next();
+                    for (Iterator<Integer> iter = map.keySet().iterator(); iter.hasNext();) {
+                        final Integer transferId = iter.next();
                         final Timestamp date = (Timestamp) map.get(transferId);
                         cal.setTime(date);
 
@@ -324,14 +324,14 @@ public final class TransfersDAO {
      *
      * @return List of transfers
      */
-    private static List loadTransfers(String sqlStmt) {
+    private static List<PlayerTransfer> loadTransfers(String sqlStmt) {
         final double curr_rate = Commons.getModel().getXtraDaten().getCurrencyRate();
 
-        final List results = new Vector();
+        final List<PlayerTransfer> results = new Vector<PlayerTransfer>();
         final ResultSet rs = Commons.getModel().getAdapter().executeQuery(sqlStmt.toString());
 
         if (rs == null) {
-            return new Vector();
+            return new Vector<PlayerTransfer>();
         }
 
         try {
@@ -361,8 +361,8 @@ public final class TransfersDAO {
             e.printStackTrace();
         }
 
-        for (Iterator iter = results.iterator(); iter.hasNext();) {
-            PlayerTransfer transfer = (PlayerTransfer) iter.next();
+        for (Iterator<PlayerTransfer> iter = results.iterator(); iter.hasNext();) {
+            PlayerTransfer transfer = iter.next();
             final ISpieler spieler = Commons.getModel().getSpielerAtDate(transfer.getPlayerId(),
                                                                          transfer.getDate());
 

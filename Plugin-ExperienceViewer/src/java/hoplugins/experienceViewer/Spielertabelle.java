@@ -55,7 +55,7 @@ public class Spielertabelle extends JTable {
 			DecimalFormat percentFormat = new DecimalFormat("##0%");
 			DateFormat datef = DateFormat.getDateInstance(2);
 			int pos = spielerSortierung[rowIndex].index;
-			Spieler s = (Spieler) spieler.elementAt(pos);
+			Spieler s = spieler.elementAt(pos);
 			String ret;
 			switch (columnIndex) {
 			case 0: // '\0'
@@ -194,7 +194,7 @@ public class Spielertabelle extends JTable {
 		}
 	}
 
-	private class SpielerSortierung implements Comparable {
+	private class SpielerSortierung implements Comparable<Object> {
 
 		private int index;
 
@@ -360,7 +360,7 @@ public class Spielertabelle extends JTable {
 	public class ColumnHeaderToolTips extends MouseMotionAdapter {
 
 		TableColumn curCol;
-		Map tips;
+		Map<TableColumn,String> tips;
 
 		public void setToolTip(TableColumn col, String tooltip) {
 			if (tooltip == null)
@@ -385,7 +385,7 @@ public class Spielertabelle extends JTable {
 		}
 
 		public ColumnHeaderToolTips() {
-			tips = new HashMap();
+			tips = new HashMap<TableColumn,String>();
 		}
 	}
 
@@ -503,7 +503,7 @@ public class Spielertabelle extends JTable {
 	private SpielertabellenSpalte cm;
 	private IHOMiniModel model;
 	private SpielerSortierung spielerSortierung[];
-	private Vector spieler;
+	private Vector<Spieler> spieler;
 	private boolean sortierrichtung[];
 	private int sortierspalte;
 	private AbstractTableModel tm;
@@ -560,12 +560,12 @@ public class Spielertabelle extends JTable {
 	}
 
 	public void aktualisieren() {
-		Vector alleSpieler = model.getAllSpieler();
+		Vector<ISpieler> alleSpieler = model.getAllSpieler();
 		spielerSortierung = new SpielerSortierung[alleSpieler.size()];
-		spieler = new Vector(alleSpieler.size());
+		spieler = new Vector<Spieler>(alleSpieler.size());
 		int pos = 0;
-		for (Enumeration el = alleSpieler.elements(); el.hasMoreElements();) {
-			spieler.add(new Spieler(model, (ISpieler) el.nextElement()));
+		for (Enumeration<ISpieler> el = alleSpieler.elements(); el.hasMoreElements();) {
+			spieler.add(new Spieler(model, el.nextElement()));
 			spielerSortierung[pos] = new SpielerSortierung(pos);
 			pos++;
 		}

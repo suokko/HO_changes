@@ -82,7 +82,7 @@ public class DetailsTableModel extends AbstractTableModel {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector vColumnNames = null;
+    private Vector<String> vColumnNames = null;
     private Object[][] data = null;
     private int playerId = 0;
 
@@ -98,7 +98,7 @@ public class DetailsTableModel extends AbstractTableModel {
 
         data = new Object[0][cols];
 
-        vColumnNames = new Vector(Arrays.asList(new String[cols]));
+        vColumnNames = new Vector<String>(Arrays.asList(new String[cols]));
 
         //Riempimento valori
         vColumnNames.set(COL_DIRECT_RED_CARDS, PluginProperty.getString("column.RedCards"));
@@ -126,7 +126,7 @@ public class DetailsTableModel extends AbstractTableModel {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
         //return getValueAt(0, c).getClass();
         return Object.class;
     }

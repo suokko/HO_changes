@@ -16,7 +16,7 @@ import java.util.List;
 public class OperationCell {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List datas = new ArrayList();
+    private List<OperationData> datas = new ArrayList<OperationData>();
     private boolean multi = false;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ public class OperationCell {
         if (isMulti()) {
             int balance = 0;
 
-            for (Iterator iter = getOperationList().iterator(); iter.hasNext();) {
+            for (Iterator<OperationData> iter = getOperationList().iterator(); iter.hasNext();) {
                 OperationData element = (OperationData) iter.next();
                 balance += element.getInner().getMoney();
             }
@@ -75,7 +75,7 @@ public class OperationCell {
     public void setOperation(OperationData data) {
         int index = 0;
 
-        for (Iterator iter = datas.iterator(); iter.hasNext();) {
+        for (Iterator<OperationData> iter = datas.iterator(); iter.hasNext();) {
             OperationData element = (OperationData) iter.next();
 
             if (element.getId() == data.getId()) {
@@ -110,7 +110,7 @@ public class OperationCell {
      *
      * @throws RuntimeException Missing Constructuor Exception Documentation
      */
-    public List getOperationList() {
+    public List<OperationData> getOperationList() {
         if (isMulti()) {
             return datas;
         } else {
@@ -126,7 +126,7 @@ public class OperationCell {
     public boolean isValid() {
         boolean isValid = true;
 
-        for (Iterator iter = datas.iterator(); iter.hasNext();) {
+        for (Iterator<OperationData> iter = datas.iterator(); iter.hasNext();) {
             OperationData element = (OperationData) iter.next();
 
             if (!element.getInner().isValid()) {
@@ -159,7 +159,7 @@ public class OperationCell {
      */
     public void clean() {
         if (isMulti()) {
-            datas = new ArrayList();
+            datas = new ArrayList<OperationData>();
         } else {
             getOperation().getInner().setMoney(0);
         }
@@ -179,7 +179,7 @@ public class OperationCell {
 
         int index = 0;
 
-        for (Iterator iter = datas.iterator(); iter.hasNext();) {
+        for (Iterator<OperationData> iter = datas.iterator(); iter.hasNext();) {
             OperationData element = (OperationData) iter.next();
 
             if (element.getId() == id) {
@@ -200,7 +200,7 @@ public class OperationCell {
 	public String toString() {
         StringBuffer s = new StringBuffer();
 
-        for (Iterator iter = datas.iterator(); iter.hasNext();) {
+        for (Iterator<OperationData> iter = datas.iterator(); iter.hasNext();) {
             OperationData element = (OperationData) iter.next();
             s.append(element.toString());
 

@@ -8,6 +8,8 @@ package de.hattrickorganizer.gui.utils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -112,7 +114,7 @@ public class OnlineWorker {
             return false;
         }
 
-        final java.util.GregorianCalendar calendar = (java.util.GregorianCalendar) Calendar
+        final GregorianCalendar calendar = (GregorianCalendar) Calendar
                                                      .getInstance();
         String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
 
@@ -329,17 +331,17 @@ public class OnlineWorker {
      * @return TODO Missing Return Method Documentation
      */
     public final boolean getMatchArchiv(int teamId,
-                                        java.util.GregorianCalendar firstDate /*, java.util.GregorianCalendar lastDate*/) {
+                                        GregorianCalendar firstDate /*, GregorianCalendar lastDate*/) {
         String matchASP = "";
         MatchKurzInfo[] matches = null;
-        final java.util.Vector allMatches = new java.util.Vector();
-        final java.util.GregorianCalendar tempBeginn = firstDate;
-        final java.util.GregorianCalendar endDate = new java.util.GregorianCalendar();
+        final Vector<MatchKurzInfo> allMatches = new Vector<MatchKurzInfo>();
+        final GregorianCalendar tempBeginn = firstDate;
+        final GregorianCalendar endDate = new GregorianCalendar();
         endDate.setTimeInMillis(System.currentTimeMillis());
 
-        final java.util.GregorianCalendar tempEnd = new java.util.GregorianCalendar();
+        final GregorianCalendar tempEnd = new GregorianCalendar();
         tempEnd.setTimeInMillis(tempBeginn.getTimeInMillis());
-        tempEnd.add(java.util.Calendar.MONTH, 3);
+        tempEnd.add(Calendar.MONTH, 3);
 
         if (!tempEnd.before(endDate)) {
             tempEnd.setTimeInMillis(endDate.getTimeInMillis());
@@ -392,8 +394,8 @@ public class OnlineWorker {
             de.hattrickorganizer.tools.MyHelper.addArray2Vector(matches, allMatches);
 
             //Zeitfenster neu setzen
-            tempBeginn.add(java.util.Calendar.MONTH, 3);
-            tempEnd.add(java.util.Calendar.MONTH, 3);
+            tempBeginn.add(Calendar.MONTH, 3);
+            tempEnd.add(Calendar.MONTH, 3);
 
             if (!tempEnd.before(endDate)) {
                 tempEnd.setTimeInMillis(endDate.getTimeInMillis());
@@ -718,7 +720,7 @@ public class OnlineWorker {
      * @return TODO Missing Return Method Documentation
      */
     protected final String getDate() {
-        final java.util.GregorianCalendar calendar = (java.util.GregorianCalendar) Calendar
+        final GregorianCalendar calendar = (GregorianCalendar) Calendar
                                                      .getInstance();
         String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
 

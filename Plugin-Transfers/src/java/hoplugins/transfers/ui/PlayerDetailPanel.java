@@ -91,7 +91,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     public PlayerDetailPanel() {
         super(new BorderLayout());
 
-        final TableModel model = new PlayerTransferTableModel(new ArrayList());
+        final TableModel model = new PlayerTransferTableModel(new ArrayList<Object>());
         final TeamTransferSorter sorter = new TeamTransferSorter(model);
         playerTable = new JTable(sorter);
         sorter.setTableHeader(playerTable.getTableHeader());
@@ -222,7 +222,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         arrow_setpieces.setIcon(null);
         arrow_stamina.setIcon(null);
         arrow_experience.setIcon(null);
-        refreshPlayerTable(new Vector());
+        refreshPlayerTable(new Vector<Object>());
     }
 
     /**
@@ -285,12 +285,12 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
                                                                                 .size()));
             }
 
-            final List transfers = TransfersDAO.getTransfers(this.playerId, true);
+            final List<PlayerTransfer> transfers = TransfersDAO.getTransfers(this.playerId, true);
             int valIncome = 0;
             final int teamid = Commons.getModel().getBasics().getTeamId();
 
-            for (final Iterator iter = transfers.iterator(); iter.hasNext();) {
-                final PlayerTransfer transfer = (PlayerTransfer) iter.next();
+            for (final Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+                final PlayerTransfer transfer = iter.next();
 
                 if (transfer.getBuyerid() == teamid) {
                     valIncome -= transfer.getPrice();

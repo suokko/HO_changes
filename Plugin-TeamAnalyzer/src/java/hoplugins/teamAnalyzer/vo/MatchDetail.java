@@ -16,7 +16,7 @@ public class MatchDetail {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** ArrayList of Player performance for this game */
-    private List playerPerf = new ArrayList();
+    private List<PlayerPerformance> playerPerf = new ArrayList<PlayerPerformance>();
 
     /** Match to which the details are reffered */
     private Match match;
@@ -54,7 +54,7 @@ public class MatchDetail {
      *
      * @return
      */
-    public final List getPerformances() {
+    public final List<PlayerPerformance> getPerformances() {
         return playerPerf;
     }
 

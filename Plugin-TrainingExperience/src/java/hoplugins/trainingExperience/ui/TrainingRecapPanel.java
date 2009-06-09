@@ -11,6 +11,7 @@ import hoplugins.commons.utils.PluginProperty;
 import hoplugins.trainingExperience.ui.renderer.TrainingRecapRenderer;
 
 import plugins.IFutureTrainingManager;
+import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 
@@ -68,17 +69,17 @@ public class TrainingRecapPanel extends JPanel {
         jbInit();
 
         // empty the table
-        Vector columns = getColumns();
+        Vector<String> columns = getColumns();
 
         //playerRef = new HashMap();
-        List trainings = TrainingExperience.getTrainPanel().getFutureTrainings();
+        List<IFutureTrainingWeek> trainings = TrainingExperience.getTrainPanel().getFutureTrainings();
 
-        Vector v = Commons.getModel().getAllSpieler();
+        Vector<ISpieler> v = Commons.getModel().getAllSpieler();
 
-        List players = new ArrayList();
+        List<Vector<String>> players = new ArrayList<Vector<String>>();
 
-        for (Iterator iter = v.iterator(); iter.hasNext();) {
-            ISpieler player = (ISpieler) iter.next();
+        for (Iterator<ISpieler> iter = v.iterator(); iter.hasNext();) {
+            ISpieler player = iter.next();
             IFutureTrainingManager ftm = Commons.getModel().getFutureTrainingManager(player,
                                                                                      trainings,
                                                                                      TrainingExperience.getStaffPanel()
@@ -87,22 +88,22 @@ public class TrainingRecapPanel extends JPanel {
                                                                                                        .getKeeperTrainerNumber(),
                                                                                      TrainingExperience.getStaffPanel()
                                                                                                        .getTrainerLevelNumber());
-            List su = ftm.getFutureSkillups();
+            List<ISkillup> su = ftm.getFutureSkillups();
 
             // Skip player!
             if (su.size() == 0) {
                 continue;
             }
 
-            HashMap maps = new HashMap();
+            HashMap<String,ISkillup> maps = new HashMap<String,ISkillup>();
 
-            for (Iterator iterator = su.iterator(); iterator.hasNext();) {
-                ISkillup skillup = (ISkillup) iterator.next();
+            for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
+                ISkillup skillup = iterator.next();
 
                 maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup); //$NON-NLS-1$
             }
 
-            Vector row = new Vector();
+            Vector<String> row = new Vector<String>();
 
             row.add(player.getName());
             row.add(player.getAlterWithAgeDaysAsString());
@@ -143,8 +144,8 @@ public class TrainingRecapPanel extends JPanel {
      *
      * @return List of string
      */
-    private Vector getColumns() {
-        Vector columns = new Vector();
+    private Vector<String> getColumns() {
+        Vector<String> columns = new Vector<String>();
 
         columns.add(Commons.getModel().getLanguageString("Spieler")); //$NON-NLS-1$
         columns.add(Commons.getModel().getLanguageString("Alter")); //$NON-NLS-1$
@@ -201,9 +202,9 @@ public class TrainingRecapPanel extends JPanel {
         title.setOpaque(false);
         panel.add(title, BorderLayout.NORTH);
 
-        Vector columns = getColumns();
+        Vector<String> columns = getColumns();
 
-        tableModel = new BaseTableModel(new Vector(), columns);
+        tableModel = new BaseTableModel(new Vector<Object>(), columns);
 
         JTable table = new JTable(tableModel);
 

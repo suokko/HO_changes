@@ -41,15 +41,15 @@ public class FinanzenDAO {
      *
      * @return Missing Return Method Documentation
      */
-    public static Vector getFinancesHistory(int weeks) {
+    public static Vector<FinancesOfWeek> getFinancesHistory(int weeks) {
         Date firstDay;
-        HashMap weekMap;
+        HashMap<String,FinancesOfWeek> weekMap;
         ResultSet rs;
         //Date lastDay = new Date(Commons.getModel().getBasics().getDatum().getTime());
         long diff = 0x240c8400L * weeks;
 
         firstDay = new Date(Commons.getModel().getXtraDaten().getEconomyDate().getTime() - diff);
-        weekMap = new HashMap();
+        weekMap = new HashMap<String,FinancesOfWeek>();
 
         String query = "select * from FINANZEN";
 
@@ -117,7 +117,7 @@ public class FinanzenDAO {
             // Ignore.
         }
 
-        Vector values = new Vector(weekMap.values());
+        Vector<FinancesOfWeek> values = new Vector<FinancesOfWeek>(weekMap.values());
 
         Collections.sort(values);
 

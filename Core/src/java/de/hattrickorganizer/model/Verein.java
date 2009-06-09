@@ -4,6 +4,7 @@ package de.hattrickorganizer.model;
 import java.sql.Timestamp;
 import java.util.Vector;
 
+import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -441,8 +442,8 @@ public final class Verein implements plugins.IVerein {
     //Server Daten erstellen
     /////////////////////////////////////////////////////
     public ServerTeam erstelleServerTeam() {
-        final Vector serverSpieler = new Vector();
-        final Vector spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<ServerSpieler> serverSpieler = new Vector<ServerSpieler>();
+        final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
         ServerTeam sTeam = null;
         Spieler player = null;
         SpielerPosition position = null;

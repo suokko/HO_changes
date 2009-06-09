@@ -14,6 +14,7 @@ import hoplugins.teamAnalyzer.ui.model.UiRecapTableModel;
 import hoplugins.teamAnalyzer.util.MatchUtil;
 import hoplugins.teamAnalyzer.vo.Match;
 import hoplugins.teamAnalyzer.vo.MatchDetail;
+import hoplugins.teamAnalyzer.vo.PlayerPerformance;
 import hoplugins.teamAnalyzer.vo.TeamLineup;
 
 import java.awt.BorderLayout;
@@ -114,11 +115,11 @@ public class RecapPanel extends JPanel {
             stars = lineup.getStars();
         }
 
-        List list = MatchPopulator.getAnalyzedMatch();
-        Vector rowData;
+        List<MatchDetail> list = MatchPopulator.getAnalyzedMatch();
+        Vector<Object> rowData;
 
         if (list.size() > 1) {
-            rowData = new Vector();
+            rowData = new Vector<Object>();
             rowData.add(PluginProperty.getString("RecapPanel.Average")); //$NON-NLS-1$
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
@@ -142,10 +143,10 @@ public class RecapPanel extends JPanel {
             table.getSelectionModel().setSelectionInterval(0, 0);
         }
 
-        for (Iterator iter = list.iterator(); iter.hasNext();) {
+        for (Iterator<MatchDetail> iter = list.iterator(); iter.hasNext();) {
             MatchDetail matchDetail = (MatchDetail) iter.next();
 
-            rowData = new Vector();
+            rowData = new Vector<Object>();
 
             Match match = matchDetail.getMatchDetail();
 
@@ -203,7 +204,7 @@ public class RecapPanel extends JPanel {
         }
 
         if (list.size() == 0) {
-            rowData = new Vector();
+            rowData = new Vector<Object>();
             rowData.add(PluginProperty.getString("RecapPanel.NoMatch")); //$NON-NLS-1$
             tableModel.addRow(rowData);
         }
@@ -280,7 +281,7 @@ public class RecapPanel extends JPanel {
      * @param row TODO Missing Method Parameter Documentation
      * @param rating TODO Missing Method Parameter Documentation
      */
-    private void setRating(Vector row, MatchRating rating) {
+    private void setRating(Vector<Object> row, MatchRating rating) {
         if (rating == null) {
             for (int i = 0; i < 7; i++) {
                 row.add(""); //$NON-NLS-1$
@@ -315,9 +316,9 @@ public class RecapPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     private void jbInit() {
-        Vector data = new Vector();
+        Vector<Object> data = new Vector<Object>();
 
-        tableModel = new UiRecapTableModel(data, new Vector(Arrays.asList(columns)));
+        tableModel = new UiRecapTableModel(data, new Vector<String>(Arrays.asList(columns)));
 
         sorter = new RecapTableSorter(tableModel);
         table = new JTable(sorter);

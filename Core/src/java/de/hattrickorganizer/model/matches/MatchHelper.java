@@ -113,7 +113,7 @@ public class MatchHelper implements IMatchHelper {
    	   			/**
    	   			 * league or cup match -> check highlights
    	   			 */
-   		   		Vector highlights = details.getHighlights();
+   		   		Vector<IMatchHighlight> highlights = details.getHighlights();
    				for (int i=0; i<highlights.size(); i++) {
    					IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
    					if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION 

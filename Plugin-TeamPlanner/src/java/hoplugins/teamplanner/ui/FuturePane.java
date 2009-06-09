@@ -37,7 +37,7 @@ public class FuturePane extends JPanel {
      */
     public FuturePane() {
         futureTableModel = null;
-        futureTableModel = new FinancesTableModel(new Vector());
+        futureTableModel = new FinancesTableModel(new Vector<Object>());
 
         BasicSorter sorter = new BasicSorter(futureTableModel);
         JTable historyTable = new JTable(sorter);

@@ -28,7 +28,7 @@ import java.util.List;
 public class MatchPopulator {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static List analyzedMatch = new ArrayList();
+    private static List<MatchDetail> analyzedMatch = new ArrayList<MatchDetail>();
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ public class MatchPopulator {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static List getAnalyzedMatch() {
+    public static List<MatchDetail> getAnalyzedMatch() {
         return analyzedMatch;
     }
 
@@ -45,7 +45,7 @@ public class MatchPopulator {
      * TODO Missing Method Documentation
      */
     public static void clean() {
-        analyzedMatch = new ArrayList();
+        analyzedMatch = new ArrayList<MatchDetail>();
     }
 
     /**
@@ -55,13 +55,13 @@ public class MatchPopulator {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List populate(List matches) {
-        List list = new ArrayList();
+    public List<MatchDetail> populate(List<Match> matches) {
+        List<MatchDetail> list = new ArrayList<MatchDetail>();
 
-        analyzedMatch = new ArrayList();
+        analyzedMatch = new ArrayList<MatchDetail>();
 
-        for (Iterator iter = matches.iterator(); iter.hasNext();) {
-            Match element = (Match) iter.next();
+        for (Iterator<Match> iter = matches.iterator(); iter.hasNext();) {
+            Match element = iter.next();
 
             if (!isMatchAvailable(element.getMatchId()) && CHPPManager.isDownloadAllowed(element)) {
                 downloadMatch(element.getMatchId());

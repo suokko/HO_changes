@@ -37,8 +37,8 @@ public class Transfers extends FeedbackObject {
 		this.player = getMiniModel().getSpielerAtDate(playerTransfer.getPlayerId(), playerTransfer.getDate());
 	}
 	
-	public static List rebuildList(Timestamp completedDate) {
-		List list = new Vector();
+	public static List<Transfers> rebuildList(Timestamp completedDate) {
+		List<Transfers> list = new Vector<Transfers>();
 		try {
 			// Set completedDate to one week ago
 			// Reason: 
@@ -47,10 +47,10 @@ public class Transfers extends FeedbackObject {
 			// would be ignored.
 			// 1 week = 7*24*60*60*1000 millisec
 			Transfers.completedDate = new Timestamp(completedDate.getTime() - 7*24*60*60*1000);
-			List transfers = TransfersDAO.getAllTransfers(Transfers.completedDate, MAXAGE);
-			ListIterator iter = transfers.listIterator();
+			List<PlayerTransfer> transfers = TransfersDAO.getAllTransfers(Transfers.completedDate, MAXAGE);
+			ListIterator<PlayerTransfer> iter = transfers.listIterator();
 			while (iter.hasNext()) {
-				PlayerTransfer curTransfer = (PlayerTransfer)iter.next();
+				PlayerTransfer curTransfer = iter.next();
 				Transfers newTransfer = new Transfers(curTransfer);
 				if (newTransfer.isValid())
 					list.add(newTransfer);

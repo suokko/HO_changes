@@ -6,6 +6,7 @@ package hoplugins.teamplanner.ui.tabs;
 
 import hoplugins.Commons;
 
+import hoplugins.teamplanner.ui.controller.OperationListener;
 import hoplugins.teamplanner.ui.controller.calculator.Calculator;
 import hoplugins.teamplanner.ui.controller.input.DefaultInputListener;
 import hoplugins.teamplanner.ui.controller.input.InputListener;
@@ -63,9 +64,9 @@ public abstract class AbstractOperationPane extends JPanel {
     //private JPanel actionPanel;
     private JPanel tabPanel;
     private JTable table;
-    private List calcRows = new ArrayList();
-    private List inputRows = new ArrayList();
-    private Vector rowHeader;
+    private List<OperationListener> calcRows = new ArrayList<OperationListener>();
+    private List<OperationListener> inputRows = new ArrayList<OperationListener>();
+    private Vector<String> rowHeader;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -74,7 +75,7 @@ public abstract class AbstractOperationPane extends JPanel {
      */
     public AbstractOperationPane() {
         super();
-        this.rowHeader = new Vector();
+        this.rowHeader = new Vector<String>();
         this.model = new OperationTableModel(new Vector(), WeekHeader.instance().getValues());
         setRows();
         jbInit();
@@ -117,7 +118,7 @@ public abstract class AbstractOperationPane extends JPanel {
         int count = 0;
 
         // Changed input field, recalculate all calculated rows
-        for (Iterator iter = calcRows.iterator(); iter.hasNext();) {
+        for (Iterator<OperationListener> iter = calcRows.iterator(); iter.hasNext();) {
             Calculator listener = (Calculator) iter.next();
             listener.doCalculate(inputRows.size() + count, model);
             count++;
@@ -245,10 +246,10 @@ public abstract class AbstractOperationPane extends JPanel {
         tabPanel.setOpaque(false);
         add(tabPanel, BorderLayout.CENTER);
 
-        Vector data = new Vector();
+        Vector<Vector<OperationCell>> data = new Vector<Vector<OperationCell>>();
 
         for (int i = 0; i < (inputRows.size() + calcRows.size()); i++) {
-            Vector row = new Vector();
+            Vector<OperationCell> row = new Vector<OperationCell>();
 
             for (int j = 0; j < IFutureTrainingManager.FUTUREWEEKS; j++) {
                 row.add(new OperationCell(model.getInnerData(i), model.isMulti(i)));

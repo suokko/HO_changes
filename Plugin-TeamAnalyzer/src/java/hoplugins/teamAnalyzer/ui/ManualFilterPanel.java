@@ -42,30 +42,23 @@ import javax.swing.table.DefaultTableModel;
 public class ManualFilterPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -9029680013941604647L;
 
 	/** TODO Missing Parameter Documentation */
-    private static final Vector COLUMN_NAMES = new Vector(Arrays.asList(new Object[]{
-                                                                            "",
-                                                                            PluginProperty
-                                                                            .getString("RecapPanel.Game"),
-                                                                            PluginProperty
-                                                                            .getString("Type"),
-                                                                            PluginProperty
-                                                                            .getString("RecapPanel.Result"),
-                                                                            PluginProperty
-                                                                            .getString("Week"),
-                                                                            Commons.getModel().getLanguageString("Season"),
-                                                                            "", ""
-                                                                        }));
+    private static final Vector<String> COLUMN_NAMES = new Vector<String>(Arrays.asList(new String[]{
+	                                                                "",
+	                                                                PluginProperty.getString("RecapPanel.Game"),
+	                                                                PluginProperty.getString("Type"),
+	                                                                PluginProperty.getString("RecapPanel.Result"),
+	                                                                PluginProperty.getString("Week"),
+	                                                                Commons.getModel().getLanguageString("Season"),
+	                                                                "", ""
+	                                                            }));
 
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    List availableMatches = new ArrayList();
+    List<Match> availableMatches = new ArrayList<Match>();
     private DefaultTableModel tableModel;
     private JTable table;
 
@@ -84,17 +77,17 @@ public class ManualFilterPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     public void reload() {
-        tableModel = new UiFilterTableModel(new Vector(), COLUMN_NAMES);
+        tableModel = new UiFilterTableModel(new Vector<Object>(), COLUMN_NAMES);
         table.setModel(tableModel);
         availableMatches = MatchManager.getAllMatches();
 
-        Vector rowData;
+        Vector<Object> rowData;
 
-        for (Iterator iter = availableMatches.iterator(); iter.hasNext();) {
-            List matchIds = new ArrayList();
-            Match element = (Match) iter.next();
+        for (Iterator<Match> iter = availableMatches.iterator(); iter.hasNext();) {
+            List<Object> matchIds = new ArrayList<Object>();
+            Match element = iter.next();
 
-            rowData = new Vector();
+            rowData = new Vector<Object>();
 
             boolean isAvailable = Commons.getModel().getHelper().existsMatchInDB(element.getMatchId());
             boolean isSelected = SystemManager.getFilter().getMatches().contains(""
@@ -153,11 +146,11 @@ public class ManualFilterPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     protected void setFilter() {
-        List list = new ArrayList();
+        List<String> list = new ArrayList<String>();
         int i = 0;
 
-        for (Iterator iter = availableMatches.iterator(); iter.hasNext();) {
-            Match element = (Match) iter.next();
+        for (Iterator<Match> iter = availableMatches.iterator(); iter.hasNext();) {
+            Match element = iter.next();
             boolean isSelected = ((Boolean) tableModel.getValueAt(i, 0)).booleanValue();
             boolean isAvailable = Boolean.valueOf((String) tableModel.getValueAt(i, 6))
                                          .booleanValue();
@@ -212,7 +205,7 @@ public class ManualFilterPanel extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        Vector data = new Vector();
+        Vector<Object> data = new Vector<Object>();
 
         tableModel = new UiFilterTableModel(data, COLUMN_NAMES);
         table = new JTable(tableModel);

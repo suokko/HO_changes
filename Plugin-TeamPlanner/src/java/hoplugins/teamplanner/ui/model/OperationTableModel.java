@@ -19,13 +19,11 @@ import java.util.Vector;
 public class OperationTableModel extends BaseTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -5834318479352507933L;
-	private Map rowClass = new HashMap();
-    private Map rowEditable = new HashMap();
-    private Map rowMulti = new HashMap();
+	
+	private Map<String,Class<?>> rowClass = new HashMap<String,Class<?>>();
+    private Map<String,String> rowEditable = new HashMap<String,String>();
+    private Map<String,String> rowMulti = new HashMap<String,String>();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -35,7 +33,7 @@ public class OperationTableModel extends BaseTableModel {
      * @param vector Vector of table data
      * @param vector2 Vector of column names
      */
-    public OperationTableModel(Vector vector, Vector vector2) {
+    public OperationTableModel(Vector<Object> vector, Vector<String> vector2) {
         super(vector, vector2);
     }
 
@@ -83,7 +81,7 @@ public class OperationTableModel extends BaseTableModel {
      * @param row Missing Method Parameter Documentation
      * @param c Missing Method Parameter Documentation
      */
-    public void setInner(int row, Class c) {
+    public void setInner(int row, Class<?> c) {
         rowClass.put("" + row, c);
     }
 
@@ -95,7 +93,7 @@ public class OperationTableModel extends BaseTableModel {
      * @return true if editable, false if not
      */
     public InnerData getInnerData(int row) {
-        Class val = (Class) rowClass.get("" + row);
+        Class<?> val = rowClass.get("" + row);
 
         try {
             return (InnerData) val.newInstance();

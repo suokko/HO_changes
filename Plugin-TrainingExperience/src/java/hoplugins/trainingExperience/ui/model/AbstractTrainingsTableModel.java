@@ -3,6 +3,7 @@ package hoplugins.trainingExperience.ui.model;
 
 import hoplugins.commons.utils.PluginProperty;
 
+import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
 
 import java.util.Vector;
@@ -25,7 +26,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     protected IHOMiniModel p_IHMM_miniModel;
 
     /** Vector of ITrainingPerPlayer object */
-    protected Vector p_V_data;
+    protected Vector<Object[]> p_V_data;
 
     /** Vector of ITrainingPerWeek object */
     protected Vector p_V_trainingsVector;
@@ -39,8 +40,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      * @param miniModel
      */
     public AbstractTrainingsTableModel(IHOMiniModel miniModel) {
-        p_V_data = new Vector();
-        p_V_trainingsVector = new Vector();
+        p_V_data = new Vector<Object[]>();
+        p_V_trainingsVector = new Vector<IFutureTrainingWeek>();
         p_IHMM_miniModel = miniModel;
         columnNames = new String[5];
         columnNames[0] = PluginProperty.getString("Week"); //$NON-NLS-1$
@@ -73,7 +74,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      * @return
      */
     @Override
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
         return getValueAt(0, column).getClass();
     }
 
@@ -112,7 +113,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return actual training vector
      */
-    public Vector getTrainingsData() {
+    public Vector<IFutureTrainingWeek> getTrainingsData() {
         return p_V_trainingsVector;
     }
 

@@ -22,7 +22,7 @@ public class TeamBookmarksTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6409403277621787085L;
-	private List values;
+	private List<Bookmark> values;
     private String[] colNames = new String[2];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ public class TeamBookmarksTableModel extends AbstractTableModel {
      *
      * @param values List of values to show in table.
      */
-    public TeamBookmarksTableModel(List values) {
+    public TeamBookmarksTableModel(List<Bookmark> values) {
         super();
 
         this.colNames[0] = Commons.getModel().getLanguageString("ID"); //$NON-NLS-1$

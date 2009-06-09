@@ -2,6 +2,8 @@ package de.hattrickorganizer.gui.model;
 
 import java.util.Vector;
 
+import plugins.ISpieler;
+
 import de.hattrickorganizer.gui.playeroverview.SpielerTrainingsVergleichsPanel;
 import de.hattrickorganizer.model.Spieler;
 
@@ -12,12 +14,10 @@ import de.hattrickorganizer.model.Spieler;
  */
 public final  class PlayerOverviewModel extends HOColumnModel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5149408240369536138L;
+	
 	/** all players **/
-	private Vector m_vPlayers;
+	private Vector<ISpieler> m_vPlayers;
 	
 	/**
 	 * constructor
@@ -92,7 +92,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector player) {
+    public final void setValues(Vector<ISpieler> player) {
     	m_vPlayers = player;
         initData();
     }

@@ -349,7 +349,7 @@ public class TransferTableModel extends AbstractTableModel {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final Class getColumnClass(int columnIndex) {
+	public final Class<?> getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {

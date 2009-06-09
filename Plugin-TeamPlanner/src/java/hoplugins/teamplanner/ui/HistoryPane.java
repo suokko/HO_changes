@@ -42,7 +42,7 @@ public class HistoryPane extends JPanel {
      */
     public HistoryPane() {
         historyTableModel = null;
-        historyTableModel = new FinancesTableModel(new Vector());
+        historyTableModel = new FinancesTableModel(new Vector<Object>());
 
         BasicSorter sorter = new BasicSorter(historyTableModel);
         JTable historyTable = new JTable(sorter);

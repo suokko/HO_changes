@@ -42,21 +42,21 @@ public class Training extends FeedbackObject {
 	/**
 	 * HashMap of all Trainings
 	 * Key = Training Date
-	 * Val = TrainingWeek
+	 * Val = TrainingsWeek
 	 */
-	private static Map trainingsMap;
+	private static Map<Timestamp,TrainingsWeek> trainingsMap;
 	/**
 	 * HashMap of all Skillups
 	 * Key = SkillUpKey (playerId, skill, value)
 	 * Value = SkillUp
 	 */
-	private static Map skillupMap;
+	private static Map<SkillUpKey,SkillUp> skillupMap;
 	/**
 	 * HashMap of all Skillups by Date
 	 * Key = TrainingDate (timestamp)
 	 * Value = SkillUp
 	 */
-	private static Map skillupMapByDate;
+	private static Map<Timestamp,List<SkillUp>> skillupMapByDate;
 
 	private SkillUp skillUp;
 
@@ -68,13 +68,13 @@ public class Training extends FeedbackObject {
 		this.skillUp = skillUp;
 	}
 
-	public static List rebuildList(Timestamp completedDate) {
-		List newList = new Vector();
+	public static List<Training> rebuildList(Timestamp completedDate) {
+		List<Training> newList = new Vector<Training>();
 		try {
 			Training.completedDate = completedDate;
-			trainingsMap = new HashMap();
-			skillupMap = new HashMap();
-			skillupMapByDate = new HashMap();
+			trainingsMap = new HashMap<Timestamp,TrainingsWeek>();
+			skillupMap = new HashMap<SkillUpKey, SkillUp>();
+			skillupMapByDate = new HashMap<Timestamp, List<SkillUp>>();
 
 			Timestamp nextTrainingDate = Commons.getModel().getXtraDaten().getTrainingDate();
 			Timestamp firstHrfDate = getFirstHrfDate();
@@ -85,10 +85,10 @@ public class Training extends FeedbackObject {
 					curTrainCal.getTimeInMillis() > startDate.getTime() &&
 					curTrainCal.getTimeInMillis() > completedDate.getTime();
 					curTrainCal.add(Calendar.WEEK_OF_YEAR, -1)) {
-				List skillUpsThisWeek = getSkillUpsForWeek(new Timestamp (curTrainCal.getTimeInMillis()));
-				Iterator iter = skillUpsThisWeek.iterator();
+				List<SkillUp> skillUpsThisWeek = getSkillUpsForWeek(new Timestamp (curTrainCal.getTimeInMillis()));
+				Iterator<SkillUp> iter = skillUpsThisWeek.iterator();
 				while (iter.hasNext()) {
-					SkillUp curSkillUp = (SkillUp)iter.next();
+					SkillUp curSkillUp = iter.next();
 					SkillUp lastSkillUp = getSkillUp(curSkillUp.getPlayerId(), curSkillUp.getSkill(), curSkillUp.getValue()-1);
 					if (lastSkillUp != null) {
 						curSkillUp.setLastSkillup(lastSkillUp.getTimestamp());
@@ -127,7 +127,7 @@ public class Training extends FeedbackObject {
 				curTrainCal.add(Calendar.WEEK_OF_YEAR, -1)) {
 			TrainingsWeek tw = getTrainingForWeek(new Timestamp(curTrainCal.getTimeInMillis()));
 //			System.out.println ("Feedback: "+skillUp.getPlayerId()+", TW="+tw.toString());
-			List matches = getMatchesForTraining(curTrainCal);
+			List<Integer> matches = getMatchesForTraining(curTrainCal);
 			if (tw == null || tw.getHrfId() == -1 || 
 					matches == null || matches.size() == 0) {
 				// Missing training/no matches for this week
@@ -238,7 +238,7 @@ public class Training extends FeedbackObject {
         return isTrained;
     }
 
-	private static List getMatchesForTraining (Calendar trainingDate) {
+	private static List<Integer> getMatchesForTraining (Calendar trainingDate) {
 		return getMiniModel().getTrainingsManager().getMatchesForTraining(trainingDate);
 	}
 				
@@ -391,12 +391,12 @@ public class Training extends FeedbackObject {
 		return null;
 	}
 	
-	private static List getSkillUpsForWeek (Timestamp thisTrainingDate) {
+	private static List<SkillUp> getSkillUpsForWeek (Timestamp thisTrainingDate) {
 //		// If the skillup is in the cache, use it
 		if (skillupMapByDate != null && skillupMapByDate.containsKey(thisTrainingDate))
-			return (List) skillupMapByDate.get(thisTrainingDate);
+			return skillupMapByDate.get(thisTrainingDate);
 		// skillup list for this date is not in cache, get from db and put to cache for further usage
-		List newList = new Vector();
+		List<SkillUp> newList = new Vector<SkillUp>();
 		IJDBCAdapter adapter = getMiniModel().getAdapter();
 		Calendar nextTrainingDate = new GregorianCalendar();
 		nextTrainingDate.setTimeInMillis(thisTrainingDate.getTime());

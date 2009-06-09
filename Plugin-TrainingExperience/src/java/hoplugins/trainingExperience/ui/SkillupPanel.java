@@ -62,7 +62,7 @@ public class SkillupPanel extends JPanel {
      * @param skillup The skillup object to be added
      */
     public void addRow(ISkillup skillup) {
-        Vector v = new Vector();
+        Vector<Object> v = new Vector<Object>();
 
         v.add(Skills.getSkillDescription(skillup.getType()) + ": " //$NON-NLS-1$
               + Commons.getModel().getHelper().getNameForSkill(skillup.getValue(), true));
@@ -81,7 +81,7 @@ public class SkillupPanel extends JPanel {
      */
     public void reload(ISpieler player) {
         // empty the table
-        tableModel = new BaseTableModel(new Vector(), new Vector(Arrays.asList(columns)));
+        tableModel = new BaseTableModel(new Vector<Object>(), new Vector<String>(Arrays.asList(columns)));
         table.setModel(tableModel);
 
         if (player == null) {
@@ -89,10 +89,10 @@ public class SkillupPanel extends JPanel {
         }
 
         // gets calculated past skillups
-        for (Iterator iter = TrainingExperience.getSkillupManager().getTrainedSkillups().iterator();
+        for (Iterator<ISkillup> iter = TrainingExperience.getSkillupManager().getTrainedSkillups().iterator();
              iter.hasNext();) {
             // add it to the table
-            addRow((ISkillup) iter.next());
+            addRow(iter.next());
         }
 
         setColumnWidth(1, 50);
@@ -122,9 +122,9 @@ public class SkillupPanel extends JPanel {
      * Initialize the object layout
      */
     private void jbInit() {
-        Vector data = new Vector();
+        Vector<Object> data = new Vector<Object>();
 
-        tableModel = new BaseTableModel(data, new Vector(Arrays.asList(columns)));
+        tableModel = new BaseTableModel(data, new Vector<String>(Arrays.asList(columns)));
         table = new SkillupTable(tableModel);
         table.setDefaultRenderer(Object.class, new SkillupTableRenderer());
 

@@ -87,7 +87,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
     /** TODO Missing Parameter Documentation */
     protected TableModel tableModel;
     private JTableHeader tableHeader;
-    private List sortingColumns = new ArrayList();
+    private List<Directive> sortingColumns = new ArrayList<Directive>();
     private Map columnComparators = new HashMap();
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
@@ -145,7 +145,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      * @return
      */
     @Override
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 
@@ -155,7 +155,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      * @param type
      * @param comparator
      */
-    public void setColumnComparator(Class type, Comparator comparator) {
+    public void setColumnComparator(Class<?> type, Comparator comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
         }
@@ -213,7 +213,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      *
      * @return
      */
-    public List getSortingColumns() {
+    public List<Directive> getSortingColumns() {
         return sortingColumns;
     }
 
@@ -376,7 +376,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
             return comparator;
         }
 
-        Class columnType = tableModel.getColumnClass(column);
+        Class<?> columnType = tableModel.getColumnClass(column);
 
         comparator = (Comparator) columnComparators.get(columnType);
 

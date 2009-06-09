@@ -74,20 +74,20 @@ public class TacticPanel extends JPanel {
      *
      * @param list TODO Missing Method Parameter Documentation
      */
-    public void reload(List list) {
-        tableModel = new BaseTableModel(new Vector(),
-                                        new Vector(Arrays.asList(new Object[]{
+    public void reload(List<TacticReport> list) {
+        tableModel = new BaseTableModel(new Vector<Object>(),
+                                        new Vector<String>(Arrays.asList(new String[]{
                                                                      "COL_A", "COL_B", "COL_C"
                                                                  })));
         table.setModel(tableModel);
 
-        Vector rowData;
+        Vector<Object> rowData;
         int row = 0;
 
-        for (Iterator iter = list.iterator(); iter.hasNext();) {
-            TacticReport report = (TacticReport) iter.next();
+        for (Iterator<TacticReport> iter = list.iterator(); iter.hasNext();) {
+            TacticReport report = iter.next();
 
-            rowData = new Vector();
+            rowData = new Vector<Object>();
             rowData.add(getTacticalRoleDesc(report.getTacticCode()));
             rowData.add("" + report.getAppearance());
             rowData.add(format(report.getRating()));
@@ -127,8 +127,8 @@ public class TacticPanel extends JPanel {
     /**
      *
      */
-    private Vector emptyLine() {
-        Vector v = new Vector();
+    private Vector<Object> emptyLine() {
+        Vector<Object> v = new Vector<Object>();
 
         return v;
     }
@@ -137,10 +137,10 @@ public class TacticPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     private void jbInit() {
-        Vector data = new Vector();
+        Vector<Object> data = new Vector<Object>();
 
         tableModel = new BaseTableModel(data,
-                                        new Vector(Arrays.asList(new Object[]{
+                                        new Vector<String>(Arrays.asList(new String[]{
                                                                      "COL_A", "COL_B", "COL_C"
                                                                  })));
         table = new JTable(tableModel);

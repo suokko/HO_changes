@@ -12,6 +12,7 @@ import hoplugins.transfers.dao.BookmarkDAO;
 import hoplugins.transfers.dao.TransfersDAO;
 import hoplugins.transfers.ui.model.TeamBookmarksTableModel;
 import hoplugins.transfers.vo.Bookmark;
+import hoplugins.transfers.vo.PlayerTransfer;
 import hoplugins.transfers.vo.TransferTotals;
 
 import java.awt.BorderLayout;
@@ -57,8 +58,8 @@ public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
     private JLabel amountTransfersOut = new JLabel("", SwingConstants.RIGHT);
     private JSpinner spinner = new JSpinner();
     private JTable bookmarkTable;
-    private List bookmarks;
-    private List transfers;
+    private List<Bookmark> bookmarks;
+    private List<PlayerTransfer> transfers;
     private TeamTransfersPane transferPane;
     private TotalsPanel pricePanel;
     private TotalsPanel tsiPanel;
@@ -164,7 +165,7 @@ public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
                                      Commons.getModel().getXtraDaten().getCurrencyName()); 
         tsiPanel = new TotalsPanel(PluginProperty.getString("TSI")); //$NON-NLS-1$
 
-        final TableModel model = new TeamBookmarksTableModel(new Vector());
+        final TableModel model = new TeamBookmarksTableModel(new Vector<Bookmark>());
         final DefaultTableSorter sorter = new DefaultTableSorter(model);
         bookmarkTable = new JTable(sorter);
         sorter.setTableHeader(bookmarkTable.getTableHeader());
@@ -212,13 +213,13 @@ public class TeamBookmarkPane extends JPanel implements ListSelectionListener {
                 this.transfers = TransfersDAO.getTransfers(teamid, 0, true, true);
             }
         } else {
-            this.transfers = new Vector();
+            this.transfers = new Vector<PlayerTransfer>();
         }
 
         this.bookmarks = BookmarkDAO.getBookmarks(Bookmark.TEAM);
 
         final DefaultTableSorter sorter = (DefaultTableSorter) bookmarkTable.getModel();
-        sorter.setTableModel(new TeamBookmarksTableModel(transfers));
+        sorter.setTableModel(new TeamBookmarksTableModel(bookmarks));
 
         bookmarkTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         bookmarkTable.getColumnModel().getColumn(1).setPreferredWidth(150);

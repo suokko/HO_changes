@@ -77,7 +77,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
      */
     @Override
 	public void populate() {
-        p_V_data = new Vector();
+        p_V_data = new Vector<Object[]>();
 
         // Stores ho trainings into training vector
         p_V_trainingsVector = Commons.getModel().getTrainingsManager().getTrainingsVector();
@@ -85,8 +85,8 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         Object[] aobj;
 
         // for each training week
-        for (Iterator it = p_V_trainingsVector.iterator(); it.hasNext();) {
-            ITrainingWeek train = (ITrainingWeek) it.next();
+        for (Iterator<ITrainingWeek> it = p_V_trainingsVector.iterator(); it.hasNext();) {
+            ITrainingWeek train = it.next();
             String selectedTrain = Trainings.getTrainingDescription(train.getTyp());
 
             aobj = (new Object[]{
