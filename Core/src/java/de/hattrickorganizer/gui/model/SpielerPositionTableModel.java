@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
 
 
@@ -27,41 +28,35 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 
 	/** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Position"),
-                                            
-
-    //Maximal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Maximal"),
-                                            
-
-    //Minimal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Minimal"),
-                                            
-
-    //Durchschnitt
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Durchschnitt"),
-                                        };
+    	HOVerwaltung.instance().getLanguageString("Position"),
+        //Maximal
+	    HOVerwaltung.instance().getLanguageString("Maximal"),
+        //Minimal
+	    HOVerwaltung.instance().getLanguageString("Minimal"),
+        //Durchschnitt
+	    HOVerwaltung.instance().getLanguageString("Durchschnitt"),
+    };
 
     /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
     /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Position"),
+                                            HOVerwaltung.instance().getLanguageString("Position"),
                                             
 
     //Maximal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Maximal"),
+    HOVerwaltung.instance().getLanguageString("Maximal"),
                                             
 
     //Minimal
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Minimal"),
+    HOVerwaltung.instance().getLanguageString("Minimal"),
                                             
 
     //Durchschnitt
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Durchschnitt"),
+    HOVerwaltung.instance().getLanguageString("Durchschnitt"),
                                         };
-    private Vector m_vSpielerBewertung;
+    private Vector<float[]> m_vSpielerBewertung;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -70,7 +65,7 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      *
      * @param spielerbewertung TODO Missing Constructuor Parameter Documentation
      */
-    public SpielerPositionTableModel(Vector spielerbewertung) {
+    public SpielerPositionTableModel(Vector<float[]> spielerbewertung) {
         m_vSpielerBewertung = spielerbewertung;
         initData();
     }
@@ -98,7 +93,7 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final Class getColumnClass(int columnIndex) {
+	public final Class<?> getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {
@@ -200,7 +195,7 @@ public class SpielerPositionTableModel extends AbstractTableModel {
      *
      * @param spielerbewertung TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector spielerbewertung) {
+    public final void setValues(Vector<float[]> spielerbewertung) {
         m_vSpielerBewertung = spielerbewertung;
         initData();
     }

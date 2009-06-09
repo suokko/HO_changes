@@ -27,7 +27,7 @@ public class BaseTableModel extends DefaultTableModel {
      * @param data Vector with the data to be used to fill the table
      * @param columnNames Vector of column names
      */
-    public BaseTableModel(Vector data, Vector columnNames) {
+    public BaseTableModel(Vector<Object> data, Vector<String> columnNames) {
         super(data, columnNames);
     }
 
@@ -52,7 +52,7 @@ public class BaseTableModel extends DefaultTableModel {
      * @return Object is column is empty, or the type of object we have in the column
      */
     @Override
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
         if (getValueAt(0, column) == null) {
             return Object.class;
         }

@@ -31,6 +31,6 @@ public interface IFutureTrainingManager {
 	*
 	* @return List of Skillups
 	*/
-	List getFutureSkillups();
+	List<ISkillup> getFutureSkillups();
 	
 }

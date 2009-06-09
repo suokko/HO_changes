@@ -99,9 +99,9 @@ public class RosterPlayerData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List getSecondaryRoles() {
+    public List<RosterRoleData> getSecondaryRoles() {
         int main = getMainPosition();
-        List l = new ArrayList();
+        List<RosterRoleData> l = new ArrayList<RosterRoleData>();
 
         for (int i = 0; i < app.length; i++) {
             RosterRoleData array_element = app[i];

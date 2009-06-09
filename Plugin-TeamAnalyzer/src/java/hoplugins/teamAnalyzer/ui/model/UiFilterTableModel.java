@@ -34,7 +34,7 @@ public class UiFilterTableModel extends BaseTableModel {
      * @param data Vector of table data
      * @param columnNames Vector of column names
      */
-    public UiFilterTableModel(Vector data, Vector columnNames) {
+    public UiFilterTableModel(Vector<Object> data, Vector<String> columnNames) {
         super(data, columnNames);
     }
 
@@ -71,7 +71,7 @@ public class UiFilterTableModel extends BaseTableModel {
      * @return
      */
     @Override
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
         if (column == 2) {
             return ImageIcon.class;
         }

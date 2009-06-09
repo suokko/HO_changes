@@ -2,16 +2,16 @@ package de.hattrickorganizer.gui.model;
 
 import java.util.Vector;
 
+import plugins.ISpieler;
+
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 
 public class LineupColumnModel extends HOColumnModel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6706783648812506363L;
-	private Vector m_vPlayers;
+	
+	private Vector<ISpieler> m_vPlayers;
 	
 	protected LineupColumnModel(int id){
 		super(id,"Aufstellung");
@@ -126,7 +126,7 @@ public class LineupColumnModel extends HOColumnModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector player) {
+    public final void setValues(Vector<ISpieler> player) {
     	m_vPlayers = player;
         initData();
     }

@@ -13,6 +13,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.ISpieler;
+
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
@@ -37,8 +39,8 @@ public class XMLPlayerParser {
     /////////////////////////////////////////////////////////////////////////////////    
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
-    public final Vector parsePlayer(String dateiname) {
-        Vector liste = null;
+    public final Vector<ISpieler> parsePlayer(String dateiname) {
+        Vector<ISpieler> liste = null;
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(dateiname);
@@ -54,7 +56,7 @@ public class XMLPlayerParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector parsePlayer(java.io.File datei) {
+    public final Vector<ISpieler> parsePlayer(java.io.File datei) {
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(datei);
@@ -179,10 +181,10 @@ public class XMLPlayerParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Vector parseSpieler(Document doc) {
+    protected final Vector<ISpieler> parseSpieler(Document doc) {
         Element ele = null;
         Element root = null;
-        final Vector liste = new Vector();
+        final Vector<ISpieler> liste = new Vector<ISpieler>();
         Timestamp fetchDate = null;
         NodeList list = null;
 

@@ -30,10 +30,10 @@ public class OldTrainingManager {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of all skill up */
-    private List allSkillups = new ArrayList();
+    private List<ISkillup> allSkillups = new ArrayList<ISkillup>();
 
     /** List of trained skill up */
-    private List trainSkillups = new ArrayList();
+    private List<ISkillup> trainSkillups = new ArrayList<ISkillup>();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -49,18 +49,18 @@ public class OldTrainingManager {
 
         //TreeMap mapTrained = new TreeMap();
         //TreeMap mapAll = new TreeMap();
-        allSkillups = new ArrayList();
-        trainSkillups = new ArrayList();
+        allSkillups = new ArrayList<ISkillup>();
+        trainSkillups = new ArrayList<ISkillup>();
 
         for (int skill = 0; skill < 10; skill++) {
         	// Skip Form ups
         	if (skill == ISpieler.SKILL_FORM)
         		continue;
 
-            Vector v = player.getAllLevelUp(skill);
+            Vector<Object[]> v = player.getAllLevelUp(skill);
             int count = 0;
 
-            for (Iterator iter = v.iterator(); iter.hasNext();) {
+            for (Iterator<Object[]> iter = v.iterator(); iter.hasNext();) {
                 Object[] element = (Object[]) iter.next();
                 PastSkillup su = null;
 
@@ -109,7 +109,7 @@ public class OldTrainingManager {
      *
      * @return list of all skillups
      */
-    public List getAllSkillups() {
+    public List<ISkillup> getAllSkillups() {
         return allSkillups;
     }
 
@@ -118,7 +118,7 @@ public class OldTrainingManager {
      *
      * @return list of trained skillups
      */
-    public List getTrainedSkillups() {
+    public List<ISkillup> getTrainedSkillups() {
         return trainSkillups;
     }
 

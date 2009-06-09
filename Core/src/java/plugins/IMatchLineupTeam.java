@@ -19,7 +19,7 @@ public interface IMatchLineupTeam {
      *
      * @return Value of property m_vAufstellung.
      */
-    public java.util.Vector getAufstellung();
+    public java.util.Vector<IMatchLineupPlayer> getAufstellung();
 
     /**
      * Getter for property m_iErfahrung.

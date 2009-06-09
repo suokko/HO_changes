@@ -22,12 +22,9 @@ import javax.swing.table.AbstractTableModel;
 public class FinancesTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 7060311989341266730L;
-	private Vector colNames;
-    private Vector values;
+	private Vector<String> colNames;
+    private Vector<Object> values;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -36,9 +33,9 @@ public class FinancesTableModel extends AbstractTableModel {
      *
      * @param values Missing Constructuor Parameter Documentation
      */
-    public FinancesTableModel(Vector values) {
+    public FinancesTableModel(Vector<Object> values) {
         this.values = null;
-        colNames = new Vector();
+        colNames = new Vector<String>();
         this.values = values;
         colNames.add(Commons.getModel().getLanguageString("Datum"));
         colNames.add(Commons.getModel().getLanguageString("Season") + " / "
@@ -178,7 +175,7 @@ public class FinancesTableModel extends AbstractTableModel {
      *
      * @param values Missing Method Parameter Documentation
      */
-    public void refresh(Vector values) {
+    public void refresh(Vector<Object> values) {
         this.values = values;
         fireTableDataChanged();
     }

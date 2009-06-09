@@ -15,7 +15,7 @@ public class TrainerSequenz {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector m_vImageSequenzItems;
+    private Vector<ImageSequenzItem> m_vImageSequenzItems;
     private int m_iAktuellerDurchlauf = 1;
 
     //Damit das ++ auf 0 bringt
@@ -30,7 +30,7 @@ public class TrainerSequenz {
      * @param imageSequenzItems TODO Missing Constructuor Parameter Documentation
      * @param durchlaeufe TODO Missing Constructuor Parameter Documentation
      */
-    public TrainerSequenz(Vector imageSequenzItems, int durchlaeufe) {
+    public TrainerSequenz(Vector<ImageSequenzItem> imageSequenzItems, int durchlaeufe) {
         m_vImageSequenzItems = imageSequenzItems;
         m_iDurchlaeufe = durchlaeufe;
     }

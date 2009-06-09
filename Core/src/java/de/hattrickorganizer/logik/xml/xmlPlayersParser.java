@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
 
@@ -34,7 +35,7 @@ public class xmlPlayersParser {
     /////////////////////////////////////////////////////////////////////////////////    
     //parse public
     ////////////////////////////////////////////////////////////////////////////////   
-    public final Vector parsePlayersFromString(String inputStream) {
+    public final Vector<MyHashtable> parsePlayersFromString(String inputStream) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -55,9 +56,9 @@ public class xmlPlayersParser {
      */
 
     //throws Exception
-    protected final Vector createListe(Document doc) {
-        final Vector liste = new Vector();
-        de.hattrickorganizer.model.MyHashtable hash = null;
+    protected final Vector<MyHashtable> createListe(Document doc) {
+        final Vector<MyHashtable> liste = new Vector<MyHashtable>();
+        MyHashtable hash = null;
         Element ele = null;
         Element root = null;
         NodeList list = null;

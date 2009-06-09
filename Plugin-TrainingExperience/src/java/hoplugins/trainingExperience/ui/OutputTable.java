@@ -110,7 +110,7 @@ public class OutputTable extends JTable {
      * @param rowData
      * @param columnNames
      */
-    public OutputTable(Vector rowData, Vector columnNames) {
+    public OutputTable(Vector<Object> rowData, Vector<String> columnNames) {
         super(rowData, columnNames);
     }
 

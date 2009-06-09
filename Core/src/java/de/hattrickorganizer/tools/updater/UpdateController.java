@@ -86,8 +86,8 @@ public final class UpdateController {
 
             Document doc = UpdateHelper.instance().getDocument(file);
 
-            Hashtable list = getWebLanguages(doc.getDocumentElement().getChildNodes(),
-                                             new Hashtable());
+            Hashtable<String, HPLanguageInfo> list = getWebLanguages(doc.getDocumentElement().getChildNodes(),
+                                             new Hashtable<String, HPLanguageInfo>());
 
             LanguagesDialog dialog = new LanguagesDialog(list);
 
@@ -111,23 +111,23 @@ public final class UpdateController {
             }
 
             Document doc = UpdateHelper.instance().getDocument(file);
-            ArrayList tmp = new ArrayList();
-            ArrayList nonVisibles = new ArrayList();
-            ArrayList list = UpdateHelper.instance().getWebPlugins(doc.getDocumentElement()
+            ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
+            ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
+            ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(doc.getDocumentElement()
                                                                       .getChildNodes(),
-                                                                   new ArrayList(), tmp);
+                                                                   new ArrayList<HPPluginInfo>(), tmp);
 
             nonVisibles = list;
             list = tmp;
 
-            Vector v = HelperWrapper.instance().getPlugins();
+            Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
             int listSize = list.size();
 
             for (int i = 0; i < listSize; i++) {
                 HPPluginInfo hpp = (HPPluginInfo) list.get(i);
 
-                for (Iterator iter = v.iterator(); iter.hasNext();) {
-                    IPlugin element = (IPlugin) iter.next();
+                for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
+                    IPlugin element = iter.next();
 
                     if (element instanceof IOfficialPlugin
                         && (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
@@ -161,23 +161,23 @@ public final class UpdateController {
             }
 
             Document doc = UpdateHelper.instance().getDocument(file);
-            ArrayList tmp = new ArrayList();
-            ArrayList nonVisibles = new ArrayList();
+            ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
+            ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
 
-            ArrayList list = UpdateHelper.instance().getWebPlugins(doc.getDocumentElement()
+            ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(doc.getDocumentElement()
                                                                       .getChildNodes(),
-                                                                   new ArrayList(), tmp);
+                                                                   new ArrayList<HPPluginInfo>(), tmp);
 
             nonVisibles = tmp;
 
-            Vector v = HelperWrapper.instance().getPlugins();
+            Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
             int listSize = list.size();
 
             for (int i = 0; i < listSize; i++) {
-                HPPluginInfo hpp = (HPPluginInfo) list.get(i);
+                HPPluginInfo hpp = list.get(i);
 
-                for (Iterator iter = v.iterator(); iter.hasNext();) {
-                    IPlugin element = (IPlugin) iter.next();
+                for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
+                    IPlugin element = iter.next();
 
                     if (element instanceof IOfficialPlugin
                         && (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
@@ -251,7 +251,7 @@ public final class UpdateController {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private static Hashtable getWebLanguages(NodeList elements, Hashtable list) {
+    private static Hashtable<String,HPLanguageInfo> getWebLanguages(NodeList elements, Hashtable<String,HPLanguageInfo> list) {
         HPLanguageInfo tmp = null;
         Element element = null;
 

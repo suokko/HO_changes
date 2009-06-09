@@ -66,9 +66,9 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
     private JButton btAll = new JButton();
     private JPanel filterPanel = Commons.getModel().getGUI().createImagePanel();
     private JTable changesTable = new JTable();
-    private Map buttonModels = new HashMap();
-    private Map skillups;
-    private Map skillupsOld;
+    private Map<Integer,ButtonModel> buttonModels = new HashMap<Integer,ButtonModel>();
+    private Map<Integer,List<SkillChange>> skillups;
+    private Map<Integer,List<SkillChange>> skillupsOld;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -88,8 +88,8 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
      */
     public void actionPerformed(ActionEvent e) {
         if (CMD_SELECT_ALL.equals(e.getActionCommand())) {
-            for (Iterator iter = this.buttonModels.values().iterator(); iter.hasNext();) {
-                ButtonModel bModel = (ButtonModel) iter.next();
+            for (Iterator<ButtonModel> iter = this.buttonModels.values().iterator(); iter.hasNext();) {
+                ButtonModel bModel = iter.next();
 
                 bModel.setSelected(true);
             }
@@ -123,20 +123,20 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
      * Sets the model for skill changes table.
      */
     public void updateTableModel() {
-        List values = new ArrayList();
+    	List<SkillChange> values = new ArrayList<SkillChange>();
 
-        for (Iterator iter = this.buttonModels.keySet().iterator(); iter.hasNext();) {
-            Integer skillType = (Integer) iter.next();
-            ButtonModel bModel = (ButtonModel) this.buttonModels.get(skillType);
+        for (Iterator<Integer> iter = this.buttonModels.keySet().iterator(); iter.hasNext();) {
+            Integer skillType = iter.next();
+            ButtonModel bModel = this.buttonModels.get(skillType);
 
             if (this.skillups.containsKey(skillType) && bModel.isSelected()) {
-                values.addAll((List) this.skillups.get(skillType));
+                values.addAll(this.skillups.get(skillType));
             }
 
             if (this.oldPlayers.isSelected()
                 && bModel.isSelected()
                 && this.skillupsOld.containsKey(skillType)) {
-                values.addAll((List) this.skillupsOld.get(skillType));
+                values.addAll(this.skillupsOld.get(skillType));
             }
         }
 
@@ -202,24 +202,24 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
      *
      * @return Map of skillups
      */
-    private Map getSkillups(List players) {
-        Map skillupsByType = new HashMap();
+    private Map<Integer,List<SkillChange>> getSkillups(List<ISpieler> players) {
+        Map<Integer,List<SkillChange>> skillupsByType = new HashMap<Integer,List<SkillChange>>();
 
-        for (Iterator iter = players.iterator(); iter.hasNext();) {
+        for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
             ISpieler player = (ISpieler) iter.next();
 
             OldTrainingManager otm = new OldTrainingManager(player);
 
-            List skillups = otm.getAllSkillups();
+            List<ISkillup> skillups = otm.getAllSkillups();
 
-            for (Iterator iterator = skillups.iterator(); iterator.hasNext();) {
-                ISkillup skillup = (ISkillup) iterator.next();
+            for (Iterator<ISkillup>  iterator = skillups.iterator(); iterator.hasNext();) {
+                ISkillup skillup = iterator.next();
                 Integer skillType = new Integer(skillup.getType());
 
-                List skillChanges = (List) skillupsByType.get(skillType);
+                List<SkillChange> skillChanges = skillupsByType.get(skillType);
 
                 if (skillChanges == null) {
-                    skillChanges = new Vector();
+                    skillChanges = new Vector<SkillChange>();
                     skillupsByType.put(skillType, skillChanges);
                 }
 
@@ -243,11 +243,11 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
         int change = 0;
 
         if (this.skillups.containsKey(skillType)) {
-            change += ((List) this.skillups.get(skillType)).size();
+            change += (this.skillups.get(skillType)).size();
         }
 
         if (this.oldPlayers.isSelected() && this.skillupsOld.containsKey(skillType)) {
-            change += ((List) this.skillupsOld.get(skillType)).size();
+            change += (this.skillupsOld.get(skillType)).size();
         }
 
         JCheckBox cBox = new JCheckBox();

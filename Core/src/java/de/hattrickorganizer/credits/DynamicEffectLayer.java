@@ -3,6 +3,8 @@ package de.hattrickorganizer.credits;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.util.Enumeration;
+import java.util.Vector;
 
 
 /**
@@ -13,11 +15,11 @@ import java.awt.Graphics;
 public class DynamicEffectLayer {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Component component;
+    //private Component component;
     private StaticEffectLayer background;
-    private java.util.Vector dynamischeObjekte = new java.util.Vector();
+    private Vector<DynamischesObjekt> dynamischeObjekte = new Vector<DynamischesObjekt>();
     private Zeitsteuerung zeitsteuerung;
-    private int time;
+    //private int time;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -28,7 +30,7 @@ public class DynamicEffectLayer {
      * @param background TODO Missing Constructuor Parameter Documentation
      */
     public DynamicEffectLayer(Component component, StaticEffectLayer background) {
-        this.component = component;
+        //this.component = component;
         this.background = background;
         zeitsteuerung = new Zeitsteuerung(this);
     }
@@ -44,9 +46,9 @@ public class DynamicEffectLayer {
     public final void action(int time, long gesamtZeit) {
         this.zeitsteuerung.action(time);
 
-        this.time = time;
+        //this.time = time;
 
-        final java.util.Enumeration enumi = dynamischeObjekte.elements();
+        final Enumeration<DynamischesObjekt> enumi = dynamischeObjekte.elements();
 
         while (enumi.hasMoreElements()) {
             final DynamischesObjekt sO = (DynamischesObjekt) (enumi.nextElement());
@@ -236,7 +238,7 @@ public class DynamicEffectLayer {
      * @param g TODO Missing Method Parameter Documentation
      */
     public final void render(Graphics g) {
-        final java.util.Enumeration enumi = dynamischeObjekte.elements();
+        final Enumeration<DynamischesObjekt> enumi = dynamischeObjekte.elements();
 
         while (enumi.hasMoreElements()) {
             final DynamischesObjekt sO = (DynamischesObjekt) (enumi.nextElement());

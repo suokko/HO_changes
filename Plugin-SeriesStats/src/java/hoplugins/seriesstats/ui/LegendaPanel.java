@@ -47,8 +47,8 @@ public class LegendaPanel extends JPanel implements ActionListener {
 	private JComboBox JCBDivision;
     private JComboBox JCBTeam;
     private JComboBox JCBType;
-    private Map MapDivisions;
-    private Map MapTeams;
+    private Map<String,Vector<Integer>> MapDivisions;
+    private Map<String,Integer> MapTeams;
     private RefreshablePanel refreshablePanel;
     private LegendeCheckBox[] LCBGeneral;
 
@@ -232,7 +232,7 @@ public class LegendaPanel extends JPanel implements ActionListener {
      */
     private void RefreshDivisionBox() {
         try {
-            MapDivisions = new HashMap();
+            MapDivisions = new HashMap<String,Vector<Integer>>();
             JCBDivision.removeActionListener(this);
 
             // Clear ComboBox
@@ -243,7 +243,7 @@ public class LegendaPanel extends JPanel implements ActionListener {
 
             // add items
             for (int i = 0; i < divisions.length; i++) {
-                Vector LigaSeas = new Vector();
+                Vector<Integer> LigaSeas = new Vector<Integer>();
 
                 // position 0
                 LigaSeas.add(new Integer(divisions[i].getLigaId()));
@@ -277,14 +277,14 @@ public class LegendaPanel extends JPanel implements ActionListener {
      */
     private void RefreshTeamBox() {
         try {
-            MapTeams = new HashMap();
+            MapTeams = new HashMap<String,Integer>();
             this.JCBTeam.removeActionListener(this);
 
             // Clear ComboBox
             this.JCBTeam.removeAllItems();
 
             // Get season and division
-            Vector LigaSeas = (Vector) this.MapDivisions.get(this.JCBDivision
+            Vector<Integer> LigaSeas = this.MapDivisions.get(this.JCBDivision
                                                              .getSelectedItem());
 
             // Get teams and team ids
@@ -296,7 +296,7 @@ public class LegendaPanel extends JPanel implements ActionListener {
                                                              .getEintraege();
 
             // sort data
-            Vector data = new Vector();
+            Vector<String> data = new Vector<String>();
 
             for (int i = 0; i < dummy.length; i++) {
                 this.MapTeams.put(new String(dummy[i].getTeamName()),
@@ -307,7 +307,7 @@ public class LegendaPanel extends JPanel implements ActionListener {
             Collections.sort(data);
 
             // add Items
-            for (Enumeration e = data.elements(); e.hasMoreElements();) {
+            for (Enumeration<String> e = data.elements(); e.hasMoreElements();) {
                 String TeamName = (String) e.nextElement();
                 this.JCBTeam.addItem(TeamName);
             }

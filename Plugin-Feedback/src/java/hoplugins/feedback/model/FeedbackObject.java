@@ -21,8 +21,8 @@ public abstract class FeedbackObject {
 	 *
 	 * @return the new build list
 	 */
-	public static List rebuildList() {
-		List list = new Vector();
+	public static List<FeedbackObject> rebuildList() {
+		List<FeedbackObject> list = new Vector<FeedbackObject>();
 		return list;
 	}
 	/**

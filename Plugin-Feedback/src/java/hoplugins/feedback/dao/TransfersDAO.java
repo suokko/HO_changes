@@ -47,7 +47,7 @@ public final class TransfersDAO {
      * @param maxAge	max age in weeks
      * @return 			list of all transfers
      */
-    public static List getAllTransfers (Timestamp startDate, int maxAge) {
+    public static List<PlayerTransfer> getAllTransfers (Timestamp startDate, int maxAge) {
     	Calendar cal = new GregorianCalendar();
         cal.add(Calendar.WEEK_OF_YEAR, -maxAge);
         Timestamp maxAgeTs = new Timestamp(cal.getTimeInMillis());
@@ -65,14 +65,14 @@ public final class TransfersDAO {
      *
      * @return List of transfers
      */
-    private static List loadTransfers(String sqlStmt) {
+    private static List<PlayerTransfer> loadTransfers(String sqlStmt) {
         final double curr_rate = Commons.getModel().getXtraDaten().getCurrencyRate();
 
-        final List results = new Vector();
+        final List<PlayerTransfer> results = new Vector<PlayerTransfer>();
         final ResultSet rs = Commons.getModel().getAdapter().executeQuery(sqlStmt.toString());
 
         if (rs == null) {
-            return new Vector();
+            return new Vector<PlayerTransfer>();
         }
 
         try {
@@ -102,8 +102,8 @@ public final class TransfersDAO {
             e.printStackTrace();
         }
 
-        for (Iterator iter = results.iterator(); iter.hasNext();) {
-            PlayerTransfer transfer = (PlayerTransfer) iter.next();
+        for (Iterator<PlayerTransfer> iter = results.iterator(); iter.hasNext();) {
+            PlayerTransfer transfer = iter.next();
             final ISpieler spieler = Commons.getModel().getSpielerAtDate(transfer.getPlayerId(),
                                                                          transfer.getDate());
 

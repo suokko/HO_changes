@@ -28,7 +28,7 @@ public class SimpleLineUp {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** h�lt die Positionen */
-    private Vector m_vPositionen = new Vector();
+    private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
 
     /** Attitude */
     private int m_iAttitude;
@@ -222,7 +222,7 @@ public class SimpleLineUp {
      *
      * @param m_vPositionen New value of property m_vPositionen.
      */
-    public final void setPositionen(java.util.Vector m_vPositionen) {
+    public final void setPositionen(Vector<ISpielerPosition> m_vPositionen) {
         this.m_vPositionen = m_vPositionen;
 
         //m_clAssi.setPositionen ( m_vPositionen );
@@ -237,7 +237,7 @@ public class SimpleLineUp {
      *
      * @return Value of property m_vPositionen.
      */
-    public final java.util.Vector getPositionen() {
+    public final Vector<ISpielerPosition> getPositionen() {
         return m_vPositionen;
     }
 
@@ -344,7 +344,7 @@ public class SimpleLineUp {
         if (m_vPositionen != null) {
             m_vPositionen.removeAllElements();
         } else {
-            m_vPositionen = new Vector();
+            m_vPositionen = new Vector<ISpielerPosition>();
         }
 
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
@@ -410,7 +410,7 @@ public class SimpleLineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isSpielerAufgestellt(int spielerId, Vector positionen) {
+    public final boolean isSpielerAufgestellt(int spielerId, Vector<ISpielerPosition> positionen) {
         for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
             if (((SpielerPosition) positionen.elementAt(i)).getSpielerId() == spielerId) {
                 return true;

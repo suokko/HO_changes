@@ -18,7 +18,7 @@ import java.util.List;
 public class MatchList {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List matchList;
+    private List<Match> matchList;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ public class MatchList {
      * Creates a new MatchList object.
      */
     public MatchList() {
-        matchList = new ArrayList();
+        matchList = new ArrayList<Match>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public class MatchList {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List getMatches() {
+    public List<Match> getMatches() {
         return matchList;
     }
 
@@ -56,13 +56,13 @@ public class MatchList {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List filterMatches(Filter filter) {
+    public List<Match> filterMatches(Filter<Match> filter) {
         int counter = 0;
-        List list = new ArrayList();
+        List<Match> list = new ArrayList<Match>();
 
         if (filter.isAutomatic()) {
-            for (Iterator iter = matchList.iterator(); iter.hasNext();) {
-                Match match = (Match) iter.next();
+            for (Iterator<Match> iter = matchList.iterator(); iter.hasNext();) {
+                Match match = iter.next();
 
                 if (isAutomaticIncluded(filter, match)) {
                     list.add(match);
@@ -74,10 +74,10 @@ public class MatchList {
                 }
             }
         } else {
-            List filterMatches = filter.getMatches();
+            List<Match> filterMatches = filter.getMatches();
 
-            for (Iterator iter = matchList.iterator(); iter.hasNext();) {
-                Match match = (Match) iter.next();
+            for (Iterator<Match> iter = matchList.iterator(); iter.hasNext();) {
+                Match match = iter.next();
 
                 if (filterMatches.contains("" + match.getMatchId())) {
                     list.add(match);
@@ -96,7 +96,7 @@ public class MatchList {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private boolean isAutomaticIncluded(Filter filter, Match match) {
+    private boolean isAutomaticIncluded(Filter<Match> filter, Match match) {
         boolean isHome = MatchUtil.isHome(match);
         int result = MatchUtil.result(match);
         int matchType = match.getMatchType();

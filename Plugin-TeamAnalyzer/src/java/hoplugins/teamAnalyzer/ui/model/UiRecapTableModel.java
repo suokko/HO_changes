@@ -27,7 +27,7 @@ public class UiRecapTableModel extends BaseTableModel {
      * @param vector Vector of table data
      * @param vector2 Vector of column names
      */
-    public UiRecapTableModel(Vector vector, Vector vector2) {
+    public UiRecapTableModel(Vector<Object> vector, Vector<String> vector2) {
         super(vector, vector2);
     }
 
@@ -48,7 +48,7 @@ public class UiRecapTableModel extends BaseTableModel {
      * @return
      */
     @Override
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
         if (column == 1) {
             return ImageIcon.class;
         }

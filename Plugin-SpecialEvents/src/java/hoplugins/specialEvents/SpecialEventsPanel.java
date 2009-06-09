@@ -40,7 +40,7 @@ public class SpecialEventsPanel extends JTable
 //    private Properties props;
     private IHOMiniModel miniModel;
     private String columnNames[];
-    private Vector highlightTexte;
+    private Vector<String> highlightTexte;
 
     public SpecialEventsPanel(IHOMiniModel miniModel)
     {
@@ -86,7 +86,9 @@ public class SpecialEventsPanel extends JTable
     {
         return new JTableHeader(columnModel) {
 
-            @Override
+			private static final long serialVersionUID = 203261496086729638L;
+
+			@Override
 			public String getToolTipText(MouseEvent e)
             {
                 String tip = null;
@@ -108,7 +110,7 @@ public class SpecialEventsPanel extends JTable
         SpecialEventsDM specialEventsDM = new SpecialEventsDM(miniModel);
         Vector matches = specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(), FilterPanel.getSaisonTyp(), FilterPanel.showFriendlies());
         highlightTexte = specialEventsDM.getHighlightText();
-        TableModel tableModel = new SpecialEventsTableModel(matches, new Vector(Arrays.asList(columnNames)));
+        TableModel tableModel = new SpecialEventsTableModel(matches, new Vector<String>(Arrays.asList(columnNames)));
         return tableModel;
     }
 
@@ -186,11 +188,11 @@ public class SpecialEventsPanel extends JTable
         debugWindow.append(exr);
     }
 
-    private void showDebugString(String s)
+    /*private void showDebugString(String s)
     {
         IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
         debugWindow.setVisible(true);
         debugWindow.append(s);
-    }
+    }*/
 
 }

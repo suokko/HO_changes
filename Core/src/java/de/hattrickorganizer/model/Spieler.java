@@ -33,7 +33,7 @@ public final class Spieler implements plugins.ISpieler {
     //~ Class fields -------------------------------------------------------------------------------
 
 	/** Cache for star ratings (Hashtable<String, Float>) */
-    private static Hashtable starRatingCache = new Hashtable();
+    private static Hashtable<String,Object> starRatingCache = new Hashtable<String,Object>();
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -471,7 +471,7 @@ public final class Spieler implements plugins.ISpieler {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector getAllLevelUp(int skill) {
+    public Vector<Object[]> getAllLevelUp(int skill) {
         return DBZugriff.instance().getAllLevelUp(skill,m_iSpielerID);
     }
 

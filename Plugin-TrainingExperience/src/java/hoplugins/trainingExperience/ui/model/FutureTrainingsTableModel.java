@@ -82,17 +82,17 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
      */
     @Override
 	public void populate() {
-        p_V_data = new Vector();
-        p_V_trainingsVector = new Vector();
+        p_V_data = new Vector<Object[]>();
+        p_V_trainingsVector = new Vector<IFutureTrainingWeek>();
 
         Object[] aobj;
 
         IFutureTrainingWeek oldTrain = null;
 
-        List futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
+        List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
 
-        for (Iterator iter = futureTrainings.iterator(); iter.hasNext();) {
-            IFutureTrainingWeek train = (IFutureTrainingWeek) iter.next();
+        for (Iterator<IFutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
+            IFutureTrainingWeek train = iter.next();
 
             // if not found create it and saves it
             if (train.getIntensitaet() == -1) {

@@ -9,13 +9,13 @@ public class SpecialEventsTableModel extends DefaultTableModel
 
 	private static final long serialVersionUID = 8499826497766216534L;
 
-	public SpecialEventsTableModel(Vector data, Vector columns)
+	public SpecialEventsTableModel(Vector<Object> data, Vector<String> columns)
     {
         super(data, columns);
     }
 
     @Override
-	public Class getColumnClass(int col)
+	public Class<?> getColumnClass(int col)
     {
         if(col == SpecialEventsPanel.HOMEEVENTCOLUMN ||
         		col == SpecialEventsPanel.AWAYEVENTCOLUMN || 

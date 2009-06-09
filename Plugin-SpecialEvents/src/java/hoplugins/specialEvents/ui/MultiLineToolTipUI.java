@@ -19,12 +19,12 @@ class MultiLineToolTipUI extends MetalToolTipUI
 {
 
     private String strs[];
-    private int maxWidth;
+/*    private int maxWidth;
 
     MultiLineToolTipUI()
     {
         maxWidth = 0;
-    }
+    }*/
 
     @Override
 	public void paint(Graphics g, JComponent c)
@@ -55,7 +55,7 @@ class MultiLineToolTipUI extends MetalToolTipUI
         }
         BufferedReader br = new BufferedReader(new StringReader(tipText));
         int maxWidth = 0;
-        Vector v = new Vector();
+        Vector<String> v = new Vector<String>();
         String line;
         try
         {
@@ -79,15 +79,15 @@ class MultiLineToolTipUI extends MetalToolTipUI
         {
             strs = new String[lines];
             int i = 0;
-            for(Enumeration e = v.elements(); e.hasMoreElements();)
+            for(Enumeration<String> e = v.elements(); e.hasMoreElements();)
             {
-                strs[i] = (String)e.nextElement();
+                strs[i] = e.nextElement();
                 i++;
             }
 
         }
         int height = metrics.getHeight() * lines;
-        this.maxWidth = maxWidth;
+        //this.maxWidth = maxWidth;
         return new Dimension(maxWidth + 6, height + 4);
     }
 }

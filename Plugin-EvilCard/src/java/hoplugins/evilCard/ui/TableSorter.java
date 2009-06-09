@@ -180,7 +180,7 @@ public class TableSorter extends AbstractTableModel {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 

@@ -156,7 +156,7 @@ public class RatingPanelTab extends JPanel implements ActionListener {
                                                      .getVerlauf().getEintraege();
 
             // sort data
-            Vector data = new Vector();
+            Vector<String> data = new Vector<String>();
 
             for (int i = 0; i < dummy.length; i++) {
                 data.add(new String(dummy[i].getTeamName()));
@@ -165,7 +165,7 @@ public class RatingPanelTab extends JPanel implements ActionListener {
             Collections.sort(data);
 
             // add Items
-            for (Enumeration e = data.elements(); e.hasMoreElements();) {
+            for (Enumeration<String> e = data.elements(); e.hasMoreElements();) {
                 String TeamName = (String) e.nextElement();
                 this.JCBTeam1.addItem(TeamName);
                 this.JCBTeam2.addItem(TeamName);

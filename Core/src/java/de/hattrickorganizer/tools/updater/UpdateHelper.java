@@ -81,7 +81,7 @@ public class UpdateHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected ArrayList getWebPlugins(NodeList elements, ArrayList list, ArrayList nonVisibles) {
+    protected ArrayList<HPPluginInfo> getWebPlugins(NodeList elements, ArrayList<HPPluginInfo> list, ArrayList<HPPluginInfo> nonVisibles) {
         HPPluginInfo tmp = null;
 
         for (int i = 0; i < elements.getLength(); i++) {

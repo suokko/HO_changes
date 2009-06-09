@@ -44,11 +44,11 @@ public final class BookmarkDAO {
      *
      * @return List of bookmarks
      */
-    public static List getBookmarks(int type) {
+    public static List<Bookmark> getBookmarks(int type) {
         final StringBuffer sqlStmt = new StringBuffer("SELECT * FROM " + TABLE_NAME); //$NON-NLS-1$
         sqlStmt.append(" WHERE type=" + type); //$NON-NLS-1$
 
-        final List results = new Vector();
+        final List<Bookmark> results = new Vector<Bookmark>();
         final ResultSet rs = Commons.getModel().getAdapter().executeQuery(sqlStmt.toString());
 
         if (rs == null) {

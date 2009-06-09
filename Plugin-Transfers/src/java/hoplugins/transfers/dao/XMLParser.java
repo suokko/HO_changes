@@ -57,14 +57,14 @@ final class XMLParser {
      *
      * @throws IOException If something goes wrong.
      */
-    static List getAllPlayerTransfers(int playerId) throws IOException {
+    static List<PlayerTransfer> getAllPlayerTransfers(int playerId) throws IOException {
         //final String url = "/common/transferHistory.asp?outputType=XML&actionType=player&playerID="+playerId;
     	final String url = "/common/chppxml.axd?file=transfersPlayer&playerID="+playerId;
         final String xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(url);
 
         final IXMLParser parser = Commons.getModel().getXMLParser();
 
-        final List transferList = new Vector();
+        final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
         final HTCalendar htcal = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
 
@@ -156,8 +156,8 @@ final class XMLParser {
      * @param teamid the team id
      * @param endDate end date for the transfers
      */
-    static List getAllTeamTransfers(int teamid, Date endDate) throws IOException, ParseException, Exception {
-        final List transferList = new Vector();
+    static List<PlayerTransfer> getAllTeamTransfers(int teamid, Date endDate) throws IOException, ParseException, Exception {
+        final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
         final String url = "/common/chppxml.axd?file=transfersTeam&teamID="+teamid+"&pageIndex=";
 
         // loop all pages 0 .. n until there are no more data avaliable
@@ -181,7 +181,7 @@ final class XMLParser {
 	            activatedDate = DATE.parse(getChildNodeValue(teamElement, "ActivatedDate"));
 	        }
 
-	        List transfers = parseTeamTransfers(doc, activatedDate, endDate);
+	        List<PlayerTransfer> transfers = parseTeamTransfers(doc, activatedDate, endDate);
 	        if (transfers == null || transfers.size()<1) {
 	        	stop = true;
 	        } else {
@@ -236,8 +236,8 @@ final class XMLParser {
      *
      * @return List of transfers.
      */
-    private static List parseTeamTransfers(Document doc, Date activatedDate, Date endDate) {
-        final List transferList = new Vector();
+    private static List<PlayerTransfer> parseTeamTransfers(Document doc, Date activatedDate, Date endDate) {
+        final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
         final HTCalendar htcal = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
 

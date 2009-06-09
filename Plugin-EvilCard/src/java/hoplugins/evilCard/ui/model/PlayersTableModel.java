@@ -112,9 +112,9 @@ public class PlayersTableModel extends AbstractTableModel {
 
     private String[] columnNames = null;
     private Object[][] data = null;
-    private int m_beginSeason;
+    /*private int m_beginSeason;
     private int m_endSeason;
-    private int m_matchType;
+    private int m_matchType;*/
     private int m_typePlayer;
     private int playersNumber;
 
@@ -129,9 +129,9 @@ public class PlayersTableModel extends AbstractTableModel {
      * @param typePlayer TODO Missing Constructuor Parameter Documentation
      */
     public PlayersTableModel(int matchType, int beginSeason, int endSeason, int typePlayer) {
-        m_matchType = matchType;
+        /*m_matchType = matchType;
         m_beginSeason = beginSeason;
-        m_endSeason = endSeason;
+        m_endSeason = endSeason;*/
 
         columnNames = new String[cols];
 
@@ -165,7 +165,7 @@ public class PlayersTableModel extends AbstractTableModel {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
 
         // return Object.class;
@@ -281,7 +281,7 @@ public class PlayersTableModel extends AbstractTableModel {
      */
     private void generateData2() {
         // Get current players.
-        Vector players = new Vector();
+        Vector<ISpieler> players = new Vector<ISpieler>();
         players.addAll(Commons.getModel().getAllSpieler());
 
         // Add old players, when requested.
@@ -327,7 +327,7 @@ public class PlayersTableModel extends AbstractTableModel {
                 int cartellino = 0;
 
                 while (res.next()) {
-                    int typeHighlight = res.getInt("TYP");
+                    //int typeHighlight = res.getInt("TYP");
                     int subtypeHighlight = res.getInt("SUBTYP");
                     int matchidlast = res.getInt("MATCHID");
 

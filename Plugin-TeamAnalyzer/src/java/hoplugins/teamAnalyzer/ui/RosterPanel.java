@@ -50,8 +50,8 @@ public class RosterPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -3867854224503291836L;
 	private JTable table;
-    private List oldPlayersInfo = new ArrayList();
-    private Map players = new HashMap();
+    private List<PlayerInfo> oldPlayersInfo = new ArrayList<PlayerInfo>();
+    private Map<String,RosterPlayerData> players = new HashMap<String,RosterPlayerData>();
     private UiRosterTableModel tableModel;
     private String[] columns = {
                                    Commons.getModel().getLanguageString("Name"),
@@ -67,7 +67,7 @@ public class RosterPanel extends JPanel {
                                    PluginProperty.getString("Max"), PluginProperty.getString("Avg"),
                                    PluginProperty.getString("Min"), "Status", "PlayerId"
                                };
-    private boolean reloading = false;
+    //private boolean reloading = false;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -88,8 +88,8 @@ public class RosterPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public PlayerInfo getPrevious(int playerId) {
-        for (Iterator iter = oldPlayersInfo.iterator(); iter.hasNext();) {
-            PlayerInfo element = (PlayerInfo) iter.next();
+        for (Iterator<PlayerInfo> iter = oldPlayersInfo.iterator(); iter.hasNext();) {
+            PlayerInfo element = iter.next();
 
             if (element.getPlayerId() == playerId) {
                 return element;
@@ -108,9 +108,9 @@ public class RosterPanel extends JPanel {
     	if (true) return;
 
 
-        reloading = true;
-        players = new HashMap();
-        oldPlayersInfo = new ArrayList();
+        //reloading = true;
+        players = new HashMap<String, RosterPlayerData>();
+        oldPlayersInfo = new ArrayList<PlayerInfo>();
 
         DecimalFormat df = new DecimalFormat("#0.0");
 
@@ -140,12 +140,12 @@ public class RosterPanel extends JPanel {
             tableModel.removeRow(0);
         }
 
-        List l = new ArrayList(players.values());
+        List<RosterPlayerData> l = new ArrayList<RosterPlayerData>(players.values());
 
         Collections.sort(l, new RosterPlayerComparator());
 
-        for (Iterator iter = l.iterator(); iter.hasNext();) {
-            RosterPlayerData element = (RosterPlayerData) iter.next();
+        for (Iterator<RosterPlayerData> iter = l.iterator(); iter.hasNext();) {
+            RosterPlayerData element = iter.next();
 
             if (element.getId() > 0) {
                 PlayerInfo info = PlayerDataManager.getPlayerInfo(element.getId());
@@ -157,7 +157,7 @@ public class RosterPanel extends JPanel {
 
                 info.setName(element.getName());
 
-                Vector rowData = new Vector();
+                Vector<Object> rowData = new Vector<Object>();
                 RosterRoleData mainRole = element.getMainRole();
 
                 rowData.add(element.getName());
@@ -167,13 +167,13 @@ public class RosterPanel extends JPanel {
 
                 StringBuffer sec = new StringBuffer();
 
-                for (Iterator iterator = element.getSecondaryRoles().iterator();
+                for (Iterator<RosterRoleData> iterator = element.getSecondaryRoles().iterator();
                      iterator.hasNext();) {
                     if (sec.toString().length() > 0) {
                         sec.append(" - ");
                     }
 
-                    RosterRoleData role = (RosterRoleData) iterator.next();
+                    RosterRoleData role = iterator.next();
 
                     sec.append(Commons.getModel().getHelper().getNameForPosition((byte) role.getPos()));
                     sec.append("(" + role.getApp() + ") ");
@@ -218,7 +218,7 @@ public class RosterPanel extends JPanel {
 
         table.getColumnModel().getColumn(1).setCellRenderer(new PlayerPositionTableCellRenderer());
 
-        reloading = false;
+        //reloading = false;
     }
 
     /**
@@ -269,9 +269,9 @@ public class RosterPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     private void jbInit() {
-        Vector data = new Vector();
+        Vector<Object> data = new Vector<Object> ();
 
-        tableModel = new UiRosterTableModel(data, new Vector(Arrays.asList(columns)));
+        tableModel = new UiRosterTableModel(data, new Vector<String>(Arrays.asList(columns)));
         table = new JTable(tableModel);
 
         // Set up tool tips for column headers.

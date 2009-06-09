@@ -12,7 +12,7 @@ import java.util.Vector;
 public class Ergebnis {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector m_vActions;
+    private Vector<Object> m_vActions;
     private int m_iGuestGoals;
     private int m_iHomeGoals;
 
@@ -25,7 +25,7 @@ public class Ergebnis {
      * @param guestgoals TODO Missing Constructuor Parameter Documentation
      * @param vActions TODO Missing Constructuor Parameter Documentation
      */
-    public Ergebnis(int homegoals, int guestgoals, Vector vActions) {
+    public Ergebnis(int homegoals, int guestgoals, Vector<Object> vActions) {
         m_iHomeGoals = homegoals;
         m_iGuestGoals = guestgoals;
         m_vActions = vActions;
@@ -38,7 +38,7 @@ public class Ergebnis {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector getActions() {
+    public final Vector<Object> getActions() {
         return m_vActions;
     }
 

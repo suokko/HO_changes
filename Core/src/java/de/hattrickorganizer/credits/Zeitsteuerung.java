@@ -14,7 +14,7 @@ class Zeitsteuerung {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private DynamicEffectLayer effectLayer;
-    private Vector dynamischeObjekte = new Vector(100);
+    private Vector<DynamischesObjekt> dynamischeObjekte = new Vector<DynamischesObjekt>(100);
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ class Zeitsteuerung {
      * @param time TODO Missing Method Parameter Documentation
      */
     public void action(long time) {
-        final Enumeration enumi = dynamischeObjekte.elements();
+        final Enumeration<DynamischesObjekt> enumi = dynamischeObjekte.elements();
 
         while (enumi.hasMoreElements()) {
             final DynamischesObjekt dO = (DynamischesObjekt) (enumi.nextElement());

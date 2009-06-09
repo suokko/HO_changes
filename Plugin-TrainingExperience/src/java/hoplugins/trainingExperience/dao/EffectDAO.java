@@ -38,7 +38,7 @@ import java.util.Vector;
 public class EffectDAO {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static List trainWeeks = new Vector();
+    private static List<TrainWeekEffect> trainWeeks = new Vector<TrainWeekEffect>();
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ public class EffectDAO {
      *
      * @return
      */
-    public static List getTrainEffect() {
+    public static List<TrainWeekEffect> getTrainEffect() {
         return trainWeeks;
     }
 
@@ -57,26 +57,26 @@ public class EffectDAO {
      */
     public static void reload() {
         try {
-            Map weeklySkillups = new HashMap();
+            Map<String,List<ISkillup>> weeklySkillups = new HashMap<String,List<ISkillup>>();
 
             // Loop through all player (also old players) to get all trained skillups.
             // Group these skillups by season and week.
-            List players = new Vector(Commons.getModel().getAllSpieler());
+            List<ISpieler> players = new Vector<ISpieler>(Commons.getModel().getAllSpieler());
 
             players.addAll(Commons.getModel().getAllOldSpieler());
 
-            for (Iterator iterPlayers = players.iterator(); iterPlayers.hasNext();) {
+            for (Iterator<ISpieler> iterPlayers = players.iterator(); iterPlayers.hasNext();) {
                 ISpieler player = (ISpieler) iterPlayers.next();
                 OldTrainingManager otm = new OldTrainingManager(player);
-                List skillups = otm.getTrainedSkillups();
+                List<ISkillup> skillups = otm.getTrainedSkillups();
 
-                for (Iterator iterSkillups = skillups.iterator(); iterSkillups.hasNext();) {
+                for (Iterator<ISkillup> iterSkillups = skillups.iterator(); iterSkillups.hasNext();) {
                     ISkillup skillup = (ISkillup) iterSkillups.next();
                     String key = skillup.getHtSeason() + "-" + skillup.getHtWeek(); //$NON-NLS-1$
-                    List collectedSkillups = (List) weeklySkillups.get(key);
+                    List<ISkillup> collectedSkillups = weeklySkillups.get(key);
 
                     if (collectedSkillups == null) {
-                        collectedSkillups = new Vector();
+                        collectedSkillups = new Vector<ISkillup>();
                         weeklySkillups.put(key, collectedSkillups);
                     }
 
@@ -94,7 +94,7 @@ public class EffectDAO {
             Timestamp datum = new Timestamp(date.getTimeInMillis());
             ResultSet tDateset = db.executeQuery("SELECT DISTINCT trainingdate FROM XTRADATA WHERE trainingdate < '"
                                                  + datum.toString() + "'");
-            List trainingDates = new Vector();
+            List<Timestamp> trainingDates = new Vector<Timestamp>();
 
             try {
                 while (tDateset.next()) {
@@ -117,8 +117,8 @@ public class EffectDAO {
 
             HTCalendar trainCalendar = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
 
-            for (Iterator iter = trainingDates.iterator(); iter.hasNext();) {
-                Timestamp trainDate = (Timestamp) iter.next();
+            for (Iterator<Timestamp> iter = trainingDates.iterator(); iter.hasNext();) {
+                Timestamp trainDate = iter.next();
 
                 trainCalendar.setTime(trainDate);
 
@@ -186,7 +186,7 @@ public class EffectDAO {
                             set.close();
                         }
 
-                        Map valuesBeforeUpdate = new HashMap();
+                        Map<Integer,PlayerValues> valuesBeforeUpdate = new HashMap<Integer,PlayerValues>();
 
                         set = db.executeQuery("SELECT * FROM SPIELER WHERE trainer = 0 AND hrf_id = " //$NON-NLS-1$
                                               + Integer.toString(week.getHRFbeforeUpdate()));
@@ -231,7 +231,7 @@ public class EffectDAO {
                                                    trainCalendar.getHTSeason(), 0, 0);
                     }
 
-                    List wsList = (List) weeklySkillups.get(key);
+                    List<ISkillup> wsList = weeklySkillups.get(key);
                     week.setAmountSkillups(wsList.size());
 
                     if (wsList.size() > 0) {

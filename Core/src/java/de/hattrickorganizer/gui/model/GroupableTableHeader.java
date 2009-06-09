@@ -24,7 +24,7 @@ public class GroupableTableHeader extends JTableHeader {
 	private static final long serialVersionUID = -3171206308970166009L;
 	/** TODO Missing Parameter Documentation */
     /** TODO Missing Parameter Documentation */
-    protected Vector columnGroups;
+    protected Vector<ColumnGroup> columnGroups;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -48,16 +48,16 @@ public class GroupableTableHeader extends JTableHeader {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Enumeration getColumnGroups(TableColumn col) {
+    public final Enumeration<ColumnGroup> getColumnGroups(TableColumn col) {
         if (columnGroups == null) {
             return null;
         }
 
-        final Enumeration enumi = columnGroups.elements();
+        final Enumeration<ColumnGroup> enumi = columnGroups.elements();
 
         while (enumi.hasMoreElements()) {
             final ColumnGroup cGroup = (ColumnGroup) enumi.nextElement();
-            final Vector v_ret = cGroup.getColumnGroups(col, new Vector());
+            final Vector<ColumnGroup> v_ret = cGroup.getColumnGroups(col, new Vector<ColumnGroup>());
 
             if (v_ret != null) {
                 return v_ret.elements();
@@ -76,7 +76,7 @@ public class GroupableTableHeader extends JTableHeader {
         }
 
         final int columnMargin = getColumnModel().getColumnMargin();
-        final Enumeration enumi = columnGroups.elements();
+        final Enumeration<ColumnGroup> enumi = columnGroups.elements();
 
         while (enumi.hasMoreElements()) {
             final ColumnGroup cGroup = (ColumnGroup) enumi.nextElement();
@@ -101,7 +101,7 @@ public class GroupableTableHeader extends JTableHeader {
      */
     public final void addColumnGroup(ColumnGroup g) {
         if (columnGroups == null) {
-            columnGroups = new Vector();
+            columnGroups = new Vector<ColumnGroup>();
         }
 
         columnGroups.addElement(g);
