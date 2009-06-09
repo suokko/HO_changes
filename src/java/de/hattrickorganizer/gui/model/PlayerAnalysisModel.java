@@ -17,7 +17,7 @@ public class PlayerAnalysisModel extends HOColumnModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2953738895366809237L;
-	private Vector m_vSpielerMatchCBItem;
+	private Vector<SpielerMatchCBItem> m_vSpielerMatchCBItem;
 
 	
 	/**
@@ -142,7 +142,7 @@ public class PlayerAnalysisModel extends HOColumnModel {
      *
      * @param spielermatchCBItem TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector spielermatchCBItem) {
+    public final void setValues(Vector<SpielerMatchCBItem> spielermatchCBItem) {
         m_vSpielerMatchCBItem = spielermatchCBItem;
         initData();
     }

@@ -38,7 +38,7 @@ public interface ISpielplan {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector getPaarungenBySpieltag(int spieltag);
+    public Vector<IPaarung> getPaarungenBySpieltag(int spieltag);
 
     /////////////////////////////////////////////////////////////////////////////////7
     //Logik

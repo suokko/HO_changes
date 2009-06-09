@@ -35,7 +35,7 @@ public interface IMatchPredictionManager {
      *
      * @return Vector holding IMPActions for that match
      */
-    public Vector calculateMatch(IMPTeamData home, IMPTeamData away);
+    public Vector<IMPActions> calculateMatch(IMPTeamData home, IMPTeamData away);
 
     /**
      * calculates a number of matches match ( 90 minutes ) and returns list of events for both

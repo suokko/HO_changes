@@ -9,6 +9,7 @@ package de.hattrickorganizer.logik.matchengine;
 import de.hattrickorganizer.logik.matchengine.engine.common.MatchData;
 import de.hattrickorganizer.logik.matchengine.engine.common.MatchResult;
 
+import plugins.IMPActions;
 import plugins.IMPMatchData;
 import plugins.IMPTeamData;
 import plugins.IMPTeamRatings;
@@ -70,8 +71,8 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
      *
      * @return Vector holding IMPActions for that match
      */
-    public Vector calculateMatch(IMPTeamData home, IMPTeamData away) {
-        final Vector actions = new Vector();
+    public Vector<IMPActions> calculateMatch(IMPTeamData home, IMPTeamData away) {
+        final Vector<IMPActions> actions = new Vector<IMPActions>();
         final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 
         for (int i = 0; i < 91; i++) {

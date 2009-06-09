@@ -47,7 +47,7 @@ public class ReduzedTableModel implements TableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Class getColumnClass(int param) {
+    public final Class<?> getColumnClass(int param) {
         return m_clTablemodel.getColumnClass(m_iSpaltenindex);
     }
 

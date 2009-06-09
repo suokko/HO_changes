@@ -18,7 +18,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -84,7 +83,7 @@ public class HRFFileParser {
         }
 
         try {
-            final Vector propertiesVector = new Vector();
+            final Vector<Properties> propertiesVector = new Vector<Properties>();
             Properties properties = null;
 
             //Datei als Datenstrom laden
@@ -208,7 +207,7 @@ public class HRFFileParser {
      *
      * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    private HOModel createHOModel(Vector propertiesVector, java.sql.Timestamp hrfdate)
+    private HOModel createHOModel(Vector<Properties> propertiesVector, java.sql.Timestamp hrfdate)
       throws Exception
     {
         final HOModel hoModel = new HOModel();
@@ -291,11 +290,11 @@ public class HRFFileParser {
      *
      * @param propertiesVector TODO Missing Constructuor Parameter Documentation
      */
-    private void printProperties(Vector propertiesVector) {
+    /*private void printProperties(Vector<Properties> propertiesVector) {
         for (int i = 0; i < propertiesVector.size(); i++) {
             final Properties properties = (Properties) propertiesVector.get(i);
-            final Enumeration keys = properties.keys();
-            final Enumeration elements = properties.elements();
+            final Enumeration<Object> keys = properties.keys();
+            final Enumeration<Object> elements = properties.elements();
 
             while (keys.hasMoreElements() && elements.hasMoreElements()) {
                 final String key = keys.nextElement().toString();
@@ -311,5 +310,5 @@ public class HRFFileParser {
             }
 
         }
-    }
+    }*/
 }

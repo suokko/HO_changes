@@ -36,10 +36,10 @@ public class SpielstandPanel extends JPanel {
     private String m_sHeimmannschaft = "";
 
     //Vector mit CBItem ( Spielername + Spielminute ) für ein Tor der Gastmannschaft
-    private Vector m_vGasttore = new Vector();
+    private Vector<String> m_vGasttore = new Vector<String>();
 
     //Vector mit CBItem ( Spielername + Spielminute ) für ein Tor der Heimmannschaft
-    private Vector m_vHeimtore = new Vector();
+    private Vector<String> m_vHeimtore = new Vector<String>();
     private int HORIZONTALOFFSET = 30;
 
     //Anzahl Tore Gastmannschaft
@@ -107,7 +107,7 @@ public class SpielstandPanel extends JPanel {
      *
      * @param m_vGasttore New value of property m_vGasttore.
      */
-    public final void setGasttore(java.util.Vector m_vGasttore) {
+    public final void setGasttore(Vector<String> m_vGasttore) {
         this.m_vGasttore = m_vGasttore;
         repaint();
     }
@@ -117,7 +117,7 @@ public class SpielstandPanel extends JPanel {
      *
      * @return Value of property m_vGasttore.
      */
-    public final java.util.Vector getGasttore() {
+    public final Vector<String> getGasttore() {
         return m_vGasttore;
     }
 
@@ -164,7 +164,7 @@ public class SpielstandPanel extends JPanel {
      *
      * @param m_vHeimtore New value of property m_vHeimtore.
      */
-    public final void setHeimtore(java.util.Vector m_vHeimtore) {
+    public final void setHeimtore(Vector<String> m_vHeimtore) {
         this.m_vHeimtore = m_vHeimtore;
         repaint();
     }
@@ -174,7 +174,7 @@ public class SpielstandPanel extends JPanel {
      *
      * @return Value of property m_vHeimtore.
      */
-    public final java.util.Vector getHeimtore() {
+    public final Vector<String> getHeimtore() {
         return m_vHeimtore;
     }
 

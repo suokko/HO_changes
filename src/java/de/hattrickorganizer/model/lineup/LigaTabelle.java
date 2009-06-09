@@ -29,7 +29,7 @@ public class LigaTabelle implements ILigaTabelle {
     protected String m_sLigaName = "";
 
     /** TODO Missing Parameter Documentation */
-    protected Vector m_vEintraege = new Vector();
+    protected Vector<ILigaTabellenEintrag> m_vEintraege = new Vector<ILigaTabellenEintrag>();
 
     /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
@@ -60,7 +60,7 @@ public class LigaTabelle implements ILigaTabelle {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector getEintraege() {
+    public final Vector<ILigaTabellenEintrag> getEintraege() {
         return m_vEintraege;
     }
 

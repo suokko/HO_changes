@@ -13,10 +13,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import plugins.IMatchHighlight;
+import plugins.IMatchLineupPlayer;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
@@ -119,8 +119,8 @@ public class xmlMatchdetailsParser {
      *
      */
     private final void readHighlights(Document doc, Matchdetails md) {
-        final Vector myHighlights = new Vector();
-        final Vector broken = new Vector();
+        final Vector<IMatchHighlight> myHighlights = new Vector<IMatchHighlight>();
+        final Vector<Integer> broken = new Vector<Integer>();
         final MatchLineup lineup = DBZugriff.instance().getMatchLineup(md.getMatchID());
         Element ele = null;
         Element eventList = null;
@@ -138,8 +138,8 @@ public class xmlMatchdetailsParser {
 //            final String awayTeamID = XMLManager.instance().getFirstChildNodeValue((Element) ele.getElementsByTagName("AwayTeamID")
 //                                                                                                        .item(0));
             
-            final Vector homeTeamPlayers = parseLineup (lineup.getHeim().getAufstellung());
-            final Vector awayTeamPlayers = parseLineup (lineup.getGast().getAufstellung());
+            final Vector<Vector<String>> homeTeamPlayers = parseLineup (lineup.getHeim().getAufstellung());
+            final Vector<Vector<String>> awayTeamPlayers = parseLineup (lineup.getGast().getAufstellung());
 
             //now go through the eventlist and add everything together
             eventList = (Element) root.getElementsByTagName("EventList").item(0);
@@ -208,7 +208,7 @@ public class xmlMatchdetailsParser {
             				break;
             			}
 
-            			final Vector tmpPlayer = (Vector) homeTeamPlayers.get(i);
+            			final Vector<String> tmpPlayer = homeTeamPlayers.get(i);
 
             			if (tmpPlayer.get(0).toString().equals(String.valueOf(subjectplayerid))) {
             				subjectplayername = tmpPlayer.get(1).toString();
@@ -229,7 +229,7 @@ public class xmlMatchdetailsParser {
             				break;
             			}
 
-            			final Vector tmpPlayer = (Vector) awayTeamPlayers.get(i);
+            			final Vector<String> tmpPlayer = awayTeamPlayers.get(i);
 
             			if (tmpPlayer.get(0).toString().equals(String.valueOf(subjectplayerid))) {
             				subjectplayername = tmpPlayer.get(1).toString();
@@ -278,7 +278,7 @@ public class xmlMatchdetailsParser {
             					plname = plname.substring(0, plname.indexOf("<"));
             					subjectplayername = plname;
 
-            					final Vector tmpplay = new Vector();
+            					final Vector<String> tmpplay = new Vector<String>();
             					tmpplay.add(String.valueOf(subjectplayerid));
             					tmpplay.add(plname);
 
@@ -302,7 +302,7 @@ public class xmlMatchdetailsParser {
             				plname = plname.substring(0, plname.indexOf("<"));
             				objectplayername = plname;
 
-            				final Vector tmpplay = new Vector();
+            				final Vector<String> tmpplay = new Vector<String>();
             				tmpplay.add(String.valueOf(objectplayerid));
             				tmpplay.add(plname);
 
@@ -399,7 +399,7 @@ public class xmlMatchdetailsParser {
             			break;
             		}
 
-            		final Vector tmpPlayer = (Vector) homeTeamPlayers.get(j);
+            		final Vector<String> tmpPlayer = homeTeamPlayers.get(j);
 
             		if (tmpPlayer.get(0).toString().equals(String.valueOf(tmp.getSpielerID()))) {
             			subjectplayername = tmpPlayer.get(1).toString();
@@ -419,7 +419,7 @@ public class xmlMatchdetailsParser {
             			break;
             		}
 
-            		final Vector tmpPlayer = (Vector) awayTeamPlayers.get(j);
+            		final Vector<String> tmpPlayer = awayTeamPlayers.get(j);
 
             		if (tmpPlayer.get(0).toString().equals(String.valueOf(tmp.getSpielerID()))) {
             			subjectplayername = tmpPlayer.get(1).toString();
@@ -491,13 +491,13 @@ public class xmlMatchdetailsParser {
      *
      * @param lineup (of MatchLineupPlayer)		team lineup
      */
-    private final Vector parseLineup (Vector lineup) {
-    	Vector players = new Vector();
-        MatchLineupPlayer player = null;
+    private final Vector<Vector<String>> parseLineup (Vector<IMatchLineupPlayer> lineup) {
+    	Vector<Vector<String>> players = new Vector<Vector<String>>();
+        IMatchLineupPlayer player = null;
 
         for (int i = 0; (lineup != null) && (i < lineup.size()); i++) {
-            player = (MatchLineupPlayer) lineup.elementAt(i);
-            final Vector tmpPlayer = new Vector();
+            player = lineup.elementAt(i);
+            final Vector<String> tmpPlayer = new Vector<String>();
             tmpPlayer.add("" + player.getSpielerId());
             tmpPlayer.add(player.getSpielerName());
             players.add(tmpPlayer);
@@ -511,7 +511,7 @@ public class xmlMatchdetailsParser {
      * @param md	match details
      */
     public final void parseMatchReport(Matchdetails md) {
-        Vector highlights = md.getHighlights();
+        Vector<IMatchHighlight> highlights = md.getHighlights();
 
         final StringBuffer report = new StringBuffer();
 

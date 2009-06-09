@@ -3,7 +3,6 @@ package de.hattrickorganizer.gui.model;
 
 import java.awt.Color;
 
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
@@ -11,7 +10,6 @@ import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ProgressbarTableEntry;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
 
 
 /**
@@ -237,7 +235,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final Class getColumnClass(int columnIndex) {
+	public final Class<?> getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
 
         if (obj != null) {

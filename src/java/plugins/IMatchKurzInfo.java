@@ -11,7 +11,7 @@ package plugins;
  *
  * @author thomas.werth
  */
-public interface IMatchKurzInfo extends Comparable {
+public interface IMatchKurzInfo extends Comparable<Object> {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */

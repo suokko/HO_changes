@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.tools;
 
+import java.util.Vector;
+
 /**
  * DOCUMENT ME!
  *
@@ -29,7 +31,7 @@ public class LanguageFiles {
      */
     public static String[] getSprachDateien() {
         String[] files = null;
-        final java.util.Vector sprachdateien = new java.util.Vector();
+        final Vector<String> sprachdateien = new Vector<String>();
 
         try {
             //java.net.URL resource = new gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource( "sprache" );

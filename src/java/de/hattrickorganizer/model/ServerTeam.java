@@ -39,9 +39,6 @@ import de.hattrickorganizer.tools.HOLogger;
 public class ServerTeam implements java.io.Serializable {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 8226174493314770192L;
 
 	/** TODO Missing Parameter Documentation */
@@ -51,13 +48,13 @@ public class ServerTeam implements java.io.Serializable {
     private String m_sTeamName = "";
 
     /** TODO Missing Parameter Documentation */
-    private Vector m_vPositionen = new Vector();
+    private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
 
     /** TODO Missing Parameter Documentation */
-    private Vector m_vSpieler = new Vector();
+    private Vector<ServerSpieler> m_vSpieler = new Vector<ServerSpieler>();
 
     /** TODO Missing Parameter Documentation */
-    private Vector m_vStartAufstellung = new Vector();
+    private Vector<Integer> m_vStartAufstellung = new Vector<Integer>();
 
     /** TODO Missing Parameter Documentation */
     private int[] m_aElferKicker;
@@ -78,8 +75,8 @@ public class ServerTeam implements java.io.Serializable {
      * @param managerName TODO Missing Constructuor Parameter Documentation
      * @param serverSpieler TODO Missing Constructuor Parameter Documentation
      */
-    public ServerTeam(Aufstellung auf, String teamName, String managerName, Vector serverSpieler) {
-        Vector temp = null;
+    public ServerTeam(Aufstellung auf, String teamName, String managerName, Vector<ServerSpieler> serverSpieler) {
+        Vector<ISpielerPosition> temp = null;
         SpielerPosition pos = null;
 
         m_aElferKicker = auf.getBestElferKicker();
@@ -136,7 +133,7 @@ public class ServerTeam implements java.io.Serializable {
 
             //Aufstellung
             anzahl = dis.readInt();
-            m_vStartAufstellung = new Vector();
+            m_vStartAufstellung = new Vector<Integer>();
 
             for (int i = 0; i < anzahl; i++) {
                 m_vStartAufstellung.addElement(new Integer(dis.readInt()));
@@ -144,7 +141,7 @@ public class ServerTeam implements java.io.Serializable {
 
             //ServerSpieler
             anzahl = dis.readInt();
-            m_vSpieler = new Vector();
+            m_vSpieler = new Vector<ServerSpieler>();
 
             for (int i = 0; i < anzahl; i++) {
                 m_vSpieler.addElement(new ServerSpieler(dis));
@@ -152,7 +149,7 @@ public class ServerTeam implements java.io.Serializable {
 
             //SpielerPosition
             anzahl = dis.readInt();
-            m_vPositionen = new Vector();
+            m_vPositionen = new Vector<ISpielerPosition>();
 
             for (int i = 0; i < anzahl; i++) {
                 m_vPositionen.addElement(new SpielerPosition(dis));
@@ -448,7 +445,7 @@ public class ServerTeam implements java.io.Serializable {
      */
     public final ServerSpieler getSpielerAufFeld(byte nr) {
         SpielerPosition pos = null;
-        final Vector liste = new Vector();
+        final Vector<Integer> liste = new Vector<Integer>();
         ServerSpieler player = null;
 
         //Liste nur mit vergebenen Positionen innnerhalb der ersten elf füllen
@@ -578,7 +575,7 @@ public class ServerTeam implements java.io.Serializable {
      *
      * @param m_vStartAufstellung New value of property m_vStartAufstellung.
      */
-    public final void setStartAufstellung(java.util.Vector m_vStartAufstellung) {
+    public final void setStartAufstellung(Vector<Integer> m_vStartAufstellung) {
         this.m_vStartAufstellung = m_vStartAufstellung;
     }
 
@@ -587,7 +584,7 @@ public class ServerTeam implements java.io.Serializable {
      *
      * @return Value of property m_vStartAufstellung.
      */
-    public final java.util.Vector getStartAufstellung() {
+    public final Vector<Integer> getStartAufstellung() {
         return m_vStartAufstellung;
     }
 
@@ -631,7 +628,7 @@ public class ServerTeam implements java.io.Serializable {
     public final ServerSpieler getZufaelligenSpieler(byte mt) {
         int wert = 0;
         ServerSpieler player = null;
-        final Vector liste = new Vector();
+        final Vector<Integer> liste = new Vector<Integer>();
         SpielerPosition pos = null;
 
         if (!isSpieler4MannschaftsteilAufgestellt(mt)) {
@@ -920,11 +917,11 @@ public class ServerTeam implements java.io.Serializable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private final float calcPlayerStk(Vector spieler, int spielerId, byte position) {
+    private final float calcPlayerStk(Vector<ServerSpieler> spieler, int spielerId, byte position) {
         ServerSpieler player = null;
 
         for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-            player = (ServerSpieler) spieler.elementAt(i);
+            player = spieler.elementAt(i);
 
             if (player.getID() == spielerId) {
                 return player.getStk(position);
@@ -942,7 +939,7 @@ public class ServerTeam implements java.io.Serializable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private final float calcTeamStk(Vector spieler, byte position) {
+    private final float calcTeamStk(Vector<ServerSpieler> spieler, byte position) {
         float stk = 0.0f;
         de.hattrickorganizer.model.SpielerPosition pos = null;
 
