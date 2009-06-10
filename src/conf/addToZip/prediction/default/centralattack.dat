@@ -7,7 +7,8 @@ delta                = 1.000000 # fixed
 trainerOff           = 1.135257 # err=0.004339
 trainerDef           = 0.927930 # err=0.005792
 trainerNeutral       = 1.050000 # fixed
-confidence           = 0.013257 # err=0.001180
+#confidence           = 0.013257 # err=0.001180
+confidence           = 0.0525 # Educated guess by GM-Mjoelnir :-)
 extraMulti           = 0.850000 # fixed
 squareMod            = 0.011339 # err=0.001363
 cubeMod              = -0.000029 # err=0.000005
