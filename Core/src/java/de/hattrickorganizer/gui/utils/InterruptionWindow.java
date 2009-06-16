@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -25,6 +26,7 @@ public class InterruptionWindow extends javax.swing.JFrame {
 
 	private Image background;
     private String m_sInfotext = "";
+    private String m_sVersionText = HOMainFrame.getVersionString();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -113,6 +115,7 @@ public class InterruptionWindow extends javax.swing.JFrame {
         g2d.setColor(Color.black);
         g2d.setFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 10));
         g2d.drawString(m_sInfotext, 145, 25);
+        g2d.drawString(m_sVersionText, 10, 147);
     }
 
     /**
