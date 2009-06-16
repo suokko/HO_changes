@@ -476,13 +476,6 @@ public class TrainingsManager implements ITrainingsManager {
            							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT)
            						) {
            				return PLAYERSTATUS_RED_CARD;
-           			// Check for manual substitutions (out)
-           			} else if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
-           					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT ||
-           							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN ||
-           							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD)
-               					) {
-           				return PLAYERSTATUS_SUBSTITUTED_OUT;
            			}
            		}
             }
@@ -493,6 +486,7 @@ public class TrainingsManager implements ITrainingsManager {
         Vector<IMatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
         	IMatchHighlight curHighlight = highlights.get(i);
+        	// Check for manual substitutions (in)
        		if (curHighlight.getGehilfeID() == playerId) {
        			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
        					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT ||
@@ -502,7 +496,15 @@ public class TrainingsManager implements ITrainingsManager {
        				return PLAYERSTATUS_SUBSTITUTED_IN;
        			}
        		} else if (curHighlight.getSpielerID() == playerId) {
+       			// Check for manual substitutions (out)
        			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
+   					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT ||
+   							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN ||
+   							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD)
+       					) {
+       				return PLAYERSTATUS_SUBSTITUTED_OUT;
+   				// Check for tactic change
+       			} else if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
        					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_DEFICIT||
        							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_EVEN ||
        							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_LEAD)
