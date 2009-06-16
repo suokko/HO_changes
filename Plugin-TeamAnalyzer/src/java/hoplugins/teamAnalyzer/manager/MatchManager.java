@@ -84,7 +84,7 @@ public class MatchManager {
         SortedSet<Match> sortedMatches = loadMatchList();
 
         for (Iterator<Match> iter = sortedMatches.iterator(); iter.hasNext();) {
-            Match element = (Match) iter.next();
+            Match element = iter.next();
 
             matches.addMatch(element);
         }

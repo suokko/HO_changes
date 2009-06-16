@@ -5,7 +5,6 @@ import hoplugins.commons.utils.PluginProperty;
 
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
-import plugins.ITrainingWeek;
 
 import java.util.Vector;
 

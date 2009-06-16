@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class MatchComparator implements Comparator {
+public class MatchComparator implements Comparator<Match> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -23,9 +23,9 @@ public class MatchComparator implements Comparator {
      *
      * @return
      */
-    public int compare(Object o1, Object o2) {
-        Date s1 = ((Match) o1).getMatchDate();
-        Date s2 = ((Match) o2).getMatchDate();
+    public int compare(Match o1, Match o2) {
+        Date s1 = o1.getMatchDate();
+        Date s2 = o2.getMatchDate();
 
         return s2.compareTo(s1);
     }

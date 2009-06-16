@@ -37,7 +37,7 @@ public class FinancesTableSorter extends BasicSorter {
      * @return Missing Return Method Documentation
      */
     @Override
-	public Comparator getCustomComparator(int column) {
+	public Comparator<HTWeek> getCustomComparator(int column) {
         if (column == 1) {
             return new HTWeekComparator();
         } else {
@@ -52,7 +52,7 @@ public class FinancesTableSorter extends BasicSorter {
      *
      * @author Draghetto
      */
-    private class HTWeekComparator implements Comparator {
+    private class HTWeekComparator implements Comparator<HTWeek> {
         //~ Methods --------------------------------------------------------------------------------
 
         /**
@@ -63,9 +63,9 @@ public class FinancesTableSorter extends BasicSorter {
          *
          * @return Missing Return Method Documentation
          */
-        public int compare(Object arg0, Object arg1) {
-            HTWeek d1 = (HTWeek) arg0;
-            HTWeek d2 = (HTWeek) arg1;
+        public int compare(HTWeek arg0, HTWeek arg1) {
+            HTWeek d1 = arg0;
+            HTWeek d2 = arg1;
 
             return d1.compareTo(d2);
         }

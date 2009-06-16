@@ -63,7 +63,7 @@ public class Util {
      * @param table Missing Constructuor Parameter Documentation
      * @param header Missing Constructuor Parameter Documentation
      */
-    public static void setRowHeader(JTable table, List header) {
+    public static void setRowHeader(JTable table, List<String> header) {
         Container p = table.getParent();
 
         if (p instanceof JViewport) {

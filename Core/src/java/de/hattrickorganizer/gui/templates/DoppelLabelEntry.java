@@ -3,6 +3,8 @@ package de.hattrickorganizer.gui.templates;
 
 import javax.swing.SwingConstants;
 
+import plugins.IHOTableEntry;
+
 /**
  * Ein Panel mit zwei Labels, um zwei Werte in einer Spalte anzuzeigen ( Wert, Verbesserung )
  */
@@ -135,7 +137,7 @@ public class DoppelLabelEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public int compareTo(Object obj) {
+	public int compareTo(IHOTableEntry obj) {
         if (obj instanceof DoppelLabelEntry) {
             final DoppelLabelEntry entry = (DoppelLabelEntry) obj;
             return getTableEntryLinks().compareTo(entry.getTableEntryLinks());

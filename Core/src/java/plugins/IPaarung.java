@@ -11,7 +11,7 @@ package plugins;
  *
  * @author thomas.werth
  */
-public interface IPaarung extends Comparable {
+public interface IPaarung extends Comparable<IPaarung> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**

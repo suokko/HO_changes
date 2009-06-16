@@ -141,8 +141,8 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
         }
 
         Collections.sort(values,
-                         new Comparator() {
-                public int compare(Object o1, Object o2) {
+                         new Comparator<SkillChange>() {
+                public int compare(SkillChange o1, SkillChange o2) {
                     SkillChange sc1 = (SkillChange) o1;
                     SkillChange sc2 = (SkillChange) o2;
 

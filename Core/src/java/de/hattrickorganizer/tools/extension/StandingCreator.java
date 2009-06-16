@@ -12,11 +12,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import plugins.ILigaTabellenEintrag;
 import plugins.ISpielplan;
 
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
@@ -60,13 +60,13 @@ public class StandingCreator extends XMLCreator{
 
 	}
 
-	private static void extractTabelle(Element root, Vector tabelleneintraege)
+	private static void extractTabelle(Element root, Vector<ILigaTabellenEintrag> vector)
 		throws IOException {
 			
 		Document doc = root.getOwnerDocument();
 						
-		for (int i = 0; i < tabelleneintraege.size(); i++) {
-			final LigaTabellenEintrag eintrag = (LigaTabellenEintrag) tabelleneintraege.get(i);
+		for (int i = 0; i < vector.size(); i++) {
+			final ILigaTabellenEintrag eintrag = vector.get(i);
 
 			if (eintrag.getPunkte() > -1) {
 

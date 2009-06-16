@@ -2,7 +2,6 @@
 package plugins;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -191,7 +190,8 @@ public interface IHOMiniModel {
      * 
      * @deprecated use getLanguageString()
      */
-    public java.util.Properties getResource();
+    @Deprecated
+	public java.util.Properties getResource();
 
     /**
      * Returns the player with the id

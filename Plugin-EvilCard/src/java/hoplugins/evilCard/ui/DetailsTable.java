@@ -141,15 +141,18 @@ public class DetailsTable extends JTable {
     @Override
 	protected JTableHeader createDefaultTableHeader() {
         return new JTableHeader(columnModel) {
-                @Override
-				public String getToolTipText(MouseEvent e) {
-                    String tip = null;
-                    java.awt.Point p = e.getPoint();
-                    int index = columnModel.getColumnIndexAtX(p.x);
-                    int realIndex = columnModel.getColumn(index).getModelIndex();
-                    return columnToolTips[realIndex];
-                }
-            };
+
+			private static final long serialVersionUID = -5010053157479571641L;
+
+			@Override
+			public String getToolTipText(MouseEvent e) {
+                //String tip = null;
+                java.awt.Point p = e.getPoint();
+                int index = columnModel.getColumnIndexAtX(p.x);
+                int realIndex = columnModel.getColumn(index).getModelIndex();
+                return columnToolTips[realIndex];
+            }
+        };
     }
 
     /**

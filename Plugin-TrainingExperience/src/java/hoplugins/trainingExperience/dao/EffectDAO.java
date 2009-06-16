@@ -106,10 +106,10 @@ public class EffectDAO {
             }
 
             Collections.sort(trainingDates,
-                             new Comparator() {
-                    public int compare(Object o1, Object o2) {
-                        Timestamp t1 = (Timestamp) o1;
-                        Timestamp t2 = (Timestamp) o2;
+                             new Comparator<Timestamp>() {
+                    public int compare(Timestamp o1, Timestamp o2) {
+                        Timestamp t1 = o1;
+                        Timestamp t2 = o2;
 
                         return t2.compareTo(t1);
                     }

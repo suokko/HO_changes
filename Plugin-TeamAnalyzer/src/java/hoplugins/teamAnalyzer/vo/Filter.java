@@ -10,11 +10,11 @@ import java.util.List;
  *
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class Filter<T> {
+public class Filter {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of manually selected match ids */
-    private List<T> matches;
+    private List<String> matches;
 
     /** Automatic or manual selection enabled */
     private boolean automatic;
@@ -66,7 +66,7 @@ public class Filter<T> {
         setCup(false);
         setFriendly(false);
         setQualifier(false);
-        matches = new ArrayList<T>();
+        matches = new ArrayList<String>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ public class Filter<T> {
      *
      * @param list
      */
-    public void setMatches(List<T> list) {
+    public void setMatches(List<String> list) {
         matches = list;
     }
 
@@ -229,7 +229,7 @@ public class Filter<T> {
      *
      * @return
      */
-    public List<T> getMatches() {
+    public List<String> getMatches() {
         return matches;
     }
 

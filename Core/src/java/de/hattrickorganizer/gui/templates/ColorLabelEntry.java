@@ -11,6 +11,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import plugins.IHOTableEntry;
+
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.tools.Helper;
 
@@ -580,7 +582,7 @@ public class ColorLabelEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof ColorLabelEntry) {
             final ColorLabelEntry entry = (ColorLabelEntry) obj;
 

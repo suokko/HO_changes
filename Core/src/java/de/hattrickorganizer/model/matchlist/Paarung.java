@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.model.matchlist;
 
+import plugins.IPaarung;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
@@ -293,19 +294,16 @@ public class Paarung implements plugins.IPaarung {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
-        Paarung tmp = null;
+    public final int compareTo(IPaarung obj) {
+        IPaarung tmp = null;
+        tmp = obj;
 
-        if (obj instanceof Paarung) {
-            tmp = (Paarung) obj;
-
-            if (m_iSpieltag > tmp.getSpieltag()) {
-                return 1;
-            } else if (m_iSpieltag < tmp.getSpieltag()) {
-                return -1;
-            }
+        if (m_iSpieltag > tmp.getSpieltag()) {
+            return 1;
+        } else if (m_iSpieltag < tmp.getSpieltag()) {
+            return -1;
         }
-
+        
         return 0;
     }
 

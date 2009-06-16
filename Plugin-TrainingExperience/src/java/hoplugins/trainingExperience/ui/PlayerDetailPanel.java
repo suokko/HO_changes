@@ -11,7 +11,6 @@ import hoplugins.trainingExperience.ui.bar.ColorBar;
 
 import plugins.IFuturePlayer;
 import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
 import plugins.ISkillup;
 import plugins.ISpieler;

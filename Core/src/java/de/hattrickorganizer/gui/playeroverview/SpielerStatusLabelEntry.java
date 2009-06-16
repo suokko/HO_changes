@@ -7,6 +7,8 @@ import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.tools.Helper;
 
+import plugins.IHOTableEntry;
+
 
 /**
  * Zeigt die Warnings und Verletzungen an
@@ -81,7 +83,7 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SpielerStatusLabelEntry) {
             final SpielerStatusLabelEntry entry = (SpielerStatusLabelEntry) obj;
 

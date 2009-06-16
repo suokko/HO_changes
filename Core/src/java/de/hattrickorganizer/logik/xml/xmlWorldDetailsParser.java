@@ -45,7 +45,7 @@ public class xmlWorldDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Hashtable parseWorldDetailsFromString(String inputStream, String leagueID) {
+    public final Hashtable<String,String> parseWorldDetailsFromString(String inputStream, String leagueID) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -65,7 +65,7 @@ public class xmlWorldDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Hashtable parseDetails(Document doc, String leagueID) {
+    protected final Hashtable<String,String> parseDetails(Document doc, String leagueID) {
         Element ele = null;
         Element root = null;
         final MyHashtable hash = new MyHashtable();

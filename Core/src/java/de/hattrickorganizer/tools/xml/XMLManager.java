@@ -285,14 +285,14 @@ public class XMLManager implements plugins.IXMLParser {
 	/**
 	 * Parse the teamDetails from the given xml string.
 	 */
-	public Hashtable parseTeamDetails(String teamDetails) {
+	public Hashtable<String,String> parseTeamDetails(String teamDetails) {
 		return new xmlTeamDetailsParser().parseTeamdetails(teamDetails);
 	}
 
 	/**
 	 * Parse the worldDetails from the given xml string.
 	 */
-	public Hashtable parseWorldDetails(String worldDetails, String leagueID) {
+	public Hashtable<String,String> parseWorldDetails(String worldDetails, String leagueID) {
 		return new xmlWorldDetailsParser().parseWorldDetailsFromString(worldDetails, leagueID);
 	}
 
