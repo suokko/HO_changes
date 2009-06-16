@@ -17,7 +17,7 @@ import de.hattrickorganizer.tools.HOLogger;
  * @author Volker Fischer
  * @version 0.2a 28.08.01
  */
-public class InterruptionWindow extends javax.swing.JWindow {
+public class InterruptionWindow extends javax.swing.JFrame {
 	
 	private static final long serialVersionUID = -4948885175460734368L;
 	
@@ -55,11 +55,12 @@ public class InterruptionWindow extends javax.swing.JWindow {
             }
 
             //background.getWidth ( null ), background.getHeight ( null ) );
-            setSize(480, 160);
+            setSize(background.getWidth(null), background.getHeight(null));
             setLocation((getToolkit().getScreenSize().width / 2) - (getSize().width / 2),
                         (getToolkit().getScreenSize().height / 2) - (getSize().height / 2));
 
             //repaint();
+            setUndecorated(true);
             setVisible(true);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"InterruptionWindow.<init> : " + e);
@@ -93,7 +94,7 @@ public class InterruptionWindow extends javax.swing.JWindow {
                              java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Hintergrundgrafik zeichnen
-        g2d.drawImage(background, (getSize().width / 2) - (background.getWidth(null) / 2), 15, null);
+        g2d.drawImage(background, 0, 0, null);
 
         //Schriftzug
         //                g2d.setColor ( Color.black );
