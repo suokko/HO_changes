@@ -15,7 +15,6 @@ import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.tools.HOLogger;
 

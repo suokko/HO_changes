@@ -69,7 +69,7 @@ public class RatingsPanel {
     private JLabel TeamDif26;
     private JLabel TeamDif27;
     private boolean doDebug = false;
-    private double Team1AttackCenterValue = 0;
+    /*private double Team1AttackCenterValue = 0;
     private double Team1AttackLeftValue = 0;
     private double Team1AttackRightValue = 0;
     private double Team1DefenseCenterValue = 0;
@@ -82,7 +82,7 @@ public class RatingsPanel {
     private double Team2DefenseCenterValue = 0;
     private double Team2DefenseLeftValue = 0;
     private double Team2DefenseRightValue = 0;
-    private double Team2MidfieldValue = 0;
+    private double Team2MidfieldValue = 0;*/
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -523,7 +523,7 @@ public class RatingsPanel {
      */
     public void setTeam1AttackCenter(double value) {
         this.Team1AttackCenter.setText(this.generateText(value));
-        this.Team1AttackCenterValue = value;
+        //this.Team1AttackCenterValue = value;
     }
 
     /**
@@ -533,7 +533,7 @@ public class RatingsPanel {
      */
     public void setTeam1AttackLeft(double value) {
         this.Team1AttackLeft.setText(this.generateText(value));
-        this.Team1AttackLeftValue = value;
+        //this.Team1AttackLeftValue = value;
     }
 
     /**
@@ -543,7 +543,7 @@ public class RatingsPanel {
      */
     public void setTeam1AttackRight(double value) {
         this.Team1AttackRight.setText(this.generateText(value));
-        this.Team1AttackRightValue = value;
+        //this.Team1AttackRightValue = value;
     }
 
     /**
@@ -562,7 +562,7 @@ public class RatingsPanel {
      */
     public void setTeam1DefenseCenter(double value) {
         this.Team1DefenseCenter.setText(this.generateText(value));
-        this.Team1DefenseCenterValue = value;
+        //this.Team1DefenseCenterValue = value;
     }
 
     /**
@@ -572,7 +572,7 @@ public class RatingsPanel {
      */
     public void setTeam1DefenseLeft(double value) {
         this.Team1DefenseLeft.setText(this.generateText(value));
-        this.Team1DefenseLeftValue = value;
+        //this.Team1DefenseLeftValue = value;
     }
 
     /**
@@ -582,7 +582,7 @@ public class RatingsPanel {
      */
     public void setTeam1DefenseRight(double value) {
         this.Team1DefenseRight.setText(this.generateText(value));
-        this.Team1DefenseRightValue = value;
+        //this.Team1DefenseRightValue = value;
     }
 
     /**
@@ -601,7 +601,7 @@ public class RatingsPanel {
      */
     public void setTeam1Midfield(double value) {
         this.Team1Midfield.setText(this.generateText(value));
-        this.Team1MidfieldValue = value;
+        //this.Team1MidfieldValue = value;
     }
 
     /**
@@ -647,7 +647,7 @@ public class RatingsPanel {
      */
     public void setTeam2AttackCenter(double value) {
         this.Team2AttackCenter.setText(this.generateText(value));
-        this.Team2AttackCenterValue = value;
+        //this.Team2AttackCenterValue = value;
     }
 
     /**
@@ -657,7 +657,7 @@ public class RatingsPanel {
      */
     public void setTeam2AttackLeft(double value) {
         this.Team2AttackLeft.setText(this.generateText(value));
-        this.Team2AttackLeftValue = value;
+        //this.Team2AttackLeftValue = value;
     }
 
     /**
@@ -667,7 +667,7 @@ public class RatingsPanel {
      */
     public void setTeam2AttackRight(double value) {
         this.Team2AttackRight.setText(this.generateText(value));
-        this.Team2AttackRightValue = value;
+        //this.Team2AttackRightValue = value;
     }
 
     /**
@@ -686,7 +686,7 @@ public class RatingsPanel {
      */
     public void setTeam2DefenseCenter(double value) {
         this.Team2DefenseCenter.setText(this.generateText(value));
-        this.Team2DefenseCenterValue = value;
+        //this.Team2DefenseCenterValue = value;
     }
 
     /**
@@ -696,7 +696,7 @@ public class RatingsPanel {
      */
     public void setTeam2DefenseLeft(double value) {
         this.Team2DefenseLeft.setText(this.generateText(value));
-        this.Team2DefenseLeftValue = value;
+        //this.Team2DefenseLeftValue = value;
     }
 
     /**
@@ -706,7 +706,7 @@ public class RatingsPanel {
      */
     public void setTeam2DefenseRight(double value) {
         this.Team2DefenseRight.setText(this.generateText(value));
-        this.Team2DefenseRightValue = value;
+        //this.Team2DefenseRightValue = value;
     }
 
     /**
@@ -725,7 +725,7 @@ public class RatingsPanel {
      */
     public void setTeam2Midfield(double value) {
         this.Team2Midfield.setText(this.generateText(value));
-        this.Team2MidfieldValue = value;
+        //this.Team2MidfieldValue = value;
     }
 
     /**

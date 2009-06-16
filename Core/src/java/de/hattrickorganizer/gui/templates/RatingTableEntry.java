@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.tools.Helper;
 
+import plugins.IHOTableEntry;
+
 
 /**
  * TODO Missing Class Documentation
@@ -175,7 +177,7 @@ public class RatingTableEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof RatingTableEntry) {
             final RatingTableEntry entry = (RatingTableEntry) obj;
 

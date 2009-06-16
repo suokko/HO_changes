@@ -691,6 +691,7 @@ public final class Spieler implements plugins.ISpieler {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
 								int intensitaet, int staminaTrainingPart) {
 			return (int) Math.round(getTrainingLength(trTyp,coTrainer,twTrainer,trainerLvl,intensitaet, staminaTrainingPart));
@@ -1097,7 +1098,8 @@ public final class Spieler implements plugins.ISpieler {
      * @param m_iTSI New value of property m_iMarkwert.
      * @deprecated Use setTSI()
      */
-    public void setMarkwert(int m_iTSI) {
+    @Deprecated
+	public void setMarkwert(int m_iTSI) {
         this.m_iTSI = m_iTSI;
     }
 
@@ -1107,7 +1109,8 @@ public final class Spieler implements plugins.ISpieler {
      * @return Value of property m_iMarkwert.
      * @deprecated use getTSI()
      */
-    public int getMarkwert() {
+    @Deprecated
+	public int getMarkwert() {
         return m_iTSI;
     }
 
@@ -1275,7 +1278,8 @@ public final class Spieler implements plugins.ISpieler {
      * @return TODO Missing Return Method Documentation
      * @deprecated Never used, better system integrated in Trainingmanager
      */
-    public boolean isSkillTrained(int skill, int trainingstype) {
+    @Deprecated
+	public boolean isSkillTrained(int skill, int trainingstype) {
         boolean isTrained = false;
 
         switch (trainingstype) {
@@ -2641,7 +2645,8 @@ public final class Spieler implements plugins.ISpieler {
     //////////////////////////////////////////////////////////////////////////////////
     //equals
     /////////////////////////////////////////////////////////////////////////////////
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         boolean equals = false;
 
         if (obj instanceof Spieler) {

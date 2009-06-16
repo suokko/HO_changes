@@ -39,11 +39,11 @@ public class OutputTableSorter extends DefaultTableSorter
 * @return comparator
 */
     @Override
-	public Comparator getCustomComparator(int column)
+	public Comparator<VerticalIndicator> getCustomComparator(int column)
     {
         if ((column > 2) && (column < 11))
         {
-            return new Comparator()
+            return new Comparator<VerticalIndicator>()
                 {
                     @Override
 					public boolean equals(Object arg0)
@@ -51,10 +51,10 @@ public class OutputTableSorter extends DefaultTableSorter
                         return false;
                     }
 
-                    public int compare(Object arg0, Object arg1)
+                    public int compare(VerticalIndicator arg0, VerticalIndicator arg1)
                     {
-                        VerticalIndicator v1 = (VerticalIndicator) arg0;
-                        VerticalIndicator v2 = (VerticalIndicator) arg1;
+                        VerticalIndicator v1 = arg0;
+                        VerticalIndicator v2 = arg1;
 
                         if (v1.getPercentage() > v2.getPercentage())
                         {

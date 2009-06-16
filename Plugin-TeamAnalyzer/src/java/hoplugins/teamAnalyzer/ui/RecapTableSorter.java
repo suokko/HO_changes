@@ -57,15 +57,15 @@ public class RecapTableSorter extends AbstractTableSorter {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public Comparator<?> getCustomComparator(int column) {
+	public Comparator<String> getCustomComparator(int column) {
         if ((column > 4) && (column < 12)) {
-            return new Comparator() {
+            return new Comparator<String>() {
                     @Override
 					public boolean equals(Object arg0) {
                         return false;
                     }
 
-                    public int compare(Object arg0, Object arg1) {
+                    public int compare(String arg0, String arg1) {
                         try {
                             double d1 = RatingUtil.getRating(arg0 + "",
                                                              SystemManager.getConfig()
@@ -96,7 +96,7 @@ public class RecapTableSorter extends AbstractTableSorter {
         }
 
         if ((column > 11) && (column < 16)) {
-            return new Comparator() {
+            return new Comparator<String>() {
                     private DecimalFormat df = new DecimalFormat("###.#");
 
                     @Override
@@ -104,7 +104,7 @@ public class RecapTableSorter extends AbstractTableSorter {
                         return false;
                     }
 
-                    public int compare(Object arg0, Object arg1) {
+                    public int compare(String arg0, String arg1) {
                         try {
                             double d1 = df.parse(arg0 + "").doubleValue();
                             double d2 = df.parse(arg1 + "").doubleValue();
@@ -126,7 +126,7 @@ public class RecapTableSorter extends AbstractTableSorter {
         }
 
         if (column == 16) {
-            return new Comparator() {
+            return new Comparator<String>() {
                     private DecimalFormat df = new DecimalFormat("###.##");
 
                     @Override
@@ -134,7 +134,7 @@ public class RecapTableSorter extends AbstractTableSorter {
                         return false;
                     }
 
-                    public int compare(Object arg0, Object arg1) {
+                    public int compare(String arg0, String arg1) {
                         try {
                             double d1 = df.parse(arg0 + "").doubleValue();
                             double d2 = df.parse(arg1 + "").doubleValue();
@@ -156,13 +156,13 @@ public class RecapTableSorter extends AbstractTableSorter {
         }
 
         if (column == 18) {
-            return new Comparator() {
+            return new Comparator<String>() {
                     @Override
 					public boolean equals(Object arg0) {
                         return false;
                     }
 
-                    public int compare(Object arg0, Object arg1) {
+                    public int compare(String arg0, String arg1) {
                         try {
                             double d1 = RatingUtil.getRating(arg0 + "", false, true, skills);
                             double d2 = RatingUtil.getRating(arg1 + "", false, true, skills);

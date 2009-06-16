@@ -12,7 +12,7 @@ package plugins;
  *
  * @author FoolmooN
  */
-public interface IHOTableEntry extends java.lang.Comparable {
+public interface IHOTableEntry extends Comparable<IHOTableEntry> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -40,7 +40,7 @@ public interface IHOTableEntry extends java.lang.Comparable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public int compareTo(Object obj);
+    public int compareTo(IHOTableEntry obj);
 
     /**
      * Create the Component. Keep it in a variable, so the same Component can be returned by

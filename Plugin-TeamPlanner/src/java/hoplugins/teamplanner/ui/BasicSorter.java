@@ -40,7 +40,7 @@ public class BasicSorter extends DefaultTableSorter {
      * @return Missing Return Method Documentation
      */
     @Override
-	public Comparator getCustomComparator(int column) {
+	public Comparator<?> getCustomComparator(int column) {
         return null;
     }
 }

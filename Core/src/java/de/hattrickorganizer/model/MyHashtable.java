@@ -6,12 +6,14 @@
  */
 package de.hattrickorganizer.model;
 
+import java.util.Hashtable;
+
 /**
  * DOCUMENT ME!
  *
  * @author thomas.werth
  */
-public class MyHashtable extends java.util.Hashtable {
+public class MyHashtable extends Hashtable<String,String> {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -37,7 +39,7 @@ public class MyHashtable extends java.util.Hashtable {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final Object put(Object key, Object value) {
+	public final String put(String key, String value) {
         return (value != null) ? super.put(key, value) : super.put(key, "");
     }
 }

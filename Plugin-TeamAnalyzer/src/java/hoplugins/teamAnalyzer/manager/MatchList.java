@@ -56,7 +56,7 @@ public class MatchList {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List<Match> filterMatches(Filter<Match> filter) {
+    public List<Match> filterMatches(Filter filter) {
         int counter = 0;
         List<Match> list = new ArrayList<Match>();
 
@@ -74,7 +74,7 @@ public class MatchList {
                 }
             }
         } else {
-            List<Match> filterMatches = filter.getMatches();
+            List<String> filterMatches = filter.getMatches();
 
             for (Iterator<Match> iter = matchList.iterator(); iter.hasNext();) {
                 Match match = iter.next();
@@ -96,7 +96,7 @@ public class MatchList {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private boolean isAutomaticIncluded(Filter<Match> filter, Match match) {
+    private boolean isAutomaticIncluded(Filter filter, Match match) {
         boolean isHome = MatchUtil.isHome(match);
         int result = MatchUtil.result(match);
         int matchType = match.getMatchType();

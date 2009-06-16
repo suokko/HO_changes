@@ -149,15 +149,15 @@ public class OldTrainingManager {
      *
      * @author TODO Author Name
      */
-    private class SkillupComperator implements Comparator {
+    private class SkillupComperator implements Comparator<ISkillup> {
         //~ Methods --------------------------------------------------------------------------------
 
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
-        public int compare(Object o1, Object o2) {
-            ISkillup skillup1 = (ISkillup) o1;
-            ISkillup skillup2 = (ISkillup) o2;
+        public int compare(ISkillup o1, ISkillup o2) {
+            ISkillup skillup1 = o1;
+            ISkillup skillup2 = o2;
 
             if (skillup1.getDate().before(skillup2.getDate())) {
                 return -1;

@@ -40,17 +40,17 @@ public class TeamTransferSorter extends DefaultTableSorter {
      * @return A custom comparator if any, null if not specified
      */
     @Override
-	public final Comparator getCustomComparator(int column) {
+	public final Comparator<Integer> getCustomComparator(int column) {
         if ((column == 1) || (column == 2) || (column >= 6)) {
-            return new Comparator() {
+            return new Comparator<Integer>() {
                     @Override
 					public boolean equals(Object arg0) {
                         return false;
                     }
 
-                    public int compare(Object arg0, Object arg1) {
-                        final Integer d1 = (Integer) arg0;
-                        final Integer d2 = (Integer) arg1;
+                    public int compare(Integer arg0, Integer arg1) {
+                        final Integer d1 = arg0;
+                        final Integer d2 = arg1;
                         return d1.compareTo(d2);
                     }
                 };

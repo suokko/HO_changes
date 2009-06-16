@@ -121,7 +121,7 @@ public class XMLMatchesParser {
         Element tmp = null;
         MatchKurzInfo[] matches = new MatchKurzInfo[0];
         MatchKurzInfo spiel = null;
-        final Vector liste = new Vector();
+        final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
         NodeList list = null;
 
         if (doc == null) {

@@ -11,7 +11,7 @@ import java.util.Comparator;
  *
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class RosterPlayerComparator implements Comparator {
+public class RosterPlayerComparator implements Comparator<RosterPlayerData> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -22,9 +22,9 @@ public class RosterPlayerComparator implements Comparator {
      *
      * @return
      */
-    public int compare(Object o1, Object o2) {
-        int s1 = ((RosterPlayerData) o1).getMainPosition();
-        int s2 = ((RosterPlayerData) o2).getMainPosition();
+    public int compare(RosterPlayerData o1, RosterPlayerData o2) {
+        int s1 = o1.getMainPosition();
+        int s2 = o2.getMainPosition();
 
         if (s1 > s2) {
             return 1;

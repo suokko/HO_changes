@@ -6,6 +6,8 @@ import javax.swing.SwingConstants;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 
+import plugins.IHOTableEntry;
+
 
 /**
  * Zeigt die Warnings und Verletzungen an
@@ -60,7 +62,7 @@ public class SmilieEntry extends DoppelLabelEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SmilieEntry) {
             final SmilieEntry entry = (SmilieEntry) obj;
 

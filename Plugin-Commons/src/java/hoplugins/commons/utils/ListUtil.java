@@ -26,8 +26,8 @@ public final class ListUtil {
      *
      * @return a sorted set
      */
-    public static SortedSet getSortedSet(Collection beans, Comparator comparator) {
-        final SortedSet set = new TreeSet(comparator);
+    public static<T> SortedSet<T> getSortedSet(Collection<T> beans, Comparator<T> comparator) {
+        final SortedSet<T> set = new TreeSet<T>(comparator);
 
         if ((beans != null) && (beans.size() > 0)) {
             set.addAll(beans);

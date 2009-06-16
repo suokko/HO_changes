@@ -99,14 +99,14 @@ public class TableSorter extends AbstractTableModel {
     private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
 
     /** TODO Missing Parameter Documentation */
-    public static final Comparator<Object> COMPARABLE_COMAPRATOR = new Comparator() {
+    public static final Comparator<Object> COMPARABLE_COMAPRATOR = new Comparator<Object>() {
         public int compare(Object o1, Object o2) {
             return ((Comparable<Object>) o1).compareTo(o2);
         }
     };
 
     /** TODO Missing Parameter Documentation */
-    public static final Comparator<Object> LEXICAL_COMPARATOR = new Comparator() {
+    public static final Comparator<Object> LEXICAL_COMPARATOR = new Comparator<Object>() {
         public int compare(Object o1, Object o2) {
             return o1.toString().compareTo(o2.toString());
         }

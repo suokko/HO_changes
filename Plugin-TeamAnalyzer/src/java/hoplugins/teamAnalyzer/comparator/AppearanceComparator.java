@@ -11,7 +11,7 @@ import java.util.Comparator;
  *
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class AppearanceComparator implements Comparator {
+public class AppearanceComparator implements Comparator<PlayerAppearance> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -22,9 +22,9 @@ public class AppearanceComparator implements Comparator {
      *
      * @return
      */
-    public int compare(Object o1, Object o2) {
-        int s1 = ((PlayerAppearance) o1).getAppearance();
-        int s2 = ((PlayerAppearance) o2).getAppearance();
+    public int compare(PlayerAppearance o1, PlayerAppearance o2) {
+        int s1 = o1.getAppearance();
+        int s2 = o2.getAppearance();
 
         if (s1 > s2) {
             return -1;

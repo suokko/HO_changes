@@ -11,6 +11,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import plugins.IHOTableEntry;
+
 
 /**
  * TODO Missing Class Documentation
@@ -128,7 +130,7 @@ public class TorLabelEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof TorLabelEntry) {
             final TorLabelEntry entry = (TorLabelEntry) obj;
 

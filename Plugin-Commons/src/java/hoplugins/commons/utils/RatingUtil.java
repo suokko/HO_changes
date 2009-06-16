@@ -93,7 +93,7 @@ public final class RatingUtil {
      * @return ouble with raing
      */
     public static double getRating(String desc, boolean isNumeric,
-        boolean isDescription, List skills) {
+        boolean isDescription, List<String> skills) {
         if (isNumeric && !isDescription) {
             return Double.parseDouble(desc);
         }

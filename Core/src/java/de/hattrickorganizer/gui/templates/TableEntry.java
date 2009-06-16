@@ -1,6 +1,8 @@
 // %1127326364025:gui.vorlagen%
 package de.hattrickorganizer.gui.templates;
 
+import plugins.IHOTableEntry;
+
 
 /**
  *
@@ -29,7 +31,7 @@ public abstract class TableEntry implements plugins.IHOTableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public abstract int compareTo(Object obj);
+    public abstract int compareTo(IHOTableEntry obj);
 
     /**
      * TODO Missing Method Documentation

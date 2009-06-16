@@ -158,7 +158,7 @@ public class SystemManager {
      */
     public static void refresh() {
         NameManager.clean();
-        filter.setMatches(new ArrayList());
+        filter.setMatches(new ArrayList<String>());
 
         if (getActiveTeamId() == getCupOpponentId()) {
             filter.setLeague(false);

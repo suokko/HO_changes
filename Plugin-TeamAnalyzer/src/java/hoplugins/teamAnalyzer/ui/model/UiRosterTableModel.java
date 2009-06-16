@@ -25,7 +25,7 @@ public class UiRosterTableModel extends BaseTableModel {
      * @param vector Vector of table data
      * @param vector2 Vector of column names
      */
-    public UiRosterTableModel(Vector vector, Vector vector2) {
+    public UiRosterTableModel(Vector<Object> vector, Vector<?> vector2) {
         super(vector, vector2);
     }
 
