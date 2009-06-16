@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
+import plugins.IHOTableEntry;
 
 
 /**
@@ -115,7 +116,7 @@ public final class SpielerLabelEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SpielerLabelEntry) {
             final SpielerLabelEntry entry = (SpielerLabelEntry) obj;
 

@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import plugins.IHOTableEntry;
+
 
 /**
  * Skillanzeige eines Spielers (Nachkommastellen in Grau)
@@ -152,7 +154,7 @@ public class SkillEntry extends TableEntry {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public final int compareTo(Object obj) {
+	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SkillEntry) {
             final SkillEntry entry = (SkillEntry) obj;
 

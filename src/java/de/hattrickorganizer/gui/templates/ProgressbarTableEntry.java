@@ -6,6 +6,8 @@ import java.text.NumberFormat;
 
 import javax.swing.JProgressBar;
 
+import plugins.IHOTableEntry;
+
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 
 /**
@@ -229,7 +231,7 @@ public class ProgressbarTableEntry extends TableEntry {
      * Implement compareTo() for sorting.
      */
     @Override
-	public final int compareTo(Object o) {
+	public final int compareTo(IHOTableEntry o) {
         if (o instanceof ProgressbarTableEntry) {
             final ProgressbarTableEntry entry = (ProgressbarTableEntry) o;
 

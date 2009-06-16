@@ -7,7 +7,6 @@ import java.util.Vector;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
-import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.tools.HOLogger;
 

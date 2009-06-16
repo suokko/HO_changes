@@ -20,7 +20,6 @@ import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.Helper;

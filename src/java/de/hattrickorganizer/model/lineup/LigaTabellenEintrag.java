@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.model.lineup;
 
+import plugins.ILigaTabellenEintrag;
+
 /**
  * DOCUMENT ME!
  *
@@ -662,7 +664,7 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
+    public final int compareTo(ILigaTabellenEintrag obj) {
         if (obj instanceof LigaTabellenEintrag) {
             final LigaTabellenEintrag lte = (LigaTabellenEintrag) obj;
 

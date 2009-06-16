@@ -2338,7 +2338,8 @@ public class Helper extends LanguageFiles {
      *
      * @deprecated Keine Fehlermeldungen! Keine negativ/max Prüfung!
      */
-    public static int[] parseMultiInt(Window parent, JTextField field, boolean negativErlaubt,
+    @Deprecated
+	public static int[] parseMultiInt(Window parent, JTextField field, boolean negativErlaubt,
                                       int maxValue) {
         return generateIntArray(field.getText());
     }

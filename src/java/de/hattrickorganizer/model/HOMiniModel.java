@@ -17,7 +17,6 @@ import plugins.IHOMiniModel;
 import plugins.IJDBCAdapter;
 import plugins.ILiga;
 import plugins.IMatchDetails;
-import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IMatchPredictionManager;
@@ -289,7 +288,8 @@ public class HOMiniModel implements IHOMiniModel {
      *         
      * @deprecated use getLanguageString()
      */
-    public java.util.Properties getResource() {
+    @Deprecated
+	public java.util.Properties getResource() {
         return HOVerwaltung.instance().getResource();
     }
 

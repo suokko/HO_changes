@@ -6,7 +6,6 @@
  */
 package de.hattrickorganizer.gui.model;
 
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;

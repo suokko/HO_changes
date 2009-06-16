@@ -17,7 +17,6 @@ import javax.swing.JViewport;
 
 import plugins.ISpielePanel;
 
-import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 

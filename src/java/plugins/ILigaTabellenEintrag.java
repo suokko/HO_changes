@@ -11,7 +11,7 @@ package plugins;
  *
  * @author thomas.werth
  */
-public interface ILigaTabellenEintrag extends java.lang.Comparable {
+public interface ILigaTabellenEintrag extends Comparable<ILigaTabellenEintrag> {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /*SerienDefines*/
