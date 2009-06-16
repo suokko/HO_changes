@@ -2,6 +2,7 @@
 package plugins;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -344,4 +345,15 @@ public interface IHOMiniModel {
 	 * @return List of IExportMatchData objects
 	 */
 	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
+
+	/**
+	 * List of useful data for export
+	 *
+	 * @param startingDate starting data to export from (for non friendlies)
+	 * @param startingDateForFriendlies starting data to export from (for friendlies)
+	 * @param strict is true, export only matches *without* cards, injuries, tactical problems / overconfidence / weather SE...
+	 * 
+	 * @return List of IExportMatchData objects
+	 */
+	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict);
 }

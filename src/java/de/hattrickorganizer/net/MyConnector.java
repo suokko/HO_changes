@@ -1180,7 +1180,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @throws IOException TODO Missing Method Exception Documentation
 	 */
-	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
+	public String getUsalWebPage(String url, boolean displaysettingsScreen, boolean shortTimeOut) throws IOException {
 		if (displaysettingsScreen) {
 			//Show Screen
 			final de.hattrickorganizer.gui.login.ProxyDialog proxyDialog =
@@ -1189,7 +1189,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebPage(url, false);
+		return getWebPage(url, false, false, shortTimeOut);
+	}
+	
+	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
+		return getUsalWebPage(url, displaysettingsScreen, false);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
