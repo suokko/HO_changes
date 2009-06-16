@@ -1,5 +1,6 @@
 package de.hattrickorganizer.model.matches;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import plugins.IMatchDetails;
@@ -155,4 +156,115 @@ public class MatchHelper implements IMatchHelper {
    		return (short)location;
 	}
 
+	public boolean hasOverConfidence (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getTeamID() == teamId) {
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT) { 
+						// Overconfidence // Unterschaetzen
+						return true;
+					}
+				}
+
+			}
+		}
+		return false;
+	}
+
+	public boolean hasTacticalProblems (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getTeamID() == teamId) {
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME) { 
+						// Tactical Problems / Verwirrung
+						return true;
+					}
+				}
+
+			}
+		}
+		return false;
+	}
+
+	public boolean hasRedCard (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getTeamID() == teamId) {
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN) {
+					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean hasInjury (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getTeamID() == teamId) {
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER
+							// Bruised
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG) {
+						return true;							
+					}
+				}
+
+			}
+		}
+		return false;
+	}
+
+	public boolean hasWeatherSE (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
+				// Weather based SpecialEvents check (as this SE alters player ratings)
+				if ((hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean hasManualSubstitution (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
+				// Weather based SpecialEvents check (as this SE alters player ratings)
+				if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_DEFICIT
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_EVEN
+						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_LEAD) {
+					return true;
+				}
+			}			
+		}
+		return false;
+	}
 }

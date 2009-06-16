@@ -2023,10 +2023,10 @@ public class DBZugriff {
 			updateConfigTo1424();
 		}
 
-//		if (lastConfigUpdate < 1.425) {
-//			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
-//			updateConfigTo1425();
-//		}
+		if (lastConfigUpdate < 1.425) {
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
+			updateConfigTo1425();
+		}
 	}
 
 	private void updateConfigTo1410_1 () {
@@ -2060,14 +2060,14 @@ public class DBZugriff {
 		saveUserParameter("LastConfUpdate", 1.424);
 	}
 
-//	private void updateConfigTo1425 () {
-//		// Drop the feedback tables to force new feedback upload for beta testers
-//		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
-//		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
-//
-//		// always set the LastConfUpdate as last step
-//		saveUserParameter("LastConfUpdate", 1.425);		
-//	}
+	private void updateConfigTo1425 () {
+		// Drop the feedback tables to force new feedback upload for beta testers
+		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
+		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
+
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.425);		
+	}
 
 	private void resetTrainingParameters () {
 		// Reset Training Speed Parameters for New Training

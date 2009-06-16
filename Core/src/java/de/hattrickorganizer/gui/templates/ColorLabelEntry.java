@@ -55,7 +55,7 @@ public class ColorLabelEntry extends TableEntry {
     public static final Color BG_SPIELERSUBPOSITONSWERTE = new Color(235, 235, 255);
 
     /** TODO Missing Parameter Documentation */
-    public static final Color BG_FLAGGEN = new Color(222, 218, 210);
+    public static final Color BG_FLAGGEN = Color.WHITE; //new Color(222, 218, 210);
 
     //~ Instance fields ----------------------------------------------------------------------------
 

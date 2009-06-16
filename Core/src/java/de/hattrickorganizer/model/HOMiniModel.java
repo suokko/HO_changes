@@ -17,6 +17,7 @@ import plugins.IHOMiniModel;
 import plugins.IJDBCAdapter;
 import plugins.ILiga;
 import plugins.IMatchDetails;
+import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IMatchPredictionManager;
@@ -502,6 +503,19 @@ public class HOMiniModel implements IHOMiniModel {
 	 */
 	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
 		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies);
+	}
+
+	/**
+	 * List of useful data for export
+	 *
+	 * @param startingDate starting data to export from (for non friendlies)
+	 * @param startingDateForFriendlies starting data to export from (for friendlies)
+	 * @param strict is true, export only matches *without* tactical problems / overconfidence / weather SE
+	 *
+	 * @return List of IExportMatchData objects
+	 */
+	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict) {
+		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies, strict);
 	}
 
 }

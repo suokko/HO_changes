@@ -83,13 +83,13 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     public final void refresh() {
     	miniModel = Commons.getModel();
         final JWindow waitWindow = miniModel.getGUI().createWaitDialog(miniModel.getGUI().getOwner4Dialog());
-        waitWindow.show();
+        waitWindow.setVisible(true);
 
         // clear Lists
         feedbackObjects = new Vector[FeedbackConstants.NUM_TYPES];
 
         Timestamp curHrfDate = miniModel.getBasics().getDatum();
-        
+
         // If new HRF available... 
         // (i.e. a change in the options or a subskill recalc IS NOT sufficient) 
         if (curHrfDate.after(FeedbackSettingDAO.getLastHrfDate())) {
@@ -130,7 +130,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
 
         FeedbackSettingDAO.setLastHrfDate(curHrfDate);
 
-        waitWindow.hide();
+        waitWindow.setVisible(false);
         waitWindow.dispose();
     }
 
@@ -180,7 +180,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
 //            System.out.println ("Opening: "+url);
         	if (url != null) {
         		String result = Commons.getModel().getDownloadHelper()
-    				.getUsalWebPage(url,false);
+    				.getUsalWebPage(url,false, true);
         		if (result.toLowerCase().equals("success") ||
         				result.toLowerCase().equals("skipped"))
         			return FeedbackConstants.UPLOAD_OK;

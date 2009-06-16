@@ -69,6 +69,7 @@ public class Transfers extends FeedbackObject {
 			StringBuffer url = new StringBuffer(baseUrl);
 			url.append("contributor=" + miniModel.getBasics().getTeamId());
 			url.append("&id=" + playerTransfer.getTransferID()); 
+			url.append("&plId=" + player.getSpielerID()); 
 			url.append("&age=" + FeedbackHelper.round(player.getAlterWithAgeDays(),4)); 
 			url.append("&fo=" + player.getForm()); 
 			url.append("&inj=" + player.getVerletzt()); 
@@ -88,9 +89,16 @@ public class Transfers extends FeedbackObject {
 			url.append("&pop=" + player.getCharakter()); 
 			url.append("&hon=" + player.getAnsehen()); 
 
-			final double curr_rate = miniModel.getXtraDaten().getCurrencyRate();
-			final double price = (playerTransfer.getPrice() * curr_rate) / 10;
+			final double curr_rate = miniModel.getXtraDaten().getCurrencyRate()/10;
+			final double price = playerTransfer.getPrice() * curr_rate;
 			url.append("&price=" + (int) price); 
+
+			double wage = player.getGehalt();
+			if (player.getBonus() > 0) {
+				wage = wage / (1d + player.getBonus()/100d);
+			}
+			wage = wage * curr_rate;
+			url.append("&wage=" + (int)wage);
 
 			final HTCalendar globalDate = HTCalendarFactory.createGlobalCalendar(playerTransfer.getDate());
 			url.append("&season=" + globalDate.getHTSeason()); 
