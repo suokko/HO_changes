@@ -350,7 +350,7 @@ public final class HOMainFrame extends JFrame
 		}
 	}
 
-	private String getVersionString() {
+	public static String getVersionString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.US);
 		nf.setMinimumFractionDigits(3);
 		String txt = nf.format(VERSION);
