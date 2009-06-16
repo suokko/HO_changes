@@ -139,6 +139,18 @@ public class Matchdetails implements plugins.IMatchDetails {
 
     /** TODO Missing Parameter Documentation */
     private int m_iZuschauer;
+    
+    /** Spectators in category Terraces, is 0 if not our home match **/
+    private int soldTerraces = -1;
+    
+    /** Spectators in category Basic, is 0 if not our home match **/
+    private int soldBasic = -1;
+    
+    /** Spectators in category Roof, is 0 if not our home match **/
+    private int soldRoof = -1;
+
+    /** Spectators in category VIP, is 0 if not our home match **/
+    private int soldVIP = -1;
 
     /** Region ID */
     private int m_iRegionId;
@@ -1098,4 +1110,62 @@ public class Matchdetails implements plugins.IMatchDetails {
     public int getRegionId () {
     	return m_iRegionId;
     }
+
+	/**
+	 * @return the soldTerraces
+	 */
+	public int getSoldTerraces() {
+		return soldTerraces;
+	}
+
+	/**
+	 * @param soldTerraces the soldTerraces to set
+	 */
+	public void setSoldTerraces(int soldTerraces) {
+		this.soldTerraces = soldTerraces;
+	}
+
+	/**
+	 * @return the soldBasic
+	 */
+	public int getSoldBasic() {
+		return soldBasic;
+	}
+
+	/**
+	 * @param soldBasic the soldBasic to set
+	 */
+	public void setSoldBasic(int soldBasic) {
+		this.soldBasic = soldBasic;
+	}
+
+	/**
+	 * @return the soldRoof
+	 */
+	public int getSoldRoof() {
+		return soldRoof;
+	}
+
+	/**
+	 * @param soldRoof the soldRoof to set
+	 */
+	public void setSoldRoof(int soldRoof) {
+		this.soldRoof = soldRoof;
+	}
+
+	/**
+	 * @return the soldVIP
+	 */
+	public int getSoldVIP() {
+		return soldVIP;
+	}
+
+	/**
+	 * @param soldVIP the soldVIP to set
+	 */
+	public void setSoldVIP(int soldVIP) {
+		this.soldVIP = soldVIP;
+	}
+
+
 }

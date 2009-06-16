@@ -57,7 +57,7 @@ public class DBZugriff {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** TODO Missing Parameter Documentation */
-	private static final int DBVersion = 8;
+	private static final int DBVersion = 9;
 
 	/** TODO Missing Parameter Documentation 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -1696,7 +1696,9 @@ public class DBZugriff {
 						updateDBv7();
 					case 7 :
 						updateDBv8();
-
+					case 8 :
+						updateDBv9();
+						
 						//case 2: updateDB_v3(); // For future versions!
 				}
 
@@ -1902,6 +1904,29 @@ public class DBZugriff {
 		saveUserParameter("DBVersion", 8);
 	}
 	
+	/**
+	 * Update DB structure to v9
+	 *
+	 * @throws Exception
+	 */
+	private void updateDBv9() throws Exception {
+		// Add new columns for spectator distribution
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MatchDetails ADD COLUMN soldTerraces INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MatchDetails ADD COLUMN soldBasic INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MatchDetails ADD COLUMN soldRoof INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MatchDetails ADD COLUMN soldVIP INTEGER");
+
+		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldTerraces=-1 WHERE soldTerraces IS null");
+		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldBasic=-1 WHERE soldBasic IS null");
+		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldRoof=-1 WHERE soldRoof IS null");
+		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldVIP=-1 WHERE soldVIP IS null");
+		
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		saveUserParameter("DBVersion", 9);
+	}
+
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
@@ -1998,6 +2023,10 @@ public class DBZugriff {
 			updateConfigTo1424();
 		}
 
+//		if (lastConfigUpdate < 1.425) {
+//			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
+//			updateConfigTo1425();
+//		}
 	}
 
 	private void updateConfigTo1410_1 () {
@@ -2030,6 +2059,15 @@ public class DBZugriff {
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.424);
 	}
+
+//	private void updateConfigTo1425 () {
+//		// Drop the feedback tables to force new feedback upload for beta testers
+//		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
+//		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
+//
+//		// always set the LastConfUpdate as last step
+//		saveUserParameter("LastConfUpdate", 1.425);		
+//	}
 
 	private void resetTrainingParameters () {
 		// Reset Training Speed Parameters for New Training
