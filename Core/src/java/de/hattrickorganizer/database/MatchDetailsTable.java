@@ -224,13 +224,13 @@ public final class MatchDetailsTable extends AbstractTable {
 						+ DBZugriff.insertEscapeSequences(details.getMatchreport())
 						+ "', "
 						+ details.getRegionId()
-						+ "', "
+						+ ", "
 						+ details.getSoldTerraces()
-						+ "', "
+						+ ", "
 						+ details.getSoldBasic()
-						+ "', "
+						+ ", "
 						+ details.getSoldRoof()
-						+ "', "
+						+ ", "
 						+ details.getSoldVIP()
 						+ ")";
 
