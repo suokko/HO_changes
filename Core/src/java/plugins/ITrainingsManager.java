@@ -27,6 +27,9 @@ public interface ITrainingsManager {
 	public static final int PLAYERSTATUS_NO_MATCHDETAILS = -2;
 	public static final int PLAYERSTATUS_NOT_IN_LINEUP = -3;
 	public static final int PLAYERSTATUS_RED_CARD = -4;
+	public static final int PLAYERSTATUS_SUBSTITUTED_IN = -5;
+	public static final int PLAYERSTATUS_SUBSTITUTED_OUT = -6;
+	public static final int PLAYERSTATUS_TACTIC_CHANGE = -7;
 	
     //~ Methods ------------------------------------------------------------------------------------
 

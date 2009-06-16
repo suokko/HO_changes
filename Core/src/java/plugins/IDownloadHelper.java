@@ -58,6 +58,9 @@ public interface IDownloadHelper {
     public String getUsalWebPage(String ur, boolean displaysettingsScreen)
       throws IOException;
 
+    public String getUsalWebPage(String ur, boolean displaysettingsScreen, boolean shortTimeOut)
+    throws IOException;
+
     /**
      * gets regionID for a team by teamID
      *

@@ -1,5 +1,7 @@
 package plugins;
 
+import java.util.Vector;
+
 /**
  * Helper class to retrieve match related information.
  *
@@ -47,4 +49,10 @@ public interface IMatchHelper {
 	 */
 	public short getLocation(int homeTeamId, int awayTeamId, int matchId, int matchType);
 
+	public boolean hasOverConfidence (Vector<IMatchHighlight> highlights, int teamId);
+	public boolean hasTacticalProblems (Vector<IMatchHighlight> highlights, int teamId);
+	public boolean hasRedCard (Vector<IMatchHighlight> highlights, int teamId);
+	public boolean hasInjury (Vector<IMatchHighlight> highlights, int teamId);
+	public boolean hasWeatherSE (Vector<IMatchHighlight> highlights, int teamId);
+	public boolean hasManualSubstitution (Vector<IMatchHighlight> highlights, int teamId);
 }

@@ -182,6 +182,24 @@ public class Training extends FeedbackObject {
 							+ "id=" + skillUp.getPlayerId() + ", skill="+skillUp.getSkill()
 							+ ", val="+skillUp.getValue() + ") because of missing match details for match "+curMatchId);
 					return;															
+				} else if (curPos == ITrainingsManager.PLAYERSTATUS_SUBSTITUTED_IN) {
+					skillUp.setLength(-1);
+					System.out.println ("Feedback.Training: Skipping skillup ("
+							+ "id=" + skillUp.getPlayerId() + ", skill="+skillUp.getSkill()
+							+ ", val="+skillUp.getValue() + ") because of manual sub (in) in match "+curMatchId);
+					return;															
+				} else if (curPos == ITrainingsManager.PLAYERSTATUS_SUBSTITUTED_OUT) {
+					skillUp.setLength(-1);
+					System.out.println ("Feedback.Training: Skipping skillup ("
+							+ "id=" + skillUp.getPlayerId() + ", skill="+skillUp.getSkill()
+							+ ", val="+skillUp.getValue() + ") because of manual sub (out) in match "+curMatchId);
+					return;															
+				} else if (curPos == ITrainingsManager.PLAYERSTATUS_TACTIC_CHANGE) {
+					skillUp.setLength(-1);
+					System.out.println ("Feedback.Training: Skipping skillup ("
+							+ "id=" + skillUp.getPlayerId() + ", skill="+skillUp.getSkill()
+							+ ", val="+skillUp.getValue() + ") because of tactic change in match "+curMatchId);
+					return;															
 				}
 				// If player has played (no matter on which position) he will get osmosis training at least
 				if (curPos > ISpielerPosition.keeper && curMinutes > 0 && isSkillTrained(skillUp.getSkill(), tw.getTrainingType()))

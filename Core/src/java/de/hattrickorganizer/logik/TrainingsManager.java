@@ -338,9 +338,17 @@ public class TrainingsManager implements ITrainingsManager {
 		// No Matchdetails found, probably not downloaded...
 		// Let's expect the worst and assume that the player
 		// did not play (-> 0 minutes)
+    	
+    	// TODO: Manually substituted players (in or out) 
+    	// and players with a tactic change
+    	// also get 0 minutes training
+    	// (Should be improved)
     	if (posId == PLAYERSTATUS_NOT_IN_LINEUP ||
     			posId == PLAYERSTATUS_NO_MATCHDATA ||
-    			posId == PLAYERSTATUS_NO_MATCHDETAILS)
+    			posId == PLAYERSTATUS_NO_MATCHDETAILS ||
+    			posId == PLAYERSTATUS_SUBSTITUTED_IN ||
+    			posId == PLAYERSTATUS_SUBSTITUTED_OUT ||
+    			posId == PLAYERSTATUS_TACTIC_CHANGE )
     		return 0;
        	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
         Vector<IMatchHighlight> highlights = details.getHighlights();
@@ -461,18 +469,49 @@ public class TrainingsManager implements ITrainingsManager {
             Vector<IMatchHighlight> highlights = details.getHighlights();
             for (int i=0; i<highlights.size(); i++) {
             	IMatchHighlight curHighlight = highlights.get(i);
-           		if (curHighlight.getSpielerID() == playerId &&
-           				curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN &&
+           		if (curHighlight.getSpielerID() == playerId) {
+           			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN &&
            					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ ||
-           						curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR ||
-           						curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT)
-           			) {
-           			return PLAYERSTATUS_RED_CARD;
+           							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR ||
+           							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_ROT)
+           						) {
+           				return PLAYERSTATUS_RED_CARD;
+           			// Check for manual substitutions (out)
+           			} else if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
+           					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT ||
+           							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN ||
+           							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD)
+               					) {
+           				return PLAYERSTATUS_SUBSTITUTED_OUT;
+           			}
            		}
             }
             // He did not get a red card, i.e. he is really not in lineup
    			return PLAYERSTATUS_NOT_IN_LINEUP;
     	}
+
+        Vector<IMatchHighlight> highlights = details.getHighlights();
+        for (int i=0; i<highlights.size(); i++) {
+        	IMatchHighlight curHighlight = highlights.get(i);
+       		if (curHighlight.getGehilfeID() == playerId) {
+       			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
+       					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT ||
+       							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN ||
+       							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD)
+           					) {
+       				return PLAYERSTATUS_SUBSTITUTED_IN;
+       			}
+       		} else if (curHighlight.getSpielerID() == playerId) {
+       			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&
+       					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_DEFICIT||
+       							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_EVEN ||
+       							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_LEAD)
+           					) {
+       				return PLAYERSTATUS_TACTIC_CHANGE;
+       			}       			
+       		}
+        }
+
     	return PLAYERSTATUS_OK;
     }
 
