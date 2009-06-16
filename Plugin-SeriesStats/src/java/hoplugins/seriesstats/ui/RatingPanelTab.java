@@ -166,7 +166,7 @@ public class RatingPanelTab extends JPanel implements ActionListener {
 
             // add Items
             for (Enumeration<String> e = data.elements(); e.hasMoreElements();) {
-                String TeamName = (String) e.nextElement();
+                String TeamName = e.nextElement();
                 this.JCBTeam1.addItem(TeamName);
                 this.JCBTeam2.addItem(TeamName);
             }
@@ -207,10 +207,10 @@ public class RatingPanelTab extends JPanel implements ActionListener {
 
             // TODO Redo This
             //Vector tmd = t.getTeamMatchesDates(t.getTeamID(JCBTeam1.getSelectedItem().toString()));
-            Vector tmd = new Vector();
+            Vector<?> tmd = new Vector<Object>();
 
             for (int i = 0; (tmd != null) && (i < tmd.size()); i++) {
-                Vector v = (Vector) tmd.elementAt(i);
+                Vector<?> v = (Vector<?>) tmd.elementAt(i);
                 JCBDate1.addItem(v.elementAt(0));
             }
 
@@ -220,10 +220,10 @@ public class RatingPanelTab extends JPanel implements ActionListener {
             JCBDate1.addItem("(" + Commons.getModel().getLanguageString("Maximal") + ")");
 
             //tmd = t.getTeamMatchesDates(t.getTeamID(JCBTeam2.getSelectedItem().toString()));
-            tmd = new Vector();
+            tmd = new Vector<Object>();
 
             for (int i = 0; (tmd != null) && (i < tmd.size()); i++) {
-                Vector v = (Vector) tmd.elementAt(i);
+                Vector<?> v = (Vector<?>) tmd.elementAt(i);
                 JCBDate2.addItem(v.elementAt(0));
             }
 

@@ -27,7 +27,7 @@ public class BaseTableModel extends DefaultTableModel {
      * @param data Vector with the data to be used to fill the table
      * @param columnNames Vector of column names
      */
-    public BaseTableModel(Vector<Object> data, Vector<String> columnNames) {
+    public BaseTableModel(Vector<Object> data, Vector<?> columnNames) {
         super(data, columnNames);
     }
 

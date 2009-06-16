@@ -20,8 +20,10 @@ import org.w3c.dom.Element;
 import plugins.IBasics;
 import plugins.IEPVData;
 import plugins.IFutureTrainingManager;
+import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
+import plugins.ITrainingWeek;
 import plugins.IXtraData;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -80,7 +82,7 @@ public class PlayerCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 
-			Vector l = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+			Vector<ITrainingWeek> l = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 			int oldWeek = 0;
 			for (int index = l.size(); index > 0; index--) {
 				TrainingPerWeek tpw = (TrainingPerWeek) l.get(index - 1);
@@ -102,7 +104,7 @@ public class PlayerCreator extends XMLCreator {
 
 	private static int addRoster(Element root, int hrfId, boolean extended, int oldWeek) throws IOException {
 
-		List players = DBZugriff.instance().getSpieler(hrfId);
+		List<ISpieler> players = DBZugriff.instance().getSpieler(hrfId);
 		IBasics basics = DBZugriff.instance().getBasics(hrfId);
 		IXtraData xtradata = DBZugriff.instance().getXtraDaten(hrfId);
 
@@ -142,8 +144,8 @@ public class PlayerCreator extends XMLCreator {
 		Element playersTag = doc.createElement("players");
 		roster.appendChild(playersTag);
 
-		for (Iterator iter = players.iterator(); iter.hasNext();) {
-			ISpieler element = (ISpieler) iter.next();
+		for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
+			ISpieler element = iter.next();
 			addPlayer(playersTag, element, extended);
 		}
 
@@ -194,14 +196,14 @@ public class PlayerCreator extends XMLCreator {
 			int coTrainer = HOMiniModel.instance().getVerein().getCoTrainer();
 			int kepperTrainer = HOMiniModel.instance().getVerein().getTorwartTrainer();
 			int trainer = HOMiniModel.instance().getTrainer().getTrainer();
-			List futures = HOMiniModel.instance().getFutureTrainingWeeks();
+			List<IFutureTrainingWeek> futures = HOMiniModel.instance().getFutureTrainingWeeks();
 
 			IFutureTrainingManager ftm = HOMiniModel.instance().getFutureTrainingManager(player, futures, coTrainer, kepperTrainer, trainer);
 
-			List futureSkillups = ftm.getFutureSkillups();
+			List<ISkillup> futureSkillups = ftm.getFutureSkillups();
 
-			for (Iterator iterator = futureSkillups.iterator(); iterator.hasNext();) {
-				ISkillup skillup = (ISkillup) iterator.next();
+			for (Iterator<ISkillup> iterator = futureSkillups.iterator(); iterator.hasNext();) {
+				ISkillup skillup = iterator.next();
 				Element skillupTag = doc.createElement("skillup");
 				skillups.appendChild(skillupTag);
 				skillupTag.appendChild(createNode(doc,"week", skillup.getHtSeason() + "/" + skillup.getHtWeek()));

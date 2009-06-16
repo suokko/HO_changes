@@ -124,7 +124,7 @@ public final class PluginProperty {
                                                              PluginProperty.getLocale());
 
             // Copy bundle contents to properties.
-            for (Enumeration e = bundle.getKeys(); e.hasMoreElements();) {
+            for (Enumeration<String> e = bundle.getKeys(); e.hasMoreElements();) {
                 String s = (String) e.nextElement();
 
                 if (!properties.contains(s)) {

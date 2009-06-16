@@ -48,9 +48,9 @@ public class ZipHelper
         (file = new File(dir)).mkdirs();
         try
         {
-            for(Enumeration enumeration = zipFile.entries(); enumeration.hasMoreElements();)
+            for(Enumeration<? extends ZipEntry> enumeration = zipFile.entries(); enumeration.hasMoreElements();)
             {
-                ZipEntry zipentry = (ZipEntry)enumeration.nextElement();
+                ZipEntry zipentry = enumeration.nextElement();
                 String filename;
                 if((filename = dir + File.separatorChar + zipentry.getName()).toUpperCase().endsWith(s.toUpperCase()))
                     extractZipEntry(zipentry, filename);
@@ -67,7 +67,7 @@ public class ZipHelper
     public static InputStream getFile(String s)
     {
     	try {
-            Enumeration enumeration = zipFile.entries();
+            Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
             ZipEntry zipentry;
             String s1;
             while(enumeration.hasMoreElements()) 
@@ -100,7 +100,7 @@ public class ZipHelper
         {
             ZipEntry zipentry;
             String filename;
-            for(Enumeration enumeration = zipFile.entries(); 
+            for(Enumeration<? extends ZipEntry> enumeration = zipFile.entries(); 
             	enumeration.hasMoreElements(); 
             	extractZipEntry(zipentry, filename))
             {
@@ -141,7 +141,7 @@ public class ZipHelper
         }
     }
 
-    public static Enumeration getFileList()
+    public static Enumeration<? extends ZipEntry> getFileList()
     {
         return zipFile.entries();
     }

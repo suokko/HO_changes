@@ -101,23 +101,23 @@ public class HOLogger {
      * @param caller TODO Missing Method Parameter Documentation
      * @param obj TODO Missing Constructuor Parameter Documentation
      */
-    public void log(Class caller, Object obj) {
+    public void log(Class<?> caller, Object obj) {
     	logMessage(caller, obj.toString(), DEBUG);
     }
 
-    public void info(Class caller, Object obj) {
+    public void info(Class<?> caller, Object obj) {
     	logMessage(caller, obj.toString(), INFORMATION);
     }
 
-    public void warning(Class caller, Object obj) {
+    public void warning(Class<?> caller, Object obj) {
     	logMessage(caller, obj.toString(), WARNING);
     }
 
-    public void error(Class caller, Object obj) {
+    public void error(Class<?> caller, Object obj) {
     	logMessage(caller, obj.toString(), ERROR);
     }
 
-    public void debug(Class caller, Object obj) {
+    public void debug(Class<?> caller, Object obj) {
     	logMessage(caller, obj.toString(), DEBUG);
     }
 
@@ -127,7 +127,7 @@ public class HOLogger {
      * @param caller TODO Missing Method Parameter Documentation
      * @param e TODO Missing Method Parameter Documentation
      */
-    public void log(Class caller, Throwable e) {
+    public void log(Class<?> caller, Throwable e) {
     	logMessage(caller, e.toString(), ERROR);
 
         for (int i = 0; i < e.getStackTrace().length; i++) {
@@ -143,7 +143,7 @@ public class HOLogger {
      * @param text TODO Missing Method Parameter Documentation
      * @param level TODO Missing Method Parameter Documentation
      */
-    private void logMessage(Class caller, String text, int level) {
+    private void logMessage(Class<?> caller, String text, int level) {
         String msg = "";
 
         switch (level) {

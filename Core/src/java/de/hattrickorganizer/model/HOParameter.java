@@ -58,8 +58,8 @@ public final class HOParameter extends Configuration {
     /** TODO Missing Parameter Documentation */
     public int HOUsers;
 
-	public HashMap getValues() {
-		HashMap map = new HashMap();
+	public HashMap<String,String> getValues() {
+		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("lastNews",String.valueOf(lastNews));
 		map.put("EpvRelease",String.valueOf(EpvRelease));
 		map.put("RatingsRelease",String.valueOf(RatingsRelease));		
@@ -69,7 +69,7 @@ public final class HOParameter extends Configuration {
 		return map;
 	}
 
-	public void setValues(HashMap values) {
+	public void setValues(HashMap<String,String> values) {
 		DBVersion = getIntValue(values,"DBVersion");
 		HOTotalUsers = getIntValue(values,"HOTotalUsers");
 		HOUsers = getIntValue(values,"HOUsers");		

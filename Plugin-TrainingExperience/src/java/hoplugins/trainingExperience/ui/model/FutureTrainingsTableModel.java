@@ -83,7 +83,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
     @Override
 	public void populate() {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector<IFutureTrainingWeek>();
+        p_V_trainingsVector = new Vector();
 
         Object[] aobj;
 

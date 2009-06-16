@@ -33,8 +33,8 @@ public class ImportItemListener implements ActionListener {
      * @param arg0 TODO Missing Method Parameter Documentation
      */
     public void actionPerformed(ActionEvent arg0) {
-        for (Iterator iter = TeamManager.getTeams().iterator(); iter.hasNext();) {
-            Team element = (Team) iter.next();
+        for (Iterator<Team> iter = TeamManager.getTeams().iterator(); iter.hasNext();) {
+            Team element = iter.next();
             System.out.println("Downloading " + element.getName());
             HattrickManager.downloadPlayers(element.getTeamId());
         }

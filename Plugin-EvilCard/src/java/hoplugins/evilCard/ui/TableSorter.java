@@ -99,14 +99,14 @@ public class TableSorter extends AbstractTableModel {
     private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
 
     /** TODO Missing Parameter Documentation */
-    public static final Comparator COMPARABLE_COMAPRATOR = new Comparator() {
+    public static final Comparator<Object> COMPARABLE_COMAPRATOR = new Comparator() {
         public int compare(Object o1, Object o2) {
-            return ((Comparable) o1).compareTo(o2);
+            return ((Comparable<Object>) o1).compareTo(o2);
         }
     };
 
     /** TODO Missing Parameter Documentation */
-    public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
+    public static final Comparator<Object> LEXICAL_COMPARATOR = new Comparator() {
         public int compare(Object o1, Object o2) {
             return o1.toString().compareTo(o2.toString());
         }
@@ -118,8 +118,8 @@ public class TableSorter extends AbstractTableModel {
     /** TODO Missing Parameter Documentation */
     protected TableModel tableModel;
     private JTableHeader tableHeader;
-    private List sortingColumns = new ArrayList();
-    private Map columnComparators = new HashMap();
+    private List<Directive> sortingColumns = new ArrayList<Directive>();
+    private Map<Class<?>, Comparator> columnComparators = new HashMap<Class<?>, Comparator>();
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
     private int[] modelToView;
@@ -190,7 +190,7 @@ public class TableSorter extends AbstractTableModel {
      * @param type TODO Missing Method Parameter Documentation
      * @param comparator TODO Missing Method Parameter Documentation
      */
-    public void setColumnComparator(Class type, Comparator comparator) {
+    public void setColumnComparator(Class<?> type, Comparator comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
         } else {
@@ -378,9 +378,9 @@ public class TableSorter extends AbstractTableModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected Comparator getComparator(int column) {
-        Class columnType = tableModel.getColumnClass(column);
-        Comparator comparator = (Comparator) columnComparators.get(columnType);
+    protected Comparator<Object> getComparator(int column) {
+        Class<?> columnType = tableModel.getColumnClass(column);
+        Comparator<Object> comparator = columnComparators.get(columnType);
 
         if (comparator != null) {
             return comparator;
@@ -420,7 +420,7 @@ public class TableSorter extends AbstractTableModel {
      */
     private Directive getDirective(int column) {
         for (int i = 0; i < sortingColumns.size(); i++) {
-            Directive directive = (Directive) sortingColumns.get(i);
+            Directive directive = sortingColumns.get(i);
 
             if (directive.column == column) {
                 return directive;
@@ -655,7 +655,7 @@ public class TableSorter extends AbstractTableModel {
     }
 
     // Helper classes
-    private class Row implements Comparable {
+    private class Row implements Comparable<Row> {
         //~ Instance fields ------------------------------------------------------------------------
 
         private int modelIndex;
@@ -680,12 +680,12 @@ public class TableSorter extends AbstractTableModel {
          *
          * @return TODO Missing Return Method Documentation
          */
-        public int compareTo(Object o) {
+        public int compareTo(Row o) {
             int row1 = modelIndex;
-            int row2 = ((Row) o).modelIndex;
+            int row2 = o.modelIndex;
 
-            for (Iterator it = sortingColumns.iterator(); it.hasNext();) {
-                Directive directive = (Directive) it.next();
+            for (Iterator<Directive> it = sortingColumns.iterator(); it.hasNext();) {
+                Directive directive = it.next();
                 int column = directive.column;
                 Object o1 = tableModel.getValueAt(row1, column);
                 Object o2 = tableModel.getValueAt(row2, column);

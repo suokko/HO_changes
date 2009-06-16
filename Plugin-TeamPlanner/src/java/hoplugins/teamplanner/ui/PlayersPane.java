@@ -238,13 +238,13 @@ public class PlayersPane extends AbstractOperationPane {
 
         int columnIndex = 0;
 
-        for (Iterator iter = TeamPlayerManager.instance().getPredictedSkillup().iterator();
+        for (Iterator<List<String>> iter = TeamPlayerManager.instance().getPredictedSkillup().iterator();
              iter.hasNext();) {
-            List weekList = (List) iter.next();
+            List<String> weekList = iter.next();
             OperationCell cell = Util.getOperationCell(model, TRAINEES_ROW, columnIndex);
 
-            for (Iterator iterator = weekList.iterator(); iterator.hasNext();) {
-                String playerId = (String) iterator.next();
+            for (Iterator<String> iterator = weekList.iterator(); iterator.hasNext();) {
+                String playerId = iterator.next();
                 ISpieler player = TeamPlayerManager.instance().getPredictedPlayerAtWeek(Integer
                                                                                         .parseInt(playerId),
                                                                                         WeekHeader.instance()

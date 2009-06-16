@@ -36,10 +36,10 @@ public final class PlayerRetriever {
         final ISpieler player = Commons.getModel().getSpieler(id);
 
         if (player == null) {
-            final List oldPlayers = Commons.getModel().getAllOldSpieler();
+            final List<ISpieler> oldPlayers = Commons.getModel().getAllOldSpieler();
 
-            for (final Iterator iter = oldPlayers.iterator(); iter.hasNext();) {
-                final ISpieler oldPlayer = (ISpieler) iter.next();
+            for (final Iterator<ISpieler> iter = oldPlayers.iterator(); iter.hasNext();) {
+                final ISpieler oldPlayer = iter.next();
 
                 if (oldPlayer.getSpielerID() == id) {
                     return oldPlayer;

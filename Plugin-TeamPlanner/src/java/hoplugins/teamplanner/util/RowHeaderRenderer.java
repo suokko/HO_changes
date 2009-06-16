@@ -33,7 +33,7 @@ public class RowHeaderRenderer extends JLabel implements ListCellRenderer {
     private Font normalFont;
     private Font selectedFont;
     private JTable table;
-    private List headerList;
+    private List<String> headerList;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ public class RowHeaderRenderer extends JLabel implements ListCellRenderer {
      * @param table Missing Constructuor Parameter Documentation
      * @param headerList Missing Constructuor Parameter Documentation
      */
-    RowHeaderRenderer(JTable table, List headerList) {
+    RowHeaderRenderer(JTable table, List<String> headerList) {
         this.table = table;
         this.headerList = headerList;
         normalBorder = UIManager.getBorder("TableHeader.cellBorder");

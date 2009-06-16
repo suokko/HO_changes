@@ -91,7 +91,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     public PlayerDetailPanel() {
         super(new BorderLayout());
 
-        final TableModel model = new PlayerTransferTableModel(new ArrayList<Object>());
+        final TableModel model = new PlayerTransferTableModel(new ArrayList<PlayerTransfer>());
         final TeamTransferSorter sorter = new TeamTransferSorter(model);
         playerTable = new JTable(sorter);
         sorter.setTableHeader(playerTable.getTableHeader());
@@ -222,7 +222,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         arrow_setpieces.setIcon(null);
         arrow_stamina.setIcon(null);
         arrow_experience.setIcon(null);
-        refreshPlayerTable(new Vector<Object>());
+        refreshPlayerTable(new Vector<PlayerTransfer>());
     }
 
     /**
@@ -230,7 +230,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
      *
      * @param values List of player transfers to display.
      */
-    private void refreshPlayerTable(List values) {
+    private void refreshPlayerTable(List<PlayerTransfer> values) {
         final DefaultTableSorter sorter = (DefaultTableSorter) playerTable.getModel();
         sorter.setTableModel(new PlayerTransferTableModel(values));
         playerTable.getColumnModel().getColumn(3).setPreferredWidth(150);

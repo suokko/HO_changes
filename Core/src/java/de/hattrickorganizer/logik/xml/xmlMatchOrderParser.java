@@ -39,7 +39,7 @@ public class xmlMatchOrderParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Hashtable parseMatchOrder(String dateiname) {
+    public final Hashtable<?, ?> parseMatchOrder(String dateiname) {
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(dateiname);
@@ -54,7 +54,7 @@ public class xmlMatchOrderParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Hashtable parseMatchOrder(java.io.File datei) {
+    public final Hashtable<String, String> parseMatchOrder(java.io.File datei) {
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(datei);
@@ -65,7 +65,7 @@ public class xmlMatchOrderParser {
     /////////////////////////////////////////////////////////////////////////////////
     //parse public
     ////////////////////////////////////////////////////////////////////////////////
-    public final Hashtable parseMatchOrderFromString(String inputStream) {
+    public final Hashtable<?, ?> parseMatchOrderFromString(String inputStream) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -81,7 +81,7 @@ public class xmlMatchOrderParser {
      *
      * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    protected final void addPlayer(Element ele, Hashtable hash) throws Exception {
+    protected final void addPlayer(Element ele, Hashtable<String, String> hash) throws Exception {
         Element tmp = null;
         int roleID = -1;
         String behaivior = "-1";
@@ -224,7 +224,7 @@ public class xmlMatchOrderParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Hashtable parseDetails(Document doc) {
+    protected final Hashtable<String, String> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
         final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();
@@ -309,7 +309,7 @@ public class xmlMatchOrderParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Hashtable parseVersion1_1(Document doc) {
+    protected final Hashtable<?, ?> parseVersion1_1(Document doc) {
         Element ele = null;
         Element root = null;
         final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();

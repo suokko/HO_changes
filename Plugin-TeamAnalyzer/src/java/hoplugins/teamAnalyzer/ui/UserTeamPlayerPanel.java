@@ -3,6 +3,7 @@ package hoplugins.teamAnalyzer.ui;
 
 import hoplugins.Commons;
 
+import hoplugins.teamAnalyzer.report.TacticReport;
 import hoplugins.teamAnalyzer.vo.UserTeamSpotLineup;
 
 import java.awt.Color;
@@ -23,7 +24,7 @@ public class UserTeamPlayerPanel extends PlayerPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -7445084726999652737L;
-	private UserTeamSpotLineup spotLineup;
+	//private UserTeamSpotLineup spotLineup;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -53,7 +54,7 @@ public class UserTeamPlayerPanel extends PlayerPanel {
      * @param lineup TODO Missing Method Parameter Documentation
      */
     public void reload(UserTeamSpotLineup lineup) {
-        spotLineup = lineup;
+        //spotLineup = lineup;
 
         if (lineup != null) {
             nameField.setText(lineup.getName());
@@ -65,14 +66,14 @@ public class UserTeamPlayerPanel extends PlayerPanel {
             positionField.setText(Commons.getModel().getHelper().getNameForPosition((byte) lineup
                                                                                     .getPosition()));
             updateRatingPanel(lineup.getRating());
-            tacticPanel.reload(new ArrayList());
+            tacticPanel.reload(new ArrayList<TacticReport>());
         } else {
             nameField.setText("");
             positionField.setText("");
             updateRatingPanel(0);
             positionImage.setIcon(Commons.getModel().getHelper().getImage4Position(0, (byte) 0));
             specialEventImage.setIcon(null);
-            tacticPanel.reload(new ArrayList());
+            tacticPanel.reload(new ArrayList<TacticReport>());
         }
     }
 

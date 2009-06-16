@@ -37,8 +37,8 @@ public class Transfers extends FeedbackObject {
 		this.player = getMiniModel().getSpielerAtDate(playerTransfer.getPlayerId(), playerTransfer.getDate());
 	}
 	
-	public static List<Transfers> rebuildList(Timestamp completedDate) {
-		List<Transfers> list = new Vector<Transfers>();
+	public static List<FeedbackObject> rebuildList(Timestamp completedDate) {
+		List<FeedbackObject> list = new Vector<FeedbackObject>();
 		try {
 			// Set completedDate to one week ago
 			// Reason: 

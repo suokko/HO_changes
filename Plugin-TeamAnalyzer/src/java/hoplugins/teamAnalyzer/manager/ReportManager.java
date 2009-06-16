@@ -22,7 +22,7 @@ public class ReportManager {
 
     /** TODO Missing Parameter Documentation */
     public static TeamLineup lineup;
-    private static List matchDetails;
+    private static List<MatchDetail> matchDetails;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -37,8 +37,8 @@ public class ReportManager {
         TeamReport report = new TeamReport();
         int i = 1;
 
-        for (Iterator iter = matchDetails.iterator(); iter.hasNext();) {
-            MatchDetail match = (MatchDetail) iter.next();
+        for (Iterator<MatchDetail> iter = matchDetails.iterator(); iter.hasNext();) {
+            MatchDetail match = iter.next();
 
             if (i == gameNumber) {
                 report.addMatch(match, true);
@@ -68,10 +68,10 @@ public class ReportManager {
      *
      * @param matchDetails TODO Missing Method Parameter Documentation
      */
-    public static void buildReport(List matchDetails) {
+    public static void buildReport(List<?> matchDetails) {
         TeamReport report = new TeamReport();
 
-        for (Iterator iter = matchDetails.iterator(); iter.hasNext();) {
+        for (Iterator<?> iter = matchDetails.iterator(); iter.hasNext();) {
             MatchDetail match = (MatchDetail) iter.next();
 
             report.addMatch(match, SystemManager.getConfig().isShowUnavailable());
@@ -87,7 +87,7 @@ public class ReportManager {
      */
     public static void clean() {
         lineup = null;
-        matchDetails = new ArrayList();
+        matchDetails = new ArrayList<MatchDetail>();
     }
 
     /**
@@ -109,10 +109,10 @@ public class ReportManager {
      * TODO Missing Method Documentation
      */
     private static void updateFilteredMatches() {
-        List filterList = new ArrayList();
+        List<String> filterList = new ArrayList<String>();
 
-        for (Iterator iter = MatchManager.getSelectedMatches().iterator(); iter.hasNext();) {
-            Match match = (Match) iter.next();
+        for (Iterator<Match> iter = MatchManager.getSelectedMatches().iterator(); iter.hasNext();) {
+            Match match = iter.next();
 
             filterList.add("" + match.getMatchId());
         }

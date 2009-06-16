@@ -22,7 +22,7 @@ public class WeekHeader {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Vector columns;
+    private Vector<HTWeek> columns;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ public class WeekHeader {
      * @return Missing Return Method Documentation
      */
     public HTWeek getColumnWeek(int columnIndex) {
-        return (HTWeek) columns.get(columnIndex);
+        return columns.get(columnIndex);
     }
 
     /**
@@ -75,7 +75,7 @@ public class WeekHeader {
      *
      * @return Missing Return Method Documentation
      */
-    public Vector getValues() {
+    public Vector<HTWeek> getValues() {
         return columns;
     }
 
@@ -83,7 +83,7 @@ public class WeekHeader {
      * Missing Method Documentation
      */
     public void reload() {
-        this.columns = new Vector();
+        this.columns = new Vector<HTWeek>();
 
         for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
             HTWeek week = TeamPlanner.ACTUALWEEK.copy();

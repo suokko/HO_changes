@@ -32,7 +32,7 @@ public class HOLauncher {
 
 		try {
 
-			Enumeration e = zipFile.entries();
+			Enumeration<? extends ZipEntry> e = zipFile.entries();
 
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();

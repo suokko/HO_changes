@@ -16,7 +16,7 @@ import java.util.List;
 public class TeamData implements plugins.IMPTeamData {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List actions;
+    private List<IMPActions> actions;
     private String teamName;
     private TeamRatings ratings;
     private int tacticLevel;
@@ -33,7 +33,7 @@ public class TeamData implements plugins.IMPTeamData {
      * @param _level Tacticlevel from 1 to 20
      */
     public TeamData(String name, TeamRatings _ratings, int _tactic, int _level) {
-        actions = new ArrayList();
+        actions = new ArrayList<IMPActions>();
         ratings = _ratings;
         tacticLevel = _level;
         tacticType = _tactic;
@@ -47,7 +47,7 @@ public class TeamData implements plugins.IMPTeamData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final List getActions() {
+    public final List<IMPActions> getActions() {
         return actions;
     }
 

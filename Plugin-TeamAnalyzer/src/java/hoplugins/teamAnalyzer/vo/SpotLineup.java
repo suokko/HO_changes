@@ -3,6 +3,7 @@ package hoplugins.teamAnalyzer.vo;
 
 import hoplugins.teamAnalyzer.report.Report;
 import hoplugins.teamAnalyzer.report.SpotReport;
+import hoplugins.teamAnalyzer.report.TacticReport;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class SpotLineup extends Report {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of tactics used by all who played in this spot */
-    private List tactics;
+    private List<TacticReport> tactics;
 
     /** Name of the Player */
     private String name;
@@ -85,7 +86,7 @@ public class SpotLineup extends Report {
      *
      * @param list
      */
-    public void setTactics(List list) {
+    public void setTactics(List<TacticReport> list) {
         tactics = list;
     }
 
@@ -94,7 +95,7 @@ public class SpotLineup extends Report {
      *
      * @return
      */
-    public List getTactics() {
+    public List<TacticReport> getTactics() {
         return tactics;
     }
 

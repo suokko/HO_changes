@@ -50,7 +50,7 @@ public final class LanguagesDialog extends UpdaterDialog {
     protected final String WEB_LANGUAGE_DIR = UpdateController.PLUGINS_HOMEPAGE + "/Sprache/";
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable hash;
+    protected Hashtable<?, ?> hash;
 
     /** TODO Missing Parameter Documentation */
     private final String SPRACHE_DIRECTORY = System.getProperty("user.dir") + File.separator
@@ -65,7 +65,7 @@ public final class LanguagesDialog extends UpdaterDialog {
      */
     protected LanguagesDialog(Object data) {
         super(data, PROP_LANGUAGEFILE);
-        hash = (Hashtable) data;
+        hash = (Hashtable<?, ?>) data;
         inizialize();
 
         Container contenPane = getContentPane();
@@ -181,12 +181,12 @@ public final class LanguagesDialog extends UpdaterDialog {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private Object[][] getNewLanguages(Hashtable hashi, boolean selected) {
+    private Object[][] getNewLanguages(Hashtable<?, ?> hashi, boolean selected) {
         Object[][] tmp = new Object[hashi.size()][4];
         boolean enabled = true;
 
         int i=0;
-        for (Iterator it=hashi.values().iterator(); it.hasNext(); i++) {
+        for (Iterator<?> it=hashi.values().iterator(); it.hasNext(); i++) {
             HPLanguageInfo element = (HPLanguageInfo)it.next();
             tmp[i][1] = getLabel(enabled, element.getFilename());
             tmp[i][2] = getLabel(enabled, "-");

@@ -16,7 +16,7 @@ public class TransferRecap {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Map of transfer type */
-    private final Map types = new HashMap();
+    private final Map<String,TransferTypeRecap> types = new HashMap<String,TransferTypeRecap>();
 
     //~ Methods ------------------------------------------------------------------------------------
 

@@ -12,8 +12,8 @@ import hoplugins.trainingExperience.ui.component.FutureSettingPanel;
 import hoplugins.trainingExperience.ui.model.FutureTrainingsTableModel;
 import hoplugins.trainingExperience.ui.model.PastTrainingsTableModel;
 
-import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
+import plugins.ITrainingWeek;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -68,7 +68,7 @@ public class TrainingPanel extends JPanel {
      *
      * @return future trainings list
      */
-    public List<IFutureTrainingWeek> getFutureTrainings() {
+    public List getFutureTrainings() {
         return futureModel.getTrainingsData();
     }
 
@@ -77,7 +77,7 @@ public class TrainingPanel extends JPanel {
      *
      * @return past trainings list
      */
-    public Vector<IFutureTrainingWeek> getOldTrainings() {
+    public Vector<ITrainingWeek> getOldTrainings() {
         return oldTableModel.getTrainingsData();
     }
 

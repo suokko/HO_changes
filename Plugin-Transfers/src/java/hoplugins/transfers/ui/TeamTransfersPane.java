@@ -36,7 +36,7 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
 	 */
 	private static final long serialVersionUID = 5180919662981139849L;
 	private JTable transferTable;
-    private List transfers = new ArrayList();
+    private List<PlayerTransfer> transfers = new ArrayList<PlayerTransfer>();
     private PlayerDetailPanel playerDetailPanel;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
         setOpaque(false);
         add(mainPanel, BorderLayout.CENTER);
 
-        final TableModel model = new TransferTableModel(new ArrayList());
+        final TableModel model = new TransferTableModel(new ArrayList<PlayerTransfer>());
         final TeamTransferSorter sorter = new TeamTransferSorter(model);
         transferTable = new JTable(sorter);
 
@@ -62,7 +62,7 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
         pane.setOpaque(false);
         mainPanel.add(pane, BorderLayout.CENTER);
 
-        refresh(new Vector());
+        refresh(new Vector<PlayerTransfer>());
     }
 
     /**
@@ -86,7 +86,7 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
      *
      * @param transfers List of transfers to show.
      */
-    public final void refresh(List transfers) {
+    public final void refresh(List<PlayerTransfer> transfers) {
         this.transfers = transfers;
 
         final DefaultTableSorter sorter = (DefaultTableSorter) transferTable.getModel();

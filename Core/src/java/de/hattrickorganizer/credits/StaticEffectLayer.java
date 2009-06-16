@@ -4,6 +4,8 @@ package de.hattrickorganizer.credits;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.util.Enumeration;
+import java.util.Vector;
 
 
 /**
@@ -20,8 +22,8 @@ public class StaticEffectLayer {
     /** TODO Missing Parameter Documentation */
     public int y;
     private Component component;
-    private java.util.Vector elementVector = new java.util.Vector();
-    private java.util.Vector statischeObjekte = new java.util.Vector();
+    private Vector<StatischesObjekt> elementVector = new Vector<StatischesObjekt>();
+    private Vector<StatischesObjekt> statischeObjekte = new Vector<StatischesObjekt>();
     private boolean background;
     private float movex = 2f;
     private float movey = 2f;
@@ -89,10 +91,10 @@ public class StaticEffectLayer {
             g.fillRect(0, 0, width, height);
         }
 
-        java.util.Enumeration enumi = elementVector.elements();
+        Enumeration<StatischesObjekt> enumi = elementVector.elements();
 
         while (enumi.hasMoreElements()) {
-            final StatischesObjekt sO = (StatischesObjekt) (enumi.nextElement());
+            final StatischesObjekt sO = enumi.nextElement();
             sO.render(g, x, y);
         }
 

@@ -34,7 +34,7 @@ public class EffectTableModel extends AbstractTableModel {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List values;
+    private List<TrainWeekEffect> values;
     private String[] colNames = new String[9];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ public class EffectTableModel extends AbstractTableModel {
      *
      * @param values List of values to show in table.
      */
-    public EffectTableModel(List values) {
+    public EffectTableModel(List<TrainWeekEffect> values) {
         super();
         FORMATTER.setMaximumFractionDigits(2);
         FORMATTER.setMinimumFractionDigits(2);
@@ -90,7 +90,7 @@ public class EffectTableModel extends AbstractTableModel {
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        TrainWeekEffect effect = (TrainWeekEffect) values.get(rowIndex);
+        TrainWeekEffect effect = values.get(rowIndex);
 
         switch (columnIndex) {
             case 0:

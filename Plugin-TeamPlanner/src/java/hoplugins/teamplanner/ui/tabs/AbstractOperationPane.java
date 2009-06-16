@@ -76,7 +76,7 @@ public abstract class AbstractOperationPane extends JPanel {
     public AbstractOperationPane() {
         super();
         this.rowHeader = new Vector<String>();
-        this.model = new OperationTableModel(new Vector(), WeekHeader.instance().getValues());
+        this.model = new OperationTableModel(new Vector<Object>(), WeekHeader.instance().getValues());
         setRows();
         jbInit();
         setColumnWidths();

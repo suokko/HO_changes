@@ -65,7 +65,7 @@ public class XMLClubParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final java.util.Hashtable parseClubFromString(String inputStream) {
+    public final java.util.Hashtable<?, ?> parseClubFromString(String inputStream) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -80,7 +80,7 @@ public class XMLClubParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final java.util.Hashtable parseDetails(Document doc) {
+    protected final java.util.Hashtable<?, ?> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
         de.hattrickorganizer.model.MyHashtable club = new de.hattrickorganizer.model.MyHashtable();

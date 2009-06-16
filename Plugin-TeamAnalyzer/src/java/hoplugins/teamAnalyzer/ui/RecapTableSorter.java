@@ -29,7 +29,7 @@ public class RecapTableSorter extends AbstractTableSorter {
 	 * 
 	 */
 	private static final long serialVersionUID = -3606200720032237171L;
-	private List skills;
+	private List<String> skills;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ public class RecapTableSorter extends AbstractTableSorter {
      */
     public RecapTableSorter(TableModel tableModel) {
         super(tableModel);
-        skills = new ArrayList();
+        skills = new ArrayList<String>();
 
         for (int i = 1; i < 21; i++) {
             skills.add(Commons.getModel().getHelper().getNameForBewertung(i, false, false));
@@ -57,7 +57,7 @@ public class RecapTableSorter extends AbstractTableSorter {
      * @return TODO Missing Return Method Documentation
      */
     @Override
-	public Comparator getCustomComparator(int column) {
+	public Comparator<?> getCustomComparator(int column) {
         if ((column > 4) && (column < 12)) {
             return new Comparator() {
                     @Override

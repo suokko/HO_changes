@@ -58,10 +58,10 @@ public class FutureSettingPanel extends JPanel {
      */
     protected void resetFutureTraininhgs() {
         IHOMiniModel p_IHMM_miniModel = Commons.getModel();
-        List futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
+        List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
 
-        for (Iterator iter = futureTrainings.iterator(); iter.hasNext();) {
-            IFutureTrainingWeek train = (IFutureTrainingWeek) iter.next();
+        for (Iterator<IFutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
+            IFutureTrainingWeek train = iter.next();
             train.setIntensitaet(intensity.getSelectedIndex());
             train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
             train.setTyp(Trainings.getTrainingCode((String) training.getSelectedItem()));
@@ -78,8 +78,8 @@ public class FutureSettingPanel extends JPanel {
      */
     private void jbInit() {
         IHOMiniModel p_IHMM_miniModel = Commons.getModel();
-        List futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
-    	IFutureTrainingWeek firstFutureTraining = (IFutureTrainingWeek)futureTrainings.get(0);
+        List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
+    	IFutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
         training.setSelectedIndex(firstFutureTraining.getTyp());
         intensity = new IntensityComboBox();

@@ -828,7 +828,7 @@ public final class UserParameter extends Configuration {
 		return map;
 	}
 
-	public void setValues(HashMap values) {
+	public void setValues(HashMap<String,String> values) {
 		FG_ANGESCHLAGEN = getColorValue(values,"FG_ANGESCHLAGEN");
 		FG_GESPERRT = getColorValue(values,"FG_GESPERRT");
 		FG_STANDARD = getColorValue(values,"FG_STANDARD");

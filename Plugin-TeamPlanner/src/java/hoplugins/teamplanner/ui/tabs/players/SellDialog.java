@@ -41,8 +41,8 @@ public class SellDialog extends JDialog {
     private CallableListener caller;
     private HTWeek week;
     private JPanel panel = new JPanel();
-    private List players = null;
-    private List soldPlayers = null;
+    private List<ISpieler> players = null;
+    private List<ISpieler> soldPlayers = null;
     private int row = -1;
     private int selected;
 
@@ -96,8 +96,8 @@ public class SellDialog extends JDialog {
         panel.setLayout(new GridLayout(players.size() + soldPlayers.size(), 2));
         row = 0;
 
-        for (Iterator iter = players.iterator(); iter.hasNext();) {
-            ISpieler tp = (ISpieler) iter.next();
+        for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
+            ISpieler tp = iter.next();
             JLabel label = new JLabel();
             label.setText(tp.getName());
             panel.add(label);
@@ -116,8 +116,8 @@ public class SellDialog extends JDialog {
             row++;
         }
 
-        for (Iterator iter = soldPlayers.iterator(); iter.hasNext();) {
-            ISpieler tp = (ISpieler) iter.next();
+        for (Iterator<ISpieler> iter = soldPlayers.iterator(); iter.hasNext();) {
+            ISpieler tp = iter.next();
             JLabel label = new JLabel();
             label.setText(tp.getName());
             panel.add(label);

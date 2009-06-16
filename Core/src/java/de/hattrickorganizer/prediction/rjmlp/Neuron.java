@@ -20,10 +20,10 @@ class Neuron {
 	private int applyFormula = SIGMOID;
 	private Layer activeLayer;
 
-	private ArrayList synapses;
+	private ArrayList<Synapse> synapses;
 
 	Neuron () {
-		synapses = new ArrayList();
+		synapses = new ArrayList<Synapse>();
 	}
 
 	void setActiveLayer (Layer activeLayer) {
@@ -117,14 +117,14 @@ class Neuron {
 	}
 
 	Synapse getSynapse (int num) {
-		return (Synapse)synapses.get(num);
+		return synapses.get(num);
 	}
 
 	int getSynapseCount () {
 		return synapses.size();
 	}
 
-	ArrayList getSynapseList () {
+	ArrayList<Synapse> getSynapseList () {
 		return synapses;
 	}
 

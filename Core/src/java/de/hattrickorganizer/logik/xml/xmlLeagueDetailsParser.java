@@ -35,7 +35,7 @@ public class xmlLeagueDetailsParser {
     /////////////////////////////////////////////////////////////////////////////////    
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
-    public final Hashtable parseLeagueDetailsFromString(String inputStream, String teamID) {
+    public final Hashtable<?, ?> parseLeagueDetailsFromString(String inputStream, String teamID) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -55,7 +55,7 @@ public class xmlLeagueDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Hashtable parseDetails(Document doc, String teamID) {
+    protected final Hashtable<?, ?> parseDetails(Document doc, String teamID) {
         Element ele = null;
         Element root = null;
         final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();

@@ -68,8 +68,8 @@ public class DeletePanel extends JPanel {
     private void fillCombo() {
         teams.removeAllItems();
 
-        for (Iterator iter = menu.teams.iterator(); iter.hasNext();) {
-            Team element = (Team) iter.next();
+        for (Iterator<Team> iter = menu.teams.iterator(); iter.hasNext();) {
+            Team element = iter.next();
 
             teams.addItem(element);
         }

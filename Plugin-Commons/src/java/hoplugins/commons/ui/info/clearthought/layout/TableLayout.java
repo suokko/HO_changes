@@ -164,7 +164,7 @@ public class TableLayout implements java.awt.LayoutManager2,
     protected static Method methodGetComponentOrientation;
 
     /** List of components and their sizes */
-    protected LinkedList list;
+    protected LinkedList<Entry> list;
 
     /**
      * Offsets of crs in pixels.  The left boarder of column n is at crOffset[C][n] and the right
@@ -337,10 +337,10 @@ public class TableLayout implements java.awt.LayoutManager2,
         }
 
         // Find and update constraints for the given component
-        ListIterator iterator = list.listIterator(0);
+        ListIterator<Entry> iterator = list.listIterator(0);
 
         while (iterator.hasNext()) {
-            Entry entry = (Entry) iterator.next();
+            Entry entry = iterator.next();
 
             if (entry.component == component) {
                 iterator.set(new Entry(component, constraint));
@@ -361,10 +361,10 @@ public class TableLayout implements java.awt.LayoutManager2,
      *         the given component is null or is not found, null is returned.
      */
     public TableLayoutConstraints getConstraints(Component component) {
-        ListIterator iterator = list.listIterator(0);
+        ListIterator<Entry> iterator = list.listIterator(0);
 
         while (iterator.hasNext()) {
-            Entry entry = (Entry) iterator.next();
+            Entry entry = iterator.next();
 
             if (entry.component == component) {
                 return new TableLayoutConstraints(entry.cr1[C], entry.cr1[R],
@@ -414,14 +414,14 @@ public class TableLayout implements java.awt.LayoutManager2,
      *
      * @see #getOverlappingEntry
      */
-    public java.util.List getInvalidEntry() {
-        LinkedList listInvalid = new LinkedList();
+    public java.util.List<Object> getInvalidEntry() {
+        LinkedList<Object> listInvalid = new LinkedList<Object>();
 
         try {
-            ListIterator iterator = list.listIterator(0);
+            ListIterator<Entry> iterator = list.listIterator(0);
 
             while (iterator.hasNext()) {
-                Entry entry = (Entry) iterator.next();
+                Entry entry = iterator.next();
 
                 if ((entry.cr1[R] < 0) || (entry.cr1[C] < 0)
                     || (entry.cr2[R] >= crSpec[R].length)
@@ -493,8 +493,8 @@ public class TableLayout implements java.awt.LayoutManager2,
      *
      * @see #getInvalidEntry
      */
-    public java.util.List getOverlappingEntry() {
-        LinkedList listOverlapping = new LinkedList();
+    public java.util.List<Object> getOverlappingEntry() {
+        LinkedList<Object> listOverlapping = new LinkedList<Object>();
 
         try {
             // Count contraints
@@ -506,7 +506,7 @@ public class TableLayout implements java.awt.LayoutManager2,
             }
 
             // Put entries in an array
-            Entry[] entry = (Entry[]) list.toArray(new Entry[numEntry]);
+            Entry[] entry = list.toArray(new Entry[numEntry]);
 
             // Check all components
             for (int knowUnique = 1; knowUnique < numEntry; knowUnique++) {
@@ -757,11 +757,11 @@ public class TableLayout implements java.awt.LayoutManager2,
         crSpec[z] = cr;
 
         // Move all components that are below the new cr
-        ListIterator iterator = list.listIterator(0);
+        ListIterator<Entry> iterator = list.listIterator(0);
 
         while (iterator.hasNext()) {
             // Get next entry
-            Entry entry = (Entry) iterator.next();
+            Entry entry = iterator.next();
 
             // Is the first cr below the new cr
             if (entry.cr1[z] >= i) {
@@ -834,11 +834,11 @@ public class TableLayout implements java.awt.LayoutManager2,
         for (int counter = 0; counter < component.length; counter++) {
             try {
                 // Get the entry for the next component
-                ListIterator iterator = list.listIterator(0);
+                ListIterator<Entry> iterator = list.listIterator(0);
                 Entry entry = null;
 
                 while (iterator.hasNext()) {
-                    entry = (Entry) iterator.next();
+                    entry = iterator.next();
 
                     if (entry.component == component[counter]) {
                         break;
@@ -961,10 +961,10 @@ public class TableLayout implements java.awt.LayoutManager2,
      */
     public void removeLayoutComponent(Component component) {
         // Remove the component
-        ListIterator iterator = list.listIterator(0);
+        ListIterator<Entry> iterator = list.listIterator(0);
 
         while (iterator.hasNext()) {
-            Entry entry = (Entry) iterator.next();
+            Entry entry = iterator.next();
 
             if (entry.component == component) {
                 iterator.remove();
@@ -1189,11 +1189,11 @@ public class TableLayout implements java.awt.LayoutManager2,
 
                 // Find maximum preferred/min width of all components completely
                 // or partially contained within this cr
-                ListIterator iterator = list.listIterator(0);
+                ListIterator<Entry> iterator = list.listIterator(0);
 
 nextComponent: 
                 while (iterator.hasNext()) {
-                    Entry entry = (Entry) iterator.next();
+                    Entry entry = iterator.next();
 
                     // Skip invalid entries
                     if ((entry.cr1[z] < 0) || (entry.cr2[z] >= numCr)) {
@@ -1321,7 +1321,7 @@ nextComponent:
     protected Dimension calculateLayoutSize(Container container,
         double typeOfSize) {
         //  Get preferred/minimum sizes
-        Entry[] entryList = (Entry[]) list.toArray(new Entry[list.size()]);
+        Entry[] entryList = list.toArray(new Entry[list.size()]);
         int numEntry = entryList.length;
         Dimension[] prefMinSize = new Dimension[numEntry];
 
@@ -1703,11 +1703,11 @@ nextComponent:
         crSpec[z] = cr;
 
         // Move all components that are to below the row deleted
-        ListIterator iterator = list.listIterator(0);
+        ListIterator<Entry> iterator = list.listIterator(0);
 
         while (iterator.hasNext()) {
             // Get next entry
-            Entry entry = (Entry) iterator.next();
+            Entry entry = iterator.next();
 
             // Is the first row below the new row
             if (entry.cr1[z] > i) {
@@ -1770,7 +1770,7 @@ nextComponent:
         }
 
         // Create an empty list of components
-        list = new LinkedList();
+        list = new LinkedList<Entry>();
 
         // Indicate that the cell sizes are not known
         dirty = true;

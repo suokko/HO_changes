@@ -26,7 +26,7 @@ public class ChangesTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -9082549798814304017L;
-	private List values;
+	private List<SkillChange> values;
     private String[] colNames = new String[7];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public class ChangesTableModel extends AbstractTableModel {
      *
      * @param values List of values to show in table.
      */
-    public ChangesTableModel(List values) {
+    public ChangesTableModel(List<SkillChange> values) {
         super();
         this.colNames[0] = PluginProperty.getString("Week"); //$NON-NLS-1$
         this.colNames[1] = Commons.getModel().getLanguageString("Season"); //$NON-NLS-1$
@@ -77,7 +77,7 @@ public class ChangesTableModel extends AbstractTableModel {
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        SkillChange change = (SkillChange) values.get(rowIndex);
+        SkillChange change = values.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
