@@ -72,8 +72,8 @@ public class OperationTableRenderer extends DefaultTableCellRenderer {
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(cell.getOperationList().size(), 1));
 
-                for (Iterator iter = cell.getOperationList().iterator(); iter.hasNext();) {
-                    OperationData data = (OperationData) iter.next();
+                for (Iterator<OperationData> iter = cell.getOperationList().iterator(); iter.hasNext();) {
+                    OperationData data = iter.next();
                     JLabel label = new JLabel();
                     label.setText(data.getInner().getDescription());
                     panel.add(label);

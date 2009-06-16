@@ -29,7 +29,7 @@ import java.util.Map;
 public class TeamManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Map teams = null;
+    private static Map<String, Team> teams = null;
     private static boolean updated = false;
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class TeamManager {
         IMatchKurzInfo[] friendlyMatches = Commons.getModel().getMatchesKurzInfo(teamId,
                                                                                  ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
                                                                                  false);
-        List l = new ArrayList();
+        List<IMatchKurzInfo> l = new ArrayList<IMatchKurzInfo>();
 
         l.addAll(Arrays.asList(friendlyMatches));
         l.addAll(Arrays.asList(cupMatches));
@@ -83,9 +83,9 @@ public class TeamManager {
         ISpielplan league = getDivisionMatches();
 
         if (league != null) {
-            List matches = league.getPaarungenBySpieltag(Commons.getModel().getBasics().getSpieltag());
+            List<?> matches = league.getPaarungenBySpieltag(Commons.getModel().getBasics().getSpieltag());
 
-            for (Iterator iter = matches.iterator(); iter.hasNext();) {
+            for (Iterator<?> iter = matches.iterator(); iter.hasNext();) {
                 IPaarung element = (IPaarung) iter.next();
 
                 if (element.getHeimId() == Commons.getModel().getBasics().getTeamId()) {
@@ -119,7 +119,7 @@ public class TeamManager {
      * @return TODO Missing Return Method Documentation
      */
     public static Team getTeam(int teamId) {
-        return (Team) teams.get(teamId + "");
+        return teams.get(teamId + "");
     }
 
     /**
@@ -142,14 +142,14 @@ public class TeamManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static Collection getTeams() {
+    public static Collection<Team> getTeams() {
         if (teams == null) {
-            teams = new HashMap();
+            teams = new HashMap<String, Team>();
 
-            List l = loadDivisionTeams();
+            List<Team> l = loadDivisionTeams();
 
-            for (Iterator iter = l.iterator(); iter.hasNext();) {
-                Team element = (Team) iter.next();
+            for (Iterator<Team> iter = l.iterator(); iter.hasNext();) {
+                Team element = iter.next();
 
                 teams.put(element.getTeamId() + "", element);
             }
@@ -234,7 +234,7 @@ public class TeamManager {
         IMatchKurzInfo[] qualificationMatches = Commons.getModel().getMatchesKurzInfo(teamId,
                                                                                       ISpielePanel.NUR_EIGENE_PFLICHTSPIELE,
                                                                                       false);
-        List l = new ArrayList();
+        List<IMatchKurzInfo> l = new ArrayList<IMatchKurzInfo>();
 
         l.addAll(Arrays.asList(qualificationMatches));
 
@@ -265,14 +265,14 @@ public class TeamManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private static List loadDivisionTeams() {
-        List loadedTeams = new ArrayList();
+    private static List<Team> loadDivisionTeams() {
+        List<Team> loadedTeams = new ArrayList<Team>();
         ISpielplan league = getDivisionMatches();
 
         if (league != null) {
-            List eintraege = league.getTabelle().getEintraege();
+            List<?> eintraege = league.getTabelle().getEintraege();
 
-            for (Iterator iter = eintraege.iterator(); iter.hasNext();) {
+            for (Iterator<?> iter = eintraege.iterator(); iter.hasNext();) {
                 ILigaTabellenEintrag element = (ILigaTabellenEintrag) iter.next();
                 Team t = new Team();
 

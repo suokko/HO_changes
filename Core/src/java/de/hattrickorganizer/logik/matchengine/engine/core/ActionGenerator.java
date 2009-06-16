@@ -65,14 +65,14 @@ public class ActionGenerator extends BaseActionGenerator {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public final Action[] predict(int minute) {
-		final List actions = new ArrayList();
+		final List<Action> actions = new ArrayList<Action>();
 		actions.addAll(calculateActions(minute, homeTeamGameData, awayTeamGameData));
 		actions.addAll(calculateActions(minute, awayTeamGameData, homeTeamGameData));
-		return (Action[]) actions.toArray(new Action[0]);
+		return actions.toArray(new Action[0]);
 	}
 
 	public Action[] simulate() {
-		final List actions = new ArrayList();
+		final List<Action> actions = new ArrayList<Action>();
 		int midfieldPossession = (int) getEffectiveness(homeTeamGameData.getRatings().getMidfield());
 		int pressing = getPressing(homeTeamGameData, awayTeamGameData);
 		int succesfulPressing = 0;
@@ -97,7 +97,7 @@ public class ActionGenerator extends BaseActionGenerator {
 				actions.addAll(calculateAction(awayTeamGameData, homeTeamGameData));		
 			}
 		}						
-		return (Action[]) actions.toArray(new Action[0]);
+		return actions.toArray(new Action[0]);
 	}
 
 	/**
@@ -130,8 +130,8 @@ public class ActionGenerator extends BaseActionGenerator {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	private List calculateActions(int minute, TeamGameData team, TeamGameData opponent) {
-		final List actions = new ArrayList();
+	private List<Action> calculateActions(int minute, TeamGameData team, TeamGameData opponent) {
+		final List<Action> actions = new ArrayList<Action>();
 		boolean hasChance = hasChance(team, minute);
 
 		if (hasChance) {
@@ -176,8 +176,8 @@ public class ActionGenerator extends BaseActionGenerator {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	private List calculateAction(TeamGameData team, TeamGameData opponent) {
-		final List actions = new ArrayList();
+	private List<Action> calculateAction(TeamGameData team, TeamGameData opponent) {
+		final List<Action> actions = new ArrayList<Action>();
 		final Action action = new Action();
 		action.setArea(getArea(team.getTacticType(), team.getTacticLevel()));
 		action.setType(0);

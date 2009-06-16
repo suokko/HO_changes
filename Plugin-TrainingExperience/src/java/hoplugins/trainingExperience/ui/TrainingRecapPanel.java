@@ -127,11 +127,11 @@ public class TrainingRecapPanel extends JPanel {
         }
 
         // Sort the players
-        SortedSet sorted = ListUtil.getSortedSet(players, new TrainingComparator());
+        SortedSet<Vector<String>>  sorted = ListUtil.getSortedSet(players, new TrainingComparator());
 
         // and add them to the model
-        for (Iterator iter = sorted.iterator(); iter.hasNext();) {
-            Vector row = (Vector) iter.next();
+        for (Iterator<Vector<String>>  iter = sorted.iterator(); iter.hasNext();) {
+            Vector<String> row = iter.next();
 
             tableModel.addRow(row);
         }

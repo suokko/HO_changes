@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author Draghetto
  */
-public class FinancesOfWeek implements Comparable {
+public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Missing Parameter Documentation */
@@ -402,8 +402,8 @@ public class FinancesOfWeek implements Comparable {
      *
      * @return Missing Return Method Documentation
      */
-    public int compareTo(Object obj) {
-        Date day = ((FinancesOfWeek) obj).calendar.getTime();
+    public int compareTo(FinancesOfWeek obj) {
+        Date day = obj.calendar.getTime();
 
         return day.compareTo(calendar.getTime());
     }

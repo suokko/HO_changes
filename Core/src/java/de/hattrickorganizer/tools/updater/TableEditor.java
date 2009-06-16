@@ -37,7 +37,7 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
 	private static final long serialVersionUID = 204969955618566382L;
 
 	/** TODO Missing Parameter Documentation */
-    protected HashMap editors;
+    protected HashMap<Integer,TableCellEditor> editors;
 
     /** TODO Missing Parameter Documentation */
     protected TableCellEditor defaultEditor;
@@ -52,7 +52,7 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
      * Creates a new TableEditor object.
      */
     public TableEditor() {
-        editors = new HashMap();
+        editors = new HashMap<Integer,TableCellEditor>();
 
         textField = new JTextField();
         textField.setBorder(null);

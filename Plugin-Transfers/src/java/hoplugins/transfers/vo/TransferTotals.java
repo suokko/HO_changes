@@ -29,11 +29,11 @@ public class TransferTotals {
      *
      * @return TransferTotals object containing totals for the list of transfers.
      */
-    public static TransferTotals calculateTotals(List transfers) {
+    public static TransferTotals calculateTotals(List<PlayerTransfer> transfers) {
         final TransferTotals totals = new TransferTotals();
 
-        for (Iterator iter = transfers.iterator(); iter.hasNext();) {
-            final PlayerTransfer transfer = (PlayerTransfer) iter.next();
+        for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+            final PlayerTransfer transfer = iter.next();
 
             if (transfer.getType() == PlayerTransfer.BUY) {
                 totals.number_buy++;

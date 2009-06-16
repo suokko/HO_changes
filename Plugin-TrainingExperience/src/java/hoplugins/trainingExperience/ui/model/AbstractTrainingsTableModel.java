@@ -5,6 +5,7 @@ import hoplugins.commons.utils.PluginProperty;
 
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
+import plugins.ITrainingWeek;
 
 import java.util.Vector;
 
@@ -113,7 +114,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return actual training vector
      */
-    public Vector<IFutureTrainingWeek> getTrainingsData() {
+    public Vector getTrainingsData() {
         return p_V_trainingsVector;
     }
 

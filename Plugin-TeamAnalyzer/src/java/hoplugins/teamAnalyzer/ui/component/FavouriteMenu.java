@@ -46,10 +46,10 @@ public class FavouriteMenu extends JMenu {
     public JMenuItem itemDelete = new JMenuItem(Commons.getModel().getLanguageString("loeschen"));
 
     /** List of favourite team menu items */
-    public List items;
+    public List<JMenuItem> items;
 
     /** List of favourite team objects */
-    public List teams;
+    public List<Team> teams;
 
     /** Reference to itself */
     private FavouriteMenu me;
@@ -72,9 +72,9 @@ public class FavouriteMenu extends JMenu {
      */
     private void jbInit() {
         teams = dao.getTeams();
-        items = new ArrayList();
+        items = new ArrayList<JMenuItem>();
 
-        for (Iterator iter = teams.iterator(); iter.hasNext();) {
+        for (Iterator<?> iter = teams.iterator(); iter.hasNext();) {
             Team element = (Team) iter.next();
             JMenuItem item = new JMenuItem(element.getName());
 

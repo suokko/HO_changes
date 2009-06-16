@@ -5,6 +5,7 @@ import hoplugins.Commons;
 
 import hoplugins.teamAnalyzer.SystemManager;
 import hoplugins.teamAnalyzer.manager.PlayerDataManager;
+import hoplugins.teamAnalyzer.report.TacticReport;
 import hoplugins.teamAnalyzer.util.NameUtil;
 import hoplugins.teamAnalyzer.vo.PlayerInfo;
 import hoplugins.teamAnalyzer.vo.SpotLineup;
@@ -215,7 +216,7 @@ public class PlayerPanel extends JPanel {
             updateRatingPanel(0);
             positionImage.setIcon(Commons.getModel().getHelper().getImage4Position(0, (byte) 0));
             specialEventImage.setIcon(null);
-            tacticPanel.reload(new ArrayList());
+            tacticPanel.reload(new ArrayList<TacticReport>());
         }
     }
 

@@ -420,11 +420,11 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
     private Date getLastSkillupDate(int trainskill, Date trainTime) {
         //Feststellung wann die relevanten Skillupswaren
         //get relevant skillups for calculation period
-        final Vector levelups = getSpieler().getAllLevelUp(trainskill);
+        final Vector<Object[]> levelups = getSpieler().getAllLevelUp(trainskill);
         Date skilluptime = new Date(0);
 
-        for (Iterator it = levelups.iterator(); it.hasNext();) {
-            final Object[] aobj = (Object[]) it.next();
+        for (Iterator<Object[]> it = levelups.iterator(); it.hasNext();) {
+            final Object[] aobj = it.next();
             final Boolean bLevel = (Boolean) aobj[1];
 
             if (bLevel.booleanValue() == true) {

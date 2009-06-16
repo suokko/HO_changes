@@ -48,7 +48,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     private static final int PLUGIN_ID = 42;
 
     /** Lists of Feedback Objects, one list per FeedbackType  */
-    private List[] feedbackObjects;
+    private List<FeedbackObject>[] feedbackObjects;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -202,10 +202,10 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
      * @param feedbackObjects
      * @return
      */
-    private boolean uploadFeedbackList (List feedbackObjects) {
+    private boolean uploadFeedbackList (List<FeedbackObject> feedbackObjects) {
     	boolean allUploaded = true;
-        for (Iterator iter = feedbackObjects.iterator(); iter.hasNext();) {
-            final FeedbackObject fo = (FeedbackObject) iter.next();
+        for (Iterator<FeedbackObject> iter = feedbackObjects.iterator(); iter.hasNext();) {
+            final FeedbackObject fo = iter.next();
 
             if (!FeedbackStatusDAO.isUploaded(fo)) {
             	int uploadStatus = upload(fo);

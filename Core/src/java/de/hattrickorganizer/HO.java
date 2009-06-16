@@ -34,7 +34,7 @@ public class HO {
      * Globally configure the font (size).
      */
     public static void setUIFont (javax.swing.plaf.FontUIResource f){
-    	Enumeration keys = UIManager.getDefaults().keys();
+    	Enumeration<Object> keys = UIManager.getDefaults().keys();
     	while (keys.hasMoreElements()) {
     		Object key = keys.nextElement();
     		Object value = UIManager.get (key);

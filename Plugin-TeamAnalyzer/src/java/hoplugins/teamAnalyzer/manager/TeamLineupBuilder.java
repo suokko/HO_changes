@@ -72,11 +72,11 @@ public class TeamLineupBuilder {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private Collection getAllTactics(Collection positions) {
-        Collection tactics = new ArrayList();
+    private Collection<TacticReport> getAllTactics(Collection<PositionReport> positions) {
+        Collection<TacticReport> tactics = new ArrayList<TacticReport>();
 
-        for (Iterator iter = positions.iterator(); iter.hasNext();) {
-            PositionReport positionReport = (PositionReport) iter.next();
+        for (Iterator<PositionReport> iter = positions.iterator(); iter.hasNext();) {
+            PositionReport positionReport = iter.next();
 
             tactics.addAll(positionReport.getTacticReports());
         }
@@ -91,7 +91,7 @@ public class TeamLineupBuilder {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private PlayerAppearance getPlayer(Collection collection) {
+    private PlayerAppearance getPlayer(Collection<PlayerAppearance> collection) {
         PlayerAppearance[] appearances = getSortedAppearance(collection);
 
         if (appearances.length == 1) {
@@ -163,14 +163,14 @@ public class TeamLineupBuilder {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private PlayerAppearance[] getSortedAppearance(Collection appearance) {
-        SortedSet sorted = ListUtil.getSortedSet(appearance, new AppearanceComparator());
+    private PlayerAppearance[] getSortedAppearance(Collection<PlayerAppearance> appearance) {
+        SortedSet<PlayerAppearance> sorted = ListUtil.getSortedSet(appearance, new AppearanceComparator());
         int size = sorted.size();
         PlayerAppearance[] array = new PlayerAppearance[size];
         int i = 0;
 
-        for (Iterator iter = sorted.iterator(); iter.hasNext();) {
-            PlayerAppearance element = (PlayerAppearance) iter.next();
+        for (Iterator<PlayerAppearance> iter = sorted.iterator(); iter.hasNext();) {
+            PlayerAppearance element = iter.next();
 
             array[i] = element;
             i++;
@@ -186,14 +186,14 @@ public class TeamLineupBuilder {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private TacticReport[] getSortedTactics(Collection tactics) {
-        SortedSet sorted = ListUtil.getSortedSet(tactics, new PerformanceComparator());
+    private TacticReport[] getSortedTactics(Collection<TacticReport> tactics) {
+        SortedSet<TacticReport> sorted = ListUtil.getSortedSet(tactics, new PerformanceComparator());
         int size = sorted.size();
         TacticReport[] tacticsReport = new TacticReport[size];
         int i = 0;
 
-        for (Iterator iter = sorted.iterator(); iter.hasNext();) {
-            TacticReport element = (TacticReport) iter.next();
+        for (Iterator<TacticReport> iter = sorted.iterator(); iter.hasNext();) {
+            TacticReport element = iter.next();
 
             tacticsReport[i] = element;
             i++;
@@ -221,7 +221,7 @@ public class TeamLineupBuilder {
         spotLineup.setAppearance(appearance.getAppearance());
         spotLineup.setStatus(appearance.getStatus());
 
-        Collection tacticsReports = getAllTactics(spotReport.getPositionReports());
+        Collection<TacticReport> tacticsReports = getAllTactics(spotReport.getPositionReports());
         TacticReport[] tacticsReport = getSortedTactics(tacticsReports);
 
         spotLineup.setTactics(Arrays.asList(tacticsReport));

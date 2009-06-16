@@ -9,7 +9,7 @@ import hoplugins.commons.utils.HTCalendar;
  *
  * @author Draghetto
  */
-public class HTWeek implements Comparable {
+public class HTWeek implements Comparable<HTWeek> {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** Missing Parameter Documentation */
@@ -118,8 +118,8 @@ public class HTWeek implements Comparable {
      *
      * @return Missing Return Method Documentation
      */
-    public int compareTo(Object obj) {
-        HTWeek week2 = (HTWeek) obj;
+    public int compareTo(HTWeek obj) {
+        HTWeek week2 = obj;
 
         if (season > week2.season) {
             return 1;

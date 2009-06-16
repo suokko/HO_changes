@@ -8,6 +8,7 @@ import hoplugins.commons.utils.PluginProperty;
 import hoplugins.trainingExperience.dao.EffectDAO;
 import hoplugins.trainingExperience.ui.model.EffectTableModel;
 import hoplugins.trainingExperience.ui.renderer.SkillupsTableCellRenderer;
+import hoplugins.trainingExperience.vo.TrainWeekEffect;
 
 import java.awt.BorderLayout;
 
@@ -62,7 +63,7 @@ public class EffectPanel extends JPanel {
      *
      * @param values List of values
      */
-    private void setEffectModel(List values) {
+    private void setEffectModel(List<TrainWeekEffect> values) {
         effectTable.setModel(new EffectTableModel(values));
         effectTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         effectTable.getColumnModel().getColumn(1).setPreferredWidth(50);

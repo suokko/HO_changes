@@ -34,7 +34,7 @@ public class TableRowHeader extends JList {
      * @param table Missing Constructuor Parameter Documentation
      * @param header Missing Constructuor Parameter Documentation
      */
-    public TableRowHeader(JTable table, List header) {
+    public TableRowHeader(JTable table, List<String> header) {
         super(new TableRowHeaderModel(table));
         this.table = table;
         setFixedCellHeight(table.getRowHeight());

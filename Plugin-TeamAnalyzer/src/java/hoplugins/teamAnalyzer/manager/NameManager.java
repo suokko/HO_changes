@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 public class NameManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Hashtable names = new Hashtable();
+    private static Hashtable<String, String> names = new Hashtable<String, String>();
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -29,8 +29,8 @@ public class NameManager {
     public static String getLastName(String name) {
         String lastName = "";
 
-        for (Iterator iter = names.keySet().iterator(); iter.hasNext();) {
-            String storedName = (String) iter.next();
+        for (Iterator<String> iter = names.keySet().iterator(); iter.hasNext();) {
+            String storedName = iter.next();
 
             if (name.indexOf(storedName) > 0) {
                 return storedName;
@@ -60,8 +60,8 @@ public class NameManager {
      *
      * @param nameList TODO Missing Method Parameter Documentation
      */
-    public static void addNames(List nameList) {
-        for (Iterator iter = nameList.iterator(); iter.hasNext();) {
+    public static void addNames(List<?> nameList) {
+        for (Iterator<?> iter = nameList.iterator(); iter.hasNext();) {
             String name = (String) iter.next();
 
             names.put(name, name);
@@ -72,6 +72,6 @@ public class NameManager {
      * TODO Missing Method Documentation
      */
     public static void clean() {
-        names = new Hashtable();
+        names = new Hashtable<String, String>();
     }
 }

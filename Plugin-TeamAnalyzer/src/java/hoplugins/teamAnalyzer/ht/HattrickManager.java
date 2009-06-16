@@ -77,7 +77,7 @@ public class HattrickManager {
             return;
         }
 
-        List players = new ArrayList();
+        List<PlayerInfo> players = new ArrayList<PlayerInfo>();
         IXMLParser parser = Commons.getModel().getXMLParser();
         Document dom = parser.parseString(xml);
         Node matchesList = dom.getElementsByTagName("PlayerList").item(0);

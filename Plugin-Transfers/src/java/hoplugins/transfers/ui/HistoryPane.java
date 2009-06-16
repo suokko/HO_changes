@@ -10,6 +10,7 @@ import hoplugins.commons.utils.PluginProperty;
 import hoplugins.transfers.dao.DividerDAO;
 import hoplugins.transfers.dao.TransfersDAO;
 import hoplugins.transfers.ui.controller.DividerListener;
+import hoplugins.transfers.vo.PlayerTransfer;
 import hoplugins.transfers.vo.TransferTotals;
 
 import java.awt.BorderLayout;
@@ -50,7 +51,7 @@ public class HistoryPane extends JSplitPane {
     private JLabel amountTransfersIn = new JLabel("", SwingConstants.RIGHT);
     private JLabel amountTransfersOut = new JLabel("", SwingConstants.RIGHT);
     private JSpinner spinner = new JSpinner();
-    private List transfers;
+    private List<PlayerTransfer> transfers;
     private PlayerDetailPanel playerDetailPanel = new PlayerDetailPanel();
     private TeamTransfersPane transferPane;
     private TotalsPanel pricePanel;

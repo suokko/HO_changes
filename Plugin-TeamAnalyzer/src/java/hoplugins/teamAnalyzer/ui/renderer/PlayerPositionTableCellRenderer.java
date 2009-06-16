@@ -27,7 +27,7 @@ public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
 
     /** TODO Missing Parameter Documentation */
     private static final long serialVersionUID = 3258412837305923127L;
-    private static Map map;
+    private static Map<Object,ImageIcon> map;
     private static IHelper helper;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
         super();
 
         if (map == null) {
-            map = new HashMap();
+            map = new HashMap<Object,ImageIcon>();
         }
 
         if (helper == null) {
@@ -67,7 +67,7 @@ public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
 
             // Check for cached icon first.
             if (map.containsKey(value)) {
-                icon = (ImageIcon) map.get(value);
+                icon = map.get(value);
             } else {
                 // Make new icon and cache it.
                 icon = Commons.getModel().getHelper().getImage4Position(helper.getPosition(pos),

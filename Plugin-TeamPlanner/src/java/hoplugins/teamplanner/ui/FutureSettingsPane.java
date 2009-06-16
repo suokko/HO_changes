@@ -32,7 +32,7 @@ public class FutureSettingsPane extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -7287375759347138254L;
-	private List futureYears = new ArrayList();
+	private List<YearSettingPane> futureYears = new ArrayList<YearSettingPane>();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ public class FutureSettingsPane extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     private YearSettingPane getYearPane(int index) {
-        return ((YearSettingPane) futureYears.get(index));
+        return futureYears.get(index);
     }
 
     /**

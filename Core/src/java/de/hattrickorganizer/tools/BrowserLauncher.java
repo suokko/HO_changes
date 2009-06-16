@@ -71,22 +71,22 @@ public class BrowserLauncher {
     private static boolean loadedWithoutErrors;
 
     /** The com.apple.mrj.MRJFilevapEngine class */
-    private static Class mrjFilevapEngineClass;
+    private static Class<?> mrjFilevapEngineClass;
 
     /** The com.apple.mrj.MRJOSType class */
-    private static Class mrjOSTypeClass;
+    private static Class<?> mrjOSTypeClass;
 
     /** The com.apple.MacOS.AEDesc class */
-    private static Class aeDescClass;
+    private static Class<?> aeDescClass;
 
     /** The init(int) method of com.apple.MacOS.AETarget */
-    private static Constructor aeTargetConstructor;
+    private static Constructor<?> aeTargetConstructor;
 
     /** The init(int, int, int) method of com.apple.MacOS.AppleEvent */
-    private static Constructor appleEventConstructor;
+    private static Constructor<?> appleEventConstructor;
 
     /** The init(String) method of com.apple.MacOS.AEDesc */
-    private static Constructor aeDescConstructor;
+    private static Constructor<?> aeDescConstructor;
 
     /** The findFolder method of com.apple.mrj.MRJFilevapEngine */
     private static Method findFolder;
@@ -446,10 +446,10 @@ public class BrowserLauncher {
             case MRJ_2_0:
 
                 try {
-                    final Class aeTargetClass = Class.forName("com.apple.MacOS.AETarget");
-                    final Class osvapEngineClass = Class.forName("com.apple.MacOS.OSvapEngine");
-                    final Class appleEventClass = Class.forName("com.apple.MacOS.AppleEvent");
-                    final Class aeClass = Class.forName("com.apple.MacOS.ae");
+                    final Class<?> aeTargetClass = Class.forName("com.apple.MacOS.AETarget");
+                    final Class<?> osvapEngineClass = Class.forName("com.apple.MacOS.OSvapEngine");
+                    final Class<?> appleEventClass = Class.forName("com.apple.MacOS.AppleEvent");
+                    final Class<?> aeClass = Class.forName("com.apple.MacOS.ae");
                     aeDescClass = Class.forName("com.apple.MacOS.AEDesc");
 
                     aeTargetConstructor = aeTargetClass.getDeclaredConstructor(new Class[]{int.class});
@@ -530,8 +530,8 @@ public class BrowserLauncher {
             case MRJ_3_0:
 
                 try {
-                    final Class linker = Class.forName("com.apple.mrj.jdirect.Linker");
-                    final Constructor constructor = linker.getConstructor(new Class[]{Class.class});
+                    final Class<?> linker = Class.forName("com.apple.mrj.jdirect.Linker");
+                    final Constructor<?> constructor = linker.getConstructor(new Class[]{Class.class});
                     linkage = constructor.newInstance(new Object[]{BrowserLauncher.class});
                 } catch (ClassNotFoundException cnfe) {
                     errorMessage = cnfe.getMessage();

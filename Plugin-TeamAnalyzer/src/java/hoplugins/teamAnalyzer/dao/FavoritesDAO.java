@@ -56,8 +56,8 @@ public class FavoritesDAO {
      *
      * @return List of Teams Object
      */
-    public List getTeams() {
-        List list = new ArrayList();
+    public List<Team> getTeams() {
+        List<Team> list = new ArrayList<Team>();
         String query = "select * from TEAMANALYZER_FAVORITES";
         ResultSet rs = Commons.getModel().getAdapter().executeQuery(query);
 
@@ -70,7 +70,7 @@ public class FavoritesDAO {
                 list.add(team);
             }
         } catch (SQLException e) {
-            return new ArrayList();
+            return new ArrayList<Team>();
         }
 
         return list;

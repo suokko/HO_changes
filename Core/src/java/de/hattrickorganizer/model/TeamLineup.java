@@ -16,7 +16,7 @@ public class TeamLineup implements ITeamLineup {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of players divided by area */
-    private List[] players = new List[4];
+    private List<String>[] players = new List[4];
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ public class TeamLineup implements ITeamLineup {
      */
     public TeamLineup() {
         for (int i = 0; i < 4; i++) {
-            players[i] = new ArrayList();
+            players[i] = new ArrayList<String>();
         }
     }
 
@@ -38,7 +38,7 @@ public class TeamLineup implements ITeamLineup {
      *
      * @return list of players
      */
-    public final List getArea(int area) {
+    public final List<String> getArea(int area) {
         return players[area];
     }
 

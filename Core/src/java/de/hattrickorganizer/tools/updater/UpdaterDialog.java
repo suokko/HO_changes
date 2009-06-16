@@ -336,7 +336,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
      */
     protected void deletePluginTables(String pluginname) {
         try {
-            ArrayList droptables = new ArrayList();
+            ArrayList<String> droptables = new ArrayList<String>();
             Object [] tables = DBZugriff.instance().getAdapter().getDBInfo().getAllTablesNames();
     
             for (int i = 0; i < tables.length; i++) {

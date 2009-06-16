@@ -19,15 +19,15 @@ import java.util.Vector;
  * @author Mirtillo To change the template for this generated type comment go to
  *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class TrainingComparator implements Comparator {
+public class TrainingComparator implements Comparator<Vector<String>> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
-    public int compare(Object arg0, Object arg1) {
-        Vector v1 = (Vector) arg0;
-        Vector v2 = (Vector) arg1;
+    public int compare(Vector<String> arg0, Vector<String> arg1) {
+        Vector<String> v1 =  arg0;
+        Vector<String> v2 =  arg1;
 
         for (int i = 1; i < (IFutureTrainingManager.FUTUREWEEKS + 1); i++) {
             String s1 = "" + v1.get(i); //$NON-NLS-1$

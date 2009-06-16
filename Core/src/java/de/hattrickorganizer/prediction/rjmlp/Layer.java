@@ -3,10 +3,10 @@ package de.hattrickorganizer.prediction.rjmlp;
 import java.util.ArrayList;
 
 class Layer {
-	private ArrayList neurons;
+	private ArrayList<Neuron> neurons;
 
 	Layer () {
-		this.neurons = new ArrayList();
+		this.neurons = new ArrayList<Neuron>();
 	}
 	
 	void setForcedInputs (double[] inputs) {
@@ -23,19 +23,19 @@ class Layer {
 		neurons.add(neuron);
 	}
 	
-	ArrayList getNeuronList () {
+	ArrayList<Neuron> getNeuronList () {
 		return neurons;
 	}
 
-	ArrayList getSynapseList () {
-		ArrayList retList = new ArrayList();
+	ArrayList<Synapse> getSynapseList () {
+		ArrayList<Synapse> retList = new ArrayList<Synapse>();
 		for (int i=0; i<getNeuronCount(); i++)
 			retList.addAll(getNeuron(i).getSynapseList());
 		return retList;
 	}
 
 	Neuron getNeuron (int num) {
-		return (Neuron)neurons.get(num);
+		return neurons.get(num);
 	}
 
 	int getNeuronCount () {

@@ -31,7 +31,7 @@ public class PlayerTransferTableModel extends AbstractTableModel {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List<Object> values;
+    private List<PlayerTransfer> values;
     private String[] colNames = new String[8];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public class PlayerTransferTableModel extends AbstractTableModel {
      *
      * @param values List of values to show in table.
      */
-    public PlayerTransferTableModel(List<Object> values) {
+    public PlayerTransferTableModel(List<PlayerTransfer> values) {
         super();
 
         this.colNames[0] = Commons.getModel().getLanguageString("Datum"); //$NON-NLS-1$

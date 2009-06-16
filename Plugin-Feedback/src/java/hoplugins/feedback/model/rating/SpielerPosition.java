@@ -14,7 +14,7 @@ import plugins.ISpielerPosition;
  *
  * @author thomas.werth
  */
-public class SpielerPosition implements java.io.Serializable, Comparable, plugins.ISpielerPosition {
+public class SpielerPosition implements java.io.Serializable, Comparable<SpielerPosition>, plugins.ISpielerPosition {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** Array mit den Konstanten (CBItems) f�r die Positionen, Ohne Ausgewechselt */
@@ -791,44 +791,42 @@ public class SpielerPosition implements java.io.Serializable, Comparable, plugin
            return SpielerPosition.KEIN_TE;
        }
      */
-    public final int compareTo(Object obj) {
-        if (obj instanceof SpielerPosition) {
-            final SpielerPosition position = (SpielerPosition) obj;
+    public final int compareTo(SpielerPosition obj) {
+        
+        final SpielerPosition position = obj;
 
-            //Beide aufgestellt ?
-            if ((this.getId() < ISpielerPosition.beginnReservere)
-                && (position.getId() < ISpielerPosition.beginnReservere)) {
-                if (this.getPosition() < position.getPosition()) {
-                    return -1;
-                } else if (this.getPosition() == position.getPosition()) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-            //this aufgestellt ?
-            else if ((this.getId() < ISpielerPosition.beginnReservere)
-                     && (position.getId() >= ISpielerPosition.beginnReservere)) {
+        //Beide aufgestellt ?
+        if ((this.getId() < ISpielerPosition.beginnReservere)
+            && (position.getId() < ISpielerPosition.beginnReservere)) {
+            if (this.getPosition() < position.getPosition()) {
                 return -1;
-            }
-            //position aufgestellt
-            else if ((this.getId() >= ISpielerPosition.beginnReservere)
-                     && (position.getId() < ISpielerPosition.beginnReservere)) {
+            } else if (this.getPosition() == position.getPosition()) {
+                return 0;
+            } else {
                 return 1;
             }
-            //keiner aufgestellt
-            else {
-                if (this.getPosition() < position.getPosition()) {
-                    return -1;
-                } else if (this.getPosition() == position.getPosition()) {
-                    return 0;
-                } else {
-                    return 1;
-                }
+        }
+        //this aufgestellt ?
+        else if ((this.getId() < ISpielerPosition.beginnReservere)
+                 && (position.getId() >= ISpielerPosition.beginnReservere)) {
+            return -1;
+        }
+        //position aufgestellt
+        else if ((this.getId() >= ISpielerPosition.beginnReservere)
+                 && (position.getId() < ISpielerPosition.beginnReservere)) {
+            return 1;
+        }
+        //keiner aufgestellt
+        else {
+            if (this.getPosition() < position.getPosition()) {
+                return -1;
+            } else if (this.getPosition() == position.getPosition()) {
+                return 0;
+            } else {
+                return 1;
             }
         }
-
-        return 0;
+    
     }
 
     /*

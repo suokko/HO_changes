@@ -18,10 +18,10 @@ public class SpotReport extends Report {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Map of players that played in this spot */
-    private Map players = new HashMap();
+    private Map<String,PlayerAppearance> players = new HashMap<String,PlayerAppearance>();
 
     /** Map of PositionReport based on the effective position on the field */
-    private Map positionReports = new HashMap();
+    private Map<String,PositionReport> positionReports = new HashMap<String,PositionReport>();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ public class SpotReport extends Report {
      *
      * @return
      */
-    public Collection getPlayerAppearance() {
+    public Collection<PlayerAppearance> getPlayerAppearance() {
         return players.values();
     }
 
@@ -50,7 +50,7 @@ public class SpotReport extends Report {
      *
      * @return
      */
-    public Collection getPositionReports() {
+    public Collection<PositionReport> getPositionReports() {
         return positionReports.values();
     }
 

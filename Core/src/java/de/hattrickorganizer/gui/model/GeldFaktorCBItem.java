@@ -4,7 +4,7 @@ package de.hattrickorganizer.gui.model;
 /**
  * Faktor für Geld mit Id fürs Land
  */
-public class GeldFaktorCBItem extends CBItem implements Comparable {
+public class GeldFaktorCBItem extends CBItem implements Comparable<GeldFaktorCBItem> {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private float m_fFaktor;
@@ -50,12 +50,10 @@ public class GeldFaktorCBItem extends CBItem implements Comparable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
-        if (obj instanceof GeldFaktorCBItem) {
-            final GeldFaktorCBItem item = (GeldFaktorCBItem) obj;
-            return this.getText().compareTo(item.getText());
-        }
+    public final int compareTo(GeldFaktorCBItem obj) {
+        
+        final GeldFaktorCBItem item = (GeldFaktorCBItem) obj;
+        return this.getText().compareTo(item.getText());
 
-        return 0;
     }
 }

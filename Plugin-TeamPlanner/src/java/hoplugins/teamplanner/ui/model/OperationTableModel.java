@@ -33,7 +33,7 @@ public class OperationTableModel extends BaseTableModel {
      * @param vector Vector of table data
      * @param vector2 Vector of column names
      */
-    public OperationTableModel(Vector<Object> vector, Vector<String> vector2) {
+    public OperationTableModel(Vector<Object> vector, Vector<?> vector2) {
         super(vector, vector2);
     }
 
@@ -56,7 +56,7 @@ public class OperationTableModel extends BaseTableModel {
      */
     @Override
 	public boolean isCellEditable(int row, int column) {
-        String val = (String) rowEditable.get("" + row);
+        String val = rowEditable.get("" + row);
 
         if ((val != null) && (val.equalsIgnoreCase("true"))) {
             return true;
@@ -120,7 +120,7 @@ public class OperationTableModel extends BaseTableModel {
      * @return true if editable, false if not
      */
     public boolean isMulti(int row) {
-        String val = (String) rowMulti.get("" + row);
+        String val = rowMulti.get("" + row);
 
         if ((val != null) && (val.equalsIgnoreCase("true"))) {
             return true;

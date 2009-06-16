@@ -37,7 +37,7 @@ public class TraineesDialog extends JDialog {
 	private static final long serialVersionUID = -4688213301998533458L;
 	private CallableListener caller;
     private JPanel p = new JPanel();
-    private List players;
+    private List<OperationData> players;
     private int row;
     private int selected;
 
@@ -72,14 +72,14 @@ public class TraineesDialog extends JDialog {
      *
      * @param players
      */
-    public void reload(List players) {
+    public void reload(List<OperationData> players) {
         this.players = players;
         p.removeAll();
         p.setLayout(new GridLayout(players.size(), 2));
         row = 0;
 
-        for (Iterator iter = players.iterator(); iter.hasNext();) {
-            OperationData data = (OperationData) iter.next();
+        for (Iterator<OperationData> iter = players.iterator(); iter.hasNext();) {
+            OperationData data = iter.next();
             JLabel label = new JLabel();
             label.setText(data.getInner().getDescription());
             p.add(label);

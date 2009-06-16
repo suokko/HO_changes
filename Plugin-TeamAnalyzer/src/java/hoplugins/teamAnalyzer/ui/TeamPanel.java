@@ -6,6 +6,7 @@ import hoplugins.Commons;
 import hoplugins.commons.utils.PluginProperty;
 
 import hoplugins.teamAnalyzer.SystemManager;
+import hoplugins.teamAnalyzer.report.TacticReport;
 import hoplugins.teamAnalyzer.ui.lineup.FormationPanel;
 import hoplugins.teamAnalyzer.vo.TeamLineup;
 import hoplugins.teamAnalyzer.vo.UserTeamSpotLineup;
@@ -167,7 +168,7 @@ public class TeamPanel extends JPanel {
      * TODO Missing Method Documentation
      */
     private void setMyTeam() {
-        List list = new ArrayList();
+        List<UserTeamPlayerPanel> list = new ArrayList<UserTeamPlayerPanel>();
         ILineUp lineup = Commons.getModel().getLineUP();
 
         for (int spot = 1; spot < 12; spot++) {
@@ -186,7 +187,7 @@ public class TeamPanel extends JPanel {
                 spotLineup.setRating(spieler.calcPosValue(lineup.getEffectivePos4PositionID(spot),
                                                           true));
                 spotLineup.setSpot(spot);
-                spotLineup.setTactics(new ArrayList());
+                spotLineup.setTactics(new ArrayList<TacticReport>());
                 pp.reload(spotLineup);
             } else {
                 pp.reload(null);
@@ -197,17 +198,17 @@ public class TeamPanel extends JPanel {
 
         lineupPanel.getMyTeam().setTeamName(Commons.getModel().getBasics().getTeamName() + " ("
                                             + Commons.getModel().getBasics().getTeamId() + ")");
-        fillPanel(lineupPanel.getMyTeam().getKeeperPanel(), (PlayerPanel) list.get(0));
-        fillPanel(lineupPanel.getMyTeam().getLeftWingbackPanel(), (PlayerPanel) list.get(4));
-        fillPanel(lineupPanel.getMyTeam().getLeftCentralDefenderPanel(), (PlayerPanel) list.get(3));
-        fillPanel(lineupPanel.getMyTeam().getRightCentralDefenderPanel(), (PlayerPanel) list.get(2));
-        fillPanel(lineupPanel.getMyTeam().getRightWingbackPanel(), (PlayerPanel) list.get(1));
-        fillPanel(lineupPanel.getMyTeam().getLeftWingPanel(), (PlayerPanel) list.get(8));
-        fillPanel(lineupPanel.getMyTeam().getLeftMidfieldPanel(), (PlayerPanel) list.get(7));
-        fillPanel(lineupPanel.getMyTeam().getRightMidfieldPanel(), (PlayerPanel) list.get(6));
-        fillPanel(lineupPanel.getMyTeam().getRightWingPanel(), (PlayerPanel) list.get(5));
-        fillPanel(lineupPanel.getMyTeam().getLeftForwardPanel(), (PlayerPanel) list.get(9));
-        fillPanel(lineupPanel.getMyTeam().getRightForwardPanel(), (PlayerPanel) list.get(10));
+        fillPanel(lineupPanel.getMyTeam().getKeeperPanel(), list.get(0));
+        fillPanel(lineupPanel.getMyTeam().getLeftWingbackPanel(), list.get(4));
+        fillPanel(lineupPanel.getMyTeam().getLeftCentralDefenderPanel(), list.get(3));
+        fillPanel(lineupPanel.getMyTeam().getRightCentralDefenderPanel(), list.get(2));
+        fillPanel(lineupPanel.getMyTeam().getRightWingbackPanel(), list.get(1));
+        fillPanel(lineupPanel.getMyTeam().getLeftWingPanel(), list.get(8));
+        fillPanel(lineupPanel.getMyTeam().getLeftMidfieldPanel(), list.get(7));
+        fillPanel(lineupPanel.getMyTeam().getRightMidfieldPanel(), list.get(6));
+        fillPanel(lineupPanel.getMyTeam().getRightWingPanel(), list.get(5));
+        fillPanel(lineupPanel.getMyTeam().getLeftForwardPanel(), list.get(9));
+        fillPanel(lineupPanel.getMyTeam().getRightForwardPanel(), list.get(10));
         lineupPanel.getMyTeam().setLeftAttack(convertRating(lineup.getLeftAttackRating()));
         lineupPanel.getMyTeam().setLeftDefence(convertRating(lineup.getLeftDefenseRating()));
         lineupPanel.getMyTeam().setRightAttack(convertRating(lineup.getRightAttackRating()));

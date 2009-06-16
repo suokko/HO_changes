@@ -70,7 +70,7 @@ public class xmlTeamDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Hashtable parseTeamdetails(String dateiname) {
+    public final Hashtable<?, ?> parseTeamdetails(String dateiname) {
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(dateiname);
@@ -85,7 +85,7 @@ public class xmlTeamDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Hashtable parseTeamdetails(java.io.File datei) {
+    public final Hashtable<?, ?> parseTeamdetails(java.io.File datei) {
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(datei);
@@ -96,7 +96,7 @@ public class xmlTeamDetailsParser {
     /////////////////////////////////////////////////////////////////////////////////    
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
-    public final Hashtable parseTeamdetailsFromString(String inputStream) {
+    public final Hashtable<?, ?> parseTeamdetailsFromString(String inputStream) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -115,7 +115,7 @@ public class xmlTeamDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Hashtable parseDetails(Document doc) {
+    protected final Hashtable<?, ?> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
         final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();

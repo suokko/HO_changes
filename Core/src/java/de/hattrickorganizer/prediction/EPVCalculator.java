@@ -26,13 +26,13 @@ public class EPVCalculator
         return epvCalculator;
     }
 
-    private void normalize (Map inputMap) {
-    	double age = ((Double)inputMap.get("age")).doubleValue();
+    private void normalize (Map<String,Double> inputMap) {
+    	double age = inputMap.get("age").doubleValue();
     	inputMap.put("age", new Double(age-17));
     }
 
     public final double getPrice (IEPVData iepvdata, int week, double currencyRate) {
-    	Map inputMap = new HashMap();
+    	Map<String,Double> inputMap = new HashMap<String,Double>();
     	inputMap.put("age", new Double(iepvdata.getAge() + iepvdata.getAgeDays()/112d));
     	inputMap.put("fo", new Double(iepvdata.getForm()));
     	inputMap.put("xp", new Double(iepvdata.getExperience()));

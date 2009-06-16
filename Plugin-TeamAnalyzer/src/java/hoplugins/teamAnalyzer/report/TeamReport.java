@@ -21,7 +21,7 @@ public class TeamReport {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Map of SpotReport */
-    private Map spotReports;
+    private Map<String,SpotReport> spotReports;
 
     /** Match Ratings */
     private MatchRating rating;
@@ -38,7 +38,7 @@ public class TeamReport {
      * Creates a new TeamReport object.
      */
     public TeamReport() {
-        spotReports = new LinkedHashMap();
+        spotReports = new LinkedHashMap<String,SpotReport>();
         rating = new MatchRating();
         matchNumber = 0;
         averageStars = 0d;
@@ -63,7 +63,7 @@ public class TeamReport {
      * @return SpotReport
      */
     public SpotReport getSpotReport(int spot) {
-        return (SpotReport) spotReports.get("" + spot);
+        return spotReports.get("" + spot);
     }
 
     /**
@@ -82,8 +82,8 @@ public class TeamReport {
      * @param showUnavailable consider also unavailable or not
      */
     public void addMatch(MatchDetail matchDetail, boolean showUnavailable) {
-        for (Iterator iter = matchDetail.getPerformances().iterator(); iter.hasNext();) {
-            addPerformance((PlayerPerformance) iter.next(), showUnavailable);
+        for (Iterator<PlayerPerformance> iter = matchDetail.getPerformances().iterator(); iter.hasNext();) {
+            addPerformance( iter.next(), showUnavailable);
         }
 
         addRating(matchDetail.getRating());

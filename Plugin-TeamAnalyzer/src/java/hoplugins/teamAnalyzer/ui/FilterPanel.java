@@ -153,8 +153,8 @@ public class FilterPanel extends JPanel implements ActionListener {
 
         int i = 0;
 
-        for (Iterator iter = TeamManager.getTeams().iterator(); iter.hasNext();) {
-            Team element = (Team) iter.next();
+        for (Iterator<Team> iter = TeamManager.getTeams().iterator(); iter.hasNext();) {
+            Team element = iter.next();
 
             teamCombo.addItem(element);
 

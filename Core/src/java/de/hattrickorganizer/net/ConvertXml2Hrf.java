@@ -44,32 +44,32 @@ public class ConvertXml2Hrf {
     //Arena
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htArena;
+    protected Hashtable<?, ?> m_htArena;
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htClub;
+    protected Hashtable<?, ?> m_htClub;
 
     //Finanzen
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htEconomy;
+    protected Hashtable<?, ?> m_htEconomy;
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htLiga;
+    protected Hashtable<?, ?> m_htLiga;
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htNextLineup;
+    protected Hashtable<?, ?> m_htNextLineup;
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htTeamdeatils;
+    protected Hashtable<?, ?> m_htTeamdeatils;
 
     //Training
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htTraining;
+    protected Hashtable<?, ?> m_htTraining;
 
     /** TODO Missing Parameter Documentation */
-    protected Hashtable m_htWorld;
+    protected Hashtable<?, ?> m_htWorld;
 
     //Finanzen
     //Aufstellung
@@ -88,7 +88,7 @@ public class ConvertXml2Hrf {
     /** TODO Missing Parameter Documentation */
 
     //enthält eine Liste an Hashtable die je einen Spieler beschreiben
-    protected Vector m_vSpieler;
+    protected Vector<?> m_vSpieler;
 
     //MatchOrder
 
@@ -561,10 +561,10 @@ public class ConvertXml2Hrf {
      * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     protected final void createPlayers() throws Exception {
-        Hashtable ht = null;
+        Hashtable<?, ?> ht = null;
 
         for (int i = 0; (m_vSpieler != null) && (i < m_vSpieler.size()); i++) {
-            ht = (Hashtable) m_vSpieler.elementAt(i);
+            ht = (Hashtable<?, ?>) m_vSpieler.elementAt(i);
 
             m_sHRFBuffer.append("[player" + ht.get("PlayerID").toString() + "]" + "\n");
             m_sHRFBuffer.append("name=" + ht.get("PlayerName").toString() + "\n");

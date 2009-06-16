@@ -73,7 +73,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
 
     private JPanel sidePanel = Commons.getModel().getGUI().createImagePanel();
     private JTable transferTable;
-    private List transferred = new ArrayList();
+    private List<TransferredPlayer> transferred = new ArrayList<TransferredPlayer>();
     private PlayerDetailPanel playerDetailPanel = new PlayerDetailPanel();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
         final JPanel topPanel = Commons.getModel().getGUI().createImagePanel();
         topPanel.setLayout(new BorderLayout());
 
-        final TableModel model = new TransferTypeTableModel(new ArrayList());
+        final TableModel model = new TransferTypeTableModel(new ArrayList<TransferredPlayer>());
         final TransferTypeSorter sorter = new TransferTypeSorter(model);
         transferTable = new JTable(sorter);
 
@@ -121,7 +121,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
         setLeftComponent(topPanel);
         setRightComponent(playerDetailPanel);
 
-        refresh(new Vector());
+        refresh(new Vector<PlayerTransfer>());
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -131,18 +131,18 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
      *
      * @param transfers List of transfers to show.
      */
-    public final void refresh(List transfers) {
-        final Map players = new LinkedHashMap();
-        final List wasted = new ArrayList();
+    public final void refresh(List<PlayerTransfer> transfers) {
+        final Map<String,TransferredPlayer> players = new LinkedHashMap<String,TransferredPlayer>();
+        final List<PlayerTransfer> wasted = new ArrayList<PlayerTransfer>();
 
-        for (final Iterator iter = transfers.iterator(); iter.hasNext();) {
-            final PlayerTransfer pt = (PlayerTransfer) iter.next();
+        for (final Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
+            final PlayerTransfer pt = iter.next();
             final int id = pt.getPlayerId();
 
             if (id == 0) {
                 wasted.add(pt);
             } else {
-                TransferredPlayer tt = (TransferredPlayer) players.get(pt.getPlayerId() + "");
+                TransferredPlayer tt = players.get(pt.getPlayerId() + "");
 
                 if (tt == null) {
                     ISpieler player = PlayerRetriever.getPlayer(pt.getPlayerId());
@@ -162,17 +162,17 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
             }
         }
 
-        transferred = new ArrayList(players.values());
+        transferred = new ArrayList<TransferredPlayer>(players.values());
 
         final TransferRecap recap = new TransferRecap();
 
-        for (final Iterator iter = wasted.iterator(); iter.hasNext();) {
-            final PlayerTransfer element = (PlayerTransfer) iter.next();
+        for (final Iterator<PlayerTransfer> iter = wasted.iterator(); iter.hasNext();) {
+            final PlayerTransfer element = iter.next();
             recap.addWastedOperation(element);
         }
 
-        for (final Iterator iter = transferred.iterator(); iter.hasNext();) {
-            final TransferredPlayer element = (TransferredPlayer) iter.next();
+        for (final Iterator<TransferredPlayer> iter = transferred.iterator(); iter.hasNext();) {
+            final TransferredPlayer element = iter.next();
             recap.addTradingOperation(element);
         }
 

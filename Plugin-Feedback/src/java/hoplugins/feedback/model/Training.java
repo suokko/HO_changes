@@ -68,8 +68,8 @@ public class Training extends FeedbackObject {
 		this.skillUp = skillUp;
 	}
 
-	public static List<Training> rebuildList(Timestamp completedDate) {
-		List<Training> newList = new Vector<Training>();
+	public static List<FeedbackObject> rebuildList(Timestamp completedDate) {
+		List<FeedbackObject> newList = new Vector<FeedbackObject>();
 		try {
 			Training.completedDate = completedDate;
 			trainingsMap = new HashMap<Timestamp,TrainingsWeek>();

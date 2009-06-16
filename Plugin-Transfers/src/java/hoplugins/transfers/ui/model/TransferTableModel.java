@@ -31,7 +31,7 @@ public class TransferTableModel extends AbstractTableModel {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List values;
+    private List<PlayerTransfer> values;
     private String[] colNames = new String[19];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public class TransferTableModel extends AbstractTableModel {
      *
      * @param values List of values to show in table.
      */
-    public TransferTableModel(List values) {
+    public TransferTableModel(List<PlayerTransfer> values) {
         super();
 
         this.colNames[0] = Commons.getModel().getLanguageString("Datum"); //$NON-NLS-1$
@@ -87,7 +87,7 @@ public class TransferTableModel extends AbstractTableModel {
 
     /** {@inheritDoc} */
     public final Object getValueAt(int rowIndex, int columnIndex) {
-        final PlayerTransfer transfer = (PlayerTransfer) values.get(rowIndex);
+        final PlayerTransfer transfer = values.get(rowIndex);
 
         switch (columnIndex) {
             case 0:

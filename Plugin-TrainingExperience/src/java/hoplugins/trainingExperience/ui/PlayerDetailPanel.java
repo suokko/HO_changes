@@ -11,6 +11,7 @@ import hoplugins.trainingExperience.ui.bar.ColorBar;
 
 import plugins.IFuturePlayer;
 import plugins.IFutureTrainingManager;
+import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
 import plugins.ISkillup;
 import plugins.ISpieler;
@@ -88,8 +89,8 @@ public class PlayerDetailPanel extends JPanel {
                                                                                                    .getTrainerLevelNumber());
 
         // Add future skillups
-        for (Iterator iter = ftm.getFutureSkillups().iterator(); iter.hasNext();) {
-            ISkillup element = (ISkillup) iter.next();
+        for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter.hasNext();) {
+            ISkillup element = iter.next();
 
             TrainingExperience.getSkillupPanel().addRow(element);
         }

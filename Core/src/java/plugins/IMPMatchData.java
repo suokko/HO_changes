@@ -23,7 +23,7 @@ public interface IMPMatchData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List getAwayTeamActionList();
+    public List<IMPActions> getAwayTeamActionList();
 
     /**
      * retrieves a copy of all actions for home time that have been calculated til the call of this
@@ -31,7 +31,7 @@ public interface IMPMatchData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public List getHomeTeamActionList();
+    public List<IMPActions> getHomeTeamActionList();
 
     /**
      * calculates next minute of match

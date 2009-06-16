@@ -9,7 +9,7 @@ import plugins.IMatchDetails;
  *
  * @author TODO Author Name
  */
-public class Action implements plugins.IMPActions, Comparable {
+public class Action implements plugins.IMPActions, Comparable<Object> {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private boolean homeTeam;

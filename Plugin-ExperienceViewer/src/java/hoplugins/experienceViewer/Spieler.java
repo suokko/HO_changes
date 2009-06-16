@@ -32,11 +32,11 @@ final class Spieler {
 	private Timestamp letzteErfahrungsAufwertung;
 	private Timestamp vorletzteErfahrungsAufwertung;
 	private Timestamp vorvorletzteErfahrungsAufwertung;
-	private HashMap einsaetze;
-	private HashMap einsaetzeNachAufwertung;
-	private HashMap einsaetzeMitAktualisierungNachAufwertung;
-	private HashMap einsaetzeNachVorletzterAufwertung;
-	private HashMap einsaetzeMitAktualisierungNachVorletzterAufwertung;
+	private HashMap<Integer,Integer> einsaetze;
+	private HashMap<Integer,Integer> einsaetzeNachAufwertung;
+	private HashMap<Integer,Integer> einsaetzeMitAktualisierungNachAufwertung;
+	private HashMap<Integer,Integer> einsaetzeNachVorletzterAufwertung;
+	private HashMap<Integer,Integer> einsaetzeMitAktualisierungNachVorletzterAufwertung;
 
 	public Spieler(IHOMiniModel m, ISpieler inSpieler) {
 		letzteErfahrungsAufwertung = null;
@@ -216,12 +216,12 @@ final class Spieler {
 	private void initEinsaetze(IHOMiniModel model) {
 		ResultSet rs = null;
 		String sql = null;
-		HashSet matchIds = new HashSet();
-		einsaetze = new HashMap();
-		einsaetzeNachAufwertung = new HashMap();
-		einsaetzeMitAktualisierungNachAufwertung = new HashMap();
-		einsaetzeNachVorletzterAufwertung = new HashMap();
-		einsaetzeMitAktualisierungNachVorletzterAufwertung = new HashMap();
+		HashSet<Integer> matchIds = new HashSet<Integer>();
+		einsaetze = new HashMap<Integer,Integer>();
+		einsaetzeNachAufwertung = new HashMap<Integer,Integer>();
+		einsaetzeMitAktualisierungNachAufwertung = new HashMap<Integer,Integer>();
+		einsaetzeNachVorletzterAufwertung = new HashMap<Integer,Integer>();
+		einsaetzeMitAktualisierungNachVorletzterAufwertung = new HashMap<Integer,Integer>();
 		sql = "SELECT MATCHID FROM MATCHLINEUPPLAYER WHERE SpielerID = " + id
 				+ " AND ROLEID <> " + 18 + " AND ROLEID <> " + 17;
 		rs = model.getAdapter().executeQuery(sql);
@@ -239,8 +239,8 @@ final class Spieler {
 			}
 
 			rs.close();
-			for (Iterator it = matchIds.iterator(); it.hasNext();) {
-				Integer mId = (Integer) it.next();
+			for (Iterator<Integer> it = matchIds.iterator(); it.hasNext();) {
+				Integer mId = it.next();
 				IMatchLineup lu = model.getMatchLineup(mId.intValue());
 				int matchtyp = lu.getMatchTyp();
 				Integer iMatchtyp = new Integer(matchtyp);

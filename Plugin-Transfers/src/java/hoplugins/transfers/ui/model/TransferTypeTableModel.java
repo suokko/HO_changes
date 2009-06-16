@@ -26,7 +26,7 @@ public class TransferTypeTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 2943508984461781906L;
-	private List values;
+	private List<TransferredPlayer> values;
     private String[] colNames = new String[4];
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public class TransferTypeTableModel extends AbstractTableModel {
      *
      * @param values List of values to show in table.
      */
-    public TransferTypeTableModel(List values) {
+    public TransferTypeTableModel(List<TransferredPlayer> values) {
         super();
 
         this.colNames[0] = Commons.getModel().getLanguageString("ID");
@@ -106,7 +106,7 @@ public class TransferTypeTableModel extends AbstractTableModel {
 
     /** {@inheritDoc} */
     public final Object getValueAt(int rowIndex, int columnIndex) {
-        final TransferredPlayer transfer = (TransferredPlayer) values.get(rowIndex);
+        final TransferredPlayer transfer = values.get(rowIndex);
 
         switch (columnIndex) {
             case 0:

@@ -22,7 +22,7 @@ public class News {
 	private float version = -1;
 	private float minimumHOVersion = -1;
 	
-	private List msg = new ArrayList();
+	private List<String> msg = new ArrayList<String>();
 	
 
 	public int getType() {
@@ -50,7 +50,7 @@ public class News {
 		msg.add(string);
 	}
 	
-	public List getMessages() {
+	public List<String> getMessages() {
 		return msg;
 	}
 
