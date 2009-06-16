@@ -5,6 +5,7 @@ import de.hattrickorganizer.logik.matchengine.TeamData;
 import de.hattrickorganizer.logik.matchengine.engine.core.ActionGenerator;
 import de.hattrickorganizer.tools.HOLogger;
 
+import plugins.IMPActions;
 import plugins.IMatchDetails;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class MatchData implements plugins.IMPMatchData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final List getAwayTeamActionList() {
+    public final List<IMPActions> getAwayTeamActionList() {
         return awayTeam.getActions();
     }
 
@@ -53,7 +54,7 @@ public class MatchData implements plugins.IMPMatchData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final List getHomeTeamActionList() {
+    public final List<IMPActions> getHomeTeamActionList() {
         return homeTeam.getActions();
     }
 
@@ -127,7 +128,7 @@ public class MatchData implements plugins.IMPMatchData {
      * @param team TODO Missing Method Parameter Documentation
      */
     private void printRecap(TeamData team) {
-        final List actions = team.getActions();
+        final List<IMPActions> actions = team.getActions();
         HOLogger.instance().log(getClass(),team.getTeamName());
 
         int c = 0;

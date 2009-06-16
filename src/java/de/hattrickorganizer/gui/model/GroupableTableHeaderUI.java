@@ -33,7 +33,7 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
     @Override
 	public final Dimension getPreferredSize(JComponent c) {
         long width = 0;
-        final Enumeration enumeration = header.getColumnModel().getColumns();
+        final Enumeration<TableColumn> enumeration = header.getColumnModel().getColumns();
 
         while (enumeration.hasMoreElements()) {
             final TableColumn aColumn = (TableColumn) enumeration.nextElement();
@@ -62,17 +62,17 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         int column = 0;
         final Dimension size = header.getSize();
         final Rectangle cellRect = new Rectangle(0, 0, size.width, size.height);
-        final Hashtable h = new Hashtable();
+        final Hashtable<ColumnGroup,Rectangle> h = new Hashtable<ColumnGroup,Rectangle>();
         final int columnMargin = header.getColumnModel().getColumnMargin();
 
-        final Enumeration enumeration = header.getColumnModel().getColumns();
+        final Enumeration<TableColumn> enumeration = header.getColumnModel().getColumns();
 
         while (enumeration.hasMoreElements()) {
             cellRect.height = size.height;
             cellRect.y = 0;
 
-            final TableColumn aColumn = (TableColumn) enumeration.nextElement();
-            final Enumeration cGroups = ((GroupableTableHeader) header).getColumnGroups(aColumn);
+            final TableColumn aColumn = enumeration.nextElement();
+            final Enumeration<ColumnGroup> cGroups = ((GroupableTableHeader) header).getColumnGroups(aColumn);
 
             if (cGroups != null) {
                 int groupHeight = 0;
@@ -124,11 +124,11 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
                                                                           aColumn.getHeaderValue(),
                                                                           false, false, -1, column);
             int cHeight = comp.getPreferredSize().height;
-            final Enumeration enumi = ((GroupableTableHeader) header).getColumnGroups(aColumn);
+            final Enumeration<ColumnGroup> enumi = ((GroupableTableHeader) header).getColumnGroups(aColumn);
 
             if (enumi != null) {
                 while (enumi.hasMoreElements()) {
-                    final ColumnGroup cGroup = (ColumnGroup) enumi.nextElement();
+                    final ColumnGroup cGroup = enumi.nextElement();
                     cHeight += cGroup.getSize(header.getTable()).height;
                 }
             }

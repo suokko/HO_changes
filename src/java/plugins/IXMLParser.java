@@ -73,12 +73,12 @@ public interface IXMLParser {
     /**
      * Parse the teamDetails from the given xml string.
      */
-    public Hashtable parseTeamDetails(String teamDetailString);
+    public Hashtable<?, ?> parseTeamDetails(String teamDetailString);
 
     /**
 	 * Parse the worldDetails from the given xml string.
 	 */
-	public Hashtable parseWorldDetails(String worldDetails, String leagueID);
+	public Hashtable<?, ?> parseWorldDetails(String worldDetails, String leagueID);
 
 	/**
 	 * Parse the match lineup from the given xml string.

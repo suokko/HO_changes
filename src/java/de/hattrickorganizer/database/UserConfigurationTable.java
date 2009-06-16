@@ -112,16 +112,18 @@ public final class UserConfigurationTable extends AbstractTable {
 
 			if ((rs != null) && rs.first()) {
 				version = rs.getInt(1);
+				rs.close();
 			}
-			rs.close();
+			
 		} catch (Exception e) {
 			try {
 				HOLogger.instance().log(getClass(), "Old DB version.");
 				final ResultSet rs = adapter.executeQuery("SELECT DBVersion FROM UserParameter");
 				if ((rs != null) && rs.first()) {
 					version = rs.getInt(1);
+					rs.close();
 				}
-				rs.close();
+				
 			} catch (Exception e1) {
 				HOLogger.instance().log(getClass(), e1);
 			}
@@ -140,8 +142,9 @@ public final class UserConfigurationTable extends AbstractTable {
 
 			if ((rs != null) && rs.first()) {
 				version = rs.getDouble(1);
+				rs.close();
 			}
-			rs.close();
+			
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(), e);
 		}
@@ -153,10 +156,10 @@ public final class UserConfigurationTable extends AbstractTable {
 	 * @param obj
 	 */
 	public void store(IUserConfiguration obj) {
-		final HashMap values = obj.getValues();
-		final Set keys = values.keySet();
-		for (Iterator iter = keys.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
+		final HashMap<String, String> values = obj.getValues();
+		final Set<String> keys = values.keySet();
+		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
+			String key = iter.next();
 			update(key, (values.get(key) != null) ? values.get(key).toString() : "");
 		}		
 	}
@@ -166,10 +169,10 @@ public final class UserConfigurationTable extends AbstractTable {
 	 * @param obj
 	 */
 	public void load(IUserConfiguration obj) {
-		final HashMap values = new HashMap();
-		final Set keys = obj.getValues().keySet();
-		for (Iterator iter = keys.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
+		final HashMap<String,String> values = new HashMap<String,String>();
+		final Set<String> keys = obj.getValues().keySet();
+		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
+			String key = iter.next();
 			String value = getStringValue(key);
 			values.put(key, (value != null) ? value : obj.getValues().get(key));
 		}

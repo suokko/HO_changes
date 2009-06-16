@@ -42,7 +42,7 @@ final class RefreshDialog extends UpdaterDialog {
 	private static final long serialVersionUID = 7661955953578080637L;
 
 	/** TODO Missing Parameter Documentation */
-    protected Hashtable infos = null;
+    protected Hashtable<String, String> infos = null;
 
     /** TODO Missing Parameter Documentation */
     protected String PROP_ADD = HOVerwaltung.instance().getLanguageString("Hinzufuegen");
@@ -51,7 +51,7 @@ final class RefreshDialog extends UpdaterDialog {
     protected String WEB_PLUGINS = UpdateController.PLUGINS_HOMEPAGE + "/downloads/";
 
     /** TODO Missing Parameter Documentation */
-    ArrayList others = new ArrayList();
+    ArrayList<?> others = new ArrayList<Object>();
     private String ADDPLUGIN = HOVerwaltung.instance().getLanguageString("addPlugin");
     private String CORRUPTEDPLUGIN = HOVerwaltung.instance().getLanguageString("corruptedPlugin");
     private String INFO = HOVerwaltung.instance().getLanguageString("Info");
@@ -85,8 +85,8 @@ final class RefreshDialog extends UpdaterDialog {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected ArrayList getAllPlugins() {
-        ArrayList plugins = new ArrayList();
+    protected ArrayList<XMLPLuginInfo> getAllPlugins() {
+        ArrayList<XMLPLuginInfo> plugins = new ArrayList<XMLPLuginInfo>();
         File hopluginsDir = new File(HOPLUGINS_DIRECTORY);
         File[] filesAfter = hopluginsDir.listFiles();
 
@@ -173,7 +173,7 @@ final class RefreshDialog extends UpdaterDialog {
      *
      * @param list TODO Missing Method Parameter Documentation
      */
-    protected void setOtherPlugins(ArrayList list) {
+    protected void setOtherPlugins(ArrayList<?> list) {
         others = list;
     }
 
@@ -242,12 +242,12 @@ final class RefreshDialog extends UpdaterDialog {
         }
 
         try {
-            ArrayList plugins = getAllPlugins();
+            ArrayList<XMLPLuginInfo> plugins = getAllPlugins();
 
             for (int i = 0; i < plugins.size(); i++) {
-                XMLPLuginInfo item = (XMLPLuginInfo) plugins.get(i);
+                XMLPLuginInfo item = plugins.get(i);
                 HPPluginInfo currentplugin = getHppPluginInfo(item.getPluginID());
-                ArrayList ids = item.getDependPluginIDs();
+                ArrayList<?> ids = item.getDependPluginIDs();
 
                 for (int j = 0; j < ids.size(); j++) {
                     int tmpid = ((Integer) ids.get(j)).intValue();
@@ -328,7 +328,7 @@ final class RefreshDialog extends UpdaterDialog {
      * TODO Missing Method Documentation
      */
     protected void inizialize() {
-        infos = new Hashtable();
+        infos = new Hashtable<String, String>();
 
         columnNames = new String[5];
         columnNames[0] = PROP_ADD;
@@ -417,9 +417,9 @@ final class RefreshDialog extends UpdaterDialog {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private int checkDependencies(ArrayList plugins, int currentID) {
+    private int checkDependencies(ArrayList<XMLPLuginInfo> plugins, int currentID) {
         for (int j = 0; j < plugins.size(); j++) {
-            XMLPLuginInfo tmp = (XMLPLuginInfo) plugins.get(j);
+            XMLPLuginInfo tmp = plugins.get(j);
 
             if (tmp.getPluginID() == currentID) {
                 return currentID;

@@ -35,7 +35,7 @@ final class XMLPLuginInfo {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ArrayList dependPluginIDs;
+    private ArrayList<Integer> dependPluginIDs;
     private HPPluginInfo hppPluginInfo;
     private int pluginID;
 
@@ -45,7 +45,7 @@ final class XMLPLuginInfo {
      * Creates a new XMLPLuginInfo object.
      */
     private XMLPLuginInfo() {
-        dependPluginIDs = new ArrayList();
+        dependPluginIDs = new ArrayList<Integer>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ final class XMLPLuginInfo {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final ArrayList getDependPluginIDs() {
+    protected final ArrayList<Integer> getDependPluginIDs() {
         return dependPluginIDs;
     }
 

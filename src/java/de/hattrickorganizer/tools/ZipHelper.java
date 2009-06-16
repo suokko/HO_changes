@@ -34,7 +34,7 @@ public class ZipHelper {
 		File file = new File(destDir);
 		file.mkdirs();
 		try {
-			Enumeration e = zipFile.entries();
+			Enumeration<? extends ZipEntry> e = zipFile.entries();
 
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
@@ -52,7 +52,7 @@ public class ZipHelper {
 	}
 
 	public InputStream getFile(String fileToExtract) {
-		Enumeration e = zipFile.entries();
+		Enumeration<? extends ZipEntry> e = zipFile.entries();
 
 		try {
 			while (e.hasMoreElements()) {
@@ -88,7 +88,7 @@ public class ZipHelper {
 
 		try {
 
-			Enumeration e = zipFile.entries();
+			Enumeration<? extends ZipEntry> e = zipFile.entries();
 
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
@@ -137,7 +137,7 @@ public class ZipHelper {
 		}
 	}
 	
-	public Enumeration getFileList() {
+	public Enumeration<? extends ZipEntry> getFileList() {
 		return zipFile.entries();
 	}
 }

@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
@@ -67,7 +68,7 @@ public class xmlWorldDetailsParser {
     protected final Hashtable parseDetails(Document doc, String leagueID) {
         Element ele = null;
         Element root = null;
-        final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();
+        final MyHashtable hash = new MyHashtable();
         NodeList list = null;
         String tempLeagueID = null;
 

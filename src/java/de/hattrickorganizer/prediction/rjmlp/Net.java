@@ -35,7 +35,7 @@ public class Net {
 	String structure;
 	String [] inputParams;
 	String [] outputParams;
-	ArrayList allLayers;
+	ArrayList<Layer> allLayers;
 	boolean classifyOutputs = false;
 	
 	public Net (String structure) {
@@ -75,9 +75,9 @@ public class Net {
 		}
 	}
 
-	public double calculate (int index, Map inputMap) {
+	public double calculate (int index, Map<?, ?> inputMap) {
 		double[] inputPar = new double[inputParams.length];
-		Iterator nameIter = inputMap.keySet().iterator();
+		Iterator<?> nameIter = inputMap.keySet().iterator();
 		while (nameIter.hasNext()) {
 			String curName = (String)nameIter.next();
 			Double curVal = (Double)inputMap.get(curName);
@@ -88,7 +88,7 @@ public class Net {
 		return calculate(index, inputPar);
 	}
 	
-	public double calculate (String outvarName, Map inputMap) {
+	public double calculate (String outvarName, Map<?, ?> inputMap) {
 		int index = getOutParIndex(outvarName);
 		if (index >= 0)
 			return calculate(index, inputMap);
@@ -119,7 +119,7 @@ public class Net {
 		if (splitted.length < 3) {
 			System.out.println ("Invalid net structure");
 		} else {
-			allLayers = new ArrayList();
+			allLayers = new ArrayList<Layer>();
 			String inputString = splitted[0];
 			setInputParams(inputString);
 			addLayer (INPUT, inputParams.length);
@@ -135,7 +135,7 @@ public class Net {
 	
 	private Layer getLastLayer () {
 		if (allLayers.size() > 0)
-			return (Layer)allLayers.get(allLayers.size()-1);
+			return allLayers.get(allLayers.size()-1);
 		else
 			return null;
 	}
@@ -252,7 +252,7 @@ public class Net {
 	}
 	
 	private void setNeuronWeight (int no, double weight) {
-		ArrayList neuronList = new ArrayList();
+		ArrayList<?> neuronList = new ArrayList<Object>();
 		neuronList = getNeuronList();
 		((Neuron)neuronList.get(no)).setWeight(weight);
 	}
@@ -263,21 +263,21 @@ public class Net {
 	}
 
 	private void setSynapseWeight (int no, double weight) {
-		ArrayList synapseList = new ArrayList();
+		ArrayList<?> synapseList = new ArrayList<Object>();
 		synapseList = getSynapseList();
 		((Synapse)synapseList.get(no)).setWeight(weight);
 	}
 	
-	private ArrayList getNeuronList () {
-		ArrayList retList = new ArrayList();
+	private ArrayList<Neuron> getNeuronList () {
+		ArrayList<Neuron> retList = new ArrayList<Neuron>();
 		for (int i=0; i < getLayerCount(); i++) {
 			retList.addAll (getLayer(i).getNeuronList());
 		}
 		return retList;
 	}
 
-	private ArrayList getSynapseList () {
-		ArrayList retList = new ArrayList();
+	private ArrayList<Synapse> getSynapseList () {
+		ArrayList<Synapse> retList = new ArrayList<Synapse>();
 		for (int i=0; i < getLayerCount(); i++) {
 			retList.addAll (getLayer(i).getSynapseList());
 		}
@@ -285,11 +285,11 @@ public class Net {
 	}
 
 	private Layer getInputLayer () {
-		return (Layer)allLayers.get(0);
+		return allLayers.get(0);
 	}
 
 	private Layer getOutputLayer () {
-		return (Layer)allLayers.get(allLayers.size()-1);
+		return allLayers.get(allLayers.size()-1);
 	}
 
 	private int getHiddenLayerCount () {
@@ -309,7 +309,7 @@ public class Net {
 	}
 	
 	private Layer getLayer (int i) {
-		return (Layer)allLayers.get(i);
+		return allLayers.get(i);
 	}
 
 	/**
