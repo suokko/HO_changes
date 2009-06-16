@@ -67,7 +67,7 @@ public final class FeedbackStatusDAO {
 	/**
 	 * Check if the table exists, if not create it with default values
 	 */
-	private static void checkTable() {
+	public static void checkTable() {
 		try {
 			final ResultSet rs = Commons.getModel().getAdapter().executeQuery(
 					"select * from " + TABLE_NAME);
