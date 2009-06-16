@@ -341,4 +341,43 @@ public interface IMatchDetails {
      * @return
      */
     public int getRegionId ();
+    
+	/**
+	 * @return the soldTerraces
+	 */
+	public int getSoldTerraces();
+
+	/**
+	 * @param soldTerraces the soldTerraces to set
+	 */
+	public void setSoldTerraces(int soldTerraces);
+
+	/**
+	 * @return the soldBasic
+	 */
+	public int getSoldBasic();
+
+	/**
+	 * @param soldBasic the soldBasic to set
+	 */
+	public void setSoldBasic(int soldBasic);
+
+	/**
+	 * @return the soldRoof
+	 */
+	public int getSoldRoof();
+
+	/**
+	 * @param soldRoof the soldRoof to set
+	 */
+	public void setSoldRoof(int soldRoof);
+
+	/**
+	 * @return the soldVIP
+	 */
+	public int getSoldVIP();
+	/**
+	 * @param soldVIP the soldVIP to set
+	 */
+	public void setSoldVIP(int soldVIP);
 }

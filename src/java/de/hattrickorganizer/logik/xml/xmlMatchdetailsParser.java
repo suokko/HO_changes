@@ -548,6 +548,17 @@ public class xmlMatchdetailsParser {
             md.setWetterId(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("SoldTotal").item(0);
             md.setZuschauer(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+            // Get spectator distribution, if available
+            if (root.getElementsByTagName("SoldTerraces").getLength() > 0) {
+            	ele = (Element) root.getElementsByTagName("SoldTerraces").item(0);
+            	md.setSoldTerraces(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+            	ele = (Element) root.getElementsByTagName("SoldBasic").item(0);
+            	md.setSoldBasic(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+            	ele = (Element) root.getElementsByTagName("SoldRoof").item(0);
+            	md.setSoldRoof(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+            	ele = (Element) root.getElementsByTagName("SoldVIP").item(0);
+            	md.setSoldVIP(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+            }
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readGeneral Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
