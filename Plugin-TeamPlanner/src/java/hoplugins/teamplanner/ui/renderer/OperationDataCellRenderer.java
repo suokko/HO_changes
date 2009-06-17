@@ -1,8 +1,6 @@
 // %950346978:hoplugins.teamplanner.ui.renderer%
 package hoplugins.teamplanner.ui.renderer;
 
-import hoplugins.commons.ui.renderer.TextAreaCellRenderer;
-
 import hoplugins.teamplanner.ui.model.OperationCell;
 
 import java.awt.Color;

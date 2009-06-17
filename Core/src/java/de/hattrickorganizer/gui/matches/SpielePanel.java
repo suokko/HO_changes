@@ -43,7 +43,6 @@ import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.tools.HOLogger;

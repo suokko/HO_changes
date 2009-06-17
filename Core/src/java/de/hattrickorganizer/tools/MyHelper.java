@@ -6,6 +6,10 @@
  */
 package de.hattrickorganizer.tools;
 
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Vector;
+
 /**
  * DOCUMENT ME!
  *
@@ -29,23 +33,23 @@ public class MyHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static String Calendar2HTString(java.util.Calendar tempdate) {
+    public static String Calendar2HTString(Calendar tempdate) {
         final StringBuffer dateString = new StringBuffer();
-        dateString.append(tempdate.get(java.util.Calendar.YEAR));
+        dateString.append(tempdate.get(Calendar.YEAR));
         dateString.append("-");
 
-        if ((tempdate.get(java.util.Calendar.MONTH) + 1) < 10) {
+        if ((tempdate.get(Calendar.MONTH) + 1) < 10) {
             dateString.append("0");
         }
 
-        dateString.append(tempdate.get(java.util.Calendar.MONTH) + 1);
+        dateString.append(tempdate.get(Calendar.MONTH) + 1);
         dateString.append("-");
 
-        if (tempdate.get(java.util.Calendar.DAY_OF_MONTH) < 10) {
+        if (tempdate.get(Calendar.DAY_OF_MONTH) < 10) {
             dateString.append("0");
         }
 
-        dateString.append(tempdate.get(java.util.Calendar.DAY_OF_MONTH));
+        dateString.append(tempdate.get(Calendar.DAY_OF_MONTH));
 
         return dateString.toString();
     }
@@ -56,7 +60,7 @@ public class MyHelper {
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
      */
-    public static void addArray2Vector(Object[] src, java.util.Vector dest) {
+    public static <T> void addArray2Vector(T[] src, Vector<T> dest) {
         for (int i = 0; (src != null) && (dest != null) && (i < src.length); i++) {
             dest.addElement(src[i]);
         }
@@ -68,7 +72,7 @@ public class MyHelper {
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
      */
-    public static void addVector2Vector(java.util.Vector src, java.util.Vector dest) {
+    public static <T> void addVector2Vector(Vector<T> src, Vector<T> dest) {
         for (int i = 0; (src != null) && (dest != null) && (i < src.size()); i++) {
             dest.addElement(src.elementAt(i));
         }
@@ -80,7 +84,7 @@ public class MyHelper {
      * @param src der Array der kopiert werden soll
      * @param dest Vektor der den Array aufnehmen soll
      */
-    public static void copyArray2Vector(Object[] src, java.util.Vector dest) {
+    public static <T> void copyArray2Vector(T[] src, Vector<T> dest) {
         for (int i = 0; (src != null) && (dest != null) && (i < src.length); i++) {
             dest.addElement(src[i]);
         }
@@ -95,7 +99,7 @@ public class MyHelper {
      * @param dest Array der Vector aufnehmen soll, muss bereits erstellt sein und die größe =
      *        Vector.size() haben
      */
-    public static void copyVector2Array(java.util.Vector src, Object[] dest) {
+    public static <T> void copyVector2Array(Vector<T> src, T[] dest) {
         for (int i = 0;
              (src != null) && (dest != null) && (dest.length >= src.size()) && (i < src.size());
              i++) {
@@ -244,14 +248,14 @@ public class MyHelper {
         try {
             //Hattrick
             final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                                                                           java.util.Locale.GERMANY);
+                                                                                           Locale.GERMANY);
 
             return new java.sql.Timestamp(simpleFormat.parse(date).getTime());
         } catch (Exception e) {
             try {
                 //Hattrick
                 final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd",
-                                                                                               java.util.Locale.GERMANY);
+                                                                                               Locale.GERMANY);
 
                 return new java.sql.Timestamp(simpleFormat.parse(date).getTime());
             } catch (Exception ex) {

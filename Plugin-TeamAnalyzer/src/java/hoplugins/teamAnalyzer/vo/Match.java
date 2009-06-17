@@ -4,8 +4,6 @@ package hoplugins.teamAnalyzer.vo;
 import hoplugins.Commons;
 
 import hoplugins.commons.utils.DateUtil;
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
@@ -73,12 +71,10 @@ public class Match {
         matchType = matchInfo.getMatchTyp();
         matchDate = matchInfo.getMatchDateAsTimestamp();
 
-        Date matchDate = DateUtil.resetDay(matchInfo.getMatchDateAsTimestamp());
+        Date matchDate = DateUtil.resetDay(matchInfo.getMatchDateAsTimestamp());        
 
-        HTCalendar matchCal = HTCalendarFactory.createEconomyCalendar(Commons.getModel(), matchDate);
-
-        week = matchCal.getHTWeek();
-        season = matchCal.getHTSeason();
+        week = Commons.getModel().getHelper().getHTWeek(matchDate);
+        season = Commons.getModel().getHelper().getHTSeason(matchDate);
     }
 
     /**

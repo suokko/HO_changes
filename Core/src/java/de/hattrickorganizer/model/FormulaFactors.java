@@ -185,7 +185,7 @@ public class FormulaFactors {
     public void readFromXML(String dateiname) {
     	final XMLManager manager = XMLManager.instance();
     	final Document doc = manager.parseFile(dateiname);
-        Element ele = null;
+        //Element ele = null;
 
 
     	if (doc == null) {
@@ -280,7 +280,7 @@ public class FormulaFactors {
     public void write2XML(String filename) {
         try {
             Document doc = null;
-            Element ele = null;
+            //Element ele = null;
             Element tmpEle = null;
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             final DocumentBuilder builder = factory.newDocumentBuilder();
