@@ -18,7 +18,7 @@ public final class ScoutTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[20];
+		columns = new ColumnDescriptor[23];
 		columns[0]= new ColumnDescriptor("PlayerID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("Name",Types.VARCHAR,true,127);
 		columns[2]= new ColumnDescriptor("Info",Types.VARCHAR,false,256);
@@ -40,6 +40,9 @@ public final class ScoutTable extends AbstractTable {
 		columns[17]= new ColumnDescriptor("Deadline",Types.TIMESTAMP,false);
 		columns[18]= new ColumnDescriptor("Wecker",Types.BOOLEAN,false);
 		columns[19]= new ColumnDescriptor("AgeDays",Types.INTEGER,false);
+		columns[20]= new ColumnDescriptor("Agreeability",Types.INTEGER,false);
+		columns[21]= new ColumnDescriptor("baseWage",Types.INTEGER,false);
+		columns[22]= new ColumnDescriptor("Nationality",Types.INTEGER,false);
 	}
 
 	/**
@@ -68,7 +71,7 @@ public final class ScoutTable extends AbstractTable {
 
 				// Prepare insert statement
 				sql =
-					"INSERT INTO "+getTableName()+" (Name, Info, Age, AgeDays, Marktwert, Kondition, Erfahrung,  Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Deadline, Wecker, PlayerID, Speciality, Price ) VALUES (";
+					"INSERT INTO "+getTableName()+" (Name, Info, Age, AgeDays, Marktwert, Kondition, Erfahrung,  Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Deadline, Wecker, PlayerID, Speciality, Price, Agreeability, baseWage, Nationality ) VALUES (";
 				sql
 					+= ("'"
 						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(scout.getName())
@@ -110,6 +113,12 @@ public final class ScoutTable extends AbstractTable {
 						+ scout.getSpeciality()
 						+ ", "
 						+ scout.getPrice()
+						+ ", "
+						+ scout.getAgreeability()
+						+ ", "
+						+ scout.getbaseWage()
+						+ ", "
+						+ scout.getNationality()
 						+ ")");
 
 				try {

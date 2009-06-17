@@ -75,6 +75,12 @@ public class ScoutEintrag {
 
     /** Verteidigung */
     protected int m_iVerteidigung = 0;
+    
+    protected int m_iAgreeability = 0;
+    protected int m_ibaseWage = 2500;
+    protected int m_iNationality = 0;
+    
+    
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -111,6 +117,9 @@ public class ScoutEintrag {
             m_clDeadline = rs.getTimestamp("Deadline");
             m_bWecker = rs.getBoolean("Wecker");
             m_sInfo = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Info"));
+            m_iAgreeability = rs.getInt("Agreeability");
+            m_ibaseWage = rs.getInt("baseWage");
+            m_iNationality = rs.getInt("Nationality");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor ScoutEintrag : " + e.toString());
         }
@@ -501,6 +510,60 @@ public class ScoutEintrag {
     public final boolean isWecker() {
         return m_bWecker;
     }
+    
+    /**
+     * Setter for property m_ibaseWage.
+     *
+     * @param m_ibaseWage New value of property m_ibaseWage.
+     */
+    public final void setbaseWage(int m_ibaseWage) {
+        this.m_ibaseWage = m_ibaseWage;
+    }
+    
+    /**
+     * Getter for property m_ibaseWage.
+     *
+     * @return Value of property m_ibaseWage.
+     */
+    public final Integer getbaseWage() {
+    	return m_ibaseWage;
+	}
+
+    /**
+     * Setter for property m_iNationality.
+     *
+     * @param m_iNationality New value of property m_iNationality.
+     */
+    public final void setNationality(int m_iNationality) {
+        this.m_iNationality = m_iNationality;
+    }
+    
+    /**
+     * Getter for property m_iNationality.
+     *
+     * @return Value of property m_iNationality.
+     */
+    public final Integer getNationality() {
+    	return m_iNationality;
+	}
+    
+    /**
+     * Setter for property m_iAgreeability.
+     *
+     * @param m_iAgreeability New value of property m_iAgreeability.
+     */
+    public final void setAgreeability(int m_iAgreeability) {
+        this.m_iAgreeability = m_iAgreeability;
+    }
+    
+    /**
+     * Getter for property m_iAgreeability.
+     *
+     * @return Value of property m_iAgreeability.
+     */
+    public final Integer getAgreeability() {
+    	return m_iAgreeability;
+	}
 
     /**
      * TODO Missing Method Documentation
@@ -529,6 +592,9 @@ public class ScoutEintrag {
         eintrag.setPrice(getPrice());
         eintrag.setWecker(isWecker());
         eintrag.setDeadline(new java.sql.Timestamp(getDeadline().getTime()));
+        eintrag.setAgreeability(getAgreeability());
+        eintrag.setbaseWage(getbaseWage());
+        eintrag.setNationality(getNationality());
 
         return eintrag;
     }
@@ -558,4 +624,6 @@ public class ScoutEintrag {
 	public final int hashCode() {
         return getPlayerID();
     }
+
+	
 }
