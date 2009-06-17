@@ -1,6 +1,7 @@
 // %1287661405:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import plugins.ISpielerComboboxItem;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 
 
@@ -159,28 +160,26 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(Object obj) {
-        if (obj instanceof SpielerCBItem) {
-            final SpielerCBItem cbitem = (SpielerCBItem) obj;
+    public final int compareTo(ISpielerComboboxItem obj) {
+        
+        final ISpielerComboboxItem cbitem =  obj;
 
-            if ((cbitem.getSpieler() != null) && (getSpieler() != null)) {
-                if (getPositionsBewertung() > cbitem.getPositionsBewertung()) {
-                    return -1;
-                } else if (getPositionsBewertung() < cbitem.getPositionsBewertung()) {
-                    return 1;
-                } else {
-                    return getSpieler().getName().compareTo(cbitem.getSpieler().getName());
-                }
-
-                //return getSpieler().getName ().compareTo ( cbitem.getSpieler ().getName () );
-            } else if (cbitem.getSpieler() == null) {
+        if ((cbitem.getSpieler() != null) && (getSpieler() != null)) {
+            if (getPositionsBewertung() > cbitem.getPositionsBewertung()) {
                 return -1;
-            } else {
+            } else if (getPositionsBewertung() < cbitem.getPositionsBewertung()) {
                 return 1;
+            } else {
+                return getSpieler().getName().compareTo(cbitem.getSpieler().getName());
             }
-        } else {
+
+            //return getSpieler().getName ().compareTo ( cbitem.getSpieler ().getName () );
+        } else if (cbitem.getSpieler() == null) {
             return -1;
+        } else {
+            return 1;
         }
+ 
     }
 
     /**

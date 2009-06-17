@@ -70,7 +70,7 @@ final class RefreshDialog extends UpdaterDialog {
      */
     protected RefreshDialog(Object data) {
         super(data, HOVerwaltung.instance().getLanguageString("Plugins"));
-        object = ((ArrayList) data).toArray();
+        object = ((ArrayList<?>) data).toArray();
         inizialize();
 
         Container contenPane = getContentPane();

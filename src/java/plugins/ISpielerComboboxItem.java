@@ -12,7 +12,7 @@ package plugins;
  *
  * @author Pirania
  */
-public interface ISpielerComboboxItem extends Comparable {
+public interface ISpielerComboboxItem extends Comparable<ISpielerComboboxItem> {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -52,5 +52,5 @@ public interface ISpielerComboboxItem extends Comparable {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public int compareTo(Object obj);
+    public int compareTo(ISpielerComboboxItem obj);
 }

@@ -44,8 +44,6 @@ public class ZipHelper
 
     public final boolean extractFile(String s, String dir)
     {
-        File file;
-        (file = new File(dir)).mkdirs();
         try
         {
             for(Enumeration<? extends ZipEntry> enumeration = zipFile.entries(); enumeration.hasMoreElements();)
@@ -69,9 +67,8 @@ public class ZipHelper
     	try {
             Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
             ZipEntry zipentry;
-            String s1;
             while(enumeration.hasMoreElements()) 
-                if((s1 = (zipentry = (ZipEntry)enumeration.nextElement()).getName()).toUpperCase().endsWith(s.toUpperCase()))
+                if(((zipentry = (ZipEntry)enumeration.nextElement()).getName()).toUpperCase().endsWith(s.toUpperCase()))
                     return zipFile.getInputStream(zipentry);			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -94,8 +91,6 @@ public class ZipHelper
 
     public final boolean unzip(String toDir)
     {
-        File file;
-        (file = new File(toDir)).mkdirs();
         try
         {
             ZipEntry zipentry;
