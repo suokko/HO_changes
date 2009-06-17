@@ -4,8 +4,6 @@ package hoplugins.transfers.dao;
 import hoplugins.Commons;
 
 import hoplugins.commons.utils.DateUtil;
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 
 import hoplugins.transfers.utils.PlayerRetriever;
 import hoplugins.transfers.vo.PlayerTransfer;
@@ -294,17 +292,14 @@ public final class TransfersDAO {
                         map.put(new Integer(rs.getInt("transferid")), rs.getTimestamp("date"));
                     }
 
-                    final HTCalendar cal = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
-
                     for (Iterator<Integer> iter = map.keySet().iterator(); iter.hasNext();) {
                         final Integer transferId = iter.next();
-                        final Timestamp date = (Timestamp) map.get(transferId);
-                        cal.setTime(date);
+                        final Timestamp date = map.get(transferId);
 
                         final StringBuffer sqlStmt = new StringBuffer("UPDATE " + TABLE_NAME
                                                                       + " SET"); //$NON-NLS-1$
-                        sqlStmt.append(" week=" + cal.getHTWeek()); //$NON-NLS-1$
-                        sqlStmt.append(",season=" + cal.getHTSeason()); //$NON-NLS-1$
+                        sqlStmt.append(" week=" + Commons.getModel().getHelper().getHTWeek(date)); //$NON-NLS-1$
+                        sqlStmt.append(",season=" + Commons.getModel().getHelper().getHTSeason(date)); //$NON-NLS-1$
                         sqlStmt.append(" WHERE transferid=" + transferId.intValue()); //$NON-NLS-1$
                         Commons.getModel().getAdapter().executeUpdate(sqlStmt.toString());
                     }
@@ -367,19 +362,13 @@ public final class TransfersDAO {
                                                                          transfer.getDate());
 
             if (spieler != null) {
-                final HTCalendar transferDate = HTCalendarFactory.createTrainingCalendar(Commons
-                                                                                         .getModel(),
-                                                                                         transfer
-                                                                                         .getDate());
-                final HTCalendar spielerDate = HTCalendarFactory.createTrainingCalendar(Commons
-                                                                                        .getModel(),
-                                                                                        spieler
-                                                                                        .getHrfDate());
+            	int transferSeason = Commons.getModel().getHelper().getHTSeason(transfer.getDate());
+                int transferWeek = Commons.getModel().getHelper().getHTWeek(transfer.getDate());
+                int spielerSeason = Commons.getModel().getHelper().getHTSeason(spieler.getHrfDate());
+                int spielerWeek = Commons.getModel().getHelper().getHTWeek(spieler.getHrfDate());
 
                 // Not in the same week, possible skillup so skip it
-                if (((transferDate.getHTSeason() * 16) + transferDate.getHTWeek()) == ((spielerDate
-                                                                                        .getHTSeason() * 16)
-                    + spielerDate.getHTWeek())) {
+                if (((transferSeason * 16) + transferWeek) == ((spielerSeason * 16) + spielerWeek)) {
                     transfer.setPlayerInfo(spieler);
                 }
             }

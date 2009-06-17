@@ -18,6 +18,7 @@ public final class SpielerTable extends AbstractTable {
 		super(TABLENAME, adapter);
 	}
 
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[58];
 		columns[0] = new ColumnDescriptor("HRF_ID", Types.INTEGER, false);
@@ -81,6 +82,7 @@ public final class SpielerTable extends AbstractTable {
 
 	}
 
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX iSpieler_1 ON " + getTableName() + "(" + columns[3].getColumnName() + "," + columns[1].getColumnName() + ")",

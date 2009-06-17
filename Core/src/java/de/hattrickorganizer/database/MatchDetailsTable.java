@@ -18,6 +18,7 @@ public final class MatchDetailsTable extends AbstractTable {
 		super(TABLENAME,adapter);
 	}
 	
+	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[39];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false,true);
@@ -61,6 +62,7 @@ public final class MatchDetailsTable extends AbstractTable {
 		columns[38]= new ColumnDescriptor("soldVIP",Types.INTEGER,false);
 	}
 	
+	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX IMATCHDETAILS_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};

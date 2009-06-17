@@ -40,11 +40,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private static final int PLAYMAKING = ISpieler.SKILL_SPIELAUFBAU; // 3
     private static final int SCORING = ISpieler.SKILL_TORSCHUSS; // 4
     private static final int PASSING = ISpieler.SKILL_PASSSPIEL; // 5
-	private static final int STAMINA = ISpieler.SKILL_KONDITION; // 6
-    private static final int FORM = ISpieler.SKILL_FORM; // 7
+	//private static final int STAMINA = ISpieler.SKILL_KONDITION; // 6
+    //private static final int FORM = ISpieler.SKILL_FORM; // 7
     private static final int SETPIECES = ISpieler.SKILL_STANDARDS; // 8
-    private static final int EXPERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
-    private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
+    //private static final int EXPERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
+    //private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
     
     public static final int SPEC_NONE = ISpieler.NO_SPECIALTY; // 0
     public static final int SPEC_TECHNICAL = ISpieler.BALLZAUBERER; // 1

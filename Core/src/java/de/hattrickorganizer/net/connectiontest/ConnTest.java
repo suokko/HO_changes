@@ -25,7 +25,7 @@ public class ConnTest {
 	final static private String LS = System.getProperty("line.separator");
 	final static private String URL_NORMAL = "http://plugins.hattrickorganizer.net/version.htm";
 	final static private String URL_SERVERS = "http://www.hattrick.org/common/chppxml.axd?file=servers";
-	final static private String URL_HT = "http://plugins.hattrickorganizer.net/version.htm";
+	//final static private String URL_HT = "http://plugins.hattrickorganizer.net/version.htm";
 	final static private int steps = 3;
 	final static public float VERSION = 0.1f;
 
@@ -37,7 +37,7 @@ public class ConnTest {
 		systemProperties.setProperty("sun.net.client.defaultConnectTimeout","10000");
 		systemProperties.setProperty("sun.net.client.defaultReadTimeout","10000");
 		ConnTestFrame frame = new ConnTestFrame(this);
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	public void start(final JTextArea log) {

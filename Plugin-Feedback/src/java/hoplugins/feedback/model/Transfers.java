@@ -1,8 +1,6 @@
 package hoplugins.feedback.model;
 
 import hoplugins.Commons;
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 import hoplugins.commons.utils.SeriesUtil;
 import hoplugins.feedback.constants.FeedbackConstants;
 import hoplugins.feedback.dao.TransfersDAO;
@@ -100,9 +98,8 @@ public class Transfers extends FeedbackObject {
 			wage = wage * curr_rate;
 			url.append("&wage=" + (int)wage);
 
-			final HTCalendar globalDate = HTCalendarFactory.createGlobalCalendar(playerTransfer.getDate());
-			url.append("&season=" + globalDate.getHTSeason()); 
-			url.append("&week=" + globalDate.getHTWeek()); 
+			url.append("&season=" + Commons.getModel().getHelper().getHTSeason(playerTransfer.getDate())); 
+			url.append("&week=" + Commons.getModel().getHelper().getHTWeek(playerTransfer.getDate())); 
 
 			Calendar c = Calendar.getInstance();
 			c.setTimeInMillis(playerTransfer.getDate().getTime());
@@ -137,15 +134,13 @@ public class Transfers extends FeedbackObject {
 		if (player == null || player.getSpielerID() <= 0)
 			return false;
 		
-        final HTCalendar transferDate = 
-        		HTCalendarFactory.createTrainingCalendar(getMiniModel(), playerTransfer.getDate());
-        final HTCalendar spielerDate = 
-        		HTCalendarFactory.createTrainingCalendar(getMiniModel(), player.getHrfDate());
+        int transferSeason = Commons.getModel().getHelper().getHTSeason(playerTransfer.getDate());
+        int transferWeek = Commons.getModel().getHelper().getHTWeek(playerTransfer.getDate());
+        int spielerSeason = Commons.getModel().getHelper().getHTSeason(player.getHrfDate());
+        int spielerWeek = Commons.getModel().getHelper().getHTWeek(player.getHrfDate());
 
         // Not in the same week, possible skillup so skip it
-        if (((transferDate.getHTSeason() * 16) + transferDate.getHTWeek()) != ((spielerDate
-                                                                                .getHTSeason() * 16)
-            + spielerDate.getHTWeek())) {
+        if (((transferSeason * 16) + transferWeek) != ((spielerSeason * 16) + spielerWeek)) {
             //System.out.println((transferDate.getHTSeason() * 16) + transferDate.getHTWeek());
             //System.out.println((spielerDate.getHTSeason() * 16) + spielerDate.getHTWeek());
             return false;

@@ -1,10 +1,7 @@
 // %2362941848:hoplugins%
 package hoplugins;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 import hoplugins.commons.utils.PluginProperty;
-import hoplugins.commons.utils.SeriesUtil;
 
 import hoplugins.transfers.dao.TransferSettingDAO;
 import hoplugins.transfers.dao.TransferStatusDAO;
@@ -24,12 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -124,9 +117,9 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
                 try {
                     final JWindow waitWindow = model.getGUI().createWaitDialog(model.getGUI()
                                                                                     .getOwner4Dialog());
-                    waitWindow.show();
+                    waitWindow.setVisible(true);
                     TransfersDAO.reloadTeamTransfers(model.getBasics().getTeamId());
-                    waitWindow.hide();
+                    waitWindow.setVisible(false);
                     waitWindow.dispose();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -147,7 +140,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         final IHOMiniModel model = Commons.getModel();
 
         final JWindow waitWindow = model.getGUI().createWaitDialog(model.getGUI().getOwner4Dialog());
-        waitWindow.show();
+        waitWindow.setVisible(true);
 
         final List<ISpieler> allOutdated = new Vector<ISpieler>();
 
@@ -193,7 +186,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
 //            uploadTransfers(transfers);
 //        }
 
-        waitWindow.hide();
+        waitWindow.setVisible(false);
         waitWindow.dispose();
     }
 
@@ -270,7 +263,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      *
      * @return Boolean to indicate succesfull upload
      */
-    private boolean upload(PlayerTransfer pt) {
+    /*private boolean upload(PlayerTransfer pt) {
         final IHOMiniModel model = Commons.getModel();
         final ISpieler spieler = model.getSpielerAtDate(pt.getPlayerId(), pt.getDate());
 
@@ -281,14 +274,13 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
 
         //System.out.println(new Date(pt.getDate().getTime()));
         //System.out.println(new Date(spieler.getHrfDate().getTime()));
-        final HTCalendar transferDate = HTCalendarFactory.createTrainingCalendar(model, pt.getDate());
-        final HTCalendar spielerDate = HTCalendarFactory.createTrainingCalendar(model,
-                                                                                spieler.getHrfDate());
+        int transferSeason = Commons.getModel().getHelper().getHTSeason(pt.getDate());
+        int transferWeek = Commons.getModel().getHelper().getHTWeek(pt.getDate());
+        int spielerSeason = Commons.getModel().getHelper().getHTSeason(spieler.getHrfDate());
+        int spielerWeek = Commons.getModel().getHelper().getHTWeek(spieler.getHrfDate());
 
         // Not in the same week, possible skillup so skip it
-        if (((transferDate.getHTSeason() * 16) + transferDate.getHTWeek()) != ((spielerDate
-                                                                                .getHTSeason() * 16)
-            + spielerDate.getHTWeek())) {
+        if (((transferSeason * 16) + transferWeek) != ((spielerSeason * 16) + spielerWeek)) {
             //System.out.println((transferDate.getHTSeason() * 16) + transferDate.getHTWeek());
             //System.out.println((spielerDate.getHTSeason() * 16) + spielerDate.getHTWeek());
             return false;
@@ -320,9 +312,8 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         final double price = (pt.getPrice() * curr_rate) / 10;
         url.append("&pri=" + (int) price); //$NON-NLS-1$ 
 
-        final HTCalendar globalDate = HTCalendarFactory.createGlobalCalendar(pt.getDate());
-        url.append("&wee=" + globalDate.getHTWeek()); //$NON-NLS-1$ 
-        url.append("&sea=" + globalDate.getHTSeason()); //$NON-NLS-1$ 
+        url.append("&wee=" + transferWeek); //$NON-NLS-1$ 
+        url.append("&sea=" + transferSeason); //$NON-NLS-1$ 
 
         final Calendar c = Calendar.getInstance();
         c.setTimeInMillis(pt.getDate().getTime());
@@ -354,7 +345,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         }
 
         return false;
-    }
+    }*/
 
     /**
      * Upload to EPV Server the needed Transfer operation

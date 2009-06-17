@@ -2,8 +2,6 @@ package hoplugins.teamAnalyzer.ui.controller;
 
 import gui.UserParameter;
 import hoplugins.Commons;
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 import hoplugins.teamAnalyzer.SystemManager;
 import hoplugins.teamAnalyzer.manager.ReportManager;
 import hoplugins.teamAnalyzer.ui.RecapPanel;
@@ -57,11 +55,10 @@ public class RecapListSelectionListener implements ListSelectionListener {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
 
-                HTCalendar cal = HTCalendarFactory.createTrainingCalendar(Commons.getModel(),
-                                                                          calendar.getTime());
-                SystemManager.getPlugin().getMainPanel().reload(lineup,
-                                                                cal.getHTWeek(),
-                                                                cal.getHTSeason());
+                int week = Commons.getModel().getHelper().getHTWeek(calendar.getTime());
+                int season = Commons.getModel().getHelper().getHTSeason(calendar.getTime());
+                
+                SystemManager.getPlugin().getMainPanel().reload(lineup, week, season);
                 SystemManager.getPlugin().getRatingPanel().reload(lineup);
             } else {
                 TeamLineup lineup = ReportManager.getLineup(selectedRow);

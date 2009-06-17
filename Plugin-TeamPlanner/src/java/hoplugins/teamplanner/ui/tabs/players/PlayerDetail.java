@@ -296,7 +296,7 @@ public class PlayerDetail extends JPanel implements ItemListener, ActionListener
         try {
             if (player != null) {
                 jtfAge.setText(player.getAlter() + "");
-                jtfTSI.setText(player.getMarkwert() + "");
+                jtfTSI.setText(player.getTSI() + "");
                 jcbSpeciality.removeItemListener(this);
                 markierenComboBox(jcbSpeciality, player.getSpezialitaet());
                 jcbSpeciality.addItemListener(this);

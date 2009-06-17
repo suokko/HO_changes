@@ -3,9 +3,6 @@ package hoplugins.teamplanner.vo;
 
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
-
 import java.sql.Timestamp;
 
 import java.util.Date;
@@ -18,9 +15,6 @@ import java.util.Date;
  */
 public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** Missing Parameter Documentation */
-    HTCalendar calendar;
 
     /** Missing Parameter Documentation */
     String currencyName;
@@ -79,7 +73,6 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      * Creates a new FinancesOfWeek object.
      */
     public FinancesOfWeek() {
-        calendar = null;
         date = null;
         currencyName = Commons.getModel().getXtraDaten().getCurrencyName();
         currencyRate = (new Float(Commons.getModel().getXtraDaten().getCurrencyRate())).floatValue();
@@ -130,7 +123,6 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      */
     public void setDate(Date date) {
         this.date = new Timestamp(date.getTime());
-        calendar = HTCalendarFactory.createEconomyCalendar(Commons.getModel(), date);
     }
 
     /**
@@ -140,7 +132,6 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      */
     public void setDate(Timestamp date) {
         this.date = date;
-        calendar = HTCalendarFactory.createEconomyCalendar(Commons.getModel(), date);
     }
 
     /**
@@ -149,7 +140,7 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      * @return Missing Return Method Documentation
      */
     public Date getDate() {
-        return calendar.getTime();
+        return date;
     }
 
     /**
@@ -176,7 +167,7 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      * @return Missing Return Method Documentation
      */
     public int getHTSeason() {
-        return calendar.getHTSeason();
+    	return Commons.getModel().getHelper().getHTSeason(date);
     }
 
     /**
@@ -185,7 +176,7 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      * @return Missing Return Method Documentation
      */
     public int getHTWeek() {
-        return calendar.getHTWeek();
+        return Commons.getModel().getHelper().getHTWeek(date);
     }
 
     /**
@@ -403,8 +394,6 @@ public class FinancesOfWeek implements Comparable<FinancesOfWeek> {
      * @return Missing Return Method Documentation
      */
     public int compareTo(FinancesOfWeek obj) {
-        Date day = obj.calendar.getTime();
-
-        return day.compareTo(calendar.getTime());
+        return obj.getDate().compareTo(date);
     }
 }

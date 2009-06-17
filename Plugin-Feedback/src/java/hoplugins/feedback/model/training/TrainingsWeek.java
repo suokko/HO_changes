@@ -1,6 +1,6 @@
 package hoplugins.feedback.model.training;
 
-import hoplugins.commons.utils.HTCalendar;
+import hoplugins.Commons;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -59,15 +59,11 @@ public class TrainingsWeek {
 	}
 
 	public int getHtSeason () {
-		HTCalendar htdate = new HTCalendar();
-		htdate.setTime(timestamp);
-		return htdate.getHTSeason();
+		return Commons.getModel().getHelper().getHTSeason(timestamp);
 	}
 
 	public int getHtWeek() {
-		HTCalendar htdate = new HTCalendar();
-		htdate.setTime(timestamp);
-		return htdate.getHTWeek();
+		return Commons.getModel().getHelper().getHTWeek(timestamp);
 	}
 
 	public int getYear() {

@@ -14,7 +14,6 @@ import hoplugins.teamAnalyzer.ui.model.UiRecapTableModel;
 import hoplugins.teamAnalyzer.util.MatchUtil;
 import hoplugins.teamAnalyzer.vo.Match;
 import hoplugins.teamAnalyzer.vo.MatchDetail;
-import hoplugins.teamAnalyzer.vo.PlayerPerformance;
 import hoplugins.teamAnalyzer.vo.TeamLineup;
 
 import java.awt.BorderLayout;

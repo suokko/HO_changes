@@ -2,7 +2,6 @@ package hoplugins.feedback.model.training;
 
 import hoplugins.Commons;
 import hoplugins.Feedback;
-import hoplugins.commons.utils.HTCalendar;
 import hoplugins.feedback.model.FeedbackObject;
 import hoplugins.feedback.util.FeedbackHelper;
 
@@ -113,15 +112,11 @@ public class SkillUp {
 	}
 
 	public int getHtSeason () {
-		HTCalendar htdate = new HTCalendar();
-		htdate.setTime(timestamp);
-		return htdate.getHTSeason();
+		return Commons.getModel().getHelper().getHTSeason(timestamp);
 	}
 
 	public int getHtWeek() {
-		HTCalendar htdate = new HTCalendar();
-		htdate.setTime(timestamp);
-		return htdate.getHTWeek();
+		return Commons.getModel().getHelper().getHTWeek(timestamp);
 	}
 
 	@Override

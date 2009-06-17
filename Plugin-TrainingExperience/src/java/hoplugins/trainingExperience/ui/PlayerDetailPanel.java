@@ -11,6 +11,7 @@ import hoplugins.trainingExperience.ui.bar.ColorBar;
 
 import plugins.IFuturePlayer;
 import plugins.IFutureTrainingManager;
+import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
 import plugins.ISkillup;
 import plugins.ISpieler;
@@ -75,7 +76,7 @@ public class PlayerDetailPanel extends JPanel {
         playerLabel.setText(spieler.getName());
 
         // gets the list of user defined future trainings
-        List trainings = TrainingExperience.getTrainPanel().getFutureTrainings();
+        List<IFutureTrainingWeek> trainings = TrainingExperience.getTrainPanel().getFutureTrainings();
 
         // instantiate a future train manager to calculate the previsions */ 
         IFutureTrainingManager ftm = Commons.getModel().getFutureTrainingManager(spieler,
