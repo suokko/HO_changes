@@ -1921,6 +1921,14 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldRoof=-1 WHERE soldRoof IS null");
 		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldVIP=-1 WHERE soldVIP IS null");
 		
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN Agreeability INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN baseWage INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN Nationality INTEGER");
+		
+		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  Agreeability=-1 WHERE agreeability IS null");
+		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  baseWage=-1 WHERE basewage IS null");
+		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  Nationality=-1 WHERE nationality IS null");
+		
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
 		// do version checking again before applying!
