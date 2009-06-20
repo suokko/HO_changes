@@ -435,6 +435,16 @@ public interface ILineUp {
      * check if all player in lineup are still in team
      */
     public void checkAufgestellteSpieler();
+    
+	/**
+	 * @return the pullBackMinute
+	 */
+	public int getPullBackMinute();
+
+	/**
+	 * @param pullBackMinute the pullBackMinute to set
+	 */
+	public void setPullBackMinute(int pullBackMinute);
 
     /////////////////////////////////////////////////////////////////////////////////    
     //    Aktions Funcs

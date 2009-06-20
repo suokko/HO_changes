@@ -205,6 +205,30 @@ final class AufstellungsDetailPanel extends ImagePanel
             };
     private JComboBox m_jcbLocation = new JComboBox(LOCATION);
 
+    // Pull back minute
+    private CBItem[] PULLBACK_MINUTE = {
+            new CBItem(HOVerwaltung.instance().getLanguageString("PullBack.None"), 90),
+            new CBItem("85", 85),
+            new CBItem("80", 80),
+            new CBItem("75", 75),
+            new CBItem("70", 70),
+            new CBItem("65", 65),
+            new CBItem("60", 60),
+            new CBItem("55", 55),
+            new CBItem("50", 50),
+            new CBItem("45", 45),
+            new CBItem("40", 40),
+            new CBItem("35", 35),
+            new CBItem("30", 30),
+            new CBItem("25", 25),
+            new CBItem("20", 20),
+            new CBItem("15", 15),
+            new CBItem("10", 10),
+            new CBItem("5", 5),
+            new CBItem(HOVerwaltung.instance().getLanguageString("PullBack.WholeGame"), 0)
+        };
+    
+    private JComboBox m_jcbPullBackMinute = new JComboBox(PULLBACK_MINUTE);
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -339,6 +363,7 @@ final class AufstellungsDetailPanel extends ImagePanel
             
             setEinstellung(aufstellung.getAttitude());
             setLocation(aufstellung.getHeimspiel());
+            setPullBackMinute(aufstellung.getPullBackMinute());
 
             float avXp = homodel.getAufstellung().getAverageExperience();
             m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(avXp));
@@ -442,13 +467,34 @@ final class AufstellungsDetailPanel extends ImagePanel
     }
 
     /**
+     * Set the pullback minute
+     *
+     * @param minute
+     */
+    public void setPullBackMinute(int minute) {
+        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbPullBackMinute, minute);
+    }
+
+    /**
+     * Get the pullback minute
+     *
+     * @return get the pullback minute
+     */
+    public int getPullBackMinute() {
+        return ((CBItem) m_jcbPullBackMinute.getSelectedItem()).getId();
+    }
+    /**
      * React on state changed events
      *
      * @param event the event
      */
     public void itemStateChanged(ItemEvent event) {
         if (event.getStateChange() == ItemEvent.SELECTED) {
-            if (event.getSource().equals(m_jcbTaktik)) {
+        	if (event.getSource().equals(m_jcbPullBackMinute)) {
+                // Pull Back minute changed
+                HOVerwaltung.instance().getModel().getAufstellung().
+                		setPullBackMinute(((CBItem) m_jcbPullBackMinute.getSelectedItem()).getId());
+            } else if (event.getSource().equals(m_jcbTaktik)) {
                 // Tactic changed
                 HOVerwaltung.instance().getModel().getAufstellung().
                 		setTacticType(((CBItem) m_jcbTaktik.getSelectedItem()).getId());
@@ -681,6 +727,16 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbTrainerType);
 
         yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("PullBack.PullBackStartMinute")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        constraints.gridwidth = 1;
+        m_jcbPullBackMinute.setToolTipText(HOVerwaltung.instance().getLanguageString("PullBack.PullBackStartMinute.ToolTip"));
+        m_jcbPullBackMinute.setOpaque(false);
+        layout.setConstraints(m_jcbPullBackMinute, constraints);
+        add(m_jcbPullBackMinute);
+
+        yPos++;
         initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
@@ -778,6 +834,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         m_jcbSelbstvertrauen.addItemListener(this);
         m_jcbTrainerType.addItemListener(this);
         m_jcbPredictionType.addItemListener(this);
+        m_jcbPullBackMinute.addItemListener(this);
     }
 
     /**
@@ -792,6 +849,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         m_jcbSelbstvertrauen.removeItemListener(this);
         m_jcbTrainerType.removeItemListener(this);
         m_jcbPredictionType.removeItemListener(this);
+        m_jcbPullBackMinute.removeItemListener(this);
     }
 
     private CBItem[] getPredictionItems () {
