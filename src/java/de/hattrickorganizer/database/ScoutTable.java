@@ -140,7 +140,7 @@ public final class ScoutTable extends AbstractTable {
 
 		try {
 			final String sql =
-				"SELECT PlayerID, Name, Info, Age, AgeDays, Marktwert, Speciality, Kondition, Erfahrung, Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Price, Deadline, Wecker FROM "+getTableName();
+				"SELECT * FROM "+getTableName();
 			final ResultSet rs = adapter.executeQuery(sql);
 			rs.beforeFirst();
 
