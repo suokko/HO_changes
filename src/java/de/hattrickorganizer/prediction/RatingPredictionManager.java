@@ -74,6 +74,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private short taktikType;
     private short trainerType;
     private ILineUp lineup;
+    private int pullBackMinute;
 
     public RatingPredictionManager () {
     	if (RatingPredictionManager.config == null)
@@ -246,6 +247,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
         // neutral Trainer
    	       	retVal *= params.getParam(sectionName, "trainerNeutral", 1);
 
+        // PullBack event
+        if (pullBackMinute >= 0 && pullBackMinute <= 90) {
+        	retVal *= 1.0 + (90-pullBackMinute)/90.0 * params.getParam(sectionName, "pullback", 0);
+        }
+        
         retVal *= params.getParam(sectionName, "multiplier", 1);
         retVal += params.getParam(sectionName, "delta", 0);
         
@@ -831,6 +837,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
             this.stimmung = (short)team.getStimmungAsInt();
             this.substimmung = (short)team.getSubStimmung();
             this.selbstvertrauen = (short)team.getSelbstvertrauenAsInt();
+            this.pullBackMinute = lineup.getPullBackMinute();
             return;
         }
         catch(Exception e)
