@@ -203,6 +203,20 @@ public final class TransfersDAO {
     }
 
     /**
+     * Remove a transfer from the HO database
+     *
+     * @param transferId Transfer ID
+     */
+    private static void removeTransfer(int transferId) {
+    	try {
+            Commons.getModel().getAdapter()
+            	.executeUpdate("DELETE FROM " + TABLE_NAME + " WHERE transferid='"+transferId+"'");
+    	} catch (Exception e) {
+    		// ignore
+    	}
+    }
+    
+    /**
      * Adds a tranfer to the HO database
      *
      * @param transfer Transfer information
@@ -210,6 +224,7 @@ public final class TransfersDAO {
      * @return Boolean to indicate if the transfer is sucessfully added.
      */
     private static boolean addTransfer(PlayerTransfer transfer) {
+    	removeTransfer(transfer.getTransferID());
         final StringBuffer sqlStmt = new StringBuffer("INSERT INTO " + TABLE_NAME); //$NON-NLS-1$
         sqlStmt.append("(transferid, date, week, season, playerid, playername, buyerid, buyername, sellerid, sellername, price, marketvalue, tsi)"); //$NON-NLS-1$
         sqlStmt.append(" VALUES ("); //$NON-NLS-1$
