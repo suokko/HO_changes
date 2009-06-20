@@ -60,6 +60,9 @@ public  class Aufstellung implements plugins.ILineUp {
 
     /** TacticType */
     private int m_iTacticType;
+    
+    /** PullBackMinute **/
+    private int pullBackMinute = 90; // no pull back
 
     /** Home/Away/AwayDerby */
     private short m_sLocation = -1;
@@ -809,7 +812,7 @@ public  class Aufstellung implements plugins.ILineUp {
                 m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
                                                                  .getTeamId()) ? (short) 1 : (short) 0;
             } catch (Exception e) {
-            	HOLogger.instance().error(getClass(),"geHeimspiel: " + e);
+            	HOLogger.instance().error(getClass(),"getHeimspiel: " + e);
             	m_sLocation = 0;
             }
         }
@@ -1339,6 +1342,7 @@ public  class Aufstellung implements plugins.ILineUp {
 
             clone = new Aufstellung(properties);
             clone.setHeimspiel(getHeimspiel());
+            clone.setPullBackMinute(getPullBackMinute());
         } catch (Exception e) {
             HOLogger.instance().error(getClass(),"Aufstellung.duplicate: " + e);
         }
@@ -1773,6 +1777,22 @@ public  class Aufstellung implements plugins.ILineUp {
         return new SpielerPosition(sp.getId(), sp2.getSpielerId(), sp2.getTaktik());
     }
 
+	/**
+	 * @return the pullBackMinute
+	 */
+	public int getPullBackMinute() {
+		return pullBackMinute;
+	}
+
+	/**
+	 * @param pullBackMinute the pullBackMinute to set
+	 */
+	public void setPullBackMinute(int pullBackMinute) {
+		this.pullBackMinute = pullBackMinute;
+	}
+
+    
+    
     /**
      * Debug logging.
      */
