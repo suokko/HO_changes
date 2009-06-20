@@ -2677,10 +2677,16 @@ public final class Spieler implements plugins.ISpieler {
     	double ageFactor = Math.pow(1.0404, age-17) * gui.UserParameter.instance().AlterFaktor;
 //    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
     	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
+    	if (skillFactor < 0)
+    		skillFactor = 0;
     	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * gui.UserParameter.instance().TrainerFaktor;
     	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * gui.UserParameter.instance().CoTrainerFaktor;
-    	double tiFactor = (1 / (intensitaet/100d)) * gui.UserParameter.instance().IntensitaetFaktor;
-    	double staminaFactor = 1 / (1 - staminaTrainingPart/100d);
+    	double tiFactor = Double.MAX_VALUE;
+    	if (intensitaet > 0)
+    		tiFactor = (1 / (intensitaet/100d)) * gui.UserParameter.instance().IntensitaetFaktor;
+    	double staminaFactor = Double.MAX_VALUE;
+    	if (staminaTrainingPart < 100)
+    		staminaFactor = 1 / (1 - staminaTrainingPart/100d);
     	double trainLength = baseLength * ageFactor * skillFactor * trainerFactor * coFactor * tiFactor * staminaFactor;
     	if (trainLength < 1)
     		trainLength = 1;
