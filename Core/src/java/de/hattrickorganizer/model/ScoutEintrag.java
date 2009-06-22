@@ -79,6 +79,7 @@ public class ScoutEintrag {
     protected int m_iAgreeability = 0;
     protected int m_ibaseWage = 2500;
     protected int m_iNationality = 0;
+    protected int m_iLeadership = 0;
     
     
 
@@ -120,6 +121,7 @@ public class ScoutEintrag {
             m_iAgreeability = rs.getInt("Agreeability");
             m_ibaseWage = rs.getInt("baseWage");
             m_iNationality = rs.getInt("Nationality");
+            m_iLeadership = rs.getInt("Leadership");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor ScoutEintrag : " + e.toString());
         }
@@ -564,6 +566,24 @@ public class ScoutEintrag {
     public final Integer getAgreeability() {
     	return m_iAgreeability;
 	}
+    
+    /**
+     * Setter for property m_iLeadership.
+     *
+     * @param m_iLeadership New value of property m_iLeadership.
+     */
+    public final void setLeadership(int m_iLeadership) {
+        this.m_iLeadership = m_iLeadership;
+    }
+    
+    /**
+     * Getter for property m_iLeadership.
+     *
+     * @return Value of property m_iLeadership.
+     */
+    public final Integer getLeadership() {
+    	return m_iLeadership;
+	}
 
     /**
      * TODO Missing Method Documentation
@@ -595,6 +615,7 @@ public class ScoutEintrag {
         eintrag.setAgreeability(getAgreeability());
         eintrag.setbaseWage(getbaseWage());
         eintrag.setNationality(getNationality());
+        eintrag.setLeadership(getLeadership());
 
         return eintrag;
     }
