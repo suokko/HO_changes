@@ -44,8 +44,8 @@ import de.hattrickorganizer.tools.xml.XMLManager;
 public class MyConnector implements plugins.IDownloadHelper {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
-	static final private int chppID = 55;
-	static final private String chppKey = "A4A07F3F-9613-495B-82DC-C5C49903A044";
+	static final private int chppID = 3330;
+	static final private String chppKey = "F283F8D8-9589-428D-87CD-96A2D9A73451";
 	static final private String htUrl = "www.hattrick.org";
 	//static final private String htUrl = "stage.hattrick.org";
 	/** TODO Missing Parameter Documentation */
