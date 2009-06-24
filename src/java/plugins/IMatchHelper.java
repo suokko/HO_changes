@@ -55,4 +55,5 @@ public interface IMatchHelper {
 	public boolean hasInjury (Vector<IMatchHighlight> highlights, int teamId);
 	public boolean hasWeatherSE (Vector<IMatchHighlight> highlights, int teamId);
 	public boolean hasManualSubstitution (Vector<IMatchHighlight> highlights, int teamId);
+	public boolean hasPullBack (Vector<IMatchHighlight> highlights, int teamId);
 }
