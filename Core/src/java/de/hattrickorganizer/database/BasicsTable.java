@@ -161,11 +161,12 @@ public final class BasicsTable extends AbstractTable {
 		ResultSet rs = null;
 		String sql = null;
 		int hrfID = -1;
-		Timestamp mintime = new Timestamp(time.getTime() - 259200000); //72 Std
+//		Timestamp mintime = new Timestamp(time.getTime() - 259200000); //72 Std
 		Timestamp hrfDate = null;
 
 		//Die passende HRF-ID besorgen
-		sql = "SELECT HRF_ID, Datum FROM "+getTableName()+" WHERE Datum<='" + time.toString() + "' AND Datum>='" + mintime.toString() + "' ORDER BY Datum DESC";
+//		sql = "SELECT HRF_ID, Datum FROM "+getTableName()+" WHERE Datum<='" + time.toString() + "' AND Datum>='" + mintime.toString() + "' ORDER BY Datum DESC";
+		sql = "SELECT HRF_ID, Datum FROM "+getTableName()+" WHERE Datum<='" + time.toString() + "' ORDER BY Datum DESC LIMIT 1";
 		rs = adapter.executeQuery(sql);
 
 		try {
