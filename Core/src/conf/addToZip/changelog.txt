@@ -17,15 +17,19 @@ Changelist HO! 1.425
 - Using team experience formula by kopsterkespits as default now
 - team captain's value in lineup now shows the predicted team experience using this player as captain
 
-- Language updates:
-	- add Slovenian as new HO language (big thx to odemodet!)
-	- huge update of the Bulgarian translation (thx stiflar)
-	- improve French translation (thx Bruno)
-	- fixed Czech skill names
+Language updates:
+-----------------
+- add Slovenian as new HO language (big thx to odemodet!)
+- huge update of the Bulgarian translation (thx stiflar)
+- improve French translation (thx Bruno)
+- fixed Czech skill names
+- add Greek as new HO language (bix thx to Angelos!)
 
 Plugin Updates:
 ---------------
 - SpecialEvents 1.22 (added weather SEs, counters, set pieces...)
+- Feedback 0.43 (included in HO 1.425)
+- TeamAnalyzer 2.70 (included in HO 1.425, using new formula for rating ratios)
 
 Special Notes:
 --------------

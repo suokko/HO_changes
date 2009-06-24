@@ -1,5 +1,5 @@
 Informations about the new HO! Feedback Plugin (since HO 1.410)
-============================================================
+===============================================================
 
 HO! introduces in this release a plugin called Feedback.
 It sends information about rating prediction, training duration,
@@ -13,13 +13,16 @@ Below, you'll find an exact list of all uploaded data.
 Of course, we will use the uploaded informations for formula 
 optimization only and keep them strictly confidential.
 
+If you have any questions about the feedback plugin, feel free
+to contact flattermann:
+hofeedback (AT) flattermann (DOT) net
 
 Structure of a data set:
 ========================
 
 Ratings
 ~~~~~~~
-For each usefull match (i.e. no red cards, no injuries...) this data will be uploaded:
+For each useful match, this data will be uploaded:
 
 - Contributor ID (i.e. your team ID)
 - Match date
@@ -27,25 +30,27 @@ For each usefull match (i.e. no red cards, no injuries...) this data will be upl
 - Trainer Type
 - Team spirit
 - Team confidence
+- Match highlights
 - Attitude (PIC/MOTS)
 - Tactic type (AOW...)
 - Tactic skill
-- The "defend lead" minute
 - the real HT ratings for each area (midfield, left defense, central defense, ...)
+- Number of spectators
 - For each player in lineup:
+  - id
   - form
   - xp
   - stamina
   - his skills (playmaking, passing...)
   - specialty
-  - behaviour (off/def)
+  - behaviour (off/def...)
   - stars
 - HO Feedback Plugin version
 
 
 Training
 ~~~~~~~~
-For each usefull skillup, this data will be uploaded:
+For each useful skillup, this data will be uploaded:
 
 - Contributor ID (i.e. your team ID)
 - HT season
@@ -63,16 +68,18 @@ For each usefull skillup, this data will be uploaded:
 
 Transfers
 ~~~~~~~~~
-For each usefull transfer, this data will be uploaded:
+For each useful transfer, this data will be uploaded:
 
 - Contributor ID (i.e. your team ID)
 - Transfer ID
+- player id
 - age
 - form
 - injury level
 - xp
 - leadership
 - tsi
+- wage
 - stamina
 - his skills (playmaking, passing, ...)
 - specialty
