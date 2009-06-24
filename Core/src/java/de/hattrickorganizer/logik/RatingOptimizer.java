@@ -41,7 +41,7 @@ public class RatingOptimizer {
 		double[] linear = new double[7];
 		double[] quadratic = new double[7];
 		
-		List<IExportMatchData> matches = MatchExporter.getDataUsefullMatches(IRatingPredictionManager.LAST_CHANGE, IRatingPredictionManager.LAST_CHANGE_FRIENDLY);
+		List<IExportMatchData> matches = MatchExporter.getDataUsefullMatches(IRatingPredictionManager.LAST_CHANGE, IRatingPredictionManager.LAST_CHANGE_FRIENDLY, true, true);
 
 		int i = 0;
 		int count = 0;
