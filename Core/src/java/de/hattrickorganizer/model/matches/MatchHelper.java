@@ -234,15 +234,17 @@ public class MatchHelper implements IMatchHelper {
 		Iterator<IMatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
 			IMatchHighlight hlight = (IMatchHighlight) iter.next();
-			if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
-				// Weather based SpecialEvents check (as this SE alters player ratings)
-				if ((hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY)) {
-					return true;
+			if (hlight.getTeamID() == teamId) {
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
+					// Weather based SpecialEvents check (as this SE alters player ratings)
+					if ((hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -253,15 +255,32 @@ public class MatchHelper implements IMatchHelper {
 		Iterator<IMatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
 			IMatchHighlight hlight = (IMatchHighlight) iter.next();
-			if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
-				// Weather based SpecialEvents check (as this SE alters player ratings)
-				if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_DEFICIT
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_EVEN
-						|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_LEAD) {
-					return true;
+			if (hlight.getTeamID() == teamId) {
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
+					// Weather based SpecialEvents check (as this SE alters player ratings)
+					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_EVEN
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_SUBSTITUTION_LEAD
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_DEFICIT
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_EVEN
+							|| hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_LEAD) {
+						return true;
+					}
+				}
+			}			
+		}
+		return false;
+	}
+
+	public boolean hasPullBack (Vector<IMatchHighlight> highlights, int teamId) {
+		Iterator<IMatchHighlight> iter = highlights.iterator();
+		while (iter.hasNext()) {
+			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			if (hlight.getTeamID() == teamId) {
+				// Pull back event
+				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION &&
+						hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_FUEHRUNG_HALTEN) {
+						return true;
 				}
 			}			
 		}

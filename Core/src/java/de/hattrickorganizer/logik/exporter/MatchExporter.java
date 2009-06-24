@@ -42,16 +42,21 @@ public class MatchExporter {
 		return getDataUsefullMatches(startingDate, startingDateForFriendlies, true);
 	}
 
+	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict) {
+		return getDataUsefullMatches(startingDate, startingDateForFriendlies, strict, false);
+	}
+	
 	/**
 	 * List of useful data for export
 	 *
 	 * @param startingDate starting data to export from (for non friendlies)
 	 * @param startingDateForFriendlies starting data to export from (for friendlies)
 	 * @param strict is true, export only matches *without* cards, injuries, tactical problems / overconfidence / weather SE...
+	 * @param skipPullBack is true, skip matches with pull back event
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict) {		
+	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict, boolean skipPullBack) {		
 		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
 		List<IExportMatchData> export = new ArrayList<IExportMatchData>();
 
@@ -65,8 +70,8 @@ public class MatchExporter {
 					|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTSPIEL 
 					|| matches[i].getMatchTyp() == IMatchLineup.TESTPOKALSPIEL
 					|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTCUPSPIEL);
-			if (isValidMatch(matches[i], details, startingDateForFriendlies, strict) && isFriendly
-					|| isValidMatch(matches[i], details, startingDate, strict) && !isFriendly ) {				
+			if (isValidMatch(matches[i], details, startingDateForFriendlies, strict, skipPullBack) && isFriendly
+					|| isValidMatch(matches[i], details, startingDate, strict, skipPullBack) && !isFriendly ) {				
 
 				//Nun lineup durchlaufen und Spielerdaten holen
 				Vector<IMatchLineupPlayer> aufstellung = DBZugriff.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
@@ -115,7 +120,7 @@ public class MatchExporter {
 		return export;
 	}
 
-	private static boolean isValidMatch(IMatchKurzInfo info, IMatchDetails details, Date startingDate, boolean strict) {
+	private static boolean isValidMatch(IMatchKurzInfo info, IMatchDetails details, Date startingDate, boolean strict, boolean skipPullBack) {
 		if ((info.getMatchStatus() != IMatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": not finished");
 			return false;
@@ -166,7 +171,12 @@ public class MatchExporter {
 				return false;							
 			}
 
-		} //ende for highlight check
+		}
+		if (skipPullBack && MatchHelper.instance().hasPullBack(highlights, HOMiniModel.instance().getBasics().getTeamId())) {
+			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Pull Back");
+			return false;
+		}
+		//ende for highlight check
 
 		//		HOLogger.instance().debug(MatchExporter.class, "Exporting match " + info.getMatchID());
 		return true;
