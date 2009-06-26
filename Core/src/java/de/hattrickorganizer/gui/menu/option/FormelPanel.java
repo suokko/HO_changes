@@ -71,6 +71,8 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
 
                 //Alle anderen Werte in GUI setzen
                 refresh();
+                
+                OptionManager.instance().setReInitNeeded();
             }
         } else if (actionEvent.getSource().equals(m_jbImport)) {
             //Filechooser
@@ -94,6 +96,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
             if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
                 FormulaFactors.instance().readFromXML(fileChooser.getSelectedFile().getAbsolutePath());
                 refresh();
+                OptionManager.instance().setReInitNeeded();
             }
         } else if (actionEvent.getSource().equals(m_jbExport)) {
             //Filechooser
