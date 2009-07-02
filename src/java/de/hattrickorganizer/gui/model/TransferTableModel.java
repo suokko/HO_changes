@@ -11,6 +11,7 @@ import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -24,294 +25,165 @@ import de.hattrickorganizer.model.SpielerPosition;
  */
 public class TransferTableModel extends AbstractTableModel {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7723286963812074041L;
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
-    public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
-                                            
-
-    //Name
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
-                                            
-
-    //Current price
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_price"),
-                                            
-
-    //Ablaufdatum
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
-                                            
-
-    //Beste Position
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
-                                            
-
-    //Alter
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Alter"), 
-    //TSI
-    "TSI", 
-    //Erfahrung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung"),
-                                            
-
-    //Form
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form"),
-                                            
-
-    //Kondition
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition"),
-                                            
-
-    //Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
-                                            
-
-    //Verteidigung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
-                                            
-
-    //Spielaufbau
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
-                                            
-
-    //Passpiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
-                                            
-
-    //Flügelspiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                            
-
-    //Torschuss
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
-                                            
-
-    //Standards
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
-                                            
-
-    //Gesamt Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
-                                            
-
-    //Innenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger"),
-                                            
-
-    //Innenverteidiger Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"),
-                                            
-
-    //Innenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"),
-                                            
-
-    //Aussenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger"),
-                                            
-
-    //Aussenverteidiger Nach Innen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"),
-                                            
-
-    //Aussenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"),
-                                            
-
-    //Aussenverteidiger Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"),
-                                            
-
-    //Mittelfeld
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld"),
-                                            
-
-    //Mittelfeld Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"),
-                                            
-
-    //Mittelfeld Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"),
-                                            
-
-    //Mittelfeld Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
-                                            
-
-    //Flügel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                            
-
-    //Flügel Nach Innen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
-                                            
-
-    //Flügel Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
-                                            
-
-    //Flügel Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
-                                            
-
-    //Sturm
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm"),
-                                            
-
-    //Sturm Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sturm_Def"),
-                                            
-
-    //Notes
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Notizen"),
-                                        };
+    /** Array of ToolTip Strings shown in the table header (first row of table) */
+    public String[] m_sToolTipStrings = 
+    {
+    	HOVerwaltung.instance().getLanguageString("ID"),
+        //Name
+	    HOVerwaltung.instance().getLanguageString("Name"),
+	    //Current price
+	    HOVerwaltung.instance().getLanguageString("scout_price"),
+	    //Ablaufdatum
+	    HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
+	    //Beste Position
+	    HOVerwaltung.instance().getLanguageString("BestePosition"),
+	    //Alter
+	    HOVerwaltung.instance().getLanguageString("Alter"), 
+	    //TSI
+	    "TSI", 
+	    //Erfahrung
+	    HOVerwaltung.instance().getLanguageString("Erfahrung"),
+	    //Form
+	    HOVerwaltung.instance().getLanguageString("Form"),
+	    //Kondition
+	    HOVerwaltung.instance().getLanguageString("skill.stamina"),
+	    //Torwart
+	    HOVerwaltung.instance().getLanguageString("skill.keeper"),
+	    //Verteidigung
+	    HOVerwaltung.instance().getLanguageString("skill.defending"),
+	    //Spielaufbau
+	    HOVerwaltung.instance().getLanguageString("skill.playmaking"),
+	    //Passpiel
+	    HOVerwaltung.instance().getLanguageString("skill.passing"),
+	    //Flügelspiel
+	    HOVerwaltung.instance().getLanguageString("skill.winger"),
+	    //Torschuss
+	    HOVerwaltung.instance().getLanguageString("skill.scoring"),
+	    //Standards
+	    HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
+	    //Gesamt Torwart
+	    HOVerwaltung.instance().getLanguageString("Torwart"),
+	    //Innenverteidiger
+	    HOVerwaltung.instance().getLanguageString("Innenverteidiger"),
+	    //Innenverteidiger Nach Aussen
+	    HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"),
+	    //Innenverteidiger Offensiv
+	    HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"),
+	    //Aussenverteidiger
+	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger"),
+	    //Aussenverteidiger Nach Innen
+	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"),
+	    //Aussenverteidiger Offensiv
+	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"),
+	    //Aussenverteidiger Defensiv
+	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"),
+	    //Mittelfeld
+	    HOVerwaltung.instance().getLanguageString("Mittelfeld"),
+	    //Mittelfeld Nach Aussen
+	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"),
+	    //Mittelfeld Offensiv
+	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"),
+	    //Mittelfeld Defensiv
+	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
+	    //Flügel
+	    HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+	    //Flügel Nach Innen
+	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
+	    //Flügel Offensiv
+	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
+	    //Flügel Defensiv
+	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
+	    //Sturm
+	    HOVerwaltung.instance().getLanguageString("Sturm"),
+	    //Sturm Defensiv
+	    HOVerwaltung.instance().getLanguageString("Sturm_Def"),
+	    //Notes
+	    HOVerwaltung.instance().getLanguageString("Notizen"),
+    };
 
     /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
-    /** TODO Missing Parameter Documentation */
-    protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
-                                            
-
-    //Name
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
-                                            
-
-    //Current price
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_price"),
-                                            
-
-    //Ablaufdatum
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
-                                            
-
-    //Beste Position
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
-                                            
-
-    //Alter
-    "", 
-    //TSI
-    "TSI", 
-    //Erfahrung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ER"),
-                                            
-
-    //Form
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FO"),
-                                            
-
-    //Kondition
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("KO"),
-                                            
-
-    //Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TW"),
-                                            
-
-    //Verteidigung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VE"),
-                                            
-
-    //Spielaufbau
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SA"),
-                                            
-
-    //Passpiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PS"),
-                                            
-
-    //Flügelspiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FL"),
-                                            
-
-    //Torschuss
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TS"),
-                                            
-
-    //Standards
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ST"),
-                                            
-
-    //Gesamt Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TORW"),
-                                            
-
-    //Innenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IV"),
-                                            
-
-    //Innenverteidiger Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IVA"),
-                                            
-
-    //Innenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("IVO"),
-                                            
-
-    //Aussenverteidiger
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AV"),
-                                            
-
-    //Aussenverteidiger Zur Mitte
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVI"),
-                                            
-
-    //Aussenverteidiger Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVO"),
-                                            
-
-    //Aussenverteidiger Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AVD"),
-                                            
-
-    //Mittelfeld
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MIT"),
-                                            
-
-    //Mittelfeld Nach Aussen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITA"),
-                                            
-
-    //Mittelfeld Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITO"),
-                                            
-
-    //Mittelfeld Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MITD"),
-                                            
-
-    //Flügel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLG"),
-                                            
-
-    //Flügel Nach Innen
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGI"),
-                                            
-
-    //Flügel Offensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGO"),
-                                            
-
-    //Flügel Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FLGD"),
-                                            
-
-    //Sturm
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STU"),
-                                            
-
-    //Sturm Defensiv
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("STUD"),
-                                            
-
-    //Notes
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Notizen"),
-                                        };
+    /** Array of Strings shown in the table header (first row of table) */
+    protected String[] m_sColumnNames = 
+    {
+        HOVerwaltung.instance().getLanguageString("ID"),
+        //Name
+	    HOVerwaltung.instance().getLanguageString("Name"),
+	    //Current price
+	    HOVerwaltung.instance().getLanguageString("scout_price"),
+	    //Ablaufdatum
+	    HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
+	    //Beste Position
+	    HOVerwaltung.instance().getLanguageString("BestePosition"),
+	    //Alter
+	    HOVerwaltung.instance().getLanguageString("Alter"), 
+	    //TSI
+	    "TSI", 
+	    //Erfahrung
+	    HOVerwaltung.instance().getLanguageString("ER"),
+	    //Form
+	    HOVerwaltung.instance().getLanguageString("FO"),
+	    //Kondition
+	    HOVerwaltung.instance().getLanguageString("KO"),
+	    //Torwart
+	    HOVerwaltung.instance().getLanguageString("TW"),
+	    //Verteidigung
+	    HOVerwaltung.instance().getLanguageString("VE"),
+	    //Spielaufbau
+	    HOVerwaltung.instance().getLanguageString("SA"),
+	    //Passpiel
+	    HOVerwaltung.instance().getLanguageString("PS"),
+	    //Flügelspiel
+	    HOVerwaltung.instance().getLanguageString("FL"),
+	    //Torschuss
+	    HOVerwaltung.instance().getLanguageString("TS"),
+	    //Standards
+	    HOVerwaltung.instance().getLanguageString("ST"),
+	    //Gesamt Torwart
+	    HOVerwaltung.instance().getLanguageString("TORW"),
+	    //Innenverteidiger
+	    HOVerwaltung.instance().getLanguageString("IV"),
+	    //Innenverteidiger Nach Aussen
+	    HOVerwaltung.instance().getLanguageString("IVA"),
+	    //Innenverteidiger Offensiv
+	    HOVerwaltung.instance().getLanguageString("IVO"),
+	    //Aussenverteidiger
+	    HOVerwaltung.instance().getLanguageString("AV"),
+	    //Aussenverteidiger Zur Mitte
+	    HOVerwaltung.instance().getLanguageString("AVI"),
+	    //Aussenverteidiger Offensiv
+	    HOVerwaltung.instance().getLanguageString("AVO"),
+	    //Aussenverteidiger Defensiv
+	    HOVerwaltung.instance().getLanguageString("AVD"),
+	    //Mittelfeld
+	    HOVerwaltung.instance().getLanguageString("MIT"),
+	    //Mittelfeld Nach Aussen
+	    HOVerwaltung.instance().getLanguageString("MITA"),
+	    //Mittelfeld Offensiv
+	    HOVerwaltung.instance().getLanguageString("MITO"),
+	    //Mittelfeld Defensiv
+	    HOVerwaltung.instance().getLanguageString("MITD"),
+	    //Flügel
+	    HOVerwaltung.instance().getLanguageString("FLG"),
+	    //Flügel Nach Innen
+	    HOVerwaltung.instance().getLanguageString("FLGI"),
+	    //Flügel Offensiv
+	    HOVerwaltung.instance().getLanguageString("FLGO"),
+	    //Flügel Defensiv
+	    HOVerwaltung.instance().getLanguageString("FLGD"),
+	    //Sturm
+	    HOVerwaltung.instance().getLanguageString("STU"),
+	    //Sturm Defensiv
+	    HOVerwaltung.instance().getLanguageString("STUD"),
+	    //Notes
+	    HOVerwaltung.instance().getLanguageString("Notizen"),
+    };
+    
     private Vector<ScoutEintrag> m_vScoutEintraege;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -329,12 +201,11 @@ public class TransferTableModel extends AbstractTableModel {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
+     *  Returns false.  This is the default implementation for all cells.
      *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param col TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     *  @param  row  the row being queried
+     *  @param  col the column being queried
+     *  @return false
      */
     @Override
 	public final boolean isCellEditable(int row, int col) {
@@ -342,11 +213,11 @@ public class TransferTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
+     *  Returns the class of the table entry row=0, column=columnIndex
+     *  Returns String.class if there is no such entry
      *
-     * @param columnIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     *  @param columnIndex  the column being queried
+     *  @return see above
      */
     @Override
 	public final Class<?> getColumnClass(int columnIndex) {
@@ -372,15 +243,16 @@ public class TransferTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
+     *  Returns the name for the column of columnIndex.
+     *  Return null if there is no match.
+     *   
      *
-     * @param columnIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * @param column  the column being queried
+     * @return a string containing the name of <code>column</code>
      */
     @Override
 	public final String getColumnName(int columnIndex) {
-        if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
+        if (m_sColumnNames.length > columnIndex) {
             return m_sColumnNames[columnIndex];
         } else {
             return null;
@@ -388,9 +260,9 @@ public class TransferTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Returns the number of data sets (without header).
      *
-     * @return TODO Missing Return Method Documentation
+     * @return m_clData.length
      */
     public final int getRowCount() {
         if (m_clData != null) {
@@ -413,7 +285,6 @@ public class TransferTableModel extends AbstractTableModel {
                 return (m_vScoutEintraege.get(i)).duplicate();
             }
         }
-
         return null;
     }
 

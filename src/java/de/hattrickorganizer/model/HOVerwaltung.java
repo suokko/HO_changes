@@ -231,7 +231,7 @@ public class HOVerwaltung {
             m_clInstance = new HOVerwaltung();
 
             //TODO : defaults für FaktorObjekte einladen
-            de.hattrickorganizer.database.DBZugriff.instance().getFaktorenFromDB();
+            DBZugriff.instance().getFaktorenFromDB();
 
             //Krücke bisher
             //berechnung.FormulaFactors.instance ().init ();
@@ -304,7 +304,7 @@ public class HOVerwaltung {
      * läadt das zuletzt importtiert model ein
      */
     public void loadLatestHoModel() {
-        int id = de.hattrickorganizer.database.DBZugriff.instance().getLatestHrfId();
+        int id = DBZugriff.instance().getLatestHrfId();
         m_clHoModel = loadModel(id);
     }
 
@@ -372,22 +372,19 @@ public class HOVerwaltung {
      */
     protected HOModel loadModel(int id) {
         final HOModel model = new HOModel();
-        model.setSpieler(de.hattrickorganizer.database.DBZugriff.instance().getSpieler(id));
-        model.setAllOldSpieler(de.hattrickorganizer.database.DBZugriff.instance().getAllSpieler());
-
-        model.setAufstellung(de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(id,
-                                                                                               Aufstellung.DEFAULT_NAME));
-        model.setLastAufstellung(de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(id,
-                                                                                                   Aufstellung.DEFAULT_NAMELAST));
-        model.setBasics(de.hattrickorganizer.database.DBZugriff.instance().getBasics(id));
-        model.setFinanzen(de.hattrickorganizer.database.DBZugriff.instance().getFinanzen(id));
-        model.setLiga(de.hattrickorganizer.database.DBZugriff.instance().getLiga(id));
-        model.setStadium(de.hattrickorganizer.database.DBZugriff.instance().getStadion(id));
-        model.setTeam(de.hattrickorganizer.database.DBZugriff.instance().getTeam(id));
-        model.setVerein(de.hattrickorganizer.database.DBZugriff.instance().getVerein(id));
+        model.setSpieler(DBZugriff.instance().getSpieler(id));
+        model.setAllOldSpieler(DBZugriff.instance().getAllSpieler());
+        model.setAufstellung(DBZugriff.instance().getAufstellung(id,Aufstellung.DEFAULT_NAME));
+        model.setLastAufstellung(DBZugriff.instance().getAufstellung(id,Aufstellung.DEFAULT_NAMELAST));
+        model.setBasics(DBZugriff.instance().getBasics(id));
+        model.setFinanzen(DBZugriff.instance().getFinanzen(id));
+        model.setLiga(DBZugriff.instance().getLiga(id));
+        model.setStadium(DBZugriff.instance().getStadion(id));
+        model.setTeam(DBZugriff.instance().getTeam(id));
+        model.setVerein(DBZugriff.instance().getVerein(id));
         model.setID(id);
-        model.setSpielplan(de.hattrickorganizer.database.DBZugriff.instance().getSpielplan(-1, -1));
-        model.setXtraDaten(de.hattrickorganizer.database.DBZugriff.instance().getXtraDaten(id));
+        model.setSpielplan(DBZugriff.instance().getSpielplan(-1, -1));
+        model.setXtraDaten(DBZugriff.instance().getXtraDaten(id));
 
         return model;
     }
