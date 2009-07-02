@@ -24,7 +24,7 @@ public class FinancesTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7060311989341266730L;
 	private Vector<String> colNames;
-    private Vector<Object> values;
+    private Vector<FinancesOfWeek> values;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ public class FinancesTableModel extends AbstractTableModel {
      *
      * @param values Missing Constructuor Parameter Documentation
      */
-    public FinancesTableModel(Vector<Object> values) {
+    public FinancesTableModel(Vector<FinancesOfWeek> values) {
         this.values = null;
         colNames = new Vector<String>();
         this.values = values;
@@ -175,7 +175,7 @@ public class FinancesTableModel extends AbstractTableModel {
      *
      * @param values Missing Method Parameter Documentation
      */
-    public void refresh(Vector<Object> values) {
+    public void refresh(Vector<FinancesOfWeek> values) {
         this.values = values;
         fireTableDataChanged();
     }

@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 
 import plugins.IBasics;
 import plugins.IFinanzen;
+import plugins.ITrainingWeek;
 import plugins.IXtraData;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -39,7 +40,7 @@ public class EconomyCreator extends XMLCreator {
 
 
 		try {
-			Vector l = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+			Vector<ITrainingWeek> l = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();

@@ -1,8 +1,6 @@
 // %3800124443:de.hattrickorganizer.gui.transferscout%
 package de.hattrickorganizer.gui.transferscout;
 
-import de.hattrickorganizer.tools.PlayerHelper;
-
 /**
  * Player used for PlayerConverter (TransferScout)
  *
@@ -33,6 +31,9 @@ public class Player {
     private int tsi;
     private int wing;
     private String booked = null;
+    private int agreeability;
+    private int baseWage;
+    private int nationality;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -213,12 +214,6 @@ public class Player {
      */
     public final String getInfo() {
         String info = "";
-
-        if (getLeadership() > 0) {
-            info = info
-                   + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fuehrung")
-                   + ": " + PlayerHelper.getNameForSkill(getLeadership()) + "\r\n";
-        }
 
         if (getInjury() > 0) {
             final String tmp = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_injury");
@@ -448,6 +443,60 @@ public class Player {
     public final int getWing() {
         return wing;
     }
+    
+    /**
+     * Setter for agreeability
+     *
+     * @param i Set agreeability to i
+     */
+    public final void setAgreeability(int i) {
+        agreeability = i;
+    }
+
+    /**
+     * Getter for agreeability
+     *
+     * @return Returns agreeability
+     */
+    public final int getAgreeability() {
+        return agreeability;
+    }
+    
+    /**
+     * Setter for baseWage
+     *
+     * @param i Set baseWage to i
+     */
+    public final void setBaseWage(int i) {
+    	baseWage = i;
+    }
+
+    /**
+     * Getter for baseWage
+     *
+     * @return Returns baseWage
+     */
+    public final int getBaseWage() {
+        return baseWage;
+    }
+    
+    /**
+     * Setter for nationality
+     *
+     * @param i Set nationality to i
+     */
+    public final void setNationality(int i) {
+    	nationality = i;
+    }
+
+    /**
+     * Getter for nationality
+     *
+     * @return Returns nationality
+     */
+    public final int getNationality() {
+        return nationality;
+    }
 
     /**
      * Setter for the booked infos.
@@ -489,6 +538,9 @@ public class Player {
         buffer.append(", defense = " + defense);
         buffer.append(", attack = " + attack);
         buffer.append(", setPieces = " + setPieces);
+        buffer.append(", agreeability = " + agreeability);
+        buffer.append(", baseWage = " + baseWage);
+        buffer.append(", nationality = " + nationality);
         buffer.append(", info = " + getInfo());
         return buffer.toString();
     }

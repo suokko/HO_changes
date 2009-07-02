@@ -20,13 +20,13 @@ import javax.swing.ListCellRenderer;
 
 public class FlagRenderer extends JLabel implements ListCellRenderer {
 	//private Properties paises;
-    private HashMap invert;
+    private HashMap<String,Integer> invert;
     private plugins.IHOMiniModel hoModel;
     private transient FlagCollection flagSet;
     final public static NumberFormat numberFormat = NumberFormat.getInstance();
 	private static final long serialVersionUID = 7966608444470977408L;
 
-    public FlagRenderer(plugins.IHOMiniModel mod, HashMap hm) {
+    public FlagRenderer(plugins.IHOMiniModel mod, HashMap<String,Integer> hm) {
         setOpaque(true);
         setHorizontalAlignment(LEADING);
         setVerticalAlignment(CENTER);

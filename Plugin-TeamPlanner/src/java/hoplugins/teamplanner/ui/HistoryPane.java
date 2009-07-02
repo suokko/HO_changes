@@ -4,6 +4,7 @@ package hoplugins.teamplanner.ui;
 import hoplugins.commons.ui.sorter.AbstractTableSorter;
 import hoplugins.teamplanner.dao.FinanzenDAO;
 import hoplugins.teamplanner.ui.model.FinancesTableModel;
+import hoplugins.teamplanner.vo.FinancesOfWeek;
 import hoplugins.teamplanner.vo.HTWeek;
 
 import java.awt.BorderLayout;
@@ -42,7 +43,7 @@ public class HistoryPane extends JPanel {
      */
     public HistoryPane() {
         historyTableModel = null;
-        historyTableModel = new FinancesTableModel(new Vector<Object>());
+        historyTableModel = new FinancesTableModel(new Vector<FinancesOfWeek>());
 
         BasicSorter sorter = new BasicSorter(historyTableModel);
         JTable historyTable = new JTable(sorter);
@@ -63,7 +64,7 @@ public class HistoryPane extends JPanel {
      * Missing Method Documentation
      */
     public void refresh() {
-        Vector values = FinanzenDAO.getFinancesHistory(16);
+        Vector<FinancesOfWeek> values = FinanzenDAO.getFinancesHistory(16);
 
         historyTableModel.refresh(values);
     }

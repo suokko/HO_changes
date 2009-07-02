@@ -50,6 +50,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.ISpieler;
 import plugins.IXMLParser;
 
 
@@ -84,9 +85,9 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
     private FlagUpdater flagUpdater;
     private static Properties countries;
     private static Properties leagues;
-    private static HashMap invertCountries;
-    private static HashMap teamIdCountry;
-    private static HashMap coolnessRanking;
+    private static HashMap<String,Integer> invertCountries;
+    private static HashMap<Integer,Integer> teamIdCountry;
+    private static HashMap<Integer,Double> coolnessRanking;
     private FlagCollection fcAway, fcHome;
     private JList listAway, listHome;
     private JMenuItem jmiAutoUpdateFlags;
@@ -96,7 +97,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
     private JLabel coolnessSumHome = new JLabel("");
     private JLabel coolnessSumAway = new JLabel("");
     private Opciones opciones;
-    private Vector allflags = new Vector();
+    private Vector<FlagObject> allflags = new Vector<FlagObject>();
 
     /** Creates a new instance of FlagsPlugin */
     public FlagsPlugin () {
@@ -117,7 +118,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         } catch(IOException e) {
         } catch(IllegalArgumentException iae) { }
         hoModel = null;
-        invertCountries = new HashMap();
+        invertCountries = new HashMap<String, Integer>();
         allflags = constructPaisesVector(true);
         if (SORT_LIST_BY_COOLNESS) Collections.sort(allflags, new FlagObject.CoolnessComparator());
         else Collections.sort(allflags);
@@ -261,8 +262,8 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         panel.add(jsp2);
         // ************
 
-        Vector allPlayers = null;
-        Vector allOldPlayers = null;
+        Vector<ISpieler> allPlayers = null;
+        Vector<ISpieler> allOldPlayers = null;
         try {
             allPlayers = hoModel.getAllSpieler();
             allOldPlayers = hoModel.getAllOldSpieler();
@@ -342,8 +343,8 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         return NAME;
     }
 
-    protected Vector constructPaisesVector(boolean firstTime) {
-        Vector paises = new Vector();
+    protected Vector<FlagObject> constructPaisesVector(boolean firstTime) {
+        Vector<FlagObject> paises = new Vector<FlagObject>();
         for (int i=1; i<190; i++) {
             if (countries.containsKey(Integer.toString(i))) {
                 Integer I = new Integer(i);
@@ -396,7 +397,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         try {
         	// read active users from each country and store it in a temp. structure
             // count overall amount of users
-        	HashMap tmpCountries = new HashMap(); //countryID - active users
+        	HashMap<Integer, Integer> tmpCountries = new HashMap<Integer, Integer>(); //countryID - active users
         	int userCount = 0;
             root = (Element) root.getElementsByTagName("LeagueList").item(0);
             list = root.getElementsByTagName("League");
@@ -414,9 +415,9 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
             }
 
             // loop temp structure, calc coolness from user numbers
-            for (Iterator j=tmpCountries.keySet().iterator(); j.hasNext(); ) {
-            	Integer country = (Integer)j.next();
-            	Integer active = (Integer)tmpCountries.get(country);
+            for (Iterator<Integer> j=tmpCountries.keySet().iterator(); j.hasNext(); ) {
+            	Integer country = j.next();
+            	Integer active = tmpCountries.get(country);
             	if (country == null || active == null) {
             		continue;
             	} else if (active.intValue() == 0) { // no active users yet
@@ -521,7 +522,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         if (invertCountries == null) return 0;
         int idx = 0;
         try {
-            idx = ((Integer)invertCountries.get(pais)).intValue();
+            idx = invertCountries.get(pais).intValue();
         } catch (Exception e) { }
         return idx;
     }
@@ -546,8 +547,8 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
     /* interface Refreshable */
     public void refresh() {
         if (hoModel == null) return;;
-        Vector allPlayers = null;
-        Vector allOldPlayers = null;
+        Vector<ISpieler> allPlayers = null;
+        Vector<ISpieler> allOldPlayers = null;
         try {
             allPlayers = hoModel.getAllSpieler();
             allOldPlayers = hoModel.getAllOldSpieler();
@@ -584,7 +585,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
             fcHome.saveFlags();
             JDialog jdOpc = opciones.createDialogoOpciones();
             jdOpc.pack();
-            jdOpc.show();
+            jdOpc.setVisible(true);
         }
         else if (e.getSource().equals(jmiAutoUpdateFlags)) {
             try {

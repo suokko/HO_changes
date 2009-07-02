@@ -18,11 +18,11 @@ import hoplugins.FlagsPlugin;
 
 public class FlagUpdater {
     private plugins.IHOMiniModel hoModel;
-    private HashMap teams;
+    private HashMap<Integer,Integer> teams;
     private FlagCollection fcAway;
     private FlagCollection fcHosted;
 
-    public FlagUpdater(IHOMiniModel hom, HashMap t, FlagCollection away, FlagCollection hosted) {
+    public FlagUpdater(IHOMiniModel hom, HashMap<Integer,Integer> t, FlagCollection away, FlagCollection hosted) {
         hoModel = hom;
         teams = t;
         fcAway = away;
@@ -34,8 +34,8 @@ public class FlagUpdater {
 
         int myTeamId = hoModel.getBasics().getTeamId();
         IMatchKurzInfo [] partidos = hoModel.getMatchesKurzInfo(myTeamId, ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE, true);
-        TreeSet awayFlags = new TreeSet();
-        TreeSet hostedFlags = new TreeSet();
+        TreeSet<FlagObject> awayFlags = new TreeSet<FlagObject>();
+        TreeSet<FlagObject> hostedFlags = new TreeSet<FlagObject>();
 
         for (int i=0; i<partidos.length; i++) {
             //int matchId = partidos[i].getMatchID();
@@ -82,10 +82,10 @@ public class FlagUpdater {
         }
 
         /* get new flags */
-        Collection newAway = fcAway.getMissing(awayFlags);
-        Collection newHosted = fcHosted.getMissing(hostedFlags);
-        Collection surplusAway = fcAway.getSurplus(awayFlags);
-        Collection surplusHosted = fcHosted.getSurplus(hostedFlags);
+        Collection<FlagObject> newAway = fcAway.getMissing(awayFlags);
+        Collection<FlagObject> newHosted = fcHosted.getMissing(hostedFlags);
+        Collection<FlagObject> surplusAway = fcAway.getSurplus(awayFlags);
+        Collection<FlagObject> surplusHosted = fcHosted.getSurplus(hostedFlags);
 
         /* show new flags obtained */
         JCheckBox chbx1 = new JCheckBox("add these", true);
@@ -122,11 +122,11 @@ public class FlagUpdater {
         return updated;
     }
 
-    protected JComponent createFlagPanel(Collection flags, String title, JComponent jc) {
+    protected JComponent createFlagPanel(Collection<FlagObject> flags, String title, JComponent jc) {
         JPanel p = new JPanel(new GridLayout(0,FlagsPlugin.FLAGS_PER_ROW,3,6));
-        Iterator it = flags.iterator();
+        Iterator<FlagObject> it = flags.iterator();
         while (it.hasNext()) {
-            FlagObject fo = (FlagObject)it.next();
+            FlagObject fo = it.next();
             p.add(FlagCollection.createFlag(fo));
         }
 

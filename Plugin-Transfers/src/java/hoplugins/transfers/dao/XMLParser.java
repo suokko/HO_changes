@@ -3,9 +3,6 @@ package hoplugins.transfers.dao;
 
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
-
 import hoplugins.transfers.vo.PlayerTransfer;
 
 import org.w3c.dom.Document;
@@ -66,8 +63,6 @@ final class XMLParser {
 
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
-        final HTCalendar htcal = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
-
         final Document doc = parser.parseString(xml);
 
         //get Root element ('HattrickData') :
@@ -116,11 +111,12 @@ final class XMLParser {
                                 continue;
                             }
                         }
+                        
+                        Timestamp time = new Timestamp(transferDate.getTime());
 
-                        playerTranfer.setDate(new Timestamp(transferDate.getTime())); 
-                        htcal.setTime(playerTranfer.getDate());
-                        playerTranfer.setSeason(htcal.getHTSeason());
-                        playerTranfer.setWeek(htcal.getHTWeek());
+                        playerTranfer.setDate(time);
+                        playerTranfer.setSeason(Commons.getModel().getHelper().getHTSeason(time));
+                        playerTranfer.setWeek(Commons.getModel().getHelper().getHTWeek(time));
 
                         final Element buyer = (Element) transfer.getElementsByTagName("Buyer").item(0); //$NON-NLS-1$
                         final Element seller = (Element) transfer.getElementsByTagName("Seller").item(0); //$NON-NLS-1$
@@ -239,8 +235,6 @@ final class XMLParser {
     private static List<PlayerTransfer> parseTeamTransfers(Document doc, Date activatedDate, Date endDate) {
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
-        final HTCalendar htcal = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
-
         //get Root element ('HattrickData') :
         final Element root = doc.getDocumentElement();
 
@@ -287,10 +281,12 @@ final class XMLParser {
                         if (transferDate.before(activatedDate)) continue;
                         if (transferDate.after(endDate)) continue;
 
-                        playerTranfer.setDate(new Timestamp(transferDate.getTime())); 
-                        htcal.setTime(playerTranfer.getDate());
-                        playerTranfer.setSeason(htcal.getHTSeason());
-                        playerTranfer.setWeek(htcal.getHTWeek());
+                        Timestamp time = new Timestamp(transferDate.getTime());
+
+                        playerTranfer.setDate(time);
+                        playerTranfer.setSeason(Commons.getModel().getHelper().getHTSeason(time));
+                        playerTranfer.setWeek(Commons.getModel().getHelper().getHTWeek(time));
+
 
                         final Element buyer = (Element) transfer.getElementsByTagName("Buyer").item(0); //$NON-NLS-1$
                         final Element seller = (Element) transfer.getElementsByTagName("Seller").item(0); //$NON-NLS-1$

@@ -7,7 +7,7 @@ package hoplugins.flagsplugin;
 
 import hoplugins.FlagsPlugin;
 
-public class FlagObject implements Comparable, java.io.Serializable {
+public class FlagObject implements Comparable<FlagObject>, java.io.Serializable {
     static final long serialVersionUID = -5727620448208543191L;
 
     private int id;
@@ -53,8 +53,8 @@ public class FlagObject implements Comparable, java.io.Serializable {
     }
     /* *********************** */
     /* Interface COMPARABLE */
-    public int compareTo(Object o) {
-        FlagObject fo = (FlagObject)o;
+    public int compareTo(FlagObject o) {
+        FlagObject fo = o;
         return simpleName.compareTo(fo.simpleName);
     }
 
@@ -71,12 +71,12 @@ public class FlagObject implements Comparable, java.io.Serializable {
     /* Nested class COOLNESSCOMPARATOR */
     /* ******************************* */
 
-    public static class CoolnessComparator implements java.util.Comparator {
+    public static class CoolnessComparator implements java.util.Comparator<FlagObject> {
 
-        public int compare(Object o1, Object o2) {
+        public int compare(FlagObject o1, FlagObject o2) {
             /* reverse order, highest coolness first */
-            FlagObject fo1 = (FlagObject)o1;
-            FlagObject fo2 = (FlagObject)o2;
+            FlagObject fo1 = o1;
+            FlagObject fo2 = o2;
             //int result = 0;
             if ((fo1.coolness == 0.0) && (fo2.coolness == 0.0)) return fo1.compareTo(fo2);
             if (fo1.coolness > fo2.coolness) return -1;
