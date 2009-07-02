@@ -285,7 +285,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlErfahrung.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getErfahrung()- m_clSpieler.getErfahrung()));
         m_jlSpielaufbau.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getSpielaufbau()- m_clSpieler.getSpielaufbau()));
         m_jlFluegel.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getFluegelspiel()- m_clSpieler.getFluegelspiel()));
-        m_jlTorschuss.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler .getTorschuss()- m_clSpieler.getTorschuss()));
+        m_jlTorschuss.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getTorschuss()- m_clSpieler.getTorschuss()));
         m_jlTorwart.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getTorwart()- m_clSpieler.getTorwart()));
         m_jlPasspiel.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getPasspiel()- m_clSpieler.getPasspiel()));
         m_jlVerteidigung.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getVerteidigung()- m_clSpieler.getVerteidigung()));
@@ -589,7 +589,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlForm, eingabenconstraints);
         panel.add(m_jlForm);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -606,7 +606,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlKondition, eingabenconstraints);
         panel.add(m_jlKondition);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -623,7 +623,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlTorwart, eingabenconstraints);
         panel.add(m_jlTorwart);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 4;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -640,7 +640,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlSpielaufbau, eingabenconstraints);
         panel.add(m_jlSpielaufbau);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 4;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -657,7 +657,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlPasspiel, eingabenconstraints);
         panel.add(m_jlPasspiel);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 5;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -674,7 +674,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlFluegel, eingabenconstraints);
         panel.add(m_jlFluegel);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 5;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -691,7 +691,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlVerteidigung, eingabenconstraints);
         panel.add(m_jlVerteidigung);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 6;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -708,7 +708,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlTorschuss, eingabenconstraints);
         panel.add(m_jlTorschuss);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 6;
         eingabenLayout.setConstraints(label, eingabenconstraints);
