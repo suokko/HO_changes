@@ -70,10 +70,10 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
     private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Bewertung"),
                                                              Helper.getImageIcon4Color(BEWERTUNG),
                                                              gui.UserParameter.instance().statistikBewertung);
-    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Erfahrung"),
+    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.experience"),
                                                              Helper.getImageIcon4Color(ERFAHRUNG),
                                                              gui.UserParameter.instance().statistikErfahrung);
-    private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+    private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.winger"),
                                                            Helper.getImageIcon4Color(FLUEGEL),
                                                            gui.UserParameter.instance().statistikFluegel);
     private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
@@ -85,28 +85,28 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
     private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gehalt"),
                                                           Helper.getImageIcon4Color(GEHALT),
                                                           gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
-    private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Kondition"),
+    private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.stamina"),
                                                              Helper.getImageIcon4Color(KONDITION),
                                                              gui.UserParameter.instance().statistikKondition);
     private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",
                                                              Helper.getImageIcon4Color(MARKTWERT),
                                                              gui.UserParameter.instance().statistikSpielerFinanzenMarktwert);
-    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Passpiel"),
+    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.passing"),
                                                             Helper.getImageIcon4Color(PASSPIEL),
                                                             gui.UserParameter.instance().statistikPasspiel);
-    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Spielaufbau"),
+    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
                                                                Helper.getImageIcon4Color(SPIELAUFBAU),
                                                                gui.UserParameter.instance().statistikSpielaufbau);
-    private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Standards"),
+    private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
                                                              Helper.getImageIcon4Color(STANDARDS),
                                                              gui.UserParameter.instance().statistikStandards);
-    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Torschuss"),
+    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.scoring"),
                                                              Helper.getImageIcon4Color(TORSCHUSS),
                                                              gui.UserParameter.instance().statistikTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Torwart"),
+    private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.keeper"),
                                                            Helper.getImageIcon4Color(TORWART),
                                                            gui.UserParameter.instance().statistikTorwart);
-    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Verteidigung"),
+    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
                                                                 Helper.getImageIcon4Color(VERTEIDIGUNG),
                                                                 gui.UserParameter.instance().statistikVerteidigung);
     private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));

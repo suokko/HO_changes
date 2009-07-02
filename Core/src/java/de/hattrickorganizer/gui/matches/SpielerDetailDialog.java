@@ -872,7 +872,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -893,7 +893,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -914,7 +914,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -935,7 +935,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -956,7 +956,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -977,7 +977,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -998,7 +998,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
@@ -1019,7 +1019,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
