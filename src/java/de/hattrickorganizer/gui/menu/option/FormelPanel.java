@@ -230,37 +230,37 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         panel.setLayout(new GridLayout(7, 1, 4, 4));
         panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 
-        m_jpSpielaufbau = new SliderPanel(HOVerwaltung.instance().getLanguageString("Spielaufbau"),
+        m_jpSpielaufbau = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
                                           100, 0, 10, 1.0f, 80);
         m_jpSpielaufbau.addChangeListener(this);
         panel.add(m_jpSpielaufbau);
 
-        m_jpFluegelspiel = new SliderPanel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+        m_jpFluegelspiel = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.winger"),
                                            100, 0, 10, 1.0f, 80);
         m_jpFluegelspiel.addChangeListener(this);
         panel.add(m_jpFluegelspiel);
 
-        m_jpTorschuss = new SliderPanel(HOVerwaltung.instance().getLanguageString("Torschuss"),
+        m_jpTorschuss = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.scoring"),
                                         100, 0, 10, 1.0f, 80);
         m_jpTorschuss.addChangeListener(this);
         panel.add(m_jpTorschuss);
 
-        m_jpTorwart = new SliderPanel(HOVerwaltung.instance().getLanguageString("Torwart"),
+        m_jpTorwart = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.keeper"),
                                       100, 0, 10, 1.0f, 80);
         m_jpTorwart.addChangeListener(this);
         panel.add(m_jpTorwart);
 
-        m_jpPasspiel = new SliderPanel(HOVerwaltung.instance().getLanguageString("Passpiel"),
+        m_jpPasspiel = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.passing"),
                                        100, 0, 10, 1.0f, 80);
         m_jpPasspiel.addChangeListener(this);
         panel.add(m_jpPasspiel);
 
-        m_jpVerteidigung = new SliderPanel(HOVerwaltung.instance().getLanguageString("Verteidigung"),
+        m_jpVerteidigung = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.defending"),
                                            100, 0, 10, 1.0f, 80);
         m_jpVerteidigung.addChangeListener(this);
         panel.add(m_jpVerteidigung);
 
-        m_jpStandard = new SliderPanel(HOVerwaltung.instance().getLanguageString("Standards"),
+        m_jpStandard = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
                                        100, 0, 10, 1.0f, 80);
         m_jpStandard.addChangeListener(this);
         panel.add(m_jpStandard);

@@ -71,43 +71,43 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
                                   + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VoraussichtlicheTrainingwochen"));
         add(label);
 
-        m_jslTrainingTorwart = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
+        m_jslTrainingTorwart = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.goalkeeping"),
                                                100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingTorwart.setValue( gui.UserParameter.temp().DAUER_TORWART);
         m_jslTrainingTorwart.addChangeListener(this);
         add(m_jslTrainingTorwart);
 
-        m_jslTrainingVerteidigung = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
+        m_jslTrainingVerteidigung = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.defending"),
                                                     100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingVerteidigung.setValue( gui.UserParameter.temp().DAUER_VERTEIDIGUNG);
         m_jslTrainingVerteidigung.addChangeListener(this);
         add(m_jslTrainingVerteidigung);
 
-        m_jslTrainingSpielaufbau = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
+        m_jslTrainingSpielaufbau = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.playmaking"),
                                                    100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingSpielaufbau.setValue( gui.UserParameter.temp().DAUER_SPIELAUFBAU);
         m_jslTrainingSpielaufbau.addChangeListener(this);
         add(m_jslTrainingSpielaufbau);
 
-        m_jslTrainingPasspiel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
+        m_jslTrainingPasspiel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.short_passes"),
                                                 100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingPasspiel.setValue( gui.UserParameter.temp().DAUER_PASSPIEL);
         m_jslTrainingPasspiel.addChangeListener(this);
         add(m_jslTrainingPasspiel);
 
-        m_jslTrainingFluegel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+        m_jslTrainingFluegel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.crossing"),
                                                100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingFluegel.setValue( gui.UserParameter.temp().DAUER_FLUEGELSPIEL);
         m_jslTrainingFluegel.addChangeListener(this);
         add(m_jslTrainingFluegel);
 
-        m_jslTrainingTorschuss = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
+        m_jslTrainingTorschuss = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.scoring"),
                                                  100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingTorschuss.setValue( gui.UserParameter.temp().DAUER_CHANCENVERWERTUNG);
         m_jslTrainingTorschuss.addChangeListener(this);
         add(m_jslTrainingTorschuss);
         
-        m_jslTrainingStandards = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
+        m_jslTrainingStandards = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.set_pieces"),
                                                  100, 1, 10.0f, 0.1f, 120);
         m_jslTrainingStandards.setValue( gui.UserParameter.temp().DAUER_STANDARDS);
                 

@@ -721,7 +721,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 		panel.add(label);
 		panel.add(jtfEPV);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.experience"));
         panel.add(label);
         jcbErfahrung.addItemListener(this);
         panel.add(jcbErfahrung);
@@ -731,42 +731,42 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jcbForm.addItemListener(this);
         panel.add(jcbForm);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
         panel.add(label);
         jcbKondition.addItemListener(this);
         panel.add(jcbKondition);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
         panel.add(label);
         jcbTorwart.addItemListener(this);
         panel.add(jcbTorwart);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
         panel.add(label);
         jcbSpielaufbau.addItemListener(this);
         panel.add(jcbSpielaufbau);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
         panel.add(label);
         jcbPasspiel.addItemListener(this);
         panel.add(jcbPasspiel);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
         panel.add(label);
         jcbFluegel.addItemListener(this);
         panel.add(jcbFluegel);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
         panel.add(label);
         jcbVerteidigung.addItemListener(this);
         panel.add(jcbVerteidigung);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
         panel.add(label);
         jcbTorschuss.addItemListener(this);
         panel.add(jcbTorschuss);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
         panel.add(label);
         jcbStandard.addItemListener(this);
         panel.add(jcbStandard);

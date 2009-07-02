@@ -66,31 +66,31 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
                                                             de.hattrickorganizer.tools.Helper
                                                             .getImageIcon4Color(FUEHRUNG),
                                                             gui.UserParameter.instance().statistikAlleFuehrung);
-    private ImageCheckbox m_jchKondition = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kondition"),
+    private ImageCheckbox m_jchKondition = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.stamina"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(KONDITION),
                                                              gui.UserParameter.instance().statistikAlleKondition);
-    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
+    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.passing"),
                                                             de.hattrickorganizer.tools.Helper
                                                             .getImageIcon4Color(PASSPIEL),
                                                             gui.UserParameter.instance().statistikAllePasspiel);
-    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
+    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.playmaking"),
                                                                de.hattrickorganizer.tools.Helper
                                                                .getImageIcon4Color(SPIELAUFBAU),
                                                                gui.UserParameter.instance().statistikAlleSpielaufbau);
-    private ImageCheckbox m_jchStandards = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
+    private ImageCheckbox m_jchStandards = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(STANDARDS),
                                                              gui.UserParameter.instance().statistikAlleStandards);
-    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
+    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.scoring"),
                                                              de.hattrickorganizer.tools.Helper
                                                              .getImageIcon4Color(TORSCHUSS),
                                                              gui.UserParameter.instance().statistikAlleTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
+    private ImageCheckbox m_jchTorwart = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.keeper"),
                                                            de.hattrickorganizer.tools.Helper
                                                            .getImageIcon4Color(TORWART),
                                                            gui.UserParameter.instance().statistikAlleTorwart);
-    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
+    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.defending"),
                                                                 de.hattrickorganizer.tools.Helper
                                                                 .getImageIcon4Color(VERTEIDIGUNG),
                                                                 gui.UserParameter.instance().statistikAlleVerteidigung);

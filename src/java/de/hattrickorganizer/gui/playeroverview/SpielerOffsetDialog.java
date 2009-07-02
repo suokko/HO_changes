@@ -133,7 +133,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
 
 		m_jpSpielaufbau =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString(	"Spielaufbau"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
 				100,
 				0,
 				1,
@@ -143,7 +143,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpSpielaufbau);
 
 		m_jpFluegelspiel =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.winger"),
 				100,
 				0,
 				1,
@@ -153,7 +153,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpFluegelspiel);
 
 		m_jpTorschuss =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("Torschuss"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.scoring"),
 				100,
 				0,
 				1,
@@ -163,7 +163,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpTorschuss);
 
 		m_jpTorwart =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("Torwart"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.keeper"),
 				100,
 				0,
 				1,
@@ -173,7 +173,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpTorwart);
 
 		m_jpPasspiel =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("Passpiel"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.winger"),
 				100,
 				0,
 				1,
@@ -183,7 +183,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpPasspiel);
 
 		m_jpVerteidigung =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("Verteidigung"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.defending"),
 				100,
 				0,
 				1,
@@ -193,7 +193,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpVerteidigung);
 
 		m_jpStandard =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("Standards"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
 				100,
 				0,
 				1,

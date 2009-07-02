@@ -862,42 +862,42 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         initYellowMainField(5,7,constraints,layout,panel,m_jpForm.getComponent(false));
         initYellowChangesField(6,7,constraints,layout,panel,m_jpForm2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Kondition"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
         initNormalLabel(0,8,constraints,layout,panel,label);
         initYellowMainField(1,8,constraints,layout,panel,m_jpKondition.getComponent(false));
         initYellowChangesField(2,8,constraints,layout,panel,m_jpKondition2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
         initNormalLabel(4,8,constraints,layout,panel,label);
         initYellowMainField(5,8,constraints,layout,panel,m_jpTorwart.getComponent(false));
         initYellowChangesField(6,8,constraints,layout,panel,m_jpTorwart2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielaufbau"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
         initNormalLabel(0,9,constraints,layout,panel,label);
         initYellowMainField(1,9,constraints,layout,panel,m_jpSpielaufbau.getComponent(false));
         initYellowChangesField(2,9,constraints,layout,panel,m_jpSpielaufbau2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Passpiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
         initNormalLabel(4,9,constraints,layout,panel,label);
         initYellowMainField(5,9,constraints,layout,panel,m_jpPasspiel.getComponent(false));
         initYellowChangesField(6,9,constraints,layout,panel,m_jpPasspiel2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
         initNormalLabel(0,10,constraints,layout,panel,label);
         initYellowMainField(1,10,constraints,layout,panel,m_jpFluegelspiel.getComponent(false));
         initYellowChangesField(2,10,constraints,layout,panel,m_jpFluegelspiel2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Verteidigung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
         initNormalLabel(4,10,constraints,layout,panel,label);
         initYellowMainField(5,10,constraints,layout,panel,m_jpVerteidigung.getComponent(false));
         initYellowChangesField(6,10,constraints,layout,panel,m_jpVerteidigung2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torschuss"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
         initNormalLabel(0,11,constraints,layout,panel,label);
         initYellowMainField(1,11,constraints,layout,panel,m_jpTorschuss.getComponent(false));
         initYellowChangesField(2,11,constraints,layout,panel,m_jpTorschuss2.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Standards"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
         initNormalLabel(4,11,constraints,layout,panel,label);
         initYellowMainField(5,11,constraints,layout,panel,m_jpStandards.getComponent(false));
         initYellowChangesField(6,11,constraints,layout,panel,m_jpStandards2.getComponent(false));
