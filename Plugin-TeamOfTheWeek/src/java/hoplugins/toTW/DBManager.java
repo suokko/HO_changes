@@ -32,11 +32,11 @@ public class DBManager {
      *
      * @return Missing Return Method Documentation
      */
-    public static List getLeagues() {
+    public static List<LigaItem> getLeagues() {
         IJDBCAdapter db = TotW.getModel().getAdapter();
         String sqlstmt = "SELECT LIGAID, LIGANAME, SAISON FROM SPIELPLAN";
         ResultSet rs = db.executeQuery(sqlstmt);
-        List l = new ArrayList();
+        List<LigaItem> l = new ArrayList<LigaItem>();
 
         try {
             while (rs.next()) {
@@ -60,7 +60,7 @@ public class DBManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static List getMatchList(int week, int season) {
+    public static List<String> getMatchList(int week, int season) {
         IJDBCAdapter db = TotW.getModel().getAdapter();
         String sql = "SELECT * FROM PAARUNG WHERE SAISON='" + season + "'";
 
@@ -69,7 +69,7 @@ public class DBManager {
         }
 
         ResultSet rs = db.executeQuery(sql);
-        List matchIDs = new ArrayList();
+        List<String> matchIDs = new ArrayList<String>();
 
         try {
             while (rs.next()) {
@@ -91,13 +91,13 @@ public class DBManager {
      *
      * @return Missing Return Method Documentation
      */
-    public static Map getPlayers(int week, int season, boolean isBest) {
+    public static Map<String,MatchLineupPlayer> getPlayers(int week, int season, boolean isBest) {
         IJDBCAdapter db = TotW.getModel().getAdapter();
-        List matchIDs = getMatchList(week, season);
+        List<String> matchIDs = getMatchList(week, season);
 
         // TODO For match of year attention of doubles
-        Map spieler = new HashMap();
-        List players = getPlayetAt(db, matchIDs, ISpielerPosition.TORWART, 1, isBest);
+        Map<String,MatchLineupPlayer> spieler = new HashMap<String,MatchLineupPlayer>();
+        List<MatchLineupPlayer> players = getPlayetAt(db, matchIDs, ISpielerPosition.TORWART, 1, isBest);
         spieler.put("1", players.get(0));
         players = getPlayetAt(db, matchIDs, ISpielerPosition.AUSSENVERTEIDIGER, 2, isBest);
         spieler.put("2", players.get(0));
@@ -125,8 +125,8 @@ public class DBManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static List getTeamList(int week, int season) {
-        List ids = new ArrayList();
+    public static List<String> getTeamList(int week, int season) {
+        List<String> ids = new ArrayList<String>();
         String sql = "SELECT * FROM PAARUNG WHERE SAISON='" + season + "'";
         sql += (" AND SPIELTAG='" + week + "'");
 
@@ -155,7 +155,7 @@ public class DBManager {
      *
      * @return Missing Return Method Documentation
      */
-    private static List getPlayetAt(IJDBCAdapter db, List matchIDs, int position, int number,
+    private static List<MatchLineupPlayer> getPlayetAt(IJDBCAdapter db, List<String> matchIDs, int position, int number,
                                     boolean isBest) {
         ResultSet rs;
         String posClase = "";
@@ -196,15 +196,15 @@ public class DBManager {
         for (int i = 0; i < matchIDs.size(); i++) {
             if (matchClause.length() > 1) {
                 matchClause += " OR ";
-            }           
+            }
             String id = (String) matchIDs.get(i);
 			matchClause += " MATCHID='" + id + "' ";
         }
-                
+
 		String sql = "SELECT DISTINCT SPIELERID, NAME, RATING, HOPOSCODE, TEAMID FROM MATCHLINEUPPLAYER WHERE "+posClase;
 		if (matchClause.length()>1) {
 			sql += " AND (" + matchClause + ") ";
-		}        	
+		}
         sql += "ORDER BY RATING ";
 
         if (isBest) {
@@ -215,7 +215,7 @@ public class DBManager {
 
         rs = db.executeQuery(sql);
 
-        List ret = new ArrayList();
+        List<MatchLineupPlayer> ret = new ArrayList<MatchLineupPlayer>();
 
         for (int i = 0; i < number; i++) {
             ret.add(new MatchLineupPlayer(rs));

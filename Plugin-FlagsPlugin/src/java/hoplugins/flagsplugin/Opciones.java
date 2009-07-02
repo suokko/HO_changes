@@ -7,7 +7,6 @@ package hoplugins.flagsplugin;
 
 import java.io.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
@@ -29,21 +28,21 @@ public class Opciones implements ActionListener, Serializable {
     protected boolean doubleClick;
     protected boolean ownFlag;
     protected boolean sortListByCoolness;
-    protected HashMap teamIdCountry;
-    protected HashMap coolnessRanking;
+    protected HashMap<Integer,Integer> teamIdCountry;
+    protected HashMap<Integer,Double> coolnessRanking;
 
     public Opciones() {
         flagsPerRow = FlagsPlugin.FLAGS_PER_ROW;
         doubleClick = FlagsPlugin.DOUBLECLICK_SELECTION;
         ownFlag = FlagsPlugin.OWN_FLAG;
-        teamIdCountry = new HashMap();
-        coolnessRanking = new HashMap();
+        teamIdCountry = new HashMap<Integer,Integer>();
+        coolnessRanking = new HashMap<Integer,Double>();
     }
 
-    public HashMap getTeamIdCountry() { return teamIdCountry; }
-    public HashMap getCoolnessRanking() { return coolnessRanking; }
-    public void setTeamIdCountry(HashMap hm) { teamIdCountry = hm; }
-    public void setCoolnessRanking(HashMap hm) { coolnessRanking = hm; }
+    public HashMap<Integer,Integer> getTeamIdCountry() { return teamIdCountry; }
+    public HashMap<Integer,Double> getCoolnessRanking() { return coolnessRanking; }
+    public void setTeamIdCountry(HashMap<Integer,Integer> hm) { teamIdCountry = hm; }
+    public void setCoolnessRanking(HashMap<Integer,Double> hm) { coolnessRanking = hm; }
 
     public JDialog createDialogoOpciones() {
         //JDialog dialog = new JDialog(owner, FlagsPlugin.ISFAC.getString(IconStringFactory.S_MENU_OPTIONS), true);

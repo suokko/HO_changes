@@ -34,9 +34,12 @@ import javax.swing.SpinnerNumberModel;
  * @author TODO Author Name
  */
 public class PotwUI extends JPanel {
+
+	private static final long serialVersionUID = 7990572479100871307L;
+
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private MyLineupPanel bestOfWeek = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
+	private MyLineupPanel bestOfWeek = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
     private MyLineupPanel bestOfYear = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
     private MyLineupPanel worstOfWeek = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
     private MyLineupPanel worstOfYear = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);

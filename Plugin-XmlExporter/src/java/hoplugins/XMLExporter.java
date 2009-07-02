@@ -117,9 +117,9 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 
 	private void pickUpData(String filename) {
 		IMatchKurzInfo[] matches = m_clModel.getMatchesKurzInfo(m_clModel.getBasics().getTeamId());
-		Hashtable usefulMatches = new Hashtable();
-		Hashtable id2Index = new Hashtable();
-		Hashtable id2MatchData = getHt4UsefullMatches(matches, usefulMatches, id2Index);
+		Hashtable<Integer, IMatchDetails> usefulMatches = new Hashtable<Integer, IMatchDetails>();
+		Hashtable<Integer, Integer> id2Index = new Hashtable<Integer, Integer>();
+		Hashtable<Integer, Hashtable<Integer, ISpieler>> id2MatchData = getHt4UsefullMatches(matches, usefulMatches, id2Index);
 		try {
 			Document doc = null;
 			Element ele = null;
@@ -139,10 +139,10 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 			tmpEle = doc.createElement("ManagerName");
 			root.appendChild(tmpEle);
 			tmpEle.appendChild(doc.createTextNode("" + m_clModel.getBasics().getManager()));
-			for(Enumeration keys = id2MatchData.keys(); keys.hasMoreElements();)
+			for(Enumeration<Integer> keys = id2MatchData.keys(); keys.hasMoreElements();)
 			{
-				int matchID = ((Integer)keys.nextElement()).intValue();
-				int index = ((Integer)id2Index.get(new Integer(matchID))).intValue();
+				int matchID = keys.nextElement().intValue();
+				int index = id2Index.get(new Integer(matchID)).intValue();
 				IMatchDetails details = null;
 				int hrfID = -1;
 				IMatchLineupTeam lineupTeam = null;
@@ -180,7 +180,7 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 				ele = doc.createElement("Team");
 				tmpEle.appendChild(ele);
 				tmpEle = ele;
-				details = (IMatchDetails)usefulMatches.get(new Integer(matchID));
+				details = usefulMatches.get(new Integer(matchID));
 				hrfID = getHRFID4Date(matches[index].getMatchDateAsTimestamp());
 				ele = doc.createElement("HRFID");
 				tmpEle.appendChild(ele);
@@ -283,7 +283,7 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 				while(lineupTeam.getAufstellung() != null && k < lineupTeam.getAufstellung().size())
 				{
 					playerMatch = (IMatchLineupPlayer)lineupTeam.getAufstellung().get(k);
-					playerData = (ISpieler)((Hashtable)id2MatchData.get(new Integer(matchID))).get(new Integer(playerMatch.getSpielerId()));
+					playerData = (ISpieler)id2MatchData.get(new Integer(matchID)).get(new Integer(playerMatch.getSpielerId()));
 					if(playerMatch.getId() < 12)
 					{
 						ele = doc.createElement("SpielerDaten");
@@ -404,13 +404,13 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 		m_clModel.getHelper().showMessage(m_clModel.getGUI().getOwner4Dialog(), "" + id2MatchData.size() + " Matches exportet.\n Regarding to CHPP rules : Any App that uses this XML-File has to be CHPP approved!", "Finished", 1);
 	}
 
-	private Hashtable getHt4UsefullMatches(IMatchKurzInfo[] matches, Hashtable usefulMatches, Hashtable id2Index) {
-		Hashtable id2MatchData = new Hashtable();
+	private Hashtable<Integer, Hashtable<Integer, ISpieler>> getHt4UsefullMatches(IMatchKurzInfo[] matches, Hashtable<Integer,IMatchDetails> usefulMatches, Hashtable<Integer, Integer> id2Index) {
+		Hashtable<Integer, Hashtable<Integer, ISpieler>> id2MatchData = new Hashtable<Integer, Hashtable<Integer, ISpieler>>();
 		System.out.println("Collecting Data");
 		for(int i = 0; matches != null && i < matches.length; i++)  {
 			System.out.println("Check " + matches[i].getMatchID() + " / " + matches[i].getMatchDateAsTimestamp());
 			IMatchDetails details = m_clModel.getMatchDetails(matches[i].getMatchID());
-			Vector highlights = details.getHighlights();
+			Vector<IMatchHighlight> highlights = details.getHighlights();
 			boolean addMatch = true;
 			int hrfCheckId = getHRFID4Date(matches[i].getMatchDateAsTimestamp());
 			if(matches[i].getMatchDateAsTimestamp().before(m_clStartZeit) || hrfCheckId == -1) {
@@ -421,7 +421,7 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 				while(true) {
 					if(highlights == null || j >= highlights.size())
 						break;
-					IMatchHighlight hlight = (IMatchHighlight)highlights.get(j);
+					IMatchHighlight hlight = highlights.get(j);
 					if(hlight.getTeamID() == m_clModel.getBasics().getTeamId() &&
 							(hlight.getHighlightSubTyp() == 12 || hlight.getHighlightSubTyp() == 13 // yellow/red + direct red cards
 							|| hlight.getHighlightSubTyp() == 14 || hlight.getHighlightSubTyp() == 95
@@ -441,11 +441,11 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 			}
 		}
 
-		Enumeration j = usefulMatches.elements();
+		Enumeration<IMatchDetails> j = usefulMatches.elements();
 		while(true) {
 			if(!j.hasMoreElements())
 				break;
-			IMatchDetails details2 = (IMatchDetails)j.nextElement();
+			IMatchDetails details2 = j.nextElement();
 			IMatchLineup lineup = m_clModel.getMatchLineup(details2.getMatchID());
 			IMatchLineupTeam userTeam = null;
 			boolean dataOK = true;
@@ -453,15 +453,15 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 				userTeam = lineup.getHeim();
 			else
 				userTeam = lineup.getGast();
-			Vector aufstellung = userTeam.getAufstellung();
-			Hashtable lineUpISpieler = new Hashtable();
+			Vector<IMatchLineupPlayer> aufstellung = userTeam.getAufstellung();
+			Hashtable<Integer,ISpieler> lineUpISpieler = new Hashtable<Integer,ISpieler>();
 			for(int k = 0; aufstellung != null && k < aufstellung.size(); k++) {
 				IMatchLineupPlayer player = (IMatchLineupPlayer)aufstellung.get(k);
 				ISpieler formerPlayerData = null;
 				if(player.getId() >= 12)
 					continue;
 				formerPlayerData = m_clModel.getSpielerAtDate(player.getSpielerId(),
-						matches[((Integer)id2Index.get(new Integer(details2.getMatchID()))).intValue()].getMatchDateAsTimestamp());
+						matches[id2Index.get(new Integer(details2.getMatchID())).intValue()].getMatchDateAsTimestamp());
 				if(formerPlayerData == null) {
 					dataOK = false;
 					System.out.println("Skipped (!dataOK): " + details2.getMatchID());

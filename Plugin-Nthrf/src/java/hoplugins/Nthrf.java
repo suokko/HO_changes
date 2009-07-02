@@ -62,10 +62,10 @@ public class Nthrf implements IPlugin, IRefreshable, IOfficialPlugin {
 		System.out.println("Nthrf: refresh()");
 		miniModel = Commons.getModel();
 		final JWindow waitWindow = miniModel.getGUI().createWaitDialog(miniModel.getGUI().getOwner4Dialog());
-		waitWindow.show();
+		waitWindow.setVisible(true);
 		//Timestamp curHrfDate = miniModel.getBasics().getDatum();
 		//System.out.println("Nthrf: " + curHrfDate);
-		waitWindow.hide();
+		waitWindow.setVisible(false);
 		waitWindow.dispose();
 	}
 

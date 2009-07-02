@@ -24,7 +24,7 @@ public class LineupCalculator {
      * @return TODO Missing Return Method Documentation
      */
     public static MatchLineupPlayer[] calcBestLineup(int week, int season, boolean best) {
-        Map spieler = DBManager.getPlayers(week, season, best);
+        Map<String, MatchLineupPlayer> spieler = DBManager.getPlayers(week, season, best);
         MatchLineupPlayer[] mlp = new MatchLineupPlayer[11];
 
         for (int i = 0; i < 11; i++) {

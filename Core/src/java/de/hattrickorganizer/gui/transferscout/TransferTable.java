@@ -3,8 +3,13 @@ package de.hattrickorganizer.gui.transferscout;
 
 import javax.swing.JTable;
 
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.TransferTableModel;
 import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.gui.utils.ToolTipHeader;
 
 
 /**
@@ -12,7 +17,7 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  *
  * @author TODO Author Name
  */
-public class TransferTable extends JTable implements de.hattrickorganizer.gui.Refreshable {
+public class TransferTable extends JTable implements Refreshable {
 	
 	private static final long serialVersionUID = 5687881326217263261L;
 	
@@ -25,12 +30,10 @@ public class TransferTable extends JTable implements de.hattrickorganizer.gui.Re
     //private DragSource                  m_clDragsource  =   null;
     public TransferTable() {
         super();
-        m_clTableModel = new TransferTableModel(de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                       .getScoutList());
+        m_clTableModel = new TransferTableModel(DBZugriff.instance().getScoutList());
         initModel();
-        setDefaultRenderer(java.lang.Object.class,
-                           new de.hattrickorganizer.gui.model.SpielerTableRenderer());
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        setDefaultRenderer(java.lang.Object.class, new SpielerTableRenderer());
+        RefreshManager.instance().registerRefreshable(this);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -100,7 +103,7 @@ public class TransferTable extends JTable implements de.hattrickorganizer.gui.Re
         if (m_clTableSorter == null) {
             m_clTableSorter = new TableSorter(m_clTableModel, 0, 1);
 
-            final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
+            final ToolTipHeader header = new ToolTipHeader(getColumnModel());
             header.setToolTipStrings(m_clTableModel.m_sToolTipStrings);
             header.setToolTipText("");
             setTableHeader(header);

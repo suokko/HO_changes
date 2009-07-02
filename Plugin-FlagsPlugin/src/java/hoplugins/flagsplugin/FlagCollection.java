@@ -51,18 +51,18 @@ public class FlagCollection extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 5517146402168122463L;
 	private JList lista;
 //	private JPanel grid;
-    private TreeSet banderas;
-    private HashMap teams;
+    private TreeSet<FlagObject> banderas;
+    private HashMap<Integer,Integer> teams;
     private String fileName;
     private int type;
     public static final int T_AWAY = 1;
     public static final int T_HOME = 2;
     private FlagsPlugin fp = null;
 
-    public FlagCollection(FlagsPlugin fp, String fn, HashMap hm, int t) {
+    public FlagCollection(FlagsPlugin fp, String fn, HashMap<Integer,Integer> hm, int t) {
         super(new GridLayout(0,FlagsPlugin.FLAGS_PER_ROW,3,6));
         this.fp = fp;
-        banderas = new TreeSet();
+        banderas = new TreeSet<FlagObject>();
         setOpaque(false);
         fileName = fn;
         teams = hm;
@@ -74,11 +74,11 @@ public class FlagCollection extends JPanel implements MouseListener {
      * @param flags TreeSet with FlagObjects
      * @return cumulated coolness score of those flags
      */
-    private double getCoolnessScore(TreeSet flags) {
+    private double getCoolnessScore(TreeSet<FlagObject> flags) {
     	double ret = 0;
     	if (flags != null) {
-    		for (Iterator i=flags.iterator(); i.hasNext(); ) {
-    			FlagObject fo = (FlagObject)i.next();
+    		for (Iterator<FlagObject> i=flags.iterator(); i.hasNext(); ) {
+    			FlagObject fo = i.next();
     			if (fo != null) {
     				ret += fo.getCoolness();
     			}
@@ -122,10 +122,10 @@ public class FlagCollection extends JPanel implements MouseListener {
     }
     protected void intRefreshFlags() {
         removeAll();
-        Iterator it = banderas.iterator();
+        Iterator<FlagObject> it = banderas.iterator();
         while (it.hasNext()) {
             try {
-                add(createMyFlag((FlagObject)it.next()));
+                add(createMyFlag(it.next()));
             } catch (ClassCastException cce) { it.remove(); }
         }
     }
@@ -175,17 +175,17 @@ public class FlagCollection extends JPanel implements MouseListener {
         try {
             fis = new FileInputStream(nombreArch);
             ois = new ObjectInputStream(new BufferedInputStream(fis));
-            banderas = (TreeSet)ois.readObject();
+            banderas = (TreeSet<FlagObject>)ois.readObject();
             ois.close();
             fis.close();
             intRefreshFlags();
             return true;
         } catch(FileNotFoundException e) {
-            banderas = new TreeSet();
+            banderas = new TreeSet<FlagObject>();
         } catch(IOException e) {
-            banderas = new TreeSet();
+            banderas = new TreeSet<FlagObject>();
         } catch(ClassNotFoundException e) {
-            banderas = new TreeSet();
+            banderas = new TreeSet<FlagObject>();
         }
         return false;
     }
@@ -193,16 +193,16 @@ public class FlagCollection extends JPanel implements MouseListener {
     public boolean contains(Object pais) {
         return banderas.contains(pais);
     }
-    public boolean addAll(Collection c) {
+    public boolean addAll(Collection<FlagObject> c) {
         boolean added = banderas.addAll(c);
         if (added) {
             refreshFlags();
         }
         return added;
     }
-    public boolean removeAll(Collection c) {
+    public boolean removeAll(Collection<FlagObject> c) {
         boolean removed = false;
-        Iterator it = c.iterator();
+        Iterator<FlagObject> it = c.iterator();
         while (it.hasNext()) {
             removed = banderas.remove(it.next()) || removed;
         }
@@ -210,20 +210,20 @@ public class FlagCollection extends JPanel implements MouseListener {
         return removed;
     }
 
-    public Collection getMissing(Collection c) {
-        Iterator it = c.iterator();
-        ArrayList missing = new ArrayList();
+    public Collection<FlagObject> getMissing(Collection<FlagObject> c) {
+        Iterator<FlagObject> it = c.iterator();
+        ArrayList<FlagObject> missing = new ArrayList<FlagObject>();
         while (it.hasNext()) {
-            Object flag = it.next();
+        	FlagObject flag = it.next();
             if (!banderas.contains(flag)) missing.add(flag);
         }
         return missing;
     }
-    public Collection getSurplus(Collection c) {
-        Iterator it = banderas.iterator();
-        ArrayList surplus = new ArrayList();
+    public Collection<FlagObject> getSurplus(Collection<FlagObject> c) {
+        Iterator<FlagObject> it = banderas.iterator();
+        ArrayList<FlagObject> surplus = new ArrayList<FlagObject>();
         while (it.hasNext()) {
-            Object flag = it.next();
+        	FlagObject flag = it.next();
             if (!c.contains(flag)) surplus.add(flag);
         }
         return surplus;

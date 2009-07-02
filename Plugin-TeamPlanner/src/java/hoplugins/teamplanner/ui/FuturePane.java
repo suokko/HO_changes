@@ -2,6 +2,7 @@
 package hoplugins.teamplanner.ui;
 
 import hoplugins.teamplanner.ui.model.FinancesTableModel;
+import hoplugins.teamplanner.vo.FinancesOfWeek;
 
 import java.awt.BorderLayout;
 
@@ -37,7 +38,7 @@ public class FuturePane extends JPanel {
      */
     public FuturePane() {
         futureTableModel = null;
-        futureTableModel = new FinancesTableModel(new Vector<Object>());
+        futureTableModel = new FinancesTableModel(new Vector<FinancesOfWeek>());
 
         BasicSorter sorter = new BasicSorter(futureTableModel);
         JTable historyTable = new JTable(sorter);

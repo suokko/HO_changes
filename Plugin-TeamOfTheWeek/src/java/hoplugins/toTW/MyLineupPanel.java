@@ -23,6 +23,9 @@ import javax.swing.JPanel;
  *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class MyLineupPanel extends JPanel {
+
+	private static final long serialVersionUID = 5900818563415056137L;
+
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */

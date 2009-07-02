@@ -37,7 +37,7 @@ import plugins.ISpieler;
 public class PlayersFlagSet extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 5412999071036972736L;
 	//private JPanel grid;
-    private TreeMap banderas;
+    private TreeMap<String,Integer> banderas;
     private String title;
     protected int type;
 
@@ -45,7 +45,7 @@ public class PlayersFlagSet extends JPanel implements MouseListener {
     static protected int T_CURRENT = 1;
     static protected int T_OLD = 2;
 
-    public PlayersFlagSet(Vector v) {
+    public PlayersFlagSet(Vector<ISpieler> v) {
         this();
         setPlayers(v);
         type= T_CURRENT;
@@ -56,7 +56,7 @@ public class PlayersFlagSet extends JPanel implements MouseListener {
         grid.setHgap(3);
         grid.setVgap(6);
         setLayout(grid);
-        banderas = new TreeMap();
+        banderas = new TreeMap<String,Integer>();
         setOpaque(false);
         title = null;
     }
@@ -68,24 +68,24 @@ public class PlayersFlagSet extends JPanel implements MouseListener {
     }
     protected void intRefreshFlags() {
         removeAll();
-        Iterator it = banderas.keySet().iterator();
+        Iterator<String> it = banderas.keySet().iterator();
         while (it.hasNext()) {
-            String pais = (String)it.next();
+            String pais = it.next();
             //JLabel flag = FlagCollection.createFlag(pais);
             FlagLabel flag = FlagCollection.createFlag(new FlagObject(FlagsPlugin.getCountryId(pais), pais));
             flag.addMouseListener(this);
-            int np = ((Integer)banderas.get(pais)).intValue();
+            int np = banderas.get(pais).intValue();
             flag.setToolTipText(pais + ", " + np + " player" + ((np>1)?"s":""));
             add(flag);
         }
     }
 
-    public boolean setPlayers(Vector v) {
+    public boolean setPlayers(Vector<ISpieler> v) {
         if (v==null) return false;
         banderas.clear();
         for (int i=0; i<v.size(); i++) {
             try {
-                ISpieler jugador = (ISpieler)v.get(i);
+                ISpieler jugador = v.get(i);
                 addFlag(jugador.getNationalitaet());
             } catch (ClassCastException cce) {
             } catch (ArrayIndexOutOfBoundsException aie) {
@@ -97,9 +97,9 @@ public class PlayersFlagSet extends JPanel implements MouseListener {
 
     public void removeRepetidos(PlayersFlagSet pfs) {
         boolean redibujar = false;
-        Iterator it = pfs.banderas.keySet().iterator();
+        Iterator<String> it = pfs.banderas.keySet().iterator();
         while (it.hasNext()) {
-            String pais = (String)it.next();
+            String pais = it.next();
             if (banderas.containsKey(pais)) {
                 banderas.remove(pais);
                 redibujar = true;
@@ -137,10 +137,10 @@ public class PlayersFlagSet extends JPanel implements MouseListener {
         Box box = new Box(BoxLayout.Y_AXIS);
         if (type == T_OLD) {
             //res = db.executeQuery("SELECT name, MAX(datum) FROM spieler WHERE land='" + country + "' GROUP BY name HAVING MAX(datum)<'" + FlagsPlugin.HOM.getBasics().getDatum().toString() + "'");
-            Vector vp = FlagsPlugin.HOM.getAllOldSpieler();
-            Iterator it = vp.iterator();
+            Vector<ISpieler> vp = FlagsPlugin.HOM.getAllOldSpieler();
+            Iterator<ISpieler> it = vp.iterator();
             while (it.hasNext()) {
-                ISpieler sp = (ISpieler)it.next();
+                ISpieler sp = it.next();
                 if (sp.getNationalitaet() == country) box.add(new JLabel(sp.getName()));
             }
         }

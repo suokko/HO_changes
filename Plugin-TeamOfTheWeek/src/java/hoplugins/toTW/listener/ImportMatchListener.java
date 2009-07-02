@@ -39,10 +39,10 @@ public class ImportMatchListener implements ActionListener {
      * @param arg0 TODO Missing Method Parameter Documentation
      */
     public void actionPerformed(ActionEvent arg0) {
-        List teams = DBManager.getMatchList(TotW.getWeek(), TotW.getSeason());
+        List<String> teams = DBManager.getMatchList(TotW.getWeek(), TotW.getSeason());
 
-        for (Iterator iter = teams.iterator(); iter.hasNext();) {
-            String id = (String) iter.next();
+        for (Iterator<String> iter = teams.iterator(); iter.hasNext();) {
+            String id = iter.next();
 
             try {
                 int matchId = Integer.parseInt(id);

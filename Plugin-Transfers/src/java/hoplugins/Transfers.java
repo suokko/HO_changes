@@ -22,7 +22,6 @@ import java.awt.event.ActionListener;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -157,7 +156,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
         tmp.removeAll(this.oldplayers);
         allOutdated.addAll(tmp);
 
-        final List<ISpieler> outdated = new ArrayList<ISpieler>(allOutdated);
+        final List<ISpieler> outdated = allOutdated;
 
         for (Iterator<ISpieler> iter = allOutdated.iterator(); iter.hasNext();) {
             final ISpieler player = iter.next();
@@ -194,8 +193,8 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      * {@inheritDoc}
      */
     public final void start(IHOMiniModel hoMiniModel) {
-        this.players = new Vector<ISpieler>(hoMiniModel.getAllSpieler());
-        this.oldplayers = new Vector<ISpieler>(hoMiniModel.getAllOldSpieler());
+        this.players = hoMiniModel.getAllSpieler();
+        this.oldplayers = hoMiniModel.getAllOldSpieler();
 
         // Create the top panel
         final JTabbedPane tabPane = new JTabbedPane();
@@ -245,8 +244,8 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
      */
     private List<PlayerTransfer> reloadData() {
         final IHOMiniModel model = Commons.getModel();
-        this.players = new Vector<ISpieler>(model.getAllSpieler());
-        this.oldplayers = new Vector<ISpieler>(model.getAllOldSpieler());
+        this.players = model.getAllSpieler();
+        this.oldplayers = model.getAllOldSpieler();
 
         final List<PlayerTransfer> transfers = TransfersDAO.getTransfers(0, true, true);
 
