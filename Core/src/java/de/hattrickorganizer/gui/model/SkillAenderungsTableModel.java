@@ -11,6 +11,7 @@ import plugins.ISpieler;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 
@@ -28,104 +29,60 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
 
     /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
-                                            
-
-    //Alter
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Alter"),
-                                            
-
-    //Beste Position
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
-                                            
-
-    //Status
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Status"),
-                                            
-
-    //Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
-                                            
-
-    //Verteidigung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
-                                            
-
-    //Spielaufbau
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
-                                            
-
-    //Passpiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
-                                            
-
-    //Flügelspiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                            
-
-    //Torschuss
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
-                                            
-
-    //Standards
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
-                                            
-
-    //ID
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
-                                        };
+        HOVerwaltung.instance().getLanguageString("Name"),
+        //Alter
+	    HOVerwaltung.instance().getLanguageString("Alter"),
+	    //Beste Position
+	    HOVerwaltung.instance().getLanguageString("BestePosition"),
+	    //Status
+	    HOVerwaltung.instance().getLanguageString("Status"),
+	    //Torwart
+	    HOVerwaltung.instance().getLanguageString("skill.keeper"),
+	    //Verteidigung
+	    HOVerwaltung.instance().getLanguageString("skill.defending"),
+	    //Spielaufbau
+	    HOVerwaltung.instance().getLanguageString("skill.playmaking"),
+	    //Passpiel
+	    HOVerwaltung.instance().getLanguageString("skill.passing"),
+	    //Flügelspiel
+	    HOVerwaltung.instance().getLanguageString("skill.winger"),
+	    //Torschuss
+	    HOVerwaltung.instance().getLanguageString("skill.scoring"),
+	    //Standards
+	    HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
+	    //ID
+	    HOVerwaltung.instance().getLanguageString("ID"),
+    };
 
     /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
     /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Name"),
-                                            
-
-    //Alter
-    " ",
-                                            
-
-    //Beste Position
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BestePosition"),
-                                            
-
-    //Status
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Status"),
-                                            
-
-    //Torwart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torwart"),
-                                            
-
-    //Verteidigung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verteidigung"),
-                                            
-
-    //Spielaufbau
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielaufbau"),
-                                            
-
-    //Passpiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Passpiel"),
-                                            
-
-    //Flügelspiel
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                            
-
-    //Torschuss
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Torschuss"),
-                                            
-
-    //Standards
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Standards"),
-                                            
-
-    //ID
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
-                                        };
+        HOVerwaltung.instance().getLanguageString("Name"),
+        //Alter
+	    " ",
+	    //Beste Position
+	    HOVerwaltung.instance().getLanguageString("BestePosition"),
+	    //Status
+	    HOVerwaltung.instance().getLanguageString("Status"),
+	  //Torwart
+	    HOVerwaltung.instance().getLanguageString("skill.keeper"),
+	    //Verteidigung
+	    HOVerwaltung.instance().getLanguageString("skill.defending"),
+	    //Spielaufbau
+	    HOVerwaltung.instance().getLanguageString("skill.playmaking"),
+	    //Passpiel
+	    HOVerwaltung.instance().getLanguageString("skill.passing"),
+	    //Flügelspiel
+	    HOVerwaltung.instance().getLanguageString("skill.winger"),
+	    //Torschuss
+	    HOVerwaltung.instance().getLanguageString("skill.scoring"),
+	    //Standards
+	    HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
+	    //ID
+	    HOVerwaltung.instance().getLanguageString("ID"),
+    };
     private Vector<ISpieler> m_vSpieler;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -361,7 +318,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                   new ColorLabelEntry((aktuellerSpieler
                                                                              .getLastLevelUpInTage(ISpieler.SKILL_TORWART) / 7)
                                                                       + " "
-                                                                      + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                      + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
@@ -379,7 +336,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                   new ColorLabelEntry((aktuellerSpieler
                                                                              .getLastLevelUpInTage(ISpieler.SKILL_VERTEIDIGUNG) / 7)
                                                                       + " "
-                                                                      + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                      + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
@@ -397,7 +354,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                   new ColorLabelEntry((aktuellerSpieler
                                                                              .getLastLevelUpInTage(ISpieler.SKILL_SPIELAUFBAU) / 7)
                                                                       + " "
-                                                                      + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                      + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
@@ -415,7 +372,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                   new ColorLabelEntry((aktuellerSpieler
                                                                              .getLastLevelUpInTage(ISpieler.SKILL_PASSSPIEL) / 7)
                                                                       + " "
-                                                                      + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                      + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
@@ -433,7 +390,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                   new ColorLabelEntry((aktuellerSpieler
                                                                              .getLastLevelUpInTage(ISpieler.SKILL_FLUEGEL) / 7)
                                                                       + " "
-                                                                      + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                      + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
@@ -451,7 +408,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                   new ColorLabelEntry((aktuellerSpieler
                                                                              .getLastLevelUpInTage(ISpieler.SKILL_TORSCHUSS) / 7)
                                                                       + " "
-                                                                      + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                      + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                       foreground,
                                                                       ColorLabelEntry.BG_STANDARD,
                                                                       SwingConstants.RIGHT));
@@ -469,7 +426,7 @@ public class SkillAenderungsTableModel extends AbstractTableModel {
                                                    new ColorLabelEntry((aktuellerSpieler
                                                                               .getLastLevelUpInTage(ISpieler.SKILL_STANDARDS) / 7)
                                                                        + " "
-                                                                       + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                                                       + HOVerwaltung.instance().getLanguageString("Wochen"),
                                                                        foreground,
                                                                        ColorLabelEntry.BG_STANDARD,
                                                                        SwingConstants.RIGHT));

@@ -67,28 +67,28 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
     HOVerwaltung.instance().getLanguageString("Bewertung"),
 
     //Kondition
-    HOVerwaltung.instance().getLanguageString("Kondition"),
+    HOVerwaltung.instance().getLanguageString("skill.stamina"),
  
     //Torwart
-    HOVerwaltung.instance().getLanguageString("Torwart"),
+    HOVerwaltung.instance().getLanguageString("skill.keeper"),
 
     //Verteidigung
-    HOVerwaltung.instance().getLanguageString("Verteidigung"),
+    HOVerwaltung.instance().getLanguageString("skill.defending"),
 
     //Spielaufbau
-    HOVerwaltung.instance().getLanguageString("Spielaufbau"),
+    HOVerwaltung.instance().getLanguageString("skill.playmaking"),
 
     //Passpiel
-    HOVerwaltung.instance().getLanguageString("Passpiel"),
+    HOVerwaltung.instance().getLanguageString("skill.passing"),
  
     //Flügelspiel
-    HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+    HOVerwaltung.instance().getLanguageString("skill.winger"),
  
     //Torschuss
-    HOVerwaltung.instance().getLanguageString("Torschuss"),
+    HOVerwaltung.instance().getLanguageString("skill.scoring"),
   
     //Standards
-    HOVerwaltung.instance().getLanguageString("Standards"),
+    HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
 
     //Gesamt Torwart
     HOVerwaltung.instance().getLanguageString("Torwart"),
