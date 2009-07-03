@@ -1,8 +1,6 @@
 // %2685801291:hoplugins.teamplanner.vo%
 package hoplugins.teamplanner.vo;
 
-import hoplugins.commons.utils.HTCalendar;
-
 
 /**
  * Missing Class Documentation
@@ -40,16 +38,6 @@ public class HTWeek implements Comparable<HTWeek> {
     public HTWeek(int season, int week) {
         this.season = season;
         this.week = week;
-    }
-
-    /**
-     * Creates a new HTWeek object.
-     *
-     * @param cal Missing Constructuor Parameter Documentation
-     */
-    public HTWeek(HTCalendar cal) {
-        season = cal.getHTSeason();
-        week = cal.getHTWeek();
     }
 
     //~ Methods ------------------------------------------------------------------------------------

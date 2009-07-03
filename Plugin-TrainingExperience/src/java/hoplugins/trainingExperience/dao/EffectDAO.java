@@ -5,9 +5,6 @@ import gui.UserParameter;
 
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
-
 import hoplugins.trainingExperience.OldTrainingManager;
 import hoplugins.trainingExperience.vo.PlayerValues;
 import hoplugins.trainingExperience.vo.TrainWeekEffect;
@@ -115,12 +112,13 @@ public class EffectDAO {
                     }
                 });
 
-            HTCalendar trainCalendar = HTCalendarFactory.createEconomyCalendar(Commons.getModel());
-
             for (Iterator<Timestamp> iter = trainingDates.iterator(); iter.hasNext();) {
                 Timestamp trainDate = iter.next();
 
-                trainCalendar.setTime(trainDate);
+                int HTWeek = Commons.getModel().getHelper().getHTWeek(trainDate);
+                int HTSeason = Commons.getModel().getHelper().getHTSeason(trainDate);
+
+                Commons.getModel().getHelper().getHTSeason(trainDate);
 
                 StringBuffer minHrf_SQLStmt = new StringBuffer("SELECT HRF.hrf_id FROM HRF, XTRADATA");
 
@@ -164,9 +162,7 @@ public class EffectDAO {
                     }
 
                     if (hrfAfterUpdate > 0) {
-                        week = new TrainWeekEffect(trainCalendar.getHTWeek(),
-                                                   trainCalendar.getHTSeason(), hrfBeforeUpdate,
-                                                   hrfAfterUpdate);
+                        week = new TrainWeekEffect(HTWeek,HTSeason,hrfBeforeUpdate,hrfAfterUpdate);
 
                         ResultSet set = db.executeQuery("SELECT SUM(marktwert) as totaltsi, AVG(marktwert) as avgtsi , SUM(form) as form, COUNT(form) as number FROM SPIELER WHERE trainer = 0 AND hrf_id = " //$NON-NLS-1$
                                                         + Integer.toString(week.getHRFafterUpdate()));
@@ -223,12 +219,11 @@ public class EffectDAO {
                 }
 
                 // Set amount of skillups for this training week
-                String key = trainCalendar.getHTSeason() + "-" + trainCalendar.getHTWeek(); //$NON-NLS-1$
+                String key = HTSeason + "-" + HTWeek; //$NON-NLS-1$
 
                 if (weeklySkillups.containsKey(key)) {
                     if (week == null) {
-                        week = new TrainWeekEffect(trainCalendar.getHTWeek(),
-                                                   trainCalendar.getHTSeason(), 0, 0);
+                        week = new TrainWeekEffect(HTWeek,HTSeason, 0, 0);
                     }
 
                     List<ISkillup> wsList = weeklySkillups.get(key);

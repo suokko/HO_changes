@@ -5,9 +5,6 @@ import gui.UserParameter;
 
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
-
 import hoplugins.teamAnalyzer.vo.PlayerInfo;
 
 import java.sql.ResultSet;
@@ -76,8 +73,9 @@ public class PlayerDataDAO {
      * @return a numeric code
      */
     public PlayerInfo getPlayerInfo(int playerId) {
-        HTCalendar cal = getCurrentHTWeek();
-        return getPlayerInfo(playerId, cal.getHTWeek(), cal.getHTSeason());
+        Integer HTWeek = getCurrentHTWeek();
+        Integer HTSeason = getCurrentHTWeek();
+        return getPlayerInfo(playerId, HTWeek, HTSeason);
     }
 
     /**
@@ -144,10 +142,21 @@ public class PlayerDataDAO {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private HTCalendar getCurrentHTWeek() {
+    private Integer getCurrentHTSeason() {
         Calendar date = Calendar.getInstance();
         date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
-        return HTCalendarFactory.createTrainingCalendar(Commons.getModel(), date.getTime());
+        return Commons.getModel().getHelper().getHTSeason(date.getTime());
+    }
+
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    private Integer getCurrentHTWeek() {
+        Calendar date = Calendar.getInstance();
+        date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
+        return Commons.getModel().getHelper().getHTWeek(date.getTime());
     }
 
     /**
@@ -156,8 +165,7 @@ public class PlayerDataDAO {
      * @return TODO Missing Return Method Documentation
      */
     private int getCurrentWeekNumber() {
-        HTCalendar ht = getCurrentHTWeek();
-        return ht.getHTWeek() + (ht.getHTSeason() * 16);
+        return getCurrentHTWeek() + (getCurrentHTSeason() * 16);
     }
 
     /**

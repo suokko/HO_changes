@@ -55,7 +55,7 @@ public class SpecialEventsDM
     public static final int FREEKICK = 5;
     public static final int PENALTY = 6;
 
-    
+
     public SpecialEventsDM(IHOMiniModel miniModel)
     {
 //        this.props = props;
@@ -134,7 +134,7 @@ public class SpecialEventsDM
         Vector<IMatchHighlight> vHighlights = details.getHighlights();
         Vector<IMatchHighlight> seHighlights = new Vector<IMatchHighlight>();
         int weather = details.getWetterId();
-        
+
         for(Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();)
         {
             IMatchHighlight highlight = (IMatchHighlight)iter.next();
@@ -315,11 +315,11 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
     			return miniModel.getHelper().getImageIcon4SpielHighlight(IMatchHighlight.HIGHLIGHT_ERFOLGREICH,
-    					highlight.getHighlightSubTyp()); // Always return the icon for "SUCCESS" because we only want the chance type icon 
+    					highlight.getHighlightSubTyp()); // Always return the icon for "SUCCESS" because we only want the chance type icon
     		}
     	}
     	return leerIcon;
@@ -334,7 +334,7 @@ public class SpecialEventsDM
         	if (highlight.getTeamID() == heimId) {
         		if (isPositiveWeatherSE(highlight)) {
         			// Positive weather SE for home team
-        			icon = homeEventIcon;        		
+        			icon = homeEventIcon;
         		} else if (isNegativeWeatherSE(highlight)) {
         			// Negative weather SE for home team
         			icon = homeEventIconNegative;
@@ -353,7 +353,7 @@ public class SpecialEventsDM
         	if (highlight.getTeamID() == gastId) {
         		if (isPositiveWeatherSE(highlight)) {
         			// Positive weather SE for guest team
-        			icon = guestEventIcon;        		
+        			icon = guestEventIcon;
         		} else if (isNegativeWeatherSE(highlight)) {
         			// Negative weather SE for guest team
         			icon = guestEventIconNegative;
@@ -411,14 +411,14 @@ public class SpecialEventsDM
         		case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
         		case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
         			return SPECIALTYSE;
-        			
+
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
         			return COUNTER;
-        			
+
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -428,7 +428,7 @@ public class SpecialEventsDM
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
         			return FREEKICK;
-        			
+
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -438,18 +438,18 @@ public class SpecialEventsDM
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
         			return PENALTY;
-        			
-        		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-        		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+
+        		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+        		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
         			return IFK;
-        			
+
         		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
         			return LONGSHOT;
     		}
     	}
     	return -1;
     }
-    
+
     private static boolean checkForSE(IMatchHighlight highlight)
     {
     	int eventType = getEventType(highlight);
@@ -511,7 +511,7 @@ public class SpecialEventsDM
 
     private String getSEText (IMatchHighlight highlight)
     {
-    	
+
     	if (isWeatherSE(highlight)) {
     		switch (highlight.getHighlightSubTyp()) {
     		case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY:
@@ -576,14 +576,14 @@ public class SpecialEventsDM
 
     		case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
     			return PluginProperty.getString("TECHNIKER_ANGREIFER_TOR");
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
     			return PluginProperty.getString("COUNTER");
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -593,7 +593,7 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
     			return PluginProperty.getString("FREEKICK");
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -603,19 +603,19 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
     			return PluginProperty.getString("PENALTY");
-    			
-    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+
+    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
     			return PluginProperty.getString("IFK");
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
     			return PluginProperty.getString("LONGSHOT");
     		}
-    		
-    		
+
+
     	}
-//		return PluginProperty.getString("Unbekannt");   			
-		return "unknown";   			
+//		return PluginProperty.getString("Unbekannt");
+		return "unknown";
     }
 
     private String getTaktik(int typ)
@@ -685,7 +685,7 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
     			return highlight.getSpielerName();
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -695,7 +695,7 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
     			return highlight.getSpielerName();
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -705,11 +705,11 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
     		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
     			return highlight.getSpielerName();
-    			
-    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_7:
-    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_8:
+
+    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+    		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
     			return highlight.getSpielerName();
-    			
+
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
     			return highlight.getSpielerName();
         	}
