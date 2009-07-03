@@ -7,6 +7,7 @@ import hoplugins.TotW;
 import hoplugins.toTW.dao.TeamColorDAO;
 import hoplugins.toTW.listener.LigaActionListener;
 import hoplugins.toTW.listener.WeekChangeListener;
+import hoplugins.toTW.vo.LigaItem;
 import hoplugins.toTW.vo.MatchLineupPlayer;
 import hoplugins.toTW.vo.TeamDetail;
 
@@ -293,7 +294,7 @@ public class PotwUI extends JPanel {
      * @param seasonCombo TODO Missing Method Parameter Documentation
      */
     private void fillSeasonCombo(JComboBox seasonCombo) {
-        Iterator it = DBManager.getLeagues().iterator();
+        Iterator<LigaItem> it = DBManager.getLeagues().iterator();
 
         while (it.hasNext()) {
             seasonCombo.addItem(it.next());

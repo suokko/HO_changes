@@ -4,8 +4,6 @@ package hoplugins.teamplanner.dao;
 import hoplugins.Commons;
 
 import hoplugins.commons.ui.DebugWindow;
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 
 import hoplugins.teamplanner.vo.FinancesOfWeek;
 
@@ -71,10 +69,8 @@ public class FinanzenDAO {
                     continue;
                 }
 
-                HTCalendar cal = HTCalendarFactory.createEconomyCalendar(Commons.getModel(),
-                                                                         rowData.getDate());
-                int season = cal.getHTSeason();
-                int week = cal.getHTWeek() - 1;
+                int season = Commons.getModel().getHelper().getHTSeason(rowData.getDate());
+                int week = Commons.getModel().getHelper().getHTWeek(rowData.getDate()) - 1;
 
                 if (week == 0) {
                     season--;

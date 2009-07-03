@@ -318,7 +318,7 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 						ele.appendChild(doc.createTextNode("" + playerData.getAlter()));
 						ele = doc.createElement("TSI");
 						tmpEle.appendChild(ele);
-						ele.appendChild(doc.createTextNode("" + playerData.getMarkwert()));
+						ele.appendChild(doc.createTextNode("" + playerData.getTSI()));
 						ele = doc.createElement("Form");
 						tmpEle.appendChild(ele);
 						ele.appendChild(doc.createTextNode("" + playerData.getForm()));

@@ -3,9 +3,6 @@ package hoplugins.trainingExperience;
 
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
-
 import hoplugins.trainingExperience.constants.Skills;
 import hoplugins.trainingExperience.vo.PastSkillup;
 
@@ -130,13 +127,11 @@ public class OldTrainingManager {
      * @return a skillup object with season and week value
      */
     private PastSkillup getSkillup(Date skillupDate) {
-        HTCalendar calendar = HTCalendarFactory.createEconomyCalendar(Commons.getModel(),
-                                                                      skillupDate);
 
         PastSkillup skillup = new PastSkillup();
 
-        skillup.setHtSeason(calendar.getHTSeason());
-        skillup.setHtWeek(calendar.getHTWeek());
+        skillup.setHtSeason(Commons.getModel().getHelper().getHTSeason(skillupDate));
+        skillup.setHtWeek(Commons.getModel().getHelper().getHTWeek(skillupDate));
         skillup.setDate(skillupDate);
 
         return skillup;

@@ -1,8 +1,6 @@
 package hoplugins.feedback.dao;
 
 import hoplugins.Commons;
-import hoplugins.commons.utils.HTCalendar;
-import hoplugins.commons.utils.HTCalendarFactory;
 import hoplugins.feedback.model.transfer.PlayerTransfer;
 
 import java.sql.ResultSet;
@@ -27,7 +25,7 @@ public final class TransfersDAO {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** Name of the table in the HO database */
-    private static final String TABLE_NAME = "transfers_transfers"; 
+    private static final String TABLE_NAME = "transfers_transfers";
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -40,9 +38,9 @@ public final class TransfersDAO {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gets a list of all transfers for you team 
-     * Consider transfers after 'startingDate' and in the last 'maxAge' weeks, only 
-     * 
+     * Gets a list of all transfers for you team
+     * Consider transfers after 'startingDate' and in the last 'maxAge' weeks, only
+     *
      * @param startDate		starting timestamp
      * @param maxAge	max age in weeks
      * @return 			list of all transfers
@@ -51,9 +49,9 @@ public final class TransfersDAO {
     	Calendar cal = new GregorianCalendar();
         cal.add(Calendar.WEEK_OF_YEAR, -maxAge);
         Timestamp maxAgeTs = new Timestamp(cal.getTimeInMillis());
-        final StringBuffer sqlStmt = new StringBuffer("SELECT * FROM " + TABLE_NAME); 
+        final StringBuffer sqlStmt = new StringBuffer("SELECT * FROM " + TABLE_NAME);
         sqlStmt.append(" WHERE date>'"+startDate.toString()+"' AND date>'"+maxAgeTs.toString()+"'");
-        sqlStmt.append(" ORDER BY date DESC"); 
+        sqlStmt.append(" ORDER BY date DESC");
 
         return loadTransfers(sqlStmt.toString());
     }
@@ -78,23 +76,23 @@ public final class TransfersDAO {
         try {
             while (rs.next()) {
                 PlayerTransfer transfer = new PlayerTransfer(rs.getInt("transferid"),
-                                                             rs.getInt("playerid"));  
+                                                             rs.getInt("playerid"));
                 transfer.setPlayerName(Commons.getModel().getHelper().decodeStringFromDatabase(rs
-                                                                                               .getString("playername"))); 
-                transfer.setDate(rs.getTimestamp("date")); 
-                transfer.setWeek(rs.getInt("week")); 
-                transfer.setSeason(rs.getInt("season")); 
+                                                                                               .getString("playername")));
+                transfer.setDate(rs.getTimestamp("date"));
+                transfer.setWeek(rs.getInt("week"));
+                transfer.setSeason(rs.getInt("season"));
 
-                transfer.setBuyerid(rs.getInt("buyerid")); 
+                transfer.setBuyerid(rs.getInt("buyerid"));
                 transfer.setBuyerName(Commons.getModel().getHelper().decodeStringFromDatabase(rs
-                                                                                              .getString("buyername"))); 
-                transfer.setSellerid(rs.getInt("sellerid")); 
+                                                                                              .getString("buyername")));
+                transfer.setSellerid(rs.getInt("sellerid"));
                 transfer.setSellerName(Commons.getModel().getHelper().decodeStringFromDatabase(rs
-                                                                                               .getString("sellername"))); 
+                                                                                               .getString("sellername")));
 
-                transfer.setPrice((int) (rs.getInt("price") / curr_rate)); 
-                transfer.setMarketvalue((int) (rs.getInt("marketvalue") / curr_rate)); 
-                transfer.setTsi(rs.getInt("tsi")); 
+                transfer.setPrice((int) (rs.getInt("price") / curr_rate));
+                transfer.setMarketvalue((int) (rs.getInt("marketvalue") / curr_rate));
+                transfer.setTsi(rs.getInt("tsi"));
 
                 results.add(transfer);
             }
@@ -108,19 +106,13 @@ public final class TransfersDAO {
                                                                          transfer.getDate());
 
             if (spieler != null) {
-                final HTCalendar transferDate = HTCalendarFactory.createTrainingCalendar(Commons
-                                                                                         .getModel(),
-                                                                                         transfer
-                                                                                         .getDate());
-                final HTCalendar spielerDate = HTCalendarFactory.createTrainingCalendar(Commons
-                                                                                        .getModel(),
-                                                                                        spieler
-                                                                                        .getHrfDate());
+            	Integer transferWeek = Commons.getModel().getHelper().getHTWeek(transfer.getDate());
+            	Integer transferSeason = Commons.getModel().getHelper().getHTSeason(transfer.getDate());
+            	Integer spielerWeek = Commons.getModel().getHelper().getHTWeek(spieler.getHrfDate());
+            	Integer spielerSeason = Commons.getModel().getHelper().getHTSeason(spieler.getHrfDate());
 
-                // Not in the same week, possible skillup so skip it
-                if (((transferDate.getHTSeason() * 16) + transferDate.getHTWeek()) == ((spielerDate
-                                                                                        .getHTSeason() * 16)
-                    + spielerDate.getHTWeek())) {
+            	// Not in the same week, possible skillup so skip it
+                if (((transferSeason * 16) + transferWeek) == ((spielerSeason * 16) + spielerWeek)) {
                     transfer.setPlayerInfo(spieler);
                 }
             }

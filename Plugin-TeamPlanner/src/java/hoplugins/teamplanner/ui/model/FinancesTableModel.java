@@ -3,7 +3,6 @@ package hoplugins.teamplanner.ui.model;
 
 import hoplugins.Commons;
 
-import hoplugins.commons.utils.HTCalendarFactory;
 import hoplugins.commons.utils.PluginProperty;
 
 import hoplugins.teamplanner.vo.FinancesOfWeek;
@@ -117,12 +116,10 @@ public class FinancesTableModel extends AbstractTableModel {
                 return rowData.getTimestamp();
 
             case 1: // '\001'
+            	Integer season = Commons.getModel().getHelper().getHTSeason(rowData.getDate());
+            	Integer week = Commons.getModel().getHelper().getHTWeek(rowData.getDate());
 
-                hoplugins.commons.utils.HTCalendar cal = HTCalendarFactory.createEconomyCalendar(Commons
-                                                                                                 .getModel(),
-                                                                                                 rowData
-                                                                                                 .getDate());
-                return new HTWeek(cal);
+                return new HTWeek(season,week);
 
             case 2: // '\002'
                 return new Integer(rowData.getCash());
