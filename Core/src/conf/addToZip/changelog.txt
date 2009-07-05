@@ -24,6 +24,7 @@ Language updates:
 - improve French translation (thx Bruno)
 - fixed Czech skill names
 - add "Greeklish" as new HO language (big thx to Angelos!)
+- improve Slowak translation (thx refri)
 
 Plugin Updates:
 ---------------
