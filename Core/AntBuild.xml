@@ -2,20 +2,20 @@
 
 <!--
 	Ant Build file for HO by flattermann <HO@flattermann.net> - 2009-05-19
-	
+
 	- created for personal use, but perhaps it may be useful for other, too -
-	    	
+
 	Visit http://www.flattermann.net/hotrac/wiki/HowToBuild for more informations
-		
+
 	Note 1: (How to create DMG-Builds with Linux)
 	- still missing, try to figure it out yourself ;-) or send a mail to HO@flattermann.net -
-	
+
 	Note 2: NSIS Win32-Installer
 	- To build the Win32 Installer, you need the NSIS *Unicode* from http://www.scratchpaper.com/,
 		because the NSIS main trunk does not support unicode, yet.
 		Unfortunately, the unicode source only builds under Windows, therefore a linux build does not exist.
 		For Linux, please install Wine and run the makensis.exe using wine.
-	- You need the additional NSIS plugin "AccessControl" 
+	- You need the additional NSIS plugin "AccessControl"
 		Download it from http://nsis.sourceforge.net/AccessControl_plug-in and unpack the AccessControl.dll
 		into your NSIS plugin directory
 -->
@@ -40,7 +40,7 @@
 		</then>
 	</if>
 
-	<!-- 
+	<!--
 		Put your local properties into this file
 		If this file exists, the properties in it have higher precedence than the
 		default properties
@@ -92,8 +92,8 @@
 		</javac>
 	</target>
 
-	<!-- ================================= 
-          target: makeAll              
+	<!-- =================================
+          target: makeAll
          ================================= -->
 	<target name="makeAll" description="Create ho.jar, HO.zip and HO.dmg">
 		<antcall target="makeJar" />
@@ -102,8 +102,8 @@
 		<antcall target="makeNSIS" />
 	</target>
 
-	<!-- ================================= 
-          target: init              
+	<!-- =================================
+          target: init
          ================================= -->
 	<target name="init" description="create tmp dirs and get HO Version">
 		<mkdir dir="${tmp.target}" />
@@ -195,7 +195,7 @@
 		</if>
 
 		<!-- Collect a list of all plugins in workspace, will be used if includePlugins.Release/Dev is set to ALL -->
-		<!-- Plugin-Commons MUST be build as first plugin, that's why we exclude it here and add it later --> 
+		<!-- Plugin-Commons MUST be build as first plugin, that's why we exclude it here and add it later -->
 		<dirset id="allPlugins.InWorkspace.dirSet" dir=".." includes="Plugin-*" excludes="Plugin-Commons" />
 		<pathconvert property="allPlugins.InWorkspace" refid="allPlugins.InWorkspace.dirSet" pathsep=",">
 			<!-- flatten the dirs, i.e. remove everything before /Plugin-* -->
@@ -237,8 +237,8 @@
 		<echo>HOFULLVERSION=${hofullversion} (used in file names)</echo>
 	</target>
 
-	<!-- ================================= 
-          target: makeJar              
+	<!-- =================================
+          target: makeJar
          ================================= -->
 	<target name="makeJar" depends="init" description="Create JAR File">
 		<delete dir="${tmp.target}" />
@@ -253,8 +253,8 @@
 	</target>
 
 
-	<!-- ================================= 
-          target: copy2build              
+	<!-- =================================
+          target: copy2build
          ================================= -->
 	<target name="copy2build" depends="makeJar,buildAllPlugins" description="Copy conf files to builddir">
 		<mkdir dir="${build.dir}" />
@@ -266,8 +266,8 @@
 		<antcall target="copyBuild2debug" />
 	</target>
 
-	<!-- ================================= 
-          target: copyBuild2debug              
+	<!-- =================================
+          target: copyBuild2debug
          ================================= -->
 	<target name="copyBuild2debug" description="Copy build dir to debug">
 		<mkdir dir="${debug.dir}" />
@@ -276,8 +276,8 @@
 		</copy>
 	</target>
 
-	<!-- ================================= 
-          target: buildSinglePlugin            
+	<!-- =================================
+          target: buildSinglePlugin
          ================================= -->
 	<target name="buildSinglePlugin" description="Build a single ho plugin">
 		<property name="plugin.basedir" value="${basedir}/../Plugin-${PLUGINNAME}"/>
@@ -288,16 +288,16 @@
 		</javac>
 	</target>
 
-	<!-- ================================= 
-          target: buildAllPlugins              
+	<!-- =================================
+          target: buildAllPlugins
          ================================= -->
 	<target name="buildAllPlugins" depends="init" description="Build all hoplugins">
 		<echo>Building the following plugins: ${includePlugins}</echo>
 		<foreach list="${includePlugins}" target="buildSinglePlugin" param="PLUGINNAME" />
 	</target>
 
-	<!-- ================================= 
-          target: copySinglePlugin            
+	<!-- =================================
+          target: copySinglePlugin
          ================================= -->
 	<target name="copySinglePlugin" description="Copy a single ho plugin to build/hoplugins">
 		<echo>Copy plugin: ${PLUGINNAME} (${basedir}/../Plugin-${PLUGINNAME}/bin/hoplugins to ${build.dir}/hoplugins)</echo>
@@ -311,16 +311,16 @@
 		</copy>
 	</target>
 
-	<!-- ================================= 
-          target: copyAllPlugins              
+	<!-- =================================
+          target: copyAllPlugins
          ================================= -->
 	<target name="copyAllPlugins" depends="init" description="Copy all hoplugins to builddir">
 		<echo>Installing the following plugins: ${includePlugins}</echo>
 		<foreach list="${includePlugins}" target="copySinglePlugin" param="PLUGINNAME" />
 	</target>
 
-	<!-- ================================= 
-          target: deployNightly              
+	<!-- =================================
+          target: deployNightly
          ================================= -->
 	<!-- To make this work, you need to have a private key auth for Sourceforge work -->
 	<target name="deployNightly" depends="init" description="Deploy the current nightly build to Sourceforge.net">
@@ -328,7 +328,7 @@
 		<echo>deploy.OS.only=${deploy.OS.only}</echo>
 		<echo>os.name=${os.name}</echo>
 		<!-- Deploy only if enabled and OS does match
-			Both is normally set by the Bitten AutoBuilder recipe via command line 
+			Both is normally set by the Bitten AutoBuilder recipe via command line
 			but can also be set via AntBuild-Local.properties
 		-->
 		<if>
@@ -353,10 +353,15 @@
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
 							<arg value="create"/>
 						</exec>
-						<echo>Removing old nightlies from SF</echo>
+						<echo>Removing old ZIP nightlies from SF</echo>
 						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
-							<arg value="${deploy.sf.sshRemoveCommand}"/>
+							<arg value="${deploy.sf.sshZipRemoveCommand}"/>
+						</exec>
+						<echo>Removing old DEB nightlies from SF</echo>
+						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
+							<arg value="${deploy.sf.sshDebRemoveCommand}"/>
 						</exec>
 <!--
 						<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
@@ -365,9 +370,10 @@
 -->
 					</then>
 				</if>
-				<echo>Uploading new nightly (HO_${hofullversion}.zip) to SF</echo>
+				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb) to SF</echo>
 				<exec executable="${scp.command}" failonerror="true">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip"/>
+					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb"/>
 					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}"/>
 				</exec>
 			</then>
@@ -377,8 +383,8 @@
 		</if>
 	</target>
 
-	<!-- ================================= 
-          target: clean              
+	<!-- =================================
+          target: clean
          ================================= -->
 	<target name="clean" description="Remove temp dirs">
 		<echo>Removing temp files and dirs</echo>
@@ -390,8 +396,8 @@
 		</delete>
 	</target>
 
-	<!-- ================================= 
-          target: makeZip              
+	<!-- =================================
+          target: makeZip
          ================================= -->
 	<target name="makeZip" depends="copy2build,buildAllPlugins,copyAllPlugins" description="Creates the full HO.zip">
 		<mkdir dir="${export.zip.dir}" />
@@ -400,8 +406,8 @@
 		</zip>
 	</target>
 
-	<!-- ================================= 
-          target: makeDmg              
+	<!-- =================================
+          target: makeDmg
          ================================= -->
 	<target name="makeDmg" depends="copy2build" description="Create OSX DMG dir">
 		<property name="InfoSrc" value="${export.dmg.sourcedir}/Hattrick Organizer.app/Contents/Info.plist" />
@@ -425,8 +431,8 @@
 		<copy file="${export.dmg.backgrounddir}/Back${dev}.png" tofile="${export.dmg.targetdir}/.Back.png" preservelastmodified="true" />
 	</target>
 
-	<!-- ================================= 
-          target: makeDmgImage              
+	<!-- =================================
+          target: makeDmgImage
          ================================= -->
 	<target name="makeDmgImage" depends="makeDmg" description="Creates the DMG image">
 		<echo>Trying to unmount DMG, just to be sure</echo>
@@ -445,7 +451,7 @@
 		</zip>
 	</target>
 
-	<!-- ================================= 
+	<!-- =================================
           target: makeNSIS
          ================================= -->
 	<target name="makeNSIS" depends="copy2build" description="Create Win32-Installer using NSIS">
@@ -484,4 +490,89 @@
 		</if>
 
 	</target>
+
+	<!-- =================================
+          target: makeDeb
+         ================================= -->
+	<target name="makeDeb" depends="copy2build" description="Creates the Debian DEB package">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${export.deb.targetdir}" />
+		</delete>
+		<loadfile property="makedeb.hoversion" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+			<filterchain>
+				<linecontains>
+					<contains value=" VERSION =" />
+				</linecontains>
+				<replaceregex pattern=".*=\D*" replace="" />
+				<replaceregex pattern="\D*$" replace="" />
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+		<!-- get current SVN version / release -->
+		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
+			<arg value="info" />
+			<redirector outputproperty="makedeb.svnrev">
+				<outputfilterchain>
+					<!-- Extract from "Revision: XXX" -->
+					<containsregex pattern="^Revision:" />
+					<replaceregex pattern="^Revision\D*(\d*)" replace="\1" />
+				</outputfilterchain>
+			</redirector>
+		</exec>
+		<!-- ${makedeb.svnrev} defaults to "" -->
+		<property name="makedeb.svnrev" value=""/>
+		<if>
+			<equals arg1="${dev}" arg2=""/>
+			<then>
+				<property name="makedeb.packagename" value="ho1"/>
+				<property name="makedeb.fullversion" value="${makedeb.hoversion}"/>
+				<property name="makedeb.terminal" value="false"/>
+			</then>
+			<else>
+				<property name="makedeb.packagename" value="ho1-beta"/>
+				<property name="makedeb.fullversion" value="${makedeb.hoversion}-${makedeb.svnrev}"/>
+				<property name="makedeb.terminal" value="true"/>
+			</else>
+		</if>
+		<!--property name="makedeb.deb.filename" value="${makedeb.packagename}_${makedeb.hoversion}-${makedeb.svnrev}.deb"/-->
+		<property name="makedeb.deb.filename" value="HO_${hofullversion}.deb"/>
+		<mkdir dir="${export.deb.targetdir}/${makedeb.packagename}"/>
+		<!--copy todir="${export.deb.targetdir}/${makedeb.packagename}">
+			<fileset dir="${export.deb.sourcedir}"/>
+		</copy-->
+		<copy file="${export.deb.sourcedir}/DEBIAN/control" tofile="${export.deb.targetdir}/${makedeb.packagename}/DEBIAN/control" overwrite="true">
+			<filterchain>
+				<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+				<replacestring from="HOVERSION" to="${makedeb.hoversion}" />
+				<replacestring from="SVNREV" to="${makedeb.svnrev}" />
+			</filterchain>
+		</copy>
+		<copy file="${export.deb.sourcedir}/DEBIAN/desktopentry.desktop" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/share/applications/${makedeb.packagename}.desktop" overwrite="true">
+			<filterchain>
+				<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+				<replacestring from="HOVERSION" to="${makedeb.fullversion}" />
+				<replacestring from="TERMINAL" to="${makedeb.terminal}" />
+			</filterchain>
+		</copy>
+		<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/lib/${makedeb.packagename}">
+			<fileset dir="${build.dir}" />
+		</copy>
+		<copy file="${export.deb.sourcedir}/HO.sh" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/bin/${makedeb.packagename}" overwrite="true">
+			<filterchain>
+				<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+			</filterchain>
+		</copy>
+		<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/share/doc/${makedeb.packagename}" overwrite="true">
+			<fileset file="${build.dir}/changelog.txt" />
+			<fileset file="${build.dir}/release_notes.txt" />
+			<fileset file="${build.dir}/LICENSE.TXT" />
+		</copy>
+		<chmod perm="a+x" file="${export.deb.targetdir}/${makedeb.packagename}/usr/bin/${makedeb.packagename}" />
+		<exec executable="${dpkg.command}" dir="${export.deb.targetdir}" failifexecutionfails="true" failonerror="true">
+			<arg value="--build"/>
+			<arg value="${makedeb.packagename}"/>
+		</exec>
+		<move file="${export.deb.targetdir}/${makedeb.packagename}.deb" tofile="${export.deb.packagedir}/${makedeb.deb.filename}" />
+	</target>
+
 </project>
