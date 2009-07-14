@@ -1,0 +1,13 @@
+Package: PACKAGE
+Version: HOVERSION-SVNREV
+Section: games
+Priority: optional
+Architecture: all
+Maintainer: flattermann <HO@flattermann.net>
+Homepage: http://www.hattrickorganizer.net
+Description: HattrickOrganizer!
+ .
+ A manager assistent for the online football manager
+ http://www.hattrick.org
+ .
+Depends: sun-java5-jre | sun-java6-jre
