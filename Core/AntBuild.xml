@@ -33,9 +33,9 @@
 
 	<!-- Use another tmp directory for Ant Bitten AutoBuilds (used by Trac) -->
 	<if>
-		<isset property="isAutoBuild"/>
+		<isset property="isAutoBuild" />
 		<then>
-			<property name="tmp" value="${java.io.tmpdir}/build.tmp-autobuild-HO1"/>
+			<property name="tmp" value="${java.io.tmpdir}/build.tmp-autobuild-HO1" />
 			<!--echo>This is an AutoBuild, using as tmp: ${tmp}</echo-->
 		</then>
 	</if>
@@ -138,15 +138,15 @@
 			<available file="${src.dir}/isPrivateBuild" />
 		</condition>
 		<!-- ... else ${private} defaults to "" -->
-		<property name="private" value=""/>
+		<property name="private" value="" />
 		<!-- if ${dev} is set (i.e. development version), set ${debug} to "DEBUG"... -->
 		<condition property="debug" value="DEBUG">
 			<isset property="dev" />
 		</condition>
 		<!-- ... else set ${debug} to ""... -->
-		<property name="debug" value=""/>
+		<property name="debug" value="" />
 		<!-- ${dev} defaults to "" -->
-		<property name="dev" value=""/>
+		<property name="dev" value="" />
 		<!-- get current SVN version / release -->
 		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
 			<arg value="info" />
@@ -170,9 +170,9 @@
 			</redirector>
 		</exec>
 		<!-- ${svninfo.rev} defaults to "" -->
-		<property name="svninfo.rev" value=""/>
+		<property name="svninfo.rev" value="" />
 		<!-- ${svninfo.url} defaults to "" -->
-		<property name="svninfo.url" value=""/>
+		<property name="svninfo.url" value="" />
 
 		<tstamp>
 			<format property="curDate" pattern="yyyyMMdd" />
@@ -280,7 +280,7 @@
           target: buildSinglePlugin
          ================================= -->
 	<target name="buildSinglePlugin" description="Build a single ho plugin">
-		<property name="plugin.basedir" value="${basedir}/../Plugin-${PLUGINNAME}"/>
+		<property name="plugin.basedir" value="${basedir}/../Plugin-${PLUGINNAME}" />
 		<echo>Building plugin ${PLUGINNAME}</echo>
 		<javac srcdir="${plugin.basedir}/src" destdir="${plugin.basedir}/bin" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
 			<compilerarg value="${javac.args}" />
@@ -350,20 +350,20 @@
 					<then>
 						<echo>Creating SF shell session</echo>
 						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
-							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
-							<arg value="create"/>
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+							<arg value="create" />
 						</exec>
 						<echo>Removing old ZIP nightlies from SF</echo>
 						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
-							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
-							<arg value="${deploy.sf.sshZipRemoveCommand}"/>
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+							<arg value="${deploy.sf.sshZipRemoveCommand}" />
 						</exec>
 						<echo>Removing old DEB nightlies from SF</echo>
 						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
-							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}"/>
-							<arg value="${deploy.sf.sshDebRemoveCommand}"/>
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+							<arg value="${deploy.sf.sshDebRemoveCommand}" />
 						</exec>
-<!--
+						<!--
 						<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
 							<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
 						</exec>
@@ -372,9 +372,9 @@
 				</if>
 				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb) to SF</echo>
 				<exec executable="${scp.command}" failonerror="true">
-					<arg value="${export.zip.dir}/HO_${hofullversion}.zip"/>
-					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb"/>
-					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}"/>
+					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
+					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
+					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}" />
 				</exec>
 			</then>
 			<else>
@@ -495,84 +495,90 @@
           target: makeDeb
          ================================= -->
 	<target name="makeDeb" depends="copy2build" description="Creates the Debian DEB package">
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${export.deb.targetdir}" />
-		</delete>
-		<loadfile property="makedeb.hoversion" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
-			<filterchain>
-				<linecontains>
-					<contains value=" VERSION =" />
-				</linecontains>
-				<replaceregex pattern=".*=\D*" replace="" />
-				<replaceregex pattern="\D*$" replace="" />
-				<striplinebreaks />
-			</filterchain>
-		</loadfile>
-		<!-- get current SVN version / release -->
-		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
-			<arg value="info" />
-			<redirector outputproperty="makedeb.svnrev">
-				<outputfilterchain>
-					<!-- Extract from "Revision: XXX" -->
-					<containsregex pattern="^Revision:" />
-					<replaceregex pattern="^Revision\D*(\d*)" replace="\1" />
-				</outputfilterchain>
-			</redirector>
-		</exec>
-		<!-- ${makedeb.svnrev} defaults to "" -->
-		<property name="makedeb.svnrev" value=""/>
 		<if>
-			<equals arg1="${dev}" arg2=""/>
+			<!-- Only build Debian packages when OS=Linux -->
+			<equals arg1="${os.name}" arg2="Linux" />
 			<then>
-				<property name="makedeb.packagename" value="ho1"/>
-				<property name="makedeb.fullversion" value="${makedeb.hoversion}"/>
-				<property name="makedeb.terminal" value="false"/>
-			</then>
-			<else>
-				<property name="makedeb.packagename" value="ho1-beta"/>
-				<property name="makedeb.fullversion" value="${makedeb.hoversion}-${makedeb.svnrev}"/>
-				<property name="makedeb.terminal" value="true"/>
-			</else>
-		</if>
-		<!--property name="makedeb.deb.filename" value="${makedeb.packagename}_${makedeb.hoversion}-${makedeb.svnrev}.deb"/-->
-		<property name="makedeb.deb.filename" value="HO_${hofullversion}.deb"/>
-		<mkdir dir="${export.deb.targetdir}/${makedeb.packagename}"/>
-		<!--copy todir="${export.deb.targetdir}/${makedeb.packagename}">
+				<delete includeemptydirs="true" failonerror="false">
+					<fileset dir="${export.deb.targetdir}" />
+				</delete>
+				<loadfile property="makedeb.hoversion" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+					<filterchain>
+						<linecontains>
+							<contains value=" VERSION =" />
+						</linecontains>
+						<replaceregex pattern=".*=\D*" replace="" />
+						<replaceregex pattern="\D*$" replace="" />
+						<striplinebreaks />
+					</filterchain>
+				</loadfile>
+				<!-- get current SVN version / release -->
+				<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
+					<arg value="info" />
+					<redirector outputproperty="makedeb.svnrev">
+						<outputfilterchain>
+							<!-- Extract from "Revision: XXX" -->
+							<containsregex pattern="^Revision:" />
+							<replaceregex pattern="^Revision\D*(\d*)" replace="\1" />
+						</outputfilterchain>
+					</redirector>
+				</exec>
+				<!-- ${makedeb.svnrev} defaults to "" -->
+				<property name="makedeb.svnrev" value="" />
+				<if>
+					<equals arg1="${dev}" arg2="" />
+					<then>
+						<property name="makedeb.packagename" value="ho1" />
+						<property name="makedeb.fullversion" value="${makedeb.hoversion}" />
+						<property name="makedeb.terminal" value="false" />
+					</then>
+					<else>
+						<property name="makedeb.packagename" value="ho1-beta" />
+						<property name="makedeb.fullversion" value="${makedeb.hoversion}-${makedeb.svnrev}" />
+						<property name="makedeb.terminal" value="true" />
+					</else>
+				</if>
+				<!--property name="makedeb.deb.filename" value="${makedeb.packagename}_${makedeb.hoversion}-${makedeb.svnrev}.deb"/-->
+				<property name="makedeb.deb.filename" value="HO_${hofullversion}.deb" />
+				<mkdir dir="${export.deb.targetdir}/${makedeb.packagename}" />
+				<!--copy todir="${export.deb.targetdir}/${makedeb.packagename}">
 			<fileset dir="${export.deb.sourcedir}"/>
 		</copy-->
-		<copy file="${export.deb.sourcedir}/DEBIAN/control" tofile="${export.deb.targetdir}/${makedeb.packagename}/DEBIAN/control" overwrite="true">
-			<filterchain>
-				<replacestring from="PACKAGE" to="${makedeb.packagename}" />
-				<replacestring from="HOVERSION" to="${makedeb.hoversion}" />
-				<replacestring from="SVNREV" to="${makedeb.svnrev}" />
-			</filterchain>
-		</copy>
-		<copy file="${export.deb.sourcedir}/DEBIAN/desktopentry.desktop" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/share/applications/${makedeb.packagename}.desktop" overwrite="true">
-			<filterchain>
-				<replacestring from="PACKAGE" to="${makedeb.packagename}" />
-				<replacestring from="HOVERSION" to="${makedeb.fullversion}" />
-				<replacestring from="TERMINAL" to="${makedeb.terminal}" />
-			</filterchain>
-		</copy>
-		<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/lib/${makedeb.packagename}">
-			<fileset dir="${build.dir}" />
-		</copy>
-		<copy file="${export.deb.sourcedir}/HO.sh" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/bin/${makedeb.packagename}" overwrite="true">
-			<filterchain>
-				<replacestring from="PACKAGE" to="${makedeb.packagename}" />
-			</filterchain>
-		</copy>
-		<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/share/doc/${makedeb.packagename}" overwrite="true">
-			<fileset file="${build.dir}/changelog.txt" />
-			<fileset file="${build.dir}/release_notes.txt" />
-			<fileset file="${build.dir}/LICENSE.TXT" />
-		</copy>
-		<chmod perm="a+x" file="${export.deb.targetdir}/${makedeb.packagename}/usr/bin/${makedeb.packagename}" />
-		<exec executable="${dpkg.command}" dir="${export.deb.targetdir}" failifexecutionfails="true" failonerror="true">
-			<arg value="--build"/>
-			<arg value="${makedeb.packagename}"/>
-		</exec>
-		<move file="${export.deb.targetdir}/${makedeb.packagename}.deb" tofile="${export.deb.packagedir}/${makedeb.deb.filename}" />
+				<copy file="${export.deb.sourcedir}/DEBIAN/control" tofile="${export.deb.targetdir}/${makedeb.packagename}/DEBIAN/control" overwrite="true">
+					<filterchain>
+						<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+						<replacestring from="HOVERSION" to="${makedeb.hoversion}" />
+						<replacestring from="SVNREV" to="${makedeb.svnrev}" />
+					</filterchain>
+				</copy>
+				<copy file="${export.deb.sourcedir}/DEBIAN/desktopentry.desktop" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/share/applications/${makedeb.packagename}.desktop" overwrite="true">
+					<filterchain>
+						<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+						<replacestring from="HOVERSION" to="${makedeb.fullversion}" />
+						<replacestring from="TERMINAL" to="${makedeb.terminal}" />
+					</filterchain>
+				</copy>
+				<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/lib/${makedeb.packagename}">
+					<fileset dir="${build.dir}" />
+				</copy>
+				<copy file="${export.deb.sourcedir}/HO.sh" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/bin/${makedeb.packagename}" overwrite="true">
+					<filterchain>
+						<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+					</filterchain>
+				</copy>
+				<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/share/doc/${makedeb.packagename}" overwrite="true">
+					<fileset file="${build.dir}/changelog.txt" />
+					<fileset file="${build.dir}/release_notes.txt" />
+					<fileset file="${build.dir}/LICENSE.TXT" />
+				</copy>
+				<chmod perm="a+x" file="${export.deb.targetdir}/${makedeb.packagename}/usr/bin/${makedeb.packagename}" />
+				<exec executable="${dpkg.command}" dir="${export.deb.targetdir}" failifexecutionfails="true" failonerror="true">
+					<arg value="--build" />
+					<arg value="${makedeb.packagename}" />
+				</exec>
+				<move file="${export.deb.targetdir}/${makedeb.packagename}.deb" tofile="${export.deb.packagedir}/${makedeb.deb.filename}" />
+			</then>
+		</if>
 	</target>
 
 </project>
