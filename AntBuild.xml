@@ -558,6 +558,13 @@
 						<replacestring from="TERMINAL" to="${makedeb.terminal}" />
 					</filterchain>
 				</copy>
+				<copy file="${export.deb.sourcedir}/DEBIAN/menuentry" tofile="${export.deb.targetdir}/${makedeb.packagename}/usr/share/menu/${makedeb.packagename}" overwrite="true">
+					<filterchain>
+						<replacestring from="PACKAGE" to="${makedeb.packagename}" />
+						<replacestring from="HOVERSION" to="${makedeb.fullversion}" />
+						<replacestring from="TERMINAL" to="${makedeb.terminal}" />
+					</filterchain>
+				</copy>
 				<copy todir="${export.deb.targetdir}/${makedeb.packagename}/usr/lib/${makedeb.packagename}">
 					<fileset dir="${build.dir}" />
 				</copy>
