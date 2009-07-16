@@ -2074,6 +2074,9 @@ public class DBZugriff {
 		// Drop the feedback tables to force new feedback upload for beta testers
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
+		
+		saveUserParameter("updateCheck", "true");
+		saveUserParameter("newsCheck", "true");
 
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.425);		
