@@ -344,7 +344,7 @@ public class DBZugriff {
 	 *
 	 * @param hrfID hrd id
 	 * @param playerId player id
-	 * 
+	 *
 	 *
 	 * @return player
 	 */
@@ -740,20 +740,20 @@ public class DBZugriff {
 	 * @param minId	minimum HRF id (<0 for all)
 	 * @param maxId maximum HRF id (<0 for all)
 	 * @param asc order ascending (descending otherwise)
-	 * 
+	 *
 	 * @return all matching HRFs
 	 */
 	public HRF[] getAllHRFs (int minId, int maxId, boolean asc) {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getAllHRFs(minId, maxId, asc);
 	}
-	
+
 	/**
 	 * get HRF by Id
 	 */
 	public HRF getHrf (int hrfId) {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getHRF(hrfId);
 	}
-	
+
 	/**
 	 * liefert die aktuelle Id des neuesten HRF-Files
 	 *
@@ -1698,7 +1698,7 @@ public class DBZugriff {
 						updateDBv8();
 					case 8 :
 						updateDBv9();
-						
+
 						//case 2: updateDB_v3(); // For future versions!
 				}
 
@@ -1863,7 +1863,7 @@ public class DBZugriff {
 		// do version checking again before applying!
 		saveUserParameter("DBVersion", 6);
 	}
-	
+
 	/**
 	 * Update DB structure to v7
 	 *
@@ -1876,7 +1876,7 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION ADD COLUMN ArenaID INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHDETAILS ADD COLUMN RegionID INTEGER");
 
-		// Drop and recreate the table 
+		// Drop and recreate the table
 		// (i.e. use defaults from defaults.xml)
 		AbstractTable faktorenTab = (AbstractTable)tables.get(FaktorenTable.TABLENAME);
 		if (faktorenTab != null) {
@@ -1903,7 +1903,7 @@ public class DBZugriff {
 		// do version checking again before applying!
 		saveUserParameter("DBVersion", 8);
 	}
-	
+
 	/**
 	 * Update DB structure to v9
 	 *
@@ -1920,17 +1920,17 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldBasic=-1 WHERE soldBasic IS null");
 		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldRoof=-1 WHERE soldRoof IS null");
 		m_clJDBCAdapter.executeUpdate("UPDATE MatchDetails SET soldVIP=-1 WHERE soldVIP IS null");
-		
+
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN Agreeability INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN baseWage INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN Nationality INTEGER");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE Scout ADD COLUMN Leadership INTEGER");
-		
+
 		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  Agreeability=-1 WHERE Agreeability IS null");
 		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  baseWage=-1 WHERE baseWage IS null");
 		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  Nationality=-1 WHERE Nationality IS null");
 		m_clJDBCAdapter.executeUpdate("UPDATE Scout SET  Leadership=-1 WHERE Leadership IS null");
-		
+
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
 		// do version checking again before applying!
@@ -2003,11 +2003,14 @@ public class DBZugriff {
 
 	/**
 	 * Automatic update of User Configuration parameters
-	 * 
+	 *
 	 * This method is similar to the updateDB() method above
 	 * The main difference is that it is based on the
 	 * HO release version instead of the DB version
-	 * 
+	 *
+	 * In development mode, we execute the current update steps
+	 * again (just like in updateBD()).
+	 *
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void updateConfig () {
@@ -2015,25 +2018,25 @@ public class DBZugriff {
 		/**
 		 * We have to use separate 'if-then' clauses for each conf version (ascending order)
 		 * because a user might have skipped some HO releases
-		 * 
-		 * DO NOT use 'if-then-else' here, as this would ignores some updates! 
+		 *
+		 * DO NOT use 'if-then-else' here, as this would ignores some updates!
 		 */
-		if (lastConfigUpdate < 1.4101) {
+		if (lastConfigUpdate < 1.4101 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.4101)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.410-1...");
 			updateConfigTo1410_1();
 		}
 
-		if (lastConfigUpdate < 1.420) {
+		if (lastConfigUpdate < 1.420 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.420)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.420...");
 			updateConfigTo1420();
 		}
 
-		if (lastConfigUpdate < 1.424) {
+		if (lastConfigUpdate < 1.424 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.424)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.424...");
 			updateConfigTo1424();
 		}
 
-		if (lastConfigUpdate < 1.425) {
+		if (lastConfigUpdate < 1.425 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
 			updateConfigTo1425();
 		}
@@ -2048,7 +2051,7 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
 
 		// always set the LastConfUpdate as last step
-		saveUserParameter("LastConfUpdate", 1.4101);		
+		saveUserParameter("LastConfUpdate", 1.4101);
 	}
 
 	private void updateConfigTo1420 () {
@@ -2062,7 +2065,7 @@ public class DBZugriff {
 
 	private void updateConfigTo1424 () {
 		resetTrainingParameters (); // Reset training parameters (just to be sure)
-		
+
 		saveUserParameter("updateCheck", "true");
 		saveUserParameter("newsCheck", "true");
 
@@ -2074,12 +2077,15 @@ public class DBZugriff {
 		// Drop the feedback tables to force new feedback upload for beta testers
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
 		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
-		
+
+		// Argentina.properties is outdated and got replaced by Spanish_sudamericano.properties
+		m_clJDBCAdapter.executeUpdate("UPDATE USERCONFIGURATION SET CONFIG_VALUE='Spanish_sudamericano' where CONFIG_KEY='sprachDatei' and CONFIG_VALUE='Argentina'");
+
 		saveUserParameter("updateCheck", "true");
 		saveUserParameter("newsCheck", "true");
 
 		// always set the LastConfUpdate as last step
-		saveUserParameter("LastConfUpdate", 1.425);		
+		saveUserParameter("LastConfUpdate", 1.425);
 	}
 
 	private void resetTrainingParameters () {
