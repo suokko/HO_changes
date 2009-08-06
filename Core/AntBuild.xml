@@ -375,11 +375,11 @@
 -->
 					</then>
 				</if>
-				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb) to SF</echo>
+				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb/.dmg) to SF</echo>
 				<exec executable="${scp.command}" failonerror="true">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
 					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
-					<arg value="${export.dmg.imagedir}/HO_${hofullversion}.dmg" />
+					<arg value="${export.dmg.imagedir}/HO_${hofullversion}.dmg.gz" />
 					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}" />
 				</exec>
 			</then>
@@ -471,9 +471,7 @@
 					<arg value="${export.dmg.mountdir}" />
 				</exec>
 				<copy file="${export.dmg.targetfile}" tofile="${export.dmg.imagedir}/HO_${hofullversion}.dmg" overwrite="true" verbose="true" />
-				<zip destfile="${export.dmg.imagedir}/HO_${hofullversion}_MacOS_DMG.zip">
-					<fileset file="${export.dmg.imagedir}/HO_${hofullversion}.dmg" />
-				</zip>
+				<gzip src="${export.dmg.imagedir}/HO_${hofullversion}.dmg" destfile="${export.dmg.imagedir}/HO_${hofullversion}.dmg.gz" />
 			</then>
 		</if>
 	</target>
