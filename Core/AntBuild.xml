@@ -424,8 +424,6 @@
 		<copy todir="${export.dmg.targetdir}" preservelastmodified="yes">
 			<fileset dir="${export.dmg.sourcedir}" />
 		</copy>
-		<!-- Making JavaApplicationStub executable -->
-		<chmod file="${export.dmg.targetdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x"/>
 		<copy todir="${export.dmg.targetdir}/Hattrick Organizer.app/Contents/Resources/Java" preservelastmodified="yes">
 			<fileset dir="${build.dir}" />
 		</copy>
@@ -466,6 +464,8 @@
 				<copy todir="${export.dmg.mountdir}" preservelastmodified="yes">
 					<fileset dir="${export.dmg.targetdir}" />
 				</copy>
+				<!-- Making JavaApplicationStub executable -->
+				<chmod file="${export.dmg.mountdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x"/>
 				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
 					<arg value="${export.dmg.targetfile}" />
 					<arg value="${export.dmg.mountdir}" />
