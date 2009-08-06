@@ -446,6 +446,9 @@
 			<equals arg1="${os.name}" arg2="Linux" />
 			<then>
 				<mkdir dir="${export.dmg.imagedir}" />
+				<!-- Set permissions to (u)mountDmg to u+x -->
+				<chmod file="${export.dmg.contribdir}/umountDmg" perm="u+x"/>
+				<chmod file="${export.dmg.contribdir}/mountDmg" perm="u+x"/>
 				<echo>Trying to unmount DMG, just to be sure</echo>
 				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
 					<arg value="${export.dmg.targetfile}" />
