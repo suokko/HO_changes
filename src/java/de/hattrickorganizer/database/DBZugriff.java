@@ -2023,26 +2023,26 @@ public class DBZugriff {
 		 */
 		if (lastConfigUpdate < 1.4101 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.4101)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.410-1...");
-			updateConfigTo1410_1();
+			updateConfigTo1410_1(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.4101);
 		}
 
 		if (lastConfigUpdate < 1.420 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.420)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.420...");
-			updateConfigTo1420();
+			updateConfigTo1420(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.420);
 		}
 
 		if (lastConfigUpdate < 1.424 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.424)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.424...");
-			updateConfigTo1424();
+			updateConfigTo1424(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.424);
 		}
 
 		if (lastConfigUpdate < 1.425 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
-			updateConfigTo1425();
+			updateConfigTo1425(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425);
 		}
 	}
 
-	private void updateConfigTo1410_1 () {
+	private void updateConfigTo1410_1 (boolean alreadyApplied) {
 		resetTrainingParameters();
 		resetPredictionOffsets();
 
@@ -2054,7 +2054,7 @@ public class DBZugriff {
 		saveUserParameter("LastConfUpdate", 1.4101);
 	}
 
-	private void updateConfigTo1420 () {
+	private void updateConfigTo1420 (boolean alreadyApplied) {
 		resetTrainingParameters();
 		resetPredictionOffsets();
 		saveUserParameter("anzahlNachkommastellen", 2);
@@ -2063,7 +2063,7 @@ public class DBZugriff {
 		saveUserParameter("LastConfUpdate", 1.420);
 	}
 
-	private void updateConfigTo1424 () {
+	private void updateConfigTo1424 (boolean alreadyApplied) {
 		resetTrainingParameters (); // Reset training parameters (just to be sure)
 
 		saveUserParameter("updateCheck", "true");
@@ -2073,16 +2073,19 @@ public class DBZugriff {
 		saveUserParameter("LastConfUpdate", 1.424);
 	}
 
-	private void updateConfigTo1425 () {
-		// Drop the feedback tables to force new feedback upload for beta testers
-		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
-		m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
-
+	private void updateConfigTo1425 (boolean alreadyApplied) {
 		// Argentina.properties is outdated and got replaced by Spanish_sudamericano.properties
 		m_clJDBCAdapter.executeUpdate("UPDATE USERCONFIGURATION SET CONFIG_VALUE='Spanish_sudamericano' where CONFIG_KEY='sprachDatei' and CONFIG_VALUE='Argentina'");
 
-		saveUserParameter("updateCheck", "true");
-		saveUserParameter("newsCheck", "true");
+		// Apply only once
+		if (!alreadyApplied) {
+			saveUserParameter("updateCheck", "true");
+			saveUserParameter("newsCheck", "true");
+
+			// Drop the feedback tables to force new feedback upload
+			m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_SETTINGS");
+			m_clJDBCAdapter.executeUpdate("DROP TABLE IF EXISTS FEEDBACK_UPLOAD");
+		}
 
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.425);
