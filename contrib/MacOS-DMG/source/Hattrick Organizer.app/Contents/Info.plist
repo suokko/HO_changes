@@ -29,9 +29,9 @@
 		<key>ClassPath</key>
 		<string>$JAVAROOT/ho.jar</string>
 		<key>JVMVersion</key>
-		<string>1.4+</string>
+		<string>1.5+</string>
 		<key>VMOptions</key>
-		<string>-Xmx256m</string>
+		<string>-Xmx512m</string>
 		<key>MainClass</key>
 		<string>de.hattrickorganizer.HO</string>
 		<key>WorkingDirectory</key>
