@@ -363,6 +363,11 @@
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
 							<arg value="${deploy.sf.sshDebRemoveCommand}" />
 						</exec>
+						<echo>Removing old DMG nightlies from SF</echo>
+						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+							<arg value="${deploy.sf.sshDmgRemoveCommand}" />
+						</exec>
 						<!--
 						<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
 							<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
@@ -374,6 +379,7 @@
 				<exec executable="${scp.command}" failonerror="true">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
 					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
+					<arg value="${export.dmg.imagedir}/HO_${hofullversion}.dmg" />
 					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}" />
 				</exec>
 			</then>
@@ -399,7 +405,7 @@
 	<!-- =================================
           target: makeZip
          ================================= -->
-	<target name="makeZip" depends="copy2build,buildAllPlugins,copyAllPlugins" description="Creates the full HO.zip">
+	<target name="makeZip" depends="copy2build" description="Creates the full HO.zip">
 		<mkdir dir="${export.zip.dir}" />
 		<zip destfile="${export.zip.dir}/HO_${hofullversion}.zip">
 			<fileset dir="${build.dir}" />
@@ -435,20 +441,36 @@
           target: makeDmgImage
          ================================= -->
 	<target name="makeDmgImage" depends="makeDmg" description="Creates the DMG image">
-		<echo>Trying to unmount DMG, just to be sure</echo>
-		<exec executable="${export.dmg.basedir}/umountDmg" resolveexecutable="true" />
-		<echo>Copying template DMG</echo>
-		<copy file="${export.dmg.templatefile}" tofile="${export.dmg.targetfile}" overwrite="true" />
-		<exec executable="${export.dmg.basedir}/mountDmg" resolveexecutable="true" />
-		<echo>Updating dmg image...</echo>
-		<copy todir="${export.dmg.mountdir}" preservelastmodified="yes">
-			<fileset dir="${export.dmg.targetdir}" />
-		</copy>
-		<exec executable="${export.dmg.basedir}/umountDmg" resolveexecutable="true" />
-		<copy file="${export.dmg.targetfile}" tofile="${export.dmg.imagedir}/HO_${hofullversion}.dmg" overwrite="true" verbose="true" />
-		<zip destfile="${export.dmg.imagedir}/HO_${hofullversion}_MacOS_DMG.zip">
-			<fileset file="${export.dmg.imagedir}/HO_${hofullversion}.dmg" />
-		</zip>
+		<if>
+			<!-- Only build DMG packages when OS=Linux -->
+			<equals arg1="${os.name}" arg2="Linux" />
+			<then>
+				<mkdir dir="${export.dmg.imagedir}" />
+				<echo>Trying to unmount DMG, just to be sure</echo>
+				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
+					<arg value="${export.dmg.targetfile}" />
+					<arg value="${export.dmg.mountdir}" />
+				</exec>
+				<echo>Copying template DMG</echo>
+				<copy file="${export.dmg.templatefile}" tofile="${export.dmg.targetfile}" overwrite="true" />
+				<exec executable="${export.dmg.contribdir}/mountDmg" resolveexecutable="true" failonerror="true">
+					<arg value="${export.dmg.targetfile}" />
+					<arg value="${export.dmg.mountdir}" />
+				</exec>
+				<echo>Updating dmg image...</echo>
+				<copy todir="${export.dmg.mountdir}" preservelastmodified="yes">
+					<fileset dir="${export.dmg.targetdir}" />
+				</copy>
+				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
+					<arg value="${export.dmg.targetfile}" />
+					<arg value="${export.dmg.mountdir}" />
+				</exec>
+				<copy file="${export.dmg.targetfile}" tofile="${export.dmg.imagedir}/HO_${hofullversion}.dmg" overwrite="true" verbose="true" />
+				<zip destfile="${export.dmg.imagedir}/HO_${hofullversion}_MacOS_DMG.zip">
+					<fileset file="${export.dmg.imagedir}/HO_${hofullversion}.dmg" />
+				</zip>
+			</then>
+		</if>
 	</target>
 
 	<!-- =================================
