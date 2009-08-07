@@ -345,19 +345,38 @@
 				<echo>deploy.sf.username=${deploy.sf.username}</echo>
 				<echo>deploy.sf.path=${deploy.sf.path}</echo>
 				<echo>deploy.sf.removeOld=${deploy.sf.removeOld}</echo>
+
+				<echo>Creating SF shell session</echo>
+				<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+					<arg value="create" />
+				</exec>
+
+				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb/.rpm/.dmg/.exe) to SF</echo>
+				<exec executable="${scp.command}" failonerror="true">
+					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
+					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
+					<arg value="${export.rpm.packagedir}/HO_${hofullversion}.rpm" />
+					<arg value="${export.dmg.imagedir}/HO_${hofullversion}.dmg.gz" />
+					<arg value="${export.nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
+					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path.temp}" />
+				</exec>
+
+				<echo>Move old builds</echo>
+				<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+					<arg value="${deploy.sf.sshMoveOldBuilds}" />
+				</exec>
+
+				<echo>Move new builds from temp</echo>
+				<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+					<arg value="${deploy.sf.sshMoveFromTemp}" />
+				</exec>
+
 				<if>
 					<equals arg1="${deploy.sf.removeOld}" arg2="true" />
 					<then>
-						<echo>Creating SF shell session</echo>
-						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
-							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
-							<arg value="create" />
-						</exec>
-						<echo>Move old builds</echo>
-						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
-							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
-							<arg value="${deploy.sf.sshMoveOldBuilds}" />
-						</exec>
 						<echo>Removing old ZIP nightlies from SF</echo>
 						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
@@ -390,15 +409,6 @@
 -->
 					</then>
 				</if>
-				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb/.rpm/.dmg/.exe) to SF</echo>
-				<exec executable="${scp.command}" failonerror="true">
-					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
-					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
-					<arg value="${export.rpm.packagedir}/HO_${hofullversion}.rpm" />
-					<arg value="${export.dmg.imagedir}/HO_${hofullversion}.dmg.gz" />
-					<arg value="${export.nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
-					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}" />
-				</exec>
 			</then>
 			<else>
 				<echo>Deployment is disabled</echo>
