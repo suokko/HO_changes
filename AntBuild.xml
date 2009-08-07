@@ -369,7 +369,7 @@
 				</exec>
 
 				<echo>Move new builds from temp</echo>
-				<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+				<exec executable="${ssh.command}" timeout="60000" failonerror="true">
 					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
 					<arg value="${deploy.sf.sshMoveFromTemp}" />
 				</exec>
@@ -659,7 +659,8 @@
 					<equals arg1="${export.rpm.createRpm}" arg2="true" />
 					<then>
 						<!-- Create RPMs via alien -->
-						<exec executable="${alien.command}" dir="${export.deb.packagedir}" failifexecutionfails="true" failonerror="true">
+						<exec executable="${fakeroot.command}" dir="${export.deb.packagedir}" failifexecutionfails="true" failonerror="true">
+							<arg value="${alien.command}" />
 							<arg value="--to-rpm" />
 							<arg value="--keep-version" />
 							<arg value="${makedeb.deb.filename}" />
