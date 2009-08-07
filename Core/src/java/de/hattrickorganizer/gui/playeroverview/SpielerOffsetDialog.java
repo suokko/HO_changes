@@ -29,7 +29,7 @@ import de.hattrickorganizer.model.Spieler;
 final class SpielerOffsetDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1187335231698270294L;
-	
+
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private JButton m_jbAbbrechen;
@@ -173,7 +173,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpTorwart);
 
 		m_jpPasspiel =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.winger"),
+			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.passing"),
 				100,
 				0,
 				1,
