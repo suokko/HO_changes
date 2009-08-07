@@ -390,7 +390,7 @@
 -->
 					</then>
 				</if>
-				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb/.dmg) to SF</echo>
+				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb/.rpm/.dmg/.exe) to SF</echo>
 				<exec executable="${scp.command}" failonerror="true">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
 					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
