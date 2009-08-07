@@ -368,6 +368,11 @@
 							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
 							<arg value="${deploy.sf.sshDmgRemoveCommand}" />
 						</exec>
+						<echo>Removing old W32-NSIS nightlies from SF</echo>
+						<exec executable="${ssh.command}" timeout="60000" failonerror="false">
+							<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server.ssh}" />
+							<arg value="${deploy.sf.sshNsisRemoveCommand}" />
+						</exec>
 						<!--
 						<exec executable="${sftp.command}" inputstring="rm ${deploy.sf.path}/*" failonerror="false">
 							<arg line="-b - ${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}"/>
@@ -380,6 +385,7 @@
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
 					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
 					<arg value="${export.dmg.imagedir}/HO_${hofullversion}.dmg.gz" />
+					<arg value="${export.nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
 					<arg value="${deploy.sf.username},${deploy.sf.project}@${deploy.sf.server}:${deploy.sf.path}" />
 				</exec>
 			</then>
@@ -447,8 +453,8 @@
 			<then>
 				<mkdir dir="${export.dmg.imagedir}" />
 				<!-- Set permissions to (u)mountDmg to u+x -->
-				<chmod file="${export.dmg.contribdir}/umountDmg" perm="u+x"/>
-				<chmod file="${export.dmg.contribdir}/mountDmg" perm="u+x"/>
+				<chmod file="${export.dmg.contribdir}/umountDmg" perm="u+x" />
+				<chmod file="${export.dmg.contribdir}/mountDmg" perm="u+x" />
 				<echo>Trying to unmount DMG, just to be sure</echo>
 				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
 					<arg value="${export.dmg.targetfile}" />
@@ -465,7 +471,7 @@
 					<fileset dir="${export.dmg.targetdir}" />
 				</copy>
 				<!-- Making JavaApplicationStub executable -->
-				<chmod file="${export.dmg.mountdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x"/>
+				<chmod file="${export.dmg.mountdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x" />
 				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
 					<arg value="${export.dmg.targetfile}" />
 					<arg value="${export.dmg.mountdir}" />
@@ -480,40 +486,58 @@
           target: makeNSIS
          ================================= -->
 	<target name="makeNSIS" depends="copy2build" description="Create Win32-Installer using NSIS">
-		<mkdir dir="${nsis.export.dir}" />
-		<property name="nsis.installerName" value="${nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
-		<property name="nsis.installerName.WithJRE" value="${nsis.export.dir}/HO_${hofullversion}_Win32_Installer_with_JRE-${nsis.JRE.Version}.exe" />
-
-		<property name="nsis.default.args" value="-V2 -NOCD -DBUILDDIR='${build.dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${nsis.confPath}'" />
-
-		<!-- Create Installer for HO only -->
-		<echo>Creating win32 installer at ${nsis.installerName} using NSIS...</echo>
-		<exec command="${nsis.command}">
-			<arg line="${nsis.default.args} -DOUTFILE='${nsis.installerName}' ${nsis.scriptName}" />
-		</exec>
-
-		<!-- Create ZIP files for esnips.com (executables are not allowed) -->
-		<zip destfile="${nsis.installerName}.zip">
-			<fileset file="${nsis.installerName}" />
-		</zip>
-
 		<if>
-			<available file="${nsis.JRE.DistPath}/${nsis.JRE.DistFile}" />
+			<!-- Only build NSIS Win32 installer packages when OS=Linux -->
+			<equals arg1="${os.name}" arg2="Linux" />
 			<then>
-				<!-- Create Installer for HO bundled with JRE -->
-				<echo>Creating win32 installer at ${nsis.installerName.WithJRE} with JRE ${nsis.JRE.Version} using NSIS...</echo>
-				<exec command="${nsis.command}">
-					<arg line="${nsis.default.args} -DOUTFILE='${nsis.installerName.WithJRE}' -DWITHJRE=${nsis.JRE.Version} -DJREPATH=${nsis.JRE.DistPath} -DJREFILE=${nsis.JRE.DistFile} ${nsis.scriptName}" />
-				</exec>
-				<zip destfile="${nsis.installerName.WithJRE}.zip">
-					<fileset file="${nsis.installerName.WithJRE}" />
-				</zip>
-			</then>
-			<else>
-				<echo>Not creating JRE bundled version because ${nsis.JRE.DistPath}/${nsis.JRE.DistFile} is not available...</echo>
-			</else>
-		</if>
+				<echo>export.nsis.command=${export.nsis.command}</echo>
+				<echo>export.nsis.confPath=${export.nsis.confPath}</echo>
+				<echo>export.nsis.directory=${export.nsis.directory}</echo>
+				<echo>export.nsis.export.dir=${export.nsis.export.dir}</echo>
+				<echo>export.nsis.pathPrefix=${export.nsis.pathPrefix}</echo>
+				<echo>export.nsis.scriptName=${export.nsis.scriptName}}</echo>
+				<echo>export.nsis.JRE.buildBundle=${export.nsis.JRE.buildBundle}</echo>
+				<echo>export.nsis.JRE.DistPath=${export.nsis.JRE.DistPath}}</echo>
+				<echo>export.nsis.JRE.Version=${export.nsis.JRE.Version}</echo>
+				<echo>export.nsis.JRE.DistFile=${export.nsis.JRE.DistFile}</echo>
+				<mkdir dir="${export.nsis.export.dir}" />
+				<property name="export.nsis.installerName" value="${export.nsis.export.dir}/HO_${hofullversion}_Win32_Installer.exe" />
+				<property name="export.nsis.installerName.WithJRE" value="${export.nsis.export.dir}/HO_${hofullversion}_Win32_Installer_with_JRE-${export.nsis.JRE.Version}.exe" />
 
+				<property name="export.nsis.default.args" value="-V2 -NOCD -DBUILDDIR='${export.nsis.pathPrefix}${build.dir}' -DHOVERSION='${hofullversion}' -DCONFPATH='${export.nsis.pathPrefix}${export.nsis.confPath}'" />
+
+				<!-- Create Installer for HO only -->
+				<echo>Creating win32 installer at ${export.nsis.installerName} using NSIS...</echo>
+				<exec command="${export.nsis.command}">
+					<arg line="${export.nsis.default.args} -DOUTFILE='${export.nsis.pathPrefix}${export.nsis.installerName}' ${export.nsis.pathPrefix}${export.nsis.scriptName}" />
+				</exec>
+
+				<!-- Create ZIP files for esnips.com (executables are not allowed) -->
+				<zip destfile="${export.nsis.installerName}.zip">
+					<fileset file="${export.nsis.installerName}" />
+				</zip>
+
+				<if>
+					<and>
+						<available file="${export.nsis.JRE.DistPath}/${export.nsis.JRE.DistFile}" />
+						<equals arg1="${export.nsis.JRE.buildBundle}" arg2="true" />
+					</and>
+					<then>
+						<!-- Create Installer for HO bundled with JRE -->
+						<echo>Creating win32 installer at ${export.nsis.installerName.WithJRE} with JRE ${export.nsis.JRE.Version} using NSIS...</echo>
+						<exec command="${export.nsis.command}">
+							<arg line="${export.nsis.default.args} -DOUTFILE='${export.nsis.pathPrefix}${export.nsis.installerName.WithJRE}' -DWITHJRE=${export.nsis.JRE.Version} -DJREPATH=${export.nsis.pathPrefix}${export.nsis.JRE.DistPath} -DJREFILE=${export.nsis.JRE.DistFile} ${export.nsis.pathPrefix}${export.nsis.scriptName}" />
+						</exec>
+						<zip destfile="${export.nsis.installerName.WithJRE}.zip">
+							<fileset file="${export.nsis.installerName.WithJRE}" />
+						</zip>
+					</then>
+					<else>
+						<echo>Not creating JRE bundled version because export.nsis.JRE.buildBundle=false or ${export.nsis.JRE.DistPath}/${export.nsis.JRE.DistFile} is not available...</echo>
+					</else>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<!-- =================================
