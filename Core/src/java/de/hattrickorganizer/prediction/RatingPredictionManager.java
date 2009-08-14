@@ -75,6 +75,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     private short trainerType;
     private ILineUp lineup;
     private int pullBackMinute;
+    private boolean pullBackOverride;
 
     public RatingPredictionManager () {
     	if (RatingPredictionManager.config == null)
@@ -248,8 +249,10 @@ public class RatingPredictionManager implements IRatingPredictionManager
    	       	retVal *= params.getParam(sectionName, "trainerNeutral", 1);
 
         // PullBack event
-        if (pullBackMinute >= 0 && pullBackMinute <= 90) {
-        	retVal *= 1.0 + (90-pullBackMinute)/90.0 * params.getParam(sectionName, "pullback", 0);
+        int actualPullBackMinute = (pullBackOverride ? 0 : pullBackMinute);
+        if (actualPullBackMinute >= 0 && actualPullBackMinute <= 90) {
+        	retVal *= 1.0 + (90 - actualPullBackMinute) / 90.0
+					* params.getParam(sectionName, "pullback", 0);
         }
         
         retVal *= params.getParam(sectionName, "multiplier", 1);
@@ -838,6 +841,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
             this.substimmung = (short)team.getSubStimmung();
             this.selbstvertrauen = (short)team.getSelbstvertrauenAsInt();
             this.pullBackMinute = lineup.getPullBackMinute();
+            this.pullBackOverride = lineup.isPullBackOverride();
             return;
         }
         catch(Exception e)
