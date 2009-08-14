@@ -446,6 +446,11 @@ public interface ILineUp {
 	 */
 	public void setPullBackMinute(int pullBackMinute);
 
+	/**
+	 * @return flag if the selected pull back minute should be overridden.
+	 */
+	public boolean isPullBackOverride();
+
     /////////////////////////////////////////////////////////////////////////////////    
     //    Aktions Funcs
     ///////////////////////////////////////////////////////////////////////////////// 

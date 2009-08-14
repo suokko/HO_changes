@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.util.Properties;
 import java.util.Vector;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -227,8 +228,12 @@ final class AufstellungsDetailPanel extends ImagePanel
             new CBItem("5", 5),
             new CBItem(HOVerwaltung.instance().getLanguageString("PullBack.WholeGame"), 0)
         };
-    
+
     private JComboBox m_jcbPullBackMinute = new JComboBox(PULLBACK_MINUTE);
+
+    private JCheckBox m_jchPullBackOverride = new JCheckBox(HOVerwaltung
+			.instance().getLanguageString("PullBack.Override"), false);
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -351,19 +356,20 @@ final class AufstellungsDetailPanel extends ImagePanel
             m_jpLoddarstat.setText(de.hattrickorganizer.tools.Helper.round(aufstellung
                                                                            .getLoddarStats(), 2)
                                    + "");
-            m_jpHatstat.setText(aufstellung.getHATStats() + "");            
+            m_jpHatstat.setText(aufstellung.getHATStats() + "");
 
             setStimmung(homodel.getTeam().getStimmungAsInt(),homodel.getTeam().getSubStimmung());
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
             setTrainerType(homodel.getTrainer().getTrainerTyp());
             setPredictionType(RatingPredictionConfig.getInstancePredictionType());
-           
+
             setTaktik(aufstellung.getTacticType());
             m_jpTaktikStaerke.setText(getTaktikString());
-            
+
             setEinstellung(aufstellung.getAttitude());
             setLocation(aufstellung.getHeimspiel());
-            setPullBackMinute(aufstellung.getPullBackMinute());
+			setPullBackMinute(aufstellung.getPullBackMinute());
+			setPullBackOverride(aufstellung.isPullBackOverride());
 
             float avXp = homodel.getAufstellung().getAverageExperience();
             m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(avXp));
@@ -483,17 +489,38 @@ final class AufstellungsDetailPanel extends ImagePanel
     public int getPullBackMinute() {
         return ((CBItem) m_jcbPullBackMinute.getSelectedItem()).getId();
     }
+
+    /**
+     * Sets the pullback override flag.
+     *
+     * @param pullBackOverride
+     */
+    private void setPullBackOverride(boolean pullBackOverride) {
+    	m_jchPullBackOverride.setSelected(pullBackOverride);
+	}
+
     /**
      * React on state changed events
      *
      * @param event the event
      */
     public void itemStateChanged(ItemEvent event) {
-        if (event.getStateChange() == ItemEvent.SELECTED) {
-        	if (event.getSource().equals(m_jcbPullBackMinute)) {
+
+    	if (event.getStateChange() == ItemEvent.DESELECTED) {
+    		if (event.getSource().equals(m_jchPullBackOverride)) {
+    				HOVerwaltung.instance().getModel().getAufstellung().setPullBackOverride(false);
+    				m_jcbPullBackMinute.setEnabled(true);
+    				refresh();
+    			}
+
+    	} else if (event.getStateChange() == ItemEvent.SELECTED) {
+        	if (event.getSource().equals(m_jchPullBackOverride)) {
+				HOVerwaltung.instance().getModel().getAufstellung().setPullBackOverride(true);
+				m_jcbPullBackMinute.setEnabled(false);
+			} else if (event.getSource().equals(m_jcbPullBackMinute)) {
                 // Pull Back minute changed
-                HOVerwaltung.instance().getModel().getAufstellung().
-                		setPullBackMinute(((CBItem) m_jcbPullBackMinute.getSelectedItem()).getId());
+				HOVerwaltung.instance().getModel().getAufstellung().
+						setPullBackMinute(((CBItem) m_jcbPullBackMinute.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbTaktik)) {
                 // Tactic changed
                 HOVerwaltung.instance().getModel().getAufstellung().
@@ -737,6 +764,16 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbPullBackMinute);
 
         yPos++;
+        initLabel(constraints, layout, new JLabel(""), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        m_jchPullBackOverride.setToolTipText(HOVerwaltung.instance()
+				.getLanguageString("PullBack.Override.ToolTip"));
+        m_jchPullBackOverride.setOpaque(false);
+		layout.setConstraints(m_jchPullBackOverride, constraints);
+		add(m_jchPullBackOverride);
+
+		yPos++;
         initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
@@ -835,6 +872,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         m_jcbTrainerType.addItemListener(this);
         m_jcbPredictionType.addItemListener(this);
         m_jcbPullBackMinute.addItemListener(this);
+        m_jchPullBackOverride.addItemListener(this);
     }
 
     /**
@@ -850,6 +888,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         m_jcbTrainerType.removeItemListener(this);
         m_jcbPredictionType.removeItemListener(this);
         m_jcbPullBackMinute.removeItemListener(this);
+        m_jchPullBackOverride.removeItemListener(this);
     }
 
     private CBItem[] getPredictionItems () {

@@ -67,6 +67,8 @@ public  class Aufstellung implements plugins.ILineUp {
     /** Home/Away/AwayDerby */
     private short m_sLocation = -1;
 
+	private boolean pullBackOverride;
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -1343,6 +1345,7 @@ public  class Aufstellung implements plugins.ILineUp {
             clone = new Aufstellung(properties);
             clone.setHeimspiel(getHeimspiel());
             clone.setPullBackMinute(getPullBackMinute());
+            clone.setPullBackOverride(isPullBackOverride());
         } catch (Exception e) {
             HOLogger.instance().error(getClass(),"Aufstellung.duplicate: " + e);
         }
@@ -1791,8 +1794,20 @@ public  class Aufstellung implements plugins.ILineUp {
 		this.pullBackMinute = pullBackMinute;
 	}
 
-    
-    
+	/**
+	 * @return if the pull back should be overridden.
+	 */
+	public boolean isPullBackOverride() {
+		return pullBackOverride;
+	}
+	
+	/**
+	 * @param pullBackOverride the override flag to set.
+	 */
+	public void setPullBackOverride(boolean pullBackOverride) {
+		this.pullBackOverride = pullBackOverride;
+	}
+
     /**
      * Debug logging.
      */
