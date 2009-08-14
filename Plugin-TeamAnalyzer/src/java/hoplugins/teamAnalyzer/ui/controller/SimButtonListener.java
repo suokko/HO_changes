@@ -144,6 +144,10 @@ public class SimButtonListener implements ActionListener {
             case IMatchDetails.TAKTIK_WINGS:
                 tacticLevel = Commons.getModel().getLineUP().getTacticLevelAimAow();
                 break;
+
+            case IMatchDetails.TAKTIK_LONGSHOTS:
+                tacticLevel = Commons.getModel().getLineUP().getTacticLevelLongShots();
+                break;
         }
 
         return (int)tacticLevel;
