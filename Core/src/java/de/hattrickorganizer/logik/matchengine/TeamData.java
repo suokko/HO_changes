@@ -35,7 +35,8 @@ public class TeamData implements plugins.IMPTeamData {
     public TeamData(String name, TeamRatings _ratings, int _tactic, int _level) {
         actions = new ArrayList<IMPActions>();
         ratings = _ratings;
-        tacticLevel = _level;
+        // Re-Scale to HT ratings (...,solid=6,...,divine=19)
+        tacticLevel = _level - 1;
         tacticType = _tactic;
         teamName = name;
     }
