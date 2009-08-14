@@ -126,7 +126,7 @@ public class SimButtonListener implements ActionListener {
      * @return the actual tactic level as shown in HO LIneup tab
      */
     private int getTacticLevel() {
-        double tacticLevel = 0d;
+        double tacticLevel = 1d;
 
         switch (Commons.getModel().getLineUP().getTacticType()) {
             case IMatchDetails.TAKTIK_KONTER:
@@ -149,8 +149,9 @@ public class SimButtonListener implements ActionListener {
                 tacticLevel = Commons.getModel().getLineUP().getTacticLevelLongShots();
                 break;
         }
-
-        return (int)tacticLevel;
+        // Re-Scale to HT ratings (...,solid=6,...,divine=19)
+        tacticLevel -= 1;
+        return (int)Math.max(tacticLevel, 0);
     }
 
     /**
