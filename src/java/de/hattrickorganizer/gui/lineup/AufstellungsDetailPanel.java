@@ -369,6 +369,7 @@ final class AufstellungsDetailPanel extends ImagePanel
             setEinstellung(aufstellung.getAttitude());
             setLocation(aufstellung.getHeimspiel());
 			setPullBackMinute(aufstellung.getPullBackMinute());
+			m_jcbPullBackMinute.setEnabled(!aufstellung.isPullBackOverride());
 			setPullBackOverride(aufstellung.isPullBackOverride());
 
             float avXp = homodel.getAufstellung().getAverageExperience();
