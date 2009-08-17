@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
@@ -57,6 +58,7 @@ import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
+import de.hattrickorganizer.gui.utils.FullScreen;
 import de.hattrickorganizer.gui.utils.HOTheme;
 import de.hattrickorganizer.gui.utils.InterruptionWindow;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
@@ -194,6 +196,8 @@ public final class HOMainFrame extends JFrame
 		new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
 //	private final JMenuItem m_jmIPAdresse =
 //		new JMenuItem(HOVerwaltung.instance().getLanguageString("IP"));
+	private final JMenuItem m_jmFullScreenItem =
+		new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
 
 	//private JMenuItem               m_jmFixturesItem        =   new JMenuItem( model.HOVerwaltung.instance().getLanguageString("FixturesDownload") );
 	private final JMenuItem m_jmImportItem =
@@ -536,8 +540,14 @@ public final class HOMainFrame extends JFrame
 				//tools.Helper.showMessage ( this, model.HOVerwaltung.instance().getLanguageString( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
+		else if (source.equals(m_jmFullScreenItem)) {
+			// Toggle fullscreen
+			FullScreen.instance().toggle(this);
+		}
 		//Beenden
 		else if (source.equals(m_jmBeendenItem)) {
+			// Restore normal window mode (i.e. leave fullscreen)
+			FullScreen.instance().restoreNormalMode(this);
 			//CloseEvent feuern, damit alle Listener (Plugins) informiert werden
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}
@@ -1073,6 +1083,13 @@ public final class HOMainFrame extends JFrame
 		//Optionen
 		m_jmOptionen.addActionListener(this);
 		m_jmDatei.add(m_jmOptionen);
+
+		m_jmDatei.addSeparator();
+
+		// Toggle fullscreen
+		m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, KeyEvent.SHIFT_DOWN_MASK));
+		m_jmFullScreenItem.addActionListener(this);
+		m_jmDatei.add(m_jmFullScreenItem);
 
 		m_jmDatei.addSeparator();
 
