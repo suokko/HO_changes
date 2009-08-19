@@ -543,12 +543,12 @@ public final class HOMainFrame extends JFrame
 			}
 		}
 		else if (source.equals(m_jmFullScreenItem)) {
-			// Toggle fullscreen
+			// Toggle full screen mode
 			FullScreen.instance().toggle(this);
 		}
 		//Beenden
 		else if (source.equals(m_jmBeendenItem)) {
-			// Restore normal window mode (i.e. leave fullscreen)
+			// Restore normal window mode (i.e. leave full screen)
 			FullScreen.instance().restoreNormalMode(this);
 			//CloseEvent feuern, damit alle Listener (Plugins) informiert werden
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -1089,8 +1089,12 @@ public final class HOMainFrame extends JFrame
 
 		m_jmDatei.addSeparator();
 
-		// Toggle fullscreen
-		m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, KeyEvent.SHIFT_DOWN_MASK));
+		// Toggle full screen mode
+		if (FullScreen.instance().isFullScreenSupported(this)) {
+			m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, KeyEvent.SHIFT_DOWN_MASK));
+		} else {
+			m_jmFullScreenItem.setEnabled(false);
+		}
 		m_jmFullScreenItem.addActionListener(this);
 		m_jmDatei.add(m_jmFullScreenItem);
 
