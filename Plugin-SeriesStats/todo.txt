@@ -1,0 +1,2 @@
+- sort teams in ComboBox
+- print function
