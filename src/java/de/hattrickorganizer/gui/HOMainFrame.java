@@ -274,6 +274,8 @@ public final class HOMainFrame extends JFrame
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
+	private boolean isAppTerminated = false; ///< set when HO should be terminated
+
 	//~ Constructors -------------------------------------------------------------------------------
 
 	/**
@@ -859,6 +861,7 @@ public final class HOMainFrame extends JFrame
 
 		HOLogger.instance().debug(getClass(), "Shutdown complete!");
 		//Dispose führt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
+		isAppTerminated = true; // enable System.exit in windowClosed()
 		try {
 			dispose();
 		} catch (Exception e) {
@@ -1560,13 +1563,18 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param windowEvent TODO Missing Method Parameter Documentation
+	 * Finally shutting down the application when the main window is closed.
+	 * This is initiated through the call to dispose(). 
+	 * System.exit is called only in the case when @see beenden() is called 
+	 * in advance. This event is called when switching into full screen 
+	 * mode, too. 
+	 * 
+	 * @param windowEvent is ignored
 	 */
 	public void windowClosed(WindowEvent windowEvent) {
-		//Wird von dem dispose im beenden aufgerufen, wenn alle windowClosing durch sind
-		System.exit(0);
+		if (isAppTerminated) {
+			System.exit(0);
+		}
 	}
 
 	//----------------Listener--------------------------------------
