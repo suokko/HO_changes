@@ -56,6 +56,7 @@ public class FullScreen
 
 	/**
 	 * Initialize the internally used data.
+	 * @param frame the frame that is manipulated and displayed in normal windowed or full screen mode
 	 */
 	public void init(JFrame frame) {
 		if (!isInitialized) {
@@ -86,15 +87,24 @@ public class FullScreen
 	        // see http://bugs.sun.com/view_bug.do?bug_id=6636469 for details
 	        isFullScreenSupported = device.isFullScreenSupported();
 			HOLogger.instance().debug(getClass(), "FullScreen: dev "+device.getIDstring()+", isFullScreenSupported="+device.isFullScreenSupported());
-			if (!isFullScreenSupported) {
-				HOLogger.instance().debug(getClass(), "FullScreen: Forcing fake-fullscreen");
-		        isFullScreenSupported = true;
-			}
+//			if (!isFullScreenSupported) {
+//				HOLogger.instance().debug(getClass(), "FullScreen: Forcing fake-fullscreen");
+//		        isFullScreenSupported = true;
+//			}
 			if (isFullScreenSupported) {
 				startBlockingThread();
 			}
 			isInitialized = true;
 		}
+	}
+	
+	/**
+	 * Returns true if full screen mode is possible.
+	 * @param frame the frame that is manipulated and displayed in normal windowed or full screen mode
+	 */
+	public boolean isFullScreenSupported(JFrame frame) {
+		init(frame);
+		return isFullScreenSupported;
 	}
 
 	/**
