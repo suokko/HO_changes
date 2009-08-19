@@ -32,6 +32,9 @@ public class FullScreen
     private boolean isFullScreen; ///< is set to true when full screen mode is enabled
     private GraphicsDevice device; ///< physical device used for the full screen mode
 	private Dimension deviceDimension; ///< size of the physical device used for the full screen mode
+	
+	private Thread threadToAvoidJvmTermination; ///< non daemon thread to avoid unwanted JVM termination
+	private boolean isThreadRunning; ///< set/reset when threadToAvoidJvmTermination is started or stopped
 
 	private static FullScreen m_clFullScreen = null; ///< instance of the singleton
 
@@ -45,6 +48,9 @@ public class FullScreen
 
     	device = null;
     	deviceDimension = null;
+    	
+    	threadToAvoidJvmTermination = null;
+    	isThreadRunning = false;
     }
 
 
@@ -84,6 +90,9 @@ public class FullScreen
 				HOLogger.instance().debug(getClass(), "FullScreen: Forcing fake-fullscreen");
 		        isFullScreenSupported = true;
 			}
+			if (isFullScreenSupported) {
+				startBlockingThread();
+			}
 			isInitialized = true;
 		}
 	}
@@ -113,7 +122,7 @@ public class FullScreen
 	}
 
 	/**
-	 * Restore normal mode - useful to call on exit.
+	 * Restore normal mode and stops the non daemon thread. Should be called on exit.
 	 * @param frame the frame that is manipulated and displayed in normal windowed mode
 	 */
 	public void restoreNormalMode(JFrame frame) {
@@ -122,6 +131,7 @@ public class FullScreen
 			return; // nothing to do
 		}
         setupNormalMode(frame);
+		stopBlockingThread();
 	}
 
 
@@ -185,6 +195,47 @@ public class FullScreen
 		isFullScreen = true;
 	}
 
+
+	/**
+	 * To avoid an unexpected termination of the JVM a non daemon thread is started.
+	 * @see http://java.sun.com/javase/6/docs/api/java/awt/doc-files/AWTThreadIssues.html#Autoshutdown
+	 */
+	void startBlockingThread() {
+		if (isThreadRunning) {
+			return;
+		}
+		Runnable r = new Runnable() {
+	        public void run() {
+	            Object o = new Object();
+	            try {
+	                synchronized (o) {
+	                    o.wait();
+	                }
+	            } catch (InterruptedException ie) {
+					HOLogger.instance().debug(getClass(), "FullScreen: Blocking thread terminated (interrupted).");
+	            }
+				HOLogger.instance().debug(getClass(), "FullScreen: Blocking thread finished.");
+	        }
+	    };
+	    threadToAvoidJvmTermination = new Thread(r);
+	    threadToAvoidJvmTermination.setDaemon(false);
+	    threadToAvoidJvmTermination.setName("Avoid JVM Termination");
+	    threadToAvoidJvmTermination.start();
+	    isThreadRunning = true;
+		HOLogger.instance().debug(getClass(), "FullScreen: Blocking thread started.");
+	}
+	/**
+	 * stops the non daemon thread to avoid the unwanted JVM termination.
+	 */
+	void stopBlockingThread() {
+		if (!isThreadRunning) {
+			return;
+		}
+		threadToAvoidJvmTermination.interrupt();
+		threadToAvoidJvmTermination = null;
+	    isThreadRunning = false;
+	}
+	
     /**
 	 * Singleton.
  	 * @return single instance of this class
