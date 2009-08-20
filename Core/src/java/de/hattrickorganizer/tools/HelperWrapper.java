@@ -577,7 +577,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @param src TODO Missing Method Parameter Documentation
      * @param dest TODO Missing Method Parameter Documentation
      */
-    public void copyArray2Vector(Object[] src, Vector dest) {
+    public <T> void copyArray2Vector(T[] src, Vector<T> dest) {
         MyHelper.copyArray2Vector(src, dest);
     }
 
@@ -587,7 +587,7 @@ public class HelperWrapper implements plugins.IHelper {
      * @param src TODO Missing Method Parameter Documentation
      * @param dest TODO Missing Method Parameter Documentation
      */
-    public void copyVector2Array(Vector src, Object[] dest) {
+    public <T> void copyVector2Array(Vector<T> src, T[] dest) {
         MyHelper.copyVector2Array(src, dest);
     }
 
