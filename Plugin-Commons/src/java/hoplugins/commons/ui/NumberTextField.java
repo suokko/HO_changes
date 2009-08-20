@@ -134,15 +134,15 @@ public class NumberTextField extends JTextField {
 		 * 
 		 */
 		private static final long serialVersionUID = 5081324121361165478L;
-		private short decimal;
+		//private short decimal;
 
         /**
          * Creates a new DecimalFieldDocument object.
          *
-         * @param length lenght of numbetr
+         * @param length length of number
          */
         public DecimalFieldDocument(short length) {
-            decimal = length;
+            //decimal = length;
         }
 
         /**
