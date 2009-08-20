@@ -17,6 +17,7 @@ public class TeamLineup implements ITeamLineup {
 
     /** List of players divided by area */
     private List<String>[] players = new List[4];
+	//private ArrayList<String>[] players; TODO enable this line because it is more accurate with respect to the constructor
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ public class TeamLineup implements ITeamLineup {
      * Creates a new Lineup object.
      */
     public TeamLineup() {
+    	//players = new ArrayList[4]; TODO why is the following performed!? the static array is already initialized above!? But with wrong type
         for (int i = 0; i < 4; i++) {
             players[i] = new ArrayList<String>();
         }
