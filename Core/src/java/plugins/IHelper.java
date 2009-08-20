@@ -343,7 +343,7 @@ public interface IHelper {
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
      */
-    public void copyArray2Vector(Object[] src, Vector<Object> dest);
+    public <T> void copyArray2Vector(T[] src, Vector<T> dest);
 
     /**
      * Copy the values for a vector to an array
@@ -351,7 +351,7 @@ public interface IHelper {
      * @param src TODO Missing Constructuor Parameter Documentation
      * @param dest TODO Missing Constructuor Parameter Documentation
      */
-    public void copyVector2Array(Vector<Object> src, Object[] dest);
+    public <T> void copyVector2Array(Vector<T> src, T[] dest);
 
     /**
      * Puts the vectorelements in a ComboBoxModel
