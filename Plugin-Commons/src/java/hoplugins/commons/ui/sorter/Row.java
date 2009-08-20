@@ -42,6 +42,7 @@ class Row implements Comparable<Row> {
      *
      * @return
      */
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     public int compareTo(Row o) {
         int row1 = modelIndex;
         int row2 = o.modelIndex;
