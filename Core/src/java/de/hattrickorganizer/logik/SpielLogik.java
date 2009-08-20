@@ -734,16 +734,21 @@ public class SpielLogik {
                             if ((torart == TA_HANDELFMETER) || (torart == TA_FOULELFMETER)) {
                                 if (ElfmeterBerechnen()) {
                                     spielbericht.ToreHeim((byte) (spielbericht.ToreHeim() + 1));
-                                    schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
-                                } else {
-                                    schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen()
-                                                              + 1));
+                                    if (schuetze != null) {
+                                    	schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
+                                    }
+                                 } else {
+                               	    if (schuetze != null) { 
+	                                    schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen()
+	                                                              + 1));
+                               	    }	                                    
                                     torchanceheim = ANGRIFF_TORWART_HAELT;
                                 }
                             } else {
                                 spielbericht.ToreHeim((byte) (spielbericht.ToreHeim() + 1));
-                                schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
-
+                                if (schuetze != null) {
+                                	schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
+                                }
                                 if ((vorbereiter != null) && (torart != TA_EIGENTOR)) {
                                     vorbereiter.setAnzVorlagen((byte) (vorbereiter.getAnzVorlagen()
                                                                + 1));
@@ -756,7 +761,9 @@ public class SpielLogik {
                                 }
                             }
                         } else {
-                            schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
+                        	if (schuetze != null) {
+                        		schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
+                        	}
                         }
 
                         //Torchance anzeigen
@@ -824,16 +831,21 @@ public class SpielLogik {
                             if ((torart == TA_HANDELFMETER) || (torart == TA_FOULELFMETER)) {
                                 if (ElfmeterBerechnen()) {
                                     spielbericht.ToreGast((byte) (spielbericht.ToreGast() + 1));
-                                    schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
+                                    if (schuetze != null) {
+                                    	schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
+                                    }
                                 } else {
-                                    schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen()
+                                	if (schuetze != null) {
+                                		schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen()
                                                               + 1));
+                                	}
                                     torchancegast = ANGRIFF_TORWART_HAELT;
                                 }
                             } else {
                                 spielbericht.ToreGast((byte) (spielbericht.ToreGast() + 1));
-                                schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
-
+                                if (schuetze != null) {
+                                	schuetze.setAnzTore((byte) (schuetze.getAnzTore() + 1));
+                                }
                                 if ((vorbereiter != null) && (torart != TA_EIGENTOR)) {
                                     vorbereiter.setAnzVorlagen((byte) (vorbereiter.getAnzVorlagen()
                                                                + 1));
@@ -846,7 +858,9 @@ public class SpielLogik {
                                 }
                             }
                         } else {
-                            schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
+                        	if (schuetze != null) {
+                        		schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
+                        	}
                         }
 
                         //Torchance anzeigen
@@ -854,7 +868,7 @@ public class SpielLogik {
                                       torwart, torart, torchancegast, minute);
                     }
                 } catch (Exception e) {
-                    System.err.println("schuezte = null ?");
+                    System.err.println("schuetze = null ?");
                     System.err.println(e.toString());
                 }
 
