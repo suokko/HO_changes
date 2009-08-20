@@ -24,7 +24,7 @@ import java.util.Map;
  * the sorter (like getValueAt(row, col)) they are passed to the underlying model after the row
  * numbers have been translated via the internal mapping array. This way, the TableSorter appears
  * to hold another copy of the table with the rows in a different order.  TableSorter registers
- * itself as a listener to the underlying model, just as the JTable itself would. Events recieved
+ * itself as a listener to the underlying model, just as the JTable itself would. Events received
  * from the model are examined, sometimes manipulated (typically widened), and then passed on to
  * the TableSorter's listeners (typically the JTable). If a change to the model has invalidated
  * the order of TableSorter's rows, a note of this is made and the sorter will resort the rows the
@@ -69,7 +69,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
 
     /**  */
     /** TODO Missing Parameter Documentation */
-    public static final Comparator COMPARABLE_COMAPRATOR = new Comparator() {
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
+    public static final Comparator COMPARABLE_COMPARATOR = new Comparator() {
             public int compare(Object o1, Object o2) {
                 return ((Comparable) o1).compareTo(o2);
             }
@@ -77,6 +78,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
 
     /**  */
     /** TODO Missing Parameter Documentation */
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
             public int compare(Object o1, Object o2) {
                 return o1.toString().compareTo(o2.toString());
@@ -87,7 +89,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
     /** TODO Missing Parameter Documentation */
     protected TableModel tableModel;
     private JTableHeader tableHeader;
-    private List<Directive> sortingColumns = new ArrayList<Directive>();
+    private List<Directive> sortingColumns = new ArrayList<Directive>();        
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     private Map<Class<?>,Comparator> columnComparators = new HashMap<Class<?>,Comparator>();
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
@@ -155,6 +158,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      * @param type
      * @param comparator
      */
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     public void setColumnComparator(Class<?> type, Comparator comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
@@ -192,7 +196,8 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      *
      * @return
      */
-    public abstract Comparator getCustomComparator(int column);
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
+	public abstract Comparator getCustomComparator(int column);
 
     // TableModel interface methods 
     public int getRowCount() {
@@ -369,6 +374,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      *
      * @return
      */
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     protected Comparator getComparator(int column) {
         Comparator comparator = getCustomComparator(column);
 
@@ -378,14 +384,14 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
 
         Class<?> columnType = tableModel.getColumnClass(column);
 
-        comparator = (Comparator) columnComparators.get(columnType);
+        comparator = columnComparators.get(columnType);
 
         if (comparator != null) {
             return comparator;
         }
 
         if (Comparable.class.isAssignableFrom(columnType)) {
-            return COMPARABLE_COMAPRATOR;
+            return COMPARABLE_COMPARATOR;
         }
 
         return LEXICAL_COMPARATOR;
@@ -454,7 +460,7 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
      */
     private Directive getDirective(int column) {
         for (int i = 0; i < sortingColumns.size(); i++) {
-            Directive directive = (Directive) sortingColumns.get(i);
+            Directive directive = sortingColumns.get(i);
 
             if (directive.getColumn() == column) {
                 return directive;
