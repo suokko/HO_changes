@@ -52,7 +52,7 @@ public class HistoryPane extends JPanel {
         sorter.setSortingStatus(1, -1);
 
 
-        sorter.setColumnComparator(HTWeek.class, AbstractTableSorter.COMPARABLE_COMAPRATOR);
+        sorter.setColumnComparator(HTWeek.class, AbstractTableSorter.COMPARABLE_COMPARATOR);
         setLayout(new BorderLayout());
         add(new JScrollPane(historyTable), "Center");
         refresh();

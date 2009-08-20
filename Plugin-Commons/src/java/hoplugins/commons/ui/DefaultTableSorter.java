@@ -57,6 +57,7 @@ public class DefaultTableSorter extends AbstractTableSorter {
      *
      * @return
      */
+    @SuppressWarnings("unchecked")
     @Override
 	public Comparator getCustomComparator(int column) {
         return null;

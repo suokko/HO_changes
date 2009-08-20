@@ -99,7 +99,8 @@ public class TableSorter extends AbstractTableModel {
     private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
 
     /** TODO Missing Parameter Documentation */
-    public static final Comparator<Object> COMPARABLE_COMAPRATOR = new Comparator<Object>() {
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
+    public static final Comparator<Object> COMPARABLE_COMPARATOR = new Comparator<Object>() {
         public int compare(Object o1, Object o2) {
             return ((Comparable<Object>) o1).compareTo(o2);
         }
@@ -119,6 +120,7 @@ public class TableSorter extends AbstractTableModel {
     protected TableModel tableModel;
     private JTableHeader tableHeader;
     private List<Directive> sortingColumns = new ArrayList<Directive>();
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     private Map<Class<?>, Comparator> columnComparators = new HashMap<Class<?>, Comparator>();
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
@@ -190,6 +192,7 @@ public class TableSorter extends AbstractTableModel {
      * @param type TODO Missing Method Parameter Documentation
      * @param comparator TODO Missing Method Parameter Documentation
      */
+    @SuppressWarnings("unchecked") // the columns may have different types of Comparators
     public void setColumnComparator(Class<?> type, Comparator comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
@@ -387,7 +390,7 @@ public class TableSorter extends AbstractTableModel {
         }
 
         if (Comparable.class.isAssignableFrom(columnType)) {
-            return COMPARABLE_COMAPRATOR;
+            return COMPARABLE_COMPARATOR;
         }
 
         return LEXICAL_COMPARATOR;
