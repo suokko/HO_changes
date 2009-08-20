@@ -811,8 +811,13 @@ public  class Aufstellung implements plugins.ILineUp {
                     }
                 }
 
-                m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
+                if (null != match) {
+                	m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
                                                                  .getTeamId()) ? (short) 1 : (short) 0;
+                } else {
+                	HOLogger.instance().error(getClass(), "getHeimspiel: no match found (match == null).");
+                	m_sLocation = 0;                	
+                }                
             } catch (Exception e) {
             	HOLogger.instance().error(getClass(),"getHeimspiel: " + e);
             	m_sLocation = 0;
