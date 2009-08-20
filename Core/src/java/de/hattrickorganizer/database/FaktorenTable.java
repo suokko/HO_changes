@@ -84,11 +84,11 @@ public final class FaktorenTable extends AbstractTable {
 	
 					}
 				}
+				rs.close();
 			} else {
 				//hardcodierte werte nehmen
 				FormulaFactors.instance().importDefaults();
 			}
-			rs.close();
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getFaktoren: " + e);
 
