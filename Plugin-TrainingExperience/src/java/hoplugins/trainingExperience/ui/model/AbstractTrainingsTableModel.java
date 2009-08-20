@@ -3,7 +3,7 @@ package hoplugins.trainingExperience.ui.model;
 
 import hoplugins.commons.utils.PluginProperty;
 
-import plugins.IFutureTrainingWeek;
+//import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
 
 import java.util.Vector;
@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
 /**
  * Bast training table model
  */
-public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
+public abstract class AbstractTrainingsTableModel<TypeOfTrainingWeek> extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
@@ -29,7 +29,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     protected Vector<Object[]> p_V_data;
 
     /** Vector of ITrainingPerWeek object */
-    protected Vector p_V_trainingsVector;
+    protected Vector<TypeOfTrainingWeek> p_V_trainingsVector;
     private String[] columnNames;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      */
     public AbstractTrainingsTableModel(IHOMiniModel miniModel) {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector<IFutureTrainingWeek>();
+        p_V_trainingsVector = new Vector<TypeOfTrainingWeek>();
         p_IHMM_miniModel = miniModel;
         columnNames = new String[5];
         columnNames[0] = PluginProperty.getString("Week"); //$NON-NLS-1$
@@ -113,7 +113,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return actual training vector
      */
-    public Vector getTrainingsData() {
+    public Vector<TypeOfTrainingWeek> getTrainingsData() {
         return p_V_trainingsVector;
     }
 

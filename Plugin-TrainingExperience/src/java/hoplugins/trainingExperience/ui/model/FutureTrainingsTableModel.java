@@ -17,7 +17,7 @@ import java.util.Vector;
 /**
  * Customized table model for future trainings
  */
-public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
+public class FutureTrainingsTableModel extends AbstractTrainingsTableModel<IFutureTrainingWeek> {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -83,7 +83,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
     @Override
 	public void populate() {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector();
+        p_V_trainingsVector = new Vector<IFutureTrainingWeek>();
 
         Object[] aobj;
 

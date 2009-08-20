@@ -15,7 +15,7 @@ import java.util.Vector;
 /**
  * Customized table model for past trainings
  */
-public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
+public class PastTrainingsTableModel extends AbstractTrainingsTableModel<ITrainingWeek> {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
