@@ -155,8 +155,8 @@ public class PlayerPanel extends JPanel {
         tacticPanel.setVisible(SystemManager.getConfig().isTacticDetail());
         mainPanel.setPreferredSize(getDefaultSize());
 
-        if (lineup != null) {
-            switch (lineup.getStatus()) {
+        if (spotLineup != null) {
+            switch (spotLineup.getStatus()) {
                 case PlayerDataManager.INJURED:
                     nameField.setForeground(Color.RED);
                     break;
@@ -174,12 +174,12 @@ public class PlayerPanel extends JPanel {
                     break;
             }
 
-            nameField.setText(NameUtil.getPlayerDesc(lineup.getName()));
+            nameField.setText(NameUtil.getPlayerDesc(spotLineup.getName()));
 
-            appearanceField.setText("" + lineup.getAppearance());
+            appearanceField.setText("" + spotLineup.getAppearance());
 
             if (SystemManager.getConfig().isShowPlayerInfo()) {
-                PlayerInfo pi = PlayerDataManager.getPlayerInfo(lineup.getPlayerId(), week, season);
+                PlayerInfo pi = PlayerDataManager.getPlayerInfo(spotLineup.getPlayerId(), week, season);
 
                 if (pi.getAge() != 0) {
                     infoPanel.setValue(pi);
@@ -190,23 +190,23 @@ public class PlayerPanel extends JPanel {
                 infoPanel.setVisible(true);
             }
 
-            int posCode = Commons.getModel().getHelper().getPosition(lineup.getPosition());
+            int posCode = Commons.getModel().getHelper().getPosition(spotLineup.getPosition());
 
             positionImage.setIcon(Commons.getModel().getHelper().getImage4Position(posCode, (byte) 0));
 
-            int specialEvent = PlayerDataManager.getLatestPlayerInfo(lineup.getPlayerId())
+            int specialEvent = PlayerDataManager.getLatestPlayerInfo(spotLineup.getPlayerId())
                                                 .getSpecialEvent();
 
-            if (lineup.getPlayerId() == 0) {
+            if (spotLineup.getPlayerId() == 0) {
                 specialEventImage.setIcon(null);
             } else {
                 specialEventImage.setIcon(Commons.getModel().getHelper().getImageIcon4Spezialitaet(specialEvent));
             }
 
-            positionField.setText(Commons.getModel().getHelper().getNameForPosition((byte) lineup
+            positionField.setText(Commons.getModel().getHelper().getNameForPosition((byte) spotLineup
                                                                                     .getPosition()));
-            updateRatingPanel(lineup.getRating());
-            tacticPanel.reload(lineup.getTactics());
+            updateRatingPanel(spotLineup.getRating());
+            tacticPanel.reload(spotLineup.getTactics());
         } else {
             nameField.setText(" ");
             appearanceField.setText(" ");
