@@ -349,32 +349,33 @@ public class PlayerConverter {
             } else {
                 error = 2;
             }
-            
-          //-- check for line wage / season (since FoxTrick 0.4.8.2)
-            String wage = "";
-            p = 0;
-            tmp = lines.get(found_at_line+2).toString();
-            //extract spaces
-            tmp = tmp.replace(" ","");
-            //get first number
-            while (p < tmp.length()) {
-            	if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
-            		break;
-            	}
-            	p++;
-            }
-            //stop after first non-number
-            while (p < tmp.length()) {
-            	if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
-            		wage += tmp.charAt(p);
-            	} else break;
-            	p++;
-            }
-            if (!wage.equals("") && Integer.parseInt(wage) >= 500) {
-            	found_at_line++;
-            }
 
-            //-- check bookings
+            // -- check for line wage / season (since FoxTrick 0.4.8.2)
+			String wage = "";
+			p = 0;
+			tmp = lines.get(found_at_line + 2).toString();
+			// extract spaces
+			tmp = tmp.replace(" ", "");
+			// get first number
+			while (p < tmp.length()) {
+				if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+					break;
+				}
+				p++;
+			}
+			// stop after first non-number
+			while (p < tmp.length()) {
+				if ((tmp.charAt(p) >= '0') && (tmp.charAt(p) <= '9')) {
+					wage += tmp.charAt(p);
+				} else break;
+				p++;
+			}
+            if (!wage.equals("") && Integer.parseInt(wage) >= 500) {
+				found_at_line++;
+			}
+			//player.setBaseWage(i);
+
+            // -- check bookings
             tmp = lines.get(found_at_line+2).toString();
             try {
             	if (tmp.indexOf(":") > -1 && tmp.indexOf("0") == -1) {
@@ -504,20 +505,22 @@ public class PlayerConverter {
                 mytext = mytext.substring(p);
             }
 
-            char[] cs = new char[teamname.length()];
+            //-- special handling for teams with the * sign in their names - it would lead to an exception in replaceAll()
+            if (teamname.indexOf('*') > -1) {
+            	teamname = teamname.replaceAll("\\*", ".");
+            	mytext = mytext.replaceAll("\\*", ".");
+            }
 
+            char[] cs = new char[teamname.length()];
             for (int cl = 0; cl < cs.length; cl++) {
                 cs[cl] = '*';
             }
-
             mytext = mytext.replaceAll(teamname, new String(cs)).toLowerCase();
 
             cs = new char[name.length()];
-
             for (int cl = 0; cl < cs.length; cl++) {
                 cs[cl] = '*';
             }
-
             mytext = mytext.replaceAll(name.toLowerCase(), new String(cs)).toLowerCase();
 
             // We can search all the skills in text now
@@ -617,7 +620,15 @@ public class PlayerConverter {
             }
 
             if ((foundspecialities.size() > 1) && (error == 0)) {
-                error = 1;
+            	error = 1;
+            	try {
+            		if (foundspecialities.size() == 2 && (Integer)(foundspecialities.get(1).get(0)) > 1500) {
+            			// no error, but caused by Foxtricks quick-links (QUICK links <-> QUICK player special)
+            			error = 0;
+            		}
+            	} catch (Exception e) {
+            		// nothing todo here
+            	}
             }
 
             // Sort specialities by location

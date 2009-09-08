@@ -37,6 +37,7 @@ import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -211,8 +212,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
             de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
             de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
-        } 
-    	
+        }
+
 		else if (actionEvent.getSource().equals(jbRemoveAll)) {
 			clOwner.removeScoutEntries();
 		}
@@ -545,7 +546,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             jbEntfernen.setEnabled(false);
         }
     }
-    
+
     /* Not used anymore
     private void copyFromClipBoard() {
     	try {
@@ -633,6 +634,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 setLabels();
             }
         } catch (Exception e) {
+        	HOLogger.instance().debug(getClass(), e);
             message = HOVerwaltung.instance().getLanguageString("scout_error");
         }
 
