@@ -32,6 +32,7 @@ import plugins.IXtraData;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.FutureTrainingManager;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
+import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -264,13 +265,13 @@ public class HOMiniModel implements IHOMiniModel {
         return de.hattrickorganizer.database.DBZugriff.instance().getMatchesKurzInfo(teamId,
                                                                                      matchtyp, asc);
     }
-    
+
     /**
      * Returns the String connected to the active language file or connected
-     * to the english language file. Returns !key! if the key can not be found. 
-     *  
+     * to the english language file. Returns !key! if the key can not be found.
+     *
      * @param key Key to be searched in language files
-     * 
+     *
      * @return String connected to the key or !key! if nothing can be found in language files
      */
     public String getLanguageString(String key) {
@@ -279,13 +280,13 @@ public class HOMiniModel implements IHOMiniModel {
 
     /**
      * Getter for property m_clResource.
-     * 
+     *
      * !!!PLEASE USE getLanguageString from now on!!!
      *
      * @return Value of property m_clResource. usage
      *         minimodel.getLanguageString("Download") to get Name for download in current
      *         language
-     *         
+     *
      * @deprecated use getLanguageString()
      */
     @Deprecated
@@ -518,4 +519,26 @@ public class HOMiniModel implements IHOMiniModel {
 		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies, strict);
 	}
 
+	/**
+	 * Log something in HOs debug log.
+	 *
+	 * @param caller the logging class
+	 * @param message the text to log
+	 */
+	public void log(Class<?> caller, String message) {
+		HOLogger.instance().log(caller, message);
+	}
+
+	/**
+	 * Log a throwable in HOs debug log.
+	 *
+	 * @param caller the logging class
+	 * @param t the Throwable/Exception
+	 */
+	public void log(Class<?> caller, Throwable t) {
+		HOLogger.instance().log(caller, t);
+		if (t != null && t.getCause() != null) {
+			HOLogger.instance().log(caller, "Caused by: " + t.getCause());
+		}
+	}
 }
