@@ -171,13 +171,13 @@ public interface IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc);
-    
+
     /**
      * Returns the String connected to the active language file or connected
-     * to the english language file. Returns !key! if the key can not be found. 
-     *  
+     * to the english language file. Returns !key! if the key can not be found.
+     *
      * @param key Key to be searched in language files
-     * 
+     *
      * @return String connected to the key or !key! if nothing can be found in language files
      */
     public String getLanguageString(String key);
@@ -187,7 +187,7 @@ public interface IHOMiniModel {
      * get Name for download in current language
      *
      * @return Value of property m_clResource.
-     * 
+     *
      * @deprecated use getLanguageString()
      */
     @Deprecated
@@ -352,8 +352,24 @@ public interface IHOMiniModel {
 	 * @param startingDate starting data to export from (for non friendlies)
 	 * @param startingDateForFriendlies starting data to export from (for friendlies)
 	 * @param strict is true, export only matches *without* cards, injuries, tactical problems / overconfidence / weather SE...
-	 * 
+	 *
 	 * @return List of IExportMatchData objects
 	 */
 	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict);
+
+	/**
+	 * Log something in HOs debug log.
+	 *
+	 * @param caller the logging class
+	 * @param message the text to log
+	 */
+	public void log(Class<?> caller, String message);
+
+	/**
+	 * Log a throwable in HOs debug log.
+	 *
+	 * @param caller the logging class
+	 * @param t the Throwable/Exception
+	 */
+	public void log(Class<?> caller, Throwable t);
 }
