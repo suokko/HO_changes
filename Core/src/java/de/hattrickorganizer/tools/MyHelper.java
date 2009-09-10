@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.tools;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Vector;
@@ -16,6 +17,8 @@ import java.util.Vector;
  * @author thomas.werth
  */
 public class MyHelper {
+	private final static SimpleDateFormat HT_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -34,24 +37,25 @@ public class MyHelper {
      * @return TODO Missing Return Method Documentation
      */
     public static String Calendar2HTString(Calendar tempdate) {
-        final StringBuffer dateString = new StringBuffer();
-        dateString.append(tempdate.get(Calendar.YEAR));
-        dateString.append("-");
-
-        if ((tempdate.get(Calendar.MONTH) + 1) < 10) {
-            dateString.append("0");
-        }
-
-        dateString.append(tempdate.get(Calendar.MONTH) + 1);
-        dateString.append("-");
-
-        if (tempdate.get(Calendar.DAY_OF_MONTH) < 10) {
-            dateString.append("0");
-        }
-
-        dateString.append(tempdate.get(Calendar.DAY_OF_MONTH));
-
-        return dateString.toString();
+//        final StringBuffer dateString = new StringBuffer();
+//        dateString.append(tempdate.get(Calendar.YEAR));
+//        dateString.append("-");
+//
+//        if ((tempdate.get(Calendar.MONTH) + 1) < 10) {
+//            dateString.append("0");
+//        }
+//
+//        dateString.append(tempdate.get(Calendar.MONTH) + 1);
+//        dateString.append("-");
+//
+//        if (tempdate.get(Calendar.DAY_OF_MONTH) < 10) {
+//            dateString.append("0");
+//        }
+//
+//        dateString.append(tempdate.get(Calendar.DAY_OF_MONTH));
+//
+//        return dateString.toString();
+    	return HT_FORMAT.format(tempdate.getTime());
     }
 
     /**
@@ -108,8 +112,8 @@ public class MyHelper {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////77
-    //Cypt Funtkionen    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////77    
+    //Cypt Funtkionen
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////77
 
     /**
      * verschlüsselt einen String der nur aus Zahlen und Buchstaben besteht
@@ -172,7 +176,7 @@ public class MyHelper {
         for (int i = 0; (encoded != null) && (i < encoded.length); ++i) {
             //check ob Zeichen gleich ~ = 126 ?
             if (encoded[i] == 126) {
-                //Dann mit tilde ersetzen slash = 92 
+                //Dann mit tilde ersetzen slash = 92
                 encoded[i] = 92;
             }
 
