@@ -14,6 +14,9 @@ import java.util.Vector;
 
 import plugins.ISpieler;
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
@@ -52,19 +55,12 @@ public class HOVerwaltung {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param args TODO Missing Method Parameter Documentation
+     * Set string arguments.
      */
     public void setArgs(String[] args) {
         m_sArgs = args;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String[] getArgs() {
         return m_sArgs;
     }
@@ -102,8 +98,6 @@ public class HOVerwaltung {
 
     /**
      * Gibt das Durchschnittsalter zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getDurchschnittsAlter() {
         float summe = 0;
@@ -125,8 +119,6 @@ public class HOVerwaltung {
 
     /**
      * Gibt das Durchschnittserfahrung zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getDurchschnittsErfahrung() {
         float summe = 0;
@@ -145,8 +137,6 @@ public class HOVerwaltung {
 
     /**
      * Gibt das Durchschnittsform zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getDurchschnittsForm() {
         float summe = 0;
@@ -164,10 +154,7 @@ public class HOVerwaltung {
     }
 
     /**
-     * Gibt den gesamtmarktwert zurück
      * Returns the TSI sum
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getSumTSI() {
         float summe = 0;
@@ -186,8 +173,6 @@ public class HOVerwaltung {
     /**
      * Gibt den gesamtmarktwert zurück
      * Returns the sum of all estimated player values (EPV)
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getSumEPV() {
         float summe = 0;
@@ -204,27 +189,18 @@ public class HOVerwaltung {
     }
 
     /**
-     * Creates a new instance of HOVerwaltung
-     *
-     * @param model TODO Missing Constructuor Parameter Documentation
+     * Set the HOModel.
      */
     public void setModel(HOModel model) {
         m_clHoModel = model;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public HOModel getModel() {
         return m_clHoModel;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the HOVerwaltung singleton instance.
      */
     public static HOVerwaltung instance() {
         if (m_clInstance == null) {
@@ -240,12 +216,6 @@ public class HOVerwaltung {
         return m_clInstance;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param pfad TODO Missing Method Parameter Documentation
-     * @param loader TODO Missing Method Parameter Documentation
-     */
     public void setResource(String pfad, ClassLoader loader) {
         //Die Properies-Endung entfernen!
         //pfad = pfad.substring ( 0, pfad.indexOf ( ".properties" ) );
@@ -282,19 +252,12 @@ public class HOVerwaltung {
         //m_clResource    =   java.util.ResourceBundle.getBundle ( pfad, java.util.Locale.getDefault (), loader );
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public Properties getResource() {
         return m_clResource;
     }
 
     /**
      * ersetzt das aktuelle model durch das aus der DB mit der angegebenen ID
-     *
-     * @param id TODO Missing Constructuor Parameter Documentation
      */
     public void loadHoModel(int id) {
         m_clHoModel = loadModel(id);
@@ -309,10 +272,8 @@ public class HOVerwaltung {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param showWait TODO Missing Method Parameter Documentation
-     * @param hrfDate TODO Missing Method Parameter Documentation
+     * Recalculate subskills since a certain HRF date.
+     * If the HRF date is null, the whole training history is recalculated.
      */
     public void recalcSubskills(boolean showWait, Timestamp hrfDate) {
     	HOLogger.instance().log(getClass(), "Start full subskill calculation. " + new Date());
@@ -321,11 +282,10 @@ public class HOVerwaltung {
             hrfDate = new Timestamp(0);
         }
 
-        de.hattrickorganizer.gui.login.LoginWaitDialog waitDialog = null;
+        LoginWaitDialog waitDialog = null;
 
         if (showWait) {
-            waitDialog = new de.hattrickorganizer.gui.login.LoginWaitDialog(de.hattrickorganizer.gui.HOMainFrame
-                                                                            .instance(), false);
+            waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
             waitDialog.setVisible(true);
         }
 
@@ -336,7 +296,7 @@ public class HOVerwaltung {
         HOLogger.instance().log(getClass(), "Subskill calculation prepared. " + new Date());
         for (int i = 0; i < hrfListe.size(); i++) {
             try {
-                if (showWait) {
+                if (showWait && waitDialog != null) {
                     waitDialog.setValue((int) ((i * 100d) / hrfListe.size()));
                 }
                 s1 = System.currentTimeMillis();
@@ -351,24 +311,20 @@ public class HOVerwaltung {
             }
         }
 
-        if (showWait) {
+        if (showWait && waitDialog != null) {
             waitDialog.setVisible(false);
         }
 
         //Erneut laden, da sich die Subskills geändert haben
         loadLatestHoModel();
 
-        de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+        RefreshManager.instance().doReInit();
         HOLogger.instance().log(getClass(), "Subskill calculation done. " + new Date() +
         		" - took " + (System.currentTimeMillis() - start) + "ms (" + (System.currentTimeMillis() - start)/1000L + " sec), lSum=" + lSum + ", mSum=" + mSum);
     }
 
     /**
      * interne Func die ein Model aus der DB lädt
-     *
-     * @param id TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected HOModel loadModel(int id) {
         final HOModel model = new HOModel();
@@ -388,15 +344,15 @@ public class HOVerwaltung {
 
         return model;
     }
-    
+
     /**
      * Returns the String connected to the active language file or connected
-     * to the english language file. Returns !key! if the key can not be found. 
-     *  
+     * to the english language file. Returns !key! if the key can not be found.
+     *
      * @param key Key to be searched in language files
-     * 
+     *
      * @return String connected to the key or !key! if nothing can be found in language files
-     */ 
+     */
     public String getLanguageString(String key) {
     	String temp = getResource().getProperty(key);
     	if (temp != null)
