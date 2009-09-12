@@ -6,6 +6,7 @@ import gui.UserParameter;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -17,6 +18,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -32,6 +35,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -107,44 +111,21 @@ public final class HOMainFrame extends JFrame
 	 */
 	private static final String WARN_DATE = "2010-01-13 00:00:00.0";
 
-	/** TODO Missing Parameter Documentation */
-	public static final int SPRACHVERSION = 2;
+	public static final int SPRACHVERSION = 2; // language version
 	private static HOMainFrame m_clHOMainFrame;
-
-	/** TODO Missing Parameter Documentation */
 	private static final boolean LIMITED = false;
-
-	/** TODO Missing Parameter Documentation */
 	private static final String LIMITED_DATE = "2004-09-01 00:00:00.0";
 	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
 
 	//---------Konstanten----------------------
-
-	/** TODO Missing Parameter Documentation */
-	public static final int SPIELERUEBERSICHT = 0;
-
-	/** TODO Missing Parameter Documentation */
-	public static final int AUFSTELLUNG = 1;
-
-	/** TODO Missing Parameter Documentation */
-	public static final int LIGATABELLE = 2;
-
-	/** TODO Missing Parameter Documentation */
-	public static final int SPIELE = 3;
-
-	/** TODO Missing Parameter Documentation */
-	public static final int SPIELERANALYSE = 4;
-
-	/** TODO Missing Parameter Documentation */
-	public static final int STATISTIK = 5;
-
-	/** TODO Missing Parameter Documentation */
+	public static final int SPIELERUEBERSICHT = 0;	// player overview
+	public static final int AUFSTELLUNG = 1; 		// lineup
+	public static final int LIGATABELLE = 2;		// league table
+	public static final int SPIELE = 3;				// matches
+	public static final int SPIELERANALYSE = 4;		// player analysis
+	public static final int STATISTIK = 5;			// statistics
 	public static final int TRANSFERSCOUT = 6;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int ARENASIZER = 7;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int INFORMATIONEN = 8;
 
 	public static final int BUSY = 0;
@@ -180,88 +161,58 @@ public final class HOMainFrame extends JFrame
 
 	//----Menue--------------------------------
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
-	private final JMenuItem m_jmBeendenItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
-	private final JMenuItem m_jmCreditsItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
-	private final JMenuItem m_jmDownloadItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Download"));
-	private final JMenuItem m_jmForumItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Forum"));
-	private final JMenuItem m_jmHattrickItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Hattrick"));
-//	private final JMenuItem m_jmHoFriendly =
-//		new JMenuItem(HOVerwaltung.instance().getLanguageString("HoFriendly"));
-	private final JMenuItem m_jmHomepageItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
-//	private final JMenuItem m_jmIPAdresse =
-//		new JMenuItem(HOVerwaltung.instance().getLanguageString("IP"));
-	private final JMenuItem m_jmFullScreenItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
+	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
+	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
+	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Download"));
+	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Forum"));
+	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Hattrick"));
+//	private final JMenuItem m_jmHoFriendly = new JMenuItem(HOVerwaltung.instance().getLanguageString("HoFriendly"));
+	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
+//	private final JMenuItem m_jmIPAdresse = new JMenuItem(HOVerwaltung.instance().getLanguageString("IP"));
+	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
 
-	//private JMenuItem               m_jmFixturesItem        =   new JMenuItem( model.HOVerwaltung.instance().getLanguageString("FixturesDownload") );
-	private final JMenuItem m_jmImportItem =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
-	private final JMenuItem m_jmOptionen =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
-	private final JMenuItem m_jmPluginsHomepage =
-		new JMenuItem("HO! " + HOVerwaltung.instance().getLanguageString("Plugins"));
+//	private JMenuItem m_jmFixturesItem = new JMenuItem( model.HOVerwaltung.instance().getLanguageString("FixturesDownload") );
+	private final JMenuItem m_jmImportItem =new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
+	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
+	private final JMenuItem m_jmPluginsHomepage = new JMenuItem("HO! " + HOVerwaltung.instance().getLanguageString("Plugins"));
 //	private final JMenuItem m_jmRatingItem = new JMenuItem("Friendly-Rating");
-	private final JMenuItem m_jmTraining =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
-	private final JMenuItem m_jmiArena =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
-	private final JMenuItem m_jmiAufstellung =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Aufstellung"));
-	private final JMenuItem m_jmiFlags =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
+	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
+	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen")
+			+ " (7 " + HOVerwaltung.instance().getLanguageString("Wochen") + ")");
+	private final JMenuItem m_jmiArena = new JMenuItem(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
+	private final JMenuItem m_jmiAufstellung = new JMenuItem(HOVerwaltung.instance().getLanguageString("Aufstellung"));
+	private final JMenuItem m_jmiFlags = new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem("HO!");
 	private final JMenuItem m_jmiEPV = new JMenuItem("EPV");
 	private final JMenuItem m_jmiRatings = new JMenuItem("Ratings");
 
-	private final JMenuItem m_jmiInjuryCalculator =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("InjuryCalculator"));
-	private final JMenuItem m_jmiKeeperTool =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("KeeperTool"));
-	private final JMenuItem m_jmiNotepad =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Notizen"));
+	private final JMenuItem m_jmiInjuryCalculator = new JMenuItem(HOVerwaltung.instance().getLanguageString("InjuryCalculator"));
+	private final JMenuItem m_jmiKeeperTool = new JMenuItem(HOVerwaltung.instance().getLanguageString("KeeperTool"));
+	private final JMenuItem m_jmiNotepad = new JMenuItem(HOVerwaltung.instance().getLanguageString("Notizen"));
 	private final JMenuItem m_jmiExporter = new JMenuItem("XML Exporter");
-	private final JMenuItem m_jmiCsvPlayerExporter =
-		new JMenuItem("CSV PlayerExport"); // TODO L10N
-	private final JMenuItem m_jmiDbCleanupTool=
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
+	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem("CSV PlayerExport"); // TODO L10N
+	private final JMenuItem m_jmiDbCleanupTool= new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
 
-	private final JMenuItem m_jmiLanguages =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
-	private final JMenuItem m_jmiLigatabelle =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
-	private final JMenuItem m_jmiPluginsDelete =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("loeschen"));
-	private final JMenuItem m_jmiPluginsLibrary =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Libraries"));
-	private final JMenuItem m_jmiPluginsNormal =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Normal"));
-	private final JMenuItem m_jmiSpiele =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Spiele"));
-	private final JMenuItem m_jmiSpieleranalyse =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
-	private final JMenuItem m_jmiSpieleruebersicht =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
-	private final JMenuItem m_jmiStatistik =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
-	private final JMenuItem m_jmiTransferscout =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
-	private final JMenuItem m_jmiVerschiedenes =
-		new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
+	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
+	private final JMenuItem m_jmiLigatabelle = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
+	private final JMenuItem m_jmiPluginsDelete = new JMenuItem(HOVerwaltung.instance().getLanguageString("loeschen"));
+	private final JMenuItem m_jmiPluginsLibrary = new JMenuItem(HOVerwaltung.instance().getLanguageString("Libraries"));
+	private final JMenuItem m_jmiPluginsNormal = new JMenuItem(HOVerwaltung.instance().getLanguageString("Normal"));
+	private final JMenuItem m_jmiSpiele = new JMenuItem(HOVerwaltung.instance().getLanguageString("Spiele"));
+	private final JMenuItem m_jmiSpieleranalyse = new JMenuItem(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
+	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
+	private final JMenuItem m_jmiStatistik = new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
+	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
+	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
 	//----Komponenten--------------------------
 	private JTabbedPane m_jtpTabbedPane;
 	private KeeperToolDialog keeperTool;
 
-	//    private SkillAenderungsPanel    m_jpSkillAenderungsPanel=   null;
+//	private SkillAenderungsPanel m_jpSkillAenderungsPanel=   null;
 	private LigaTabellePanel m_jpLigaTabelle;
 
-	// private JMenuItem               m_jmChatItem            =   new JMenuItem( model.HOVerwaltung.instance().getLanguageString("Chat") );
+//	private JMenuItem m_jmChatItem = new JMenuItem( model.HOVerwaltung.instance().getLanguageString("Chat") );
 	//eventuell Menuitem Vector für Plugins anlegen
 	//-----------------------------------------
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
@@ -372,9 +323,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * Singelton
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Getter for the singleton HOMainFrame instance.
 	 */
 	public static HOMainFrame instance() {
 		if (m_clHOMainFrame == null) {
@@ -384,11 +333,6 @@ public final class HOMainFrame extends JFrame
 		return m_clHOMainFrame;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerid TODO Missing Method Parameter Documentation
-	 */
 	public void setActualSpieler(int spielerid) {
 		getAufstellungsPanel().getAufstellungsTabelle().setSpieler(spielerid);
 		getAufstellungsPanel().getAufstellungsNamensTabelle().setSpieler(spielerid);
@@ -397,46 +341,24 @@ public final class HOMainFrame extends JFrame
 		getSpielerUebersichtPanel().newSelectionInform();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public ArenaSizerPanel getArenaSizerPanel() {
 		return m_jpArenaSizer;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public AufstellungsPanel getAufstellungsPanel() {
 		return m_jpAufstellung;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public InfoPanel getInfoPanel() {
 		return m_jpInfoPanel;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public InformationsPanel getInformationsPanel() {
 		return m_jpInformation;
 	}
 
 	/**
 	 * Gibt den Vector mit den Gestarteten Plugins zurück
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static Vector<IPlugin> getPlugins() {
 		return m_vPlugins;
@@ -456,9 +378,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the main statistics panel.
 	 */
 	public StatistikMainPanel getStatistikMainPanel() {
 		return m_jpStatistikPanel;
@@ -470,47 +390,34 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the current weather.
 	 */
 	public static int getWetter() {
 		if (m_clHOMainFrame == null) {
 			return ISpieler.LEICHTBEWOELKT;
 		}
-
-		return HOMainFrame
-			.instance()
-			.getAufstellungsPanel()
-			.getAufstellungsAssitentPanel()
-			.getWetter();
+		return HOMainFrame.instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWetter();
 
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the online worker object.
 	 */
 	public OnlineWorker getOnlineWorker() {
 		return m_clOnlineWorker;
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the transfer scout panel.
 	 */
 	public TransferScoutPanel getTransferScoutPanel() {
 		return m_jpTransferScout;
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param actionEvent TODO Missing Method Parameter Documentation
+	 * Handle action events.
 	 */
-	public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+	public void actionPerformed(ActionEvent actionEvent) {
 		HOMainFrame.setHOStatus(HOMainFrame.BUSY);
 		final Object source = actionEvent.getSource();
 		//HRF Import
@@ -530,16 +437,24 @@ public final class HOMainFrame extends JFrame
 		//Training
 		else if (source.equals(m_jmTraining)) {
 			//Training komplett neu berechnen
-			if (JOptionPane
-				.showConfirmDialog(
-					this,
+			if (JOptionPane.showConfirmDialog(this,
 					"Depending on database volume this process takes several minutes. Start recalculation ?",
-					"Subskill Recalculation",
-					JOptionPane.YES_NO_OPTION)
-				== JOptionPane.OK_OPTION) {
+					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				HOVerwaltung.instance().recalcSubskills(true, null);
-
 				//tools.Helper.showMessage ( this, model.HOVerwaltung.instance().getLanguageString( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
+			}
+		}
+		//Training
+		else if (source.equals(m_jmTraining2)) {
+			Calendar cal = Calendar.getInstance();
+			cal.setLenient(true);
+			cal.set(Calendar.WEEK_OF_YEAR, -7); // half season
+			if (JOptionPane.showConfirmDialog(this,
+					"Start recalculation subskill recalculation for the last 7 weeks (since " +
+					new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?",
+					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+				Timestamp from = new Timestamp(cal.getTimeInMillis());
+				HOVerwaltung.instance().recalcSubskills(true, from);
 			}
 		}
 		else if (source.equals(m_jmFullScreenItem)) {
@@ -756,10 +671,7 @@ public final class HOMainFrame extends JFrame
 			keeperTool.reload();
 			keeperTool.setVisible(true);
 		} else if (source.equals(m_jmiNotepad)) {
-			NotepadDialog notepad =
-				new NotepadDialog(
-					this,
-					HOVerwaltung.instance().getLanguageString("Notizen"));
+			NotepadDialog notepad = new NotepadDialog(this, HOVerwaltung.instance().getLanguageString("Notizen"));
 			notepad.setVisible(true);
 		} else if (source.equals(m_jmiExporter)) {
 			XMLExporter exporter = new XMLExporter();
@@ -795,27 +707,18 @@ public final class HOMainFrame extends JFrame
 
 	/**
 	 * Für Plugins zur Info
-	 *
-	 * @param listener TODO Missing Constructuor Parameter Documentation
 	 */
 	public void addMainFrameListener(WindowListener listener) {
 		addWindowListener(listener);
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param menu TODO Missing Method Parameter Documentation
+	 * Add plugin menu.
 	 */
 	public void addMenu(JMenu menu) {
 		m_jmPluginMenu.add(menu);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param menu TODO Missing Method Parameter Documentation
-	 */
 	public void addTopLevelMenu(JMenu menu) {
 		m_jmMenuBar.add(menu);
 	}
@@ -870,8 +773,6 @@ public final class HOMainFrame extends JFrame
 
 	/**
 	 * Checked die Sprachdatei oder Fragt nach einer passenden
-	 *
-	 * @param dateiname TODO Missing Constructuor Parameter Documentation
 	 */
 	public static void checkSprachFile(String dateiname) {
 		try {
@@ -1030,18 +931,18 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * TODO Missing Method Documentation
+	 * Initialize the menu.
 	 */
 	public void initMenue() {
 		//Kein F10!
 		((InputMap) UIManager.get("Table.ancestorInputMap")).remove(
-			KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+			KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 
-		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove( KeyStroke.getKeyStroke( java.awt.event.KeyEvent.VK_F10, 0 ) );
-		//m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke( java.awt.event.KeyEvent.VK_F10, 0 ) );
+		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove( KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
+		//m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
 		//Datei
 		//Download HRF
-		m_jmDownloadItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
+		m_jmDownloadItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		m_jmDownloadItem.addActionListener(this);
 		m_jmDatei.add(m_jmDownloadItem);
 
@@ -1080,6 +981,8 @@ public final class HOMainFrame extends JFrame
 		//Training
 		m_jmTraining.addActionListener(this);
 		m_jmDatei.add(m_jmTraining);
+		m_jmTraining2.addActionListener(this);
+		m_jmDatei.add(m_jmTraining2);
 
 		m_jmDatei.addSeparator();
 
@@ -1110,48 +1013,48 @@ public final class HOMainFrame extends JFrame
 		//Verschiedenes
 		//Spieleruebersicht
 		m_jmiSpieleruebersicht.setAccelerator(
-			KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+			KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		m_jmiSpieleruebersicht.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleruebersicht);
 
 		//Aufstellung
-		m_jmiAufstellung.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+		m_jmiAufstellung.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		m_jmiAufstellung.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiAufstellung);
 
 		//Ligatabelle
-		m_jmiLigatabelle.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+		m_jmiLigatabelle.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		m_jmiLigatabelle.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiLigatabelle);
 
 		//Spiele
-		m_jmiSpiele.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+		m_jmiSpiele.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		m_jmiSpiele.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpiele);
 
 		//Spieleranalyse
 		m_jmiSpieleranalyse.setAccelerator(
-			KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+			KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		m_jmiSpieleranalyse.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleranalyse);
 
 		//Statistik
-		m_jmiStatistik.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+		m_jmiStatistik.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		m_jmiStatistik.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiStatistik);
 
 		//Transferscout
-		m_jmiTransferscout.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+		m_jmiTransferscout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		m_jmiTransferscout.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTransferscout);
 
 		//ArenaSizer
-		m_jmiArena.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+		m_jmiArena.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
 		m_jmiArena.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiArena);
 
 		//Verschiedenes
-		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		m_jmiVerschiedenes.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiVerschiedenes);
 
@@ -1159,7 +1062,7 @@ public final class HOMainFrame extends JFrame
 
 		/////
 		//HOFriendly
-//		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
+//		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 //		m_jmHoFriendly.addActionListener(this);
 //		m_jmHoFriendlyMenu.add(m_jmHoFriendly);
 //
@@ -1216,7 +1119,7 @@ public final class HOMainFrame extends JFrame
 
 		m_jmMenuBar.add(m_jmToolsMenu);
 
-		//		Plugin Menu
+		//Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
 
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);
@@ -1230,35 +1133,25 @@ public final class HOMainFrame extends JFrame
 	 */
 	public void initProxy() {
 		if (gui.UserParameter.instance().ProxyAktiv) {
-			MyConnector.instance().setProxyHost(
-				gui.UserParameter.instance().ProxyHost);
-			MyConnector.instance().setUseProxy(
-				gui.UserParameter.instance().ProxyAktiv);
-			MyConnector.instance().setProxyPort(
-				gui.UserParameter.instance().ProxyPort);
-			MyConnector.instance().setProxyAuthentifactionNeeded(
-				gui.UserParameter.instance().ProxyAuthAktiv);
-			MyConnector.instance().setProxyUserName(
-				gui.UserParameter.instance().ProxyAuthName);
-			MyConnector.instance().setProxyUserPWD(
-				gui.UserParameter.instance().ProxyAuthPassword);
+			MyConnector.instance().setProxyHost(gui.UserParameter.instance().ProxyHost);
+			MyConnector.instance().setUseProxy(gui.UserParameter.instance().ProxyAktiv);
+			MyConnector.instance().setProxyPort(gui.UserParameter.instance().ProxyPort);
+			MyConnector.instance().setProxyAuthentifactionNeeded(gui.UserParameter.instance().ProxyAuthAktiv);
+			MyConnector.instance().setProxyUserName(gui.UserParameter.instance().ProxyAuthName);
+			MyConnector.instance().setProxyUserPWD(gui.UserParameter.instance().ProxyAuthPassword);
 			MyConnector.instance().enableProxy();
 		}
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get all option panel names.
 	 */
 	public Vector<String> getOptionPanelNames() {
 		return m_vOptionPanelNames;
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get all option panels.
 	 */
 	public Vector<JPanel> getOptionPanels() {
 		return m_vOptionPanels;
@@ -1266,9 +1159,6 @@ public final class HOMainFrame extends JFrame
 
 	/**
 	 * OptionsPanels für Plugins
-	 *
-	 * @param name TODO Missing Constructuor Parameter Documentation
-	 * @param optionpanel TODO Missing Constructuor Parameter Documentation
 	 */
 	public void addOptionPanel(String name, JPanel optionpanel) {
 		m_vOptionPanels.add(optionpanel);
@@ -1276,7 +1166,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * TODO Missing Method Documentation
+	 * Reinit, set currency.
 	 */
 	public void reInit() {
 		//Die Währung auf die aus dem HRF setzen
@@ -1306,8 +1196,6 @@ public final class HOMainFrame extends JFrame
 
 	/**
 	 * Für Plugins zur Info
-	 *
-	 * @param listener TODO Missing Constructuor Parameter Documentation
 	 */
 	public void removeMainFrameListener(WindowListener listener) {
 		removeWindowListener(listener);
@@ -1325,7 +1213,7 @@ public final class HOMainFrame extends JFrame
 	/**
 	 * Zeigt das Tab an (Nicht Index, sondern Konstante benutzen!
 	 *
-	 * @param tabnumber TODO Missing Constructuor Parameter Documentation
+	 * @param tabnumber number of the tab to show
 	 */
 	public void showTab(int tabnumber) {
 		//Erstmal weg damit
@@ -1535,11 +1423,9 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param changeEvent TODO Missing Method Parameter Documentation
+	 * React on state changed events.
 	 */
-	public void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
+	public void stateChanged(ChangeEvent changeEvent) {
 		//Wenn ein Tab als Temp gespeichert wurde dieses entfernen
 		if (m_sToRemoveTabName != null) {
 			final int index = m_jtpTabbedPane.indexOfTab(m_sToRemoveTabName);
@@ -1568,11 +1454,11 @@ public final class HOMainFrame extends JFrame
 
 	/**
 	 * Finally shutting down the application when the main window is closed.
-	 * This is initiated through the call to dispose(). 
-	 * System.exit is called only in the case when @see beenden() is called 
-	 * in advance. This event is called when switching into full screen 
-	 * mode, too. 
-	 * 
+	 * This is initiated through the call to dispose().
+	 * System.exit is called only in the case when @see beenden() is called
+	 * in advance. This event is called when switching into full screen
+	 * mode, too.
+	 *
 	 * @param windowEvent is ignored
 	 */
 	public void windowClosed(WindowEvent windowEvent) {
@@ -1584,50 +1470,26 @@ public final class HOMainFrame extends JFrame
 	//----------------Listener--------------------------------------
 
 	/**
-	 * Beenden von HO
-	 *
-	 * @param windowEvent TODO Missing Constructuor Parameter Documentation
+	 * Close HO window.
 	 */
 	public void windowClosing(WindowEvent windowEvent) {
 		beenden();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param windowEvent TODO Missing Method Parameter Documentation
-	 */
 	public void windowDeactivated(WindowEvent windowEvent) {
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param windowEvent TODO Missing Method Parameter Documentation
-	 */
 	public void windowDeiconified(WindowEvent windowEvent) {
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param windowEvent TODO Missing Method Parameter Documentation
-	 */
 	public void windowIconified(WindowEvent windowEvent) {
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param windowEvent TODO Missing Method Parameter Documentation
-	 */
 	public void windowOpened(WindowEvent windowEvent) {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param groesse TODO Missing Method Parameter Documentation
+	 * Set the default font size.
 	 */
 	private void setDefaultFont(int groesse) {
 		try {
@@ -1642,7 +1504,7 @@ public final class HOMainFrame extends JFrame
 	}
 
 	/**
-	 * Alle temporären Tabs entfernen
+	 * Remove all temporary tabs.
 	 */
 	private void checkTabs() {
 		int index;
