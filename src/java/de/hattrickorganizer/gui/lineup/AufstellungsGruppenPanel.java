@@ -22,9 +22,9 @@ import de.hattrickorganizer.tools.Helper;
  * Hier lassen sich mit einem Klick alle aufgestellten Spieler einer Gruppe zuordnen
  */
 final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
-	
+
 	private static final long serialVersionUID = 955755336335567688L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private JButton aGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/A-Team.png")));
@@ -32,6 +32,7 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
     private JButton cGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/C-Team.png")));
     private JButton dGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/D-Team.png")));
     private JButton eGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/E-Team.png")));
+    private JButton fGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/F-Team.png")));
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -62,6 +63,8 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
             gruppenMarkierung("D-Team.png");
         } else if (e.getSource().equals(eGruppe)) {
             gruppenMarkierung("E-Team.png");
+        } else if (e.getSource().equals(fGruppe)) {
+            gruppenMarkierung("F-Team.png");
         }
     }
 
@@ -124,5 +127,9 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
         eGruppe.setPreferredSize(new Dimension(18, 18));
         eGruppe.addActionListener(this);
         add(eGruppe);
+        fGruppe.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsGruppe_Zuordnung"));
+        fGruppe.setPreferredSize(new Dimension(18, 18));
+        fGruppe.addActionListener(this);
+        add(fGruppe);
     }
 }

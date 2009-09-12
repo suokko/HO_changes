@@ -32,68 +32,64 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
 {
 
 	private static final long serialVersionUID = 3606384591123088694L;
-	
+
 	//~ Instance fields ----------------------------------------------------------------------------
 
     private final JButton doButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Taktik_Offensiv.png")));
     private final JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
-    private final JToggleButton aGruppe = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                              .loadImage("gui/bilder/smilies/A-Team.png"),
-                                                                              0.5f)));
-    private final JToggleButton aGruppe2 = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                               .loadImage("gui/bilder/smilies/A-Team.png"),
-                                                                               0.5f)));
-    private final JToggleButton bGruppe = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                              .loadImage("gui/bilder/smilies/B-Team.png"),
-                                                                              0.5f)));
-    private final JToggleButton bGruppe2 = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                               .loadImage("gui/bilder/smilies/B-Team.png"),
-                                                                               0.5f)));
-    private final JToggleButton cGruppe = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                              .loadImage("gui/bilder/smilies/C-Team.png"),
-                                                                              0.5f)));
-    private final JToggleButton cGruppe2 = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                               .loadImage("gui/bilder/smilies/C-Team.png"),
-                                                                               0.5f)));
-    private final JToggleButton dGruppe = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                              .loadImage("gui/bilder/smilies/D-Team.png"),
-                                                                              0.5f)));
-    private final JToggleButton dGruppe2 = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                               .loadImage("gui/bilder/smilies/D-Team.png"),
-                                                                               0.5f)));
-    private final JToggleButton eGruppe = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                              .loadImage("gui/bilder/smilies/E-Team.png"),
-                                                                              0.5f)));
-    private final JToggleButton eGruppe2 = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                               .loadImage("gui/bilder/smilies/E-Team.png"),
-                                                                               0.5f)));
-    private final JToggleButton noGruppe = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                               .loadImage("gui/bilder/smilies/No-Team.png"),
-                                                                               0.5f)));
-    private final JToggleButton noGruppe2 = new JToggleButton(new ImageIcon(Helper.makeGray(Helper
-                                                                                .loadImage("gui/bilder/smilies/No-Team.png"),
-                                                                                0.5f)));
+    private final JToggleButton aGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/A-Team.png"), 0.5f)));
+	private final JToggleButton aGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/A-Team.png"), 0.5f)));
+	private final JToggleButton bGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/B-Team.png"), 0.5f)));
+	private final JToggleButton bGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/B-Team.png"), 0.5f)));
+	private final JToggleButton cGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/C-Team.png"), 0.5f)));
+	private final JToggleButton cGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/C-Team.png"), 0.5f)));
+	private final JToggleButton dGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/D-Team.png"), 0.5f)));
+	private final JToggleButton dGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/D-Team.png"), 0.5f)));
+	private final JToggleButton eGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/E-Team.png"), 0.5f)));
+	private final JToggleButton eGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/E-Team.png"), 0.5f)));
+    private final JToggleButton fGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/F-Team.png"), 0.5f)));
+	private final JToggleButton fGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/F-Team.png"), 0.5f)));
+    private final JToggleButton noGruppe = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/No-Team.png"), 0.5f)));
+	private final JToggleButton noGruppe2 = new JToggleButton(new ImageIcon(
+			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/No-Team.png"), 0.5f)));
     private PlayerOverviewTable m_clTable;
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors
+	// -------------------------------------------------------------------------------
 
     /**
-     * Creates a new RemoveGruppenPanel object.
-     *
-     * @param spielerTable TODO Missing Constructuor Parameter Documentation
-     */
+	 * Creates a new RemoveGruppenPanel object.
+	 *
+	 * @param spielerTable
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
     public RemoveGruppenPanel(PlayerOverviewTable spielerTable) {
         m_clTable = spielerTable;
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    // ~ Methods
+	// ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+	 * TODO Missing Method Documentation
+	 *
+	 * @param e
+	 *            TODO Missing Method Parameter Documentation
+	 */
     public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(doButton)) {
             gruppenMarkierung();
@@ -129,6 +125,8 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
             return "D-Team.png";
         } else if (button.equals(eGruppe) || button.equals(eGruppe2)) {
             return "E-Team.png";
+        } else if (button.equals(fGruppe) || button.equals(fGruppe2)) {
+            return "F-Team.png";
         } else {
             return "";
         }
@@ -155,6 +153,8 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
                 return dGruppe;
             } else if (eGruppe.isSelected()) {
                 return eGruppe;
+            } else if (fGruppe.isSelected()) {
+                return fGruppe;
             }
         } else {
             if (noGruppe2.isSelected()) {
@@ -169,6 +169,8 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
                 return dGruppe2;
             } else if (eGruppe2.isSelected()) {
                 return eGruppe2;
+            } else if (fGruppe2.isSelected()) {
+                return fGruppe2;
             }
         }
 
@@ -250,14 +252,14 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
-        constraints.insets = new Insets(4, 4, 4, 4);
+        constraints.insets = new Insets(3, 2, 3, 2);
 
         setLayout(layout);
 
         final ButtonGroup bg = new ButtonGroup();
         final String tooltipFrom = HOVerwaltung.instance().getLanguageString("tt_Gruppe_von");
         final String tooltipTo = HOVerwaltung.instance().getLanguageString("tt_Gruppe_nach");
-        
+
         initButton(noGruppe,tooltipFrom,"gui/bilder/smilies/No-Team.png");
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -282,7 +284,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         layout.setConstraints(cGruppe, constraints);
         bg.add(cGruppe);
         add(cGruppe);
-        initButton(dGruppe,tooltipFrom,"gui/bilder/smilies/D-Team.png");       
+        initButton(dGruppe,tooltipFrom,"gui/bilder/smilies/D-Team.png");
         constraints.gridx = 4;
         constraints.gridy = 0;
         layout.setConstraints(dGruppe, constraints);
@@ -294,6 +296,12 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         layout.setConstraints(eGruppe, constraints);
         bg.add(eGruppe);
         add(eGruppe);
+        initButton(fGruppe,tooltipFrom,"gui/bilder/smilies/E-Team.png");
+        constraints.gridx = 6;
+        constraints.gridy = 0;
+        layout.setConstraints(fGruppe, constraints);
+        bg.add(fGruppe);
+        add(fGruppe);
 
         final ButtonGroup bg2 = new ButtonGroup();
 
@@ -309,7 +317,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         layout.setConstraints(aGruppe2, constraints);
         bg2.add(aGruppe2);
         add(aGruppe2);
-        initButton(bGruppe2,tooltipTo,"gui/bilder/smilies/B-Team.png");       
+        initButton(bGruppe2,tooltipTo,"gui/bilder/smilies/B-Team.png");
         constraints.gridx = 2;
         constraints.gridy = 1;
         layout.setConstraints(bGruppe2, constraints);
@@ -333,12 +341,18 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         layout.setConstraints(eGruppe2, constraints);
         bg2.add(eGruppe2);
         add(eGruppe2);
+        initButton(fGruppe2,tooltipTo,"gui/bilder/smilies/F-Team.png");
+        constraints.gridx = 6;
+        constraints.gridy = 1;
+        layout.setConstraints(fGruppe2, constraints);
+        bg2.add(fGruppe2);
+        add(fGruppe2);
 
         doButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Gruppe_wechseln"));
         doButton.setPreferredSize(new Dimension(28, 28));
         doButton.setEnabled(false);
         doButton.addActionListener(this);
-        constraints.gridx = 6;
+        constraints.gridx = 7;
         constraints.gridy = 0;
         constraints.gridheight = 2;
         layout.setConstraints(doButton, constraints);
@@ -347,13 +361,13 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spieler_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(28, 28));
         m_jbDrucken.addActionListener(this);
-        constraints.gridx = 7;
+        constraints.gridx = 8;
         constraints.gridy = 0;
         constraints.gridheight = 2;
         layout.setConstraints(m_jbDrucken, constraints);
         add(m_jbDrucken);
     }
-    
+
     private void initButton(JToggleButton button,String tooltip,String iconPath){
     	button.setToolTipText(tooltip);
     	button.setPreferredSize(new Dimension(16, 16));
