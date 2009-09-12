@@ -18,20 +18,23 @@ import javax.swing.event.ListSelectionListener;
 import plugins.ISpieler;
 
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.AufstellungsListRenderer;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
  * Hier kann eingestellt werden, mit welchem HRF die aktuelle Mannschaft verglichen werden soll
  */
 public class SpielerTrainingsVergleichsPanel extends ImagePanel
-    implements de.hattrickorganizer.gui.Refreshable, ListSelectionListener, ActionListener
-{
+    implements Refreshable, ListSelectionListener, ActionListener {
 
 	private static final long serialVersionUID = 7090555271664890027L;
-	
+
 	//~ Static fields/initializers -----------------------------------------------------------------
 
     private static Vector<ISpieler> vergleichsSpieler = new Vector<ISpieler>();
@@ -39,7 +42,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbLoeschen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen"));
+    private JButton m_jbLoeschen = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));
     private JList m_jlHRFs = new JList();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -49,9 +52,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      */
     public SpielerTrainingsVergleichsPanel() {
         initComponents();
-
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
-
+        RefreshManager.instance().registerRefreshable(this);
         loadHRFListe(true);
     }
 
@@ -82,7 +83,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         final Object[] hrfs = m_jlHRFs.getSelectedValues();
-        String text = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen");
+        String text = HOVerwaltung.instance().getLanguageString("loeschen");
 
         if (hrfs.length > 1) {
             text += (" (" + hrfs.length + " Files) : ");
@@ -99,24 +100,21 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
         }
 
         final int value = JOptionPane.showConfirmDialog(this, text,
-                                                        de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen"),
-                                                        JOptionPane.YES_NO_OPTION);
+				HOVerwaltung.instance().getLanguageString("loeschen"), JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.OK_OPTION) {
             for (int i = 0; i < hrfs.length; i++) {
-                DBZugriff.instance().deleteHRF(((CBItem) hrfs[i])
-                                                                             .getId());
+                DBZugriff.instance().deleteHRF(((CBItem) hrfs[i]).getId());
             }
 
             loadHRFListe(false);
             vergleichsSpieler.removeAllElements();
-            
+
             // HRF Deleted, recalculate Skillups
 			DBZugriff.instance().reimportSkillup();
-			
+
             //Nur manuelles Update der Tabelle, kein reInit, damit die Sortierung bleibt.
-            de.hattrickorganizer.gui.HOMainFrame.instance().getSpielerUebersichtPanel()
-                                                .refreshHRFVergleich();
+            HOMainFrame.instance().getSpielerUebersichtPanel().refreshHRFVergleich();
         }
     }
 
@@ -161,8 +159,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
         }
 
         //Nur manuelles Update der Tabelle, kein reInit, damit die Sortierung bleibt.
-        de.hattrickorganizer.gui.HOMainFrame.instance().getSpielerUebersichtPanel()
-                                            .refreshHRFVergleich();
+        HOMainFrame.instance().getSpielerUebersichtPanel().refreshHRFVergleich();
 
         //gui.RefreshManager.instance ().doReInit();
     }
@@ -173,7 +170,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
     private void initComponents() {
         setLayout(new BorderLayout());
 
-        add(new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VergleichsHRF")),
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("VergleichsHRF")),
             BorderLayout.NORTH);
 
         m_jlHRFs.setOpaque(false);
