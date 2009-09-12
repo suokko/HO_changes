@@ -343,18 +343,13 @@ public class Helper extends LanguageFiles {
                                                      };
 
     /** team categories */
-    public static final String[] TEAMSMILIES = {
-                                                   "", "A-Team.png", "B-Team.png", "C-Team.png",
-                                                   "D-Team.png", "E-Team.png"
-                                               };
+    public static final String[] TEAMSMILIES = { "", "A-Team.png",
+			"B-Team.png", "C-Team.png", "D-Team.png", "E-Team.png", "F-Team.png" };
 
     /** smilies */
-    public static final String[] MANUELLSMILIES = {
-                                                      "", "1bigsmile.png", "2smile.png",
-                                                      "3normal.png", "4sad.png", "5verysad.png",
-                                                      "6clown.png", "7trainer.png", "8dollar.png",
-                                                      "9coach.png"
-                                                  };
+    public static final String[] MANUELLSMILIES = { "", "1bigsmile.png",
+			"2smile.png", "3normal.png", "4sad.png", "5verysad.png",
+			"6clown.png", "7trainer.png", "8dollar.png", "9coach.png" };
 
     /** weather combo boxes */
     public static final CBItem[] WETTER = {
@@ -2405,7 +2400,7 @@ public class Helper extends LanguageFiles {
         //Wert wieder durch 10^nachkommastellen teilen und zurückgeben
         return (lwert / (int)Math.pow(10.0, nachkommastellen));
     }
-    
+
     /**
      * Zeigt eine Meldung per JOptionPane an, aber immer nur eine!
      *
