@@ -66,6 +66,9 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
     private SpielerPositionsPanel m_clSpielfuehrer;
     private SpielerPositionsPanel m_clStandard;
     private SpielerPositionsPanel m_clTorwart;
+    
+    private final SwapPositionsManager swapPositionsManager = new SwapPositionsManager(
+			this);
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -332,6 +335,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clRechteAussenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.rightBack);
         layout.setConstraints(m_clRechteAussenVerteidiger, constraints);
         centerPanel.add(m_clRechteAussenVerteidiger);
+        swapPositionsManager.addSwapCapabilityTo(m_clRechteAussenVerteidiger);
 
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -339,6 +343,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clRechteInnenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.insideBack1);
         layout.setConstraints(m_clRechteInnenVerteidiger, constraints);
         centerPanel.add(m_clRechteInnenVerteidiger);
+        swapPositionsManager.addSwapCapabilityTo(m_clRechteInnenVerteidiger);
 
         constraints.gridx = 2;
         constraints.gridy = 1;
@@ -346,6 +351,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clLinkeInnenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.insideBack2);
         layout.setConstraints(m_clLinkeInnenVerteidiger, constraints);
         centerPanel.add(m_clLinkeInnenVerteidiger);
+        swapPositionsManager.addSwapCapabilityTo(m_clLinkeInnenVerteidiger);
 
         constraints.gridx = 3;
         constraints.gridy = 1;
@@ -353,6 +359,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clLinkeAussenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.leftBack);
         layout.setConstraints(m_clLinkeAussenVerteidiger, constraints);
         centerPanel.add(m_clLinkeAussenVerteidiger);
+        swapPositionsManager.addSwapCapabilityTo(m_clLinkeAussenVerteidiger);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -360,6 +367,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clRechteFluegel = new SpielerPositionsPanel(this, ISpielerPosition.rightWinger);
         layout.setConstraints(m_clRechteFluegel, constraints);
         centerPanel.add(m_clRechteFluegel);
+        swapPositionsManager.addSwapCapabilityTo(m_clRechteFluegel);
 
         constraints.gridx = 1;
         constraints.gridy = 2;
@@ -367,6 +375,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clRechteMittelfeld = new SpielerPositionsPanel(this, ISpielerPosition.insideMid1);
         layout.setConstraints(m_clRechteMittelfeld, constraints);
         centerPanel.add(m_clRechteMittelfeld);
+        swapPositionsManager.addSwapCapabilityTo(m_clRechteMittelfeld);
 
         constraints.gridx = 2;
         constraints.gridy = 2;
@@ -374,6 +383,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clLinkeMittelfeld = new SpielerPositionsPanel(this, ISpielerPosition.insideMid2);
         layout.setConstraints(m_clLinkeMittelfeld, constraints);
         centerPanel.add(m_clLinkeMittelfeld);
+        swapPositionsManager.addSwapCapabilityTo(m_clLinkeMittelfeld);
 
         constraints.gridx = 3;
         constraints.gridy = 2;
@@ -381,6 +391,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clLinkeFluegel = new SpielerPositionsPanel(this, ISpielerPosition.leftWinger);
         layout.setConstraints(m_clLinkeFluegel, constraints);
         centerPanel.add(m_clLinkeFluegel);
+        swapPositionsManager.addSwapCapabilityTo(m_clLinkeFluegel);
 
         constraints.gridx = 1;
         constraints.gridy = 3;
@@ -388,6 +399,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clLinkerSturm = new SpielerPositionsPanel(this, ISpielerPosition.forward1);
         layout.setConstraints(m_clLinkerSturm, constraints);
         centerPanel.add(m_clLinkerSturm);
+        swapPositionsManager.addSwapCapabilityTo(m_clLinkerSturm);
 
         constraints.gridx = 2;
         constraints.gridy = 3;
@@ -395,6 +407,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clRechterSturm = new SpielerPositionsPanel(this, ISpielerPosition.forward2);
         layout.setConstraints(m_clRechterSturm, constraints);
         centerPanel.add(m_clRechterSturm);
+        swapPositionsManager.addSwapCapabilityTo(m_clRechterSturm);
 
         constraints.gridx = 0;
         constraints.gridy = 4;
