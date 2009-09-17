@@ -2,14 +2,11 @@
 package hoplugins.teamAnalyzer.ui;
 
 import hoplugins.Commons;
-
 import hoplugins.commons.ui.sorter.AbstractTableSorter;
 import hoplugins.commons.utils.RatingUtil;
-
 import hoplugins.teamAnalyzer.SystemManager;
 
 import java.text.DecimalFormat;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +22,13 @@ import javax.swing.table.TableModel;
 public class RecapTableSorter extends AbstractTableSorter {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
+    protected final class NaturalNumericComparator implements Comparator<String> {
+		public int compare(String o1, String o2) {
+			return Integer.parseInt(o1) - Integer.parseInt(o2);
+		}
+	}
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3606200720032237171L;
@@ -43,9 +46,13 @@ public class RecapTableSorter extends AbstractTableSorter {
         skills = new ArrayList<String>();
 
         for (int i = 1; i < 21; i++) {
-            skills.add(Commons.getModel().getHelper().getNameForBewertung(i, false, false));
+            skills.add(getSkillDenomination(i));
         }
     }
+
+	protected String getSkillDenomination(int i) {
+		return Commons.getModel().getHelper().getNameForBewertung(i, false, false);
+	}
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -58,6 +65,9 @@ public class RecapTableSorter extends AbstractTableSorter {
      */
     @Override
 	public Comparator<String> getCustomComparator(int column) {
+    	if (column == 3) {
+    		return new NaturalNumericComparator();
+    	}
         if ((column > 4) && (column < 12)) {
             return new Comparator<String>() {
                     @Override
