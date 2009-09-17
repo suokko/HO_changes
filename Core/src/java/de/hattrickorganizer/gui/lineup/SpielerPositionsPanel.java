@@ -220,6 +220,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 
             constraints.gridx = 0;
             constraints.gridy = 1;
+            constraints.gridwidth = 2;
             m_jcbSpieler.addFocusListener(this);
             m_jcbSpieler.setMaximumRowCount(15);
             m_jcbSpieler.setRenderer(new SpielerCBItemRenderer());
@@ -659,6 +660,15 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 
 	public int getTacticOrder() {
 		return tacticOrder;
+	}
+
+	/**
+	 * Exposes the player combo box to reset the swap button if needed.
+	 * 
+	 * @return the player {@link JComboBox}.
+	 */
+	protected JComboBox getPlayerComboBox() {
+		return m_jcbSpieler;
 	}
 
 }
