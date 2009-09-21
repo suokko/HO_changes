@@ -62,6 +62,14 @@ public class RecapTableSorterTest {
 		assertThat(comparator.compare("1", "1"), is(equalTo(0)));
 		assertThat(comparator.compare("10", "10"), is(equalTo(0)));
 	}
+	
+	@Test
+	public void shouldOrderNonnumericStringsAtEnd() throws Exception {
+		Comparator<String> comparator = getComparator();
+		
+		assertThat(comparator.compare("1", "nonnumeric"), is(lessThan(0)));
+		assertThat(comparator.compare("nonnumeric", "1"), is(greaterThan(0)));
+	}
 
 	private Comparator<String> getComparator() {
 		RecapTableSorter recapTableSorter = new TestableRecapTableSorter();
