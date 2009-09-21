@@ -22,9 +22,18 @@ import javax.swing.table.TableModel;
 public class RecapTableSorter extends AbstractTableSorter {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    protected final class NaturalNumericComparator implements Comparator<String> {
+    protected final class NaturalNumericComparator implements
+			Comparator<String> {
 		public int compare(String o1, String o2) {
-			return Integer.parseInt(o1) - Integer.parseInt(o2);
+			return parseToInt(o1) - parseToInt(o2);
+		}
+
+		private int parseToInt(String o1) {
+			try {
+				return Integer.parseInt(o1);
+			} catch (NumberFormatException e) {
+				return Integer.MAX_VALUE;
+			}
 		}
 	}
 
