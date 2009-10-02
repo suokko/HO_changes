@@ -282,6 +282,7 @@
 	<target name="buildSinglePlugin" description="Build a single ho plugin">
 		<property name="plugin.basedir" value="${basedir}/../Plugin-${PLUGINNAME}" />
 		<echo>Building plugin ${PLUGINNAME}</echo>
+		<mkdir dir="${plugin.basedir}/bin"/>
 		<javac srcdir="${plugin.basedir}/src" destdir="${plugin.basedir}/bin" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
 			<compilerarg value="${javac.args}" />
 			<classpath path="${bin.dir}:${basedir}/../Plugin-Commons/bin" />
