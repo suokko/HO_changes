@@ -23,6 +23,8 @@ import javax.swing.SpinnerDateModel;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.utils.HOTheme;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.extension.StadiumCreator;
 import de.hattrickorganizer.tools.extension.StandingCreator;
 
@@ -31,22 +33,22 @@ import de.hattrickorganizer.tools.extension.StandingCreator;
  * Dialog, der den User den Download von verschiedenen Daten aus Hattrick heraus ermöglicht
  */
 public class DownloadDialog extends JDialog implements ActionListener {
-	
+
 	private static final long serialVersionUID = 7837303870465506844L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
-	
-	private JButton m_jbAbbrechen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
-    private JButton m_jbDownload = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"));
-    private JCheckBox m_jchAlterSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"),
+
+	private JButton m_jbAbbrechen = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+    private JButton m_jbDownload = new JButton(HOVerwaltung.instance().getLanguageString("Download"));
+    private JCheckBox m_jchAlterSpielplan = new JCheckBox(HOVerwaltung.instance().getLanguageString("FixturesDownload"),
                                                           false);
-    private JCheckBox m_jchEigenenSpiele = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"),
+    private JCheckBox m_jchEigenenSpiele = new JCheckBox(HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"),
                                                          gui.UserParameter.instance().currentMatchlist);
-    private JCheckBox m_jchHRF = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HRFDownload"),
+    private JCheckBox m_jchHRF = new JCheckBox(HOVerwaltung.instance().getLanguageString("HRFDownload"),
                                                gui.UserParameter.instance().xmlDownload);
-    private JCheckBox m_jchMatchArchiv = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Matcharchiv"),
+    private JCheckBox m_jchMatchArchiv = new JCheckBox(HOVerwaltung.instance().getLanguageString("Matcharchiv"),
                                                        false);
-    private JCheckBox m_jchSpielplan = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"),
+    private JCheckBox m_jchSpielplan = new JCheckBox(HOVerwaltung.instance().getLanguageString("FixturesDownload"),
                                                      gui.UserParameter.instance().fixtures);
     private JList m_jlAlterSeasons = new JList();
     private SpinnerDateModel m_clSpinnerModel = new SpinnerDateModel();
@@ -58,16 +60,14 @@ public class DownloadDialog extends JDialog implements ActionListener {
      * Creates a new DownloadDialog object.
      */
     public DownloadDialog() {
-        super(de.hattrickorganizer.gui.HOMainFrame.instance(),
-              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"),
-              true);
-
+		super(de.hattrickorganizer.gui.HOMainFrame.instance(),
+              de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"), true);
         initComponents();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    //------------------------------------------------------------------------    
+    //------------------------------------------------------------------------
     public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(m_jchAlterSpielplan)) {
             m_jlAlterSeasons.setEnabled(m_jchAlterSpielplan.isSelected());
@@ -80,38 +80,35 @@ public class DownloadDialog extends JDialog implements ActionListener {
         }
     }
 
-
-
     /**
-     * TODO Missing Method Documentation
+     * Fill season list box.
      */
     private void fillSpielplanListe() {
-        final int aktuelleSaison = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getSeason();
-
+        final int aktuelleSaison = HOVerwaltung.instance().getModel().getBasics().getSeason();
         final DefaultListModel listModel = new DefaultListModel();
 
         for (int i = aktuelleSaison; i > 0; i--) {
-            listModel.addElement(new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season")
-                                            + " " + i, i));
+            listModel.addElement(new CBItem(HOVerwaltung.instance().getLanguageString("Season") + " " + i, i));
         }
-
         m_jlAlterSeasons.setModel(listModel);
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Initialize the GUI components.
      */
     private void initComponents() {
+    	if (HOTheme.getDefaultFont() != null) {
+    		setFont(HOTheme.getDefaultFont());
+    	}
         setResizable(false);
         setContentPane(new ImagePanel(null));
 
         final JPanel normalDownloadPanel = new ImagePanel(new GridLayout(3, 1, 4, 4));
-        normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download")));
+        normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Download")));
 
-        m_jchHRF.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_XML"));
-        m_jchEigenenSpiele.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_AktuellerSpielplan"));
-        m_jchSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Ligatabelle"));
+        m_jchHRF.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_XML"));
+        m_jchEigenenSpiele.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_AktuellerSpielplan"));
+        m_jchSpielplan.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Ligatabelle"));
         m_jchHRF.setOpaque(false);
         m_jchEigenenSpiele.setOpaque(false);
         m_jchSpielplan.setOpaque(false);
@@ -124,12 +121,12 @@ public class DownloadDialog extends JDialog implements ActionListener {
         getContentPane().add(normalDownloadPanel);
 
         final JPanel speziellerDownload = new ImagePanel(new GridLayout(1, 1, 4, 4));
-        speziellerDownload.setBorder(BorderFactory.createTitledBorder(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verschiedenes")));
+        speziellerDownload.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Verschiedenes")));
 
         //Alte Spielpläne
         final JPanel alteSpielplaenePanel = new ImagePanel(new BorderLayout());
 
-        m_jchAlterSpielplan.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_AlteLigatabelle"));
+        m_jchAlterSpielplan.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_AlteLigatabelle"));
         m_jchAlterSpielplan.addActionListener(this);
         m_jchAlterSpielplan.setOpaque(false);
         alteSpielplaenePanel.add(m_jchAlterSpielplan, BorderLayout.NORTH);
@@ -143,7 +140,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
         final JPanel matchArchivPanel = new JPanel(new BorderLayout(1, 2));
         matchArchivPanel.setOpaque(false);
 
-        m_jchMatchArchiv.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Matcharchiv"));
+        m_jchMatchArchiv.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Matcharchiv"));
         m_jchMatchArchiv.addActionListener(this);
         m_jchMatchArchiv.setOpaque(false);
         matchArchivPanel.add(m_jchMatchArchiv, BorderLayout.WEST);
@@ -162,14 +159,14 @@ public class DownloadDialog extends JDialog implements ActionListener {
         speziellerDownload.setLocation(220, 10);
         getContentPane().add(speziellerDownload);
 
-        m_jbDownload.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
+        m_jbDownload.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
         m_jbDownload.addActionListener(this);
         m_jbDownload.setFont(m_jbDownload.getFont().deriveFont(Font.BOLD));
         m_jbDownload.setSize(140, 30);
         m_jbDownload.setLocation(10, 220);
         getContentPane().add(m_jbDownload);
 
-        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
+        m_jbAbbrechen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
         m_jbAbbrechen.addActionListener(this);
         m_jbAbbrechen.setSize(140, 30);
         m_jbAbbrechen.setLocation(380, 220);
@@ -189,17 +186,14 @@ public class DownloadDialog extends JDialog implements ActionListener {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * The download action.
      */
     private void startDownload() {
         if (m_jchEigenenSpiele.isSelected()) {
             //Nur, wenn der Spielplan gezogen wurde auch die Lineups holen
-            if (de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker().getMatches(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                    .getModel()
-                                                                                                                                    .getBasics()
-                                                                                                                                    .getTeamId(),
-                                                                                             false)) {
-                //Zu allen vorhandenen Matches die Lineups holen, wenn noch nicht vorhanden
+            if (HOMainFrame.instance().getOnlineWorker().getMatches(
+					HOVerwaltung.instance().getModel().getBasics().getTeamId(), false)) {
+                // Zu allen vorhandenen Matches die Lineups holen, wenn noch nicht vorhanden
 				HOMainFrame.instance().getOnlineWorker().getAllLineups();
                 StadiumCreator.extractHistoric();
             }
@@ -208,38 +202,16 @@ public class DownloadDialog extends JDialog implements ActionListener {
         if (m_jchMatchArchiv.isSelected()) {
             final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
             tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
-
-            /*
-               StringBuffer  dateString    =   new StringBuffer();
-               dateString.append( tempdate.get( java.util.Calendar.YEAR ) );
-               dateString.append( "-" );
-               if ( tempdate.get( java.util.Calendar.MONTH ) +1 < 10 )
-               {
-                   dateString.append ( "0" );
-               }
-               dateString.append ( tempdate.get( java.util.Calendar.MONTH ) +1 );
-               dateString.append( "-" );
-               if ( tempdate.get( java.util.Calendar.DAY_OF_MONTH  ) < 10 )
-               {
-                   dateString.append ( "0" );
-               }
-               dateString.append ( tempdate.get( java.util.Calendar.DAY_OF_MONTH ) );
-            
-               HOLogger.instance().log(getClass(), dateString );
-             */
-            if (de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker().getMatchArchiv(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                        .getModel()
-                                                                                                                                        .getBasics()
-                                                                                                                                        .getTeamId(),
-                                                                                                 tempdate)) {
-                //Zu allen vorhandenen Matches die Lineups holen, wenn noch nicht vorhanden
+            if (de.hattrickorganizer.gui.HOMainFrame.instance()
+					.getOnlineWorker().getMatchArchiv(HOVerwaltung.instance().getModel().getBasics().getTeamId(),tempdate)) {
+                // Zu allen vorhandenen Matches die Lineups holen, wenn noch nicht vorhanden
 				HOMainFrame.instance().getOnlineWorker().getAllLineups();
             }
         }
 
         if (m_jchSpielplan.isSelected()) {
-            //Immer aktuelle Saison und Liga
-            //ligaid );
+            // Immer aktuelle Saison und Liga
+            // ligaid );
             de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker().getSpielplan(-1, -1);
             StandingCreator.extractActual();
         }
