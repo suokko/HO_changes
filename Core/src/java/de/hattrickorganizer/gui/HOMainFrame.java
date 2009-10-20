@@ -5,8 +5,6 @@ import gui.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -38,12 +36,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import plugins.IPlugin;
 import plugins.ISpieler;
-import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
 import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
@@ -1805,43 +1801,9 @@ public final class HOMainFrame extends JFrame
 		checkSprachFile(UserParameter.instance().sprachDatei);
 
 		//font switch, because the default font doesn't support Georgian and Chinese characters
-		try {
-			if ("Georgian".equals(UserParameter.instance().sprachDatei)) {
-				FontUIResource fr = new FontUIResource("Sylfaen", Font.PLAIN, 12);
-				HO.setUIFont(fr);
-			} else if ("Chinese".equals(UserParameter.instance().sprachDatei)) {
-				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-				String chinesesample = "\u4e00";
-				String chFont = null;
-				// 1. try to use Arial Unicode MS
-				for (int j = 0; j < allfonts.length; j++) {
-				    if ("Arial Unicode MS".equalsIgnoreCase(allfonts[j].getFontName())) {
-				    	HOLogger.instance().log(HOMainFrame.class, "Found Arial Unicode MS");
-				    	chFont = "Arial Unicode MS";
-				    	break;
-				    }
-				}
-				// 2. Arial Unicode MS not found, check other fonts
-				if (chFont == null) {
-					for (int j = 0; j < allfonts.length; j++) {
-						if (allfonts[j].canDisplayUpTo(chinesesample) == -1) {
-							HOLogger.instance().log(HOMainFrame.class, "Font can handle Chinese: " + allfonts[j].getFontName());
-							chFont = allfonts[j].getFontName();
-							break;
-						}
-					}
-				}
-				FontUIResource fr = new FontUIResource(chFont, Font.PLAIN, 12);
-				HO.setUIFont(fr);
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class, "Error switching fonts: " + e);
-		}
+		// TODO
+		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
 
-		final ClassLoader loader =
-			new ImagePanel().getClass().getClassLoader();
-
-		//java.net.URL    url     =   loader.getResource ("sprache/"+UserParameter.instance ().sprachDatei+".properties");
 		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei, loader);
 		interuptionsWindow.setInfoText("Load latest Data");
 		HOVerwaltung.instance().loadLatestHoModel();
@@ -1869,12 +1831,7 @@ public final class HOMainFrame extends JFrame
 		interuptionsWindow.setInfoText("Starting Plugins");
 		HOMainFrame.instance().startPluginModuls(interuptionsWindow);
 
-		HOMainFrame
-			.instance()
-			.getAufstellungsPanel()
-			.getAufstellungsPositionsPanel()
-			.exportOldLineup(
-			"Actual");
+		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
 		//Anzeigen
 		interuptionsWindow.setInfoText("Prepare to show");
