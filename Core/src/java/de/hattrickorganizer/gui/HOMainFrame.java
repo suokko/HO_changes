@@ -6,6 +6,7 @@ import gui.UserParameter;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -1803,10 +1804,34 @@ public final class HOMainFrame extends JFrame
 		interuptionsWindow.setInfoText("Check Languagefiles");
 		checkSprachFile(UserParameter.instance().sprachDatei);
 
-		//font switch, because the default font doesn't support Georgian characters
+		//font switch, because the default font doesn't support Georgian and Chinese characters
 		try {
 			if ("Georgian".equals(UserParameter.instance().sprachDatei)) {
 				FontUIResource fr = new FontUIResource("Sylfaen", Font.PLAIN, 12);
+				HO.setUIFont(fr);
+			} else if ("Chinese".equals(UserParameter.instance().sprachDatei)) {
+				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+				String chinesesample = "\u4e00";
+				String chFont = null;
+				// 1. try to use Arial Unicode MS
+				for (int j = 0; j < allfonts.length; j++) {
+				    if ("Arial Unicode MS".equalsIgnoreCase(allfonts[j].getFontName())) {
+				    	HOLogger.instance().log(HOMainFrame.class, "Found Arial Unicode MS");
+				    	chFont = "Arial Unicode MS";
+				    	break;
+				    }
+				}
+				// 2. Arial Unicode MS not found, check other fonts
+				if (chFont == null) {
+					for (int j = 0; j < allfonts.length; j++) {
+						if (allfonts[j].canDisplayUpTo(chinesesample) == -1) {
+							HOLogger.instance().log(HOMainFrame.class, "Font can handle Chinese: " + allfonts[j].getFontName());
+							chFont = allfonts[j].getFontName();
+							break;
+						}
+					}
+				}
+				FontUIResource fr = new FontUIResource(chFont, Font.PLAIN, 12);
 				HO.setUIFont(fr);
 			}
 		} catch (Exception e) {
