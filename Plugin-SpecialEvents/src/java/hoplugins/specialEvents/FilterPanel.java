@@ -125,9 +125,9 @@ public class FilterPanel extends JPanel
             longshot.addActionListener(this);
 
         	setLayout(new BorderLayout());
-        	
+
         	JPanel filterTop = new JPanel();
-        	
+
             filterTop.add(gameTypSE);
             filterTop.add(gameTypAll);
             filterTop.add(new JLabel("                           "));
@@ -146,7 +146,7 @@ public class FilterPanel extends JPanel
         	filterBottom.add(penalty);
         	filterBottom.add(ifk);
         	filterBottom.add(longshot);
-        	
+
         	add (BorderLayout.NORTH, filterTop);
         	add (BorderLayout.SOUTH, filterBottom);
         }
@@ -155,6 +155,7 @@ public class FilterPanel extends JPanel
 //        	exr.printStackTrace();
             IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
             debugWindow.setVisible(true);
+            debugWindow.append("Error initializing FilterPanel:\n");
             debugWindow.append(exr);
         }
     }
@@ -223,27 +224,27 @@ public class FilterPanel extends JPanel
     {
         return counter.isSelected();
     }
-    
+
     public static boolean showFreekick()
     {
         return freekick.isSelected();
     }
-    
+
     public static boolean showPenalty()
     {
         return penalty.isSelected();
     }
-    
+
     public static boolean showIFK()
     {
         return ifk.isSelected();
     }
-    
+
     public static boolean showLongShot()
     {
         return longshot.isSelected();
-    }    
-    
+    }
+
     public void actionPerformed(ActionEvent actionevent)
     {
         SpecialEvents.newTableModel();

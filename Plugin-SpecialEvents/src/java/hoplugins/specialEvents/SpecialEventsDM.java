@@ -5,8 +5,9 @@ import hoplugins.commons.utils.PluginProperty;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -22,7 +23,6 @@ import plugins.IMatchLineupTeam;
 
 public class SpecialEventsDM
 {
-
 //    private Properties props;
     private IHOMiniModel miniModel;
     private static ImageIcon goalIcon;
@@ -55,10 +55,10 @@ public class SpecialEventsDM
     public static final int FREEKICK = 5;
     public static final int PENALTY = 6;
 
+    private static final DateFormat DF = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
 
     public SpecialEventsDM(IHOMiniModel miniModel)
     {
-//        this.props = props;
         this.miniModel = miniModel;
         homeEventIcon = createImageIcon(this, "/hoplugins/specialEvents/img/prechts.gif");
         guestEventIcon = createImageIcon(this, "/hoplugins/specialEvents/img/plinks.gif");
@@ -82,45 +82,37 @@ public class SpecialEventsDM
         teamId = miniModel.getBasics().getTeamId();
     }
 
-    public Vector<Vector<Object>> holeInfos(boolean allMatches, int saisonAnz, boolean friendlies)
-    {
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        highlightText = new Vector<String>();
-        try
-        {
-            Vector<IMatchKurzInfo> kurzInfos = SpecialEventsDataAccess.getCurrent().getAktMatchKurzInfos(saisonAnz, friendlies);
-            int zInd = 1;
-            for(Iterator<IMatchKurzInfo> iter = kurzInfos.iterator(); iter.hasNext();)
-            {
-                IMatchKurzInfo element = (IMatchKurzInfo)iter.next();
-                Vector<Vector<Object>> v = getMatchlines(element, allMatches, saisonAnz);
-                if(v != null && v.size() > 0)
-                {
-                    for(int j = 0; j < v.size(); j++)
-                    {
-                        if(j == 0)
-                        {
-                            zInd *= -1;
-                        }
-                        Vector<Object> vTemp = v.elementAt(j);
-                        vTemp.setElementAt((new Integer(zInd)).toString(), SpecialEventsPanel.HIDDENCOLUMN);
-                        data.add(vTemp);
-                    }
+    public Vector<Vector<Object>> holeInfos(boolean allMatches, int saisonAnz, boolean friendlies) {
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		highlightText = new Vector<String>();
+		try {
+			Vector<IMatchKurzInfo> kurzInfos = SpecialEventsDataAccess.getCurrent().getAktMatchKurzInfos(saisonAnz, friendlies);
+			int zInd = 1;
+			for (Iterator<IMatchKurzInfo> iter = kurzInfos.iterator(); iter
+					.hasNext();) {
+				IMatchKurzInfo element = (IMatchKurzInfo) iter.next();
+				Vector<Vector<Object>> v = getMatchlines(element, allMatches, saisonAnz);
+				if (v != null && v.size() > 0) {
+					for (int j = 0; j < v.size(); j++) {
+						if (j == 0) {
+							zInd *= -1;
+						}
+						Vector<Object> vTemp = v.elementAt(j);
+						vTemp.setElementAt((new Integer(zInd)).toString(),
+								SpecialEventsPanel.HIDDENCOLUMN);
+						data.add(vTemp);
+					}
+				}
+			}
 
-                }
-            }
+		} catch (Exception e) {
+			e.printStackTrace();
+			showDebug(e.toString());
+		}
+		return data;
+	}
 
-        }
-        catch(Exception e)
-        {
-//        	e.printStackTrace();
-            showDebug(e.toString());
-        }
-        return data;
-    }
-
-    private Vector<Vector<Object>> getMatchlines(IMatchKurzInfo kurzInfos, boolean allMatches, int saisonAnz)
-    {
+    private Vector<Vector<Object>> getMatchlines(IMatchKurzInfo kurzInfos, boolean allMatches, int saisonAnz) {
     	IMatchDetails details = miniModel.getMatchDetails(kurzInfos.getMatchID());
         String datum = getDateAsString(kurzInfos.getMatchDateAsTimestamp());
         Integer matchId = new Integer(kurzInfos.getMatchID());
@@ -135,18 +127,15 @@ public class SpecialEventsDM
         Vector<IMatchHighlight> seHighlights = new Vector<IMatchHighlight>();
         int weather = details.getWetterId();
 
-        for(Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();)
-        {
-            IMatchHighlight highlight = (IMatchHighlight)iter.next();
-            if(checkForSE(highlight))
-            {
-                seHighlights.add(highlight);
-            }
+        for (Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
+			IMatchHighlight highlight = (IMatchHighlight) iter.next();
+			if (checkForSE(highlight)) {
+				seHighlights.add(highlight);
+			}
         }
 
         Vector<Vector<Object>> lines = new Vector<Vector<Object>>();
-        if(allMatches && seHighlights.size() == 0)
-        {
+        if(allMatches && seHighlights.size() == 0) {
             Vector<Object> allNoSELine = new Vector<Object>();
             allNoSELine.add(datum);
             allNoSELine.add(matchId);
@@ -165,18 +154,14 @@ public class SpecialEventsDM
             allNoSELine.add("");
             lines.add(allNoSELine);
             highlightText.add("");
-        } else
-        {
+        } else {
             int lCounter = 0;
-            for(Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();)
-            {
+            for(Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
                 IMatchHighlight highlight = iter.next();
                 String se = format_Highlights(highlight);
-                if(se != null && !se.equals(""))
-                {
+                if(se != null && !se.equals("")) {
                     Vector<Object> singleLine = new Vector<Object>();
-                    if(++lCounter == 1)
-                    {
+                    if(++lCounter == 1)  {
                         singleLine.add(datum);
                         singleLine.add(matchId);
                         singleLine.add(heimTaktik);
@@ -186,8 +171,7 @@ public class SpecialEventsDM
                         singleLine.add(gastName);
                         singleLine.add(getOwnerIcon(highlight, false, heimId, gastId));
                         singleLine.add(gastTaktik);
-                    } else
-                    {
+                    } else {
                         singleLine.add("");
                         singleLine.add("");
                         singleLine.add("");
@@ -221,24 +205,11 @@ public class SpecialEventsDM
         return lines;
     }
 
-    private String getDateAsString(Timestamp date)
-    {
-        String datum = "";
-        String lang = miniModel.getHelper().getLanguageName();
-        SimpleDateFormat sdf;
-        if(lang.equals("Deutsch"))
-        {
-            sdf = new SimpleDateFormat("dd.MM.yyyy");
-        } else
-        {
-            sdf = new SimpleDateFormat("yyyy-MM-dd");
-        }
-        datum = sdf.format(date);
-        return datum;
-    }
+    private String getDateAsString(Timestamp date) {
+		return DF.format(date);
+	}
 
-    private ImageIcon getEventTypIcon(IMatchHighlight highlight)
-    {
+    private ImageIcon getEventTypIcon(IMatchHighlight highlight) {
     	if (isPositiveWeatherSE(highlight)) {
     		return weatherPositiveIcon;
     	} else if (isNegativeWeatherSE(highlight)) {
@@ -759,12 +730,11 @@ public class SpecialEventsDM
         return name;
     }
 
-    private void showDebug(String s)
-    {
-        IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
-        debugWindow.setVisible(true);
-        debugWindow.append(s);
-    }
+    private void showDebug(String s) {
+		IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
+		debugWindow.setVisible(true);
+		debugWindow.append("SpecialEvents Plugin: " + s);
+	}
 
     protected static ImageIcon createImageIcon(Object object, String path)
     {
