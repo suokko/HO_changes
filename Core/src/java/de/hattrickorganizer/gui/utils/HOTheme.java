@@ -19,26 +19,15 @@ import de.hattrickorganizer.tools.HOLogger;
  * Theme configuring HO colors, fonts and sizes.
  */
 public class HOTheme extends DefaultMetalTheme {
-    /*
-       private static final ColorUIResource primary1 = new ColorUIResource( 102, 102, 153);
-       private static final ColorUIResource primary2 = new ColorUIResource( 153, 153, 204);
-       private static final ColorUIResource primary3 = new ColorUIResource( 204, 204, 255);
-       private static final ColorUIResource secondary1 = new ColorUIResource( 102, 102, 102);
-       private static final ColorUIResource secondary2 = new ColorUIResource( 153, 153, 153);
-       private static final ColorUIResource secondary3 = new ColorUIResource( 204, 204, 204);
-     */
-
     private static final ColorUIResource primary1 = new ColorUIResource(106, 104, 100);
     private static final ColorUIResource primary2 = new ColorUIResource(159, 156, 150);
     private static final ColorUIResource primary3 = new ColorUIResource(212, 208, 200);
     private static final ColorUIResource secondary1 = new ColorUIResource(106, 104, 100);
     private static final ColorUIResource secondary2 = new ColorUIResource(159, 156, 150);
     private static final ColorUIResource secondary3 = new ColorUIResource(212, 208, 200);
-
     private static FontUIResource TEXTFONT;
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new HOTheme object.
      *
@@ -49,41 +38,31 @@ public class HOTheme extends DefaultMetalTheme {
         try {
 			if ("Georgian".equals(UserParameter.instance().sprachDatei)) {
 				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-				String geFont = null;
-				for (int j = 0; j < allfonts.length; j++) {
-				    if ("Arial Unicode MS".equalsIgnoreCase(allfonts[j].getFontName())) {
-				    	geFont = allfonts[j].getFontName();
-				    	break;
-				    }
+				String geFont = checkInstalledFont("BPG Nino Elite Round Cond", allfonts); // prefer BPG_Nino_Elite_Round_Cond
+				if (geFont == null) {
+					geFont = checkInstalledFont("Arial Unicode MS", allfonts); // Arial Unicode is the 2nd option
 				}
 				if (geFont == null) {
-					geFont = "Sylfaen";
+					geFont = checkInstalledFont("Sylfaen", allfonts); // try Sylfan as 3rd
 				}
-				TEXTFONT = new FontUIResource(geFont, Font.PLAIN, schriftgroesse);
-			} else if ("Chinese".equals(UserParameter.instance().sprachDatei)) {
-				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-				String chinesesample = "\u4e00";
-				String chFont = null;
-				// 1. try to use Arial Unicode MS
-				for (int j = 0; j < allfonts.length; j++) {
-				    if ("Arial Unicode MS".equalsIgnoreCase(allfonts[j].getFontName())) {
-				    	HOLogger.instance().log(HOMainFrame.class, "Found " + allfonts[j].getFontName());
-				    	chFont = allfonts[j].getFontName();
-				    	break;
-				    }
-				}
-				// 2. 2nd best option is SimSun
-				if (chFont == null) {
+				if (geFont == null) {
+					String georgiansample = "\u10f0";
 					for (int j = 0; j < allfonts.length; j++) {
-					    if ("SimSun".equalsIgnoreCase(allfonts[j].getFontName())) {
-					    	HOLogger.instance().log(HOMainFrame.class, "Found " + allfonts[j].getFontName());
-					    	chFont = allfonts[j].getFontName();
-					    	break;
-					    }
+						if (allfonts[j].canDisplayUpTo(georgiansample) == -1) {
+							HOLogger.instance().log(HOMainFrame.class, "Font can handle Georgian: " + allfonts[j].getFontName());
+							geFont = allfonts[j].getFontName();
+						}
 					}
 				}
-				// 3. still no font found yet, check other fonts
+				TEXTFONT = new FontUIResource((geFont != null ? geFont : "SansSerif"), Font.PLAIN, schriftgroesse);
+			} else if ("Chinese".equals(UserParameter.instance().sprachDatei)) {
+				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+				String chFont = checkInstalledFont("Arial Unicode MS", allfonts); // 1. try to use Arial Unicode MS
 				if (chFont == null) {
+					chFont = checkInstalledFont("SimSun", allfonts); // 2. 2nd best option is SimSun
+				}
+				if (chFont == null) { // 3. still no font found yet, check other fonts
+					String chinesesample = "\u4e00";
 					for (int j = 0; j < allfonts.length; j++) {
 						if (allfonts[j].canDisplayUpTo(chinesesample) == -1) {
 							HOLogger.instance().log(HOMainFrame.class, "Font can handle Chinese: " + allfonts[j].getFontName());
@@ -92,7 +71,7 @@ public class HOTheme extends DefaultMetalTheme {
 						}
 					}
 				}
-				TEXTFONT = new FontUIResource(chFont, Font.PLAIN, schriftgroesse);
+				TEXTFONT = new FontUIResource((chFont != null ? chFont : "SansSerif"), Font.PLAIN, schriftgroesse);
 			} else {
 				TEXTFONT = new FontUIResource("SansSerif", Font.PLAIN, schriftgroesse);
 			}
@@ -107,61 +86,31 @@ public class HOTheme extends DefaultMetalTheme {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final FontUIResource getControlTextFont() {
         return TEXTFONT;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final FontUIResource getMenuTextFont() {
         return TEXTFONT;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final FontUIResource getSubTextFont() {
         return TEXTFONT;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final FontUIResource getSystemTextFont() {
         return TEXTFONT;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final FontUIResource getUserTextFont() {
         return TEXTFONT;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final FontUIResource getWindowTitleFont() {
         return TEXTFONT;
@@ -173,21 +122,11 @@ public class HOTheme extends DefaultMetalTheme {
         return primary1;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	protected final ColorUIResource getPrimary2() {
         return primary2;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	protected final ColorUIResource getPrimary3() {
         return primary3;
@@ -199,21 +138,11 @@ public class HOTheme extends DefaultMetalTheme {
         return secondary1;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	protected final ColorUIResource getSecondary2() {
         return secondary2;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	protected final ColorUIResource getSecondary3() {
         return secondary3;
@@ -221,6 +150,17 @@ public class HOTheme extends DefaultMetalTheme {
 
     public static FontUIResource getDefaultFont() {
     	return TEXTFONT;
+    }
+
+    private static String checkInstalledFont(String targetFont, Font[] allfonts) {
+    	if (targetFont != null) {
+    		for (int j = 0; j < allfonts.length; j++) {
+    			if (targetFont.equalsIgnoreCase(allfonts[j].getFontName())) {
+    				return allfonts[j].getFontName();
+    			}
+    		}
+    	}
+    	return null;
     }
 
     /**
