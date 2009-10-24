@@ -51,6 +51,7 @@ public class HOTheme extends DefaultMetalTheme {
 						if (allfonts[j].canDisplayUpTo(georgiansample) == -1) {
 							HOLogger.instance().log(HOMainFrame.class, "Font can handle Georgian: " + allfonts[j].getFontName());
 							geFont = allfonts[j].getFontName();
+							break;
 						}
 					}
 				}
