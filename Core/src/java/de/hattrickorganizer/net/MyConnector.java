@@ -27,8 +27,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import sun.misc.BASE64Encoder;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.login.LoginDialog;
 import de.hattrickorganizer.logik.xml.XMLExtensionParser;
 import de.hattrickorganizer.logik.xml.XMLNewsParser;
+import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
 import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
@@ -43,7 +46,6 @@ import de.hattrickorganizer.tools.xml.XMLManager;
  */
 public class MyConnector implements plugins.IDownloadHelper {
 	//~ Static fields/initializers -----------------------------------------------------------------
-
 	static final private int chppID = 3330;
 	static final private String chppKey = "F283F8D8-9589-428D-87CD-96A2D9A73451";
 	static final private String htUrl = "www.hattrick.org";
@@ -69,11 +71,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private int m_iUserID = -1;
 
 	//~ Constructors -------------------------------------------------------------------------------
-
-	// public static       String          SERVER_NAME         = "195.149.159.156";//"www.hattrick.org";
-
 	/**
-	 * Creates a new instance of MyConnector
+	 * Creates a new instance of MyConnector.
 	 */
 	private MyConnector() {
 	}
@@ -81,9 +80,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	//~ Methods ------------------------------------------------------------------------------------
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the MyConnector instance.
 	 */
 	public static MyConnector instance() {
 		if (m_clInstance == null) {
@@ -135,9 +132,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * um nach einem Fehler zu restten
-	 *
-	 * @param value TODO Missing Constructuor Parameter Documentation
+	 * um nach einem Fehler zu resetten
 	 */
 	public void setAuthenticated(boolean value) {
 		m_bAuthenticated = value;
@@ -146,23 +141,18 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Getter for m_bAuthenticated.
 	 */
 	public boolean isAuthenticated() {
 		return m_bAuthenticated;
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Get and extract the cookies.
 	 */
 	private void getCookie() throws IOException {
 		final HttpURLConnection httpurlconnection =
-			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip))
-				.openConnection();
+			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip)).openConnection();
 		httpurlconnection.setRequestMethod("GET");
 		infoHO(httpurlconnection);
 
@@ -174,7 +164,12 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	private void extractCookie(String v) {
-		m_sCookie = v;
+		if (v != null) {
+			m_sCookie = v;
+		}
+		if (m_sCookie == null) {
+			return;
+		}
 		StringTokenizer st = new StringTokenizer(m_sCookie, ";");
 
 		// the specification dictates that the first name/value pair
@@ -206,10 +201,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt die Finanzen
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getEconomy() throws IOException {
 		final String url =
@@ -220,10 +211,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt die IP Adress-Seite
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getHattrickIPAdress() throws IOException {
 		final String surl = "http://"+htUrl+"/common/chppxml.axd?file=servers";
@@ -245,8 +232,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @param file ex. = /common/leagueDetails.asp?outputType=XML&actionType=view
 	 *
 	 * @return the complete file as String
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getHattrickXMLFile(String file) throws IOException {
 		if (!isAuthenticated()) {
@@ -263,10 +248,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt die Tabelle
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getLeagueDetails() throws IOException {
 		final String url =
@@ -277,13 +258,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt den Spielplan
-	 *
-	 * @param season angabe der Saison ( optinal &lt; 1 für aktuelle
-	 * @param ligaID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getLeagueFixtures(int season, int ligaID) throws IOException {
 		String url =
@@ -302,14 +276,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt das MatchArchiv als xml
-	 *
-	 * @param teamId TODO Missing Constructuor Parameter Documentation
-	 * @param firstDate TODO Missing Constructuor Parameter Documentation
-	 * @param lastDate TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getMatchArchiv(int teamId, String firstDate, String lastDate)
 		throws IOException {
@@ -333,13 +299,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt den Die Aufstellungsbewertung zu einem Spiel
-	 *
-	 * @param matchId angabe der Saison ( optinal &lt; 1 für aktuelle
-	 * @param teamId TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
 		String url =
@@ -358,12 +317,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt den Die Aufstellung zu einem Spiel
-	 *
-	 * @param matchId angabe der Saison ( optinal &lt; 1 für aktuelle
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
 		String url =
@@ -374,12 +327,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt den Die Aufstellungsbewertung zu einem Spiel
-	 *
-	 * @param matchId angabe der Saison ( optinal &lt; 1 für aktuelle
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getMatchdetails(int matchId) throws IOException {
 		String url =
@@ -394,13 +341,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt die matches.asp seite als xml
-	 *
-	 * @param teamId TODO Missing Constructuor Parameter Documentation
-	 * @param forceRefresh TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getMatchesASP(int teamId, boolean forceRefresh) throws IOException {
 		String url =
@@ -425,14 +365,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param surl TODO Missing Method Parameter Documentation
-	 * @param needLogin TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Get the content from a web page as string.
 	 */
 	public String getPage(String surl, boolean needLogin) throws IOException {
 		if (needLogin && !isAuthenticated()) {
@@ -459,10 +392,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt die Spielerdaten
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getPlayersAsp() throws IOException {
 		final String url =
@@ -585,7 +514,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		//gleich Einträge erstellen
 		for (int i = 0; i < (list.length - 1); i++) {
-			server[i] = new ServerVerweis(list[i]);
+			if (server != null) {
+				server[i] = new ServerVerweis(list[i]);
+			}
 		}
 
 		return server;
@@ -593,12 +524,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt die Teamdetails
-	 *
-	 * @param teamId TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getTeamdetails(int teamId) throws IOException {
 		String url =
@@ -612,10 +537,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt das Training
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getTraining() throws IOException {
 		final String url =
@@ -695,12 +616,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * lädt die Tabelle
-	 *
-	 * @param playerID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getTransferCompare(int playerID) throws IOException {
 		if (!isAuthenticated()) {
@@ -776,10 +691,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt die Vereinsdaten
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getVerein() throws IOException {
 		final String url =
@@ -792,14 +703,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param surl TODO Missing Method Parameter Documentation
-	 * @param needCookie TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Get the content of a web page in one string.
 	 */
 	public String getWebPage(String surl, boolean needCookie, boolean showError, boolean shortTimeOut) throws IOException {
 		final InputStream resultingInputStream = getWebFile(surl, needCookie, showError, shortTimeOut);
@@ -831,10 +735,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt die Weltdaten
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Constructuor Exception Documentation
 	 */
 	public String getWorldDetails() throws IOException {
 		final String url =
@@ -916,20 +816,14 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the region id for a certain team.
 	 */
 	public String fetchRegionID(int teamID) {
 		String xmlFile = "";
 
 		try {
 			if (!isAuthenticated()) {
-				final de.hattrickorganizer.gui.login.LoginDialog ld =
-					new de.hattrickorganizer.gui.login.LoginDialog(
-						de.hattrickorganizer.gui.HOMainFrame.instance());
+				final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
 				ld.setVisible(true);
 			}
 			xmlFile = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=team&teamID=" + teamID;
@@ -939,23 +833,21 @@ public class MyConnector implements plugins.IDownloadHelper {
 			return "-1";
 		}
 
-		return new de.hattrickorganizer.logik.xml.xmlTeamDetailsParser().fetchRegionID(xmlFile);
+		return new xmlTeamDetailsParser().fetchRegionID(xmlFile);
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Check, if a security code is set (actionType checksecuritycode).
 	 */
-	public boolean hasSecLogin() {
-		String url =
-			"http://"
+	public boolean hasSecLogin() throws Exception {
+		boolean checkOK;
+		try {
+			String url =
+				"http://"
 				+ gui.UserParameter.instance().htip
 				+ "/common/chppxml.axd?file=login&actionType=checksecuritycode&chppID="+chppID
 				+ "&chppKey="+chppKey+"&loginname="+m_sUserName;
-		boolean checkOK = true;
 
-		try {
 			final Document doc = XMLManager.instance().parseString(getPage(url, false));
 			Element ele = null;
 			Element tmpEle = null;
@@ -981,7 +873,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
 			checkOK = false;
-		};
+			throw e;
+		}
 		return checkOK;
 	}
 
@@ -1019,8 +912,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if ((s2 != null) && !s2.equals(m_sCookie)) {
 			//HOLogger.instance().log(getClass()," got a new Cookie: " + s2);
 			extractCookie(s2);
-			//m_sCookie = s2;
-
 		}
 
 		final String encoding = httpurlconnection.getContentEncoding();
@@ -1030,11 +921,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 		//the encoding type
 		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
 			resultingInputStream =
-				new java.util.zip.GZIPInputStream(httpurlconnection.getInputStream());
+				new GZIPInputStream(httpurlconnection.getInputStream());
 			HOLogger.instance().log(getClass()," Read GZIP.");
 		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
 			resultingInputStream =
-				new java.util.zip.InflaterInputStream(
+				new InflaterInputStream(
 					httpurlconnection.getInputStream(),
 					new java.util.zip.Inflater(true));
 			HOLogger.instance().log(getClass()," Read Deflated.");
@@ -1123,15 +1014,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Log off from HT.
 	 */
 	public void logout() throws IOException {
 		try {
-			getPage(
-				"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=login&action=logout",
-				true);
+			getPage("http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=login&action=logout", true);
 			m_bAuthenticated = false;
 			m_sCookie = null;
 			cookie = new HashMap<String, String>();
@@ -1148,14 +1035,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param url TODO Missing Method Parameter Documentation
-	 * @param displaysettingsScreen TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Get a file from a web server as input stream.
 	 */
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen, boolean showErrorMessage)
 		throws IOException {
@@ -1171,14 +1051,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param url TODO Missing Method Parameter Documentation
-	 * @param displaysettingsScreen TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 *
-	 * @throws IOException TODO Missing Method Exception Documentation
+	 * Get the content of a normal (non-HT) web page in one string.
 	 */
 	public String getUsalWebPage(String url, boolean displaysettingsScreen, boolean shortTimeOut) throws IOException {
 		if (displaysettingsScreen) {
@@ -1191,7 +1064,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		return getWebPage(url, false, false, shortTimeOut);
 	}
-	
+
 	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
 		return getUsalWebPage(url, displaysettingsScreen, false);
 	}
@@ -1202,12 +1075,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * registriert einen HO! Friendly Server im Internet
-	 *
-	 * @param ipAdress TODO Missing Constructuor Parameter Documentation
-	 * @param port TODO Missing Constructuor Parameter Documentation
-	 * @param info TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return MatchId, -1 == Error
 	 */
 	public int registerServer(String ipAdress, int port, String info) {
 		int i = -1;
@@ -1237,10 +1104,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * Informiert Inet Db das Friendly-Server weiterhin lauscht
-	 *
-	 * @param matchId TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public boolean sendAlive(int matchId) {
 		try {
@@ -1260,11 +1123,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * holt die Liste der verfügbaren Server aus der I-Net-Server-DB
-	 *
-	 * @param sb TODO Missing Constructuor Parameter Documentation
-	 * @param isServer TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return Array-Liste mit ServerVerweis Objekten
 	 */
 	public boolean sendSpielbericht(de.hattrickorganizer.model.Spielbericht sb, boolean isServer) {
 		String request = "http://tooldesign.ch/ho/index.php?cmd=sendSB";
@@ -1324,15 +1182,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 			HOLogger.instance().log(getClass(),"Send Fehlgeschlagen" + e);
 		}
 
-		return (s.trim().equalsIgnoreCase("True"));
+		return (s != null && s.trim().equalsIgnoreCase("True"));
 	}
 
 	/**
 	 * Informiert die DB das der Server nicht mehr zur verfügung steht
-	 *
-	 * @param matchId TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public boolean unregisterServer(int matchId) {
 		try {
@@ -1355,9 +1209,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 	/**
 	 * Get a web page using a URLconnection.
 	 */
-	private InputStream getWebFile(String surl, boolean needCookie, boolean showErrorMessage, boolean shortTimeOut) throws IOException {
+	private InputStream getWebFile(String surl, boolean needCookie,
+			boolean showErrorMessage, boolean shortTimeOut) throws IOException {
 		final URL url = new URL(surl);
-		final HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
+		final HttpURLConnection httpurlconnection = (HttpURLConnection) url
+				.openConnection();
 		httpurlconnection.setRequestMethod("GET");
 		infoHO(httpurlconnection);
 
@@ -1375,9 +1231,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 			}
 			httpurlconnection.connect();
 		} catch (Exception sox) {
-			HOLogger.instance().log(getClass(),sox);
+			HOLogger.instance().log(getClass(), sox);
 			if (showErrorMessage) {
-				JOptionPane.showMessageDialog( null, surl, "error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, surl, "error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 			return null;
 		}
@@ -1386,7 +1243,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			String s1 = httpurlconnection.getHeaderField("set-cookie");
 
 			if ((s1 != null) && !s1.equals(m_sCookie)) {
-				HOLogger.instance().log(getClass()," got a new Cookie: " + s1);
+				HOLogger.instance().log(getClass(), " got a new Cookie: " + s1);
 				extractCookie(s1);
 			}
 		}
@@ -1394,20 +1251,20 @@ public class MyConnector implements plugins.IDownloadHelper {
 		final String encoding = httpurlconnection.getContentEncoding();
 		InputStream resultingInputStream = null;
 
-		//create the appropriate stream wrapper based on
-		//the encoding type
+		// create the appropriate stream wrapper based on
+		// the encoding type
 		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-			resultingInputStream = new GZIPInputStream(httpurlconnection.getInputStream());
-			HOLogger.instance().log(getClass()," Read GZIP.");
+			resultingInputStream = new GZIPInputStream(httpurlconnection
+					.getInputStream());
+			HOLogger.instance().log(getClass(), " Read GZIP.");
 		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
-			resultingInputStream =
-				new InflaterInputStream(httpurlconnection.getInputStream(),	new Inflater(true));
-			HOLogger.instance().log(getClass()," Read Deflated.");
+			resultingInputStream = new InflaterInputStream(httpurlconnection
+					.getInputStream(), new Inflater(true));
+			HOLogger.instance().log(getClass(), " Read Deflated.");
 		} else {
 			resultingInputStream = httpurlconnection.getInputStream();
-			HOLogger.instance().log(getClass()," Read Normal.");
+			HOLogger.instance().log(getClass(), " Read Normal.");
 		}
-
 		return resultingInputStream;
 	}
 
