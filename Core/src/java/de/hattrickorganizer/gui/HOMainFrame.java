@@ -1073,29 +1073,7 @@ public final class HOMainFrame extends JFrame
 //
 //		m_jmMenuBar.add(m_jmHoFriendlyMenu);
 
-		//About
-		m_jmHomepageItem.addActionListener(this);
-		m_jmAbout.add(m_jmHomepageItem);
-
-		m_jmForumItem.addActionListener(this);
-		m_jmAbout.add(m_jmForumItem);
-
-		m_jmPluginsHomepage.addActionListener(this);
-		m_jmAbout.add(m_jmPluginsHomepage);
-
-		//        m_jmChatItem.addActionListener( this );
-		//        m_jmAbout.add ( m_jmChatItem );
-		m_jmHattrickItem.addActionListener(this);
-		m_jmAbout.add(m_jmHattrickItem);
-
-		m_jmAbout.addSeparator();
-
-		m_jmCreditsItem.addActionListener(this);
-		m_jmAbout.add(m_jmCreditsItem);
-
-		m_jmMenuBar.add(m_jmAbout);
-
-		//		Tool Menu
+		//Tool Menu
 		m_jmiKeeperTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiKeeperTool);
 
@@ -1118,6 +1096,28 @@ public final class HOMainFrame extends JFrame
 
 		//Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
+
+		//About
+		m_jmHomepageItem.addActionListener(this);
+		m_jmAbout.add(m_jmHomepageItem);
+
+		m_jmForumItem.addActionListener(this);
+		m_jmAbout.add(m_jmForumItem);
+
+		m_jmPluginsHomepage.addActionListener(this);
+		m_jmAbout.add(m_jmPluginsHomepage);
+
+		//        m_jmChatItem.addActionListener( this );
+		//        m_jmAbout.add ( m_jmChatItem );
+		m_jmHattrickItem.addActionListener(this);
+		m_jmAbout.add(m_jmHattrickItem);
+
+		m_jmAbout.addSeparator();
+
+		m_jmCreditsItem.addActionListener(this);
+		m_jmAbout.add(m_jmCreditsItem);
+
+		m_jmMenuBar.add(m_jmAbout);
 
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);
 
@@ -1490,10 +1490,28 @@ public final class HOMainFrame extends JFrame
 	 */
 	private void setDefaultFont(int groesse) {
 		try {
-			//com.jgoodies.plaf.plastic.Plastic3DLookAndFeel laf = new com.jgoodies.plaf.plastic.Plastic3DLookAndFeel();
 			final MetalLookAndFeel laf = new MetalLookAndFeel();
 			MetalLookAndFeel.setCurrentTheme(new HOTheme(UserParameter.instance().schriftGroesse));
-			javax.swing.UIManager.setLookAndFeel(laf);
+			// Um die systemweite MenuBar von Mac OS X zu verwenden
+			// http://www.pushing-pixels.org/?p=366
+			if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				Object mbUI = UIManager.get("MenuBarUI");
+				Object mUI = UIManager.get("MenuUI");
+				Object cbmiUI = UIManager.get("CheckBoxMenuItemUI");
+				Object rbmiUI = UIManager.get("RadioButtonMenuItemUI");
+				Object pmUI = UIManager.get("PopupMenuUI");
+
+				UIManager.setLookAndFeel(laf);
+
+				UIManager.put("MenuBarUI", mbUI);
+				UIManager.put("MenuUI", mUI);
+				UIManager.put("CheckBoxMenuItemUI", cbmiUI);
+				UIManager.put("RadioButtonMenuItemUI", rbmiUI);
+				UIManager.put("PopupMenuUI", pmUI);
+			} else {
+				UIManager.setLookAndFeel(laf);
+			}
 			SwingUtilities.updateComponentTreeUI(this);
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, e);
