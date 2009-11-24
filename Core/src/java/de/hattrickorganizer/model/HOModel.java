@@ -13,9 +13,9 @@ import plugins.IHTCalendar;
 import plugins.IHelper;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
+import plugins.IVerein;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.EPV;
-import de.hattrickorganizer.logik.HOFriendlyManager;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.model.matchlist.Spielplan;
@@ -35,14 +35,14 @@ public class HOModel {
     private Basics m_clBasics;
     private EPV epv = new EPV();
     private Finanzen m_clFinanzen;
-    private HOFriendlyManager m_clFriendlyManager = new HOFriendlyManager();
+//    private HOFriendlyManager m_clFriendlyManager = new HOFriendlyManager();
     private Liga m_clLiga;
     private Spielplan m_clSpielplan;
     private Stadium m_clStadium;
     private Team m_clTeam;
     private Vector<ISpieler> m_vOldSpieler = new Vector<ISpieler>();
     private Vector<ISpieler> m_vSpieler = new Vector<ISpieler>();
-    private Verein m_clVerein;
+    private IVerein m_clVerein;
     private XtraData m_clXtraDaten;
     private int m_iID = -1;
 
@@ -174,14 +174,14 @@ public class HOModel {
         return m_clFinanzen;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final HOFriendlyManager getHOFriendlyManager() {
-        return m_clFriendlyManager;
-    }
+//    /**
+//     * TODO Missing Method Documentation
+//     *
+//     * @return TODO Missing Return Method Documentation
+//     */
+//    public final HOFriendlyManager getHOFriendlyManager() {
+//        return m_clFriendlyManager;
+//    }
 
     /**
      * Setter for property m_iID.
@@ -354,7 +354,7 @@ public class HOModel {
      *
      * @param verein TODO Missing Constructuor Parameter Documentation
      */
-    public final void setVerein(Verein verein) {
+    public final void setVerein(IVerein verein) {
         m_clVerein = verein;
     }
 
@@ -365,7 +365,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Verein getVerein() {
+    public final IVerein getVerein() {
         return m_clVerein;
     }
 

@@ -107,7 +107,9 @@ public class Rating extends FeedbackObject {
 			int hrfID = dba.getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
 			ITeam team = dba.getTeam(hrfID);
 			short trainerType = (short)dba.getTrainerType(hrfID);
-			return createUrl (det, team, lineup, trainerType, isHomeTeam, stars);
+			int ti = team.getTrainingslevel();
+			int physios = dba.getVerein(hrfID).getMasseure();
+			return createUrl (det, team, lineup, trainerType, ti, physios, isHomeTeam, stars);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,7 +117,7 @@ public class Rating extends FeedbackObject {
 		return null;
 	}
 
-	public String createUrl(IMatchDetails det, ITeam team, SimpleLineUp lineup, short trainerType, boolean isHomeTeam, HashMap<Integer,Double> stars) {
+	public String createUrl(IMatchDetails det, ITeam team, SimpleLineUp lineup, short trainerType, int ti, int physios, boolean isHomeTeam, HashMap<Integer,Double> stars) {
 		try {
 			IHOMiniModel miniModel = getMiniModel();
 			StringBuffer url = new StringBuffer();
@@ -131,6 +133,8 @@ public class Rating extends FeedbackObject {
 					+ "&trainer=" + trainerType
 					+ "&ts=" + team.getStimmungAsInt()
 					+ "&tc=" + team.getSelbstvertrauenAsInt()
+					+ "&ti=" + ti
+					+ "&phy=" + physios
 			);
 			int plNum = 0;
 			for (int i = 1; i < 12; i++) {
@@ -170,9 +174,9 @@ public class Rating extends FeedbackObject {
 					plNum++;
 				}
 			}
-			
+
 			Vector<IMatchHighlight> highlights = det.getHighlights();
-			
+
 			url.append("&isHome="+(isHomeTeam?"1":"0"));
 			url.append("&pb="+getPullBackMinute(det));
 			url.append("&oc="+(miniModel.getHelper().getMatchHelper().hasOverConfidence(highlights, contributor)?"1":"0"));
@@ -181,48 +185,48 @@ public class Rating extends FeedbackObject {
 			url.append("&injury="+(miniModel.getHelper().getMatchHelper().hasInjury(highlights, contributor)?"1":"0"));
 			url.append("&weatherSE="+(miniModel.getHelper().getMatchHelper().hasWeatherSE(highlights, contributor)?"1":"0"));
 			url.append("&sub="+(miniModel.getHelper().getMatchHelper().hasManualSubstitution(highlights, contributor)?"1":"0"));
-			
+
 			url.append("&aId=" + det.getArenaID());
 			url.append("&rId=" + det.getRegionId());
-			
+
 			url.append("&hId=" + det.getHeimId());
 			url.append("&hGoals=" + det.getHomeGoals());
 			url.append("&hAtt=" + det.getHomeEinstellung());
 			url.append("&hTac=" + det.getHomeTacticType());
 			url.append("&hTacLvl=" + det.getHomeTacticSkill());
-			url.append("&hr[rd]=" + det.getHomeRightDef()); 
-			url.append("&hr[md]=" + det.getHomeMidDef()); 
-			url.append("&hr[ld]=" + det.getHomeLeftDef()); 
-			url.append("&hr[mid]=" + det.getHomeMidfield()); 
-			url.append("&hr[ra]=" + det.getHomeRightAtt()); 
-			url.append("&hr[ma]=" + det.getHomeMidAtt()); 
+			url.append("&hr[rd]=" + det.getHomeRightDef());
+			url.append("&hr[md]=" + det.getHomeMidDef());
+			url.append("&hr[ld]=" + det.getHomeLeftDef());
+			url.append("&hr[mid]=" + det.getHomeMidfield());
+			url.append("&hr[ra]=" + det.getHomeRightAtt());
+			url.append("&hr[ma]=" + det.getHomeMidAtt());
 			url.append("&hr[la]=" + det.getHomeLeftAtt());
-			url.append("&hr[ifkd]=" + getIfkRating(highlights, det.getHeimId(), true)); 
-			url.append("&hr[ifka]=" + getIfkRating(highlights, det.getHeimId(), false)); 
-			
+			url.append("&hr[ifkd]=" + getIfkRating(highlights, det.getHeimId(), true));
+			url.append("&hr[ifka]=" + getIfkRating(highlights, det.getHeimId(), false));
+
 			url.append("&gId=" + det.getGastId());
 			url.append("&gGoals=" + det.getGuestGoals());
 			url.append("&gAtt=" + det.getGuestEinstellung());
 			url.append("&gTac=" + det.getGuestTacticType());
 			url.append("&gTacLvl=" + det.getGuestTacticSkill());
-			url.append("&gr[rd]=" + det.getGuestRightDef()); 
-			url.append("&gr[md]=" + det.getGuestMidDef()); 
-			url.append("&gr[ld]=" + det.getGuestLeftDef()); 
-			url.append("&gr[mid]=" + det.getGuestMidfield()); 
-			url.append("&gr[ra]=" + det.getGuestRightAtt()); 
-			url.append("&gr[ma]=" + det.getGuestMidAtt()); 
-			url.append("&gr[la]=" + det.getGuestLeftAtt()); 
-			url.append("&gr[ifkd]=" + getIfkRating(highlights, det.getGastId(), true)); 
-			url.append("&gr[ifka]=" + getIfkRating(highlights, det.getGastId(), false)); 
+			url.append("&gr[rd]=" + det.getGuestRightDef());
+			url.append("&gr[md]=" + det.getGuestMidDef());
+			url.append("&gr[ld]=" + det.getGuestLeftDef());
+			url.append("&gr[mid]=" + det.getGuestMidfield());
+			url.append("&gr[ra]=" + det.getGuestRightAtt());
+			url.append("&gr[ma]=" + det.getGuestMidAtt());
+			url.append("&gr[la]=" + det.getGuestLeftAtt());
+			url.append("&gr[ifkd]=" + getIfkRating(highlights, det.getGastId(), true));
+			url.append("&gr[ifka]=" + getIfkRating(highlights, det.getGastId(), false));
 
-			url.append("&weather=" + det.getWetterId()); 
-			url.append("&spect=" + det.getZuschauer()); 
-			url.append("&spectT=" + det.getSoldTerraces()); 
-			url.append("&spectB=" + det.getSoldBasic()); 
-			url.append("&spectR=" + det.getSoldRoof()); 
-			url.append("&spectV=" + det.getSoldVIP()); 
+			url.append("&weather=" + det.getWetterId());
+			url.append("&spect=" + det.getZuschauer());
+			url.append("&spectT=" + det.getSoldTerraces());
+			url.append("&spectB=" + det.getSoldBasic());
+			url.append("&spectR=" + det.getSoldRoof());
+			url.append("&spectV=" + det.getSoldVIP());
 
-			
+
 			Iterator<IMatchHighlight> iter = highlights.iterator();
 			int hlNum = 0;
 			while (iter.hasNext()) {
@@ -237,8 +241,8 @@ public class Rating extends FeedbackObject {
 				url.append("&hl["+hlNum+"][oHome]="+(curHighlight.getGehilfeHeim()?"1":"0"));
 				hlNum++;
 			}
-			
-	        url.append("&ver=" + getFeedbackVersion()); 
+
+	        url.append("&ver=" + getFeedbackVersion());
 			return (url.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -249,7 +253,7 @@ public class Rating extends FeedbackObject {
 	/**
 	 * Get the minute with the 'Pull back to defend lead' event
 	 * if not existent, return -1
-	 * 
+	 *
 	 * @param det	Match details
 	 * @return		minute of the DefendLead event
 	 */
@@ -266,7 +270,7 @@ public class Rating extends FeedbackObject {
 		}
 		return -1;
 	}
-	
+
 	private static int getIfkRating (Vector<IMatchHighlight> highlights, int teamId, boolean def) {
 		Iterator<IMatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
@@ -285,7 +289,7 @@ public class Rating extends FeedbackObject {
 		}
 		return -1;
 	}
-	
+
 	public static Timestamp getCompletedDate() {
 		return completedDate;
 	}
@@ -293,5 +297,5 @@ public class Rating extends FeedbackObject {
 	public static void setCompletedDate(Timestamp completedDate) {
 		Rating.completedDate = completedDate;
 	}
-	
+
 }

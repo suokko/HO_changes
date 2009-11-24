@@ -1,9 +1,6 @@
 // %2109680998:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
-
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,6 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import plugins.IVerein;
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.model.HOVerwaltung;
+
 
 /**
  * Zeigt die Vereininformationen an
@@ -21,7 +22,7 @@ import javax.swing.SwingConstants;
 final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
 
 	private static final long serialVersionUID = 8873968321073527819L;
-	
+
 	//~ Instance fields ----------------------------------------------------------------------------
 
     private final ColorLabelEntry m_jpAerzte = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
@@ -79,7 +80,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
      * TODO Missing Method Documentation
      */
     private void setLabels() {
-        final de.hattrickorganizer.model.Verein verein = HOVerwaltung.instance().getModel()
+        final IVerein verein = HOVerwaltung.instance().getModel()
                                                                      .getVerein();
 
         m_jpTWTrainer.setText(verein.getTorwartTrainer() + "");
@@ -97,7 +98,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        
+
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;

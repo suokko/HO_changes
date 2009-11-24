@@ -3,6 +3,7 @@ package de.hattrickorganizer.database;
 import java.sql.Timestamp;
 
 import plugins.ITeam;
+import plugins.IVerein;
 
 /**
  * Adapter to make some basic DBZugriff functions accessible for plugins.
@@ -40,4 +41,15 @@ public class DBAdapter implements plugins.IDBAdapter {
 	public int getTrainerType(int hrfID) {
 		return DBZugriff.instance().getTrainerType(hrfID);
 	}
+
+	/**
+	 * Returns the Verein object for the given hrf dataset
+	 *
+	 * @param hrfID
+	 * @return
+	 */
+	public IVerein getVerein(int hrfID) {
+		return DBZugriff.instance().getVerein(hrfID);
+	}
+
 }
