@@ -11,7 +11,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>Hattrick Organizer</string>
 	<key>CFBundleIconFile</key>
-	<string>GenericJavaApp.icns</string>
+	<string>HO.icns</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
