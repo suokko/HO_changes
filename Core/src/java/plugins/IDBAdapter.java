@@ -30,4 +30,12 @@ public interface IDBAdapter {
 	 * @return constant for the trainer type
 	 */
 	int getTrainerType(int hrfID);
+
+	/**
+	 * Returns the Verein object for the given hrf dataset
+	 *
+	 * @param hrfID
+	 * @return
+	 */
+	IVerein getVerein(int hrfID);
 }

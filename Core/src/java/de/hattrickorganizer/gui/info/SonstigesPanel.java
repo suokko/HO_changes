@@ -12,10 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import plugins.IVerein;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -105,7 +105,7 @@ final class SonstigesPanel extends JPanel implements de.hattrickorganizer.gui.Re
      * TODO Missing Method Documentation
      */
     private void setLabels() {
-        final Verein verein = HOVerwaltung.instance().getModel().getVerein();
+        final IVerein verein = HOVerwaltung.instance().getModel().getVerein();
         final Finanzen finanzen = HOVerwaltung.instance().getModel().getFinanzen();
 
         DecimalFormat df = new DecimalFormat("###,###,###,##0");

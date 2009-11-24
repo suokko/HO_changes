@@ -163,14 +163,14 @@ public class HOMiniModel implements IHOMiniModel {
         return de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper.instance();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IHOFriendlyManager getHOFriendlyManager() {
-        return getModel().getHOFriendlyManager();
-    }
+//    /**
+//     * TODO Missing Method Documentation
+//     *
+//     * @return TODO Missing Return Method Documentation
+//     */
+//    public IHOFriendlyManager getHOFriendlyManager() {
+//        return getModel().getHOFriendlyManager();
+//    }
 
     /**
      * TODO Missing Method Documentation
