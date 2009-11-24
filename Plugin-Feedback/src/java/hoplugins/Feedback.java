@@ -42,7 +42,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Plugin version constant */
-    public static final double PLUGIN_VERSION = 0.43;
+    public static final double PLUGIN_VERSION = 0.44;
 
     /** Plugin Id */
     private static final int PLUGIN_ID = 42;
@@ -75,10 +75,10 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     /**
      * This method is called when new data is available
      * (i.e. after a download, after setting options, after sub skill recalculation...)
-     * 
+     *
      * It creates the FeedbackObject lists with the upload data
-     * 
-     * The lists are rebuild only, if a new HRF is available 
+     *
+     * The lists are rebuild only, if a new HRF is available
      */
     public final void refresh() {
     	miniModel = Commons.getModel();
@@ -90,11 +90,11 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
 
         Timestamp curHrfDate = miniModel.getBasics().getDatum();
 
-        // If new HRF available... 
-        // (i.e. a change in the options or a subskill recalc IS NOT sufficient) 
+        // If new HRF available...
+        // (i.e. a change in the options or a subskill recalc IS NOT sufficient)
         if (curHrfDate.after(FeedbackSettingDAO.getLastHrfDate())) {
             // If activated and not stopped
-            // build a list starting with the last COMPLETED date  
+            // build a list starting with the last COMPLETED date
             if (FeedbackSettingDAO.isAutomatic(FeedbackConstants.TYPE_RATING) &&
             		!FeedbackSettingDAO.isStopUpload(FeedbackConstants.TYPE_RATING)) {
             	feedbackObjects[FeedbackConstants.TYPE_RATING] =
@@ -103,8 +103,8 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
             							new Timestamp(0)));
             }
 
-            // If activated and not stopped, 
-            // build a list starting with the last COMPLETED date  
+            // If activated and not stopped,
+            // build a list starting with the last COMPLETED date
             if (FeedbackSettingDAO.isAutomatic(FeedbackConstants.TYPE_TRAINING) &&
             		!FeedbackSettingDAO.isStopUpload(FeedbackConstants.TYPE_TRAINING)) {
             	feedbackObjects[FeedbackConstants.TYPE_TRAINING] =
@@ -113,8 +113,8 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
             							new Timestamp(0)));
             }
 
-            // If activated and not stopped, 
-            // build a list starting with the last COMPLETED date  
+            // If activated and not stopped,
+            // build a list starting with the last COMPLETED date
             if (FeedbackSettingDAO.isAutomatic(FeedbackConstants.TYPE_TRANSFERS) &&
             		!FeedbackSettingDAO.isStopUpload(FeedbackConstants.TYPE_TRANSFERS)) {
             	feedbackObjects[FeedbackConstants.TYPE_TRANSFERS] =
@@ -125,7 +125,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
 
             // Check, if something needs to be uploaded
             checkLists();
-            
+
         }
 
         FeedbackSettingDAO.setLastHrfDate(curHrfDate);
@@ -147,7 +147,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     		}
     	}
     }
-    
+
     /**
      * This method is called on HO startup
      */
@@ -169,7 +169,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
 
     /**
      * Upload a single Feedback Object
-     * 
+     *
      * @param fo
      * @return
      */
@@ -198,7 +198,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
 
     /**
      * Upload a list of FeedbackObjects to the server
-     * 
+     *
      * @param feedbackObjects
      * @return
      */
