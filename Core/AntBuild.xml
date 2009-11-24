@@ -187,7 +187,7 @@
 				<equals arg1="${private}" arg2="" />
 			</and>
 			<then>
-				<property name="hofullversion" value="${hoversion}" />
+				<property name="hofullversion" value="${hoversion}${svninfo.rev}" />
 			</then>
 			<else>
 				<property name="hofullversion" value="${hoversion}${buildinfo}" />
