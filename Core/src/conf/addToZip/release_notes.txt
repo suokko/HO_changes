@@ -14,6 +14,7 @@ Changelist HO! 1.425
 - Fix bug in stadium statistics (>100% usage)
 - Using team experience formula by kopsterkespits as default now
 - team captain's value in lineup now shows the predicted team experience using this player as captain
+- MacOS: HO now uses a modern JavaApplicationStub (no need for Rosetta anymore) and the Aqua toolbars (thx to DerKanzler)
 
 Language updates:
 -----------------
@@ -26,8 +27,8 @@ Language updates:
 
 Plugin Updates:
 ---------------
-- SpecialEvents 1.22 (added weather SEs, counters, set pieces...)
-- Feedback 0.43 (included in HO 1.425)
+- SpecialEvents 1.221 (added weather SEs, counters, set pieces...)
+- Feedback 0.44 (included in HO 1.425)
 - TeamAnalyzer 2.70 (included in HO 1.425, using new formula for rating ratios)
 
 Special Notes:
