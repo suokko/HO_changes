@@ -90,12 +90,12 @@ public interface IHOMiniModel {
      */
     public plugins.IGUI getGUI();
 
-    /**
-     * get HOFriendlyManager
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IHOFriendlyManager getHOFriendlyManager();
+//    /**
+//     * get HOFriendlyManager
+//     *
+//     * @return TODO Missing Return Method Documentation
+//     */
+//    public IHOFriendlyManager getHOFriendlyManager();
 
     /**
      * Returns the HO! Version

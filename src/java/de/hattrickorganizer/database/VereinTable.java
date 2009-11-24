@@ -3,6 +3,7 @@ package de.hattrickorganizer.database;
 import java.sql.ResultSet;
 import java.sql.Types;
 
+import plugins.IVerein;
 import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -10,7 +11,7 @@ public final class VereinTable extends AbstractTable {
 
 	/** tablename **/
 	public final static String TABLENAME = "VEREIN";
-	
+
 	protected VereinTable(JDBCAdapter  adapter){
 		super( TABLENAME, adapter );
 	}
@@ -43,7 +44,7 @@ public final class VereinTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param verein TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveVerein(int hrfId, Verein verein) {
+	public void saveVerein(int hrfId, IVerein verein) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -83,7 +84,7 @@ public final class VereinTable extends AbstractTable {
 			adapter.executeUpdate(statement);
 		}
 	}
-	
+
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
 	 *
@@ -110,5 +111,5 @@ public final class VereinTable extends AbstractTable {
 
 		return verein;
 	}
-	
+
 }

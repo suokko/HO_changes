@@ -17,6 +17,7 @@ import plugins.IMatchLineupPlayer;
 import plugins.IPaarung;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import plugins.IVerein;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.gui.model.CBItem;
@@ -1213,7 +1214,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Verein getVerein(int hrfID) {
+	public IVerein getVerein(int hrfID) {
 		return ((VereinTable) getTable(VereinTable.TABLENAME)).getVerein(hrfID);
 	}
 
@@ -1223,7 +1224,7 @@ public class DBZugriff {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param verein TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveVerein(int hrfId, Verein verein) {
+	public void saveVerein(int hrfId, IVerein verein) {
 		((VereinTable) getTable(VereinTable.TABLENAME)).saveVerein(hrfId, verein);
 	}
 
