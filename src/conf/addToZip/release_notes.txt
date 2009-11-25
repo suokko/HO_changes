@@ -14,6 +14,7 @@ Changelist HO! 1.425
 - Fix bug in stadium statistics (>100% usage)
 - Using team experience formula by kopsterkespits as default now
 - team captain's value in lineup now shows the predicted team experience using this player as captain
+- improve support for non latin characters
 - MacOS: HO now uses a modern JavaApplicationStub (no need for Rosetta anymore) and the Aqua toolbars (thx to DerKanzler)
 
 Language updates:
@@ -24,6 +25,7 @@ Language updates:
 - fixed Czech skill names
 - add "Greeklish" as new HO language (big thx to Angelos!)
 - improve Slowak translation (thx refri)
+- add Chinese as new HO languag (thx Ryan Li!)
 
 Plugin Updates:
 ---------------
