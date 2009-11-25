@@ -26,7 +26,7 @@ public class Nthrf implements IPlugin, IRefreshable, IOfficialPlugin {
 	// plugin version constant
 	public static final double PLUGIN_VERSION = 0.2;
 	// plugin id
-	private static final int PLUGIN_ID = 43;
+	private static final int PLUGIN_ID = 44;
 	// debug mode
 	public static boolean DEBUG = false;
 
