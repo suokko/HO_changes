@@ -59,6 +59,13 @@ public class PotW implements ActionListener,IPlugin,ChangeListener, plugins.IRef
 		return "Players of the Week V " + version + "by Ivian (Ivian@gmx.net)";
 	}
 
+	/**
+	 * Plugin version.
+	 */
+    public double getVersion() {
+        return version;
+    }
+
 	public void refresh ()
 	{
 		spieltag = ((Integer) cSpieltag.getValue()).intValue();
