@@ -160,4 +160,19 @@
     <lang_id>32</lang_id>
     <version>3.5</version>
   </property>
+  <property>
+    <datei>Greeklish.properties</datei>
+    <lang_id>33</lang_id>
+    <version>3.5</version>
+  </property>
+  <property>
+    <datei>Vlaams.properties</datei>
+    <lang_id>34</lang_id>
+    <version>3.6</version>
+  </property>
+  <property>
+    <datei>Chinese.properties</datei>
+    <lang_id>35</lang_id>
+    <version>3.5</version>
+  </property>
 </languages>
