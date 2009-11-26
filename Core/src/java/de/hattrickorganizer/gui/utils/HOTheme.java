@@ -12,7 +12,6 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
 
 import de.hattrickorganizer.HO;
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
@@ -36,49 +35,49 @@ public class HOTheme extends DefaultMetalTheme {
     public HOTheme(int schriftgroesse) {
         super();
         try {
-			if ("Georgian".equals(UserParameter.instance().sprachDatei)) {
+			if ("Georgian".equalsIgnoreCase(UserParameter.instance().sprachDatei)) {
+				String georgiansample = "\u10d0\u10e0\u10f0\u2013"; // different Georgian chars used by HO
 				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-				String geFont = checkInstalledFont("BPG Nino Elite Round Cond", allfonts); // prefer BPG_Nino_Elite_Round_Cond
+				String geFont = checkInstalledFont("BPG Nino Elite Round Cond", georgiansample, allfonts); // prefer BPG_Nino_Elite_Round_Cond
 				if (geFont == null) {
-					geFont = checkInstalledFont("Arial Unicode MS", allfonts); // Arial Unicode is the 2nd option
+					geFont = checkInstalledFont("Arial Unicode MS", georgiansample, allfonts); // Arial Unicode is the 2nd option
 				}
 				if (geFont == null) {
-					geFont = checkInstalledFont("Sylfaen", allfonts); // try Sylfan as 3rd
+					geFont = checkInstalledFont("Sylfaen", georgiansample, allfonts); // try Sylfan as 3rd
 				}
 				if (geFont == null) {
-					String georgiansample = "\u10f0";
 					for (int j = 0; j < allfonts.length; j++) {
 						if (allfonts[j].canDisplayUpTo(georgiansample) == -1) {
-							HOLogger.instance().log(HOMainFrame.class, "Font can handle Georgian: " + allfonts[j].getFontName());
 							geFont = allfonts[j].getFontName();
 							break;
 						}
 					}
 				}
+				HOLogger.instance().log(getClass(), "Use Font: " + geFont);
 				TEXTFONT = new FontUIResource((geFont != null ? geFont : "SansSerif"), Font.PLAIN, schriftgroesse);
-			} else if ("Chinese".equals(UserParameter.instance().sprachDatei)) {
+			} else if ("Chinese".equalsIgnoreCase(UserParameter.instance().sprachDatei)) {
+				String chinesesample = "\u4e00\u524d\u672a\u7ecf\u80fd\u9996"; // different Chinese chars used by HO
 				Font[] allfonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-				String chFont = checkInstalledFont("Arial Unicode MS", allfonts); // 1. try to use Arial Unicode MS
+				String chFont = checkInstalledFont("SimSun", chinesesample, allfonts); // 1. best option is SimSun
 				if (chFont == null) {
-					chFont = checkInstalledFont("SimSun", allfonts); // 2. 2nd best option is SimSun
+					chFont = checkInstalledFont("Arial Unicode MS", chinesesample, allfonts); // 2. try to use Arial Unicode MS
 				}
 				if (chFont == null) { // 3. still no font found yet, check other fonts
-					String chinesesample = "\u4e00";
 					for (int j = 0; j < allfonts.length; j++) {
 						if (allfonts[j].canDisplayUpTo(chinesesample) == -1) {
-							HOLogger.instance().log(HOMainFrame.class, "Font can handle Chinese: " + allfonts[j].getFontName());
 							chFont = allfonts[j].getFontName();
 							break;
 						}
 					}
 				}
+				HOLogger.instance().log(getClass(), "Use Font: " + chFont);
 				TEXTFONT = new FontUIResource((chFont != null ? chFont : "SansSerif"), Font.PLAIN, schriftgroesse);
 			} else {
 				TEXTFONT = new FontUIResource("SansSerif", Font.PLAIN, schriftgroesse);
 			}
 			setUIFont(TEXTFONT);
 		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class, "Error switching fonts: " + e);
+			HOLogger.instance().log(getClass(), "Error switching fonts: " + e);
 		}
 
         //Ausnahme TitledBorderfont nicht Bold
@@ -153,10 +152,10 @@ public class HOTheme extends DefaultMetalTheme {
     	return TEXTFONT;
     }
 
-    private static String checkInstalledFont(String targetFont, Font[] allfonts) {
+    private static String checkInstalledFont(String targetFont, String sample, Font[] allfonts) {
     	if (targetFont != null) {
     		for (int j = 0; j < allfonts.length; j++) {
-    			if (targetFont.equalsIgnoreCase(allfonts[j].getFontName())) {
+    			if (targetFont.equalsIgnoreCase(allfonts[j].getFontName()) && (sample == null || allfonts[j].canDisplayUpTo(sample) == -1)) {
     				return allfonts[j].getFontName();
     			}
     		}
