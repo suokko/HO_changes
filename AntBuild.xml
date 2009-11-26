@@ -600,7 +600,7 @@
 					<equals arg1="${dev}" arg2="" />
 					<then>
 						<property name="makedeb.packagename" value="ho1" />
-						<property name="makedeb.fullversion" value="${makedeb.hoversion}" />
+						<property name="makedeb.fullversion" value="${makedeb.hoversion}-${makedeb.svnrev}" />
 						<property name="makedeb.terminal" value="false" />
 					</then>
 					<else>
