@@ -107,9 +107,11 @@ public class Rating extends FeedbackObject {
 			int hrfID = dba.getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
 			ITeam team = dba.getTeam(hrfID);
 			short trainerType = (short)dba.getTrainerType(hrfID);
-			int ti = team.getTrainingslevel();
-			int physios = dba.getVerein(hrfID).getMasseure();
-			return createUrl (det, team, lineup, trainerType, ti, physios, isHomeTeam, stars);
+			int physios = -1;
+			try {
+				physios = dba.getVerein(hrfID).getMasseure();
+			} catch (Exception e) {/** Nothing **/}
+			return createUrl (det, team, lineup, trainerType, physios, isHomeTeam, stars);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,7 +119,7 @@ public class Rating extends FeedbackObject {
 		return null;
 	}
 
-	public String createUrl(IMatchDetails det, ITeam team, SimpleLineUp lineup, short trainerType, int ti, int physios, boolean isHomeTeam, HashMap<Integer,Double> stars) {
+	public String createUrl(IMatchDetails det, ITeam team, SimpleLineUp lineup, short trainerType, int physios, boolean isHomeTeam, HashMap<Integer,Double> stars) {
 		try {
 			IHOMiniModel miniModel = getMiniModel();
 			StringBuffer url = new StringBuffer();
@@ -133,7 +135,7 @@ public class Rating extends FeedbackObject {
 					+ "&trainer=" + trainerType
 					+ "&ts=" + team.getStimmungAsInt()
 					+ "&tc=" + team.getSelbstvertrauenAsInt()
-					+ "&ti=" + ti
+					+ "&ti=" + team.getTrainingslevel()
 					+ "&phy=" + physios
 			);
 			int plNum = 0;
