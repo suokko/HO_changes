@@ -1,5 +1,15 @@
 Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.426
+====================
+
+Language updates:
+-----------------
+- fix Spanish specialty names
+
+Plugin Updates:
+---------------
+
 Changelist HO! 1.425
 ====================
 - fixed problem of missing match highlights / reports when downloading games with the team analyzer
