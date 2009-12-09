@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.model;
 
 import java.awt.Color;
+import java.text.DateFormat;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
@@ -10,6 +11,10 @@ import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ProgressbarTableEntry;
+import de.hattrickorganizer.model.Finanzen;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -23,172 +28,90 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7187251269604772672L;
 
-	/** TODO Missing Parameter Documentation */
     public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
 
-    /** TODO Missing Parameter Documentation */
-
-    //	League match.	
+    //	League match.
     public static final Color LIGASPIEL = new Color(255, 255, 200);
-
-    /** TODO Missing Parameter Documentation */
-
-    //	Qualification match.	
+    //	Qualification match.
     public static final Color QUALISPIEL = new Color(255, 200, 200);
-
-    /** TODO Missing Parameter Documentation */
-
-    //	Cup match (standard league cup).	
+    //	Cup match (standard league cup).
     public static final Color POKALSPIEL = new Color(200, 255, 200);
-
-    /** TODO Missing Parameter Documentation */
-
-    //	Friendly (normal rules).	
+    //	Friendly (normal rules).
     public static final Color TESTSPIEL = Color.white;
-
-    /** TODO Missing Parameter Documentation */
-
-    //	Friendly (cup rules).	
+    //	Friendly (cup rules).
     public static final Color TESTPOKALSPIEL = Color.white;
-
-    /** TODO Missing Parameter Documentation */
-
-    //	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).	
+    //	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).
     public static final Color INTSPIEL = Color.lightGray;
-
-    /** TODO Missing Parameter Documentation */
-
-    //	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).	
+    //	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).
     public static final Color INTCUPSPIEL = Color.lightGray;
-
-    /** TODO Missing Parameter Documentation */
-
-    //	International friendly (normal rules).	
+    //	International friendly (normal rules).
     public static final Color INT_TESTSPIEL = Color.white;
-
-    /** TODO Missing Parameter Documentation */
-
-    //	International friendly (cup rules).	
+    //	International friendly (cup rules).
     public static final Color INT_TESTCUPSPIEL = Color.white;
-
-    /** TODO Missing Parameter Documentation */
-
-    //	National teams competition match (normal rules).	
+    //	National teams competition match (normal rules).
     public static final Color LAENDERSPIEL = new Color(220, 220, 255);
-
-    /** TODO Missing Parameter Documentation */
-
-    //	National teams competition match (cup rules).	
+    //	National teams competition match (cup rules).
     public static final Color LAENDERCUPSPIEL = new Color(220, 220, 255);
-
-    /** TODO Missing Parameter Documentation */
-
     //	National teams friendly.
     public static final Color TESTLAENDERSPIEL = new Color(220, 220, 255);
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Datum"),
-                                            
+			HOVerwaltung.instance().getLanguageString("Datum"),
+			// Spielart
+			HOVerwaltung.instance().getLanguageString("Spielart"),
+			// Gast
+			HOVerwaltung.instance().getLanguageString("Gast"),
+			// Ergebnis
+			HOVerwaltung.instance().getLanguageString("Ergebnis"),
+			// Wetter
+			"",
+			// MatchId
+			HOVerwaltung.instance().getLanguageString("ID"),
+			// Stadiongroesse
+			HOVerwaltung.instance().getLanguageString("Aktuell"),
+			// Zuschauer
+			HOVerwaltung.instance().getLanguageString("Zuschauer"),
+			// Auslastung
+			"%",
+			// Fananzahl
+			HOVerwaltung.instance().getLanguageString("Fans"),
+			HOVerwaltung.instance().getLanguageString("Fans") + " / "
+					+ HOVerwaltung.instance().getLanguageString("Wochen"),
+			HOVerwaltung.instance().getLanguageString("Zuschauer") + " / "
+					+ HOVerwaltung.instance().getLanguageString("Fans"),
+			// Stimmung
+			HOVerwaltung.instance().getLanguageString("Fans"),
+			// LigaPlatz
+			HOVerwaltung.instance().getLanguageString("Platzierung") };
 
-    //Spielart
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielart"),
-                                            
-
-    //Gast
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"),
-                                            
-
-    //Ergebnis
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"), 
-    //Wetter
-    "", 
-    //MatchId
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
-                                            
-
-    //Stadiongroesse
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aktuell"),
-                                            
-
-    //Zuschauer
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"), 
-    //Auslastung
-    "%", 
-    //Fananzahl
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                            
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans") + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
-                                            
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer")
-                                            + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                            
-
-    //Stimmung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                            
-
-    //LigaPlatz
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Platzierung")
-                                        };
-
-    /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
-    /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Datum"),
-                                            
-
-    //Spielart
-    "", 
-    //Gast
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"),
-                                            
-
-    //Ergebnis
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ergebnis"), 
-    //Wetter
-    "", 
-    //MatchId
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ID"),
-                                            
-
-    //Stadiongroesse
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aktuell"),
-                                            
-
-    //Zuschauer
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"), 
-    //Auslastung
-    "%", 
-    //Fananzahl
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                            
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans") + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
-                                            
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer")
-                                            + " / "
-                                            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                            
-
-    //Stimmung
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                            
-
-    //LigaPlatz
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Platzierung")
-                                        };
+			HOVerwaltung.instance().getLanguageString("Datum"),
+			"", // Spielart
+			HOVerwaltung.instance().getLanguageString("Gast"), // Gast
+			HOVerwaltung.instance().getLanguageString("Ergebnis"), // Ergebnis
+			"", // Wetter
+			HOVerwaltung.instance().getLanguageString("ID"), // MatchId
+			HOVerwaltung.instance().getLanguageString("Aktuell"), // Stadiongroesse
+			HOVerwaltung.instance().getLanguageString("Zuschauer"), // Zuschauer
+			"%", // Auslastung
+			HOVerwaltung.instance().getLanguageString("Fans"), // Fananzahl
+			HOVerwaltung.instance().getLanguageString("Fans") + " / "
+					+ HOVerwaltung.instance().getLanguageString("Wochen"),
+			HOVerwaltung.instance().getLanguageString("Zuschauer") + " / "
+					+ HOVerwaltung.instance().getLanguageString("Fans"),
+			HOVerwaltung.instance().getLanguageString("Fans"), // Stimmung
+			HOVerwaltung.instance().getLanguageString("Platzierung") // LigaPlatz
+    };
     private ArenaStatistikModel[] m_clMatches;
     private int m_iMaxArenaGroesse;
     private int m_iMaxFananzahl;
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors
+	// -------------------------------------------------------------------------------
 
     /**
      * Creates a new ArenaStatistikTableModel object.
@@ -199,13 +122,9 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
     /**
      * Creates a new ArenaStatistikTableModel object.
-     *
-     * @param matches TODO Missing Constructuor Parameter Documentation
-     * @param maxAreanGroesse TODO Missing Constructuor Parameter Documentation
-     * @param maxFananzahl TODO Missing Constructuor Parameter Documentation
      */
-    public ArenaStatistikTableModel(ArenaStatistikModel[] matches, int maxAreanGroesse,
-                                    int maxFananzahl) {
+    public ArenaStatistikTableModel(ArenaStatistikModel[] matches,
+    		int maxAreanGroesse, int maxFananzahl) {
         m_clMatches = matches;
         m_iMaxArenaGroesse = maxAreanGroesse;
         m_iMaxFananzahl = maxFananzahl;
@@ -215,12 +134,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param col TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Check, if cell is editable.
      */
     @Override
 	public final boolean isCellEditable(int row, int col) {
@@ -228,11 +142,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param columnIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the class for a column.
      */
     @Override
 	public final Class<?> getColumnClass(int columnIndex) {
@@ -245,7 +155,9 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
         return "".getClass();
     }
 
-    //-----Zugriffsmethoden----------------------------------------        
+    /**
+     * Get amount of columns.
+     */
     public final int getColumnCount() {
         return m_sColumnNames.length;
 
@@ -258,11 +170,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param columnIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the column name.
      */
     @Override
 	public final String getColumnName(int columnIndex) {
@@ -274,11 +182,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param id TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the ArenaStatistikModel for a certain match.
      */
     public final ArenaStatistikModel getMatch(int id) {
         if (id > 0) {
@@ -288,26 +192,18 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
                 }
             }
         }
-
         return null;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get amount of rows.
      */
     public final int getRowCount() {
         return (m_clData != null) ? m_clData.length : 0;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param columnName TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the value at a certain row and column.
      */
     public final Object getValue(int row, String columnName) {
         if ((m_sColumnNames != null) && (m_clData != null)) {
@@ -324,11 +220,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
+     * Set the value at a certain row and column.
      */
     @Override
 	public final void setValueAt(Object value, int row, int column) {
@@ -336,27 +228,17 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the value at a certain row and column.
      */
     public final Object getValueAt(int row, int column) {
         if (m_clData != null) {
             return m_clData[row][column];
         }
-
         return null;
     }
 
     /**
      * Matches neu setzen
-     *
-     * @param matches TODO Missing Constructuor Parameter Documentation
-     * @param maxAreanGroesse TODO Missing Constructuor Parameter Documentation
-     * @param maxFananzahl TODO Missing Constructuor Parameter Documentation
      */
     public final void setValues(ArenaStatistikModel[] matches, int maxAreanGroesse, int maxFananzahl) {
         m_clMatches = matches;
@@ -366,11 +248,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the color for a certain match type.
      */
     private Color getColor4Matchtyp(int typ) {
         switch (typ) {
@@ -418,11 +296,6 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
     /**
      * Gibt eine String zurück, der die Tore darstellt
-     *
-     * @param heim TODO Missing Constructuor Parameter Documentation
-     * @param gast TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private String createTorString(int heim, int gast) {
         final StringBuffer buffer = new StringBuffer();
@@ -458,111 +331,95 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      * Erzeugt einen Data[][] aus dem Spielervector
      */
     private void initData() {
-        m_clData = new Object[m_clMatches.length][m_sColumnNames.length];
+    	try {
+			m_clData = new Object[m_clMatches.length][m_sColumnNames.length];
 
-        for (int i = 0; i < m_clMatches.length; i++) {
-            final ArenaStatistikModel match = m_clMatches[i];
+			for (int i = 0; i < m_clMatches.length; i++) {
+			    final ArenaStatistikModel match = m_clMatches[i];
+			    final Color background = getColor4Matchtyp(match.getMatchTyp());
+			    //Datum
+			    m_clData[i][0] = new ColorLabelEntry(match.getMatchDateAsTimestamp().getTime(),
+			    		DateFormat.getDateTimeInstance().format(match.getMatchDateAsTimestamp()),
+			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.LEFT);
+			    //Spielart
+			    m_clData[i][1] = new ColorLabelEntry(Helper.getImageIcon4Spieltyp(match.getMatchTyp()),
+			    		match.getMatchTyp(), ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
+			    //Gast
+			    m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
+			    		background, SwingConstants.LEFT);
+			    //Ergebnis
+			    m_clData[i][3] = new ColorLabelEntry(createTorString(match.getHeimTore(), match.getGastTore()),
+			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
 
-            final Color background = getColor4Matchtyp(match.getMatchTyp());
+			    //Sterne für Sieger!
+			    if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.NOIMAGEICON);
+			    } else if (match.getHeimTore() > match.getGastTore()) {
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.YELLOWSTARIMAGEICON);
+			    } else if (match.getHeimTore() < match.getGastTore()) {
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.NOIMAGEICON);
+			    } else {
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.GREYSTARIMAGEICON);
+			    }
 
-            //Datum
-            m_clData[i][0] = new ColorLabelEntry(match.getMatchDateAsTimestamp().getTime(),
-                                                 java.text.DateFormat.getDateTimeInstance().format(match
-                                                                                                   .getMatchDateAsTimestamp()),
-                                                 ColorLabelEntry.FG_STANDARD, background,
-                                                 SwingConstants.LEFT);
+			    //Wetter
+			    m_clData[i][4] = new ColorLabelEntry(Helper.getImageIcon4Wetter(match.getWetter()),
+			                                         match.getWetter(), ColorLabelEntry.FG_STANDARD,
+			                                         background, SwingConstants.RIGHT);
 
-            //Spielart
-            m_clData[i][1] = new ColorLabelEntry(de.hattrickorganizer.tools.Helper
-                                                 .getImageIcon4Spieltyp(match.getMatchTyp()),
-                                                 match.getMatchTyp(), ColorLabelEntry.FG_STANDARD,
-                                                 background, SwingConstants.CENTER);
+			    //Matchid
+			    m_clData[i][5] = new ColorLabelEntry(match.getMatchID(), match.getMatchID() + "",
+			                                         ColorLabelEntry.FG_STANDARD, background,
+			                                         SwingConstants.RIGHT);
 
-            //Gast
-            m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
-                                                 background, SwingConstants.LEFT);
+			    //Stadiongroesse
+			    m_clData[i][6] = new ProgressbarTableEntry(match.getArenaGroesse(), 0,
+			    		m_iMaxArenaGroesse, 0, 1, background, new Color(0, 0, 120), "");
 
-            //Ergebnis
-            m_clData[i][3] = new ColorLabelEntry(createTorString(match.getHeimTore(),
-                                                                 match.getGastTore()),
-                                                 ColorLabelEntry.FG_STANDARD, background,
-                                                 SwingConstants.CENTER);
+			    //Zuschauer
+			    m_clData[i][7] = new ProgressbarTableEntry(match.getZuschaueranzahl(), 0,
+			    		m_iMaxArenaGroesse, 0, 1, background, new Color(0, 120, 0), "");
 
-            //Sterne für Sieger!
-            if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
-                ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
-            } else if (match.getHeimTore() > match.getGastTore()) {
-                ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
-            } else if (match.getHeimTore() < match.getGastTore()) {
-                ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
-            } else {
-                ((ColorLabelEntry) m_clData[i][3]).setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
-            }
+			    //Verhältnis Auslastung
+			    m_clData[i][8] = new ProgressbarTableEntry(
+			    		(int) ((float) match.getZuschaueranzahl() / (float) match.getArenaGroesse() * 1000),
+			    		0, 1000, 1, 0.1, background, new Color(0, 120, 120), " %");
 
-            //Wetter
-            m_clData[i][4] = new ColorLabelEntry(de.hattrickorganizer.tools.Helper
-                                                 .getImageIcon4Wetter(match.getWetter()),
-                                                 match.getWetter(), ColorLabelEntry.FG_STANDARD,
-                                                 background, SwingConstants.RIGHT);
+			    //Fananzahl
+			    m_clData[i][9] = new ProgressbarTableEntry(match.getFans(), 0, m_iMaxFananzahl, 0, 1, background, new Color(80, 80, 80), "");
 
-            //Matchid
-            m_clData[i][5] = new ColorLabelEntry(match.getMatchID(), match.getMatchID() + "",
-                                                 ColorLabelEntry.FG_STANDARD, background,
-                                                 SwingConstants.RIGHT);
+			    //Fanzuwachs pro Woche
+			    float fanzuwachs = 0;
 
-            //Stadiongroesse
-            m_clData[i][6] = new ProgressbarTableEntry(match.getArenaGroesse(), 0,
-                                                       m_iMaxArenaGroesse, 0, 1, background,
-                                                       new Color(0, 0, 120), "");
+			    if ((i + 1) < m_clMatches.length) {
+			        fanzuwachs = ((match.getFans() - m_clMatches[i + 1].getFans()) * 604800000f) / (match.getMatchDateAsTimestamp().getTime()
+			                     - m_clMatches[i + 1].getMatchDateAsTimestamp().getTime());
+			    }
 
-            //Zuschauer
-            m_clData[i][7] = new ProgressbarTableEntry(match.getZuschaueranzahl(), 0,
-                                                       m_iMaxArenaGroesse, 0, 1, background,
-                                                       new Color(0, 120, 0), "");
+			    m_clData[i][10] = new ColorLabelEntry(fanzuwachs, background, false);
 
-            //Verhältnis Auslastung
-            m_clData[i][8] = new ProgressbarTableEntry((int) ((float) match.getZuschaueranzahl() / (float) match
-                                                                                                   .getArenaGroesse() * 1000),
-                                                       0, 1000, 1, 0.1, background,
-                                                       new Color(0, 120, 120), " %");
+			    //Quotione  Zuschauer/Fans
+			    m_clData[i][11] = new ColorLabelEntry(Helper.round((float) match.getZuschaueranzahl()
+						/ (float) match.getFans(), 2) + "", ColorLabelEntry.FG_STANDARD, background,
+						SwingConstants.RIGHT);
 
-            //Fananzahl
-            m_clData[i][9] = new ProgressbarTableEntry(match.getFans(), 0, m_iMaxFananzahl, 0, 1,
-                                                       background, new Color(80, 80, 80), "");
+			    // Fanstimmung
+			    m_clData[i][12] = new ColorLabelEntry(Finanzen.getNameForLevelFans(match.getFanZufriedenheit(), match.getMatchDateAsTimestamp()),
+			                                          ColorLabelEntry.FG_STANDARD, background,
+			                                          SwingConstants.LEFT);
 
-            //Fanzuwachs pro Woche
-            float fanzuwachs = 0;
-
-            if ((i + 1) < m_clMatches.length) {
-                fanzuwachs = ((match.getFans() - m_clMatches[i + 1].getFans()) * 604800000f) / (match.getMatchDateAsTimestamp()
-                                                                                                             .getTime()
-                             - m_clMatches[i + 1].getMatchDateAsTimestamp().getTime());
-            }
-
-            m_clData[i][10] = new ColorLabelEntry(fanzuwachs, background, false);
-
-            //Quotione  Zuschauer/Fans
-            m_clData[i][11] = new ColorLabelEntry(de.hattrickorganizer.tools.Helper.round((float) match
-                                                                                          .getZuschaueranzahl() / (float) match
-                                                                                                                  .getFans(),
-                                                                                          2) + "",
-                                                  ColorLabelEntry.FG_STANDARD, background,
-                                                  SwingConstants.RIGHT);
-
-            //Fanstimmung
-            m_clData[i][12] = new ColorLabelEntry(de.hattrickorganizer.model.Finanzen
-                                                  .getNameForLevelFans(match.getFanZufriedenheit(), match.getMatchDateAsTimestamp()),
-                                                  ColorLabelEntry.FG_STANDARD, background,
-                                                  SwingConstants.LEFT);
-
-            //Ligaplatz
-            m_clData[i][13] = new ColorLabelEntry(match.getLigaPlatz() + ".",
-                                                  ColorLabelEntry.FG_STANDARD, background,
-                                                  SwingConstants.CENTER);
-        }
+			    //Ligaplatz
+			    m_clData[i][13] = new ColorLabelEntry(match.getLigaPlatz() + ".",
+			                                          ColorLabelEntry.FG_STANDARD, background,
+			                                          SwingConstants.CENTER);
+			}
+		} catch (Exception e) {
+			HOLogger.instance().error(getClass(), "Error initialising arena stats: " + e);
+			HOLogger.instance().error(getClass(), e);
+		}
     }
-    
-    
+
+
 	public ArenaStatistikModel[] getMatches() {
 		return m_clMatches;
 	}
