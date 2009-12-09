@@ -111,10 +111,6 @@ public class StatisticQuery {
 
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
-	 *
-	 * @param matchtyp TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static ArenaStatistikTableModel getArenaStatistikModel(int matchtyp) {
 		ArenaStatistikTableModel tablemodel = null;
@@ -216,14 +212,19 @@ public class StatisticQuery {
 				rs.close();
 
 				// fix bug when visitors exceed the stadiumsize
-				if (arenamodels[i].getZuschaueranzahl() > arenamodels[i].getArenaGroesse()) {
-					rs = DBZugriff.instance().getAdapter().executeQuery("SELECT GesamtGr FROM " + StadionTable.TABLENAME + " WHERE HRF_ID=" + (hrfid+1));
-					if (rs.next()) {
-						arenamodels[i].setArenaGroesse(rs.getInt("GesamtGr"));
-						maxArenaGroesse = Math.max(arenamodels[i].getArenaGroesse(), maxArenaGroesse);
+				try {
+					if (arenamodels[i].getZuschaueranzahl() > arenamodels[i].getArenaGroesse()) {
+						rs = DBZugriff.instance().getAdapter().executeQuery("SELECT GesamtGr FROM " + StadionTable.TABLENAME + " WHERE HRF_ID=" + (hrfid+1));
+						if (rs.next()) {
+							arenamodels[i].setArenaGroesse(rs.getInt("GesamtGr"));
+							maxArenaGroesse = Math.max(arenamodels[i].getArenaGroesse(), maxArenaGroesse);
+						}
 					}
+				} catch (Exception e) {
+					HOLogger.instance().log(StatisticQuery.class, "Error(>100% handling): " + e);
+				} finally {
+					if (rs != null) rs.close();
 				}
-				rs.close();
 
 				//Fananzahl
 				sql = "SELECT Fans FROM " + VereinTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
@@ -250,8 +251,8 @@ public class StatisticQuery {
 				}
 				rs.close();
 			} catch (Exception e) {
-				HOLogger.instance().log(StatisticQuery.class, "DB.getArenaStatistikModel 2 Error" + e);
-				//HOLogger.instance().log(MarketQuery.class,e);
+				HOLogger.instance().warning(StatisticQuery.class, "DB.getArenaStatistikModel 2 Error" + e);
+				HOLogger.instance().log(StatisticQuery.class, e);
 			}
 		}
 

@@ -16,9 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import plugins.ISpielePanel;
-
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -26,41 +26,35 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
  *
  * @author TODO Author Name
  */
-public class ArenaStatistikPanel extends ImagePanel implements MouseListener, KeyListener,
-                                                               ItemListener
-{
+public class ArenaStatistikPanel extends ImagePanel implements MouseListener, KeyListener, ItemListener {
 	private static final long serialVersionUID = 2679088584924124183L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
-	private ArenaStatistikTable m_jtArenaStatistikTable;
-    private JComboBox m_jcbSpieleFilter;
-    private CBItem[] SPIELEFILTER = {
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
-                                                   ISpielePanel.NUR_EIGENE_SPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
-                                                   ISpielePanel.NUR_EIGENE_PFLICHTSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
-                                                   ISpielePanel.NUR_EIGENE_POKALSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
-                                                   ISpielePanel.NUR_EIGENE_LIGASPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
-                                                   ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
-                                    };
-    private boolean m_bInitialisiert;
+	final private ArenaStatistikTable m_jtArenaStatistikTable;
+	final private JComboBox m_jcbSpieleFilter;
+	final private CBItem[] SPIELEFILTER = {
+    		new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), ISpielePanel.NUR_EIGENE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), ISpielePanel.NUR_EIGENE_PFLICHTSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), ISpielePanel.NUR_EIGENE_POKALSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), ISpielePanel.NUR_EIGENE_LIGASPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"), ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
+    };
+	private boolean m_bInitialisiert;
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors
+	// -------------------------------------------------------------------------------
 
     /**
-     * Creates a new ArenaStatistikPanel object.
-     */
+	 * Creates a new ArenaStatistikPanel object.
+	 */
     public ArenaStatistikPanel() {
         setLayout(new BorderLayout());
 
         final ImagePanel panel = new ImagePanel(null);
         m_jcbSpieleFilter = new JComboBox(SPIELEFILTER);
 
-        //Nur Pflichtspiele ist default
+        // Nur Pflichtspiele ist default
         m_jcbSpieleFilter.setSelectedIndex(1);
 
         //tools.Helper.markierenComboBox( m_jcbSpieleFilter, UserParameter.instance().spieleFilter );
@@ -159,7 +153,7 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
     public void keyTyped(java.awt.event.KeyEvent keyEvent) {
     }
 
-    //----------------------Listener    
+    //----------------------Listener
     public final void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtArenaStatistikTable)) {
             manageSelectionRow();

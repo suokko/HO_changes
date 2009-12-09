@@ -1,21 +1,26 @@
 // %1280579671:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
-import javax.swing.JTabbedPane;
+import java.awt.BorderLayout;
 
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * TabbedPane mit Statistiken
  */
 public class StatistikMainPanel extends ImagePanel implements
 		javax.swing.event.ChangeListener, de.hattrickorganizer.gui.Refreshable {
-	
+
 	private static final long serialVersionUID = -4248329201381491432L;
-	
+
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
-	
+
 	private AlleSpielerStatistikPanel m_clAlleSpielerStatistikPanel = new AlleSpielerStatistikPanel();
 	private ArenaStatistikPanel m_clArenaStatistikPanel = new ArenaStatistikPanel();
 	private FinanzStatistikPanel m_clFinanzStatistikPanel = new FinanzStatistikPanel();
@@ -30,14 +35,13 @@ public class StatistikMainPanel extends ImagePanel implements
 	 * Creates a new StatistikMainPanel object.
 	 */
 	public StatistikMainPanel() {
-		setLayout(new java.awt.BorderLayout());
+		setLayout(new BorderLayout());
 
 		m_clTabbedPane = new JTabbedPane();
 
 		// Spielerstatistik
-		m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung
-				.instance().getLanguageString("Spieler"),
-				m_clSpielerStatistikPanel);
+		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
+				"Spieler"), m_clSpielerStatistikPanel);
 
 		// SpielerFinanzstatistik
 		// m_clTabbedPane.addTab (
@@ -45,31 +49,24 @@ public class StatistikMainPanel extends ImagePanel implements
 		// model.HOVerwaltung.instance().getLanguageString( "Finanzen" ), new
 		// SpielerFinanzenStatistikPanel() );
 		// SpieleStatistik
-		m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung
-				.instance().getLanguageString("Spiele"),
-				m_clSpieleStatistikPanel);
+		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
+				"Spiele"), m_clSpieleStatistikPanel);
 
 		// DurchschnittlicheSpielerstatistik
-		m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung
-				.instance().getLanguageString("Verein"),
-				m_clAlleSpielerStatistikPanel);
+		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
+				"Verein"), m_clAlleSpielerStatistikPanel);
 
 		// Finanzstatistik
-		m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung
-				.instance().getLanguageString("Finanzen"),
-				m_clFinanzStatistikPanel);
+		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
+				"Finanzen"), m_clFinanzStatistikPanel);
 
 		// Arenastatistik
-		m_clTabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung
-				.instance().getLanguageString("Stadion"),
-				m_clArenaStatistikPanel);
+		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
+				"Stadion"), m_clArenaStatistikPanel);
 
 		add(m_clTabbedPane, java.awt.BorderLayout.CENTER);
-
 		m_clTabbedPane.addChangeListener(this);
-
-		de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(
-				this);
+		RefreshManager.instance().registerRefreshable(this);
 	}
 
 	// ~ Methods
@@ -77,7 +74,7 @@ public class StatistikMainPanel extends ImagePanel implements
 
 	/**
 	 * TODO Missing Method Documentation
-	 * 
+	 *
 	 * @param spielerid
 	 *            TODO Missing Method Parameter Documentation
 	 */
@@ -108,11 +105,11 @@ public class StatistikMainPanel extends ImagePanel implements
 
 	/**
 	 * TODO Missing Method Documentation
-	 * 
+	 *
 	 * @param changeEvent
 	 *            TODO Missing Method Parameter Documentation
 	 */
-	public final void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
+	public final void stateChanged(ChangeEvent changeEvent) {
 		init();
 	}
 
