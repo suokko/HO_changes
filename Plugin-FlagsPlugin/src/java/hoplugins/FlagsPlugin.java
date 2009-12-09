@@ -5,6 +5,7 @@ package hoplugins;
  * @author Daniel Gonz�lez Fisher
  */
 
+import hoplugins.commons.utils.Debug;
 import hoplugins.flagsplugin.FlagCollection;
 import hoplugins.flagsplugin.FlagObject;
 import hoplugins.flagsplugin.FlagRenderer;
@@ -19,6 +20,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -579,7 +581,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
         return VERSION;
     }
     /* ********************** Interface ActionListener ******************************** */
-    public void actionPerformed(java.awt.event.ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(jmiOptions)) {
             fcAway.saveFlags();
             fcHome.saveFlags();
@@ -594,8 +596,9 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
                     listHome.repaint();
                 }
             } catch (Exception exx) {
-                //new hoplugins.calendarplugin.DebugFrame(exx);
                 hoModel.getGUI().getInfoPanel().setLangInfoText("ERROR! " + exx.toString(), Color.RED);
+                Debug.log("ERROR! " + exx);
+                Debug.logException(exx);
             }
         }
         else if (e.getSource().equals(jmiUpdateCoolness)) {
