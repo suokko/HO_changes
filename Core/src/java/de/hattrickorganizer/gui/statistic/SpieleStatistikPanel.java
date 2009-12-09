@@ -1,6 +1,8 @@
 // %119582289:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
+import gui.UserParameter;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,14 +28,17 @@ import javax.swing.SwingConstants;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
-
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -44,133 +49,139 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
     implements ActionListener, FocusListener, ItemListener, de.hattrickorganizer.gui.Refreshable
 {
 	private static final long serialVersionUID = 3954095099686666846L;
-	
+
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static Color BEWERTUNG = Color.black;
-    private static Color MITTELFELD = de.hattrickorganizer.tools.Helper.TRICKOT_MITTELFELD;
-    private static Color RECHTEABWEHR = de.hattrickorganizer.tools.Helper.TRICKOT_AUSSENVERTEIDIGER
+    private static Color MITTELFELD = Helper.TRICKOT_MITTELFELD;
+    private static Color RECHTEABWEHR = Helper.TRICKOT_AUSSENVERTEIDIGER
                                         .darker();
-    private static Color ABWEHRZENTRUM = de.hattrickorganizer.tools.Helper.TRICKOT_INNENVERTEIDIGER;
-    private static Color LINKEABWEHR = de.hattrickorganizer.tools.Helper.TRICKOT_AUSSENVERTEIDIGER
+    private static Color ABWEHRZENTRUM = Helper.TRICKOT_INNENVERTEIDIGER;
+    private static Color LINKEABWEHR = Helper.TRICKOT_AUSSENVERTEIDIGER
                                        .brighter();
-    private static Color RECHTERANGRIFF = de.hattrickorganizer.tools.Helper.TRICKOT_FLUEGEL.darker();
-    private static Color ANGRIFFSZENTRUM = de.hattrickorganizer.tools.Helper.TRICKOT_STURM;
-    private static Color LINKERANGRIFF = de.hattrickorganizer.tools.Helper.TRICKOT_FLUEGEL.brighter();
+    private static Color RECHTERANGRIFF = Helper.TRICKOT_FLUEGEL.darker();
+    private static Color ANGRIFFSZENTRUM = Helper.TRICKOT_STURM;
+    private static Color LINKERANGRIFF = Helper.TRICKOT_FLUEGEL.brighter();
     private static Color GESAMT = Color.GRAY;
     private static Color STIMMUNG = Color.PINK;
     private static Color SELBSTVERTRAUEN = Color.CYAN;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"),
-                                                                 de.hattrickorganizer.tools.Helper
-                                                                 .getImageIcon4Color(ABWEHRZENTRUM),
-                                                                 gui.UserParameter.instance().statistikSpieleAbwehrzentrum);
-    private ImageCheckbox m_jchAngriffszentrum = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"),
-                                                                   de.hattrickorganizer.tools.Helper
-                                                                   .getImageIcon4Color(ANGRIFFSZENTRUM),
-                                                                   gui.UserParameter.instance().statistikSpieleAngriffszentrum);
-    private ImageCheckbox m_jchBewertung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bewertung"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(BEWERTUNG),
-                                                             gui.UserParameter.instance().statistikSpieleBewertung);
-    private ImageCheckbox m_jchGesamt = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"),
-                                                          de.hattrickorganizer.tools.Helper
-                                                          .getImageIcon4Color(GESAMT),
-                                                          gui.UserParameter.instance().statistikSpieleGesamt);
-    private ImageCheckbox m_jchLinkeAbwehr = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"),
-                                                               de.hattrickorganizer.tools.Helper
-                                                               .getImageIcon4Color(LINKEABWEHR),
-                                                               gui.UserParameter.instance().statistikSpieleLinkeAbwehr);
-    private ImageCheckbox m_jchLinkerAngriff = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"),
-                                                                 de.hattrickorganizer.tools.Helper
-                                                                 .getImageIcon4Color(LINKERANGRIFF),
-                                                                 gui.UserParameter.instance().statistikSpieleLinkerAngriff);
-    private ImageCheckbox m_jchMittelfeld = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Mittelfeld"),
-                                                              de.hattrickorganizer.tools.Helper
-                                                              .getImageIcon4Color(MITTELFELD),
-                                                              gui.UserParameter.instance().statistikSpieleMittelfeld);
-    private ImageCheckbox m_jchRechteAbwehr = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"),
-                                                                de.hattrickorganizer.tools.Helper
-                                                                .getImageIcon4Color(RECHTEABWEHR),
-                                                                gui.UserParameter.instance().statistikSpieleRechteAbwehr);
-    private ImageCheckbox m_jchRechterAngriff = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"),
-                                                                  de.hattrickorganizer.tools.Helper
-                                                                  .getImageIcon4Color(RECHTERANGRIFF),
-                                                                  gui.UserParameter.instance().statistikSpieleRechterAngriff);
-    private ImageCheckbox m_jchSelbstvertrauen = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Selbstvertrauen"),
-                                                                   de.hattrickorganizer.tools.Helper
-                                                                   .getImageIcon4Color(SELBSTVERTRAUEN),
-                                                                   gui.UserParameter.instance().statistikSpieleSelbstvertrauen);
-    private ImageCheckbox m_jchStimmung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung"),
-                                                            de.hattrickorganizer.tools.Helper
-                                                            .getImageIcon4Color(STIMMUNG),
-                                                            gui.UserParameter.instance().statistikSpieleStimmung);
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
-                                                        gui.UserParameter.instance().statistikSpielerFinanzenBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
-                                                      gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien);
-    private JComboBox m_jcbSpieleFilter;
-    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikSpielerFinanzenAnzahlHRF
-                                                       + "", 5);
-    private StatistikPanel m_clStatistikPanel;
-    private de.hattrickorganizer.gui.model.CBItem[] SPIELEFILTER = {
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
-                                                                                                                 ISpielePanel.NUR_EIGENE_SPIELE
-                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
-                                                                                                                 ISpielePanel.NUR_EIGENE_PFLICHTSPIELE
-                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
-                                                                                                                 ISpielePanel.NUR_EIGENE_POKALSPIELE
-                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
-                                                                                                                 ISpielePanel.NUR_EIGENE_LIGASPIELE
-                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE),
-                                                                       new de.hattrickorganizer.gui.model.CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
-                                                                                                                 ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
-                                                                                                                 + ISpielePanel.NUR_GESPIELTEN_SPIELE)
-                                                                   };
-    private boolean m_bInitialisiert;
+    private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Abwehrzentrum"), Helper
+			.getImageIcon4Color(ABWEHRZENTRUM),
+			UserParameter.instance().statistikSpieleAbwehrzentrum);
+	private ImageCheckbox m_jchAngriffszentrum = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Angriffszentrum"), Helper
+			.getImageIcon4Color(ANGRIFFSZENTRUM),
+			UserParameter.instance().statistikSpieleAngriffszentrum);
+	private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Bewertung"), Helper
+			.getImageIcon4Color(BEWERTUNG),
+			UserParameter.instance().statistikSpieleBewertung);
+	private ImageCheckbox m_jchGesamt = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Gesamtstaerke"), Helper
+			.getImageIcon4Color(GESAMT),
+			UserParameter.instance().statistikSpieleGesamt);
+	private ImageCheckbox m_jchLinkeAbwehr = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("linkeAbwehrseite"), Helper
+			.getImageIcon4Color(LINKEABWEHR),
+			UserParameter.instance().statistikSpieleLinkeAbwehr);
+	private ImageCheckbox m_jchLinkerAngriff = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("linkeAngriffsseite"), Helper
+			.getImageIcon4Color(LINKERANGRIFF),
+			UserParameter.instance().statistikSpieleLinkerAngriff);
+	private ImageCheckbox m_jchMittelfeld = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Mittelfeld"), Helper
+			.getImageIcon4Color(MITTELFELD),
+			UserParameter.instance().statistikSpieleMittelfeld);
+	private ImageCheckbox m_jchRechteAbwehr = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("rechteAbwehrseite"), Helper
+			.getImageIcon4Color(RECHTEABWEHR),
+			UserParameter.instance().statistikSpieleRechteAbwehr);
+	private ImageCheckbox m_jchRechterAngriff = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("rechteAngriffsseite"), Helper
+			.getImageIcon4Color(RECHTERANGRIFF),
+			UserParameter.instance().statistikSpieleRechterAngriff);
+	private ImageCheckbox m_jchSelbstvertrauen = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Selbstvertrauen"), Helper
+			.getImageIcon4Color(SELBSTVERTRAUEN),
+			UserParameter.instance().statistikSpieleSelbstvertrauen);
+	private ImageCheckbox m_jchStimmung = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Stimmung"), Helper
+			.getImageIcon4Color(STIMMUNG),
+			UserParameter.instance().statistikSpieleStimmung);
+	private JButton m_jbDrucken = new JButton(new ImageIcon(Helper
+			.loadImage("gui/bilder/Drucken.png")));
+	private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance()
+			.getLanguageString("Uebernehmen"));
+	private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance()
+			.getLanguageString("Beschriftung"),
+			UserParameter.instance().statistikSpielerFinanzenBeschriftung);
+	private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance()
+			.getLanguageString("Hilflinien"),
+			UserParameter.instance().statistikSpielerFinanzenHilfslinien);
+	private JComboBox m_jcbSpieleFilter;
+	private JTextField m_jtfAnzahlHRF = new JTextField(
+			UserParameter.instance().statistikSpielerFinanzenAnzahlHRF + "", 5);
+	private StatistikPanel m_clStatistikPanel;
+	private CBItem[] SPIELEFILTER = {
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneSpiele"), ISpielePanel.NUR_EIGENE_SPIELE
+					+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigenePflichtspiele"),
+					ISpielePanel.NUR_EIGENE_PFLICHTSPIELE
+							+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigenePokalspiele"),
+					ISpielePanel.NUR_EIGENE_POKALSPIELE
+							+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneLigaspiele"), ISpielePanel.NUR_EIGENE_LIGASPIELE
+					+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneFreundschaftsspiele"),
+					ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
+							+ ISpielePanel.NUR_GESPIELTEN_SPIELE) };
+	private boolean m_bInitialisiert;
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors
+	// -------------------------------------------------------------------------------
 
     /**
-     * Creates a new SpieleStatistikPanel object.
-     */
+	 * Creates a new SpieleStatistikPanel object.
+	 */
     public SpieleStatistikPanel() {
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
-
+        RefreshManager.instance().registerRefreshable(this);
         initComponents();
-
-        //initStatistik();
+        // initStatistik();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    // ~ Methods
+	// ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param init TODO Missing Method Parameter Documentation
-     */
+	 * TODO Missing Method Documentation
+	 *
+	 * @param init
+	 *            TODO Missing Method Parameter Documentation
+	 */
     public final void setInitialisiert(boolean init) {
         m_bInitialisiert = init;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+	 * TODO Missing Method Documentation
+	 *
+	 * @return TODO Missing Return Method Documentation
+	 */
     public final boolean isInitialisiert() {
         return m_bInitialisiert;
     }
 
-    //-- Helper
+    // -- Helper
     public final double getMaxValue(double[] werte) {
         double max = 0;
 
@@ -183,57 +194,57 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         return (max);
     }
 
-    //--------Listener-------------------------------    
+    // --------Listener-------------------------------
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele"));
+            m_clStatistikPanel.doPrint(HOVerwaltung.instance().getLanguageString("Spiele"));
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
-            gui.UserParameter.instance().statistikSpielerFinanzenHilfslinien = m_jchHilflinien
+            UserParameter.instance().statistikSpielerFinanzenHilfslinien = m_jchHilflinien
                                                                                .isSelected();
         } else if (actionEvent.getSource().equals(m_jchBeschriftung)) {
             m_clStatistikPanel.setBeschriftung(m_jchBeschriftung.isSelected());
-            gui.UserParameter.instance().statistikSpielerFinanzenBeschriftung = m_jchBeschriftung
+            UserParameter.instance().statistikSpielerFinanzenBeschriftung = m_jchBeschriftung
                                                                                 .isSelected();
         } else if (actionEvent.getSource().equals(m_jchBewertung.getCheckbox())) {
             m_clStatistikPanel.setShow("Bewertung", m_jchBewertung.isSelected());
-            gui.UserParameter.instance().statistikSpieleBewertung = m_jchBewertung.isSelected();
+            UserParameter.instance().statistikSpieleBewertung = m_jchBewertung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchGesamt.getCheckbox())) {
             m_clStatistikPanel.setShow("Gesamtstaerke", m_jchGesamt.isSelected());
-            gui.UserParameter.instance().statistikSpieleGesamt = m_jchGesamt.isSelected();
+            UserParameter.instance().statistikSpieleGesamt = m_jchGesamt.isSelected();
         } else if (actionEvent.getSource().equals(m_jchMittelfeld.getCheckbox())) {
             m_clStatistikPanel.setShow("Mittelfeld", m_jchMittelfeld.isSelected());
-            gui.UserParameter.instance().statistikSpieleMittelfeld = m_jchMittelfeld.isSelected();
+            UserParameter.instance().statistikSpieleMittelfeld = m_jchMittelfeld.isSelected();
         } else if (actionEvent.getSource().equals(m_jchRechteAbwehr.getCheckbox())) {
             m_clStatistikPanel.setShow("RechteAbwehr", m_jchRechteAbwehr.isSelected());
-            gui.UserParameter.instance().statistikSpieleRechteAbwehr = m_jchRechteAbwehr.isSelected();
+            UserParameter.instance().statistikSpieleRechteAbwehr = m_jchRechteAbwehr.isSelected();
         } else if (actionEvent.getSource().equals(m_jchAbwehrzentrum.getCheckbox())) {
             m_clStatistikPanel.setShow("Abwehrzentrum", m_jchAbwehrzentrum.isSelected());
-            gui.UserParameter.instance().statistikSpieleAbwehrzentrum = m_jchAbwehrzentrum
+            UserParameter.instance().statistikSpieleAbwehrzentrum = m_jchAbwehrzentrum
                                                                         .isSelected();
         } else if (actionEvent.getSource().equals(m_jchLinkeAbwehr.getCheckbox())) {
             m_clStatistikPanel.setShow("LinkeAbwehr", m_jchLinkeAbwehr.isSelected());
-            gui.UserParameter.instance().statistikSpieleLinkeAbwehr = m_jchLinkeAbwehr.isSelected();
+            UserParameter.instance().statistikSpieleLinkeAbwehr = m_jchLinkeAbwehr.isSelected();
         } else if (actionEvent.getSource().equals(m_jchRechterAngriff.getCheckbox())) {
             m_clStatistikPanel.setShow("RechterAngriff", m_jchRechterAngriff.isSelected());
-            gui.UserParameter.instance().statistikSpieleRechterAngriff = m_jchRechterAngriff
+            UserParameter.instance().statistikSpieleRechterAngriff = m_jchRechterAngriff
                                                                          .isSelected();
         } else if (actionEvent.getSource().equals(m_jchAngriffszentrum.getCheckbox())) {
             m_clStatistikPanel.setShow("Angriffszentrum", m_jchAngriffszentrum.isSelected());
-            gui.UserParameter.instance().statistikSpieleAngriffszentrum = m_jchAngriffszentrum
+            UserParameter.instance().statistikSpieleAngriffszentrum = m_jchAngriffszentrum
                                                                           .isSelected();
         } else if (actionEvent.getSource().equals(m_jchLinkerAngriff.getCheckbox())) {
             m_clStatistikPanel.setShow("LinkerAngriff", m_jchLinkerAngriff.isSelected());
-            gui.UserParameter.instance().statistikSpieleLinkerAngriff = m_jchLinkerAngriff
+            UserParameter.instance().statistikSpieleLinkerAngriff = m_jchLinkerAngriff
                                                                         .isSelected();
         } else if (actionEvent.getSource().equals(m_jchStimmung.getCheckbox())) {
             m_clStatistikPanel.setShow("Stimmung", m_jchStimmung.isSelected());
-            gui.UserParameter.instance().statistikSpieleStimmung = m_jchStimmung.isSelected();
+            UserParameter.instance().statistikSpieleStimmung = m_jchStimmung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchSelbstvertrauen.getCheckbox())) {
             m_clStatistikPanel.setShow("Selbstvertrauen", m_jchSelbstvertrauen.isSelected());
-            gui.UserParameter.instance().statistikSpieleSelbstvertrauen = m_jchSelbstvertrauen
+            UserParameter.instance().statistikSpieleSelbstvertrauen = m_jchSelbstvertrauen
                                                                           .isSelected();
         }
     }
@@ -260,7 +271,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
      * @param focusEvent TODO Missing Method Parameter Documentation
      */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
+        Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 
@@ -275,7 +286,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         }
     }
 
-    //-------Refresh---------------------------------    
+    //-------Refresh---------------------------------
     public final void reInit() {
         m_bInitialisiert = false;
 
@@ -318,13 +329,13 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Wochen"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -343,7 +354,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
         layout2.setConstraints(m_jbUbernehmen, constraints2);
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
@@ -352,8 +363,8 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridwidth = 2;
         m_jcbSpieleFilter = new JComboBox(SPIELEFILTER);
         m_jcbSpieleFilter.setPreferredSize(new Dimension(150, 25));
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbSpieleFilter,
-                                                            gui.UserParameter.instance().statistikSpieleFilter);
+        Helper.markierenComboBox(m_jcbSpieleFilter,
+				UserParameter.instance().statistikSpieleFilter);
         m_jcbSpieleFilter.addItemListener(this);
         m_jcbSpieleFilter.setFont(m_jcbSpieleFilter.getFont().deriveFont(Font.BOLD));
         layout2.setConstraints(m_jcbSpieleFilter, constraints2);
@@ -505,86 +516,83 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                 anzahlHRF = 1;
             }
 
-            gui.UserParameter.instance().statistikSpielerFinanzenAnzahlHRF = anzahlHRF;
-            gui.UserParameter.instance().statistikSpieleFilter = ((de.hattrickorganizer.gui.model.CBItem) m_jcbSpieleFilter
+            UserParameter.instance().statistikSpielerFinanzenAnzahlHRF = anzahlHRF;
+            UserParameter.instance().statistikSpieleFilter = ((de.hattrickorganizer.gui.model.CBItem) m_jcbSpieleFilter
                                                                   .getSelectedItem()).getId();
 
-            final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT;
-            final java.text.NumberFormat format2 = de.hattrickorganizer.tools.Helper.INTEGERFORMAT;
-            final java.text.NumberFormat format3 = de.hattrickorganizer.tools.Helper.DEZIMALFORMAT_2STELLEN;
+            final java.text.NumberFormat format = Helper.DEFAULTDEZIMALFORMAT;
+            final java.text.NumberFormat format2 = Helper.INTEGERFORMAT;
+            final java.text.NumberFormat format3 = Helper.DEZIMALFORMAT_2STELLEN;
 
-            final MatchKurzInfo[] matchkurzinfos = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                          .getMatchesKurzInfo(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                                     .getModel()
-                                                                                                                                                     .getBasics()
-                                                                                                                                                     .getTeamId(),
-                                                                                                              ((de.hattrickorganizer.gui.model.CBItem) m_jcbSpieleFilter
-                                                                                                               .getSelectedItem())
-                                                                                                              .getId(),
-                                                                                                              true);
+            final MatchKurzInfo[] matchkurzinfos = DBZugriff
+					.instance()
+					.getMatchesKurzInfo(
+							HOVerwaltung.instance().getModel().getBasics()
+									.getTeamId(),
+							((de.hattrickorganizer.gui.model.CBItem) m_jcbSpieleFilter
+									.getSelectedItem()).getId(), true);
 
-            final int anzahl = Math.min(matchkurzinfos.length, anzahlHRF);
-            final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                      .getBasics().getTeamId();
+			final int anzahl = Math.min(matchkurzinfos.length, anzahlHRF);
+			final int teamid = HOVerwaltung.instance().getModel().getBasics()
+					.getTeamId();
 
-            final double[][] statistikWerte = new double[12][anzahl];
+			final double[][] statistikWerte = new double[12][anzahl];
 
-            //Infos zusammenstellen
-            for (int i = 0; i < anzahl; i++) {
-                final Matchdetails details = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                    .getMatchDetails(matchkurzinfos[matchkurzinfos.length
-                                                                                                     - i
-                                                                                                     - 1]
-                                                                                                     .getMatchID());
+			// Infos zusammenstellen
+			for (int i = 0; i < anzahl; i++) {
+				final Matchdetails details = DBZugriff.instance()
+						.getMatchDetails(
+								matchkurzinfos[matchkurzinfos.length - i - 1]
+										.getMatchID());
 
                 int bewertungwert = 0;
 
-                //Für match
+                // Für match
                 int sublevel = 0;
 
-                //Für gesamtstärke
+                // Für gesamtstärke
                 double temp = 0d;
 
                 if (details.getHeimId() == teamid) {
                     sublevel = (details.getHomeMidfield()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    // (int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeMidfield() - 1) / 4) + 1;
                     statistikWerte[1][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeRightDef()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeRightDef() - 1) / 4) + 1;
                     statistikWerte[2][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeMidDef()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeMidDef() - 1) / 4) + 1;
                     statistikWerte[3][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeLeftDef()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeLeftDef() - 1) / 4) + 1;
                     statistikWerte[4][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeRightAtt()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeRightAtt() - 1) / 4) + 1;
                     statistikWerte[5][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeMidAtt()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeMidAtt() - 1) / 4) + 1;
                     statistikWerte[6][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeLeftAtt()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeLeftAtt() - 1) / 4) + 1;
                     statistikWerte[7][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
@@ -595,43 +603,43 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                 } else {
                     sublevel = (details.getGuestMidfield()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestMidfield() - 1) / 4) + 1;
                     statistikWerte[1][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestRightDef()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestRightDef() - 1) / 4) + 1;
                     statistikWerte[2][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestMidDef()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestMidDef() - 1) / 4) + 1;
                     statistikWerte[3][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestLeftDef()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestLeftDef() - 1) / 4) + 1;
                     statistikWerte[4][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestRightAtt()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestRightAtt() - 1) / 4) + 1;
                     statistikWerte[5][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestMidAtt()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestMidAtt() - 1) / 4) + 1;
                     statistikWerte[6][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestLeftAtt()) % 4;
 
-                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+                    //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestLeftAtt() - 1) / 4) + 1;
                     statistikWerte[7][i] = bewertungwert
                                            + PlayerHelper.getValue4Sublevel(sublevel);
@@ -642,27 +650,25 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                 }
 
                 //Stimmung, Selbstvertrauen
-                final int hrfid = de.hattrickorganizer.database.DBZugriff.instance().getHRFID4Date(matchkurzinfos[matchkurzinfos.length
-                                                                                                   - i
-                                                                                                   - 1]
-                                                                                                   .getMatchDateAsTimestamp());
-                final int[] stimmungSelbstvertrauen = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                             .getStimmmungSelbstvertrauenValues(hrfid);
+                final int hrfid = DBZugriff.instance().getHRFID4Date(
+						matchkurzinfos[matchkurzinfos.length - i - 1]
+								.getMatchDateAsTimestamp());
+				final int[] stimmungSelbstvertrauen = DBZugriff.instance()
+						.getStimmmungSelbstvertrauenValues(hrfid);
 
-                statistikWerte[9][i] = stimmungSelbstvertrauen[0];
-                statistikWerte[10][i] = stimmungSelbstvertrauen[1];
+				statistikWerte[9][i] = stimmungSelbstvertrauen[0];
+				statistikWerte[10][i] = stimmungSelbstvertrauen[1];
 
-                statistikWerte[11][i] = matchkurzinfos[matchkurzinfos.length - i - 1].getMatchDateAsTimestamp()
-                                                                                     .getTime();
+				statistikWerte[11][i] = matchkurzinfos[matchkurzinfos.length
+						- i - 1].getMatchDateAsTimestamp().getTime();
 
-                final Vector<IMatchLineupPlayer> team = DBZugriff.instance().getMatchLineupPlayers(matchkurzinfos[matchkurzinfos.length
-                                                                                                            - i
-                                                                                                            - 1]
-                                                                                                            .getMatchID(),
-                                                                                                            teamid);
+				final Vector<IMatchLineupPlayer> team = DBZugriff.instance()
+						.getMatchLineupPlayers(
+								matchkurzinfos[matchkurzinfos.length - i - 1]
+										.getMatchID(), teamid);
                 float sterne = 0;
 
-                //Sterne
+                // Sterne
                 for (int j = 0; j < team.size(); j++) {
                     final MatchLineupPlayer player = (MatchLineupPlayer) team.get(j);
 
@@ -713,11 +719,10 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                                                 format2);
             }
 
-            final String[] yBezeichnungen = de.hattrickorganizer.tools.Helper
-                                            .convertTimeMillisToFormatString(statistikWerte[11]);
+            final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[11]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele"),
+                                            HOVerwaltung.instance().getLanguageString("Spiele"),
                                             "", m_jchBeschriftung.isSelected(),
                                             m_jchHilflinien.isSelected());
         } catch (Exception e) {
