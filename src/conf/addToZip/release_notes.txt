@@ -7,3 +7,4 @@ Language updates:
 
 Plugin Updates:
 ---------------
+- flagsplugin 3.23 (catch possible exception when getting the country id of an opponent)
