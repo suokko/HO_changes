@@ -186,12 +186,15 @@ public class FlagUpdater {
         try {
 			Document doc = hoModel.getXMLParser().parseString(xmlstr);
 			String leagueId = doc.getElementsByTagName("LeagueID").item(0).getFirstChild().getNodeValue();
-			pbar.setVisible(false);
-			pbar.dispose();
 			return FlagsPlugin.getCountryIdFromLeague(leagueId);
 		} catch (Exception e) {
 			Debug.log("Flags: Error 3 getting country for team " + id + " : " + e);
 			return 0;
+		} finally {
+			if (pbar != null) {
+				pbar.setVisible(false);
+				pbar.dispose();
+			}
 		}
     }
 
