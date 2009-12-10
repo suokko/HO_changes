@@ -8,6 +8,7 @@ package hoplugins.flagsplugin;
 import java.io.*;
 import plugins.*;
 import org.w3c.dom.*;
+
 import java.awt.*;
 import javax.swing.*;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.TreeSet;
 import java.util.Iterator;
 import java.util.Collection;
 import hoplugins.FlagsPlugin;
+import hoplugins.commons.utils.Debug;
 
 public class FlagUpdater {
     private plugins.IHOMiniModel hoModel;
@@ -169,20 +171,28 @@ public class FlagUpdater {
         String xmlstr = "";
         try {
             xmlstr = hoModel.getDownloadHelper().getHattrickXMLFile(htpage);
-        } catch (IOException ioex) {
+        } catch (IOException e) {
             pbar.setVisible(false);
             pbar.dispose();
+            Debug.log("Flags: Error 1 getting country for team " + id + " : " + e);
             return 0;
-        } catch (NullPointerException npex) {
+        } catch (NullPointerException e) {
             pbar.setVisible(false);
             pbar.dispose();
+            Debug.log("Flags: Error 2 getting country for team " + id + " : " + e);
             return 0;
         }
-        Document doc = hoModel.getXMLParser().parseString(xmlstr);
-        String leagueId = doc.getElementsByTagName("LeagueID").item(0).getFirstChild().getNodeValue();
-        pbar.setVisible(false);
-        pbar.dispose();
-        return FlagsPlugin.getCountryIdFromLeague(leagueId);
+
+        try {
+			Document doc = hoModel.getXMLParser().parseString(xmlstr);
+			String leagueId = doc.getElementsByTagName("LeagueID").item(0).getFirstChild().getNodeValue();
+			pbar.setVisible(false);
+			pbar.dispose();
+			return FlagsPlugin.getCountryIdFromLeague(leagueId);
+		} catch (Exception e) {
+			Debug.log("Flags: Error 3 getting country for team " + id + " : " + e);
+			return 0;
+		}
     }
 
 

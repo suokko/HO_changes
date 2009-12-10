@@ -58,11 +58,11 @@ import plugins.IXMLParser;
 
 public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListener, plugins.IOfficialPlugin, plugins.IRefreshable {
     public static final String NAME = "Flags Collector Plugin";
-    public static final double INTERNAL_VERSION = 3.22;
+    public static final double INTERNAL_VERSION = 3.23;
     public static final double HO_VERSION = 1.400;
     //public static final double VERSION = HO_VERSION + (INTERNAL_VERSION / 1000.0);
     public static final double VERSION = INTERNAL_VERSION;
-    public static final String AUTHOR = "Daniel Gonz�lez F. (Danthor)";
+    public static final String AUTHOR = "Daniel González F. (Danthor)";
     public static final int PLUGIN_ID = 20;
     public static final String FILENAME_FCAWAY = "flagdata.obj";
     public static final String FILENAME_FCHOME = "flagdata2.obj";
@@ -597,7 +597,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
                 }
             } catch (Exception exx) {
                 hoModel.getGUI().getInfoPanel().setLangInfoText("ERROR! " + exx.toString(), Color.RED);
-                Debug.log("ERROR! " + exx);
+                Debug.log("Flag: ERROR! " + exx);
                 Debug.logException(exx);
             }
         }
