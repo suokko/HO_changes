@@ -51,7 +51,7 @@ public class TrainingsManager implements ITrainingsManager {
     private Map<String,Map<Integer,Integer>> matchMap;
 
     private TrainingsWeekManager weekManager;
-    static final public boolean TRAININGDEBUG = false;
+    static final public boolean TRAININGDEBUG = true;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ public class TrainingsManager implements ITrainingsManager {
 
         ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
 
-        if (TRAININGDEBUG) 
+        if (TRAININGDEBUG)
         	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+spieler.getName()+", output="+output);
 
         //alle Trainings durchlaufen
@@ -249,7 +249,7 @@ public class TrainingsManager implements ITrainingsManager {
         	htc2.setTime(train.getTrainingDate());
         	c2s = " ("+htc2.getHTSeason()+"."+htc2.getHTWeek()+")";
 
-        	HOLogger.instance().debug(getClass(), 
+        	HOLogger.instance().debug(getClass(),
         			"Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")
         			+ ", trainDate="+train.getTrainingDate().getTime().toLocaleString()+c2s);
         }
@@ -285,8 +285,8 @@ public class TrainingsManager implements ITrainingsManager {
             HOLogger.instance().log(getClass(),e);
         }
 
-        if (TRAININGDEBUG) 
-        	HOLogger.instance().debug(getClass(), 
+        if (TRAININGDEBUG)
+        	HOLogger.instance().debug(getClass(),
         			"End calcWeeklyTraining for "+spieler.getName()+", "+train+", output="+output);
         return output;
     }
@@ -338,8 +338,8 @@ public class TrainingsManager implements ITrainingsManager {
 		// No Matchdetails found, probably not downloaded...
 		// Let's expect the worst and assume that the player
 		// did not play (-> 0 minutes)
-    	
-    	// TODO: Manually substituted players (in or out) 
+
+    	// TODO: Manually substituted players (in or out)
     	// and players with a tactic change
     	// also get 0 minutes training
     	// (Should be improved)
@@ -510,7 +510,7 @@ public class TrainingsManager implements ITrainingsManager {
        							curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TACTICCHANGE_LEAD)
            					) {
        				return PLAYERSTATUS_TACTIC_CHANGE;
-       			}       			
+       			}
        		}
         }
 
