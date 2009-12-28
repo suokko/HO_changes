@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.hattrickorganizer.net.MyConnector;
+import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -107,12 +108,7 @@ public class UpdateHelper {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param urlName TODO Missing Method Parameter Documentation
-     * @param targetFile TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Download contents of a url into a target file.
      */
     public boolean download(String urlName, File targetFile) {
         int data;
@@ -120,9 +116,7 @@ public class UpdateHelper {
 
         try {
             FileOutputStream outStream = new FileOutputStream(targetFile);
-
-            if ((gui.UserParameter.instance().LoginName == null)
-                || (gui.UserParameter.instance().LoginName.length() == 0)) {
+            if ((gui.UserParameter.instance().LoginName == null) || (gui.UserParameter.instance().LoginName.length() == 0)) {
                 showDialog = true;
             }
 
@@ -131,11 +125,9 @@ public class UpdateHelper {
 
             while (true) {
                 data = in.read();
-
                 if (data == -1) {
                     break;
                 }
-
                 out.write(data);
             }
 
@@ -145,12 +137,9 @@ public class UpdateHelper {
             outStream.flush();
             outStream.close();
         } catch (Exception e) {
-            //handleException(e,"Can´t download "+urlName+"\n ");
+        	HOLogger.instance().log(getClass(), "Error downloading from '" + urlName + "': " + e);
             return false;
         }
-
         return true;
     }
-
-
 }

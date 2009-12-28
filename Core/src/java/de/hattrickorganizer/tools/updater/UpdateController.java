@@ -341,29 +341,26 @@ public final class UpdateController {
 		File tmp = new File("update.zip");
 		String ver = "" + version;
 		ver = ver.replaceAll("\\.", "");
-		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance()
+				.getGUI().getOwner4Dialog());
 		wait.setVisible(true);
-		if (!UpdateHelper
-			.instance()
-			.download(
-			"http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip",
-			tmp)) {
+		if (!UpdateHelper.instance().download("http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip", tmp)) {
 			wait.setVisible(false);
 			return;
 		}
-			wait.setVisible(false);
+		wait.setVisible(false);
 		try {
 			ZipHelper zip = new ZipHelper("update.zip");
 			String dir = System.getProperty("user.dir");
-			zip.extractFile("HO.bat",dir);
-			zip.extractFile("HO.sh",dir);
-			zip.extractFile("HOLauncher.class",dir);
+			zip.extractFile("HO.bat", dir);
+			zip.extractFile("HO.sh", dir);
+			zip.extractFile("HOLauncher.class", dir);
 			zip.close();
 		} catch (Exception e) {
 			return;
 		}
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
-									  JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
+				"", JOptionPane.INFORMATION_MESSAGE);
 
 		HOMainFrame.instance().beenden();
 	}
