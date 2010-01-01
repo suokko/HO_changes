@@ -113,7 +113,7 @@ then
 # SO YOU HAVE TO CREATE IT BY YOUR OWN BY COPYING THE LINES ABOVE
 # BETWEEN "### BEGIN" AND "### END" THAT YOU WANT TO CHANGE!!!
    echo "Reading HO configuration from user file $HOSHDIR/$HOCONF!"
-   source "$HOSHDIR/$HOCONF"
+   . "$HOSHDIR/$HOCONF"
 fi
 
 ########################################################################
