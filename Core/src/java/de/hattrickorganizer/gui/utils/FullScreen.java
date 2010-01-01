@@ -81,12 +81,17 @@ public class FullScreen
 				HOLogger.instance().debug(getClass(), "FullScreen: NO matching conf found");
 	        	device = devices[0]; // if nothing matches stay with the first one
 	        }
-	        DisplayMode dm = device.getDisplayMode();
-	        deviceDimension = new Dimension(dm.getWidth(), dm.getHeight());
-	        // isFullScreenSupported on X11 > 1.3.0 requires fixed java 6 u10 or greater,
-	        // see http://bugs.sun.com/view_bug.do?bug_id=6636469 for details
-	        isFullScreenSupported = device.isFullScreenSupported();
-			HOLogger.instance().debug(getClass(), "FullScreen: dev "+device.getIDstring()+", isFullScreenSupported="+device.isFullScreenSupported());
+	        try {
+				DisplayMode dm = device.getDisplayMode();
+				deviceDimension = new Dimension(dm.getWidth(), dm.getHeight());
+				// isFullScreenSupported on X11 > 1.3.0 requires fixed java 6 u10 or greater,
+				// see http://bugs.sun.com/view_bug.do?bug_id=6636469 for details
+				isFullScreenSupported = device.isFullScreenSupported();
+				HOLogger.instance().debug(getClass(), "FullScreen: dev "+device.getIDstring()+", isFullScreenSupported="+device.isFullScreenSupported());
+			} catch (Exception e) {
+				HOLogger.instance().debug(getClass(), "Error checking FullScreen support: " + e);
+				isFullScreenSupported = false;
+			}
 //			if (!isFullScreenSupported) {
 //				HOLogger.instance().debug(getClass(), "FullScreen: Forcing fake-fullscreen");
 //		        isFullScreenSupported = true;
