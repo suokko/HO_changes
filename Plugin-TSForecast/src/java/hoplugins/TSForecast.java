@@ -46,7 +46,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkListener;
@@ -158,7 +157,7 @@ public class TSForecast extends 	WindowAdapter
   public String getName()       { return "TS Forecast"; }
   public int getPluginID()      { return 34; }
   public String getPluginName() { return getName() + " v" + getVersion(); }
-  public double getVersion()    { return 1.0D; }
+  public double getVersion()    { return 1.01D; }
 
   public File[] getUnquenchableFiles() {
     String s = "hoplugins" + File.separator + "tsforecast" + File.separator;
@@ -607,10 +606,10 @@ public class TSForecast extends 	WindowAdapter
           + "Darunter eine Liste der n\344chsten Spiele. Hier kann man \n"
           + "ausw\344hlen, wie man diese Spiele in der Zukunft zu spielen gedenkt.\n"
           + "Die Vorhersage passt sich entsprechend an. Pokalspiele und das \n"
-          + "Relegationsspiel können wahlweise hinzugefügt werden.\n"
+          + "Relegationsspiel kï¿½nnen wahlweise hinzugefï¿½gt werden.\n"
           + "\n"
           + "Probleme/Hilfe:\n"
-          + "Bitte kontaktiert mich über Hattrick oder das HO-Forum. Am Besten schickst\n"
+          + "Bitte kontaktiert mich ï¿½ber Hattrick oder das HO-Forum. Am Besten schickst\n"
           + "Du einen Screenshot mit allen Kurve mit. Fehlerberichte und\n"
           + "Verbesserungsw\374nsche etc. sind nat\374rlich auch willkommen.\n"
           + "\n";
