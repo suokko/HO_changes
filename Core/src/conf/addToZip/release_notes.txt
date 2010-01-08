@@ -1,5 +1,7 @@
 Changelist HO! 1.426
 ====================
+- fix bug, that prevented HO from starting in special screen configurations
+- fix bug in TeamAnalyzer which lead to missing opponent specials and wrong blue player names
 
 Language updates:
 -----------------

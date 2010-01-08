@@ -31,34 +31,16 @@ import javax.swing.SwingConstants;
 public class PlayerPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1838357704496299083L;
-
-	/** TODO Missing Parameter Documentation */
     protected JLabel appearanceField = new JLabel("", SwingConstants.RIGHT);
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel nameField = new JLabel("", SwingConstants.LEFT);
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel positionField = createLabel("", Color.BLACK, 0);
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel positionImage = new JLabel();
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel specialEventImage = new JLabel();
-
-    /** TODO Missing Parameter Documentation */
     protected JPanel ratingPanel = new JPanel();
-
-    /** TODO Missing Parameter Documentation */
     protected TacticPanel tacticPanel = new TacticPanel();
     private JPanel mainPanel;
     private PlayerInfoPanel infoPanel = new PlayerInfoPanel();
-    private SpotLineup spotLineup;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -144,14 +126,9 @@ public class PlayerPanel extends JPanel {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param lineup TODO Missing Method Parameter Documentation
-     * @param week TODO Missing Constructuor Parameter Documentation
-     * @param season TODO Missing Constructuor Parameter Documentation
+     * Reload and refresh data for a certain spot/player.
      */
     public void reload(SpotLineup lineup, int week, int season) {
-        spotLineup = lineup;
         tacticPanel.setVisible(SystemManager.getConfig().isTacticDetail());
         mainPanel.setPreferredSize(getDefaultSize());
 
@@ -191,11 +168,8 @@ public class PlayerPanel extends JPanel {
             }
 
             int posCode = Commons.getModel().getHelper().getPosition(lineup.getPosition());
-
             positionImage.setIcon(Commons.getModel().getHelper().getImage4Position(posCode, (byte) 0));
-
-            int specialEvent = PlayerDataManager.getLatestPlayerInfo(lineup.getPlayerId())
-                                                .getSpecialEvent();
+            int specialEvent = PlayerDataManager.getLatestPlayerInfo(lineup.getPlayerId()).getSpecialEvent();
 
             if (lineup.getPlayerId() == 0) {
                 specialEventImage.setIcon(null);
