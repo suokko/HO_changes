@@ -31,25 +31,18 @@ public class PlayerDataDAO {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Returns the specialEvent code for a player
-     *
-     * @param playerId the playerId
-     * @param week TODO Missing Constructuor Parameter Documentation
-     * @param season TODO Missing Constructuor Parameter Documentation
-     *
-     * @return a numeric code
+     * Returns PlayerInfo object with the latest data.
      */
     public PlayerInfo getPlayerInfo(int playerId, int week, int season) {
         int weekNumber = week + (season * 16);
 
         String query = "select * from TEAMANALYZER_PLAYERDATA where PLAYERID=" + playerId
                        + " and week=" + weekNumber;
-
+        
         ResultSet rs = Commons.getModel().getAdapter().executeQuery(query);
 
         try {
             rs.next();
-
             PlayerInfo info = new PlayerInfo();
             info.setPlayerId(playerId);
             info.setAge(rs.getInt("AGE"));
@@ -74,7 +67,7 @@ public class PlayerDataDAO {
      */
     public PlayerInfo getPlayerInfo(int playerId) {
         Integer HTWeek = getCurrentHTWeek();
-        Integer HTSeason = getCurrentHTWeek();
+        Integer HTSeason = getCurrentHTSeason();
         return getPlayerInfo(playerId, HTWeek, HTSeason);
     }
 
@@ -127,7 +120,7 @@ public class PlayerDataDAO {
      * @param info TODO Missing Method Parameter Documentation
      */
     public void updatePlayer(PlayerInfo info) {
-        Commons.getModel().getAdapter().executeUpdate("update TEAMANALYZER_PLAYERDATA set "
+    	Commons.getModel().getAdapter().executeUpdate("update TEAMANALYZER_PLAYERDATA set "
                                                       + "   SPECIALEVENT=" + info.getSpecialEvent()
                                                       + " , TSI=" + info.getTSI() + " , FORM="
                                                       + +info.getForm() + " , AGE=" + info.getAge()
