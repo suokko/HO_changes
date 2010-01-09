@@ -33,6 +33,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
 
+import plugins.ILineUp;
 import plugins.IMPTeamData;
 import plugins.IMPTeamRatings;
 import plugins.IMatchDetails;
@@ -146,9 +147,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Gibt die Reihenfolge der Spalten in der Tabelle zurück
-     *
-     * @return TODO Missing Return Method Documentation
+     * Gibt die Reihenfolge der Spalten in der Tabelle zurück.
      */
     public int[][] getSpaltenreihenfolge() {
         return m_jtSpieleTable.getSpaltenreihenfolge();
@@ -215,7 +214,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             }
         } else if (e.getSource().equals(m_jbAufstellungUebernehmen)) {
             if ((m_clMatchKurzInfo != null)
-                && (m_clMatchKurzInfo.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
+            		&& (m_clMatchKurzInfo.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
                 final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
                 final Vector<IMatchLineupPlayer> vteamspieler = DBZugriff.instance().getMatchLineupPlayers(m_clMatchKurzInfo.getMatchID(),
                                                                                        teamid);
@@ -244,7 +243,12 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         	if (m_clMatchKurzInfo != null) {
         		final Matchdetails details = DBZugriff.instance().getMatchDetails(m_clMatchKurzInfo.getMatchID());
         		final IMatchPredictionManager manager = HOMiniModel.instance().getMatchPredictionManager();
-
+        		final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+        		boolean homeMatch = false;
+        		if (teamId == m_clMatchKurzInfo.getHeimID()) {
+        			homeMatch = true;
+        		}
+        		
         		IMPTeamRatings homeTeamRatings = manager.generateTeamRatings(
         				details != null ? getRatingValue(details.getHomeMidfield()) : 1,
 						details != null ? getRatingValue(details.getHomeLeftDef()) : 1,
@@ -254,10 +258,14 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 						details != null ? getRatingValue(details.getHomeMidAtt()) : 1,
 						details != null ? getRatingValue(details.getHomeRightAtt()) : 1);
         		
-        		IMPTeamData homeTeamValues = manager.generateTeamData(
-						m_clMatchKurzInfo.getHeimName(), homeTeamRatings,
-						details != null ? details.getHomeTacticType(): IMatchDetails.TAKTIK_NORMAL, 
-								details != null ? getRatingValue(details.getHomeTacticSkill()) : 1);
+        		final IMPTeamData homeTeamValues;
+        		if (homeMatch && !ratingsAreKnown(homeTeamRatings)) {
+        			homeTeamValues = getOwnLineupRatings(manager);
+        		} else {
+        			homeTeamValues = manager.generateTeamData(m_clMatchKurzInfo.getHeimName(), homeTeamRatings,
+    						details != null ? details.getHomeTacticType(): IMatchDetails.TAKTIK_NORMAL, 
+    						details != null ? getRatingValue(details.getHomeTacticSkill() - 1) : 1);
+        		}
         		
         		IMPTeamRatings awayTeamRatings = manager.generateTeamRatings(
 						details != null ? getRatingValue(details.getGuestMidfield()) : 1,
@@ -267,16 +275,18 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 						details != null ? getRatingValue(details.getGuestLeftAtt()) : 1,
 						details != null ? getRatingValue(details.getGuestMidAtt()) : 1,
 						details != null ? getRatingValue(details.getGuestRightAtt()) : 1);
-        		IMPTeamData awayTeamValues = manager.generateTeamData(
-						m_clMatchKurzInfo.getGastName(), awayTeamRatings,
-						details != null ? details.getGuestTacticType(): IMatchDetails.TAKTIK_NORMAL, 
-								details != null ? getRatingValue(details.getGuestTacticSkill()) : 1);
         		
-                JPanel matchPredictionPanel;
+        		final IMPTeamData awayTeamValues;
+        		if (!homeMatch && !ratingsAreKnown(awayTeamRatings)) {
+        			awayTeamValues = getOwnLineupRatings(manager);
+        		} else {
+        			awayTeamValues = manager.generateTeamData(m_clMatchKurzInfo.getGastName(), awayTeamRatings,
+        					details != null ? details.getGuestTacticType(): IMatchDetails.TAKTIK_NORMAL, 
+        					details != null ? getRatingValue(details.getGuestTacticSkill() - 1) : 1);
+        		}
+        		
                 String match = m_clMatchKurzInfo.getHeimName() + " - " + m_clMatchKurzInfo.getGastName();
-
-                //HOVerwaltung.instance().getModel()
-                matchPredictionPanel = HOMiniModel.instance().getGUI().createMatchPredictionPanel(homeTeamValues, awayTeamValues);
+                JPanel matchPredictionPanel = HOMiniModel.instance().getGUI().createMatchPredictionPanel(homeTeamValues, awayTeamValues);
 
                 JDialog d = new JDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
                 d.getContentPane().setLayout(new BorderLayout());
@@ -298,23 +308,73 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     	}
     	return 1;
     }
+    
+    /**
+     * Check, if the ratings are ok/known or if all are at the default.
+     */
+    private boolean ratingsAreKnown(IMPTeamRatings ratings) {
+    	return (ratings != null && ratings.getMidfield() > 1d
+    			&& ratings.getLeftDef() > 1d && ratings.getMiddleDef() > 1d && ratings.getRightDef() > 1d
+    			&& ratings.getLeftAttack() > 1d && ratings.getMiddleAttack() > 1d && ratings.getRightAttack() > 1d);
+    }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
+     * Get the team data for the own team (current linep).
      */
+    private IMPTeamData getOwnLineupRatings(IMatchPredictionManager manager) {
+    	ILineUp lineup = HOMiniModel.instance().getLineUP();
+    	IMPTeamRatings teamRatings = manager.generateTeamRatings(
+    			getRatingValue(lineup.getIntValue4Rating(lineup.getMidfieldRating())),
+    			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftDefenseRating())),
+    			getRatingValue(lineup.getIntValue4Rating(lineup.getCentralDefenseRating())),
+    			getRatingValue(lineup.getIntValue4Rating(lineup.getRightDefenseRating())),
+    			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftAttackRating())),
+    			getRatingValue(lineup.getIntValue4Rating(lineup.getCentralAttackRating())),
+				getRatingValue(lineup.getIntValue4Rating(lineup.getRightAttackRating())));
+    	
+    	int tactic = lineup.getTacticType();
+    	return manager.generateTeamData(HOMiniModel.instance().getBasics().getTeamName(),
+    			teamRatings, tactic, getTacticStrength(lineup, tactic));
+    }
+
+    /**
+     * Get the tactic strength of the given lineup.
+     */
+    private int getTacticStrength(ILineUp lineup, int tacticType) {
+		double tacticLevel = 1d;
+		switch (tacticType) {
+		case IMatchDetails.TAKTIK_KONTER:
+			tacticLevel = lineup.getTacticLevelCounter();
+			break;
+		case IMatchDetails.TAKTIK_MIDDLE:
+			tacticLevel = lineup.getTacticLevelAimAow();
+			break;
+		case IMatchDetails.TAKTIK_PRESSING:
+			tacticLevel = lineup.getTacticLevelPressing();
+			break;
+		case IMatchDetails.TAKTIK_WINGS:
+			tacticLevel = lineup.getTacticLevelAimAow();
+			break;
+		case IMatchDetails.TAKTIK_LONGSHOTS:
+			tacticLevel = lineup.getTacticLevelLongShots();
+			break;
+		}
+		tacticLevel -= 1;
+		return (int) Math.max(tacticLevel, 0);
+	}
+    
+    /**
+	 * React on item state changed events.
+	 */
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //Änderung der Tabelle -> Anderer Filter!
+            // Änderung der Tabelle -> Anderer Filter!
             reInit();
         }
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
+     * React on key pressed events.
      */
     public void keyPressed(java.awt.event.KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtSpieleTable)) {
@@ -324,9 +384,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
+     * React on key released events.
      */
     public void keyReleased(java.awt.event.KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtSpieleTable)) {
@@ -336,17 +394,13 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
+     * React on key typed events.
      */
     public void keyTyped(java.awt.event.KeyEvent keyEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * React on mouse klicked events.
      */
     public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtSpieleTable)) {
@@ -356,33 +410,25 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * React on mouse entered events.
      */
     public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * React on mouse exited events.
      */
     public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * React on mouse pressed events.
      */
     public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * React on mouse released events.
      */
     public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtSpieleTable)) {
@@ -416,9 +462,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Zeigt das Match mit der ID an
-     *
-     * @param matchid TODO Missing Constructuor Parameter Documentation
+     * Zeigt das Match mit der ID an.
      */
     public void showMatch(int matchid) {
         m_jtSpieleTable.markiereMatch(matchid);

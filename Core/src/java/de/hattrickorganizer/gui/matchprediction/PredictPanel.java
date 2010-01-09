@@ -146,10 +146,10 @@ public class PredictPanel extends JPanel {
 
         m_jlGesamtToreHome.setText(mr.getHomeGoals() + "");
         m_jlGesamtChancenHome.setText("(" + mr.getHomeChances() + ")");
-        m_jpbGesamtHome.setValue((mr.getHomeGoals() * 100) / mr.getHomeChances());
+        m_jpbGesamtHome.setValue((mr.getHomeGoals() * 100) / Math.max(1, mr.getHomeChances()));
         m_jlGesamtToreGuest.setText(mr.getGuestGoals() + "");
         m_jlGesamtChancenGuest.setText("(" + mr.getGuestChances() + ")");
-        m_jpbGesamtGuest.setValue((mr.getGuestGoals() * 100) / mr.getGuestChances());
+        m_jpbGesamtGuest.setValue((mr.getGuestGoals() * 100) / Math.max(1, mr.getGuestChances()));
 
         m_jlRechtsToreHome.setText(mr.getHomeSuccess()[2] + "");
         m_jlRechtsChancenHome.setText("(" + (mr.getHomeFailed()[2] + mr.getHomeSuccess()[2]) + ")");
