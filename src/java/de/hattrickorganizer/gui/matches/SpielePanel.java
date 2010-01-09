@@ -18,11 +18,14 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,22 +33,30 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
 
+import plugins.IMPTeamData;
+import plugins.IMPTeamRatings;
+import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
+import plugins.IMatchPredictionManager;
 import plugins.ISpielerPosition;
-
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
+import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -61,19 +72,12 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
     private AufstellungsSternePanel m_jpAufstellungGastPanel;
     private AufstellungsSternePanel m_jpAufstellungHeimPanel;
-    private JButton m_jbAufstellungUebernehmen = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                                           .loadImage("gui/bilder/AufstellungUebernehmen.png")));
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbLoeschen = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                             .getImageDurchgestrichen(new java.awt.image.BufferedImage(20,
-                                                                                                                       20,
-                                                                                                                       java.awt.image.BufferedImage.TYPE_INT_ARGB),
-                                                                                      Color.red,
-                                                                                      new Color(200,
-                                                                                                0, 0))));
-    private JButton m_jbReloadMatch = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                                .loadImage("gui/bilder/Reload.png")));
+    private JButton m_jbAufstellungUebernehmen = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/AufstellungUebernehmen.png")));
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbLoeschen = new JButton(new ImageIcon(Helper
+			.getImageDurchgestrichen(new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB), Color.red, new Color(200, 0, 0))));
+    private JButton m_jbReloadMatch = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Reload.png")));
+    private JButton m_jbSimMatch = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/simulate_match.png")));
     private JComboBox m_jcbSpieleFilter;
 
     //private JSplitPane                      horizontalRightSplitPane            = null;
@@ -82,7 +86,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private JSplitPane verticalSplitPane;
     private JTabbedPane m_jtpSpieldetails;
     private ManschaftsBewertungsPanel m_jpManschaftsBewertungsPanel;
-    private de.hattrickorganizer.model.matches.MatchKurzInfo m_clMatchKurzInfo;
+    private MatchKurzInfo m_clMatchKurzInfo;
     private MatchberichtPanel m_jpMatchberichtPanel;
     private SpielHighlightPanel m_jpSpielHighlightPanel;
     private MatchesTable m_jtSpieleTable;
@@ -99,46 +103,45 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
        public static final int             NUR_GESPIELTEN_SPIELE             = 10;
      */
     private CBItem[] SPIELEFILTER = {
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AlleSpiele"),
-                                                   ALLE_SPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
-                                                   NUR_EIGENE_SPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
-                                                   NUR_EIGENE_PFLICHTSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
-                                                   NUR_EIGENE_POKALSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
-                                                   NUR_EIGENE_LIGASPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
-                                                   NUR_EIGENE_FREUNDSCHAFTSSPIELE),
-                                        new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"),
-                                                   NUR_FREMDE_SPIELE)
-                                    };
+			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),
+					ALLE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneSpiele"), NUR_EIGENE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigenePflichtspiele"), NUR_EIGENE_PFLICHTSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigenePokalspiele"), NUR_EIGENE_POKALSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneLigaspiele"), NUR_EIGENE_LIGASPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneFreundschaftsspiele"),
+					NUR_EIGENE_FREUNDSCHAFTSSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurFremdeSpiele"), NUR_FREMDE_SPIELE) };
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors
+	// -------------------------------------------------------------------------------
 
     /**
-     * Creates a new SpielePanel object.
-     */
+	 * Creates a new SpielePanel object.
+	 */
     public SpielePanel() {
         RefreshManager.instance().registerRefreshable(this);
 
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    // ~ Methods
+	// ------------------------------------------------------------------------------------
 
     /**
-     * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+	 * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden
+	 * können
+	 */
     public int[] getDividerLocations() {
         final int[] locations = new int[2];
-
         locations[0] = horizontalLeftSplitPane.getDividerLocation();
         locations[1] = verticalSplitPane.getDividerLocation();
-
         return locations;
     }
 
@@ -158,38 +161,27 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(m_jbReloadMatch)) {
             final int matchid = m_clMatchKurzInfo.getMatchID();
-            de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker().getMatchlineup(m_clMatchKurzInfo
-                                                                                             .getMatchID(),
-                                                                                             m_clMatchKurzInfo
-                                                                                             .getHeimID(),
-                                                                                             m_clMatchKurzInfo
-                                                                                             .getGastID());
-            de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker().getMatchDetails(m_clMatchKurzInfo
-                                                                                              .getMatchID());
-            de.hattrickorganizer.logik.MatchUpdater.updateMatch(de.hattrickorganizer.model.HOMiniModel
-                                                                .instance(),
-                                                                
-            //Dragettho werte setzen
-            m_clMatchKurzInfo.getMatchID());
-            de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
-            de.hattrickorganizer.gui.HOMainFrame.instance().showMatch(matchid);
+			HOMainFrame.instance().getOnlineWorker().getMatchlineup(m_clMatchKurzInfo.getMatchID(),
+					m_clMatchKurzInfo.getHeimID(), m_clMatchKurzInfo.getGastID());
+			HOMainFrame.instance().getOnlineWorker().getMatchDetails(m_clMatchKurzInfo.getMatchID());
+			MatchUpdater.updateMatch(HOMiniModel.instance(), // Dragettho werte setzen
+					m_clMatchKurzInfo.getMatchID());
+			RefreshManager.instance().doReInit();
+			HOMainFrame.instance().showMatch(matchid);
         } else if (e.getSource().equals(m_jbLoeschen)) {
             final int[] rows = m_jtSpieleTable.getSelectedRows();
-            final de.hattrickorganizer.model.matches.MatchKurzInfo[] infos = new de.hattrickorganizer.model.matches.MatchKurzInfo[rows.length];
+            final MatchKurzInfo[] infos = new MatchKurzInfo[rows.length];
 
             for (int i = 0; i < rows.length; i++) {
-                infos[i] = ((MatchesColumnModel) m_jtSpieleTable.getSorter()
-                                                                                             .getModel())
-                           .getMatch((int) ((ColorLabelEntry) m_jtSpieleTable.getSorter()
-                                                                             .getValueAt(rows[i], 5))
-                                     .getZahl());
+                infos[i] = ((MatchesColumnModel) m_jtSpieleTable.getSorter().getModel())
+                           .getMatch((int) ((ColorLabelEntry) m_jtSpieleTable.getSorter().getValueAt(rows[i], 5)).getZahl());
             }
 
-            String text = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen");
+            String text = HOVerwaltung.instance().getLanguageString("loeschen");
 
             if (infos.length > 1) {
                 text += (" (" + infos.length + " "
-                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele")
+                + HOVerwaltung.instance().getLanguageString("Spiele")
                 + ") : ");
             } else {
                 text += " : ";
@@ -203,17 +195,14 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 }
             }
 
-            final int value = JOptionPane.showConfirmDialog(this, text,
-                                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen"),
-                                                            JOptionPane.YES_NO_OPTION);
+            final int value = JOptionPane.showConfirmDialog(this, text, HOVerwaltung.instance().getLanguageString("loeschen"),
+					JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
                 for (int i = 0; i < infos.length; i++) {
-                    de.hattrickorganizer.database.DBZugriff.instance().deleteMatch(infos[i]
-                                                                                   .getMatchID());
+                    DBZugriff.instance().deleteMatch(infos[i].getMatchID());
                 }
-
-                de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+                RefreshManager.instance().doReInit();
             }
         } else if (e.getSource().equals(m_jbDrucken)) {
             if (m_clMatchKurzInfo != null) {
@@ -233,8 +222,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
                 for (int i = 0; (vteamspieler != null) && (i < vteamspieler.size()); i++) {
-                    final MatchLineupPlayer player = (MatchLineupPlayer) vteamspieler
-                                                                                        .get(i);
+                    final MatchLineupPlayer player = (MatchLineupPlayer) vteamspieler.get(i);
 
                     if (player.getId() == ISpielerPosition.standard) {
                         aufstellung.setKicker(player.getSpielerId());
@@ -247,12 +235,68 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 }
 
                 //Alles Updaten
-                de.hattrickorganizer.gui.HOMainFrame.instance().getAufstellungsPanel().update();
+                HOMainFrame.instance().getAufstellungsPanel().update();
 
                 //Aufstellung zeigen
-                de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.AUFSTELLUNG);
+                HOMainFrame.instance().showTab(HOMainFrame.AUFSTELLUNG);
             }
+        } else if (e.getSource().equals(m_jbSimMatch)) {
+        	if (m_clMatchKurzInfo != null) {
+        		final Matchdetails details = DBZugriff.instance().getMatchDetails(m_clMatchKurzInfo.getMatchID());
+        		final IMatchPredictionManager manager = HOMiniModel.instance().getMatchPredictionManager();
+
+        		IMPTeamRatings homeTeamRatings = manager.generateTeamRatings(
+        				details != null ? getRatingValue(details.getHomeMidfield()) : 1,
+						details != null ? getRatingValue(details.getHomeLeftDef()) : 1,
+						details != null ? getRatingValue(details.getHomeMidDef()) : 1,
+						details != null ? getRatingValue(details.getHomeRightDef()) : 1,
+						details != null ? getRatingValue(details.getHomeLeftAtt()) : 1,
+						details != null ? getRatingValue(details.getHomeMidAtt()) : 1,
+						details != null ? getRatingValue(details.getHomeRightAtt()) : 1);
+        		
+        		IMPTeamData homeTeamValues = manager.generateTeamData(
+						m_clMatchKurzInfo.getHeimName(), homeTeamRatings,
+						details != null ? details.getHomeTacticType(): IMatchDetails.TAKTIK_NORMAL, 
+								details != null ? getRatingValue(details.getHomeTacticSkill()) : 1);
+        		
+        		IMPTeamRatings awayTeamRatings = manager.generateTeamRatings(
+						details != null ? getRatingValue(details.getGuestMidfield()) : 1,
+						details != null ? getRatingValue(details.getGuestLeftDef()) : 1,
+						details != null ? getRatingValue(details.getGuestMidDef()) : 1,
+						details != null ? getRatingValue(details.getGuestRightDef()) : 1,
+						details != null ? getRatingValue(details.getGuestLeftAtt()) : 1,
+						details != null ? getRatingValue(details.getGuestMidAtt()) : 1,
+						details != null ? getRatingValue(details.getGuestRightAtt()) : 1);
+        		IMPTeamData awayTeamValues = manager.generateTeamData(
+						m_clMatchKurzInfo.getGastName(), awayTeamRatings,
+						details != null ? details.getGuestTacticType(): IMatchDetails.TAKTIK_NORMAL, 
+								details != null ? getRatingValue(details.getGuestTacticSkill()) : 1);
+        		
+                JPanel matchPredictionPanel;
+                String match = m_clMatchKurzInfo.getHeimName() + " - " + m_clMatchKurzInfo.getGastName();
+
+                //HOVerwaltung.instance().getModel()
+                matchPredictionPanel = HOMiniModel.instance().getGUI().createMatchPredictionPanel(homeTeamValues, awayTeamValues);
+
+                JDialog d = new JDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+                d.getContentPane().setLayout(new BorderLayout());
+                d.getContentPane().add(matchPredictionPanel, BorderLayout.CENTER);
+                d.setResizable(true);
+                d.setSize(900, 600);
+                d.setTitle(match);
+                d.setVisible(true);
+        	}
         }
+    }
+
+    /**
+     * Helper to get at least the minium rating value.
+     */
+    private int getRatingValue(int in) {
+    	if (in > 0) {
+    		return in;
+    	}
+    	return 1;
     }
 
     /**
@@ -391,19 +435,18 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Für die Button
+     * Disable all buttons.
      */
     private void clear() {
         m_jbReloadMatch.setEnabled(false);
         m_jbLoeschen.setEnabled(false);
         m_jbDrucken.setEnabled(false);
         m_jbAufstellungUebernehmen.setEnabled(false);
+        m_jbSimMatch.setEnabled(false);
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Initialise and get the visitor lineup panel.
      */
     private Component initAufstellungGast() {
         m_jpAufstellungGastPanel = new AufstellungsSternePanel(false);
@@ -411,9 +454,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Initialise and get the home teams lineup panel.
      */
     private Component initAufstellungHeim() {
         m_jpAufstellungHeimPanel = new AufstellungsSternePanel(true);
@@ -446,9 +487,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Initialise player details GUI components.
      */
     private Component initSpieldetails() {
         final GridBagLayout mainlayout = new GridBagLayout();
@@ -534,6 +573,15 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         buttonconstraints.gridy = 0;
         buttonlayout.setConstraints(m_jbAufstellungUebernehmen, buttonconstraints);
         buttonPanel.add(m_jbAufstellungUebernehmen);
+        
+        m_jbSimMatch.setToolTipText(HOVerwaltung.instance().getLanguageString("Simulate"));
+        m_jbSimMatch.addActionListener(this);
+        m_jbSimMatch.setPreferredSize(new Dimension(24, 24));
+        m_jbSimMatch.setEnabled(false);
+        buttonconstraints.gridx = 4;
+        buttonconstraints.gridy = 0;
+        buttonlayout.setConstraints(m_jbSimMatch, buttonconstraints);
+        buttonPanel.add(m_jbSimMatch);
 
         mainconstraints.gridx = 0;
         mainconstraints.gridy = 1;
@@ -547,16 +595,13 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Initialise matches panel.
      */
     private Component initSpieleTabelle() {
         final ImagePanel panel = new ImagePanel(new BorderLayout());
 
         m_jcbSpieleFilter = new JComboBox(SPIELEFILTER);
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbSpieleFilter,
-                                                            UserParameter.instance().spieleFilter);
+        Helper.markierenComboBox(m_jcbSpieleFilter,UserParameter.instance().spieleFilter);
         m_jcbSpieleFilter.addItemListener(this);
         m_jcbSpieleFilter.setFont(m_jcbSpieleFilter.getFont().deriveFont(Font.BOLD));
         panel.add(m_jcbSpieleFilter, BorderLayout.NORTH);
@@ -572,21 +617,6 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
         return panel;
     }
-
-    /**
-     * TODO Missing Method Documentation
-     */
-/*    private void manageSelectionRow() {
-        final int row = m_jtSpieleTable.getSelectedRow();
-
-        if (row > -1) {
-            m_jtSpieleTable.setRowSelectionInterval(row, row);
-            newSelectionInform();
-        } else {
-            m_jtSpieleTable.clearSelection();
-            newSelectionInform();
-        }
-    }*/
 
     //----------------------------------------------------    
     private void newSelectionInform() {
@@ -635,37 +665,34 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     }
 
     /**
-     * Für die Buttons
-     *
-     * @param info TODO Missing Constructuor Parameter Documentation
+     * Refresh button states.
      */
     private void refresh(MatchKurzInfo info) {
-        m_clMatchKurzInfo = info;
+    	m_clMatchKurzInfo = info;
 
-        m_jbLoeschen.setEnabled(true);
-        m_jbDrucken.setEnabled(true);
+    	m_jbLoeschen.setEnabled(true);
+    	m_jbDrucken.setEnabled(true);
+    	m_jbSimMatch.setEnabled(true);
 
-        //Reload möglich?
-        HOLogger.instance().log(getClass(),info.getMatchDateAsTimestamp() + " "
-                           + new java.sql.Timestamp(System.currentTimeMillis()) + " "
-                           + info.getMatchDateAsTimestamp().before(new java.sql.Timestamp(System
-                                                                                          .currentTimeMillis()))
-                           + " " + info.getMatchStatus());
+    	//Reload möglich?
+//    	HOLogger.instance().log(getClass(),info.getMatchDateAsTimestamp() + " "
+//    			+ new Timestamp(System.currentTimeMillis()) + " "
+//    			+ info.getMatchDateAsTimestamp().before(new Timestamp(System.currentTimeMillis()))
+//    			+ " " + info.getMatchStatus());
 
-        if (info.getMatchDateAsTimestamp().before(new java.sql.Timestamp(System.currentTimeMillis()))) {
-            m_jbReloadMatch.setEnabled(true);
-        } else {
-            m_jbReloadMatch.setEnabled(false);
-        }
+    	if (info.getMatchDateAsTimestamp().before(new Timestamp(System.currentTimeMillis()))) {
+    		m_jbReloadMatch.setEnabled(true);
+    	} else {
+    		m_jbReloadMatch.setEnabled(false);
+    	}
 
-        //Eigenes Spiel dabei
-        final int teamid = HOVerwaltung.instance().getModel().getBasics()
-                                                                  .getTeamId();
+    	//Eigenes Spiel dabei
+    	final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
-        if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
-            m_jbAufstellungUebernehmen.setEnabled(true);
-        } else {
-            m_jbAufstellungUebernehmen.setEnabled(false);
-        }
+    	if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
+    		m_jbAufstellungUebernehmen.setEnabled(true);
+    	} else {
+    		m_jbAufstellungUebernehmen.setEnabled(false);
+    	}
     }
 }
