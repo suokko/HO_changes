@@ -576,90 +576,15 @@ public  class Aufstellung implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float getLoddarStats() {
-		// Version 3.1 formulars (gives values between 1....80), http://oeufi-foed.doesel.ch/LoddarStats/LoddarStats-Inside-3.htm
-		float Abwehrstaerke;
-		float Angriffsstaerke;
-		float MFF;
-		float KK;
-		float KZG;
-		float KAG;
-		float AG;
-		float AF;
-		float CA;
-		float AoW;
-		float AiM;
-
-		// constants
-		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
-		// updated to V3.2
-		final float MFS = 0.0f;
-
-		// constants
-		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
-		// updated to V3.2
-		final float VF = 0.47f;
-
-		// constants
-		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
-		// updated to V3.2
-		float ZG = 0.37f;
-
-		// constants
-		// float MFS=0.2f, VF=0.45f, ZG=0.5f, KG=0.25f;
-		// updated to V3.2
-		final float KG = 0.25f;
-
-		MFF = MFS + ((1.0f - MFS) * HQ(getMidfieldRating()));
-
-		AG = (1.0f - ZG) / 2.0f;
-		Abwehrstaerke =
-			VF
-				* ((ZG * HQ(getCentralDefenseRating()))
-					+ (AG * (HQ(getLeftDefenseRating()) + HQ(getRightDefenseRating()))));
-
-		// AiM or AoW or CA?
-		if (getTacticType() == plugins.IMatchDetails.TAKTIK_MIDDLE) {
-			AiM = (float) HTfloat2int(getTacticLevelAimAow());
-			KZG = ZG + (((0.2f * (AiM - 1.0f)) / 19.0f) + 0.2f);
-			KK = 0.0f;
-		} else if (getTacticType() == plugins.IMatchDetails.TAKTIK_WINGS) {
-			AoW = (float) HTfloat2int(getTacticLevelAimAow());
-			KZG = ZG - (((0.2f * (AoW - 1.0f)) / 19.0f) + 0.2f);
-			KK = 0.0f;
-		} else if (getTacticType() == plugins.IMatchDetails.TAKTIK_KONTER) {
-			CA = (float) HTfloat2int(getTacticLevelCounter());
-			KK = KG * 2.0f * (CA / (CA + 20.0f));
-			KZG = ZG;
-		} else {
-			KZG = ZG;
-			KK = 0.0f;
-		}
-
-		KAG = (1.0f - KZG) / 2.0f;
-		AF = 1.0f - VF;
-		Angriffsstaerke =
-			(AF + KK)
-				* ((KZG * HQ(getCentralAttackRating()))
-					+ (KAG * (HQ(getLeftAttackRating()) + HQ(getRightAttackRating()))));
-
-		return 80.0f * (MFF * (Abwehrstaerke + Angriffsstaerke));
-    }
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param x TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public final float HQ(double x) {
-		// first convert to original HT rating (1...80)
-		x = (float) HTfloat2int(x);
-
-		// and now LoddarStats Hattrick-Quality function (?)
-		double v = (2.0f * x) / (x + 80.0f);
-		return (float) v;
+	public final float getLoddarStats() {
+		LoddarStatsCalculator calculator = new LoddarStatsCalculator();
+		calculator.setRatings(getMidfieldRating(), getRightDefenseRating(),
+				getCentralDefenseRating(), getLeftDefenseRating(),
+				getRightAttackRating(), getCentralAttackRating(),
+				getLeftAttackRating());
+		calculator.setTactics(getTacticType(), getTacticLevelAimAow(),
+				getTacticLevelCounter());
+		return calculator.calculate();
 	}
 
 	/**
@@ -669,7 +594,7 @@ public  class Aufstellung implements plugins.ILineUp {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final int HTfloat2int(double x) {
+	public static final int HTfloat2int(double x) {
 		// convert reduced float rating (1.00....20.99) to original integer HT rating (1...80)
 		// one +0.5 is because of correct rounding to integer
 		return (int) (((x - 1.0f) * 4.0f) + 1.0f);
