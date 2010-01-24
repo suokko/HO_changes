@@ -1,6 +1,7 @@
 package hoplugins;
 
 import hoplugins.commons.utils.PluginProperty;
+import hoplugins.youthclub.ctrl.Retriever;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,7 +80,7 @@ public class YouthClub implements IPlugin, IRefreshable, IOfficialPlugin {
 		YouthClub.miniModel = hoMiniModel;
 		PluginProperty.loadPluginProperties(PLUGIN_PACKAGE);
 		//hoMiniModel.getGUI().addOptionPanel(getPluginName(), new OptionPanel()); // add plugin specific panel to HO settings
-		hoMiniModel.getGUI().addMenu(createMenu(hoMiniModel)); // add plugin specific menu
+		hoMiniModel.getGUI().addMenu(createMenu()); // add plugin specific menu
 		//hoMiniModel.getGUI().registerRefreshable(this);
 	}
 
@@ -94,17 +95,31 @@ public class YouthClub implements IPlugin, IRefreshable, IOfficialPlugin {
 	 * Create a new menu item.
 	 * TODO
 	 */
-	public static JMenu createMenu(final IHOMiniModel hoMiniModel) {
+	public static JMenu createMenu() {
 		JMenu menu = new JMenu(PLUGIN_NAME);
+		JMenuItem test1 = new JMenuItem("Test 1");
+		test1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent ev) {
+        		try {
+        			String ycCode = ""; // TODO
+        			Retriever.loadPackage1(ycCode);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+        	}
+        });
     	JMenuItem about = new JMenuItem("About");
         about.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		JPanel panel = new JPanel();
         		panel.add(new JLabel(PLUGIN_NAME + " " + PLUGIN_VERSION));
-        		JOptionPane.showMessageDialog(hoMiniModel.getGUI().getOwner4Dialog(), panel,
+        		JOptionPane.showMessageDialog(miniModel.getGUI().getOwner4Dialog(), panel,
         				"About", JOptionPane.PLAIN_MESSAGE);
         	}
         });
+        if (miniModel.getBasics().getTeamId() != 0) {
+        	menu.add(test1);
+        }
         menu.add(about);
         return menu;
 	}
