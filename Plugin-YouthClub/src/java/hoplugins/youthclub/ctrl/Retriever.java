@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 import org.w3c.dom.Document;
 
@@ -20,30 +23,39 @@ public class Retriever {
 	// https://www.hattrick-youthclub.org/_data_provider/?action=package1&application_id=1&application_code=[YOUR
 	// CODE]&htID=[HT_USER_ID]&password=[HATTRICK YOUTHCLUB SECURITY CODE]
 	private final static String pack1 = "https://www.hattrick-youthclub.org/_data_provider/?action=package1&application_id="
-			+ YOUTHCLUB_APP_ID
-			+ "&application_code="
-			+ YOUTHCLUB_APP_CODE
-			+ "&htID=";
+			+ YOUTHCLUB_APP_ID + "&application_code=" + YOUTHCLUB_APP_CODE + "&htID=";
 
 	/**
 	 * Get the URL for the main YC package.
 	 * 
-	 * @param htLogin
-	 *            the users HT manager id
-	 * @param ycCode
-	 *            the YC security code
+	 * @param htManagerId the users HT manager id
+	 * @param ycCode the YC security code
 	 */
-	private static URL getPackage1Url(String htLogin, String ycCode)
+	public static URL getPackage1Url(String htManagerId, String ycCode)
 			throws MalformedURLException {
-		return new URL(pack1 + htLogin + "&password=" + getMD5(ycCode));
+		return new URL(pack1 + htManagerId + "&password=" + getMD5(ycCode));
 	}
 
+	/**
+	 * Load the 'package 1' XML data from the youth club page.
+	 * @param ycCode the YC security code
+	 */
 	public static void loadPackage1(String ycCode) {
 		InputStream input = null;
 		try {
-			URL url = Retriever.getPackage1Url(String.valueOf(YouthClub
-					.getMiniModel().getBasics().getTeamId()), ycCode);
-			URLConnection uc = url.openConnection();
+			TrustManager[] trustAllCerts = new TrustManager[]{ new FakeTrustManager() };
+			// create the factory where we can set some parameters for the connection
+			SSLContext sc = SSLContext.getInstance("SSL");
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+			// create the socket connection and open it to the secure remote web server
+			// TODO: we need the UserID, not TeamID here!
+			URL url = Retriever.getPackage1Url(String.valueOf(YouthClub.getMiniModel().getBasics().getTeamId()), ycCode);
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+			HttpsURLConnection uc = (HttpsURLConnection)url.openConnection();
+			
+			uc.setHostnameVerifier(new FakeHostnameVerifier());
+
+			
 			uc.setConnectTimeout(CONNECTION_TIMEOUT);
 			uc.setReadTimeout(CONNECTION_TIMEOUT);
 			input = uc.getInputStream();
@@ -95,4 +107,5 @@ public class Retriever {
 		}
 		return null;
 	}
+	
 }
