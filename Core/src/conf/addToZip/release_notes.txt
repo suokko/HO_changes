@@ -8,6 +8,7 @@ Language updates:
 -----------------
 - fix Spanish specialty names
 - update Serbian translations (thx Chokky)
+- add Catalan translations for some plugins (thx CAT-fike)
 
 Plugin Updates:
 ---------------
