@@ -10,4 +10,4 @@ Description: HattrickOrganizer!
  A manager assistent for the online football manager
  http://www.hattrick.org
  .
-Depends: sun-java5-jre | sun-java6-jre
+Depends: sun-java5-jre | sun-java6-jre | openjdk-6-jre
