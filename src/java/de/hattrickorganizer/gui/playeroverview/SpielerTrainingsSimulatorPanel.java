@@ -472,7 +472,10 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     }
 
 	private int getAge() {
-		int age = m_clSpieler.getAlter();
+		int age = 17;
+		if (m_clSpieler != null) {
+			age = m_clSpieler.getAlter();
+		}
 		try {
 			age = Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", ""));
 		} catch (NumberFormatException e) {
@@ -481,7 +484,10 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 	}
 
 	private int getAgeDays() {
-		int age = m_clSpieler.getAgeDays();
+		int age = 0;
+		if (m_clSpieler != null) {
+			age = m_clSpieler.getAgeDays();
+		}
 		try {
 			age = Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", ""));
 		} catch (NumberFormatException e) {
