@@ -22,8 +22,7 @@ public class SwapPositionFeature {
 		public void actionPerformed(ActionEvent event) {
 			if (swapButton.isSelected()) {
 				JComboBox source = (JComboBox) event.getSource();
-				SpielerCBItem selectedItem = (SpielerCBItem) source
-						.getSelectedItem();
+				SpielerCBItem selectedItem = (SpielerCBItem) source.getSelectedItem();
 				if ((selectedItem != null)
 						&& (selectedItem.getSpieler() == null)) {
 					unpressButton();
@@ -70,8 +69,7 @@ public class SwapPositionFeature {
 		}
 
 		private boolean playerIsSelectedOnThisPosition() {
-			Aufstellung lineup = HOVerwaltung.instance().getModel()
-					.getAufstellung();
+			Aufstellung lineup = HOVerwaltung.instance().getModel().getAufstellung();
 			if (lineup.getPlayerByPositionID(getPositionsID()) != null) {
 				return true;
 			}
@@ -96,13 +94,12 @@ public class SwapPositionFeature {
 	}
 
 	private void customizeSwapButton() {
-		swapButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"Lineup.Swap.ToolTip"));
-		swapButton.setIcon(new ImageIcon(Helper
-				.loadImage("gui/bilder/swap.png")));
-		swapButton.setSelectedIcon(new ImageIcon(Helper
-				.loadImage("gui/bilder/swap-pressed.png")));
+		swapButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Lineup.Swap.ToolTip"));
+		swapButton.setIcon(new ImageIcon(Helper.loadImage("gui/bilder/swap.png")));
+		swapButton.setSelectedIcon(new ImageIcon(Helper.loadImage("gui/bilder/swap-pressed.png")));
 		swapButton.setPreferredSize(new Dimension(18, 18));
+		swapButton.setMaximumSize(new Dimension(18, 18));
+		swapButton.setMinimumSize(new Dimension(18, 18));
 
 		swapButton.addActionListener(new SwapPositionFeatureItemListener(
 				this.swapPositionsManager));
