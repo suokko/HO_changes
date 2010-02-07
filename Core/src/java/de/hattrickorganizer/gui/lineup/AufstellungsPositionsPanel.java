@@ -26,6 +26,7 @@ import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -40,14 +41,10 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
 	
     //~ Instance fields ----------------------------------------------------------------------------
 	private AufstellungsPanel m_clAufstellungsPanel;
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbFlipSide = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                             .loadImage("gui/bilder/Reload.png")));
-    private JButton m_jbMidiFrame = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                              .loadImage("gui/bilder/MidiAufstellung.png")));
-    private JButton m_jbMiniFrame = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                              .loadImage("gui/bilder/MiniAufstellung.png")));
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbFlipSide = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Reload.png")));
+	private JButton m_jbMidiFrame = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/MidiAufstellung.png")));
+	private JButton m_jbMiniFrame = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/MiniAufstellung.png")));
     private SpielerPositionsPanel m_clLinkeAussenVerteidiger;
     private SpielerPositionsPanel m_clLinkeFluegel;
     private SpielerPositionsPanel m_clLinkeInnenVerteidiger;
@@ -328,6 +325,7 @@ public class AufstellungsPositionsPanel extends de.hattrickorganizer.gui.templat
         m_clTorwart = new SpielerPositionsPanel(this, ISpielerPosition.keeper);
         layout.setConstraints(m_clTorwart, constraints);
         centerPanel.add(m_clTorwart);
+        swapPositionsManager.addSwapCapabilityTo(m_clTorwart);
 
         constraints.gridx = 0;
         constraints.gridy = 1;

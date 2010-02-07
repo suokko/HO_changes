@@ -6,6 +6,8 @@ Changelist HO! 1.426
 - fix bug in TeamAnalyzer which lead to missing opponent specials and wrong blue player names
 - add option to "re-simulate" an old match
 - allow openjdk as alternative for the Debian build (thx salt00)
+- lineup screen: add feature to copy ratings into the system clipboard
+- allow to quick-switch also the keeper 
 
 Language updates:
 -----------------
