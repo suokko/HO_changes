@@ -14,8 +14,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +26,8 @@ import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.RasenPanel;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -35,70 +40,48 @@ final class AufstellungsRatingPanel extends RasenPanel {
 	private static final long serialVersionUID = -8938268226990652913L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     public static final boolean REIHENFOLGE_STURM2VERTEIDIGUNG = false;
-
-    /** TODO Missing Parameter Documentation */
     public static final boolean REIHENFOLGE_VERTEIDIGUNG2STURM = true;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     double bottomcenter;
-
-    /** TODO Missing Parameter Documentation */
     double bottomleft;
-
-    /** TODO Missing Parameter Documentation */
     double bottomright;
-
-    /** TODO Missing Parameter Documentation */
     double middle;
-
-    /** TODO Missing Parameter Documentation */
     double topcenter;
-
-    /** TODO Missing Parameter Documentation */
     double topleft;
-
-    /** TODO Missing Parameter Documentation */
     double topright;
-    private ColorLabelEntry m_clBottomCenterCompare = new ColorLabelEntry("", Color.BLACK,
-                                                                          Color.WHITE,
-                                                                          SwingConstants.CENTER);
-    private ColorLabelEntry m_clBottomCenterMain = new ColorLabelEntry("", Color.BLACK,
-                                                                       Color.WHITE,
-                                                                       SwingConstants.RIGHT);
-    private ColorLabelEntry m_clBottomLeftCompare = new ColorLabelEntry("", Color.BLACK,
-                                                                        Color.WHITE,
-                                                                        SwingConstants.CENTER);
-    private ColorLabelEntry m_clBottomLeftMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                     SwingConstants.RIGHT);
-    private ColorLabelEntry m_clBottomRightCompare = new ColorLabelEntry("", Color.BLACK,
-                                                                         Color.WHITE,
-                                                                         SwingConstants.CENTER);
-    private ColorLabelEntry m_clBottomRightMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                      SwingConstants.RIGHT);
-    private ColorLabelEntry m_clMiddleCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                    SwingConstants.CENTER);
-    private ColorLabelEntry m_clMiddleMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                 SwingConstants.RIGHT);
-    private ColorLabelEntry m_clTopCenterCompare = new ColorLabelEntry("", Color.BLACK,
-                                                                       Color.WHITE,
-                                                                       SwingConstants.CENTER);
-    private ColorLabelEntry m_clTopCenterMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                    SwingConstants.RIGHT);
-    private ColorLabelEntry m_clTopLeftCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                     SwingConstants.CENTER);
-    private ColorLabelEntry m_clTopLeftMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                  SwingConstants.RIGHT);
-    private ColorLabelEntry m_clTopRightCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                      SwingConstants.CENTER);
-    private ColorLabelEntry m_clTopRightMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-                                                                   SwingConstants.RIGHT);
-    private Dimension GROESSE = new Dimension(de.hattrickorganizer.tools.Helper.calcCellWidth(80),
-                                              de.hattrickorganizer.tools.Helper.calcCellWidth(25));
+    
+    private ColorLabelEntry m_clBottomCenterCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clBottomCenterMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_clBottomLeftCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clBottomLeftMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_clBottomRightCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clBottomRightMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_clMiddleCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clMiddleMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_clTopCenterCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clTopCenterMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_clTopLeftCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clTopLeftMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_clTopRightCompare = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
+	private ColorLabelEntry m_clTopRightMain = new ColorLabelEntry("",
+			Color.BLACK, Color.WHITE, SwingConstants.RIGHT);
+    private Dimension GROESSE = new Dimension(Helper.calcCellWidth(80), Helper.calcCellWidth(25));
     private JLabel m_clBottomCenterText = new JLabel("", SwingConstants.LEFT);
     private JLabel m_clBottomLeftText = new JLabel("", SwingConstants.LEFT);
     private JLabel m_clBottomRightText = new JLabel("", SwingConstants.LEFT);
@@ -113,10 +96,12 @@ final class AufstellungsRatingPanel extends RasenPanel {
     private JPanel m_clTopCenterPanel = new JPanel(new BorderLayout());
     private JPanel m_clTopLeftPanel = new JPanel(new BorderLayout());
     private JPanel m_clTopRightPanel = new JPanel(new BorderLayout());
-    private java.text.NumberFormat m_clFormat;
+    private NumberFormat m_clFormat;
     private boolean m_bReihenfolge = REIHENFOLGE_STURM2VERTEIDIGUNG;
+    private final JButton copyButton = new JButton();
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors
+	// -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of AufstellungsRatingPanel
@@ -125,16 +110,16 @@ final class AufstellungsRatingPanel extends RasenPanel {
         initComponents();
 
         if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-            m_clFormat = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT;
+            m_clFormat = Helper.DEFAULTDEZIMALFORMAT;
         } else {
-            m_clFormat = de.hattrickorganizer.tools.Helper.DEZIMALFORMAT_2STELLEN;
+            m_clFormat = Helper.DEZIMALFORMAT_2STELLEN;
         }
     }
 
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
+     * Clear all fields.
      */
     public void clear() {
         m_clTopLeftText.setText("");
@@ -160,122 +145,62 @@ final class AufstellungsRatingPanel extends RasenPanel {
         m_clBottomRightCompare.clear();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setBottomCenter(double value) {
         m_clBottomCenterMain.setText(m_clFormat.format(value));
         m_clBottomCenterCompare.setSpezialNumber((float) (value - bottomcenter), false);
         bottomcenter = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     protected void setBottomCenterText(String text) {
         m_clBottomCenterText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setBottomLeft(double value) {
         m_clBottomLeftMain.setText(m_clFormat.format(value));
         m_clBottomLeftCompare.setSpezialNumber((float) (value - bottomleft), false);
         bottomleft = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     protected void setBottomLeftText(String text) {
         m_clBottomLeftText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setBottomRight(double value) {
         m_clBottomRightMain.setText(m_clFormat.format(value));
         m_clBottomRightCompare.setSpezialNumber((float) (value - bottomright), false);
         bottomright = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     protected void setBottomRightText(String text) {
         m_clBottomRightText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setMiddle(double value) {
         m_clMiddleMain.setText(m_clFormat.format(value));
         m_clMiddleCompare.setSpezialNumber((float) (value - middle), false);
         middle = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     protected void setMiddleText(String text) {
         m_clMiddleText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param reihenfolge TODO Missing Method Parameter Documentation
-     */
     protected void setReihenfolge(boolean reihenfolge) {
         m_bReihenfolge = REIHENFOLGE_STURM2VERTEIDIGUNG;
 
         initToolTips();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setTopCenter(double value) {
         m_clTopCenterMain.setText(m_clFormat.format(value));
         m_clTopCenterCompare.setSpezialNumber((float) (value - topcenter), false);
         topcenter = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     protected void setTopCenterText(String text) {
         m_clTopCenterText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setTopLeft(double value) {
         m_clTopLeftMain.setText(m_clFormat.format(value));
         m_clTopLeftCompare.setSpezialNumber((float) (value - topleft), false);
@@ -287,29 +212,16 @@ final class AufstellungsRatingPanel extends RasenPanel {
         m_clTopLeftText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setTopRight(double value) {
         m_clTopRightMain.setText(m_clFormat.format(value));
         m_clTopRightCompare.setSpezialNumber((float) (value - topright), false);
         topright = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     protected void setTopRightText(String text) {
         m_clTopRightText.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     protected void calcColorBorders() {
         final int faktor = 60;
         double temp = 0d;
@@ -396,7 +308,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Initialize GUI components.
      */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
@@ -428,12 +340,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
 
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         subconstraints.gridx = 1;
         subconstraints.gridy = 1;
         subconstraints.gridwidth = 1;
@@ -459,9 +368,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clTopCenterPanel.setBackground(Color.WHITE);
-        m_clTopCenterText.setFont(m_clTopCenterText.getFont().deriveFont(m_clTopCenterText.getFont()
-                                                                                          .getSize2D()
-                                                                         - 1f));
+        m_clTopCenterText.setFont(m_clTopCenterText.getFont().deriveFont(m_clTopCenterText.getFont().getSize2D() - 1f));
         m_clTopCenterText.setOpaque(true);
         m_clTopCenterPanel.add(innerpanel, BorderLayout.CENTER);
         m_clTopCenterPanel.setPreferredSize(GROESSE);
@@ -478,12 +385,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
 
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         subconstraints.gridx = 5;
         subconstraints.gridy = 1;
         subconstraints.gridwidth = 1;
@@ -525,9 +429,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clTopLeftPanel.setBackground(Color.WHITE);
-        m_clTopLeftText.setFont(m_clTopLeftText.getFont().deriveFont(m_clTopLeftText.getFont()
-                                                                                    .getSize2D()
-                                                                     - 1f));
+        m_clTopLeftText.setFont(m_clTopLeftText.getFont().deriveFont(m_clTopLeftText.getFont().getSize2D() - 1f));
         m_clTopLeftText.setOpaque(true);
         m_clTopLeftPanel.add(innerpanel, BorderLayout.CENTER);
         m_clTopLeftPanel.setPreferredSize(GROESSE);
@@ -544,12 +446,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
 
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         subconstraints.gridx = 3;
         subconstraints.gridy = 2;
         subconstraints.gridwidth = 1;
@@ -576,9 +475,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clTopRightPanel.setBackground(Color.WHITE);
-        m_clTopRightText.setFont(m_clTopRightText.getFont().deriveFont(m_clTopRightText.getFont()
-                                                                                       .getSize2D()
-                                                                       - 1f));
+        m_clTopRightText.setFont(m_clTopRightText.getFont().deriveFont(m_clTopRightText.getFont().getSize2D() - 1f));
         m_clTopRightText.setOpaque(true);
         m_clTopRightPanel.add(innerpanel, BorderLayout.CENTER);
         m_clTopRightPanel.setPreferredSize(GROESSE);
@@ -602,12 +499,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
         ////////////////////////////////////////////////////////////////////////
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.weightx = 0.0;
@@ -628,12 +522,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
 
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         subconstraints.gridx = 1;
         subconstraints.gridy = 4;
         subconstraints.gridwidth = 1;
@@ -659,8 +550,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clMiddlePanel.setBackground(Color.WHITE);
-        m_clMiddleText.setFont(m_clMiddleText.getFont().deriveFont(m_clMiddleText.getFont()
-                                                                                 .getSize2D() - 1f));
+        m_clMiddleText.setFont(m_clMiddleText.getFont().deriveFont(m_clMiddleText.getFont().getSize2D() - 1f));
         m_clMiddleText.setOpaque(true);
         m_clMiddlePanel.add(innerpanel, BorderLayout.CENTER);
         m_clMiddlePanel.setPreferredSize(GROESSE);
@@ -677,12 +567,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
 
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         subconstraints.gridx = 5;
         subconstraints.gridy = 4;
         subconstraints.gridwidth = 1;
@@ -698,12 +585,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
         ////////////////////////////////////////////////////////////////////////
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.weightx = 0.0;
@@ -740,9 +624,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clBottomLeftPanel.setBackground(Color.WHITE);
-        m_clBottomLeftText.setFont(m_clBottomLeftText.getFont().deriveFont(m_clBottomLeftText.getFont()
-                                                                                             .getSize2D()
-                                                                           - 1f));
+        m_clBottomLeftText.setFont(m_clBottomLeftText.getFont().deriveFont(m_clBottomLeftText.getFont().getSize2D() - 1f));
         m_clBottomLeftText.setOpaque(true);
         m_clBottomLeftPanel.add(innerpanel, BorderLayout.CENTER);
         m_clBottomLeftPanel.setPreferredSize(GROESSE);
@@ -760,12 +642,9 @@ final class AufstellungsRatingPanel extends RasenPanel {
 
         //Platzhalter
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10),
+                                                     Helper.calcCellWidth(2)));
         subconstraints.gridx = 3;
         subconstraints.gridy = 6;
         subconstraints.gridwidth = 1;
@@ -792,9 +671,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clBottomRightPanel.setBackground(Color.WHITE);
-        m_clBottomRightText.setFont(m_clBottomRightText.getFont().deriveFont(m_clBottomRightText.getFont()
-                                                                                                .getSize2D()
-                                                                             - 1f));
+        m_clBottomRightText.setFont(m_clBottomRightText.getFont().deriveFont(m_clBottomRightText.getFont().getSize2D() - 1f));
         m_clBottomRightText.setOpaque(true);
         m_clBottomRightPanel.add(innerpanel, BorderLayout.CENTER);
         m_clBottomRightPanel.setPreferredSize(GROESSE);
@@ -826,14 +703,10 @@ final class AufstellungsRatingPanel extends RasenPanel {
         subpanel = new JPanel(sublayout);
         subpanel.setOpaque(false);
 
-        //Platzhalter
+        //left bottom spacer
         tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), 1));
         subconstraints.gridx = 1;
         subconstraints.gridy = 7;
         subconstraints.gridwidth = 1;
@@ -859,9 +732,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         innerpanel.add(temppanel);
 
         m_clBottomCenterPanel.setBackground(Color.WHITE);
-        m_clBottomCenterText.setFont(m_clBottomCenterText.getFont().deriveFont(m_clBottomCenterText.getFont()
-                                                                                                   .getSize2D()
-                                                                               - 1f));
+        m_clBottomCenterText.setFont(m_clBottomCenterText.getFont().deriveFont(m_clBottomCenterText.getFont().getSize2D() - 1f));
         m_clBottomCenterText.setOpaque(true);
         m_clBottomCenterPanel.add(innerpanel, BorderLayout.CENTER);
         m_clBottomCenterPanel.setPreferredSize(GROESSE);
@@ -876,26 +747,37 @@ final class AufstellungsRatingPanel extends RasenPanel {
         sublayout.setConstraints(mainpanel, subconstraints);
         subpanel.add(mainpanel);
 
-        //Platzhalter
-        tempcomponent = new JLabel();
-        tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D()
-                                                                 - 2f));
-        tempcomponent.setPreferredSize(new Dimension(de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(10),
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(2)));
+        //right bottom spacer (copy button)
+        //tempcomponent = new JLabel();
+        //tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
+        //tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
+        //tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(1), 1));
         subconstraints.gridx = 5;
         subconstraints.gridy = 7;
         subconstraints.gridwidth = 1;
+        
+        //--- copy ratings button start
+        temppanel = new JPanel(new BorderLayout());
+        temppanel.setOpaque(false);
+        copyButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.ToolTip"));
+        copyButton.setIcon(new ImageIcon(Helper.loadImage("gui/bilder/info.gif")));
+        copyButton.addActionListener(new CopyListener(this));
+        copyButton.setPreferredSize(new Dimension(18, 18));
+        copyButton.setMaximumSize(new Dimension(18, 18));
+        temppanel.add(copyButton, BorderLayout.EAST);
+        //--- copy ratings button end
 
-        sublayout.setConstraints(tempcomponent, subconstraints);
-        subpanel.add(tempcomponent);
+        //sublayout.setConstraints(tempcomponent, subconstraints);
+        //subpanel.add(tempcomponent);
+        sublayout.setConstraints(temppanel, subconstraints);
+        subpanel.add(temppanel);
 
         constraints.gridx = 0;
         constraints.gridy = 6;
         layout.setConstraints(subpanel, constraints);
         add(subpanel);
 
+		
         ////////////////////////////////////////////////////////////////////////
         initToolTips();
 
@@ -910,53 +792,101 @@ final class AufstellungsRatingPanel extends RasenPanel {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Initialize all tool tips.
      */
     private void initToolTips() {
         if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-            m_clTopLeftText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clTopLeftMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clTopLeftCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clTopCenterText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clTopCenterMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clTopCenterCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clTopRightText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clTopRightMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clTopRightCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clMiddleText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clBottomLeftText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clBottomLeftMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clBottomLeftCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clBottomCenterText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clBottomCenterMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clBottomCenterCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clBottomRightText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clBottomRightMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clBottomRightCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clTopLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clTopLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clTopLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clTopCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+            m_clTopCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+            m_clTopCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+            m_clTopRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+            m_clTopRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+            m_clTopRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+            m_clMiddleText.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+            m_clMiddleMain.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+            m_clMiddleCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+            m_clBottomLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+            m_clBottomLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+            m_clBottomLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+            m_clBottomCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+            m_clBottomCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+            m_clBottomCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+            m_clBottomRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clBottomRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clBottomRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
         } else {
-            m_clTopLeftText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clTopLeftMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clTopLeftCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clTopCenterText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clTopCenterMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clTopCenterCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clTopRightText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clTopRightMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clTopRightCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clMiddleText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clBottomLeftText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clBottomLeftMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clBottomLeftCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clBottomCenterText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clBottomCenterMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clBottomCenterCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clBottomRightText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clBottomRightMain.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clBottomRightCompare.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clTopLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clTopLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clTopLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clTopCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+            m_clTopCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+            m_clTopCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+            m_clTopRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+            m_clTopRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+            m_clTopRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+            m_clMiddleText.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+            m_clMiddleMain.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+            m_clMiddleCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+            m_clBottomLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+            m_clBottomLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+            m_clBottomLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+            m_clBottomCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+            m_clBottomCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+            m_clBottomCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+            m_clBottomRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clBottomRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clBottomRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
         }
     }
+    
+    String getMidfieldRating() {
+    	return m_clFormat.format(middle);
+    }
+    String getLeftDefenseRating() {
+        if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+        	return m_clFormat.format(topright);
+        } else {
+        	return m_clFormat.format(bottomleft);
+        }
+    }
+    String getCentralDefenseRating() {
+        if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+        	return m_clFormat.format(topcenter);
+        } else {
+        	return m_clFormat.format(bottomcenter);
+        }
+    }
+    String getRightDefenseRating() {
+        if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+        	return m_clFormat.format(topleft);
+        } else {
+        	return m_clFormat.format(bottomright);
+        }
+    }
+
+    String getLeftAttackRating() {
+        if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+        	return m_clFormat.format(bottomright);
+        } else {
+        	return m_clFormat.format(topleft);
+        }
+    }
+    String getCentralAttackRating() {
+        if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+        	return m_clFormat.format(bottomcenter);
+        } else {
+        	return m_clFormat.format(topcenter);
+        }
+    }
+    String getRightAttackRating() {
+        if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+        	return m_clFormat.format(bottomleft);
+        } else {
+        	return m_clFormat.format(topright);
+        }
+    }
+    
 }
