@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOParameter;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -20,18 +21,13 @@ import de.hattrickorganizer.model.HOParameter;
 public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 4902186890362152556L;
 
-	/** TODO Missing Parameter Documentation */
+	// color for error messages
     public static final Color FEHLERFARBE = Color.red;
-
-    /** TODO Missing Parameter Documentation */
+    // color for info messages
     public static final Color INFOFARBE = Color.black;
-
-    /** TODO Missing Parameter Documentation */
+    // color for success messages
     public static final Color ERFOLGSFARBE = Color.green;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -54,8 +50,6 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 
     /**
      * Setzt den kurzen Infotext
-     *
-     * @param text TODO Missing Constructuor Parameter Documentation
      */
     public final void setKurzInfoText(String text) {
         m_jtfKurzInfoLabel.setText(text);
@@ -63,8 +57,6 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 
     /**
      * Setzt den langen Infotext
-     *
-     * @param text TODO Missing Constructuor Parameter Documentation
      */
     public final void setLangInfoText(String text) {
         m_jlInfoLabel.setText(text);
@@ -73,9 +65,6 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 
     /**
      * Setzt den langen Infotext und die Zeichenfarbe
-     *
-     * @param text TODO Missing Constructuor Parameter Documentation
-     * @param zeichenfarbe TODO Missing Constructuor Parameter Documentation
      */
     public final void setLangInfoText(String text, Color zeichenfarbe) {
         m_jlInfoLabel.setText(text);
@@ -83,13 +72,10 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     }
 
     /**
-     * Sets HO Users info
-     *
-     * @param actual TODO Missing Constructuor Parameter Documentation
-     * @param all TODO Missing Constructuor Parameter Documentation
+     * Sets the amount of HO Users in the bottom panel.
      */
     public final void setUserInfo(int actual, int all) {
-        m_jlUserLabel.setText(actual + " users ");
+        m_jlUserLabel.setText(actual + " " + HOVerwaltung.instance().getLanguageString("Info.users") + " ");
     }
 
     /**
