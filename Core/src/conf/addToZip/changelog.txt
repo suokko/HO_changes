@@ -15,6 +15,7 @@ Language updates:
 - update Serbian translations (thx Chokky)
 - add Catalan translations for some plugins (thx CAT-fike)
 - update English denominations to solve problems in the player parser (thx salt00)
+- add Hangul (Korean) as new HO language (thx to dodegun!)
 
 Plugin Updates:
 ---------------
