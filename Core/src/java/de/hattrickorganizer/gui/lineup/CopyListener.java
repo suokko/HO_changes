@@ -95,7 +95,7 @@ public class CopyListener implements ActionListener {
 			sb.append("[/td][td]"+lineup.getRightAttackRating());
 			sb.append("[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("MatchMittelfeld")+"[/th]");
-			sb.append("[td colspan=\"3\"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"); // TODO: is there a "center" @ HT-ML?
+			sb.append("[td colspan='3' align='center']");
 			sb.append(lineup.getMidfieldRating()+"[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Verteidigung"));
 			sb.append("[/th][td]"+lineup.getLeftDefenseRating()+"[/td][td]");
