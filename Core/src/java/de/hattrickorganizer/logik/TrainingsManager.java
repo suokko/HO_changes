@@ -51,7 +51,7 @@ public class TrainingsManager implements ITrainingsManager {
     private Map<String,Map<Integer,Integer>> matchMap;
 
     private TrainingsWeekManager weekManager;
-    static final public boolean TRAININGDEBUG = true;
+    static final public boolean TRAININGDEBUG = false;
 
     //~ Constructors -------------------------------------------------------------------------------
 
