@@ -98,6 +98,9 @@ MAX_MEMORY=512m
 
 # JDBC driver to use. Only if you use a remote DDBB
 # better write it in your HO.config
+# When you launch HO using the jar file, just put a link to your 
+# driver into the ho main-dir and name it "jdbc.jar". Example:
+# ln -s /usr/share/mysql-connector-java-5.0.8-bin.jar /home/ho/jdbc.jar
 #JDBC=/usr/share/java/mysql-3.1.11.jar
 
 #
