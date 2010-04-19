@@ -41,64 +41,25 @@ import de.hattrickorganizer.tools.PlayerHelper;
 public class ConvertXml2Hrf {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    //Arena
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htArena;
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htClub;
-
-    //Finanzen
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htEconomy;
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htLiga;
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htNextLineup;
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htTeamdeatils;
-
-    //Training
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htTraining;
-
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> m_htWorld;
-
-    //Finanzen
-    //Aufstellung
-
-    /** TODO Missing Parameter Documentation */
     protected MatchLineup m_clLineUp;
-
-    /** TODO Missing Parameter Documentation */
     protected MatchLineupTeam m_clTeam;
 
-    /** enthält die HRF-Textdatei */
     protected StringBuffer m_sHRFBuffer;
-
-    //Spieler
-
-    /** TODO Missing Parameter Documentation */
 
     //enthält eine Liste an Hashtable die je einen Spieler beschreiben
     protected Vector<?> m_vSpieler;
 
     //MatchOrder
-
-    /** TODO Missing Parameter Documentation */
     protected MatchKurzInfo[] m_aMatches;
-
-    /** TODO Missing Parameter Documentation */
     int m_iLastAttitude;
-
-    /** TODO Missing Parameter Documentation */
     int m_iLastTactic;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -128,87 +89,61 @@ public class ConvertXml2Hrf {
 
         try {
             //Hashtable's füllen
+        	final MyConnector mc = MyConnector.instance();
             waitDialog.setValue(5);
-            m_htTeamdeatils = new xmlTeamDetailsParser().parseTeamdetailsFromString(MyConnector.instance()
-                                                                                               .getTeamdetails(-1));
+            m_htTeamdeatils = new xmlTeamDetailsParser().parseTeamdetailsFromString(mc.getTeamdetails(-1));
             waitDialog.setValue(10);
-            m_htClub = new XMLClubParser().parseClubFromString(MyConnector.instance().getVerein());
+            m_htClub = new XMLClubParser().parseClubFromString(mc.getVerein());
             waitDialog.setValue(15);
-            m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(MyConnector.instance()
-                                                                                            .getLeagueDetails(),
-                                                                                 m_htTeamdeatils.get("TeamID")
-                                                                                                .toString());
+            m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),m_htTeamdeatils.get("TeamID").toString());
             waitDialog.setValue(20);
-            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(MyConnector.instance()
-                                                                                           .getWorldDetails(),
-                                                                                m_htTeamdeatils.get("LeagueID")
-                                                                                               .toString());
+            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(),m_htTeamdeatils.get("LeagueID").toString());
             waitDialog.setValue(25);
-            m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(MyConnector.instance()
-                                                                                          .getMatchLineup(-1,
-                                                                                                          -1)
-                                                                                          .toString());
+            m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1).toString());
             waitDialog.setValue(30);
-            m_vSpieler = new xmlPlayersParser().parsePlayersFromString(MyConnector.instance()
-                                                                                  .getPlayersAsp());
+            m_vSpieler = new xmlPlayersParser().parsePlayersFromString(mc.getPlayersAsp());
             waitDialog.setValue(35);
-            m_htEconomy = new xmlEconomyParser().parseEconomyFromString(MyConnector.instance()
-                                                                                   .getEconomy());
+            m_htEconomy = new xmlEconomyParser().parseEconomyFromString(mc.getEconomy());
             waitDialog.setValue(40);
-            m_htTraining = new XMLTrainingParser().parseTrainingFromString(MyConnector.instance()
-                                                                                      .getTraining());
+            m_htTraining = new XMLTrainingParser().parseTrainingFromString(mc.getTraining());
             waitDialog.setValue(45);
-            m_htArena = new XMLArenaParser().parseArenaFromString(MyConnector.instance().getArena());
+            m_htArena = new XMLArenaParser().parseArenaFromString(mc.getArena());
 
             //MatchOrder
             waitDialog.setValue(50);
-            m_aMatches = new XMLMatchesParser().parseMatchesFromString(MyConnector.instance()
-                                                                                  .getMatchesASP(Integer
-                                                                                                 .parseInt(m_htTeamdeatils.get("TeamID")
-                                                                                                                          .toString()),
-                                                                                                 false));
+            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatchesASP(Integer.parseInt(m_htTeamdeatils.get("TeamID").toString()), false));
             waitDialog.setValue(52);
 
-            //Automatisch alle MatchLineups runterladen
-            for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
-                if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
-                    waitDialog.setValue(54);
-                    m_htNextLineup = new xmlMatchOrderParser().parseMatchOrderFromString(MyConnector.instance()
-                                                                                                    .getMatchOrder(m_aMatches[i]
-                                                                                                                   .getMatchID()));
-                    break;
-                }
-            }
+            // Automatisch alle MatchLineups runterladen
+			for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
+				if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
+					waitDialog.setValue(54);
+					m_htNextLineup = new xmlMatchOrderParser().parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID()));
+					break;
+				}
+			}
 
             waitDialog.setValue(55);
 
-            //Team ermitteln, für Ratings der Player wichtig
+            // Team ermitteln, für Ratings der Player wichtig
             if (m_clLineUp != null) {
-                final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(MyConnector.instance()
-                                                                                                           .getMatchdetails(m_clLineUp
-                                                                                                                  .getMatchID()));
+                final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID()));
 
-                if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdeatils.get("TeamID")
-                                                                              .toString())) {
-                    m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp
-                               .getHeim();
+                if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdeatils.get("TeamID").toString())) {
+                    m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp.getHeim();
 
                     if (md != null) {
                         m_iLastAttitude = md.getHomeEinstellung();
                         m_iLastTactic = md.getHomeTacticType();
                     }
                 } else {
-                    m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp
-                               .getGast();
+                    m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp.getGast();
 
                     if (md != null) {
                         m_iLastAttitude = md.getGuestEinstellung();
                         m_iLastTactic = md.getGuestTacticType();
                     }
                 }
-
-                ;
-
                 m_clTeam.getTeamID();
             }
 
@@ -255,7 +190,7 @@ public class ConvertXml2Hrf {
             createLastLineUp();
             waitDialog.setValue(100);
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"convertxml2hrf :Exception gefangen: " + e);
+            HOLogger.instance().log(getClass(),"convertxml2hrf: Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
 
             //Fehlermdeldung und weg
@@ -377,10 +312,8 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("total=" + m_htEconomy.get("ExpectedWeeksTotal") + "\n");
         m_sHRFBuffer.append("lastIncomeSponsorer=" + m_htEconomy.get("LastIncomeSponsors") + "\n");
         m_sHRFBuffer.append("lastIncomePublik=" + m_htEconomy.get("LastIncomeSpectators") + "\n");
-        m_sHRFBuffer.append("lastIncomeFinansiella=" + m_htEconomy.get("LastIncomeFinancial")
-                            + "\n");
-        m_sHRFBuffer.append("lastIncomeTillfalliga=" + m_htEconomy.get("LastIncomeTemporary")
-                            + "\n");
+        m_sHRFBuffer.append("lastIncomeFinansiella=" + m_htEconomy.get("LastIncomeFinancial") + "\n");
+        m_sHRFBuffer.append("lastIncomeTillfalliga=" + m_htEconomy.get("LastIncomeTemporary") + "\n");
         m_sHRFBuffer.append("lastIncomeSumma=" + m_htEconomy.get("LastIncomeSum") + "\n");
         m_sHRFBuffer.append("lastCostsSpelare=" + m_htEconomy.get("LastCostsPlayers") + "\n");
         m_sHRFBuffer.append("lastCostsPersonal=" + m_htEconomy.get("LastCostsStaff") + "\n");
@@ -393,70 +326,46 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Create last lineup section.
      */
     protected final void createLastLineUp() {
         m_sHRFBuffer.append("[lastlineup]" + "\n");
         m_sHRFBuffer.append("trainer=" + m_htTeamdeatils.get("TrainerID") + "\n");
 
         try {
-            m_sHRFBuffer.append("installning=" + m_iLastAttitude + "\n");
-            m_sHRFBuffer.append("tactictype=" + m_iLastTactic + "\n");
-            m_sHRFBuffer.append("keeper=" + m_clTeam.getPlayerByPosition(1).getSpielerId() + "\n");
-            m_sHRFBuffer.append("rightBack=" + m_clTeam.getPlayerByPosition(2).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("insideBack1=" + m_clTeam.getPlayerByPosition(3).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("insideBack2=" + m_clTeam.getPlayerByPosition(4).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("leftBack=" + m_clTeam.getPlayerByPosition(5).getSpielerId() + "\n");
-            m_sHRFBuffer.append("rightWinger=" + m_clTeam.getPlayerByPosition(6).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("insideMid1=" + m_clTeam.getPlayerByPosition(7).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("insideMid2=" + m_clTeam.getPlayerByPosition(8).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("leftWinger=" + m_clTeam.getPlayerByPosition(9).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("forward1=" + m_clTeam.getPlayerByPosition(10).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("forward2=" + m_clTeam.getPlayerByPosition(11).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("substBack=" + m_clTeam.getPlayerByPosition(13).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("substInsideMid=" + m_clTeam.getPlayerByPosition(14).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("substWinger=" + m_clTeam.getPlayerByPosition(15).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("substKeeper=" + m_clTeam.getPlayerByPosition(12).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("substForward=" + m_clTeam.getPlayerByPosition(16).getSpielerId()
-                                + "\n");
-            m_sHRFBuffer.append("captain=" + m_clTeam.getPlayerByPosition(18).getSpielerId() + "\n");
-            m_sHRFBuffer.append("kicker1=" + m_clTeam.getPlayerByPosition(17).getSpielerId() + "\n");
+			m_sHRFBuffer.append("installning=" + m_iLastAttitude + "\n");
+			m_sHRFBuffer.append("tactictype=" + m_iLastTactic + "\n");
+			m_sHRFBuffer.append("keeper=" + m_clTeam.getPlayerByPosition(1).getSpielerId() + "\n");
+			m_sHRFBuffer.append("rightBack=" + m_clTeam.getPlayerByPosition(2).getSpielerId() + "\n");
+			m_sHRFBuffer.append("insideBack1=" + m_clTeam.getPlayerByPosition(3).getSpielerId() + "\n");
+			m_sHRFBuffer.append("insideBack2=" + m_clTeam.getPlayerByPosition(4).getSpielerId() + "\n");
+			m_sHRFBuffer.append("leftBack=" + m_clTeam.getPlayerByPosition(5).getSpielerId() + "\n");
+			m_sHRFBuffer.append("rightWinger=" + m_clTeam.getPlayerByPosition(6).getSpielerId() + "\n");
+			m_sHRFBuffer.append("insideMid1=" + m_clTeam.getPlayerByPosition(7).getSpielerId() + "\n");
+			m_sHRFBuffer.append("insideMid2=" + m_clTeam.getPlayerByPosition(8).getSpielerId() + "\n");
+			m_sHRFBuffer.append("leftWinger=" + m_clTeam.getPlayerByPosition(9).getSpielerId() + "\n");
+			m_sHRFBuffer.append("forward1=" + m_clTeam.getPlayerByPosition(10).getSpielerId() + "\n");
+			m_sHRFBuffer.append("forward2=" + m_clTeam.getPlayerByPosition(11).getSpielerId() + "\n");
+			m_sHRFBuffer.append("substBack=" + m_clTeam.getPlayerByPosition(13).getSpielerId() + "\n");
+			m_sHRFBuffer.append("substInsideMid=" + m_clTeam.getPlayerByPosition(14).getSpielerId() + "\n");
+			m_sHRFBuffer.append("substWinger=" + m_clTeam.getPlayerByPosition(15).getSpielerId() + "\n");
+			m_sHRFBuffer.append("substKeeper=" + m_clTeam.getPlayerByPosition(12).getSpielerId() + "\n");
+			m_sHRFBuffer.append("substForward=" + m_clTeam.getPlayerByPosition(16).getSpielerId() + "\n");
+			m_sHRFBuffer.append("captain=" + m_clTeam.getPlayerByPosition(18).getSpielerId() + "\n");
+			m_sHRFBuffer.append("kicker1=" + m_clTeam.getPlayerByPosition(17).getSpielerId() + "\n");
 
-            m_sHRFBuffer.append("behRightBack=" + m_clTeam.getPlayerByPosition(2).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behInsideBack1=" + m_clTeam.getPlayerByPosition(3).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behInsideBack2=" + m_clTeam.getPlayerByPosition(4).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behLeftBack=" + m_clTeam.getPlayerByPosition(5).getTaktik() + "\n");
-            m_sHRFBuffer.append("behRightWinger=" + m_clTeam.getPlayerByPosition(6).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behInsideMid1=" + m_clTeam.getPlayerByPosition(7).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behInsideMid2=" + m_clTeam.getPlayerByPosition(8).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behLeftWinger=" + m_clTeam.getPlayerByPosition(9).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behForward1=" + m_clTeam.getPlayerByPosition(10).getTaktik()
-                                + "\n");
-            m_sHRFBuffer.append("behForward2=" + m_clTeam.getPlayerByPosition(11).getTaktik()
-                                + "\n");
-
-            //fangen da manchmal kein Lineup verfügbar ist...
+			m_sHRFBuffer.append("behRightBack=" + m_clTeam.getPlayerByPosition(2).getTaktik() + "\n");
+			m_sHRFBuffer.append("behInsideBack1=" + m_clTeam.getPlayerByPosition(3).getTaktik() + "\n");
+			m_sHRFBuffer.append("behInsideBack2=" + m_clTeam.getPlayerByPosition(4).getTaktik() + "\n");
+			m_sHRFBuffer.append("behLeftBack=" + m_clTeam.getPlayerByPosition(5).getTaktik() + "\n");
+			m_sHRFBuffer.append("behRightWinger=" + m_clTeam.getPlayerByPosition(6).getTaktik() + "\n");
+			m_sHRFBuffer.append("behInsideMid1=" + m_clTeam.getPlayerByPosition(7).getTaktik() + "\n");
+			m_sHRFBuffer.append("behInsideMid2=" + m_clTeam.getPlayerByPosition(8).getTaktik() + "\n");
+			m_sHRFBuffer.append("behLeftWinger=" + m_clTeam.getPlayerByPosition(9).getTaktik() + "\n");
+			m_sHRFBuffer.append("behForward1=" + m_clTeam.getPlayerByPosition(10).getTaktik() + "\n");
+			m_sHRFBuffer.append("behForward2=" + m_clTeam.getPlayerByPosition(11).getTaktik() + "\n");
         } catch (Exception e) {
+        	HOLogger.instance().debug(getClass(), "Error(last lineup): " + e);
         }
     }
 
@@ -477,8 +386,6 @@ public class ConvertXml2Hrf {
 
     /**
      * Erstellt die LineUp Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     protected final void createLineUp() throws Exception {
         m_sHRFBuffer.append("[lineup]" + "\n");
@@ -486,10 +393,7 @@ public class ConvertXml2Hrf {
         try {
             m_sHRFBuffer.append("trainer=" + m_htTeamdeatils.get("TrainerID") + "\n");
             m_sHRFBuffer.append("installning=" + m_htNextLineup.get("Attitude") + "\n");
-            m_sHRFBuffer.append("tactictype="
-                                + (m_htNextLineup.get("TacticType").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("TacticType").toString().trim())
-                                + "\n");
+			m_sHRFBuffer.append("tactictype="+ (m_htNextLineup.get("TacticType").toString().trim().equals("") ? "0" : m_htNextLineup.get("TacticType").toString().trim()) + "\n");
             m_sHRFBuffer.append("keeper=" + m_htNextLineup.get("KeeperID") + "\n");
             m_sHRFBuffer.append("rightBack=" + m_htNextLineup.get("RightBackID") + "\n");
             m_sHRFBuffer.append("insideBack1=" + m_htNextLineup.get("InsideBack1ID") + "\n");
@@ -509,49 +413,47 @@ public class ConvertXml2Hrf {
             m_sHRFBuffer.append("captain=" + m_htNextLineup.get("CaptainID") + "\n");
             m_sHRFBuffer.append("kicker1=" + m_htNextLineup.get("KickerID") + "\n");
 
-            m_sHRFBuffer.append("behRightBack="
-                                + (m_htNextLineup.get("RightBackOrder").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("RightBackOrder").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behInsideBack1="
-                                + (m_htNextLineup.get("InsideBack1Order").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("InsideBack1Order").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behInsideBack2="
-                                + (m_htNextLineup.get("InsideBack2Order").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("InsideBack2Order").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behLeftBack="
-                                + (m_htNextLineup.get("LeftBackOrder").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("LeftBackOrder").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behRightWinger="
-                                + (m_htNextLineup.get("RightWingerOrder").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("RightWingerOrder").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behInsideMid1="
-                                + (m_htNextLineup.get("InsideMid1Order").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("InsideMid1Order").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behInsideMid2="
-                                + (m_htNextLineup.get("InsideMid2Order").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("InsideMid2Order").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behLeftWinger="
-                                + (m_htNextLineup.get("LeftWingerOrder").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("LeftWingerOrder").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behForward1="
-                                + (m_htNextLineup.get("Forward1Order").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("Forward1Order").toString().trim())
-                                + "\n");
-            m_sHRFBuffer.append("behForward2="
-                                + (m_htNextLineup.get("Forward2Order").toString().trim().equals("")
-                                   ? "0" : m_htNextLineup.get("Forward2Order").toString().trim())
-                                + "\n");
-
-            //fangen da manchmal kein Lineup verfügbar  ist...
+			m_sHRFBuffer.append("behRightBack=" + (m_htNextLineup.get("RightBackOrder").toString().trim()
+					.equals("") ? "0" : m_htNextLineup.get(
+							"RightBackOrder").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behInsideBack1="
+					+ (m_htNextLineup.get("InsideBack1Order").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"InsideBack1Order").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behInsideBack2="
+					+ (m_htNextLineup.get("InsideBack2Order").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"InsideBack2Order").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behLeftBack="
+					+ (m_htNextLineup.get("LeftBackOrder").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"LeftBackOrder").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behRightWinger="
+					+ (m_htNextLineup.get("RightWingerOrder").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"RightWingerOrder").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behInsideMid1="
+					+ (m_htNextLineup.get("InsideMid1Order").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"InsideMid1Order").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behInsideMid2="
+					+ (m_htNextLineup.get("InsideMid2Order").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"InsideMid2Order").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behLeftWinger="
+					+ (m_htNextLineup.get("LeftWingerOrder").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"LeftWingerOrder").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behForward1="
+					+ (m_htNextLineup.get("Forward1Order").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"Forward1Order").toString().trim()) + "\n");
+			m_sHRFBuffer.append("behForward2="
+					+ (m_htNextLineup.get("Forward2Order").toString().trim()
+							.equals("") ? "0" : m_htNextLineup.get(
+							"Forward2Order").toString().trim()) + "\n");
         } catch (Exception e) {
+        	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
         }
     }
 
