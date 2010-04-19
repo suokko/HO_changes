@@ -6,25 +6,31 @@
  */
 package de.hattrickorganizer.logik.xml;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.ISpielerPosition;
 import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
 
 /**
- * DOCUMENT ME!
+ * Parser for the matchorders.
  *
  * @author TheTom
  */
 public class xmlMatchOrderParser {
+	final static String[] PLAYERPOSITIONS = { "Keeper", "RightBack", "InsideBack1", "InsideBack2",
+			"LeftBack", "RightWinger", "InsideMid1", "InsideMid2", "LeftWinger", "Forward1", "Forward2" };
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new instance of xmlMatchOrderParser
      */
@@ -32,65 +38,42 @@ public class xmlMatchOrderParser {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param dateiname TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Parse match orders from a file name.
      */
-    public final Hashtable<?, ?> parseMatchOrder(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-
+    public final Hashtable<String, String> parseMatchOrder(String dateiname) {
+        Document doc = XMLManager.instance().parseFile(dateiname);
         return parseDetails(doc);
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Parse match orders from a file.
      */
-    public final Hashtable<String, String> parseMatchOrder(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
+    public final Hashtable<String, String> parseMatchOrder(File datei) {
+        Document doc = XMLManager.instance().parseFile(datei);
         return parseDetails(doc);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     //parse public
     ////////////////////////////////////////////////////////////////////////////////
-    public final Hashtable<?, ?> parseMatchOrderFromString(String inputStream) {
+    public final Hashtable<String, String> parseMatchOrderFromString(String inputStream) {
         Document doc = null;
-
         doc = XMLManager.instance().parseString(inputStream);
-
         return parseDetails(doc);
     }
 
     /**
-     * erzeugt einen Spieler aus dem xml
-     *
-     * @param ele TODO Missing Constructuor Parameter Documentation
-     * @param hash TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create a player from the given XML.
      */
     protected final void addPlayer(Element ele, Hashtable<String, String> hash) throws Exception {
         Element tmp = null;
         int roleID = -1;
-        String behaivior = "-1";
+        String behavior = "-1";
         String spielerID = "-1";
         String name = "";
 
         tmp = (Element) ele.getElementsByTagName("PlayerID").item(0);
-
         spielerID = XMLManager.instance().getFirstChildNodeValue(tmp);
 
         if (spielerID.trim().equals("")) {
@@ -105,76 +88,101 @@ public class xmlMatchOrderParser {
         tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
         name = XMLManager.instance().getFirstChildNodeValue(tmp);
 
-        //taktik nur für aufgestellte
+        // individual orders only for the 10 players in the lineup (starting11 - keeper)
         if ((roleID > 1) && (roleID < 12)) {
             tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
-            behaivior = XMLManager.instance().getFirstChildNodeValue(tmp);
+            behavior = XMLManager.instance().getFirstChildNodeValue(tmp);
         }
 
         switch (roleID) {
             case 1:
                 hash.put("KeeperID", spielerID);
                 hash.put("KeeperName", name);
+                hash.put("KeeperOrder", "0");
                 break;
 
             case 2:
                 hash.put("RightBackID", spielerID);
                 hash.put("RightBackName", name);
-                hash.put("RightBackOrder", behaivior);
+                hash.put("RightBackOrder", behavior);
                 break;
 
             case 3:
-                hash.put("InsideBack1ID", spielerID);
-                hash.put("InsideBack1Name", name);
-                hash.put("InsideBack1Order", behaivior);
+            	if (!hash.containsKey("InsideBack1ID")) {
+            		hash.put("InsideBack1ID", spielerID);
+            		hash.put("InsideBack1Name", name);
+            		hash.put("InsideBack1Order", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
                 break;
 
             case 4:
-                hash.put("InsideBack2ID", spielerID);
-                hash.put("InsideBack2Name", name);
-                hash.put("InsideBack2Order", behaivior);
-                break;
+            	if (!hash.containsKey("InsideBack2ID")) {
+            		hash.put("InsideBack2ID", spielerID);
+            		hash.put("InsideBack2Name", name);
+            		hash.put("InsideBack2Order", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
+            	break;
 
             case 5:
                 hash.put("LeftBackID", spielerID);
                 hash.put("LeftBackName", name);
-                hash.put("LeftBackOrder", behaivior);
+                hash.put("LeftBackOrder", behavior);
                 break;
 
             case 6:
                 hash.put("RightWingerID", spielerID);
                 hash.put("RightWingerName", name);
-                hash.put("RightWingerOrder", behaivior);
+                hash.put("RightWingerOrder", behavior);
                 break;
 
             case 7:
-                hash.put("InsideMid1ID", spielerID);
-                hash.put("InsideMid1Name", name);
-                hash.put("InsideMid1Order", behaivior);
+            	if (!hash.containsKey("InsideMid1ID")) {
+            		hash.put("InsideMid1ID", spielerID);
+            		hash.put("InsideMid1Name", name);
+            		hash.put("InsideMid1Order", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
                 break;
 
             case 8:
-                hash.put("InsideMid2ID", spielerID);
-                hash.put("InsideMid2Name", name);
-                hash.put("InsideMid2Order", behaivior);
+            	if (!hash.containsKey("InsideMid2ID")) {
+            		hash.put("InsideMid2ID", spielerID);
+            		hash.put("InsideMid2Name", name);
+            		hash.put("InsideMid2Order", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
                 break;
 
             case 9:
                 hash.put("LeftWingerID", spielerID);
                 hash.put("LeftWingerName", name);
-                hash.put("LeftWingerOrder", behaivior);
+                hash.put("LeftWingerOrder", behavior);
                 break;
 
             case 10:
-                hash.put("Forward1ID", spielerID);
-                hash.put("Forward1Name", name);
-                hash.put("Forward1Order", behaivior);
+            	if (!hash.containsKey("Forward1ID")) {
+            		hash.put("Forward1ID", spielerID);
+            		hash.put("Forward1Name", name);
+            		hash.put("Forward1Order", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
                 break;
 
             case 11:
-                hash.put("Forward2ID", spielerID);
-                hash.put("Forward2Name", name);
-                hash.put("Forward2Order", behaivior);
+            	if (!hash.containsKey("Forward2ID")) {
+            		hash.put("Forward2ID", spielerID);
+            		hash.put("Forward2Name", name);
+            		hash.put("Forward2Order", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
                 break;
 
             case 12:
@@ -213,6 +221,42 @@ public class xmlMatchOrderParser {
                 break;
         }
     }
+    
+    private static void addAdditionalPlayer(Hashtable<String, String> hash, int roleID, String spielerID, String name, String behavior) {
+    	String key = "Additional1";
+    	if (!hash.containsKey(key+"ID")) {
+    		hash.put(key + "ID", spielerID);
+    		hash.put(key + "Role", String.valueOf(roleID));
+    		hash.put(key + "Name", name);
+    		hash.put(key + "Behaviour", behavior);
+    		return;
+    	}
+    	key = "Additional2";
+    	if (!hash.containsKey(key+"ID")) {
+    		hash.put(key + "ID", spielerID);
+    		hash.put(key + "Role", String.valueOf(roleID));
+    		hash.put(key + "Name", name);
+    		hash.put(key + "Behaviour", behavior);
+    		return;
+    	}
+    	key = "Additional3";
+    	if (!hash.containsKey(key+"ID")) {
+    		hash.put(key + "ID", spielerID);
+    		hash.put(key + "Role", String.valueOf(roleID));
+    		hash.put(key + "Name", name);
+    		hash.put(key + "Behaviour", behavior);
+    		return;
+    	}
+    	key = "Additional4";
+    	if (!hash.containsKey(key+"ID")) {
+    		hash.put(key + "ID", spielerID);
+    		hash.put(key + "Role", String.valueOf(roleID));
+    		hash.put(key + "Name", name);
+    		hash.put(key + "Behaviour", behavior);
+    		return;
+    	}
+    	// max. 4 additional/repositioned players in the new lineup?
+    }
 
     /////////////////////////////////////////////////////////////////////////////////
     //Parser Helper private
@@ -220,10 +264,6 @@ public class xmlMatchOrderParser {
 
     /**
      * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final Hashtable<String, String> parseDetails(Document doc) {
         Element ele = null;
@@ -241,12 +281,6 @@ public class xmlMatchOrderParser {
         try {
             ele = (Element) root.getElementsByTagName("Version").item(0);
 
-            /*
-               if ( Double.parseDouble ( XMLManager.instance().getFirstChildNodeValue( ele ) ) < 1.2 )
-               {
-                   return parseVersion1_1( doc );
-               }
-             */
             //Nach Format ab Version 1.2 parsen
             //Daten füllen
             //Fetchdate
@@ -295,6 +329,7 @@ public class xmlMatchOrderParser {
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {
                 addPlayer((Element) list.item(i), hash);
             }
+            fillEmptySpotsWithAdditionalPlayers(hash);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLMatchOrderParser.parseDetails Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
@@ -302,13 +337,125 @@ public class xmlMatchOrderParser {
 
         return hash;
     }
+    
+    private static void fillEmptySpotsWithAdditionalPlayers(Hashtable<String, String> hash) {
+    	try {
+			int a = 1;
+			String add = hash.get("Additional" + a + "ID");
+			if (add == null) {
+				return;
+			} else {
+				String pos = getNextFreeSlot(hash);
+				if (pos != null) {
+					hash.put(pos + "ID", add);
+					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					//hash.put(pos + "Order", hash.get("Additional" + a + "Behaviour"));
+					try {
+						int role = Integer.parseInt(hash.get("Additional" + a + "Role"));
+						if (role == 3 || role == 4) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_INNENV));
+						} else if (role == 7 || role == 8) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_MITTELFELD));
+						} else if (role == 10 || role == 11) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
+						}
+					} catch (Exception e) {
+						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						hash.put(pos + "Order", "0");
+					}
+				}
+			}
+    		a = 2;
+			add = hash.get("Additional" + a + "ID");
+			if (add == null) {
+				return;
+			} else {
+				String pos = getNextFreeSlot(hash);
+				if (pos != null) {
+					hash.put(pos + "ID", add);
+					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					//hash.put(pos + "Order", hash.get("Additional" + a + "Behaviour"));
+					try {
+						int role = Integer.parseInt(hash.get("Additional" + a + "Role"));
+						if (role == 3 || role == 4) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_INNENV));
+						} else if (role == 7 || role == 8) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_MITTELFELD));
+						} else if (role == 10 || role == 11) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
+						}
+					} catch (Exception e) {
+						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						hash.put(pos + "Order", "0");
+					}
+				}
+			}
+			a = 3;
+			add = hash.get("Additional" + a + "ID");
+			if (add == null) {
+				return;
+			} else {
+				String pos = getNextFreeSlot(hash);
+				if (pos != null) {
+					hash.put(pos + "ID", add);
+					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					//hash.put(pos + "Order", hash.get("Additional" + a + "Behaviour"));
+					try {
+						int role = Integer.parseInt(hash.get("Additional" + a + "Role"));
+						if (role == 3 || role == 4) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_INNENV));
+						} else if (role == 7 || role == 8) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_MITTELFELD));
+						} else if (role == 10 || role == 11) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
+						}
+					} catch (Exception e) {
+						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						hash.put(pos + "Order", "0");
+					}
+				}
+			}
+			a = 4;
+			add = hash.get("Additional" + a + "ID");
+			if (add == null) {
+				return;
+			} else {
+				String pos = getNextFreeSlot(hash);
+				if (pos != null) {
+					hash.put(pos + "ID", add);
+					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					//hash.put(pos + "Order", hash.get("Additional" + a + "Behaviour"));
+					try {
+						int role = Integer.parseInt(hash.get("Additional" + a + "Role"));
+						if (role == 3 || role == 4) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_INNENV));
+						} else if (role == 7 || role == 8) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_MITTELFELD));
+						} else if (role == 10 || role == 11) {
+							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
+						}
+					} catch (Exception e) {
+						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						hash.put(pos + "Order", "0");
+					}
+				}
+			}
+    	} catch (Exception e) {
+    		HOLogger.instance().debug(xmlMatchOrderParser.class, e);
+    	}
+    }
+    
+    private static String getNextFreeSlot(Hashtable<String, String> hash) {
+    	for (String pos : PLAYERPOSITIONS) {
+    		if (!hash.containsKey(pos + "ID")) {
+    			return pos;
+    		}
+    	}
+    	return null;
+    }
 
     /**
-     * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * erstellt das Matchlineup Objekt
      */
     protected final Hashtable<?, ?> parseVersion1_1(Document doc) {
         Element ele = null;
@@ -369,16 +516,6 @@ public class xmlMatchOrderParser {
             ele = (Element) root.getElementsByTagName("KeeperName").item(0);
             hash.put("KeeperName", (XMLManager.instance().getFirstChildNodeValue(ele)));
 
-            /*
-               try
-               {
-                   ele  =   (Element) root.getElementsByTagName( "KeeperOrder" ).item(0);
-                   hash.put( "KeeperOrder", ( XMLManager.instance().getFirstChildNodeValue( ele ) ) );
-               }
-               catch ( Exception e )
-               {
-               }
-             **/
             ele = (Element) root.getElementsByTagName("RightBackID").item(0);
             hash.put("RightBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("RightBackName").item(0);
@@ -471,7 +608,7 @@ public class xmlMatchOrderParser {
             HOLogger.instance().log(getClass(),"XMLMatchOrderParser.parseDetails Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
         }
-
         return hash;
     }
+    
 }

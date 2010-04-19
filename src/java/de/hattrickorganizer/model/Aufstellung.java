@@ -8,6 +8,7 @@ package de.hattrickorganizer.model;
 
 import gui.UserParameter;
 
+import java.util.Properties;
 import java.util.Vector;
 
 import plugins.ILineUp;
@@ -30,13 +31,8 @@ public  class Aufstellung implements plugins.ILineUp {
 
     //Systeme
 
-    /** TODO Missing Parameter Documentation */
     public static final String DEFAULT_NAME = "HO!";
-
-    /** TODO Missing Parameter Documentation */
     public static final String DEFAULT_NAMELAST = "HO!LastLineup";
-
-    /** TODO Missing Parameter Documentation */
     public static final int NO_HRF_VERBINDUNG = -1;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -44,7 +40,7 @@ public  class Aufstellung implements plugins.ILineUp {
     /** Aufstellungsassistent */
     private Aufstellungsassistent m_clAssi = new Aufstellungsassistent();
 
-    /** hï¿½lt die Positionen */
+    /** positions */
     private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
 
     /** Attitude */
@@ -52,10 +48,10 @@ public  class Aufstellung implements plugins.ILineUp {
 
     //protected Vector    m_vSpieler      =   null;
 
-    /** wer ist Kapitän */
+    /** captain */
     private int m_iKapitaen = -1;
 
-    /** wer schieï¿½t Standards */
+    /** set pieces take */
     private int m_iKicker = -1;
 
     /** TacticType */
@@ -84,104 +80,68 @@ public  class Aufstellung implements plugins.ILineUp {
 
     /**
      * Creates a new instance of Aufstellung
-     *
-     * @param properties TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    public Aufstellung(java.util.Properties properties) throws Exception {
-        try {
-            //Positionen erzeugen
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper,
-                                                  Integer.parseInt(properties.getProperty("keeper",
-                                                                                          "0")),
-                                                  (byte) 0));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack,
-                                                  Integer.parseInt(properties.getProperty("rightback",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behrightback",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideBack1,
-                                                  Integer.parseInt(properties.getProperty("insideback1",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behinsideback1",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideBack2,
-                                                  Integer.parseInt(properties.getProperty("insideback2",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behinsideback2",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack,
-                                                  Integer.parseInt(properties.getProperty("leftback",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behleftback",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger,
-                                                  Integer.parseInt(properties.getProperty("rightwinger",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behrightwinger",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideMid1,
-                                                  Integer.parseInt(properties.getProperty("insidemid1",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behinsidemid1",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideMid2,
-                                                  Integer.parseInt(properties.getProperty("insidemid2",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behinsidemid2",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger,
-                                                  Integer.parseInt(properties.getProperty("leftwinger",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behleftwinger",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.forward1,
-                                                  Integer.parseInt(properties.getProperty("forward1",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behforward1",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.forward2,
-                                                  Integer.parseInt(properties.getProperty("forward2",
-                                                                                          "0")),
-                                                  Byte.parseByte(properties.getProperty("behforward2",
-                                                                                        "0"))));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.substBack,
-                                                  Integer.parseInt(properties.getProperty("substback",
-                                                                                          "0")),
-                                                  (byte) 0));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInsideMid,
-                                                  Integer.parseInt(properties.getProperty("substinsidemid",
-                                                                                          "0")),
-                                                  (byte) 0));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger,
-                                                  Integer.parseInt(properties.getProperty("substwinger",
-                                                                                          "0")),
-                                                  (byte) 0));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper,
-                                                  Integer.parseInt(properties.getProperty("substkeeper",
-                                                                                          "0")),
-                                                  (byte) 0));
-            m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward,
-                                                  Integer.parseInt(properties.getProperty("substforward",
-                                                                                          "0")),
-                                                  (byte) 0));
-            m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
-            m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
-        } catch (Exception e) {
-            HOLogger.instance().warning(getClass(),"Aufstellung.<init1>: " + e);
-            m_vPositionen.removeAllElements();
-            initPositionen442();
-        }
+	public Aufstellung(Properties properties) throws Exception {
+		try {
+			// Positionen erzeugen
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper,
+					Integer.parseInt(properties.getProperty("keeper", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack,
+					Integer.parseInt(properties.getProperty("rightback", "0")), 
+					Byte.parseByte(properties.getProperty("behrightback", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideBack1,
+					Integer.parseInt(properties.getProperty("insideback1", "0")), 
+					Byte.parseByte(properties.getProperty("behinsideback1","0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideBack2,
+					Integer.parseInt(properties.getProperty("insideback2", "0")),
+					Byte.parseByte(properties.getProperty("behinsideback2", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack, 
+					Integer.parseInt(properties.getProperty("leftback", "0")), Byte.parseByte(properties.getProperty("behleftback", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger,
+					Integer.parseInt(properties.getProperty("rightwinger", "0")), 
+					Byte.parseByte(properties.getProperty("behrightwinger","0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideMid1,
+					Integer.parseInt(properties.getProperty("insidemid1", "0")),
+					Byte.parseByte(properties.getProperty("behinsidemid1", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideMid2,
+					Integer.parseInt(properties.getProperty("insidemid2", "0")), 
+					Byte.parseByte(properties.getProperty("behinsidemid2", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger,
+					Integer.parseInt(properties.getProperty("leftwinger", "0")), 
+					Byte.parseByte(properties.getProperty("behleftwinger", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.forward1, 
+					Integer.parseInt(properties.getProperty("forward1", "0")),
+					Byte.parseByte(properties.getProperty("behforward1", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.forward2, 
+					Integer.parseInt(properties.getProperty("forward2", "0")),
+					Byte.parseByte(properties.getProperty("behforward2", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substBack,
+					Integer.parseInt(properties.getProperty("substback", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInsideMid,
+					Integer.parseInt(properties.getProperty("substinsidemid","0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger,
+					Integer.parseInt(properties.getProperty("substwinger", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper,
+					Integer.parseInt(properties.getProperty("substkeeper", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward,
+					Integer.parseInt(properties.getProperty("substforward", "0")), (byte) 0));
+			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
+			m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
+		} catch (Exception e) {
+			HOLogger.instance().warning(getClass(), "Aufstellung.<init1>: " + e);
+			HOLogger.instance().log(getClass(), e);
+			m_vPositionen.removeAllElements();
+			initPositionen442();
+		}
 
-        try {
-            //Kapitï¿½n + kicker
-            m_iKicker = Integer.parseInt(properties.getProperty("kicker1", "0"));
-            m_iKapitaen = Integer.parseInt(properties.getProperty("captain", "0"));
-        } catch (Exception e) {
-            HOLogger.instance().warning(getClass(),"Aufstellung.<init2>: " + e);
-        }
-    }
+		try { // captain + set pieces taker
+			m_iKicker = Integer.parseInt(properties.getProperty("kicker1", "0"));
+			m_iKapitaen = Integer.parseInt(properties.getProperty("captain", "0"));
+		} catch (Exception e) {
+			HOLogger.instance().warning(getClass(), "Aufstellung.<init2>: " + e);
+			HOLogger.instance().log(getClass(), e);
+		}
+	}
 
     //~ Methods ------------------------------------------------------------------------------------
 
