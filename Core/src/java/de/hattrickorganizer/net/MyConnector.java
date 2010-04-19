@@ -7,6 +7,8 @@
 package de.hattrickorganizer.net;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -49,11 +51,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 	static final private int chppID = 3330;
 	static final private String chppKey = "F283F8D8-9589-428D-87CD-96A2D9A73451";
 	static final private String htUrl = "www.hattrick.org";
-	//static final private String htUrl = "stage.hattrick.org";
-	/** TODO Missing Parameter Documentation */
+//	static final private String htUrl = "stage.hattrick.org";
 	public static String m_sIDENTIFIER =
 		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
+	private final static String VERSION_MATCHORDERS = "1.3";
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
@@ -69,6 +71,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private boolean m_bProxyAuthentifactionNeeded;
 	private boolean m_bUseProxy;
 	private int m_iUserID = -1;
+	final static private boolean DEBUGSAVE = false;
+	final static private String SAVEDIR = "D:/tmp/ho/";
 
 	//~ Constructors -------------------------------------------------------------------------------
 	/**
@@ -298,7 +302,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * lädt den Die Aufstellungsbewertung zu einem Spiel
+	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
 		String url =
@@ -311,22 +315,43 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
-
-		return getPage(url, true);
+		
+		if (DEBUGSAVE) {
+			final String ret = getPage(url, true);
+			FileWriter fw = new FileWriter(new File(SAVEDIR+"matchlineup_m"
+					+ matchId + "_t" + teamId + "_"
+					+ System.currentTimeMillis() + ".xml"));
+			fw.write(ret);
+			fw.flush();
+			fw.close();
+			return ret;
+		} else {
+			return getPage(url, true);
+		}
 	}
 
 	/**
-	 * lädt den Die Aufstellung zu einem Spiel
+	 * lädt die Aufstellung zu einem Spiel
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
-		String url =
-			"http://"+ gui.UserParameter.instance().htip + "/common/chppxml.axd?file=matchorders&matchID="+matchId+"&isYouth=false";
+		String url = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=matchorders&version="
+				+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
 
-		return getPage(url, true);
+		if (DEBUGSAVE) {
+			final String ret = getPage(url, true);
+			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchorders_m"
+					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
+			fw.write(ret);
+			fw.flush();
+			fw.close();
+			return ret;
+		} else {
+			return getPage(url, true);
+		}
 	}
 
 	/**
-	 * lädt den Die Aufstellungsbewertung zu einem Spiel
+	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchdetails(int matchId) throws IOException {
 		String url =
@@ -336,7 +361,17 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 		url += "&matchEvents=true";
 
-		return getPage(url, true);
+		if (DEBUGSAVE) {
+			final String ret = getPage(url, true);
+			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchdetails_m"
+					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
+			fw.write(ret);
+			fw.flush();
+			fw.close();
+			return ret;
+		} else {
+			return getPage(url, true);
+		}
 	}
 
 	/**
@@ -986,6 +1021,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 				try {
 					m_iUserID = Integer.parseInt(value);
+					if (m_iUserID > 0) {
+						// TODO: store user ID (necessary e.g. for the youthclub plugin)
+					}
 				} catch (NumberFormatException nfe) {
 				}
 			} catch (Exception e) {
