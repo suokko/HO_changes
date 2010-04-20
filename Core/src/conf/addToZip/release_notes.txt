@@ -5,7 +5,8 @@ Changelist HO! 1.426
 - add option to "re-simulate" an old match
 - allow openjdk as alternative for the Debian build (thx salt00)
 - lineup screen: add feature to copy ratings into the system clipboard
-- allow to quick-switch also the keeper 
+- allow to quick-switch also the keeper
+- quick hack to handle HTs changed lineup data
 
 Language updates:
 -----------------
