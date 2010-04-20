@@ -25,6 +25,7 @@ import de.hattrickorganizer.logik.xml.xmlMatchdetailsParser;
 import de.hattrickorganizer.logik.xml.xmlPlayersParser;
 import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
 import de.hattrickorganizer.logik.xml.xmlWorldDetailsParser;
+import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupTeam;
@@ -547,35 +548,20 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * Erstellt die Team Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create team related data (training, confidence, formation experience, etc.).
      */
     protected final void createTeam() throws Exception {
         m_sHRFBuffer.append("[team]" + "\n");
         m_sHRFBuffer.append("trLevel=" + m_htTraining.get("TrainingLevel") + "\n");
         m_sHRFBuffer.append("staminaTrainingPart=" + m_htTraining.get("StaminaTrainingPart") + "\n");
         m_sHRFBuffer.append("trTypeValue=" + m_htTraining.get("TrainingType") + "\n");
-        m_sHRFBuffer.append("trType="
-                            + de.hattrickorganizer.model.Team.getNameForTraining(Integer.parseInt(m_htTraining.get("TrainingType")
-                                                                                                              .toString()))
-                            + "\n");
+		m_sHRFBuffer.append("trType=" + Team.getNameForTraining(Integer.parseInt(m_htTraining.get("TrainingType").toString())) + "\n");
 
-        if ((m_htTraining.get("Morale") != null) && (m_htTraining.get("SelfConfidence") != null)) {
-            m_sHRFBuffer.append("stamningValue=" + m_htTraining.get("Morale") + "\n");
-            m_sHRFBuffer.append("stamning="
-                                + de.hattrickorganizer.model.Team.getNameForStimmung(Integer
-                                                                                     .parseInt(m_htTraining.get("Morale")
-                                                                                                           .toString()))
-                                + "\n");
-            m_sHRFBuffer.append("sjalvfortroendeValue=" + m_htTraining.get("SelfConfidence") + "\n");
-            m_sHRFBuffer.append("sjalvfortroende="
-                                + de.hattrickorganizer.model.Team.getNameForSelbstvertrauen(Integer
-                                                                                            .parseInt(m_htTraining.get("SelfConfidence")
-                                                                                                                  .toString()))
-                                + "\n");
-
-            //es wird grad gespielt flag setzen
+		if ((m_htTraining.get("Morale") != null) && (m_htTraining.get("SelfConfidence") != null)) {
+			m_sHRFBuffer.append("stamningValue=" + m_htTraining.get("Morale") + "\n");
+			m_sHRFBuffer.append("stamning=" + Team.getNameForStimmung(Integer.parseInt(m_htTraining.get("Morale").toString())) + "\n");
+			m_sHRFBuffer.append("sjalvfortroendeValue=" + m_htTraining.get("SelfConfidence") + "\n");
+			m_sHRFBuffer.append("sjalvfortroende=" + Team.getNameForSelbstvertrauen(Integer.parseInt(m_htTraining.get("SelfConfidence").toString()))+ "\n");
         } else {
             m_sHRFBuffer.append("playingMatch=true");
         }
