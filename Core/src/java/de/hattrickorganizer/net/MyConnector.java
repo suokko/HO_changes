@@ -571,7 +571,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	/**
-	 * holt das Training
+	 * Get the training XML data.
 	 */
 	public String getTraining() throws IOException {
 		final String url =
