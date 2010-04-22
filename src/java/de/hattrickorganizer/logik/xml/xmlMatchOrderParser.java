@@ -6,11 +6,8 @@
  */
 package de.hattrickorganizer.logik.xml;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.Hashtable;
-import java.util.Iterator;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
