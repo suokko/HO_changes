@@ -13,6 +13,7 @@ import java.io.OutputStreamWriter;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.logik.xml.XMLArenaParser;
 import de.hattrickorganizer.logik.xml.XMLClubParser;
 import de.hattrickorganizer.logik.xml.XMLMatchLineupParser;
@@ -35,7 +36,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
- * DOCUMENT ME!
+ * Convert the necessary xml data into a HRF file.
  *
  * @author thomas.werth
  */
@@ -74,17 +75,9 @@ public class ConvertXml2Hrf {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * erzeugt ein HRF und liefert den String zurück
-     *
-     * @param waitDialog TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the HRF data and return it in one string. 
      */
-    public final String createHrf(de.hattrickorganizer.gui.login.LoginWaitDialog waitDialog)
-      throws Exception
-    {
+    public final String createHrf(LoginWaitDialog waitDialog) throws Exception {
         //init
         m_sHRFBuffer = new StringBuffer();
 
@@ -171,7 +164,7 @@ public class ConvertXml2Hrf {
             createLineUp();
             waitDialog.setValue(85);
 
-            //econemy  
+            //economy  
             createEconemy();
             waitDialog.setValue(90);
 
@@ -187,14 +180,12 @@ public class ConvertXml2Hrf {
             createWorld();
             waitDialog.setValue(99);
 
-            //Aufstellung vom LETZTEM Spiel
+            //lineup from the last match
             createLastLineUp();
             waitDialog.setValue(100);
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"convertxml2hrf: Exception gefangen: " + e);
+            HOLogger.instance().log(getClass(),"convertxml2hrf: Exception: " + e);
             HOLogger.instance().log(getClass(),e);
-
-            //Fehlermdeldung und weg
             throw new Exception(e);
         }
 
@@ -205,9 +196,7 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * Erstellt die Arena Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the arena data.
      */
     protected final void createArena() throws Exception {
         m_sHRFBuffer.append("[arena]" + "\n");
@@ -234,9 +223,7 @@ public class ConvertXml2Hrf {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Erstellt die Basics Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the basic data.
      */
     protected final void createBasics() throws Exception {
         m_sHRFBuffer.append("[basics]\n");
@@ -258,9 +245,7 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * Erstellt die Club Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the club data.
      */
     protected final void createClub() throws Exception {
         m_sHRFBuffer.append("[club]\n");
@@ -274,15 +259,11 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("juniorverksamhet=" + m_htClub.get("YouthLevel") + "\n");
         m_sHRFBuffer.append("undefeated=" + m_htTeamdeatils.get("NumberOfUndefeated") + "\n");
         m_sHRFBuffer.append("victories=" + m_htTeamdeatils.get("NumberOfVictories") + "\n");
-
-        //TODO fehlt noch
         m_sHRFBuffer.append("fanclub=" + m_htEconomy.get("FanClubSize") + "\n");
     }
 
     /**
-     * Erstellt die Econemy Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the economy data.
      */
     protected final void createEconemy() throws Exception {
         //wahrscheinlich in Training.asp fehlt noch
@@ -371,9 +352,7 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * Erstellt die Liga Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the league data.
      */
     protected final void createLeague() throws Exception {
         m_sHRFBuffer.append("[league]\n");
@@ -453,9 +432,7 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * Erstellt die Player Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the player data.
      */
     protected final void createPlayers() throws Exception {
         Hashtable<?, ?> ht = null;
@@ -566,12 +543,22 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("exper532=" + m_htTraining.get("Experience532") + "\n");
         m_sHRFBuffer.append("exper343=" + m_htTraining.get("Experience343") + "\n");
         m_sHRFBuffer.append("exper541=" + m_htTraining.get("Experience541") + "\n");
+        if (m_htTraining.get("Experience442") != null) {
+        	m_sHRFBuffer.append("exper442=" + m_htTraining.get("Experience442") + "\n");
+        }
+        if (m_htTraining.get("Experience523") != null) {
+        	m_sHRFBuffer.append("exper523=" + m_htTraining.get("Experience523") + "\n");
+        }
+        if (m_htTraining.get("Experience550") != null) {
+        	m_sHRFBuffer.append("exper550=" + m_htTraining.get("Experience550") + "\n");
+        }
+        if (m_htTraining.get("Experience253") != null) {
+        	m_sHRFBuffer.append("exper253=" + m_htTraining.get("Experience253") + "\n");
+        }
     }
 
     /**
-     * Erstellt die World Daten
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
+     * Create the world data.
      */
     protected final void createWorld() throws Exception {
         m_sHRFBuffer.append("[xtra]\n");
@@ -598,41 +585,42 @@ public class ConvertXml2Hrf {
     }
 
     /**
-     * schreibt die HRF datei
-     *
-     * @param dateiname TODO Missing Constructuor Parameter Documentation
+     * Save the HRF file.
      */
     protected final void writeHRF(String dateiname) {
         BufferedWriter out = null;
-        File datei = null;
         final String text = m_sHRFBuffer.toString();
-        ;
 
         //utf-8
         OutputStreamWriter outWrit = null;
 
         try {
-            datei = new File(dateiname);
+        	File f = new File(dateiname);
 
-            if (datei.exists()) {
-                datei.delete();
+            if (f.exists()) {
+                f.delete();
             }
 
-            datei.createNewFile();
+            f.createNewFile();
 
-            //utf 8 schreiben
-            outWrit = new OutputStreamWriter(new FileOutputStream(datei), "UTF-8");
+            //write utf 8
+            outWrit = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
             out = new BufferedWriter(outWrit);
 
-            //ansi schreiben
-            //            out =   new BufferedWriter( new FileWriter( datei ) );
+            //write ansi
+            //out = new BufferedWriter( new FileWriter( f ) );
             if (text != null) {
                 out.write(text);
             }
-
-            out.close();
         } catch (Exception except) {
             HOLogger.instance().log(getClass(),except);
+        } finally {
+        	if (out != null) {
+        		try {
+					out.close();
+				} catch (Exception e) {
+				}        	
+        	}
         }
     }
 }

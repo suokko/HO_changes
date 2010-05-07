@@ -56,6 +56,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
 	private final static String VERSION_MATCHORDERS = "1.3";
+	private final static String VERSION_TRAINING = "1.5";
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
@@ -574,8 +575,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * Get the training XML data.
 	 */
 	public String getTraining() throws IOException {
-		final String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=training";
+		final String url = "http://" + gui.UserParameter.instance().htip
+				+ "/common/chppxml.axd?file=training&version="+ VERSION_TRAINING;
 
 		return getPage(url, true);
 	}

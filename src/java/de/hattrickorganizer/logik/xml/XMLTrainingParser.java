@@ -6,17 +6,19 @@
  */
 package de.hattrickorganizer.logik.xml;
 
+import java.io.File;
 import java.util.Hashtable;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
 
 /**
- * DOCUMENT ME!
+ * Parser for trainig xml data.
  *
  * @author thomas.werth
  */
@@ -32,130 +34,126 @@ public class XMLTrainingParser {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param dateiname TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Parse the training from the given xml file name.
      */
-    public final Hashtable<?, ?> parseTraining(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-
+    public final Hashtable<?, ?> parseTraining(String filename) {
+    	final Document doc = XMLManager.instance().parseFile(filename);
         return parseDetails(doc);
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Parse the training from the given xml file.
      */
-    public final Hashtable<?, ?> parseTraining(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
+    public final Hashtable<?, ?> parseTraining(File file) {
+    	final Document doc = XMLManager.instance().parseFile(file);
         return parseDetails(doc);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
-    //parse public
-    ////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Parse the training from the given xml string.
+     */
     public final Hashtable<?, ?> parseTrainingFromString(String inputStream) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(inputStream);
-
+        final Document doc = XMLManager.instance().parseString(inputStream);
         return parseDetails(doc);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final Hashtable<?, ?> parseDetails(Document doc) {
+	/**
+	 * erstellt das MAtchlineup Objekt
+	 */
+	protected final Hashtable<?, ?> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
-        final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();
+        final MyHashtable hash = new MyHashtable();
 
         if (doc == null) {
             return hash;
         }
 
-        //Tabelle erstellen
         root = doc.getDocumentElement();
 
         try {
-            //Daten füllen
-            //Fetchdate
+        	final XMLManager xml = XMLManager.instance();
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-            hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("FetchedDate", (xml.getFirstChildNodeValue(ele)));
 
-            //Root wechseln
             root = (Element) root.getElementsByTagName("Team").item(0);
             ele = (Element) root.getElementsByTagName("TeamID").item(0);
-            hash.put("TeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamID", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("TeamName").item(0);
-            hash.put("TeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamName", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("TrainingLevel").item(0);
-            hash.put("TrainingLevel", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TrainingLevel", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("StaminaTrainingPart").item(0);
-            hash.put("StaminaTrainingPart", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("StaminaTrainingPart", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("NewTrainingLevel ").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-                hash.put("NewTrainingLevel ", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            if (xml.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+                hash.put("NewTrainingLevel ", (xml.getFirstChildNodeValue(ele)));
             }
 
             ele = (Element) root.getElementsByTagName("TrainingType").item(0);
-            hash.put("TrainingType", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TrainingType", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Morale").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-                hash.put("Morale", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            if (xml.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+                hash.put("Morale", (xml.getFirstChildNodeValue(ele)));
             }
 
             ele = (Element) root.getElementsByTagName("SelfConfidence").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-                hash.put("SelfConfidence", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            if (xml.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+                hash.put("SelfConfidence", (xml.getFirstChildNodeValue(ele)));
             }
 
             ele = (Element) root.getElementsByTagName("Experience433").item(0);
-            hash.put("Experience433", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Experience433", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Experience451").item(0);
-            hash.put("Experience451", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Experience451", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Experience352").item(0);
-            hash.put("Experience352", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Experience352", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Experience532").item(0);
-            hash.put("Experience532", (XMLManager.instance().getFirstChildNodeValue(ele)));
-
+            hash.put("Experience532", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Experience343").item(0);
-            hash.put("Experience343", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Experience343", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Experience541").item(0);
-            hash.put("Experience541", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Experience541", (xml.getFirstChildNodeValue(ele)));
+        
+            // new formation experiences since training xml version 1.5
+            try {
+            	ele = (Element) root.getElementsByTagName("Experience442").item(0);
+                hash.put("Experience442", (xml.getFirstChildNodeValue(ele)));
+            } catch (Exception e) {
+            	HOLogger.instance().log(getClass(), "Err(Experience442): " + e);
+            }
+            try {
+            	ele = (Element) root.getElementsByTagName("Experience523").item(0);
+                hash.put("Experience523", (xml.getFirstChildNodeValue(ele)));
+            } catch (Exception e) {
+            	HOLogger.instance().log(getClass(), "Err(Experience523): " + e);
+            }
+            try {
+            	ele = (Element) root.getElementsByTagName("Experience550").item(0);
+                hash.put("Experience550", (xml.getFirstChildNodeValue(ele)));
+            } catch (Exception e) {
+            	HOLogger.instance().log(getClass(), "Err(Experience550): " + e);
+            }
+            try {
+            	ele = (Element) root.getElementsByTagName("Experience253").item(0);
+                hash.put("Experience253", (xml.getFirstChildNodeValue(ele)));
+            } catch (Exception e) {
+            	HOLogger.instance().log(getClass(), "Err(Experience253): " + e);
+            }
 
-            //Root wechseln
             root = (Element) root.getElementsByTagName("Trainer").item(0);
             ele = (Element) root.getElementsByTagName("TrainerID").item(0);
-            hash.put("TrainerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TrainerID", (xml.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("TrainerName").item(0);
-            hash.put("TrainerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TrainerName", (xml.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("ArrivalDate").item(0);
-            hash.put("ArrivalDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ArrivalDate", (xml.getFirstChildNodeValue(ele)));
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLTrainingParser.parseDetails Exception gefangen: " + e);
+            HOLogger.instance().log(getClass(),"XMLTrainingParser.parseDetails Exception: " + e);
             HOLogger.instance().log(getClass(),e);
         }
 
