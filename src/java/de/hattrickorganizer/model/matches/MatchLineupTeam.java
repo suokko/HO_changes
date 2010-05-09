@@ -176,9 +176,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
     }
 
     /**
-     * determinates played System
-     *
-     * @return TODO Missing Return Method Documentation
+     * Determinates the played formation.
      */
     public final byte determinateSystem() {
         short abw = 0;
@@ -225,8 +223,17 @@ public class MatchLineupTeam implements IMatchLineupTeam {
             }
         }
 
-        //343
-        if (abw == 3) {
+        if (abw == 2) {
+        	//253
+        	if (mf == 5) {
+        		return ILineUp.SYS_253;
+        	}
+        	//MURKS
+            else {
+                return ILineUp.SYS_MURKS;
+            }
+        } else if (abw == 3) {
+        	//343
             if (mf == 4) {
                 return ILineUp.SYS_343;
             } //352
@@ -259,6 +266,12 @@ public class MatchLineupTeam implements IMatchLineupTeam {
             } //541
             else if ((mf == 4) && (st == 1)) {
                 return ILineUp.SYS_541;
+            } //523
+            else if ((mf == 2) && (st == 3)) {
+                return ILineUp.SYS_523;
+            } //550
+            else if ((mf == 5) && (st == 0)) {
+                return ILineUp.SYS_550;
             }
             //MURKS
             else {

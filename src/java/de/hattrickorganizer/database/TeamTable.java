@@ -7,9 +7,8 @@ import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
- * 
+ * Implementation of the team table.
  * @author Thorsten Dietz
- *
  */
 public final class TeamTable extends AbstractTable {
 
@@ -22,7 +21,7 @@ public final class TeamTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[15];
+		columns = new ColumnDescriptor[19];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("TrainingsIntensitaet",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("TrainingsArt",Types.INTEGER,false);
@@ -38,6 +37,10 @@ public final class TeamTable extends AbstractTable {
 		columns[12]= new ColumnDescriptor("iErfahrung532",Types.INTEGER,false);
 		columns[13]= new ColumnDescriptor("iErfahrung343",Types.INTEGER,false);
 		columns[14]= new ColumnDescriptor("StaminaTrainingPart",Types.INTEGER,false);
+		columns[15]= new ColumnDescriptor("iErfahrung442",Types.INTEGER,false);
+		columns[16]= new ColumnDescriptor("iErfahrung523",Types.INTEGER,false);
+		columns[17]= new ColumnDescriptor("iErfahrung550",Types.INTEGER,false);
+		columns[18]= new ColumnDescriptor("iErfahrung253",Types.INTEGER,false);
 	}
 
 	@Override
@@ -46,10 +49,7 @@ public final class TeamTable extends AbstractTable {
 			"CREATE INDEX ITEAM_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
 	}
 	/**
-	 * speichert das Team
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param team TODO Missing Constructuor Parameter Documentation
+	 * Save the team data for the given HRF id.
 	 */
 	public void saveTeam(int hrfId, Team team) {
 		String statement = null;
@@ -57,42 +57,31 @@ public final class TeamTable extends AbstractTable {
 		final String[] awhereV = { "" + hrfId };
 
 		if (team != null) {
-			//erst Vorhandene Aufstellung löschen
+			//delete existing lineup
 			delete( awhereS, awhereV );
-			//insert vorbereiten
-			statement =
-				"INSERT INTO "+getTableName()+" ( TrainingsIntensitaet , StaminaTrainingPart, TrainingsArt, sTrainingsArt , iStimmung, sStimmung , iSelbstvertrauen, sSelbstvertrauen , iErfahrung541 , iErfahrung433 , iErfahrung352 , iErfahrung451 , iErfahrung532 , iErfahrung343, HRF_ID ) VALUES(";
+			//prepare insert statment 
+			statement = "INSERT INTO " + getTableName()
+					+ " ( TrainingsIntensitaet , StaminaTrainingPart, TrainingsArt, sTrainingsArt , iStimmung, sStimmung , iSelbstvertrauen, sSelbstvertrauen , iErfahrung541 , iErfahrung433 , iErfahrung352 , iErfahrung451 , iErfahrung532 , iErfahrung343, iErfahrung442, iErfahrung523, iErfahrung550, iErfahrung253, HRF_ID ) VALUES(";
 			statement
-				+= (""
-					+ team.getTrainingslevel()
-					+ ","
-					+ team.getStaminaTrainingPart()
-					+ ","
-					+ team.getTrainingsArtAsInt()
-					+ ",'"
-					+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(team.getTrainingsArt())
-					+ "',"
-					+ team.getStimmungAsInt()
-					+ ",'"
-					+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(team.getStimmung())
-					+ "',"
-					+ team.getSelbstvertrauenAsInt()
-					+ ",'"
-					+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(team.getSelbstvertrauen())
-					+ "',"
-					+ team.getErfahrung541()
-					+ ","
-					+ team.getErfahrung433()
-					+ ","
-					+ team.getErfahrung352()
-					+ ","
-					+ team.getErfahrung451()
-					+ ","
-					+ team.getErfahrung532()
-					+ ","
-					+ team.getErfahrung343()
-					+ ","
-					+ hrfId
+				+= ("" + team.getTrainingslevel()
+					+ "," + team.getStaminaTrainingPart()
+					+ "," + team.getTrainingsArtAsInt()
+					+ ",'" + DBZugriff.insertEscapeSequences(team.getTrainingsArt())
+					+ "'," + team.getStimmungAsInt()
+					+ ",'" + DBZugriff.insertEscapeSequences(team.getStimmung())
+					+ "'," + team.getSelbstvertrauenAsInt()
+					+ ",'" + DBZugriff.insertEscapeSequences(team.getSelbstvertrauen())
+					+ "'," + team.getErfahrung541()
+					+ "," + team.getErfahrung433()
+					+ "," + team.getErfahrung352()
+					+ "," + team.getErfahrung451()
+					+ "," + team.getErfahrung532()
+					+ "," + team.getErfahrung343()
+					+ "," + team.getFormationExperience442()
+					+ "," + team.getFormationExperience523()
+					+ "," + team.getFormationExperience550()
+					+ "," + team.getFormationExperience253()
+					+ "," + hrfId
 					+ " )");
 			adapter.executeUpdate(statement);
 		}
@@ -101,10 +90,6 @@ public final class TeamTable extends AbstractTable {
 	/**
 	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
 	 * Selbstvertrauen
-	 *
-	 * @param hrfid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public String[] getStimmmungSelbstvertrauen(int hrfid) {
 		final int[] intvalue = new int[2];
@@ -123,8 +108,8 @@ public final class TeamTable extends AbstractTable {
 					returnvalue[0] = rs.getString("sStimmung");
 					returnvalue[1] = rs.getString("sSelbstvertrauen");
 				} else {
-					returnvalue[0] = de.hattrickorganizer.model.Team.getNameForStimmung(intvalue[0]);
-					returnvalue[1] = de.hattrickorganizer.model.Team.getNameForSelbstvertrauen(intvalue[1]);
+					returnvalue[0] = Team.getNameForStimmung(intvalue[0]);
+					returnvalue[1] = Team.getNameForSelbstvertrauen(intvalue[1]);
 				}
 			}
 		} catch (Exception e) {
@@ -137,10 +122,6 @@ public final class TeamTable extends AbstractTable {
 	/**
 	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
 	 * Selbstvertrauen
-	 *
-	 * @param hrfid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int[] getStimmmungSelbstvertrauenValues(int hrfid) {
 		final int[] intvalue = new int[2];
@@ -161,11 +142,7 @@ public final class TeamTable extends AbstractTable {
 	}
 	
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * load the team data for the given HRF id
 	 */
 	public Team getTeam(int hrfID) {
 		ResultSet rs = null;
@@ -185,31 +162,4 @@ public final class TeamTable extends AbstractTable {
 
 		return team;
 	}
-
-//	/**
-//	 * liefert die Trainingsart für das angeforderte HRF
-//	 *
-//	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-//	 *
-//	 * @return TODO Missing Return Method Documentation
-//	 */
-//	public int getTrainingsartByHRFID(int hrfID) {
-//		ResultSet rs = null;
-//		String sql = null;
-//		int trTyp = -1;
-//
-//		sql = "SELECT TrainingsArt FROM Team WHERE HRF_ID = " + hrfID;
-//		rs = adapter.executeQuery(sql);
-//
-//		try {
-//			if (rs != null) {
-//				rs.first();
-//				trTyp = rs.getInt("TrainingsArt");
-//			}
-//		} catch (Exception e) {
-//			HOLogger.instance().log(getClass(),"DatenbankZugriff.getTrainingsartByHRFID: " + e);
-//		}
-//
-//		return trTyp;
-//	}	
 }

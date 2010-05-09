@@ -37,7 +37,6 @@ import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.model.User;
-import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.model.XtraData;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
@@ -57,13 +56,13 @@ public class DBZugriff {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
-	/** TODO Missing Parameter Documentation */
-	private static final int DBVersion = 9;
+	/** database version */
+	private static final int DBVersion = 10;
 
-	/** TODO Missing Parameter Documentation 2004-06-14 11:00:00.0 */
+	/** 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
 
-	/** singelton */
+	/** singleton */
 	protected static DBZugriff m_clInstance;
 
 	//~ Instance fields ----------------------------------------------------------------------------
@@ -1680,7 +1679,7 @@ public class DBZugriff {
 			try {
 				HOLogger.instance().log(getClass(), "Updating DB to version " + DBVersion + "...");
 
-				switch (version) {
+				switch (version) { // hint: fall though (no breaks) is intended here
 					case 0 :
 						updateDBv1();
 					case 1 :
@@ -1699,8 +1698,8 @@ public class DBZugriff {
 						updateDBv8();
 					case 8 :
 						updateDBv9();
-
-						//case 2: updateDB_v3(); // For future versions!
+					case 9 : 
+						updateDBv10();
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -1713,9 +1712,7 @@ public class DBZugriff {
 	}
 
 	/**
-	  * TODO Missing Method Documentation
-	  *
-	  * @throws Exception TODO Missing Method Exception Documentation
+	  * Update database to version 1.
 	  */
 	private void updateDBv1() throws Exception {
 		// Add TimeZone and DBVersion field
@@ -1747,9 +1744,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @throws Exception TODO Missing Method Exception Documentation
+	 * Update database to version 2.
 	 */
 	private void updateDBv2() throws Exception {
 
@@ -1795,9 +1790,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @throws Exception TODO Missing Method Exception Documentation
+	 * Update database to version 3.
 	 */
 	private void updateDBv3() throws Exception {
 
@@ -1817,9 +1810,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @throws Exception TODO Missing Method Exception Documentation
+	 * Update database to version 4.
 	 */
 	private void updateDBv4() throws Exception {
 
@@ -1832,9 +1823,7 @@ public class DBZugriff {
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @throws Exception TODO Missing Method Exception Documentation
+	 * Update database to version 5.
 	 */
 	private void updateDBv5() throws Exception {
 
@@ -1851,8 +1840,6 @@ public class DBZugriff {
 
 	/**
 	 * Update DB structure to v6
-	 *
-	 * @throws Exception
 	 */
 	private void updateDBv6() throws Exception {
 
@@ -1867,8 +1854,6 @@ public class DBZugriff {
 
 	/**
 	 * Update DB structure to v7
-	 *
-	 * @throws Exception
 	 */
 	private void updateDBv7() throws Exception {
 
@@ -1907,8 +1892,6 @@ public class DBZugriff {
 
 	/**
 	 * Update DB structure to v9
-	 *
-	 * @throws Exception
 	 */
 	private void updateDBv9() throws Exception {
 		// Add new columns for spectator distribution
@@ -1937,6 +1920,27 @@ public class DBZugriff {
 		// do version checking again before applying!
 		saveUserParameter("DBVersion", 9);
 	}
+	
+	/**
+	 * Update database to version 10.
+	 */
+	private void updateDBv10() throws Exception {
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN iErfahrung442 INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN iErfahrung523 INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN iErfahrung550 INTEGER");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN iErfahrung253 INTEGER");
+		
+		m_clJDBCAdapter.executeUpdate("UPDATE TEAM SET iErfahrung442=8 WHERE iErfahrung442 IS NULL");
+		m_clJDBCAdapter.executeUpdate("UPDATE TEAM SET iErfahrung523=1 WHERE iErfahrung523 IS NULL");
+		m_clJDBCAdapter.executeUpdate("UPDATE TEAM SET iErfahrung550=1 WHERE iErfahrung550 IS NULL");
+		m_clJDBCAdapter.executeUpdate("UPDATE TEAM SET iErfahrung253=1 WHERE iErfahrung253 IS NULL");
+
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		saveUserParameter("DBVersion", 10);
+	}
+
 
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
@@ -1948,10 +1952,6 @@ public class DBZugriff {
 }
 	/**
 	 * Alle \ entfernen
-	 *
-	 * @param text TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String deleteEscapeSequences(String text) {
 		if (text == null) {
@@ -1976,10 +1976,6 @@ public class DBZugriff {
 
 	/**
 	 * ' " und ´ codieren durch \
-	 *
-	 * @param text TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String insertEscapeSequences(String text) {
 		if (text == null) {
@@ -2041,6 +2037,12 @@ public class DBZugriff {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
 			updateConfigTo1425(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425);
 		}
+		
+//		Maybe later (feedback upload since start of the season).
+//		if (lastConfigUpdate < 1.426 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.426)) {
+//			HOLogger.instance().log(getClass(), "Updating configuration to version 1.426...");
+//			updateConfigTo1426(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.426);
+//		}
 	}
 
 	private void updateConfigTo1410_1 (boolean alreadyApplied) {
