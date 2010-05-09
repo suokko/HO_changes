@@ -62,9 +62,7 @@ public class XMLExporter  {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
+     * Do the export.
      */
     public void doExport() {
         javax.swing.JWindow waitDialog = null;
@@ -163,9 +161,7 @@ public class XMLExporter  {
 
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param filename TODO Missing Method Parameter Documentation
+	 * Save XMP file.
 	 */
 	public void saveXML(String filename, Timestamp startingDate) {
 				
@@ -494,19 +490,13 @@ public class XMLExporter  {
 		//        HOMiniModel.instance().getGUI ().getInfoPanel ().clearAll ();   
 		HOMiniModel.instance().getHelper().showMessage(
 			HOMiniModel.instance().getGUI().getOwner4Dialog(),
-			"" + matches.size() + " Matches exportet.\n Regarding to CHPP rules : Any App that uses this XML-File has to be CHPP approved!",
+			"" + matches.size() + " Matches exportet.\n Regarding to CHPP rules: Any App that uses this XML-File has to be CHPP approved!",
 			"Finished",
 			javax.swing.JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param skill TODO Missing Method Parameter Documentation
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchdate TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Check for skillup.
 	 */
 	private String hadSkillup(int skill, ISpieler player, Timestamp matchdate) {
 		Object[] value = player.getLastLevelUp(skill);
@@ -543,12 +533,7 @@ public class XMLExporter  {
 	}
 
 	/**
-	 * lädt die Basics zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 * @param system TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the formation experience for the given system.
 	 */
 	private int getTeamErfahrung(ITeam team, byte system) {
 		if (team == null) {
@@ -565,7 +550,7 @@ public class XMLExporter  {
 				return team.getErfahrung352();
 
 			case ILineUp.SYS_442 :
-				return ISpieler.sehr_gut;
+				return team.getFormationExperience442();
 
 			case ILineUp.SYS_343 :
 				return team.getErfahrung343();
@@ -578,17 +563,22 @@ public class XMLExporter  {
 
 			case ILineUp.SYS_541 :
 				return team.getErfahrung541();
+				
+			case ILineUp.SYS_523 :
+				return team.getFormationExperience523();
+				
+			case ILineUp.SYS_550 :
+				return team.getFormationExperience550();
+				
+			case ILineUp.SYS_253 :
+				return team.getFormationExperience253();
 
 		}
 		return -1;
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param hrfID TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get the confidence.
 	 */
 	private int getTeamSelbstvertrauen(ITeam team) {
 		if (team == null) {
@@ -598,7 +588,9 @@ public class XMLExporter  {
 
 	}
 
-	//TODO Stimmung + Selbstvertauen holen    
+	/**
+	 * Get the team spirit.
+	 */
 	private int getTeamStimmung(ITeam team) {
 		if (team == null) {
 			return -1;

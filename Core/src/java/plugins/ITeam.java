@@ -6,119 +6,45 @@ package plugins;
  * players are stored here )
  */
 public interface ITeam {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //Konstanten
-    ////////////////////////////////////////////////////////////////////////////////
-    //Stimmung
-
-    /** TODO Missing Parameter Documentation */
+    //team spirit
     public static final int TS_paradiesisch = 10;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_auf_Wolke_sieben = 9;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_euphorisch = 8;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_ausgezeichnet = 7;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_gut = 6;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_zufrieden = 5;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_ruhig = 4;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_irritiert = 3;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_wuetend = 2;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_blutruenstig = 1;
-
-    /** TODO Missing Parameter Documentation */
     public static final int TS_wie_im_kalten_Krieg = 0;
 
-    //selbstvertauen
-
-    /** TODO Missing Parameter Documentation */
+    //self confidence
     public static final int SV_voellig_abgehoben = 9;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_voellig_uebertrieben = 8;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_etwas_ueberheblich = 7;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_sehr_gross = 6;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_stark = 5;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_bescheiden = 4;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_gering = 3;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_armselig = 2;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_katastrophal = 1;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SV_nichtVorhanden = 0;
 
-    //Trainingsarten
-
-    /** TODO Missing Parameter Documentation */
-
-    public static final int TA_EXTERNALATTACK = 12;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_ABWEHRVERHALTEN = 11;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_STEILPAESSE = 10;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_TORWART = 9;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_SPIELAUFBAU = 8;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_PASSSPIEL = 7;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_SCHUSSTRAINING = 6;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_FLANKEN = 5;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_CHANCEN = 4;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_VERTEIDIGUNG = 3;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_STANDARD = 2;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_KONDITION = 1;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_ALLGEMEIN = 0;
+    //training types
+    public static final int TA_EXTERNALATTACK = 12;		// wing attacks
+    public static final int TA_ABWEHRVERHALTEN = 11;	// def. positions
+    public static final int TA_STEILPAESSE = 10;		// through passes
+    public static final int TA_TORWART = 9;				// goalkeeping
+    public static final int TA_SPIELAUFBAU = 8;			// playmaking
+    public static final int TA_PASSSPIEL = 7;			// short passes
+    public static final int TA_SCHUSSTRAINING = 6;		// shooting
+    public static final int TA_FLANKEN = 5;				// crossing / winger
+    public static final int TA_CHANCEN = 4;				// scoring
+    public static final int TA_VERTEIDIGUNG = 3;		// defending
+    public static final int TA_STANDARD = 2;			// set pieces
+    public static final int TA_KONDITION = 1;			// stamina
+    public static final int TA_ALLGEMEIN = 0;			// general / form
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -205,20 +131,60 @@ public interface ITeam {
      * @return Value of property m_iErfahrung541.
      */
     public int getErfahrung541();
+    
+    /**
+     * Get the formation experience for the 442 system.
+     */
+    public int getFormationExperience442();
+
+    /**
+     * Set the formation experience for the 442 system.
+     */
+    public void setFormationExperience442(int formationXp442);
+    
+    /**
+     * Get the formation experience for the 523 system.
+     */
+    public int getFormationExperience523();
+
+    /**
+     * Set the formation experience for the 523 system.
+     */
+    public void setFormationExperience523(int formationXp523);
+    
+    /**
+     * Get the formation experience for the 550 system.
+     */
+    public int getFormationExperience550();
+
+    /**
+     * Set the formation experience for the 550 system.
+     */
+    public void setFormationExperience550(int formationXp550);
+
+    /**
+     * Get the formation experience for the 253 system.
+     */
+    public int getFormationExperience253();
+
+    /**
+     * Set the formation experience for the 253 system.
+     */
+    public void setFormationExperience253(int formationXp253);
 
     /**
      * Setter for property m_sSelbstvertrauen.
      *
      * @param m_sSelbstvertrauen New value of property m_sSelbstvertrauen.
      */
-    public void setSelbstvertrauen(java.lang.String m_sSelbstvertrauen);
+    public void setSelbstvertrauen(String m_sSelbstvertrauen);
 
     /**
      * Getter for property m_sSelbstvertrauen.
      *
      * @return Value of property m_sSelbstvertrauen.
      */
-    public java.lang.String getSelbstvertrauen();
+    public String getSelbstvertrauen();
 
     /**
      * Setter for property m_iSelbstvertrauen.
@@ -239,14 +205,14 @@ public interface ITeam {
      *
      * @param m_sStimmung New value of property m_sStimmung.
      */
-    public void setStimmung(java.lang.String m_sStimmung);
+    public void setStimmung(String m_sStimmung);
 
     /**
      * Getter for property m_sStimmung.
      *
      * @return Value of property m_sStimmung.
      */
-    public java.lang.String getStimmung();
+    public String getStimmung();
 
     public int getSubStimmung();
 
@@ -258,9 +224,7 @@ public interface ITeam {
     public void setStimmungAsInt(int m_iStimmung);
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get team spirit as int.
      */
     public int getStimmungAsInt();
 
@@ -269,14 +233,14 @@ public interface ITeam {
      *
      * @param m_sTrainingsArt New value of property m_sTrainingsArt.
      */
-    public void setTrainingsArt(java.lang.String m_sTrainingsArt);
+    public void setTrainingsArt(String m_sTrainingsArt);
 
     /**
      * Getter for property m_sTrainingsArt.
      *
      * @return Value of property m_sTrainingsArt.
      */
-    public java.lang.String getTrainingsArt();
+    public String getTrainingsArt();
 
     /**
      * Setter for property m_iTrainingsArt.

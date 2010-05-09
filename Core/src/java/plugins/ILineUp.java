@@ -21,29 +21,18 @@ import java.util.Vector;
 public interface ILineUp {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** Systems */
+    /** Formation Systems */
     public static final byte SYS_433 = 0;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte SYS_442 = 1;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte SYS_532 = 2;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte SYS_541 = 3;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte SYS_352 = 4;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte SYS_343 = 5;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte SYS_451 = 6;
-
-    /** TODO Missing Parameter Documentation */
-    public static final byte SYS_MURKS = 7;
+    public static final byte SYS_MURKS = 7; // unknown / invalid system
+    public static final byte SYS_523 = 8;
+    public static final byte SYS_550 = 9;
+    public static final byte SYS_253 = 10;
 
     /** DEfaultNAme for LineUP */
     public static final String DEFAULT_NAME = "HO!";

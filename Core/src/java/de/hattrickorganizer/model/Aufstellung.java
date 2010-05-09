@@ -606,11 +606,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * Gibt den Namen fï¿½r das System zurï¿½ck
-     *
-     * @param system TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the short name for a fomation constant.
      */
     public static String getNameForSystem(byte system) {
         String name;
@@ -643,9 +639,21 @@ public  class Aufstellung implements plugins.ILineUp {
             case SYS_541:
                 name = "5-4-1";
                 break;
+                
+            case SYS_523:
+                name = "5-2-3";
+                break;
+                
+            case SYS_550:
+                name = "5-5-0";
+                break;
+
+            case SYS_253:
+                name = "2-5-3";
+                break;
 
             default:
-                name = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
+                name = HOVerwaltung.instance().getLanguageString("Unbestimmt");
                 break;
         }
 
@@ -696,8 +704,9 @@ public  class Aufstellung implements plugins.ILineUp {
                     }
                 }
 
-                m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
-                                                                 .getTeamId()) ? (short) 1 : (short) 0;
+                if (match != null) {
+                	m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) ? (short) 1 : (short) 0;
+                }
             } catch (Exception e) {
             	HOLogger.instance().error(getClass(),"getHeimspiel: " + e);
             	m_sLocation = 0;
@@ -1024,9 +1033,7 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * liefert die Team erfahrung des Systems
-     *
-     * @return ERfahrung -1 wenn unsinniges System gewï¿½hlt ist
+     * Get the formation xp for the current formation.
      */
     public final int getTeamErfahrung4AktuellesSystem() {
         int erfahrung = -1;
@@ -1045,7 +1052,7 @@ public  class Aufstellung implements plugins.ILineUp {
                 break;
 
             case SYS_442:
-                erfahrung = ISpieler.sehr_gut;
+                erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience442();
                 break;
 
             case SYS_343:
@@ -1063,6 +1070,19 @@ public  class Aufstellung implements plugins.ILineUp {
             case SYS_541:
                 erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung541();
                 break;
+                
+            case SYS_523:
+                erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience523();
+                break;
+                
+            case SYS_550:
+                erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience550();
+                break;
+                
+            case SYS_253:
+                erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience253();
+                break;
+
         }
 
         return erfahrung;
@@ -1239,17 +1259,24 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
     /**
-     * ermittelt das aktuelle System
-     *
-     * @return TODO Missing Return Method Documentation
+     * Determinates the current formation.
      */
     public final byte ermittelSystem() {
         final int abw = getAnzAbwehr();
         final int mf = getAnzMittelfeld();
 
         //int st  =   getAnzSturm();
-        //343
-        if (abw == 3) {
+        if (abw == 2) {
+        	//253
+        	if (mf == 5) {
+        		return ILineUp.SYS_253;
+        	}
+        	//MURKS
+            else {
+                return SYS_MURKS;
+            }
+        } else if (abw == 3) {
+        	//343
             if (mf == 4) {
                 return SYS_343;
             } //352
@@ -1282,6 +1309,12 @@ public  class Aufstellung implements plugins.ILineUp {
             } //541
             else if (mf == 4) {
                 return SYS_541;
+            } //523
+            else if (mf == 2) {
+                return ILineUp.SYS_523;
+            } //550
+            else if (mf == 5) {
+                return ILineUp.SYS_550;
             }
             //MURKS
             else {
@@ -1291,8 +1324,6 @@ public  class Aufstellung implements plugins.ILineUp {
         else {
             return SYS_MURKS;
         }
-
-        //  return SYS_MURKS;
     }
 
     /**

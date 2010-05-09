@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -20,6 +21,7 @@ import javax.swing.SwingConstants;
 import plugins.IMatchDetails;
 import plugins.ISpieler;
 import plugins.ITeam;
+import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
@@ -29,111 +31,92 @@ import de.hattrickorganizer.model.Aufstellung;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
- * Gibt die Gesamtstärken aus
+ * Create the lineup detail panel.
  */
-final class AufstellungsDetailPanel extends ImagePanel
-    implements de.hattrickorganizer.gui.Refreshable, java.awt.event.ItemListener
-{
+final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, ItemListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = -2077901764599789950L;
 
 	private AufstellungsRatingPanel m_jpRating = new AufstellungsRatingPanel();
 
-    private ColorLabelEntry m_jpAktuellesSystem = new ColorLabelEntry("",
-                                                                      ColorLabelEntry.FG_STANDARD,
-                                                                      ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                      SwingConstants.LEFT);
-    private ColorLabelEntry m_jpDurchschnittErfahrung = new ColorLabelEntry("",
-                                                                            ColorLabelEntry.FG_STANDARD,
-                                                                            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                            SwingConstants.LEFT);
-    private ColorLabelEntry m_jpErfahrung343 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung352 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung433 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung442 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung451 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung532 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung541 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                   SwingConstants.CENTER);
+    private ColorLabelEntry m_jpAktuellesSystem = new ColorLabelEntry("", 
+    		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+    private ColorLabelEntry m_jpDurchschnittErfahrung = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+    private ColorLabelEntry m_jpErfahrung343 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung352 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung433 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung442 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung451 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung532 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung541 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung523 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung550 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    private ColorLabelEntry m_jpErfahrung253 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+    
     private ColorLabelEntry m_jpErfahrungAktuellesSystem = new ColorLabelEntry("",
-                                                                               ColorLabelEntry.FG_STANDARD,
-                                                                               ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                               SwingConstants.CENTER);
-    private ColorLabelEntry m_jpGesamtStaerkeText = new ColorLabelEntry("",
-                                                                        ColorLabelEntry.FG_STANDARD,
-                                                                        Color.WHITE,
-                                                                        SwingConstants.RIGHT);
-    private ColorLabelEntry m_jpHatstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                              ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                              SwingConstants.CENTER);
-    private ColorLabelEntry m_jpLoddarstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                 SwingConstants.CENTER);
-    private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("",
-                                                                    ColorLabelEntry.FG_STANDARD,
-                                                                    ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
-                                                                    SwingConstants.LEFT);
+    		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpGesamtStaerkeText = new ColorLabelEntry("",
+			ColorLabelEntry.FG_STANDARD, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_jpHatstat = new ColorLabelEntry("",
+			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpLoddarstat = new ColorLabelEntry("",
+			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("",
+			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
     private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
-    private CBItem[] EINSTELLUNG = {
-                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PIC"),
-                                                  IMatchDetails.EINSTELLUNG_PIC),
-                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Normal"),
-                                                  IMatchDetails.EINSTELLUNG_NORMAL),
-                                       new CBItem(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("MOTS"),
-                                                  IMatchDetails.EINSTELLUNG_MOTS)
+	private CBItem[] EINSTELLUNG = {
+			new CBItem(HOVerwaltung.instance()
+					.getLanguageString("PIC"), IMatchDetails.EINSTELLUNG_PIC),
+			new CBItem(HOVerwaltung.instance()
+					.getLanguageString("Normal"),
+					IMatchDetails.EINSTELLUNG_NORMAL),
+			new CBItem(HOVerwaltung.instance()
+					.getLanguageString("MOTS"), IMatchDetails.EINSTELLUNG_MOTS)
                                    };
     private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
-    private CBItem[] SELBSTVERTRAUEN = {
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_nichtVorhanden),
-                                                      ITeam.SV_nichtVorhanden),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_katastrophal),
-                                                      ITeam.SV_katastrophal),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_armselig),
-                                                      ITeam.SV_armselig),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_gering),
-                                                      ITeam.SV_gering),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_bescheiden),
-                                                      ITeam.SV_bescheiden),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_stark),
-                                                      ITeam.SV_stark),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_sehr_gross),
-                                                      ITeam.SV_sehr_gross),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_etwas_ueberheblich),
-                                                      ITeam.SV_etwas_ueberheblich),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_voellig_uebertrieben),
-                                                      ITeam.SV_voellig_uebertrieben),
-                                           new CBItem(de.hattrickorganizer.model.Team
-                                                      .getNameForSelbstvertrauen(ITeam.SV_voellig_abgehoben),
-                                                      ITeam.SV_voellig_abgehoben)
+	private CBItem[] SELBSTVERTRAUEN = {
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_nichtVorhanden),
+					ITeam.SV_nichtVorhanden),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_katastrophal),
+					ITeam.SV_katastrophal),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_armselig),
+					ITeam.SV_armselig),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_gering),
+					ITeam.SV_gering),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_bescheiden),
+					ITeam.SV_bescheiden),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_stark),
+					ITeam.SV_stark),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_sehr_gross),
+					ITeam.SV_sehr_gross),
+			new CBItem(Team
+					.getNameForSelbstvertrauen(ITeam.SV_etwas_ueberheblich),
+					ITeam.SV_etwas_ueberheblich),
+			new CBItem(Team
+					.getNameForSelbstvertrauen(ITeam.SV_voellig_uebertrieben),
+					ITeam.SV_voellig_uebertrieben),
+			new CBItem(Team
+					.getNameForSelbstvertrauen(ITeam.SV_voellig_abgehoben),
+					ITeam.SV_voellig_abgehoben)
                                        };
     private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
 	private CBItem[] TRAINERTYPE = {
@@ -144,29 +127,27 @@ final class AufstellungsDetailPanel extends ImagePanel
 	private JComboBox m_jcbTrainerType= new JComboBox(TRAINERTYPE);
 	private CBItem[] PREDICTIONTYPE = getPredictionItems();
 	private JComboBox m_jcbPredictionType= new JComboBox(PREDICTIONTYPE);
-    private CBItem[] STIMMUNG = {
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg),
-                                               ITeam.TS_wie_im_kalten_Krieg),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_blutruenstig),
-                                               ITeam.TS_blutruenstig),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_wuetend),
-                                               ITeam.TS_wuetend),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_irritiert),
-                                               ITeam.TS_irritiert),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_ruhig),
-                                               ITeam.TS_ruhig),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_zufrieden),
-                                               ITeam.TS_zufrieden),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_gut),
-                                               ITeam.TS_gut),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_ausgezeichnet),
-                                               ITeam.TS_ausgezeichnet),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_euphorisch),
-                                               ITeam.TS_euphorisch),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben),
-                                               ITeam.TS_auf_Wolke_sieben),
-                                    new CBItem(de.hattrickorganizer.model.Team.getNameForStimmung(ITeam.TS_paradiesisch),
-                                               ITeam.TS_paradiesisch)
+	private CBItem[] STIMMUNG = {
+			new CBItem(Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg),
+					ITeam.TS_wie_im_kalten_Krieg),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_blutruenstig),
+					ITeam.TS_blutruenstig),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_wuetend),
+					ITeam.TS_wuetend),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_irritiert),
+					ITeam.TS_irritiert),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_ruhig), ITeam.TS_ruhig),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_zufrieden),
+					ITeam.TS_zufrieden),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_gut), ITeam.TS_gut),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_ausgezeichnet),
+					ITeam.TS_ausgezeichnet),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_euphorisch),
+					ITeam.TS_euphorisch),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben),
+					ITeam.TS_auf_Wolke_sieben),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_paradiesisch),
+					ITeam.TS_paradiesisch)
                                 };
     private JComboBox m_jcbMainStimmung = new JComboBox(STIMMUNG);
 	private CBItem[] SUBSTIMM = {
@@ -378,46 +359,41 @@ final class AufstellungsDetailPanel extends ImagePanel
             		(avXp < 0 ? "Need to set team captain!" : "TeamXP formula by kopsterkespits")); // TODO L10N
 
             m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
-            m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
+            //m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
                                                         .getTeamErfahrung4AktuellesSystem() + "");
             m_jpErfahrung433.setText(homodel.getTeam().getErfahrung433() + "");
-            m_jpErfahrung442.setText(ISpieler.sehr_gut + "");
+            m_jpErfahrung442.setText(homodel.getTeam().getFormationExperience442() + "");
             m_jpErfahrung532.setText(homodel.getTeam().getErfahrung532() + "");
             m_jpErfahrung541.setText(homodel.getTeam().getErfahrung541() + "");
             m_jpErfahrung352.setText(homodel.getTeam().getErfahrung352() + "");
             m_jpErfahrung343.setText(homodel.getTeam().getErfahrung343() + "");
             m_jpErfahrung451.setText(homodel.getTeam().getErfahrung451() + "");
-            m_jpErfahrungAktuellesSystem.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                                         - homodel.getAufstellung()
-                                                                                                  .getTeamErfahrung4AktuellesSystem()) * 32)
-                                                                                         - 1, 0),
-                                                                                255), 0, 0));
-            m_jpErfahrung433.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                             - homodel.getTeam()
-                                                                                      .getErfahrung433()) * 32)
-                                                                             - 1, 0), 255), 0, 0));
-            m_jpErfahrung442.setText(ISpieler.sehr_gut + "");
-            m_jpErfahrung532.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                             - homodel.getTeam()
-                                                                                      .getErfahrung532()) * 32)
-                                                                             - 1, 0), 255), 0, 0));
-            m_jpErfahrung541.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                             - homodel.getTeam()
-                                                                                      .getErfahrung541()) * 32)
-                                                                             - 1, 0), 255), 0, 0));
-            m_jpErfahrung352.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                             - homodel.getTeam()
-                                                                                      .getErfahrung352()) * 32)
-                                                                             - 1, 0), 255), 0, 0));
-            m_jpErfahrung343.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                             - homodel.getTeam()
-                                                                                      .getErfahrung343()) * 32)
-                                                                             - 1, 0), 255), 0, 0));
-            m_jpErfahrung451.setFGColor(new java.awt.Color(Math.min(Math.max(((8
-                                                                             - homodel.getTeam()
-                                                                                      .getErfahrung451()) * 32)
-                                                                             - 1, 0), 255), 0, 0));
+            m_jpErfahrung523.setText(homodel.getTeam().getFormationExperience523() + "");
+            m_jpErfahrung550.setText(homodel.getTeam().getFormationExperience550() + "");
+            m_jpErfahrung253.setText(homodel.getTeam().getFormationExperience253() + "");
+            m_jpErfahrungAktuellesSystem.setFGColor(new Color(Math.min(Math.max(
+            		((8 - homodel.getAufstellung().getTeamErfahrung4AktuellesSystem()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung433.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung433()) * 32) - 1, 0),255), 0, 0));
+            m_jpErfahrung442.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience442()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung532.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung532()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung541.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung541()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung352.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung352()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung343.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung343()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung451.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung451()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung523.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience523()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung550.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience550()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung253.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience253()) * 32) - 1, 0), 255), 0, 0));
         }
     }
 
@@ -633,10 +609,10 @@ final class AufstellungsDetailPanel extends ImagePanel
         yPos++;
         panel = new JPanel(new BorderLayout());
         panel.setOpaque(true);
-        m_jpGesamtStaerke.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
+        m_jpGesamtStaerke.setToolTipText(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
         panel.add(m_jpGesamtStaerke.getComponent(false), BorderLayout.CENTER);
         m_jpGesamtStaerkeText.setFontStyle(Font.BOLD);
-        m_jpGesamtStaerkeText.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
+        m_jpGesamtStaerkeText.setToolTipText(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
         panel.add(m_jpGesamtStaerkeText.getComponent(false), BorderLayout.EAST);
         constraints.gridx = 1;
         constraints.gridy = yPos;
@@ -651,7 +627,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbEinstellung.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Einstellung"));
+        m_jcbEinstellung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Einstellung"));
         layout.setConstraints(m_jcbEinstellung, constraints);
         add(m_jcbEinstellung);
 
@@ -659,7 +635,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbTaktik.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Taktik"));
+        m_jcbTaktik.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Taktik"));
         layout.setConstraints(m_jcbTaktik, constraints);
         add(m_jcbTaktik);
 
@@ -667,7 +643,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 2;
-        m_jcbLocation.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Spielort"));
+        m_jcbLocation.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Spielort"));
         m_jcbLocation.setOpaque(false);
         layout.setConstraints(m_jcbLocation, constraints);
         add(m_jcbLocation);
@@ -701,7 +677,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
@@ -711,7 +687,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jpTaktikStaerke.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbMainStimmung.setPreferredSize(new Dimension(50,
@@ -722,7 +698,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbMainStimmung);
 
         yPos++;
-		initLabel(constraints,layout,new JLabel("Sub"+de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
+		initLabel(constraints,layout,new JLabel("Sub"+HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
 		constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbSubStimmung.setPreferredSize(new Dimension(50,
@@ -733,7 +709,7 @@ final class AufstellungsDetailPanel extends ImagePanel
 		add(m_jcbSubStimmung);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Selbstvertrauen")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50,
@@ -744,7 +720,7 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbSelbstvertrauen);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Trainer")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Trainer")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbTrainerType.setPreferredSize(new Dimension(50,
@@ -775,7 +751,7 @@ final class AufstellungsDetailPanel extends ImagePanel
 		add(m_jchPullBackOverride);
 
 		yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbPredictionType.setPreferredSize(new Dimension(50,
@@ -786,75 +762,95 @@ final class AufstellungsDetailPanel extends ImagePanel
         add(m_jcbPredictionType);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpDurchschnittErfahrung.getComponent(false), constraints);
         add(m_jpDurchschnittErfahrung.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AktuellesSystem")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("AktuellesSystem")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpAktuellesSystem.getComponent(false), constraints);
         add(m_jpAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ErfahrungAktuellesSys")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ErfahrungAktuellesSys")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrungAktuellesSystem.getComponent(false), constraints);
         add(m_jpErfahrungAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung433")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung433")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung433.getComponent(false), constraints);
         add(m_jpErfahrung433.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung442")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung442")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung442.getComponent(false), constraints);
         add(m_jpErfahrung442.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung532")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung532")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung532.getComponent(false), constraints);
         add(m_jpErfahrung532.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung541")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung541")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung541.getComponent(false), constraints);
         add(m_jpErfahrung541.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung352")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung352")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung352.getComponent(false), constraints);
         add(m_jpErfahrung352.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung343")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung343")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung343.getComponent(false), constraints);
         add(m_jpErfahrung343.getComponent(false));
 
-
         yPos++;
-        initLabel(constraints,layout,new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung451")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung451")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
         add(m_jpErfahrung451.getComponent(false));
+        
+        yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp523")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        layout.setConstraints(m_jpErfahrung523.getComponent(false), constraints);
+        add(m_jpErfahrung523.getComponent(false));
+        
+        yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp550")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        layout.setConstraints(m_jpErfahrung550.getComponent(false), constraints);
+        add(m_jpErfahrung550.getComponent(false));
+        
+        yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp253")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        layout.setConstraints(m_jpErfahrung253.getComponent(false), constraints);
+        add(m_jpErfahrung253.getComponent(false));
 
         // Add all item listeners
         addItemListeners();
@@ -899,7 +895,7 @@ final class AufstellungsDetailPanel extends ImagePanel
 		for (int i=0; i < allItems.length; i++)	{
 			String predictionName = allPredictionNames[i];
 			if (properties.containsKey("prediction."+predictionName))
-				predictionName = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("prediction."+predictionName);
+				predictionName = HOVerwaltung.instance().getLanguageString("prediction."+predictionName);
 			allItems[i] = new CBItem(predictionName, i);
 		}
 		return allItems;
