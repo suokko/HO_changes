@@ -151,7 +151,7 @@ public class SelectObjectDialog extends JDialog {
     }
 
     /**
-     * Speichert ausgew‰hlte Objekte in einem Array
+     * Speichert ausgew√§hlte Objekte in einem Array
      */
     protected void findSelectedObjects() {
         if (table != null) {
