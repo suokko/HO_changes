@@ -9,6 +9,7 @@ Changelist HO! 1.426
 - lineup screen: add feature to copy ratings into the system clipboard
 - allow to quick-switch also the keeper
 - quick hack to handle HTs changed lineup data
+- add handling for new formation experience data
 
 Language updates:
 -----------------
