@@ -39,7 +39,7 @@ public class LoepiCurve extends ForecastCurve {
 
   //-- protected ------------------------------------------------------------------------
 
-//TS über 4,5:
+//TS Ã¼ber 4,5:
 //TS(neu)=TS(alt)*(1-((TS(alt)-4.5)/(FQ/3))/100)
 //alte Formel: TS(neu)=TS(alt)*(1-((TS(alt)-4,5)*Faktor)/100).
 //TS unter 4,5:
