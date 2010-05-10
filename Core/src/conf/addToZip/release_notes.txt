@@ -8,6 +8,7 @@ Changelist HO! 1.426
 - allow to quick-switch also the keeper
 - quick hack to handle HTs changed lineup data
 - add handling for new formation experience data
+- add new engine prediction types from cirlama
 
 Language updates:
 -----------------
