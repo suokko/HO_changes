@@ -1,6 +1,9 @@
 // %214693493:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import java.sql.ResultSet;
+import java.util.Properties;
+
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
@@ -40,12 +43,8 @@ public final class Basics implements plugins.IBasics {
 
     /**
      * Creates a new Basics object.
-     *
-     * @param properties TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    public Basics(java.util.Properties properties) throws Exception {
+    public Basics(Properties properties) throws Exception {
         try {
             setDatumByString(properties.getProperty("date"));
         } catch (Exception e) {
@@ -93,12 +92,8 @@ public final class Basics implements plugins.IBasics {
 
     /**
      * Creates a new Basics object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    public Basics(java.sql.ResultSet rs) throws Exception {
+    public Basics(ResultSet rs) throws Exception {
         try {
             m_iTeamId = rs.getInt("TeamID");
             m_sTeamName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("TeamName"));
@@ -267,8 +262,8 @@ public final class Basics implements plugins.IBasics {
     public int getTeamId() {
         return m_iTeamId;
     }
-
-    /**
+    
+	/**
      * Setter for property m_sTeamName.
      *
      * @param m_sTeamName New value of property m_sTeamName.
