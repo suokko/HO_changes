@@ -11,6 +11,7 @@ Changelist HO! 1.426
 - quick hack to handle HTs changed lineup data
 - add handling for new formation experience data
 - add new engine prediction types from cirlama
+- fix Danish 'non-existent' denomination (fixes also player parser problems) 
 
 Language updates:
 -----------------
