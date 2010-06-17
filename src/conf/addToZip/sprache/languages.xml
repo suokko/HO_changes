@@ -175,4 +175,9 @@
     <lang_id>35</lang_id>
     <version>3.5</version>
   </property>
+  <property>
+    <datei>Persian.properties</datei>
+    <lang_id>36</lang_id>
+    <version>3.5</version>
+  </property>
 </languages>
