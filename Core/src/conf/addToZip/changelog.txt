@@ -11,7 +11,6 @@ Changelist HO! 1.426
 - quick hack to handle HTs changed lineup data
 - add handling for new formation experience data
 - add new engine prediction types from cirlama
-- fix Danish 'non-existent' denomination (fixes also player parser problems) 
 
 Language updates:
 -----------------
@@ -20,6 +19,8 @@ Language updates:
 - add Catalan translations for some plugins (thx CAT-fike)
 - update English denominations to solve problems in the player parser (thx salt00)
 - add Hangul (Korean) as new HO language (thx to dodegun!)
+- fix Danish 'non-existent' denomination (fixes also player parser problems) 
+- add Persian as new HO language (big thx to lvl_Rashid_lvl!)
 
 Plugin Updates:
 ---------------
