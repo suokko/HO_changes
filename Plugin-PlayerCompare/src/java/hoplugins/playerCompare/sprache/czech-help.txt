@@ -1,0 +1,28 @@
+Srovnání hráèù - pomoc:Tento plugin ti pomáhá srovnat hráèe, které si 
+mùžeš seskupit jejich jednotlivým vybráním nebo výbìrem pozice èi 
+skupiny (A - E).
+Nejdøíve vyber skupinu hráèù (použij "vybraní", skupiny nebo dle 
+pozice), poté vyber dovednosti k pøepoèítání.
+Máš dvì možnosti pro zmìnu hodnoty dovedností:
+1. Vedle dovedností se nachází rolovací menu, které obsahuje rùzné 
+hodnoty (napø. passable), tím zmìníš dovednosti každého hráèe na vybranou 
+hodnotu.
+2. Hned vedle je druhá rolovací nabídka, kde mùžeš zmìnit hodnotu 
+dovednosti o urèitou úroveò (+1, +2). Tím zvýšíš individuální hodnotu 
+vybraného hráèe o vybranou hodnotu.
+Toto mùžeš použít pro kontrolu síly pozice, jestliže hráè zlepší svou 
+dovednost tréningem.
+Pro každou dovednost mùžeš použít pouze jednu z obou možností, ale 
+mùžeš kombinovat rùzné možnosti pro rùzné dovednosti, napø. "passable" pro 
+skórování a "+1" pro kondici.
+Jestliže je dovednost nastavena na "---" a "+0", pro pøepoèet bude 
+brána v úvahu její pùvodní hodnota.
+Výsledek pøepoètu se zobrazí v dolní èásti obrazovky.
+Šipky za novì nastavenými dovednostmi znázoròují rozdíl ve srovnání se 
+sílou hráèe s pùvodníma hodnotama.
+Jestliže vybereš jednoho z hráèù z dolní tabulky, na pravé stranì 
+uvidíš detaily pro všechny pozice pøed (pùvodní) a po (zmìnìné) pøepoètu.
+Nyní vidíš, kde se hráè zlepší a jaká mùže být jeho nová nejlepší èi 
+druhá nejlepší pozice.
+Jesliže máš jakékoliv problémy èi dotazy, pošli e-mail na 
+kickmuck@gmx.de nebo použij diskusní skupiny.
