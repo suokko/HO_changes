@@ -2,6 +2,7 @@
 package de.hattrickorganizer.tools.xml;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Hashtable;
 
@@ -44,9 +45,7 @@ public class XMLManager implements plugins.IXMLParser {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the singleton instance.
      */
     public static XMLManager instance() {
         if (m_clInstance == null) {
@@ -58,11 +57,6 @@ public class XMLManager implements plugins.IXMLParser {
 
     /**
      * liefert den Value des attributes sonst ""
-     *
-     * @param ele TODO Missing Constructuor Parameter Documentation
-     * @param attributeName TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public String getAttributeValue(Element ele, String attributeName) {
         try {
@@ -82,10 +76,6 @@ public class XMLManager implements plugins.IXMLParser {
 
     /**
      * liefert den Value des ersten childes falls kein child vorhanden liefert ""
-     *
-     * @param ele TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public String getFirstChildNodeValue(Element ele) {
         try {
@@ -99,11 +89,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
     /**
-     * parsed eine übergebene Datei
-     *
-     * @param dateiname TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Parse XM from file name.
      */
     public Document parseFile(String dateiname) {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -118,21 +104,36 @@ public class XMLManager implements plugins.IXMLParser {
 
             doc = builder.parse(new File(dateiname));
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Parser fehler: " + e);
+            HOLogger.instance().log(getClass(),"Parser error: " + e);
             HOLogger.instance().log(getClass(),e);
         }
 
         return doc;
     }
+    
+    /**
+     * Parse XML from input stream.
+     */
+	public Document parseFile(InputStream xmlStream) {
+		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		Document doc = null;
+
+		try {
+			builder = factory.newDocumentBuilder();
+			doc = builder.parse(xmlStream);
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), "Parser error: " + e);
+			HOLogger.instance().log(getClass(), e);
+		}
+
+		return doc;
+	}
 
     /**
-     * parsed eine übergebene Datei
-     *
-     * @param datei TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Parse XML fro file.
      */
-    public Document parseFile(java.io.File datei) {
+    public Document parseFile(File datei) {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         Document doc = null;
@@ -154,10 +155,6 @@ public class XMLManager implements plugins.IXMLParser {
 
     /**
      * parsed eine übergebene Datei
-     *
-     * @param inputString TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public Document parseString(String inputString) {
         //Fix to remove commented tag
@@ -173,8 +170,7 @@ public class XMLManager implements plugins.IXMLParser {
         Document doc = null;
 
         try {
-            final java.io.ByteArrayInputStream input = new java.io.ByteArrayInputStream(inputString
-                                                                                        .getBytes("UTF-8"));
+            final java.io.ByteArrayInputStream input = new java.io.ByteArrayInputStream(inputString.getBytes("UTF-8"));
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = null;
 
@@ -195,9 +191,6 @@ public class XMLManager implements plugins.IXMLParser {
     /**
      * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
      * vorhanden
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     * @param dateiname TODO Missing Constructuor Parameter Documentation
      */
     public void writeXML(Document doc, String dateiname) {
         //Transformer creation for DOM rewriting into XML file
@@ -221,9 +214,7 @@ public class XMLManager implements plugins.IXMLParser {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
+     * Parse the league table.
      */
     protected void parseTabelle(Document doc) {
         Element ele = null;
@@ -257,9 +248,6 @@ public class XMLManager implements plugins.IXMLParser {
 	/**
 	 * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
 	 * vorhanden
-	 *
-	 * @param doc TODO Missing Constructuor Parameter Documentation
-	 * @param dateiname TODO Missing Constructuor Parameter Documentation
 	 */
 	public String getXML(Document doc) {
 		//Transformer creation for DOM rewriting into XML String
