@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.model;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -145,9 +146,8 @@ public class FormulaFactors {
     public void importDefaults() {
         //vorsichtshalber vorinitialisieren.
         init();
-
         //eigentliche Defaults lesen
-        readFromXML("prediction/defaults.xml");
+       	readFromXML("prediction/defaults.xml");
     }
 
     /**
@@ -182,15 +182,25 @@ public class FormulaFactors {
      *
      * @param dateiname the filename of the xml config
      */
-    public void readFromXML(String dateiname) {
-    	final XMLManager manager = XMLManager.instance();
-    	final Document doc = manager.parseFile(dateiname);
-        //Element ele = null;
+    public void readFromXML(String defaults) {
+		final XMLManager manager = XMLManager.instance();
+		Document doc = null;
 
+		if (new File(defaults).exists()) {
+			doc = manager.parseFile(defaults);
+		} else {
+			HOLogger.instance().debug(getClass(), "File " + defaults + " not found");
+			try {
+				final ClassLoader loader = getClass().getClassLoader();
+				doc = manager.parseFile(loader.getResourceAsStream(defaults));
+			} catch (Exception e) {
+				HOLogger.instance().debug(getClass(), "Error loading " + defaults + " as resource: " + e);
+			}
+		}
 
-    	if (doc == null) {
-            return;
-        }
+		if (doc == null) {
+			return;
+		}
 
         //Tabelle erstellen
     	final Element root = doc.getDocumentElement();

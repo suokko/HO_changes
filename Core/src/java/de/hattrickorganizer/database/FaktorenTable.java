@@ -71,29 +71,24 @@ public final class FaktorenTable extends AbstractTable {
 	
 	///////////////////Faktoren holen//////////////////////////
 	public void getFaktorenFromDB() {
-
 		final FormulaFactors factors = FormulaFactors.instance();
-		final ResultSet rs = adapter.executeQuery("SELECT * FROM "+getTableName()+"");
+		final ResultSet rs = adapter.executeQuery("SELECT * FROM " + getTableName() + "");
 
 		try {
 			if (rs != null) {
 				rs.beforeFirst();
-
 				while (rs.next()) {
-					factors.setPositionFactor(rs.getByte("HOPosition"),new FactorObject(rs)); {
-	
-					}
+					factors.setPositionFactor(rs.getByte("HOPosition"), new FactorObject(rs));
 				}
 			} else {
-				//hardcodierte werte nehmen
+				// use hardcoded values
 				FormulaFactors.instance().importDefaults();
 			}
-			rs.close();
+			if (rs != null)
+				rs.close();
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.getFaktoren: " + e);
-
-			//hardcodierte werte nehmen
-			FormulaFactors.instance().importDefaults();
+			HOLogger.instance().log(getClass(), "DatenbankZugriff.getFaktoren: " + e);
+			FormulaFactors.instance().importDefaults(); // use hardcoded values
 		}
 	}
 }
