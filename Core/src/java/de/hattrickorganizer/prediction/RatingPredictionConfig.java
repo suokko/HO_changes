@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,9 +12,7 @@ import plugins.IRatingPredictionConfig;
 import plugins.IRatingPredictionParameter;
 import de.hattrickorganizer.tools.HOLogger;
 
-public class RatingPredictionConfig
-    implements IRatingPredictionConfig
-{
+public class RatingPredictionConfig implements IRatingPredictionConfig {
 	/* We check for changed rating parameter files regularily */
 	private static long lastCheck = new Date().getTime();
 	private static long checkInterval = 5000; // in millisecs
@@ -77,8 +76,19 @@ public class RatingPredictionConfig
     	else {
     		ArrayList<String> list = new ArrayList<String>();
     		try {
-    			BufferedReader br = new BufferedReader(new FileReader(predConfigFile));
-    			while (br.ready()) {
+    			BufferedReader br = null;
+    			final File predFile = new File(predConfigFile);
+    			if (predFile.exists()) {
+    				br = new BufferedReader(new FileReader(predFile));
+    			} else {
+    				try {
+						final ClassLoader loader = RatingPredictionConfig.class.getClassLoader();
+						br = new BufferedReader(new InputStreamReader((loader.getResourceAsStream(predDir + "/predictionTypes.conf"))));
+					} catch (Exception e) {
+						HOLogger.instance().debug(RatingPredictionConfig.class, "Error while loading : " + e);
+					}
+    			}
+    			while (br != null && br.ready()) {
     				String line = br.readLine();
     				// Remove Comments
     				line = line.replaceFirst("#.*", "");

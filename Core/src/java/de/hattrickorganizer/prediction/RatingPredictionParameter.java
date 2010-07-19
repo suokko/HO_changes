@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -19,7 +20,7 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
     public RatingPredictionParameter () {
     }
     
-    public void readFromFile (String newFilename) {
+	public void readFromFile (String newFilename) {
 		File file = new File(newFilename);
 		/*
 		 * If filename changed or the file was modified -> (re)-parse the parameter file 
@@ -30,10 +31,24 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
 				filename = newFilename;
 				allProps.clear();
 				HOLogger.instance().debug(this.getClass(), "(Re-)initializing prediction parameters: "+newFilename);
-				BufferedReader br = new BufferedReader(new FileReader(newFilename));
+				
+				//BufferedReader br = new BufferedReader(new FileReader(newFilename));
+				BufferedReader br = null;
+    			final File predFile = new File(newFilename);
+    			if (predFile.exists()) {
+    				br = new BufferedReader(new FileReader(predFile));
+    			} else {
+    				try {
+						final ClassLoader loader = RatingPredictionConfig.class.getClassLoader();
+						br = new BufferedReader(new InputStreamReader((loader.getResourceAsStream(newFilename))));
+					} catch (Exception e) {
+						HOLogger.instance().debug(RatingPredictionConfig.class, "Error loading " + newFilename + ": " + e);
+					}
+    			}
+				
 				String line = null;
 				Properties curProperties = null;
-				while((line = br.readLine()) != null) {
+				while(br != null && (line = br.readLine()) != null) {
 					line = line.toLowerCase();
 					// # begins a Comment
 					line = line.replaceFirst ("#.*", "");
@@ -50,19 +65,19 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
 						}
 					}
 					String temp[] = line.split("=");
-					if (temp.length == 2) {
+					if (temp.length == 2 && curProperties != null) {
 						String key = temp[0].trim();
 						String value = temp[1].trim();
-						//         			System.out.println ("Found new property: "+key+" -> "+value);
+						//System.out.println ("Found new property: "+key+" -> "+value);
 						curProperties.setProperty(key, value);
 					}
 				}
 				//            System.out.println ("All Props: "+allProps);
 			} catch (FileNotFoundException e) {
-				HOLogger.instance().error(RatingPredictionConfig.class, "File not found: "+newFilename);
+				HOLogger.instance().error(RatingPredictionConfig.class, "File not found: " + newFilename);
 			} catch (Exception e) {
 				// TODO: handle exception
-				e.printStackTrace();
+				HOLogger.instance().error(RatingPredictionConfig.class, e);
 			}
 		}
     }
