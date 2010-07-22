@@ -1361,11 +1361,8 @@ public final class HOMainFrame extends JFrame
 							HOMainFrame.class, "- " + files[i].getName() + " ist Interface");
 					}
 				} catch (Throwable e2) {
-					HOLogger.instance().log(
-						HOMainFrame.class,
-						"- " + files[i].getName() + " wird übersprungen: " + e2.toString());
-
-					//HOLogger.instance().log(HOMainFrame.class,e2);
+					HOLogger.instance().log( HOMainFrame.class, "- " + files[i].getName() + " wird übersprungen: " + e2);
+					//HOLogger.instance().log(HOMainFrame.class, e2);
 				}
 			}
 
@@ -1407,11 +1404,8 @@ public final class HOMainFrame extends JFrame
 							"- " + files[i].getName() + " ist Interface");
 					}
 				} catch (Throwable e2) {
-					HOLogger.instance().log(
-						HOMainFrame.class,
-						"- " + files[i].getName() + " wird übersprungen: " + e2.toString());
-
-					//HOLogger.instance().log(HOMainFrame.class,e2);
+					HOLogger.instance().log(HOMainFrame.class, "- " + files[i].getName() + " wird übersprungen: " + e2);
+					//HOLogger.instance().log(HOMainFrame.class, e2);
 				}
 			}
 		} catch (Exception e) {
