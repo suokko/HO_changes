@@ -28,47 +28,47 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 {
 	// Members aus HO
 	private plugins.IHOMiniModel m_clModel = null; 		//Das IHOMiniModel
-	private plugins.IJDBCAdapter m_jdbcAdapter = null; 	//Adapter f�r DB-Zugriffe
-	private IGUI m_gui = null; 							// Adapter f�r GUI-Elemente
-	private static IHelper m_helper = null; 			// Adapter f�r Hilfsfunktionen
-	private static Properties m_properties;				// Adapter f�r property-Sprachfiles
-	//private static IDebugWindow debugWindow;			// Adapter f�r das DebugWindow
-	private Properties m_HO_Properties;					// Adapter f�r HO-Properties
-	private IBasics m_basics;							// Adapter f�r Basic-Funktionen
-	private IXtraData m_xtraData;						// Adapter f�r XtraData
-	private IMatchKurzInfo[] m_kurzInfo;				// Adapter f�r Spieleinfos, u.a. ob Friendly oder Liga
+	private plugins.IJDBCAdapter m_jdbcAdapter = null; 	//Adapter für DB-Zugriffe
+	private IGUI m_gui = null; 							// Adapter für GUI-Elemente
+	private static IHelper m_helper = null; 			// Adapter für Hilfsfunktionen
+	private static Properties m_properties;				// Adapter für property-Sprachfiles
+	//private static IDebugWindow debugWindow;			// Adapter für das DebugWindow
+	private Properties m_HO_Properties;					// Adapter für HO-Properties
+	private IBasics m_basics;							// Adapter für Basic-Funktionen
+	private IXtraData m_xtraData;						// Adapter für XtraData
+	private IMatchKurzInfo[] m_kurzInfo;				// Adapter für Spieleinfos, u.a. ob Friendly oder Liga
 	
 	
-	private File[] m_unquenchableFiles = null;			// Member f�r die Files, die nicht gel�scht werden d�rfen
+	private File[] m_unquenchableFiles = null;			// Member für die Files, die nicht gelöscht werden dürfen
 	
-	private int m_pluginID = 29;						// Member f�r die PluginID
+	private int m_pluginID = 29;						// Member für die PluginID
 
-	private double m_pluginVersion = 1.03;				// Member f�r die Versionsnummer des Plugins
+	private double m_pluginVersion = 1.03;				// Member für die Versionsnummer des Plugins
 	
 	private String m_TabName = new String();			// Name des Tabs
 	private String m_PluginName = "HRFExplorer";		// Name des Plugins ohne Versionsnummer
 	
 	private int m_ResultSetFetchSize;					// Menge der Tupel im ResultSet
 	
-	private int m_Language_ID = 1;						//Nummer der gew�hlten Sprache
-	// Members f�r Farben
+	private int m_Language_ID = 1;						//Nummer der gewählten Sprache
+	// Members für Farben
 	private Color gruen = new Color (220,255,220);
 	private Color hellblau = new Color (235,235,255);
 	private Color dunkelblau = new Color (220,220,255);
 	private Color rot = new Color (255,200,200);
 	private Color m_LineColor;
 	
-	//Members f�r die GUI
+	//Members für die GUI
 	private JTabbedPane m_TabPane_Details = null;
 	
 	private JSplitPane m_SplitPane_main = null;
 	private JSplitPane m_SplitPane_top = null;
-	private JSplitPane m_SplitPane_top_left = null;		// SplitPane f�r Calendar und Imports
+	private JSplitPane m_SplitPane_top_left = null;		// SplitPane für Calendar und Imports
 	
 	private JScrollPane m_ScrollPane_Calendar = null;
 	private JScrollPane m_ScrollPane_FileTable = null;
 	private JScrollPane m_ScrollPane_Details = null;
-	private JScrollPane m_ScrollPane_Imports = null;	// nimmt die Tabelle f�r die zu importierenden Dateien auf
+	private JScrollPane m_ScrollPane_Imports = null;	// nimmt die Tabelle für die zu importierenden Dateien auf
 	private JScrollPane m_ScrollPane_Images = null;
 	
 	private JPanel m_Panel_main = null;
@@ -99,11 +99,11 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	private JComboBox m_CB_year = null;
 	private JComboBox m_CB_month = null;
 	
-	// Members f�r die Tabellen
+	// Members für die Tabellen
 	private JTable m_Table_Calendar = null;
 	private JTable m_Table_Filelist = null;
 	private JTable m_Table_Details = null;
-	private JTable m_Table_Imports = null;				// Tabelle mit den Pfaden f�r Importdateien
+	private JTable m_Table_Imports = null;				// Tabelle mit den Pfaden für Importdateien
 	private JTable m_Table_Images = null;
 	
 	private HrfTableModel m_TableModel_Calendar = null;
@@ -115,15 +115,15 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	private HrfPanelCellRenderer m_renderer = new HrfPanelCellRenderer();
 	
 
-	private static int m_int_selectedMonth;				// int f�r den Monat im Calendar-Panel (0-11)
-	private static int m_int_selectedYear;				// int f�r das Jahr aus dem Calendar-Panel
-	private int m_int_firstYearInDB;					// int f�r das Jahr des ersten DB-Eintrages
-	private int m_int_actualYear;						// int f�r das aktuelle Jahr
+	private static int m_int_selectedMonth;				// int für den Monat im Calendar-Panel (0-11)
+	private static int m_int_selectedYear;				// int für das Jahr aus dem Calendar-Panel
+	private int m_int_firstYearInDB;					// int für das Jahr des ersten DB-Eintrages
+	private int m_int_actualYear;						// int für das aktuelle Jahr
 	
-	private int m_int_Hoehe_DetailPanels;				// H�he des Panels, in dem alle Details in der Detail-Tabelle stehen
+	private int m_int_Hoehe_DetailPanels;				// Höhe des Panels, in dem alle Details in der Detail-Tabelle stehen
 	private int m_int_Breite_Detail_Fixed = 130;		// Breite der 1. Spalte der Detail-Tabelle
 	private int m_int_Breite_Detail_Var = 140;			// Breite der weiteren Spalten der Detail-Tabelle
-	private int m_int_Hoehe_Label = 16;					// H�he der Labels f�r die Details in der Detail-Tabelle
+	private int m_int_Hoehe_Label = 16;					// Höhe der Labels für die Details in der Detail-Tabelle
 	
 	private int m_int_anz_DBEintraege = 0;				// Anzahl der HRF-Files in der DB
 	private int m_TeamID;								// Die TeamID
@@ -139,13 +139,13 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	private String[] m_Ar_Detail_Label_fix;				// Bezeichnungen in der 1.Spalte der Detail-Tabelle
 	
 	
-	//Variablen f�r Detailtabelle
+	//Variablen für Detailtabelle
 	private Vector m_V_Details_Header;
 	private Vector m_V_Details_Values;
-	//Variablen f�r Filelist-Tabelle
+	//Variablen für Filelist-Tabelle
 	private Vector m_V_Filelist_Header;
 	private Vector m_V_Filelist_Values;
-//	Variablen f�r Calendar-Tabelle
+//	Variablen für Calendar-Tabelle
 	private Vector m_V_Calendar_Header;
 	private Vector m_V_Calendar_Values;
 
@@ -159,31 +159,31 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	private ResultSet m_queryResult;
 	private ResultSet m_Result_SpecialEvent;
 	
-	private static Hashtable m_HashTable_DayInDB = new Hashtable(40);		// KEY: Tag des gew�hlten Monats in Calendar, 		VALUE: HRF-ID f�r diesen Tag
+	private static Hashtable m_HashTable_DayInDB = new Hashtable(40);		// KEY: Tag des gewählten Monats in Calendar, 		VALUE: HRF-ID für diesen Tag
 	private Hashtable m_HashTable_Details = new Hashtable(40);			// KEY: Pfad oder Datum eines HrfDetails-Objekt, 	VALUE: das HrfDetails-Objekt
 	private Hashtable m_HashTable_Details_ColHeader = new Hashtable(40);	// KEY: Datum eines HrfDetails-Objekt				VALUE: das HrfDetails-Objekt
 	private Hashtable m_HashTable_Columns = new Hashtable(40);			// KEY: Spaltenname der Detailtabelle				VALUE: Vector mit dem Inhalt einer Spalte der Detailtabelle
 	private static Hashtable m_HashTable_DatumKey = new Hashtable(40);	// KEY: Datum im Format YYYY-MM-DD					VALUE: Dateipfad
 	private Hashtable m_HashTable_Import = new Hashtable(40);				// KEY: Pfad der Dateien aus der Importtabelle		VALUE: ---
-	private static Hashtable m_HashTable_isEvent = new Hashtable(40);		// KEY: Tag des gew�hlten Monats in Calendar, 		VALUE: Matchtyp als String
+	private static Hashtable m_HashTable_isEvent = new Hashtable(40);		// KEY: Tag des gewählten Monats in Calendar, 		VALUE: Matchtyp als String
 	private Hashtable m_HashTable_MatchTyp = new Hashtable(40);			// KEY: Match-ID, 									VALUE: Matchtyp
 	private static Hashtable m_HashTable_EventInfo = new Hashtable(40);
 	private Hashtable m_HashTable_EventGUI = new Hashtable();			// KEY: Der Tag des Events							VALUE: Vector mit Zeit(sek) und Eventtyp
 	
 	/** 
 	 * Wird von HO aufgerufen, wenn das Tab aktiviert wird
-	 * @param hOMiniModel Das MiniModel, �bergeben von HO
+	 * @param hOMiniModel Das MiniModel, übergeben von HO
 	 */
 	public void start(IHOMiniModel hOMiniModel)
 	{
 		m_TabName = getName();						// Name des Tabs holen  
 		m_clModel = hOMiniModel;					// Das MiniModell in der MemberVariablen speichern
-		m_jdbcAdapter = m_clModel.getAdapter();		// Einen Adapter f�r Datenbankquerys besorgen
-		m_gui = m_clModel.getGUI();					// Adapter f�r GUI-Funktionen holen
-		m_helper = m_clModel.getHelper();			// Adapter f�r Helper-Funktionen holen
-		m_HO_Properties = m_clModel.getResource();	// Adapter f�r HO-Properties
-		m_basics = m_clModel.getBasics();			// Adapter f�r die Basics
-		m_xtraData = m_clModel.getXtraDaten();		// Adapter f�r die XtraDaten
+		m_jdbcAdapter = m_clModel.getAdapter();		// Einen Adapter für Datenbankquerys besorgen
+		m_gui = m_clModel.getGUI();					// Adapter für GUI-Funktionen holen
+		m_helper = m_clModel.getHelper();			// Adapter für Helper-Funktionen holen
+		m_HO_Properties = m_clModel.getResource();	// Adapter für HO-Properties
+		m_basics = m_clModel.getBasics();			// Adapter für die Basics
+		m_xtraData = m_clModel.getXtraDaten();		// Adapter für die XtraDaten
 		IRefreshable ref = this;
 		
 		// Debug Window einbinden
@@ -201,7 +201,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		// TeamID setzen
 		m_TeamID = m_basics.getTeamId();
 		
-		// Matches f�r das Team holen und in die Hashtable m_HashTable_MatchTyp f�llen
+		// Matches für das Team holen und in die Hashtable m_HashTable_MatchTyp füllen
 		m_kurzInfo = m_clModel.getMatchesKurzInfo(m_TeamID);
 		for(int ii = 0; ii < m_kurzInfo.length; ii++)
 		{
@@ -224,12 +224,13 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
         }
         catch(Exception e) 
 		{
+        	m_clModel.log(getClass(), "Err(start): " + e);
 		}
         
         // Namen der Tage in m_Ar_days schreiben
         setTage();
         
-        //F�llen der HashTable m_HashTable_EventInfo mit den Sprachenabh�ngigen W�rtern
+        //Füllen der HashTable m_HashTable_EventInfo mit den Sprachenabhängigen Wörtern
         m_HashTable_EventInfo.put("L",m_HO_Properties.getProperty("LigaSpiel"));
         m_HashTable_EventInfo.put("F",m_HO_Properties.getProperty("FriendlySpiel"));
         m_HashTable_EventInfo.put("I",m_HO_Properties.getProperty("IntFriendlySpiel"));
@@ -274,9 +275,10 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		}
 		catch(SQLException s)
 		{
+			m_clModel.log(getClass(), "Err(s): " + s);
 		}
 		
-		// Ausgangspfad f�r den Start des JFileChooser ermitteln
+		// Ausgangspfad für den Start des JFileChooser ermitteln
 	
 		m_Str_hrfPfad = null;
 		
@@ -373,7 +375,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		m_Ar_Detail_Label_fix[11] = m_properties.getProperty("lasthrf");
 		m_Ar_Detail_Label_fix[12] = m_properties.getProperty("nexthrf");
 		
-		m_int_Hoehe_DetailPanels = m_Ar_Detail_Label_fix.length * m_int_Hoehe_Label;	// Festlege der Gesamth�he des Detailpanels
+		m_int_Hoehe_DetailPanels = m_Ar_Detail_Label_fix.length * m_int_Hoehe_Label;	// Festlege der Gesamthöhe des Detailpanels
 		
         m_V_Details_Header = new Vector();
         m_V_Details_Values = new Vector();
@@ -384,7 +386,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
         m_Table_Details.addMouseListener(this);
         m_Table_Details.getColumnModel().addColumnModelListener(this);
         
-        // Erstellen des Panels f�r die 1. Spalte der Detailtabelle
+        // Erstellen des Panels für die 1. Spalte der Detailtabelle
         HrfPanel fixedPanel = new HrfPanel(m_int_Breite_Detail_Fixed,m_int_Hoehe_DetailPanels);
         fixedPanel.setLayout(new GridLayout(m_Ar_Detail_Label_fix.length,1));
         fixedPanel.addMouseListener(this);
@@ -410,7 +412,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
         fixedColumn.add(emptyPanel);
         fixedColumn.add(fixedPanel);
         
-        // Die 1. Spalte zu der Tabelle hinzuf�gen
+        // Die 1. Spalte zu der Tabelle hinzufügen
         m_TableModel_Details.addColumn(" ",fixedColumn);
         m_Table_Details.setDefaultRenderer(JPanel.class, m_renderer );
     	m_Table_Details.setRowHeight(1,m_int_Hoehe_DetailPanels);
@@ -642,8 +644,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 
 	/******************
 	 * Liefert ein ImageIcon aus HO zu einer Konstante
-	 * @param bild Kurzbezeichnung f�r das gew�nschte Bild
-	 * @return Gibt ein ImageIcon zur�ck
+	 * @param bild Kurzbezeichnung für das gewünschte Bild
+	 * @return Gibt ein ImageIcon zurück
 	 ******************/
 	/*public static ImageIcon getBild(String bild)
 	{
@@ -653,7 +655,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}*/
 	
 	/******************
-	 * Schreibt die Monatsnamen in der gew�hlten Sprache in den Vector m_V_months
+	 * Schreibt die Monatsnamen in der gewählten Sprache in den Vector m_V_months
 	 ******************/
 	public void setMonate()
 	{
@@ -672,8 +674,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 	
 	/******************
-	 * Gibt einen Vector zur�ck, der alle Monatsnamen enth�lt
-	 * @return Gibt den Vector m_V_months zur�ck
+	 * Gibt einen Vector zurück, der alle Monatsnamen enthält
+	 * @return Gibt den Vector m_V_months zurück
 	 ******************/
 	public static Vector getMonate()
 	{
@@ -681,7 +683,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 	
 	/******************
-	 * Schreibt die Tagesnamen in der gew�hlten Sprache in das Array m_Ar_days
+	 * Schreibt die Tagesnamen in der gewählten Sprache in das Array m_Ar_days
 	 ******************/
 	public void setTage()
 	{
@@ -695,8 +697,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 	
 	/******************
-	 * Gibt ein Array zur�ck, das alle Tage als Namen enth�lt
-	 * @return Gibt das Array m_Ar_days zur�ck
+	 * Gibt ein Array zurück, das alle Tage als Namen enthält
+	 * @return Gibt das Array m_Ar_days zurück
 	 ******************/
 	public static String[] getTage()
 	{
@@ -705,8 +707,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	
 	/******************
 	 * Erstellt die Calendar-Tabelle
-	 * @param monat Der Monat f�r den die Tabelle erstellt wird
-	 * @param jahr Das Jahr f�r das die Tabelle erstellt wird
+	 * @param monat Der Monat für den die Tabelle erstellt wird
+	 * @param jahr Das Jahr für das die Tabelle erstellt wird
      ******************/
 	public void createCalendarTable(int monat, int jahr)
 	{
@@ -715,7 +717,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		String monat_Ende;
 		String jahr_Ende;
 		
-		//Monat um 1 heraufz�hlen, weil Monatsz�hlung bei 0 anf�ngt :-(
+		//Monat um 1 heraufzählen, weil Monatszählung bei 0 anfängt :-(
 		monat++;
 		if(monat < 10)
 		{
@@ -743,7 +745,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 			jahr_Ende = "" + jahr;
 		}
 		
-		// Holen der HRF-ID und des Datums der Eintr�ge, die in dem gew�hlten Monat liegen
+		// Holen der HRF-ID und des Datums der Einträge, die in dem gewählten Monat liegen
 		doSelect("SELECT DATUM,HRF_ID FROM HRF where DATUM between '" + jahr_Start + "-" + monat_Start + "-01' and '" + jahr_Ende + "-" + monat_Ende + "-01'");
 		//********************************************************************************************
 		//Leeren der Hashtables
@@ -751,7 +753,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		m_HashTable_isEvent.clear();
 		
 		/*Erstmal die Vorarbeiten:
-		 * alle ben�tigten Werte ermitteln,
+		 * alle benötigten Werte ermitteln,
 		 * Label erstellen
 		 */
 		int akt_Monat = m_int_selectedMonth;
@@ -822,7 +824,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		}
 		
 		/*
-		 * Alle Spiele und Trainings f�r den gew�hlten Monat herausfinden
+		 * Alle Spiele und Trainings für den gewählten Monat herausfinden
 		 */
 		GregorianCalendar cStart = new GregorianCalendar(Integer.parseInt(jahr_Start),Integer.parseInt(monat_Start)-1,1);
 		Timestamp tsStart = new Timestamp(cStart.getTimeInMillis());
@@ -934,10 +936,10 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
     	{
     		m_HashTable_Details_ColHeader.put(selectedObject.getStr_Datum(),selectedObject);
 			//erstellen der Detailtabelle
-	    	//Label der �berschrift f�llen
+	    	//Label der überschrift füllen
 	    	m_Label_DetailHeader.setText(selectedObject.getTeamName() + " (" + selectedObject.getTeamID() + ")");
-	    	// Panel f�r die Detail-ScrollPane erstellen
-//	    	 Array f�r die nicht fixen Details
+	    	// Panel für die Detail-ScrollPane erstellen
+//	    	 Array für die nicht fixen Details
 	    	String[] objectDetails = {
 	    			" " + selectedObject.getLiga(),
 	    			" " + selectedObject.getSaison() + " / " + selectedObject.getSpieltag(),
@@ -957,7 +959,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	    	teamDetails.setLayout(new GridLayout(objectDetails.length,1));
 	    	String columnHeader = selectedObject.getStr_Datum();
 	    	
-	    	// Labels f�r das DetailPanel erstellen und einf�gen
+	    	// Labels für das DetailPanel erstellen und einfügen
 	    	for(int ii = 0; ii < objectDetails.length; ii++)
 	    	{
 	    		if(ii == 0 || ii%2 == 0)
@@ -977,7 +979,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	    	remove.getInsets();
 	    	entfernen.add(remove);
 	    	
-	    	//Vector f�r die Objekte in der Detailtabelle
+	    	//Vector für die Objekte in der Detailtabelle
 	    	Vector details = new Vector();
 	    	details.add(entfernen);
 	    	details.add(teamDetails);
@@ -1026,7 +1028,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 
 	/******************
-	 * Setzt die Breiten und H�hen f�r die Detail-Tabelle
+	 * Setzt die Breiten und Höhen für die Detail-Tabelle
 	 * @param anzColumns Anzahl der Spalten in der Detailtabelle
 	 ******************/
 	public void setDetailTableSize(int anzColumns)
@@ -1053,9 +1055,9 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 	
 	/******************
-	 * Liefert ein boolean Ergebnis, ob f�r einen Tag ein HRF-File in der DB ist und wertet dabei die Hashtable aus
-     * @param tag Der Tag, der gepr�ft werden soll
-     * @return Ein boolean-Wert, der anzeigt, ob f�r den �bergebenen Tag ein DB-Eintrag existiert
+	 * Liefert ein boolean Ergebnis, ob für einen Tag ein HRF-File in der DB ist und wertet dabei die Hashtable aus
+     * @param tag Der Tag, der geprüft werden soll
+     * @return Ein boolean-Wert, der anzeigt, ob für den übergebenen Tag ein DB-Eintrag existiert
 	 ******************/
 	public static boolean hrfForDay(int tag)
 	{
@@ -1069,8 +1071,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	
 	/******************
 	 * Liefert ein boolean Ergebnis, ob an einem Tag ein Spiel oder Training stattgefunden hat
-     * @param tag Der Tag, der gepr�ft werden soll
-     * @return Ein boolean-Wert, der anzeigt, ob an dem �bergebenen Tag ein SpecialEvent (z.B. ein Spiel) stattgefunden hat.
+     * @param tag Der Tag, der geprüft werden soll
+     * @return Ein boolean-Wert, der anzeigt, ob an dem übergebenen Tag ein SpecialEvent (z.B. ein Spiel) stattgefunden hat.
 	 ******************/
 	public static boolean isSpecialEvent(int tag)
 	{
@@ -1084,8 +1086,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	
 	/******************
 	 * Liefert den Wert des SpecialEvents
-     * @param tag Der Tag, f�r den das SpecialEvent geliefert werden soll
-     * @return Liefert die Art des SpecialEvents f�r den �bergebenen Tag als String.
+     * @param tag Der Tag, für den das SpecialEvent geliefert werden soll
+     * @return Liefert die Art des SpecialEvents für den übergebenen Tag als String.
 	 ******************/
 	public static String getSpecialEvent(int tag)
 	{
@@ -1094,8 +1096,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	
 	/******************
 	 * Liefert den Wert des SpecialEvents
-     * @param tag Der Tag, f�r den das SpecialEvent geliefert werden soll
-     * @return Liefert die Art des SpecialEvents f�r den �bergebenen Tag als String.
+     * @param tag Der Tag, für den das SpecialEvent geliefert werden soll
+     * @return Liefert die Art des SpecialEvents für den übergebenen Tag als String.
 	 ******************/
 	public static String getNameForEvent(String event)
 	{
@@ -1104,8 +1106,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 	
 	/******************
-	 * Liefert die HRF-ID, die f�r den �bergebenen Tag in der DB steht
-     * @param tag Der Tag, f�r den die ID geholt werden soll
+	 * Liefert die HRF-ID, die für den übergebenen Tag in der DB steht
+     * @param tag Der Tag, für den die ID geholt werden soll
 	 ******************/
 	/*public int getHrfID(int tag)
 	{
@@ -1120,9 +1122,9 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	
 	
 	/******************
-	 * Pr�ft, ob ein File f�r ein Datum eines Monats geladen ist
-	 * @param tag Tag des Monats der gepr�ft werden soll
-	 * @return Ein boolean-Wert, der anzeigt, ob eine gew�hlte Datei bereits in der Datenbank existiert.
+	 * Prüft, ob ein File für ein Datum eines Monats geladen ist
+	 * @param tag Tag des Monats der geprüft werden soll
+	 * @return Ein boolean-Wert, der anzeigt, ob eine gewählte Datei bereits in der Datenbank existiert.
 	 ******************/
 	public static boolean hrfAsFile(String tag)
 	{
@@ -1149,7 +1151,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	
 	// *********** Beginn der Listener-Methoden *******************
 	/*****************
-     * Methode f�r die Behandlung von Mausklicks auf einen Button
+     * Methode für die Behandlung von Mausklicks auf einen Button
      * @param e Wertet den Klick auf Buttons aus
      *****************/
 	public void actionPerformed(ActionEvent e)
@@ -1256,7 +1258,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		 */
 		else if(e.getSource().equals(m_Button_delete_file))
 		{
-			//Ein oder mehrere ausgew�hlte Files werden physikalisch von der Festplatte entfernt
+			//Ein oder mehrere ausgewählte Files werden physikalisch von der Festplatte entfernt
 			int anzRows = m_TableModel_Filelist.getRowCount();
 			//int anzCols = m_TableModel_Filelist.getDataVector().capacity();
 			
@@ -1274,9 +1276,9 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
         			int option = JOptionPane.showConfirmDialog(null,m_properties.getProperty("deletefile") + "\n" + deletePath,m_properties.getProperty("delFile"),JOptionPane.YES_NO_OPTION);
         			if(option == 0)
         			{
-        				//L�schen der Datei von der Platte
+        				//Löschen der Datei von der Platte
         				tmp_File.delete();
-        				//L�schen der Datei aus der Hashtable Details
+        				//Löschen der Datei aus der Hashtable Details
         				m_HashTable_Details.remove(deletePath);
         				m_HashTable_DatumKey.remove(rem_DatumKey);
         				m_TableModel_Filelist.removeRow(i);
@@ -1292,7 +1294,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		 */
 		else if(e.getSource().equals(m_Button_delete_db))
 		{
-			// L�schen aller Informationen aus der DB die zu den ausgew�hlten Files geh�ren
+			// Löschen aller Informationen aus der DB die zu den ausgewählten Files gehören
 			int anzRows = m_TableModel_Filelist.getRowCount();
 			//int anzCols = m_TableModel_Filelist.getDataVector().capacity();
 			for(int i = 0; i < anzRows; i++)
@@ -1305,7 +1307,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
         			int deleteHRF_ID = ((Integer)tmpV.elementAt(tmpV.size()-1)).intValue();
         			//int deleteHRF_ID = ((Integer)(m_TableModel_Filelist.getValueAt(i,m_TableModel_Filelist.getDataVector().capacity()))).intValue();
         			
-        			//Tabelle und die Z�hlwerte anpassen
+        			//Tabelle und die Zählwerte anpassen
         			m_TableModel_Filelist.removeRow(i);
 					m_V_Filelist_Keys.remove(new Integer(deleteHRF_ID));
         			anzRows = m_TableModel_Filelist.getRowCount();
@@ -1418,7 +1420,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
     }
 	
 	/*****************
-     * Methode f�r die Behandlung von �nderungen einer JComboBox
+     * Methode für die Behandlung von änderungen einer JComboBox
      * @param ie Das Event einer ComboBox
      *****************/
 	
@@ -1448,26 +1450,24 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	{
     	if(e.getSource().equals(m_Table_Calendar))
     	{
-    		int zeile = m_Table_Calendar.getSelectedRow();
-    		int spalte = m_Table_Calendar.getSelectedColumn();
-    		int tag = 0;
-    		int id = 0;
-    		Vector TagesIDs = new Vector();
-    		if(spalte != 0)
-    		{
-    			Object tmpObj = m_TableModel_Calendar.getValueAt(zeile,spalte);
-	    		if(!tmpObj.toString().equals(""))
-	    		{
-	    			tag = Integer.parseInt(tmpObj.toString());
-	    			//id =((Integer)m_HashTable_DayInDB.get(new Integer(tag))).intValue();
-	    			Hashtable tmp = (Hashtable)m_HashTable_DayInDB.get(new Integer(tag));
-	    			Enumeration enu = tmp.keys();
-	    			while(enu.hasMoreElements())
-	    			{
-	    				TagesIDs.add(enu.nextElement());
-	    			}
-	    		}
-    		}
+			int zeile = m_Table_Calendar.getSelectedRow();
+			int spalte = m_Table_Calendar.getSelectedColumn();
+			int tag = 0;
+			int id = 0;
+			Vector TagesIDs = new Vector();
+			if (spalte != 0) {
+				Object tmpObj = m_TableModel_Calendar.getValueAt(zeile, spalte);
+				if (!tmpObj.toString().equals("")) {
+					tag = Integer.parseInt(tmpObj.toString());
+					// id =((Integer)m_HashTable_DayInDB.get(new
+					// Integer(tag))).intValue();
+					Hashtable tmp = (Hashtable) m_HashTable_DayInDB.get(new Integer(tag));
+					Enumeration enu = (tmp != null ? tmp.keys() : null);
+					while (enu != null && enu.hasMoreElements()) {
+						TagesIDs.add(enu.nextElement());
+					}
+				}
+			}
     		for(int ii = 0; ii < TagesIDs.size(); ii++)
     		{
     			id = ((Integer)TagesIDs.elementAt(ii)).intValue();
@@ -1489,9 +1489,9 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
     	
     	else if(e.getSource().equals(m_Table_Filelist))
     	{
-	    	//Gew�hlte Zeile ermitteln
+	    	//Gewählte Zeile ermitteln
 	    	int rowNr = m_Table_Filelist.getSelectedRow();
-	    	// Key f�r die HashTable ermitteln
+	    	// Key für die HashTable ermitteln
 	    	Vector tmpV = (Vector)(m_TableModel_Filelist.getDataVector()).elementAt(rowNr);
 			String hashKey = tmpV.elementAt(tmpV.size()-1).toString();
 	    	//String hashKey = "" + m_TableModel_Filelist.getValueAt(rowNr,m_TableModel_Filelist.getDataVector().capacity());
@@ -1502,10 +1502,10 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	    	{
 	    		m_HashTable_Details_ColHeader.put(selectedObject.getStr_Datum(),selectedObject);
 				//erstellen der Detailtabelle
-		    	//Label der �berschrift f�llen
+		    	//Label der überschrift füllen
 		    	m_Label_DetailHeader.setText(selectedObject.getTeamName() + " (" + selectedObject.getTeamID() + ")");
-		    	// Panel f�r die Detail-ScrollPane erstellen
-	//	    	 Array f�r die nicht fixen Details
+		    	// Panel für die Detail-ScrollPane erstellen
+	//	    	 Array für die nicht fixen Details
 		    	String[] objectDetails = {
 		    			" " + selectedObject.getLiga(),
 		    			" " + selectedObject.getSaison() + " / " + selectedObject.getSpieltag(),
@@ -1525,7 +1525,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		    	teamDetails.setLayout(new GridLayout(objectDetails.length,1));
 		    	String columnHeader = selectedObject.getStr_Datum();
 		    	
-		    	// Labels f�r das DetailPanel erstellen und einf�gen
+		    	// Labels für das DetailPanel erstellen und einfügen
 		    	for(int ii = 0; ii < objectDetails.length; ii++)
 		    	{
 		    		if(ii == 0 || ii%2 == 0)
@@ -1545,7 +1545,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		    	remove.getInsets();
 		    	entfernen.add(remove);
 		    	
-		    	//Vector f�r die Objekte in der Detailtabelle
+		    	//Vector für die Objekte in der Detailtabelle
 		    	Vector details = new Vector();
 		    	details.add(entfernen);
 		    	details.add(teamDetails);
@@ -1612,11 +1612,11 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 //  ********** Ende Table Events ******************
     
-    //******** Start der Methoden f�r IOfficialPlugin
+    //******** Start der Methoden für IOfficialPlugin
     
     /**
      * Liefert die Plugin-ID
-     * @return Die zugewiesene ID f�r dieses Plugin
+     * @return Die zugewiesene ID für dieses Plugin
      */
     public int getPluginID()
     {
@@ -1625,7 +1625,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
     
     /**
      * Liefert den Plugin-Namen
-     * @return Gibt den Namen des Plugins zur�ck.
+     * @return Gibt den Namen des Plugins zurück.
      */
     public String getPluginName()
     {
@@ -1633,8 +1633,8 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
     }
     
     /**
-     * Liefert eine Liste der Dateien, die nicht �berschrieben werden d�rfen.
-     * @return Ein Array von Files, die nicht �berschrieben werden d�rfen.
+     * Liefert eine Liste der Dateien, die nicht überschrieben werden dürfen.
+     * @return Ein Array von Files, die nicht überschrieben werden dürfen.
      */
     public File[] getUnquenchableFiles()
     {
@@ -1651,17 +1651,17 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
     }
     
     /** 
-	 * Liefert den Namen des Plugins f�r die Beschriftung des Tabs.
+	 * Liefert den Namen des Plugins für die Beschriftung des Tabs.
 	 * @return Liefert den Namen des Plugins
 	 */
 	public String getName()
 	{
 		return m_PluginName + " V" + m_pluginVersion;
 	}
-//  ******** Start der Methoden f�r IOfficialPlugin
+//  ******** Start der Methoden für IOfficialPlugin
 //	 *********** Beginn der Datenbank-Methoden *******************
 	/*****************
-	 * F�hrt ein query gegen die DB aus
+	 * Führt ein query gegen die DB aus
 	 * @param query
 	 */
 	public void doSelect(String query)
@@ -1677,9 +1677,9 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 	}
 //	 *********** Ende der Datenbank-Methoden **********************
 //	 **************************************************************
-	//********** Beginn F�r HO notwendige Methoden ****************
+	//********** Beginn Für HO notwendige Methoden ****************
 	/**
-	 * F�hrt ein refresh f�r das Plugin durch
+	 * Führt ein refresh für das Plugin durch
 	 */
 	public void refresh()
     {
@@ -1741,7 +1741,7 @@ public class HrfExplorer implements IPlugin,IOfficialPlugin,ActionListener,ItemL
 		}
     }
 	
-//	********** Ende F�r HO notwendige Methoden ******************
+//	********** Ende Für HO notwendige Methoden ******************
 	//***********************************************************
 	//********** Beginn Debugging Methoden **********************
 	public static void appendText(String test)
