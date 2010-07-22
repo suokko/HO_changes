@@ -132,6 +132,8 @@ public class PlayerCompare implements IPlugin,MouseListener, ActionListener,Item
 		//Save model in member Var
 		m_clModel = hOMiniModel;
 		
+		debugWindow = m_clModel.getGUI ().createDebugWindow ( new java.awt.Point( 100, 200 ), new java.awt.Dimension( 200,  100 ) );
+		
 //		einlesen der Sprache-Files
 		try
         {
@@ -155,24 +157,24 @@ public class PlayerCompare implements IPlugin,MouseListener, ActionListener,Item
         getAllPlayer();
 		
 		
-//		--- Hinzugef�gt 29.08.04---		
+//		--- Hinzugefügt 29.08.04---		
 		// Hauptpanel erstellen
 		m_jpPanel = hOMiniModel.getGUI().createImagePanel ();
 		m_jpPanel.setLayout (new BorderLayout());
 		
-		//FocusListener f�r Neuanzeige bei Tabwechsel
+		//FocusListener für Neuanzeige bei Tabwechsel
 		m_jpPanel.addFocusListener(this);
 		
 		//Tab registrieren, damit bei update die obere Tabelle refresht wird
 		m_clModel.getGUI().registerRefreshable(this);
 		
-		//Default Werte f�r die skill-Auswahlen werden gesetzt
+		//Default Werte für die skill-Auswahlen werden gesetzt
 		newStaerke = new int[]
 		{
 				0,6,0,0,0,0,0,0,0,0
 		};
 		
-//		Default Werte f�r die skill-Ver�nderungen setzen
+//		Default Werte für die skill-Ver�nderungen setzen
 		changedStaerke = new int[]
 		{
 				0,0,0,0,0,0,0,0,0,0
