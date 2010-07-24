@@ -26,6 +26,7 @@ Plugin Updates:
 ---------------
 - flagsplugin 3.23 (catch possible exception when getting the country id of an opponent)
 - TSForecast 1.01 (fix problems at plugin start with only few datasets)
+- add PlayerCompare and HRFExplorer to plugins (thx KickMuck)
 
 Changelist HO! 1.425
 ====================
