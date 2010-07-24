@@ -15,19 +15,23 @@ import java.io.*;
 /**
  * @author KickMuck
  */
-public class PlayerCompare implements IPlugin,MouseListener, ActionListener,ItemListener,IRefreshable, FocusListener
+public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, ActionListener,ItemListener,IRefreshable, FocusListener
 {
 	
 	private plugins.IHOMiniModel m_clModel = null;
 	//Members for Tables
-	private PlayerTable m_jTableTop = null;	//Tabelle f�r alle Spieler
-	private JTable m_jTableBot = null;		//Tabelle f�r alle verglichenen Spieler
-	private JTable m_jTableDetail = null;	//Tabelle f�r Spielerdetails
+	private PlayerTable m_jTableTop = null;	//Tabelle für alle Spieler
+	private JTable m_jTableBot = null;		//Tabelle für alle verglichenen Spieler
+	private JTable m_jTableDetail = null;	//Tabelle für Spielerdetails
 	// Members for Buttons
 	private JButton m_btCompare;	//Button -> Vergleichen
 	private JButton m_btHelp;		//Button -> Hilfe
 	private JButton m_btReset;		//Button -> Reset
 	private JButton m_btDebugWindow;//Button -> DebugWindow
+	
+	private String m_PluginName = "PlayerCompare";
+	private float m_pluginVersion = 1.11f;
+	private int m_pluginID = 45;
 	
 	private JPanel m_jpPanel;
 	private JPanel m_topPanel;
@@ -105,9 +109,9 @@ public class PlayerCompare implements IPlugin,MouseListener, ActionListener,Item
 	private String[] m_faehigkeiten;
 	private String[] m_staerke;
 	
-//	*** Hinzugef�gt 18.08.04 siehe Z.1226***
+//	*** Hinzugefügt 18.08.04 siehe Z.1226***
 	private static int m_selectedRow;
-//	*** Hinzugef�gt 18.08.04 ***
+//	*** Hinzugefügt 18.08.04 ***
 	private int m_i_ptmTopCount;
 	private int m_anzSpieler; //Anzahl der Spieler
 	
@@ -640,15 +644,14 @@ public class PlayerCompare implements IPlugin,MouseListener, ActionListener,Item
 		debugWindow.append(text);
 	}
 	
-	/**
-	 * getName()
-	 * - liefert den Namen des PlugIns
+    /** 
+	 * Liefert den Namen des Plugins für die Beschriftung des Tabs.
+	 * @return Liefert den Namen des Plugins
 	 */
-    public String getName()
-    {
-        return "PlayerCompare V 1.11";
-    }
-
+	public String getName()
+	{
+		return m_PluginName + " V " + m_pluginVersion;
+	}
     
     public void refresh()
     {
@@ -1582,6 +1585,43 @@ public class PlayerCompare implements IPlugin,MouseListener, ActionListener,Item
 		
 	}
 //  ********** Ende Mouse Events ******************
+    
+    /**
+     * Liefert die Plugin-ID
+     * @return Die zugewiesene ID für dieses Plugin
+     */
+    public int getPluginID()
+    {
+    	return m_pluginID;
+    }
+    
+    /**
+     * Liefert den Plugin-Namen
+     * @return Gibt den Namen des Plugins zurück.
+     */
+    public String getPluginName()
+    {
+    	return m_PluginName;
+    }
+
+    /**
+     * Liefert die Plugin-Version
+     * @return Die Versionsnummer als double-Wert.
+     */
+    public double getVersion()
+    {
+    	return m_pluginVersion;
+    }
+    
+    /**
+     * Liefert eine Liste der Dateien, die nicht überschrieben werden dürfen.
+     * @return Ein Array von Files, die nicht überschrieben werden dürfen.
+     */
+    public File[] getUnquenchableFiles()
+    {
+    	return null;
+    }
+    
     public static String getPCProperties(String prop)
     {
     	return m_properties.getProperty(prop);
