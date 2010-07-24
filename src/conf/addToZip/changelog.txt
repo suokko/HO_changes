@@ -1,5 +1,8 @@
 Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.427
+====================
+
 Changelist HO! 1.426
 ====================
 - fix bug, that prevented HO from starting in special screen configurations
