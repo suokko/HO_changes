@@ -455,6 +455,14 @@ public  class Aufstellung implements plugins.ILineUp {
 		return sum;
     }
 
+	public void updateRatingPredictionConfig() {
+		int vt = getAnzInnenverteidiger();
+		int im = getAnzInneresMittelfeld();
+		int st = getAnzSturm();
+		String predictionName = vt + "D+" + im + "M+" + st + "F";
+		RatingPredictionConfig.setInstancePredictionName(predictionName);
+	}
+
     /**
      * Setter for property m_iKapitaen.
      *
@@ -1466,13 +1474,25 @@ public  class Aufstellung implements plugins.ILineUp {
         anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER_IN);
         anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER_OFF);
         anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER_DEF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER);
-        anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER_AUS);
-        anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER_OFF);
 
-        return anzahl;
+        return anzahl+getAnzInnenverteidiger();
     }
 
+    /**
+     * berechnet Anzahl Innenverteidiger im System
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    private int getAnzInnenverteidiger() {
+    	int anzahl = 0;
+    	
+    	anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER);
+    	anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER_AUS);
+    	anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER_OFF);
+    	
+    	return anzahl;
+    }
+    
     /**
      * berechnet Anzahl Abwehr im System
      *
@@ -1481,28 +1501,39 @@ public  class Aufstellung implements plugins.ILineUp {
     private int getAnzMittelfeld() {
         int anzahl = 0;
 
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD);
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_OFF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_DEF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_AUS);
         anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL);
         anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL_IN);
         anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL_OFF);
         anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL_DEF);
 
-        return anzahl;
+        return anzahl + getAnzInneresMittelfeld();
     }
 
-    //    /**berechnet Anzahl Abwehr im System*/
-    //    private int getAnzSturm()
-    //    {
-    //        int anzahl  =   0;
-    //
-    //        anzahl  +=  getAnzPosImSystem( ISpielerPosition.STURM );
-    //        anzahl  +=  getAnzPosImSystem( ISpielerPosition.STURM_DEF );
-    //
-    //        return anzahl;
-    //    }
+    /**
+     * berechnet Anzahl Innere MF im System
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    private int getAnzInneresMittelfeld() {
+    	int anzahl = 0;
+    	
+    	anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD);
+    	anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_OFF);
+    	anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_DEF);
+    	anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_AUS);
+    	
+    	return anzahl;
+    }
+
+	/** berechnet Anzahl Stürmer im System */
+	private int getAnzSturm() {
+		int anzahl = 0;
+
+		anzahl += getAnzPosImSystem(ISpielerPosition.STURM);
+		anzahl += getAnzPosImSystem(ISpielerPosition.STURM_DEF);
+
+		return anzahl;
+	}
 
     /**
      * ermittelt ANzahl der gesuchten Pos im aktuellen System
