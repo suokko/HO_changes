@@ -125,8 +125,10 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			new CBItem(HOMiniModel.instance().getLanguageString("coach.offensive"),1),
 		};
 	private JComboBox m_jcbTrainerType= new JComboBox(TRAINERTYPE);
-	private CBItem[] PREDICTIONTYPE = getPredictionItems();
-	private JComboBox m_jcbPredictionType= new JComboBox(PREDICTIONTYPE);
+	
+	private ColorLabelEntry m_jpPredictionType = new ColorLabelEntry("",
+			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+	   
 	private CBItem[] STIMMUNG = {
 			new CBItem(Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg),
 					ITeam.TS_wie_im_kalten_Krieg),
@@ -274,6 +276,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
                     if (vergleichsaufstellung != null) {
                         //Wegen der Berechnung zuerst die Aufstellung kurz in Model packen, da immer die aktuelle Aufstellung genommen wird
+                    	vergleichsaufstellung.updateRatingPredictionConfig();
                         homodel.setAufstellung(vergleichsaufstellung);
                         m_jpRating.setTopRight(vergleichsaufstellung.getLeftDefenseRating());
                         m_jpRating.setTopCenter(vergleichsaufstellung.getCentralDefenseRating());
@@ -290,6 +293,8 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             }
 
             //Erst mal leeren
+    		aufstellung.updateRatingPredictionConfig();
+    		
             m_jpRating.clear();
 
             m_jpRating.setTopRightText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
@@ -342,8 +347,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             setStimmung(homodel.getTeam().getStimmungAsInt(),homodel.getTeam().getSubStimmung());
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
             setTrainerType(homodel.getTrainer().getTrainerTyp());
-            setPredictionType(RatingPredictionConfig.getInstancePredictionType());
-
+            
             setTaktik(aufstellung.getTacticType());
             m_jpTaktikStaerke.setText(getTaktikString());
 
@@ -352,6 +356,8 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			setPullBackMinute(aufstellung.getPullBackMinute());
 			m_jcbPullBackMinute.setEnabled(!aufstellung.isPullBackOverride());
 			setPullBackOverride(aufstellung.isPullBackOverride());
+
+			m_jpPredictionType.setText(RatingPredictionConfig.getInstancePredictionName());
 
             float avXp = homodel.getAufstellung().getAverageExperience();
             m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(avXp));
@@ -422,13 +428,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      */
     public void setTrainerType (int newTrainerType) {
     	de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbTrainerType, newTrainerType);
-    }
-
-    /**
-     * Set the prediction type.
-     */
-    public void setPredictionType (int newPredictionType) {
-    	de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbPredictionType, newPredictionType);
     }
 
     /**
@@ -526,10 +525,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             	// trainer type changed
             	HOVerwaltung.instance().getModel().getTrainer().
             			setTrainerTyp(((CBItem)m_jcbTrainerType.getSelectedItem()).getId());
-            } else if (event.getSource().equals(m_jcbPredictionType)) {
-            	// prediction type changed
-            	RatingPredictionConfig.
-            			setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbLocation)) {
             	// location changed
             	HOVerwaltung.instance().getModel().getAufstellung().
@@ -750,16 +745,12 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 		layout.setConstraints(m_jchPullBackOverride, constraints);
 		add(m_jchPullBackOverride);
 
-		yPos++;
+        yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-		m_jcbPredictionType.setPreferredSize(new Dimension(50,
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(20)));
-		//m_jcbPredictionType.setMaximumRowCount(3);
-        layout.setConstraints(m_jcbPredictionType, constraints);
-        add(m_jcbPredictionType);
+        layout.setConstraints(m_jpPredictionType.getComponent(false), constraints);
+        add(m_jpPredictionType.getComponent(false));
 
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung")), yPos);
@@ -867,7 +858,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 		m_jcbSubStimmung.addItemListener(this);
         m_jcbSelbstvertrauen.addItemListener(this);
         m_jcbTrainerType.addItemListener(this);
-        m_jcbPredictionType.addItemListener(this);
         m_jcbPullBackMinute.addItemListener(this);
         m_jchPullBackOverride.addItemListener(this);
     }
@@ -883,7 +873,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 		m_jcbSubStimmung.removeItemListener(this);
         m_jcbSelbstvertrauen.removeItemListener(this);
         m_jcbTrainerType.removeItemListener(this);
-        m_jcbPredictionType.removeItemListener(this);
         m_jcbPullBackMinute.removeItemListener(this);
         m_jchPullBackOverride.removeItemListener(this);
     }
