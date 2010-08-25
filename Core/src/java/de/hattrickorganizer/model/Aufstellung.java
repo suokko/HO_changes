@@ -1531,6 +1531,7 @@ public  class Aufstellung implements plugins.ILineUp {
 
 		anzahl += getAnzPosImSystem(ISpielerPosition.STURM);
 		anzahl += getAnzPosImSystem(ISpielerPosition.STURM_DEF);
+		anzahl += getAnzPosImSystem(ISpielerPosition.STURM_AUS);
 
 		return anzahl;
 	}
