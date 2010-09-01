@@ -456,14 +456,18 @@ public  class Aufstellung implements plugins.ILineUp {
     }
 
 	public void updateRatingPredictionConfig() {
-		int vt = getAnzInnenverteidiger();
-		int im = getAnzInneresMittelfeld();
-		int st = getAnzSturm();
+		int vt = atLeastOne(getAnzInnenverteidiger());
+		int im = atLeastOne(getAnzInneresMittelfeld());
+		int st = atLeastOne(getAnzSturm());
 		String predictionName = vt + "D+" + im + "M+" + st + "F";
 		RatingPredictionConfig.setInstancePredictionName(predictionName);
 	}
 
-    /**
+	private int atLeastOne(int count) {
+		return count == 0 ? 1 : count;
+	}
+
+	/**
      * Setter for property m_iKapitaen.
      *
      * @param m_iKapitaen New value of property m_iKapitaen.
