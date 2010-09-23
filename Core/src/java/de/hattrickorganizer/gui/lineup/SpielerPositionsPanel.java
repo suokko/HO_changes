@@ -538,6 +538,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 				addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermerDef"),ISpielerPosition.ZUS_STUERMER_DEF);
                 break;
             }
 
@@ -548,6 +549,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.NACH_AUSSEN);
                 addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);
                 addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermerDef"),ISpielerPosition.ZUS_STUERMER_DEF);
                 break;
             }
 
@@ -559,6 +561,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.NACH_AUSSEN);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
                 addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermerDef"),ISpielerPosition.ZUS_STUERMER_DEF);
                 break;
             }
 
@@ -571,6 +574,7 @@ final class SpielerPositionsPanel extends de.hattrickorganizer.gui.templates.Ima
 				addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichMittelfeld"),ISpielerPosition.ZUS_MITTELFELD);            	
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichInnenverteidiger"),ISpielerPosition.ZUS_INNENV);
                 addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermer"),ISpielerPosition.ZUS_STUERMER);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zusaetzlichStuermerDef"),ISpielerPosition.ZUS_STUERMER_DEF);
                 break;
             }
 

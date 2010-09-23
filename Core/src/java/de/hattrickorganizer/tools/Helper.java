@@ -738,7 +738,9 @@ public class Helper extends LanguageFiles {
                     break;
                 }
 
-                case ISpielerPosition.ZUS_STUERMER: {
+                case ISpielerPosition.ZUS_STUERMER:
+                case ISpielerPosition.ZUS_STUERMER_DEF:
+                {
                     trickotfarbe = TRICKOT_STURM;
                     break;
                 }

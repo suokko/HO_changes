@@ -109,10 +109,13 @@ public interface ISpielerPosition {
     /** additional defender */
     public static final byte ZUS_INNENV = 7;
 
+    /** additional def forward */
+    public static final byte ZUS_STUERMER_DEF = 8;
+
     //Konstanten für Position
 
     /** Number of Positions [0 (Keeper) - 24 (extraCD) => 25] **/
-    public static final byte NUM_POSITIONS = 25;
+    public static final byte NUM_POSITIONS = 26;
     
     /** Keeper */
     public static final byte TORWART = 0;
@@ -187,6 +190,9 @@ public interface ISpielerPosition {
     /** additional forward */
     public static final byte POS_ZUS_STUERMER = 22;
 
+    /** additional def forward */
+    public static final byte POS_ZUS_STUERMER_DEF = 25;
+    
     /** additional midfield */
     public static final byte POS_ZUS_MITTELFELD = 23;
 
