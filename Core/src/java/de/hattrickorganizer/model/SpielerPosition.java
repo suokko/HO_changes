@@ -459,6 +459,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
                     return MITTELFELD;
                 } else if (taktik == ZUS_STUERMER) {
                     return STURM;
+                } else if (taktik == ZUS_STUERMER_DEF) {
+                	return STURM_DEF;
                 } else if (taktik == ZUS_INNENV) {
                     return INNENVERTEIDIGER;
                 } else if (taktik == OFFENSIV) {
@@ -478,6 +480,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
                     return MITTELFELD;
                 } else if (taktik == ZUS_STUERMER) {
                     return STURM;
+                } else if (taktik == ZUS_STUERMER_DEF) {
+                	return STURM_DEF;
                 } else if (taktik == OFFENSIV) {
                     return INNENVERTEIDIGER_OFF;
                 } else {
@@ -493,6 +497,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
                     return INNENVERTEIDIGER;
                 } else if (taktik == ZUS_STUERMER) {
                     return STURM;
+                } else if (taktik == ZUS_STUERMER_DEF) {
+                	return STURM_DEF;
                 } else if (taktik == ZUS_MITTELFELD) {
                     return MITTELFELD;
                 } else if (taktik == OFFENSIV) {
@@ -512,6 +518,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
                     return INNENVERTEIDIGER;
                 } else if (taktik == ZUS_STUERMER) {
                     return STURM;
+                } else if (taktik == ZUS_STUERMER_DEF) {
+                	return STURM_DEF;
                 } else if (taktik == OFFENSIV) {
                     return MITTELFELD_OFF;
                 } else if (taktik == DEFENSIV) {
