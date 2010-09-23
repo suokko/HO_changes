@@ -472,6 +472,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		weights[ISpielerPosition.POS_ZUS_INNENV][specialty] = params.getParam(sectionName, "extra_cd" + specialtyName) * modCD;
     		weights[ISpielerPosition.POS_ZUS_MITTELFELD][specialty] = params.getParam(sectionName, "extra_im" + specialtyName) * modIM;
 			weights[ISpielerPosition.POS_ZUS_STUERMER][specialty] = params.getParam(sectionName, "extra_fw" + specialtyName) * modFW;
+			weights[ISpielerPosition.POS_ZUS_STUERMER_DEF][specialty] = params.getParam(sectionName, "fw_def" + specialtyName) * modFW;
 			weights[ISpielerPosition.POS_ZUS_INNENV][specialty] += params.getParam(sectionName, "cd_xtra" + specialtyName) * modCD;	// alias for extra_cd
 			weights[ISpielerPosition.POS_ZUS_MITTELFELD][specialty] += params.getParam(sectionName, "im_xtra" + specialtyName) * modIM;	// alias for extra_im
 			weights[ISpielerPosition.POS_ZUS_STUERMER][specialty] += params.getParam(sectionName, "fw_xtra" + specialtyName) * modFW;	// alias for extra_fw
@@ -523,7 +524,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         	byte taktik = lineup.getTactic4PositionID(pos);
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             if (spieler != null) { 
-            	if (taktik == ISpielerPosition.ZUS_STUERMER)
+            	if (taktik == ISpielerPosition.ZUS_STUERMER || taktik == ISpielerPosition.ZUS_STUERMER_DEF)
             		retVal++;
             	else if (taktik != ISpielerPosition.ZUS_INNENV  &&
         					taktik != ISpielerPosition.ZUS_MITTELFELD &&
@@ -544,6 +545,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
             		retVal++;
             	else if (taktik != ISpielerPosition.ZUS_MITTELFELD &&
             				taktik != ISpielerPosition.ZUS_STUERMER &&
+            				taktik != ISpielerPosition.ZUS_STUERMER_DEF &&
             				(pos == ISpielerPosition.insideBack1 || pos == ISpielerPosition.insideBack2 ))
             		retVal++;
             }
@@ -582,6 +584,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	if (taktik == ISpielerPosition.ZUS_INNENV 
 				|| taktik == ISpielerPosition.ZUS_MITTELFELD
 				|| taktik == ISpielerPosition.ZUS_STUERMER 
+				|| taktik == ISpielerPosition.ZUS_STUERMER_DEF 
 				|| pos == ISpielerPosition.keeper)
 			return true;
     	else if (taktik == ISpielerPosition.NACH_AUSSEN)
@@ -623,6 +626,8 @@ public class RatingPredictionManager implements IRatingPredictionManager
             		// Extra FW
             		else if (taktik == ISpielerPosition.ZUS_STUERMER)
             			retArray[ISpielerPosition.POS_ZUS_STUERMER][specialty] += calcPlayerStrength(spieler, skillType);
+            		else if (taktik == ISpielerPosition.ZUS_STUERMER_DEF)
+            			retArray[ISpielerPosition.POS_ZUS_STUERMER_DEF][specialty] += calcPlayerStrength(spieler, skillType);
             	
             		else switch (pos) {
             		case ISpielerPosition.keeper:

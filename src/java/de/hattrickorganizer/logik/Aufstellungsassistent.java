@@ -709,6 +709,7 @@ public class Aufstellungsassistent {
             if (pos.getPosition() == position) {
                 //die zus XYZ Positionen nur vormerken
                 if ((pos.getTaktik() == plugins.ISpielerPosition.ZUS_STUERMER)
+                    || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_STUERMER_DEF)
                     || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_MITTELFELD)
                     || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_INNENV)) {
                     zusPos.add(pos);
@@ -780,6 +781,7 @@ public class Aufstellungsassistent {
             if (pos.getPosition() == position) {
                 //die zus XYZ Positionen nur vormerken
                 if ((pos.getTaktik() == ISpielerPosition.ZUS_STUERMER)
+                    || (pos.getTaktik() == ISpielerPosition.ZUS_STUERMER_DEF)
                     || (pos.getTaktik() == ISpielerPosition.ZUS_MITTELFELD)
                     || (pos.getTaktik() == ISpielerPosition.ZUS_INNENV)) {
                     zusPos.add(pos);
