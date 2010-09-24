@@ -2,6 +2,8 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 
 Changelist HO! 1.427
 ====================
+- automatically select prediction type (thx Smaug)
+- allow new position "Extra def. Forward" to simulate lineups with 3 def. forwards (thx Smaug)
 
 Changelist HO! 1.426
 ====================
