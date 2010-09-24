@@ -1,5 +1,7 @@
 Changelist HO! 1.427
 ====================
+- automatically select prediction type (thx Smaug)
+- allow new position "Extra def. Forward" to simulate lineups with 3 def. forwards (thx Smaug)
 
 Language updates:
 -----------------
