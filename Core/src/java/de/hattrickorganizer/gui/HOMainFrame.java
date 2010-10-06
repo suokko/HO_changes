@@ -445,7 +445,7 @@ public final class HOMainFrame extends JFrame
 		else if (source.equals(m_jmTraining2)) {
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
-			cal.set(Calendar.WEEK_OF_YEAR, -7); // half season
+			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
 			if (JOptionPane.showConfirmDialog(this,
 					"Start recalculation subskill recalculation for the last 7 weeks (since " +
 					new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?",
