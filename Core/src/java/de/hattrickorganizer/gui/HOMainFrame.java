@@ -62,6 +62,7 @@ import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
 import de.hattrickorganizer.gui.utils.HOTheme;
 import de.hattrickorganizer.gui.utils.InterruptionWindow;
+import de.hattrickorganizer.gui.utils.NimbusTheme;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.FormulaFactors;
@@ -138,23 +139,16 @@ public final class HOMainFrame extends JFrame
 	//    private TrainingsPanel          m_jpTrainingshelfer     =   null;
 	private InformationsPanel m_jpInformation;
 	private InjuryDialog injuryTool;
-	private final JMenu m_jmAbout =
-		new JMenu(HOVerwaltung.instance().getLanguageString("About"));
-	private final JMenu m_jmDatei =
-		new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
+	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
+	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
 	// disabled HOFriendly, aik, 05.03.2008
-//	private final JMenu m_jmHoFriendlyMenu =
-//		new JMenu(HOVerwaltung.instance().getLanguageString("HoFriendly"));
-	private final JMenu m_jmPluginMenu =
-		new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
-	private final JMenu m_jmPluginsRefresh =
-		new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
-	private final JMenu m_jmToolsMenu =
-		new JMenu(HOVerwaltung.instance().getLanguageString("Tools"));
-	private final JMenu m_jmUpdating =
-		new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
-	private final JMenu m_jmVerschiedenes =
-		new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
+	// private final JMenu m_jmHoFriendlyMenu =
+	// new JMenu(HOVerwaltung.instance().getLanguageString("HoFriendly"));
+	private final JMenu m_jmPluginMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
+	private final JMenu m_jmPluginsRefresh = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
+	private final JMenu m_jmToolsMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Tools"));
+	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
+	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
 
 	//----Menue--------------------------------
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
@@ -1482,29 +1476,36 @@ public final class HOMainFrame extends JFrame
 	/**
 	 * Set the default font size.
 	 */
-	private void setDefaultFont(int groesse) {
+	private void setDefaultFont(int size) {
 		try {
-			final MetalLookAndFeel laf = new MetalLookAndFeel();
-			MetalLookAndFeel.setCurrentTheme(new HOTheme(UserParameter.instance().schriftGroesse));
-			// Um die systemweite MenuBar von Mac OS X zu verwenden
-			// http://www.pushing-pixels.org/?p=366
-			if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				Object mbUI = UIManager.get("MenuBarUI");
-				Object mUI = UIManager.get("MenuUI");
-				Object cbmiUI = UIManager.get("CheckBoxMenuItemUI");
-				Object rbmiUI = UIManager.get("RadioButtonMenuItemUI");
-				Object pmUI = UIManager.get("PopupMenuUI");
-
-				UIManager.setLookAndFeel(laf);
-
-				UIManager.put("MenuBarUI", mbUI);
-				UIManager.put("MenuUI", mUI);
-				UIManager.put("CheckBoxMenuItemUI", cbmiUI);
-				UIManager.put("RadioButtonMenuItemUI", rbmiUI);
-				UIManager.put("PopupMenuUI", pmUI);
-			} else {
-				UIManager.setLookAndFeel(laf);
+			boolean succ = false;
+			if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) {
+				succ = NimbusTheme.enableNimbusTheme(size);
+			}
+			if (!succ) {
+				final MetalLookAndFeel laf = new MetalLookAndFeel();
+				MetalLookAndFeel.setCurrentTheme(new HOTheme(UserParameter.instance().schriftGroesse));
+				
+				// Um die systemweite MenuBar von Mac OS X zu verwenden
+				// http://www.pushing-pixels.org/?p=366
+				if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					Object mbUI = UIManager.get("MenuBarUI");
+					Object mUI = UIManager.get("MenuUI");
+					Object cbmiUI = UIManager.get("CheckBoxMenuItemUI");
+					Object rbmiUI = UIManager.get("RadioButtonMenuItemUI");
+					Object pmUI = UIManager.get("PopupMenuUI");
+	
+					UIManager.setLookAndFeel(laf);
+	
+					UIManager.put("MenuBarUI", mbUI);
+					UIManager.put("MenuUI", mUI);
+					UIManager.put("CheckBoxMenuItemUI", cbmiUI);
+					UIManager.put("RadioButtonMenuItemUI", rbmiUI);
+					UIManager.put("PopupMenuUI", pmUI);
+				} else {
+					UIManager.setLookAndFeel(laf);
+				}
 			}
 			SwingUtilities.updateComponentTreeUI(this);
 		} catch (Exception e) {
