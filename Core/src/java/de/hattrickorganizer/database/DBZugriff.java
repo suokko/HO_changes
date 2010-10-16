@@ -1941,7 +1941,6 @@ public class DBZugriff {
 		saveUserParameter("DBVersion", 10);
 	}
 
-
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
