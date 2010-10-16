@@ -248,6 +248,7 @@ public final class UserParameter extends Configuration {
 
     //Textgroesse
     public int schriftGroesse = 11;
+    public String skin = "Nimbus";
 
     //Spiele
     public int spieleFilter;
@@ -361,6 +362,7 @@ public final class UserParameter extends Configuration {
 		map.put("matchLineupImport_Path",String.valueOf(matchLineupImport_Path));
 		map.put("spielPlanImport_Path",String.valueOf(spielPlanImport_Path));
 		map.put("sprachDatei",String.valueOf(sprachDatei));
+		map.put("skin", skin);
 		map.put("ProxyAktiv",String.valueOf(ProxyAktiv));
 		map.put("ProxyAuthAktiv",String.valueOf(ProxyAuthAktiv));
 		map.put("aufstellungsAssistentPanel_cbfilter",String.valueOf(aufstellungsAssistentPanel_cbfilter));
@@ -534,6 +536,7 @@ public final class UserParameter extends Configuration {
 		matchLineupImport_Path = getStringValue(values,"matchLineupImport_Path");
 		spielPlanImport_Path = getStringValue(values,"spielPlanImport_Path");
 		sprachDatei = getStringValue(values,"sprachDatei");
+		skin = getStringValue(values, "skin");
 		
 		ProxyAktiv = getBooleanValue(values,"ProxyAktiv");
 		ProxyAuthAktiv = getBooleanValue(values,"ProxyAuthAktiv");
