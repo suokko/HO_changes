@@ -20,115 +20,54 @@ public final class UserParameter extends Configuration {
     private static UserParameter m_clTemp;
 
     //------Konstanten-----------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     public static final int SORT_NAME = 0;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SORT_BESTPOS = 1;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SORT_AUFGESTELLT = 2;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SORT_GRUPPE = 3;
-
-    /** TODO Missing Parameter Documentation */
     public static final int SORT_BEWERTUNG = 4;
 
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     public Color FG_ANGESCHLAGEN = new Color(100, 0, 0);
-
-    /** TODO Missing Parameter Documentation */
     public Color FG_GESPERRT = new Color(200, 20, 20);
 
     //Farben für Spielernamen
-
-    /** TODO Missing Parameter Documentation */
     public Color FG_STANDARD = Color.black;
-
-    /** TODO Missing Parameter Documentation */
     public Color FG_TRANSFERMARKT = new Color(0, 180, 0);
-
-    /** TODO Missing Parameter Documentation */
     public Color FG_VERLETZT = new Color(200, 0, 0);
-
-    /** TODO Missing Parameter Documentation */
     public Color FG_ZWEIKARTEN = new Color(100, 100, 0);
-
-    /** TODO Missing Parameter Documentation */
     public String LoginName = "";
-
-    /** TODO Missing Parameter Documentation */
     public String LoginPWD = "";
-
-    /** TODO Missing Parameter Documentation */
     public String ProxyAuthName = "";
-
-    /** TODO Missing Parameter Documentation */
     public String ProxyAuthPassword = "";
 
     //Proxy
-
-    /** TODO Missing Parameter Documentation */
     public String ProxyHost = "";
-
-    /** TODO Missing Parameter Documentation */
     public String ProxyPort = "";
 
     //AufstellungsAssistentPanel
-
-    /** TODO Missing Parameter Documentation */
     public String aufstellungsAssistentPanel_gruppe = "";
 
-    //Pfad
-
-    /** TODO Missing Parameter Documentation */
+    //Path to stored HRFs
     public String hrfImport_HRFPath = "";
-
-    //IP von Hattrick
-
-    /** TODO Missing Parameter Documentation */
     public String htip = "www1.hattrick.org";
-
-    /** TODO Missing Parameter Documentation */
     public String matchLineupImport_Path = "";
-
-    /** TODO Missing Parameter Documentation */
     public String spielPlanImport_Path = "";
 
     //Sprachdatei
 
     /** Name of language */
     public String sprachDatei = "English";
-
     /** is proxy activ */
     public boolean ProxyAktiv;
-
     /** is proxy authentification activ */
     public boolean ProxyAuthAktiv;
-
     /** is linup groupfilter activ */
     public boolean aufstellungsAssistentPanel_cbfilter;
-
-    /** TODO Missing Parameter Documentation */
     public boolean aufstellungsAssistentPanel_form = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean aufstellungsAssistentPanel_gesperrt;
-
-    /** TODO Missing Parameter Documentation */
     public boolean aufstellungsAssistentPanel_idealPosition;
-
-    /** TODO Missing Parameter Documentation */
     public boolean aufstellungsAssistentPanel_not;
-
-    /** TODO Missing Parameter Documentation */
     public boolean aufstellungsAssistentPanel_notLast;
-
-    /** TODO Missing Parameter Documentation */
     public boolean aufstellungsAssistentPanel_verletzt;
 
     //Einzelnen Positionen in den Tabellen anzeigen
@@ -157,325 +96,132 @@ public final class UserParameter extends Configuration {
     
 
     //Die Spieleranalyse wird vertikal untereinander gepackt oder nicht
-
-    /** TODO Missing Parameter Documentation */
     public boolean spieleranalyseVertikal = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleBeschriftung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleErfahrung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleFluegel;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleForm = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleFuehrung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleHilfslinien = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleKondition = true;
 
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAllePasspiel;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleSpielaufbau;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleStandards;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleTorschuss;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleTorwart;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikAlleVerteidigung;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikBeschriftung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikBewertung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikErfahrung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikFananzahl;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikFans;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikFinanzenBeschriftung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikFinanzenHilfslinien = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikFluegel;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikForm = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikFuehrung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikGesamtAusgaben = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikGesamtEinnahmen = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikGewinnVerlust = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikHilfslinien = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikJugend;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikKondition = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikKontostand = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikMarktwert;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikPasspiel;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSonstigeAusgaben;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSonstigeEinnahmen;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpielaufbau;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleAbwehrzentrum = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleAngriffszentrum = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleBewertung = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleGesamt = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleLinkeAbwehr = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleLinkerAngriff = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleMittelfeld = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleRechteAbwehr = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleRechterAngriff = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleSelbstvertrauen;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpieleStimmung;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpielerFinanzenBeschriftung = true;
-
-    /** TODO Missing Parameter Documentation */
 
     //Unused
     public boolean statistikSpielerFinanzenGehalt = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpielerFinanzenHilfslinien = true;
-
-    /** TODO Missing Parameter Documentation */
 
     //Unused
     public boolean statistikSpielerFinanzenMarktwert = true;
 
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSpielergehaelter;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikSponsoren;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikStadion;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikStandards;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikTorschuss;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikTorwart;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikTrainerstab;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikVerteidigung;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikZinsaufwendungen;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikZinsertraege;
-
-    /** TODO Missing Parameter Documentation */
     public boolean statistikZuschauer;
-
-    /** TODO Missing Parameter Documentation */
+    
     public boolean tempTabArenasizer = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabAufstellung;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabInformation = true;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabLigatabelle;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabSpiele;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabSpieleranalyse;
 
     //Temporäre Tabs
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabSpieleruebersicht;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabStatistik;
-
-    /** TODO Missing Parameter Documentation */
     public boolean tempTabTransferscout = true;
 
     //Update
 	public boolean newsCheck = false;
-	
 	public boolean userCheck = false;
-    /** TODO Missing Parameter Documentation */
     public boolean updateCheck = false;
 	
     //Zahlen hinter den Bewertungen anzeigen
-
-    /** TODO Missing Parameter Documentation */
     public boolean zahlenFuerSkill = true;
 
     //Faktoren
-
-    /** TODO Missing Parameter Documentation */
     public float AlterFaktor = 1.0f;
-
-    /** TODO Missing Parameter Documentation */
     public float CoTrainerFaktor = 1.0f;
-
-    /** TODO Missing Parameter Documentation */
     public float IntensitaetFaktor = 1.0f;
-
     /*gibt die mindeststärke für einen Spieler an für seine Idealpos um vom Aufstellungsassi bei idealpos gesetzt zu werden*/
-
-    /** TODO Missing Parameter Documentation */
     public float MinIdealPosStk = 3.5f;
-
-    /** TODO Missing Parameter Documentation */
     public float TrainerFaktor = 1.0f;
-
+    
     //Prozentualer Abzug/Gewinn durch Wettereffekt
-
-    /** TODO Missing Parameter Documentation */
     public float WetterEffektBonus = 0.2f;
 
     //Sonstiges
     //Faktor, durch den Geld geteilt werden muß für die Währung (Gleiche Währungsfaktoren zusammenfassen)
-
-    /** TODO Missing Parameter Documentation */
     public float faktorGeld = 1f;
-
     //Faktor für Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet    
-
-    /** TODO Missing Parameter Documentation */
     public float zellenbreitenFaktor = 1.0f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_ALLGEMEIN = 1.0f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_CHANCENVERWERTUNG = 5.2f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_FLUEGELSPIEL = 3.8f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_KONDITION = 1.0f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_PASSPIEL = 4.5f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_SPIELAUFBAU = 5.5f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_STANDARDS = 1.5f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_TORWART = 3.7f;
-
-    /** TODO Missing Parameter Documentation */
     public float DAUER_VERTEIDIGUNG = 6.1f;
 
     //Timezone
-
-    /** TODO Missing Parameter Documentation */
     public int TimeZoneDifference;
 
     //Anzahl Nachkommastellen
-
-    /** TODO Missing Parameter Documentation */
     public int anzahlNachkommastellen = 2;
-
-    /** TODO Missing Parameter Documentation */
     public int aufstellungsAssistentPanel_reihenfolge = ILineUp.AW_MF_ST;
-
-    /** TODO Missing Parameter Documentation */
     public int aufstellungsPanel_horizontalLeftSplitPane = 450;
-
-    /** TODO Missing Parameter Documentation */
     public int aufstellungsPanel_horizontalRightSplitPane = 200;
-
-    /** TODO Missing Parameter Documentation */
     public int aufstellungsPanel_verticalSplitPane = 800;
 
     //AufstellungsPanel
-
-    /** TODO Missing Parameter Documentation */
     public int aufstellungsPanel_verticalSplitPaneLow = 250;
 
     //Breite der BestPos-Spalte
@@ -487,117 +233,57 @@ public final class UserParameter extends Configuration {
 	public int bestPostWidth = 140;
 
     //Wecker vor der Deadliniezeit
-
-    /** TODO Missing Parameter Documentation */
     public int deadlineFrist = 300000;
-
-    /** TODO Missing Parameter Documentation */
     public int hoMainFrame_PositionX;
-
-    /** TODO Missing Parameter Documentation */
     public int hoMainFrame_PositionY;
-
-    /** TODO Missing Parameter Documentation */
     public int hoMainFrame_height = 740;
 
     //------Werte----------------------------------------------------
     //HOMainFrame
-
-    /** TODO Missing Parameter Documentation */
     public int hoMainFrame_width = 1024;
 
     //MiniScout
-
-    /** TODO Missing Parameter Documentation */
     public int miniscout_PositionX = 50;
-
-    /** TODO Missing Parameter Documentation */
     public int miniscout_PositionY = 50;
 
     //Textgroesse
-
-    /** TODO Missing Parameter Documentation */
     public int schriftGroesse = 11;
 
     //Spiele
-
-    /** TODO Missing Parameter Documentation */
     public int spieleFilter;
 
     //Spiele
-
-    /** TODO Missing Parameter Documentation */
     public int spielePanel_horizontalLeftSplitPane = 400;
-
-    /** TODO Missing Parameter Documentation */
     public int spielePanel_horizontalRightSplitPane = 310;
-
-    /** TODO Missing Parameter Documentation */
     public int spielePanel_verticalSplitPane = 440;
 
     //SpielerAnalyse
-
-    /** TODO Missing Parameter Documentation */
     public int spielerAnalysePanel_horizontalSplitPane = 400;
 
     //Position SpielerDetails
-
-    /** TODO Missing Parameter Documentation */
     public int spielerDetails_PositionX = 50;
-
-    /** TODO Missing Parameter Documentation */
     public int spielerDetails_PositionY = 50;
-	
     public int futureWeeks = 16;
-
-    /** TODO Missing Parameter Documentation */
     public int spielerUebersichtsPanel_horizontalLeftSplitPane = 700;
-
-    /** TODO Missing Parameter Documentation */
     public int spielerUebersichtsPanel_horizontalRightSplitPane = 750;
-
-    /** TODO Missing Parameter Documentation */
     public int spielerUebersichtsPanel_verticalSplitPane = 400;
 
     //Standardsortierung
-
-    /** TODO Missing Parameter Documentation */
     public int standardsortierung = SORT_BESTPOS;
-
     //AlleSpielerstatistik
-
-    /** TODO Missing Parameter Documentation */
     public int statistikAlleAnzahlHRF = 50;
-
     //Spielerstatistik
-
-    /** TODO Missing Parameter Documentation */
     public int statistikAnzahlHRF = 50;
-
     //Finanzstatistik
-
-    /** TODO Missing Parameter Documentation */
     public int statistikFinanzenAnzahlHRF = 50;
-
-    /** TODO Missing Parameter Documentation */
-
     //Alle eigenen
     public int statistikSpieleFilter = 11;
-
     //SpielerFinanzenStatistikPanel
     //Wird nun für SpieleStatistik verwendet!
-
-    /** TODO Missing Parameter Documentation */
     public int statistikSpielerFinanzenAnzahlHRF = 50;
-
     //TransferScoutPanel
-
-    /** TODO Missing Parameter Documentation */
     public int transferScoutPanel_horizontalSplitPane = 300;
-
     //Id der Währung
-
-    /** TODO Missing Parameter Documentation */
 	
 	// Rating offset
 	public float leftDefenceOffset = 0.0f;
