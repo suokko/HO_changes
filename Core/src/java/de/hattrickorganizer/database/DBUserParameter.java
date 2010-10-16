@@ -7,12 +7,6 @@ import java.sql.ResultSet;
 import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.tools.HOLogger;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class DBUserParameter {
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -27,13 +21,9 @@ public class DBUserParameter {
     /**
      * Speichert die Spaltenreihenfolge der Tabellen public void saveTabellenSpaltenReihenfolge(
      * int[][] spieleruebersicht, int[][] aufstellung ) {}
-     *
-     * @param m_clJDBCAdapter TODO Missing Constructuor Parameter Documentation
      */
     /**
      * Lädt die UserParameter direkt in das UserParameter-SingeltonObjekt
-     *
-     * @param m_clJDBCAdapter TODO Missing Constructuor Parameter Documentation
      */
     public final void loadUserParameter(JDBCAdapter m_clJDBCAdapter) {
         ResultSet rs = null;
@@ -42,10 +32,9 @@ public class DBUserParameter {
         try {
             rs = m_clJDBCAdapter.executeQuery(statement);
 
-            if (rs != null) {
-                rs.first();
+            while (rs != null && rs.next()) {
 
-                //    byte helper = 0;
+                //byte helper = 0;
                 //Daten in UserParameter setzten
                 final gui.UserParameter parameter = gui.UserParameter.instance();
 				final HOParameter hoParameter = HOParameter.instance();
@@ -112,8 +101,7 @@ public class DBUserParameter {
                 //Währung, Sprachdatei, Schriftgroesse
                 //Die Währungsid ist veraltet, der Faktor wird nachher überschrieben durch die Extradata aus dem HRF, wenn vorhanden
                 parameter.waehrungsID = rs.getInt("Waehrung");
-                parameter.faktorGeld = de.hattrickorganizer.gui.menu.option.SonstigeOptionenPanel
-                                       .getFaktorGeld4WaehrungsID(parameter.waehrungsID);
+                parameter.faktorGeld = de.hattrickorganizer.gui.menu.option.SonstigeOptionenPanel.getFaktorGeld4WaehrungsID(parameter.waehrungsID);
                 parameter.sprachDatei = rs.getString("Sprachdatei");
                 parameter.schriftGroesse = rs.getInt("Schriftgroesse");
 
@@ -435,27 +423,8 @@ public class DBUserParameter {
                 }
             }
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"DatenbankZugriff.ladtUserParameter " + e);
+            HOLogger.instance().log(getClass(),"DBUserParameter.loadUserParameter: " + e);
             HOLogger.instance().log(getClass(),e);
         }
     }
-
- 
-//    /**
-//     * Set a single UserParameter in the DB
-//     *
-//     * @param fieldName TODO Missing Constructuor Parameter Documentation
-//     * @param value TODO Missing Constructuor Parameter Documentation
-//     * @param m_clJDBCAdapter TODO Missing Constructuor Parameter Documentation
-//     */
-//    public final void saveUserParameter(String fieldName, int value, JDBCAdapter m_clJDBCAdapter) {
-//        final String statement = "UPDATE UserParameter SET " + fieldName + "=" + value;
-//
-//        try {
-//            HOLogger.instance().log(getClass(),"fieldName" + fieldName);
-//            m_clJDBCAdapter.executeUpdate(statement);
-//        } catch (Exception e) {
-//            HOLogger.instance().log(getClass(),"DatenbankZugriff.saveUserParameter " + e);
-//        }
-//    }
 }
