@@ -475,11 +475,11 @@ public class Helper extends LanguageFiles {
         NOMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/NoMatch.png"), Color.white));
         DOWNLOADMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/DownloadMatch.png"), Color.white));
         SHOWMATCHICON = new ImageIcon(Helper.makeColorTransparent( Helper.loadImage("gui/bilder/ShowMatch.png"), Color.white));
-        ROTEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.gif"), Color.white));
-        GELBEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.gif"), Color.white));
-        DOPPELGELB = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.gif"), Color.white));
+        ROTEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.png"), Color.white));
+        GELBEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.png"), Color.white));
+        DOPPELGELB = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.png"), Color.white));
         ANGESCHLAGEN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.gif"), Color.white));
-        VERLETZT = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.gif"),  Color.white));
+        VERLETZT = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.png"),  Color.white));
         ANGESCHLAGEN_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen_klein.png"), Color.red));
         VERLETZT_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt_klein.png"), Color.white));
 
