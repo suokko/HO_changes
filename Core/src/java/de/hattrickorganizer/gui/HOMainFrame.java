@@ -70,6 +70,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.backup.BackupHelper;
 import de.hattrickorganizer.tools.extension.ExtensionListener;
@@ -244,7 +245,7 @@ public final class HOMainFrame extends JFrame
 		setDefaultFont(UserParameter.instance().schriftGroesse);
 
 		setTitle("HO! - Hattrick Organizer " + getVersionString());
-		this.setIconImage(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/Logo-16px.png"));
+		this.setIconImage(Helper.loadImage("gui/bilder/Logo-16px.png"));
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
