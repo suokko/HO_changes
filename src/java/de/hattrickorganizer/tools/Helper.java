@@ -5,11 +5,13 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageProducer;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -159,116 +162,64 @@ public class Helper extends LanguageFiles {
     public static ImageIcon WEATHER_SE_SUN_NEG;
 
     /** Gesamteinstufung */
-    public static final CBItem[] EINSTUFUNG = {
-										    	 new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden),
-										                 ISpieler.nicht_vorhanden),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal),
-                                                             ISpieler.katastrophal),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich),
-                                                             ISpieler.erbaermlich),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig),
-                                                             ISpieler.armselig),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach),
-                                                             ISpieler.schwach),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich),
-                                                             ISpieler.durchschnittlich),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel),
-                                                             ISpieler.passabel),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut),
-                                                             ISpieler.gut),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut),
-                                                             ISpieler.sehr_gut),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.hervorragend),
-                                                             ISpieler.hervorragend),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.grossartig),
-                                                             ISpieler.grossartig),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.brilliant),
-                                                             ISpieler.brilliant),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.fantastisch),
-                                                             ISpieler.fantastisch),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.Weltklasse),
-                                                             ISpieler.Weltklasse),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.uebernatuerlich),
-                                                             ISpieler.uebernatuerlich),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.gigantisch),
-                                                             ISpieler.gigantisch),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.ausserirdisch),
-                                                             ISpieler.ausserirdisch),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.mythisch),
-                                                             ISpieler.mythisch),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.maerchenhaft),
-                                                             ISpieler.maerchenhaft),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.galaktisch),
-                                                             ISpieler.galaktisch),
-                                                  new CBItem(PlayerHelper.getNameForSkill(ISpieler.goettlich),
-                                                             ISpieler.goettlich)
-                                              };
+	public static final CBItem[] EINSTUFUNG = {
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden), ISpieler.nicht_vorhanden),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.hervorragend), ISpieler.hervorragend),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.grossartig), ISpieler.grossartig),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.brilliant), ISpieler.brilliant),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.fantastisch), ISpieler.fantastisch),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.Weltklasse), ISpieler.Weltklasse),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.uebernatuerlich), ISpieler.uebernatuerlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gigantisch), ISpieler.gigantisch),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.ausserirdisch), ISpieler.ausserirdisch),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.mythisch), ISpieler.mythisch),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.maerchenhaft), ISpieler.maerchenhaft),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.galaktisch), ISpieler.galaktisch),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.goettlich), ISpieler.goettlich) };
 
     /** Form */
-    public static final CBItem[] EINSTUFUNG_FORM = {
-													new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden),
-																	ISpieler.nicht_vorhanden),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal),
-                                                                  ISpieler.katastrophal),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich),
-                                                                  ISpieler.erbaermlich),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig),
-                                                                  ISpieler.armselig),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach),
-                                                                  ISpieler.schwach),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich),
-                                                                  ISpieler.durchschnittlich),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel),
-                                                                  ISpieler.passabel),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut),
-                                                                  ISpieler.gut),
-                                                       new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut),
-                                                                  ISpieler.sehr_gut)
-                                                   };
+	public static final CBItem[] EINSTUFUNG_FORM = {
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden), ISpieler.nicht_vorhanden),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut) };
 
     /** Kondition */
-    public static final CBItem[] EINSTUFUNG_KONDITION = {
-														new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden),
-																		ISpieler.nicht_vorhanden),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal),
-                                                                       ISpieler.katastrophal),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich),
-                                                                       ISpieler.erbaermlich),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig),
-                                                                       ISpieler.armselig),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach),
-                                                                       ISpieler.schwach),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich),
-                                                                       ISpieler.durchschnittlich),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel),
-                                                                       ISpieler.passabel),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut),
-                                                                       ISpieler.gut),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut),
-                                                                       ISpieler.sehr_gut),
-                                                            new CBItem(PlayerHelper.getNameForSkill(ISpieler.hervorragend),
-                                                                       ISpieler.hervorragend)
-                                                        };
+	public static final CBItem[] EINSTUFUNG_KONDITION = {
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden), ISpieler.nicht_vorhanden),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.hervorragend), ISpieler.hervorragend) };
 
     /** Form */
-    public static final CBItem[] EINSTUFUNG_TRAINER = {
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal),
-                                                                     ISpieler.katastrophal),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich),
-                                                                     ISpieler.erbaermlich),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig),
-                                                                     ISpieler.armselig),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach),
-                                                                     ISpieler.schwach),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich),
-                                                                     ISpieler.durchschnittlich),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel),
-                                                                     ISpieler.passabel),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut),
-                                                                     ISpieler.gut),
-                                                          new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut),
-                                                                     ISpieler.sehr_gut)
-                                                      };
+	public static final CBItem[] EINSTUFUNG_TRAINER = {
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
+			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut) };
 
     /** Speciality */
     public static final CBItem[] EINSTUFUNG_SPECIALITY = {
@@ -282,65 +233,26 @@ public class Helper extends LanguageFiles {
     };
 
     /** Spielerpositionen */
-    public static final CBItem[] SPIELERPOSITIONEN = {
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.TORWART),
-                                                                    ISpielerPosition.TORWART),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.INNENVERTEIDIGER),
-                                                                    ISpielerPosition.INNENVERTEIDIGER),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.INNENVERTEIDIGER_OFF),
-                                                                    ISpielerPosition.INNENVERTEIDIGER_OFF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.INNENVERTEIDIGER_AUS),
-                                                                    ISpielerPosition.INNENVERTEIDIGER_AUS),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER),
-                                                                    ISpielerPosition.AUSSENVERTEIDIGER),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_OFF),
-                                                                    ISpielerPosition.AUSSENVERTEIDIGER_OFF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_DEF),
-                                                                    ISpielerPosition.AUSSENVERTEIDIGER_DEF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_IN),
-                                                                    ISpielerPosition.AUSSENVERTEIDIGER_IN),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.MITTELFELD),
-                                                                    ISpielerPosition.MITTELFELD),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.MITTELFELD_OFF),
-                                                                    ISpielerPosition.MITTELFELD_OFF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.MITTELFELD_DEF),
-                                                                    ISpielerPosition.MITTELFELD_DEF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.MITTELFELD_AUS),
-                                                                    ISpielerPosition.MITTELFELD_AUS),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.FLUEGELSPIEL),
-                                                                    ISpielerPosition.FLUEGELSPIEL),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.FLUEGELSPIEL_OFF),
-                                                                    ISpielerPosition.FLUEGELSPIEL_OFF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.FLUEGELSPIEL_DEF),
-                                                                    ISpielerPosition.FLUEGELSPIEL_DEF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.FLUEGELSPIEL_IN),
-                                                                    ISpielerPosition.FLUEGELSPIEL_IN),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.STURM),
-                                                                    ISpielerPosition.STURM),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.STURM_DEF),
-                                                                    ISpielerPosition.STURM_DEF),
-                                                         new CBItem(SpielerPosition
-                                                                    .getNameForPosition(ISpielerPosition.STURM_AUS),
-                                                                    ISpielerPosition.STURM_AUS)
-                                                     };
+	public static final CBItem[] SPIELERPOSITIONEN = {
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.TORWART), ISpielerPosition.TORWART),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.INNENVERTEIDIGER), ISpielerPosition.INNENVERTEIDIGER),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.INNENVERTEIDIGER_OFF), ISpielerPosition.INNENVERTEIDIGER_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.INNENVERTEIDIGER_AUS), ISpielerPosition.INNENVERTEIDIGER_AUS),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER), ISpielerPosition.AUSSENVERTEIDIGER),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_OFF), ISpielerPosition.AUSSENVERTEIDIGER_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_DEF), ISpielerPosition.AUSSENVERTEIDIGER_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_IN), ISpielerPosition.AUSSENVERTEIDIGER_IN),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD), ISpielerPosition.MITTELFELD),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD_OFF), ISpielerPosition.MITTELFELD_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD_DEF), ISpielerPosition.MITTELFELD_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD_AUS), ISpielerPosition.MITTELFELD_AUS),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL), ISpielerPosition.FLUEGELSPIEL),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL_OFF), ISpielerPosition.FLUEGELSPIEL_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL_DEF), ISpielerPosition.FLUEGELSPIEL_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL_IN), ISpielerPosition.FLUEGELSPIEL_IN),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.STURM), ISpielerPosition.STURM),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.STURM_DEF), ISpielerPosition.STURM_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.STURM_AUS), ISpielerPosition.STURM_AUS) };
 
     /** team categories */
     public static final String[] TEAMSMILIES = { "", "A-Team.png",
@@ -352,10 +264,7 @@ public class Helper extends LanguageFiles {
 			"6clown.png", "7trainer.png", "8dollar.png", "9coach.png" };
 
     /** weather combo boxes */
-    public static final CBItem[] WETTER = {
-                                              new CBItem("", 1), new CBItem("", 2),
-                                              new CBItem("", 3), new CBItem("", 4)
-                                          };
+	public static final CBItem[] WETTER = { new CBItem("", 1), new CBItem("", 2), new CBItem("", 3), new CBItem("", 4) };
 
     /** shirt colors */
     public static Color TRICKOT_TORWART = Color.black;
@@ -478,7 +387,7 @@ public class Helper extends LanguageFiles {
         ROTEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.png"), Color.white));
         GELBEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.png"), Color.white));
         DOPPELGELB = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.png"), Color.white));
-        ANGESCHLAGEN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.gif"), Color.white));
+        ANGESCHLAGEN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.png"), Color.white));
         VERLETZT = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.png"),  Color.white));
         ANGESCHLAGEN_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen_klein.png"), Color.red));
         VERLETZT_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt_klein.png"), Color.white));
@@ -566,35 +475,32 @@ public class Helper extends LanguageFiles {
     /**
      * Get the color for the given highlight type and subtype.
      */
-    public static Color getColor4SpielHighlight(int typ, int subtyp) {
-        if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
-            if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
-                || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
-                return gui.UserParameter.instance().FG_ZWEIKARTEN;
-            } else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_ROT)
-                       || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
-                       || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
-                return gui.UserParameter.instance().FG_GESPERRT;
-            }
-        } else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
-            return Color.BLACK;
-        } else if (typ == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
-            return Color.GRAY;
-        } else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
-            if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER)
-                || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
-                return gui.UserParameter.instance().FG_ANGESCHLAGEN;
-            } else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
-                       || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
-                       || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
-                       || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
-                       || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
-                return gui.UserParameter.instance().FG_VERLETZT;
-            }
-        }
+	public static Color getColor4SpielHighlight(int typ, int subtyp) {
+		if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
+			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
+				return gui.UserParameter.instance().FG_ZWEIKARTEN;
+			} else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_ROT) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
+				return gui.UserParameter.instance().FG_GESPERRT;
+			}
+		} else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
+			return Color.BLACK;
+		} else if (typ == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
+			return Color.GRAY;
+		} else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
+				return gui.UserParameter.instance().FG_ANGESCHLAGEN;
+			} else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
+				return gui.UserParameter.instance().FG_VERLETZT;
+			}
+		}
 
-        return Color.BLACK;
-    }
+		return Color.BLACK;
+	}
 
     /**
      * TODO Missing Method Documentation
@@ -623,228 +529,207 @@ public class Helper extends LanguageFiles {
      * @return TODO Missing Return Method Documentation
      */
     public static ImageIcon getImage4Position(int posid, byte taktik, int trickotnummer) {
-        Color trickotfarbe = null;
-        Image trickotImage = null;
+		Color trickotfarbe = null;
+		Image trickotImage = null;
 
-        //       Image taktikImage = null;
-        Image zusammenImage = null;
+		// Image taktikImage = null;
+		Image zusammenImage = null;
 
-        //       Image scaleImage = null;
-        ImageIcon komplettIcon = null;
+		// Image scaleImage = null;
+		ImageIcon komplettIcon = null;
 
-        //Im Cache nachsehen
-        komplettIcon = (ImageIcon) m_clTrickotCache.get(new TrickotCacheKey(posid,
-                                                                                        taktik));
+		// Im Cache nachsehen
+		komplettIcon = (ImageIcon) m_clTrickotCache.get(new TrickotCacheKey(posid, taktik));
 
-        //       if ( posid < 0 )
-        //       {
-        //           if ( EMPTYIMAGE == null )
-        //           {
-        //               EMPTYIMAGE = new ImageIcon( new BufferedImage( 14, 14, BufferedImage.TYPE_INT_ARGB ) );
-        //           }
-        //           komplettIcon = EMPTYIMAGE;
-        //       }
-        //Nicht gefunden
-        if (komplettIcon == null) {
-            switch (posid) {
-                case ISpielerPosition.keeper: {
-                    trickotfarbe = TRICKOT_TORWART;
-                    break;
-                }
+		// if ( posid < 0 )
+		// {
+		// if ( EMPTYIMAGE == null )
+		// {
+		// EMPTYIMAGE = new ImageIcon( new BufferedImage( 14, 14,
+		// BufferedImage.TYPE_INT_ARGB ) );
+		// }
+		// komplettIcon = EMPTYIMAGE;
+		// }
+		// Nicht gefunden
+		if (komplettIcon == null) {
+			switch (posid) {
+				case ISpielerPosition.keeper: {
+					trickotfarbe = TRICKOT_TORWART;
+					break;
+				}
+	
+				case ISpielerPosition.insideBack1:
+				case ISpielerPosition.insideBack2: {
+					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
+					break;
+				}
+	
+				case ISpielerPosition.leftBack:
+				case ISpielerPosition.rightBack: {
+					trickotfarbe = TRICKOT_AUSSENVERTEIDIGER;
+					break;
+				}
+	
+				case ISpielerPosition.insideMid1:
+				case ISpielerPosition.insideMid2: {
+					trickotfarbe = TRICKOT_MITTELFELD;
+					break;
+				}
+	
+				case ISpielerPosition.leftWinger:
+				case ISpielerPosition.rightWinger: {
+					trickotfarbe = TRICKOT_FLUEGEL;
+					break;
+				}
+	
+				case ISpielerPosition.forward1:
+				case ISpielerPosition.forward2: {
+					trickotfarbe = TRICKOT_STURM;
+					break;
+				}
+	
+				case ISpielerPosition.substKeeper: {
+					trickotfarbe = TRICKOT_RESERVE_TORWART;
+					break;
+				}
+	
+				case ISpielerPosition.substBack: {
+					trickotfarbe = TRICKOT_RESERVE_INNENVERTEIDIGER;
+					break;
+				}
+	
+				case ISpielerPosition.substInsideMid: {
+					trickotfarbe = TRICKOT_RESERVE_MITTELFELD;
+					break;
+				}
+	
+				case ISpielerPosition.substWinger: {
+					trickotfarbe = TRICKOT_RESERVE_FLUEGEL;
+					break;
+				}
+	
+				case ISpielerPosition.substForward: {
+					trickotfarbe = TRICKOT_RESERVE_STURM;
+					break;
+				}
+	
+				default:
+					trickotfarbe = TRICKOT_NONE;
+			}
 
-                case ISpielerPosition.insideBack1:
-                case ISpielerPosition.insideBack2: {
-                    trickotfarbe = TRICKOT_INNENVERTEIDIGER;
-                    break;
-                }
+			switch (taktik) {
+				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
+				// "gui/bilder/Taktik_Defensiv.png" ), Color.white );
+				case ISpielerPosition.DEFENSIV:
+					break;
+	
+				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
+				// "gui/bilder/Taktik_Offensiv.png" ), Color.white );
+				case ISpielerPosition.OFFENSIV:
+					break;
+	
+				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
+				// "gui/bilder/Taktik_NachAussen.png" ), Color.white );
+				case ISpielerPosition.NACH_AUSSEN:
+					break;
+	
+				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
+				// "gui/bilder/Taktik_ZurMitte.png" ), Color.white );
+				case ISpielerPosition.ZUR_MITTE:
+					break;
+	
+				case ISpielerPosition.ZUS_INNENV: {
+					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
+					break;
+				}
+	
+				case ISpielerPosition.ZUS_MITTELFELD: {
+					trickotfarbe = TRICKOT_MITTELFELD;
+					break;
+				}
+	
+				case ISpielerPosition.ZUS_STUERMER:
+				case ISpielerPosition.ZUS_STUERMER_DEF: {
+					trickotfarbe = TRICKOT_STURM;
+					break;
+				}
+			}
 
-                case ISpielerPosition.leftBack:
-                case ISpielerPosition.rightBack: {
-                    trickotfarbe = TRICKOT_AUSSENVERTEIDIGER;
-                    break;
-                }
+			// Bild laden, transparenz hinzu, trikofarbe wechseln
+			trickotImage = Helper.changeColor(Helper.changeColor(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Trickot.png"),
+					Color.white), Color.black, trickotfarbe), new Color(100, 100, 100), trickotfarbe.brighter());
 
-                case ISpielerPosition.insideMid1:
-                case ISpielerPosition.insideMid2: {
-                    trickotfarbe = TRICKOT_MITTELFELD;
-                    break;
-                }
+			// trickotImage = Helper.loadImage( component,
+			// "gui/bilder/Trickot.png" );
+			// Taktik, wenn vorhanden
+			/*
+			 * BUGGY!! if ( taktikImage != null ) { //Warten, bis die Grafik
+			 * geladen worden ist java.awt.MediaTracker tracker = new
+			 * java.awt.MediaTracker(component);
+			 * tracker.addImage(taktikImage,1);
+			 * tracker.addImage(trickotImage,2); try { tracker.waitForAll(); }
+			 * catch(InterruptedException ie) { } zusammenImage =
+			 * Helper.zusammenfuehren ( trickotImage, taktikImage ); } else {
+			 * zusammenImage = trickotImage; } //Warten, bis die Grafik geladen
+			 * worden ist java.awt.MediaTracker tracker = new
+			 * java.awt.MediaTracker(component);
+			 * tracker.addImage(zusammenImage,1); try { tracker.waitForAll(); }
+			 * catch(InterruptedException ie) { }
+			 */
+			zusammenImage = trickotImage;
 
-                case ISpielerPosition.leftWinger:
-                case ISpielerPosition.rightWinger: {
-                    trickotfarbe = TRICKOT_FLUEGEL;
-                    break;
-                }
+			/*
+			 * BUG in JVM! scaleImage = zusammenImage.getScaledInstance ( 14,
+			 * 14, Image.SCALE_SMOOTH ); //Warten, bis die Grafik geladen worden
+			 * ist java.awt.MediaTracker tracker = new
+			 * java.awt.MediaTracker(component); tracker.addImage(scaleImage,1);
+			 * try { tracker.waitForAll(); } catch(InterruptedException ie) { }
+			 */
+			komplettIcon = new ImageIcon(zusammenImage);
 
-                case ISpielerPosition.forward1:
-                case ISpielerPosition.forward2: {
-                    trickotfarbe = TRICKOT_STURM;
-                    break;
-                }
+			// In den Cache hinzufügen
+			m_clTrickotCache.put(new TrickotCacheKey(posid, taktik), komplettIcon);
 
-                case ISpielerPosition.substKeeper: {
-                    trickotfarbe = TRICKOT_RESERVE_TORWART;
-                    break;
-                }
+			// HOLogger.instance().log(Helper.class, "Laden Grafik: "+
+			// position.getPosition () + "/" + position.getTaktik () );
+		} else {
+			// HOLogger.instance().log(Helper.class, "Cache Grafik: "+
+			// position.getPosition () + "/" + position.getTaktik () );
+		}
 
-                case ISpielerPosition.substBack: {
-                    trickotfarbe = TRICKOT_RESERVE_INNENVERTEIDIGER;
-                    break;
-                }
+		// return new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB );
+		// Trickotnummer
+		if ((trickotnummer > 0) && (trickotnummer < 100)) {
+			BufferedImage image = new BufferedImage(24, 14, BufferedImage.TYPE_INT_ARGB);
 
-                case ISpielerPosition.substInsideMid: {
-                    trickotfarbe = TRICKOT_RESERVE_MITTELFELD;
-                    break;
-                }
+			// 5;
+			int xPosText = 18;
 
-                case ISpielerPosition.substWinger: {
-                    trickotfarbe = TRICKOT_RESERVE_FLUEGEL;
-                    break;
-                }
+			// Helper.makeColorTransparent( image, Color.white );
+			final java.awt.Graphics2D g2d = (java.awt.Graphics2D) image.getGraphics();
 
-                case ISpielerPosition.substForward: {
-                    trickotfarbe = TRICKOT_RESERVE_STURM;
-                    break;
-                }
+			// Wert eintragen
+			// g2d.setComposite ( AlphaComposite.getInstance(
+			// AlphaComposite.SRC_OVER, 1.0f ) );
+			g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.BOLD, 10));
 
-                default:
-                    trickotfarbe = TRICKOT_NONE;
-            }
+			// Position bei grossen Zahlen weiter nach vorne
+			if (trickotnummer > 9) {
+				xPosText = 12;
+			}
 
-            switch (taktik) {
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_Defensiv.png" ), Color.white );
-                case ISpielerPosition.DEFENSIV:
-                    break;
+			g2d.setColor(Color.black);
+			g2d.drawString(trickotnummer + "", xPosText, 13);
 
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_Offensiv.png" ), Color.white );
-                case ISpielerPosition.OFFENSIV:
-                    break;
+			// Zusammenführen
+			image = (BufferedImage) Helper.zusammenfuehren(komplettIcon.getImage(), image);
 
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_NachAussen.png" ), Color.white );
-                case ISpielerPosition.NACH_AUSSEN:
-                    break;
+			// Icon erstellen und in den Cache packen
+			komplettIcon = new ImageIcon(image);
+		}
 
-                //taktikImage = Helper.makeColorTransparent ( Helper.loadImage ( "gui/bilder/Taktik_ZurMitte.png" ), Color.white );
-                case ISpielerPosition.ZUR_MITTE:
-                    break;
-
-                case ISpielerPosition.ZUS_INNENV: {
-                    trickotfarbe = TRICKOT_INNENVERTEIDIGER;
-                    break;
-                }
-
-                case ISpielerPosition.ZUS_MITTELFELD: {
-                    trickotfarbe = TRICKOT_MITTELFELD;
-                    break;
-                }
-
-                case ISpielerPosition.ZUS_STUERMER:
-                case ISpielerPosition.ZUS_STUERMER_DEF:
-                {
-                    trickotfarbe = TRICKOT_STURM;
-                    break;
-                }
-            }
-
-            //Bild laden, transparenz hinzu, trikofarbe wechseln
-            trickotImage = Helper.changeColor(Helper.changeColor(Helper.makeColorTransparent(Helper
-                                                                                             .loadImage("gui/bilder/Trickot.png"),
-                                                                                             Color.white),
-                                                                 Color.black, trickotfarbe),
-                                              new Color(100, 100, 100),
-                                              trickotfarbe.brighter());
-
-            //trickotImage = Helper.loadImage( component, "gui/bilder/Trickot.png" );
-            //Taktik, wenn vorhanden
-            /* BUGGY!!
-               if ( taktikImage != null )
-               {
-                   //Warten, bis die Grafik geladen worden ist
-                    java.awt.MediaTracker tracker = new java.awt.MediaTracker(component);
-                    tracker.addImage(taktikImage,1);
-                    tracker.addImage(trickotImage,2);
-                    try
-                    {
-                        tracker.waitForAll();
-                    }
-                    catch(InterruptedException ie)
-                    {
-                    }
-                    zusammenImage = Helper.zusammenfuehren ( trickotImage, taktikImage );
-               }
-               else
-               {
-                   zusammenImage = trickotImage;
-               }
-               //Warten, bis die Grafik geladen worden ist
-                java.awt.MediaTracker tracker = new java.awt.MediaTracker(component);
-                tracker.addImage(zusammenImage,1);
-                try
-                {
-                    tracker.waitForAll();
-                }
-                catch(InterruptedException ie)
-                {
-                }
-             */
-            zusammenImage = trickotImage;
-
-            /* BUG in JVM!
-               scaleImage = zusammenImage.getScaledInstance ( 14, 14, Image.SCALE_SMOOTH );
-               //Warten, bis die Grafik geladen worden ist
-                java.awt.MediaTracker tracker = new java.awt.MediaTracker(component);
-                tracker.addImage(scaleImage,1);
-                try
-                {
-                    tracker.waitForAll();
-                }
-                catch(InterruptedException ie)
-                {
-                }
-             */
-            komplettIcon = new ImageIcon(zusammenImage);
-
-            //In den Cache hinzufügen
-            m_clTrickotCache.put(new TrickotCacheKey(posid, taktik), komplettIcon);
-
-            //HOLogger.instance().log(Helper.class, "Laden Grafik: "+ position.getPosition () + "/" + position.getTaktik () );
-        } else {
-            //HOLogger.instance().log(Helper.class, "Cache Grafik: "+ position.getPosition () + "/" + position.getTaktik () );
-        }
-
-        //return new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB );
-        //Trickotnummer
-        if ((trickotnummer > 0) && (trickotnummer < 100)) {
-            BufferedImage image = new BufferedImage(24, 14, BufferedImage.TYPE_INT_ARGB);
-
-            //5;
-            int xPosText = 18;
-
-            //Helper.makeColorTransparent( image, Color.white );
-            final java.awt.Graphics2D g2d = (java.awt.Graphics2D) image.getGraphics();
-
-            //Wert eintragen
-            //g2d.setComposite ( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1.0f ) );
-            g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.BOLD, 10));
-
-            //Position bei grossen Zahlen weiter nach vorne
-            if (trickotnummer > 9) {
-                xPosText = 12;
-            }
-
-            g2d.setColor(Color.black);
-            g2d.drawString(trickotnummer + "", xPosText, 13);
-
-            //Zusammenführen
-            image = (BufferedImage) Helper.zusammenfuehren(komplettIcon.getImage(),
-                                                                          image);
-
-            //Icon erstellen und in den Cache packen
-            komplettIcon = new ImageIcon(image);
-        }
-
-        return komplettIcon;
-    }
+		return komplettIcon;
+	}
 
     /**
      * Macht einen Kreuz durch das Image
@@ -2032,82 +1917,67 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static int[] generateIntArray(String text) {
-        //String message = "";
-        final int[] tempzahlen = new int[100];
+	public static int[] generateIntArray(String text) {
+		// String message = "";
+		final int[] tempzahlen = new int[100];
 
-        try {
-            int index = 0;
-            StringBuffer buffer = new StringBuffer();
+		try {
+			int index = 0;
+			StringBuffer buffer = new StringBuffer();
 
-            for (int i = 0; i < text.length(); i++) {
-                if (text.charAt(i) != ',') {
-                    buffer.append("" + text.charAt(i));
-                }
-                //Komma gefunden
-                else {
-                    //buffer ist nicht leer
-                    if (!buffer.toString().trim().equals("")) {
-                        tempzahlen[index] = Integer.parseInt(buffer.toString().trim());
+			for (int i = 0; i < text.length(); i++) {
+				if (text.charAt(i) != ',') {
+					buffer.append("" + text.charAt(i));
+				} else { // Komma gefunden
+					// buffer ist nicht leer
+					if (!buffer.toString().trim().equals("")) {
+						tempzahlen[index] = Integer.parseInt(buffer.toString().trim());
 
-                        /*
-                           if ( !negativErlaubt && tempzahlen[index] < 0 )
-                           {
-                               //message = "Keinen negativen Werte erlaubt!";
-                               throw new NumberFormatException();
-                           }
-                           //Groesser als Maximalwert
-                           if ( tempzahlen[index] > maxValue )
-                           {
-                               //message = "Ein Wert ist zu hoch!";
-                               throw new NumberFormatException();
-                           }
-                         */
-                        index++;
-                    }
+						/*
+						 * if ( !negativErlaubt && tempzahlen[index] < 0 ) {
+						 * //message = "Keinen negativen Werte erlaubt!"; throw
+						 * new NumberFormatException(); } //Groesser als
+						 * Maximalwert if ( tempzahlen[index] > maxValue ) {
+						 * //message = "Ein Wert ist zu hoch!"; throw new
+						 * NumberFormatException(); }
+						 */
+						index++;
+					}
 
-                    buffer = new StringBuffer();
-                }
-            }
+					buffer = new StringBuffer();
+				}
+			}
 
-            if (!buffer.toString().trim().equals("")) {
-                //Es folgt am Ende kein , mehr ->
-                tempzahlen[index] = Integer.parseInt(buffer.toString().trim());
+			if (!buffer.toString().trim().equals("")) {
+				// Es folgt am Ende kein , mehr ->
+				tempzahlen[index] = Integer.parseInt(buffer.toString().trim());
 
-                /*
-                   if ( !negativErlaubt && tempzahlen[index] < 0 )
-                   {
-                       //message = "Keinen negativen Werte erlaubt!";
-                       throw new NumberFormatException();
-                   }
-                   //Groesser als Maximalwert
-                   if ( tempzahlen[index] > maxValue )
-                   {
-                       //message = "Ein Wert ist zu hoch!";
-                       throw new NumberFormatException();
-                   }
-                 */
-                index++;
-            }
+				/*
+				 * if ( !negativErlaubt && tempzahlen[index] < 0 ) { //message =
+				 * "Keinen negativen Werte erlaubt!"; throw new
+				 * NumberFormatException(); } //Groesser als Maximalwert if (
+				 * tempzahlen[index] > maxValue ) { //message =
+				 * "Ein Wert ist zu hoch!"; throw new NumberFormatException(); }
+				 */
+				index++;
+			}
 
-            //Zahlen in passenden Array kopieren
-            final int[] zahlen = new int[index];
+			// Zahlen in passenden Array kopieren
+			final int[] zahlen = new int[index];
 
-            for (int i = 0; i < index; i++) {
-                zahlen[i] = tempzahlen[i];
-            }
+			for (int i = 0; i < index; i++) {
+				zahlen[i] = tempzahlen[i];
+			}
 
-            return zahlen;
-        } catch (NumberFormatException nfe) {
-            /*
-               if (message.equals("") )
-               {
-                   message = "Eine Eingabe ist keine Zahl!";
-               }
-               showMessage( parent, message, "Fehler", javax.swing.JOptionPane.ERROR_MESSAGE);
-             */
-            return null;
-        }
+			return zahlen;
+		} catch (NumberFormatException nfe) {
+			/*
+			 * if (message.equals("") ) { message =
+			 * "Eine Eingabe ist keine Zahl!"; } showMessage( parent, message,
+			 * "Fehler", javax.swing.JOptionPane.ERROR_MESSAGE);
+			 */
+			return null;
+		}
     }
 
     /**
@@ -2117,47 +1987,47 @@ public class Helper extends LanguageFiles {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static BufferedImage loadImage(String datei) {
-        BufferedImage image = null;
+	public static BufferedImage loadImage(String datei) {
+		BufferedImage image = null;
 
-        //Cache durchsuchen
-        image = (BufferedImage) m_clBilderCache.get(datei);
+		// Cache durchsuchen
+		image = (BufferedImage) m_clBilderCache.get(datei);
 
-        //Nicht im Cache -> laden
-        if (image == null) {
-            try {
-                java.net.URL resource = LADECOMPONENTE.getClass().getClassLoader().getResource(datei);
+		// Nicht im Cache -> laden
+		if (image == null) {
+			try {
+				URL resource = LADECOMPONENTE.getClass().getClassLoader().getResource(datei);
 
-                //HOLogger.instance().log(Helper.class, datei );
-                //Resource nicht gefunden!
-                if (resource == null) {
-                    HOLogger.instance().log(Helper.class,datei + " Not Found!!!");
-                    resource = LADECOMPONENTE.getClass().getClassLoader().getResource("gui/bilder/Unknownflag.png");
-                }
+				// HOLogger.instance().log(Helper.class, datei );
+				// Resource nicht gefunden!
+				if (resource == null) {
+					HOLogger.instance().log(Helper.class, datei + " Not Found!!!");
+					resource = LADECOMPONENTE.getClass().getClassLoader().getResource("gui/bilder/Unknownflag.png");
+				}
 
-                //HOLogger.instance().log(Helper.class, resource.getPath() );
-                //.component.getToolkit().createImage(resource);
-                image = javax.imageio.ImageIO.read(resource);
+				// HOLogger.instance().log(Helper.class, resource.getPath() );
+				// .component.getToolkit().createImage(resource);
+				image = ImageIO.read(resource);
 
-                final java.awt.MediaTracker tracker = new java.awt.MediaTracker(LADECOMPONENTE);
-                tracker.addImage(image, 1);
+				final MediaTracker tracker = new MediaTracker(LADECOMPONENTE);
+				tracker.addImage(image, 1);
 
-                try {
-                    tracker.waitForAll();
-                } catch (InterruptedException ie) {
-                }
+				try {
+					tracker.waitForAll();
+				} catch (InterruptedException ie) {
+				}
 
-                //Bild in den Cache hinzufügen
-                m_clBilderCache.put(datei, image);
+				// Bild in den Cache hinzufügen
+				m_clBilderCache.put(datei, image);
 
-                return image;
-            } catch (Throwable e) {
-                HOLogger.instance().log(Helper.class,e);
-            }
-        }
+				return image;
+			} catch (Throwable e) {
+				HOLogger.instance().log(Helper.class, e);
+			}
+		}
 
-        return image;
-    }
+		return image;
+	}
 
     /**
      * Macht eine Farbe in dem Bild transparent
