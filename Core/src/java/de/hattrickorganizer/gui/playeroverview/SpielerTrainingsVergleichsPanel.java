@@ -1,6 +1,8 @@
 // %2054665773:de.hattrickorganizer.gui.playeroverview%
 package de.hattrickorganizer.gui.playeroverview;
 
+import gui.UserParameter;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
@@ -133,60 +135,55 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param listSelectionEvent TODO Missing Method Parameter Documentation
+     * Handle vlaueChanged() events.
      */
-    public final void valueChanged(javax.swing.event.ListSelectionEvent listSelectionEvent) {
-        //Markierung vorhanden
-        if (m_jlHRFs.getSelectedValue() != null) {
-            vergleichsSpieler = DBZugriff.instance().getSpieler(((CBItem) m_jlHRFs
-                                                                                               .getSelectedValue())
-                                                                                              .getId());
-            vergleichsMarkierung = true;
+	public final void valueChanged(javax.swing.event.ListSelectionEvent listSelectionEvent) {
+		// Markierung vorhanden
+		if (m_jlHRFs.getSelectedValue() != null) {
+			vergleichsSpieler = DBZugriff.instance().getSpieler(((CBItem) m_jlHRFs.getSelectedValue()).getId());
+			vergleichsMarkierung = true;
 
-            if (m_jlHRFs.getSelectedIndex() > 0) {
-                m_jbLoeschen.setEnabled(true);
-            } else {
-                m_jbLoeschen.setEnabled(false);
-            }
-        }
-        //Keine Markierung -> Alles löschen
-        else {
-            vergleichsSpieler.removeAllElements();
-            vergleichsMarkierung = false;
-            m_jbLoeschen.setEnabled(false);
-        }
+			if (m_jlHRFs.getSelectedIndex() > 0) {
+				m_jbLoeschen.setEnabled(true);
+			} else {
+				m_jbLoeschen.setEnabled(false);
+			}
+		}
+		// Keine Markierung -> Alles löschen
+		else {
+			vergleichsSpieler.removeAllElements();
+			vergleichsMarkierung = false;
+			m_jbLoeschen.setEnabled(false);
+		}
 
-        //Nur manuelles Update der Tabelle, kein reInit, damit die Sortierung bleibt.
-        HOMainFrame.instance().getSpielerUebersichtPanel().refreshHRFVergleich();
+		// Nur manuelles Update der Tabelle, kein reInit, damit die Sortierung
+		// bleibt.
+		HOMainFrame.instance().getSpielerUebersichtPanel().refreshHRFVergleich();
 
-        //gui.RefreshManager.instance ().doReInit();
-    }
+		// gui.RefreshManager.instance().doReInit();
+	}
 
     /**
-     * TODO Missing Method Documentation
+     * Init GUI components.
      */
-    private void initComponents() {
-        setLayout(new BorderLayout());
+	private void initComponents() {
+		setLayout(new BorderLayout());
 
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("VergleichsHRF")),
-            BorderLayout.NORTH);
+		add(new JLabel(HOVerwaltung.instance().getLanguageString("VergleichsHRF")), BorderLayout.NORTH);
+		m_jlHRFs.setOpaque(false);
+		// use the default renderer for all non-classic skins
+		if ("Classic".equals(UserParameter.instance().skin)) {
+			m_jlHRFs.setCellRenderer(new AufstellungsListRenderer());
+		}
 
-        m_jlHRFs.setOpaque(false);
+		m_jlHRFs.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		m_jlHRFs.addListSelectionListener(this);
+		add(new JScrollPane(m_jlHRFs), BorderLayout.CENTER);
 
-        final AufstellungsListRenderer renderer = new AufstellungsListRenderer();
-        m_jlHRFs.setCellRenderer(renderer);
-
-        //.SINGLE_SELECTION );
-        m_jlHRFs.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        m_jlHRFs.addListSelectionListener(this);
-        add(new JScrollPane(m_jlHRFs), BorderLayout.CENTER);
-
-        m_jbLoeschen.setEnabled(false);
-        m_jbLoeschen.addActionListener(this);
-        add(m_jbLoeschen, BorderLayout.SOUTH);
-    }
+		m_jbLoeschen.setEnabled(false);
+		m_jbLoeschen.addActionListener(this);
+		add(m_jbLoeschen, BorderLayout.SOUTH);
+	}
 
     /**
      * TODO Missing Method Documentation
