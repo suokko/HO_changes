@@ -1,13 +1,6 @@
 // %1942107811:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.model.GeldFaktorCBItem;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.OptionManager;
-import de.hattrickorganizer.tools.LanguageFiles;
-
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -15,6 +8,13 @@ import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import de.hattrickorganizer.gui.model.CBItem;
+import de.hattrickorganizer.gui.model.GeldFaktorCBItem;
+import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.OptionManager;
+import de.hattrickorganizer.tools.LanguageFiles;
 
 /**
  * Alle weiteren Optionen, die Keine Formeln sind
@@ -26,7 +26,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 	private static final long serialVersionUID = 1L;
 
 	public static GeldFaktorCBItem[] WAEHRUNGEN = { new GeldFaktorCBItem("Sverige kr", 1f, 1),
-			new GeldFaktorCBItem("Great Britain £", 15f, 2), new GeldFaktorCBItem("Euro ", 10f, 3),
+			new GeldFaktorCBItem("Great Britain £", 15f, 2), new GeldFaktorCBItem("Euro €", 10f, 3),
 			new GeldFaktorCBItem("México Pesos", 1f, 4), new GeldFaktorCBItem("Argentina Pesos", 10f, 5),
 			new GeldFaktorCBItem("USA $", 10f, 6), new GeldFaktorCBItem("Norge Kroner", 1f, 7), new GeldFaktorCBItem("Oceania AU$", 5f, 8),
 			new GeldFaktorCBItem("Canada C$", 5f, 9), new GeldFaktorCBItem("Colombia Dollar", 1f, 10),
@@ -133,6 +133,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		if (gui.UserParameter.temp().zahlenFuerSkill != gui.UserParameter.instance().zahlenFuerSkill)
 			OptionManager.instance().setReInitNeeded();
 		if (!gui.UserParameter.temp().skin.equals(gui.UserParameter.instance().skin)) {
+			OptionManager.instance().setSkinChanged();
 			OptionManager.instance().setRestartNeeded();
 		}
 	}
@@ -144,8 +145,11 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		gui.UserParameter.temp().futureWeeks = (int) m_jslFutureWeeks.getValue();
 		gui.UserParameter.temp().schriftGroesse = (int) m_jslSchriftgroesse.getValue();
 
-		if ((gui.UserParameter.temp().schriftGroesse != gui.UserParameter.instance().schriftGroesse)
-				|| (gui.UserParameter.temp().futureWeeks != gui.UserParameter.instance().futureWeeks)) {
+		if (gui.UserParameter.temp().schriftGroesse != gui.UserParameter.instance().schriftGroesse) {
+			OptionManager.instance().setSkinChanged();
+			OptionManager.instance().setRestartNeeded();
+		}
+		if (gui.UserParameter.temp().futureWeeks != gui.UserParameter.instance().futureWeeks) {
 			OptionManager.instance().setRestartNeeded();
 		}
 	}
@@ -186,7 +190,8 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		m_jslSchriftgroesse.addChangeListener(this);
 		add(m_jslSchriftgroesse);
 
-		m_jcbSkin = new ComboBoxPanel("Skin", new String[] { "Nimbus", "Classic" }, 120);
+		m_jcbSkin = new ComboBoxPanel("Skin", new String[] { "Nimbus", "Classic", "JGoodies Green", // 
+				"JGoodies Silver", "JGoodies Sky", "JGoodies Blue", "JGoodies Royale", "System" }, 120);
 		m_jcbSkin.setSelectedItem(gui.UserParameter.temp().skin);
 		m_jcbSkin.addItemListener(this);
 		add(m_jcbSkin);
