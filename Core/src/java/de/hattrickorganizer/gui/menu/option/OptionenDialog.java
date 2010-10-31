@@ -237,7 +237,9 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		        RefreshManager.instance().doReInit();
 		        waitdialog.setVisible(false);
 			}
-					       
+			//if (HOMainFrame.isDevelopment() && OptionManager.instance().isSkinChanged()) {
+			//	HOMainFrame.instance().setDefaultFont(gui.UserParameter.temp().schriftGroesse);
+			//}
 		}
 		else if (e.getSource().equals(m_jbCancel)) {
 			gui.UserParameter.deleteTempParameter();

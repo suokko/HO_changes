@@ -4,9 +4,11 @@ import gui.UserParameter;
 
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.DimensionUIResource;
 
@@ -50,6 +52,7 @@ public class NimbusTheme {
 				UIDefaults uid = UIManager.getLookAndFeelDefaults();
 				final String fontName = FontUtil.getFontName(UserParameter.instance().sprachDatei);
 				final Font userFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, fontSize);
+				final Font smallFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, (fontSize-1));
 				final Font boldFont = new Font((fontName != null ? fontName : "SansSerif"), Font.BOLD, fontSize);
 				uid.put("defaultFont", userFont);
 				uid.put("DesktopIcon.font", userFont);
@@ -59,7 +62,7 @@ public class NimbusTheme {
 				uid.put("FormattedTextField.font", userFont);
 				uid.put("Spinner.font", userFont);
 				uid.put("PopupMenuSeparator.font", userFont);
-				uid.put("Table.font", userFont);
+				uid.put("Table.font", userFont); // smallFont
 				uid.put("TextArea.font", userFont);
 				uid.put("Slider.font", userFont);
 				uid.put("InternalFrameTitlePane.font", userFont);
@@ -78,7 +81,7 @@ public class NimbusTheme {
 				uid.put("CheckBox.font", userFont);
 				uid.put("ToggleButton.font", userFont);
 				uid.put("TabbedPane.font", userFont);
-				uid.put("TableHeader.font", userFont);
+				uid.put("TableHeader.font", userFont); // smallFont
 				uid.put("List.font", userFont);
 				uid.put("PopupMenu.font", userFont);
 				uid.put("ToolTip.font", userFont);
@@ -103,9 +106,14 @@ public class NimbusTheme {
 				uid.put("SliderTrack.font", userFont);
 				uid.put("TitledBorder.font", boldFont);
 				
-				uid.put("Table.intercellSpacing", new DimensionUIResource(1, 1));
+				uid.put("Table.intercellSpacing", new DimensionUIResource(1, 1)); //new DimensionUIResource(1, 1)
 				uid.put("Table.showGrid", new Boolean(true));
 				uid.put("Table.gridColor", new ColorUIResource(214, 217, 223));
+				
+				//uid.put("Table.editor".contentMargins	InsetsUIResource	javax.swing.plaf.InsetsUIResource[top=3,left=5,bottom=3,right=5]
+				BorderUIResource tableBorder = new BorderUIResource(BorderFactory.createEmptyBorder(2, 3, 2, 3));
+				uid.put("Table.cellNoFocusBorder", tableBorder);
+				uid.put("Table.focusCellHighlightBorder", tableBorder);
 				
 				return true;
 			}

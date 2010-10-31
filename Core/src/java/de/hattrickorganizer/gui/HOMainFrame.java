@@ -34,6 +34,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -62,6 +63,7 @@ import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
 import de.hattrickorganizer.gui.utils.HOTheme;
 import de.hattrickorganizer.gui.utils.InterruptionWindow;
+import de.hattrickorganizer.gui.utils.JGoodiesTheme;
 import de.hattrickorganizer.gui.utils.NimbusTheme;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
 import de.hattrickorganizer.logik.TrainingsManager;
@@ -1480,7 +1482,31 @@ public final class HOMainFrame extends JFrame
 	private void setDefaultFont(int size) {
 		try {
 			boolean succ = false;
-			if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) {
+			if (UserParameter.instance().skin != null && UserParameter.instance().skin.startsWith("JGoodies")) {
+				succ = JGoodiesTheme.enableJGoodiesTheme(UserParameter.instance().skin, size);
+			} else if ("System".equalsIgnoreCase(UserParameter.instance().skin)) {
+				try {
+					LookAndFeelInfo win = null;
+					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				        if ("Windows".equals(info.getName())) {
+				            win = info;
+				            break;
+				        }
+				    }
+					if (win != null) {
+						HOLogger.instance().log(getClass(), "Use " + win.getName() + " l&f");
+						UIManager.setLookAndFeel(win.getClassName());
+					} else {
+						HOLogger.instance().log(getClass(), "Use System l&f...");
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					}
+					// TODO: font size
+					SwingUtilities.updateComponentTreeUI(this);
+					succ = true;
+				} catch (Exception e) {
+					succ = false;
+				}
+			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { // Nimbus is the default theme
 				succ = NimbusTheme.enableNimbusTheme(size);
 			}
 			if (!succ) {

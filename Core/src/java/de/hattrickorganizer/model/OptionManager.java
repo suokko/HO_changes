@@ -20,12 +20,16 @@ public class OptionManager {
 	 * Is a reInit needed after changes in the option dialog?
 	 */
 	private boolean reInitNeeded;
+	/**
+	 * Skin or font size changed?
+	 */
+	private boolean skinChanged;
 	
-	
-	
-	OptionManager() {
+
+	private OptionManager() {
 		restartNeeded = false;
-		reInitNeeded = false;		
+		reInitNeeded = false;
+		skinChanged = false;
 	}
 	
 	/**
@@ -69,7 +73,13 @@ public class OptionManager {
 	public void setReInitNeeded() {
 		this.reInitNeeded = true;
 	}
-	
-	
 
+	public boolean isSkinChanged() {
+		return skinChanged;
+	}
+
+	public void setSkinChanged() {
+		this.skinChanged = true;
+	}
+	
 }
