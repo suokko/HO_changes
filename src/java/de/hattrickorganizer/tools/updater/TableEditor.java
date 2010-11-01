@@ -51,15 +51,15 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
     /**
      * Creates a new TableEditor object.
      */
-    public TableEditor() {
-        editors = new HashMap<Integer,TableCellEditor>();
+	public TableEditor() {
+		editors = new HashMap<Integer, TableCellEditor>();
 
-        textField = new JTextField();
-        textField.setBorder(null);
-        textField.setFocusCycleRoot(true);
+		textField = new JTextField();
+		textField.setBorder(null);
+		textField.setFocusCycleRoot(true);
 
-        defaultEditor = new DefaultCellEditor(textField);
-    }
+		defaultEditor = new DefaultCellEditor(textField);
+	}
 
     //~ Methods ------------------------------------------------------------------------------------
 

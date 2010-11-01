@@ -13,82 +13,72 @@ import javax.swing.table.TableCellRenderer;
 
 
 /**
- * DOCUMENT ME!
+ * TableCellRenderer for the update plugins panel and user columns settings panel. 
  *
  * @author tdietz
  */
 public final class UpdaterCellRenderer implements TableCellRenderer {
-    //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param table TODO Missing Method Parameter Documentation
-     * @param value TODO Missing Method Parameter Documentation
-     * @param isSelected TODO Missing Method Parameter Documentation
-     * @param hasFocus TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                   boolean hasFocus, int row, int column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
 		double site = 0;
-		double ho = 0;		                                                   	
+		double ho = 0;
 		try {
-			site = Double.parseDouble(((JLabel)table.getModel().getValueAt(row,3)).getText());
+			site = Double.parseDouble(((JLabel) table.getModel().getValueAt(row, 3)).getText());
 		} catch (Exception e) {
 		}
 		try {
-			ho = Double.parseDouble(((JLabel)table.getModel().getValueAt(row,2)).getText());
+			ho = Double.parseDouble(((JLabel) table.getModel().getValueAt(row, 2)).getText());
 		} catch (Exception e1) {
-		}		
+		}
 		Color highlite = Color.RED;
 		boolean color = false;
-		if ( (ho>0) && (ho<site) ) {
+		if ((ho > 0) && (ho < site)) {
 			color = true;
 		}
-						
-        if (value instanceof JTextField) {
-            JTextField field = (JTextField) value;
-            field.setBorder(null);
 
-            if (isSelected) {
-                field.setBackground(new Color(212, 175, 250));                
-                field.setForeground(Color.black);
-            }
-            if (color) {
-            	field.setForeground(highlite);
-            }
-            return field;
-        }
+		if (value instanceof JTextField) {
+			JTextField field = (JTextField) value;
+			field.setBorder(null);
+			if (isSelected) {
+				field.setBackground(new Color(212, 175, 250));
+				field.setForeground(Color.BLACK);
+			}
+			if (color) {
+				field.setForeground(highlite);
+			}
+			return field;
+		}
 
-        if (value instanceof JCheckBox) {
-            JCheckBox check = (JCheckBox) value;
-            return check;
-        }
+		if (value instanceof JCheckBox) {
+			return (JCheckBox) value;
+		}
 
-        if (value instanceof JButton) {
-        	JButton b = (JButton) value; 
-            b.setBorderPainted(false);
+		if (value instanceof JButton) {
+			JButton b = (JButton) value;
+			b.setBorderPainted(false);
 			if (color) {
 				b.setForeground(highlite);
-			}            
-            return b;
-        }
+			}
+			int labelHeight = 20; // fix table height problems with non-classic l&f
+			int tableRowHeight = table.getRowHeight(row);
+			if (labelHeight != tableRowHeight) {
+				table.setRowHeight(row, labelHeight);
+			}
+			return b;
+		}
 
 		JLabel label = null;
-        if (value instanceof JLabel) {
-        	label = (JLabel) value;
-        } else {
-        	label = new JLabel(value.toString()); 
-        }
-			
+		if (value instanceof JLabel) {
+			label = (JLabel) value;
+		} else {
+			label = new JLabel(value.toString());
+		}
+
 		if (color) {
 			label.setForeground(highlite);
-		}             
+		}
 		return label;
+	}
 
-    }
 }
