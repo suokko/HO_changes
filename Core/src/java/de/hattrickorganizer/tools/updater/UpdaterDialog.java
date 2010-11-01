@@ -44,49 +44,21 @@ import de.hattrickorganizer.tools.Helper;
 abstract class UpdaterDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    //	protected String PROP_NO_SERVER		= HOVerwaltung.instance().getLanguageString("KeinServer");
-
-    /**
-	 * 
-	 */
+	// protected String PROP_NO_SERVER = HOVerwaltung.instance().getLanguageString("KeinServer");
 	private static final long serialVersionUID = -991600939074866793L;
-
-	/** TODO Missing Parameter Documentation */
-    protected JTable table;
-
-    /** TODO Missing Parameter Documentation */
-    protected String ACT_SHOW_INFO = "ShowInfo";
-
-    /** TODO Missing Parameter Documentation */
-    protected String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator
-                                           + "hoplugins";
-
-    /** TODO Missing Parameter Documentation */
-    protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("Uebernehmen");
-
-    /** TODO Missing Parameter Documentation */
-    protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getLanguageString("DateiNichtGefunden");
-
-    /** TODO Missing Parameter Documentation */
-    protected String PROP_HOMEPAGE = HOVerwaltung.instance().getLanguageString("Homepage");
-
-    /** TODO Missing Parameter Documentation */
-    protected String PROP_NAME = HOVerwaltung.instance().getLanguageString("Name");
-
-    /** TODO Missing Parameter Documentation */
-    protected String PROP_NEW_START = HOVerwaltung.instance().getLanguageString("NeustartErforderlich");
-
-    /** TODO Missing Parameter Documentation */
-    protected String okButtonLabel;
-
-    /** TODO Missing Parameter Documentation */
+	protected JTable table;
+	protected String ACT_SHOW_INFO = "ShowInfo";
+	protected String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator + "hoplugins";
+	protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("Uebernehmen");
+	protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getLanguageString("DateiNichtGefunden");
+	protected String PROP_HOMEPAGE = HOVerwaltung.instance().getLanguageString("Homepage");
+	protected String PROP_NAME = HOVerwaltung.instance().getLanguageString("Name");
+	protected String PROP_NEW_START = HOVerwaltung.instance().getLanguageString("NeustartErforderlich");
+	protected String okButtonLabel;
     protected String[] columnNames;
-
-    /** TODO Missing Parameter Documentation */
     protected Object[] object;
-
-    /** TODO Missing Parameter Documentation */
     protected boolean defaultSelected;
+    
     private String ACT_CANCEL = "CANCEL";
     private String ACT_FIND = "FIND";
     private String ACT_SET_ALL = "SET_ALL";
@@ -100,19 +72,17 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
      * @param data TODO Missing Constructuor Parameter Documentation
      * @param title TODO Missing Constructuor Parameter Documentation
      */
-    protected UpdaterDialog(Object data, String title) {
-        super(GUIPluginWrapper.instance().getOwner4Dialog(), title);
+	protected UpdaterDialog(Object data, String title) {
+		super(GUIPluginWrapper.instance().getOwner4Dialog(), title);
 
-        int dialogWidth = 480;
-        int dialogHeight = 320;
+		int dialogWidth = 500;
+		int dialogHeight = 400;
 
-        int with = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
-                                            .getWidth();
-        int height = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
-                                              .getHeight();
-        setLocation((with - dialogWidth) / 2, (height - dialogHeight) / 2);
-        setSize(dialogWidth, dialogHeight);
-    }
+		int with = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getWidth();
+		int height = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getHeight();
+		setLocation((with - dialogWidth) / 2, (height - dialogHeight) / 2);
+		setSize(dialogWidth, dialogHeight);
+	}
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -281,21 +251,21 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected JScrollPane createTable() {
-        table = new JTable(getModel(defaultSelected, columnNames));
-        table.setDefaultRenderer(Object.class, new UpdaterCellRenderer());
-        table.getTableHeader().setReorderingAllowed(false);
+	protected JScrollPane createTable() {
+		table = new JTable(getModel(defaultSelected, columnNames));
+		//table.setRowHeight(25);
+		table.setDefaultRenderer(Object.class, new UpdaterCellRenderer());
+		table.getTableHeader().setReorderingAllowed(false);
 
-        if (table.getColumnCount() == 5) {
-            table.getColumn(HOVerwaltung.instance().getLanguageString("Notizen"))
-                 .setCellEditor(new TableEditor());
-        }
+		if (table.getColumnCount() == 5) {
+			table.getColumn(HOVerwaltung.instance().getLanguageString("Notizen")).setCellEditor(new TableEditor());
+		}
 
-        table.getColumn(columnNames[0]).setCellEditor(new TableEditor());
+		table.getColumn(columnNames[0]).setCellEditor(new TableEditor());
 
-        JScrollPane scroll = new JScrollPane(table);
-        return scroll;
-    }
+		JScrollPane scroll = new JScrollPane(table);
+		return scroll;
+	}
 
     /**
      * TODO Missing Method Documentation
