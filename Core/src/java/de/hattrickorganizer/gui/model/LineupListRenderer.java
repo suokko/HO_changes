@@ -25,7 +25,6 @@ public class LineupListRenderer extends JLabel implements ListCellRenderer {
 				// fallback, if the selBGcolor is (almost) white
 				fgColor = list.getSelectionBackground().darker();
 			}
-			HOLogger.instance().log(getClass(), "displayColor: " + fgColor);
 		}
 	}
 
