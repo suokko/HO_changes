@@ -88,7 +88,6 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
         table.setDefaultRenderer(Object.class, new UpdaterCellRenderer());
         table.getColumn(columnNames[0]).setCellEditor(new TableEditor());
 
-        
         final TableColumnModel tableColumnModel = table.getColumnModel();
         tableColumnModel.getColumn(0).setMaxWidth(50);
         tableColumnModel.getColumn(0).setPreferredWidth(50);
@@ -97,7 +96,6 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
         return scroll;
     }
 
-	
 	/**
      * TODO Missing Method Documentation
      *
