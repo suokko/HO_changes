@@ -1251,8 +1251,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private InputStream getWebFile(String surl, boolean needCookie,
 			boolean showErrorMessage, boolean shortTimeOut) throws IOException {
 		final URL url = new URL(surl);
-		final HttpURLConnection httpurlconnection = (HttpURLConnection) url
-				.openConnection();
+		final HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
 		httpurlconnection.setRequestMethod("GET");
 		infoHO(httpurlconnection);
 
@@ -1272,8 +1271,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		} catch (Exception sox) {
 			HOLogger.instance().log(getClass(), sox);
 			if (showErrorMessage) {
-				JOptionPane.showMessageDialog(null, surl, "error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
 			}
 			return null;
 		}
@@ -1293,12 +1291,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 		// create the appropriate stream wrapper based on
 		// the encoding type
 		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-			resultingInputStream = new GZIPInputStream(httpurlconnection
-					.getInputStream());
+			resultingInputStream = new GZIPInputStream(httpurlconnection.getInputStream());
 			HOLogger.instance().log(getClass(), " Read GZIP.");
 		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
-			resultingInputStream = new InflaterInputStream(httpurlconnection
-					.getInputStream(), new Inflater(true));
+			resultingInputStream = new InflaterInputStream(httpurlconnection.getInputStream(), new Inflater(true));
 			HOLogger.instance().log(getClass(), " Read Deflated.");
 		} else {
 			resultingInputStream = httpurlconnection.getInputStream();
