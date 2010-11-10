@@ -563,7 +563,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getTeamdetails(int teamId) throws IOException {
 		String url =
-			"http://"+ gui.UserParameter.instance().htip + "/common/chppxml.axd?file=team";
+			"http://"+ gui.UserParameter.instance().htip + "/common/chppxml.axd?file=teamdetails";
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
@@ -862,7 +862,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
 				ld.setVisible(true);
 			}
-			xmlFile = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=team&teamID=" + teamID;
+			xmlFile = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=teamdetails&teamID=" + teamID;
 			xmlFile = getPage(xmlFile, true);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
