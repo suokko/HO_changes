@@ -4,6 +4,7 @@ Changelist HO! 1.427
 - allow new position "Extra def. Forward" to simulate lineups with 3 def. forwards (thx Smaug)
 - add optional "Nimbus" look and feel, if available
 - update some graphics
+- fix bug with fraction digit in fanclub size
 
 Language updates:
 -----------------
