@@ -1,7 +1,12 @@
 // %163934374:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.util.Properties;
 import java.util.Vector;
 
 import plugins.ISpieler;
@@ -13,59 +18,40 @@ import de.hattrickorganizer.tools.HOLogger;
  * Allgemeine Informationen über den Verein
  */
 public final class Verein implements plugins.IVerein {
-    //~ Instance fields ----------------------------------------------------------------------------
-
+	// for locale indepemdent parsing of input with commas
+    final DecimalFormat DF = new DecimalFormat("0", new DecimalFormatSymbols(Locale.GERMANY));
+	
     /** Team Name */
     private String m_sTeamName;
-
-    //NEU XML
-
     /** Datum */
     private Timestamp m_clDate;
-
     /** Jungendspieler gezogen */
     private boolean m_bYouthPull;
-
-    /** Ärzte */
+    /** doctors */
     private int m_iAerzte;
-
     /** Co-Trainer */
     private int m_iCoTrainer;
-
     /** FanClub */
-
-    //bald im Team
     private int m_iFans;
-
-    /** Finanzberater */
+    /** economists */
     private int m_iFinanzberater;
-
     /** Jugendmannschaft */
     private int m_iJugend;
-
     /** Investition */
     private int m_iJugendGeld;
-
     /** Physiotherapeuten */
     private int m_iMasseure;
-
     /** Pressesprecher */
     private int m_iPRManager;
-
     /** Psychologen */
     private int m_iPsychologen;
-
     /** Siege */
     private int m_iSiege;
-
     /** TeamID */
     private int m_iTeamID = -1;
 
-    //Bleibt in Verein
-
     /** Torwarttrainer */
     private int m_iTorwartTrainer;
-
     /** Ungeschlagen für # Spiele */
     private int m_iUngeschlagen;
 
@@ -77,31 +63,27 @@ public final class Verein implements plugins.IVerein {
     public Verein() {
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //Konstruktor
-    ////////////////////////////////////////////////////////////////////////////////    
-    public Verein(java.util.Properties properties) throws Exception {
-        m_iTorwartTrainer = Integer.parseInt(properties.getProperty("mvtranare", "0"));
-        m_iCoTrainer = Integer.parseInt(properties.getProperty("hjtranare", "0"));
-        m_iPsychologen = Integer.parseInt(properties.getProperty("psykolog", "0"));
-        m_iPRManager = Integer.parseInt(properties.getProperty("presstalesman", "0"));
-        m_iFinanzberater = Integer.parseInt(properties.getProperty("ekonom", "0"));
-        m_iMasseure = Integer.parseInt(properties.getProperty("massor", "0"));
-        m_iAerzte = Integer.parseInt(properties.getProperty("lakare", "0"));
-        m_iJugend = Integer.parseInt(properties.getProperty("juniorverksamhet", "0"));
-        m_iFans = Integer.parseInt(properties.getProperty("fanclub", "0"));
-        m_iUngeschlagen = Integer.parseInt(properties.getProperty("undefeated", "0"));
-        m_iSiege = Integer.parseInt(properties.getProperty("victories", "0"));
+    /**
+     * Creates a new Club object based on properties (e.g. from an hrf file).
+     */
+    public Verein(Properties properties) throws Exception {
+		m_iTorwartTrainer = DF.parse(properties.getProperty("mvtranare", "0")).intValue();
+        m_iCoTrainer = DF.parse(properties.getProperty("hjtranare", "0")).intValue();
+        m_iPsychologen = DF.parse(properties.getProperty("psykolog", "0")).intValue();
+        m_iPRManager = DF.parse(properties.getProperty("presstalesman", "0")).intValue();
+        m_iFinanzberater = DF.parse(properties.getProperty("ekonom", "0")).intValue();
+        m_iMasseure = DF.parse(properties.getProperty("massor", "0")).intValue();
+        m_iAerzte = DF.parse(properties.getProperty("lakare", "0")).intValue();
+        m_iJugend = DF.parse(properties.getProperty("juniorverksamhet", "0")).intValue();
+        m_iFans = DF.parse(properties.getProperty("fanclub", "0")).intValue();
+        m_iUngeschlagen = DF.parse(properties.getProperty("undefeated", "0")).intValue();
+        m_iSiege = DF.parse(properties.getProperty("victories", "0")).intValue();
     }
 
     /**
      * Creates a new Verein object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
-    public Verein(java.sql.ResultSet rs) throws Exception {
+    public Verein(ResultSet rs) throws Exception {
         try {
             m_iTorwartTrainer = rs.getInt("TWTrainer");
             m_iCoTrainer = rs.getInt("COTrainer");
