@@ -504,8 +504,8 @@ public class SpielLogik {
 
                             if (pschuetze == null) {
                                 pschuetze = spieler;
-                            } else if (pschuetze.getStk(ISpielerPosition.STURM) < spieler
-                                                                                                            .getStk(ISpielerPosition.STURM)) {
+                            } else if (pschuetze.getStk(ISpielerPosition.FORWARD) < spieler
+                                                                                                            .getStk(ISpielerPosition.FORWARD)) {
                                 pschuetze = spieler;
                             }
                         }
@@ -1209,14 +1209,14 @@ public class SpielLogik {
             player = sb.Heim().getSpielerById(((Integer) sb.Heim()
                                                                            .getStartAufstellung()
                                                                            .elementAt(i)).intValue());
-            Z1 += player.getStk(ISpielerPosition.INNENVERTEIDIGER);
+            Z1 += player.getStk(ISpielerPosition.CENTRAL_DEFENDER);
         }
 
         for (int i = 0; i < sb.Gast().getStartAufstellung().size(); i++) {
             player = sb.Gast().getSpielerById(((Integer) sb.Gast()
                                                                            .getStartAufstellung()
                                                                            .elementAt(i)).intValue());
-            Z2 += player.getStk(ISpielerPosition.INNENVERTEIDIGER);
+            Z2 += player.getStk(ISpielerPosition.CENTRAL_DEFENDER);
         }
 
         Summe1 = (byte) ((100 * (float) Z1) / (Z1 + Z2));
@@ -1474,7 +1474,7 @@ public class SpielLogik {
             pos = verein.getSpielerPositionObjBySpielerID(id);
 
             // halbe Wahrscheinlichkeit beim TW
-            if (pos.getPosition() == ISpielerPosition.TORWART) {
+            if (pos.getPosition() == ISpielerPosition.KEEPER) {
                 id = verein.getSpielerAufFeld((byte) (getZufallsZahl(verein
                                                                      .getAnzAufgestellteSpieler())))
                            .getID();

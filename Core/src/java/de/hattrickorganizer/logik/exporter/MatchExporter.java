@@ -87,7 +87,7 @@ public class MatchExporter {
 					plugins.ISpieler formerPlayerData = null;
 
 					//Bankl + verlketzte ï¿½berspringen
-					if (player.getId() >= ISpielerPosition.beginnReservere) {
+					if (player.getId() >= ISpielerPosition.startReserves) {
 						continue;
 					}
 
