@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
@@ -29,7 +29,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 7318780000118008882L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
-	private Aufstellung m_clAufstellung;
+	private Lineup m_clAufstellung;
     private JButton m_jbAbbrechen;
     private JButton m_jbOK;
     private JTextField m_jtfAufstellungsName;
@@ -46,7 +46,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
      * @param y TODO Missing Constructuor Parameter Documentation
      */
     protected AufstellungsNameDialog(JFrame owner, String aufstellungsName,
-                                     Aufstellung aufstellung, int x, int y) {
+                                     Lineup aufstellung, int x, int y) {
         super(owner, true);
 
         m_clAufstellung = aufstellung;
@@ -148,7 +148,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
         //nicht schon vorhanden
         if (dbcheck) {
-            aufstellungsNamen = DBZugriff.instance().getAufstellungsListe(Aufstellung.NO_HRF_VERBINDUNG);
+            aufstellungsNamen = DBZugriff.instance().getAufstellungsListe(Lineup.NO_HRF_VERBINDUNG);
         }
 
         //nicht Aktuelle Aufstellung
@@ -156,7 +156,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
         aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"));
 
         //nicht HO!
-        aufstellungsNamen.add(Aufstellung.DEFAULT_NAME);
+        aufstellungsNamen.add(Lineup.DEFAULT_NAME);
 
         return (!(aufstellungsNamen.contains(name)));
     }

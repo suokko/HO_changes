@@ -27,7 +27,7 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -261,7 +261,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         if (HOVerwaltung.instance().getModel().getTeam() != null) {
             final HOModel homodel = HOVerwaltung.instance().getModel();
             final Vector<ISpieler> allSpieler = homodel.getAllSpieler();
-            final Aufstellung aufstellung = homodel.getAufstellung();
+            final Lineup aufstellung = homodel.getAufstellung();
 
             //AufstellungCBItem   avergleich  = AufstellungsVergleichHistoryPanel.getVergleichsAufstellung ();
             //HRF-Vergleich gefordert
@@ -271,7 +271,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
                                                                       .getVergleichsAufstellung();
 
                 if (vergleichsaufstellungcbitem != null) {
-                    final Aufstellung vergleichsaufstellung = vergleichsaufstellungcbitem
+                    final Lineup vergleichsaufstellung = vergleichsaufstellungcbitem
                                                               .getAufstellung();
 
                     if (vergleichsaufstellung != null) {
@@ -364,7 +364,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             m_jpDurchschnittErfahrung.setToolTipText(
             		(avXp < 0 ? "Need to set team captain!" : "TeamXP formula by kopsterkespits")); // TODO L10N
 
-            m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
+            m_jpAktuellesSystem.setText(Lineup.getNameForSystem(aufstellung.ermittelSystem()));
             //m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
                                                         .getTeamErfahrung4AktuellesSystem() + "");
@@ -556,7 +556,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @return the name of the tactic incl. strength
      */
     private String getTaktikString() {
-        final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
+        final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
         //getTaktik liefert Taktik aus ComboBox, wir wollen Taktik aus aufstellung!
         //switch (getTaktik()) {

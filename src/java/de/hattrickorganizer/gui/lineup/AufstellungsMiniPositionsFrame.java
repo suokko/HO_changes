@@ -30,7 +30,7 @@ import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -46,27 +46,27 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
-	private AufstellungsPanel m_clAufstellungsPanel;
+	private LineupPanel m_clAufstellungsPanel;
     private JButton m_jbMaxFrame = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                              .loadImage("gui/bilder/MaxAufstellung.png")));
-    private SpielerPositionsPanel m_clLinkeAussenVerteidiger;
-    private SpielerPositionsPanel m_clLinkeFluegel;
-    private SpielerPositionsPanel m_clLinkeInnenVerteidiger;
-    private SpielerPositionsPanel m_clLinkeMittelfeld;
-    private SpielerPositionsPanel m_clLinkerSturm;
-    private SpielerPositionsPanel m_clRechteAussenVerteidiger;
-    private SpielerPositionsPanel m_clRechteFluegel;
-    private SpielerPositionsPanel m_clRechteInnenVerteidiger;
-    private SpielerPositionsPanel m_clRechteMittelfeld;
-    private SpielerPositionsPanel m_clRechterSturm;
-    private SpielerPositionsPanel m_clReserveFluegel;
-    private SpielerPositionsPanel m_clReserveMittelfeld;
-    private SpielerPositionsPanel m_clReserveSturm;
-    private SpielerPositionsPanel m_clReserveTorwart;
-    private SpielerPositionsPanel m_clReserveVerteidiger;
-    private SpielerPositionsPanel m_clSpielfuehrer;
-    private SpielerPositionsPanel m_clStandard;
-    private SpielerPositionsPanel m_clTorwart;
+    private PlayerPositionPanel m_clLinkeAussenVerteidiger;
+    private PlayerPositionPanel m_clLinkeFluegel;
+    private PlayerPositionPanel m_clLinkeInnenVerteidiger;
+    private PlayerPositionPanel m_clLinkeMittelfeld;
+    private PlayerPositionPanel m_clLinkerSturm;
+    private PlayerPositionPanel m_clRechteAussenVerteidiger;
+    private PlayerPositionPanel m_clRechteFluegel;
+    private PlayerPositionPanel m_clRechteInnenVerteidiger;
+    private PlayerPositionPanel m_clRechteMittelfeld;
+    private PlayerPositionPanel m_clRechterSturm;
+    private PlayerPositionPanel m_clReserveFluegel;
+    private PlayerPositionPanel m_clReserveMittelfeld;
+    private PlayerPositionPanel m_clReserveSturm;
+    private PlayerPositionPanel m_clReserveTorwart;
+    private PlayerPositionPanel m_clReserveVerteidiger;
+    private PlayerPositionPanel m_clSpielfuehrer;
+    private PlayerPositionPanel m_clStandard;
+    private PlayerPositionPanel m_clTorwart;
     private boolean m_bMinimize;
     private boolean m_bPrint;
 
@@ -79,7 +79,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
      * @param print TODO Missing Constructuor Parameter Documentation
      * @param minimized TODO Missing Constructuor Parameter Documentation
      */
-    public AufstellungsMiniPositionsFrame(AufstellungsPanel aufstellungsPanel, boolean print,
+    public AufstellungsMiniPositionsFrame(LineupPanel aufstellungsPanel, boolean print,
                                           boolean minimized) {
         super("Mini"
               + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung"));
@@ -181,7 +181,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
         final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
         final Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
-        final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
+        final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
         for (int i = 0; i < alleSpieler.size(); i++) {
             final Spieler spieler = (Spieler) alleSpieler.get(i);
@@ -373,14 +373,14 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 4;
-        m_clTorwart = new SpielerPositionsPanel(this, ISpielerPosition.keeper, m_bPrint, m_bMinimize);
+        m_clTorwart = new PlayerPositionPanel(this, ISpielerPosition.keeper, m_bPrint, m_bMinimize);
         layout.setConstraints(m_clTorwart, constraints);
         centerPanel.add(m_clTorwart);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clRechteAussenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.rightBack,
+        m_clRechteAussenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.rightBack,
                                                                 m_bPrint, m_bMinimize);
         layout.setConstraints(m_clRechteAussenVerteidiger, constraints);
         centerPanel.add(m_clRechteAussenVerteidiger);
@@ -388,7 +388,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clRechteInnenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.insideBack1,
+        m_clRechteInnenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.rightCentralDefender,
                                                                m_bPrint, m_bMinimize);
         layout.setConstraints(m_clRechteInnenVerteidiger, constraints);
         centerPanel.add(m_clRechteInnenVerteidiger);
@@ -396,7 +396,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clLinkeInnenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.insideBack2,
+        m_clLinkeInnenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.leftCentralDefender,
                                                               m_bPrint, m_bMinimize);
         layout.setConstraints(m_clLinkeInnenVerteidiger, constraints);
         centerPanel.add(m_clLinkeInnenVerteidiger);
@@ -404,7 +404,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 3;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clLinkeAussenVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.leftBack,
+        m_clLinkeAussenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.leftBack,
                                                                m_bPrint, m_bMinimize);
         layout.setConstraints(m_clLinkeAussenVerteidiger, constraints);
         centerPanel.add(m_clLinkeAussenVerteidiger);
@@ -412,7 +412,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clRechteFluegel = new SpielerPositionsPanel(this, ISpielerPosition.rightWinger, m_bPrint,
+        m_clRechteFluegel = new PlayerPositionPanel(this, ISpielerPosition.rightWinger, m_bPrint,
                                                       m_bMinimize);
         layout.setConstraints(m_clRechteFluegel, constraints);
         centerPanel.add(m_clRechteFluegel);
@@ -420,7 +420,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clRechteMittelfeld = new SpielerPositionsPanel(this, ISpielerPosition.insideMid1,
+        m_clRechteMittelfeld = new PlayerPositionPanel(this, ISpielerPosition.rightInnerMidfield,
                                                          m_bPrint, m_bMinimize);
         layout.setConstraints(m_clRechteMittelfeld, constraints);
         centerPanel.add(m_clRechteMittelfeld);
@@ -428,7 +428,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 2;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clLinkeMittelfeld = new SpielerPositionsPanel(this, ISpielerPosition.insideMid2, m_bPrint,
+        m_clLinkeMittelfeld = new PlayerPositionPanel(this, ISpielerPosition.leftInnerMidfield, m_bPrint,
                                                         m_bMinimize);
         layout.setConstraints(m_clLinkeMittelfeld, constraints);
         centerPanel.add(m_clLinkeMittelfeld);
@@ -436,7 +436,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 3;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clLinkeFluegel = new SpielerPositionsPanel(this, ISpielerPosition.leftWinger, m_bPrint,
+        m_clLinkeFluegel = new PlayerPositionPanel(this, ISpielerPosition.leftWinger, m_bPrint,
                                                      m_bMinimize);
         layout.setConstraints(m_clLinkeFluegel, constraints);
         centerPanel.add(m_clLinkeFluegel);
@@ -444,7 +444,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 1;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_clLinkerSturm = new SpielerPositionsPanel(this, ISpielerPosition.forward1, m_bPrint,
+        m_clLinkerSturm = new PlayerPositionPanel(this, ISpielerPosition.rightForward, m_bPrint,
                                                     m_bMinimize);
         layout.setConstraints(m_clLinkerSturm, constraints);
         centerPanel.add(m_clLinkerSturm);
@@ -452,7 +452,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 2;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_clRechterSturm = new SpielerPositionsPanel(this, ISpielerPosition.forward2, m_bPrint,
+        m_clRechterSturm = new PlayerPositionPanel(this, ISpielerPosition.leftForward, m_bPrint,
                                                      m_bMinimize);
         layout.setConstraints(m_clRechterSturm, constraints);
         centerPanel.add(m_clRechterSturm);
@@ -460,7 +460,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_clStandard = new SpielerPositionsPanel(this, SpielerPositionsPanel.STANDARD, m_bPrint,
+        m_clStandard = new PlayerPositionPanel(this, ISpielerPosition.setPieces, m_bPrint,
                                                  m_bMinimize);
         layout.setConstraints(m_clStandard, constraints);
         centerPanel.add(m_clStandard);
@@ -468,7 +468,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 1;
         constraints.gridy = 4;
         constraints.gridwidth = 2;
-        m_clReserveTorwart = new SpielerPositionsPanel(this, ISpielerPosition.substKeeper, m_bPrint,
+        m_clReserveTorwart = new PlayerPositionPanel(this, ISpielerPosition.substKeeper, m_bPrint,
                                                        m_bMinimize);
         layout.setConstraints(m_clReserveTorwart, constraints);
         centerPanel.add(m_clReserveTorwart);
@@ -476,7 +476,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 3;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_clSpielfuehrer = new SpielerPositionsPanel(this, SpielerPositionsPanel.SPIELFUEHRER,
+        m_clSpielfuehrer = new PlayerPositionPanel(this, ISpielerPosition.captain,
                                                      m_bPrint, m_bMinimize);
         layout.setConstraints(m_clSpielfuehrer, constraints);
         centerPanel.add(m_clSpielfuehrer);
@@ -484,7 +484,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 0;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveVerteidiger = new SpielerPositionsPanel(this, ISpielerPosition.substBack,
+        m_clReserveVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.substDefender,
                                                            m_bPrint, m_bMinimize);
         layout.setConstraints(m_clReserveVerteidiger, constraints);
         centerPanel.add(m_clReserveVerteidiger);
@@ -492,7 +492,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 1;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveMittelfeld = new SpielerPositionsPanel(this, ISpielerPosition.substInsideMid,
+        m_clReserveMittelfeld = new PlayerPositionPanel(this, ISpielerPosition.substInnerMidfield,
                                                           m_bPrint, m_bMinimize);
         layout.setConstraints(m_clReserveMittelfeld, constraints);
         centerPanel.add(m_clReserveMittelfeld);
@@ -500,7 +500,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 2;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveSturm = new SpielerPositionsPanel(this, ISpielerPosition.substForward, m_bPrint,
+        m_clReserveSturm = new PlayerPositionPanel(this, ISpielerPosition.substForward, m_bPrint,
                                                      m_bMinimize);
         layout.setConstraints(m_clReserveSturm, constraints);
         centerPanel.add(m_clReserveSturm);
@@ -508,7 +508,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         constraints.gridx = 3;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveFluegel = new SpielerPositionsPanel(this, ISpielerPosition.substWinger, m_bPrint,
+        m_clReserveFluegel = new PlayerPositionPanel(this, ISpielerPosition.substWinger, m_bPrint,
                                                        m_bMinimize);
         layout.setConstraints(m_clReserveFluegel, constraints);
         centerPanel.add(m_clReserveFluegel);
