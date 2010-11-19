@@ -24,7 +24,7 @@ import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.AufstellungsListRenderer;
 import de.hattrickorganizer.gui.model.LineupListRenderer;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
@@ -111,7 +111,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
      * @param nextAufstellung TODO Missing Constructuor Parameter Documentation
      * @param lastAufstellung TODO Missing Constructuor Parameter Documentation
      */
-    public static void setHRFAufstellung(Aufstellung nextAufstellung, Aufstellung lastAufstellung) {
+    public static void setHRFAufstellung(Lineup nextAufstellung, Lineup lastAufstellung) {
 		if (nextAufstellung != null) {
 			m_clHRFNextAufstellung = new AufstellungCBItem(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"),
 					nextAufstellung.duplicate());
@@ -188,7 +188,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 			}
         	
             //Abfrage##
-			DBZugriff.instance().deleteAufstellung(Aufstellung.NO_HRF_VERBINDUNG,
+			DBZugriff.instance().deleteAufstellung(Lineup.NO_HRF_VERBINDUNG,
 					((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText());
 			HOMainFrame.instance().getInfoPanel().setLangInfoText(
 					HOVerwaltung.instance().getLanguageString("Aufstellung") + " "
@@ -403,7 +403,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 
 		for (int i = 0; i < aufstellungsnamen.size(); i++) {
 			aufstellungsCBItems.add(new AufstellungCBItem(aufstellungsnamen.get(i).toString(), DBZugriff.instance().getAufstellung(
-					Aufstellung.NO_HRF_VERBINDUNG, aufstellungsnamen.get(i).toString())));
+					Lineup.NO_HRF_VERBINDUNG, aufstellungsnamen.get(i).toString())));
 		}
 
 		return aufstellungsCBItems;

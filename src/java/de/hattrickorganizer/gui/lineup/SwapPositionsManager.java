@@ -2,7 +2,7 @@ package de.hattrickorganizer.gui.lineup;
 
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.Updateable;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 public class SwapPositionsManager {
@@ -46,7 +46,7 @@ public class SwapPositionsManager {
 
 	private void swapPositionsInLineup(SwapPositionFeature swapPositionA,
 			SwapPositionFeature swapPositionB) {
-		Aufstellung lineup = HOVerwaltung.instance().getModel()
+		Lineup lineup = HOVerwaltung.instance().getModel()
 				.getAufstellung();
 
 		int positionA = swapPositionA.getPositionsID();
@@ -71,7 +71,7 @@ public class SwapPositionsManager {
 	 * @param swapPositionsManager
 	 *            the {@link SwapPositionsManager} to register this position to.
 	 */
-	public void addSwapCapabilityTo(SpielerPositionsPanel spielerPositionsPanel) {
+	public void addSwapCapabilityTo(PlayerPositionPanel spielerPositionsPanel) {
 		SwapPositionFeature swapPositionFeature = new SwapPositionFeature(
 				spielerPositionsPanel, this);
 	}
