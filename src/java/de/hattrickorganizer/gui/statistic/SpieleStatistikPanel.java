@@ -672,7 +672,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                 for (int j = 0; j < team.size(); j++) {
                     final MatchLineupPlayer player = (MatchLineupPlayer) team.get(j);
 
-                    if (player.getId() < ISpielerPosition.beginnReservere) {
+                    if (player.getId() < ISpielerPosition.startReserves) {
                         float rating = (float) player.getRating();
 
                         if (rating > 0) {
