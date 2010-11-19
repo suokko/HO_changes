@@ -330,8 +330,8 @@ public class HOVerwaltung {
         final HOModel model = new HOModel();
         model.setSpieler(DBZugriff.instance().getSpieler(id));
         model.setAllOldSpieler(DBZugriff.instance().getAllSpieler());
-        model.setAufstellung(DBZugriff.instance().getAufstellung(id,Aufstellung.DEFAULT_NAME));
-        model.setLastAufstellung(DBZugriff.instance().getAufstellung(id,Aufstellung.DEFAULT_NAMELAST));
+        model.setAufstellung(DBZugriff.instance().getAufstellung(id,Lineup.DEFAULT_NAME));
+        model.setLastAufstellung(DBZugriff.instance().getAufstellung(id,Lineup.DEFAULT_NAMELAST));
         model.setBasics(DBZugriff.instance().getBasics(id));
         model.setFinanzen(DBZugriff.instance().getFinanzen(id));
         model.setLiga(DBZugriff.instance().getLiga(id));
