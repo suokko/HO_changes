@@ -1,7 +1,7 @@
 // %1683810490:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 
 
 /**
@@ -12,7 +12,7 @@ import de.hattrickorganizer.model.Aufstellung;
 public class AufstellungCBItem {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Aufstellung m_clAufstellung;
+    private Lineup m_clAufstellung;
     private String m_sText;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ public class AufstellungCBItem {
      * @param text TODO Missing Constructuor Parameter Documentation
      * @param aufstellung TODO Missing Constructuor Parameter Documentation
      */
-    public AufstellungCBItem(String text, Aufstellung aufstellung) {
+    public AufstellungCBItem(String text, Lineup aufstellung) {
         m_sText = text;
         m_clAufstellung = aufstellung;
     }
@@ -44,7 +44,7 @@ public class AufstellungCBItem {
      *
      * @param aufstellung TODO Missing Method Parameter Documentation
      */
-    public final void setAufstellung(Aufstellung aufstellung) {
+    public final void setAufstellung(Lineup aufstellung) {
         m_clAufstellung = aufstellung;
     }
 
@@ -53,7 +53,7 @@ public class AufstellungCBItem {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Aufstellung getAufstellung() {
+    public final Lineup getAufstellung() {
         return m_clAufstellung;
     }
 

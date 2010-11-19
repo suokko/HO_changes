@@ -238,25 +238,25 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     };
 
     private final byte[] playerPosition = new byte[]{
-    		ISpielerPosition.TORWART,
-            ISpielerPosition.INNENVERTEIDIGER,
-            ISpielerPosition.INNENVERTEIDIGER_AUS,
-            ISpielerPosition.INNENVERTEIDIGER_OFF,
-            ISpielerPosition.AUSSENVERTEIDIGER,
-            ISpielerPosition.AUSSENVERTEIDIGER_IN,
-            ISpielerPosition.AUSSENVERTEIDIGER_OFF,
-            ISpielerPosition.AUSSENVERTEIDIGER_DEF,
-            ISpielerPosition.MITTELFELD,
-            ISpielerPosition.MITTELFELD_AUS,
-            ISpielerPosition.MITTELFELD_OFF,
-            ISpielerPosition.MITTELFELD_DEF,
-            ISpielerPosition.FLUEGELSPIEL,
-            ISpielerPosition.FLUEGELSPIEL_IN,
-            ISpielerPosition.FLUEGELSPIEL_OFF,
-            ISpielerPosition.FLUEGELSPIEL_DEF,
-            ISpielerPosition.STURM,
-            ISpielerPosition.STURM_AUS,
-            ISpielerPosition.STURM_DEF
+    		ISpielerPosition.KEEPER,
+            ISpielerPosition.CENTRAL_DEFENDER,
+            ISpielerPosition.CENTRAL_DEFENDER_TOWING,
+            ISpielerPosition.CENTRAL_DEFENDER_OFF,
+            ISpielerPosition.BACK,
+            ISpielerPosition.BACK_TOMID,
+            ISpielerPosition.BACK_OFF,
+            ISpielerPosition.BACK_DEF,
+            ISpielerPosition.MIDFIELDER,
+            ISpielerPosition.MIDFIELDER_TOWING,
+            ISpielerPosition.MIDFIELDER_OFF,
+            ISpielerPosition.MIDFIELDER_DEF,
+            ISpielerPosition.WINGER,
+            ISpielerPosition.WINGER_TOMID,
+            ISpielerPosition.WINGER_OFF,
+            ISpielerPosition.WINGER_DEF,
+            ISpielerPosition.FORWARD,
+            ISpielerPosition.FORWARD_TOWING,
+            ISpielerPosition.FORWARD_DEF
 
     };
 
