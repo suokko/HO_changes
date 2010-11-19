@@ -358,7 +358,7 @@ public class XMLExporter  {
 					ISpieler playerData = (ISpieler) matchData.getPlayers().get(new Integer(playerMatch.getSpielerId()));
 
 					//Bank + verletzte überspringen
-					if (playerMatch.getId() >= ISpielerPosition.beginnReservere) {
+					if (playerMatch.getId() >= ISpielerPosition.startReserves) {
 						continue;
 					}
 
