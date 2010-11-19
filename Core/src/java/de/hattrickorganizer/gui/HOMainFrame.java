@@ -51,7 +51,7 @@ import de.hattrickorganizer.gui.injury.InjuryDialog;
 import de.hattrickorganizer.gui.keepertool.KeeperToolDialog;
 import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
-import de.hattrickorganizer.gui.lineup.AufstellungsPanel;
+import de.hattrickorganizer.gui.lineup.LineupPanel;
 import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.notepad.NotepadDialog;
@@ -136,7 +136,7 @@ public final class HOMainFrame extends JFrame
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private ArenaSizerPanel m_jpArenaSizer;
-	private AufstellungsPanel m_jpAufstellung;
+	private LineupPanel m_jpAufstellung;
 	private InfoPanel m_jpInfoPanel;
 
 	//    private TrainingsPanel          m_jpTrainingshelfer     =   null;
@@ -339,7 +339,7 @@ public final class HOMainFrame extends JFrame
 		return m_jpArenaSizer;
 	}
 
-	public AufstellungsPanel getAufstellungsPanel() {
+	public LineupPanel getAufstellungsPanel() {
 		return m_jpAufstellung;
 	}
 
@@ -827,7 +827,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		//Aufstellung
-		m_jpAufstellung = new AufstellungsPanel();
+		m_jpAufstellung = new LineupPanel();
 
 		if (!gui.UserParameter.instance().tempTabAufstellung) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), m_jpAufstellung);
