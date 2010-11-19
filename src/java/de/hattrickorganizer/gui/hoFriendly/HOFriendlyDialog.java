@@ -378,7 +378,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
             if (sb.Heim().getSpielerById(heim[i].getSpielerId()) != null) {
                 buffer.append("<tr><td><b>");
 
-                if (heim[i].getId() >= de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
+                if (heim[i].getId() >= de.hattrickorganizer.model.SpielerPosition.startReserves) {
                     buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Reserve"));
                     buffer.append(" ");
                 }
@@ -395,7 +395,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
             if (sb.Gast().getSpielerById(gast[i].getSpielerId()) != null) {
                 buffer.append("<td><b>");
 
-                if (gast[i].getId() >= de.hattrickorganizer.model.SpielerPosition.beginnReservere) {
+                if (gast[i].getId() >= de.hattrickorganizer.model.SpielerPosition.startReserves) {
                     buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Reserve"));
                     buffer.append(" ");
                 }
