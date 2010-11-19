@@ -11,7 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
 import de.hattrickorganizer.gui.model.SpielerCBItem;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 
@@ -69,7 +69,7 @@ public class SwapPositionFeature {
 		}
 
 		private boolean playerIsSelectedOnThisPosition() {
-			Aufstellung lineup = HOVerwaltung.instance().getModel().getAufstellung();
+			Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 			if (lineup.getPlayerByPositionID(getPositionsID()) != null) {
 				return true;
 			}
@@ -81,14 +81,14 @@ public class SwapPositionFeature {
 	private final SwapPositionsManager swapPositionsManager;
 	private final int positionsID;
 
-	public SwapPositionFeature(SpielerPositionsPanel spielerPositionsPanel,
+	public SwapPositionFeature(PlayerPositionPanel spielerPositionsPanel,
 			final SwapPositionsManager swapPositionsManager) {
 		this.positionsID = spielerPositionsPanel.getPositionsID();
 		this.swapPositionsManager = swapPositionsManager;
 		initSwapButton(spielerPositionsPanel);
 	}
 
-	private void initSwapButton(SpielerPositionsPanel spielerPositionsPanel) {
+	private void initSwapButton(PlayerPositionPanel spielerPositionsPanel) {
 		customizeSwapButton();
 		addButtonToPanel(spielerPositionsPanel);
 	}
@@ -105,7 +105,7 @@ public class SwapPositionFeature {
 				this.swapPositionsManager));
 	}
 
-	private void addButtonToPanel(SpielerPositionsPanel spielerPositionsPanel) {
+	private void addButtonToPanel(PlayerPositionPanel spielerPositionsPanel) {
 		GridBagLayout layout = (GridBagLayout) spielerPositionsPanel
 				.getLayout();
 		layout.setConstraints(getSwapButton(), createSwapButtonConstraints());
@@ -116,7 +116,7 @@ public class SwapPositionFeature {
 
 	private GridBagConstraints createSwapButtonConstraints() {
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 1;
+		constraints.gridx = 5;
 		constraints.gridy = 0;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0.0;
