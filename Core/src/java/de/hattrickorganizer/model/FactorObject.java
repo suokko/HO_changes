@@ -18,7 +18,7 @@ public final class FactorObject {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** The position that is described by this FactorObject */
-    private byte m_bPosition = ISpielerPosition.UNBESTIMMT;
+    private byte m_bPosition = ISpielerPosition.UNKNOWN;
 
     /** Influence of Winger for this position */
     private float m_fFluegelspiel;

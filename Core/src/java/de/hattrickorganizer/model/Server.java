@@ -516,12 +516,12 @@ public class Server implements java.lang.Runnable {
             txt[i] = pl.getName() + " spielt "
                      + SpielerPosition.getNameForPosition(sp[i].getPosition()) + " mit STK : "
                      + pl.getStk(sp[i].getPosition()) + ", TW: "
-                     + pl.getStk(ISpielerPosition.TORWART) + ", IV: "
-                     + pl.getStk(ISpielerPosition.INNENVERTEIDIGER) + ", AV: "
-                     + pl.getStk(ISpielerPosition.AUSSENVERTEIDIGER) + ", FL: "
-                     + pl.getStk(ISpielerPosition.FLUEGELSPIEL) + ", IM: "
-                     + pl.getStk(ISpielerPosition.MITTELFELD) + ", ST: "
-                     + pl.getStk(ISpielerPosition.STURM);
+                     + pl.getStk(ISpielerPosition.KEEPER) + ", IV: "
+                     + pl.getStk(ISpielerPosition.CENTRAL_DEFENDER) + ", AV: "
+                     + pl.getStk(ISpielerPosition.BACK) + ", FL: "
+                     + pl.getStk(ISpielerPosition.WINGER) + ", IM: "
+                     + pl.getStk(ISpielerPosition.MIDFIELDER) + ", ST: "
+                     + pl.getStk(ISpielerPosition.FORWARD);
         }
 
         if (sp != null) {

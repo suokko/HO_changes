@@ -188,35 +188,35 @@ public class MatchLineupTeam implements IMatchLineupTeam {
         for (int i = 0; i < m_vAufstellung.size(); i++) {
             player = (MatchLineupPlayer) m_vAufstellung.get(i);
 
-            if ((player != null) && (player.getId() < ISpielerPosition.beginnReservere)) {
+            if ((player != null) && (player.getId() < ISpielerPosition.startReserves)) {
                 switch (player.getPosition()) {
-                    case ISpielerPosition.UNBESTIMMT:
+                    case ISpielerPosition.UNKNOWN:
                         break;
 
-                    case ISpielerPosition.AUSSENVERTEIDIGER:
-                    case ISpielerPosition.AUSSENVERTEIDIGER_IN:
-                    case ISpielerPosition.AUSSENVERTEIDIGER_OFF:
-                    case ISpielerPosition.AUSSENVERTEIDIGER_DEF:
-                    case ISpielerPosition.INNENVERTEIDIGER:
-                    case ISpielerPosition.INNENVERTEIDIGER_AUS:
-                    case ISpielerPosition.INNENVERTEIDIGER_OFF:
+                    case ISpielerPosition.BACK:
+                    case ISpielerPosition.BACK_TOMID:
+                    case ISpielerPosition.BACK_OFF:
+                    case ISpielerPosition.BACK_DEF:
+                    case ISpielerPosition.CENTRAL_DEFENDER:
+                    case ISpielerPosition.CENTRAL_DEFENDER_TOWING:
+                    case ISpielerPosition.CENTRAL_DEFENDER_OFF:
                         abw++;
                         break;
 
-                    case ISpielerPosition.MITTELFELD:
-                    case ISpielerPosition.MITTELFELD_OFF:
-                    case ISpielerPosition.MITTELFELD_DEF:
-                    case ISpielerPosition.MITTELFELD_AUS:
-                    case ISpielerPosition.FLUEGELSPIEL:
-                    case ISpielerPosition.FLUEGELSPIEL_IN:
-                    case ISpielerPosition.FLUEGELSPIEL_OFF:
-                    case ISpielerPosition.FLUEGELSPIEL_DEF:
+                    case ISpielerPosition.MIDFIELDER:
+                    case ISpielerPosition.MIDFIELDER_OFF:
+                    case ISpielerPosition.MIDFIELDER_DEF:
+                    case ISpielerPosition.MIDFIELDER_TOWING:
+                    case ISpielerPosition.WINGER:
+                    case ISpielerPosition.WINGER_TOMID:
+                    case ISpielerPosition.WINGER_OFF:
+                    case ISpielerPosition.WINGER_DEF:
                         mf++;
                         break;
 
-                    case ISpielerPosition.STURM:
-                    case ISpielerPosition.STURM_AUS:
-                    case ISpielerPosition.STURM_DEF:
+                    case ISpielerPosition.FORWARD:
+                    case ISpielerPosition.FORWARD_TOWING:
+                    case ISpielerPosition.FORWARD_DEF:
                         st++;
                         break;
                 }

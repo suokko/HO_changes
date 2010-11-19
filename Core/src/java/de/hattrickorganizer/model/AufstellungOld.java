@@ -13,7 +13,7 @@ import plugins.ISpieler;
  *
  * @author thomas.werth
  */
-public final class AufstellungOld extends Aufstellung implements plugins.ILineUp {
+public final class AufstellungOld extends Lineup implements plugins.ILineUp {
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private ISpieler[] players = new ISpieler[11];

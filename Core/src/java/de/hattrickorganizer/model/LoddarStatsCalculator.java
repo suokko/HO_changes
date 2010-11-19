@@ -104,7 +104,7 @@ public class LoddarStatsCalculator {
 	 */
 	public final float HQ(double x) {
 		// first convert to original HT rating (1...80)
-		float htRating = (float) Aufstellung.HTfloat2int(x);
+		float htRating = (float) Lineup.HTfloat2int(x);
 
 		// and now LoddarStats Hattrick-Quality function (?)
 		double result = (2.0f * htRating) / (htRating + 80.0f);

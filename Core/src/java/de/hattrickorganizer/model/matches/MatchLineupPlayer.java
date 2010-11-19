@@ -156,7 +156,7 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
         byte ret = super.getPosition();
 
         ///wenn pos nicht bestimmt werden kann dann die roleID zurückwerfen
-        if (ret == ISpielerPosition.UNBESTIMMT) {
+        if (ret == ISpielerPosition.UNKNOWN) {
             //m_iId;
             ret = (byte) getId();
         }

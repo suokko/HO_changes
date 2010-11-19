@@ -28,48 +28,48 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
     /** Array mit den Konstanten (CBItems) für die Positionen, Ohne Ausgewechselt */
     public static final CBItem[] POSITIONEN = {
-                                                  new CBItem(SpielerPosition.getNameForPosition(UNBESTIMMT),
-                                                             UNBESTIMMT),
-                                                  new CBItem(SpielerPosition.getNameForPosition(TRAINER),
-                                                             TRAINER),
-                                                  new CBItem(SpielerPosition.getNameForPosition(TORWART),
-                                                             TORWART),
-                                                  new CBItem(SpielerPosition.getNameForPosition(INNENVERTEIDIGER),
-                                                             INNENVERTEIDIGER),
-                                                  new CBItem(SpielerPosition.getNameForPosition(INNENVERTEIDIGER_OFF),
-                                                             INNENVERTEIDIGER_OFF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(INNENVERTEIDIGER_AUS),
-                                                             INNENVERTEIDIGER_AUS),
-                                                  new CBItem(SpielerPosition.getNameForPosition(AUSSENVERTEIDIGER),
-                                                             AUSSENVERTEIDIGER),
-                                                  new CBItem(SpielerPosition.getNameForPosition(AUSSENVERTEIDIGER_OFF),
-                                                             AUSSENVERTEIDIGER_OFF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(AUSSENVERTEIDIGER_DEF),
-                                                             AUSSENVERTEIDIGER_DEF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(AUSSENVERTEIDIGER_IN),
-                                                             AUSSENVERTEIDIGER_IN),
-                                                  new CBItem(SpielerPosition.getNameForPosition(MITTELFELD),
-                                                             MITTELFELD),
-                                                  new CBItem(SpielerPosition.getNameForPosition(MITTELFELD_OFF),
-                                                             MITTELFELD_OFF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(MITTELFELD_DEF),
-                                                             MITTELFELD_DEF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(MITTELFELD_AUS),
-                                                             MITTELFELD_AUS),
-                                                  new CBItem(SpielerPosition.getNameForPosition(FLUEGELSPIEL),
-                                                             FLUEGELSPIEL),
-                                                  new CBItem(SpielerPosition.getNameForPosition(FLUEGELSPIEL_OFF),
-                                                             FLUEGELSPIEL_OFF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(FLUEGELSPIEL_DEF),
-                                                             FLUEGELSPIEL_DEF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(FLUEGELSPIEL_IN),
-                                                             FLUEGELSPIEL_IN),
-                                                  new CBItem(SpielerPosition.getNameForPosition(STURM),
-                                                             STURM),
-                                                  new CBItem(SpielerPosition.getNameForPosition(STURM_DEF),
-                                                             STURM_DEF),
-                                                  new CBItem(SpielerPosition.getNameForPosition(STURM_AUS),
-                                                             STURM_AUS)
+                                                  new CBItem(SpielerPosition.getNameForPosition(UNKNOWN),
+                                                             UNKNOWN),
+                                                  new CBItem(SpielerPosition.getNameForPosition(COACH),
+                                                             COACH),
+                                                  new CBItem(SpielerPosition.getNameForPosition(KEEPER),
+                                                             KEEPER),
+                                                  new CBItem(SpielerPosition.getNameForPosition(CENTRAL_DEFENDER),
+                                                             CENTRAL_DEFENDER),
+                                                  new CBItem(SpielerPosition.getNameForPosition(CENTRAL_DEFENDER_OFF),
+                                                             CENTRAL_DEFENDER_OFF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(CENTRAL_DEFENDER_TOWING),
+                                                             CENTRAL_DEFENDER_TOWING),
+                                                  new CBItem(SpielerPosition.getNameForPosition(BACK),
+                                                             BACK),
+                                                  new CBItem(SpielerPosition.getNameForPosition(BACK_OFF),
+                                                             BACK_OFF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(BACK_DEF),
+                                                             BACK_DEF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(BACK_TOMID),
+                                                             BACK_TOMID),
+                                                  new CBItem(SpielerPosition.getNameForPosition(MIDFIELDER),
+                                                             MIDFIELDER),
+                                                  new CBItem(SpielerPosition.getNameForPosition(MIDFIELDER_OFF),
+                                                             MIDFIELDER_OFF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(MIDFIELDER_DEF),
+                                                             MIDFIELDER_DEF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(MIDFIELDER_TOWING),
+                                                             MIDFIELDER_TOWING),
+                                                  new CBItem(SpielerPosition.getNameForPosition(WINGER),
+                                                             WINGER),
+                                                  new CBItem(SpielerPosition.getNameForPosition(WINGER_OFF),
+                                                             WINGER_OFF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(WINGER_DEF),
+                                                             WINGER_DEF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(WINGER_TOMID),
+                                                             WINGER_TOMID),
+                                                  new CBItem(SpielerPosition.getNameForPosition(FORWARD),
+                                                             FORWARD),
+                                                  new CBItem(SpielerPosition.getNameForPosition(FORWARD_DEF),
+                                                             FORWARD_DEF),
+                                                  new CBItem(SpielerPosition.getNameForPosition(FORWARD_TOWING),
+                                                             FORWARD_TOWING)
                                               };
 
     //Konstanten für TRAININGSEFFEKTE
@@ -166,40 +166,40 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
      */
     public static int getHTPosidForHOPosition4Image(byte posId) {
         switch (posId) {
-            case TORWART:
+            case KEEPER:
                 return keeper;
 
-            case INNENVERTEIDIGER:
-            case INNENVERTEIDIGER_AUS:
-            case INNENVERTEIDIGER_OFF:
-                return insideBack1;
+            case CENTRAL_DEFENDER:
+            case CENTRAL_DEFENDER_TOWING:
+            case CENTRAL_DEFENDER_OFF:
+                return rightCentralDefender;
 
-            case AUSSENVERTEIDIGER:
-            case AUSSENVERTEIDIGER_IN:
-            case AUSSENVERTEIDIGER_OFF:
-            case AUSSENVERTEIDIGER_DEF:
+            case BACK:
+            case BACK_TOMID:
+            case BACK_OFF:
+            case BACK_DEF:
                 return rightBack;
 
-            case MITTELFELD:
-            case MITTELFELD_OFF:
-            case MITTELFELD_DEF:
-            case MITTELFELD_AUS:
-                return insideMid1;
+            case MIDFIELDER:
+            case MIDFIELDER_OFF:
+            case MIDFIELDER_DEF:
+            case MIDFIELDER_TOWING:
+                return rightInnerMidfield;
 
-            case FLUEGELSPIEL:
-            case FLUEGELSPIEL_IN:
-            case FLUEGELSPIEL_OFF:
-            case FLUEGELSPIEL_DEF:
+            case WINGER:
+            case WINGER_TOMID:
+            case WINGER_OFF:
+            case WINGER_DEF:
                 return rightWinger;
 
-            case STURM:
-            case STURM_AUS:
-            case STURM_DEF:
-                return forward1;
+            case FORWARD:
+            case FORWARD_TOWING:
+            case FORWARD_DEF:
+                return rightForward;
 
-            case AUSGEWECHSELT1:
-            case AUSGEWECHSELT2:
-            case AUSGEWECHSELT3:
+            case SUBSTITUTED1:
+            case SUBSTITUTED2:
+            case SUBSTITUTED3:
                 return ausgewechselt;
 
             default: {
@@ -219,66 +219,66 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
     public static String getKurzNameForPosition(byte posId) {
 
         switch (posId) {
-            case TORWART:
+            case KEEPER:
                 return HOVerwaltung.instance().getLanguageString("TORW");
 
-            case INNENVERTEIDIGER:
+            case CENTRAL_DEFENDER:
                 return HOVerwaltung.instance().getLanguageString("IV");
 
-            case INNENVERTEIDIGER_AUS:
+            case CENTRAL_DEFENDER_TOWING:
                 return HOVerwaltung.instance().getLanguageString("IVA");
 
-            case INNENVERTEIDIGER_OFF:
+            case CENTRAL_DEFENDER_OFF:
                 return HOVerwaltung.instance().getLanguageString("IVO");
 
-            case AUSSENVERTEIDIGER:
+            case BACK:
                 return HOVerwaltung.instance().getLanguageString("AV");
 
-            case AUSSENVERTEIDIGER_IN:
+            case BACK_TOMID:
                 return HOVerwaltung.instance().getLanguageString("AVI");
 
-            case AUSSENVERTEIDIGER_OFF:
+            case BACK_OFF:
                 return HOVerwaltung.instance().getLanguageString("AVO");
 
-            case AUSSENVERTEIDIGER_DEF:
+            case BACK_DEF:
                 return HOVerwaltung.instance().getLanguageString("AVD");
 
-            case MITTELFELD:
+            case MIDFIELDER:
                 return HOVerwaltung.instance().getLanguageString("MIT");
 
-            case MITTELFELD_OFF:
+            case MIDFIELDER_OFF:
                 return HOVerwaltung.instance().getLanguageString("MITO");
 
-            case MITTELFELD_DEF:
+            case MIDFIELDER_DEF:
                 return HOVerwaltung.instance().getLanguageString("MITD");
 
-            case MITTELFELD_AUS:
+            case MIDFIELDER_TOWING:
                 return HOVerwaltung.instance().getLanguageString("MITA");
 
-            case FLUEGELSPIEL:
+            case WINGER:
                 return HOVerwaltung.instance().getLanguageString("FLG");
 
-            case FLUEGELSPIEL_IN:
+            case WINGER_TOMID:
                 return HOVerwaltung.instance().getLanguageString("FLGI");
 
-            case FLUEGELSPIEL_OFF:
+            case WINGER_OFF:
                 return HOVerwaltung.instance().getLanguageString("FLGO");
 
-            case FLUEGELSPIEL_DEF:
+            case WINGER_DEF:
                 return HOVerwaltung.instance().getLanguageString("FLGD");
 
-            case STURM:
+            case FORWARD:
                 return HOVerwaltung.instance().getLanguageString("STU");
 
-            case STURM_AUS:
+            case FORWARD_TOWING:
                 return HOVerwaltung.instance().getLanguageString("STUA");
                 
-            case STURM_DEF:
+            case FORWARD_DEF:
                 return HOVerwaltung.instance().getLanguageString("STUD");
 
-            case AUSGEWECHSELT1:
-            case AUSGEWECHSELT2:
-            case AUSGEWECHSELT3:
+            case SUBSTITUTED1:
+            case SUBSTITUTED2:
+            case SUBSTITUTED3:
                 return HOVerwaltung.instance().getLanguageString("Ausgewechselt");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
@@ -302,11 +302,14 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
             case rightBack:
                 return "rightBack";
 
-            case insideBack1:
-                return "insideBack1";
+            case rightCentralDefender:
+                return "rightCentralDefender";
 
-            case insideBack2:
-                return "insideBack2";
+            case leftCentralDefender:
+                return "leftCentralDefender";
+                
+            case middleCentralDefender:
+            	return "middleCentralDefender";
 
             case leftBack:
                 return "leftBack";
@@ -314,25 +317,31 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
             case rightWinger:
                 return "rightWinger";
 
-            case insideMid1:
-                return "insideMid1";
+            case rightInnerMidfield:
+                return "rightInnerMidfield";
+                
+            case centralInnerMidfield:
+            	return "centralInnerMidfield";
 
-            case insideMid2:
-                return "insideMid2";
+            case leftInnerMidfield:
+                return "leftInnerMidfield";
 
             case leftWinger:
                 return "leftWinger";
 
-            case forward1:
-                return "forward1";
+            case rightForward:
+                return "rightForward";
+                
+            case centralForward:
+            	return "centralForward";
 
-            case forward2:
-                return "forward2";
+            case leftForward:
+                return "leftForward";
 
-            case substBack:
-                return "substBack";
+            case substDefender:
+                return "substDefender";
 
-            case substInsideMid:
+            case substInnerMidfield:
                 return "substInsideMid";
 
             case substWinger:
@@ -358,69 +367,69 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
     public static String getNameForPosition(byte posId) {
 
         switch (posId) {
-            case TORWART:
+            case KEEPER:
                 return HOVerwaltung.instance().getLanguageString("Torwart");
 
-            case INNENVERTEIDIGER:
+            case CENTRAL_DEFENDER:
                 return HOVerwaltung.instance().getLanguageString("Innenverteidiger");
 
-            case INNENVERTEIDIGER_AUS:
+            case CENTRAL_DEFENDER_TOWING:
                 return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus");
 
-            case INNENVERTEIDIGER_OFF:
+            case CENTRAL_DEFENDER_OFF:
                 return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off");
 
-            case AUSSENVERTEIDIGER:
+            case BACK:
                 return HOVerwaltung.instance().getLanguageString("Aussenverteidiger");
 
-            case AUSSENVERTEIDIGER_IN:
+            case BACK_TOMID:
                 return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In");
 
-            case AUSSENVERTEIDIGER_OFF:
+            case BACK_OFF:
                 return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off");
 
-            case AUSSENVERTEIDIGER_DEF:
+            case BACK_DEF:
                 return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def");
 
-            case MITTELFELD:
+            case MIDFIELDER:
                 return HOVerwaltung.instance().getLanguageString("Mittelfeld");
 
-            case MITTELFELD_OFF:
+            case MIDFIELDER_OFF:
                 return HOVerwaltung.instance().getLanguageString("Mittelfeld_Off");
 
-            case MITTELFELD_DEF:
+            case MIDFIELDER_DEF:
                 return HOVerwaltung.instance().getLanguageString("Mittelfeld_Def");
 
-            case MITTELFELD_AUS:
+            case MIDFIELDER_TOWING:
                 return HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus");
 
-            case FLUEGELSPIEL:
+            case WINGER:
                 return HOVerwaltung.instance().getLanguageString("Fluegel");
 
-            case FLUEGELSPIEL_IN:
+            case WINGER_TOMID:
                 return HOVerwaltung.instance().getLanguageString("Fluegelspiel_In");
 
-            case FLUEGELSPIEL_OFF:
+            case WINGER_OFF:
                 return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off");
 
-            case FLUEGELSPIEL_DEF:
+            case WINGER_DEF:
                 return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def");
 
-            case STURM:
+            case FORWARD:
                 return HOVerwaltung.instance().getLanguageString("Sturm");
 
-            case STURM_DEF:
+            case FORWARD_DEF:
                 return HOVerwaltung.instance().getLanguageString("Sturm_Def");
 
-            case STURM_AUS:
+            case FORWARD_TOWING:
                 return HOVerwaltung.instance().getLanguageString("Sturm_Aus");
 
-            case AUSGEWECHSELT1:
-            case AUSGEWECHSELT2:
-            case AUSGEWECHSELT3:
+            case SUBSTITUTED1:
+            case SUBSTITUTED2:
+            case SUBSTITUTED3:
                 return HOVerwaltung.instance().getLanguageString("Ausgewechselt");
 
-            case TRAINER:
+            case COACH:
                 return HOVerwaltung.instance().getLanguageString("Trainer");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
@@ -449,118 +458,89 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
     public static byte getPosition(int id, byte taktik) {
         switch (id) {
             case keeper:
-                return TORWART;
+                return KEEPER;
 
             case rightBack:
             case leftBack: {
-                if (taktik == ZUR_MITTE) {
-                    return AUSSENVERTEIDIGER_IN;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == ZUS_STUERMER_DEF) {
-                	return STURM_DEF;
-                } else if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == OFFENSIV) {
-                    return AUSSENVERTEIDIGER_OFF;
-                } else if (taktik == DEFENSIV) {
-                    return AUSSENVERTEIDIGER_DEF;
+                if (taktik == TOWARDS_MIDDLE) {
+                    return BACK_TOMID;
+                } else if (taktik == OFFENSIVE) {
+                    return BACK_OFF;
+                } else if (taktik == DEFENSIVE) {
+                    return BACK_DEF;
                 } else {
-                    return AUSSENVERTEIDIGER;
+                    return BACK;
                 }
             }
 
-            case insideBack1:
-            case insideBack2: {
-                if (taktik == NACH_AUSSEN) {
-                    return INNENVERTEIDIGER_AUS;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == ZUS_STUERMER_DEF) {
-                	return STURM_DEF;
-                } else if (taktik == OFFENSIV) {
-                    return INNENVERTEIDIGER_OFF;
+            case middleCentralDefender:
+            case rightCentralDefender:
+            case leftCentralDefender: {
+                if (taktik == TOWARDS_WING) {
+                    return CENTRAL_DEFENDER_TOWING;
+                } else if (taktik == OFFENSIVE) {
+                    return CENTRAL_DEFENDER_OFF;
                 } else {
-                    return INNENVERTEIDIGER;
+                    return CENTRAL_DEFENDER;
                 }
             }
 
             case rightWinger:
             case leftWinger: {
-                if (taktik == ZUR_MITTE) {
-                    return FLUEGELSPIEL_IN;
-                } else if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == ZUS_STUERMER_DEF) {
-                	return STURM_DEF;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == OFFENSIV) {
-                    return FLUEGELSPIEL_OFF;
-                } else if (taktik == DEFENSIV) {
-                    return FLUEGELSPIEL_DEF;
+                if (taktik == TOWARDS_MIDDLE) {
+                    return WINGER_TOMID;
+                } else if (taktik == OFFENSIVE) {
+                    return WINGER_OFF;
+                } else if (taktik == DEFENSIVE) {
+                    return WINGER_DEF;
                 } else {
-                    return FLUEGELSPIEL;
+                    return WINGER;
                 }
             }
 
-            case insideMid1:
-            case insideMid2: {
-                if (taktik == NACH_AUSSEN) {
-                    return MITTELFELD_AUS;
-                } else if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == ZUS_STUERMER_DEF) {
-                	return STURM_DEF;
-                } else if (taktik == OFFENSIV) {
-                    return MITTELFELD_OFF;
-                } else if (taktik == DEFENSIV) {
-                    return MITTELFELD_DEF;
+            case centralInnerMidfield:
+            case rightInnerMidfield:
+            case leftInnerMidfield: {
+                if (taktik == TOWARDS_WING) {
+                    return MIDFIELDER_TOWING;
+                } else if (taktik == OFFENSIVE) {
+                    return MIDFIELDER_OFF;
+                } else if (taktik == DEFENSIVE) {
+                    return MIDFIELDER_DEF;
                 } else {
-                    return MITTELFELD;
+                    return MIDFIELDER;
                 }
             }
 
-            case forward1:
-            case forward2: {
-                if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == DEFENSIV) {
-                    return STURM_DEF;
-                } else if (taktik == NACH_AUSSEN) {
-                    return STURM_AUS;
+            case centralForward:
+            case rightForward:
+            case leftForward: {
+            	if (taktik == DEFENSIVE) {
+                    return FORWARD_DEF;
+                } else if (taktik == TOWARDS_WING) {
+                    return FORWARD_TOWING;
                 } else {
-                    return STURM;
+                    return FORWARD;
                 }
             }
 
-            case substBack:
-                return INNENVERTEIDIGER;
+            case substDefender:
+                return CENTRAL_DEFENDER;
 
-            case substInsideMid:
-                return MITTELFELD;
+            case substInnerMidfield:
+                return MIDFIELDER;
 
             case substWinger:
-                return FLUEGELSPIEL;
+                return WINGER;
 
             case substKeeper:
-                return TORWART;
+                return KEEPER;
 
             case substForward:
-                return STURM;
+                return FORWARD;
         }
 
-        return UNBESTIMMT;
+        return UNKNOWN;
     }
 
     /**
@@ -596,16 +576,18 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
     /**
      * liefert eine ID nach der Sortiert werden kann ( z.B. Spierlübersichtstabelle
      *
+     * 
+     *
      * @return TODO Missing Return Method Documentation
      */
     public final int getSortId() {
         int id = this.getPosition();
 
-		if (id == ISpielerPosition.STURM_AUS)  {
+		if (id == ISpielerPosition.FORWARD_TOWING)  {
 			id = 18;
 		}
 
-        if (this.getId() >= ISpielerPosition.beginnReservere)  {
+        if (this.getId() >= ISpielerPosition.startReserves)  {
             id += 20;
         }
 
@@ -809,8 +791,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
             final SpielerPosition position = (SpielerPosition) obj;
 
             //Beide aufgestellt ?
-            if ((this.getId() < ISpielerPosition.beginnReservere)
-                && (position.getId() < ISpielerPosition.beginnReservere)) {
+            if ((this.getId() < ISpielerPosition.startReserves)
+                && (position.getId() < ISpielerPosition.startReserves)) {
                 if (this.getPosition() < position.getPosition()) {
                     return -1;
                 } else if (this.getPosition() == position.getPosition()) {
@@ -820,13 +802,13 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
                 }
             }
             //this aufgestellt ?
-            else if ((this.getId() < ISpielerPosition.beginnReservere)
-                     && (position.getId() >= ISpielerPosition.beginnReservere)) {
+            else if ((this.getId() < ISpielerPosition.startReserves)
+                     && (position.getId() >= ISpielerPosition.startReserves)) {
                 return -1;
             }
             //position aufgestellt
-            else if ((this.getId() >= ISpielerPosition.beginnReservere)
-                     && (position.getId() < ISpielerPosition.beginnReservere)) {
+            else if ((this.getId() >= ISpielerPosition.startReserves)
+                     && (position.getId() < ISpielerPosition.startReserves)) {
                 return 1;
             }
             //keiner aufgestellt
