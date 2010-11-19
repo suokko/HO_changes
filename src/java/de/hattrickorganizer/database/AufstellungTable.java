@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -36,9 +36,9 @@ public final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Aufstellung getAufstellung(int hrfID, String name) {
+	public Lineup getAufstellung(int hrfID, String name) {
 		ResultSet rs = null;
-		de.hattrickorganizer.model.Aufstellung auf = null;
+		de.hattrickorganizer.model.Lineup auf = null;
 		String sql = null;
 
 		sql = "SELECT * FROM "+getTableName()+" WHERE HRF_ID = " + hrfID + " and Aufstellungsname ='" + name + "'";
@@ -48,7 +48,7 @@ public final class AufstellungTable extends AbstractTable {
 			if (rs != null) {
 				rs.first();
 
-				auf = new de.hattrickorganizer.model.Aufstellung();
+				auf = new de.hattrickorganizer.model.Lineup();
 				auf.setKapitaen(rs.getInt("Kapitaen"));
 				auf.setKicker(rs.getInt("Kicker"));
 				auf.setTacticType(rs.getInt("Tactic"));
@@ -102,7 +102,7 @@ public final class AufstellungTable extends AbstractTable {
 	 */
 	public Vector<String> getUserAufstellungsListe() {
 		ResultSet rs = null;
-		final String statement = "SELECT Aufstellungsname FROM "+getTableName()+" WHERE HRF_ID=" + Aufstellung.NO_HRF_VERBINDUNG;
+		final String statement = "SELECT Aufstellungsname FROM "+getTableName()+" WHERE HRF_ID=" + Lineup.NO_HRF_VERBINDUNG;
 		final Vector<String> ret = new Vector<String>();
 
 		try {
@@ -129,7 +129,7 @@ public final class AufstellungTable extends AbstractTable {
 	 * @param aufstellung TODO Missing Constructuor Parameter Documentation
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveAufstellung(int hrfId, Aufstellung aufstellung, String name) {
+	public void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
 		String statement = null;
 
 		if (aufstellung != null) {
