@@ -482,7 +482,7 @@ public class HelperWrapper implements plugins.IHelper {
         }
 
         if (hoposcode < 4) {
-            return ISpielerPosition.insideBack1;
+            return ISpielerPosition.rightCentralDefender;
         }
 
         if ((hoposcode < 8)) {
@@ -490,7 +490,7 @@ public class HelperWrapper implements plugins.IHelper {
         }
 
         if ((hoposcode < 12)) {
-            return ISpielerPosition.insideMid1;
+            return ISpielerPosition.rightInnerMidfield;
         }
 
         if ((hoposcode < 16)) {
@@ -498,7 +498,7 @@ public class HelperWrapper implements plugins.IHelper {
         }
 
         if ((hoposcode < 18) || (hoposcode == 21)) {
-            return ISpielerPosition.forward1;
+            return ISpielerPosition.rightForward;
         }
 
         if (hoposcode < 0) {

@@ -1,7 +1,7 @@
 // %3512883119:de.hattrickorganizer.tools%
 package de.hattrickorganizer.tools;
 
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Basics;
 import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOModel;
@@ -236,7 +236,7 @@ public class HRFFileParser {
                 }
                 //lineup
                 else if (entity.toString().equalsIgnoreCase(HRFFileParser.LINEUP)) {
-                    hoModel.setAufstellung(new Aufstellung(properties));
+                    hoModel.setAufstellung(new Lineup(properties));
                 }
                 //economy
                 else if (entity.toString().equalsIgnoreCase(HRFFileParser.ECONOMY)) {
@@ -255,7 +255,7 @@ public class HRFFileParser {
                     hoModel.setXtraDaten(new XtraData(properties));
                     trainerID = Integer.parseInt(properties.getProperty("trainerid", "-1").toString());
                 } else if (entity.toString().equalsIgnoreCase(HRFFileParser.LASTLINEUP)) {
-                    hoModel.setLastAufstellung(new Aufstellung(properties));
+                    hoModel.setLastAufstellung(new Lineup(properties));
                 }
                 //Unbekannt
                 else {

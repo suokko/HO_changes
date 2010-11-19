@@ -33,27 +33,27 @@ public class LineupPanel extends JPanel {
 
     /** The Panels and Label */
     private JLabel m_jlTeamName;
-    private JPanel m_clAusgewechselt1;
-    private JPanel m_clAusgewechselt2;
-    private JPanel m_clAusgewechselt3;
-    private JPanel m_clLinkeAussenVerteidiger;
-    private JPanel m_clLinkeFluegel;
-    private JPanel m_clLinkeInnenVerteidiger;
-    private JPanel m_clLinkeMittelfeld;
-    private JPanel m_clLinkerSturm;
-    private JPanel m_clRechteAussenVerteidiger;
-    private JPanel m_clRechteFluegel;
-    private JPanel m_clRechteInnenVerteidiger;
-    private JPanel m_clRechteMittelfeld;
-    private JPanel m_clRechterSturm;
-    private JPanel m_clReserveFluegel;
-    private JPanel m_clReserveMittelfeld;
-    private JPanel m_clReserveSturm;
-    private JPanel m_clReserveTorwart;
-    private JPanel m_clReserveVerteidiger;
-    private JPanel m_clSpielfuehrer;
-    private JPanel m_clStandard;
-    private JPanel m_clTorwart;
+    private JPanel m_clSubstituted1;
+    private JPanel m_clSubstituted2;
+    private JPanel m_clSubstituted3;
+    private JPanel m_clLeftBack;
+    private JPanel m_clLeftWinger;
+    private JPanel m_clLeftCentralDefender;
+    private JPanel m_clLeftMidfield;
+    private JPanel m_clLeftForward;
+    private JPanel m_clRightBack;
+    private JPanel m_clRightWinger;
+    private JPanel m_clRightCentralDefender;
+    private JPanel m_clRightMidfield;
+    private JPanel m_clRightForward;
+    private JPanel m_clReserveWinger;
+    private JPanel m_clReserveMidfield;
+    private JPanel m_clReserveForward;
+    private JPanel m_clReserveKeeper;
+    private JPanel m_clReserveDefender;
+    private JPanel m_clCaptain;
+    private JPanel m_clSetPieceTaker;
+    private JPanel m_clKeeper;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getInjured1Panel() {
-        return m_clAusgewechselt1;
+        return m_clSubstituted1;
     }
 
     /**
@@ -85,7 +85,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getInjured2Panel() {
-        return m_clAusgewechselt2;
+        return m_clSubstituted2;
     }
 
     /**
@@ -94,7 +94,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getInjured3Panel() {
-        return m_clAusgewechselt3;
+        return m_clSubstituted3;
     }
 
     /**
@@ -103,7 +103,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getKeeperPanel() {
-        return m_clTorwart;
+        return m_clKeeper;
     }
 
     /**
@@ -112,7 +112,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getLeftCentralDefenderPanel() {
-        return m_clLinkeInnenVerteidiger;
+        return m_clLeftCentralDefender;
     }
 
     /**
@@ -121,7 +121,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getLeftForwardPanel() {
-        return m_clLinkerSturm;
+        return m_clLeftForward;
     }
 
     /**
@@ -130,7 +130,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getLeftMidfieldPanel() {
-        return m_clLinkeMittelfeld;
+        return m_clLeftMidfield;
     }
 
     /**
@@ -139,7 +139,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getLeftWingPanel() {
-        return m_clLinkeFluegel;
+        return m_clLeftWinger;
     }
 
     /**
@@ -148,7 +148,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getLeftWingbackPanel() {
-        return m_clLinkeAussenVerteidiger;
+        return m_clLeftBack;
     }
 
     /**
@@ -157,7 +157,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getReserveDefenderPanel() {
-        return m_clReserveVerteidiger;
+        return m_clReserveDefender;
     }
 
     /**
@@ -166,7 +166,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getReserveForwardPanel() {
-        return m_clReserveSturm;
+        return m_clReserveForward;
     }
 
     /**
@@ -175,7 +175,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getReserveKeeperPanel() {
-        return m_clReserveTorwart;
+        return m_clReserveKeeper;
     }
 
     /**
@@ -184,7 +184,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getReserveMidfieldPanel() {
-        return m_clReserveMittelfeld;
+        return m_clReserveMidfield;
     }
 
     /**
@@ -193,7 +193,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getReserveWingPanel() {
-        return m_clReserveFluegel;
+        return m_clReserveWinger;
     }
 
     /**
@@ -202,7 +202,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getRightCentralDefenderPanel() {
-        return m_clRechteInnenVerteidiger;
+        return m_clRightCentralDefender;
     }
 
     /**
@@ -211,7 +211,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getRightForwardPanel() {
-        return m_clRechterSturm;
+        return m_clRightForward;
     }
 
     /**
@@ -220,7 +220,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getRightMidfieldPanel() {
-        return m_clRechteMittelfeld;
+        return m_clRightMidfield;
     }
 
     /**
@@ -229,7 +229,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getRightWingPanel() {
-        return m_clRechteFluegel;
+        return m_clRightWinger;
     }
 
     /**
@@ -238,7 +238,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getRightWingbackPanel() {
-        return m_clRechteAussenVerteidiger;
+        return m_clRightBack;
     }
 
     /**
@@ -247,7 +247,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getSetPiecesPanel() {
-        return m_clStandard;
+        return m_clSetPieceTaker;
     }
 
     /**
@@ -256,7 +256,7 @@ public class LineupPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     public final JPanel getTeamLeaderPanel() {
-        return m_clSpielfuehrer;
+        return m_clCaptain;
     }
 
     //-- Getter/Setter ----------------------------------------------------------
@@ -332,10 +332,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 4;
         }
 
-        m_clTorwart = new JPanel();
-        m_clTorwart.setOpaque(false);
-        layout.setConstraints(m_clTorwart, constraints);
-        centerPanel.add(m_clTorwart);
+        m_clKeeper = new JPanel();
+        m_clKeeper.setOpaque(false);
+        layout.setConstraints(m_clKeeper, constraints);
+        centerPanel.add(m_clKeeper);
 
         if (flags) {
             constraints.gridx = 0;
@@ -347,10 +347,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteAussenVerteidiger = new JPanel();
-        m_clRechteAussenVerteidiger.setOpaque(false);
-        layout.setConstraints(m_clRechteAussenVerteidiger, constraints);
-        centerPanel.add(m_clRechteAussenVerteidiger);
+        m_clRightBack = new JPanel();
+        m_clRightBack.setOpaque(false);
+        layout.setConstraints(m_clRightBack, constraints);
+        centerPanel.add(m_clRightBack);
 
         if (flags) {
             constraints.gridx = 1;
@@ -362,10 +362,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteInnenVerteidiger = new JPanel();
-        m_clRechteInnenVerteidiger.setOpaque(false);
-        layout.setConstraints(m_clRechteInnenVerteidiger, constraints);
-        centerPanel.add(m_clRechteInnenVerteidiger);
+        m_clRightCentralDefender = new JPanel();
+        m_clRightCentralDefender.setOpaque(false);
+        layout.setConstraints(m_clRightCentralDefender, constraints);
+        centerPanel.add(m_clRightCentralDefender);
 
         if (flags) {
             constraints.gridx = 2;
@@ -377,10 +377,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeInnenVerteidiger = new JPanel();
-        m_clLinkeInnenVerteidiger.setOpaque(false);
-        layout.setConstraints(m_clLinkeInnenVerteidiger, constraints);
-        centerPanel.add(m_clLinkeInnenVerteidiger);
+        m_clLeftCentralDefender = new JPanel();
+        m_clLeftCentralDefender.setOpaque(false);
+        layout.setConstraints(m_clLeftCentralDefender, constraints);
+        centerPanel.add(m_clLeftCentralDefender);
 
         if (flags) {
             constraints.gridx = 3;
@@ -392,10 +392,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeAussenVerteidiger = new JPanel();
-        m_clLinkeAussenVerteidiger.setOpaque(false);
-        layout.setConstraints(m_clLinkeAussenVerteidiger, constraints);
-        centerPanel.add(m_clLinkeAussenVerteidiger);
+        m_clLeftBack = new JPanel();
+        m_clLeftBack.setOpaque(false);
+        layout.setConstraints(m_clLeftBack, constraints);
+        centerPanel.add(m_clLeftBack);
 
         if (flags) {
             constraints.gridx = 0;
@@ -407,10 +407,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteFluegel = new JPanel();
-        m_clRechteFluegel.setOpaque(false);
-        layout.setConstraints(m_clRechteFluegel, constraints);
-        centerPanel.add(m_clRechteFluegel);
+        m_clRightWinger = new JPanel();
+        m_clRightWinger.setOpaque(false);
+        layout.setConstraints(m_clRightWinger, constraints);
+        centerPanel.add(m_clRightWinger);
 
         if (flags) {
             constraints.gridx = 1;
@@ -422,10 +422,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechteMittelfeld = new JPanel();
-        m_clRechteMittelfeld.setOpaque(false);
-        layout.setConstraints(m_clRechteMittelfeld, constraints);
-        centerPanel.add(m_clRechteMittelfeld);
+        m_clRightMidfield = new JPanel();
+        m_clRightMidfield.setOpaque(false);
+        layout.setConstraints(m_clRightMidfield, constraints);
+        centerPanel.add(m_clRightMidfield);
 
         if (flags) {
             constraints.gridx = 2;
@@ -437,10 +437,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeMittelfeld = new JPanel();
-        m_clLinkeMittelfeld.setOpaque(false);
-        layout.setConstraints(m_clLinkeMittelfeld, constraints);
-        centerPanel.add(m_clLinkeMittelfeld);
+        m_clLeftMidfield = new JPanel();
+        m_clLeftMidfield.setOpaque(false);
+        layout.setConstraints(m_clLeftMidfield, constraints);
+        centerPanel.add(m_clLeftMidfield);
 
         if (flags) {
             constraints.gridx = 3;
@@ -452,10 +452,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkeFluegel = new JPanel();
-        m_clLinkeFluegel.setOpaque(false);
-        layout.setConstraints(m_clLinkeFluegel, constraints);
-        centerPanel.add(m_clLinkeFluegel);
+        m_clLeftWinger = new JPanel();
+        m_clLeftWinger.setOpaque(false);
+        layout.setConstraints(m_clLeftWinger, constraints);
+        centerPanel.add(m_clLeftWinger);
 
         if (flags) {
             constraints.gridx = 1;
@@ -467,10 +467,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clLinkerSturm = new JPanel();
-        m_clLinkerSturm.setOpaque(false);
-        layout.setConstraints(m_clLinkerSturm, constraints);
-        centerPanel.add(m_clLinkerSturm);
+        m_clLeftForward = new JPanel();
+        m_clLeftForward.setOpaque(false);
+        layout.setConstraints(m_clLeftForward, constraints);
+        centerPanel.add(m_clLeftForward);
 
         if (flags) {
             constraints.gridx = 2;
@@ -482,10 +482,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clRechterSturm = new JPanel();
-        m_clRechterSturm.setOpaque(false);
-        layout.setConstraints(m_clRechterSturm, constraints);
-        centerPanel.add(m_clRechterSturm);
+        m_clRightForward = new JPanel();
+        m_clRightForward.setOpaque(false);
+        layout.setConstraints(m_clRightForward, constraints);
+        centerPanel.add(m_clRightForward);
 
         if (flags) {
             constraints.gridx = 0;
@@ -497,10 +497,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clStandard = new JPanel();
-        m_clStandard.setOpaque(false);
-        layout.setConstraints(m_clStandard, constraints);
-        centerPanel.add(m_clStandard);
+        m_clSetPieceTaker = new JPanel();
+        m_clSetPieceTaker.setOpaque(false);
+        layout.setConstraints(m_clSetPieceTaker, constraints);
+        centerPanel.add(m_clSetPieceTaker);
 
         if (flags) {
             constraints.gridx = 1;
@@ -512,10 +512,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 2;
         }
 
-        m_clReserveTorwart = new JPanel();
-        m_clReserveTorwart.setOpaque(false);
-        layout.setConstraints(m_clReserveTorwart, constraints);
-        centerPanel.add(m_clReserveTorwart);
+        m_clReserveKeeper = new JPanel();
+        m_clReserveKeeper.setOpaque(false);
+        layout.setConstraints(m_clReserveKeeper, constraints);
+        centerPanel.add(m_clReserveKeeper);
 
         if (flags) {
             constraints.gridx = 3;
@@ -527,10 +527,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clSpielfuehrer = new JPanel();
-        m_clSpielfuehrer.setOpaque(false);
-        layout.setConstraints(m_clSpielfuehrer, constraints);
-        centerPanel.add(m_clSpielfuehrer);
+        m_clCaptain = new JPanel();
+        m_clCaptain.setOpaque(false);
+        layout.setConstraints(m_clCaptain, constraints);
+        centerPanel.add(m_clCaptain);
 
         if (flags) {
             constraints.gridx = 0;
@@ -542,10 +542,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveVerteidiger = new JPanel();
-        m_clReserveVerteidiger.setOpaque(false);
-        layout.setConstraints(m_clReserveVerteidiger, constraints);
-        centerPanel.add(m_clReserveVerteidiger);
+        m_clReserveDefender = new JPanel();
+        m_clReserveDefender.setOpaque(false);
+        layout.setConstraints(m_clReserveDefender, constraints);
+        centerPanel.add(m_clReserveDefender);
 
         if (flags) {
             constraints.gridx = 1;
@@ -557,10 +557,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveMittelfeld = new JPanel();
-        m_clReserveMittelfeld.setOpaque(false);
-        layout.setConstraints(m_clReserveMittelfeld, constraints);
-        centerPanel.add(m_clReserveMittelfeld);
+        m_clReserveMidfield = new JPanel();
+        m_clReserveMidfield.setOpaque(false);
+        layout.setConstraints(m_clReserveMidfield, constraints);
+        centerPanel.add(m_clReserveMidfield);
 
         if (flags) {
             constraints.gridx = 2;
@@ -572,10 +572,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveSturm = new JPanel();
-        m_clReserveSturm.setOpaque(false);
-        layout.setConstraints(m_clReserveSturm, constraints);
-        centerPanel.add(m_clReserveSturm);
+        m_clReserveForward = new JPanel();
+        m_clReserveForward.setOpaque(false);
+        layout.setConstraints(m_clReserveForward, constraints);
+        centerPanel.add(m_clReserveForward);
 
         if (flags) {
             constraints.gridx = 3;
@@ -587,10 +587,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clReserveFluegel = new JPanel();
-        m_clReserveFluegel.setOpaque(false);
-        layout.setConstraints(m_clReserveFluegel, constraints);
-        centerPanel.add(m_clReserveFluegel);
+        m_clReserveWinger = new JPanel();
+        m_clReserveWinger.setOpaque(false);
+        layout.setConstraints(m_clReserveWinger, constraints);
+        centerPanel.add(m_clReserveWinger);
 
         if (flags) {
             constraints.gridx = 0;
@@ -617,10 +617,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clAusgewechselt1 = new JPanel();
-        m_clAusgewechselt1.setOpaque(false);
-        layout.setConstraints(m_clAusgewechselt1, constraints);
-        centerPanel.add(m_clAusgewechselt1);
+        m_clSubstituted1 = new JPanel();
+        m_clSubstituted1.setOpaque(false);
+        layout.setConstraints(m_clSubstituted1, constraints);
+        centerPanel.add(m_clSubstituted1);
 
         if (flags) {
             constraints.gridx = 2;
@@ -632,10 +632,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clAusgewechselt2 = new JPanel();
-        m_clAusgewechselt2.setOpaque(false);
-        layout.setConstraints(m_clAusgewechselt2, constraints);
-        centerPanel.add(m_clAusgewechselt2);
+        m_clSubstituted2 = new JPanel();
+        m_clSubstituted2.setOpaque(false);
+        layout.setConstraints(m_clSubstituted2, constraints);
+        centerPanel.add(m_clSubstituted2);
 
         if (flags) {
             constraints.gridx = 3;
@@ -647,10 +647,10 @@ public class LineupPanel extends JPanel {
             constraints.gridwidth = 1;
         }
 
-        m_clAusgewechselt3 = new JPanel();
-        m_clAusgewechselt3.setOpaque(false);
-        layout.setConstraints(m_clAusgewechselt3, constraints);
-        centerPanel.add(m_clAusgewechselt3);
+        m_clSubstituted3 = new JPanel();
+        m_clSubstituted3.setOpaque(false);
+        layout.setConstraints(m_clSubstituted3, constraints);
+        centerPanel.add(m_clSubstituted3);
 
         add(centerPanel, BorderLayout.CENTER);
     }
