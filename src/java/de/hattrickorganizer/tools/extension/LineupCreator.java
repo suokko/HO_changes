@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
@@ -35,7 +35,7 @@ public class LineupCreator extends XMLCreator {
 		if (teamId == 0) {
 			return;
 		}
-		Aufstellung lineup = HOVerwaltung.instance().getModel().getAufstellung();
+		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 		File dir = new File("Info/" + teamId + "/Lineups");
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -52,19 +52,22 @@ public class LineupCreator extends XMLCreator {
 			
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.keeper));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.rightBack));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.insideBack1));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.insideBack2));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.leftCentralDefender));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.middleCentralDefender));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.rightCentralDefender));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.leftBack));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.rightWinger));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.insideMid1));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.insideMid2));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.rightInnerMidfield));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.centralInnerMidfield));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.leftInnerMidfield));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.leftWinger));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.forward1));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.forward2));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.rightForward));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.centralForward));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.leftForward));
 
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substKeeper));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substBack));
-			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substInsideMid));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substDefender));
+			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substInnerMidfield));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substWinger));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substForward));
 			

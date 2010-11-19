@@ -234,25 +234,25 @@ public class Helper extends LanguageFiles {
 
     /** Spielerpositionen */
 	public static final CBItem[] SPIELERPOSITIONEN = {
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.TORWART), ISpielerPosition.TORWART),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.INNENVERTEIDIGER), ISpielerPosition.INNENVERTEIDIGER),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.INNENVERTEIDIGER_OFF), ISpielerPosition.INNENVERTEIDIGER_OFF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.INNENVERTEIDIGER_AUS), ISpielerPosition.INNENVERTEIDIGER_AUS),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER), ISpielerPosition.AUSSENVERTEIDIGER),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_OFF), ISpielerPosition.AUSSENVERTEIDIGER_OFF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_DEF), ISpielerPosition.AUSSENVERTEIDIGER_DEF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.AUSSENVERTEIDIGER_IN), ISpielerPosition.AUSSENVERTEIDIGER_IN),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD), ISpielerPosition.MITTELFELD),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD_OFF), ISpielerPosition.MITTELFELD_OFF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD_DEF), ISpielerPosition.MITTELFELD_DEF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MITTELFELD_AUS), ISpielerPosition.MITTELFELD_AUS),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL), ISpielerPosition.FLUEGELSPIEL),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL_OFF), ISpielerPosition.FLUEGELSPIEL_OFF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL_DEF), ISpielerPosition.FLUEGELSPIEL_DEF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FLUEGELSPIEL_IN), ISpielerPosition.FLUEGELSPIEL_IN),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.STURM), ISpielerPosition.STURM),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.STURM_DEF), ISpielerPosition.STURM_DEF),
-			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.STURM_AUS), ISpielerPosition.STURM_AUS) };
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.KEEPER), ISpielerPosition.KEEPER),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.CENTRAL_DEFENDER), ISpielerPosition.CENTRAL_DEFENDER),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.CENTRAL_DEFENDER_OFF), ISpielerPosition.CENTRAL_DEFENDER_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.CENTRAL_DEFENDER_TOWING), ISpielerPosition.CENTRAL_DEFENDER_TOWING),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.BACK), ISpielerPosition.BACK),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.BACK_OFF), ISpielerPosition.BACK_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.BACK_DEF), ISpielerPosition.BACK_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.BACK_TOMID), ISpielerPosition.BACK_TOMID),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MIDFIELDER), ISpielerPosition.MIDFIELDER),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MIDFIELDER_OFF), ISpielerPosition.MIDFIELDER_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MIDFIELDER_DEF), ISpielerPosition.MIDFIELDER_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.MIDFIELDER_TOWING), ISpielerPosition.MIDFIELDER_TOWING),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.WINGER), ISpielerPosition.WINGER),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.WINGER_OFF), ISpielerPosition.WINGER_OFF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.WINGER_DEF), ISpielerPosition.WINGER_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.WINGER_TOMID), ISpielerPosition.WINGER_TOMID),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FORWARD), ISpielerPosition.FORWARD),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FORWARD_DEF), ISpielerPosition.FORWARD_DEF),
+			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FORWARD_TOWING), ISpielerPosition.FORWARD_TOWING) };
 
     /** team categories */
     public static final String[] TEAMSMILIES = { "", "A-Team.png",
@@ -558,8 +558,8 @@ public class Helper extends LanguageFiles {
 					break;
 				}
 	
-				case ISpielerPosition.insideBack1:
-				case ISpielerPosition.insideBack2: {
+				case ISpielerPosition.rightCentralDefender:
+				case ISpielerPosition.leftCentralDefender: {
 					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
 					break;
 				}
@@ -570,8 +570,8 @@ public class Helper extends LanguageFiles {
 					break;
 				}
 	
-				case ISpielerPosition.insideMid1:
-				case ISpielerPosition.insideMid2: {
+				case ISpielerPosition.rightInnerMidfield:
+				case ISpielerPosition.leftInnerMidfield: {
 					trickotfarbe = TRICKOT_MITTELFELD;
 					break;
 				}
@@ -582,8 +582,8 @@ public class Helper extends LanguageFiles {
 					break;
 				}
 	
-				case ISpielerPosition.forward1:
-				case ISpielerPosition.forward2: {
+				case ISpielerPosition.rightForward:
+				case ISpielerPosition.leftForward: {
 					trickotfarbe = TRICKOT_STURM;
 					break;
 				}
@@ -593,12 +593,12 @@ public class Helper extends LanguageFiles {
 					break;
 				}
 	
-				case ISpielerPosition.substBack: {
+				case ISpielerPosition.substDefender: {
 					trickotfarbe = TRICKOT_RESERVE_INNENVERTEIDIGER;
 					break;
 				}
 	
-				case ISpielerPosition.substInsideMid: {
+				case ISpielerPosition.substInnerMidfield: {
 					trickotfarbe = TRICKOT_RESERVE_MITTELFELD;
 					break;
 				}
@@ -620,39 +620,39 @@ public class Helper extends LanguageFiles {
 			switch (taktik) {
 				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
 				// "gui/bilder/Taktik_Defensiv.png" ), Color.white );
-				case ISpielerPosition.DEFENSIV:
+				case ISpielerPosition.DEFENSIVE:
 					break;
 	
 				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
 				// "gui/bilder/Taktik_Offensiv.png" ), Color.white );
-				case ISpielerPosition.OFFENSIV:
+				case ISpielerPosition.OFFENSIVE:
 					break;
 	
 				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
 				// "gui/bilder/Taktik_NachAussen.png" ), Color.white );
-				case ISpielerPosition.NACH_AUSSEN:
+				case ISpielerPosition.TOWARDS_WING:
 					break;
 	
 				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
 				// "gui/bilder/Taktik_ZurMitte.png" ), Color.white );
-				case ISpielerPosition.ZUR_MITTE:
+				case ISpielerPosition.TOWARDS_MIDDLE:
 					break;
 	
-				case ISpielerPosition.ZUS_INNENV: {
-					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
-					break;
-				}
-	
-				case ISpielerPosition.ZUS_MITTELFELD: {
-					trickotfarbe = TRICKOT_MITTELFELD;
-					break;
-				}
-	
-				case ISpielerPosition.ZUS_STUERMER:
-				case ISpielerPosition.ZUS_STUERMER_DEF: {
-					trickotfarbe = TRICKOT_STURM;
-					break;
-				}
+//				case ISpielerPosition.ZUS_INNENV: {
+//					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
+//					break;
+//				}
+//	
+//				case ISpielerPosition.ZUS_MITTELFELD: {
+//					trickotfarbe = TRICKOT_MITTELFELD;
+//					break;
+//				}
+//	
+//				case ISpielerPosition.ZUS_STUERMER:
+//				case ISpielerPosition.ZUS_STUERMER_DEF: {
+//					trickotfarbe = TRICKOT_STURM;
+//					break;
+//				}
 			}
 
 			// Bild laden, transparenz hinzu, trikofarbe wechseln
