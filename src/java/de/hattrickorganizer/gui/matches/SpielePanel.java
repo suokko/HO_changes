@@ -50,7 +50,7 @@ import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.logik.MatchUpdater;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
@@ -218,14 +218,14 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
                 final Vector<IMatchLineupPlayer> vteamspieler = DBZugriff.instance().getMatchLineupPlayers(m_clMatchKurzInfo.getMatchID(),
                                                                                        teamid);
-                final Aufstellung aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
+                final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
                 for (int i = 0; (vteamspieler != null) && (i < vteamspieler.size()); i++) {
                     final MatchLineupPlayer player = (MatchLineupPlayer) vteamspieler.get(i);
 
-                    if (player.getId() == ISpielerPosition.standard) {
+                    if (player.getId() == ISpielerPosition.setPieces) {
                         aufstellung.setKicker(player.getSpielerId());
-                    } else if (player.getId() == ISpielerPosition.spielfuehrer) {
+                    } else if (player.getId() == ISpielerPosition.captain) {
                         aufstellung.setKapitaen(player.getSpielerId());
                     } else {
                         aufstellung.setSpielerAtPosition(player.getId(), player.getSpielerId(),

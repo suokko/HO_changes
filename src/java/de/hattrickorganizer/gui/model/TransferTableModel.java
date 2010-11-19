@@ -515,120 +515,120 @@ public class TransferTableModel extends AbstractTableModel {
                                                   SwingConstants.RIGHT);
 
             //Wert Torwart
-            m_clData[i][17] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.TORWART,
+            m_clData[i][17] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.KEEPER,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Innnenverteidiger
-            m_clData[i][18] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER,
+            m_clData[i][18] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Innnenverteidiger Nach Aussen
-            m_clData[i][19] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.INNENVERTEIDIGER_AUS,
+            m_clData[i][19] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.CENTRAL_DEFENDER_TOWING,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Innnenverteidiger Offensiv
-            m_clData[i][20] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.INNENVERTEIDIGER_OFF,
+            m_clData[i][20] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.CENTRAL_DEFENDER_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Aussenverteidiger
-            m_clData[i][21] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.AUSSENVERTEIDIGER,
+            m_clData[i][21] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Aussenverteidiger
-            m_clData[i][22] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.AUSSENVERTEIDIGER_IN,
+            m_clData[i][22] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK_TOMID,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Aussenverteidiger
-            m_clData[i][23] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.AUSSENVERTEIDIGER_OFF,
+            m_clData[i][23] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Aussenverteidiger
-            m_clData[i][24] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.AUSSENVERTEIDIGER_DEF,
+            m_clData[i][24] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Mittelfeld
-            m_clData[i][25] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MITTELFELD,
+            m_clData[i][25] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Mittelfeld
-            m_clData[i][26] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MITTELFELD_AUS,
+            m_clData[i][26] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER_TOWING,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Mittelfeld
-            m_clData[i][27] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MITTELFELD_OFF,
+            m_clData[i][27] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Mittelfeld
-            m_clData[i][28] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MITTELFELD_DEF,
+            m_clData[i][28] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Flügel
-            m_clData[i][29] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL,
+            m_clData[i][29] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Flügel
-            m_clData[i][30] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL_IN,
+            m_clData[i][30] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER_TOMID,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Flügel
-            m_clData[i][31] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL_OFF,
+            m_clData[i][31] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Flügel
-            m_clData[i][32] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FLUEGELSPIEL_DEF,
+            m_clData[i][32] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Sturm
-            m_clData[i][33] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.STURM,
+            m_clData[i][33] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FORWARD,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   gui.UserParameter.instance().anzahlNachkommastellen);
 
             //Wert Sturm
-            m_clData[i][34] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.STURM_DEF,
+            m_clData[i][34] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FORWARD_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,

@@ -559,7 +559,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
             for (int i = 0; i < heimteam.size(); i++) {
                 final MatchLineupPlayer player = (MatchLineupPlayer) heimteam.get(i);
 
-                if (player.getId() < ISpielerPosition.beginnReservere) {
+                if (player.getId() < ISpielerPosition.startReserves) {
                     float rating = (float) player.getRating();
 
                     if (rating > 0) {
@@ -572,7 +572,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
             for (int i = 0; i < gastteam.size(); i++) {
                 final MatchLineupPlayer player = (MatchLineupPlayer) gastteam.get(i);
 
-                if (player.getId() < ISpielerPosition.beginnReservere) {
+                if (player.getId() < ISpielerPosition.startReserves) {
                     float rating = (float) player.getRating();
 
                     if (rating > 0) {
