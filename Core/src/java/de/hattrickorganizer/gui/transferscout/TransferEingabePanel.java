@@ -393,115 +393,115 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                           + " (" + tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)
                           + ")");
         jpWertTor.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                             .calcPosValue(ISpielerPosition.TORWART,
+                                                                             .calcPosValue(ISpielerPosition.KEEPER,
                                                                                            true),
                                                                              gui.UserParameter
                                                                              .instance().anzahlNachkommastellen)
                                      + "");
         jpWertInnenVert.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                   .calcPosValue(ISpielerPosition.INNENVERTEIDIGER,
+                                                                                   .calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,
                                                                                                  true),
                                                                                    gui.UserParameter
                                                                                    .instance().anzahlNachkommastellen)
                                            + "");
         jpWertInnenVertAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.INNENVERTEIDIGER_AUS,
+                                                                                      .calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,
                                                                                                     true),
                                                                                       gui.UserParameter
                                                                                       .instance().anzahlNachkommastellen)
                                               + "");
         jpWertInnenVertOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.INNENVERTEIDIGER_OFF,
+                                                                                      .calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,
                                                                                                     true),
                                                                                       gui.UserParameter
                                                                                       .instance().anzahlNachkommastellen)
                                               + "");
         jpWertAussenVert.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER,
+                                                                                    .calcPosValue(ISpielerPosition.BACK,
                                                                                                   true),
                                                                                     gui.UserParameter
                                                                                     .instance().anzahlNachkommastellen)
                                             + "");
         jpWertAussenVertIn.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_IN,
+                                                                                      .calcPosValue(ISpielerPosition.BACK_TOMID,
                                                                                                     true),
                                                                                       gui.UserParameter
                                                                                       .instance().anzahlNachkommastellen)
                                               + "");
         jpWertAussenVertOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_OFF,
+                                                                                       .calcPosValue(ISpielerPosition.BACK_OFF,
                                                                                                      true),
                                                                                        gui.UserParameter
                                                                                        .instance().anzahlNachkommastellen)
                                                + "");
         jpWertAussenVertDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_DEF,
+                                                                                       .calcPosValue(ISpielerPosition.BACK_DEF,
                                                                                                      true),
                                                                                        gui.UserParameter
                                                                                        .instance().anzahlNachkommastellen)
                                                + "");
         jpWertMittelfeld.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.MITTELFELD,
+                                                                                    .calcPosValue(ISpielerPosition.MIDFIELDER,
                                                                                                   true),
                                                                                     gui.UserParameter
                                                                                     .instance().anzahlNachkommastellen)
                                             + "");
         jpWertMittelfeldAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.MITTELFELD_AUS,
+                                                                                       .calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,
                                                                                                      true),
                                                                                        gui.UserParameter
                                                                                        .instance().anzahlNachkommastellen)
                                                + "");
         jpWertMittelfeldOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.MITTELFELD_OFF,
+                                                                                       .calcPosValue(ISpielerPosition.MIDFIELDER_OFF,
                                                                                                      true),
                                                                                        gui.UserParameter
                                                                                        .instance().anzahlNachkommastellen)
                                                + "");
         jpWertMittelfeldDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.MITTELFELD_DEF,
+                                                                                       .calcPosValue(ISpielerPosition.MIDFIELDER_DEF,
                                                                                                      true),
                                                                                        gui.UserParameter
                                                                                        .instance().anzahlNachkommastellen)
                                                + "");
         jpWertFluegel.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                 .calcPosValue(ISpielerPosition.FLUEGELSPIEL,
+                                                                                 .calcPosValue(ISpielerPosition.WINGER,
                                                                                                true),
                                                                                  gui.UserParameter
                                                                                  .instance().anzahlNachkommastellen)
                                          + "");
         jpWertFluegelIn.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                   .calcPosValue(ISpielerPosition.FLUEGELSPIEL_IN,
+                                                                                   .calcPosValue(ISpielerPosition.WINGER_TOMID,
                                                                                                  true),
                                                                                    gui.UserParameter
                                                                                    .instance().anzahlNachkommastellen)
                                            + "");
         jpWertFluegelOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.FLUEGELSPIEL_OFF,
+                                                                                    .calcPosValue(ISpielerPosition.WINGER_OFF,
                                                                                                   true),
                                                                                     gui.UserParameter
                                                                                     .instance().anzahlNachkommastellen)
                                             + "");
         jpWertFluegelDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.FLUEGELSPIEL_DEF,
+                                                                                    .calcPosValue(ISpielerPosition.WINGER_DEF,
                                                                                                   true),
                                                                                     gui.UserParameter
                                                                                     .instance().anzahlNachkommastellen)
                                             + "");
         jpWertSturm.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                               .calcPosValue(ISpielerPosition.STURM,
+                                                                               .calcPosValue(ISpielerPosition.FORWARD,
                                                                                              true),
                                                                                gui.UserParameter
                                                                                .instance().anzahlNachkommastellen)
                                        + "");
 
         jpWertSturmAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                																.calcPosValue(ISpielerPosition.STURM_AUS,
+                																.calcPosValue(ISpielerPosition.FORWARD_TOWING,
 															                              true),
 															                    gui.UserParameter
 															                    .instance().anzahlNachkommastellen) + "");
         jpWertSturmDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                  .calcPosValue(ISpielerPosition.STURM_DEF,
+                                                                                  .calcPosValue(ISpielerPosition.FORWARD_DEF,
                                                                                                 true),
                                                                                   gui.UserParameter
                                                                                   .instance().anzahlNachkommastellen)
