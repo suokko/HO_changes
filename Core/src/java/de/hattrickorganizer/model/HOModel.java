@@ -30,8 +30,8 @@ import de.hattrickorganizer.tools.HelperWrapper;
 public class HOModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private Aufstellung m_clAufstellung;
-    private Aufstellung m_clLastAufstellung;
+    private Lineup m_clAufstellung;
+    private Lineup m_clLastAufstellung;
     private Basics m_clBasics;
     private EPV epv = new EPV();
     private Finanzen m_clFinanzen;
@@ -110,7 +110,7 @@ public class HOModel {
      *
      * @param aufstellung TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAufstellung(Aufstellung aufstellung) {
+    public final void setAufstellung(Lineup aufstellung) {
         m_clAufstellung = aufstellung;
     }
 
@@ -121,7 +121,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Aufstellung getAufstellung() {
+    public final Lineup getAufstellung() {
         return m_clAufstellung;
     }
 
@@ -208,7 +208,7 @@ public class HOModel {
      *
      * @param aufstellung TODO Missing Constructuor Parameter Documentation
      */
-    public final void setLastAufstellung(Aufstellung aufstellung) {
+    public final void setLastAufstellung(Lineup aufstellung) {
         m_clLastAufstellung = aufstellung;
     }
 
@@ -217,7 +217,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Aufstellung getLastAufstellung() {
+    public final Lineup getLastAufstellung() {
         return m_clLastAufstellung;
     }
 
@@ -601,7 +601,7 @@ public class HOModel {
      */
     public final void loadStdAufstellung() {
         m_clAufstellung = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(-1,
-                                                                                            Aufstellung.DEFAULT_NAME);
+                                                                                            Lineup.DEFAULT_NAME);
 
         //prüfen ob alle aufgstellen Spieler noch existieren
         m_clAufstellung.checkAufgestellteSpieler();
@@ -612,7 +612,7 @@ public class HOModel {
      */
     public final void loadStdLastAufstellung() {
         m_clLastAufstellung = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(-1,
-                                                                                                Aufstellung.DEFAULT_NAMELAST);
+                                                                                                Lineup.DEFAULT_NAMELAST);
 
         //prüfen ob alle aufgstellen Spieler noch existieren
         m_clLastAufstellung.checkAufgestellteSpieler();
@@ -686,12 +686,12 @@ public class HOModel {
 
         //Aufstellung + aktu Sys als Standard saven
         de.hattrickorganizer.database.DBZugriff.instance().saveAufstellung(m_iID, m_clAufstellung,
-                                                                           Aufstellung.DEFAULT_NAME);
+                                                                           Lineup.DEFAULT_NAME);
 
         //Aufstellung + aktu Sys als Standard saven
         de.hattrickorganizer.database.DBZugriff.instance().saveAufstellung(m_iID,
                                                                            m_clLastAufstellung,
-                                                                           Aufstellung.DEFAULT_NAMELAST);
+                                                                           Lineup.DEFAULT_NAMELAST);
 
         //Xtra Daten
         de.hattrickorganizer.database.DBZugriff.instance().saveXtraDaten(m_iID, m_clXtraDaten);
