@@ -949,9 +949,9 @@ public final class Spieler implements plugins.ISpieler {
         //Usr Vorgabe aus DB holen
         final byte flag = getUserPosFlag();
 
-        if (flag == ISpielerPosition.UNBESTIMMT) {
+        if (flag == ISpielerPosition.UNKNOWN) {
             final FactorObject[] allPos = FormulaFactors.instance().getAllObj();
-            byte idealPos = ISpielerPosition.UNBESTIMMT;
+            byte idealPos = ISpielerPosition.UNKNOWN;
             float maxStk = -1.0f;
 
             for (int i = 0; (allPos != null) && (i < allPos.length); i++) {
@@ -1979,7 +1979,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return TODO Missing Return Method Documentation
      */
     public byte getUserPosFlag() {
-        if (m_bUserPosFlag < SpielerPosition.UNBESTIMMT) {
+        if (m_bUserPosFlag < SpielerPosition.UNKNOWN) {
             m_bUserPosFlag = DBZugriff.instance().getSpielerUserPosFlag(m_iSpielerID);
         }
 
@@ -2539,7 +2539,7 @@ public final class Spieler implements plugins.ISpieler {
         float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm);
 
         // Fix for new Defensive Attacker position
-		if (fo.getPosition()==ISpielerPosition.STURM_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
+		if (fo.getPosition()==ISpielerPosition.FORWARD_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
 			psValue *= 1.30f;
 		}
 

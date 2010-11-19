@@ -72,8 +72,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private boolean m_bProxyAuthentifactionNeeded;
 	private boolean m_bUseProxy;
 	private int m_iUserID = -1;
-	final static private boolean DEBUGSAVE = false;
-	final static private String SAVEDIR = "D:/tmp/ho/";
+	final static private boolean DEBUGSAVE = true; // Blaghaid
+	final static private String SAVEDIR = "C:/temp/ho/";
 
 	//~ Constructors -------------------------------------------------------------------------------
 	/**

@@ -377,6 +377,15 @@ public class ConvertXml2Hrf {
     private String getPlayerOrderForNextLineup(String position) {
     	if (m_htNextLineup != null) {
     		String ret = (String)m_htNextLineup.get(position);
+    		java.util.Iterator iterator = m_htNextLineup.keySet().iterator();
+    		 
+    		while (iterator.hasNext()) {
+    		   String key = iterator.next().toString();
+    		   String value = m_htNextLineup.get(key).toString();
+    		 
+    		   System.out.println(key + " " + value);
+    		}
+    		
     		if (ret != null) {
     			ret = ret.trim();
     			if (!"null".equals(ret) && !"".equals(ret)) {

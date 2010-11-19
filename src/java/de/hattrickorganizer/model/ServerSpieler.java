@@ -71,7 +71,7 @@ public final class ServerSpieler implements java.io.Serializable {
     private byte m_bAnzVorlagen;
 
     /** TODO Missing Parameter Documentation */
-    private byte m_bPosition = ISpielerPosition.UNBESTIMMT;
+    private byte m_bPosition = ISpielerPosition.UNKNOWN;
 
     /** TODO Missing Parameter Documentation */
     private float m_fAV_D;
@@ -371,78 +371,78 @@ public final class ServerSpieler implements java.io.Serializable {
      */
     public final void setStk(byte pos, float stk) {
         switch (pos) {
-            case ISpielerPosition.TORWART:
+            case ISpielerPosition.KEEPER:
                 m_fTW = stk;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER:
+            case ISpielerPosition.CENTRAL_DEFENDER:
                 m_fIV_N = stk;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER_OFF:
+            case ISpielerPosition.CENTRAL_DEFENDER_OFF:
                 m_fIV_O = stk;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER_AUS:
+            case ISpielerPosition.CENTRAL_DEFENDER_TOWING:
                 m_fIV_A = stk;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER:
+            case ISpielerPosition.BACK:
                 m_fAV_N = stk;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER_OFF:
+            case ISpielerPosition.BACK_OFF:
                 m_fAV_O = stk;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER_DEF:
+            case ISpielerPosition.BACK_DEF:
                 m_fAV_D = stk;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER_IN:
+            case ISpielerPosition.BACK_TOMID:
                 m_fAV_I = stk;
                 break;
 
-            case ISpielerPosition.MITTELFELD:
+            case ISpielerPosition.MIDFIELDER:
                 m_fMF_N = stk;
                 break;
 
-            case ISpielerPosition.MITTELFELD_OFF:
+            case ISpielerPosition.MIDFIELDER_OFF:
                 m_fMF_O = stk;
                 break;
 
-            case ISpielerPosition.MITTELFELD_DEF:
+            case ISpielerPosition.MIDFIELDER_DEF:
                 m_fMF_D = stk;
                 break;
 
-            case ISpielerPosition.MITTELFELD_AUS:
+            case ISpielerPosition.MIDFIELDER_TOWING:
                 m_fMF_A = stk;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL:
+            case ISpielerPosition.WINGER:
                 m_fFL_N = stk;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL_OFF:
+            case ISpielerPosition.WINGER_OFF:
                 m_fFL_O = stk;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL_DEF:
+            case ISpielerPosition.WINGER_DEF:
                 m_fFL_D = stk;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL_IN:
+            case ISpielerPosition.WINGER_TOMID:
                 m_fFL_I = stk;
                 break;
 
-            case ISpielerPosition.STURM:
+            case ISpielerPosition.FORWARD:
                 m_fST = stk;
                 break;
 
-            case ISpielerPosition.STURM_DEF:
+            case ISpielerPosition.FORWARD_DEF:
                 m_fST_D = stk;
                 break;
-            case ISpielerPosition.STURM_AUS:
+            case ISpielerPosition.FORWARD_TOWING:
                 m_fST_D = stk;
                 break;
         }
@@ -459,78 +459,78 @@ public final class ServerSpieler implements java.io.Serializable {
         float ret = 1.0f;
 
         switch (pos) {
-            case ISpielerPosition.TORWART:
+            case ISpielerPosition.KEEPER:
                 ret = m_fTW;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER:
+            case ISpielerPosition.CENTRAL_DEFENDER:
                 ret = m_fIV_N;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER_OFF:
+            case ISpielerPosition.CENTRAL_DEFENDER_OFF:
                 ret = m_fIV_O;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER_AUS:
+            case ISpielerPosition.CENTRAL_DEFENDER_TOWING:
                 ret = m_fIV_A;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER:
+            case ISpielerPosition.BACK:
                 ret = m_fAV_N;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER_OFF:
+            case ISpielerPosition.BACK_OFF:
                 ret = m_fAV_O;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER_DEF:
+            case ISpielerPosition.BACK_DEF:
                 ret = m_fAV_D;
                 break;
 
-            case ISpielerPosition.AUSSENVERTEIDIGER_IN:
+            case ISpielerPosition.BACK_TOMID:
                 ret = m_fAV_I;
                 break;
 
-            case ISpielerPosition.MITTELFELD:
+            case ISpielerPosition.MIDFIELDER:
                 ret = m_fMF_N;
                 break;
 
-            case ISpielerPosition.MITTELFELD_OFF:
+            case ISpielerPosition.MIDFIELDER_OFF:
                 ret = m_fMF_O;
                 break;
 
-            case ISpielerPosition.MITTELFELD_DEF:
+            case ISpielerPosition.MIDFIELDER_DEF:
                 ret = m_fMF_D;
                 break;
 
-            case ISpielerPosition.MITTELFELD_AUS:
+            case ISpielerPosition.MIDFIELDER_TOWING:
                 ret = m_fMF_A;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL:
+            case ISpielerPosition.WINGER:
                 ret = m_fFL_N;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL_OFF:
+            case ISpielerPosition.WINGER_OFF:
                 ret = m_fFL_O;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL_DEF:
+            case ISpielerPosition.WINGER_DEF:
                 ret = m_fFL_D;
                 break;
 
-            case ISpielerPosition.FLUEGELSPIEL_IN:
+            case ISpielerPosition.WINGER_TOMID:
                 ret = m_fFL_I;
                 break;
 
-            case ISpielerPosition.STURM:
+            case ISpielerPosition.FORWARD:
                 ret = m_fST;
                 break;
 
-            case ISpielerPosition.STURM_DEF:
+            case ISpielerPosition.FORWARD_DEF:
                 ret = m_fST_D;
                 break;
-            case ISpielerPosition.STURM_AUS:
+            case ISpielerPosition.FORWARD_TOWING:
                 ret = m_fST_W;
                 break;
         }

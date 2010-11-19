@@ -440,7 +440,7 @@ public final class Verein implements plugins.IVerein {
             if ((position != null) && (player.getSpielerID() > 0)) {
                 //Abähngig von Id pos speichern oder Reserve Codierung
                 switch (position.getId()) {
-                    case ISpielerPosition.substBack:
+                    case ISpielerPosition.substDefender:
                         pos = ServerSpieler.BANK_AB;
                         break;
 
@@ -448,7 +448,7 @@ public final class Verein implements plugins.IVerein {
                         pos = ServerSpieler.BANK_ST;
                         break;
 
-                    case ISpielerPosition.substInsideMid:
+                    case ISpielerPosition.substInnerMidfield:
                         pos = ServerSpieler.BANK_MF;
                         break;
 

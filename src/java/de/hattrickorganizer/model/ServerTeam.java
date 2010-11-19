@@ -75,7 +75,7 @@ public class ServerTeam implements java.io.Serializable {
      * @param managerName TODO Missing Constructuor Parameter Documentation
      * @param serverSpieler TODO Missing Constructuor Parameter Documentation
      */
-    public ServerTeam(Aufstellung auf, String teamName, String managerName, Vector<ServerSpieler> serverSpieler) {
+    public ServerTeam(Lineup auf, String teamName, String managerName, Vector<ServerSpieler> serverSpieler) {
         Vector<ISpielerPosition> temp = null;
         SpielerPosition pos = null;
 
@@ -96,7 +96,7 @@ public class ServerTeam implements java.io.Serializable {
             m_vPositionen.addElement(new SpielerPosition(pos));
 
             //StartAufstellung merken
-            if ((pos.getId() < ISpielerPosition.beginnReservere) && (pos.getSpielerId() > 0)) {
+            if ((pos.getId() < ISpielerPosition.startReserves) && (pos.getSpielerId() > 0)) {
                 m_vStartAufstellung.add(new Integer(pos.getSpielerId()));
             }
         }
@@ -171,13 +171,13 @@ public class ServerTeam implements java.io.Serializable {
      */
     public final float getAWTeamStk() {
         float stk = 0.0f;
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.INNENVERTEIDIGER);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.AUSSENVERTEIDIGER_OFF);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.INNENVERTEIDIGER_OFF);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.AUSSENVERTEIDIGER);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.INNENVERTEIDIGER_AUS);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.AUSSENVERTEIDIGER_IN);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.AUSSENVERTEIDIGER_DEF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.CENTRAL_DEFENDER);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.BACK_OFF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.CENTRAL_DEFENDER_OFF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.BACK);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.CENTRAL_DEFENDER_TOWING);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.BACK_TOMID);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.BACK_DEF);
 
         return de.hattrickorganizer.tools.Helper.round(stk, 1);
     }
@@ -190,13 +190,13 @@ public class ServerTeam implements java.io.Serializable {
     public final int getAnzAbwehr() {
         int anzahl = 0;
 
-        anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER);
-        anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER_IN);
-        anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER_OFF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.AUSSENVERTEIDIGER_DEF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER);
-        anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER_AUS);
-        anzahl += getAnzPosImSystem(ISpielerPosition.INNENVERTEIDIGER_OFF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.BACK);
+        anzahl += getAnzPosImSystem(ISpielerPosition.BACK_TOMID);
+        anzahl += getAnzPosImSystem(ISpielerPosition.BACK_OFF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.BACK_DEF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.CENTRAL_DEFENDER);
+        anzahl += getAnzPosImSystem(ISpielerPosition.CENTRAL_DEFENDER_TOWING);
+        anzahl += getAnzPosImSystem(ISpielerPosition.CENTRAL_DEFENDER_OFF);
 
         return anzahl;
     }
@@ -213,7 +213,7 @@ public class ServerTeam implements java.io.Serializable {
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            if ((pos.getSpielerId() > 0) && (pos.getId() < ISpielerPosition.beginnReservere)) {
+            if ((pos.getSpielerId() > 0) && (pos.getId() < ISpielerPosition.startReserves)) {
                 ++anzahl;
             }
         }
@@ -229,9 +229,9 @@ public class ServerTeam implements java.io.Serializable {
     public final int getAnzSturm() {
         int anzahl = 0;
 
-        anzahl += getAnzPosImSystem(ISpielerPosition.STURM);
-        anzahl += getAnzPosImSystem(ISpielerPosition.STURM_AUS);
-        anzahl += getAnzPosImSystem(ISpielerPosition.STURM_DEF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.FORWARD);
+        anzahl += getAnzPosImSystem(ISpielerPosition.FORWARD_TOWING);
+        anzahl += getAnzPosImSystem(ISpielerPosition.FORWARD_DEF);
 
         return anzahl;
     }
@@ -244,7 +244,7 @@ public class ServerTeam implements java.io.Serializable {
     public final int getAnzTW() {
         int anzahl = 0;
 
-        anzahl += getAnzPosImSystem(ISpielerPosition.TORWART);
+        anzahl += getAnzPosImSystem(ISpielerPosition.KEEPER);
 
         return anzahl;
     }
@@ -319,14 +319,14 @@ public class ServerTeam implements java.io.Serializable {
      */
     public final float getMFTeamStk() {
         float stk = 0.0f;
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MITTELFELD);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FLUEGELSPIEL);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MITTELFELD_OFF);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FLUEGELSPIEL_OFF);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MITTELFELD_DEF);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FLUEGELSPIEL_DEF);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MITTELFELD_AUS);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FLUEGELSPIEL_IN);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MIDFIELDER);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.WINGER);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MIDFIELDER_OFF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.WINGER_OFF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MIDFIELDER_DEF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.WINGER_DEF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.MIDFIELDER_TOWING);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.WINGER_TOMID);
 
         return de.hattrickorganizer.tools.Helper.round(stk, 1);
     }
@@ -357,7 +357,7 @@ public class ServerTeam implements java.io.Serializable {
      * @return TODO Missing Return Method Documentation
      */
     public final byte getMannschaftsteil4Spieler(ServerSpieler player) {
-        byte pos = ISpielerPosition.UNBESTIMMT;
+        byte pos = ISpielerPosition.UNKNOWN;
         byte ret = 0;
 
         pos = getSpielerPositionBySpielerID(player.getID());
@@ -398,11 +398,11 @@ public class ServerTeam implements java.io.Serializable {
                 break;
 
             case de.hattrickorganizer.logik.SpielLogik.MT_ABWEHR:
-                id = getSpielerID4Position(ISpielerPosition.substBack);
+                id = getSpielerID4Position(ISpielerPosition.substDefender);
                 break;
 
             case de.hattrickorganizer.logik.SpielLogik.MT_MITTELFELD:
-                id = getSpielerID4Position(ISpielerPosition.substInsideMid);
+                id = getSpielerID4Position(ISpielerPosition.substInnerMidfield);
 
                 if (id == -1) {
                     id = getSpielerID4Position(ISpielerPosition.substWinger);
@@ -416,7 +416,7 @@ public class ServerTeam implements java.io.Serializable {
         }
 
         if (id <= 0) {
-            id = getSpielerID4Position(ISpielerPosition.substInsideMid);
+            id = getSpielerID4Position(ISpielerPosition.substInnerMidfield);
         }
 
         return id;
@@ -429,9 +429,9 @@ public class ServerTeam implements java.io.Serializable {
      */
     public final float getSTTeamStk() {
         float stk = 0.0f;
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.STURM);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.STURM_AUS);
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.STURM_DEF);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FORWARD);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FORWARD_TOWING);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.FORWARD_DEF);
 
         return de.hattrickorganizer.tools.Helper.round(stk, 1);
     }
@@ -452,7 +452,7 @@ public class ServerTeam implements java.io.Serializable {
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            if ((pos.getId() < ISpielerPosition.beginnReservere)
+            if ((pos.getId() < ISpielerPosition.startReserves)
                 && (pos.getSpielerId() > 0)
                 && (pos.getId() != ISpielerPosition.keeper)) {
                 liste.addElement(new Integer(pos.getSpielerId()));
@@ -518,7 +518,7 @@ public class ServerTeam implements java.io.Serializable {
         for (int i = 0; (id > 0) && (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            if ((pos.getId() < ISpielerPosition.beginnReservere)
+            if ((pos.getId() < ISpielerPosition.startReserves)
                 && (pos.getSpielerId() == id)
                 && (pos.getSpielerId() > 0)) {
                 return true;
@@ -595,7 +595,7 @@ public class ServerTeam implements java.io.Serializable {
      */
     public final float getTWTeamStk() {
         float stk = 0.0f;
-        stk += calcTeamStk(m_vSpieler, ISpielerPosition.TORWART);
+        stk += calcTeamStk(m_vSpieler, ISpielerPosition.KEEPER);
 
         return de.hattrickorganizer.tools.Helper.round(stk, 1);
     }
@@ -641,7 +641,7 @@ public class ServerTeam implements java.io.Serializable {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
             if ((getMannschaftsteil4Position(pos.getPosition()) == mt)
-                && (pos.getId() < ISpielerPosition.beginnReservere)
+                && (pos.getId() < ISpielerPosition.startReserves)
                 && (pos.getSpielerId() > 0)) {
                 liste.addElement(new Integer(pos.getSpielerId()));
             }
@@ -753,14 +753,14 @@ public class ServerTeam implements java.io.Serializable {
     private final int getAnzMittelfeld() {
         int anzahl = 0;
 
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD);
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_OFF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_DEF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.MITTELFELD_AUS);
-        anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL);
-        anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL_IN);
-        anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL_OFF);
-        anzahl += getAnzPosImSystem(ISpielerPosition.FLUEGELSPIEL_DEF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER);
+        anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER_OFF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER_DEF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER_TOWING);
+        anzahl += getAnzPosImSystem(ISpielerPosition.WINGER);
+        anzahl += getAnzPosImSystem(ISpielerPosition.WINGER_TOMID);
+        anzahl += getAnzPosImSystem(ISpielerPosition.WINGER_OFF);
+        anzahl += getAnzPosImSystem(ISpielerPosition.WINGER_DEF);
 
         return anzahl;
     }
@@ -780,7 +780,7 @@ public class ServerTeam implements java.io.Serializable {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
             if ((position == pos.getPosition())
-                && (pos.getId() < ISpielerPosition.beginnReservere)
+                && (pos.getId() < ISpielerPosition.startReserves)
                 && (pos.getSpielerId() > 0)) {
                 ++anzahl;
             }
@@ -800,34 +800,34 @@ public class ServerTeam implements java.io.Serializable {
         byte ret = 0;
 
         switch (pos) {
-            case ISpielerPosition.TORWART:
+            case ISpielerPosition.KEEPER:
                 ret = de.hattrickorganizer.logik.SpielLogik.MT_TORWART;
                 break;
 
-            case ISpielerPosition.INNENVERTEIDIGER:
-            case ISpielerPosition.INNENVERTEIDIGER_OFF:
-            case ISpielerPosition.INNENVERTEIDIGER_AUS:
-            case ISpielerPosition.AUSSENVERTEIDIGER:
-            case ISpielerPosition.AUSSENVERTEIDIGER_OFF:
-            case ISpielerPosition.AUSSENVERTEIDIGER_DEF:
-            case ISpielerPosition.AUSSENVERTEIDIGER_IN:
+            case ISpielerPosition.CENTRAL_DEFENDER:
+            case ISpielerPosition.CENTRAL_DEFENDER_OFF:
+            case ISpielerPosition.CENTRAL_DEFENDER_TOWING:
+            case ISpielerPosition.BACK:
+            case ISpielerPosition.BACK_OFF:
+            case ISpielerPosition.BACK_DEF:
+            case ISpielerPosition.BACK_TOMID:
                 ret = de.hattrickorganizer.logik.SpielLogik.MT_ABWEHR;
                 break;
 
-            case ISpielerPosition.MITTELFELD:
-            case ISpielerPosition.MITTELFELD_OFF:
-            case ISpielerPosition.MITTELFELD_DEF:
-            case ISpielerPosition.MITTELFELD_AUS:
-            case ISpielerPosition.FLUEGELSPIEL:
-            case ISpielerPosition.FLUEGELSPIEL_OFF:
-            case ISpielerPosition.FLUEGELSPIEL_DEF:
-            case ISpielerPosition.FLUEGELSPIEL_IN:
+            case ISpielerPosition.MIDFIELDER:
+            case ISpielerPosition.MIDFIELDER_OFF:
+            case ISpielerPosition.MIDFIELDER_DEF:
+            case ISpielerPosition.MIDFIELDER_TOWING:
+            case ISpielerPosition.WINGER:
+            case ISpielerPosition.WINGER_OFF:
+            case ISpielerPosition.WINGER_DEF:
+            case ISpielerPosition.WINGER_TOMID:
                 ret = de.hattrickorganizer.logik.SpielLogik.MT_MITTELFELD;
                 break;
 
-            case ISpielerPosition.STURM:
-            case ISpielerPosition.STURM_DEF:
-            case ISpielerPosition.STURM_AUS:
+            case ISpielerPosition.FORWARD:
+            case ISpielerPosition.FORWARD_DEF:
+            case ISpielerPosition.FORWARD_TOWING:
                 ret = de.hattrickorganizer.logik.SpielLogik.MT_STURM;
                 break;
         }
@@ -879,7 +879,7 @@ public class ServerTeam implements java.io.Serializable {
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             sPos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            if ((sPos.getId() >= ISpielerPosition.beginnReservere) && (sPos.getId() == pos)) {
+            if ((sPos.getId() >= ISpielerPosition.startReserves) && (sPos.getId() == pos)) {
                 return sPos.getSpielerId();
             }
         }
@@ -905,7 +905,7 @@ public class ServerTeam implements java.io.Serializable {
             }
         }
 
-        return ISpielerPosition.UNBESTIMMT;
+        return ISpielerPosition.UNKNOWN;
     }
 
     /**
@@ -948,7 +948,7 @@ public class ServerTeam implements java.io.Serializable {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
             if ((pos.getPosition() == position)
-                && (pos.getId() < ISpielerPosition.substBack)) {
+                && (pos.getId() < ISpielerPosition.substDefender)) {
                 stk += calcPlayerStk(spieler, pos.getSpielerId(), position);
             }
         }
