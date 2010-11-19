@@ -58,7 +58,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		final Vector<float[]> bewertung = new Vector<float[]>();
 
 		//Alle Möglichen Kombos durchlaufen
-		for (byte i = 0; i <= ISpielerPosition.STURM_AUS; i++) {
+		for (byte i = 0; i < ISpielerPosition.substForward; i++) { // Blaghaid changed the high end
 			final float[] temp = getBewertungen4PlayerUndPosition(spielerid, i);
 
 			//Min ein Wert für die Pos gefunden -> Max > 0
