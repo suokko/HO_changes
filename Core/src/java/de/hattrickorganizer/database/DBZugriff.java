@@ -23,7 +23,7 @@ import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.HOColumnModel;
 import de.hattrickorganizer.gui.model.SpielerMatchCBItem;
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Basics;
 import de.hattrickorganizer.model.FactorObject;
 import de.hattrickorganizer.model.Finanzen;
@@ -607,7 +607,7 @@ public class DBZugriff {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Aufstellung getAufstellung(int hrfID, String name) {
+	public Lineup getAufstellung(int hrfID, String name) {
 		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME)).getAufstellung(
 			hrfID,
 			name);
@@ -641,7 +641,7 @@ public class DBZugriff {
 	 * @param aufstellung TODO Missing Constructuor Parameter Documentation
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveAufstellung(int hrfId, Aufstellung aufstellung, String name) {
+	public void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
 		((AufstellungTable) getTable(AufstellungTable.TABLENAME)).saveAufstellung(
 			hrfId,
 			aufstellung,
