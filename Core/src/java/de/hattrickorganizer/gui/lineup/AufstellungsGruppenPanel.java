@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import plugins.ISpieler;
 
-import de.hattrickorganizer.model.Aufstellung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 
@@ -75,7 +75,7 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
      */
     private void gruppenMarkierung(String gruppenName) {
         final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
-        final Aufstellung aufstellung = HOVerwaltung.instance()
+        final Lineup aufstellung = HOVerwaltung.instance()
                                                                                                           .getModel()
                                                                                                           .getAufstellung();
 
