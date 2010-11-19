@@ -89,12 +89,12 @@ class PlayerPositionColumn extends PlayerColumn {
 	
 	private Color getBackgroundColor(){
 		switch(position){
-		case ISpielerPosition.TORWART:
-		case ISpielerPosition.INNENVERTEIDIGER:
-		case ISpielerPosition.AUSSENVERTEIDIGER:
-		case ISpielerPosition.MITTELFELD:
-		case ISpielerPosition.FLUEGELSPIEL:
-		case ISpielerPosition.STURM:	
+		case ISpielerPosition.KEEPER:
+		case ISpielerPosition.CENTRAL_DEFENDER:
+		case ISpielerPosition.BACK:
+		case ISpielerPosition.MIDFIELDER:
+		case ISpielerPosition.WINGER:
+		case ISpielerPosition.FORWARD:	
 			return ColorLabelEntry.BG_SPIELERPOSITONSWERTE;
 		default:
 			return ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE;

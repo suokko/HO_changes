@@ -146,14 +146,14 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
             case ISpielerPosition.keeper:
             case ISpielerPosition.rightBack:
             case ISpielerPosition.leftBack:
-            case ISpielerPosition.insideBack1:
-            case ISpielerPosition.insideBack2:
-            case ISpielerPosition.insideMid1:
-            case ISpielerPosition.insideMid2:
+            case ISpielerPosition.rightCentralDefender:
+            case ISpielerPosition.leftCentralDefender:
+            case ISpielerPosition.rightInnerMidfield:
+            case ISpielerPosition.leftInnerMidfield:
             case ISpielerPosition.leftWinger:
             case ISpielerPosition.rightWinger:
-            case ISpielerPosition.forward1:
-            case ISpielerPosition.forward2:
+            case ISpielerPosition.rightForward:
+            case ISpielerPosition.leftForward:
             case ISpielerPosition.ausgewechselt: {
                 constraints.gridx = 0;
                 constraints.gridy = 2;
@@ -225,11 +225,11 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     protected final void initLabel(int posid, byte taktik) {
         if (m_iPositionsID == ISpielerPosition.ausgewechselt) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
-        } else if (m_iPositionsID == ISpielerPosition.standard) {
+        } else if (m_iPositionsID == ISpielerPosition.setPieces) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
-        } else if (m_iPositionsID == ISpielerPosition.spielfuehrer) {
+        } else if (m_iPositionsID == ISpielerPosition.captain) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
-        } else if (m_iPositionsID == ISpielerPosition.substBack) {
+        } else if (m_iPositionsID == ISpielerPosition.substDefender) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
                                  + HOVerwaltung.instance().getLanguageString("defender"));
@@ -241,7 +241,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
                                  + HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
-        } else if (m_iPositionsID == ISpielerPosition.substInsideMid) {
+        } else if (m_iPositionsID == ISpielerPosition.substInnerMidfield) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                  + " "
                                  + HOVerwaltung.instance().getLanguageString("Mittelfeld"));
@@ -253,7 +253,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
             if (posid >= 0) {
                 //Reserve
                 //Bei Reserve ist die posId immer -1! Fehler!
-                if (posid >= ISpielerPosition.beginnReservere) {
+                if (posid >= ISpielerPosition.startReserves) {
                     m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
                                          + " "
                                          + de.hattrickorganizer.model.SpielerPosition

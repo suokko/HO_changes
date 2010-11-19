@@ -271,25 +271,25 @@ final public class UserColumnFactory {
 	 */
 	protected static PlayerPositionColumn[] createPlayerPositionArray(){
 		final PlayerPositionColumn[] playerPositionArray = new PlayerPositionColumn[19];
-		playerPositionArray[0] = new PlayerPositionColumn( 190, "TORW",	"Torwart",				ISpielerPosition.TORWART ); 
-		playerPositionArray[1] = new PlayerPositionColumn( 200, "IV",		"Innenverteidiger",		ISpielerPosition.INNENVERTEIDIGER ); 
-		playerPositionArray[2] = new PlayerPositionColumn( 210, "IVA",		"Innenverteidiger_Aus",	ISpielerPosition.INNENVERTEIDIGER_AUS ); 
-		playerPositionArray[3] = new PlayerPositionColumn( 220, "IVO",		"Innenverteidiger_Off",	ISpielerPosition.INNENVERTEIDIGER_OFF ); 
-		playerPositionArray[4] = new PlayerPositionColumn( 230, "AV",		"Aussenverteidiger",	ISpielerPosition.AUSSENVERTEIDIGER ); 
-		playerPositionArray[5] = new PlayerPositionColumn( 240, "AVI",		"Aussenverteidiger_In",	ISpielerPosition.AUSSENVERTEIDIGER_IN ); 
-		playerPositionArray[6] = new PlayerPositionColumn( 250, "AVO",		"Aussenverteidiger_Off",ISpielerPosition.AUSSENVERTEIDIGER_OFF ); 
-		playerPositionArray[7] = new PlayerPositionColumn( 260, "AVD",		"Aussenverteidiger_Def",ISpielerPosition.AUSSENVERTEIDIGER_DEF ); 
-		playerPositionArray[8] = new PlayerPositionColumn( 270, "MIT",		"Mittelfeld",			ISpielerPosition.MITTELFELD ); 
-		playerPositionArray[9] = new PlayerPositionColumn( 280, "MITA",		"Mittelfeld_Aus",		ISpielerPosition.MITTELFELD_AUS ); 
-		playerPositionArray[10] = new PlayerPositionColumn( 290, "MITO",	"Mittelfeld_Off",		ISpielerPosition.MITTELFELD_OFF ); 
-		playerPositionArray[11] = new PlayerPositionColumn( 300, "MITD",	"Mittelfeld_Def",		ISpielerPosition.MITTELFELD_DEF ); 
-		playerPositionArray[12] = new PlayerPositionColumn( 310, "FLG",		"Fluegelspiel",			ISpielerPosition.FLUEGELSPIEL ); 
-		playerPositionArray[13] = new PlayerPositionColumn( 320, "FLGI",	"Fluegelspiel_In",		ISpielerPosition.FLUEGELSPIEL_IN ); 
-		playerPositionArray[14] = new PlayerPositionColumn( 330, "FLGO",	"Fluegelspiel_Off",		ISpielerPosition.FLUEGELSPIEL_OFF ); 
-		playerPositionArray[15] = new PlayerPositionColumn( 340, "FLGD",	"Fluegelspiel_Def",		ISpielerPosition.FLUEGELSPIEL_DEF ); 
-		playerPositionArray[16] = new PlayerPositionColumn( 350, "STU",		"Sturm",				ISpielerPosition.STURM ); 
-		playerPositionArray[17] = new PlayerPositionColumn( 360, "STUA",	"Sturm_Aus",			ISpielerPosition.STURM_AUS ); 
-		playerPositionArray[18] = new PlayerPositionColumn( 370, "STUD",	"Sturm_Def",			ISpielerPosition.STURM_DEF ); 
+		playerPositionArray[0] = new PlayerPositionColumn( 190, "TORW",	"Torwart",				ISpielerPosition.KEEPER ); 
+		playerPositionArray[1] = new PlayerPositionColumn( 200, "IV",		"Innenverteidiger",		ISpielerPosition.CENTRAL_DEFENDER ); 
+		playerPositionArray[2] = new PlayerPositionColumn( 210, "IVA",		"Innenverteidiger_Aus",	ISpielerPosition.CENTRAL_DEFENDER_TOWING ); 
+		playerPositionArray[3] = new PlayerPositionColumn( 220, "IVO",		"Innenverteidiger_Off",	ISpielerPosition.CENTRAL_DEFENDER_OFF ); 
+		playerPositionArray[4] = new PlayerPositionColumn( 230, "AV",		"Aussenverteidiger",	ISpielerPosition.BACK ); 
+		playerPositionArray[5] = new PlayerPositionColumn( 240, "AVI",		"Aussenverteidiger_In",	ISpielerPosition.BACK_TOMID ); 
+		playerPositionArray[6] = new PlayerPositionColumn( 250, "AVO",		"Aussenverteidiger_Off",ISpielerPosition.BACK_OFF ); 
+		playerPositionArray[7] = new PlayerPositionColumn( 260, "AVD",		"Aussenverteidiger_Def",ISpielerPosition.BACK_DEF ); 
+		playerPositionArray[8] = new PlayerPositionColumn( 270, "MIT",		"Mittelfeld",			ISpielerPosition.MIDFIELDER ); 
+		playerPositionArray[9] = new PlayerPositionColumn( 280, "MITA",		"Mittelfeld_Aus",		ISpielerPosition.MIDFIELDER_TOWING ); 
+		playerPositionArray[10] = new PlayerPositionColumn( 290, "MITO",	"Mittelfeld_Off",		ISpielerPosition.MIDFIELDER_OFF ); 
+		playerPositionArray[11] = new PlayerPositionColumn( 300, "MITD",	"Mittelfeld_Def",		ISpielerPosition.MIDFIELDER_DEF ); 
+		playerPositionArray[12] = new PlayerPositionColumn( 310, "FLG",		"Fluegelspiel",			ISpielerPosition.WINGER ); 
+		playerPositionArray[13] = new PlayerPositionColumn( 320, "FLGI",	"Fluegelspiel_In",		ISpielerPosition.WINGER_TOMID ); 
+		playerPositionArray[14] = new PlayerPositionColumn( 330, "FLGO",	"Fluegelspiel_Off",		ISpielerPosition.WINGER_OFF ); 
+		playerPositionArray[15] = new PlayerPositionColumn( 340, "FLGD",	"Fluegelspiel_Def",		ISpielerPosition.WINGER_DEF ); 
+		playerPositionArray[16] = new PlayerPositionColumn( 350, "STU",		"Sturm",				ISpielerPosition.FORWARD ); 
+		playerPositionArray[17] = new PlayerPositionColumn( 360, "STUA",	"Sturm_Aus",			ISpielerPosition.FORWARD_TOWING ); 
+		playerPositionArray[18] = new PlayerPositionColumn( 370, "STUD",	"Sturm_Def",			ISpielerPosition.FORWARD_DEF ); 
 		return playerPositionArray;
 	}
 	
