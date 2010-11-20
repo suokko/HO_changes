@@ -9,6 +9,11 @@ package de.hattrickorganizer.model;
 import gui.UserParameter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -729,32 +734,14 @@ public  class Lineup implements plugins.ILineUp {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 				final IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId, IMatchKurzInfo.UPCOMING);
-				IMatchKurzInfo match = null;
+				final List<IMatchKurzInfo> sMatches = removeBuggyMatches(matches);
 				
-				if (matches != null && matches.length > 2) {
-					HOLogger.instance().log(getClass(), "Warning: Got " + (matches != null ? matches.length : "null") + " matches with status UPCOMING!");
-					// for some reason we have users with old "upcoming" matches which break the location determination
-					final Timestamp NOW_MINUS3D = new Timestamp(System.currentTimeMillis() - 3*24*60*60*1000L);
-					int left = matches.length;
-					for (int i=0; i<matches.length; i++) {
-						IMatchKurzInfo m = matches[i];
-						if (NOW_MINUS3D.after(m.getMatchDateAsTimestamp())) {
-							matches[i] = null; // 'remove' too old upcoming matches here
-							left--;
-						}
-						if (left < 2) { // don't remove all when starting an old HO with this db-bug
-							break;
-						}
-					}
-				}
-				if (matches != null) {
-					for (IMatchKurzInfo m : matches) {
-						if (m != null) { // might have been removed now
-							if ((m.getMatchStatus() == IMatchKurzInfo.UPCOMING)
-									&& ((match == null) || match.getMatchDateAsTimestamp().after(m.getMatchDateAsTimestamp()))) {
-								match = m;
-								HOLogger.instance().debug(getClass(), "Updated");
-							}
+				IMatchKurzInfo match = null;
+				if (sMatches != null) {
+					for (IMatchKurzInfo m : sMatches) {
+						if ((m.getMatchStatus() == IMatchKurzInfo.UPCOMING)
+								&& ((match == null) || match.getMatchDateAsTimestamp().after(m.getMatchDateAsTimestamp()))) {
+							match = m;
 						}
 					}
 				}
@@ -771,6 +758,41 @@ public  class Lineup implements plugins.ILineUp {
 		}
 
 		return m_sLocation;
+	}
+	
+	/**
+	 * For some reason we have users with old "upcoming" matches which break the location determination.
+	 * This method removes all matches that are more than 8 days older than the previous 'upcoming' match.
+	 */
+	private List<IMatchKurzInfo> removeBuggyMatches(IMatchKurzInfo[] inMatches) {
+		final List<IMatchKurzInfo> matches = new ArrayList<IMatchKurzInfo>();
+		if (inMatches != null && inMatches.length > 1) {
+			for (IMatchKurzInfo m : inMatches) {
+				matches.add(m);
+			}
+			
+			Collections.sort(matches, new Comparator<IMatchKurzInfo>() {
+				public int compare(IMatchKurzInfo o1, IMatchKurzInfo o2) {
+					return 0-(o1.getMatchDateAsTimestamp().compareTo(o2.getMatchDateAsTimestamp()));
+				}
+			});
+			
+			Timestamp checkDate = null;
+			for (Iterator<IMatchKurzInfo> i=matches.iterator(); i.hasNext(); ) {
+				IMatchKurzInfo m = i.next();
+				if (checkDate == null) {
+					checkDate = m.getMatchDateAsTimestamp();
+					continue;
+				}
+				if (m.getMatchDateAsTimestamp().getTime() < (checkDate.getTime()-8*24*60*60*1000L)) { // older than 8 days
+					HOLogger.instance().warning(getClass(), "Old match with status UPCOMING! " + m.getMatchID() + " from " + m.getMatchDate());
+					i.remove();
+				} else {
+					checkDate = m.getMatchDateAsTimestamp();
+				}
+			}
+		}
+		return matches;
 	}
 
     /* Umrechnung von double auf 1-80 int*/
