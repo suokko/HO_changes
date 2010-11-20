@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.Vector;
 
 import plugins.ILineUp;
+import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
@@ -727,9 +728,9 @@ public  class Lineup implements plugins.ILineUp {
 	public final short getHeimspiel() {
 		if (m_sLocation < 0) {
 			try {
-				final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(
-						HOVerwaltung.instance().getModel().getBasics().getTeamId());
-				plugins.IMatchKurzInfo match = null;
+				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+				final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId);
+				IMatchKurzInfo match = null;
 
 				for (int i = 0; (matches != null) && (matches.length > i); i++) {
 					if ((matches[i].getMatchStatus() == plugins.IMatchKurzInfo.UPCOMING)
@@ -739,7 +740,7 @@ public  class Lineup implements plugins.ILineUp {
 				}
 
 				if (match != null) {
-					m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) ? (short) 1 : (short) 0;
+					m_sLocation = (match.getHeimID() == teamId) ? (short) 1 : (short) 0;
 				}
 			} catch (Exception e) {
 				HOLogger.instance().error(getClass(), "getHeimspiel: " + e);
@@ -756,28 +757,19 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param positionsid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the player object by position id.
      */
-    public plugins.ISpieler getPlayerByPositionID(int positionsid) {
+    public ISpieler getPlayerByPositionID(int positionId) {
         try {
-            return HOVerwaltung.instance().getModel().getSpieler(getPositionById(positionsid)
-                                                                     .getSpielerId());
+			return HOVerwaltung.instance().getModel().getSpieler(getPositionById(positionId).getSpielerId());
         } catch (Exception e) {
-        	HOLogger.instance().error(getClass(),"getPlayerByPositionID: " + e);
+			HOLogger.instance().error(getClass(), "getPlayerByPositionID(" + positionId + "): " + e);
             return null;
         }
     }
 
     /**
-     * Gibt die Spielerposition zu der Id zurï¿½ck
-     *
-     * @param id TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the position object by position id. 
      */
     public final SpielerPosition getPositionById(int id) {
         for (int i = 0; i < m_vPositionen.size(); i++) {
@@ -785,28 +777,20 @@ public  class Lineup implements plugins.ILineUp {
                 return (SpielerPosition) m_vPositionen.get(i);
             }
         }
-
-        //Nix gefunden
         return null;
     }
 
     /**
-     * Gibt die Spielerposition zu der SpielerId zurï¿½ck
-     *
-     * @param spielerid TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the position object by player id.
      */
-    public final SpielerPosition getPositionBySpielerId(int spielerid) {
-        for (int i = 0; i < m_vPositionen.size(); i++) {
-            if (((SpielerPosition) m_vPositionen.get(i)).getSpielerId() == spielerid) {
-                return (SpielerPosition) m_vPositionen.get(i);
-            }
-        }
-
-        //Nix gefunden
-        return null;
-    }
+	public final SpielerPosition getPositionBySpielerId(int playerid) {
+		for (int i = 0; i < m_vPositionen.size(); i++) {
+			if (((SpielerPosition) m_vPositionen.get(i)).getSpielerId() == playerid) {
+				return (SpielerPosition) m_vPositionen.get(i);
+			}
+		}
+		return null;
+	}
 
     /**
      * Setter for property m_vPositionen.
