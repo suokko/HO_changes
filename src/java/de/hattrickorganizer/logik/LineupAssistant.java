@@ -862,36 +862,38 @@ public class LineupAssistant {
 
 			SpielerPosition sp = (SpielerPosition) getSpielerPositionById(vpos, i);
 
-			if ((sp.getSpielerId() == 260143047) || (sp.getSpielerId() == 115641569) || (sp.getSpielerId() == 141926040)) {
-				System.out.println("Halt!");
-			}
-			SpielerPosition tmpSp = null;
+			if (sp != null) {
+				if (sp.getSpielerId() == 260143047 || sp.getSpielerId() == 115641569 || sp.getSpielerId() == 141926040) {
+					System.out.println("Halt! (debug player))");
+				}
+				SpielerPosition tmpSp = null;
 
-			switch (sp.getTaktik()) {
+				switch (sp.getTaktik()) {
 
-			case ISpielerPosition.OLD_EXTRA_DEFENDER:
-				tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.middleCentralDefender);
-				tmpSp.setSpielerId(sp.getSpielerId());
-				tmpSp.setTaktik(ISpielerPosition.NORMAL);
-				sp.setSpielerId(-1);
-				sp.setTaktik((byte) -1);
-				break;
-			case ISpielerPosition.OLD_EXTRA_MIDFIELD:
-				tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.centralInnerMidfield);
-				tmpSp.setSpielerId(sp.getSpielerId());
-				tmpSp.setTaktik(ISpielerPosition.NORMAL);
-				sp.setSpielerId(-1);
-				sp.setTaktik((byte) -1);
-				break;
-			case ISpielerPosition.OLD_EXTRA_FORWARD:
-				tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.centralForward);
-				tmpSp.setSpielerId(sp.getSpielerId());
-				tmpSp.setTaktik(ISpielerPosition.NORMAL);
-				sp.setSpielerId(-1);
-				sp.setTaktik((byte) -1);
-				break;
-			default:
-				break;
+				case ISpielerPosition.OLD_EXTRA_DEFENDER:
+					tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.middleCentralDefender);
+					tmpSp.setSpielerId(sp.getSpielerId());
+					tmpSp.setTaktik(ISpielerPosition.NORMAL);
+					sp.setSpielerId(-1);
+					sp.setTaktik((byte) -1);
+					break;
+				case ISpielerPosition.OLD_EXTRA_MIDFIELD:
+					tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.centralInnerMidfield);
+					tmpSp.setSpielerId(sp.getSpielerId());
+					tmpSp.setTaktik(ISpielerPosition.NORMAL);
+					sp.setSpielerId(-1);
+					sp.setTaktik((byte) -1);
+					break;
+				case ISpielerPosition.OLD_EXTRA_FORWARD:
+					tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.centralForward);
+					tmpSp.setSpielerId(sp.getSpielerId());
+					tmpSp.setTaktik(ISpielerPosition.NORMAL);
+					sp.setSpielerId(-1);
+					sp.setTaktik((byte) -1);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
