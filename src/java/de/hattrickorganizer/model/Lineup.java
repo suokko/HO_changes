@@ -8,6 +8,7 @@ package de.hattrickorganizer.model;
 
 import gui.UserParameter;
 
+import java.sql.Timestamp;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -727,20 +728,41 @@ public  class Lineup implements plugins.ILineUp {
 		if (m_sLocation < 0) {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-				final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId, IMatchKurzInfo.UPCOMING);
+				final IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId, IMatchKurzInfo.UPCOMING);
 				IMatchKurzInfo match = null;
 				
-				HOLogger.instance().debug(getClass(), "Got " + (matches != null ? matches.length : "null") + " matches");
-
-				for (int i = 0; (matches != null) && (matches.length > i); i++) {
-					if ((matches[i].getMatchStatus() == plugins.IMatchKurzInfo.UPCOMING)
-							&& ((match == null) || match.getMatchDateAsTimestamp().after(matches[i].getMatchDateAsTimestamp()))) {
-						match = matches[i];
+				if (matches != null && matches.length > 2) {
+					HOLogger.instance().log(getClass(), "Warning: Got " + (matches != null ? matches.length : "null") + " matches with status UPCOMING!");
+					// for some reason we have users with old "upcoming" matches which break the location determination
+					final Timestamp NOW_MINUS3D = new Timestamp(System.currentTimeMillis() - 3*24*60*60*1000L);
+					int left = matches.length;
+					for (int i=0; i<matches.length; i++) {
+						IMatchKurzInfo m = matches[i];
+						if (NOW_MINUS3D.after(m.getMatchDateAsTimestamp())) {
+							matches[i] = null; // 'remove' too old upcoming matches here
+							left--;
+						}
+						if (left < 2) { // don't remove all when starting an old HO with this db-bug
+							break;
+						}
+					}
+				}
+				if (matches != null) {
+					for (IMatchKurzInfo m : matches) {
+						if (m != null) { // might have been removed now
+							if ((m.getMatchStatus() == IMatchKurzInfo.UPCOMING)
+									&& ((match == null) || match.getMatchDateAsTimestamp().after(m.getMatchDateAsTimestamp()))) {
+								match = m;
+								HOLogger.instance().debug(getClass(), "Updated");
+							}
+						}
 					}
 				}
 
 				if (match != null) {
 					m_sLocation = (match.getHeimID() == teamId) ? (short) 1 : (short) 0;
+				} else {
+					HOLogger.instance().debug(getClass(), "no match to determine location");
 				}
 			} catch (Exception e) {
 				HOLogger.instance().error(getClass(), "getHeimspiel: " + e);
