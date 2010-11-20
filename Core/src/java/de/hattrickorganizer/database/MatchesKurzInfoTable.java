@@ -39,8 +39,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 
 	@Override
 	protected String[] getCreateIndizeStatements() {
-		return new String[] {
-			"CREATE INDEX IMATCHKURZINFO_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
+		return new String[] { "CREATE INDEX IMATCHKURZINFO_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")" };
 	}
 	
 	/**
@@ -123,7 +122,6 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 			rs.beforeFirst();
 
 			while (rs.next()) {
-				//Paarung auslesen
 				match = new MatchKurzInfo();
 				match.setMatchDate(rs.getString("MatchDate"));
 				match.setGastID(rs.getInt("GastID"));
@@ -143,8 +141,6 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
-
-			//HOLogger.instance().log(getClass(),e);
 		}
 
 		matches = new MatchKurzInfo[liste.size()];
@@ -154,11 +150,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	}
 	
 	/**
-	 * Ist das Match schon in der Datenbank vorhanden?
-	 *
-	 * @param matchid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Check if a match is already in the database.
 	 */
 	public boolean isMatchVorhanden(int matchid) {
 		boolean vorhanden = false;
@@ -184,13 +176,12 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * holt die MAtches zu einem Team aus der DB
-	 *
-	 * @param teamId Die Teamid oder -1 für alle
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get all matches with a certain status for the given team from the database.
+	 * 
+	 * @param teamId the teamid or -1 for all matches
+	 * @param matchStatus the match status (e.g. IMatchKurzInfo.UPCOMING) or -1 to ignore this parameter
 	 */
-	public MatchKurzInfo[] getMatchesKurzInfo(int teamId) {
+	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
 		MatchKurzInfo match = null;
 		String sql = null;
@@ -200,18 +191,19 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		try {
 			sql = "SELECT * FROM "+getTableName();
 
-			if (teamId > -1) {
-				sql += (" WHERE GastID = " + teamId + " OR HeimID = " + teamId);
+			if (teamId > -1 && matchStatus > -1) {
+				sql += (" WHERE GastID=" + teamId + " OR HeimID=" + teamId + " AND Status=" + matchStatus);
+			} else if (teamId > -1) {
+				sql += (" WHERE GastID=" + teamId + " OR HeimID=" + teamId);
+			} else if (teamId > -1) {
+				sql += (" WHERE Status=" + matchStatus);
 			}
 
 			sql += " ORDER BY MatchDate DESC";
-
 			rs = adapter.executeQuery(sql);
-
-			rs.beforeFirst();
+			//rs.beforeFirst();
 
 			while (rs.next()) {
-				//Paarung auslesen
 				match = new MatchKurzInfo();
 				match.setMatchDate(rs.getString("MatchDate"));
 				match.setGastID(rs.getInt("GastID"));
@@ -221,18 +213,13 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 				match.setMatchID(rs.getInt("MatchID"));
 				match.setGastTore(rs.getInt("GastTore"));
 				match.setHeimTore(rs.getInt("HeimTore"));
-
 				match.setMatchTyp(rs.getInt("MatchTyp"));
 				match.setMatchStatus(rs.getInt("Status"));
 				match.setAufstellung(rs.getBoolean("Aufstellung"));
-
-				//Adden
 				liste.add(match);
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
-
-			//HOLogger.instance().log(getClass(),e);
 		}
 
 		matches = new MatchKurzInfo[liste.size()];
@@ -240,11 +227,18 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 
 		return matches;
 	}
+	
+	/**
+	 * Get all matches for the given team from the database.
+	 * 
+	 * @param teamId the teamid or -1 for all matches
+	 */
+	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId) {
+		return getMatchesKurzInfo(teamId, -1);
+	}
 
 	/**
-	 * speichert die Matches
-	 *
-	 * @param matches TODO Missing Constructuor Parameter Documentation
+	 * Saves matches into the databse.
 	 */
 	public void storeMatchKurzInfos(MatchKurzInfo[] matches) {
 		String sql = null;
@@ -258,30 +252,11 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 			try {
 				//insert vorbereiten
 				sql = "INSERT INTO "+getTableName()+" (  MatchID, MatchTyp, HeimName, HeimID, GastName, GastID, MatchDate, HeimTore, GastTore, Aufstellung, Status ) VALUES(";
-				sql
-					+= (matches[i].getMatchID()
-						+ ","
-						+ matches[i].getMatchTyp()
-						+ ", '"
-						+ DBZugriff.insertEscapeSequences(matches[i].getHeimName())
-						+ "', "
-						+ matches[i].getHeimID()
-						+ ", '"
-						+ DBZugriff.insertEscapeSequences(matches[i].getGastName())
-						+ "', ");
-				sql
-					+= (matches[i].getGastID()
-						+ ", '"
-						+ matches[i].getMatchDate()
-						+ "', "
-						+ matches[i].getHeimTore()
-						+ ", "
-						+ matches[i].getGastTore()
-						+ ", "
-						+ matches[i].isAufstellung()
-						+ ", "
-						+ matches[i].getMatchStatus()
-						+ " )");
+				sql += (matches[i].getMatchID() + "," + matches[i].getMatchTyp() + ", '"
+						+ DBZugriff.insertEscapeSequences(matches[i].getHeimName()) + "', " + matches[i].getHeimID() + ", '"
+						+ DBZugriff.insertEscapeSequences(matches[i].getGastName()) + "', ");
+				sql += (matches[i].getGastID() + ", '" + matches[i].getMatchDate() + "', " + matches[i].getHeimTore() + ", "
+						+ matches[i].getGastTore() + ", " + matches[i].isAufstellung() + ", " + matches[i].getMatchStatus() + " )");
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeMatchKurzInfos Error" + e);

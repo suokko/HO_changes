@@ -988,38 +988,41 @@ public class DBZugriff {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public boolean isMatchVorhanden(int matchid) {
-		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).isMatchVorhanden(
-			matchid);
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).isMatchVorhanden(matchid);
 	}
 
 	/**
-	 * holt die MAtches zu einem Team aus der DB
-	 *
-	 * @param teamId Die Teamid oder -1 für alle
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * Get all matches for the given team from the database.
+	 * 
+	 * @param teamId the teamid or -1 for all matches
 	 */
 	public MatchKurzInfo[] getMatchesKurzInfo(int teamId) {
-		return (
-			(MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(
-			teamId);
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(teamId);
+	}
+	
+	/**
+	 * Get all matches with a certain status for the given team from the database.
+	 * 
+	 * @param teamId the teamid or -1 for all matches
+	 */
+	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(teamId, matchStatus);
 	}
 
 	/**
 	 * Wichtig: Wenn die Teamid = -1 ist muss der Matchtyp ALLE_SPIELE sein!
-	 *
-	 * @param teamId Die Teamid oder -1 für alle
-	 * @param matchtyp Welche Matches? Konstanten im SpielePanel!
-	 * @param asc TODO Missing Constructuor Parameter Documentation
-	 *
+	 * 
+	 * @param teamId
+	 *            Die Teamid oder -1 für alle
+	 * @param matchtyp
+	 *            Welche Matches? Konstanten im SpielePanel!
+	 * @param asc
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
-		return (
-			(MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(
-			teamId,
-			matchtyp,
-			asc);
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(teamId, matchtyp, asc);
 	}
 
 	/**
@@ -1028,8 +1031,7 @@ public class DBZugriff {
 	 * @param matches TODO Missing Constructuor Parameter Documentation
 	 */
 	public void storeMatchKurzInfos(MatchKurzInfo[] matches) {
-		((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).storeMatchKurzInfos(
-			matches);
+		((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).storeMatchKurzInfos(matches);
 	}
 
 	//	------------------------------- ScoutTable -------------------------------------------------
