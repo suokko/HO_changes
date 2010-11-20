@@ -34,6 +34,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
@@ -47,147 +48,97 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	private AufstellungsRatingPanel m_jpRating = new AufstellungsRatingPanel();
 
-    private ColorLabelEntry m_jpAktuellesSystem = new ColorLabelEntry("", 
-    		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
-    private ColorLabelEntry m_jpDurchschnittErfahrung = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
-    private ColorLabelEntry m_jpErfahrung343 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung352 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung433 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung442 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung451 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung532 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung541 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
-    		ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung523 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung550 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    private ColorLabelEntry m_jpErfahrung253 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-            ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-    
-    private ColorLabelEntry m_jpErfahrungAktuellesSystem = new ColorLabelEntry("",
-    		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-	private ColorLabelEntry m_jpGesamtStaerkeText = new ColorLabelEntry("",
-			ColorLabelEntry.FG_STANDARD, Color.WHITE, SwingConstants.RIGHT);
-	private ColorLabelEntry m_jpHatstat = new ColorLabelEntry("",
-			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-	private ColorLabelEntry m_jpLoddarstat = new ColorLabelEntry("",
-			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-	private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("",
-			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
-    private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
-	private CBItem[] EINSTELLUNG = {
-			new CBItem(HOVerwaltung.instance()
-					.getLanguageString("PIC"), IMatchDetails.EINSTELLUNG_PIC),
-			new CBItem(HOVerwaltung.instance()
-					.getLanguageString("Normal"),
-					IMatchDetails.EINSTELLUNG_NORMAL),
-			new CBItem(HOVerwaltung.instance()
-					.getLanguageString("MOTS"), IMatchDetails.EINSTELLUNG_MOTS)
-                                   };
-    private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
-	private CBItem[] SELBSTVERTRAUEN = {
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_nichtVorhanden),
-					ITeam.SV_nichtVorhanden),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_katastrophal),
-					ITeam.SV_katastrophal),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_armselig),
-					ITeam.SV_armselig),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_gering),
-					ITeam.SV_gering),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_bescheiden),
-					ITeam.SV_bescheiden),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_stark),
-					ITeam.SV_stark),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_sehr_gross),
-					ITeam.SV_sehr_gross),
-			new CBItem(Team
-					.getNameForSelbstvertrauen(ITeam.SV_etwas_ueberheblich),
-					ITeam.SV_etwas_ueberheblich),
-			new CBItem(Team
-					.getNameForSelbstvertrauen(ITeam.SV_voellig_uebertrieben),
-					ITeam.SV_voellig_uebertrieben),
-			new CBItem(Team
-					.getNameForSelbstvertrauen(ITeam.SV_voellig_abgehoben),
-					ITeam.SV_voellig_abgehoben)
-                                       };
-    private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
-	private CBItem[] TRAINERTYPE = {
-			new CBItem(HOMiniModel.instance().getLanguageString("coach.defensive"),0),
-			new CBItem(HOMiniModel.instance().getLanguageString("coach.normal"),2),
-			new CBItem(HOMiniModel.instance().getLanguageString("coach.offensive"),1),
-		};
-	private JComboBox m_jcbTrainerType= new JComboBox(TRAINERTYPE);
-	
-	private ColorLabelEntry m_jpPredictionType = new ColorLabelEntry("",
-			ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
-	   
-	private CBItem[] STIMMUNG = {
-			new CBItem(Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg),
-					ITeam.TS_wie_im_kalten_Krieg),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_blutruenstig),
-					ITeam.TS_blutruenstig),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_wuetend),
-					ITeam.TS_wuetend),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_irritiert),
-					ITeam.TS_irritiert),
+	private ColorLabelEntry m_jpAktuellesSystem = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+	private ColorLabelEntry m_jpDurchschnittErfahrung = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+	private ColorLabelEntry m_jpErfahrung343 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung352 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung433 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung442 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung451 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung532 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung541 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung523 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung550 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpErfahrung253 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+
+	private ColorLabelEntry m_jpErfahrungAktuellesSystem = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpGesamtStaerkeText = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_jpHatstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
+			SwingConstants.CENTER);
+	private ColorLabelEntry m_jpLoddarstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
+	private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+	private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
+	private CBItem[] EINSTELLUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("PIC"), IMatchDetails.EINSTELLUNG_PIC),
+			new CBItem(HOVerwaltung.instance().getLanguageString("Normal"), IMatchDetails.EINSTELLUNG_NORMAL),
+			new CBItem(HOVerwaltung.instance().getLanguageString("MOTS"), IMatchDetails.EINSTELLUNG_MOTS) };
+	private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
+	private CBItem[] SELBSTVERTRAUEN = { new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_nichtVorhanden), ITeam.SV_nichtVorhanden),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_katastrophal), ITeam.SV_katastrophal),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_armselig), ITeam.SV_armselig),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_gering), ITeam.SV_gering),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_bescheiden), ITeam.SV_bescheiden),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_stark), ITeam.SV_stark),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_sehr_gross), ITeam.SV_sehr_gross),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_etwas_ueberheblich), ITeam.SV_etwas_ueberheblich),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_voellig_uebertrieben), ITeam.SV_voellig_uebertrieben),
+			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_voellig_abgehoben), ITeam.SV_voellig_abgehoben) };
+	private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
+	private CBItem[] TRAINERTYPE = { new CBItem(HOMiniModel.instance().getLanguageString("coach.defensive"), 0),
+			new CBItem(HOMiniModel.instance().getLanguageString("coach.normal"), 2),
+			new CBItem(HOMiniModel.instance().getLanguageString("coach.offensive"), 1), };
+	private JComboBox m_jcbTrainerType = new JComboBox(TRAINERTYPE);
+
+	private ColorLabelEntry m_jpPredictionType = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+
+	private CBItem[] STIMMUNG = { new CBItem(Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg), ITeam.TS_wie_im_kalten_Krieg),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_blutruenstig), ITeam.TS_blutruenstig),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_wuetend), ITeam.TS_wuetend),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_irritiert), ITeam.TS_irritiert),
 			new CBItem(Team.getNameForStimmung(ITeam.TS_ruhig), ITeam.TS_ruhig),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_zufrieden),
-					ITeam.TS_zufrieden),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_zufrieden), ITeam.TS_zufrieden),
 			new CBItem(Team.getNameForStimmung(ITeam.TS_gut), ITeam.TS_gut),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_ausgezeichnet),
-					ITeam.TS_ausgezeichnet),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_euphorisch),
-					ITeam.TS_euphorisch),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben),
-					ITeam.TS_auf_Wolke_sieben),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_paradiesisch),
-					ITeam.TS_paradiesisch)
-                                };
+			new CBItem(Team.getNameForStimmung(ITeam.TS_ausgezeichnet), ITeam.TS_ausgezeichnet),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_euphorisch), ITeam.TS_euphorisch),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben), ITeam.TS_auf_Wolke_sieben),
+			new CBItem(Team.getNameForStimmung(ITeam.TS_paradiesisch), ITeam.TS_paradiesisch) };
     private JComboBox m_jcbMainStimmung = new JComboBox(STIMMUNG);
-	private CBItem[] SUBSTIMM = {
-									new CBItem(HOMiniModel.instance().getLanguageString("verylow"),0),
-									new CBItem(HOMiniModel.instance().getLanguageString("low"),1),
-									new CBItem(HOMiniModel.instance().getLanguageString("Durchschnitt"),2),
-									new CBItem(HOMiniModel.instance().getLanguageString("high"),3),
-									new CBItem(HOMiniModel.instance().getLanguageString("veryhigh"),4)
-								};
+	private CBItem[] SUBSTIMM = { new CBItem(HOMiniModel.instance().getLanguageString("verylow"), 0),
+			new CBItem(HOMiniModel.instance().getLanguageString("low"), 1),
+			new CBItem(HOMiniModel.instance().getLanguageString("Durchschnitt"), 2),
+			new CBItem(HOMiniModel.instance().getLanguageString("high"), 3),
+			new CBItem(HOMiniModel.instance().getLanguageString("veryhigh"), 4) };
 	private JComboBox m_jcbSubStimmung = new JComboBox(SUBSTIMM);
-    private CBItem[] TAKTIK = {
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL),
-                                             IMatchDetails.TAKTIK_NORMAL),
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING),
-                                             IMatchDetails.TAKTIK_PRESSING),
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_KONTER),
-                                             IMatchDetails.TAKTIK_KONTER),
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE),
-                                             IMatchDetails.TAKTIK_MIDDLE),
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS),
-                                             IMatchDetails.TAKTIK_WINGS),
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE),
-                                             IMatchDetails.TAKTIK_CREATIVE),
-                                  new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS),
-                                             IMatchDetails.TAKTIK_LONGSHOTS)
-                              };
+	private CBItem[] TAKTIK = { new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL), IMatchDetails.TAKTIK_NORMAL),
+			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING), IMatchDetails.TAKTIK_PRESSING),
+			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_KONTER), IMatchDetails.TAKTIK_KONTER),
+			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE), IMatchDetails.TAKTIK_MIDDLE),
+			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS), IMatchDetails.TAKTIK_WINGS),
+			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE), IMatchDetails.TAKTIK_CREATIVE),
+			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS), IMatchDetails.TAKTIK_LONGSHOTS) };
     private JComboBox m_jcbTaktik = new JComboBox(TAKTIK);
 
-    // home / away / away-derby
-    private CBItem[] LOCATION = {
-	            new CBItem(HOVerwaltung.instance().getLanguageString("Heimspiel"),
-	                       IMatchDetails.LOCATION_HOME),
-	            new CBItem(HOVerwaltung.instance().getLanguageString("matchlocation.away"),
-	                       IMatchDetails.LOCATION_AWAY),
-	            new CBItem(HOVerwaltung.instance().getLanguageString("matchlocation.awayderby"),
-	                       IMatchDetails.LOCATION_AWAYDERBY)
-            };
-    private JComboBox m_jcbLocation = new JComboBox(LOCATION);
+	// home / away / away-derby
+	private CBItem[] LOCATION = { new CBItem(HOVerwaltung.instance().getLanguageString("Heimspiel"), IMatchDetails.LOCATION_HOME), //
+			new CBItem(HOVerwaltung.instance().getLanguageString("matchlocation.away"), IMatchDetails.LOCATION_AWAY), //
+			new CBItem(HOVerwaltung.instance().getLanguageString("matchlocation.awayderby"), IMatchDetails.LOCATION_AWAYDERBY) //
+	};
+	private JComboBox m_jcbLocation = new JComboBox(LOCATION);
 
     // Pull back minute
     private CBItem[] PULLBACK_MINUTE = {
@@ -235,7 +186,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @param einstellung the constant for Pic/Mots/Normal
      */
     public void setEinstellung(int einstellung) {
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbEinstellung, einstellung);
+        Helper.markierenComboBox(m_jcbEinstellung, einstellung);
     }
 
     /**
@@ -253,8 +204,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @param location the constant for the location
      */
     public void setLocation(int location) {
-		de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbLocation, location);
-
+		Helper.markierenComboBox(m_jcbLocation, location);
     }
 
     private void setLabels() {
@@ -267,12 +217,10 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             //HRF-Vergleich gefordert
             if (AufstellungsVergleichHistoryPanel.isVergleichgefordert()) {
                 //Erst die Werte auf die der geladenen Aufstellung setzen
-                final AufstellungCBItem vergleichsaufstellungcbitem = AufstellungsVergleichHistoryPanel
-                                                                      .getVergleichsAufstellung();
+				final AufstellungCBItem vergleichsaufstellungcbitem = AufstellungsVergleichHistoryPanel.getVergleichsAufstellung();
 
-                if (vergleichsaufstellungcbitem != null) {
-                    final Lineup vergleichsaufstellung = vergleichsaufstellungcbitem
-                                                              .getAufstellung();
+				if (vergleichsaufstellungcbitem != null) {
+					final Lineup vergleichsaufstellung = vergleichsaufstellungcbitem.getAufstellung();
 
                     if (vergleichsaufstellung != null) {
                         //Wegen der Berechnung zuerst die Aufstellung kurz in Model packen, da immer die aktuelle Aufstellung genommen wird
@@ -293,35 +241,22 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             }
 
             //Erst mal leeren
-    		aufstellung.updateRatingPredictionConfig();
-    		
-            m_jpRating.clear();
-
-            m_jpRating.setTopRightText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
-                                                                                                    .getLeftDefenseRating())),
-                                                                    false, true));
-            m_jpRating.setTopCenterText(PlayerHelper.getNameForSkill((aufstellung
-                                                                      .getIntValue4Rating(aufstellung
-                                                                                          .getCentralDefenseRating())),
-                                                                     false, true));
-            m_jpRating.setTopLeftText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
-                                                                                                   .getRightDefenseRating())),
-                                                                   false, true));
-            m_jpRating.setMiddleText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
-                                                                                                  .getMidfieldRating())),
-                                                                  false, true));
-            m_jpRating.setBottomRightText(PlayerHelper.getNameForSkill((aufstellung
-                                                                        .getIntValue4Rating(aufstellung
-                                                                                            .getLeftAttackRating())),
-                                                                       false, true));
-            m_jpRating.setBottomCenterText(PlayerHelper.getNameForSkill((aufstellung
-                                                                         .getIntValue4Rating(aufstellung
-                                                                                             .getCentralAttackRating())),
-                                                                        false, true));
-            m_jpRating.setBottomLeftText(PlayerHelper.getNameForSkill((aufstellung
-                                                                       .getIntValue4Rating(aufstellung
-                                                                                           .getRightAttackRating())),
-                                                                      false, true));
+			aufstellung.updateRatingPredictionConfig();
+			m_jpRating.clear();
+			m_jpRating.setTopRightText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftDefenseRating())),
+					false, true));
+			m_jpRating.setTopCenterText(PlayerHelper.getNameForSkill(
+					(aufstellung.getIntValue4Rating(aufstellung.getCentralDefenseRating())), false, true));
+			m_jpRating.setTopLeftText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightDefenseRating())),
+					false, true));
+			m_jpRating.setMiddleText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getMidfieldRating())), false,
+					true));
+			m_jpRating.setBottomRightText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftAttackRating())),
+					false, true));
+			m_jpRating.setBottomCenterText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
+					.getCentralAttackRating())), false, true));
+			m_jpRating.setBottomLeftText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightAttackRating())),
+					false, true));
             m_jpRating.setTopRight(aufstellung.getLeftDefenseRating());
             m_jpRating.setTopCenter(aufstellung.getCentralDefenseRating());
             m_jpRating.setTopLeft(aufstellung.getRightDefenseRating());
@@ -336,13 +271,10 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             final double gesamtstaerke = aufstellung.getGesamtStaerke(allSpieler, true);
 
             //*2 wegen halben Sternen
-            m_jpGesamtStaerke.setRating((int) (gesamtstaerke * 2));
-            m_jpGesamtStaerkeText.setText(de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT
-                                          .format(gesamtstaerke));
-            m_jpLoddarstat.setText(de.hattrickorganizer.tools.Helper.round(aufstellung
-                                                                           .getLoddarStats(), 2)
-                                   + "");
-            m_jpHatstat.setText(aufstellung.getHATStats() + "");
+			m_jpGesamtStaerke.setRating((int) (gesamtstaerke * 2));
+			m_jpGesamtStaerkeText.setText(Helper.DEFAULTDEZIMALFORMAT.format(gesamtstaerke));
+			m_jpLoddarstat.setText(Helper.round(aufstellung.getLoddarStats(), 2) + "");
+			m_jpHatstat.setText(aufstellung.getHATStats() + "");
 
             setStimmung(homodel.getTeam().getStimmungAsInt(),homodel.getTeam().getSubStimmung());
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
@@ -409,7 +341,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @param selbstvertrauen the confidence value
      */
     public void setSelbstvertrauen(int selbstvertrauen) {
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbSelbstvertrauen, selbstvertrauen);
+        Helper.markierenComboBox(m_jcbSelbstvertrauen, selbstvertrauen);
     }
 
     /**
@@ -419,15 +351,15 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @param subStimmung subskill of the team spirit
      */
     public void setStimmung(int stimmung,int subStimmung) {
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbMainStimmung, stimmung);
-		de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbSubStimmung, subStimmung);
+        Helper.markierenComboBox(m_jcbMainStimmung, stimmung);
+		Helper.markierenComboBox(m_jcbSubStimmung, subStimmung);
     }
 
     /**
      * Set the trainer type.
      */
     public void setTrainerType (int newTrainerType) {
-    	de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbTrainerType, newTrainerType);
+    	Helper.markierenComboBox(m_jcbTrainerType, newTrainerType);
     }
 
     /**
@@ -436,7 +368,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @param taktik the tactic constant
      */
     public void setTaktik(int taktik) {
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbTaktik, taktik);
+        Helper.markierenComboBox(m_jcbTaktik, taktik);
     }
 
     /**
@@ -454,7 +386,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      * @param minute
      */
     public void setPullBackMinute(int minute) {
-        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbPullBackMinute, minute);
+        Helper.markierenComboBox(m_jcbPullBackMinute, minute);
     }
 
     /**
@@ -681,35 +613,29 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         layout.setConstraints(m_jpTaktikStaerke.getComponent(false), constraints);
         add(m_jpTaktikStaerke.getComponent(false));
 
-        yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
-        constraints.gridx = 2;
-        constraints.gridy = yPos;
-		m_jcbMainStimmung.setPreferredSize(new Dimension(50,
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(20)));
-		m_jcbMainStimmung.setMaximumRowCount(13);
-        layout.setConstraints(m_jcbMainStimmung, constraints);
-        add(m_jcbMainStimmung);
-
-        yPos++;
-		initLabel(constraints,layout,new JLabel("Sub"+HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
+		yPos++;
+		initLabel(constraints, layout, new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
 		constraints.gridx = 2;
-        constraints.gridy = yPos;
-		m_jcbSubStimmung.setPreferredSize(new Dimension(50,
-													 de.hattrickorganizer.tools.Helper
-													 .calcCellWidth(20)));
+		constraints.gridy = yPos;
+		m_jcbMainStimmung.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
+		m_jcbMainStimmung.setMaximumRowCount(13);
+		layout.setConstraints(m_jcbMainStimmung, constraints);
+		add(m_jcbMainStimmung);
+
+		yPos++;
+		initLabel(constraints, layout, new JLabel("Sub" + HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
+		constraints.gridx = 2;
+		constraints.gridy = yPos;
+		m_jcbSubStimmung.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
 		m_jcbSubStimmung.setMaximumRowCount(5);
 		layout.setConstraints(m_jcbSubStimmung, constraints);
 		add(m_jcbSubStimmung);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen")), yPos);
+        initLabel(constraints,layout, new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50,
-                                                            de.hattrickorganizer.tools.Helper
-                                                            .calcCellWidth(20)));
+		m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
         m_jcbSelbstvertrauen.setMaximumRowCount(10);
         layout.setConstraints(m_jcbSelbstvertrauen, constraints);
         add(m_jcbSelbstvertrauen);
@@ -718,9 +644,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Trainer")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-		m_jcbTrainerType.setPreferredSize(new Dimension(50,
-                                                     de.hattrickorganizer.tools.Helper
-                                                     .calcCellWidth(20)));
+		m_jcbTrainerType.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
 		m_jcbTrainerType.setMaximumRowCount(3);
         layout.setConstraints(m_jcbTrainerType, constraints);
         add(m_jcbTrainerType);
