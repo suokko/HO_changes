@@ -192,16 +192,15 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 			sql = "SELECT * FROM "+getTableName();
 
 			if (teamId > -1 && matchStatus > -1) {
-				sql += (" WHERE GastID=" + teamId + " OR HeimID=" + teamId + " AND Status=" + matchStatus);
+				sql += (" WHERE (GastID=" + teamId + " OR HeimID=" + teamId + ") AND Status=" + matchStatus);
 			} else if (teamId > -1) {
 				sql += (" WHERE GastID=" + teamId + " OR HeimID=" + teamId);
-			} else if (teamId > -1) {
+			} else if (matchStatus > -1) {
 				sql += (" WHERE Status=" + matchStatus);
 			}
 
 			sql += " ORDER BY MatchDate DESC";
 			rs = adapter.executeQuery(sql);
-			//rs.beforeFirst();
 
 			while (rs.next()) {
 				match = new MatchKurzInfo();
@@ -223,8 +222,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		}
 
 		matches = new MatchKurzInfo[liste.size()];
-		MyHelper.copyVector2Array(liste, matches);
-
+		matches = liste.toArray(matches);
 		return matches;
 	}
 	
