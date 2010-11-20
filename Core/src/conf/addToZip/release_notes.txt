@@ -5,6 +5,8 @@ Changelist HO! 1.427
 - add optional "Nimbus" look and feel, if available
 - update some graphics
 - fix bug with fraction digit in fanclub size
+- switch to 553 linup (thx blaghaid)
+- fix home/away determination for DBs with illegal matches (announced but never played)
 
 Language updates:
 -----------------
