@@ -855,54 +855,46 @@ public class LineupAssistant {
     
     /**
      * Checks the position array. Verifies that all positions are there. Repositions players with old reposition tactics
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     * @return 
-     *
-     * @return TODO Missing Return Method Documentation
      */
-    public void cleanPositionArray (Vector<ISpielerPosition> vpos){
-    
-    	
-    	for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.startReserves; i++) {
-    		
-    		SpielerPosition sp = (SpielerPosition)getSpielerPositionById(vpos, i);
-    		
-    		if ((sp.getSpielerId() == 260143047) || (sp.getSpielerId() == 115641569) || (sp.getSpielerId() == 141926040)){
-    			System.out.println("Halt!");
-    		}
-    		SpielerPosition tmpSp = null;
+	public void cleanPositionArray(Vector<ISpielerPosition> vpos) {
 
-    		switch (sp.getTaktik()) {
+		for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.startReserves; i++) {
 
-    		case ISpielerPosition.OLD_EXTRA_DEFENDER:
-    			tmpSp = (SpielerPosition)getSpielerPositionById(vpos, ISpielerPosition.middleCentralDefender);
-    			tmpSp.setSpielerId(sp.getSpielerId());
-    			tmpSp.setTaktik(ISpielerPosition.NORMAL);
-    			sp.setSpielerId(-1);
-    			sp.setTaktik((byte)-1);	
-    			break;
-    		case ISpielerPosition.OLD_EXTRA_MIDFIELD :
-    			tmpSp = (SpielerPosition)getSpielerPositionById(vpos, ISpielerPosition.centralInnerMidfield);
-    			tmpSp.setSpielerId(sp.getSpielerId());
-    			tmpSp.setTaktik(ISpielerPosition.NORMAL);
-    			sp.setSpielerId(-1);
-    			sp.setTaktik((byte)-1);	
-    			break;
-    		case ISpielerPosition.OLD_EXTRA_FORWARD :
-    			tmpSp = (SpielerPosition)getSpielerPositionById(vpos, ISpielerPosition.centralForward);
-    			tmpSp.setSpielerId(sp.getSpielerId());
-    			tmpSp.setTaktik(ISpielerPosition.NORMAL);
-    			sp.setSpielerId(-1);
-    			sp.setTaktik((byte)-1);	
-    			break;
-    		default:
-    			break;
-    		}
-    		}
-    	}
-    }
-    		
+			SpielerPosition sp = (SpielerPosition) getSpielerPositionById(vpos, i);
+
+			if ((sp.getSpielerId() == 260143047) || (sp.getSpielerId() == 115641569) || (sp.getSpielerId() == 141926040)) {
+				System.out.println("Halt!");
+			}
+			SpielerPosition tmpSp = null;
+
+			switch (sp.getTaktik()) {
+
+			case ISpielerPosition.OLD_EXTRA_DEFENDER:
+				tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.middleCentralDefender);
+				tmpSp.setSpielerId(sp.getSpielerId());
+				tmpSp.setTaktik(ISpielerPosition.NORMAL);
+				sp.setSpielerId(-1);
+				sp.setTaktik((byte) -1);
+				break;
+			case ISpielerPosition.OLD_EXTRA_MIDFIELD:
+				tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.centralInnerMidfield);
+				tmpSp.setSpielerId(sp.getSpielerId());
+				tmpSp.setTaktik(ISpielerPosition.NORMAL);
+				sp.setSpielerId(-1);
+				sp.setTaktik((byte) -1);
+				break;
+			case ISpielerPosition.OLD_EXTRA_FORWARD:
+				tmpSp = (SpielerPosition) getSpielerPositionById(vpos, ISpielerPosition.centralForward);
+				tmpSp.setSpielerId(sp.getSpielerId());
+				tmpSp.setTaktik(ISpielerPosition.NORMAL);
+				sp.setSpielerId(-1);
+				sp.setTaktik((byte) -1);
+				break;
+			default:
+				break;
+			}
+		}
+	}
     	
     	
     private ISpielerPosition getSpielerPositionById (Vector<ISpielerPosition> vec, int id) {
