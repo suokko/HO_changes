@@ -50,8 +50,6 @@ public  class Lineup implements plugins.ILineUp {
     /** Attitude */
     private int m_iAttitude;
 
-    //protected Vector    m_vSpieler      =   null;
-
     /** captain */
     private int m_iKapitaen = -1;
 
@@ -729,8 +727,10 @@ public  class Lineup implements plugins.ILineUp {
 		if (m_sLocation < 0) {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-				final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId);
+				final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId, IMatchKurzInfo.UPCOMING);
 				IMatchKurzInfo match = null;
+				
+				HOLogger.instance().debug(getClass(), "Got " + (matches != null ? matches.length : "null") + " matches");
 
 				for (int i = 0; (matches != null) && (matches.length > i); i++) {
 					if ((matches[i].getMatchStatus() == plugins.IMatchKurzInfo.UPCOMING)
