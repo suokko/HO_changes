@@ -14,8 +14,11 @@ import javax.swing.JLabel;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.RasenPanel;
+import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
+import de.hattrickorganizer.model.matches.MatchLineupTeam;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -113,146 +116,140 @@ public class AufstellungsSternePanel extends RasenPanel {
     }
 
     /**
-     * Holt das Lineup für das Match und Team und aktualisiert die SpielerSternePanels
-     *
-     * @param matchid TODO Missing Constructuor Parameter Documentation
-     * @param teamid TODO Missing Constructuor Parameter Documentation
+     * Get match lineup and refresh this SpielerSternePanels.
      */
-    public final void refresh(int matchid, int teamid) {
-        final de.hattrickorganizer.model.matches.MatchLineup lineup = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                                             .getMatchLineup(matchid);
-        de.hattrickorganizer.model.matches.MatchLineupTeam lineupteam = null;
+	public final void refresh(int matchid, int teamid) {
+		final MatchLineup lineup = DBZugriff.instance().getMatchLineup(matchid);
+		MatchLineupTeam lineupteam = null;
 
-        if (lineup.getHeimId() == teamid) {
-            lineupteam = (de.hattrickorganizer.model.matches.MatchLineupTeam) lineup.getHeim();
-        } else {
-            lineupteam = (de.hattrickorganizer.model.matches.MatchLineupTeam) lineup.getGast();
-        }
+		if (lineup.getHeimId() == teamid) {
+			lineupteam = (MatchLineupTeam) lineup.getHeim();
+		} else {
+			lineupteam = (MatchLineupTeam) lineup.getGast();
+		}
 
-        clearAll();
+		clearAll();
 
-        if (lineupteam != null) {
-            m_jlTeamName.setText(lineupteam.getTeamName() + " (" + lineupteam.getTeamID() + ")");
+		if (lineupteam != null) {
+			m_jlTeamName.setText(lineupteam.getTeamName() + " (" + lineupteam.getTeamID() + ")");
 
-            final Vector<IMatchLineupPlayer> aufstellung = lineupteam.getAufstellung();
+			final Vector<IMatchLineupPlayer> aufstellung = lineupteam.getAufstellung();
 
-            for (int i = 0; i < aufstellung.size(); i++) {
-                final MatchLineupPlayer player = (MatchLineupPlayer) aufstellung.get(i);
+			for (int i = 0; i < aufstellung.size(); i++) {
+				final MatchLineupPlayer player = (MatchLineupPlayer) aufstellung.get(i);
 
-                switch (player.getId()) {
-                    case ISpielerPosition.keeper: {
-                        m_clTorwart.refresh(lineup, player);
-                        break;
-                    }
+				switch (player.getId()) {
+				case ISpielerPosition.keeper: {
+					m_clTorwart.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.rightBack: {
-                        m_clRechteAussenVerteidiger.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.rightBack: {
+					m_clRechteAussenVerteidiger.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.leftBack: {
-                        m_clLinkeAussenVerteidiger.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.leftBack: {
+					m_clLinkeAussenVerteidiger.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.rightCentralDefender: {
-                        m_clRechteInnenVerteidiger.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.rightCentralDefender: {
+					m_clRechteInnenVerteidiger.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.leftCentralDefender: {
-                        m_clLinkeInnenVerteidiger.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.leftCentralDefender: {
+					m_clLinkeInnenVerteidiger.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.rightInnerMidfield: {
-                        m_clRechteMittelfeld.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.rightInnerMidfield: {
+					m_clRechteMittelfeld.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.leftInnerMidfield: {
-                        m_clLinkeMittelfeld.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.leftInnerMidfield: {
+					m_clLinkeMittelfeld.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.leftWinger: {
-                        m_clLinkeFluegel.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.leftWinger: {
+					m_clLinkeFluegel.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.rightWinger: {
-                        m_clRechteFluegel.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.rightWinger: {
+					m_clRechteFluegel.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.rightForward: {
-                        m_clLinkerSturm.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.rightForward: {
+					m_clLinkerSturm.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.leftForward: {
-                        m_clRechterSturm.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.leftForward: {
+					m_clRechterSturm.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.substDefender: {
-                        m_clReserveVerteidiger.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.substDefender: {
+					m_clReserveVerteidiger.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.substForward: {
-                        m_clReserveSturm.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.substForward: {
+					m_clReserveSturm.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.substInnerMidfield: {
-                        m_clReserveMittelfeld.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.substInnerMidfield: {
+					m_clReserveMittelfeld.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.substKeeper: {
-                        m_clReserveTorwart.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.substKeeper: {
+					m_clReserveTorwart.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.substWinger: {
-                        m_clReserveFluegel.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.substWinger: {
+					m_clReserveFluegel.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.captain: {
-                        m_clSpielfuehrer.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.captain: {
+					m_clSpielfuehrer.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.setPieces: {
-                        m_clStandard.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.setPieces: {
+					m_clStandard.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.ausgewechselt: {
-                        m_clAusgewechselt1.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.ausgewechselt: {
+					m_clAusgewechselt1.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.ausgewechselt + 1: {
-                        m_clAusgewechselt2.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.ausgewechselt + 1: {
+					m_clAusgewechselt2.refresh(lineup, player);
+					break;
+				}
 
-                    case ISpielerPosition.ausgewechselt + 2: {
-                        m_clAusgewechselt3.refresh(lineup, player);
-                        break;
-                    }
+				case ISpielerPosition.ausgewechselt + 2: {
+					m_clAusgewechselt3.refresh(lineup, player);
+					break;
+				}
 
-                    default:
-                        HOLogger.instance().log(getClass(),"Umbekannte Position: " + player.getPositionCode());
-
-                    //Ausgewechselte Spieler fehlen noch!
-                }
-            }
-        }
-    }
+				default:
+					HOLogger.instance().log(getClass(), getClass().getName() + ": Unknown player position: " + player.getPositionCode());
+				}
+			}
+		}
+	}
 
     /**
      * Erstellt die Komponenten
