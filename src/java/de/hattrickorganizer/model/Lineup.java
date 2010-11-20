@@ -14,7 +14,6 @@ import java.util.Vector;
 import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import sun.misc.Cleaner;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.LineupAssistant;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
@@ -725,32 +724,31 @@ public  class Lineup implements plugins.ILineUp {
      * TODO: determine away derby (aik) !!!
      * @return the location constant for the match
      */
-    public final short getHeimspiel() {
-        if (m_sLocation < 0) {
-            try {
-                final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(
-                		HOVerwaltung.instance().getModel().getBasics().getTeamId());
-                plugins.IMatchKurzInfo match = null;
+	public final short getHeimspiel() {
+		if (m_sLocation < 0) {
+			try {
+				final plugins.IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(
+						HOVerwaltung.instance().getModel().getBasics().getTeamId());
+				plugins.IMatchKurzInfo match = null;
 
-                for (int i = 0; (matches != null) && (matches.length > i); i++) {
-                    if ((matches[i].getMatchStatus() == plugins.IMatchKurzInfo.UPCOMING)
-                        && ((match == null)
-                        || match.getMatchDateAsTimestamp().after(matches[i].getMatchDateAsTimestamp()))) {
-                        match = matches[i];
-                    }
-                }
+				for (int i = 0; (matches != null) && (matches.length > i); i++) {
+					if ((matches[i].getMatchStatus() == plugins.IMatchKurzInfo.UPCOMING)
+							&& ((match == null) || match.getMatchDateAsTimestamp().after(matches[i].getMatchDateAsTimestamp()))) {
+						match = matches[i];
+					}
+				}
 
-                if (match != null) {
-                	m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) ? (short) 1 : (short) 0;
-                }
-            } catch (Exception e) {
-            	HOLogger.instance().error(getClass(),"getHeimspiel: " + e);
-            	m_sLocation = 0;
-            }
-        }
+				if (match != null) {
+					m_sLocation = (match.getHeimID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) ? (short) 1 : (short) 0;
+				}
+			} catch (Exception e) {
+				HOLogger.instance().error(getClass(), "getHeimspiel: " + e);
+				m_sLocation = 0;
+			}
+		}
 
-        return m_sLocation;
-    }
+		return m_sLocation;
+	}
 
     /* Umrechnung von double auf 1-80 int*/
     public final int getIntValue4Rating(double rating) {
