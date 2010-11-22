@@ -847,7 +847,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	IRatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
     	float passing = 0;
-        for(int i = 2; i < 12; i++)
+        for(int i = ISpielerPosition.startLineup +1; i < ISpielerPosition.startReserves; i++)
         {
             ISpieler ispieler = lineup.getPlayerByPositionID(i);
             byte taktik = lineup.getTactic4PositionID(i);
@@ -877,7 +877,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         float psDefender = 0.0F;
     	IRatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
-        for(int pos = 2; pos < 12; pos++)
+        for(int pos = ISpielerPosition.startLineup+1; pos < ISpielerPosition.startReserves; pos++)
         {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             byte taktik = lineup.getTactic4PositionID(pos);

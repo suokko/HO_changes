@@ -246,7 +246,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		String sql = null;
 		ResultSet rs = null;
 		int roleID;
-		int behaivior;
+		int behavior;
 		int spielerID;
 		double rating;
 		String vname;
@@ -262,15 +262,40 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 
 			while (rs.next()) {
 				roleID = rs.getInt("RoleID");
-				behaivior = rs.getInt("Taktik");
+				behavior = rs.getInt("Taktik");
 				spielerID = rs.getInt("SpielerID");
 				rating = rs.getDouble("Rating");
 				vname = new String(DBZugriff.deleteEscapeSequences(rs.getString("VName")));
 				nickName = new String(DBZugriff.deleteEscapeSequences(rs.getString("NickName")));
 				name = new String(DBZugriff.deleteEscapeSequences(rs.getString("Name")));
 				positionsCode = rs.getInt("PositionCode");
-
-				player = new MatchLineupPlayer(roleID, behaivior, spielerID, rating, vname, nickName, name, positionsCode, rs.getInt("STATUS"), rs.getInt("FIELDPOS"));
+				
+//				if ((roleID != positionsCode || roleID != rs.getInt("FIELDPOS")) && 
+//						(positionsCode != -1 || rs.getInt("FIELDPOS") != -1)) {
+//					HOLogger.instance().debug(getClass(),"Unexpected database output - RoleID: " + roleID + 
+//							" PosCode: " + positionsCode + " FieldPos: " + rs.getInt("FIELDPOS") + " Behavior: " + behavior);
+//				}
+				
+				switch (behavior) {
+					case ISpielerPosition.OLD_EXTRA_DEFENDER :
+						roleID = ISpielerPosition.middleCentralDefender;
+						behavior = ISpielerPosition.NORMAL;
+						break;
+					case ISpielerPosition.OLD_EXTRA_MIDFIELD :
+						roleID = ISpielerPosition.centralInnerMidfield;
+						behavior = ISpielerPosition.NORMAL;
+						break;
+					case ISpielerPosition.OLD_EXTRA_FORWARD :
+						roleID = ISpielerPosition.centralForward;
+						behavior = ISpielerPosition.NORMAL;
+				}
+				
+				if (roleID < ISpielerPosition.setPieces) {
+					roleID = convertOldRoleToNew(roleID);
+				}
+				
+				// Position code and field position was removed from constructor below.
+				player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, vname, nickName, name, rs.getInt("STATUS"));
 				vec.add(player);
 			}
 		} catch (Exception e) {
@@ -279,5 +304,46 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 
 		return vec;
 	}
+		
+		// Helpers
+		
+		 private int convertOldRoleToNew(int roleID) {
+		    	switch (roleID) {
+		    		case ISpielerPosition.oldKeeper :
+		    			return ISpielerPosition.keeper;
+		    		case ISpielerPosition.oldRightBack :
+		    			return ISpielerPosition.rightBack;
+		    		case ISpielerPosition.oldLeftCentralDefender :
+		    			return ISpielerPosition.leftCentralDefender;
+		    		case ISpielerPosition.oldRightCentralDefender :
+		    			return ISpielerPosition.rightCentralDefender;
+		    		case ISpielerPosition.oldLeftBack :
+		    			return ISpielerPosition.leftBack;
+		    		case ISpielerPosition.oldRightWinger :
+		    			return ISpielerPosition.rightWinger;
+		    		case ISpielerPosition.oldRightInnerMidfielder :
+		    			return ISpielerPosition.rightInnerMidfield;
+		    		case ISpielerPosition.oldLeftInnerMidfielder :
+		    			return ISpielerPosition.leftInnerMidfield;
+		    		case ISpielerPosition.oldLeftWinger:
+		    			return ISpielerPosition.leftWinger;
+		    		case ISpielerPosition.oldRightForward :
+		    			return ISpielerPosition.rightForward;
+		    		case ISpielerPosition.oldLeftForward :
+		    			return ISpielerPosition.leftForward;
+		    		case ISpielerPosition.oldSubstKeeper :
+		    			return ISpielerPosition.substKeeper;
+		    		case ISpielerPosition.oldSubstDefender :
+		    			return ISpielerPosition.substDefender;
+		    		case ISpielerPosition.oldSubstMidfielder :
+		    			return ISpielerPosition.substInnerMidfield;
+		    		case ISpielerPosition.oldSubstWinger :
+		    			return ISpielerPosition.substWinger;
+		    		case ISpielerPosition.oldSubstForward :
+		    			return ISpielerPosition.substForward;
+		    		default :
+		    			return roleID;
+		    	}
+		    }
 
 }
