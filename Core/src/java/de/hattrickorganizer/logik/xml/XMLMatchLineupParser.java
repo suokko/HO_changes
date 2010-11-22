@@ -10,6 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import plugins.ISpielerPosition;
+
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.MatchLineupTeam;
@@ -160,11 +162,11 @@ public class XMLMatchLineupParser {
         Element tmp = null;
         MatchLineupPlayer player = null;
         int roleID = -1;
-        int behaivior = 0;
+        int behavior = 0;
         int spielerID = -1;
         double rating = -1.0d;
         String name = "";
-        int positionsCode = -1;
+     //   int positionsCode = -1;
 
         tmp = (Element) ele.getElementsByTagName("PlayerID").item(0);
         spielerID = Integer.parseInt(tmp.getFirstChild().getNodeValue());
@@ -173,6 +175,20 @@ public class XMLMatchLineupParser {
         	roleID = Integer.parseInt(tmp.getFirstChild().getNodeValue());
         }
 
+        
+        // This is the right spot to wash the old role IDs if arrived by xml.
+        // Position code is not include in 1.6 xml. It is not needed from the older ones,
+        // what is necessary is to check for old reposition values in the Behaviour.
+        // We do move all repositions to central slot, and go happily belly up if we find more
+        // than one repositioning to the same position (old setup where more than 3 forwards was possible)
+        // 
+        
+//        if (roleID == 17 || roleID == 14) {
+//        	System.out.println("Give me somewhere to put a breakpoint");
+//        }
+        
+//        HOLogger.instance().debug(getClass(),"RoleID in: " + roleID);
+        
         //nur wenn Spieler existiert
         if (spielerID > 0) {
             tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
@@ -182,31 +198,95 @@ public class XMLMatchLineupParser {
                 name = tmp.getFirstChild().getNodeValue();
             }
 
-            //taktik nur für aufgestellte
-            if (roleID == 1) {
+            //tactic is only set for those in the lineup (and not for the keeper).
+            if (roleID == ISpielerPosition.keeper || roleID == ISpielerPosition.oldKeeper)  {
                 //Diese Werte sind von HT vorgegeben aber nicht garantiert  mitgeliefert in xml, daher selbst setzen!
-                behaivior = 0;
-                positionsCode = 1;
-            } else if ((roleID > 1) && (roleID < 12)) {
+            	behavior = 0;
+            	roleID = ISpielerPosition.keeper; // takes care of the old keeper ID.
+            
+            } else if ((roleID < ISpielerPosition.setPieces) 
+            		|| ((roleID < ISpielerPosition.startReserves) && (roleID > ISpielerPosition.keeper))) {
                 tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
-                behaivior = Integer.parseInt(tmp.getFirstChild().getNodeValue());
-                tmp = (Element) ele.getElementsByTagName("PositionCode").item(0);
-                positionsCode = Integer.parseInt(tmp.getFirstChild().getNodeValue());
+                behavior = Integer.parseInt(tmp.getFirstChild().getNodeValue());
+                
+//                HOLogger.instance().debug(getClass(),"Behavior found: " + behavior);
+                
+                switch (behavior) {
+                  case ISpielerPosition.OLD_EXTRA_DEFENDER :
+                	  roleID = ISpielerPosition.middleCentralDefender;
+                	  behavior = ISpielerPosition.NORMAL;
+                	  break;
+                  case ISpielerPosition.OLD_EXTRA_MIDFIELD :
+                	  roleID = ISpielerPosition.centralInnerMidfield;
+                	  behavior = ISpielerPosition.NORMAL;
+                	  break;
+                  case ISpielerPosition.OLD_EXTRA_FORWARD :
+                	  roleID = ISpielerPosition.centralForward;
+                	  behavior = ISpielerPosition.NORMAL;
+                }
+                
+                // Wash the remaining old positions
+                if (roleID < ISpielerPosition.setPieces) {
+                	roleID = convertOldRoleToNew(roleID);
+                }
             }
 
             //rating nur für leute die gespielt haben
-            if ((roleID < 12) || (roleID > 18)) {
+            if ((roleID >= ISpielerPosition.startLineup) &&(roleID < ISpielerPosition.startReserves) || 
+            		((roleID >= ISpielerPosition.ausgewechselt) && (roleID < ISpielerPosition.ausgewechseltEnd))) {
                 tmp = (Element) ele.getElementsByTagName("RatingStars").item(0);
                 rating = Double.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",","."));
             }
         }
 
-        player = new MatchLineupPlayer(roleID, behaivior, spielerID, rating, name, positionsCode,
-                                       0, positionsCode);
+//        HOLogger.instance().debug(getClass(),"RoleID out: " + roleID);
+//        HOLogger.instance().debug(getClass(),"Behavior out: " + behavior);
+//        HOLogger.instance().debug(getClass(),"--------------- Debug by XMLMatchLineupParse if you want it gone");      
+        
+        player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, name, 0);
 
         return player;
     }
 
+    private int convertOldRoleToNew(int roleID) {
+    	switch (roleID) {
+    		case ISpielerPosition.oldKeeper :
+    			return ISpielerPosition.keeper;
+    		case ISpielerPosition.oldRightBack :
+    			return ISpielerPosition.rightBack;
+    		case ISpielerPosition.oldLeftCentralDefender :
+    			return ISpielerPosition.leftCentralDefender;
+    		case ISpielerPosition.oldRightCentralDefender :
+    			return ISpielerPosition.rightCentralDefender;
+    		case ISpielerPosition.oldLeftBack :
+    			return ISpielerPosition.leftBack;
+    		case ISpielerPosition.oldRightWinger :
+    			return ISpielerPosition.rightWinger;
+    		case ISpielerPosition.oldRightInnerMidfielder :
+    			return ISpielerPosition.rightInnerMidfield;
+    		case ISpielerPosition.oldLeftInnerMidfielder :
+    			return ISpielerPosition.leftInnerMidfield;
+    		case ISpielerPosition.oldLeftWinger:
+    			return ISpielerPosition.leftWinger;
+    		case ISpielerPosition.oldRightForward :
+    			return ISpielerPosition.rightForward;
+    		case ISpielerPosition.oldLeftForward :
+    			return ISpielerPosition.leftForward;
+    		case ISpielerPosition.oldSubstKeeper :
+    			return ISpielerPosition.substKeeper;
+    		case ISpielerPosition.oldSubstDefender :
+    			return ISpielerPosition.substDefender;
+    		case ISpielerPosition.oldSubstMidfielder :
+    			return ISpielerPosition.substInnerMidfield;
+    		case ISpielerPosition.oldSubstWinger :
+    			return ISpielerPosition.substWinger;
+    		case ISpielerPosition.oldSubstForward :
+    			return ISpielerPosition.substForward;
+    		default :
+    			return roleID;
+    	}
+    		
+    }
     /**
      * erzeugt das Team aus dem xml
      *

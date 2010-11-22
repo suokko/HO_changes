@@ -49,10 +49,28 @@ public final class PositionenTable extends AbstractTable {
 				rs.beforeFirst();
 
 				while (rs.next()) {
-					pos = new de.hattrickorganizer.model.SpielerPosition(rs.getInt("ID"),
-
-					/*rs.getByte ( "Position" ), */
-					rs.getInt("SpielerID"), rs.getByte("Taktik"));
+					
+					int roleID = rs.getInt("ID");
+					int behavior = rs.getByte("Taktik");
+					
+					switch (behavior) {
+					case ISpielerPosition.OLD_EXTRA_DEFENDER :
+						roleID = ISpielerPosition.middleCentralDefender;
+						behavior = ISpielerPosition.NORMAL;
+						break;
+					case ISpielerPosition.OLD_EXTRA_MIDFIELD :
+						roleID = ISpielerPosition.centralInnerMidfield;
+						behavior = ISpielerPosition.NORMAL;
+						break;
+					case ISpielerPosition.OLD_EXTRA_FORWARD :
+						roleID = ISpielerPosition.centralForward;
+						behavior = ISpielerPosition.NORMAL;
+				}
+					
+					if (roleID < ISpielerPosition.setPieces) {
+						roleID = convertOldRoleToNew(roleID);
+					}
+					pos = new de.hattrickorganizer.model.SpielerPosition(roleID, rs.getInt("SpielerID"), (byte)behavior);
 					ret.add(pos);
 				}
 			}
@@ -86,5 +104,45 @@ public final class PositionenTable extends AbstractTable {
 			adapter.executeUpdate(statement);
 		}
 	}	
+	
+	// Helper
+	private int convertOldRoleToNew(int roleID) {
+    	switch (roleID) {
+    		case ISpielerPosition.oldKeeper :
+    			return ISpielerPosition.keeper;
+    		case ISpielerPosition.oldRightBack :
+    			return ISpielerPosition.rightBack;
+    		case ISpielerPosition.oldLeftCentralDefender :
+    			return ISpielerPosition.leftCentralDefender;
+    		case ISpielerPosition.oldRightCentralDefender :
+    			return ISpielerPosition.rightCentralDefender;
+    		case ISpielerPosition.oldLeftBack :
+    			return ISpielerPosition.leftBack;
+    		case ISpielerPosition.oldRightWinger :
+    			return ISpielerPosition.rightWinger;
+    		case ISpielerPosition.oldRightInnerMidfielder :
+    			return ISpielerPosition.rightInnerMidfield;
+    		case ISpielerPosition.oldLeftInnerMidfielder :
+    			return ISpielerPosition.leftInnerMidfield;
+    		case ISpielerPosition.oldLeftWinger:
+    			return ISpielerPosition.leftWinger;
+    		case ISpielerPosition.oldRightForward :
+    			return ISpielerPosition.rightForward;
+    		case ISpielerPosition.oldLeftForward :
+    			return ISpielerPosition.leftForward;
+    		case ISpielerPosition.oldSubstKeeper :
+    			return ISpielerPosition.substKeeper;
+    		case ISpielerPosition.oldSubstDefender :
+    			return ISpielerPosition.substDefender;
+    		case ISpielerPosition.oldSubstMidfielder :
+    			return ISpielerPosition.substInnerMidfield;
+    		case ISpielerPosition.oldSubstWinger :
+    			return ISpielerPosition.substWinger;
+    		case ISpielerPosition.oldSubstForward :
+    			return ISpielerPosition.substForward;
+    		default :
+    			return roleID;
+    	}
+    }
 
 }

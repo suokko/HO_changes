@@ -14,6 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import plugins.ISpielerPosition;
+
 import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
@@ -25,8 +26,21 @@ import de.hattrickorganizer.tools.xml.XMLManager;
  * @author TheTom
  */
 public class xmlMatchOrderParser {
-	final static String[] PLAYERPOSITIONS = { "Keeper", "RightBack", "InsideBack1", "InsideBack2",
-			"LeftBack", "RightWinger", "InsideMid1", "InsideMid2", "LeftWinger", "Forward1", "Forward2" };
+	
+	/** List of positions used in property files */
+	final static String[] PLAYERPOSITIONS = { "Keeper", "RightBack", "RightCentralDefender", "MiddleCentralDefender", 
+		"LeftCentralDefender", "LeftBack", "RightWinger", "RightInnerMidfield", "CentralInnerMidfield", 
+		"LeftInnerMidfield", "LeftWinger", "RightForward", "CentralForward", "LeftForward" , "SubstKeeper",
+		"SubstBack", "SubstInsideMid", "SubstWinger", "SubstForward", "Kicker", "Captain"
+		};
+	
+	/** List of positions that has an order attached, used in property files */
+	final static String[] PLAYERPOSITIONORDERS = { "RightBack", "RightCentralDefender", "MiddleCentralDefender", 
+		"LeftCentralDefender", "LeftBack", "RightWinger", "RightInnerMidfield", "CentralInnerMidfield", 
+		"LeftInnerMidfield", "LeftWinger", "RightForward", "CentralForward", "LeftForward"
+	};
+	
+	
     //~ Constructors -------------------------------------------------------------------------------
     /**
      * Creates a new instance of xmlMatchOrderParser
@@ -86,133 +100,166 @@ public class xmlMatchOrderParser {
         name = XMLManager.instance().getFirstChildNodeValue(tmp);
 
         // individual orders only for the 10 players in the lineup (starting11 - keeper)
-        if ((roleID > 1) && (roleID < 12)) {
+        if ((roleID > ISpielerPosition.keeper) && (roleID < ISpielerPosition.startReserves)) {
             tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
             behavior = XMLManager.instance().getFirstChildNodeValue(tmp);
         }
 
         switch (roleID) {
-            case 1:
+        // Why do only some have the check for previous entry? I guess it is due to duplicate positions
+        // In the 1.3 xml, hopefully no more. They don't hurt, so they are not removed.
+            
+        	case ISpielerPosition.keeper:
                 hash.put("KeeperID", spielerID);
                 hash.put("KeeperName", name);
                 hash.put("KeeperOrder", "0");
                 break;
 
-            case 2:
+            case ISpielerPosition.rightBack:
                 hash.put("RightBackID", spielerID);
                 hash.put("RightBackName", name);
                 hash.put("RightBackOrder", behavior);
                 break;
 
-            case 3:
-            	if (!hash.containsKey("InsideBack1ID")) {
-            		hash.put("InsideBack1ID", spielerID);
-            		hash.put("InsideBack1Name", name);
-            		hash.put("InsideBack1Order", behavior);
+            case ISpielerPosition.rightCentralDefender:
+            	if (!hash.containsKey("RightCentralDefenderID")) {
+            		hash.put("RightCentralDefenderID", spielerID);
+            		hash.put("RightCentralDefenderName", name);
+            		hash.put("RightCentralDefenderOrder", behavior);
             	} else {
             		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
             	}
                 break;
 
-            case 4:
-            	if (!hash.containsKey("InsideBack2ID")) {
-            		hash.put("InsideBack2ID", spielerID);
-            		hash.put("InsideBack2Name", name);
-            		hash.put("InsideBack2Order", behavior);
+            case ISpielerPosition.middleCentralDefender:
+            	if (!hash.containsKey("MiddleCentralDefenderID")) {
+            		hash.put("MiddleCentralDefenderID", spielerID);
+            		hash.put("MiddleCentralDefenderName", name);
+            		hash.put("MiddleCentralDefenderOrder", behavior);
             	} else {
             		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
             	}
             	break;
 
-            case 5:
+            case ISpielerPosition.leftCentralDefender:
+                hash.put("LeftCentralDefenderID", spielerID);
+                hash.put("LeftCentralDefenderName", name);
+                hash.put("LeftCentralDefenderOrder", behavior);
+                break;
+
+            case ISpielerPosition.leftBack:
                 hash.put("LeftBackID", spielerID);
                 hash.put("LeftBackName", name);
-                hash.put("LeftBackOrder", behavior);
+                hash.put("LeftBack", behavior);
                 break;
-
-            case 6:
-                hash.put("RightWingerID", spielerID);
-                hash.put("RightWingerName", name);
-                hash.put("RightWingerOrder", behavior);
-                break;
-
-            case 7:
-            	if (!hash.containsKey("InsideMid1ID")) {
-            		hash.put("InsideMid1ID", spielerID);
-            		hash.put("InsideMid1Name", name);
-            		hash.put("InsideMid1Order", behavior);
+                
+            case ISpielerPosition.leftWinger:
+            	if (!hash.containsKey("LeftWingerID")) {
+            		hash.put("LeftWingerID", spielerID);
+            		hash.put("LeftWingerName", name);
+            		hash.put("LeftWingerOrder", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
+                break;    
+                
+            case ISpielerPosition.leftInnerMidfield:
+            	if (!hash.containsKey("LeftInnerMidfieldID")) {
+            		hash.put("LeftInnerMidfieldID", spielerID);
+            		hash.put("LeftInnerMidfieldName", name);
+            		hash.put("LeftInnerMidfieldOrder", behavior);
             	} else {
             		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
             	}
                 break;
 
-            case 8:
-            	if (!hash.containsKey("InsideMid2ID")) {
-            		hash.put("InsideMid2ID", spielerID);
-            		hash.put("InsideMid2Name", name);
-            		hash.put("InsideMid2Order", behavior);
+            case ISpielerPosition.centralInnerMidfield:
+            	if (!hash.containsKey("CentralInnerMidfieldID")) {
+            		hash.put("CentralInnerMidfieldID", spielerID);
+            		hash.put("CentralInnerMidfieldName", name);
+            		hash.put("CentralInnerMidfieldOrder", behavior);
             	} else {
             		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
             	}
                 break;
 
-            case 9:
-                hash.put("LeftWingerID", spielerID);
-                hash.put("LeftWingerName", name);
-                hash.put("LeftWingerOrder", behavior);
+            case ISpielerPosition.rightInnerMidfield:
+                hash.put("RightInnerMidfieldID", spielerID);
+                hash.put("RightInnerMidfieldName", name);
+                hash.put("RightInnerMidfieldOrder", behavior);
                 break;
 
-            case 10:
-            	if (!hash.containsKey("Forward1ID")) {
-            		hash.put("Forward1ID", spielerID);
-            		hash.put("Forward1Name", name);
-            		hash.put("Forward1Order", behavior);
+            case ISpielerPosition.rightWinger:
+            	if (!hash.containsKey("RightWingerID")) {
+            		hash.put("RightWingerID", spielerID);
+            		hash.put("RightWingerName", name);
+            		hash.put("RightWingerOrder", behavior);
             	} else {
             		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
             	}
                 break;
 
-            case 11:
-            	if (!hash.containsKey("Forward2ID")) {
-            		hash.put("Forward2ID", spielerID);
-            		hash.put("Forward2Name", name);
-            		hash.put("Forward2Order", behavior);
+            case ISpielerPosition.rightForward:
+            	if (!hash.containsKey("RightForward")) {
+            		hash.put("RightForwardID", spielerID);
+            		hash.put("RightForwardName", name);
+            		hash.put("RightForwardOrder", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
+                break;
+                
+            case ISpielerPosition.centralForward:
+            	if (!hash.containsKey("CentralForward")) {
+            		hash.put("CentralForwardID", spielerID);
+            		hash.put("CentralForwardName", name);
+            		hash.put("CentralForwardOrder", behavior);
             	} else {
             		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
             	}
                 break;
 
-            case 12:
+            case ISpielerPosition.leftForward:
+            	if (!hash.containsKey("LeftForward")) {
+            		hash.put("LeftForwardID", spielerID);
+            		hash.put("LeftForwardName", name);
+            		hash.put("LeftForwardOrder", behavior);
+            	} else {
+            		addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+            	}
+            	break;
+            	
+            case ISpielerPosition.substKeeper:
                 hash.put("SubstKeeperID", spielerID);
                 hash.put("SubstKeeperName", name);
                 break;
 
-            case 13:
+            case ISpielerPosition.substDefender:
                 hash.put("SubstBackID", spielerID);
                 hash.put("SubstBackName", name);
                 break;
 
-            case 14:
+            case ISpielerPosition.substInnerMidfield:
                 hash.put("SubstInsideMidID", spielerID);
                 hash.put("SubstInsideMidName", name);
                 break;
 
-            case 15:
+            case ISpielerPosition.substWinger:
                 hash.put("SubstWingerID", spielerID);
                 hash.put("SubstWingerName", name);
                 break;
 
-            case 16:
+            case ISpielerPosition.substForward:
                 hash.put("SubstForwardID", spielerID);
                 hash.put("SubstForwardName", name);
                 break;
 
-            case 17:
+            case ISpielerPosition.setPieces:
                 hash.put("KickerID", spielerID);
                 hash.put("KickerName", name);
                 break;
 
-            case 18:
+            case ISpielerPosition.captain:
                 hash.put("CaptainID", spielerID);
                 hash.put("CaptainName", name);
                 break;
@@ -336,6 +383,8 @@ public class xmlMatchOrderParser {
     }
     
     private static void fillEmptySpotsWithAdditionalPlayers(Hashtable<String, String> hash) {
+    	// Does this have any role? I guess noone will miss it if deleted after 553 change
+    	
     	try {
 			int a = 1;
 			String add = hash.get("Additional" + a + "ID");
@@ -508,99 +557,121 @@ public class xmlMatchOrderParser {
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("LineUp").item(0);
-            ele = (Element) root.getElementsByTagName("KeeperID").item(0);
-            hash.put("KeeperID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("KeeperName").item(0);
-            hash.put("KeeperName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-
-            ele = (Element) root.getElementsByTagName("RightBackID").item(0);
-            hash.put("RightBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("RightBackName").item(0);
-            hash.put("RightBackName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("RightBackOrder").item(0);
-            hash.put("RightBackOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideBack1ID").item(0);
-            hash.put("InsideBack1ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideBack1Name").item(0);
-            hash.put("InsideBack1Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideBack1Order").item(0);
-            hash.put("InsideBack1Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideBack2ID").item(0);
-            hash.put("InsideBack2ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideBack2Name").item(0);
-            hash.put("InsideBack2Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideBack2Order").item(0);
-            hash.put("InsideBack2Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("LeftBackID").item(0);
-            hash.put("LeftBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("LeftBackName").item(0);
-            hash.put("LeftBackName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("LeftBackOrder").item(0);
-            hash.put("LeftBackOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("RightWingerID").item(0);
-            hash.put("RightWingerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("RightWingerName").item(0);
-            hash.put("RightWingerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("RightWingerOrder").item(0);
-            hash.put("RightWingerOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideMid1ID").item(0);
-            hash.put("InsideMid1ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideMid1Name").item(0);
-            hash.put("InsideMid1Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideMid1Order").item(0);
-            hash.put("InsideMid1Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideMid2ID").item(0);
-            hash.put("InsideMid2ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideMid2Name").item(0);
-            hash.put("InsideMid2Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("InsideMid2Order").item(0);
-            hash.put("InsideMid2Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("LeftWingerID").item(0);
-            hash.put("LeftWingerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("LeftWingerName").item(0);
-            hash.put("LeftWingerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("LeftWingerOrder").item(0);
-            hash.put("LeftWingerOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("Forward1ID").item(0);
-            hash.put("Forward1ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("Forward1Name").item(0);
-            hash.put("Forward1Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("Forward1Order").item(0);
-            hash.put("Forward1Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("Forward2ID").item(0);
-            hash.put("Forward2ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("Forward2Name").item(0);
-            hash.put("Forward2Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("Forward2Order").item(0);
-            hash.put("Forward2Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstKeeperID").item(0);
-            hash.put("SubstKeeperID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstKeeperName").item(0);
-            hash.put("SubstKeeperName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstBackID").item(0);
-            hash.put("SubstBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstBackName").item(0);
-            hash.put("SubstBackName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstInsideMidID").item(0);
-            hash.put("SubstInsideMidID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstInsideMidName").item(0);
-            hash.put("SubstInsideMidName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstWingerID").item(0);
-            hash.put("SubstWingerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstWingerName").item(0);
-            hash.put("SubstWingerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstForwardID").item(0);
-            hash.put("SubstForwardID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("SubstForwardName").item(0);
-            hash.put("SubstForwardName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("KickerID").item(0);
-            hash.put("KickerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("KickerName").item(0);
-            hash.put("KickerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("CaptainID").item(0);
-            hash.put("CaptainID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-            ele = (Element) root.getElementsByTagName("CaptainName").item(0);
-            hash.put("CaptainName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            
+            String pos = null;
+            String order = "";
+            for (int i =0; i < PLAYERPOSITIONS.length; i++) {
+            	pos = PLAYERPOSITIONS[i];
+            	 ele = (Element) root.getElementsByTagName(pos+"ID").item(0);
+                 hash.put(pos+"ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                 
+            }
+            
+            for (int i =0; i < PLAYERPOSITIONORDERS.length; i++) {
+            	pos = PLAYERPOSITIONORDERS[i];
+            	ele = (Element) root.getElementsByTagName(pos+"Name").item(0);
+                hash.put(pos+"Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            }
+            
+//            ele = (Element) root.getElementsByTagName("KeeperID").item(0);
+//            hash.put("KeeperID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("KeeperName").item(0);
+//            hash.put("KeeperName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//
+//            ele = (Element) root.getElementsByTagName("RightBackID").item(0);
+//            hash.put("RightBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("RightBackName").item(0);
+//            hash.put("RightBackName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("RightBackOrder").item(0);
+//            hash.put("RightBackOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//
+//            ele = (Element) root.getElementsByTagName("InsideBack1ID").item(0);
+//            hash.put("InsideBack1ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideBack1Name").item(0);
+//            hash.put("InsideBack1Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideBack1Order").item(0);
+//            hash.put("InsideBack1Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            
+//            ele = (Element) root.getElementsByTagName("InsideBack2ID").item(0);
+//            hash.put("InsideBack2ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideBack2Name").item(0);
+//            hash.put("InsideBack2Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideBack2Order").item(0);
+//            hash.put("InsideBack2Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            
+//            ele = (Element) root.getElementsByTagName("LeftBackID").item(0);
+//            hash.put("LeftBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("LeftBackName").item(0);
+//            hash.put("LeftBackName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("LeftBackOrder").item(0);
+//            hash.put("LeftBackOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//
+//            ele = (Element) root.getElementsByTagName("RightWingerID").item(0);
+//            hash.put("RightWingerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("RightWingerName").item(0);
+//            hash.put("RightWingerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("RightWingerOrder").item(0);
+//            hash.put("RightWingerOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideMid1ID").item(0);
+//
+//            hash.put("InsideMid1ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideMid1Name").item(0);
+//            hash.put("InsideMid1Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideMid1Order").item(0);
+//            hash.put("InsideMid1Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideMid2ID").item(0);
+//            hash.put("InsideMid2ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideMid2Name").item(0);
+//            hash.put("InsideMid2Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("InsideMid2Order").item(0);
+//            hash.put("InsideMid2Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("LeftWingerID").item(0);
+//            hash.put("LeftWingerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("LeftWingerName").item(0);
+//            hash.put("LeftWingerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("LeftWingerOrder").item(0);
+//            hash.put("LeftWingerOrder", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("Forward1ID").item(0);
+//            hash.put("Forward1ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("Forward1Name").item(0);
+//            hash.put("Forward1Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("Forward1Order").item(0);
+//            hash.put("Forward1Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("Forward2ID").item(0);
+//            hash.put("Forward2ID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("Forward2Name").item(0);
+//            hash.put("Forward2Name", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("Forward2Order").item(0);
+//            hash.put("Forward2Order", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//
+//            ele = (Element) root.getElementsByTagName("SubstKeeperID").item(0);
+//            hash.put("SubstKeeperID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstKeeperName").item(0);
+//            hash.put("SubstKeeperName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstBackID").item(0);
+//            hash.put("SubstBackID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstBackName").item(0);
+//            hash.put("SubstBackName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstInsideMidID").item(0);
+//            hash.put("SubstInsideMidID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstInsideMidName").item(0);
+//            hash.put("SubstInsideMidName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstWingerID").item(0);
+//            hash.put("SubstWingerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstWingerName").item(0);
+//            hash.put("SubstWingerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstForwardID").item(0);
+//            hash.put("SubstForwardID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("SubstForwardName").item(0);
+//            hash.put("SubstForwardName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("KickerID").item(0);
+//            hash.put("KickerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("KickerName").item(0);
+//            hash.put("KickerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("CaptainID").item(0);
+//            hash.put("CaptainID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+//            ele = (Element) root.getElementsByTagName("CaptainName").item(0);
+//            hash.put("CaptainName", (XMLManager.instance().getFirstChildNodeValue(ele)));
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLMatchOrderParser.parseDetails Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
