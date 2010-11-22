@@ -149,7 +149,6 @@ public  class Lineup implements plugins.ILineUp {
 			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
 			m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
 			
-			m_clAssi.cleanPositionArray(m_vPositionen);
 		} catch (Exception e) {
 			HOLogger.instance().warning(getClass(), "Aufstellung.<init1>: " + e);
 			HOLogger.instance().log(getClass(), e);
@@ -844,7 +843,6 @@ public  class Lineup implements plugins.ILineUp {
     public final void setPositionen(Vector<ISpielerPosition> m_vPositionen) {
 
     	this.m_vPositionen = m_vPositionen;
-    	m_clAssi.cleanPositionArray(this.m_vPositionen);
         //m_clAssi.setPositionen ( m_vPositionen );
     }
 
@@ -1445,7 +1443,6 @@ public  class Lineup implements plugins.ILineUp {
                                                                                                    name);
         m_vPositionen = null;
         m_vPositionen = temp.getPositionen();
-        m_clAssi.cleanPositionArray(m_vPositionen);
         m_iKicker = temp.getKicker();
         m_iKapitaen = temp.getKapitaen();
     }
@@ -1460,7 +1457,6 @@ public  class Lineup implements plugins.ILineUp {
                                                                                                    "HRF");
         m_vPositionen = null;
         m_vPositionen = temp.getPositionen();
-        m_clAssi.cleanPositionArray(m_vPositionen);
         m_iKicker = temp.getKicker();
         m_iKapitaen = temp.getKapitaen();
     }
@@ -1479,7 +1475,6 @@ public  class Lineup implements plugins.ILineUp {
         m_vPositionen = de.hattrickorganizer.database.DBZugriff.instance().getSystemPositionen(NO_HRF_VERBINDUNG,
                                                                                                 name);
         checkAufgestellteSpieler();
-        m_clAssi.cleanPositionArray(m_vPositionen);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -1491,7 +1486,6 @@ public  class Lineup implements plugins.ILineUp {
      */
     public final void resetAufgestellteSpieler() {
         m_clAssi.resetPositionsbesetzungen(m_vPositionen);
-        m_clAssi.cleanPositionArray(m_vPositionen);
     }
 
     /**
