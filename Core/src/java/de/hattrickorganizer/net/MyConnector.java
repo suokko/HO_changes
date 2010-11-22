@@ -55,7 +55,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public static String m_sIDENTIFIER =
 		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
-	private final static String VERSION_MATCHORDERS = "1.3";
+	private final static String VERSION_MATCHORDERS = "1.6";
 	private final static String VERSION_TRAINING = "1.5";
 
 	//~ Instance fields ----------------------------------------------------------------------------

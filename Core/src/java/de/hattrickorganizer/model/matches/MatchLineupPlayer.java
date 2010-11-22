@@ -69,17 +69,17 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      * @param status TODO Missing Constructuor Parameter Documentation
      * @param fieldPos TODO Missing Constructuor Parameter Documentation
      */
-    public MatchLineupPlayer(int roleID, int behaivior, int spielerID, double rating, String name,
-                             int positionsCode, int status, int fieldPos) {
-        super(roleID, spielerID, (byte) behaivior);
+    public MatchLineupPlayer(int roleID, int behavior, int spielerID, double rating, String name,
+                             int status) {
+        super(roleID, spielerID, (byte) behavior);
 
         //erst mit neuer Version Namen aufsplitten
         //setName( name );
         m_sSpielerName = name;
         m_dRating = rating;
-        m_iPositionCode = positionsCode;
+        m_iPositionCode = roleID;
         m_iStatus = status;
-        m_iFieldPos = fieldPos;
+        m_iFieldPos = roleID; // Why the two positions? Also the same input before 553 change.
     }
 
     /**
@@ -97,17 +97,16 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      * @param fieldPos TODO Missing Constructuor Parameter Documentation
      */
     public MatchLineupPlayer(int roleID, int behaivior, int spielerID, double rating, String vname,
-                             String nickName, String name, int positionsCode, int status,
-                             int fieldPos) {
+                             String nickName, String name, int status) {
         super(roleID, spielerID, (byte) behaivior);
 
         m_sSpielerName = name;
         m_sNickName = nickName;
         m_sSpielerVName = vname;
         m_dRating = rating;
-        m_iPositionCode = positionsCode;
+        m_iPositionCode = roleID;
         m_iStatus = status;
-        m_iFieldPos = fieldPos;
+        m_iFieldPos = roleID;
     }
 
     //~ Methods ------------------------------------------------------------------------------------

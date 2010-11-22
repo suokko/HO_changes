@@ -111,6 +111,11 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
     /*byte position, */
     public SpielerPosition(int id, int spielerId, byte taktik) {
         //m_bPosition     =   position;
+    	
+    	if ((id < ISpielerPosition.setPieces) && (id != -1)) {
+    		HOLogger.instance().debug(getClass(),"Old RoleID found in lineup: " + id);
+    	}
+    	
         m_iId = id;
         m_iSpielerId = spielerId;
         m_bTaktik = taktik;
@@ -123,9 +128,13 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
      */
     public SpielerPosition(SpielerPosition sp) {
         //m_bPosition     =   position;
-        m_iId = sp.getId();
+    	m_iId = sp.getId();
         m_iSpielerId = sp.getSpielerId();
         m_bTaktik = sp.getTaktik();
+        
+        if ((m_iId < ISpielerPosition.setPieces) && (m_iId != -1) ) {
+    		HOLogger.instance().debug(getClass(),"Old RoleID found in lineup: " + m_iId);
+    	}
     }
 
     ////////////////////Load/Save/////////////////
