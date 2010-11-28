@@ -36,21 +36,19 @@ public class SpecialEventsPanel extends JTable {
 	public static final int HIDDENCOLUMN = 14;
 	public static final int NUMCOLUMNS = 15;
 
-	//    private Properties props;
+	// private Properties props;
 	private IHOMiniModel miniModel;
 	private String columnNames[];
 	private Vector<String> highlightTexte;
 
 	public SpecialEventsPanel(IHOMiniModel miniModel) {
 		columnNames = new String[NUMCOLUMNS];
-		//        this.props = props;
 		this.miniModel = miniModel;
 		setColumnHeaders();
-		setAutoResizeMode(0);
+		setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // AUTO_RESIZE_ALL_COLUMNS
 		getTableHeader().setReorderingAllowed(false);
 		try {
-			setDefaultRenderer(java.lang.Object.class,
-					new SpecialEventsTableRenderer());
+			setDefaultRenderer(Object.class, new SpecialEventsTableRenderer());
 			TableModel table = getSEModel(miniModel);
 			setModel(table);
 		} catch (RuntimeException e) {
@@ -88,9 +86,11 @@ public class SpecialEventsPanel extends JTable {
 				Point p = e.getPoint();
 				int index = columnModel.getColumnIndexAtX(p.x);
 				int realIndex = columnModel.getColumn(index).getModelIndex();
-				if (realIndex == HOMEEVENTCOLUMN
-						|| realIndex == AWAYEVENTCOLUMN) {
+				if (realIndex == HOMEEVENTCOLUMN || realIndex == AWAYEVENTCOLUMN) {
 					tip = PluginProperty.getString("Tip4");
+				} else {
+					tip = (columnNames[realIndex] != null && columnNames[realIndex].length() > 0) ? columnNames[realIndex] : null;
+					
 				}
 				return tip;
 			}
@@ -100,7 +100,7 @@ public class SpecialEventsPanel extends JTable {
 
 	public TableModel getSEModel(IHOMiniModel miniModel) {
 		SpecialEventsDM specialEventsDM = new SpecialEventsDM(miniModel);
-		Vector matches = specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(),
+		Vector matches = specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(), //
 				FilterPanel.getSaisonTyp(), FilterPanel.showFriendlies());
 		highlightTexte = specialEventsDM.getHighlightText();
 		TableModel tableModel = new SpecialEventsTableModel(matches, new Vector<String>(Arrays.asList(columnNames)));
@@ -114,17 +114,14 @@ public class SpecialEventsPanel extends JTable {
 		int rowIndex = rowAtPoint(p);
 		int colIndex = columnAtPoint(p);
 		int realColumnIndex = convertColumnIndexToModel(colIndex);
-		if (realColumnIndex == HOMEEVENTCOLUMN
-				|| realColumnIndex == AWAYEVENTCOLUMN) {
+		if (realColumnIndex == HOMEEVENTCOLUMN || realColumnIndex == AWAYEVENTCOLUMN) {
 			tip = PluginProperty.getString("Tip4");
 		}
 		if (realColumnIndex == NAMECOLUMN) {
 			tip = PluginProperty.getString("TipName");
 		}
 		if (realColumnIndex == EVENTTYPCOLUMN) {
-			String highlightText = "<table width='300'><tr><td>"
-					+ (String) highlightTexte.elementAt(rowIndex)
-					+ "</td></tr></table>";
+			String highlightText = "<table width='300'><tr><td>" + (String) highlightTexte.elementAt(rowIndex) + "</td></tr></table>";
 			String text = "<html>" + highlightText + "</html>";
 			tip = text;
 		}
@@ -138,25 +135,25 @@ public class SpecialEventsPanel extends JTable {
 	}
 
 	private void setTableSize() {
-		colomnWidth(MATCHDATECOLUMN, 64, 34);
-		colomnWidth(MATCHIDCOLUMN, 64, 34);
-		colomnWidth(HOMETACTICCOLUMN, 32, 22);
-		colomnWidth(HOMEEVENTCOLUMN, 20, 20);
-		colomnWidth(HOMETEAMCOLUMN, 150, 100);
-		colomnWidth(RESULTCOLUMN, 40, 20);
-		colomnWidth(AWAYTEAMCOLUMN, 150, 100);
-		colomnWidth(AWAYEVENTCOLUMN, 20, 20);
-		colomnWidth(AWAYTACTICCOLUMN, 32, 22);
-		colomnWidth(MINUTECOLUMN, 25, 25);
-		colomnWidth(CHANCECOLUMN, 20, 20);
-		colomnWidth(EVENTTYPCOLUMN, 20, 20);
-		colomnWidth(SETEXTCOLUMN, 270, 140);
-		colomnWidth(NAMECOLUMN, 200, 200);
-		colomnWidth(HIDDENCOLUMN, 0, 0);
+		columnWidth(MATCHDATECOLUMN, 64, 34);
+		columnWidth(MATCHIDCOLUMN, 64, 34);
+		columnWidth(HOMETACTICCOLUMN, 34, 22);
+		columnWidth(HOMEEVENTCOLUMN, 20, 20);
+		columnWidth(HOMETEAMCOLUMN, 150, 100);
+		columnWidth(RESULTCOLUMN, 40, 20);
+		columnWidth(AWAYTEAMCOLUMN, 150, 100);
+		columnWidth(AWAYEVENTCOLUMN, 20, 20);
+		columnWidth(AWAYTACTICCOLUMN, 34, 22);
+		columnWidth(MINUTECOLUMN, 27, 27);
+		columnWidth(CHANCECOLUMN, 20, 20);
+		columnWidth(EVENTTYPCOLUMN, 20, 20);
+		columnWidth(SETEXTCOLUMN, 270, 140);
+		columnWidth(NAMECOLUMN, 200, 200);
+		columnWidth(HIDDENCOLUMN, 0, 0);
 		setRowHeight(20);
 	}
 
-	private void colomnWidth(int col, int width, int minWidth) {
+	private void columnWidth(int col, int width, int minWidth) {
 		getColumnModel().getColumn(col).setMaxWidth(width);
 		getColumnModel().getColumn(col).setMinWidth(minWidth);
 		getColumnModel().getColumn(col).setWidth(width);
@@ -170,8 +167,7 @@ public class SpecialEventsPanel extends JTable {
 
 	private void showDebug(Exception exr) {
 		// exr.printStackTrace();
-		IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(
-				new Point(100, 200), new Dimension(700, 400));
+		IDebugWindow debugWindow = miniModel.getGUI().createDebugWindow(new Point(100, 200), new Dimension(700, 400));
 		debugWindow.setVisible(true);
 		debugWindow.append("Error initializing SpecialEventsPanel:\n");
 		debugWindow.append(exr);
