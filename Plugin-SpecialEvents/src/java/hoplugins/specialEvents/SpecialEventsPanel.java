@@ -135,18 +135,18 @@ public class SpecialEventsPanel extends JTable {
 	}
 
 	private void setTableSize() {
-		columnWidth(MATCHDATECOLUMN, 64, 34);
-		columnWidth(MATCHIDCOLUMN, 64, 34);
-		columnWidth(HOMETACTICCOLUMN, 34, 22);
+		columnWidth(MATCHDATECOLUMN, 66, 34);
+		columnWidth(MATCHIDCOLUMN, 66, 34);
+		columnWidth(HOMETACTICCOLUMN, 37, 22);
 		columnWidth(HOMEEVENTCOLUMN, 20, 20);
 		columnWidth(HOMETEAMCOLUMN, 150, 100);
 		columnWidth(RESULTCOLUMN, 40, 20);
 		columnWidth(AWAYTEAMCOLUMN, 150, 100);
 		columnWidth(AWAYEVENTCOLUMN, 20, 20);
-		columnWidth(AWAYTACTICCOLUMN, 34, 22);
+		columnWidth(AWAYTACTICCOLUMN, 37, 22);
 		columnWidth(MINUTECOLUMN, 27, 27);
-		columnWidth(CHANCECOLUMN, 20, 20);
-		columnWidth(EVENTTYPCOLUMN, 20, 20);
+		columnWidth(CHANCECOLUMN, 22, 20);
+		columnWidth(EVENTTYPCOLUMN, 23, 20);
 		columnWidth(SETEXTCOLUMN, 270, 140);
 		columnWidth(NAMECOLUMN, 200, 200);
 		columnWidth(HIDDENCOLUMN, 0, 0);

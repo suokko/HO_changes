@@ -17,40 +17,35 @@ import plugins.IOfficialPlugin;
 import plugins.IPlugin;
 import plugins.IRefreshable;
 
-public class SpecialEvents
-    implements IPlugin, IRefreshable, IOfficialPlugin
-{
+public class SpecialEvents implements IPlugin, IRefreshable, IOfficialPlugin {
 
-    private static final String PLUGIN_NAME = "Special Events";
-    private static final String PLUGIN_PACKAGE = "specialEvents";
-    private static final double PLUGIN_VERSION = 1.221D;
-    private static final int PLUGIN_ID = 33;
-    private JPanel mainPanel;
-    public static IHOMiniModel miniModel = null;
-    public static Properties props;
-    private static SpecialEventsPanel specialEventsTable;
+	private static final String PLUGIN_NAME = "Special Events";
+	private static final String PLUGIN_PACKAGE = "specialEvents";
+	private static final double PLUGIN_VERSION = 1.23D;
+	private static final int PLUGIN_ID = 33;
+	private JPanel mainPanel;
+	public static IHOMiniModel miniModel = null;
+	public static Properties props;
+	private static SpecialEventsPanel specialEventsTable;
 
-    public SpecialEvents()
-    {
-        mainPanel = null;
-    }
+	public SpecialEvents() {
+		mainPanel = null;
+	}
 
-    public void start(IHOMiniModel hOMiniModel)
-    {
-        mpInit(hOMiniModel);
-    }
+	public void start(IHOMiniModel hOMiniModel) {
+		mpInit(hOMiniModel);
+	}
 
-    private void mpInit(IHOMiniModel hOMiniModel)
-    {
-        String sTabName = PLUGIN_NAME;
-        miniModel = hOMiniModel;
+	private void mpInit(IHOMiniModel hOMiniModel) {
+		String sTabName = PLUGIN_NAME;
+		miniModel = hOMiniModel;
 		PluginProperty.loadPluginProperties(PLUGIN_PACKAGE);
-        mainPanel = hOMiniModel.getGUI().createImagePanel();
-        mainPanel.setLayout(new BorderLayout());
-//        props = getProperties();
-//        JPanel filterPanel = new FilterPanel(miniModel, props);
-//        specialEventsTable = new SpecialEventsPanel(miniModel, props);
-//        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel, props));
+		mainPanel = hOMiniModel.getGUI().createImagePanel();
+		mainPanel.setLayout(new BorderLayout());
+		// props = getProperties();
+		// JPanel filterPanel = new FilterPanel(miniModel, props);
+		// specialEventsTable = new SpecialEventsPanel(miniModel, props);
+		// specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel, props));
         JPanel filterPanel = new FilterPanel(miniModel);
         specialEventsTable = new SpecialEventsPanel(miniModel);
         specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel));
@@ -90,40 +85,33 @@ public class SpecialEvents
 //        return props;
 //    }
 
-    public void refresh()
-    {
-        newTableModel();
-    }
+	public void refresh() {
+		newTableModel();
+	}
 
-    public static void newTableModel()
-    {
-        specialEventsTable.removeAll();
-        specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel));
-    }
+	public static void newTableModel() {
+		specialEventsTable.removeAll();
+		specialEventsTable.setTableModel(specialEventsTable.getSEModel(miniModel));
+	}
 
-    public double getVersion()
-    {
-        return PLUGIN_VERSION;
-    }
+	public double getVersion() {
+		return PLUGIN_VERSION;
+	}
 
-    public int getPluginID()
-    {
-        return PLUGIN_ID;
-    }
+	public int getPluginID() {
+		return PLUGIN_ID;
+	}
 
-    public String getPluginName()
-    {
-        return PLUGIN_NAME;
-    }
+	public String getPluginName() {
+		return PLUGIN_NAME;
+	}
 
-    public String getName()
-    {
-        return getPluginName() + " " + getVersion();
-    }
+	public String getName() {
+		return getPluginName() + " " + getVersion();
+	}
 
-    public File[] getUnquenchableFiles()
-    {
-        return new File[0];
-    }
+	public File[] getUnquenchableFiles() {
+		return new File[0];
+	}
 
 }
