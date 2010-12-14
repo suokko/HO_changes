@@ -41,6 +41,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import plugins.IPlugin;
 import plugins.ISpieler;
+import de.hattrickorganizer.credits.VAPCredits;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
 import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
@@ -53,6 +54,9 @@ import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
 import de.hattrickorganizer.gui.matches.SpielePanel;
+import de.hattrickorganizer.gui.menu.DownloadDialog;
+import de.hattrickorganizer.gui.menu.HRFImport;
+import de.hattrickorganizer.gui.menu.option.OptionenDialog;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.notepad.NotepadDialog;
 import de.hattrickorganizer.gui.playeranalysis.SpielerAnalyseMainPanel;
@@ -414,120 +418,83 @@ public final class HOMainFrame extends JFrame
 	public void actionPerformed(ActionEvent actionEvent) {
 		HOMainFrame.setHOStatus(HOMainFrame.BUSY);
 		final Object source = actionEvent.getSource();
-		//HRF Import
-		if (source.equals(m_jmImportItem)) {
-			new de.hattrickorganizer.gui.menu.HRFImport(this);
-		}
-		//HRF Download
-		else if (source.equals(m_jmDownloadItem)) {
-			//new gui.login.LoginDialog( this );
-			//m_clOnlineWorker.getHrf ();
-			new de.hattrickorganizer.gui.menu.DownloadDialog();
-		}
-		//Optionen
-		else if (source.equals(m_jmOptionen)) {
-			new de.hattrickorganizer.gui.menu.option.OptionenDialog(this).setVisible(true);
-		}
-		//Training
-		else if (source.equals(m_jmTraining)) {
-			//Training komplett neu berechnen
+
+		if (source.equals(m_jmImportItem)) { // HRF Import
+			new HRFImport(this);
+		} else if (source.equals(m_jmDownloadItem)) { // HRF Download
+			// new gui.login.LoginDialog( this );
+			// m_clOnlineWorker.getHrf ();
+			System.out.println("new DownloadDialog");
+			new DownloadDialog();
+		} else if (source.equals(m_jmOptionen)) { // Options
+			new OptionenDialog(this).setVisible(true);
+		} else if (source.equals(m_jmTraining)) { // recalc training
+			// Training komplett neu berechnen
 			if (JOptionPane.showConfirmDialog(this,
-					"Depending on database volume this process takes several minutes. Start recalculation ?",
-					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+					"Depending on database volume this process takes several minutes. Start recalculation ?", "Subskill Recalculation",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				HOVerwaltung.instance().recalcSubskills(true, null);
-				//tools.Helper.showMessage ( this, model.HOVerwaltung.instance().getLanguageString( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
+				// tools.Helper.showMessage ( this,
+				// model.HOVerwaltung.instance().getLanguageString(
+				// "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE
+				// );
 			}
-		}
-		//Training
-		else if (source.equals(m_jmTraining2)) {
+		} else if (source.equals(m_jmTraining2)) { // recalc training (7 weeks)
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
 			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
-			if (JOptionPane.showConfirmDialog(this,
-					"Start recalculation subskill recalculation for the last 7 weeks (since " +
-					new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?",
-					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, "Start recalculation subskill recalculation for the last 7 weeks (since "
+					+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?", "Subskill Recalculation",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
 				HOVerwaltung.instance().recalcSubskills(true, from);
 			}
-		}
-		else if (source.equals(m_jmFullScreenItem)) {
-			// Toggle full screen mode
+		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen
+														// mode
 			FullScreen.instance().toggle(this);
-		}
-		//Beenden
-		else if (source.equals(m_jmBeendenItem)) {
+		} else if (source.equals(m_jmBeendenItem)) { // Quit
 			// Restore normal window mode (i.e. leave full screen)
 			FullScreen.instance().restoreNormalMode(this);
-			//CloseEvent feuern, damit alle Listener (Plugins) informiert werden
+			// CloseEvent feuern, damit alle Listener (Plugins) informiert
+			// werden
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		}
-		//Spieleruebersicht
-		else if (source.equals(m_jmiSpieleruebersicht)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
-		}
-		//Aufstellung
-		else if (source.equals(m_jmiAufstellung)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.AUFSTELLUNG);
-		}
-		//Ligatabelle
-		else if (source.equals(m_jmiLigatabelle)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.LIGATABELLE);
-		}
-		//Spiele
-		else if (source.equals(m_jmiSpiele)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELE);
-		}
-		//SpielerAnalyse
-		else if (source.equals(m_jmiSpieleranalyse)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERANALYSE);
-		}
-		//Statistik
-		else if (source.equals(m_jmiStatistik)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.STATISTIK);
-		}
-		//Transferscout
-		else if (source.equals(m_jmiTransferscout)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.TRANSFERSCOUT);
-		}
-		//Arena
-		else if (source.equals(m_jmiArena)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.ARENASIZER);
-		}
-		//Verschiedenes
-		else if (source.equals(m_jmiVerschiedenes)) {
-			showTab(de.hattrickorganizer.gui.HOMainFrame.INFORMATIONEN);
-		}
-		//Credits
-		else if (source.equals(m_jmCreditsItem)) {
-			//credits starten
-			new de.hattrickorganizer.credits.VAPCredits(this);
-		}
-		//Homepage
-		else if (source.equals(m_jmHomepageItem)) {
+		} else if (source.equals(m_jmiSpieleruebersicht)) { // Player overview
+			showTab(HOMainFrame.SPIELERUEBERSICHT);
+		} else if (source.equals(m_jmiAufstellung)) { // Lineup
+			showTab(HOMainFrame.AUFSTELLUNG);
+		} else if (source.equals(m_jmiLigatabelle)) { // League table
+			showTab(HOMainFrame.LIGATABELLE);
+		} else if (source.equals(m_jmiSpiele)) { // Matches
+			showTab(HOMainFrame.SPIELE);
+		} else if (source.equals(m_jmiSpieleranalyse)) { // Player Analysis
+			showTab(HOMainFrame.SPIELERANALYSE);
+		} else if (source.equals(m_jmiStatistik)) { // Statistics
+			showTab(HOMainFrame.STATISTIK);
+		} else if (source.equals(m_jmiTransferscout)) { // Transferscout
+			showTab(HOMainFrame.TRANSFERSCOUT);
+		} else if (source.equals(m_jmiArena)) { // Arena
+			showTab(HOMainFrame.ARENASIZER);
+		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
+			showTab(HOMainFrame.INFORMATIONEN);
+		} else if (source.equals(m_jmCreditsItem)) { // Credits
+			new VAPCredits(this);
+		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
-		}
-		// Plugins Homepage
-		else if (source.equals(m_jmPluginsHomepage)) {
+		} else if (source.equals(m_jmPluginsHomepage)) { // Plugins Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(UpdateController.PLUGINS_HOMEPAGE);
-		}
-		//Forum
-		else if (source.equals(m_jmForumItem)) {
+		} else if (source.equals(m_jmForumItem)) { // Forum
 			HelperWrapper.instance().openUrlInUserBRowser("http://forum.hattrickorganizer.net/index.php");
-		}
-		//        //chat
-		//        else if ( actionEvent.getSource().equals( m_jmChatItem ) )
-		//        {
-		//            try
-		//            {
-		//                tools.BrowserLauncher.openURL( "http://chat.uin4d.de/" );
-		//            }
-		//            catch ( java.io.IOException ioex )
-		//            {
-		//            }
-		//        }
-		//Hattrick
-		else if (source.equals(m_jmHattrickItem)) {
+//		} else if ( actionEvent.getSource().equals( m_jmChatItem ) ) //chat
+//        {
+//            try
+//            {
+//                tools.BrowserLauncher.openURL( "http://chat.uin4d.de/" );
+//            }
+//            catch ( java.io.IOException ioex )
+//            {
+//            }
+//        }
+		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
 		}
 		//HOFriendly Server
@@ -1903,5 +1870,4 @@ public final class HOMainFrame extends JFrame
 	public static void setHOStatus(int i) {
 		status = i;
 	}
-
 }
