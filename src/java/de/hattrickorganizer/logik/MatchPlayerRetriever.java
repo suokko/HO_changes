@@ -13,6 +13,7 @@ import java.util.Map;
 
 import plugins.IHOMiniModel;
 import plugins.IMatchDetails;
+import plugins.ISpielerPosition;
 import plugins.ITeamLineup;
 import de.hattrickorganizer.model.MatchPosition;
 import de.hattrickorganizer.model.TeamLineup;
@@ -213,7 +214,7 @@ public class MatchPlayerRetriever {
                 int rid = -2;
                 try {
                 	rid = rs.getInt("ROLEID");
-                	if(rid > 0 && rid < 22) {
+                	if((rid > 0 && rid < 22) || (rid >= ISpielerPosition.startLineup && rid <= ISpielerPosition.substForward)) {
                 		pos[rid - 1] = position;
                 		position.setPlayerID(rs.getInt("SPIELERID"));
                 		position.setName(rs.getString("NAME"));

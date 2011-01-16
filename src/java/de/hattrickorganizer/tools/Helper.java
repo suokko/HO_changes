@@ -559,7 +559,8 @@ public class Helper extends LanguageFiles {
 				}
 	
 				case ISpielerPosition.rightCentralDefender:
-				case ISpielerPosition.leftCentralDefender: {
+				case ISpielerPosition.leftCentralDefender:
+				case ISpielerPosition.middleCentralDefender: {
 					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
 					break;
 				}
@@ -571,7 +572,8 @@ public class Helper extends LanguageFiles {
 				}
 	
 				case ISpielerPosition.rightInnerMidfield:
-				case ISpielerPosition.leftInnerMidfield: {
+				case ISpielerPosition.leftInnerMidfield:
+				case ISpielerPosition.centralInnerMidfield: {
 					trickotfarbe = TRICKOT_MITTELFELD;
 					break;
 				}
@@ -583,7 +585,8 @@ public class Helper extends LanguageFiles {
 				}
 	
 				case ISpielerPosition.rightForward:
-				case ISpielerPosition.leftForward: {
+				case ISpielerPosition.leftForward:
+				case ISpielerPosition.centralForward: {
 					trickotfarbe = TRICKOT_STURM;
 					break;
 				}
