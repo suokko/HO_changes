@@ -627,7 +627,16 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
      * @param m_iSpielerId New value of property m_iSpielerId.
      */
     public final void setSpielerId(int m_iSpielerId) {
-        this.m_iSpielerId = m_iSpielerId;
+        
+    	// We don't want another player in the starting lineup if there are already 11 on the field.
+    	if ((this.m_iSpielerId < 1) && (m_iSpielerId > 0) && (m_iId >= ISpielerPosition.startLineup) && 
+    			(m_iId < ISpielerPosition.startReserves) &&
+    			(HOVerwaltung.instance().getModel().getAufstellung().hasFreePosition() == false)) {
+        	HOLogger.instance().debug(getClass(), "Blocked from setting player at position: " + m_iSpielerId + " " + m_iId);
+    		return;
+    	} else {
+    		this.m_iSpielerId = m_iSpielerId;
+        }
     }
 
     /**

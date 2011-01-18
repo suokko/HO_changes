@@ -26,6 +26,7 @@ import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -349,8 +350,18 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
                                                                                  .getSpielerId());
                                                                                  
 				if (aktuellerSpieler!=null) {
+					m_jcbPlayer.setEnabled(true); // To be sure
 					playerId = aktuellerSpieler.getSpielerID();
-				}					
+				} else {
+					// We want to disable the player selection box if there is already 11 players on the field and this is an on field position.
+					if ((HOVerwaltung.instance().getModel().getAufstellung().hasFreePosition() == false) &&
+							(m_iPositionID >= ISpielerPosition.keeper) && (m_iPositionID < ISpielerPosition.startReserves)) {
+						m_jcbPlayer.setEnabled(false);
+					} else {
+						// And enable empty positions if there is room in the lineup
+						m_jcbPlayer.setEnabled(true);
+					}
+				}
 				tacticOrder = position.getTaktik();
                 setTaktik(position.getTaktik(), aktuellerSpieler);				
             }

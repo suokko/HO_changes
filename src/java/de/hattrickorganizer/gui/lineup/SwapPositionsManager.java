@@ -53,8 +53,21 @@ public class SwapPositionsManager {
 		int positionB = swapPositionB.getPositionsID();
 		ISpieler playerA = lineup.getPlayerByPositionID(positionA);
 		ISpieler playerB = lineup.getPlayerByPositionID(positionB);
-		lineup.setSpielerAtPosition(positionA, playerB.getSpielerID());
-		lineup.setSpielerAtPosition(positionB, playerA.getSpielerID());
+		
+		// Changed to allow swapping players to empty positions
+		int playerA_id = -1;
+		int playerB_id = -1;
+		
+		if  (playerA != null) {
+			playerA_id = playerA.getSpielerID();
+		}
+		
+		if  (playerB != null) {
+			playerB_id = playerB.getSpielerID();
+		}
+		
+		lineup.setSpielerAtPosition(positionA, playerB_id);
+		lineup.setSpielerAtPosition(positionB, playerA_id);
 	}
 
 	void markAsSwapCandidate(SwapPositionFeature swapPositionFeature) {
