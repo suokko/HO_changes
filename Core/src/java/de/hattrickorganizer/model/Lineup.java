@@ -961,8 +961,8 @@ public  class Lineup implements plugins.ILineUp {
 
         //Spieler an die neue Position setzten
         final SpielerPosition position = getPositionById(positionsid);
-        position.setSpielerId(spielerid);
-
+       	position.setSpielerId(spielerid);
+        
         //Ist der Spielfï¿½hrer und der Kicker noch aufgestellt?
         if (!isSpielerAufgestellt(m_iKapitaen)) {
             //Spielfï¿½hrer entfernen
@@ -1340,58 +1340,57 @@ public  class Lineup implements plugins.ILineUp {
      * Determinates the current formation.
      */
     public final byte ermittelSystem() {
-        final int abw = getAnzAbwehr();
-        final int mf = getAnzMittelfeld();
-
-        //int st  =   getAnzSturm();
-        if (abw == 2) {
+        final int defenders = getAnzAbwehr();
+        final int midfielders = getAnzMittelfeld();
+        final int forwards  =   getAnzSturm();
+        if (defenders == 2) {
         	//253
-        	if (mf == 5) {
+        	if (midfielders == 5) {
         		return ILineUp.SYS_253;
         	}
         	//MURKS
             else {
                 return SYS_MURKS;
             }
-        } else if (abw == 3) {
+        } else if (defenders == 3) {
         	//343
-            if (mf == 4) {
+            if (midfielders == 4) {
                 return SYS_343;
             } //352
-            else if (mf == 5) {
+            else if (midfielders == 5) {
                 return SYS_352;
             }
             //MURKS
             else {
                 return SYS_MURKS;
             }
-        } else if (abw == 4) {
+        } else if (defenders == 4) {
             //433
-            if (mf == 3) {
+            if (midfielders == 3) {
                 return SYS_433;
             } //442
-            else if (mf == 4) {
+            else if (midfielders == 4) {
                 return SYS_442;
             } //451
-            else if (mf == 5) {
+            else if (midfielders == 5) {
                 return SYS_451;
             }
             //MURKS
             else {
                 return SYS_MURKS;
             }
-        } else if (abw == 5) {
+        } else if (defenders == 5) {
             //532
-            if (mf == 3) {
+            if (midfielders == 3) {
                 return SYS_532;
             } //541
-            else if (mf == 4) {
+            else if (midfielders == 4) {
                 return SYS_541;
             } //523
-            else if (mf == 2) {
+            else if (midfielders == 2) {
                 return ILineUp.SYS_523;
             } //550
-            else if (mf == 5) {
+            else if (midfielders == 5) {
                 return ILineUp.SYS_550;
             }
             //MURKS
@@ -1566,7 +1565,7 @@ public  class Lineup implements plugins.ILineUp {
     }
     
     /**
-     * berechnet Anzahl Abwehr im System
+     * berechnet Anzahl Mittelfeld im System
      *
      * @return TODO Missing Return Method Documentation
      */
@@ -1622,12 +1621,34 @@ public  class Lineup implements plugins.ILineUp {
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            if ((position == pos.getPosition()) && (pos.getId() < ISpielerPosition.startReserves)) {
+            if ((position == pos.getPosition()) && (pos.getId() < ISpielerPosition.startReserves) && (pos.getSpielerId() > 0)) {
                 ++anzahl;
             }
         }
 
         return anzahl;
+    }
+    
+    /**
+     * @return true if less than 11 players on field, false if 11 (or more) on field
+     */
+    public boolean hasFreePosition() {
+    	SpielerPosition pos = null;
+    	int numPlayers = 0;
+    	for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
+    		pos = (SpielerPosition) m_vPositionen.elementAt(i);
+    		
+    		if ((pos.getId() < ISpielerPosition.KEEPER) || (pos.getId() >= ISpielerPosition.startReserves)) {
+    			continue; // We are not interested in reserves, captain, set piece taker.
+    		}
+    		if (pos.getSpielerId() > 0) {
+    			numPlayers++;
+    			if (numPlayers == 11) {
+    				return false;
+    			}
+    		}
+    	}
+    	return true;
     }
 
     /**

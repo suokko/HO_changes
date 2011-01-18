@@ -51,11 +51,12 @@ public class SwapPositionFeature {
 		}
 
 		private void handlePressedButton() {
-			if (playerIsSelectedOnThisPosition()) {
+			// Check removed to allow the swap into empty positions.
+//			if (playerIsSelectedOnThisPosition()) {
 				actOnLegalPressedButton();
-			} else {
-				unpressButton();
-			}
+//			} else {
+//				unpressButton();
+//			}
 		}
 
 		private void actOnLegalPressedButton() {
