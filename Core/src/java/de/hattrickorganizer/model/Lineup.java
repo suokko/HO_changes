@@ -840,10 +840,20 @@ public  class Lineup implements plugins.ILineUp {
      *
      * @param m_vPositionen New value of property m_vPositionen.
      */
-    public final void setPositionen(Vector<ISpielerPosition> m_vPositionen) {
+    public final void setPositionen(Vector<ISpielerPosition> posVec) {
 
-    	this.m_vPositionen = m_vPositionen;
-        //m_clAssi.setPositionen ( m_vPositionen );
+    	// Replace the existing positions with the incoming on a one by one basis. Otherwise we will miss 3 positions when loading
+    	// an old style lineup.
+    	// We need to avoid the regular methods, as some necessary stuff like the Model may not be created yet.
+    	
+    	for (int i = 0; i < posVec.size(); i++) {
+    		SpielerPosition spos = (SpielerPosition) posVec.get(i);
+    			for (int j = 0; j < m_vPositionen.size(); j++) {
+    	            if (((SpielerPosition) m_vPositionen.get(j)).getId() == spos.getId()) {
+    	                m_vPositionen.setElementAt(spos, j);
+    	            }
+    	        }
+    	}
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -1403,33 +1413,34 @@ public  class Lineup implements plugins.ILineUp {
         }
     }
 
+    private final void swapContentAtPositions(int pos1, int pos2) {
+    	int id1 = -1;
+    	int id2 = -1;
+    	byte tac1 = -1;
+    	byte tac2 = -1;
+
+    	tac1 = getTactic4PositionID(pos1);
+    	tac2 = getTactic4PositionID(pos2);
+    	
+    	if (getPlayerByPositionID(pos1) != null) {
+    	  id1 = getPlayerByPositionID(pos1).getSpielerID(); 
+    	}
+    	if (getPlayerByPositionID(pos2) != null) {
+      	  id2 = getPlayerByPositionID(pos2).getSpielerID(); 
+      	}
+    	setSpielerAtPosition(pos2, id1, tac1);
+    	setSpielerAtPosition(pos1, id2, tac2);
+    }
+    
     /**
-     * TODO Missing Method Documentation
+     * Swap corresponding right/left players and orders.
      */
     public final void flipSide() {
-        Vector<ISpielerPosition> tmp = new Vector<ISpielerPosition>(m_vPositionen);
-     
-        // Ugly, ugly, horror. I really don't enjoy depending on position in Vector. 
-        // And it don't work in 553 of course, and fix should be based on position contents
-        
-        m_vPositionen.removeAllElements();
-        m_vPositionen.add(tmp.get(0));
-        m_vPositionen.add(swap(tmp.get(1), tmp.get(4)));
-        m_vPositionen.add(swap(tmp.get(2), tmp.get(3)));
-        m_vPositionen.add(swap(tmp.get(3), tmp.get(2)));
-        m_vPositionen.add(swap(tmp.get(4), tmp.get(1)));
-        m_vPositionen.add(swap(tmp.get(5), tmp.get(8)));
-        m_vPositionen.add(swap(tmp.get(6), tmp.get(7)));
-        m_vPositionen.add(swap(tmp.get(7), tmp.get(6)));
-        m_vPositionen.add(swap(tmp.get(8), tmp.get(5)));
-        m_vPositionen.add(swap(tmp.get(9), tmp.get(10)));
-        m_vPositionen.add(swap(tmp.get(10), tmp.get(9)));
-        m_vPositionen.add(tmp.get(11));
-        m_vPositionen.add(tmp.get(12));
-        m_vPositionen.add(tmp.get(13));
-        m_vPositionen.add(tmp.get(14));
-        m_vPositionen.add(tmp.get(15));
-        tmp = null;
+    	swapContentAtPositions(ISpielerPosition.rightBack, ISpielerPosition.leftBack);
+    	swapContentAtPositions(ISpielerPosition.rightCentralDefender, ISpielerPosition.leftCentralDefender);
+    	swapContentAtPositions(ISpielerPosition.rightWinger, ISpielerPosition.leftWinger);
+    	swapContentAtPositions(ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftInnerMidfield);
+    	swapContentAtPositions(ISpielerPosition.rightForward, ISpielerPosition.leftForward);
     }
 
     /**
