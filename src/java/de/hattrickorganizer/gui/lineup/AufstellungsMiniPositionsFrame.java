@@ -49,24 +49,27 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 	private LineupPanel m_clAufstellungsPanel;
     private JButton m_jbMaxFrame = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
                                                              .loadImage("gui/bilder/MaxAufstellung.png")));
-    private PlayerPositionPanel m_clLinkeAussenVerteidiger;
-    private PlayerPositionPanel m_clLinkeFluegel;
-    private PlayerPositionPanel m_clLinkeInnenVerteidiger;
-    private PlayerPositionPanel m_clLinkeMittelfeld;
-    private PlayerPositionPanel m_clLinkerSturm;
-    private PlayerPositionPanel m_clRechteAussenVerteidiger;
-    private PlayerPositionPanel m_clRechteFluegel;
-    private PlayerPositionPanel m_clRechteInnenVerteidiger;
-    private PlayerPositionPanel m_clRechteMittelfeld;
-    private PlayerPositionPanel m_clRechterSturm;
-    private PlayerPositionPanel m_clReserveFluegel;
-    private PlayerPositionPanel m_clReserveMittelfeld;
-    private PlayerPositionPanel m_clReserveSturm;
-    private PlayerPositionPanel m_clReserveTorwart;
-    private PlayerPositionPanel m_clReserveVerteidiger;
-    private PlayerPositionPanel m_clSpielfuehrer;
-    private PlayerPositionPanel m_clStandard;
-    private PlayerPositionPanel m_clTorwart;
+    private PlayerPositionPanel m_clMiddleCentralDefender;
+    private PlayerPositionPanel m_clCentralInnerMidfielder;
+    private PlayerPositionPanel m_clCentralForward;
+    private PlayerPositionPanel m_clLeftBack;
+    private PlayerPositionPanel m_clLeftWinger;
+    private PlayerPositionPanel m_clLeftCentralDefender;
+    private PlayerPositionPanel m_clLeftInnerMidfielder;
+    private PlayerPositionPanel m_clLeftForward;
+    private PlayerPositionPanel m_clRightBack;
+    private PlayerPositionPanel m_clRightWinger;
+    private PlayerPositionPanel m_clRightCentralDefender;
+    private PlayerPositionPanel m_clRightInnerMidfielder;
+    private PlayerPositionPanel m_clRightForward;
+    private PlayerPositionPanel m_clReserveWinger;
+    private PlayerPositionPanel m_clReserveMidfielder;
+    private PlayerPositionPanel m_clReserveForward;
+    private PlayerPositionPanel m_clReserveKeeper;
+    private PlayerPositionPanel m_clReserveDefender;
+    private PlayerPositionPanel m_clCaptain;
+    private PlayerPositionPanel m_clSetPieces;
+    private PlayerPositionPanel m_clKeeper;
     private boolean m_bMinimize;
     private boolean m_bPrint;
 
@@ -207,59 +210,68 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         //SpielerPositionsPanels aktualisieren
         SpielerPosition position;
 
-        position = aufstellung.getPositionById(m_clTorwart.getPositionsID());
-        m_clTorwart.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clKeeper.getPositionsID());
+        m_clKeeper.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clLinkeAussenVerteidiger.getPositionsID());
-        m_clLinkeAussenVerteidiger.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clLeftBack.getPositionsID());
+        m_clLeftBack.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clLinkeInnenVerteidiger.getPositionsID());
-        m_clLinkeInnenVerteidiger.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clLeftCentralDefender.getPositionsID());
+        m_clLeftCentralDefender.refresh(gefilterteSpieler);
+        
+        position = aufstellung.getPositionById(m_clMiddleCentralDefender.getPositionsID());
+        m_clMiddleCentralDefender.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clRechteInnenVerteidiger.getPositionsID());
-        m_clRechteInnenVerteidiger.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clRightCentralDefender.getPositionsID());
+        m_clRightCentralDefender.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clRechteAussenVerteidiger.getPositionsID());
-        m_clRechteAussenVerteidiger.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clRightBack.getPositionsID());
+        m_clRightBack.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clLinkeFluegel.getPositionsID());
-        m_clLinkeFluegel.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clLeftWinger.getPositionsID());
+        m_clLeftWinger.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clLinkeMittelfeld.getPositionsID());
-        m_clLinkeMittelfeld.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clLeftInnerMidfielder.getPositionsID());
+        m_clLeftInnerMidfielder.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clRechteMittelfeld.getPositionsID());
-        m_clRechteMittelfeld.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clCentralInnerMidfielder.getPositionsID());
+        m_clCentralInnerMidfielder.refresh(gefilterteSpieler);
+        
+        position = aufstellung.getPositionById(m_clRightInnerMidfielder.getPositionsID());
+        m_clRightInnerMidfielder.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clRechteFluegel.getPositionsID());
-        m_clRechteFluegel.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clRightWinger.getPositionsID());
+        m_clRightWinger.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clLinkerSturm.getPositionsID());
-        m_clLinkerSturm.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clLeftForward.getPositionsID());
+        m_clLeftForward.refresh(gefilterteSpieler);
+        
+        position = aufstellung.getPositionById(m_clCentralForward.getPositionsID());
+        m_clCentralForward.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clRechterSturm.getPositionsID());
-        m_clRechterSturm.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clRightForward.getPositionsID());
+        m_clRightForward.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clReserveTorwart.getPositionsID());
-        m_clReserveTorwart.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clReserveKeeper.getPositionsID());
+        m_clReserveKeeper.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clReserveVerteidiger.getPositionsID());
-        m_clReserveVerteidiger.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clReserveDefender.getPositionsID());
+        m_clReserveDefender.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clReserveMittelfeld.getPositionsID());
-        m_clReserveMittelfeld.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clReserveMidfielder.getPositionsID());
+        m_clReserveMidfielder.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clReserveFluegel.getPositionsID());
-        m_clReserveFluegel.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clReserveWinger.getPositionsID());
+        m_clReserveWinger.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clReserveSturm.getPositionsID());
-        m_clReserveSturm.refresh(gefilterteSpieler);
+        position = aufstellung.getPositionById(m_clReserveForward.getPositionsID());
+        m_clReserveForward.refresh(gefilterteSpieler);
 
-        position = aufstellung.getPositionById(m_clStandard.getPositionsID());
-        m_clStandard.refresh(aufgestellteSpieler);
+        position = aufstellung.getPositionById(m_clSetPieces.getPositionsID());
+        m_clSetPieces.refresh(aufgestellteSpieler);
 
-        position = aufstellung.getPositionById(m_clSpielfuehrer.getPositionsID());
-        m_clSpielfuehrer.refresh(aufgestellteSpieler);
+        position = aufstellung.getPositionById(m_clCaptain.getPositionsID());
+        m_clCaptain.refresh(aufgestellteSpieler);
 
         //Check
         aufstellung.checkAufgestellteSpieler();
@@ -372,146 +384,170 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.gridwidth = 4;
-        m_clTorwart = new PlayerPositionPanel(this, ISpielerPosition.keeper, m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clTorwart, constraints);
-        centerPanel.add(m_clTorwart);
+        constraints.gridwidth = 5;
+        m_clKeeper = new PlayerPositionPanel(this, ISpielerPosition.keeper, m_bPrint, m_bMinimize);
+        layout.setConstraints(m_clKeeper, constraints);
+        centerPanel.add(m_clKeeper);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clRechteAussenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.rightBack,
+        m_clRightBack = new PlayerPositionPanel(this, ISpielerPosition.rightBack,
                                                                 m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clRechteAussenVerteidiger, constraints);
-        centerPanel.add(m_clRechteAussenVerteidiger);
+        layout.setConstraints(m_clRightBack, constraints);
+        centerPanel.add(m_clRightBack);
 
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clRechteInnenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.rightCentralDefender,
+        m_clRightCentralDefender = new PlayerPositionPanel(this, ISpielerPosition.rightCentralDefender,
                                                                m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clRechteInnenVerteidiger, constraints);
-        centerPanel.add(m_clRechteInnenVerteidiger);
+        layout.setConstraints(m_clRightCentralDefender, constraints);
+        centerPanel.add(m_clRightCentralDefender);
 
         constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clLinkeInnenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.leftCentralDefender,
+        m_clMiddleCentralDefender = new PlayerPositionPanel(this, ISpielerPosition.middleCentralDefender,
                                                               m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clLinkeInnenVerteidiger, constraints);
-        centerPanel.add(m_clLinkeInnenVerteidiger);
-
+        layout.setConstraints(m_clMiddleCentralDefender, constraints);
+        centerPanel.add(m_clMiddleCentralDefender);
+        
         constraints.gridx = 3;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        m_clLinkeAussenVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.leftBack,
+        m_clLeftCentralDefender = new PlayerPositionPanel(this, ISpielerPosition.leftCentralDefender,
+                                                              m_bPrint, m_bMinimize);
+        layout.setConstraints(m_clLeftCentralDefender, constraints);
+        centerPanel.add(m_clLeftCentralDefender);
+
+        constraints.gridx = 4;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        m_clLeftBack = new PlayerPositionPanel(this, ISpielerPosition.leftBack,
                                                                m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clLinkeAussenVerteidiger, constraints);
-        centerPanel.add(m_clLinkeAussenVerteidiger);
+        layout.setConstraints(m_clLeftBack, constraints);
+        centerPanel.add(m_clLeftBack);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clRechteFluegel = new PlayerPositionPanel(this, ISpielerPosition.rightWinger, m_bPrint,
+        m_clRightWinger = new PlayerPositionPanel(this, ISpielerPosition.rightWinger, m_bPrint,
                                                       m_bMinimize);
-        layout.setConstraints(m_clRechteFluegel, constraints);
-        centerPanel.add(m_clRechteFluegel);
+        layout.setConstraints(m_clRightWinger, constraints);
+        centerPanel.add(m_clRightWinger);
 
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clRechteMittelfeld = new PlayerPositionPanel(this, ISpielerPosition.rightInnerMidfield,
+        m_clRightInnerMidfielder = new PlayerPositionPanel(this, ISpielerPosition.rightInnerMidfield,
                                                          m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clRechteMittelfeld, constraints);
-        centerPanel.add(m_clRechteMittelfeld);
-
+        layout.setConstraints(m_clRightInnerMidfielder, constraints);
+        centerPanel.add(m_clRightInnerMidfielder);
+        
         constraints.gridx = 2;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clLinkeMittelfeld = new PlayerPositionPanel(this, ISpielerPosition.leftInnerMidfield, m_bPrint,
-                                                        m_bMinimize);
-        layout.setConstraints(m_clLinkeMittelfeld, constraints);
-        centerPanel.add(m_clLinkeMittelfeld);
+        m_clCentralInnerMidfielder = new PlayerPositionPanel(this, ISpielerPosition.centralInnerMidfield,
+                                                         m_bPrint, m_bMinimize);
+        layout.setConstraints(m_clCentralInnerMidfielder, constraints);
+        centerPanel.add(m_clCentralInnerMidfielder);
 
         constraints.gridx = 3;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        m_clLinkeFluegel = new PlayerPositionPanel(this, ISpielerPosition.leftWinger, m_bPrint,
+        m_clLeftInnerMidfielder = new PlayerPositionPanel(this, ISpielerPosition.leftInnerMidfield, m_bPrint,
+                                                        m_bMinimize);
+        layout.setConstraints(m_clLeftInnerMidfielder, constraints);
+        centerPanel.add(m_clLeftInnerMidfielder);
+
+        constraints.gridx = 4;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        m_clLeftWinger = new PlayerPositionPanel(this, ISpielerPosition.leftWinger, m_bPrint,
                                                      m_bMinimize);
-        layout.setConstraints(m_clLinkeFluegel, constraints);
-        centerPanel.add(m_clLinkeFluegel);
+        layout.setConstraints(m_clLeftWinger, constraints);
+        centerPanel.add(m_clLeftWinger);
 
         constraints.gridx = 1;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_clLinkerSturm = new PlayerPositionPanel(this, ISpielerPosition.rightForward, m_bPrint,
+        m_clLeftForward = new PlayerPositionPanel(this, ISpielerPosition.rightForward, m_bPrint,
                                                     m_bMinimize);
-        layout.setConstraints(m_clLinkerSturm, constraints);
-        centerPanel.add(m_clLinkerSturm);
+        layout.setConstraints(m_clLeftForward, constraints);
+        centerPanel.add(m_clLeftForward);
 
         constraints.gridx = 2;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        m_clRechterSturm = new PlayerPositionPanel(this, ISpielerPosition.leftForward, m_bPrint,
+        m_clCentralForward = new PlayerPositionPanel(this, ISpielerPosition.centralForward, m_bPrint,
+                                                    m_bMinimize);
+        layout.setConstraints(m_clCentralForward, constraints);
+        centerPanel.add(m_clCentralForward);
+
+        constraints.gridx = 3;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        m_clRightForward = new PlayerPositionPanel(this, ISpielerPosition.leftForward, m_bPrint,
                                                      m_bMinimize);
-        layout.setConstraints(m_clRechterSturm, constraints);
-        centerPanel.add(m_clRechterSturm);
+        layout.setConstraints(m_clRightForward, constraints);
+        centerPanel.add(m_clRightForward);
 
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_clStandard = new PlayerPositionPanel(this, ISpielerPosition.setPieces, m_bPrint,
+        m_clSetPieces = new PlayerPositionPanel(this, ISpielerPosition.setPieces, m_bPrint,
                                                  m_bMinimize);
-        layout.setConstraints(m_clStandard, constraints);
-        centerPanel.add(m_clStandard);
+        layout.setConstraints(m_clSetPieces, constraints);
+        centerPanel.add(m_clSetPieces);
 
         constraints.gridx = 1;
         constraints.gridy = 4;
         constraints.gridwidth = 2;
-        m_clReserveTorwart = new PlayerPositionPanel(this, ISpielerPosition.substKeeper, m_bPrint,
+        m_clReserveKeeper = new PlayerPositionPanel(this, ISpielerPosition.substKeeper, m_bPrint,
                                                        m_bMinimize);
-        layout.setConstraints(m_clReserveTorwart, constraints);
-        centerPanel.add(m_clReserveTorwart);
+        layout.setConstraints(m_clReserveKeeper, constraints);
+        centerPanel.add(m_clReserveKeeper);
 
         constraints.gridx = 3;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        m_clSpielfuehrer = new PlayerPositionPanel(this, ISpielerPosition.captain,
+        m_clCaptain = new PlayerPositionPanel(this, ISpielerPosition.captain,
                                                      m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clSpielfuehrer, constraints);
-        centerPanel.add(m_clSpielfuehrer);
+        layout.setConstraints(m_clCaptain, constraints);
+        centerPanel.add(m_clCaptain);
 
         constraints.gridx = 0;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveVerteidiger = new PlayerPositionPanel(this, ISpielerPosition.substDefender,
+        m_clReserveDefender = new PlayerPositionPanel(this, ISpielerPosition.substDefender,
                                                            m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clReserveVerteidiger, constraints);
-        centerPanel.add(m_clReserveVerteidiger);
+        layout.setConstraints(m_clReserveDefender, constraints);
+        centerPanel.add(m_clReserveDefender);
 
         constraints.gridx = 1;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveMittelfeld = new PlayerPositionPanel(this, ISpielerPosition.substInnerMidfield,
+        m_clReserveMidfielder = new PlayerPositionPanel(this, ISpielerPosition.substInnerMidfield,
                                                           m_bPrint, m_bMinimize);
-        layout.setConstraints(m_clReserveMittelfeld, constraints);
-        centerPanel.add(m_clReserveMittelfeld);
+        layout.setConstraints(m_clReserveMidfielder, constraints);
+        centerPanel.add(m_clReserveMidfielder);
 
         constraints.gridx = 2;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveSturm = new PlayerPositionPanel(this, ISpielerPosition.substForward, m_bPrint,
+        m_clReserveForward = new PlayerPositionPanel(this, ISpielerPosition.substForward, m_bPrint,
                                                      m_bMinimize);
-        layout.setConstraints(m_clReserveSturm, constraints);
-        centerPanel.add(m_clReserveSturm);
+        layout.setConstraints(m_clReserveForward, constraints);
+        centerPanel.add(m_clReserveForward);
 
         constraints.gridx = 3;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        m_clReserveFluegel = new PlayerPositionPanel(this, ISpielerPosition.substWinger, m_bPrint,
+        m_clReserveWinger = new PlayerPositionPanel(this, ISpielerPosition.substWinger, m_bPrint,
                                                        m_bMinimize);
-        layout.setConstraints(m_clReserveFluegel, constraints);
-        centerPanel.add(m_clReserveFluegel);
+        layout.setConstraints(m_clReserveWinger, constraints);
+        centerPanel.add(m_clReserveWinger);
 
         getContentPane().add(centerPanel, BorderLayout.CENTER);
 
