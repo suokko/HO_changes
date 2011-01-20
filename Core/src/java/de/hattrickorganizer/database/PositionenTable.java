@@ -65,6 +65,10 @@ public final class PositionenTable extends AbstractTable {
 					case ISpielerPosition.OLD_EXTRA_FORWARD :
 						roleID = ISpielerPosition.centralForward;
 						behavior = ISpielerPosition.NORMAL;
+						break;
+					case ISpielerPosition.OLD_EXTRA_DEFENSIVE_FORWARD :
+						roleID = ISpielerPosition.centralForward;
+						behavior = ISpielerPosition.DEFENSIVE;
 				}
 					
 					if (roleID < ISpielerPosition.setPieces) {
