@@ -223,6 +223,10 @@ public class XMLMatchLineupParser {
                   case ISpielerPosition.OLD_EXTRA_FORWARD :
                 	  roleID = ISpielerPosition.centralForward;
                 	  behavior = ISpielerPosition.NORMAL;
+                	  break;
+                  case ISpielerPosition.OLD_EXTRA_DEFENSIVE_FORWARD :
+                	  roleID = ISpielerPosition.centralForward;
+                	  behavior = ISpielerPosition.DEFENSIVE;
                 }
                 
                 // Wash the remaining old positions
