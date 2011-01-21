@@ -97,7 +97,7 @@ public interface ISpielerPosition {
     
     /** ab welccher PositionsID gehört Pos zur Reserve Bank */
 
-    //First id of an the reserve
+    //First id of the reserves
     public static final int startReserves = 114;
 
     //Start of player list is not a good idea to hard code at 0 either
@@ -128,6 +128,9 @@ public interface ISpielerPosition {
     
     /** additional defender */
     public static final byte OLD_EXTRA_DEFENDER = 7;
+    
+    /** additional extra defensive forward */
+    public static final byte OLD_EXTRA_DEFENSIVE_FORWARD = 8;
     
   
     //Constants for positions
@@ -300,7 +303,7 @@ public interface ISpielerPosition {
     @Deprecated
     public static final byte ZUS_INNENV = OLD_EXTRA_DEFENDER;
     @Deprecated
-    public static final byte ZUS_STUERMER_DEF = 8;
+    public static final byte ZUS_STUERMER_DEF = OLD_EXTRA_DEFENSIVE_FORWARD;
 
     @Deprecated
     public static final byte TORWART = KEEPER;
