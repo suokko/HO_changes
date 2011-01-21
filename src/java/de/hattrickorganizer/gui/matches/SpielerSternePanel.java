@@ -147,12 +147,15 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
             case ISpielerPosition.rightBack:
             case ISpielerPosition.leftBack:
             case ISpielerPosition.rightCentralDefender:
+            case ISpielerPosition.middleCentralDefender:
             case ISpielerPosition.leftCentralDefender:
             case ISpielerPosition.rightInnerMidfield:
+            case ISpielerPosition.centralInnerMidfield:
             case ISpielerPosition.leftInnerMidfield:
             case ISpielerPosition.leftWinger:
             case ISpielerPosition.rightWinger:
             case ISpielerPosition.rightForward:
+            case ISpielerPosition.centralForward:
             case ISpielerPosition.leftForward:
             case ISpielerPosition.ausgewechselt: {
                 constraints.gridx = 0;
