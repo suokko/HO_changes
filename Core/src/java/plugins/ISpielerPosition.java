@@ -236,9 +236,9 @@ public interface ISpielerPosition {
     
     public static final byte oldLeftWinger = 9;
     
-    public static final byte oldLeftForward = 10;
+    public static final byte oldRightForward = 10;
     
-    public static final byte oldRightForward = 11;
+    public static final byte oldLeftForward = 11;
     
     public static final byte oldSubstKeeper = 12;
     
