@@ -37,8 +37,19 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
         m_sText = text;
         m_clSpieler = spieler;
         m_fPositionsBewertung = poswert;
+        m_clEntry = new SpielerLabelEntry(null, null, 0f, true, true);
     }
-
+    
+    public SpielerCBItem(String text, float poswert, plugins.ISpieler spieler, boolean useCustomText) {
+        m_sText = text;
+        m_clSpieler = spieler;
+        m_fPositionsBewertung = poswert;
+        if (useCustomText == true) {
+            m_clEntry = new SpielerLabelEntry(null, null, 0f, true, true, true, text);
+        } else {
+        	m_clEntry = new SpielerLabelEntry(null, null, 0f, true, true);
+        }
+    }
     //~ Methods ------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------------
@@ -59,7 +70,7 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
                                                                                  .getAufstellung()
                                                                                  .getPositionBySpielerId(spieler
                                                                                                          .getSpielerID()),
-                                          ((SpielerCBItem) obj).getPositionsBewertung());
+                                          ((SpielerCBItem) obj).getPositionsBewertung(), m_sText);
 
                 return m_clEntry.getComponent(isSelected);
             } else {

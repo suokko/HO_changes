@@ -2,12 +2,14 @@
 package de.hattrickorganizer.gui.templates;
 
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -44,6 +46,8 @@ public final class SpielerLabelEntry extends TableEntry {
     private SpielerPosition m_clCurrentPlayerPosition;
     private boolean m_bShowTrikot;
     private boolean m_bShowWeatherEffect = true;
+    private boolean m_bCustomName = false;
+    private String m_sCustomNameString = "";
     private float m_fPositionsbewertung;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -66,10 +70,29 @@ public final class SpielerLabelEntry extends TableEntry {
         m_bShowWeatherEffect = showWetterwarnung;
         createComponent();
     }
+    
+    public SpielerLabelEntry(plugins.ISpieler spieler, SpielerPosition positionAktuell,
+    		float positionsbewertung, boolean showTrikot, boolean showWetterwarnung, boolean customName, String customNameText) {
+    	m_clPlayer = spieler;
+    	m_clCurrentPlayerPosition = positionAktuell;
+    	m_fPositionsbewertung = positionsbewertung;
+    	m_bShowTrikot = showTrikot;
+    	m_bShowWeatherEffect = showWetterwarnung;
+    	m_bCustomName = customName;
+    	m_sCustomNameString = customNameText;
+    	createComponent();
+    }
 
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
+     * Set the custom player name. Will only be used if m_bCustomName is true, a setting available in alternate constructor.
+     */
+    public void setM_sCustomNameString(String m_sCustomNameString) {
+		this.m_sCustomNameString = m_sCustomNameString;
+	}
+
+	/**
      * Gibt eine passende Komponente zurück
      *
      * @param isSelected TODO Missing Constructuor Parameter Documentation
@@ -176,12 +199,14 @@ public final class SpielerLabelEntry extends TableEntry {
         spezPanel.add(m_jlSkill);
 
         //MiniGruppe
-        m_jlGroup.setBackground(ColorLabelEntry.BG_STANDARD);
-        m_jlGroup.setVerticalAlignment(SwingConstants.BOTTOM);
-        m_jlGroup.setOpaque(false);
-        m_jlGroup.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
+        // Removed at 553 change
+        
+//        m_jlGroup.setBackground(ColorLabelEntry.BG_STANDARD);
+//        m_jlGroup.setVerticalAlignment(SwingConstants.BOTTOM);
+//        m_jlGroup.setOpaque(false);
+//        m_jlGroup.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
 
-        spezPanel.add(m_jlGroup);
+//        spezPanel.add(m_jlGroup);
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.EAST;
@@ -192,7 +217,13 @@ public final class SpielerLabelEntry extends TableEntry {
 
         if (m_clPlayer != null) {
             //Name
-            m_jlName.setText(m_clPlayer.getName());
+            
+        	if (m_bCustomName == true) {
+        		m_jlName.setText(m_sCustomNameString);
+        	} else {
+        		m_jlName.setText(m_clPlayer.getName());
+        	}
+        	
             m_jlName.setOpaque(false);
             m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
 
@@ -257,10 +288,11 @@ public final class SpielerLabelEntry extends TableEntry {
      * @param positionsbewertung TODO Missing Constructuor Parameter Documentation
      */
     public final void updateComponent(ISpieler spieler, SpielerPosition positionAktuell,
-                                      float positionsbewertung) {
+                                      float positionsbewertung, String nameText) {
         m_clPlayer = spieler;
         m_clCurrentPlayerPosition = positionAktuell;
         m_fPositionsbewertung = positionsbewertung;
+        m_sCustomNameString = nameText;
 
         if (m_clPlayer != null) {
             if (m_clPlayer.isOld()) {
@@ -269,7 +301,11 @@ public final class SpielerLabelEntry extends TableEntry {
                 m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
             }
 
-            m_jlName.setText(m_clPlayer.getName());
+            if (m_bCustomName == true) {
+        		m_jlName.setText(m_sCustomNameString);
+        	} else {
+        		m_jlName.setText(m_clPlayer.getName());
+        	}
 
             //Trikot
             //&& m_clSpielerPositionAktuell != null )
@@ -294,7 +330,7 @@ public final class SpielerLabelEntry extends TableEntry {
         	m_jlGroup.setIcon(null);
         }
 
-        m_clComponent.setPreferredSize(new Dimension(Helper.calcCellWidth(150),Helper.calcCellWidth(18)));
+        m_clComponent.setPreferredSize(new Dimension(Helper.calcCellWidth(130),Helper.calcCellWidth(18)));  // Was 150,18 - setting lower solved lineup problem
     }
     
     private void setEmptyLabel(){

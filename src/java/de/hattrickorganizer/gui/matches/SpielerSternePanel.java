@@ -126,7 +126,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_jbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_Spielerdetails"));
         m_jbSpieler.setHorizontalAlignment(SwingConstants.LEFT);
         m_jbSpieler.setMargin(new Insets(0, 1, 0, 1));
-        m_jbSpieler.setPreferredSize(new Dimension(145, 16));
+        m_jbSpieler.setPreferredSize(new Dimension(125, 16));
         m_jbSpieler.setFocusPainted(false);
         m_jbSpieler.setEnabled(false);
         m_jbSpieler.addActionListener(this);
@@ -141,6 +141,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         constraints.gridy = 1;
         layout.setConstraints(panel, constraints);
         add(panel);
+        
+        
 
         switch (m_iPositionsID) {
             case ISpielerPosition.keeper:
@@ -165,13 +167,13 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
                 layout.setConstraints(component, constraints);
                 add(component);
 
-                setPreferredSize(new Dimension(Helper.calcCellWidth(150),
+                setPreferredSize(new Dimension(Helper.calcCellWidth(120),
                                                Helper.calcCellWidth(62)));
                 break;
             }
 
             default:
-                setPreferredSize(new Dimension(Helper.calcCellWidth(150),
+                setPreferredSize(new Dimension(Helper.calcCellWidth(120),
                                                Helper.calcCellWidth(36)));
         }
     }
