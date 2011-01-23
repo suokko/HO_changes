@@ -44,7 +44,7 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
 
     /** TODO Missing Parameter Documentation */
  //   protected static final int SET_PIECE = 201;
-    private static SpielerCBItem m_clNullSpieler = new SpielerCBItem("", 0f, null);
+    private static SpielerCBItem m_clNullSpieler = new SpielerCBItem("", 0f, null, true);
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
 
     //Für Minimized
     private final JLabel m_jlPlayer = new JLabel();
-    private final SpielerCBItem m_clSelectedPlayer = new SpielerCBItem("", 0f, null);
+    private final SpielerCBItem m_clSelectedPlayer = new SpielerCBItem("", 0f, null, true);
 
     /** TODO Missing Parameter Documentation */
     private Updateable m_clUpdater;
@@ -222,7 +222,7 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
 
             constraints.gridx = 0;
             constraints.gridy = 1;
-            constraints.gridwidth = 5;
+            constraints.gridwidth = 2;
             m_jcbPlayer.addFocusListener(this);
             m_jcbPlayer.setMaximumRowCount(15);
             m_jcbPlayer.setRenderer(new SpielerCBItemRenderer());
@@ -237,9 +237,9 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
 
             //Nur anzeigen, wenn mehr als eine Taktik möglich ist
             if (m_jcbTactic.getItemCount() > 1) {
-                constraints.gridx = 1;
-                constraints.gridy = 0;
-                constraints.gridwidth = 3;
+                constraints.gridx = 0;
+                constraints.gridy = 2;
+                constraints.gridwidth = 2;
                 if (!aenderbar) {
                     m_jcbTactic.setEnabled(false);
                 }
@@ -248,9 +248,9 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
                 layout.setConstraints(m_jcbTactic, constraints);
                 add(m_jcbTactic);
 
-                setPreferredSize(new Dimension(Helper.calcCellWidth(200),Helper.calcCellWidth(55)));// W 80
+                setPreferredSize(new Dimension(Helper.calcCellWidth(160),Helper.calcCellWidth(80)));
             } else {
-                setPreferredSize(new Dimension(Helper.calcCellWidth(200),Helper.calcCellWidth(55)));// W 50
+                setPreferredSize(new Dimension(Helper.calcCellWidth(160),Helper.calcCellWidth(50)));
             }
         }
     }
@@ -403,7 +403,7 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
                 }
                 //Neu erzeugen
                 else {
-                    tempCB[i] = new SpielerCBItem("", 0f, null);
+                    tempCB[i] = new SpielerCBItem("", 0f, null, true);
 
                     //HOLogger.instance().log(getClass(), "Create new SpielerCBItem " + this.m_iPositionsID );
                 }
@@ -496,8 +496,9 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
 
             if (position != null) {
                 //Reserve
-            	final String nameForPosition = (m_bMinimize)?SpielerPosition.getKurzNameForPosition(position
-                        .getPosition()):SpielerPosition.getKurzNameForPosition(position.getPosition());
+            	final String nameForPosition = (m_bMinimize)?SpielerPosition.getNameForPosition(position
+                        .getPosition()):SpielerPosition.getNameForPosition(position.getPosition());
+            		
                 if ((m_jcbTactic.getItemCount() == 1) && (position.getId() != ISpielerPosition.keeper)) {
                 	//special naming for reserve defender
                 	if (!m_bMinimize && position.getId() == ISpielerPosition.substDefender) {
@@ -642,14 +643,17 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
      */
     private SpielerCBItem createSpielerCBItem(SpielerCBItem item, Spieler spieler) {
         if (spieler != null) {
-            if (m_iPositionID == ISpielerPosition.setPieces) {
-                item.setValues(spieler.getName(),
+        	// Create a string with just initial as first name
+        	String spielerName = spieler.getName().substring(0, 1) + "." + spieler.getName().substring(spieler.getName().indexOf(" ")+1);
+        	
+        	if (m_iPositionID == ISpielerPosition.setPieces) {
+                item.setValues(spielerName,
                                spieler.getStandards()
                                + spieler.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS),
                                spieler);
                 return item;
             } else if (m_iPositionID == ISpielerPosition.captain) {
-                item.setValues(spieler.getName(),
+                item.setValues(spielerName,
                                Helper.round(
                             		   HOVerwaltung.instance().getModel().getAufstellung().getAverageExperience(spieler.getSpielerID()), 
                             		   gui.UserParameter.instance().anzahlNachkommastellen),
@@ -659,8 +663,8 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
                 final SpielerPosition position = HOVerwaltung.instance().getModel().getAufstellung()
                                                                                         .getPositionById(m_iPositionID);
 
-                if (position != null) {                	                
-                    item.setValues(spieler.getName(),
+                if (position != null) { 
+                    item.setValues(spielerName,
                                    spieler.calcPosValue(position.getPosition(), true), spieler);					
                     return item;
                 } 

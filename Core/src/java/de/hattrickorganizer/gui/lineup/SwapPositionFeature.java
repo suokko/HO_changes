@@ -117,7 +117,7 @@ public class SwapPositionFeature {
 
 	private GridBagConstraints createSwapButtonConstraints() {
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 5;
+		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0.0;
