@@ -57,6 +57,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private static MyConnector m_clInstance;
 	private final static String VERSION_MATCHORDERS = "1.6";
 	private final static String VERSION_TRAINING = "1.5";
+	private final static String VERSION_MATCHLINEUP = "1.4";
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
@@ -307,7 +308,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
 		String url =
-			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchlineup";
+			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchlineup&version=" +
+				VERSION_MATCHLINEUP;
 
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
