@@ -837,6 +837,7 @@ public  class Lineup implements plugins.ILineUp {
 
     /**
      * Setter for property m_vPositionen.
+     * All previous entries of the linup are cleared.
      *
      * @param m_vPositionen New value of property m_vPositionen.
      */
@@ -846,13 +847,16 @@ public  class Lineup implements plugins.ILineUp {
     	// an old style lineup.
     	// We need to avoid the regular methods, as some necessary stuff like the Model may not be created yet.
     	
-    	for (int i = 0; i < posVec.size(); i++) {
-    		SpielerPosition spos = (SpielerPosition) posVec.get(i);
+    	initPositionen553();
+    	if (posVec != null) {
+    		for (int i = 0; i < posVec.size(); i++) {
+    			SpielerPosition spos = (SpielerPosition) posVec.get(i);
     			for (int j = 0; j < m_vPositionen.size(); j++) {
-    	            if (((SpielerPosition) m_vPositionen.get(j)).getId() == spos.getId()) {
-    	                m_vPositionen.setElementAt(spos, j);
-    	            }
-    	        }
+    				if (((SpielerPosition) m_vPositionen.get(j)).getId() == spos.getId()) {
+    					m_vPositionen.setElementAt(spos, j);
+    				}
+    			}
+    		}
     	}
     }
 
