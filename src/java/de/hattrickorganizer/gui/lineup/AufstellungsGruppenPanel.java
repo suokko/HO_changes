@@ -103,7 +103,10 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
      * TODO Missing Method Documentation
      */
     private void initComponents() {
-        setPreferredSize(new Dimension(20, 200));
+    	
+    	// Horizontal by Blaghaid - away with size specification
+    	
+        //setPreferredSize(new Dimension(20, 200));
 
         //Platzhalter
         add(new JLabel("   "));

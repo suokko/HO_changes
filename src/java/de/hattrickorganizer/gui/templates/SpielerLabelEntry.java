@@ -199,14 +199,13 @@ public final class SpielerLabelEntry extends TableEntry {
         spezPanel.add(m_jlSkill);
 
         //MiniGruppe
-        // Removed at 553 change
-        
-//        m_jlGroup.setBackground(ColorLabelEntry.BG_STANDARD);
-//        m_jlGroup.setVerticalAlignment(SwingConstants.BOTTOM);
-//        m_jlGroup.setOpaque(false);
-//        m_jlGroup.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
+  
+        m_jlGroup.setBackground(ColorLabelEntry.BG_STANDARD);
+        m_jlGroup.setVerticalAlignment(SwingConstants.BOTTOM);
+        m_jlGroup.setOpaque(false);
+        m_jlGroup.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
 
-//        spezPanel.add(m_jlGroup);
+        spezPanel.add(m_jlGroup);
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.EAST;

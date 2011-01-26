@@ -1,9 +1,11 @@
 package de.hattrickorganizer.gui.lineup;
 
 import plugins.ISpieler;
+import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.HOLogger;
 
 public class SwapPositionsManager {
 
@@ -49,12 +51,25 @@ public class SwapPositionsManager {
 		Lineup lineup = HOVerwaltung.instance().getModel()
 				.getAufstellung();
 
+		// Changed to allow swapping players to empty positions - Blaghaid
+
 		int positionA = swapPositionA.getPositionsID();
 		int positionB = swapPositionB.getPositionsID();
 		ISpieler playerA = lineup.getPlayerByPositionID(positionA);
 		ISpieler playerB = lineup.getPlayerByPositionID(positionB);
 		
-		// Changed to allow swapping players to empty positions
+		// We don't want to swap a substitute into an empty position unless there is less
+		// than 11 players on the field.
+		if ((playerA==null && positionB >= ISpielerPosition.startReserves) ||
+				(playerB==null && positionA >= ISpielerPosition.startReserves))   {
+			if (lineup.hasFreePosition() != true) {
+				// HOLogger.instance().debug(getClass(), "Stopped swap due to sub-check!");
+				return;
+			} else {
+				// HOLogger.instance().debug(getClass(), "Allowed swap due to sub-check!");
+			}
+		}
+			
 		int playerA_id = -1;
 		int playerB_id = -1;
 		
