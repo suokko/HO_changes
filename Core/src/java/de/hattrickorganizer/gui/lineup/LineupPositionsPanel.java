@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -333,9 +335,9 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
 
         centerPanel.setLayout(layout);
 
-        constraints.gridx = 0;
+        constraints.gridx = 2;
         constraints.gridy = 0;
-        constraints.gridwidth = 4;
+        constraints.gridwidth = 1;
         m_clKeeper = new PlayerPositionPanel(this, ISpielerPosition.keeper);
         layout.setConstraints(m_clKeeper, constraints);
         centerPanel.add(m_clKeeper);
@@ -452,63 +454,83 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         centerPanel.add(m_clLeftForward);
         swapPositionsManager.addSwapCapabilityTo(m_clLeftForward);
 
-        // Captain, SP and Keeper reserve Line
+        // A spacer between forwards and reserves.
         
         constraints.gridx = 0;
         constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        m_clSetPieceTaker = new PlayerPositionPanel(this, ISpielerPosition.setPieces);
-        layout.setConstraints(m_clSetPieceTaker, constraints);
-        centerPanel.add(m_clSetPieceTaker);
-
-        constraints.gridx = 2;
-        constraints.gridy = 4;
+        constraints.gridwidth = 5;
+        Box box = new Box(BoxLayout.Y_AXIS);
+        box.add(Box.createRigidArea(new Dimension(10, 6)));
+        layout.setConstraints(box, constraints);
+        centerPanel.add(box);
+        
+        // The reserves
+        
+        constraints.gridx = 0;
+        constraints.gridy = 5;
         constraints.gridwidth = 1;
         m_clSubstKeeper = new PlayerPositionPanel(this, ISpielerPosition.substKeeper);
         layout.setConstraints(m_clSubstKeeper, constraints);
         centerPanel.add(m_clSubstKeeper);
-
-        constraints.gridx = 4;
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        m_clCaptain = new PlayerPositionPanel(this, ISpielerPosition.captain);
-        layout.setConstraints(m_clCaptain, constraints);
-        centerPanel.add(m_clCaptain);
-
-        // Outfield reserves line
+        swapPositionsManager.addSwapCapabilityTo(m_clSubstKeeper);
         
-        constraints.gridx = 0;
+        constraints.gridx = 1;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         m_clSubstDefender = new PlayerPositionPanel(this, ISpielerPosition.substDefender);
         layout.setConstraints(m_clSubstDefender, constraints);
         centerPanel.add(m_clSubstDefender);
+        swapPositionsManager.addSwapCapabilityTo(m_clSubstDefender);
 
-        constraints.gridx = 1;
+        constraints.gridx = 2;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         m_clSubstMidfield = new PlayerPositionPanel(this, ISpielerPosition.substInnerMidfield);
         layout.setConstraints(m_clSubstMidfield, constraints);
         centerPanel.add(m_clSubstMidfield);
+        swapPositionsManager.addSwapCapabilityTo(m_clSubstMidfield);
 
-        constraints.gridx = 2;
+        constraints.gridx = 3;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         m_clSubstForward = new PlayerPositionPanel(this, ISpielerPosition.substForward);
         layout.setConstraints(m_clSubstForward, constraints);
         centerPanel.add(m_clSubstForward);
+        swapPositionsManager.addSwapCapabilityTo(m_clSubstForward);
 
-        constraints.gridx = 3;
+        constraints.gridx = 4;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         m_clSubstWinger = new PlayerPositionPanel(this, ISpielerPosition.substWinger);
         layout.setConstraints(m_clSubstWinger, constraints);
         centerPanel.add(m_clSubstWinger);
+        swapPositionsManager.addSwapCapabilityTo(m_clSubstWinger);
 
-        add(centerPanel, BorderLayout.CENTER);
+        // Captain and setpieces
+       
+        
+        constraints.gridx = 0;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        m_clCaptain = new PlayerPositionPanel(this, ISpielerPosition.captain);
+        layout.setConstraints(m_clCaptain, constraints);
+        centerPanel.add(m_clCaptain);
+        
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        m_clSetPieceTaker = new PlayerPositionPanel(this, ISpielerPosition.setPieces);
+        layout.setConstraints(m_clSetPieceTaker, constraints);
+        centerPanel.add(m_clSetPieceTaker);
+        
 
         //Gruppenzuordnung des aufgestellten 
-        add(new AufstellungsGruppenPanel(), BorderLayout.EAST);
+        
+        constraints.gridx = 3;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        centerPanel.add(new AufstellungsGruppenPanel(), constraints);
 
         //MiniLineup
         final JPanel buttonPanel = new JPanel(new BorderLayout());
@@ -533,7 +555,17 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         m_jbFlipSide.setPreferredSize(new Dimension(25, 25));
         panel.add(m_jbFlipSide);
         m_jbDrucken.setPreferredSize(new Dimension(m_jbDrucken.getPreferredSize().width, 25));
-        buttonPanel.add(panel, BorderLayout.EAST);
-        add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(panel, BorderLayout.NORTH);
+        
+        constraints.gridx = 4;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        layout.setConstraints(panel, constraints);
+        centerPanel.add(panel);
+        
+        add(centerPanel, BorderLayout.CENTER);
+
+        //add(buttonPanel, BorderLayout.SOUTH);
     }
 }
