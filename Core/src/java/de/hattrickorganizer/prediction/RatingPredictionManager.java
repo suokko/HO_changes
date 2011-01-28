@@ -877,26 +877,14 @@ public class RatingPredictionManager implements IRatingPredictionManager
         float psDefender = 0.0F;
     	IRatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
-        for(int pos = ISpielerPosition.startLineup+1; pos < ISpielerPosition.startReserves; pos++)
+        for(int pos = ISpielerPosition.rightBack; pos <= ISpielerPosition.leftBack; pos++)
         {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
-            byte taktik = lineup.getTactic4PositionID(pos);
             if(spieler != null) {
-            	// CD/WB (NOT extra CD)
-                if(pos >= 2 && pos <= 5 && taktik < 5)
-                {
-                    deDefender += calcPlayerStrength(spieler, DEFENDING);
-                    psDefender += calcPlayerStrength(spieler, PASSING);
-                }
-                // extra CD
-                if(taktik == 7) 
-                {
-                    deDefender += params.getParam("extraMulti", 1.0) * calcPlayerStrength(spieler, DEFENDING);
-                    psDefender += params.getParam("extraMulti", 1.0) * calcPlayerStrength(spieler, PASSING);
-                }
+            		deDefender += calcPlayerStrength(spieler, DEFENDING);
+            		psDefender += calcPlayerStrength(spieler, PASSING);
             }
         }
-
         deDefender *= params.getParam("counter", "multiDe", 1.0);
         psDefender *= params.getParam("counter", "multiPs", 1.0);
         
@@ -916,17 +904,12 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public final float getTacticLevelPressing() {
     	IRatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
-        for(int pos = 2; pos < 12; pos++)
+        for(int pos = ISpielerPosition.startLineup + 1; pos < ISpielerPosition.startReserves; pos++)
         {
             float defense = 0.0F;
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
-            byte taktik = lineup.getTactic4PositionID(pos);
             if(spieler != null) {
             	defense = calcPlayerStrength(spieler, DEFENDING);
-            	// Zus. MF/IV/ST
-                if(taktik == 7 || taktik == 6 || taktik == 5) {
-                    defense *= params.getParam("extraMulti", 1.0); 
-                }
                 if (spieler.getSpezialitaet() == ISpieler.DURCHSETZUGNSSTARK) {
                 	defense *= 2;
                 }
@@ -948,20 +931,14 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public final float getTacticLevelLongShots() {
        	IRatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
-        for(int pos = 2; pos < 12; pos++)
+        for(int pos = ISpielerPosition.startLineup +1; pos < ISpielerPosition.startReserves; pos++)
         {
             float scoring = 0.0F;
             float setpieces = 0.0F;
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
-            byte taktik = lineup.getTactic4PositionID(pos);
             if(spieler != null) {
             	scoring = 3*calcPlayerStrength(spieler, SCORING);
             	setpieces = calcPlayerStrength(spieler, SETPIECES);
-            	// Zus. MF/IV/ST
-                if(taktik == 7 || taktik == 6 || taktik == 5) {
-                    scoring *= params.getParam("extraMulti", 1.0); 
-                    setpieces *= params.getParam("extraMulti", 1.0); 
-                }
                 retVal += scoring;
                 retVal += setpieces;
             }
