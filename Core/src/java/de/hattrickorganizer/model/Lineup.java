@@ -845,10 +845,10 @@ public  class Lineup implements plugins.ILineUp {
 
     	// Replace the existing positions with the incoming on a one by one basis. Otherwise we will miss 3 positions when loading
     	// an old style lineup.
-    	// We need to avoid the regular methods, as some necessary stuff like the Model may not be created yet.
+    	// We need to avoid the regular methods, as some required stuff like the Model may not be created yet.
     	
-    	initPositionen553();
     	if (posVec != null) {
+    		initPositionen553();
     		for (int i = 0; i < posVec.size(); i++) {
     			SpielerPosition spos = (SpielerPosition) posVec.get(i);
     			for (int j = 0; j < m_vPositionen.size(); j++) {
@@ -860,6 +860,13 @@ public  class Lineup implements plugins.ILineUp {
     	}
     }
 
+    /**
+    * Clears all positions of content by creating a new, empty lineup.
+    */
+    public final void clearLineup() {
+    	initPositionen553();
+    }
+    
     /////////////////////////////////////////////////////////////////////////////////
     //    Accessor
     /////////////////////////////////////////////////////////////////////////////////
