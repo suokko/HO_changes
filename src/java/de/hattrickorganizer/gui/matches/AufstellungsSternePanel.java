@@ -3,12 +3,15 @@ package de.hattrickorganizer.gui.matches;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Vector;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
 import plugins.IMatchLineupPlayer;
@@ -283,6 +286,12 @@ public class AufstellungsSternePanel extends RasenPanel {
 
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
+        int gridx;
+        int gridy;
+        
+        // The adding of the SpielerSternePanels is moved into the each panel, to facilitate them appearing
+        // and disappearing depending on the presence of a player.
+        
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
@@ -297,7 +306,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             constraints.gridwidth = 5;
         } else {
             constraints.gridx = 0;
-            constraints.gridy = 8;
+            constraints.gridy = 16;
             constraints.gridwidth = 5;
         }
 
@@ -309,358 +318,270 @@ public class AufstellungsSternePanel extends RasenPanel {
                                                                + 3));
         layout.setConstraints(m_jlTeamName, constraints);
         centerPanel.add(m_jlTeamName);
+        
+        Box midFieldGap = new Box(BoxLayout.X_AXIS);
+        midFieldGap.setPreferredSize(new Dimension(20, 6));
+        constraints.gridx = 2;
+        constraints.gridy = 8;
+        centerPanel.add(midFieldGap, constraints);
+        
 
         if (m_bHeim) {
-            constraints.gridx = 0;
-            constraints.gridy = 4;
-            constraints.gridwidth = 5;
+            gridx = 2;
+            gridy = 4;
         } else {
-            constraints.gridx = 0;
-            constraints.gridy = 4;
-            constraints.gridwidth = 5;
+            gridx = 2;
+            gridy = 12;
         }
 
-        m_clKeeper = new SpielerSternePanel(ISpielerPosition.keeper, m_bPrint);
-        layout.setConstraints(m_clKeeper, constraints);
-        centerPanel.add(m_clKeeper);
+        m_clKeeper = new SpielerSternePanel(ISpielerPosition.keeper, m_bPrint, centerPanel, gridx, gridy);
+ 
+        if (m_bHeim) {
+            gridx = 0;
+            gridy = 5;
+        } else {
+            gridx = 4;
+            gridy = 11;
+        }
+
+        m_clRightBack = new SpielerSternePanel(ISpielerPosition.rightBack, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 0;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 5;
         } else {
-            constraints.gridx = 4;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 11;
         }
 
-        m_clRightBack = new SpielerSternePanel(ISpielerPosition.rightBack, m_bPrint);
-        layout.setConstraints(m_clRightBack, constraints);
-        centerPanel.add(m_clRightBack);
+        m_clRightCentralDefender = new SpielerSternePanel(ISpielerPosition.rightCentralDefender, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 1;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 5;
         } else {
-            constraints.gridx = 3;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 11;
         }
 
-        m_clRightCentralDefender = new SpielerSternePanel(ISpielerPosition.rightCentralDefender, m_bPrint);
-        layout.setConstraints(m_clRightCentralDefender, constraints);
-        centerPanel.add(m_clRightCentralDefender);
-
-        if (m_bHeim) {
-            constraints.gridx = 2;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
-        } else {
-            constraints.gridx = 2;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
-        }
-
-        m_clMiddleCentralDefender = new SpielerSternePanel(ISpielerPosition.middleCentralDefender, m_bPrint);
-        layout.setConstraints(m_clMiddleCentralDefender, constraints);
-        centerPanel.add(m_clMiddleCentralDefender);
+        m_clMiddleCentralDefender = new SpielerSternePanel(ISpielerPosition.middleCentralDefender, m_bPrint, centerPanel, gridx, gridy);
         
         if (m_bHeim) {
-            constraints.gridx = 3;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 5;
         } else {
-            constraints.gridx = 1;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 11;
         }
 
-        m_clLeftCentralDefender = new SpielerSternePanel(ISpielerPosition.leftCentralDefender, m_bPrint);
-        layout.setConstraints(m_clLeftCentralDefender, constraints);
-        centerPanel.add(m_clLeftCentralDefender);
+        m_clLeftCentralDefender = new SpielerSternePanel(ISpielerPosition.leftCentralDefender, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 4;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 4;
+            gridy = 5;
         } else {
-            constraints.gridx = 0;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 0;
+            gridy = 11;
         }
 
-        m_clLeftBack = new SpielerSternePanel(ISpielerPosition.leftBack, m_bPrint);
-        layout.setConstraints(m_clLeftBack, constraints);
-        centerPanel.add(m_clLeftBack);
+        m_clLeftBack = new SpielerSternePanel(ISpielerPosition.leftBack, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 0;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 0;
+            gridy = 6;
         } else {
-            constraints.gridx = 4;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 4;
+            gridy = 10;
         }
 
-        m_clRightWinger = new SpielerSternePanel(ISpielerPosition.rightWinger, m_bPrint);
-        layout.setConstraints(m_clRightWinger, constraints);
-        centerPanel.add(m_clRightWinger);
+        m_clRightWinger = new SpielerSternePanel(ISpielerPosition.rightWinger, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 1;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 6;
         } else {
-            constraints.gridx = 3;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 10;
         }
 
-        m_clRightInnerMidfielder = new SpielerSternePanel(ISpielerPosition.rightInnerMidfield, m_bPrint);
-        layout.setConstraints(m_clRightInnerMidfielder, constraints);
-        centerPanel.add(m_clRightInnerMidfielder);
+        m_clRightInnerMidfielder = new SpielerSternePanel(ISpielerPosition.rightInnerMidfield, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 2;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 6;
         } else {
-            constraints.gridx = 2;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 10;
         }
         
-        m_clCentralInnerMidfielder = new SpielerSternePanel(ISpielerPosition.centralInnerMidfield, m_bPrint);
-        layout.setConstraints(m_clCentralInnerMidfielder, constraints);
-        centerPanel.add(m_clCentralInnerMidfielder);
+        m_clCentralInnerMidfielder = new SpielerSternePanel(ISpielerPosition.centralInnerMidfield, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 3;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 6;
         } else {
-            constraints.gridx = 1;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 10;
         }
 
-        m_clLeftInnerMidfielder = new SpielerSternePanel(ISpielerPosition.leftInnerMidfield, m_bPrint);
-        layout.setConstraints(m_clLeftInnerMidfielder, constraints);
-        centerPanel.add(m_clLeftInnerMidfielder);
+        m_clLeftInnerMidfielder = new SpielerSternePanel(ISpielerPosition.leftInnerMidfield, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 4;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 4;
+            gridy = 6;
         } else {
-            constraints.gridx = 0;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 0;
+            gridy = 10;
         }
 
-        m_clLeftWinger = new SpielerSternePanel(ISpielerPosition.leftWinger, m_bPrint);
-        layout.setConstraints(m_clLeftWinger, constraints);
-        centerPanel.add(m_clLeftWinger);
+        m_clLeftWinger = new SpielerSternePanel(ISpielerPosition.leftWinger, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 1;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 7;
         } else {
-            constraints.gridx = 3;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 9;
         }
 
-        m_clLeftForward = new SpielerSternePanel(ISpielerPosition.rightForward, m_bPrint);
-        layout.setConstraints(m_clLeftForward, constraints);
-        centerPanel.add(m_clLeftForward);
+        m_clLeftForward = new SpielerSternePanel(ISpielerPosition.rightForward, m_bPrint, centerPanel, gridx, gridy);
         
         if (m_bHeim) {
-            constraints.gridx = 2;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 7;
         } else {
-            constraints.gridx = 2;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 9;
         }
 
-        m_clCentralForward = new SpielerSternePanel(ISpielerPosition.centralForward, m_bPrint);
-        layout.setConstraints(m_clCentralForward, constraints);
-        centerPanel.add(m_clCentralForward);
+        m_clCentralForward = new SpielerSternePanel(ISpielerPosition.centralForward, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 3;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 7;
         } else {
-            constraints.gridx = 1;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 9;
         }
 
-        m_clRightForward = new SpielerSternePanel(ISpielerPosition.leftForward, m_bPrint);
-        layout.setConstraints(m_clRightForward, constraints);
-        centerPanel.add(m_clRightForward);
+        m_clRightForward = new SpielerSternePanel(ISpielerPosition.leftForward, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 0;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 0;
+            gridy = 3;
         } else {
-            constraints.gridx = 0;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 4;
+            gridy = 13;
         }
 
-        m_clSetPieces = new SpielerSternePanel(ISpielerPosition.setPieces, m_bPrint);
-        layout.setConstraints(m_clSetPieces, constraints);
-        centerPanel.add(m_clSetPieces);
+        m_clReserveKeeper = new SpielerSternePanel(ISpielerPosition.substKeeper, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 2;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 3;
         } else {
-            constraints.gridx = 2;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 13;
         }
 
-        m_clReserveKeeper = new SpielerSternePanel(ISpielerPosition.substKeeper, m_bPrint);
-        layout.setConstraints(m_clReserveKeeper, constraints);
-        centerPanel.add(m_clReserveKeeper);
+        m_clReserveDefender = new SpielerSternePanel(ISpielerPosition.substDefender, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 4;
-            constraints.gridy = 3;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 3;
         } else {
-            constraints.gridx = 4;
-            constraints.gridy = 5;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 13;
         }
 
-        m_clCaptain = new SpielerSternePanel(ISpielerPosition.captain, m_bPrint);
-        layout.setConstraints(m_clCaptain, constraints);
-        centerPanel.add(m_clCaptain);
+        m_clReserveMidfielder = new SpielerSternePanel(ISpielerPosition.substInnerMidfield, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 0;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 3;
         } else {
-            constraints.gridx = 0;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 13;
         }
 
-        m_clReserveDefender = new SpielerSternePanel(ISpielerPosition.substDefender, m_bPrint);
-        layout.setConstraints(m_clReserveDefender, constraints);
-        centerPanel.add(m_clReserveDefender);
+        m_clReserveForward = new SpielerSternePanel(ISpielerPosition.substForward, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 1;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 4;
+            gridy = 3;
         } else {
-            constraints.gridx = 1;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 0;
+            gridy = 13;
         }
 
-        m_clReserveMidfielder = new SpielerSternePanel(ISpielerPosition.substInnerMidfield, m_bPrint);
-        layout.setConstraints(m_clReserveMidfielder, constraints);
-        centerPanel.add(m_clReserveMidfielder);
+        m_clReserveWinger = new SpielerSternePanel(ISpielerPosition.substWinger, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 2;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 0;
+            gridy = 2;
         } else {
-            constraints.gridx = 2;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 4;
+            gridy = 14;
         }
 
-        m_clReserveForward = new SpielerSternePanel(ISpielerPosition.substForward, m_bPrint);
-        layout.setConstraints(m_clReserveForward, constraints);
-        centerPanel.add(m_clReserveForward);
+        m_clCaptain = new SpielerSternePanel(ISpielerPosition.captain, m_bPrint, centerPanel, gridx, gridy);
+        
+        if (m_bHeim) {
+        	gridx = 1;
+        	gridy = 2;
+        } else {
+        	gridx = 3;
+        	gridy = 14;
+        }
+        
+        m_clSetPieces = new SpielerSternePanel(ISpielerPosition.setPieces, m_bPrint, centerPanel, gridx, gridy);
+        
+        if (m_bHeim) {
+        	gridx = 0;
+        	gridy = 1;
+        } else {
+        	gridx = 4;
+        	gridy = 15;
+        }
+        
+        m_clAusgewechselt1 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 3;
-            constraints.gridy = 2;
-            constraints.gridwidth = 1;
+            gridx = 1;
+            gridy = 1;
         } else {
-            constraints.gridx = 3;
-            constraints.gridy = 6;
-            constraints.gridwidth = 1;
+            gridx = 3;
+            gridy = 15;
         }
 
-        m_clReserveWinger = new SpielerSternePanel(ISpielerPosition.substWinger, m_bPrint);
-        layout.setConstraints(m_clReserveWinger, constraints);
-        centerPanel.add(m_clReserveWinger);
+        m_clAusgewechselt2 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            constraints.gridx = 0;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 1;
         } else {
-            constraints.gridx = 0;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
+            gridx = 2;
+            gridy = 15;
         }
+
+        m_clAusgewechselt3 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint, centerPanel, gridx, gridy);
 
         final JLabel label = new JLabel();
         label.setOpaque(true);
         layout.setConstraints(label, constraints);
         centerPanel.add(label);
-
+        
         if (m_bHeim) {
-            constraints.gridx = 1;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
+        	constraints.gridx = 1;
+        	constraints.gridy = 1;
+        	constraints.gridwidth = 1;
         } else {
-            constraints.gridx = 1;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
+        	constraints.gridx = 1;
+        	constraints.gridy = 7;
+        	constraints.gridwidth = 1;
         }
-
-        m_clAusgewechselt1 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint);
-        layout.setConstraints(m_clAusgewechselt1, constraints);
-        centerPanel.add(m_clAusgewechselt1);
-
-        if (m_bHeim) {
-            constraints.gridx = 2;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
-        } else {
-            constraints.gridx = 2;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
-        }
-
-        m_clAusgewechselt2 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint);
-        layout.setConstraints(m_clAusgewechselt2, constraints);
-        centerPanel.add(m_clAusgewechselt2);
-
-        if (m_bHeim) {
-            constraints.gridx = 3;
-            constraints.gridy = 1;
-            constraints.gridwidth = 1;
-        } else {
-            constraints.gridx = 3;
-            constraints.gridy = 7;
-            constraints.gridwidth = 1;
-        }
-
-        m_clAusgewechselt3 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint);
-        layout.setConstraints(m_clAusgewechselt3, constraints);
-        centerPanel.add(m_clAusgewechselt3);
-
+        
         add(centerPanel, BorderLayout.CENTER);
     }
 }
+
