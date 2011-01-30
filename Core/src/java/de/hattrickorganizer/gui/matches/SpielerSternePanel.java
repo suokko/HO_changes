@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -35,6 +37,11 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
+
+	private int PANEL_WIDTH = Helper.calcCellWidth(120);
+	private int PANEL_HEIGHT = Helper.calcCellWidth(59);
+	private int PANEL_HEIGHT_REDUCED = Helper.calcCellWidth(40);
+	
 	/** TODO Missing Parameter Documentation */
     protected int m_iPositionsID = -1;
     private final JButton m_jbSpieler = new JButton();
@@ -43,6 +50,13 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     private MatchLineup m_clMatchLineup;
     private MatchLineupPlayer m_clMatchPlayer;
     private RatingTableEntry m_jpSterne = new RatingTableEntry();
+    private Box m_jpDummy = new Box(BoxLayout.X_AXIS);
+    
+    private JPanel m_jpParent;
+    private int m_iXcoord;
+    private int m_iYcoord;
+    private boolean m_bOnScreen = false;
+    GridBagConstraints m_gbcConstraints = new GridBagConstraints();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -51,8 +65,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
      *
      * @param positionsID TODO Missing Constructuor Parameter Documentation
      */
-    protected SpielerSternePanel(int positionsID) {
-        this(positionsID, false);
+    protected SpielerSternePanel(int positionsID, JPanel parent, int x, int y) {
+        this(positionsID, false, parent, x, y);
     }
 
     /**
@@ -61,12 +75,33 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
      * @param positionsID TODO Missing Constructuor Parameter Documentation
      * @param print TODO Missing Constructuor Parameter Documentation
      */
-    protected SpielerSternePanel(int positionsID, boolean print) {
+    protected SpielerSternePanel(int positionsID, boolean print, JPanel parent, int x, int y) {
         super(print);
 
         m_iPositionsID = positionsID;
-
+        m_iXcoord = x;
+        m_iYcoord = y;
+        m_jpParent = parent;
+        
         initComponents();
+        initLabel(positionsID, (byte)0); // Tactic does not matter anymore...
+        
+        
+        // This one size fits all will be bad whenever it is decided to 
+        // remove subs/captain/setpiece-taker panels when empty
+        m_jpDummy.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+
+        // Init the constraints object, and add this panel to the parent
+        m_gbcConstraints.anchor = GridBagConstraints.CENTER;
+        m_gbcConstraints.fill = GridBagConstraints.NONE;
+        m_gbcConstraints.weightx = 0.0;
+        m_gbcConstraints.weighty = 0.0;
+        m_gbcConstraints.insets = new Insets(2, 2, 2, 2);
+        m_gbcConstraints.gridx = x;
+        m_gbcConstraints.gridy = y;
+        m_gbcConstraints.gridwidth = 1;
+
+    	addPanel();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -85,12 +120,22 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
      * TODO Missing Method Documentation
      */
     protected final void clear() {
-        m_jlPosition.setText("");
+
+    	// We want empty frames in the on field positions hidden when empty
+    	if ((m_bOnScreen == true) && 
+    			( (m_iPositionsID >= ISpielerPosition.startLineup ) && 
+    					(m_iPositionsID < ISpielerPosition.startReserves))) {
+    		removePanel();
+    	}
+        
+    	// lets leave the position text, right? - Blaghaid
+    	// m_jlPosition.setText("");
         m_jbSpieler.setText("");
         m_jbSpieler.setIcon(null);
         m_jbSpieler.setEnabled(false);
         m_jpSterne.clear();
         m_jlSpecial.setIcon(null);
+        repaint();
     }
 
     /**
@@ -100,8 +145,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
+        constraints.weightx = 1;
+        constraints.weighty = 0;
         constraints.insets = new Insets(1, 1, 1, 1);
 
         setLayout(layout);
@@ -110,14 +155,10 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        m_jlPosition.setPreferredSize(new Dimension(100, 15));
+        m_jlPosition.setPreferredSize(new Dimension(100, 10));
         layout.setConstraints(m_jlPosition, constraints);
         add(m_jlPosition);
-
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-
+        
         final JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panel.setBackground(Color.WHITE);
@@ -126,7 +167,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_jbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_Spielerdetails"));
         m_jbSpieler.setHorizontalAlignment(SwingConstants.LEFT);
         m_jbSpieler.setMargin(new Insets(0, 1, 0, 1));
-        m_jbSpieler.setPreferredSize(new Dimension(125, 16));
+        m_jbSpieler.setPreferredSize(new Dimension(125, 15));
         m_jbSpieler.setFocusPainted(false);
         m_jbSpieler.setEnabled(false);
         m_jbSpieler.addActionListener(this);
@@ -139,6 +180,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
 
         constraints.gridx = 0;
         constraints.gridy = 1;
+        constraints.weighty = 0.5; // Give extra vertical space to the player button
+        constraints.gridwidth = 1;
         layout.setConstraints(panel, constraints);
         add(panel);
         
@@ -162,19 +205,18 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
             case ISpielerPosition.ausgewechselt: {
                 constraints.gridx = 0;
                 constraints.gridy = 2;
+                constraints.weighty = 0; // No vertical stretch for this one
 
                 final JComponent component = m_jpSterne.getComponent(false);
                 layout.setConstraints(component, constraints);
                 add(component);
 
-                setPreferredSize(new Dimension(Helper.calcCellWidth(120),
-                                               Helper.calcCellWidth(62)));
+                setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
                 break;
             }
 
             default:
-                setPreferredSize(new Dimension(Helper.calcCellWidth(120),
-                                               Helper.calcCellWidth(36)));
+                setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT_REDUCED));
         }
     }
 
@@ -189,7 +231,14 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_clMatchPlayer = player;
 
         if (player != null) {
-            m_jbSpieler.setText(player.getSpielerName());
+        	
+        	// Make sure this is on screen, we got a player to display
+        	if (m_bOnScreen == false) {
+        		addPanel();
+        	}
+            m_jbSpieler.setText(player.getSpielerName().substring(0, 1) + "." + player.getSpielerName()
+            							.substring(player.getSpielerName().indexOf(" ")+1));
+            
 
             //SpielerPosition pos = new SpielerPosition( player.getId (), player.getSpielerId (), player.getTaktik () );
             int trickotnummer = 0;
@@ -216,9 +265,28 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
             m_jpSterne.setRating((float) player.getRating() * 2f, true);
 
             initLabel(player.getId(), player.getTaktik());
+
         } else {
             clear();
         }
+        repaint();
+    }
+    
+    private void removePanel() {
+    	m_jpParent.remove(this);
+    	m_jpParent.add(m_jpDummy, m_gbcConstraints);
+    	m_bOnScreen = false;
+    	
+    	m_jpParent.revalidate();
+    	
+    }
+    
+    private void addPanel() {
+    	m_jpParent.remove(m_jpDummy);
+    	m_jpParent.add(this, m_gbcConstraints);
+    	m_bOnScreen = true;
+    	
+    	m_jpParent.revalidate();
     }
 
     /**
@@ -228,51 +296,54 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
      * @param taktik TODO Missing Constructuor Parameter Documentation
      */
     protected final void initLabel(int posid, byte taktik) {
-        if (m_iPositionsID == ISpielerPosition.ausgewechselt) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
-        } else if (m_iPositionsID == ISpielerPosition.setPieces) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
-        } else if (m_iPositionsID == ISpielerPosition.captain) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
-        } else if (m_iPositionsID == ISpielerPosition.substDefender) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
-                                 + " "
-                                 + HOVerwaltung.instance().getLanguageString("defender"));
-        } else if (m_iPositionsID == ISpielerPosition.substForward) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
-                                 + " "
-                                 + HOVerwaltung.instance().getLanguageString("Sturm"));
-        } else if (m_iPositionsID == ISpielerPosition.substWinger) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
-                                 + " "
-                                 + HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
-        } else if (m_iPositionsID == ISpielerPosition.substInnerMidfield) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
-                                 + " "
-                                 + HOVerwaltung.instance().getLanguageString("Mittelfeld"));
-        } else if (m_iPositionsID == ISpielerPosition.substKeeper) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
-                                 + " "
-                                 + HOVerwaltung.instance().getLanguageString("Torwart"));
-        } else {
-            if (posid >= 0) {
-                //Reserve
-                //Bei Reserve ist die posId immer -1! Fehler!
-                if (posid >= ISpielerPosition.startReserves) {
-                    m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
-                                         + " "
-                                         + de.hattrickorganizer.model.SpielerPosition
-                                           .getNameForPosition(de.hattrickorganizer.model.SpielerPosition
-                                                               .getPosition(posid, taktik)));
-                } else {
-                    m_jlPosition.setText(de.hattrickorganizer.model.SpielerPosition
-                                         .getNameForPosition(de.hattrickorganizer.model.SpielerPosition
-                                                             .getPosition(posid, taktik)));
-                }
-
-                //NIX
-            } else {
-                m_jlPosition.setText("");
+        
+    	switch (posid) {
+    		case ISpielerPosition.ausgewechselt : {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
+    			break;
+    		}
+    		case ISpielerPosition.setPieces : {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
+    			break;
+    		} 
+    		case ISpielerPosition.captain : {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
+    			break;
+    		} 
+    		case ISpielerPosition.substDefender: {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
+    					+ " "
+    					+ HOVerwaltung.instance().getLanguageString("defender"));
+    			break;
+    		}
+    		case ISpielerPosition.substForward: {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
+    					+ " "
+    					+ HOVerwaltung.instance().getLanguageString("Sturm"));
+    			break;
+    		} 
+    		case ISpielerPosition.substWinger: {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
+    					+ " "
+    					+ HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+    			break;
+    		}
+    		case ISpielerPosition.substInnerMidfield: {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
+    					+ " "
+    					+ HOVerwaltung.instance().getLanguageString("Mittelfeld"));
+    			break;
+    		} 
+    		case ISpielerPosition.substKeeper: {
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
+    					+ " "
+    					+ HOVerwaltung.instance().getLanguageString("Torwart"));
+    			break;
+    		}
+    		default: 
+    		{
+    			m_jlPosition.setText(de.hattrickorganizer.model.SpielerPosition
+    					.getNameForPosition(de.hattrickorganizer.model.SpielerPosition.getPosition(posid, taktik)));
             }
         }
     }
