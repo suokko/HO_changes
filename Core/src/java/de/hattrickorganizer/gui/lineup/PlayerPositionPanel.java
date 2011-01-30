@@ -22,18 +22,17 @@ import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
-import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
 /**
  * Panel, in dem die Spielerposition dargestellt wird und geändert werden kann
  */
-final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
+class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     implements ItemListener, FocusListener
 {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -44,7 +43,17 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
 
     /** TODO Missing Parameter Documentation */
  //   protected static final int SET_PIECE = 201;
-    private static SpielerCBItem m_clNullSpieler = new SpielerCBItem("", 0f, null, true);
+    
+	protected static int PLAYER_POSITION_PANEL_WIDTH = Helper.calcCellWidth(160);
+	protected static int PLAYER_POSITION_PANEL_HEIGHT_FULL = Helper.calcCellWidth(80);
+	// Used for positions with no tactics box
+	protected static int PLAYER_POSITION_PANEL_HEIGHT_REDUCED = Helper.calcCellWidth(50);
+	
+	
+	protected static int MINI_PLAYER_POSITION_PANEL_WIDTH = Helper.calcCellWidth(120);
+	protected static int MINI_PLAYER_POSITION_PANEL_HEIGHT = Helper.calcCellWidth(32);
+	
+	private static SpielerCBItem m_clNullSpieler = new SpielerCBItem("", 0f, null, true);
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -208,7 +217,7 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
             layout.setConstraints(m_jlPlayer, constraints);
             add(m_jlPlayer);
 
-            setPreferredSize(new Dimension(Helper.calcCellWidth(120),Helper.calcCellWidth(32)));
+            setPreferredSize(new Dimension(MINI_PLAYER_POSITION_PANEL_WIDTH,MINI_PLAYER_POSITION_PANEL_HEIGHT));
         }
         //Normal
         else {
@@ -248,9 +257,9 @@ final class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.Image
                 layout.setConstraints(m_jcbTactic, constraints);
                 add(m_jcbTactic);
 
-                setPreferredSize(new Dimension(Helper.calcCellWidth(160),Helper.calcCellWidth(80)));
+                setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH,PLAYER_POSITION_PANEL_HEIGHT_FULL));
             } else {
-                setPreferredSize(new Dimension(Helper.calcCellWidth(160),Helper.calcCellWidth(50)));
+                setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH, PLAYER_POSITION_PANEL_HEIGHT_REDUCED));
             }
         }
     }

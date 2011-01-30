@@ -70,8 +70,8 @@ public class SwapPositionsManager {
 			}
 		}
 			
-		int playerA_id = -1;
-		int playerB_id = -1;
+		int playerA_id = 0;
+		int playerB_id = 0;
 		
 		if  (playerA != null) {
 			playerA_id = playerA.getSpielerID();
