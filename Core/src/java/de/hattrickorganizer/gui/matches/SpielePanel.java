@@ -220,6 +220,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                                                                        teamid);
                 final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
+                aufstellung.clearLineup(); // To make sure the old one is gone.
+                
                 for (int i = 0; (vteamspieler != null) && (i < vteamspieler.size()); i++) {
                     final MatchLineupPlayer player = (MatchLineupPlayer) vteamspieler.get(i);
 
