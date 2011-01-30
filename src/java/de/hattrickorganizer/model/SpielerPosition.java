@@ -95,8 +95,10 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
     /** ID */
     private int m_iId = -1;
 
+    // It is much safer to have "empty" as 0, as it appears temp-players may
+    // get ID -1 - Blaghaid
     /** welcher Spieler besetzt diese Position */
-    private int m_iSpielerId = -1;
+    private int m_iSpielerId = 0;
 
     //~ Constructors -------------------------------------------------------------------------------
 
