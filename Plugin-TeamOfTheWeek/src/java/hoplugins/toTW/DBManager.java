@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// 553 changes by Blaghaid
 
 /**
  * Missing Class Documentation
@@ -97,21 +98,21 @@ public class DBManager {
 
         // TODO For match of year attention of doubles
         Map<String,MatchLineupPlayer> spieler = new HashMap<String,MatchLineupPlayer>();
-        List<MatchLineupPlayer> players = getPlayetAt(db, matchIDs, ISpielerPosition.TORWART, 1, isBest);
+        List<MatchLineupPlayer> players = getPlayetAt(db, matchIDs, ISpielerPosition.KEEPER, 1, isBest);
         spieler.put("1", players.get(0));
-        players = getPlayetAt(db, matchIDs, ISpielerPosition.AUSSENVERTEIDIGER, 2, isBest);
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.BACK, 2, isBest);
         spieler.put("2", players.get(0));
         spieler.put("5", players.get(1));
-        players = getPlayetAt(db, matchIDs, ISpielerPosition.INNENVERTEIDIGER, 2, isBest);
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.CENTRAL_DEFENDER, 2, isBest);
         spieler.put("3", players.get(0));
         spieler.put("4", players.get(1));
-        players = getPlayetAt(db, matchIDs, ISpielerPosition.FLUEGELSPIEL, 2, isBest);
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.WINGER, 2, isBest);
         spieler.put("6", players.get(0));
         spieler.put("9", players.get(1));
-        players = getPlayetAt(db, matchIDs, ISpielerPosition.MITTELFELD, 2, isBest);
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.MIDFIELDER, 2, isBest);
         spieler.put("7", players.get(0));
         spieler.put("8", players.get(1));
-        players = getPlayetAt(db, matchIDs, ISpielerPosition.STURM, 2, isBest);
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.FORWARD, 2, isBest);
         spieler.put("10", players.get(0));
         spieler.put("11", players.get(1));
         return spieler;
@@ -161,33 +162,36 @@ public class DBManager {
         String posClase = "";
 
 		switch (position) {
-			case ISpielerPosition.TORWART: {
-				posClase += " FIELDPOS=1 ";
+			case ISpielerPosition.KEEPER: {
+				posClase += " FIELDPOS=" + ISpielerPosition.keeper + " ";
 				break;
 			}
 
-			case ISpielerPosition.INNENVERTEIDIGER: {
-				posClase += " (FIELDPOS=3 OR FIELDPOS=4) ";
+			case ISpielerPosition.CENTRAL_DEFENDER: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftCentralDefender + " OR FIELDPOS=" + 
+						ISpielerPosition.middleCentralDefender + " OR FIELDPOS=" + ISpielerPosition.rightCentralDefender + ") ";
 				break;
 			}
 
-			case ISpielerPosition.AUSSENVERTEIDIGER: {
-				posClase += " (FIELDPOS=2 OR FIELDPOS=5) ";
+			case ISpielerPosition.BACK: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftBack + " OR FIELDPOS=" + ISpielerPosition.rightBack + ") ";
 				break;
 			}
 
-			case ISpielerPosition.FLUEGELSPIEL: {
-				posClase += " (FIELDPOS=6 OR FIELDPOS=9) ";
+			case ISpielerPosition.WINGER: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftWinger + " OR FIELDPOS=" + ISpielerPosition.rightWinger + ") ";
 				break;
 			}
 
-			case ISpielerPosition.MITTELFELD: {
-				posClase += " (FIELDPOS=7 OR FIELDPOS=8) ";
+			case ISpielerPosition.MIDFIELDER: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftInnerMidfield + " OR FIELDPOS=" + 
+						ISpielerPosition.centralInnerMidfield + " OR FIELDPOS=" + ISpielerPosition.rightInnerMidfield + ") ";
 				break;
 			}
 
-			case ISpielerPosition.STURM: {
-				posClase += " (FIELDPOS=10 OR FIELDPOS=11) ";
+			case ISpielerPosition.FORWARD: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftForward + " OR FIELDPOS=" + 
+						ISpielerPosition.centralForward + " OR FIELDPOS=" + ISpielerPosition.rightForward + ") ";
 				break;
 			}
 		}
