@@ -108,24 +108,27 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
 
         setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Trainerstab")));
 
+        
         JLabel label;
 
         setLayout(layout);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwarttrainer"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpTWTrainer.getComponent(false), constraints);
-        add(m_jpTWTrainer.getComponent(false));
+//		 -- GK trainers are no longer a part of Hattrick
+//
+//        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwarttrainer"));
+//        constraints.anchor = GridBagConstraints.WEST;
+//        constraints.gridx = 0;
+//        constraints.gridy = 2;
+//        constraints.gridwidth = 1;
+//        layout.setConstraints(label, constraints);
+//        add(label);
+//
+//        constraints.anchor = GridBagConstraints.EAST;
+//        constraints.gridx = 1;
+//        constraints.gridy = 2;
+//        constraints.gridwidth = 1;
+//        layout.setConstraints(m_jpTWTrainer.getComponent(false), constraints);
+//        add(m_jpTWTrainer.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("CoTrainer"));
         constraints.anchor = GridBagConstraints.WEST;
@@ -172,20 +175,22 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         layout.setConstraints(m_jpPRManager.getComponent(false), constraints);
         add(m_jpPRManager.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Finanzberater"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpFinanzberater.getComponent(false), constraints);
-        add(m_jpFinanzberater.getComponent(false));
+// 		  Economists are long gone...
+//
+//        label = new JLabel(HOVerwaltung.instance().getLanguageString("Finanzberater"));
+//        constraints.anchor = GridBagConstraints.WEST;
+//        constraints.gridx = 0;
+//        constraints.gridy = 6;
+//        constraints.gridwidth = 1;
+//        layout.setConstraints(label, constraints);
+//        add(label);
+//
+//        constraints.anchor = GridBagConstraints.EAST;
+//        constraints.gridx = 1;
+//        constraints.gridy = 6;
+//        constraints.gridwidth = 1;
+//        layout.setConstraints(m_jpFinanzberater.getComponent(false), constraints);
+//        add(m_jpFinanzberater.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Physiotherapeuten"));
         constraints.anchor = GridBagConstraints.WEST;
