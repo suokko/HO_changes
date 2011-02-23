@@ -92,21 +92,21 @@ public class CopyListener implements ActionListener {
 		StringBuilder sb = new StringBuilder("");
 		if (lineup != null) {
 			sb.append("[table]");
-			sb.append("[tr][th][/th][th]"+HOVerwaltung.instance().getLanguageString("Links"));
+			sb.append("[tr][th][/th][th]"+HOVerwaltung.instance().getLanguageString("Rechts"));
 			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Mitte"));
-			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Rechts")+"[/th][/tr]" + LF);
+			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Links")+"[/th][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Verteidigung"));
-			sb.append("[/th][td]"+lineup.getLeftDefenseRating());
+			sb.append("[/th][td]"+lineup.getRightDefenseRating());
 			sb.append("[/td][td]"+lineup.getCentralDefenseRating());
-			sb.append("[/td][td]"+lineup.getRightDefenseRating());
+			sb.append("[/td][td]"+lineup.getLeftDefenseRating());
 			sb.append("[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
 			sb.append("[/th][td colspan=3 align=center]");
 			sb.append(lineup.getMidfieldRating()+"[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Attack"));
-			sb.append("[/th][td]"+lineup.getLeftAttackRating());
+			sb.append("[/th][td]"+lineup.getRightAttackRating());
 			sb.append("[/td][td]"+lineup.getCentralAttackRating());
-			sb.append("[/td][td]"+lineup.getRightAttackRating());
+			sb.append("[/td][td]"+lineup.getLeftAttackRating());
 			sb.append("[/td][/tr]" + LF);
 			sb.append("[/table]");
 			sb.append(LF);
