@@ -42,6 +42,7 @@ public class PlayerPanel extends JPanel {
     private JPanel mainPanel;
     private PlayerInfoPanel infoPanel = new PlayerInfoPanel();
 
+    protected boolean containsPlayer = false;
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -121,10 +122,15 @@ public class PlayerPanel extends JPanel {
         if (SystemManager.getConfig().isTacticDetail()) {
             height = height + 50;
         }
-
-        return new Dimension(180, height);
+       
+        // return new Dimension(180, height); - Blaghaid
+        return new Dimension(150, height);
     }
 
+    public boolean getContainsPlayer () {
+    	return containsPlayer;
+    }
+    
     /**
      * Reload and refresh data for a certain spot/player.
      */
@@ -133,6 +139,8 @@ public class PlayerPanel extends JPanel {
         mainPanel.setPreferredSize(getDefaultSize());
 
         if (lineup != null) {
+        	containsPlayer = true;
+        	
             switch (lineup.getStatus()) {
                 case PlayerDataManager.INJURED:
                     nameField.setForeground(Color.RED);
@@ -182,6 +190,8 @@ public class PlayerPanel extends JPanel {
             updateRatingPanel(lineup.getRating());
             tacticPanel.reload(lineup.getTactics());
         } else {
+        	containsPlayer = false;
+        	
             nameField.setText(" ");
             appearanceField.setText(" ");
             positionField.setText(" ");

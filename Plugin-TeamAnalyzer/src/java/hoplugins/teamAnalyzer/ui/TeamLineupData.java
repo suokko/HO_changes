@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 /**
  * This is an empty panel to display a lineup
+ * 553 changes by blaghaid
  */
 public class TeamLineupData {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -24,6 +25,9 @@ public class TeamLineupData {
     private JPanel m_clRechteMittelfeld = new JPanel();
     private JPanel m_clRechterSturm = new JPanel();
     private JPanel m_clTorwart = new JPanel();
+    private JPanel m_clCentralMittelfeld = new JPanel();
+    private JPanel m_clCentralInnenVerteidiger = new JPanel();
+    private JPanel m_clCentralSturm= new JPanel();
     private double leftAttack;
     private double leftDefence;
     private double middleAttack;
@@ -349,10 +353,39 @@ public class TeamLineupData {
     public JPanel getRightWingbackPanel() {
         return m_clRechteAussenVerteidiger;
     }
-
-    //-- Getter/Setter ----------------------------------------------------------
+    
+    
 
     /**
+     * Get the Panel Middle Central Defender
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public JPanel getMiddleCentralDefenderPanel() {
+		return m_clCentralInnenVerteidiger;
+	}
+    
+    /**
+     * Get the Panel Central Forward
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+	public JPanel getCentralForwardPanel() {
+		return m_clCentralSturm;
+	}
+
+	/**
+     * Get the Panel Central Midfielder
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+	public JPanel getCentralMidfieldPanel() {
+		return m_clCentralMittelfeld;
+	}
+	
+	//-- Getter/Setter ----------------------------------------------------------
+
+	/**
      * Set the Name of the Team
      *
      * @param teamname TODO Missing Constructuor Parameter Documentation

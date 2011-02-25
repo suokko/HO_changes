@@ -45,7 +45,7 @@ public class UserTeamPlayerPanel extends PlayerPanel {
      */
     @Override
 	public Dimension getDefaultSize() {
-        return new Dimension(180, 60);
+        return new Dimension(150, 60);
     }
 
     /**
@@ -57,6 +57,9 @@ public class UserTeamPlayerPanel extends PlayerPanel {
         //spotLineup = lineup;
 
         if (lineup != null) {
+        	
+        	containsPlayer = true;
+        	
             nameField.setText(lineup.getName());
             positionImage.setIcon(Commons.getModel().getHelper().getImage4Position(lineup.getSpot(),
                                                                                    (byte) lineup
@@ -68,6 +71,8 @@ public class UserTeamPlayerPanel extends PlayerPanel {
             updateRatingPanel(lineup.getRating());
             tacticPanel.reload(new ArrayList<TacticReport>());
         } else {
+        	containsPlayer = false;
+        	
             nameField.setText("");
             positionField.setText("");
             updateRatingPanel(0);

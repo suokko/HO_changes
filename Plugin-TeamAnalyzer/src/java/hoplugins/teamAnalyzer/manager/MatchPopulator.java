@@ -14,6 +14,7 @@ import hoplugins.teamAnalyzer.vo.PlayerPerformance;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
+import plugins.ISpielerPosition;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -187,7 +188,7 @@ public class MatchPopulator {
 
         double totStars = 0;
 
-        for (int spot = 1; spot < 12; spot++) {
+        for (int spot = ISpielerPosition.startLineup; spot < ISpielerPosition.startReserves; spot++) {
             IMatchLineupPlayer mlp = tmpLineupTeam.getPlayerByPosition(spot);
 
             if (mlp != null && mlp.getSpielerId() > 0) {

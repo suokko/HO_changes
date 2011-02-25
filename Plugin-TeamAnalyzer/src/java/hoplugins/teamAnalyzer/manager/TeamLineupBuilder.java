@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
 
+import plugins.ISpielerPosition;
+
 
 /**
  * TODO Missing Class Documentation
@@ -43,7 +45,8 @@ public class TeamLineupBuilder {
         teamLineup.setRating(teamReport.getRating());
         teamLineup.setStars(teamReport.getStars());
 
-        for (int spot = 1; spot < 12; spot++) {
+        for (int spot = ISpielerPosition.startLineup; spot < ISpielerPosition.startReserves; spot++) {
+        	
             SpotReport spotReport = teamReport.getSpotReport(spot);
 
             if (spotReport != null) {
