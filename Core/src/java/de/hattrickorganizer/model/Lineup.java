@@ -1663,7 +1663,11 @@ public  class Lineup implements plugins.ILineUp {
     		if ((pos.getId() < ISpielerPosition.KEEPER) || (pos.getId() >= ISpielerPosition.startReserves)) {
     			continue; // We are not interested in reserves, captain, set piece taker.
     		}
-    		if (pos.getSpielerId() > 0) {
+    		
+    		// SpielerID of 0 indicates the position is empty. -1 is the first temp player. This is bug prone.
+    		// At some time, clean up by adding some boolean value to Spieler instead (isTemp or something).
+    		
+    		if (pos.getSpielerId() != 0) {
     			numPlayers++;
     			if (numPlayers == 11) {
     				return false;

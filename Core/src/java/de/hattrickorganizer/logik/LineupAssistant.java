@@ -75,7 +75,12 @@ public class LineupAssistant {
         Spieler spieler = null;
         float maxValue = -1;
         float curValue = -1;
-        int bestPlayerID = -1;
+
+        // Another attempt to avoid Temp1 being in all penalty lists if less than 11 are fielded
+        // -1 is the Temp1 ID.
+        // int bestPlayerID = -1;
+
+        int bestPlayerID = 0;
 
         for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
             spieler = (Spieler) vSpieler.elementAt(i);
@@ -498,7 +503,10 @@ public class LineupAssistant {
      */
     public final void initElferKicker(int[] liste) {
         for (int i = 0; (liste != null) && (i < liste.length); i++) {
-            liste[i] = -1;
+          
+        	// This should cure the issue with first temp player filling penalty spots if less than 11 on field.
+        	liste[i] = 0;
+        	//  liste[i] = -1;
         }
     }
 
