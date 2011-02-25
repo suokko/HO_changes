@@ -36,6 +36,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
+import plugins.ISpielerPosition;
 
 /**
  * TODO Missing Class Documentation
@@ -123,7 +124,7 @@ public class RosterPanel extends JPanel {
             }
 
             if (lineup != null) {
-                for (int spot = 1; spot < 12; spot++) {
+                for (int spot = ISpielerPosition.startLineup; spot < ISpielerPosition.startReserves; spot++) {
                     SpotLineup spotLineup = lineup.getSpotLineup(spot);
 
                     if ((spotLineup != null) && (spotLineup.getPlayerId() > 0)) {

@@ -4,6 +4,7 @@ package hoplugins.teamAnalyzer.vo;
 import hoplugins.commons.vo.MatchRating;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 /**
@@ -17,8 +18,11 @@ public class TeamLineup {
     /** Rating of the team on the field */
     private MatchRating rating;
 
-    /** Array of the 11 SpotLineup object representing the single spot */
-    private SpotLineup[] spotLineups = new SpotLineup[11];
+    /** Array of the 11 SpotLineup object representing the single spot.
+     *  Changed to a HashMap with roleID (from HO) as key... */
+
+    private HashMap<Integer, SpotLineup> spotLineups = new HashMap<Integer, SpotLineup>();
+    //private SpotLineup[] spotLineups = new SpotLineup[11];
 
     /** Number of stars */
     private double stars;
@@ -33,7 +37,7 @@ public class TeamLineup {
      * @return a spot lineup
      */
     public final SpotLineup getSpotLineup(int spot) {
-        return spotLineups[spot - 1];
+        return spotLineups.get(spot);
     }
 
     /**
@@ -61,7 +65,7 @@ public class TeamLineup {
      * @param spot spot to be filled with the object
      */
     public void setSpotLineup(SpotLineup detail, int spot) {
-        spotLineups[spot - 1] = detail;
+        spotLineups.put(spot, detail);
     }
 
     /**
@@ -84,10 +88,12 @@ public class TeamLineup {
 
     /**
      * toString methode: creates a String representation of the object
+     * Maybe not pretty after HashMap change
      *
      * @return the String representation
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public String toString() {
         StringBuffer buffer = new StringBuffer();
 

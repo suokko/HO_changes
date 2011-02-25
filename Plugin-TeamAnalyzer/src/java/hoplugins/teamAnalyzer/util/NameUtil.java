@@ -86,28 +86,33 @@ public class NameUtil {
     private static String getPlayerName(String name, boolean detail) {
         String playerName = "";
 
-        if (name.length() > 22) {
-            StringTokenizer st = new StringTokenizer(name, "/");
-
-            while (st.hasMoreTokens()) {
-                String nameStr = st.nextToken();
-
-                if (detail) {
-                    playerName = playerName + getInitials(nameStr) + " ";
-                }
-
-                playerName = playerName + getLastName(nameStr) + "/";
-            }
-
-            playerName = playerName.substring(0, playerName.length() - 1);
-        } else {
-            playerName = name;
-        }
-
-        if ((playerName.length() > 22) && detail) {
-            playerName = getPlayerName(playerName, false);
-        }
-
+        // Blaghaid changes at 553 modification
+        
+//        if (name.length() > 22) {
+//            StringTokenizer st = new StringTokenizer(name, "/");
+//
+//            while (st.hasMoreTokens()) {
+//                String nameStr = st.nextToken();
+//
+//                if (detail) {
+//                    playerName = playerName + getInitials(nameStr) + " ";
+//                }
+//
+//                playerName = playerName + getLastName(nameStr) + "/";
+//            }
+//
+//            playerName = playerName.substring(0, playerName.length() - 1);
+//        } else {
+//            playerName = name;
+//        }
+//
+//        if ((playerName.length() > 22) && detail) {
+//            playerName = getPlayerName(playerName, false);
+//        }
+        
+        // Ugly, evil nasty, shortcut by Blaghaid at 553 changes.
+        
+        playerName = " " + name.substring(0, 1) + "." +name.substring(name.indexOf(" ")+1);
         return playerName;
     }
 }
