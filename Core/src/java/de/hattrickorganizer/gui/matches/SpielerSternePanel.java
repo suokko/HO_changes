@@ -25,6 +25,7 @@ import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -40,11 +41,11 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
 
 	private int PANEL_WIDTH = Helper.calcCellWidth(120);
 	private int PANEL_HEIGHT = Helper.calcCellWidth(59);
-	private int PANEL_HEIGHT_REDUCED = Helper.calcCellWidth(40);
+	private int PANEL_HEIGHT_REDUCED = Helper.calcCellWidth(44);
 	
 	/** TODO Missing Parameter Documentation */
     protected int m_iPositionsID = -1;
-    private final JButton m_jbSpieler = new JButton();
+    public final JButton m_jbSpieler = new JButton();
     private final JLabel m_jlPosition = new JLabel();
     private final JLabel m_jlSpecial = new JLabel();
     private MatchLineup m_clMatchLineup;
@@ -92,7 +93,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_jpDummy.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
         // Init the constraints object, and add this panel to the parent
-        m_gbcConstraints.anchor = GridBagConstraints.CENTER;
+        m_gbcConstraints.anchor = GridBagConstraints.NORTH;
         m_gbcConstraints.fill = GridBagConstraints.NONE;
         m_gbcConstraints.weightx = 0.0;
         m_gbcConstraints.weighty = 0.0;
@@ -277,8 +278,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     	m_jpParent.add(m_jpDummy, m_gbcConstraints);
     	m_bOnScreen = false;
     	
-    	m_jpParent.revalidate();
-    	
+    	//m_jpParent.revalidate();
+    	m_jpParent.repaint();
     }
     
     private void addPanel() {
@@ -286,7 +287,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     	m_jpParent.add(this, m_gbcConstraints);
     	m_bOnScreen = true;
     	
-    	m_jpParent.revalidate();
+    	//m_jpParent.revalidate();
+    	m_jpParent.repaint();
     }
 
     /**
@@ -298,10 +300,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     protected final void initLabel(int posid, byte taktik) {
         
     	switch (posid) {
-    		case ISpielerPosition.ausgewechselt : {
-    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
-    			break;
-    		}
+    		
     		case ISpielerPosition.setPieces : {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
     			break;
@@ -342,9 +341,16 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     		}
     		default: 
     		{
-    			m_jlPosition.setText(de.hattrickorganizer.model.SpielerPosition
-    					.getNameForPosition(de.hattrickorganizer.model.SpielerPosition.getPosition(posid, taktik)));
-            }
+    			// Special check here for the replaced players, we got a range of at least 3...
+    			if ((posid >= ISpielerPosition.ausgewechselt) && (posid < ISpielerPosition.ausgewechseltEnd)) {
+    				m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
+    			break;
+    			} else {
+    			
+    				m_jlPosition.setText(de.hattrickorganizer.model.SpielerPosition
+    						.getNameForPosition(de.hattrickorganizer.model.SpielerPosition.getPosition(posid, taktik)));
+    			}
+    		}
         }
     }
 }
