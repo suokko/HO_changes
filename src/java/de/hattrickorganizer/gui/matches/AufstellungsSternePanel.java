@@ -204,7 +204,7 @@ public class AufstellungsSternePanel extends RasenPanel {
 				}
 
 				case ISpielerPosition.rightForward: {
-					m_clLeftForward.refresh(lineup, player);
+					m_clRightForward.refresh(lineup, player);
 					break;
 				}
 				
@@ -214,7 +214,7 @@ public class AufstellungsSternePanel extends RasenPanel {
 				}
 
 				case ISpielerPosition.leftForward: {
-					m_clRightForward.refresh(lineup, player);
+					m_clLeftForward.refresh(lineup, player);
 					break;
 				}
 
@@ -444,7 +444,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             gridy = 9;
         }
 
-        m_clLeftForward = new SpielerSternePanel(ISpielerPosition.rightForward, m_bPrint, centerPanel, gridx, gridy);
+        m_clRightForward = new SpielerSternePanel(ISpielerPosition.rightForward, m_bPrint, centerPanel, gridx, gridy);
         
         if (m_bHeim) {
             gridx = 2;
@@ -464,13 +464,13 @@ public class AufstellungsSternePanel extends RasenPanel {
             gridy = 9;
         }
 
-        m_clRightForward = new SpielerSternePanel(ISpielerPosition.leftForward, m_bPrint, centerPanel, gridx, gridy);
+        m_clLeftForward = new SpielerSternePanel(ISpielerPosition.leftForward, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
             gridx = 0;
             gridy = 3;
         } else {
-            gridx = 4;
+            gridx = 0;
             gridy = 13;
         }
 
@@ -480,7 +480,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             gridx = 1;
             gridy = 3;
         } else {
-            gridx = 3;
+            gridx = 1;
             gridy = 13;
         }
 
@@ -500,7 +500,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             gridx = 3;
             gridy = 3;
         } else {
-            gridx = 1;
+            gridx = 3;
             gridy = 13;
         }
 
@@ -510,7 +510,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             gridx = 4;
             gridy = 3;
         } else {
-            gridx = 0;
+            gridx = 4;
             gridy = 13;
         }
 
@@ -520,7 +520,7 @@ public class AufstellungsSternePanel extends RasenPanel {
             gridx = 0;
             gridy = 2;
         } else {
-            gridx = 4;
+            gridx = 0;
             gridy = 14;
         }
 
@@ -530,38 +530,38 @@ public class AufstellungsSternePanel extends RasenPanel {
         	gridx = 1;
         	gridy = 2;
         } else {
-        	gridx = 3;
+        	gridx = 1;
         	gridy = 14;
         }
         
         m_clSetPieces = new SpielerSternePanel(ISpielerPosition.setPieces, m_bPrint, centerPanel, gridx, gridy);
         
         if (m_bHeim) {
-        	gridx = 0;
-        	gridy = 1;
+        	gridx = 2;
+        	gridy = 2;
         } else {
-        	gridx = 4;
-        	gridy = 15;
+        	gridx = 2;
+        	gridy = 14;
         }
         
         m_clAusgewechselt1 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            gridx = 1;
-            gridy = 1;
+            gridx = 3;
+            gridy = 2;
         } else {
             gridx = 3;
-            gridy = 15;
+            gridy = 14;
         }
 
         m_clAusgewechselt2 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint, centerPanel, gridx, gridy);
 
         if (m_bHeim) {
-            gridx = 2;
-            gridy = 1;
+            gridx = 4;
+            gridy = 2;
         } else {
-            gridx = 2;
-            gridy = 15;
+            gridx = 4;
+            gridy = 14;
         }
 
         m_clAusgewechselt3 = new SpielerSternePanel(ISpielerPosition.ausgewechselt, m_bPrint, centerPanel, gridx, gridy);
