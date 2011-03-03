@@ -179,6 +179,83 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 
 		return bewertungen;
 	}
+	
+	/**
+	 * Deletes the given player based on teamID and matchID.
+	 * He is only deleted from the role set in the player object.
+	 *
+	 * @param player TODO Missing Method Parameter Documentation
+	 * @param matchID TODO Missing Method Parameter Documentation
+	 * @param teamID TODO Missing Method Parameter Documentation
+	 * 
+	 * @author blaghaid
+	 */
+	protected void deleteMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+		if (player != null) {
+			final String[] where = { "MatchID" , "TeamID", "RoleID", "SpielerID"};
+			final String[] werte = { "" + matchID, "" + teamID, "" + player.getId(), "" + player.getSpielerId()};			
+			delete(where, werte);			
+		}
+	}
+	
+	/**
+	 * Updates a match lineup based on the given inputs
+	 *
+	 * @param player TODO Missing Method Parameter Documentation
+	 * @param matchID TODO Missing Method Parameter Documentation
+	 * @param teamID TODO Missing Method Parameter Documentation
+	 * 
+	 * @author blaghaid
+	 */
+	protected void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+		// As some weirdness may be present in the db (like old role IDs), we do a delete and
+		// insert rather than an update. It is not desired to end up with the same player in both
+		// and old style and new style position.
+		
+		if (player != null) {
+
+			// First, delete the player(s) present on the player's position. Hopefully the player given.
+			
+			final String[] where = { "MatchID" , "TeamID", "RoleID"};
+			final String[] werte = { "" + matchID, "" + teamID, "" + player.getId()};			
+			delete(where, werte);	
+
+			// Second, check if the player is still around in the lineup.
+			
+			try {
+				String sql = null;
+				int roleId;
+
+				sql = "SELECT * FROM "+getTableName()+" WHERE MatchID = " + matchID + " AND TeamID = " + teamID + " AND SpielerID = " + player.getSpielerId();
+				ResultSet rs = adapter.executeQuery(sql);
+				
+				rs.beforeFirst();
+				
+				while (rs.next()) {
+					
+					roleId = rs.getInt("RoleID"); 
+					
+					boolean playerIsSetPieceOrCaptain = ((player.getId() == ISpielerPosition.captain) || (player.getId() == ISpielerPosition.setPieces));
+					boolean positionIsSetPieceOrCaptain = ((roleId == ISpielerPosition.captain) || (roleId == ISpielerPosition.setPieces));
+	
+					// If they player is neither set piece taker or captain, and is found on a position which is none of the two, we have found
+					// a player with an old ID, and want to get rid of him as the first delete missed its target.
+					
+					if (!playerIsSetPieceOrCaptain && !positionIsSetPieceOrCaptain) {	
+						deleteMatchLineupPlayer(new MatchLineupPlayer(roleId, 0, player.getSpielerId(), 0, "", 0), matchID, teamID);
+					}
+				}
+				
+				// And we store the given player after doing our deletes
+				storeMatchLineupPlayer(player, matchID, teamID);
+				
+			} catch (Exception e) {
+				HOLogger.instance().log(getClass(),"DB.updateMatchLineupPlayer Retrieval Error" + e);
+				HOLogger.instance().log(getClass(),e);
+			}
+		}
+	}	
+	
 
 	/**
 	 * TODO Missing Method Documentation
@@ -220,7 +297,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 						+ player.getRating()
 						+ ", "
 						+ player.getPosition()
-						+ ", 0"
+						+ ", 0" // Status
 						+ ","
 						+ player.getPositionCode()
 						+ " )");

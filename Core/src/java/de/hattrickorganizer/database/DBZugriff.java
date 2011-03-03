@@ -596,6 +596,41 @@ public class DBZugriff {
 			matchID,
 			teamID);
 	}
+	
+	/**
+	 * Deletes the given player based on teamID and matchID.
+	 * He is only deleted from the role set in the player object.
+	 *
+	 * @param player TODO Missing Method Parameter Documentation
+	 * @param matchID TODO Missing Method Parameter Documentation
+	 * @param teamID TODO Missing Method Parameter Documentation
+	 * 
+	 */
+	protected void deleteMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+		(
+				(MatchLineupPlayerTable) getTable(
+					MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayer(
+				player,
+				matchID,
+				teamID);
+		}
+	
+	/**
+	 * Updates a player in a match.
+	 *
+	 * @param player TODO Missing Method Parameter Documentation
+	 * @param matchID TODO Missing Method Parameter Documentation
+	 * @param teamID TODO Missing Method Parameter Documentation
+	 * 
+	 */
+	public void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+		(
+				(MatchLineupPlayerTable) getTable(
+				MatchLineupPlayerTable.TABLENAME)).updateMatchLineupPlayer(
+			player,
+			matchID,
+			teamID);
+	}
 
 	// ------------------------------- AufstellungTable -------------------------------------------------
 
