@@ -23,9 +23,13 @@ import de.hattrickorganizer.tools.HOLogger;
 /**
  * Class that extract the list of players that played in each match with the position field where
  * he played. He consider also sent off and injured players
+ * 
+ * Set deprecated by blaghaid.
  *
  * @author Draghetto HO
  */
+
+@Deprecated
 public class MatchPlayerRetriever {
     //~ Instance fields ----------------------------------------------------------------------------
 
