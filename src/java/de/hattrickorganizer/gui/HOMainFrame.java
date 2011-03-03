@@ -1194,6 +1194,7 @@ public final class HOMainFrame extends JFrame
 
 			case AUFSTELLUNG :
 				component = m_jpAufstellung;
+				m_jpAufstellung.update(); // - blaghaid
 				titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
 				temporaer = gui.UserParameter.instance().tempTabAufstellung;
 				break;

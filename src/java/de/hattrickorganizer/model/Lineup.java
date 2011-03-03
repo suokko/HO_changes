@@ -969,12 +969,6 @@ public  class Lineup implements plugins.ILineUp {
      * @param spielerid TODO Missing Constructuor Parameter Documentation
      */
     public final void setSpielerAtPosition(int positionsid, int spielerid) {
-       
-    	// Does the Spieler even exist? (not necessarily if you copy a match from matches...)
-    	
-    	if (HOVerwaltung.instance().getModel().getSpieler(spielerid) == null) {
-    		return;
-    	}
     	
     	//Ist der Spieler noch aufgestellt?
         if (this.isSpielerAufgestellt(spielerid)) {
