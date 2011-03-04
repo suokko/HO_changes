@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import de.hattrickorganizer.model.TrainingPerWeek;
 
+import plugins.ISpielerPosition;
 import plugins.ITeam;
 import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
@@ -70,34 +71,34 @@ public class TrainingPoint implements ITrainingPoint {
 
     //	Abwehrverhalten alle Verteidiger und Mittelfeldspieler in Verteidigung mit 50% 
     //Defensive Positions: all defenders and playmakers 50% defense
-    private Hashtable<Integer,Double> AV;
+    private Hashtable<Integer,Double> DEFPOS;
 
     //	Chancenauswertung -> Torschuss 100% St?rmer 
     //Scoring: 100% scoring forwards 
-    private Hashtable<Integer,Double> CA;
+    private Hashtable<Integer,Double> SCORING;
 
-    private Hashtable<Integer,Double> LATOFF = null; //External Attacker
+    private Hashtable<Integer,Double> WINGATTACK = null; //External Attacker
     
     //Flankel?ufe // Wing
-    private Hashtable<Integer,Double> FL;
+    private Hashtable<Integer,Double> CROSSING;
 
     //Passspiel //Passing
-    private Hashtable<Integer,Double> PS;
+    private Hashtable<Integer,Double> SHORTPASS;
 
     //Spielaufbau // playmaking
-    private Hashtable<Integer,Double> SA;
+    private Hashtable<Integer,Double> PLAYMAKING;
 
     //scoring
-    private Hashtable<Integer,Double> SCHT;
+    private Hashtable<Integer,Double> SHOOTING;
 
     //Steilpaesse : Passspiel f?r alle Verteidiger und MFler mit 85% // Through passess: passing for all defenders and midfielders with 85%
-    private Hashtable<Integer,Double> SP;
+    private Hashtable<Integer,Double> THROUGHPASS;
 
     //Torwart //Keeper
-    private Hashtable<Integer,Double> TW;
+    private Hashtable<Integer,Double> KEEPER;
 
     //Verteidigung //Defense
-    private Hashtable<Integer,Double> VE;
+    private Hashtable<Integer,Double> DEFENSE;
     
     //Standards //Set Pieces
     private Hashtable<Integer,Double> SETPIECES;
@@ -156,104 +157,123 @@ public class TrainingPoint implements ITrainingPoint {
     private void init() {
         //F?r jedes TRainingsart die Positionen und Werte festlegen
         //for every traintype position and values definition
-        SA = new Hashtable<Integer,Double>();
-        SA.put(new Integer(6), new Double(0.5));
-        SA.put(new Integer(7), new Double(1.0));
-        SA.put(new Integer(8), new Double(1.0));
-        SA.put(new Integer(9), new Double(0.5));
+       
+    	
+    	PLAYMAKING = new Hashtable<Integer,Double>();
+        PLAYMAKING.put(new Integer(ISpielerPosition.leftWinger), new Double(0.5));
+        PLAYMAKING.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(1.0));
+        PLAYMAKING.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(1.0));
+        PLAYMAKING.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(1.0));
+        PLAYMAKING.put(new Integer(ISpielerPosition.rightWinger), new Double(0.5));
 
-        FL = new Hashtable<Integer,Double>();
-        FL.put(new Integer(2), new Double(0.5));
-        FL.put(new Integer(5), new Double(0.5));
-        FL.put(new Integer(6), new Double(1.0));
-        FL.put(new Integer(9), new Double(1.0));
+        CROSSING = new Hashtable<Integer,Double>();
+        CROSSING.put(new Integer(ISpielerPosition.rightBack), new Double(0.5));
+        CROSSING.put(new Integer(ISpielerPosition.leftBack), new Double(0.5));
+        CROSSING.put(new Integer(ISpielerPosition.rightWinger), new Double(1.0));
+        CROSSING.put(new Integer(ISpielerPosition.leftWinger), new Double(1.0));
 
-        VE = new Hashtable<Integer,Double>();
-        VE.put(new Integer(2), new Double(1.0));
-        VE.put(new Integer(3), new Double(1.0));
-        VE.put(new Integer(4), new Double(1.0));
-        VE.put(new Integer(5), new Double(1.0));
+        DEFENSE = new Hashtable<Integer,Double>();
+        DEFENSE.put(new Integer(ISpielerPosition.leftBack), new Double(1.0));
+        DEFENSE.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(1.0));
+        DEFENSE.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(1.0));
+        DEFENSE.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(1.0));
+        DEFENSE.put(new Integer(ISpielerPosition.rightBack), new Double(1.0));
 
-        PS = new Hashtable<Integer,Double>();
-        PS.put(new Integer(6), new Double(1.0));
-        PS.put(new Integer(7), new Double(1.0));
-        PS.put(new Integer(8), new Double(1.0));
-        PS.put(new Integer(9), new Double(1.0));
-        PS.put(new Integer(10), new Double(1.0));
-        PS.put(new Integer(11), new Double(1.0));
+        SHORTPASS = new Hashtable<Integer,Double>();
+        SHORTPASS.put(new Integer(ISpielerPosition.leftWinger), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.rightWinger), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.leftForward), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.centralForward), new Double(1.0));
+        SHORTPASS.put(new Integer(ISpielerPosition.rightForward), new Double(1.0));
 
-        TW = new Hashtable<Integer,Double>();
-        TW.put(new Integer(1), new Double(1.0));
+        KEEPER = new Hashtable<Integer,Double>();
+        KEEPER.put(new Integer(ISpielerPosition.keeper), new Double(1.0));
 
-        CA = new Hashtable<Integer,Double>();
-        CA.put(new Integer(10), new Double(1.0));
-        CA.put(new Integer(11), new Double(1.0));
+        SCORING = new Hashtable<Integer,Double>();
+        SCORING.put(new Integer(ISpielerPosition.leftForward), new Double(1.0));
+        SCORING.put(new Integer(ISpielerPosition.centralForward), new Double(1.0));
+        SCORING.put(new Integer(ISpielerPosition.rightForward), new Double(1.0));
 
-        SCHT = new Hashtable<Integer,Double>();
-        SCHT.put(new Integer(2), new Double(0.6));
-        SCHT.put(new Integer(3), new Double(0.6));
-        SCHT.put(new Integer(4), new Double(0.6));
-        SCHT.put(new Integer(5), new Double(0.6));
-        SCHT.put(new Integer(6), new Double(0.6));
-        SCHT.put(new Integer(7), new Double(0.6));
-        SCHT.put(new Integer(8), new Double(0.6));
-        SCHT.put(new Integer(9), new Double(0.6));
-        SCHT.put(new Integer(10), new Double(0.6));
-        SCHT.put(new Integer(11), new Double(0.6));
+        SHOOTING = new Hashtable<Integer,Double>();
+        SHOOTING.put(new Integer(ISpielerPosition.keeper), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.leftBack), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.rightBack), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.leftWinger), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.rightWinger), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.leftForward), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.centralForward), new Double(0.6));
+        SHOOTING.put(new Integer(ISpielerPosition.rightForward), new Double(0.6));
 
-        AV = new Hashtable<Integer,Double>();
-        AV.put(new Integer(1), new Double(0.5));
-        AV.put(new Integer(2), new Double(0.5));
-        AV.put(new Integer(3), new Double(0.5));
-        AV.put(new Integer(4), new Double(0.5));
-        AV.put(new Integer(5), new Double(0.5));
-        AV.put(new Integer(6), new Double(0.5));
-        AV.put(new Integer(7), new Double(0.5));
-        AV.put(new Integer(8), new Double(0.5));
-        AV.put(new Integer(9), new Double(0.5));
+        DEFPOS = new Hashtable<Integer,Double>();
+        DEFPOS.put(new Integer(ISpielerPosition.keeper), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.leftBack), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.rightBack), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.leftWinger), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(0.5));
+        DEFPOS.put(new Integer(ISpielerPosition.rightWinger), new Double(0.5));
 
-        SP = new Hashtable<Integer,Double>();
-        SP.put(new Integer(2), new Double(0.85));
-        SP.put(new Integer(3), new Double(0.85));
-        SP.put(new Integer(4), new Double(0.85));
-        SP.put(new Integer(5), new Double(0.85));
-        SP.put(new Integer(6), new Double(0.85));
-        SP.put(new Integer(7), new Double(0.85));
-        SP.put(new Integer(8), new Double(0.85));
-        SP.put(new Integer(9), new Double(0.85));
+        THROUGHPASS = new Hashtable<Integer,Double>();
+        THROUGHPASS.put(new Integer(ISpielerPosition.leftBack), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.rightBack), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.leftWinger), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(0.85));
+        THROUGHPASS.put(new Integer(ISpielerPosition.rightWinger), new Double(0.85));
 
-        LATOFF = new Hashtable<Integer,Double>();
-        LATOFF.put(new Integer(6), new Double(0.6));
-        LATOFF.put(new Integer(9), new Double(0.6));        
-        LATOFF.put(new Integer(10), new Double(0.6));
-        LATOFF.put(new Integer(11), new Double(0.6));
+        WINGATTACK = new Hashtable<Integer,Double>();
+        WINGATTACK.put(new Integer(ISpielerPosition.leftWinger), new Double(0.6));
+        WINGATTACK.put(new Integer(ISpielerPosition.rightWinger), new Double(0.6));        
+        WINGATTACK.put(new Integer(ISpielerPosition.leftForward), new Double(0.6));
+        WINGATTACK.put(new Integer(ISpielerPosition.centralForward), new Double(0.6));
+        WINGATTACK.put(new Integer(ISpielerPosition.rightForward), new Double(0.6));
         
         // TODO flattermann: The default SetPieces taker gets 25% bonus as well
         SETPIECES = new Hashtable<Integer,Double>();
-        SETPIECES.put(new Integer(1), new Double(1.25)); // Goalkeepers train 25% faster
-        SETPIECES.put(new Integer(2), new Double(1.0));
-        SETPIECES.put(new Integer(3), new Double(1.0));
-        SETPIECES.put(new Integer(4), new Double(1.0));
-        SETPIECES.put(new Integer(5), new Double(1.0));
-        SETPIECES.put(new Integer(6), new Double(1.0));
-        SETPIECES.put(new Integer(7), new Double(1.0));
-        SETPIECES.put(new Integer(8), new Double(1.0));
-        SETPIECES.put(new Integer(9), new Double(1.0));
-        SETPIECES.put(new Integer(10), new Double(1.0));
-        SETPIECES.put(new Integer(11), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.keeper), new Double(1.25)); // Goalkeepers train 25% faster
+        SETPIECES.put(new Integer(ISpielerPosition.leftBack), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.rightBack), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.leftWinger), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.rightWinger), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.leftForward), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.centralForward), new Double(1.0));
+        SETPIECES.put(new Integer(ISpielerPosition.rightForward), new Double(1.0));
 
         //die einzelnen Trainingsarten hinzuf?gen
         //add all traintypes to one hashtable with all trainingstypes
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_SPIELAUFBAU), SA);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_FLANKEN), FL);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_VERTEIDIGUNG), VE);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_PASSSPIEL), PS);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_TORWART), TW);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_CHANCEN), CA);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_SCHUSSTRAINING), SCHT);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_ABWEHRVERHALTEN), AV);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_STEILPAESSE), SP);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_EXTERNALATTACK), LATOFF);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_SPIELAUFBAU), PLAYMAKING);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_FLANKEN), CROSSING);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_VERTEIDIGUNG), DEFENSE);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_PASSSPIEL), SHORTPASS);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_TORWART), KEEPER);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_CHANCEN), SCORING);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_SCHUSSTRAINING), SHOOTING);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_ABWEHRVERHALTEN), DEFPOS);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_STEILPAESSE), THROUGHPASS);
+        p_Ht_trainPositionen.put(new Integer(ITeam.TA_EXTERNALATTACK), WINGATTACK);
         p_Ht_trainPositionen.put(new Integer(ITeam.TA_STANDARD), SETPIECES);
     }
 
