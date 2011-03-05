@@ -134,7 +134,9 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 					
 					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup(m_jtfAufstellungsName.getText());
 					FileExtensionManager.extractLineup(m_jtfAufstellungsName.getText());
-                    setVisible(false);
+					
+					HOMainFrame.instance().getAufstellungsPanel().update(); // Should prepare it for the new lineup
+					setVisible(false);
                 }
             }
         } else if (actionEvent.getSource().equals(m_jbAbbrechen)) {

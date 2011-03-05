@@ -30,12 +30,18 @@ public class MatchUpdater {
      * @param matchId TODO Missing Method Parameter Documentation
      */
     public static void updateMatch(IHOMiniModel model, int matchId) {
-        final IMatchDetails matchDetail = model.getMatchDetails(matchId);
+    	// Why would we want to limit updates to matches where "our" team participates?
+        // Matches allows for browsing "foreign" matches, and such a match would be in the db.
+        // It needs updating too. - blaghaid
 
-        if ((matchDetail.getHeimId() != model.getBasics().getTeamId())
-            && (matchDetail.getGastId() != model.getBasics().getTeamId())) {
-            return;
-        }
+//    	final IMatchDetails matchDetail = model.getMatchDetails(matchId);
+//      
+//     	final IMatchDetails matchDetail = model.getMatchDetails(matchId);
+//        
+//       if ((matchDetail.getHeimId() != model.getBasics().getTeamId())
+//           && (matchDetail.getGastId() != model.getBasics().getTeamId())) {
+//           return;
+//        }
 
         
         
