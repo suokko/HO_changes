@@ -18,6 +18,7 @@ import java.util.Properties;
 import java.util.Vector;
 
 import plugins.ILineUp;
+import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
@@ -733,23 +734,28 @@ public  class Lineup implements plugins.ILineUp {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 				final IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId, IMatchKurzInfo.UPCOMING);
-				final List<IMatchKurzInfo> sMatches = removeBuggyMatches(matches);
+				IMatchKurzInfo match;
 				
-				IMatchKurzInfo match = null;
-				if (sMatches != null) {
-					for (IMatchKurzInfo m : sMatches) {
-						if ((m.getMatchStatus() == IMatchKurzInfo.UPCOMING)
-								&& ((match == null) || match.getMatchDateAsTimestamp().after(m.getMatchDateAsTimestamp()))) {
-							match = m;
-						}
-					}
-				}
-
-				if (match != null) {
-					m_sLocation = (match.getHeimID() == teamId) ? (short) 1 : (short) 0;
-				} else {
+				if ((matches == null) || (matches.length < 1)) {
+					m_sLocation = IMatchDetails.LOCATION_AWAY;
 					HOLogger.instance().debug(getClass(), "no match to determine location");
+					return m_sLocation;
 				}
+				
+				if (matches.length > 1) {
+					final List<IMatchKurzInfo> sMatches = removeBuggyMatches(matches);
+					match = sMatches.get(0);
+				} else {
+					match = matches[0];
+				}
+				
+				m_sLocation = (match.getHeimID() == teamId) ? IMatchDetails.LOCATION_HOME : IMatchDetails.LOCATION_AWAY;
+
+				// To decide away derby we need hold of the region.
+				// I think this is very annoying to get hold of 
+				// (possible both download and db work needed) and
+				// probably why aik has it as TODO (blaghaid).
+				
 			} catch (Exception e) {
 				HOLogger.instance().error(getClass(), "getHeimspiel: " + e);
 				m_sLocation = 0;
