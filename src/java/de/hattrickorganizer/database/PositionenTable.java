@@ -52,6 +52,7 @@ public final class PositionenTable extends AbstractTable {
 					
 					int roleID = rs.getInt("ID");
 					int behavior = rs.getByte("Taktik");
+					int playerID = rs.getInt("SpielerID");
 					
 					switch (behavior) {
 					case ISpielerPosition.OLD_EXTRA_DEFENDER :
@@ -74,7 +75,12 @@ public final class PositionenTable extends AbstractTable {
 					if (roleID < ISpielerPosition.setPieces) {
 						roleID = convertOldRoleToNew(roleID);
 					}
-					pos = new de.hattrickorganizer.model.SpielerPosition(roleID, rs.getInt("SpielerID"), (byte)behavior);
+					
+					if (playerID < 0) {
+						playerID = 0;
+					}
+					
+					pos = new de.hattrickorganizer.model.SpielerPosition(roleID, playerID, (byte)behavior);
 					ret.add(pos);
 				}
 			}
