@@ -1442,9 +1442,11 @@ public  class Lineup implements plugins.ILineUp {
     	
     	if (getPlayerByPositionID(pos1) != null) {
     	  id1 = getPlayerByPositionID(pos1).getSpielerID(); 
+    	  setSpielerAtPosition(pos1, 0);
     	}
     	if (getPlayerByPositionID(pos2) != null) {
-      	  id2 = getPlayerByPositionID(pos2).getSpielerID(); 
+      	  id2 = getPlayerByPositionID(pos2).getSpielerID();
+      	  setSpielerAtPosition(pos2, 0);
       	}
     	setSpielerAtPosition(pos2, id1, tac1);
     	setSpielerAtPosition(pos1, id2, tac2);
