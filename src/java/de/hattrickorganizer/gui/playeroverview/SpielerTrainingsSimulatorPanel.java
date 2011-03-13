@@ -154,7 +154,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
             tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
             tempSpieler.setSpielerID(de.hattrickorganizer.gui.transferscout.TransferEingabePanel
                                      .getNextTempSpielerID());
-            tempSpieler.setName("Temp " + Math.abs(tempSpieler.getSpielerID()));
+            tempSpieler.setName("Temp " + Math.abs(1000 + tempSpieler.getSpielerID()));
 			tempSpieler.setAlter(getAge());
 			tempSpieler.setAgeDays(getAgeDays());
             tempSpieler.setErfahrung(((CBItem) m_jcbErfahrung.getSelectedItem()).getId());
