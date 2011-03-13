@@ -20,11 +20,14 @@ import plugins.IHOMiniModel;
 import plugins.IHTCalendar;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
+import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
+import plugins.ISpielerPosition;
 import plugins.ITrainingPerPlayer;
 import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -543,34 +546,30 @@ public class TrainingsManager implements ITrainingsManager {
      * @return	Map	(playerId -> posId) of a match lineup
      */
     private Map<Integer,Integer> getMatchLineup(int matchId) {
-        Map<Integer,Integer> matchData = this.matchMap.get("" + matchId);
+    	Map<Integer,Integer> matchData = this.matchMap.get("" + matchId);
 
-        if (matchData == null) {
-            matchData = new HashMap<Integer,Integer>();
+    	if (matchData == null) {
+    		matchData = new HashMap<Integer,Integer>();
+    		IMatchLineupPlayer player;
 
-            final String query =
-                "select SPIELERID,FieldPos from MATCHLINEUPPLAYER where FIELDPOS>-1 AND MATCHID = "
-                + matchId + "  and TEAMID = " + p_IHMM_HOMiniModel.getBasics().getTeamId();
-            final ResultSet rs = p_IHMM_HOMiniModel.getAdapter().executeQuery(query);
+    		Vector<IMatchLineupPlayer> playerVec = 
+    			DBZugriff.instance().getMatchLineupPlayers(matchId, 
+    					p_IHMM_HOMiniModel.getBasics().getTeamId());	
 
-            if (rs == null) {
-                this.matchMap.put("" + matchId, matchData);
-                return matchData;
-            }
+    		for (int i = 0 ; i < playerVec.size() ; i++) {
+    			player = playerVec.get(i);
+    			// Ignore everyone but the 11 on field
+    			if ((player.getFieldPos() >= ISpielerPosition.startLineup) &&
+    					(player.getFieldPos() < ISpielerPosition.startReserves)) {
+    				matchData.put(player.getSpielerId(), (int)player.getFieldPos());
+    			}
 
-            try {
-                while (rs.next()) {
-                    final int id = rs.getInt("SPIELERID");
-                    final int pos = rs.getInt("FIELDPOS");
-                    matchData.put(new Integer(id), new Integer(pos));
-                }
-            } catch (SQLException e) {
-            }
+    		}
 
-            this.matchMap.put("" + matchId, matchData);
-        }
+    		this.matchMap.put("" + matchId, matchData);
+    	}
 
-        return matchData;
+    	return matchData;
     }
 
     /**
