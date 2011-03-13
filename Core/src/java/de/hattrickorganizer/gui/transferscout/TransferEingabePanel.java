@@ -52,7 +52,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static final long serialVersionUID = -3287232092187457640L;
-	private static int iTempSpielerID = -1;
+	private static int iTempSpielerID = -1001;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             tempSpieler.setSpielerID(getNextTempSpielerID());
 
             if (jtfName.getText().trim().equals("")) {
-                tempSpieler.setName("Temp " + Math.abs(tempSpieler.getSpielerID()));
+                tempSpieler.setName("Temp " + Math.abs(1000 + tempSpieler.getSpielerID()));
             } else {
                 tempSpieler.setName(jtfName.getText());
             }

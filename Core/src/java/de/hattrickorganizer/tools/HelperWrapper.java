@@ -619,7 +619,7 @@ public class HelperWrapper implements plugins.IHelper {
         tempSpieler.setSpielerID(TransferEingabePanel.getNextTempSpielerID());
 
         if (player.getPlayerName().trim().equals("")) {
-            tempSpieler.setName("Temp " + Math.abs(tempSpieler.getSpielerID()));
+            tempSpieler.setName("Temp " + Math.abs(1000 + tempSpieler.getSpielerID()));
         } else {
             tempSpieler.setName(player.getPlayerName());
         }
