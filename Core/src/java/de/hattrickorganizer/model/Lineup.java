@@ -1432,8 +1432,8 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     private final void swapContentAtPositions(int pos1, int pos2) {
-    	int id1 = -1;
-    	int id2 = -1;
+    	int id1 = 0;
+    	int id2 = 0;
     	byte tac1 = -1;
     	byte tac2 = -1;
 
