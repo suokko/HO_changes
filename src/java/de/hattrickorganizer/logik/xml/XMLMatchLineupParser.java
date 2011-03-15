@@ -204,7 +204,7 @@ public class XMLMatchLineupParser {
             	behavior = 0;
             	roleID = ISpielerPosition.keeper; // takes care of the old keeper ID.
             
-            } else if ((roleID < ISpielerPosition.setPieces) 
+            } else if ((roleID >= 0) && (roleID < ISpielerPosition.setPieces) 
             		|| ((roleID < ISpielerPosition.startReserves) && (roleID > ISpielerPosition.keeper))) {
                 tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
                 behavior = Integer.parseInt(tmp.getFirstChild().getNodeValue());
