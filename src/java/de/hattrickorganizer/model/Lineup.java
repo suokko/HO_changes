@@ -743,7 +743,7 @@ public  class Lineup implements plugins.ILineUp {
 				}
 				
 				if (matches.length > 1) {
-					final List<IMatchKurzInfo> sMatches = removeBuggyMatches(matches);
+					final List<IMatchKurzInfo> sMatches = orderMatches(matches);
 					match = sMatches.get(0);
 				} else {
 					match = matches[0];
@@ -768,17 +768,20 @@ public  class Lineup implements plugins.ILineUp {
 	/**
 	 * For some reason we have users with old "upcoming" matches which break the location determination.
 	 * This method removes all matches that are more than 8 days older than the previous 'upcoming' match.
+	 * 
+	 * This method also returns the matches in order of the newest first.
 	 */
-	private List<IMatchKurzInfo> removeBuggyMatches(IMatchKurzInfo[] inMatches) {
+	private List<IMatchKurzInfo> orderMatches(IMatchKurzInfo[] inMatches) {
 		final List<IMatchKurzInfo> matches = new ArrayList<IMatchKurzInfo>();
 		if (inMatches != null && inMatches.length > 1) {
 			for (IMatchKurzInfo m : inMatches) {
 				matches.add(m);
 			}
 			
+			// Flipped the sign of the return value to get newest first - blaghaid
 			Collections.sort(matches, new Comparator<IMatchKurzInfo>() {
 				public int compare(IMatchKurzInfo o1, IMatchKurzInfo o2) {
-					return 0-(o1.getMatchDateAsTimestamp().compareTo(o2.getMatchDateAsTimestamp()));
+					return (o1.getMatchDateAsTimestamp().compareTo(o2.getMatchDateAsTimestamp()));
 				}
 			});
 			
