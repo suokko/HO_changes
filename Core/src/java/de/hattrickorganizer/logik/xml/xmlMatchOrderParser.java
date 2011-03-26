@@ -150,7 +150,7 @@ public class xmlMatchOrderParser {
             case ISpielerPosition.leftBack:
                 hash.put("LeftBackID", spielerID);
                 hash.put("LeftBackName", name);
-                hash.put("LeftBack", behavior);
+                hash.put("LeftBackOrder", behavior);
                 break;
                 
             case ISpielerPosition.leftWinger:
