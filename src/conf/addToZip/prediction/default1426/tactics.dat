@@ -3,7 +3,7 @@
 [general]
 version              = 4.0
 delta                = 1.000000 # fixed
-extraMulti           = 1.000000 # fixed
+extraMulti           = 0.850000 # fixed
 squareMod            = 0.000000 # fixed
 cubeMod              = 0.000000 # fixed
 
