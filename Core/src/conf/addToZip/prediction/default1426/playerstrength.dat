@@ -54,17 +54,6 @@ resultMultiStamina=1
 resultMultiForm=1
 resultMultiXp=1
 
-# 9 multipliers for crowding penalties. 1-2-3 central defenders/midfielders/forwards
-1CdMulti=1
-2CdMulti=0.9647
-3CdMulti=0.8731
-1MfMulti=1
-2MfMulti=0.9356
-3MfMulti=0.8268
-1FwMulti=1
-2FwMulti=0.9480
-3FwMulti=0.8190
-
 # SkillSubDeltas:
 # Default is to add 0.5 subskill for skills 0 (non existant) up to 7 (solid)
 # Uncomment the next line to ignore the skillSubDeltas
