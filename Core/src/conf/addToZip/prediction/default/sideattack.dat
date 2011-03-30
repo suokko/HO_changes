@@ -9,7 +9,7 @@ trainerDef           = 0.921278 # err=0.004323
 trainerNeutral       = 1.050000 # fixed
 #confidence           = 0.012933 # err=0.000942
 confidence           = 0.0525 # Educated guess by GM-Mjoelnir :-)
-extraMulti           = 0.850000 # fixed
+extraMulti           = 1.000 # fixed
 squareMod            = 0.012093 # err=0.001183
 cubeMod              = -0.000027 # err=0.000005
 defleadPercentOff    = 0.000000 # fixed
@@ -18,49 +18,49 @@ pullback             = -0.25
 
 
 [passing_middle]
-IM_norm    = 0.094722
-IM_def     = 0.060906
-IM_off     = 0.093873
+IM_norm    = 0.0947
+IM_def     = 0.0609
+IM_off     = 0.0938
 
 [passing_allsides]
-FW_norm    = 0.100290 # err=0.006391
-FW_def     = 0.186512 # err=0.012405
-FW_def.technical = 0.220424 # err=0.009875
+FW_norm    = 0.105693415258036
+FW_def     = 0.196724769916405
+FW_def.technical = 0.258314800652819
 
 [winger_allsides]
-FW_norm    = 0.142456 # err=0.007157
-FW_def     = 0.097975 # err=0.013933
+FW_norm    = 0.158112641377712
+FW_def     = 0.108702440947177
 
 [passing_thisside]
-IM_norm    = 0.189444 # err=0.008249
-IM_def     = 0.121811 # err=0.014559
-WI_norm    = 0.182107 # err=0.019341
-IM_off     = 0.187746 # err=0.007697
-FW_tw      = 0.148148 # err=0.019264
-IM_tw      = 0.235698 # err=0.022383
-WI_def     = 0.150160 # err=0.028379
-WI_off     = 0.213452 # err=0.012056
-WI_tm      = 0.115254 # err=0.012704
+IM_norm    = 0.1894
+IM_def     = 0.1218
+WI_norm    = 0.1821
+IM_off     = 0.1877
+FW_tw      = 0.156219508979194
+IM_tw      = 0.2356
+WI_def     = 0.1501
+WI_off     = 0.2134
+WI_tm      = 0.1152
 
 [winger_thisside]
-WB_norm    = 0.399755 # err=0.010201
-WI_norm    = 0.674398 # err=0.016448
-FW_tw      = 0.392185 # err=0.012762
-WB_def     = 0.255317 # err=0.008828
-WB_off     = 0.487884 # err=0.010137
-CD_tw      = 0.213672 # err=0.016225
-IM_tw      = 0.428863 # err=0.015641
-WI_def     = 0.571036 # err=0.021634
-WB_tm      = 0.255317
-WI_off     = 0.789342 # err=0.014973
-WI_tm      = 0.445048 # err=0.011674
+WB_norm    = 0.444111111111111
+WI_norm    = 0.749222222222222
+FW_tw      = 0.459551875390065
+WB_def     = 0.283666666666667
+WB_off     = 0.542
+CD_tw      = 0.221266898016264
+IM_tw      = 0.4288
+WI_def     = 0.634444444444444
+WB_tm      = 0.242535
+WI_off     = 0.877
+WI_tm      = 0.494444444444444
 
 [scoring_allsides]
-FW_norm    = 0.184292 # err=0.003935
-FW_def     = 0.095023 # err=0.009238
+FW_norm    = 0.194298673558187
+FW_def     = 0.100208327839456
 
 [scoring_otherside]
-FW_tw      = 0.151325 # err=0.006290
+FW_tw      = 0.159594947390628
 
 [scoring_thisside]
-FW_tw      = 0.371022 # err=0.011827
+FW_tw      = 0.391339890825664

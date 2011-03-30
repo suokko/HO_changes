@@ -180,19 +180,67 @@ public class RatingPredictionManager implements IRatingPredictionManager
     			double curWeight = allWeights[effPos][spec];
     			if (curStk > 0) {
     				if (curWeight > 0) {
-//    	    			if (skillType == SPIELAUFBAU)
-//    	    				System.out.println ("addingPlayer (SPEC) @"+effPos+": (skill "+skillType+") stk="+curStk + " * weight="+ curWeight+" = "+curStk * curWeight);
-    					retVal += curStk * curWeight;
+    					
+    	  
+//    					System.out.println ("addingPlayer (SPEC) @"+effPos+": (skill "+skillType+") stk="+curStk + " * weight="+ curWeight+" = "+curStk * curWeight);
+    					
+    					// blaghaid: I could not find a better spot to adjust for crowding. For instance the parameters are
+    					// set in static method and can't check the number of central players in the lineup. Feel free to
+    					// move to a better home.
+    					
+    					retVal += adjustForCrowding(curStk, effPos) * curWeight;
     				} else {
-//    	    			if (skillType == SPIELAUFBAU)
-//    	    				System.out.println ("addingPlayer (ALL) @"+effPos+": (skill "+skillType+") stk="+curStk + " * weight="+ curAllSpecWeight +" = "+curStk * curAllSpecWeight);
-    					retVal += curStk * curAllSpecWeight;
+    	  
+//    					System.out.println ("addingPlayer (ALL) @"+effPos+": (skill "+skillType+") stk="+curStk + " * weight="+ curAllSpecWeight +" = "+curStk * curAllSpecWeight);
+    					
+    					retVal += adjustForCrowding(curStk, effPos) * curAllSpecWeight;
     				}
     			}
     		}
     	}
     	retVal = applyCommonProps (retVal, params, sectionName);
     	return retVal;
+    }
+    
+    private double adjustForCrowding(double stk, int pos) {
+    	
+    	double weight;
+    	
+    	switch (pos) {
+	    	case ISpielerPosition.CENTRAL_DEFENDER :
+	    	case ISpielerPosition.CENTRAL_DEFENDER_OFF :
+	    	case ISpielerPosition.CENTRAL_DEFENDER_TOWING :
+	    	{
+	    		weight = getCrowdingPenalty(CENTRALDEFENSE);
+	    		break;
+	    	}
+	    	case ISpielerPosition.MIDFIELDER :
+	    	case ISpielerPosition.MIDFIELDER_DEF :
+	    	case ISpielerPosition.MIDFIELDER_OFF :
+	    	case ISpielerPosition.MIDFIELDER_TOWING :
+	    	{
+	    		weight = getCrowdingPenalty(MIDFIELD);
+	    		break;
+	    	}
+	    	case ISpielerPosition.FORWARD :
+	    	case ISpielerPosition.FORWARD_DEF :
+	    	case ISpielerPosition.FORWARD_TOWING :
+	    	{
+	    		weight = getCrowdingPenalty(CENTRALATTACK);
+	    		break;
+	    	}
+	    	default :
+	    	{
+	    		weight = 1;
+	    	}
+    	}
+    	
+    	if ( !(weight > 0)) {
+    		// It is probably not set in the config
+    		weight = 1;
+    	}
+    	
+    	return stk * weight;
     }
 
     public double applyCommonProps (double inVal, IRatingPredictionParameter params, String sectionName) {
@@ -433,6 +481,32 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return calcRatings(SIDEDEFENSE, side);
     }
 
+    
+    private double getCrowdingPenalty(int pos) {
+    	double penalty;
+    	IRatingPredictionParameter  para = config.getPlayerStrengthParameters();
+    	
+//    	HOLogger.instance().debug(getClass(), "Parameter file used: " + config.getPredictionName());
+    	
+    	switch (pos) {
+    	case CENTRALDEFENSE :
+    		// Central Defender
+    		penalty = para.getParam(IRatingPredictionParameter.GENERAL, getNumCDs() + "CdMulti");
+    		break;
+    	case MIDFIELD :
+    		// Midfielder
+    		penalty = para.getParam(IRatingPredictionParameter.GENERAL, getNumIMs() + "MfMulti");
+    		break;
+    	case CENTRALATTACK :
+    		// Forward
+    		penalty = para.getParam(IRatingPredictionParameter.GENERAL, getNumFWs() + "FwMulti");
+    		break;
+    	default :
+    		penalty = 1;
+    	}
+    	return penalty;
+    }
+    
 
     public static double[][] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
     	double[][] weights = new double[ISpielerPosition.NUM_POSITIONS][NUM_SPEC];
