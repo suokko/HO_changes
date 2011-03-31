@@ -1,5 +1,18 @@
 Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.428
+====================
+- The model is switched to the 553 lineup model. This has affected a lot of the code.
+- Linup screen now has 14 position boxes, but only 11 can be filled.
+- Swap ability is added to subs.
+- Matches screen is updated to display matches in a 553 format.
+- All match related downloads are now at latest API
+- TeamAnalyzer is updated to 553 changes, including lineup screen here.
+- Team of the week plugin interprets the new positions, otherwise no change here.
+- Added crowding penalties in rating calculation. Default is again the default prediction set.
+- Prediction type can again be selected manually in the lineup screen.
+- Removed some traces of the now gone economists and gk trainers.
+
 Changelist HO! 1.427
 ====================
 - automatically select prediction type (thx Smaug)
@@ -7,7 +20,6 @@ Changelist HO! 1.427
 - add optional "Nimbus" look and feel, if available
 - update some graphics
 - fix bug with fraction digit in fanclub size
-- switch to 553 linup (thx blaghaid)
 - fix home/away determination for DBs with illegal matches (announced but never played)
 
 Changelist HO! 1.426

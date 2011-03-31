@@ -104,7 +104,7 @@ public final class HOMainFrame extends JFrame
 	 */
 
 	/** HO Version */
-	public static final double VERSION = 1.427d;
+	public static final double VERSION = 1.428d;
 
 	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;

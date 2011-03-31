@@ -1,15 +1,19 @@
-Changelist HO! 1.427
+Changelist HO! 1.428
 ====================
-- automatically select prediction type (thx Smaug)
-- allow new position "Extra def. Forward" to simulate lineups with 3 def. forwards (thx Smaug)
-- add optional "Nimbus" look and feel, if available
-- update some graphics
-- fix bug with fraction digit in fanclub size
-- switch to 553 linup (thx blaghaid)
-- fix home/away determination for DBs with illegal matches (announced but never played)
+- Hattrick is moved to a 553 lineup. This has led to a lot of changes, so new bugs are quite possible.
+- The lineup screen, and the lineups in matches are updated to the 553 model.
+- Added swap capabilites to subs, who can be swapped into play as long as there is no more than 11 players afterwards.
+- Overcrowding penalties is done in calculations now, prediction types can again be chosen in the lineup screen.
+- Default is back, and is now predicting as well as 1.427.
 
 Language updates:
 -----------------
 
 Plugin Updates:
 ---------------
+
+Team Analyzer:
+- Updated to work with 553, including the lineup image.
+
+Team of the Week (not included in download)
+- Updated to read players correctly after 553 change.
