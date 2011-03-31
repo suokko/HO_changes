@@ -85,7 +85,7 @@ public class Rating extends FeedbackObject {
 				IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
 				if (playerMatch != null &&
 						playerMatch.getId() >= ISpielerPosition.keeper &&
-						playerMatch.getId() <= ISpielerPosition.forward2 &&
+						playerMatch.getId() < ISpielerPosition.startReserves &&
 						playerMatch.getSpielerId() > 0) {
 					stars.put(new Integer(playerMatch.getSpielerId()), new Double (playerMatch.getRating()));
 					ISpieler playerData = (ISpieler) matchData.getPlayers().get(new Integer(playerMatch.getSpielerId()));
@@ -139,7 +139,7 @@ public class Rating extends FeedbackObject {
 					+ "&phy=" + physios
 			);
 			int plNum = 0;
-			for (int i = 1; i < 12; i++) {
+			for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.startReserves; i++) {
 				ISpieler player = lineup.getPlayerByPositionID(i);
 				if (player != null) {
 					url.append("&pl["+plNum+"][id]=" + player.getSpielerID()
