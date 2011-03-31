@@ -30,7 +30,7 @@ public class TotW implements IPlugin, IRefreshable, IOfficialPlugin {
     private static int season;
     private static int liga;
     private static int maxWeek;
-    private static double VERSION = 0.201d;
+    private static double VERSION = 0.210d;
     private static final int PLUGIN_ID = 43;
 
     //~ Methods ------------------------------------------------------------------------------------
