@@ -202,7 +202,8 @@ public class Training extends FeedbackObject {
 					return;															
 				}
 				// If player has played (no matter on which position) he will get osmosis training at least
-				if (curPos > ISpielerPosition.keeper && curMinutes > 0 && isSkillTrained(skillUp.getSkill(), tw.getTrainingType()))
+				// Keeper included, they also get osmosis training... - Blaghaid
+				if (curPos >= ISpielerPosition.keeper && curMinutes > 0 && isSkillTrained(skillUp.getSkill(), tw.getTrainingType()))
 					osmosisTraining = true;
 			}
 			trainPerPlayer.setTrainPoint(curTrainingPoint);
