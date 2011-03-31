@@ -48,7 +48,7 @@ public class TeamAnalyzer implements IPlugin, IRefreshable, IOfficialPlugin {
     private final String PLUGIN_NAME = "TeamAnalyzer";
 
     /** Plugin version constant */
-    private final double PLUGIN_VERSION = 2.70;
+    private final double PLUGIN_VERSION = 2.80;
 
     /** Plugin Id */
     private final int PLUGIN_ID = 14;
