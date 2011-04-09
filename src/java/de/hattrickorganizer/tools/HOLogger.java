@@ -33,7 +33,7 @@ public class HOLogger {
 
     /** TODO Missing Parameter Documentation */
     FileWriter logWriter = null;
-    private int logLevel = DEBUG;
+    private int logLevel = WARNING;
 
     //~ Constructors -------------------------------------------------------------------------------
 
