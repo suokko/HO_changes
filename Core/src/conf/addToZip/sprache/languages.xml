@@ -13,7 +13,7 @@
   <property>
     <datei>English.properties</datei>
     <lang_id>2</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Catalan.properties</datei>
@@ -68,7 +68,7 @@
   <property>
     <datei>Spanish.properties</datei>
     <lang_id>13</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>Svenska.properties</datei>
