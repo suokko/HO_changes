@@ -3,6 +3,7 @@ package hoplugins.teamAnalyzer.ui;
 
 import hoplugins.Commons;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.ImageIcon;
@@ -23,6 +24,9 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		int type = 0;
 
+		// (blaghaid fixes selection colors)
+		setForeground(Color.black);
+		
 		try {
 			type = Integer.parseInt((String) table.getValueAt(row, 7));
 		} catch (NumberFormatException e) {
@@ -31,6 +35,10 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
 		setBackground(UIColors.getColor4Matchtyp(type));
 		String available = (String) table.getValueAt(row, 6);
 
+		if (isSelected) {
+			setBackground(UIColors.SelectedRowColor);
+		}
+
 		if (!available.equalsIgnoreCase("true")) {
 			setEnabled(false);
 		} else {
@@ -38,12 +46,14 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
 		}
 		
 		if (value instanceof ImageIcon) {
-			this.setIcon(Commons.getModel().getHelper().getImageIcon4Spieltyp(type));
-			this.setText(null);
+			setIcon(Commons.getModel().getHelper().getImageIcon4Spieltyp(type));
+			setText(null);
 		} else {
-			this.setIcon(null);
+			setIcon(null);
 		}
 
+		
 		return this;
+		
 	}
 }
