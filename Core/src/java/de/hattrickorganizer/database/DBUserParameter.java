@@ -93,8 +93,11 @@ public class DBUserParameter {
                 parameter.ProxyAuthAktiv = rs.getBoolean("ProxyAuthAktiv");
                 parameter.ProxyAuthName = rs.getString("ProxyAuthName");
                 parameter.ProxyAuthPassword = rs.getString("ProxyAuthPassword");
-                parameter.LoginName = rs.getString("LoginName");
-                parameter.LoginPWD = de.hattrickorganizer.tools.MyHelper.decryptString(rs.getString("LoginPWD"));
+//                parameter.LoginName = rs.getString("LoginName");
+//                parameter.LoginPWD = de.hattrickorganizer.tools.MyHelper.decryptString(rs.getString("LoginPWD"));
+                parameter.AccessToken = rs.getString("AccessToken");
+              	parameter.TokenSecret = rs.getString("TokenSecret");
+                
                 parameter.MinIdealPosStk = rs.getFloat("MinIdealPosStk");
                 parameter.WetterEffektBonus = rs.getFloat("WetterEffektBonus");
 
@@ -203,7 +206,7 @@ public class DBUserParameter {
                 //11 ist defaultschriftgroesse
                 parameter.zellenbreitenFaktor = parameter.schriftGroesse / 11f;
 
-                parameter.htip = rs.getString("HTIP");
+//                parameter.htip = rs.getString("HTIP");
 
                 parameter.updateCheck = rs.getBoolean("UpdateCheck");
                 parameter.logoutOnExit = rs.getBoolean("LogoutOnExit");

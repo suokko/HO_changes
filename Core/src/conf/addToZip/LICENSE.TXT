@@ -19,3 +19,12 @@ JCalendar is licensed LGPL
 hsqldb.jar
 http://www.hsqldb.org
 HSQLDB has its own license, see hsqldb_lic.txt
+
+signpost-core-1.2.jar
+http://code.google.com/p/oauth-signpost/
+Signpost uses Apache License, version 2.0
+http://commons.apache.org/codec/license.html 
+
+commons-codec-1.4.jar
+The commons codec uses Apache License, version 2.0.
+http://commons.apache.org/codec/license.html

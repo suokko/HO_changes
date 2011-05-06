@@ -35,8 +35,11 @@ public final class UserParameter extends Configuration {
     public Color FG_TRANSFERMARKT = new Color(0, 180, 0);
     public Color FG_VERLETZT = new Color(200, 0, 0);
     public Color FG_ZWEIKARTEN = new Color(100, 100, 0);
-    public String LoginName = "";
-    public String LoginPWD = "";
+//    public String LoginName = "";
+//    public String LoginPWD = "";
+    public String AccessToken = "";
+    public String TokenSecret = "";
+    
     public String ProxyAuthName = "";
     public String ProxyAuthPassword = "";
 
@@ -49,7 +52,7 @@ public final class UserParameter extends Configuration {
 
     //Path to stored HRFs
     public String hrfImport_HRFPath = "";
-    public String htip = "www1.hattrick.org";
+//    public String htip = "www1.hattrick.org";
     public String matchLineupImport_Path = "";
     public String spielPlanImport_Path = "";
 
@@ -350,15 +353,19 @@ public final class UserParameter extends Configuration {
 		map.put("FG_TRANSFERMARKT",String.valueOf(FG_TRANSFERMARKT.getRGB()));
 		map.put("FG_VERLETZT",String.valueOf(FG_VERLETZT.getRGB()));
 		map.put("FG_ZWEIKARTEN",String.valueOf(FG_ZWEIKARTEN.getRGB()));
-		map.put("LoginName",String.valueOf(LoginName));
-		map.put("LoginPWD",MyHelper.cryptString(String.valueOf(LoginPWD)));
+//		map.put("LoginName",String.valueOf(LoginName));
+//		map.put("LoginPWD",MyHelper.cryptString(String.valueOf(LoginPWD)));
+		
+		map.put("AccessToken",String.valueOf(AccessToken));
+		map.put("TokenSecret", String.valueOf(TokenSecret));
+		
 		map.put("ProxyAuthName",String.valueOf(ProxyAuthName));
 		map.put("ProxyAuthPassword",String.valueOf(ProxyAuthPassword));
 		map.put("ProxyHost",String.valueOf(ProxyHost));
 		map.put("ProxyPort",String.valueOf(ProxyPort));
 		map.put("aufstellungsAssistentPanel_gruppe",String.valueOf(aufstellungsAssistentPanel_gruppe));
 		map.put("hrfImport_HRFPath",DBZugriff.insertEscapeSequences(String.valueOf(hrfImport_HRFPath)));
-		map.put("htip",String.valueOf(htip));
+//		map.put("htip",String.valueOf(htip));
 		map.put("matchLineupImport_Path",String.valueOf(matchLineupImport_Path));
 		map.put("spielPlanImport_Path",String.valueOf(spielPlanImport_Path));
 		map.put("sprachDatei",String.valueOf(sprachDatei));
@@ -524,15 +531,18 @@ public final class UserParameter extends Configuration {
 		FG_VERLETZT = getColorValue(values,"FG_VERLETZT");
 		FG_ZWEIKARTEN = getColorValue(values,"FG_ZWEIKARTEN");
 		
-		LoginName = getStringValue(values,"LoginName");
-		LoginPWD = MyHelper.decryptString(getStringValue(values,"LoginPWD"));
+//		LoginName = getStringValue(values,"LoginName");
+//		LoginPWD = MyHelper.decryptString(getStringValue(values,"LoginPWD"));
+		AccessToken = getStringValue(values,"AccessToken");
+		TokenSecret = getStringValue(values, "TokenSecret");
+		
 		ProxyAuthName = getStringValue(values,"ProxyAuthName");
 		ProxyAuthPassword = getStringValue(values,"ProxyAuthPassword");
 		ProxyHost = getStringValue(values,"ProxyHost");
 		ProxyPort = getStringValue(values,"ProxyPort");
 		aufstellungsAssistentPanel_gruppe = getStringValue(values,"aufstellungsAssistentPanel_gruppe");
 		hrfImport_HRFPath = DBZugriff.deleteEscapeSequences(getStringValue(values,"hrfImport_HRFPath"));
-		htip = getStringValue(values,"htip");
+//		htip = getStringValue(values,"htip");
 		matchLineupImport_Path = getStringValue(values,"matchLineupImport_Path");
 		spielPlanImport_Path = getStringValue(values,"spielPlanImport_Path");
 		sprachDatei = getStringValue(values,"sprachDatei");

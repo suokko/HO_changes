@@ -20,7 +20,6 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.InfoPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
-import de.hattrickorganizer.gui.login.LoginDialog;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.logik.MatchUpdater;
@@ -79,13 +78,18 @@ public class OnlineWorker {
     public final boolean getHrf() {
         String hrf = "";
 
-        //Sicherstellen das HO! eingeloggt ist
-        assureLogin();
+//        //Sicherstellen das HO! eingeloggt ist
+//        assureLogin();
+//
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
-        //falls immer noch nicht eingeloggt raus
-        if (!MyConnector.instance().isAuthenticated()) {
-            return false;
-        }
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
         //Wairt Dialog zeigen
         waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
@@ -99,17 +103,18 @@ public class OnlineWorker {
             //Info
             HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error converting xml 2 HRF. Corrupt/Missing Data : "
-                                                                                           + gui.UserParameter
-                                                                                             .instance().htip,
+//                                                                                         + gui.UserParameter.instance().htip
+                                                                                           ,
                                                                                            InfoPanel.FEHLERFARBE);
             Helper.showMessage(HOMainFrame.instance(),
                                HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                + " : Error converting xml 2 HRF. Corrupt/Missing Data : \n"
                                + e.toString() + "\n"
-                               + gui.UserParameter.instance().htip,
+//                               + gui.UserParameter.instance().htip
+                               ,
                                HOVerwaltung.instance().getLanguageString("Fehler"),
                                JOptionPane.ERROR_MESSAGE);
-            MyConnector.instance().setAuthenticated(false);
+//            MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
             return false;
         }
@@ -360,13 +365,18 @@ public class OnlineWorker {
         String strDateFirst = MyHelper.Calendar2HTString(tempBeginn);
         String strDateLast = MyHelper.Calendar2HTString(tempEnd);
 
-        //Sicherstellen das HO! eingeloggt ist
-        assureLogin();
+//        //Sicherstellen das HO! eingeloggt ist
+//        assureLogin();
+//
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
-        //falls immer noch nicht eingeloggt raus
-        if (!MyConnector.instance().isAuthenticated()) {
-            return false;
-        }
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
         //Wairt Dialog zeigen
         waitDialog = new LoginWaitDialog(HOMainFrame.instance());
@@ -381,17 +391,18 @@ public class OnlineWorker {
                 //Info
                 HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                                + " : Error fetching MatchArchiv : "
-                                                                                               + gui.UserParameter
-                                                                                                 .instance().htip,
+//                                                                                             + gui.UserParameter.instance().htip
+                                                                                               ,
                                                                                                InfoPanel.FEHLERFARBE);
                 Helper.showMessage(HOMainFrame
                                                               .instance(),
                                                               HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                               + " : Error fetching MatchArchiv : "
-                                                              + gui.UserParameter.instance().htip,
+//                                                              + gui.UserParameter.instance().htip
+                                                              ,
                                                               HOVerwaltung.instance().getLanguageString("Fehler"),
                                                               JOptionPane.ERROR_MESSAGE);
-                MyConnector.instance().setAuthenticated(false);
+//                MyConnector.instance().setAuthenticated(false);
                 waitDialog.setVisible(false);
                 return false;
             }
@@ -458,13 +469,13 @@ public class OnlineWorker {
         boolean success = true;
         Matchdetails details = null;
 
-        //Sicherstellen das HO! eingeloggt ist
-        assureLogin();
-
-        //falls immer noch nicht eingeloggt raus
-        if (!MyConnector.instance().isAuthenticated()) {
-            return false;
-        }
+//        //Sicherstellen das HO! eingeloggt ist
+//        assureLogin();
+//
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
         //Wait Dialog zeigen
         waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
@@ -502,13 +513,13 @@ public class OnlineWorker {
         String matchASP = "";
         MatchKurzInfo[] matches = null;
 
-        //Sicherstellen das HO! eingeloggt ist
-        assureLogin();
-
-        //falls immer noch nicht eingeloggt raus
-        if (!MyConnector.instance().isAuthenticated()) {
-            return false;
-        }
+//        //Sicherstellen das HO! eingeloggt ist
+//        assureLogin();
+//
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
         //Wairt Dialog zeigen
         waitDialog = new LoginWaitDialog(HOMainFrame.instance());
@@ -522,15 +533,17 @@ public class OnlineWorker {
             //Info
             HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                     + " : Error fetching MatchesASP : "
-                                                                    + gui.UserParameter.instance().htip,
+//                                                                    + gui.UserParameter.instance().htip
+                                                                    ,
                                                                   InfoPanel.FEHLERFARBE);
             Helper.showMessage(HOMainFrame.instance(),
                                HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                + " : Error fetching MatchesASP : "
-                               + gui.UserParameter.instance().htip,
+//                               + gui.UserParameter.instance().htip
+                               ,
                                HOVerwaltung.instance().getLanguageString("Fehler"),
                                JOptionPane.ERROR_MESSAGE);
-            MyConnector.instance().setAuthenticated(false);
+//            MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
             return false;
         }
@@ -590,13 +603,13 @@ public class OnlineWorker {
         MatchLineup lineUp1 = null;
         MatchLineup lineUp2 = null;
 
-        //Sicherstellen das HO! eingeloggt ist
-        assureLogin();
-
-        //falls immer noch nicht eingeloggt raus
-        if (!MyConnector.instance().isAuthenticated()) {
-            return false;
-        }
+//        //Sicherstellen das HO! eingeloggt ist
+//        assureLogin();
+//
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
         //Wait Dialog zeigen
         waitDialog = new LoginWaitDialog(HOMainFrame.instance());
@@ -660,13 +673,18 @@ public class OnlineWorker {
     public final boolean getSpielplan(int season, int ligaID) {
         String leagueFixtures = "";
 
-        //Sicherstellen das HO! eingeloggt ist
-        assureLogin();
+//        //Sicherstellen das HO! eingeloggt ist
+//        assureLogin();
+//
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
-        //falls immer noch nicht eingeloggt raus
-        if (!MyConnector.instance().isAuthenticated()) {
-            return false;
-        }
+//        //falls immer noch nicht eingeloggt raus
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            return false;
+//        }
 
         //Wairt Dialog zeigen
         waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
@@ -681,17 +699,18 @@ public class OnlineWorker {
             HOLogger.instance().log(getClass(),e);
             HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error fetching leagueFixture xml. Corrupt/Missing Data :"
-                                                                                           + gui.UserParameter
-                                                                                             .instance().htip,
+//                                                                                         + gui.UserParameter.instance().htip
+                                                                                           ,
                                                                                            InfoPanel.FEHLERFARBE);
             Helper.showMessage(HOMainFrame
                                                           .instance(),
                                                           HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + " : Error fetching leagueFixture xml. Corrupt/Missing Data :"
-                                                          + gui.UserParameter.instance().htip,
+//                                                          + gui.UserParameter.instance().htip
+                                                          ,
                                                           HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
-            MyConnector.instance().setAuthenticated(false);
+//            MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
             return false;
         }
@@ -741,12 +760,12 @@ public class OnlineWorker {
     ////////////////////////////////////////////////////////////////////////////////
     //LOGIN
     ////////////////////////////////////////////////////////////////////////////////
-    protected final void assureLogin() {
-        if (!MyConnector.instance().isAuthenticated()) {
-            final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
-            ld.setVisible(true);
-        }
-    }
+//    protected final void assureLogin() {
+//        if (!MyConnector.instance().isAuthenticated()) {
+//            final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
+//            ld.setVisible(true);
+//        }
+//    }
 
     /**
      * TODO Missing Method Documentation
@@ -782,17 +801,18 @@ public class OnlineWorker {
             //Info
             HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + ": Error fetching Matchdetails XML.: "
-                                                                                           + gui.UserParameter
-                                                                                             .instance().htip,
+//                                                                                         + gui.UserParameter.instance().htip
+                                                                                           ,
                                                                                            InfoPanel.FEHLERFARBE);
             Helper.showMessage(HOMainFrame
                                                           .instance(),
                                                           HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + ": Error fetching Matchdetails XML.: "
-                                                          + gui.UserParameter.instance().htip,
+//                                                          + gui.UserParameter.instance().htip
+                                                          ,
                                                           HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
-            MyConnector.instance().setAuthenticated(false);
+//            MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
             return null;
         }
@@ -818,17 +838,18 @@ public class OnlineWorker {
             //Info
             HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                            + " : Error fetching Matchlineup :"
-                                                                                           + gui.UserParameter
-                                                                                             .instance().htip,
+//                                                                                         + gui.UserParameter.instance().htip
+                                                                                           ,
                                                                                            InfoPanel.FEHLERFARBE);
             Helper.showMessage(HOMainFrame
                                                           .instance(),
                                                           HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                           + " : Error fetching Matchlineup :"
-                                                          + gui.UserParameter.instance().htip,
+//                                                          + gui.UserParameter.instance().htip
+                                                          ,
                                                           HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
-            MyConnector.instance().setAuthenticated(false);
+//            MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
             return null;
         }

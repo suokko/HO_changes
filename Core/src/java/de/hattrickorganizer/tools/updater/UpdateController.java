@@ -284,10 +284,10 @@ public final class UpdateController {
         String content = "";
 
         try {
-            if ((UserParameter.instance().LoginName == null)
-                || (UserParameter.instance().LoginName.length() == 0)) {
-                showDialog = true;
-            }
+//            if ((UserParameter.instance().LoginName == null)
+//                || (UserParameter.instance().LoginName.length() == 0)) {
+//                showDialog = true;
+//            }
 
             content = MyConnector.instance().getUsalWebPage(url, showDialog);
         } catch (Exception ex) {
@@ -389,7 +389,7 @@ public final class UpdateController {
 	public static void updateUsers() {
 		try {
 			final String s =
-				MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/users.html", false, false, true);
+				MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/users.html", false, true);
 
 			final Properties pr = new Properties();
 			pr.load(new ByteArrayInputStream(s.getBytes()));

@@ -104,7 +104,7 @@ public final class HOMainFrame extends JFrame
 	 */
 
 	/** HO Version */
-	public static final double VERSION = 1.428d;
+	public static final double VERSION = 1.429d;
 
 	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;
@@ -114,7 +114,7 @@ public final class HOMainFrame extends JFrame
 	 * set to empty string for no warning
 	 * (DEVELOPMENT versions do not show the nag screen)
 	 */
-	private static final String WARN_DATE = "2011-07-24 00:00:00.0";
+	private static final String WARN_DATE = "2012-07-24 00:00:00.0";
 
 	public static final int SPRACHVERSION = 2; // language version
 	private static HOMainFrame m_clHOMainFrame;
@@ -714,14 +714,14 @@ public final class HOMainFrame extends JFrame
 
 		HOLogger.instance().debug(getClass(), "Disconnected");
 
-		//Ausloggen
-		try {
-			if ((UserParameter.instance().logoutOnExit)
-				&& (MyConnector.instance().isAuthenticated())) {
-				MyConnector.instance().logout();
-			}
-		} catch (Exception e) {
-		}
+//		//Ausloggen
+//		try {
+//			if ((UserParameter.instance().logoutOnExit)
+//				&& (MyConnector.instance().isAuthenticated())) {
+//				MyConnector.instance().logout();
+//			}
+//		} catch (Exception e) {
+//		}
 
 		HOLogger.instance().debug(getClass(), "Shutdown complete!");
 		//Dispose führt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
