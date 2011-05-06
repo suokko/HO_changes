@@ -1799,11 +1799,11 @@ public class Helper extends LanguageFiles {
      */
     public static boolean isUserMatch(String matchID) {
         try {
-            if (!de.hattrickorganizer.net.MyConnector.instance().isAuthenticated()) {
-                final de.hattrickorganizer.gui.login.LoginDialog ld =
-                	new de.hattrickorganizer.gui.login.LoginDialog(HOMainFrame.instance());
-                ld.setVisible(true);
-            }
+//            if (!de.hattrickorganizer.net.MyConnector.instance().isAuthenticated()) {
+//                final de.hattrickorganizer.gui.login.LoginDialog ld =
+//                	new de.hattrickorganizer.gui.login.LoginDialog(HOMainFrame.instance());
+//                ld.setVisible(true);
+//            }
 
             final String input = de.hattrickorganizer.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID));
             final de.hattrickorganizer.model.matches.Matchdetails mdetails = new de.hattrickorganizer.logik.xml.xmlMatchdetailsParser()

@@ -116,9 +116,9 @@ public class UpdateHelper {
 
         try {
             FileOutputStream outStream = new FileOutputStream(targetFile);
-            if ((gui.UserParameter.instance().LoginName == null) || (gui.UserParameter.instance().LoginName.length() == 0)) {
-                showDialog = true;
-            }
+//            if ((gui.UserParameter.instance().LoginName == null) || (gui.UserParameter.instance().LoginName.length() == 0)) {
+//                showDialog = true;
+//            }
 
             InputStream in = MyConnector.instance().getFileFromWeb(urlName, showDialog, true);
             BufferedOutputStream out = new BufferedOutputStream(outStream);

@@ -27,6 +27,7 @@ import javax.swing.SpinnerDateModel;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.login.ProxyDialog;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.utils.HOTheme;
@@ -47,6 +48,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	// ----------------------------------------------------------------------------
 	private JButton m_jbAbbrechen = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
 	final private JButton m_jbDownload = new JButton(HOVerwaltung.instance().getLanguageString("Download"));
+	private JButton m_jbProxy = new JButton("Configure Proxy"); // TODO proper text
 	private JCheckBox m_jchAlterSpielplan = new JCheckBox(HOVerwaltung.instance().getLanguageString("FixturesDownload"), false);
 	private JCheckBox m_jchEigenenSpiele = new JCheckBox(HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"),
 			gui.UserParameter.instance().currentMatchlist);
@@ -83,6 +85,8 @@ public class DownloadDialog extends JDialog implements ActionListener {
 			setVisible(false);
 		} else if (e.getSource().equals(m_jbAbbrechen)) {
 			setVisible(false);
+		} else if (e.getSource().equals(m_jbProxy)) {
+			new ProxyDialog(HOMainFrame.instance());
 		}
 	}
 
@@ -176,6 +180,14 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		buttonKeys.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,true), "released");
 
 		getContentPane().add(m_jbDownload);
+		
+		m_jbProxy.setToolTipText("Proxy configuration"); // TODO
+		m_jbProxy.addActionListener(this);
+		m_jbProxy.setFont(m_jbProxy.getFont().deriveFont(Font.BOLD));
+		m_jbProxy.setSize(140, 30);
+		m_jbProxy.setLocation(195, 220);
+		
+		getContentPane().add(m_jbProxy);
 
 		m_jbAbbrechen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
 		m_jbAbbrechen.addActionListener(this);
