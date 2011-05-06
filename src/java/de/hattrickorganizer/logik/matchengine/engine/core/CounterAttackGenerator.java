@@ -57,7 +57,7 @@ public class CounterAttackGenerator extends BaseActionGenerator {
 		ca.setArea(getArea(team.getTacticType(), team.getTacticLevel()));
 		ca.setHomeTeam(team.isHome());
 		ca.setScore(isScore(team, ca.getArea()));
-		HOLogger.instance().log(getClass(),"CA");
+//		HOLogger.instance().log(getClass(),"CA");
 		return ca;
 	}
 
