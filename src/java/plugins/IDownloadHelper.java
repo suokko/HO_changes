@@ -35,9 +35,10 @@ public interface IDownloadHelper {
       throws IOException;
 
     /**
-     * downloads an xml File from hattrick
+     * downloads an xml File from hattrick. 
+     * Syntax is updated with OAuth change, but old version should still work.
      *
-     * @param file ex. = /common/leagueDetails.asp?outputType=XML&actionType=view
+     * @param file ex.: "?file=leaguedetails&leagueLevelUnitID=100"
      *
      * @return the complete file as String
      *

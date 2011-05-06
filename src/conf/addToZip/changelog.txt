@@ -1,5 +1,9 @@
 Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.429
+====================
+- Authentication is now done through oAuth.
+
 Changelist HO! 1.428
 ====================
 - The model is switched to the 553 lineup model. This has affected a lot of the code

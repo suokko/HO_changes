@@ -15,22 +15,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 import javax.swing.JOptionPane;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.basic.DefaultOAuthConsumer;
 import sun.misc.BASE64Encoder;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.login.LoginDialog;
+import de.hattrickorganizer.gui.login.OAuthDialog;
 import de.hattrickorganizer.logik.xml.XMLExtensionParser;
 import de.hattrickorganizer.logik.xml.XMLNewsParser;
 import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
@@ -39,7 +35,6 @@ import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 /**
  * DOCUMENT ME!
@@ -49,30 +44,37 @@ import de.hattrickorganizer.tools.xml.XMLManager;
 public class MyConnector implements plugins.IDownloadHelper {
 	//~ Static fields/initializers -----------------------------------------------------------------
 	static final private int chppID = 3330;
-	static final private String chppKey = "F283F8D8-9589-428D-87CD-96A2D9A73451";
-	static final private String htUrl = "www.hattrick.org";
+//	static final private String chppKey = "F283F8D8-9589-428D-87CD-96A2D9A73451";
+//	static final private String htUrl = "www.hattrick.org";
 //	static final private String htUrl = "stage.hattrick.org";
+	static final private String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
 	public static String m_sIDENTIFIER =
 		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
 	private final static String VERSION_MATCHORDERS = "1.6";
 	private final static String VERSION_TRAINING = "1.5";
 	private final static String VERSION_MATCHLINEUP = "1.4";
-
+	
+	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
+	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
-	private String m_sCookie;
-	private Map<String, String> cookie = new HashMap<String, String>();
+//	private String m_sCookie;
+//	private Map<String, String> cookie = new HashMap<String, String>();
 	private String m_sProxyHost = "";
 	private String m_sProxyPort = "";
-	private String m_sUserName = "";
-	private String m_sUserPwd = "";
+//	private String m_sUserName = "";
+//	private String m_sUserPwd = "";
 	private boolean m_bAuthenticated;
 	private boolean m_bProxyAuthentifactionNeeded;
 	private boolean m_bUseProxy;
 	private int m_iUserID = -1;
+
+	private OAuthConsumer m_OAConsumer;
+	private OAuthProvider m_OAProvider;
+	
 	final static private boolean DEBUGSAVE = false;
 	final static private String SAVEDIR = "C:/temp/ho/";
 
@@ -81,6 +83,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * Creates a new instance of MyConnector.
 	 */
 	private MyConnector() {
+		m_OAConsumer = new DefaultOAuthConsumer(MyHelper.decryptString(CONSUMER_KEY),
+	            MyHelper.decryptString(CONSUMER_SECRET));
+		m_OAConsumer.setTokenWithSecret(MyHelper.decryptString(gui.UserParameter.instance().AccessToken), 
+											MyHelper.decryptString(gui.UserParameter.instance().TokenSecret));
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
@@ -129,104 +135,102 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @throws IOException
 	 */
 	public String getArena(int arenaId) throws IOException {
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=arenadetails";
+		String url = htUrl +"?file=arenadetails";
 
 		if (arenaId > 0)
 			url += "&arenaID="+arenaId;
-		return getPage(url, true);
+		return getPage(url);
 	}
 
-	/**
-	 * um nach einem Fehler zu resetten
-	 */
-	public void setAuthenticated(boolean value) {
-		m_bAuthenticated = value;
-		m_sCookie = null;
-		cookie = new HashMap<String, String>();
-	}
+//	/**
+//	 * um nach einem Fehler zu resetten
+//	 */
+//	public void setAuthenticated(boolean value) {
+//		m_bAuthenticated = value;
+//		m_sCookie = null;
+//		cookie = new HashMap<String, String>();
+//	}
+//
+//	/**
+//	 * Getter for m_bAuthenticated.
+//	 */
+//	public boolean isAuthenticated() {
+//		return m_bAuthenticated;
+//	}
 
-	/**
-	 * Getter for m_bAuthenticated.
-	 */
-	public boolean isAuthenticated() {
-		return m_bAuthenticated;
-	}
+//	/**
+//	 * Get and extract the cookies.
+//	 */
+//	private void getCookie() throws IOException {
+//		final HttpURLConnection httpurlconnection =
+//			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip)).openConnection();
+//		httpurlconnection.setRequestMethod("GET");
+//		infoHO(httpurlconnection);
+//
+//		HttpURLConnection.setFollowRedirects(true);
+//		httpurlconnection.connect();
+//		extractCookie(httpurlconnection.getHeaderField("set-cookie"));
+//
+//		httpurlconnection.disconnect();
+//	}
 
-	/**
-	 * Get and extract the cookies.
-	 */
-	private void getCookie() throws IOException {
-		final HttpURLConnection httpurlconnection =
-			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip)).openConnection();
-		httpurlconnection.setRequestMethod("GET");
-		infoHO(httpurlconnection);
-
-		HttpURLConnection.setFollowRedirects(true);
-		httpurlconnection.connect();
-		extractCookie(httpurlconnection.getHeaderField("set-cookie"));
-
-		httpurlconnection.disconnect();
-	}
-
-	private void extractCookie(String v) {
-		if (v != null) {
-			m_sCookie = v;
-		}
-		if (m_sCookie == null) {
-			return;
-		}
-		StringTokenizer st = new StringTokenizer(m_sCookie, ";");
-
-		// the specification dictates that the first name/value pair
-		// in the string is the cookie name and value, so let's handle
-		// them as a special case:
-		if (st.hasMoreTokens()) {
-			String token = st.nextToken();
-			String name = token.substring(0, token.indexOf("="));
-			String value = token.substring(token.indexOf("=") + 1, token.length());
-			cookie.put(name, value);
-		}
-
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-            if(token.indexOf("=")>0)
-			    cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
-            else {
-                cookie.put(token, "");
-            }
-		}
-	}
+//	private void extractCookie(String v) {
+//		if (v != null) {
+//			m_sCookie = v;
+//		}
+//		if (m_sCookie == null) {
+//			return;
+//		}
+//		StringTokenizer st = new StringTokenizer(m_sCookie, ";");
+//
+//		// the specification dictates that the first name/value pair
+//		// in the string is the cookie name and value, so let's handle
+//		// them as a special case:
+//		if (st.hasMoreTokens()) {
+//			String token = st.nextToken();
+//			String name = token.substring(0, token.indexOf("="));
+//			String value = token.substring(token.indexOf("=") + 1, token.length());
+//			cookie.put(name, value);
+//		}
+//
+//		while (st.hasMoreTokens()) {
+//			String token = st.nextToken();
+//            if(token.indexOf("=")>0)
+//			    cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
+//            else {
+//                cookie.put(token, "");
+//            }
+//		}
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//Cookie Funcs
 	////////////////////////////////////////////////////////////////////////////////
-	public boolean isCookieSet() {
-		return m_sCookie != null;
-	}
+//	public boolean isCookieSet() {
+//		return m_sCookie != null;
+//	}
 
 	/**
 	 * holt die Finanzen
 	 */
 	public String getEconomy() throws IOException {
-		final String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=economy";
+		final String url = htUrl + "?file=economy";
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
-	/**
-	 * lädt die IP Adress-Seite
-	 */
-	public String getHattrickIPAdress() throws IOException {
-		final String surl = "http://"+htUrl+"/common/chppxml.axd?file=servers";
-		final de.hattrickorganizer.logik.xml.XMLMenuParser worker =
-			new de.hattrickorganizer.logik.xml.XMLMenuParser();
-		final String page = getWebPage(surl, false);
-
-		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance().getLanguageString("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
-		return worker.parseMenuFromString(page);
-	}
+//	/**
+//	 * lädt die IP Adress-Seite
+//	 */
+//	public String getHattrickIPAdress() throws IOException {
+//		final String surl = "http://"+htUrl+"/chppxml.ashx?common/chppxml.axd?file=servers";
+//		final de.hattrickorganizer.logik.xml.XMLMenuParser worker =
+//			new de.hattrickorganizer.logik.xml.XMLMenuParser();
+//		final String page = getWebPage(surl);
+//
+//		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance().getLanguageString("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
+//		return worker.parseMenuFromString(page);
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//get-XML-Files
@@ -234,40 +238,49 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	/**
 	 * downloads an xml File from hattrick
-	 *
-	 * @param file ex. = /common/leagueDetails.asp?outputType=XML&actionType=view
+	 * Behavior has changed with oauth, but we try to convert old syntaxes.
+	 * 
+	 * @param file ex. = "?file=leaguedetails&[leagueLevelUnitID = integer]"
 	 *
 	 * @return the complete file as String
 	 */
 	public String getHattrickXMLFile(String file) throws IOException {
-		if (!isAuthenticated()) {
-			final de.hattrickorganizer.gui.login.LoginDialog ld =
-				new de.hattrickorganizer.gui.login.LoginDialog(
-					de.hattrickorganizer.gui.HOMainFrame.instance());
-			ld.setVisible(true);
-		}
+//		if (!isAuthenticated()) {
+//			final de.hattrickorganizer.gui.login.LoginDialog ld =
+//				new de.hattrickorganizer.gui.login.LoginDialog(
+//					de.hattrickorganizer.gui.HOMainFrame.instance());
+//			ld.setVisible(true);
+//		}
 
-		final String url = "http://" + gui.UserParameter.instance().htip + file;
-
-		return getPage(url, true);
+		String url;
+		
+		// An attempt at solving old syntaxes.
+		
+		if (file.contains("chppxml.axd")) {
+			file = file.substring(file.indexOf("?"));
+		} else if (file.contains(".asp")) {
+			String s = file.substring(0, file.indexOf("?")).replace(".asp", "").replace("/common/", "");
+			file = "?file=" + s + "&" + file.substring(file.indexOf("?")+1); 
+		} 
+		
+		url =  htUrl + file;
+		return getPage(url);
 	}
 
 	/**
 	 * lädt die Tabelle
 	 */
 	public String getLeagueDetails() throws IOException {
-		final String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=leaguedetails";
+		final String url = htUrl + "?file=leaguedetails";
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/**
 	 * lädt den Spielplan
 	 */
 	public String getLeagueFixtures(int season, int ligaID) throws IOException {
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=leaguefixtures";
+		String url = htUrl + "?file=leaguefixtures";
 
 		if (season > 0) {
 			url += ("&season=" + season);
@@ -277,7 +290,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&leagueLevelUnitID=" + ligaID);
 		}
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/**
@@ -285,8 +298,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchArchiv(int teamId, String firstDate, String lastDate)
 		throws IOException {
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchesarchive";
+		String url = htUrl + "?file=matchesarchive";
 
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
@@ -300,15 +312,14 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&LastMatchDate=" + lastDate);
 		}
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchlineup&version=" +
+		String url = htUrl + "?file=matchlineup&version=" +
 				VERSION_MATCHLINEUP;
 
 		if (matchId > 0) {
@@ -320,7 +331,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 		
 		if (DEBUGSAVE) {
-			final String ret = getPage(url, true);
+			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR+"matchlineup_m"
 					+ matchId + "_t" + teamId + "_"
 					+ System.currentTimeMillis() + ".xml"));
@@ -329,7 +340,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			fw.close();
 			return ret;
 		} else {
-			return getPage(url, true);
+			return getPage(url);
 		}
 	}
 
@@ -337,11 +348,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die Aufstellung zu einem Spiel
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
-		String url = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=matchorders&version="
+		String url = htUrl + "?file=matchorders&version="
 				+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
 
 		if (DEBUGSAVE) {
-			final String ret = getPage(url, true);
+			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchorders_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
 			fw.write(ret);
@@ -349,7 +360,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			fw.close();
 			return ret;
 		} else {
-			return getPage(url, true);
+			return getPage(url);
 		}
 	}
 
@@ -357,15 +368,14 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchdetails(int matchId) throws IOException {
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matchdetails";
+		String url = htUrl + "?file=matchdetails";
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
 		url += "&matchEvents=true";
 
 		if (DEBUGSAVE) {
-			final String ret = getPage(url, true);
+			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchdetails_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
 			fw.write(ret);
@@ -373,7 +383,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			fw.close();
 			return ret;
 		} else {
-			return getPage(url, true);
+			return getPage(url);
 		}
 	}
 
@@ -381,8 +391,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die matches.asp seite als xml
 	 */
 	public String getMatchesASP(int teamId, boolean forceRefresh) throws IOException {
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/chppxml.axd?file=matches";
+		String url = htUrl + "?file=matches";
 
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
@@ -392,50 +401,51 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += "&actionType=refreshCache";
 		}
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//internel getPage Funcs
 	////////////////////////////////////////////////////////////////////////////////
 	public String getPage(String url) throws IOException {
-		return getPage(url, false);
+		return getWebPage(url);
 	}
 
-	/**
-	 * Get the content from a web page as string.
-	 */
-	public String getPage(String surl, boolean needLogin) throws IOException {
-		if (needLogin && !isAuthenticated()) {
-			login();
-		}
-
-		if (!isCookieSet()) {
-			getCookie();
-		}
-
-		String page = getWebPage(surl, true);
-		if ( (page!=null) && (page.length()>1) ) {
-			return page;
-		}
-
-		// Timeout on an Hattrick page
-		if (needLogin) {
-			login();
-			getCookie();
-			return getWebPage(surl, true);
-		}
-		return "";
-	}
+//	/**
+//	 * Get the content from a web page as string.
+//	 */
+//	public String getPage(String surl, boolean needLogin) throws IOException {
+//
+//		
+//		if (needLogin && !isAuthenticated()) {
+//			login();
+//		}
+//
+//		if (!isCookieSet()) {
+//			getCookie();
+//		}
+//
+//		String page = getWebPage(surl);
+//		if ( (page!=null) && (page.length()>1) ) {
+//			return page;
+//		}
+//
+//		// Timeout on an Hattrick page
+//		if (needLogin) {
+//		login();
+//			getCookie();
+//			return getWebPage(surl);
+//		}
+//		return "";
+//	}
 
 	/**
 	 * holt die Spielerdaten
 	 */
 	public String getPlayersAsp() throws IOException {
-		final String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=players";
+		final String url = htUrl + "?file=players";
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/**
@@ -539,7 +549,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		ServerVerweis[] server = null;
 
 		try {
-			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList", false);
+			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList");
 			list = MyHelper.generateStringArray(s, ';');
 
 			if ((s != null) && (!s.trim().equals("")) && (s.length() > 0)) {
@@ -564,23 +574,21 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * holt die Teamdetails
 	 */
 	public String getTeamdetails(int teamId) throws IOException {
-		String url =
-			"http://"+ gui.UserParameter.instance().htip + "/common/chppxml.axd?file=teamdetails";
+		String url = htUrl + "?file=teamdetails";
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/**
 	 * Get the training XML data.
 	 */
 	public String getTraining() throws IOException {
-		final String url = "http://" + gui.UserParameter.instance().htip
-				+ "/common/chppxml.axd?file=training&version="+ VERSION_TRAINING;
+		final String url =  htUrl + "?file=training&version="+ VERSION_TRAINING;
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -656,17 +664,16 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die Tabelle
 	 */
 	public String getTransferCompare(int playerID) throws IOException {
-		if (!isAuthenticated()) {
-			final de.hattrickorganizer.gui.login.LoginDialog ld =
-				new de.hattrickorganizer.gui.login.LoginDialog(
-					de.hattrickorganizer.gui.HOMainFrame.instance());
-			ld.setVisible(true);
-		}
+//		if (!isAuthenticated()) {
+//			final de.hattrickorganizer.gui.login.LoginDialog ld =
+//				new de.hattrickorganizer.gui.login.LoginDialog(
+//					de.hattrickorganizer.gui.HOMainFrame.instance());
+//			ld.setVisible(true);
+//		}
 
-		String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=playerdetails&playerID="+playerID;
+		String url =  htUrl + "?file=playerdetails&playerID="+playerID;
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/**
@@ -691,60 +698,59 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return m_bUseProxy;
 	}
 
-	/**
-	 * Setter for property m_sUserName.
-	 *
-	 * @param m_sUserName New value of property m_sUserName.
-	 */
-	public void setUserName(java.lang.String m_sUserName) {
-		this.m_sUserName = m_sUserName;
-	}
-
-	/**
-	 * Getter for property m_sUserName.
-	 *
-	 * @return Value of property m_sUserName.
-	 */
-	public java.lang.String getUserName() {
-		return m_sUserName;
-	}
-
-	/**
-	 * Setter for property m_sUserPwd.
-	 *
-	 * @param m_sUserPwd New value of property m_sUserPwd.
-	 */
-	public void setUserPwd(java.lang.String m_sUserPwd) {
-		this.m_sUserPwd = m_sUserPwd;
-	}
-
-	/**
-	 * Getter for property m_sUserPwd.
-	 *
-	 * @return Value of property m_sUserPwd.
-	 */
-	public java.lang.String getUserPwd() {
-		return m_sUserPwd;
-	}
+//	/**
+//	 * Setter for property m_sUserName.
+//	 *
+//	 * @param m_sUserName New value of property m_sUserName.
+//	 */
+//	public void setUserName(java.lang.String m_sUserName) {
+//		this.m_sUserName = m_sUserName;
+//	}
+//
+//	/**
+//	 * Getter for property m_sUserName.
+//	 *
+//	 * @return Value of property m_sUserName.
+//	 */
+//	public java.lang.String getUserName() {
+//		return m_sUserName;
+//	}
+//
+//	/**
+//	 * Setter for property m_sUserPwd.
+//	 *
+//	 * @param m_sUserPwd New value of property m_sUserPwd.
+//	 */
+//	public void setUserPwd(java.lang.String m_sUserPwd) {
+//		this.m_sUserPwd = m_sUserPwd;
+//	}
+//
+//	/**
+//	 * Getter for property m_sUserPwd.
+//	 *
+//	 * @return Value of property m_sUserPwd.
+//	 */
+//	public java.lang.String getUserPwd() {
+//		return m_sUserPwd;
+//	}
 
 	/**
 	 * holt die Vereinsdaten
 	 */
 	public String getVerein() throws IOException {
-		final String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=club";
-		return getPage(url, true);
+		final String url = htUrl + "?file=club";
+		return getPage(url);
 	}
 
-	public String getWebPage(String surl, boolean needCookie) throws IOException {
-		return getWebPage(surl, needCookie, true, false); // show connect error
+	public String getWebPage(String surl) throws IOException {
+		return getWebPage(surl, true, false); // show connect error
 	}
 
 	/**
 	 * Get the content of a web page in one string.
 	 */
-	public String getWebPage(String surl, boolean needCookie, boolean showError, boolean shortTimeOut) throws IOException {
-		final InputStream resultingInputStream = getWebFile(surl, needCookie, showError, shortTimeOut);
+	public String getWebPage(String surl, boolean showError, boolean shortTimeOut) throws IOException {
+		final InputStream resultingInputStream = getWebFile(surl, showError, shortTimeOut);
 
 		if (resultingInputStream != null) {
 			final BufferedReader bufferedreader =
@@ -775,10 +781,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * holt die Weltdaten
 	 */
 	public String getWorldDetails() throws IOException {
-		final String url =
-			"http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=worlddetails";
+		final String url =  htUrl + "?file=worlddetails";
 
-		return getPage(url, true);
+		return getPage(url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -787,7 +792,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public double getLatestVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getPluginSite()+"/version.htm", false, false, true);
+				getWebPage(MyConnector.getPluginSite()+"/version.htm", false, true);
 			double d = de.hattrickorganizer.gui.HOMainFrame.VERSION;
 
 			try {
@@ -804,7 +809,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public Extension getEpvVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getResourceSite()+"/downloads/epv.xml", false);
+				getWebPage(MyConnector.getResourceSite()+"/downloads/epv.xml");
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
@@ -816,7 +821,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public Extension getRatingsVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getResourceSite()+"/downloads/ratings.xml", false);
+				getWebPage(MyConnector.getResourceSite()+"/downloads/ratings.xml");
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
@@ -827,7 +832,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	public News getLatestNews() {
 		try {
-			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false, false, true);
+			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false, true);
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
@@ -860,12 +865,12 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String xmlFile = "";
 
 		try {
-			if (!isAuthenticated()) {
-				final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
-				ld.setVisible(true);
-			}
-			xmlFile = "http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=teamdetails&teamID=" + teamID;
-			xmlFile = getPage(xmlFile, true);
+//			if (!isAuthenticated()) {
+//				final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
+//				ld.setVisible(true);
+//			}
+			xmlFile =  htUrl + "?file=teamdetails&teamID=" + teamID;
+			xmlFile = getPage(xmlFile);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
 			return "-1";
@@ -874,202 +879,202 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return new xmlTeamDetailsParser().fetchRegionID(xmlFile);
 	}
 
-	/**
-	 * Check, if a security code is set (actionType checksecuritycode).
-	 */
-	public boolean hasSecLogin() throws Exception {
-		boolean checkOK;
-		try {
-			String url =
-				"http://"
-				+ gui.UserParameter.instance().htip
-				+ "/common/chppxml.axd?file=login&actionType=checksecuritycode&chppID="+chppID
-				+ "&chppKey="+chppKey+"&loginname="+m_sUserName;
-
-			final Document doc = XMLManager.instance().parseString(getPage(url, false));
-			Element ele = null;
-			Element tmpEle = null;
-
-			//get Root element :
-			ele = doc.getDocumentElement();
-
-			//get specific sub element of root element
-			tmpEle = (Element) ele.getElementsByTagName("HasSecurityCode").item(0);
-
-			//get it's value
-			String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-			checkOK = value.trim().equalsIgnoreCase("True");
-
-			//get specific sub element of team element
-			//tmpEle = (Element) ele.getElementsByTagName("ActionSuccessful").item(0);
-			//tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
-
-			//04.09.2008 aik: diabled the 2nd check, IsAuthenticated is always False upon initial check
-			//get it's value
-			//value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-			//checkOK = checkOK && value.trim().equalsIgnoreCase("True");
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),e);
-			checkOK = false;
-			throw e;
-		}
-		return checkOK;
-	}
+//	/**
+//	 * Check, if a security code is set (actionType checksecuritycode).
+//	 */
+//	public boolean hasSecLogin() throws Exception {
+//		boolean checkOK;
+//		try {
+//			String url =
+//				"http://"
+//				+ gui.UserParameter.instance().htip
+//				+ "/common/chppxml.axd?file=login&actionType=checksecuritycode&chppID="+chppID
+//				+ "&chppKey="+chppKey+"&loginname="+m_sUserName;
+//
+//			final Document doc = XMLManager.instance().parseString(getPage(url, false));
+//			Element ele = null;
+//			Element tmpEle = null;
+//
+//			//get Root element :
+//			ele = doc.getDocumentElement();
+//
+//			//get specific sub element of root element
+//			tmpEle = (Element) ele.getElementsByTagName("HasSecurityCode").item(0);
+//
+//			//get it's value
+//			String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+//			checkOK = value.trim().equalsIgnoreCase("True");
+//
+//			//get specific sub element of team element
+//			//tmpEle = (Element) ele.getElementsByTagName("ActionSuccessful").item(0);
+//			//tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
+//
+//			//04.09.2008 aik: diabled the 2nd check, IsAuthenticated is always False upon initial check
+//			//get it's value
+//			//value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+//			//checkOK = checkOK && value.trim().equalsIgnoreCase("True");
+//		} catch (Exception e) {
+//			HOLogger.instance().log(getClass(),e);
+//			checkOK = false;
+//			throw e;
+//		}
+//		return checkOK;
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//HT-LOGIN / Logout
 	////////////////////////////////////////////////////////////////////////////////
-	public boolean login() throws IOException {
-		String page = "";
-		boolean loggedIn = false;
+//	public boolean login() throws IOException {
+//		String page = "";
+//		boolean loggedIn = false;
+//
+////		if ((m_sUserPwd == null) || (m_sUserPwd.length() == 0)) {
+////			throw new IOException("Password not set");
+////		}
+////
+////		if (!isCookieSet()) {
+////			getCookie();
+////		}
+//
+//		final HttpURLConnection httpurlconnection =
+//			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip
+//				+ "/common/chppxml.axd?file=login&actionType=login&loginname=" + m_sUserName
+//				+ "&readonlypassword=" + m_sUserPwd + "&chppID=" + chppID + "&chppKey=" + chppKey)).openConnection();
+//
+////		httpurlconnection.setRequestMethod("GET");
+////
+////		httpurlconnection.setRequestProperty("cookie", getCookieString());
+//
+//		infoHO(httpurlconnection);
+//
+//		HttpURLConnection.setFollowRedirects(true);
+//		httpurlconnection.connect();
+//
+////		String s2 = httpurlconnection.getHeaderField("set-cookie");
+////
+////		if ((s2 != null) && !s2.equals(m_sCookie)) {
+////			//HOLogger.instance().log(getClass()," got a new Cookie: " + s2);
+////			extractCookie(s2);
+////		}
+//
+//		final String encoding = httpurlconnection.getContentEncoding();
+//		InputStream resultingInputStream = null;
+//
+//		//create the appropriate stream wrapper based on
+//		//the encoding type
+//		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
+//			resultingInputStream =
+//				new GZIPInputStream(httpurlconnection.getInputStream());
+//			HOLogger.instance().log(getClass()," Read GZIP.");
+//		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
+//			resultingInputStream =
+//				new InflaterInputStream(
+//					httpurlconnection.getInputStream(),
+//					new java.util.zip.Inflater(true));
+//			HOLogger.instance().log(getClass()," Read Deflated.");
+//		} else {
+//			resultingInputStream = httpurlconnection.getInputStream();
+//			HOLogger.instance().log(getClass()," Read Normal.");
+//		}
+//
+//		if (resultingInputStream != null) {
+//			final BufferedReader bufferedreader =
+//				new BufferedReader(new InputStreamReader(resultingInputStream, "UTF-8"));
+//
+//			final StringBuffer sb2 = new StringBuffer();
+//			String line;
+//
+//			line = bufferedreader.readLine();
+//
+//			if (line != null) {
+//				sb2.append(line);
+//
+//				while ((line = bufferedreader.readLine()) != null) {
+//					sb2.append('\n');
+//					sb2.append(line);
+//				}
+//			}
+//
+//			bufferedreader.close();
+//			page = sb2.toString();
+//		}
+//
+//		httpurlconnection.disconnect();
+//
+//		if (page.length() > 0) {
+//			//xml auswerten
+//			try {
+//				final Document doc = XMLManager.instance().parseString(page);
+//				Element ele = null;
+//				Element tmpEle = null;
+//
+//				//get Root element :
+//				ele = doc.getDocumentElement();
+//
+//				//get specific sub element of root element
+//				tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
+//
+//				//get it's value
+//				String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+//				loggedIn = value.trim().equalsIgnoreCase("True");
+//
+//				tmpEle = (Element) ele.getElementsByTagName("LoginResult").item(0);
+//				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+//				loggedIn = loggedIn && "0".equals(value.trim());
+//
+//				tmpEle = (Element) ele.getElementsByTagName("UserID").item(0);
+//
+//				//get it's value
+//				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
+//
+//				try {
+//					m_iUserID = Integer.parseInt(value);
+//					if (m_iUserID > 0) {
+//						// TODO: store user ID (necessary e.g. for the youthclub plugin)
+//					}
+//				} catch (NumberFormatException nfe) {
+//				}
+//			} catch (Exception e) {
+//				HOLogger.instance().log(getClass(),e);
+//				loggedIn = false;
+//			};
+//		}
+//
+//		m_bAuthenticated = loggedIn;
+//
+//		return loggedIn;
+//	}
 
-		if ((m_sUserPwd == null) || (m_sUserPwd.length() == 0)) {
-			throw new IOException("Password not set");
-		}
+//	private String getCookieString() {
+//		StringBuffer cookieStringBuffer = new StringBuffer();
+//		Iterator<String> cookieNames = cookie.keySet().iterator();
+//		while (cookieNames.hasNext()) {
+//			String cookieName = cookieNames.next();
+//			cookieStringBuffer.append(cookieName);
+//			cookieStringBuffer.append("=");
+//			cookieStringBuffer.append((String) cookie.get(cookieName));
+//			if (cookieNames.hasNext())
+//				cookieStringBuffer.append(";");
+//		}
+//		return cookieStringBuffer.toString();
+//	}
 
-		if (!isCookieSet()) {
-			getCookie();
-		}
-
-		final HttpURLConnection httpurlconnection =
-			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip
-				+ "/common/chppxml.axd?file=login&actionType=login&loginname=" + m_sUserName
-				+ "&readonlypassword=" + m_sUserPwd + "&chppID=" + chppID + "&chppKey=" + chppKey)).openConnection();
-
-		httpurlconnection.setRequestMethod("GET");
-
-		httpurlconnection.setRequestProperty("cookie", getCookieString());
-
-		infoHO(httpurlconnection);
-
-		HttpURLConnection.setFollowRedirects(true);
-		httpurlconnection.connect();
-
-		String s2 = httpurlconnection.getHeaderField("set-cookie");
-
-		if ((s2 != null) && !s2.equals(m_sCookie)) {
-			//HOLogger.instance().log(getClass()," got a new Cookie: " + s2);
-			extractCookie(s2);
-		}
-
-		final String encoding = httpurlconnection.getContentEncoding();
-		InputStream resultingInputStream = null;
-
-		//create the appropriate stream wrapper based on
-		//the encoding type
-		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-			resultingInputStream =
-				new GZIPInputStream(httpurlconnection.getInputStream());
-			HOLogger.instance().log(getClass()," Read GZIP.");
-		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
-			resultingInputStream =
-				new InflaterInputStream(
-					httpurlconnection.getInputStream(),
-					new java.util.zip.Inflater(true));
-			HOLogger.instance().log(getClass()," Read Deflated.");
-		} else {
-			resultingInputStream = httpurlconnection.getInputStream();
-			HOLogger.instance().log(getClass()," Read Normal.");
-		}
-
-		if (resultingInputStream != null) {
-			final BufferedReader bufferedreader =
-				new BufferedReader(new InputStreamReader(resultingInputStream, "UTF-8"));
-
-			final StringBuffer sb2 = new StringBuffer();
-			String line;
-
-			line = bufferedreader.readLine();
-
-			if (line != null) {
-				sb2.append(line);
-
-				while ((line = bufferedreader.readLine()) != null) {
-					sb2.append('\n');
-					sb2.append(line);
-				}
-			}
-
-			bufferedreader.close();
-			page = sb2.toString();
-		}
-
-		httpurlconnection.disconnect();
-
-		if (page.length() > 0) {
-			//xml auswerten
-			try {
-				final Document doc = XMLManager.instance().parseString(page);
-				Element ele = null;
-				Element tmpEle = null;
-
-				//get Root element :
-				ele = doc.getDocumentElement();
-
-				//get specific sub element of root element
-				tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
-
-				//get it's value
-				String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-				loggedIn = value.trim().equalsIgnoreCase("True");
-
-				tmpEle = (Element) ele.getElementsByTagName("LoginResult").item(0);
-				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-				loggedIn = loggedIn && "0".equals(value.trim());
-
-				tmpEle = (Element) ele.getElementsByTagName("UserID").item(0);
-
-				//get it's value
-				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-
-				try {
-					m_iUserID = Integer.parseInt(value);
-					if (m_iUserID > 0) {
-						// TODO: store user ID (necessary e.g. for the youthclub plugin)
-					}
-				} catch (NumberFormatException nfe) {
-				}
-			} catch (Exception e) {
-				HOLogger.instance().log(getClass(),e);
-				loggedIn = false;
-			};
-		}
-
-		m_bAuthenticated = loggedIn;
-
-		return loggedIn;
-	}
-
-	private String getCookieString() {
-		StringBuffer cookieStringBuffer = new StringBuffer();
-		Iterator<String> cookieNames = cookie.keySet().iterator();
-		while (cookieNames.hasNext()) {
-			String cookieName = cookieNames.next();
-			cookieStringBuffer.append(cookieName);
-			cookieStringBuffer.append("=");
-			cookieStringBuffer.append((String) cookie.get(cookieName));
-			if (cookieNames.hasNext())
-				cookieStringBuffer.append(";");
-		}
-		return cookieStringBuffer.toString();
-	}
-
-	/**
-	 * Log off from HT.
-	 */
-	public void logout() throws IOException {
-		try {
-			getPage("http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=login&action=logout", true);
-			m_bAuthenticated = false;
-			m_sCookie = null;
-			cookie = new HashMap<String, String>();
-		} catch (IOException ioexception) {
-			m_bAuthenticated = false;
-			m_sCookie = null;
-			cookie = new HashMap<String, String>();
-			throw ioexception;
-		}
-	}
+//	/**
+//	 * Log off from HT.
+//	 */
+//	public void logout() throws IOException {
+//		try {
+//			getPage("http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=login&action=logout", true);
+//			m_bAuthenticated = false;
+//			m_sCookie = null;
+//			cookie = new HashMap<String, String>();
+//		} catch (IOException ioexception) {
+//			m_bAuthenticated = false;
+//			m_sCookie = null;
+//			cookie = new HashMap<String, String>();
+//			throw ioexception;
+//		}
+//	}
 
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
 		return getFileFromWeb(url, displaysettingsScreen, false);
@@ -1088,7 +1093,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebFile(url, false, showErrorMessage, false);
+		return getWebFile(url, showErrorMessage, false);
 	}
 
 	/**
@@ -1103,7 +1108,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebPage(url, false, false, shortTimeOut);
+		return getWebPage(url, false, shortTimeOut);
 	}
 
 	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
@@ -1128,7 +1133,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			/*123.123.123.123*/
 			+"&port=" + port /*1234*/
 			+"&info=" + info /*Infotext"*/;
-			result = getWebPage(request, false);
+			result = getWebPage(request);
 
 			try {
 				i = Integer.parseInt(result);
@@ -1149,7 +1154,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public boolean sendAlive(int matchId) {
 		try {
 			final String s =
-				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId, false);
+				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId);
 
 			if (MyHelper.parseDate(s) == null) {
 				return false;
@@ -1216,7 +1221,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			request += "&CupID=0";
 
 			//HOLogger.instance().log(getClass(), request );
-			s = getWebPage(request, false);
+			s = getWebPage(request);
 
 			//HOLogger.instance().log(getClass(), s );
 		} catch (Exception e) {
@@ -1233,8 +1238,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			final String s =
 				getWebPage(
-					"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId,
-					false);
+					"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId);
 
 			if (!s.trim().equals("True")) {
 				return false;
@@ -1250,40 +1254,61 @@ public class MyConnector implements plugins.IDownloadHelper {
 	/**
 	 * Get a web page using a URLconnection.
 	 */
-	private InputStream getWebFile(String surl, boolean needCookie,
-			boolean showErrorMessage, boolean shortTimeOut) throws IOException {
-		final URL url = new URL(surl);
-		final HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
-		httpurlconnection.setRequestMethod("GET");
-		infoHO(httpurlconnection);
+	private InputStream getWebFile(String surl, boolean showErrorMessage, 
+					boolean shortTimeOut) throws IOException {
+		
+		OAuthDialog authDialog = null;
+		URL url = new URL(surl);
+		HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
+		
+		boolean tryAgain = true;
+		while (tryAgain == true) {
+			try {
 
-		if (needCookie) {
-			httpurlconnection.setRequestProperty("cookie", getCookieString());
-		}
+				httpurlconnection.setRequestMethod("GET");
+				infoHO(httpurlconnection);
 
-		try {
-			if (shortTimeOut) {
-				httpurlconnection.setConnectTimeout(7500);
-				httpurlconnection.setReadTimeout(8500);
-			} else {
-				httpurlconnection.setConnectTimeout(45000);
-				httpurlconnection.setReadTimeout(60000);
-			}
-			httpurlconnection.connect();
-		} catch (Exception sox) {
-			HOLogger.instance().log(getClass(), sox);
-			if (showErrorMessage) {
-				JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
-			}
-			return null;
-		}
+				//		if (needCookie) {
+				//			httpurlconnection.setRequestProperty("cookie", getCookieString());
+				//		}
 
-		if (needCookie) {
-			String s1 = httpurlconnection.getHeaderField("set-cookie");
+				if (shortTimeOut) {
+					httpurlconnection.setConnectTimeout(7500);
+					httpurlconnection.setReadTimeout(8500);
+				} else {
+					httpurlconnection.setConnectTimeout(45000);
+					httpurlconnection.setReadTimeout(60000);
+				}
 
-			if ((s1 != null) && !s1.equals(m_sCookie)) {
-				HOLogger.instance().log(getClass(), " got a new Cookie: " + s1);
-				extractCookie(s1);
+
+				m_OAConsumer.sign(httpurlconnection);
+				httpurlconnection.connect();
+
+				if (httpurlconnection.getResponseCode() == 401) {
+					// 401 is authorization failed...
+
+					// Ask user to do authorization magic
+					if (authDialog == null) {
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAConsumer);
+					}
+					authDialog.setVisible(true);
+					// A way out for a user unable to authorize for some reason
+					if (authDialog.getUserCancel() == true) {
+						return null;
+					}
+					
+		            // Open a fresh connection for the next attempt
+		            httpurlconnection = (HttpURLConnection) url.openConnection();
+				} else {				
+					tryAgain = false;
+				}
+			} catch (Exception sox) {
+				HOLogger.instance().log(getClass(), sox);
+				if (showErrorMessage) {
+					JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
+				}
+				return null;
+				
 			}
 		}
 
