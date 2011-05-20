@@ -3,7 +3,10 @@ package de.hattrickorganizer.gui.login;
 import gui.UserParameter;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -58,6 +61,7 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	private String m_sUserCode;
 	private String m_sUserURL;
 	private boolean m_bUserCancel = false;
+	private boolean m_bFirstTry = true;
 	
 	private OAuthConsumer m_consumer;
 	OAuthProvider m_provider = new DefaultOAuthProvider(
@@ -66,7 +70,7 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 
 	
 	public OAuthDialog(HOMainFrame mainFrame, OAuthConsumer consumer) {
-		super(mainFrame, HOVerwaltung.instance().getLanguageString("Login"), true);
+		super(mainFrame, HOVerwaltung.instance().getLanguageString("oauth.Title"), true);
 
 		this.m_clMainFrame = mainFrame;
 		this.m_consumer = consumer;
@@ -100,7 +104,7 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 		
 		UserParameter.instance().AccessToken = MyHelper.cryptString(m_consumer.getToken());
 		UserParameter.instance().TokenSecret = MyHelper.cryptString(m_consumer.getTokenSecret());
-		
+		m_bFirstTry = false;
 		this.dispose();
 	}
 	
@@ -204,70 +208,124 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 
 	public void focusLost(FocusEvent arg0) {
 	}
+	
+	@Override
+	public void setVisible(boolean b) {
+		if (m_bFirstTry == false) {
+			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("oauth.FailedTry"), HOVerwaltung.instance().getLanguageString("oauth.FailedTryHeader"), JOptionPane.INFORMATION_MESSAGE);
+			m_jtfAuthString.setText("");
+		}
+		super.setVisible(b);
+	}
 
 	private void initComponents() {
 		JPanel panel;
 		
-		setContentPane(new ImagePanel());
-		getContentPane().setLayout(null);
+		setContentPane(new ImagePanel(new FlowLayout()));
 		
 		
-		// User Daten
-		panel = new ImagePanel();
-		panel.setLayout(new GridLayout(0,2));
-		panel.setSize(355, 290);
+		panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setLayout(new GridBagLayout());
+//		panel.setPreferredSize(new Dimension(370, 470));
+		panel.setSize(370, 470);
+		
+		GridBagConstraints constraints = new GridBagConstraints();
+		
+		constraints.anchor = GridBagConstraints.CENTER;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0;
+        constraints.weighty = 0;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(2, 2, 2, 2);		
 		
 		JLabel infoLabel = new JLabel();
-		infoLabel.setText("Hi welcome, do your job, authorize, paste, be happy, whatever");
-		panel.add(infoLabel);
-		// Fill out the first line
-		panel.add(new JPanel());
+		infoLabel.setText(HOVerwaltung.instance().getLanguageString("oauth.Intro"));
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		panel.add(infoLabel, constraints);
+		
+		JPanel spacer = new JPanel();
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.gridwidth = 2;
+		spacer.setOpaque(false);
+		spacer.setPreferredSize(new Dimension(25, 10));
+		panel.add(spacer, constraints);
 		
 		JLabel authLink = new JLabel();
-		authLink.setText("This is the url for authorization");
-		panel.add(authLink);
-		m_jtfAuthURL.setText(m_sUserURL);
-		panel.add(m_jtfAuthURL);
+		authLink.setText(HOVerwaltung.instance().getLanguageString("oauth.URLOrButton"));
 		
-		JLabel authInput = new JLabel();
-		authInput.setText("Enter your authorization obtained from Hattrick here");
-		panel.add(authInput);
-		panel.add(m_jtfAuthString);
-		
-		
-		
-		getContentPane().add(panel);
-		
-		// Buttons
-		m_jbOK.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Login_Anmelden"));
-		m_jbOK.setText(HOVerwaltung.instance().getLanguageString("Anmelden"));
-		m_jbOK.setSize(170, 35);
-		m_jbOK.addActionListener(this);
-		
-		//m_jbOK.setEnabled(false);
-		panel.add(m_jbOK);
-		
-		m_jbBrowse.setText("Open URL");
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		constraints.gridwidth = 2;
+		panel.add(authLink, constraints);
+
+		m_jbBrowse.setText(HOVerwaltung.instance().getLanguageString("oauth.OpenUrl"));
 		m_jbBrowse.setSize(170,35);
 		m_jbBrowse.addActionListener(this);
 		m_jbBrowse.setEnabled(true);
-		panel.add(m_jbBrowse);
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		constraints.gridwidth = 2;
+		constraints.fill = GridBagConstraints.NONE;
+		panel.add(m_jbBrowse, constraints);
 		
-		m_jbCancel.setText("Cancel");
-		m_jbCancel.setSize(170,35);
+		m_jtfAuthURL.setText(m_sUserURL);
+		constraints.gridx = 0;
+		constraints.gridy = 4;
+		constraints.gridwidth = 2;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(m_jtfAuthURL, constraints);
+		
+		
+		
+		JLabel authInput = new JLabel();
+		authInput.setText(HOVerwaltung.instance().getLanguageString("oauth.EnterCode"));
+		constraints.gridx = 0;
+		constraints.gridy = 5;
+		constraints.gridwidth = 2;
+		panel.add(authInput, constraints);
+
+		constraints.gridx = 0;
+		constraints.gridy = 6;
+		constraints.gridwidth = 2;
+		panel.add(m_jtfAuthString, constraints);
+		
+		
+		
+		m_jbOK.setText(HOVerwaltung.instance().getLanguageString("oauth.Enter"));
+		m_jbOK.setSize(170, 35);
+		constraints.gridx = 0;
+		constraints.gridy = 7;
+		constraints.gridwidth = 1;
+		constraints.fill = GridBagConstraints.NONE;
+		m_jbOK.addActionListener(this);
+		//m_jbOK.setEnabled(false);
+		panel.add(m_jbOK, constraints);
+		
+		
+		m_jbCancel.setText(HOVerwaltung.instance().getLanguageString("oauth.Cancel"));
 		m_jbCancel.addActionListener(this);
 		m_jbCancel.setEnabled(true);
-		panel.add(m_jbCancel);
+		constraints.gridx = 1;
+		constraints.gridy = 7;
+		constraints.gridwidth = 1;
+		constraints.anchor = GridBagConstraints.EAST;
+		m_jbCancel.setSize(170,35);
+		panel.add(m_jbCancel, constraints);
+		
+		panel.setBorder(new javax.swing.border.EtchedBorder());
+
+		getContentPane().add(panel);
+		
+		this.setSize(400, 500);
+		pack();
 		
 		final Dimension size = m_clMainFrame.getToolkit().getScreenSize();
-		this.setSize(400, 500);
-		
 		if (size.width > this.getSize().width) { // open dialog in the middle of the screen
 			this.setLocation((size.width / 2) - (this.getSize().width / 2), (size.height / 2) - (this.getSize().height / 2));
 		}
-		
-		//setResizable(false);
-		
-		//loginWaitDialog = new LoginWaitDialog(this);
 	}
 }
