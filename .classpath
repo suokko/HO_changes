@@ -13,5 +13,7 @@
 	<classpathentry kind="lib" path="test/lib/hamcrest-library-1.1.jar"/>
 	<classpathentry kind="lib" path="test/lib/junit-4.7.jar"/>
 	<classpathentry kind="lib" path="src/conf/addToZip/looks-2.3.1.jar"/>
+	<classpathentry kind="lib" path="src/conf/addToZip/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="src/conf/addToZip/signpost-core-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
