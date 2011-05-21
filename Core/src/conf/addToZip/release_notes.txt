@@ -1,23 +1,4 @@
-Changelist HO! 1.428
+Changelist HO! 1.429
 ====================
-- Hattrick is moved to a 553 lineup  model. This has led to a lot of changes, so new bugs are quite possible.
-- The lineup screen is adjusted to 553 and:
-  - Added swap capabilities to subs.
-  - Moved captain, setpiece taker, and subs to match the layout of HT lineup page.
-  - Small adjustment to output of "copy ratings to clipboard" function.
-  - Compacted the screen by moving buttons for categories and "flip" with friends.
-  - Experimental indicators for "incomplete" lineups added to the minimized version.
-- Matches screen has been updated to show a 553 based lineup.  
-- Overcrowding penalties is done in calculations now, prediction types can again be chosen in the lineup screen. Default is back as the default prediction type.
+- Authorization is now done through the new oauth interface.
 
-Language updates:
------------------
-
-Plugin Updates:
----------------
-
-Team Analyzer:
-- Updated to work with 553, including the lineup image.
-
-Team of the Week (not included in download)
-- Updated to read players correctly after 553 change.
