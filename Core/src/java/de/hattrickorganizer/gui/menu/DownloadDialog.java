@@ -48,7 +48,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	// ----------------------------------------------------------------------------
 	private JButton m_jbAbbrechen = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
 	final private JButton m_jbDownload = new JButton(HOVerwaltung.instance().getLanguageString("Download"));
-	private JButton m_jbProxy = new JButton("Configure Proxy"); // TODO proper text
+	private JButton m_jbProxy = new JButton(HOVerwaltung.instance().getLanguageString("ConfigureProxy"));
 	private JCheckBox m_jchAlterSpielplan = new JCheckBox(HOVerwaltung.instance().getLanguageString("FixturesDownload"), false);
 	private JCheckBox m_jchEigenenSpiele = new JCheckBox(HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"),
 			gui.UserParameter.instance().currentMatchlist);
