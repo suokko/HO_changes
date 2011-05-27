@@ -11,7 +11,7 @@
 4=4
 # France
 5=5
-# México
+# Mï¿½xico
 6=6
 # Argentina
 7=7
@@ -41,7 +41,7 @@
 21=16
 # Nippon
 22=25
-# Perú
+# Perï¿½
 23=21
 # Polska
 24=26
@@ -59,7 +59,7 @@
 30=29
 # Prathet Thai
 31=30
-# Türkiye
+# Tï¿½rkiye
 32=31
 # Misr
 33=32
@@ -67,15 +67,15 @@
 34=28
 # Rossiya
 35=34
-# España
+# Espaï¿½a
 36=35
-# România
+# Romï¿½nia
 37=36
-# Ísland
+# ï¿½sland
 38=37
-# Österreich
+# ï¿½sterreich
 39=33
-# België
+# Belgiï¿½
 44=38
 # Malaysia
 45=39
@@ -87,7 +87,7 @@
 50=45
 # Magyarorszag
 51=44
-# ?eská republika
+# ?eskï¿½ republika
 52=46
 # Latvija
 53=48
@@ -133,7 +133,7 @@
 74=69
 # Nigeria
 75=70
-# Føroyar
+# Fï¿½royar
 76=71
 # Al Maghrib
 77=72
@@ -145,7 +145,7 @@
 81=77
 # United Arab Emirates
 83=78
-# Lëtzebuerg
+# Lï¿½tzebuerg
 84=79
 # Iran
 85=80
@@ -211,7 +211,7 @@
 124=130
 # Cabo Verde
 125=131
-# Côte d'Ivoire
+# Cï¿½te d'Ivoire
 126=132
 #Al Kuwayt
 127=134
@@ -249,3 +249,11 @@
 143=153
 #Maldives
 144=154
+#O'zbekiston / Uzbekistan
+145=163
+#Cameroon
+146=165
+#Cuba
+147=93
+#Palestine
+148=166
