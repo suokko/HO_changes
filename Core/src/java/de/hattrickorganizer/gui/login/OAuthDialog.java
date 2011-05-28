@@ -87,7 +87,7 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
        try {
     	   m_sUserURL = m_provider.retrieveRequestToken(m_consumer, OAuth.OUT_OF_BAND);
        } catch (Exception e){
-			HOLogger.instance().debug(getClass(), "Exception in obtainUserCode");
+			HOLogger.instance().debug(getClass(), "Exception in obtainUserCode: " + e.getMessage());
 			
 			// XXX Do More?
 		}
