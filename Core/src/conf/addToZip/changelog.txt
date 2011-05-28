@@ -3,6 +3,8 @@ Please visit the official HO! forum at http://forum.hattrickorganizer.net if you
 Changelist HO! 1.429
 ====================
 - Authentication is now done through oAuth.
+- Updates to missing German language texts.
+- Added flags for Cuba, O'zbekiston, Cameroon, and Palestine
 
 Changelist HO! 1.428
 ====================
