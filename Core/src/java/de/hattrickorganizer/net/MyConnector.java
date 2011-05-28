@@ -850,9 +850,13 @@ public class MyConnector implements plugins.IDownloadHelper {
 		//boolean proxyAuth = false;
 		///Proxy Quark
 		if (m_bUseProxy) {
+			System.getProperties().put("https.proxyHost", m_sProxyHost);
+			System.getProperties().put("https.proxyPort", m_sProxyPort);
 			System.getProperties().put("http.proxyHost", m_sProxyHost);
 			System.getProperties().put("http.proxyPort", m_sProxyPort);
 		} else {
+			System.getProperties().remove("https.proxyHost");
+			System.getProperties().remove("https.proxyPort");
 			System.getProperties().remove("http.proxyHost");
 			System.getProperties().remove("http.proxyPort");
 		}
