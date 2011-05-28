@@ -181,7 +181,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 
 		getContentPane().add(m_jbDownload);
 		
-		m_jbProxy.setToolTipText("Proxy configuration"); // TODO
+		m_jbProxy.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_ConfigureProxy"));
 		m_jbProxy.addActionListener(this);
 		m_jbProxy.setFont(m_jbProxy.getFont().deriveFont(Font.BOLD));
 		m_jbProxy.setSize(140, 30);
