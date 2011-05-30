@@ -1,4 +1,6 @@
 Changelist HO! 1.429
 ====================
 - Authorization is now done through the new oauth interface.
+- Bugfixes from the 553 updated released in 1.428. Including Prediction Offset.
+- Training defaults are updated to defaults lifted from the HT forums.
 

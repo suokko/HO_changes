@@ -1797,9 +1797,8 @@ public final class HOMainFrame extends JFrame
 			interuptionsWindow.setVisible(false);
 			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
 			JOptionPane.showMessageDialog(null,
-					"Remember: You have to enter your login name and the security code in the loginscreen, NOT the password.\n"
-					+ "To load your team data into HO! select File > Download from the main menu.",
-					"Securitycode", JOptionPane.INFORMATION_MESSAGE);
+					"To load your team data into HO! select File > Download from the main menu.",
+					"Team Data", JOptionPane.INFORMATION_MESSAGE);
 			interuptionsWindow.setVisible(true);
 		}
 

@@ -22,6 +22,7 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.AufstellungOld;
 import de.hattrickorganizer.model.HOMiniModel;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
@@ -112,7 +113,8 @@ public class RatingOptimizer {
 			return offset;			
 		}
 		
-		final AufstellungOld lineup = new AufstellungOld();
+		// Switched from use of AufstellungOld to the use of Lineup. Bye, bye, hack. (blaghaid)
+		final Lineup lineup = new Lineup();
 		for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
 			IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
 			ISpieler playerData = (ISpieler) matchData.getPlayers().get(new Integer(playerMatch.getSpielerId()));
@@ -122,7 +124,7 @@ public class RatingOptimizer {
 			} else if (playerMatch.getId() == ISpielerPosition.captain) {
 				lineup.setKapitaen(playerMatch.getSpielerId());
 			} else {
-				lineup.setSpieler(playerMatch.getId(),playerMatch.getTaktik(),playerData);
+				lineup.setSpielerAtPosition(playerMatch.getId(), playerMatch.getSpielerId(), playerMatch.getTaktik());
 			}
 		}
 		

@@ -985,14 +985,14 @@ public  class Lineup implements plugins.ILineUp {
             for (int i = 0; i < m_vPositionen.size(); i++) {
                 if (((SpielerPosition) m_vPositionen.get(i)).getSpielerId() == spielerid) {
                     //Spieler entfernen
-                    ((SpielerPosition) m_vPositionen.get(i)).setSpielerId(0);
+                    ((SpielerPosition) m_vPositionen.get(i)).setSpielerId(0, this);
                 }
             }
         }
       
         //Spieler an die neue Position setzten
         final SpielerPosition position = getPositionById(positionsid);
-       	position.setSpielerId(spielerid);
+       	position.setSpielerId(spielerid, this);
         
         //Ist der Spielfï¿½hrer und der Kicker noch aufgestellt?
         if (!isSpielerAufgestellt(m_iKapitaen)) {
@@ -1205,7 +1205,7 @@ public  class Lineup implements plugins.ILineUp {
             if ((HOVerwaltung.instance().getModel() != null)
                 && (HOVerwaltung.instance().getModel().getSpieler(pos.getSpielerId()) == null)) {
                 //nein dann zuweisung aufheben
-                pos.setSpielerId(0);
+                pos.setSpielerId(0, this);
             }
         }
     }

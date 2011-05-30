@@ -4,7 +4,6 @@ package de.hattrickorganizer.logik;
 import gui.UserParameter;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,6 +46,19 @@ public class TrainingsManager implements ITrainingsManager {
 
     private static TrainingsManager m_clInstance;
 
+    /** Base values for training duration */
+	public static final float BASE_DURATION_GOALKEEPING = (float)2.0;
+	public static final float BASE_DURATION_DEFENDING = (float)3.6;
+	public static final float BASE_DURATION_PLAYMAKING = (float)3.1;
+	public static final float BASE_DURATION_PASSING = (float)2.8;
+	public static final float BASE_DURATION_WINGER = (float)2.2;
+	public static final float BASE_DURATION_SCORING = (float)3.2;
+	public static final float BASE_DURATION_SET_PIECES = (float)0.9;
+	public static final float BASE_AGE_FACTOR = (float)0.9;
+	public static final float BASE_COACH_FACTOR = (float)1.0;
+	public static final float BASE_ASSISTANT_COACH_FACTOR = (float)1.0;
+	public static final float BASE_INTENSITY_FACTOR = (float)1.0;
+    
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** HO Model */
