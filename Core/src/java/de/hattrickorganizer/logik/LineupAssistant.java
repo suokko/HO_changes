@@ -15,12 +15,10 @@ import org.w3c.dom.Element;
 import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.model.HOModel;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -206,7 +204,10 @@ public class LineupAssistant {
                                     float wetterBonus, int wetter) {
         //m_vPositionen   =   new Vector ( positionen );
         //m_vSpieler      =   new Vector( spieler );
-        m_fWetterBonus = wetterBonus;
+
+    	positionen = filterPositions(positionen);
+
+    	m_fWetterBonus = wetterBonus;
         m_iWetter = wetter;
 
         //nur spieler auf idealpos aufstellen
@@ -860,4 +861,20 @@ public class LineupAssistant {
 
         return average;
     }
+    
+    private Vector<ISpielerPosition> filterPositions(Vector<ISpielerPosition> positions) {
+    	// Remove "red" positions from the position selection of the AssistantPanel.
+    	Vector<ISpielerPosition> returnVec = new Vector<ISpielerPosition>();
+    	java.util.HashMap<Integer, Boolean> statusMap = 
+    		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getPositionStatuses();
+    	for (int i = 0 ; i < positions.size() ; i++) {
+    		SpielerPosition pos = (SpielerPosition)positions.get(i);
+    		if ((!statusMap.containsKey(pos.getId())) || (statusMap.get(pos.getId()))) {
+    			returnVec.add(pos);
+    		} else {
+    		}
+    	}
+    	return returnVec;
+    }
+    
 }
