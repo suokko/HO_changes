@@ -2,10 +2,13 @@
 package de.hattrickorganizer.gui.lineup;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
@@ -15,6 +18,7 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
@@ -82,6 +86,9 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 
 	private int playerId = -1;
 	private int tacticOrder = -1;
+	
+	final GridBagLayout layout = new GridBagLayout();
+	JLayeredPane jlp = new JLayeredPane();
 	
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -193,29 +200,32 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
      * @param aenderbar TODO Missing Constructuor Parameter Documentation
      */
     private void initComponents(boolean aenderbar) {
-        final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         constraints.insets = new Insets(2, 2, 2, 2);
-
-        setLayout(layout);
-
+        FlowLayout fl = new FlowLayout();
+        fl.setHgap(0);
+        fl.setVgap(0);
+        fl.setAlignment(FlowLayout.CENTER);
+        setLayout(fl);
+        jlp.setLayout(layout);
+     
         //Minimiert
         if (m_bMinimize) {
             setBorder(javax.swing.BorderFactory.createLineBorder(Color.lightGray));
-            setBackground(Color.WHITE);
+            jlp.setBackground(Color.WHITE);
 
             constraints.gridx = 0;
             constraints.gridy = 0;
-            layout.setConstraints(m_jlPosition, constraints);
-            add(m_jlPosition);
+//            layout.setConstraints(m_jlPosition, constraints);
+            jlp.add(m_jlPosition, constraints, 1);
 
             constraints.gridx = 0;
             constraints.gridy = 1;
-            layout.setConstraints(m_jlPlayer, constraints);
-            add(m_jlPlayer);
+//            layout.setConstraints(m_jlPlayer, constraints);
+            jlp.add(m_jlPlayer, constraints,  1);
 
             setPreferredSize(new Dimension(MINI_PLAYER_POSITION_PANEL_WIDTH,MINI_PLAYER_POSITION_PANEL_HEIGHT));
         }
@@ -226,8 +236,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
             constraints.gridx = 0;
             constraints.gridy = 0;
             constraints.gridwidth = 1;
-            layout.setConstraints(m_jlPosition, constraints);
-            add(m_jlPosition);
+            jlp.add(m_jlPosition, constraints, 1);
 
             constraints.gridx = 0;
             constraints.gridy = 1;
@@ -235,8 +244,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
             m_jcbPlayer.addFocusListener(this);
             m_jcbPlayer.setMaximumRowCount(15);
             m_jcbPlayer.setRenderer(new SpielerCBItemRenderer());
-            layout.setConstraints(m_jcbPlayer, constraints);
-            add(m_jcbPlayer);
+            jlp.add(m_jcbPlayer, constraints, 1);
 
             if (!aenderbar) {
                 m_jcbPlayer.setEnabled(false);
@@ -254,13 +262,12 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
                 }
 
                 m_jcbTactic.setBackground(Color.white);
-                layout.setConstraints(m_jcbTactic, constraints);
-                add(m_jcbTactic);
-
+                jlp.add(m_jcbTactic, constraints, 1);
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH,PLAYER_POSITION_PANEL_HEIGHT_FULL));
             } else {
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH, PLAYER_POSITION_PANEL_HEIGHT_REDUCED));
             }
+            add(jlp);
         }
     }
 
@@ -701,6 +708,33 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 	 */
 	protected JComboBox getPlayerComboBox() {
 		return m_jcbPlayer;
+	}
+	
+	public LayoutManager getSwapLayout() {
+		return layout;
+	}
+	
+	public void addSwapItem (Component c) {
+		jlp.add(c,1);
+	}
+	
+	public void addAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1.0;
+        constraints.weighty = 1.0;
+        constraints.insets = new Insets(2, 2, 2, 2);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 3;
+        jlp.add(overlay, constraints, 2);
+        repaint();
+ 	}
+	
+	public void removeAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
+		jlp.remove(overlay);
+		repaint();
 	}
 
 }

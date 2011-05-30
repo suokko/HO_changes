@@ -7,7 +7,6 @@ import java.util.HashMap;
 import plugins.ILineUp;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.Configuration;
-import de.hattrickorganizer.tools.MyHelper;
 
 
 /**
@@ -308,6 +307,25 @@ public final class UserParameter extends Configuration {
     public int waehrungsID = 3;
 
 	public int simulatorMatches = 0;
+	
+	// Lineup Assistant Position Filters
+	public boolean assistantSaved = false;
+	public boolean assistant101 = true;
+	public boolean assistant102 = true;
+	public boolean assistant103 = true;
+	public boolean assistant104 = true;
+	public boolean assistant105 = true;
+	public boolean assistant106 = true;
+	public boolean assistant107 = true;
+	public boolean assistant108 = true;
+	public boolean assistant109 = true;
+	public boolean assistant110 = true;
+	public boolean assistant111 = true;
+	public boolean assistant112 = true;
+	public boolean assistant113 = true;
+	
+	
+	
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -527,6 +545,21 @@ public final class UserParameter extends Configuration {
 		map.put("rightAttackOffset",String.valueOf(rightAttackOffset));
 		map.put("waehrungsID",String.valueOf(waehrungsID));
 		map.put("simulatorMatches",String.valueOf(simulatorMatches));		
+		map.put("assistant101", String.valueOf(assistant101));
+		map.put("assistant102", String.valueOf(assistant102));
+		map.put("assistant103", String.valueOf(assistant103));
+		map.put("assistant104", String.valueOf(assistant104));
+		map.put("assistant105", String.valueOf(assistant105));
+		map.put("assistant106", String.valueOf(assistant106));
+		map.put("assistant107", String.valueOf(assistant107));
+		map.put("assistant108", String.valueOf(assistant108));
+		map.put("assistant109", String.valueOf(assistant109));
+		map.put("assistant110", String.valueOf(assistant110));
+		map.put("assistant111", String.valueOf(assistant111));
+		map.put("assistant112", String.valueOf(assistant112));
+		map.put("assistant113", String.valueOf(assistant113));
+		map.put("assistantSaved", String.valueOf(assistantSaved));
+		
 		return map;
 	}
 
@@ -707,6 +740,22 @@ public final class UserParameter extends Configuration {
 		transferScoutPanel_horizontalSplitPane = getIntValue(values,"transferScoutPanel_horizontalSplitPane");
 		waehrungsID = getIntValue(values,"waehrungsID");
 		simulatorMatches = getIntValue(values,"simulatorMatches");
+		
+		assistant101 = getBooleanValue(values, "assistant101");
+		assistant102 = getBooleanValue(values, "assistant102");
+		assistant103 = getBooleanValue(values, "assistant103");
+		assistant104 = getBooleanValue(values, "assistant104");
+		assistant105 = getBooleanValue(values, "assistant105");
+		assistant106 = getBooleanValue(values, "assistant106");
+		assistant107 = getBooleanValue(values, "assistant107");
+		assistant108 = getBooleanValue(values, "assistant108");
+		assistant109 = getBooleanValue(values, "assistant109");
+		assistant110 = getBooleanValue(values, "assistant110");
+		assistant111 = getBooleanValue(values, "assistant111");
+		assistant112 = getBooleanValue(values, "assistant112");
+		assistant113 = getBooleanValue(values, "assistant113");
+		assistantSaved = getBooleanValue(values,"assistantSaved");
+		
 	}
 
 }

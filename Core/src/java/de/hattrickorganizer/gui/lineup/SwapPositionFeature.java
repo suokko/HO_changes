@@ -108,9 +108,9 @@ public class SwapPositionFeature {
 
 	private void addButtonToPanel(PlayerPositionPanel spielerPositionsPanel) {
 		GridBagLayout layout = (GridBagLayout) spielerPositionsPanel
-				.getLayout();
+				.getSwapLayout();
 		layout.setConstraints(getSwapButton(), createSwapButtonConstraints());
-		spielerPositionsPanel.add(getSwapButton());
+		spielerPositionsPanel.addSwapItem(getSwapButton());
 		spielerPositionsPanel.getPlayerComboBox().addActionListener(
 				new SpielerPositionSwapActionListener());
 	}

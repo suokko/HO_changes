@@ -70,9 +70,10 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
     private PlayerPositionPanel m_clSetPieceTaker;
     private PlayerPositionPanel m_clKeeper;
     
-    
+    private javax.swing.JLayeredPane centerPanel;
     private final SwapPositionsManager swapPositionsManager = new SwapPositionsManager(
 			this);
+    private final AufstellungsAssistentPanel assistantPanel;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -83,7 +84,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
      */
     public LineupPositionsPanel(LineupPanel panel) {
         m_clLineupPanel = panel;
-
+        assistantPanel = panel.getAufstellungsAssitentPanel();
         initComponentes();
 
         RefreshManager.instance().registerRefreshable(this);
@@ -91,6 +92,10 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
 
     //~ Methods ------------------------------------------------------------------------------------
 
+    public javax.swing.JLayeredPane getCenterPanel() {
+    	return centerPanel;
+    }
+    
     /**
      * TODO Missing Method Documentation
      *
@@ -322,7 +327,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
     private void initComponentes() {
         setLayout(new BorderLayout());
 
-        final javax.swing.JPanel centerPanel = new javax.swing.JPanel();
+        centerPanel = new javax.swing.JLayeredPane();
         centerPanel.setOpaque(false);
 
         final GridBagLayout layout = new GridBagLayout();
@@ -342,6 +347,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clKeeper, constraints);
         centerPanel.add(m_clKeeper);
         swapPositionsManager.addSwapCapabilityTo(m_clKeeper);
+//      assistantPanel.addToAssistant(m_clKeeper);
 
         
         constraints.gridx = 0;
@@ -351,6 +357,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clRightBack, constraints);
         centerPanel.add(m_clRightBack);
         swapPositionsManager.addSwapCapabilityTo(m_clRightBack);
+        assistantPanel.addToAssistant(m_clRightBack);
 
         // Defense line
         
@@ -361,7 +368,8 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clRightCentralDefender, constraints);
         centerPanel.add(m_clRightCentralDefender);
         swapPositionsManager.addSwapCapabilityTo(m_clRightCentralDefender);
-
+        assistantPanel.addToAssistant(m_clRightCentralDefender);
+        
         constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
@@ -369,6 +377,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clMiddleCentralDefender, constraints);
         centerPanel.add(m_clMiddleCentralDefender);
         swapPositionsManager.addSwapCapabilityTo(m_clMiddleCentralDefender);
+        assistantPanel.addToAssistant(m_clMiddleCentralDefender);
         
         constraints.gridx = 3;
         constraints.gridy = 1;
@@ -377,6 +386,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clLeftCentralDefender, constraints);
         centerPanel.add(m_clLeftCentralDefender);
         swapPositionsManager.addSwapCapabilityTo(m_clLeftCentralDefender);
+        assistantPanel.addToAssistant(m_clLeftCentralDefender);
         
         constraints.gridx = 4;
         constraints.gridy = 1;
@@ -385,6 +395,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clLeftBack, constraints);
         centerPanel.add(m_clLeftBack);
         swapPositionsManager.addSwapCapabilityTo(m_clLeftBack);
+        assistantPanel.addToAssistant(m_clLeftBack);
 
         // Midfield Line
 
@@ -395,6 +406,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clRightWinger, constraints);
         centerPanel.add(m_clRightWinger);
         swapPositionsManager.addSwapCapabilityTo(m_clRightWinger);
+        assistantPanel.addToAssistant(m_clRightWinger);
         
         constraints.gridx = 1;
         constraints.gridy = 2;
@@ -403,7 +415,8 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clRightInnerMidfielder, constraints);
         centerPanel.add(m_clRightInnerMidfielder);
         swapPositionsManager.addSwapCapabilityTo(m_clRightInnerMidfielder);
-
+        assistantPanel.addToAssistant(m_clRightInnerMidfielder);
+        
         constraints.gridx = 2;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
@@ -411,6 +424,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clCentralInnerMidfielder, constraints);
         centerPanel.add(m_clCentralInnerMidfielder);
         swapPositionsManager.addSwapCapabilityTo(m_clCentralInnerMidfielder);
+        assistantPanel.addToAssistant(m_clCentralInnerMidfielder);
         
         constraints.gridx = 3;
         constraints.gridy = 2;
@@ -419,6 +433,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clLeftInnerMidfielder, constraints);
         centerPanel.add(m_clLeftInnerMidfielder);
         swapPositionsManager.addSwapCapabilityTo(m_clLeftInnerMidfielder);
+        assistantPanel.addToAssistant(m_clLeftInnerMidfielder);
         
         constraints.gridx = 4;
         constraints.gridy = 2;
@@ -427,6 +442,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clLeftWinger, constraints);
         centerPanel.add(m_clLeftWinger);
         swapPositionsManager.addSwapCapabilityTo(m_clLeftWinger);
+        assistantPanel.addToAssistant(m_clLeftWinger);
 
         // Forward line
         
@@ -437,6 +453,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clRightForward, constraints);
         centerPanel.add(m_clRightForward);
         swapPositionsManager.addSwapCapabilityTo(m_clRightForward);
+        assistantPanel.addToAssistant(m_clRightForward);
 
         constraints.gridx = 2;
         constraints.gridy = 3;
@@ -445,6 +462,7 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clCentralForward, constraints);
         centerPanel.add(m_clCentralForward);
         swapPositionsManager.addSwapCapabilityTo(m_clCentralForward);
+        assistantPanel.addToAssistant(m_clCentralForward);
 
         constraints.gridx = 3;
         constraints.gridy = 3;
@@ -453,7 +471,8 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
         layout.setConstraints(m_clLeftForward, constraints);
         centerPanel.add(m_clLeftForward);
         swapPositionsManager.addSwapCapabilityTo(m_clLeftForward);
-
+        assistantPanel.addToAssistant(m_clLeftForward);
+        
         // A spacer between forwards and reserves.
         
         constraints.gridx = 0;
