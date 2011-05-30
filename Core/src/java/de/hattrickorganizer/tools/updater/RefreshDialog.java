@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -48,6 +49,7 @@ final class RefreshDialog extends UpdaterDialog {
     private String PROP_NOTE = HOVerwaltung.instance().getLanguageString("Notizen");
     private String REQUIREDPLUGIN = HOVerwaltung.instance().getLanguageString("requiredPlugin");
     private String UNKNOWNPLUGIN = HOVerwaltung.instance().getLanguageString("unknownPlugin");
+    private final static DecimalFormat versionFormat = new DecimalFormat("#0.0####");
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -98,7 +100,7 @@ final class RefreshDialog extends UpdaterDialog {
 			String oldVersion = "-";
 
 			if (tmp != null) {
-				oldVersion = tmp.getVersion() + "";
+				oldVersion = versionFormat.format(tmp.getVersion());
 
 				if (!(((HPPluginInfo) object[i]).getVersion() > tmp.getVersion())) {
 					isEnabled = false;
