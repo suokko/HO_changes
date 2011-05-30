@@ -11,6 +11,7 @@ Changelist HO! 1.429
 - Downloaded matches with individual orders should now display better. 
   Matches already in the database can be redownloaded from the matches screen.
 - Prediction Offset should work again.
+- Update Catalan translations (thx CAT-fike)
 
 Changelist HO! 1.428
 ====================
