@@ -109,21 +109,21 @@ public class DBUserParameter {
                 parameter.schriftGroesse = rs.getInt("Schriftgroesse");
 
                 //Training
-                parameter.DAUER_TORWART = rs.getInt("Dauer_TW");
+                parameter.TRAINING_OFFSET_GOALKEEPING = rs.getInt("Dauer_TW");
                 parameter.DAUER_ALLGEMEIN = rs.getInt("Dauer_ALL");
-                parameter.DAUER_KONDITION = rs.getInt("Dauer_Kon");
-                parameter.DAUER_SPIELAUFBAU = rs.getInt("Dauer_SA");
-                parameter.DAUER_FLUEGELSPIEL = rs.getInt("Dauer_FL");
-                parameter.DAUER_CHANCENVERWERTUNG = rs.getInt("Dauer_CV");
-                parameter.DAUER_VERTEIDIGUNG = rs.getInt("Dauer_VER");
-                parameter.DAUER_PASSPIEL = rs.getInt("Dauer_PAS");
-                parameter.DAUER_STANDARDS = rs.getInt("Dauer_STD");
+                parameter.TRAINING_OFFSET_STAMINA = rs.getInt("Dauer_Kon");
+                parameter.TRAINING_OFFSET_PLAYMAKING = rs.getInt("Dauer_SA");
+                parameter.TRAINING_OFFSET_WINGER = rs.getInt("Dauer_FL");
+                parameter.TRAINING_OFFSET_SCORING = rs.getInt("Dauer_CV");
+                parameter.TRAINING_OFFSET_DEFENDING = rs.getInt("Dauer_VER");
+                parameter.TRAINING_OFFSET_PASSING = rs.getInt("Dauer_PAS");
+                parameter.TRAINING_OFFSET_SETPIECES = rs.getInt("Dauer_STD");
 
                 //Faktoren
-                parameter.AlterFaktor = rs.getFloat("Fktr_Alter");
+                parameter.TRAINING_OFFSET_AGE = rs.getFloat("Fktr_Alter");
                 parameter.TrainerFaktor = rs.getFloat("Fktr_Trainer");
-                parameter.CoTrainerFaktor = rs.getFloat("Fktr_CoTr");
-                parameter.IntensitaetFaktor = rs.getFloat("Fktr_Training");
+                parameter.TRAINING_OFFSET_ASSISTANTS = rs.getFloat("Fktr_CoTr");
+                parameter.TRAINING_OFFSET_INTENSITY = rs.getFloat("Fktr_Training");
 
                 //SpielerStatisik
                 parameter.statistikAnzahlHRF = rs.getInt("Stat_AnzahlHRF");

@@ -9,10 +9,12 @@ package de.hattrickorganizer.model;
 import plugins.ISpieler;
 
 /**
- * DOCUMENT ME!
+ * Use discontinued at 1.429 by blaghaid
  *
  * @author thomas.werth
  */
+
+@Deprecated
 public final class AufstellungOld extends Lineup implements plugins.ILineUp {
     //~ Static fields/initializers -----------------------------------------------------------------
 
@@ -25,11 +27,13 @@ public final class AufstellungOld extends Lineup implements plugins.ILineUp {
      *
      * @return TODO Missing Return Method Documentation
      */
+	@Deprecated
     @Override
 	public final plugins.ISpieler getPlayerByPositionID(int positionsid) {
     	return players[positionsid-1];
     }
 
+    @Deprecated
 	public void setSpieler(int position, byte taktic, ISpieler player) {
 		if (position>11) {
 			return;

@@ -17,6 +17,7 @@ import plugins.ISpielerPosition;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
@@ -705,53 +706,55 @@ public final class Spieler implements plugins.ISpieler {
     ///////////////////////////////////////////////////77
     public double getTrainingLength(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
                                 int intensitaet, int staminaTrainingPart) {
-        switch (trTyp) {
+      
+    	switch (trTyp) {
             case TORWART:
-                return calcTraining(gui.UserParameter.instance().DAUER_TORWART, m_iAlter,
-                                    twTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
+            	// Blaghaid sends coTrainer rather than the never present twTrainers
+                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_GOALKEEPING + TrainingsManager.BASE_DURATION_GOALKEEPING, 
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
 
-            case ALLGEMEIN:
-                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN, m_iAlter,
-                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getForm());
+            case ALLGEMEIN: 
+                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN,  
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getForm());
 
             case KONDITION:
-                return gui.UserParameter.instance().DAUER_KONDITION;
+                return gui.UserParameter.instance().TRAINING_OFFSET_STAMINA;
 
             case SPIELAUFBAU:
-                return calcTraining(gui.UserParameter.instance().DAUER_SPIELAUFBAU, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getSpielaufbau());
+                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_PLAYMAKING + TrainingsManager.BASE_DURATION_PLAYMAKING,
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getSpielaufbau());
 
             case FLUEGELSPIEL:
-                return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
+                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER,
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             case CHANCENVERWERTUNG:
-                return calcTraining(gui.UserParameter.instance().DAUER_CHANCENVERWERTUNG, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorschuss());
+                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_SCORING + TrainingsManager.BASE_DURATION_SCORING,
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorschuss());
 
             case VERTEIDIGUNG:
-                return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
+                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING,
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
             case PASSPIEL:
-				return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL, m_iAlter,
-								coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
+				return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING,
+						m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case TA_STEILPAESSE:
-                return calcTraining(gui.UserParameter.instance().DAUER_PASSPIEL*100d/85d, m_iAlter,
-                                    coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
+                return calcTraining((100d/85d)*(gui.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING), 
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case STANDARDS:
-                return calcTraining(gui.UserParameter.instance ().DAUER_STANDARDS, m_iAlter,
-                					coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());
+                return calcTraining(gui.UserParameter.instance ().TRAINING_OFFSET_SETPIECES + TrainingsManager.BASE_DURATION_SET_PIECES,
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());
 
             case TA_ABWEHRVERHALTEN:
-                return calcTraining(gui.UserParameter.instance().DAUER_VERTEIDIGUNG * 2, m_iAlter,
-                                     coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
+                return calcTraining(2 * (gui.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING),
+                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
 			case TA_EXTERNALATTACK:
-				return calcTraining(gui.UserParameter.instance().DAUER_FLUEGELSPIEL*100d/60d, m_iAlter,
-								 coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
+				return calcTraining((100d/60d) * (gui.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER),
+						m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             default:
                 return -1;
@@ -2674,16 +2677,16 @@ public final class Spieler implements plugins.ISpieler {
     protected static double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
                                int intensitaet, int staminaTrainingPart, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
-    	double ageFactor = Math.pow(1.0404, age-17) * gui.UserParameter.instance().AlterFaktor;
+    	double ageFactor = Math.pow(1.0404, age-17) * (gui.UserParameter.instance().TRAINING_OFFSET_AGE + TrainingsManager.BASE_AGE_FACTOR);
 //    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
     	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
     	if (skillFactor < 0)
     		skillFactor = 0;
-    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * gui.UserParameter.instance().TrainerFaktor;
-    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * gui.UserParameter.instance().CoTrainerFaktor;
+    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * (gui.UserParameter.instance().TrainerFaktor + TrainingsManager.BASE_COACH_FACTOR);
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * (gui.UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingsManager.BASE_ASSISTANT_COACH_FACTOR);
     	double tiFactor = Double.MAX_VALUE;
     	if (intensitaet > 0)
-    		tiFactor = (1 / (intensitaet/100d)) * gui.UserParameter.instance().IntensitaetFaktor;
+    		tiFactor = (1 / (intensitaet/100d)) * (gui.UserParameter.instance().TRAINING_OFFSET_INTENSITY + TrainingsManager.BASE_INTENSITY_FACTOR);
     	double staminaFactor = Double.MAX_VALUE;
     	if (staminaTrainingPart < 100)
     		staminaFactor = 1 / (1 - staminaTrainingPart/100d);

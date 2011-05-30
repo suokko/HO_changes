@@ -625,19 +625,34 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
     /**
      * Setter for property m_iSpielerId.
+     * This will fail if the current lineup of the HO model would end up with 12 players or more.
      *
      * @param m_iSpielerId New value of property m_iSpielerId.
      */
-    public final void setSpielerId(int m_iSpielerId) {
+    public final void setSpielerId(int spielerId) {
+        setSpielerId(spielerId, HOVerwaltung.instance().getModel().getAufstellung());
+    }
+    
+    /**
+     * Setter for property m_iSpielerId.
+     * This setter will fail if the provided lineup would end up with 12 players or more.
+     *
+     * @param spielerId New value of property m_iSpielerId.
+     * @param lineup The lineup that will be used to check for available space.
+     */
+    public final void setSpielerId(int spielerId, Lineup lineup) {
         
+    	boolean containsPlayer = (m_iSpielerId > 0) || (m_iSpielerId < -10) ? true : false; 
+    	boolean incomingEmpty = (spielerId < 1) && (spielerId > -10) ? true : false;
+    	
     	// We don't want another player in the starting lineup if there are already 11 on the field.
-    	if ((this.m_iSpielerId < 1) && (m_iSpielerId > 0) && (m_iId >= ISpielerPosition.startLineup) && 
-    			(m_iId < ISpielerPosition.startReserves) &&
-    			(HOVerwaltung.instance().getModel().getAufstellung().hasFreePosition() == false)) {
-        	HOLogger.instance().debug(getClass(), "Blocked from setting player at position: " + m_iSpielerId + " " + m_iId);
+    	
+    	if (!incomingEmpty && !containsPlayer && m_iId >= ISpielerPosition.startLineup && 
+    			m_iId < ISpielerPosition.startReserves && lineup.hasFreePosition() == false) {
+    		HOLogger.instance().debug(getClass(), "Blocked from setting player at position: " + m_iSpielerId + " " + m_iId);
     		return;
     	} else {
-    		this.m_iSpielerId = m_iSpielerId;
+    		this.m_iSpielerId = spielerId;
         }
     }
 

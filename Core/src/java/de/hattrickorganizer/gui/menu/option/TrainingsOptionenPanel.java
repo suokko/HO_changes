@@ -2,31 +2,33 @@
 package de.hattrickorganizer.gui.menu.option;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.logik.TrainingsManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
-
 
 /**
  * Optionen für das Training
  */
-final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.event.ChangeListener {
+final class TrainingsOptionenPanel extends ImagePanel implements ActionListener {
     //~ Static / Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 1L;
-	private SliderPanel m_jslAlterFaktor;
-    private SliderPanel m_jslCoTrainerFaktor;
-    private SliderPanel m_jslIntensitaetFaktor;
-    private SliderPanel m_jslTrainerFaktor;
-    private SliderPanel m_jslTrainingFluegel;
-    private SliderPanel m_jslTrainingPasspiel;
-    private SliderPanel m_jslTrainingSpielaufbau;
-    private SliderPanel m_jslTrainingStandards;
-    private SliderPanel m_jslTrainingTorschuss;
-    private SliderPanel m_jslTrainingTorwart;
-    private SliderPanel m_jslTrainingVerteidigung;
+	private TrainingAdjustmentPanel m_tapAgeFactor;
+    private TrainingAdjustmentPanel m_jtapAssisstantFactor;
+    private TrainingAdjustmentPanel m_jtapIntensityFactor;
+    private TrainingAdjustmentPanel m_jtapCoachFactor;
+    private TrainingAdjustmentPanel m_jtapWinger;
+    private TrainingAdjustmentPanel m_jtapPassing;
+    private TrainingAdjustmentPanel m_jtapPlaymaking;
+    private TrainingAdjustmentPanel m_jtapSetPieces;
+    private TrainingAdjustmentPanel m_jtapScoring;
+    private TrainingAdjustmentPanel m_jtapGoalkeeping;
+    private TrainingAdjustmentPanel m_jtapDefending;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -44,19 +46,18 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
      *
      * @param changeEvent TODO Missing Method Parameter Documentation
      */
-    public final void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
-        gui.UserParameter.temp().DAUER_TORWART =  m_jslTrainingTorwart.getValue();
-        gui.UserParameter.temp().DAUER_VERTEIDIGUNG =  m_jslTrainingVerteidigung.getValue();
-        gui.UserParameter.temp().DAUER_SPIELAUFBAU = m_jslTrainingSpielaufbau.getValue();
-        gui.UserParameter.temp().DAUER_PASSPIEL =  m_jslTrainingPasspiel.getValue();
-        gui.UserParameter.temp().DAUER_FLUEGELSPIEL =  m_jslTrainingFluegel.getValue();
-        gui.UserParameter.temp().DAUER_CHANCENVERWERTUNG =  m_jslTrainingTorschuss
-                                                               .getValue();
-        gui.UserParameter.temp().DAUER_STANDARDS = m_jslTrainingStandards.getValue();        
-        gui.UserParameter.temp().AlterFaktor = m_jslAlterFaktor.getValue();
-        gui.UserParameter.temp().TrainerFaktor = m_jslTrainerFaktor.getValue();
-        gui.UserParameter.temp().CoTrainerFaktor = m_jslCoTrainerFaktor.getValue();
-        gui.UserParameter.temp().IntensitaetFaktor = m_jslIntensitaetFaktor.getValue();
+    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+        gui.UserParameter.temp().TRAINING_OFFSET_GOALKEEPING =  m_jtapGoalkeeping.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_DEFENDING =  m_jtapDefending.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_PLAYMAKING = m_jtapPlaymaking.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_PASSING =  m_jtapPassing.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_WINGER =  m_jtapWinger.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_SCORING =  m_jtapScoring.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_SETPIECES = m_jtapSetPieces.getValue();        
+        gui.UserParameter.temp().TRAINING_OFFSET_AGE = m_tapAgeFactor.getValue();
+        gui.UserParameter.temp().TrainerFaktor = m_jtapCoachFactor.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_ASSISTANTS = m_jtapAssisstantFactor.getValue();
+        gui.UserParameter.temp().TRAINING_OFFSET_INTENSITY = m_jtapIntensityFactor.getValue();
         
         OptionManager.instance().setReInitNeeded();
     }
@@ -65,89 +66,69 @@ final class TrainingsOptionenPanel extends ImagePanel implements javax.swing.eve
      * TODO Missing Method Documentation
      */
     private void initComponents() {
-        setLayout(new GridLayout(13, 1, 4, 4));
+    	setLayout(new GridLayout(13, 1, 4, 4));
 
-        JLabel label = new JLabel("   "
-                                  + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VoraussichtlicheTrainingwochen"));
+        JLabel label = new JLabel("   " + 
+        		de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("VoraussichtlicheTrainingwochen"));
         add(label);
 
-        m_jslTrainingTorwart = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.goalkeeping"),
-                                               100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingTorwart.setValue( gui.UserParameter.temp().DAUER_TORWART);
-        m_jslTrainingTorwart.addChangeListener(this);
-        add(m_jslTrainingTorwart);
+        m_jtapGoalkeeping = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.goalkeeping"),
+                   TrainingsManager.BASE_DURATION_GOALKEEPING, gui.UserParameter.temp().TRAINING_OFFSET_GOALKEEPING);
+        m_jtapGoalkeeping.addActionListener(this);
+        add(m_jtapGoalkeeping);
 
-        m_jslTrainingVerteidigung = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.defending"),
-                                                    100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingVerteidigung.setValue( gui.UserParameter.temp().DAUER_VERTEIDIGUNG);
-        m_jslTrainingVerteidigung.addChangeListener(this);
-        add(m_jslTrainingVerteidigung);
+        m_jtapDefending = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.defending"),
+        			TrainingsManager.BASE_DURATION_DEFENDING, gui.UserParameter.temp().TRAINING_OFFSET_DEFENDING);
+        m_jtapDefending.addActionListener(this);
+        add(m_jtapDefending);
 
-        m_jslTrainingSpielaufbau = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.playmaking"),
-                                                   100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingSpielaufbau.setValue( gui.UserParameter.temp().DAUER_SPIELAUFBAU);
-        m_jslTrainingSpielaufbau.addChangeListener(this);
-        add(m_jslTrainingSpielaufbau);
+        m_jtapPlaymaking = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.playmaking"),
+        		TrainingsManager.BASE_DURATION_PLAYMAKING, gui.UserParameter.temp().TRAINING_OFFSET_PLAYMAKING);
+        m_jtapPlaymaking.addActionListener(this);
+        add(m_jtapPlaymaking);
 
-        m_jslTrainingPasspiel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.short_passes"),
-                                                100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingPasspiel.setValue( gui.UserParameter.temp().DAUER_PASSPIEL);
-        m_jslTrainingPasspiel.addChangeListener(this);
-        add(m_jslTrainingPasspiel);
+        m_jtapPassing = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.short_passes"),
+        		TrainingsManager.BASE_DURATION_PASSING, gui.UserParameter.temp().TRAINING_OFFSET_PASSING);
+        m_jtapPassing.addActionListener(this);
+        add(m_jtapPassing);
 
-        m_jslTrainingFluegel = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.crossing"),
-                                               100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingFluegel.setValue( gui.UserParameter.temp().DAUER_FLUEGELSPIEL);
-        m_jslTrainingFluegel.addChangeListener(this);
-        add(m_jslTrainingFluegel);
+        m_jtapWinger = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.crossing"),
+        		TrainingsManager.BASE_DURATION_WINGER, gui.UserParameter.temp().TRAINING_OFFSET_WINGER);
+        m_jtapWinger.addActionListener(this);
+        add(m_jtapWinger);
 
-        m_jslTrainingTorschuss = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.scoring"),
-                                                 100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingTorschuss.setValue( gui.UserParameter.temp().DAUER_CHANCENVERWERTUNG);
-        m_jslTrainingTorschuss.addChangeListener(this);
-        add(m_jslTrainingTorschuss);
+        m_jtapScoring = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.scoring"),
+        		TrainingsManager.BASE_DURATION_SCORING, gui.UserParameter.temp().TRAINING_OFFSET_SCORING);
+        m_jtapScoring.addActionListener(this);
+        add(m_jtapScoring);
         
-        m_jslTrainingStandards = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("training.set_pieces"),
-                                                 100, 1, 10.0f, 0.1f, 120);
-        m_jslTrainingStandards.setValue( gui.UserParameter.temp().DAUER_STANDARDS);
-                
-        m_jslTrainingStandards.addChangeListener(this);
-        add(m_jslTrainingStandards);
+        m_jtapSetPieces = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.set_pieces"),
+        		TrainingsManager.BASE_DURATION_SET_PIECES, gui.UserParameter.temp().TRAINING_OFFSET_SETPIECES);
+        m_jtapSetPieces.addActionListener(this);
+        add(m_jtapSetPieces);
 
-        label = new JLabel("   "
-                           + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TrainingFaktoren"));
+        label = new JLabel("   " + 
+        		de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TrainingFaktoren"));
         add(label);
 
-        m_jslAlterFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
-                                           
-        //faktor optimal 1.0
-        200, 0, 100.0f, 1.0f, 120);
-        m_jslAlterFaktor.setValue(gui.UserParameter.temp().AlterFaktor);
-        m_jslAlterFaktor.addChangeListener(this);
-        add(m_jslAlterFaktor);
+        m_tapAgeFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
+        		TrainingsManager.BASE_AGE_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_AGE);
+        m_tapAgeFactor.addActionListener(this);
+        add(m_tapAgeFactor);
 
-        m_jslTrainerFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorTrainerfertigkeit"),
-                                             
-        //faktor optimal 1.0
-        200, 0, 100.0f, 1.0f, 120);
-        m_jslTrainerFaktor.setValue(gui.UserParameter.temp().TrainerFaktor);
-        m_jslTrainerFaktor.addChangeListener(this);
-        add(m_jslTrainerFaktor);
+        m_jtapCoachFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorTrainerfertigkeit"),
+        		TrainingsManager.BASE_COACH_FACTOR, gui.UserParameter.temp().TrainerFaktor);
+        m_jtapCoachFactor.addActionListener(this);
+        add(m_jtapCoachFactor);
 
-        m_jslCoTrainerFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorCoTraineranzahl"),
-                                               
-        //faktor optimal 1.0
-        200, 0, 100.0f, 1.0f, 120);
-        m_jslCoTrainerFaktor.setValue(gui.UserParameter.temp().CoTrainerFaktor);
-        m_jslCoTrainerFaktor.addChangeListener(this);
-        add(m_jslCoTrainerFaktor);
+        m_jtapAssisstantFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorCoTraineranzahl"),
+        		TrainingsManager.BASE_ASSISTANT_COACH_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_ASSISTANTS);
+        m_jtapAssisstantFactor.addActionListener(this);
+        add(m_jtapAssisstantFactor);
 
-        m_jslIntensitaetFaktor = new SliderPanel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
-                                                 
-        //faktor optimal 1.0
-        200, 0, 100.0f, 1.0f, 120);
-        m_jslIntensitaetFaktor.setValue(gui.UserParameter.temp().IntensitaetFaktor);
-        m_jslIntensitaetFaktor.addChangeListener(this);
-        add(m_jslIntensitaetFaktor);
+        m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
+        		TrainingsManager.BASE_INTENSITY_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_INTENSITY);
+        m_jtapIntensityFactor.addActionListener(this);
+        add(m_jtapIntensityFactor);
     }
 }
