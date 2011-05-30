@@ -2074,11 +2074,12 @@ public class DBZugriff {
 			updateConfigTo1425(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425);
 		}
 		
-//		Maybe later (feedback upload since start of the season).
-//		if (lastConfigUpdate < 1.426 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.426)) {
-//			HOLogger.instance().log(getClass(), "Updating configuration to version 1.426...");
-//			updateConfigTo1426(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.426);
-//		}
+		if (lastConfigUpdate < 1.429 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.429)) {
+
+			// Lets not reset poor user's custom training setting each time they start...
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.429...");
+			updateConfigTo1429(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.429);
+		}
 	}
 
 	private void updateConfigTo1410_1 (boolean alreadyApplied) {
@@ -2129,22 +2130,33 @@ public class DBZugriff {
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.425);
 	}
+	
+	private void updateConfigTo1429 (boolean alreadyApplied) {
+		
+		if (!alreadyApplied){
+			resetTrainingParameters ();
+		}
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.429);
+	}
+	
 
 	private void resetTrainingParameters () {
 		// Reset Training Speed Parameters for New Training
+		// 1.429 training speed in db is now an offset
 		HOLogger.instance().info(this.getClass(), "Resetting training parameters to default values");
-		saveUserParameter("DAUER_TORWART", 3.0206);
-		saveUserParameter("DAUER_VERTEIDIGUNG", 5.4824);
-		saveUserParameter("DAUER_SPIELAUFBAU", 4.6613);
-		saveUserParameter("DAUER_PASSPIEL", 4.2989);
-		saveUserParameter("DAUER_FLUEGELSPIEL", 3.2341);
-		saveUserParameter("DAUER_CHANCENVERWERTUNG", 4.8536);
-		saveUserParameter("DAUER_STANDARDS", 0.9938);
+		saveUserParameter("DAUER_TORWART", 0.0);
+		saveUserParameter("DAUER_VERTEIDIGUNG", 0.0);
+		saveUserParameter("DAUER_SPIELAUFBAU", 0.0);
+		saveUserParameter("DAUER_PASSPIEL", 0.0);
+		saveUserParameter("DAUER_FLUEGELSPIEL", 0.0);
+		saveUserParameter("DAUER_CHANCENVERWERTUNG", 0.0);
+		saveUserParameter("DAUER_STANDARDS", 0.0);
 
-		saveUserParameter("AlterFaktor", 1.0);
-		saveUserParameter("TrainerFaktor", 1.0);
-		saveUserParameter("CoTrainerFaktor", 1.0);
-		saveUserParameter("IntensitaetFaktor", 1.0);
+		saveUserParameter("AlterFaktor", 0.0);
+		saveUserParameter("TrainerFaktor", 0.0);
+		saveUserParameter("CoTrainerFaktor", 0.0);
+		saveUserParameter("IntensitaetFaktor", 0.0);
 	}
 
 	private void resetPredictionOffsets () {

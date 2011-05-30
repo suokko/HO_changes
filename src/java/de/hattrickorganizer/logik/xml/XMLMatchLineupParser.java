@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.logik.xml;
 
+import java.util.HashMap;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -322,8 +324,25 @@ public class XMLMatchLineupParser {
         //Einträge adden
         list = tmp.getElementsByTagName("Player");
 
+        HashMap<Integer, Integer> tempPlayerList = new HashMap<Integer, Integer>();
+        
         for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-            team.add2Aufstellung(createPlayer((Element) list.item(i)));
+ 
+        	// We want to stop an api error that has repositioned players as substituted.
+        	// They are both shown as substituted and in a position. (hopefully) substituted
+        	// players are always last in the API, there are at least signs of a fixed order.
+        	MatchLineupPlayer player = createPlayer((Element) list.item(i));
+        	if (tempPlayerList.get(player.getSpielerId()) != null) {
+        		if ((player.getId() >= ISpielerPosition.ausgewechselt) 
+            			&& (player.getId() < ISpielerPosition.ausgewechseltEnd)) {
+        			
+        			// MatchLineup API bug, he is still on the pitch, so skip
+        			continue;
+        		}
+        	}
+        	
+        	tempPlayerList.put(player.getSpielerId(), player.getId());
+        	team.add2Aufstellung(player);
         }
 
         return team;
