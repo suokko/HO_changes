@@ -1,10 +1,16 @@
-Please visit the official HO! forum at http://forum.hattrickorganizer.net if you have any questions!
+Please visit the HO! forum in the CHPP section of Hattrick, or the 
+forum at http://forum.hattrickorganizer.net if you have any questions!
 
 Changelist HO! 1.429
 ====================
-- Authentication is now done through oAuth.
+- Authentication is now done through oAuth
 - Updates to missing German language texts.
 - Added flags for Cuba, O'zbekiston, Cameroon, and Palestine
+- Training defaults are updated (thx Art-Frisson for numbers), and the format of modifying them in options have changed
+- Fixed a small error in the Lineup gui with temporary players
+- Downloaded matches with individual orders should now display better. 
+  Matches already in the database can be redownloaded from the matches screen.
+- Prediction Offset should work again.
 
 Changelist HO! 1.428
 ====================
