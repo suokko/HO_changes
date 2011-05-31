@@ -241,6 +241,24 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 				mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
 			}
 		} else if (actionEvent.getSource().equals(overlayOk)) {
+			
+			// Check that max 11 positions are sent
+			Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
+			int reds = 0;
+			while (it.hasNext()){
+				if (!it.next().getValue().isSelected()) {
+					reds++;
+				}
+			}
+			if (reds < 3) {
+				// We have more positions left than is allowed in the lineup. Return.
+				javax.swing.JOptionPane.showMessageDialog(HOMainFrame.instance().getAufstellungsPanel(),
+						HOVerwaltung.instance().getLanguageString("lineupassist.Error"),
+						HOVerwaltung.instance().getLanguageString("lineupassist.ErrorHeader"),
+						javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			
 			removeGUI();
 			updateDefaultSelection();
 
