@@ -87,8 +87,8 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 	private int playerId = -1;
 	private int tacticOrder = -1;
 	
-	final GridBagLayout layout = new GridBagLayout();
-	JLayeredPane jlp = new JLayeredPane();
+	private final GridBagLayout layout = new GridBagLayout();
+	private JLayeredPane jlp = new JLayeredPane();
 	
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -205,33 +205,35 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         constraints.insets = new Insets(2, 2, 2, 2);
-        FlowLayout fl = new FlowLayout();
-        fl.setHgap(0);
-        fl.setVgap(0);
-        fl.setAlignment(FlowLayout.CENTER);
-        setLayout(fl);
-        jlp.setLayout(layout);
      
         //Minimiert
         if (m_bMinimize) {
-            setBorder(javax.swing.BorderFactory.createLineBorder(Color.lightGray));
-            jlp.setBackground(Color.WHITE);
+            // This is the realm of the miniposframe, no jlp...
+        	setLayout(layout);
+        	setBorder(javax.swing.BorderFactory.createLineBorder(Color.lightGray));
+            setBackground(Color.WHITE);
 
             constraints.gridx = 0;
             constraints.gridy = 0;
-//            layout.setConstraints(m_jlPosition, constraints);
-            jlp.add(m_jlPosition, constraints, 1);
+            add(m_jlPosition, constraints);
 
             constraints.gridx = 0;
             constraints.gridy = 1;
-//            layout.setConstraints(m_jlPlayer, constraints);
-            jlp.add(m_jlPlayer, constraints,  1);
+            add(m_jlPlayer, constraints);
 
             setPreferredSize(new Dimension(MINI_PLAYER_POSITION_PANEL_WIDTH,MINI_PLAYER_POSITION_PANEL_HEIGHT));
         }
         //Normal
         else {
-            setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        	jlp.setLayout(layout);
+        	// No gaps around the layeredpane.
+        	FlowLayout fl = new FlowLayout();
+        	fl.setHgap(0);
+        	fl.setVgap(0);
+        	fl.setAlignment(FlowLayout.CENTER);
+        	setLayout(fl);
+
+        	setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
             constraints.gridx = 0;
             constraints.gridy = 0;
