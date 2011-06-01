@@ -8,7 +8,7 @@
   <property>
     <datei>Deutsch.properties</datei>
     <lang_id>1</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>English.properties</datei>
@@ -58,7 +58,7 @@
   <property>
     <datei>Portugues.properties</datei>
     <lang_id>11</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>Romanian.properties</datei>
