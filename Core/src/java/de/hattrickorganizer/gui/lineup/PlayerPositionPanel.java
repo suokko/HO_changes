@@ -349,6 +349,22 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 				playerId = aktuellerSpieler.getSpielerID();
 			}	
 			tacticOrder=-1;                                                                                         
+			
+			// Filter keeper from the spieler vector (can't be sp taker)
+			// Make sure the incoming spieler list is not modified, it 
+			// seems to visit the captain position later.
+			
+			ISpieler keeper = HOVerwaltung.instance().getModel().getAufstellung().
+					getPlayerByPositionID(ISpielerPosition.keeper); 
+			if (keeper != null) {
+				Vector<ISpieler> tmpSpieler = new Vector<ISpieler>(spieler.size() -1);
+				for (int i = 0; i < spieler.size(); i++) {
+					if ( keeper.getSpielerID() != spieler.get(i).getSpielerID()) {
+						tmpSpieler.add(spieler.get(i));
+					}
+				}
+				spieler = tmpSpieler;
+			}
         } else if (m_iPositionID == ISpielerPosition.captain) {
             aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(HOVerwaltung.instance()
                                                                                          .getModel()
