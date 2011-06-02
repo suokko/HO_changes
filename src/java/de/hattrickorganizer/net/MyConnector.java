@@ -35,6 +35,7 @@ import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.updater.VersionInfo;
 
 /**
  * DOCUMENT ME!
@@ -804,6 +805,46 @@ public class MyConnector implements plugins.IDownloadHelper {
 			HOLogger.instance().log(getClass(),"Unable to connect to the update server (HO): " + e);
 			return de.hattrickorganizer.gui.HOMainFrame.VERSION;
 		}
+	}
+	
+	/**
+	 * Get information about the latest HO beta.
+	 */
+	public VersionInfo getLatestBetaVersion() {
+		BufferedReader br = null;
+		InputStream is = null;
+		try {
+			is = getWebFile(MyConnector.getPluginSite()+"/betaversion.htm", false, true);
+			if (is != null) {
+				br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+				VersionInfo ret = new VersionInfo();
+				String line;
+				
+				while ((line = br.readLine()) != null) {
+					int pos = line.indexOf("=");
+					if (pos > 0) {
+						String key = line.substring(0, pos).trim();
+						String val = line.substring(pos+1).trim();
+						ret.setValue(key, val);
+					}
+				}
+				if (ret.isValid()) {
+					HOLogger.instance().log(getClass(), "LatestBetaVersion: " + ret);
+					return ret;
+				}
+			} else {
+				HOLogger.instance().log(getClass(), "Unable to connect to the update server (HO).");
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), "Unable to connect to the update server (HO): " + e);
+		} finally {
+			try {
+				if (br != null) br.close();
+				if (is != null) is.close();
+			} catch (IOException e) {
+			}
+		}
+		return null;
 	}
 
 	public Extension getEpvVersion() {

@@ -338,31 +338,61 @@ public final class UpdateController {
 	}
 
 	public static void updateHO(double version) {
-		File tmp = new File("update.zip");
 		String ver = "" + version;
 		ver = ver.replaceAll("\\.", "");
-		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance()
-				.getGUI().getOwner4Dialog());
+		updateHO("http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip");
+	}
+	
+	public static void updateHO(final String urlString) {
+		File tmp = new File("update.zip");
+		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
 		wait.setVisible(true);
-		if (!UpdateHelper.instance().download("http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip", tmp)) {
+		HOLogger.instance().debug(UpdateController.class, "Try to download: " + urlString);
+		if (!UpdateHelper.instance().download(urlString, tmp)) {
 			wait.setVisible(false);
 			return;
 		}
 		wait.setVisible(false);
+		ZipHelper zip = null;
 		try {
-			ZipHelper zip = new ZipHelper("update.zip");
+			zip = new ZipHelper("update.zip");
 			String dir = System.getProperty("user.dir");
 			zip.extractFile("HO.bat", dir);
 			zip.extractFile("HO.sh", dir);
 			zip.extractFile("HOLauncher.class", dir);
-			zip.close();
 		} catch (Exception e) {
+			HOLogger.instance().log(UpdateController.class, e);
 			return;
+		} finally {
+			if (zip != null) zip.close();
 		}
 		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 				"", JOptionPane.INFORMATION_MESSAGE);
 
 		HOMainFrame.instance().beenden();
+	}
+	
+	/**
+	 * 
+	 * TODO: i18n
+	 */
+	public static void check4latestbeta() {
+		final VersionInfo vi = MyConnector.instance().getLatestBetaVersion();
+		if (vi != null && vi.isValid() && vi.getVersion() >= HOMainFrame.VERSION) {
+			int update =
+				JOptionPane.showConfirmDialog(HOMainFrame.instance(),
+					"Update your HO to this "+(vi.isBeta()?" beta":"")+"version:"
+						+ "\n\nVersion: " + vi.getVersionString()
+						+ "\nReleased: " + vi.getReleaseDate()
+						+ "\n\n"
+						+ HOVerwaltung.instance().getLanguageString("update") + "?",
+					HOVerwaltung.instance().getLanguageString("update")+"?",
+					JOptionPane.YES_NO_OPTION);
+
+			if (update == JOptionPane.YES_OPTION) {
+				updateHO("http://downloads.sourceforge.net/ho1/" + vi.getZipFileName());
+			}
+		}
 	}
 
 	public static void check4EPVUpdate() {
