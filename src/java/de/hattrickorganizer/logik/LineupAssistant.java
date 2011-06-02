@@ -6,11 +6,7 @@
  */
 package de.hattrickorganizer.logik;
 
-import java.io.IOException;
 import java.util.Vector;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import plugins.ILineUp;
 import plugins.ISpieler;
@@ -117,11 +113,13 @@ public class LineupAssistant {
         initElferKicker(bestElfer);
 
         for (int i = 0; (bestElfer != null) && (i < bestElfer.length); i++) {
-            //erster Schütze ist der Standard schütze
-            if ((i == 0) && (kicker > 0)) {
-                bestElfer[0] = kicker;
-                continue;
-            }
+
+// The sp taker is no longer required to be first in a shootout.
+//        	//erster Schütze ist der Standard schütze
+//            if ((i == 0) && (kicker > 0)) {
+//                bestElfer[0] = kicker;
+//                continue;
+//            }
 
             bestElfer[i] = getBestFreeElferKicker(bestElfer, vSpieler, positionen);
         }
