@@ -181,6 +181,7 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiAufstellung = new JMenuItem(HOVerwaltung.instance().getLanguageString("Aufstellung"));
 	private final JMenuItem m_jmiFlags = new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem("HO!");
+	private final JMenuItem m_jmiHObeta = new JMenuItem("HO! (Beta)");
 	private final JMenuItem m_jmiEPV = new JMenuItem("EPV");
 	private final JMenuItem m_jmiRatings = new JMenuItem("Ratings");
 
@@ -652,6 +653,8 @@ public final class HOMainFrame extends JFrame
 			UpdateController.updateFlags();
 		} else if (source.equals(m_jmiHO)) {
 			UpdateController.check4update();
+		} else if (source.equals(m_jmiHObeta)) {
+			UpdateController.check4latestbeta();
 		} else if (source.equals(m_jmiEPV)) {
 			UpdateController.check4EPVUpdate();
 		} else if (source.equals(m_jmiRatings)) {
@@ -911,11 +914,12 @@ public final class HOMainFrame extends JFrame
 		m_jmImportItem.addActionListener(this);
 		m_jmDatei.add(m_jmImportItem);
 
-		// 		Updating Menu
+		//Updating Menu
 		m_jmiLanguages.addActionListener(this);
 		m_jmiPluginsDelete.addActionListener(this);
 		m_jmiFlags.addActionListener(this);
 		m_jmiHO.addActionListener(this);
+		m_jmiHObeta.addActionListener(this);
 		m_jmiEPV.addActionListener(this);
 		m_jmiRatings.addActionListener(this);
 		m_jmiPluginsNormal.addActionListener(this);
@@ -927,6 +931,7 @@ public final class HOMainFrame extends JFrame
 
 		m_jmUpdating.add(m_jmPluginsRefresh);
 		m_jmUpdating.add(m_jmiHO);
+		m_jmUpdating.add(m_jmiHObeta);
 		m_jmUpdating.add(m_jmiEPV);
 		m_jmUpdating.add(m_jmiRatings);
 		m_jmUpdating.add(m_jmiLanguages);
