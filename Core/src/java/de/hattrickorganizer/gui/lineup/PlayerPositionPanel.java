@@ -201,10 +201,10 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
      */
     private void initComponents(boolean aenderbar) {
         final GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
-        constraints.insets = new Insets(2, 2, 2, 2);
+        constraints.weighty = 0;
+        constraints.insets = new Insets(1, 2, 1, 2);
      
         //Minimiert
         if (m_bMinimize) {
@@ -269,6 +269,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
             } else {
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH, PLAYER_POSITION_PANEL_HEIGHT_REDUCED));
             }
+            jlp.setPreferredSize(getPreferredSize());
             add(jlp);
         }
     }
