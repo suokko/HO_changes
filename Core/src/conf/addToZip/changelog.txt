@@ -1,19 +1,29 @@
-Please visit the HO! forum in the CHPP section of Hattrick, or the 
+Please visit the HO! forum in the CHPP section of Hattrick, or the
 forum at http://forum.hattrickorganizer.net if you have any questions!
 
 Changelist HO! 1.429
 ====================
 - Authentication is now done through oAuth
-- Updates to missing German language texts.
 - Added flags for Cuba, O'zbekiston, Cameroon, and Palestine
 - Training defaults are updated (thx Art-Frisson for numbers), and the format of modifying them in options have changed
 - Fixed a small error in the Lineup gui with temporary players
-- Downloaded matches with individual orders should now display better. 
+- Downloaded matches with individual orders should now display better.
   Matches already in the database can be redownloaded from the matches screen.
 - Prediction Offset should work again.
-- Update Catalan translations (thx CAT-fike)
 - It is no longer possible to set the keeper at set piece taker.
 - The set piece taker is no longer automatically first on the penalty shooter list.
+- Update Catalan translations (thx CAT-fike)
+- Update Finnish translations (thx -Lupi-)
+- Update French translations (thx Butboja)
+- Update German translations (thx Werder0405)
+- Update Hrvatski(Croatian) translations (thx Bilke5)
+- Update Italiano translations (thx silkevicious)
+- Update Nederlands translations (thx BrammieG)
+- Update Polish translations (thx aMiUK)
+- Update Portugues translations (thx a_cardoso)
+- Update Slovak translations (thx zymbo)
+- Update Spanish translations (thx Baler0, garcilp)
+- Update Spanish_Sudamericano translations (thx Baler0)
 
 Changelist HO! 1.428
 ====================
@@ -60,7 +70,7 @@ Language updates:
 - add Catalan translations for some plugins (thx CAT-fike)
 - update English denominations to solve problems in the player parser (thx salt00)
 - add Hangul (Korean) as new HO language (thx to dodegun!)
-- fix Danish 'non-existent' denomination (fixes also player parser problems) 
+- fix Danish 'non-existent' denomination (fixes also player parser problems)
 - add Persian as new HO language (big thx to lvl_Rashid_lvl!)
 
 Plugin Updates:
