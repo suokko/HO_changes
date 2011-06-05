@@ -12,6 +12,7 @@ Changelist HO! 1.429
 - Prediction Offset should work again.
 - It is no longer possible to set the keeper at set piece taker.
 - The set piece taker is no longer automatically first on the penalty shooter list.
+
 - Update Catalan translations (thx CAT-fike)
 - Update Finnish translations (thx -Lupi-)
 - Update French translations (thx Butboja)
@@ -19,6 +20,7 @@ Changelist HO! 1.429
 - Update Hrvatski(Croatian) translations (thx Bilke5)
 - Update Italiano translations (thx silkevicious)
 - Update Nederlands translations (thx BrammieG)
+- Update to Norsk translations
 - Update Polish translations (thx aMiUK)
 - Update Portugues translations (thx a_cardoso)
 - Update Slovak translations (thx zymbo)
