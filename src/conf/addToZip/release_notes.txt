@@ -1,6 +1,32 @@
 Changelist HO! 1.429
 ====================
-- Authorization is now done through the new oauth interface.
-- Bugfixes from the 553 updated released in 1.428. Including Prediction Offset.
-- Training defaults are updated to defaults lifted from the HT forums.
 
+- Authentication is now done through oAuth
+- Added flags for Cuba, O'zbekiston, Cameroon, and Palestine
+- Training defaults are updated (thx Art-Frisson for numbers), and the format of modifying them in options have changed
+- Fixed a small error in the Lineup gui with temporary players
+- Downloaded matches with individual orders should now display better.
+  Matches already in the database can be redownloaded from the matches screen.
+- Prediction Offset should work again.
+- It is no longer possible to set the keeper at set piece taker.
+- The set piece taker is no longer automatically first on the penalty shooter list.
+
+Language updates:
+-----------------
+
+- Update Catalan translations (thx CAT-fike)
+- Update Finnish translations (thx -Lupi-)
+- Update French translations (thx Butboja)
+- Update German translations (thx Werder0405)
+- Update Hrvatski(Croatian) translations (thx Bilke5)
+- Update Italiano translations (thx silkevicious)
+- Update Nederlands translations (thx BrammieG)
+- Update to Norsk translations
+- Update Polish translations (thx aMiUK)
+- Update Portugues translations (thx a_cardoso)
+- Update Slovak translations (thx zymbo)
+- Update Spanish translations (thx Baler0, garcilp)
+- Update Spanish_Sudamericano translations (thx Baler0)
+
+Plugin Updates:
+---------------
