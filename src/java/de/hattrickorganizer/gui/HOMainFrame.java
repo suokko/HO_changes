@@ -259,14 +259,19 @@ public final class HOMainFrame extends JFrame
 
 
 		// Catch Apple-Q for MacOS
-		if (System.getProperty("os.name").toLowerCase().indexOf("mac") != -1)
+		if (isMac()) {
 			addMacOSListener();
+		}
 
 		initProxy();
 		initComponents();
 		initMenue();
 
 		RefreshManager.instance().doRefresh();
+	}
+	
+	final public static boolean isMac() {
+		return (System.getProperty("os.name").toLowerCase().indexOf("mac") != -1);
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
@@ -918,8 +923,13 @@ public final class HOMainFrame extends JFrame
 		m_jmiLanguages.addActionListener(this);
 		m_jmiPluginsDelete.addActionListener(this);
 		m_jmiFlags.addActionListener(this);
-		m_jmiHO.addActionListener(this);
-		m_jmiHObeta.addActionListener(this);
+		if (isMac()) { // update doesn't work on MacOs' strange packet structure 
+			m_jmiHO.setEnabled(false);
+			m_jmiHObeta.setEnabled(false);
+		} else {
+			m_jmiHO.addActionListener(this);
+			m_jmiHObeta.addActionListener(this);
+		}
 		m_jmiEPV.addActionListener(this);
 		m_jmiRatings.addActionListener(this);
 		m_jmiPluginsNormal.addActionListener(this);
