@@ -33,7 +33,7 @@
   <property>
     <datei>French.properties</datei>
     <lang_id>6</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>Italiano.properties</datei>
@@ -133,7 +133,7 @@
   <property>
     <datei>Galego.properties</datei>
     <lang_id>27</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>Srpski(lat).properties</datei>

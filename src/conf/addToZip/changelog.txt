@@ -12,10 +12,12 @@ Changelist HO! 1.429
 - Prediction Offset should work again.
 - It is no longer possible to set the keeper at set piece taker.
 - The set piece taker is no longer automatically first on the penalty shooter list.
+- Changed formation experience ordering according to Hattrick
 
 - Update Catalan translations (thx CAT-fike)
 - Update Finnish translations (thx -Lupi-)
 - Update French translations (thx Butboja)
+- Update Galego translations (thx OReiDasSachadas)
 - Update German translations (thx Werder0405)
 - Update Hrvatski(Croatian) translations (thx Bilke5)
 - Update Italiano translations (thx silkevicious)

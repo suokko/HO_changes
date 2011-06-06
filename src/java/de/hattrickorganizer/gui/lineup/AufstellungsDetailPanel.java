@@ -103,9 +103,9 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			new CBItem(HOMiniModel.instance().getLanguageString("coach.offensive"), 1), };
 	private JComboBox m_jcbTrainerType = new JComboBox(TRAINERTYPE);
 
-	private CBItem[] PREDICTIONTYPE = getPredictionItems(); 
-	private JComboBox m_jcbPredictionType= new JComboBox(PREDICTIONTYPE); 
-	
+	private CBItem[] PREDICTIONTYPE = getPredictionItems();
+	private JComboBox m_jcbPredictionType= new JComboBox(PREDICTIONTYPE);
+
 	private CBItem[] STIMMUNG = { new CBItem(Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg), ITeam.TS_wie_im_kalten_Krieg),
 			new CBItem(Team.getNameForStimmung(ITeam.TS_blutruenstig), ITeam.TS_blutruenstig),
 			new CBItem(Team.getNameForStimmung(ITeam.TS_wuetend), ITeam.TS_wuetend),
@@ -280,7 +280,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             setSelbstvertrauen(homodel.getTeam().getSelbstvertrauenAsInt());
             setTrainerType(homodel.getTrainer().getTrainerTyp());
             setPredictionType(RatingPredictionConfig.getInstancePredictionType());
-            
+
             setTaktik(aufstellung.getTacticType());
             m_jpTaktikStaerke.setText(getTaktikString());
 
@@ -301,36 +301,36 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             //m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
                                                         .getTeamErfahrung4AktuellesSystem() + "");
-            m_jpErfahrung433.setText(homodel.getTeam().getErfahrung433() + "");
-            m_jpErfahrung442.setText(homodel.getTeam().getFormationExperience442() + "");
-            m_jpErfahrung532.setText(homodel.getTeam().getErfahrung532() + "");
+            m_jpErfahrung550.setText(homodel.getTeam().getFormationExperience550() + "");
             m_jpErfahrung541.setText(homodel.getTeam().getErfahrung541() + "");
+            m_jpErfahrung532.setText(homodel.getTeam().getErfahrung532() + "");
+            m_jpErfahrung523.setText(homodel.getTeam().getFormationExperience523() + "");
+            m_jpErfahrung451.setText(homodel.getTeam().getErfahrung451() + "");
+            m_jpErfahrung442.setText(homodel.getTeam().getFormationExperience442() + "");
+            m_jpErfahrung433.setText(homodel.getTeam().getErfahrung433() + "");
             m_jpErfahrung352.setText(homodel.getTeam().getErfahrung352() + "");
             m_jpErfahrung343.setText(homodel.getTeam().getErfahrung343() + "");
-            m_jpErfahrung451.setText(homodel.getTeam().getErfahrung451() + "");
-            m_jpErfahrung523.setText(homodel.getTeam().getFormationExperience523() + "");
-            m_jpErfahrung550.setText(homodel.getTeam().getFormationExperience550() + "");
             m_jpErfahrung253.setText(homodel.getTeam().getFormationExperience253() + "");
             m_jpErfahrungAktuellesSystem.setFGColor(new Color(Math.min(Math.max(
             		((8 - homodel.getAufstellung().getTeamErfahrung4AktuellesSystem()) * 32) - 1, 0), 255), 0, 0));
-			m_jpErfahrung433.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getErfahrung433()) * 32) - 1, 0),255), 0, 0));
-            m_jpErfahrung442.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience442()) * 32) - 1, 0), 255), 0, 0));
-			m_jpErfahrung532.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getErfahrung532()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung550.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience550()) * 32) - 1, 0), 255), 0, 0));
 			m_jpErfahrung541.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getErfahrung541()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung532.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung532()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung523.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience523()) * 32) - 1, 0), 255), 0, 0));
+			m_jpErfahrung451.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung451()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung442.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getFormationExperience442()) * 32) - 1, 0), 255), 0, 0));
+            m_jpErfahrung433.setFGColor(new Color(Math.min(Math.max(
+					((8 - homodel.getTeam().getErfahrung433()) * 32) - 1, 0),255), 0, 0));
 			m_jpErfahrung352.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getErfahrung352()) * 32) - 1, 0), 255), 0, 0));
 			m_jpErfahrung343.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getErfahrung343()) * 32) - 1, 0), 255), 0, 0));
-			m_jpErfahrung451.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getErfahrung451()) * 32) - 1, 0), 255), 0, 0));
-            m_jpErfahrung523.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience523()) * 32) - 1, 0), 255), 0, 0));
-            m_jpErfahrung550.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience550()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung253.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getFormationExperience253()) * 32) - 1, 0), 255), 0, 0));
         }
@@ -363,13 +363,13 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
     	Helper.markierenComboBox(m_jcbTrainerType, newTrainerType);
     }
 
-    /** 
-    * Set the prediction type. 
-  	*/ 
-    public void setPredictionType (int newPredictionType) { 
-    	 	        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbPredictionType, newPredictionType); 
-    } 
-    
+    /**
+    * Set the prediction type.
+  	*/
+    public void setPredictionType (int newPredictionType) {
+    	 	        de.hattrickorganizer.tools.Helper.markierenComboBox(m_jcbPredictionType, newPredictionType);
+    }
+
     /**
      * Set the tactic using it's constant.
      *
@@ -465,10 +465,10 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             	// trainer type changed
             	HOVerwaltung.instance().getModel().getTrainer().
             			setTrainerTyp(((CBItem)m_jcbTrainerType.getSelectedItem()).getId());
-            } else if (event.getSource().equals(m_jcbPredictionType)) { 
-            	// prediction type changed 
+            } else if (event.getSource().equals(m_jcbPredictionType)) {
+            	// prediction type changed
             	RatingPredictionConfig.
-            		setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId()); 	
+            		setInstancePredictionType(((CBItem)m_jcbPredictionType.getSelectedItem()).getId());
             } else if (event.getSource().equals(m_jcbLocation)) {
             	// location changed
             	HOVerwaltung.instance().getModel().getAufstellung().
@@ -686,10 +686,10 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridx = 2;
         constraints.gridy = yPos;
         m_jcbPredictionType.setPreferredSize(
-        		new Dimension(50, de.hattrickorganizer.tools.Helper.calcCellWidth(20))); 
-        //m_jcbPredictionType.setMaximumRowCount(3); 
-         layout.setConstraints(m_jcbPredictionType, constraints); 
-         add(m_jcbPredictionType); 
+        		new Dimension(50, de.hattrickorganizer.tools.Helper.calcCellWidth(20)));
+        //m_jcbPredictionType.setMaximumRowCount(3);
+         layout.setConstraints(m_jcbPredictionType, constraints);
+         add(m_jcbPredictionType);
 
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung")), yPos);
@@ -760,21 +760,21 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
         add(m_jpErfahrung451.getComponent(false));
-        
+
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp523")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung523.getComponent(false), constraints);
         add(m_jpErfahrung523.getComponent(false));
-        
+
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp550")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung550.getComponent(false), constraints);
         add(m_jpErfahrung550.getComponent(false));
-        
+
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp253")), yPos);
         constraints.gridx = 2;
