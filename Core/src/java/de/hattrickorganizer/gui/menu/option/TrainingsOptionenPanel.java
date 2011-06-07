@@ -7,14 +7,13 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 
 /**
  * Optionen für das Training
  */
-final class TrainingsOptionenPanel extends ImagePanel implements ActionListener {
+final class TrainingsOptionenPanel extends ImagePanel {
     //~ Static / Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 1L;
@@ -46,7 +45,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
      *
      * @param changeEvent TODO Missing Method Parameter Documentation
      */
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+    public final void refresh() {
         gui.UserParameter.temp().TRAINING_OFFSET_GOALKEEPING =  m_jtapGoalkeeping.getValue();
         gui.UserParameter.temp().TRAINING_OFFSET_DEFENDING =  m_jtapDefending.getValue();
         gui.UserParameter.temp().TRAINING_OFFSET_PLAYMAKING = m_jtapPlaymaking.getValue();
@@ -73,38 +72,31 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         add(label);
 
         m_jtapGoalkeeping = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.goalkeeping"),
-                   TrainingsManager.BASE_DURATION_GOALKEEPING, gui.UserParameter.temp().TRAINING_OFFSET_GOALKEEPING);
-        m_jtapGoalkeeping.addActionListener(this);
+                   TrainingsManager.BASE_DURATION_GOALKEEPING, gui.UserParameter.temp().TRAINING_OFFSET_GOALKEEPING, this);
         add(m_jtapGoalkeeping);
 
         m_jtapDefending = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.defending"),
-        			TrainingsManager.BASE_DURATION_DEFENDING, gui.UserParameter.temp().TRAINING_OFFSET_DEFENDING);
-        m_jtapDefending.addActionListener(this);
+        			TrainingsManager.BASE_DURATION_DEFENDING, gui.UserParameter.temp().TRAINING_OFFSET_DEFENDING, this);
         add(m_jtapDefending);
 
         m_jtapPlaymaking = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.playmaking"),
-        		TrainingsManager.BASE_DURATION_PLAYMAKING, gui.UserParameter.temp().TRAINING_OFFSET_PLAYMAKING);
-        m_jtapPlaymaking.addActionListener(this);
+        		TrainingsManager.BASE_DURATION_PLAYMAKING, gui.UserParameter.temp().TRAINING_OFFSET_PLAYMAKING, this);
         add(m_jtapPlaymaking);
 
         m_jtapPassing = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.short_passes"),
-        		TrainingsManager.BASE_DURATION_PASSING, gui.UserParameter.temp().TRAINING_OFFSET_PASSING);
-        m_jtapPassing.addActionListener(this);
+        		TrainingsManager.BASE_DURATION_PASSING, gui.UserParameter.temp().TRAINING_OFFSET_PASSING, this);
         add(m_jtapPassing);
 
         m_jtapWinger = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.crossing"),
-        		TrainingsManager.BASE_DURATION_WINGER, gui.UserParameter.temp().TRAINING_OFFSET_WINGER);
-        m_jtapWinger.addActionListener(this);
+        		TrainingsManager.BASE_DURATION_WINGER, gui.UserParameter.temp().TRAINING_OFFSET_WINGER, this);
         add(m_jtapWinger);
 
         m_jtapScoring = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.scoring"),
-        		TrainingsManager.BASE_DURATION_SCORING, gui.UserParameter.temp().TRAINING_OFFSET_SCORING);
-        m_jtapScoring.addActionListener(this);
+        		TrainingsManager.BASE_DURATION_SCORING, gui.UserParameter.temp().TRAINING_OFFSET_SCORING, this);
         add(m_jtapScoring);
         
         m_jtapSetPieces = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.set_pieces"),
-        		TrainingsManager.BASE_DURATION_SET_PIECES, gui.UserParameter.temp().TRAINING_OFFSET_SETPIECES);
-        m_jtapSetPieces.addActionListener(this);
+        		TrainingsManager.BASE_DURATION_SET_PIECES, gui.UserParameter.temp().TRAINING_OFFSET_SETPIECES, this);
         add(m_jtapSetPieces);
 
         label = new JLabel("   " + 
@@ -112,23 +104,19 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         add(label);
 
         m_tapAgeFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
-        		TrainingsManager.BASE_AGE_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_AGE);
-        m_tapAgeFactor.addActionListener(this);
+        		TrainingsManager.BASE_AGE_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_AGE, this);
         add(m_tapAgeFactor);
 
         m_jtapCoachFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorTrainerfertigkeit"),
-        		TrainingsManager.BASE_COACH_FACTOR, gui.UserParameter.temp().TrainerFaktor);
-        m_jtapCoachFactor.addActionListener(this);
+        		TrainingsManager.BASE_COACH_FACTOR, gui.UserParameter.temp().TrainerFaktor, this);
         add(m_jtapCoachFactor);
 
         m_jtapAssisstantFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorCoTraineranzahl"),
-        		TrainingsManager.BASE_ASSISTANT_COACH_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_ASSISTANTS);
-        m_jtapAssisstantFactor.addActionListener(this);
+        		TrainingsManager.BASE_ASSISTANT_COACH_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_ASSISTANTS, this);
         add(m_jtapAssisstantFactor);
 
         m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
-        		TrainingsManager.BASE_INTENSITY_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_INTENSITY);
-        m_jtapIntensityFactor.addActionListener(this);
+        		TrainingsManager.BASE_INTENSITY_FACTOR, gui.UserParameter.temp().TRAINING_OFFSET_INTENSITY, this);
         add(m_jtapIntensityFactor);
     }
 }
