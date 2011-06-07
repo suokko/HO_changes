@@ -30,7 +30,8 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
     private float offset;
     private float base;
     private NumberFormat nf = NumberFormat.getInstance(Locale.US);
-
+    private TrainingsOptionenPanel top;
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -40,9 +41,10 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
      * @param base The base value for the item
      * @param offset The initial offset value for the item
      */
-    public TrainingAdjustmentPanel(String text, float base, float offset) {
+    public TrainingAdjustmentPanel(String text, float base, float offset, TrainingsOptionenPanel top) {
         this.base = base;
         this.offset = offset;
+        this.top = top;
         initComponents(text);
         nf.setMaximumFractionDigits(2);
         nf.setMinimumFractionDigits(2);
@@ -165,6 +167,7 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
 			offset = new Float(m_jtfTextfield.getText());
 			m_jlTotal.setText(nf.format(offset + base));
 			m_jlTotal.setForeground(java.awt.Color.BLACK);
+			top.refresh(); // Store
 		} catch (Exception ex) {
 			// Give a hint the value was not quite what we wanted
 			m_jlTotal.setForeground(java.awt.Color.RED);
