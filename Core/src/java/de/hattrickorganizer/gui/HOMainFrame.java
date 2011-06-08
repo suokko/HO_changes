@@ -12,6 +12,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -105,6 +107,8 @@ public final class HOMainFrame extends JFrame
 
 	/** HO Version */
 	public static final double VERSION = 1.429d;
+	
+	private static int revision = 0;
 
 	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;
@@ -229,9 +233,10 @@ public final class HOMainFrame extends JFrame
 	//~ Constructors -------------------------------------------------------------------------------
 
 	/**
-	 * Singelton
+	 * Singleton
 	 */
 	private HOMainFrame() {
+		
 		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 
@@ -317,7 +322,11 @@ public final class HOMainFrame extends JFrame
 		String txt = nf.format(VERSION);
 
 		if (isDevelopment()) {
-			txt = txt + " DEV";
+			txt += " DEV";
+			final int r = getRevisionNumber();
+			if (r > 1) {
+				txt += " (r" + getRevisionNumber() + ")";
+			}
 		}
 		return txt;
 	}
@@ -1884,5 +1893,39 @@ public final class HOMainFrame extends JFrame
 
 	public static void setHOStatus(int i) {
 		status = i;
+	}
+	
+	public static int getRevisionNumber() {
+		if (revision == 0) {
+			InputStream is = null;
+			BufferedReader br = null;
+			try {
+				is = HOMainFrame.class.getResourceAsStream("/revision.num");
+				if (is != null) {
+					br = new BufferedReader(new InputStreamReader(is));
+					String line = null;
+					if (br != null && (line = br.readLine()) != null) { // expect one line only
+						revision = Integer.parseInt(line.trim());
+					}
+				} else {
+					HOLogger.instance().debug(HOMainFrame.class, "revision.num not found");
+				}
+			} catch (Exception e) {
+				HOLogger.instance().warning(HOMainFrame.class, "getRevisionNumber failed: " + e);
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (Exception e) {
+					}
+				}
+			}
+		}
+		if (revision == 0) { // to avoid multiple errors
+			revision = 1;
+		} else {
+			HOLogger.instance().info(HOMainFrame.class, "HO! revision " + revision);
+		}
+		return revision;
 	}
 }
