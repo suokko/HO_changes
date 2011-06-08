@@ -27,7 +27,9 @@ Changelist HO! 1.429
 - Update Portugues translations (thx a_cardoso)
 - Update Slovak translations (thx zymbo)
 - Update Spanish translations (thx Baler0, garcilp)
-- Update Spanish_Sudamericano translations (thx Baler0)
+- Update Srpski translations (thx dr_Chokky)
+- Update Srpski(lat) translations (thx dr_Chokky)
+
 
 Changelist HO! 1.428
 ====================
