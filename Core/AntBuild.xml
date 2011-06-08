@@ -150,14 +150,15 @@
 		<!-- get current SVN version / release -->
 		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
 			<arg value="info" />
-			<redirector outputproperty="svninfo.rev">
+			<redirector outputproperty="svninfo.revnum">
 				<outputfilterchain>
 					<!-- Extract from "Revision: XXX" -->
 					<containsregex pattern="^Revision:" />
-					<replaceregex pattern="^Revision\D*(\d*)" replace="_r\1" />
+					<replaceregex pattern="^Revision\D*(\d*)" replace="\1" />
 				</outputfilterchain>
 			</redirector>
 		</exec>
+		<property name="svninfo.rev" value="_r${svninfo.revnum}" />
 		<!-- get current SVN URL -->
 		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
 			<arg value="info" />
@@ -173,6 +174,12 @@
 		<property name="svninfo.rev" value="" />
 		<!-- ${svninfo.url} defaults to "" -->
 		<property name="svninfo.url" value="" />
+		
+		<!-- store svn revision into a file (delete, if already exists) -->
+		<echo>Store revision number ${svninfo.revnum} into new file: ${bin.dir}/revision.num</echo>
+		<delete file="${bin.dir}/revision.num" failonerror="false"/>
+		<echo file="${bin.dir}/revision.num">${svninfo.revnum}</echo> 
+		 
 
 		<tstamp>
 			<format property="curDate" pattern="yyyyMMdd" />
@@ -478,7 +485,7 @@
 				<chmod file="${export.dmg.contribdir}/umountDmg" perm="u+x" />
 				<chmod file="${export.dmg.contribdir}/mountDmg" perm="u+x" />
 				<echo>Trying to unmount DMG, just to be sure</echo>
-				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
+				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="false">
 					<arg value="${export.dmg.targetfile}" />
 					<arg value="${export.dmg.mountdir}" />
 				</exec>
@@ -494,7 +501,7 @@
 				</copy>
 				<!-- Making JavaApplicationStub executable -->
 				<chmod file="${export.dmg.mountdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x" />
-				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
+				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="false">
 					<arg value="${export.dmg.targetfile}" />
 					<arg value="${export.dmg.mountdir}" />
 				</exec>
