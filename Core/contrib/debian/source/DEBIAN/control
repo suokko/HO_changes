@@ -3,7 +3,8 @@ Version: HOVERSION-SVNREV
 Section: games
 Priority: optional
 Architecture: all
-Maintainer: flattermann <HO@flattermann.net>
+Installed-Size: 7000
+Maintainer: Bingeling <blaghaid@gmail.com>
 Homepage: http://www.hattrickorganizer.net
 Description: HattrickOrganizer!
  .
