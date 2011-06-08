@@ -713,18 +713,18 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         add(m_jpErfahrungAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung433")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp550")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        layout.setConstraints(m_jpErfahrung433.getComponent(false), constraints);
-        add(m_jpErfahrung433.getComponent(false));
+        layout.setConstraints(m_jpErfahrung550.getComponent(false), constraints);
+        add(m_jpErfahrung550.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung442")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung541")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        layout.setConstraints(m_jpErfahrung442.getComponent(false), constraints);
-        add(m_jpErfahrung442.getComponent(false));
+        layout.setConstraints(m_jpErfahrung541.getComponent(false), constraints);
+        add(m_jpErfahrung541.getComponent(false));
 
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung532")), yPos);
@@ -734,11 +734,32 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         add(m_jpErfahrung532.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung541")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp523")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        layout.setConstraints(m_jpErfahrung541.getComponent(false), constraints);
-        add(m_jpErfahrung541.getComponent(false));
+        layout.setConstraints(m_jpErfahrung523.getComponent(false), constraints);
+        add(m_jpErfahrung523.getComponent(false));
+
+        yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung451")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
+        add(m_jpErfahrung451.getComponent(false));
+
+        yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung442")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        layout.setConstraints(m_jpErfahrung442.getComponent(false), constraints);
+        add(m_jpErfahrung442.getComponent(false));
+
+        yPos++;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung433")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+        layout.setConstraints(m_jpErfahrung433.getComponent(false), constraints);
+        add(m_jpErfahrung433.getComponent(false));
 
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung352")), yPos);
@@ -753,27 +774,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung343.getComponent(false), constraints);
         add(m_jpErfahrung343.getComponent(false));
-
-        yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung451")), yPos);
-        constraints.gridx = 2;
-        constraints.gridy = yPos;
-        layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
-        add(m_jpErfahrung451.getComponent(false));
-
-        yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp523")), yPos);
-        constraints.gridx = 2;
-        constraints.gridy = yPos;
-        layout.setConstraints(m_jpErfahrung523.getComponent(false), constraints);
-        add(m_jpErfahrung523.getComponent(false));
-
-        yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp550")), yPos);
-        constraints.gridx = 2;
-        constraints.gridy = yPos;
-        layout.setConstraints(m_jpErfahrung550.getComponent(false), constraints);
-        add(m_jpErfahrung550.getComponent(false));
 
         yPos++;
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp253")), yPos);
