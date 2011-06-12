@@ -178,7 +178,7 @@
 		<!-- store svn revision into a file (delete, if already exists) -->
 		<echo>Store revision number ${svninfo.revnum} into new file: ${bin.dir}/revision.num</echo>
 		<delete file="${bin.dir}/revision.num" failonerror="false"/>
-		<echo file="${bin.dir}/revision.num">${svninfo.revnum}</echo> 
+		<echo file="${bin.dir}/revision.num">${svninfo.revnum}</echo>
 		 
 
 		<tstamp>
@@ -489,6 +489,8 @@
 					<arg value="${export.dmg.targetfile}" />
 					<arg value="${export.dmg.mountdir}" />
 				</exec>
+				<echo>Create dummy file ${export.dmg.mountdir}/notmounted in the original mount folder</echo>
+				<echo file="${export.dmg.mountdir}/notmounted"></echo>
 				<echo>Copying template DMG</echo>
 				<copy file="${export.dmg.templatefile}" tofile="${export.dmg.targetfile}" overwrite="true" />
 				<exec executable="${export.dmg.contribdir}/mountDmg" resolveexecutable="true" failonerror="true">
@@ -501,7 +503,7 @@
 				</copy>
 				<!-- Making JavaApplicationStub executable -->
 				<chmod file="${export.dmg.mountdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x" />
-				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="false">
+				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
 					<arg value="${export.dmg.targetfile}" />
 					<arg value="${export.dmg.mountdir}" />
 				</exec>
