@@ -14,6 +14,7 @@ Changelist HO! 1.429
 - The set piece taker is no longer automatically first on the penalty shooter list.
 - Changed formation experience ordering according to Hattrick
 
+- Added Hebrew translations (thx Mod-Transy)
 - Update Catalan translations (thx CAT-fike)
 - Update Finnish translations (thx -Lupi-)
 - Update French translations (thx Butboja)
@@ -27,8 +28,10 @@ Changelist HO! 1.429
 - Update Portugues translations (thx a_cardoso)
 - Update Slovak translations (thx zymbo)
 - Update Spanish translations (thx Baler0, garcilp)
+- Update Spanish_Sudamericano translations (thx Baler0)
 - Update Srpski translations (thx dr_Chokky)
 - Update Srpski(lat) translations (thx dr_Chokky)
+- Update Vlaams translations (thx icarus95)
 
 
 Changelist HO! 1.428
