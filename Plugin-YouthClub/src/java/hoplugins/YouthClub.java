@@ -32,7 +32,7 @@ public class YouthClub implements IPlugin, IRefreshable, IOfficialPlugin {
 	// plugin version constant
 	public static final double PLUGIN_VERSION = 0.1;
 	// plugin id
-	private static final int PLUGIN_ID = 45;
+	private static final int PLUGIN_ID = 46;
 	// debug mode
 	public static boolean DEBUG = false;
 
