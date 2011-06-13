@@ -168,7 +168,7 @@
   <property>
     <datei>Vlaams.properties</datei>
     <lang_id>34</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>Chinese.properties</datei>
@@ -185,4 +185,8 @@
     <lang_id>37</lang_id>
     <version>3.5</version>
   </property>
+  <property>
+  	<datei>Hebrew.properties</datei>
+  	<lang_id>38</lang_id>
+  	<version>0.1</version></property>
 </languages>
