@@ -1,6 +1,10 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
 forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.430
+- Publishing a proper release based on 1.429
+- Some minor fixes
+
 Changelist HO! 1.429
 ====================
 - Authentication is now done through oAuth
@@ -14,7 +18,6 @@ Changelist HO! 1.429
 - The set piece taker is no longer automatically first on the penalty shooter list.
 - Changed formation experience ordering according to Hattrick
 
-- Added Hebrew translations (thx Mod-Transy)
 - Update Catalan translations (thx CAT-fike)
 - Update Finnish translations (thx -Lupi-)
 - Update French translations (thx Butboja)
@@ -23,7 +26,7 @@ Changelist HO! 1.429
 - Update Hrvatski(Croatian) translations (thx Bilke5)
 - Update Italiano translations (thx silkevicious)
 - Update Nederlands translations (thx BrammieG)
-- Update to Norsk translations
+- Update Norsk translations
 - Update Polish translations (thx aMiUK)
 - Update Portugues translations (thx a_cardoso)
 - Update Slovak translations (thx zymbo)
