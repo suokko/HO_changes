@@ -106,19 +106,19 @@ public final class HOMainFrame extends JFrame
 	 */
 
 	/** HO Version */
-	public static final double VERSION = 1.429d;
+	public static final double VERSION = 1.430d;
 	
 	private static int revision = 0;
 
 	/** Is this a development version? */
-	private static final boolean DEVELOPMENT = true;
+	private static final boolean DEVELOPMENT = false;
 
 	/**
 	 * After that date, the user gets a nag screen if he starts his old HO version,
 	 * set to empty string for no warning
 	 * (DEVELOPMENT versions do not show the nag screen)
 	 */
-	private static final String WARN_DATE = "2012-07-24 00:00:00.0";
+	private static final String WARN_DATE = "2012-06-30 00:00:00.0";
 
 	public static final int SPRACHVERSION = 2; // language version
 	private static HOMainFrame m_clHOMainFrame;
