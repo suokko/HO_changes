@@ -378,7 +378,9 @@ public final class UpdateController {
 	 */
 	public static void check4latestbeta() {
 		final VersionInfo vi = MyConnector.instance().getLatestBetaVersion();
-		if (vi != null && vi.isValid() && vi.getVersion() >= HOMainFrame.VERSION) {
+		final int currRev = HOMainFrame.getRevisionNumber();
+		if (vi != null && vi.isValid() && 
+				(vi.getVersion() >= HOMainFrame.VERSION || (currRev > 1 && currRev < vi.getBuild())))  {
 			int update =
 				JOptionPane.showConfirmDialog(HOMainFrame.instance(),
 					"Update your HO to this "+(vi.isBeta()?" beta":"")+"version:"
@@ -392,6 +394,10 @@ public final class UpdateController {
 			if (update == JOptionPane.YES_OPTION) {
 				updateHO("http://downloads.sourceforge.net/ho1/" + vi.getZipFileName());
 			}
+		} else {
+			JOptionPane.showMessageDialog(HOMainFrame.instance(), "No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
+					+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance().getLanguageString("update"),
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
