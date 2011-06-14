@@ -1,0 +1,67 @@
+/**
+ * 
+ */
+package de.hattrickorganizer.gui.theme;
+
+import java.awt.Color;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import de.hattrickorganizer.gui.HOMainFrame;
+
+public class ClassicTheme extends Theme {
+
+	ClassicTheme(){
+		initialize();
+	}
+	
+	private void initialize(){
+		setName("Classic");
+		setVersion("1.0");
+		put("createdDate",Timestamp.valueOf("2011-06-12 12:00:00"));
+		put("hoVersion", new BigDecimal(HOMainFrame.VERSION));
+		put("author","HO");
+		
+		initColors();
+	}
+	
+	/**
+	 * key-Syntax => javaComponent.[hoComponent].property || name
+	 *  	
+	 */
+	private void initColors(){
+		put("black", Color.BLACK);
+		put("white", Color.WHITE);
+		put("red", Color.RED);
+		put("lightGreen",new Color(220, 255, 220));
+		put("lightYellow",new Color(255, 255, 200));
+		
+		// league Table
+		put("panel.league.usersteam.foreground",new Color(50, 50, 150));
+		put("table.league.title.background",new Color(230, 230, 230));
+		put("table.league.promoted.background","lightGreen");
+		put("table.league.relegation.background","lightYellow");
+		put("table.league.demoted.background",new Color(255, 220, 220));
+		put("table.league.background","white");
+		put("table.league.foreground","black");
+		
+		// matchday Panel
+		put("panel.matchday.background","table.league.background");
+		
+		// league history panel
+		put("panel.leaguehistory.line1.foreground", Color.GREEN);
+		put("panel.leaguehistory.line2.foreground",  Color.CYAN);
+		put("panel.leaguehistory.line3.foreground",  Color.GRAY);
+		put("panel.leaguehistory.line4.foreground",  "black");
+		put("panel.leaguehistory.line5.foreground",  Color.ORANGE);
+		put("panel.leaguehistory.line6.foreground",  Color.PINK);
+		put("panel.leaguehistory.line7.foreground",  "red");
+		put("panel.leaguehistory.line8.foreground",  Color.MAGENTA);
+		put("panel.leaguehistory.cross.foreground",Color.DARK_GRAY);
+		put("panel.leaguehistory.grid.foreground",Color.LIGHT_GRAY);
+	}
+	
+	public Color getDefaultColor(String key){
+		return key.contains("foreground")?Color.BLACK:Color.white; 
+	}
+}
