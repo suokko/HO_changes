@@ -17,7 +17,7 @@ public class VersionInfo {
 	private int build;
 	private Date released;
 	private boolean beta;
-	final static private DecimalFormat DECF = new DecimalFormat("0.0####");
+	final static private DecimalFormat DECF = new DecimalFormat("0.000##");
 	final static private DateFormat DATF = new SimpleDateFormat("dd.MM.yyyy");
 	
 	static {
