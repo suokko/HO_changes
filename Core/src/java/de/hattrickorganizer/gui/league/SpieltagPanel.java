@@ -19,27 +19,30 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
 import plugins.IPaarung;
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matchlist.Paarung;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Zeigt einen Spieltag an
+ * Display a matchday
  */
 final class SpieltagPanel extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 6884532906036202996L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
-	/** TODO Missing Parameter Documentation */
     public static final int NAECHSTER_SPIELTAG = -2;
-
-    /** TODO Missing Parameter Documentation */
     public static final int LETZTER_SPIELTAG = -1;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -62,13 +65,8 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     private JLabel m_jlThirdVisitorTeam = new JLabel();
     private int m_iSpieltag = -1;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new SpieltagPanel object.
-     *
-     * @param spieltag TODO Missing Constructuor Parameter Documentation
-     */
+    
+    
     protected SpieltagPanel(int spieltag) {
         //Kann codiert sein!
         m_iSpieltag = spieltag;
@@ -76,25 +74,13 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    //    /**
-    //     * TODO Missing Method Documentation
-    //     *
-    //     * @param spieltag TODO Missing Method Parameter Documentation
-    //     */
-    //    public void setSpieltag(int spieltag) {
-    //        m_iSpieltag = spieltag;
-    //        fillLabels();
-    //    }
-    //-----------------------------------------------------------------------
     public void actionPerformed(ActionEvent e) {
         //Das Match anzeigen
         int[] matchdata = new int[0];
 
         try {
             //Matchid, Heimid, Gastid, Heimtore, Gasttore
-            matchdata = de.hattrickorganizer.tools.Helper.generateIntArray(e.getActionCommand());
+            matchdata = Helper.generateIntArray(e.getActionCommand());
         } catch (Exception ex) {
             HOLogger.instance().log(getClass(),"SpieltagPanel.actionPerformed: Matchid konnte nicht geparsed werden: "
                                + e.getActionCommand() + " / " + ex);
@@ -104,26 +90,23 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         //--Match zeigen ggf runterladen--
         if (matchdata[0] > 0) {
             //Spiel nicht vorhanden, dann erst runterladen!
-            if (!de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(matchdata[0])) {
+            if (!DBZugriff.instance().isMatchVorhanden(matchdata[0])) {
                 try {
                     //Lineups
-                    if (!de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker()
-                                                             .getMatchlineup(matchdata[0],
+                    if (!HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchdata[0],
                                                                              matchdata[1],
                                                                              matchdata[2])) {
                         //Abbruch, wenn das Lineup nicht gezogen wurde
                         return;
                     }
 
-                    if (!de.hattrickorganizer.gui.HOMainFrame.instance().getOnlineWorker()
-                                                             .getMatchDetails(matchdata[0])) {
+                    if (!HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchdata[0])) {
                         //Abbruch, wenn das Details nicht gezogen wurde
                         return;
                     }
 
                     //MatchKurzInfo muss hier erstellt werden!!
-                    final MatchLineup lineup = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                      .getMatchLineup(matchdata[0]);
+                    final MatchLineup lineup = DBZugriff.instance().getMatchLineup(matchdata[0]);
 
                     if (lineup != null) {
                         final MatchKurzInfo info = new MatchKurzInfo();
@@ -142,13 +125,9 @@ final class SpieltagPanel extends JPanel implements ActionListener {
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};
-                        de.hattrickorganizer.database.DBZugriff.instance().storeMatchKurzInfos(infos);
+                        DBZugriff.instance().storeMatchKurzInfos(infos);
 
-                        de.hattrickorganizer.logik.MatchUpdater.updateMatch(HOMiniModel
-                                                                            .instance(),
-
-                        //Draghetto set value
-                        matchdata[0]);
+                        MatchUpdater.updateMatch(HOMiniModel.instance(), matchdata[0]);
                     }
 
                     fillLabels();
@@ -161,31 +140,17 @@ final class SpieltagPanel extends JPanel implements ActionListener {
                     return;
                 }
             }
-            //Match nur dann anzeigen, wenn es schon vorhanden war.
             else {
                 //Match zeigen
-                de.hattrickorganizer.gui.HOMainFrame.instance().showMatch(matchdata[0]);
+                HOMainFrame.instance().showMatch(matchdata[0]);
             }
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     protected void changeSaison() {
         fillLabels();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param constraints TODO Missing Method Parameter Documentation
-     * @param fillValue TODO Missing Method Parameter Documentation
-     * @param weightxValue TODO Missing Method Parameter Documentation
-     * @param gridxValue TODO Missing Method Parameter Documentation
-     * @param gridyValue TODO Missing Method Parameter Documentation
-     * @param gridWithValue TODO Missing Method Parameter Documentation
-     */
     private void setConstraintsValues(GridBagConstraints constraints, int fillValue,
                                       double weightxValue, int gridxValue, int gridyValue,
                                       int gridWithValue) {
@@ -196,66 +161,36 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         constraints.gridwidth = gridWithValue;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param button TODO Missing Method Parameter Documentation
-     * @param paarung TODO Missing Method Parameter Documentation
-     */
     private void setMatchButton(JButton button, Paarung paarung) {
         button.setPreferredSize(new Dimension(27, 18));
 
         //Hat das Spiel schon stattgefunden
         if ((paarung != null) && paarung.hatStattgefunden()) {
             //Match schon in der Datenbank
-            if (de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(paarung
+            if (DBZugriff.instance().isMatchVorhanden(paarung
                                                                                     .getMatchId())) {
                 button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielAnzeigen"));
                 button.setEnabled(true);
-                button.setIcon(de.hattrickorganizer.tools.Helper.SHOWMATCHICON);
-                button.setDisabledIcon(de.hattrickorganizer.tools.Helper.SHOWMATCHICON);
+                button.setIcon(Helper.SHOWMATCHICON);
+                button.setDisabledIcon(Helper.SHOWMATCHICON);
             }
             //Match noch nicht in der Datenbank
             else {
-                //                int              teamid    = model.HOVerwaltung.instance().getModel().getBasics().getTeamId();
-                //                //Login PWD nur in der Debugversion
-                //                String args[]   =   model.HOVerwaltung.instance ().getArgs ();
-                //                //Debug?
-                //                if ( ( ( args!= null ) && ( args.length > 0 )
-                //                && ( tools.MyHelper.decryptString ( "k[gmn" ).equals ( args[0] ) ) ) //Scout
-                //                || ( paarung.getHeimId () == teamid  ||  paarung.getGastId () == teamid ) )//oder Eigene Teamid
-                //                {
                 button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielDownloaden"));
                 button.setEnabled(true);
-                button.setIcon(de.hattrickorganizer.tools.Helper.DOWNLOADMATCHICON);
-                button.setDisabledIcon(de.hattrickorganizer.tools.Helper.DOWNLOADMATCHICON);
-
-                //                }
-                //                else
-                //                {
-                //                    button.setEnabled( false );
-                //                    button.setIcon( tools.Helper.NOMATCHICON );
-                //                    button.setDisabledIcon( tools.Helper.NOMATCHICON );
-                //                }
+                button.setIcon(Helper.DOWNLOADMATCHICON);
+                button.setDisabledIcon(Helper.DOWNLOADMATCHICON);
             }
         }
         //Noch nicht stattgefunden
         else {
             button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielNochnichtgespielt"));
             button.setEnabled(false);
-            button.setIcon(de.hattrickorganizer.tools.Helper.NOMATCHICON);
-            button.setDisabledIcon(de.hattrickorganizer.tools.Helper.NOMATCHICON);
+            button.setIcon(Helper.NOMATCHICON);
+            button.setDisabledIcon(Helper.NOMATCHICON);
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param homeGoals TODO Missing Method Parameter Documentation
-     * @param awayGoals TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private String convertResult(String homeGoals, String awayGoals) {
         char[] result = new char[]{' ', ' ', ' ', ' ', ' ', ':', ' ', ' ', ' ', ' '};
 
@@ -273,14 +208,10 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         return new String(result);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void fillLabels() {
         int spieltag = m_iSpieltag;
         Vector<IPaarung> paarungen = null;
-        final int teamid = HOVerwaltung.instance().getModel().getBasics()
-                                                                  .getTeamId();
+        final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
         if (LigaTabellePanel.getAktuellerSpielPlan() == null) {
             //Button aktualisieren
@@ -294,36 +225,23 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
         //Letzte Spieltag
         if (spieltag == LETZTER_SPIELTAG) {
-            spieltag = HOVerwaltung.instance().getModel().getBasics()
-                                                              .getSpieltag() - 1;
+            spieltag = HOVerwaltung.instance().getModel().getBasics().getSpieltag() - 1;
 
             if (spieltag <= 0) {
                 spieltag = 1;
             }
-
-            paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
-
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "letzte" ) + " " + model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) ) );
         }
         //Nächste Spieltag
         else if (spieltag == NAECHSTER_SPIELTAG) {
-            spieltag = HOVerwaltung.instance().getModel().getBasics()
-                                                              .getSpieltag();
+            spieltag = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
 
             if (spieltag > 14) {
                 spieltag = 14;
             }
 
-            paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
-
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "naechste" ) + " " + model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) ) );
         }
-        //Absoluter Spieltag
-        else {
-            paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
-            //setBorder( BorderFactory.createTitledBorder ( model.HOVerwaltung.instance().getLanguageString( "Spieltag" ) + " " + spieltag ) );
-        }
+        paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
         String bordertext = HOVerwaltung.instance().getLanguageString("Spieltag") + " "
                             + spieltag;
@@ -346,9 +264,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             //Erste Paarung------------------------------------------
             Paarung paarung = (Paarung) paarungen.get(0);
-            m_jlFirstHomeTeam.setText(paarung.getHeimName());
-            m_jlFirstVisitorTeam.setText(paarung.getGastName());
-
             m_jbFirstMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
                                             + paarung.getGastId() + "," + paarung.getToreHeim()
                                             + "," + paarung.getToreGast());
@@ -358,9 +273,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             //Zweite Paarung------------------------------------------
             paarung = (Paarung) paarungen.get(1);
-            m_jlSecondHomeTeam.setText(paarung.getHeimName());
-            m_jlSecondVisitorTeam.setText(paarung.getGastName());
-
             m_jbSecondMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
                                              + paarung.getGastId() + "," + paarung.getToreHeim()
                                              + "," + paarung.getToreGast());
@@ -370,9 +282,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             //Dritte Paarung------------------------------------------
             paarung = (Paarung) paarungen.get(2);
-            m_jlThirdHomeTeam.setText(paarung.getHeimName());
-            m_jlThirdVisitorTeam.setText(paarung.getGastName());
-
             m_jbThirdMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
                                             + paarung.getGastId() + "," + paarung.getToreHeim()
                                             + "," + paarung.getToreGast());
@@ -382,9 +291,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             //Vierte Paarung------------------------------------------
             paarung = (Paarung) paarungen.get(3);
-            m_jlFourthHomeTeam.setText(paarung.getHeimName());
-            m_jlFourthVisitorTeam.setText(paarung.getGastName());
-
             m_jbFourthMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
                                              + paarung.getGastId() + "," + paarung.getToreHeim()
                                              + "," + paarung.getToreGast());
@@ -402,39 +308,32 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param homeTeam TODO Missing Method Parameter Documentation
-     * @param visitorTeam TODO Missing Method Parameter Documentation
-     * @param result TODO Missing Method Parameter Documentation
-     * @param paarung TODO Missing Method Parameter Documentation
-     * @param teamid TODO Missing Method Parameter Documentation
-     */
     private void fillRow(JLabel homeTeam, JLabel visitorTeam, JLabel result, Paarung paarung,
                          int teamid) {
+    	homeTeam.setText(paarung.getHeimName());
+    	visitorTeam.setText(paarung.getGastName());
         if ((paarung.getToreHeim() > -1) && (paarung.getToreGast() > -1)) {
             result.setText(convertResult(paarung.getToreHeim() + "", "" + paarung.getToreGast()));
 
             //HomeVictory
             if (paarung.getToreHeim() > paarung.getToreGast()) {
-                homeTeam.setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
-                visitorTeam.setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
+                homeTeam.setIcon(Helper.YELLOWSTARIMAGEICON);
+                visitorTeam.setIcon(Helper.NOIMAGEICON);
             }
             //VisitorVictory
             else if (paarung.getToreHeim() < paarung.getToreGast()) {
-                homeTeam.setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
-                visitorTeam.setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
+                homeTeam.setIcon(Helper.NOIMAGEICON);
+                visitorTeam.setIcon(Helper.YELLOWSTARIMAGEICON);
             }
             //drawn
             else {
-                homeTeam.setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
-                visitorTeam.setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
+                homeTeam.setIcon(Helper.GREYSTARIMAGEICON);
+                visitorTeam.setIcon(Helper.GREYSTARIMAGEICON);
             }
         } else {
             result.setText(convertResult("-", "-"));
-            homeTeam.setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
-            visitorTeam.setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
+            homeTeam.setIcon(Helper.NOIMAGEICON);
+            visitorTeam.setIcon(Helper.NOIMAGEICON);
         }
 
         markMyTeam(homeTeam, paarung.getHeimId(), teamid);
@@ -443,31 +342,16 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         markSelectedTeam(visitorTeam, paarung.getGastName());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param button TODO Missing Method Parameter Documentation
-     * @param constraints TODO Missing Method Parameter Documentation
-     * @param layout TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     */
     private void initButton(JButton button, GridBagConstraints constraints, GridBagLayout layout,
                             int row) {
         setConstraintsValues(constraints, GridBagConstraints.NONE, 0.0, 6, row, 1);
 
-        button.setBackground(Color.white);
+        button.setBackground(this.getBackground());
         button.addActionListener(this);
         layout.setConstraints(button, constraints);
         add(button);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param constraints TODO Missing Method Parameter Documentation
-     * @param layout TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     */
     private void initColon(GridBagConstraints constraints, GridBagLayout layout, int row) {
         JLabel label = new JLabel(":");
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -476,9 +360,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         add(label);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -486,7 +367,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(2, 2, 2, 2);
 
-        this.setBackground(Color.white);
+        this.setBackground(ThemeManager.instance().getColor("panel.matchday.background")); 
 
         JLabel label;
 
@@ -558,14 +439,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         fillLabels();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param label TODO Missing Method Parameter Documentation
-     * @param constraints TODO Missing Method Parameter Documentation
-     * @param layout TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     */
     private void initResultLabel(JLabel label, GridBagConstraints constraints,
                                  GridBagLayout layout, int row) {
         setConstraintsValues(constraints, GridBagConstraints.NONE, 0.5, 3, row, 3);
@@ -574,15 +447,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         add(label);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param label TODO Missing Method Parameter Documentation
-     * @param constraints TODO Missing Method Parameter Documentation
-     * @param layout TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     */
     private void initTeam(JLabel label, GridBagConstraints constraints, GridBagLayout layout,
                           int row, int column) {
         setConstraintsValues(constraints, GridBagConstraints.HORIZONTAL, 1.0, column, row, 1);
@@ -590,36 +454,20 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         add(label);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param team TODO Missing Method Parameter Documentation
-     * @param matchTeamId TODO Missing Method Parameter Documentation
-     * @param myTeamId TODO Missing Method Parameter Documentation
-     */
     private void markMyTeam(JLabel team, int matchTeamId, int myTeamId) {
         if (matchTeamId == myTeamId) {
             team.setFont(team.getFont().deriveFont(Font.BOLD));
-            team.setForeground(LigaTabelle.FG_EIGENESTEAM);
+            team.setForeground(ThemeManager.instance().getColor("panel.league.usersteam.foreground"));
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param team TODO Missing Method Parameter Documentation
-     * @param teamName TODO Missing Method Parameter Documentation
-     */
     private void markSelectedTeam(JLabel team, String teamName) {
         if (teamName.equals(LigaTabellePanel.MARKIERTER_VEREIN)) {
             team.setOpaque(true);
-            team.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+            team.setBackground(SpielerTableRenderer.SELECTION_BG);
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void resetMarkierung() {
         resetMarkup(m_jlFirstHomeTeam);
         resetMarkup(m_jlFirstVisitorTeam);
@@ -631,11 +479,6 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         resetMarkup(m_jlFourthVisitorTeam);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param label TODO Missing Method Parameter Documentation
-     */
     private void resetMarkup(JLabel label) {
         label.setFont(label.getFont().deriveFont(Font.PLAIN));
         label.setForeground(Color.black);

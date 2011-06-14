@@ -19,89 +19,84 @@ import javax.swing.table.TableColumnModel;
 
 import plugins.ILigaTabellenEintrag;
 
+import de.hattrickorganizer.gui.model.VAPTableModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Panel mit JTabel für die Arena anzeige und zum Testen
+ * A panel with a league table
  */
-public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
+public class LigaTabelle extends ImagePanel {
 	
 	private static final long serialVersionUID = -7087165908899999232L;
 	
-    //~ Static fields/initializers -----------------------------------------------------------------
+    private Color PROMOTED_BACKGROUND 	= ThemeManager.instance().getColor("table.league.promoted.background");//new Color(220, 255, 220);
+    private Color RELEGATION_BACKGROUND = ThemeManager.instance().getColor("table.league.relegation.background");//new Color(255, 255, 200);
+    private Color DEMOTED_BACKGROUND 	= ThemeManager.instance().getColor("table.league.demoted.background");//new Color(255, 220, 220);
+    private Color TITLE_BACKGROUND 		= ThemeManager.instance().getColor("table.league.title.background");//new Color(230, 230, 230);
 
-   /** TODO Missing Parameter Documentation */
-    public static final Color BG_AUFSTIEGSPLATZ = new Color(220, 255, 220);
-
-    /** TODO Missing Parameter Documentation */
-    public static final Color BG_RELEGATIONSPLATZ = new Color(255, 255, 200);
-
-    /** TODO Missing Parameter Documentation */
-    public static final Color BG_ABSTIEGSPLATZ = new Color(255, 220, 220);
-
-    /** TODO Missing Parameter Documentation */
-    public static final Color BG_TITEL = new Color(230, 230, 230);
-
-    /** TODO Missing Parameter Documentation */
-    public static final Color FG_EIGENESTEAM = new Color(50, 50, 150);
+    private Color TABLE_BACKGROUND 		= ThemeManager.instance().getColor("table.league.background");//Color.white
+    private Color TABLE_FOREGROUND 		= ThemeManager.instance().getColor("table.league.foreground");// Color.black
+    private Color USERSTEAM_FOREGROUND 	= ThemeManager.instance().getColor("panel.league.usersteam.foreground");//something blue
+    
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     private final String[] COLUMNNAMES = {
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Platz"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verein"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Serie"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spiele_kurz"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tore"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
-                                             de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Punkte_kurz"),
+                                             HOVerwaltung.instance().getLanguageString("Platz"),
+                                             HOVerwaltung.instance().getLanguageString("Verein"),
+                                             HOVerwaltung.instance().getLanguageString("Serie"),
+                                             HOVerwaltung.instance().getLanguageString("Spiele_kurz"),
+                                             HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
+                                             HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
+                                             HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
+                                             HOVerwaltung.instance().getLanguageString("Tore"),
+                                             HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
+                                             HOVerwaltung.instance().getLanguageString("Punkte_kurz"),
                                              "",
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
+    HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
+    HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
+    HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tore"),
+    HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("Tore"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
+    HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Punkte_kurz"),
+    HOVerwaltung.instance().getLanguageString("Heim_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("Punkte_kurz"),
                                              "",
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
+    HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("SerieAuswaertsSieg"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
+    HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("SerieAuswaertsUnendschieden"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
+    HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("SerieAuswaertsNiederlage"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Tore"),
+    HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("Tore"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
+    HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
                                              
-    de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
-                                             + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Punkte_kurz")
+    HOVerwaltung.instance().getLanguageString("Auswaerts_kurz")
+                                             + HOVerwaltung.instance().getLanguageString("Punkte_kurz")
                                          };
     private JTable m_jtLigaTabelle = new JTable();
     private Object[][] tabellenwerte;
@@ -123,11 +118,6 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * Gibt den Namen des Markierten Teams zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String getSelectedTeam() {
         String team = null;
 
@@ -138,11 +128,6 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         return team;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param listener TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void addKeyListener(KeyListener listener) {
         m_jtLigaTabelle.addKeyListener(listener);
@@ -159,34 +144,25 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         reinitTabelle();
     }
 
-    /**
-     * Gibt die Farbe für die Zeile in der Tabelle zurück
-     *
-     * @param row TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Color getColor4Row(int row) {
         switch (row) {
             case 1:
-                return BG_AUFSTIEGSPLATZ;
+                return PROMOTED_BACKGROUND;
 
             case 5:
             case 6:
-                return BG_RELEGATIONSPLATZ;
+                return RELEGATION_BACKGROUND;
 
             case 7:
             case 8:
-                return BG_ABSTIEGSPLATZ;
+                return DEMOTED_BACKGROUND;
 
             default:
-                return Color.white;
+                return TABLE_BACKGROUND;//Color.white;
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     private void setTableColumnWidth() {
         final TableColumnModel columnModel = m_jtLigaTabelle.getColumnModel();
 
@@ -272,14 +248,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         columnModel.getColumn(23).setPreferredWidth(Helper.calcCellWidth(30));
     }
 
-    /**
-     * Gibt eine String zurück, der die Tore darstellt
-     *
-     * @param heim TODO Missing Constructuor Parameter Documentation
-     * @param gast TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+ 
     private String createTorString(int heim, int gast) {
         final StringBuffer buffer = new StringBuffer();
 
@@ -299,9 +268,6 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         return buffer.toString();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -333,17 +299,14 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
     private void initLigaTabelle() {
         //Entrys mit Werten füllen
         //Ein Model vorhanden?
-        if ((de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getSpielplan() != null)
-            && (de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getSpielplan()
+        if ((HOVerwaltung.instance().getModel().getSpielplan() != null)
+            && (HOVerwaltung.instance().getModel().getSpielplan()
                                                        .getSaison() > 0)) {
             //Daten in die Tabelle füllen
             reinitTabelle();
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initTabelle() {
         //Tablewerte setzen
         tabellenwerte = new Object[9][COLUMNNAMES.length];
@@ -351,7 +314,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         //Überschrift
         for (int i = 0; i < COLUMNNAMES.length; i++) {
             tabellenwerte[0][i] = new ColorLabelEntry(COLUMNNAMES[i], ColorLabelEntry.FG_STANDARD,
-                                                      BG_TITEL, SwingConstants.CENTER);
+            		TITLE_BACKGROUND, SwingConstants.CENTER);
         }
 
         for (int i = 1; i < 9; i++) {
@@ -371,14 +334,14 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
             tabellenwerte[i][7] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.CENTER);
             tabellenwerte[i][8] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][9] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
-            tabellenwerte[i][10] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, BG_TITEL,SwingConstants.RIGHT);
+            tabellenwerte[i][10] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, TITLE_BACKGROUND,SwingConstants.RIGHT);
             tabellenwerte[i][11] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][12] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][13] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][14] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.CENTER);
             tabellenwerte[i][15] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][16] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
-            tabellenwerte[i][17] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, BG_TITEL,SwingConstants.RIGHT);
+            tabellenwerte[i][17] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, TITLE_BACKGROUND,SwingConstants.RIGHT);
             tabellenwerte[i][18] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][19] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
             tabellenwerte[i][20] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, bg_Color,SwingConstants.RIGHT);
@@ -388,15 +351,11 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
         }
 
         //Model setzen
-        m_jtLigaTabelle.setModel(new de.hattrickorganizer.gui.model.VAPTableModel(COLUMNNAMES,
-                                                                                  tabellenwerte));
+        m_jtLigaTabelle.setModel(new VAPTableModel(COLUMNNAMES,tabellenwerte));
 
         setTableColumnWidth();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void reinitTabelle() {
         try {
             if (LigaTabellePanel.getAktuellerSpielPlan() != null) {
@@ -406,8 +365,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
 
                 final Vector<ILigaTabellenEintrag> tabelleneintraege = LigaTabellePanel.getAktuellerSpielPlan()
                                                                  .getTabelle().getEintraege();
-                final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getTeamId();
+                final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
                 int j = -1;
 
                 for (int i = 0; i < tabelleneintraege.size(); i++) {
@@ -429,9 +387,9 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
                         ((ColorLabelEntry) tabellenwerte[j][1]).setFontStyle(Font.BOLD);
 
                         if (eintrag.getTeamId() == teamid) {
-                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(FG_EIGENESTEAM);
+                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(USERSTEAM_FOREGROUND);
                         } else {
-                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(Color.black);
+                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(TABLE_FOREGROUND);//);Color.black
                         }
 
                         ((ColorLabelEntry) tabellenwerte[j][2]).setText(eintrag.getSerieAsString());
@@ -477,8 +435,7 @@ public class LigaTabelle extends de.hattrickorganizer.gui.templates.ImagePanel {
                 }
 
                 //Model setzen
-                m_jtLigaTabelle.setModel(new de.hattrickorganizer.gui.model.VAPTableModel(COLUMNNAMES,
-                                                                                          tabellenwerte));
+                m_jtLigaTabelle.setModel(new VAPTableModel(COLUMNNAMES, tabellenwerte));
             }
 
             setTableColumnWidth();

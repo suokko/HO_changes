@@ -1,6 +1,7 @@
 // %3066887473:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
+//import java.awt.Color;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,6 +10,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
+
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -22,9 +26,18 @@ final class TabellenverlaufStatistikPanel extends JPanel {
 
 	/** TODO Missing Parameter Documentation */
     private final Color[] COLOR4LINES = {
-                                            Color.green, Color.cyan, Color.gray, Color.black,
-                                            Color.orange, Color.PINK, Color.red, Color.MAGENTA
+    			ThemeManager.instance().getColor("panel.leaguehistory.line1.foreground"), // Color.green
+    			ThemeManager.instance().getColor("panel.leaguehistory.line2.foreground"), // Color.cyan
+    			ThemeManager.instance().getColor("panel.leaguehistory.line3.foreground"), // Color.gray
+    			ThemeManager.instance().getColor("panel.leaguehistory.line4.foreground"), // Color.black
+    			ThemeManager.instance().getColor("panel.leaguehistory.line5.foreground"), // Color.orange
+    			ThemeManager.instance().getColor("panel.leaguehistory.line6.foreground"), // Color.PINK
+    			ThemeManager.instance().getColor("panel.leaguehistory.line7.foreground"), // Color.red
+    			ThemeManager.instance().getColor("panel.leaguehistory.line8.foreground") // Color.MAGENTA
                                         };
+    
+    private Color USERSTEAM_FOREGROUND = ThemeManager.instance().getColor("panel.league.usersteam.foreground");
+    private Color STANDARD_FOREGROUND = ThemeManager.instance().getColor("table.league.foreground");
     private plugins.ITabellenVerlaufEintrag[] m_clVerlaufeintraege;
 
     /** TODO Missing Parameter Documentation */
@@ -56,15 +69,13 @@ final class TabellenverlaufStatistikPanel extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Hintergrund
-        g2d.setColor(Color.white);
+        g2d.setColor(ThemeManager.instance().getColor("table.league.background"));//Color.white);
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         if ((m_clVerlaufeintraege != null)
             && (m_clVerlaufeintraege.length > 0)
             && (m_clVerlaufeintraege[0] != null)) {
-            final int aktuelleTeamId = de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                              .getBasics()
-                                                                              .getTeamId();
+            final int aktuelleTeamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
             //Wegen Überschrift!
             final int anzahlPlaetze = m_clVerlaufeintraege.length + 1;
@@ -77,7 +88,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
             final Font normalFont = new Font("sansserif", Font.PLAIN, fontsize);
 
             //Koordinatenkreuz
-            g2d.setColor(Color.darkGray);
+            g2d.setColor(ThemeManager.instance().getColor("panel.leaguehistory.cross.foreground"));
 
             //Vertikal
             g2d.drawLine(getWidth() - VEREINSNAMENBREITE, 0, getWidth() - VEREINSNAMENBREITE,
@@ -91,7 +102,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
                          (getHeight() / anzahlPlaetze) + 1);
 
             //Hilfslinien
-            g2d.setColor(Color.lightGray);
+            g2d.setColor(ThemeManager.instance().getColor("panel.leaguehistory.grid.foreground"));
 
             //Horizontal
             for (int i = 1; i < anzahlPlaetze; i++) {
@@ -108,11 +119,11 @@ final class TabellenverlaufStatistikPanel extends JPanel {
             for (int i = 0; i < m_clVerlaufeintraege.length; i++) {
                 //Platzierung
                 if (m_clVerlaufeintraege[i].getTeamId() == aktuelleTeamId) {
-                    g2d.setColor(LigaTabelle.FG_EIGENESTEAM);
+                    g2d.setColor(USERSTEAM_FOREGROUND);
                 } else if (i < COLOR4LINES.length) {
                     g2d.setColor(COLOR4LINES[i]);
                 } else {
-                    g2d.setColor(Color.black);
+                    g2d.setColor(STANDARD_FOREGROUND);
                 }
 
                 g2d.setFont(fettFont);
@@ -124,9 +135,9 @@ final class TabellenverlaufStatistikPanel extends JPanel {
 
                 //Eigenes Team blau machen
                 if (m_clVerlaufeintraege[i].getTeamId() == aktuelleTeamId) {
-                    g2d.setColor(LigaTabelle.FG_EIGENESTEAM);
+                    g2d.setColor(USERSTEAM_FOREGROUND);
                 } else {
-                    g2d.setColor(Color.black);
+                    g2d.setColor(STANDARD_FOREGROUND);
                 }
 
                 //Maximal 30 Zeichen als Namen
@@ -150,11 +161,11 @@ final class TabellenverlaufStatistikPanel extends JPanel {
                 final int[] platzierungen = m_clVerlaufeintraege[i].getPlatzierungen();
 
                 if (m_clVerlaufeintraege[i].getTeamId() == aktuelleTeamId) {
-                    g2d.setColor(LigaTabelle.FG_EIGENESTEAM);
+                    g2d.setColor(USERSTEAM_FOREGROUND);
                 } else if (i < COLOR4LINES.length) {
                     g2d.setColor(COLOR4LINES[i]);
                 } else {
-                    g2d.setColor(Color.black);
+                    g2d.setColor(STANDARD_FOREGROUND);
                 }
 
                 //Erste Linie vom Namen
