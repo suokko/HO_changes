@@ -324,7 +324,7 @@ public final class UserParameter extends Configuration {
 	public boolean assistant112 = true;
 	public boolean assistant113 = true;
 	
-	
+	public String theme = "Classic";
 	
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -559,7 +559,7 @@ public final class UserParameter extends Configuration {
 		map.put("assistant112", String.valueOf(assistant112));
 		map.put("assistant113", String.valueOf(assistant113));
 		map.put("assistantSaved", String.valueOf(assistantSaved));
-		
+		map.put("theme", String.valueOf(theme));
 		return map;
 	}
 
@@ -756,6 +756,7 @@ public final class UserParameter extends Configuration {
 		assistant113 = getBooleanValue(values, "assistant113");
 		assistantSaved = getBooleanValue(values,"assistantSaved");
 		
+		theme = getStringValue(values, "theme");
 	}
 
 }

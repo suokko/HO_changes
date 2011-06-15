@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.List;
 
+import javax.swing.UIManager;
 import javax.xml.bind.annotation.XmlRegistry;
 
 
@@ -44,7 +45,10 @@ public class Theme {
 		final String type = xmlValue.getType();
 		if (type.equals("Color")){
 			String[] rgb = xmlValue.getValue().split(",");
-			return new Color(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2]));
+			if(rgb.length==3)
+				return new Color(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2]));
+			else if(rgb.length==4)
+				return new Color(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2],Integer.parseInt(rgb[3])));
 		}else if (type.equals("BigDecimal")){
 			return new BigDecimal(xmlValue.getValue());
 		}else if(type.equals("Timestamp")){
@@ -72,9 +76,14 @@ public class Theme {
 		Object obj = cache.get(key);
 		if(obj!= null && obj instanceof Color)
 			return (Color)obj;
+		
 		if(obj != null && obj instanceof String)
 			return getColor(obj.toString());
-		return null;
+		
+		if(obj == null)
+			obj = UIManager.getColor(key);
+		
+		return (Color)obj;
 	}
 	
 	public String getVersion() {
@@ -135,7 +144,7 @@ public class Theme {
 		
 		if(obj instanceof Color){
 			Color c = (Color)obj;
-			xmlValue.setValue(c.getRed()+","+c.getGreen()+","+c.getBlue());
+			xmlValue.setValue(c.getRed()+","+c.getGreen()+","+c.getBlue()+(c.getAlpha()<255?","+c.getAlpha():""));
 		}
 		
 		return xmlValue;	
