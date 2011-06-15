@@ -790,21 +790,21 @@ public class MyConnector implements plugins.IDownloadHelper {
 	/////////////////////////////////////////////////////////////////////////////////
 	//Update Checker
 	////////////////////////////////////////////////////////////////////////////////
-	public double getLatestVersion() {
+	public VersionInfo getLatestVersion() {
+		VersionInfo ret = new VersionInfo();
+		ret.setBeta(false);
+		ret.setVersion(HOMainFrame.VERSION);
 		try {
-			final String s =
-				getWebPage(MyConnector.getPluginSite()+"/version.htm", false, true);
-			double d = de.hattrickorganizer.gui.HOMainFrame.VERSION;
-
+			final String s = getWebPage(MyConnector.getPluginSite() + "/version.htm", false, true);
 			try {
-				d = Double.parseDouble(s);
+				ret.setVersion(Double.parseDouble(s));
 			} catch (NumberFormatException e) {
+				HOLogger.instance().debug(getClass(), "Error parsing version '" + s + "': " + e);
 			}
-			return d;
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Unable to connect to the update server (HO): " + e);
-			return de.hattrickorganizer.gui.HOMainFrame.VERSION;
+			HOLogger.instance().log(getClass(), "Unable to connect to the update server (HO): " + e);
 		}
+		return ret;
 	}
 	
 	/**
