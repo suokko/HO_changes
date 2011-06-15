@@ -311,10 +311,8 @@ public final class UpdateController {
     }
 
 	public static void check4update() {
-		double version = MyConnector.instance().getLatestVersion();
-		if (version > HOMainFrame.VERSION) {
-			// Info anzeigen, dass es ein Update gibt
-			// Show update info
+		VersionInfo version = MyConnector.instance().getLatestVersion();
+		if (version != null && version.getVersion() > HOMainFrame.VERSION) {
 			int update =
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
@@ -324,7 +322,7 @@ public final class UpdateController {
 					JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
-				updateHO(version);
+				updateHO(String.valueOf(version.getVersion()));
 			}
 //			int update = JOptionPane.showConfirmDialog(
 //					HOMainFrame.instance(),
@@ -334,6 +332,12 @@ public final class UpdateController {
 //			if (update == JOptionPane.YES_OPTION) {
 //				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");
 //			}
+		} else {
+			final int currRev = HOMainFrame.getRevisionNumber();
+			JOptionPane.showMessageDialog(HOMainFrame.instance(), "No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
+					+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance().getLanguageString("update"),
+					JOptionPane.INFORMATION_MESSAGE);
+
 		}
 	}
 
@@ -471,7 +475,7 @@ public final class UpdateController {
 	public static void check4RatingsUpdate() {
 		Extension data = MyConnector.instance().getRatingsVersion();
 		HOLogger.instance().log(UpdateController.class, "Check: " + HOMainFrame.VERSION + ">=" + (data != null ? data.getMinimumHOVersion() : -1f) + " && " + (data != null ? data.getRelease(): -1f) +" > " + HOParameter.instance().RatingsRelease);
-		if (HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().RatingsRelease) {
+		if (data != null && HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().RatingsRelease) {
 			//Infro anzeigen das es ein Update gibt
 			int update =
 				JOptionPane.showConfirmDialog(
