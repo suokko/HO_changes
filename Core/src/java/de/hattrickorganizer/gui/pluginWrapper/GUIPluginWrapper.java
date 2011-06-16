@@ -1,8 +1,12 @@
 // %3994494499:de.hattrickorganizer.gui.pluginWrapper%
 package de.hattrickorganizer.gui.pluginWrapper;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
 
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -43,7 +47,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @return TODO Missing Return Method Documentation
      */
     public plugins.IInfoPanel getInfoPanel() {
-        return de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel();
+        return HOMainFrame.instance().getInfoPanel();
     }
 
     /**
@@ -52,7 +56,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @return TODO Missing Return Method Documentation
      */
     public javax.swing.JFrame getOwner4Dialog() {
-        return de.hattrickorganizer.gui.HOMainFrame.instance();
+        return HOMainFrame.instance();
     }
 
     /**
@@ -72,7 +76,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param listener TODO Missing Method Parameter Documentation
      */
     public void addMainFrameListener(java.awt.event.WindowListener listener) {
-        de.hattrickorganizer.gui.HOMainFrame.instance().addMainFrameListener(listener);
+        HOMainFrame.instance().addMainFrameListener(listener);
     }
 
     /**
@@ -81,7 +85,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param menu TODO Missing Method Parameter Documentation
      */
     public void addMenu(javax.swing.JMenu menu) {
-        de.hattrickorganizer.gui.HOMainFrame.instance().addMenu(menu);
+        HOMainFrame.instance().addMenu(menu);
     }
 
     /**
@@ -91,7 +95,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param optionpanel TODO Missing Method Parameter Documentation
      */
     public void addOptionPanel(String name, javax.swing.JPanel optionpanel) {
-        de.hattrickorganizer.gui.HOMainFrame.instance().addOptionPanel(name, optionpanel);
+        HOMainFrame.instance().addOptionPanel(name, optionpanel);
     }
 
     /**
@@ -110,7 +114,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param panel TODO Missing Method Parameter Documentation
      */
     public void addTab(String name, JPanel panel) {
-        de.hattrickorganizer.gui.HOMainFrame.instance().getTabbedPane().addTab(name, panel);
+        HOMainFrame.instance().getTabbedPane().addTab(name, panel);
     }
 
     /**
@@ -119,7 +123,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param menu TODO Missing Method Parameter Documentation
      */
     public void addTopLevelMenu(javax.swing.JMenu menu) {
-        de.hattrickorganizer.gui.HOMainFrame.instance().addTopLevelMenu(menu);
+        HOMainFrame.instance().addTopLevelMenu(menu);
     }
 
     /**
@@ -300,7 +304,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param listener TODO Missing Method Parameter Documentation
      */
     public void removeMainFrameListener(java.awt.event.WindowListener listener) {
-        de.hattrickorganizer.gui.HOMainFrame.instance().removeMainFrameListener(listener);
+        HOMainFrame.instance().removeMainFrameListener(listener);
     }
 
     /**
@@ -310,5 +314,14 @@ public class GUIPluginWrapper implements plugins.IGUI {
      */
     public void unregisterRefreshable(plugins.IRefreshable refreshable) {
         de.hattrickorganizer.gui.RefreshManager.instance().unregisterRefreshable(refreshable);
+    }
+    
+    /**
+     * return a HO Theme Color
+     * 
+     * @param String color key text for example "table.player.skill.background"
+     */
+    public Color getColor(String key){
+    	return ThemeManager.instance().getColor(key);
     }
 }
