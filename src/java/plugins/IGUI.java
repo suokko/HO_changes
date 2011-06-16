@@ -1,6 +1,8 @@
 // %1127326826915:plugins%
 package plugins;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
@@ -225,4 +227,11 @@ public interface IGUI {
      * @param refreshable The refreshable-objekt, that shall be removed
      */
     public void unregisterRefreshable(IRefreshable refreshable);
+    
+    /**
+     * return a HO Theme Color
+     * 
+     * @param String color key text for example "table.player.skill.background"
+     */
+    public Color getColor(String key);
 }
