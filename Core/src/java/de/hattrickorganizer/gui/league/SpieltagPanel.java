@@ -367,7 +367,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(2, 2, 2, 2);
 
-        this.setBackground(ThemeManager.instance().getColor("panel.matchday.background")); 
+        this.setBackground(ThemeManager.getColor("panel.matchday.background")); 
 
         JLabel label;
 
@@ -457,7 +457,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     private void markMyTeam(JLabel team, int matchTeamId, int myTeamId) {
         if (matchTeamId == myTeamId) {
             team.setFont(team.getFont().deriveFont(Font.BOLD));
-            team.setForeground(ThemeManager.instance().getColor("panel.league.usersteam.foreground"));
+            team.setForeground(ThemeManager.getColor("panel.league.usersteam.foreground"));
         }
     }
 

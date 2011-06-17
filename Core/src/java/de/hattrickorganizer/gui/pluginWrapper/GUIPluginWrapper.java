@@ -322,6 +322,6 @@ public class GUIPluginWrapper implements plugins.IGUI {
      * @param String color key text for example "table.player.skill.background"
      */
     public Color getColor(String key){
-    	return ThemeManager.instance().getColor(key);
+    	return ThemeManager.getColor(key);
     }
 }

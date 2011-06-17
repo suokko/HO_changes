@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
@@ -52,7 +53,7 @@ public class NotepadDialog extends JDialog implements ActionListener{
 	    setSize(dialogWidth, dialogHeight);
 
 		cmdSave.setPreferredSize(new Dimension(25,25));
-		cmdSave.setBackground(Color.WHITE);
+		cmdSave.setBackground(ThemeManager.getColor("ho.button.background"));
 		cmdSave.addActionListener( this );
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(getButtonPanel(), BorderLayout.NORTH);

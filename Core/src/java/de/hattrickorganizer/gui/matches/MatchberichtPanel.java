@@ -2,7 +2,6 @@
 package de.hattrickorganizer.gui.matches;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
 
@@ -43,7 +43,7 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
      * @param mitButton TODO Missing Constructuor Parameter Documentation
      */
     public MatchberichtPanel(boolean mitButton) {
-        setBackground(Color.WHITE);
+        setBackground(ThemeManager.getColor("ho.panel.background"));
 
         setLayout(new BorderLayout());
 
@@ -59,7 +59,7 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
             constraints.insets = new Insets(4, 6, 4, 6);
 
             final ImagePanel buttonPanel = new ImagePanel(layout);
-            buttonPanel.setBackground(Color.white);
+            buttonPanel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
             m_jbMaximieren.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Matchbericht_Maximieren"));
             m_jbMaximieren.setEnabled(false);

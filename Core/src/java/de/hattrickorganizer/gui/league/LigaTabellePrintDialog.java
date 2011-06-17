@@ -82,6 +82,7 @@ public class LigaTabellePrintDialog extends JDialog {
         constraints.weighty = 1.0;
         constraints.insets = new Insets(0, 0, 0, 0);
         getContentPane().setLayout(layout);
+        //background important for printing, so static white
         getContentPane().setBackground(Color.WHITE);
 
         m_jpLigaTabelle = new LigaTabelle();

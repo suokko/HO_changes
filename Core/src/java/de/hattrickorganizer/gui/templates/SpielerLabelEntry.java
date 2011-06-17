@@ -293,7 +293,7 @@ public final class SpielerLabelEntry extends TableEntry {
 
         if (m_clPlayer != null) {
             if (m_clPlayer.isOld()) {
-                m_jlName.setForeground(ThemeManager.instance().getColor("tableEntry.player.isOld.foreground"));//Color.GRAY);
+                m_jlName.setForeground(ThemeManager.getColor("tableEntry.player.isOld.foreground"));//Color.GRAY);
             } else {
                 m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
             }

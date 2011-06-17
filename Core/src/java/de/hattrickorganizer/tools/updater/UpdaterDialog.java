@@ -30,6 +30,7 @@ import plugins.IDebugWindow;
 import plugins.IOfficialPlugin;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 
@@ -66,12 +67,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * Creates a new UpdaterDialog object.
-     *
-     * @param data TODO Missing Constructuor Parameter Documentation
-     * @param title TODO Missing Constructuor Parameter Documentation
-     */
 	protected UpdaterDialog(Object data, String title) {
 		super(GUIPluginWrapper.instance().getOwner4Dialog(), title);
 
@@ -86,11 +81,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void actionPerformed(ActionEvent e) {
         String comand = e.getActionCommand();
         UpdaterDialog dialog = (UpdaterDialog) ((JButton) e.getSource()).getTopLevelAncestor();
@@ -116,46 +106,19 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param selected TODO Missing Method Parameter Documentation
-     * @param columnNames2 TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected abstract TableModel getModel(boolean selected, String[] columnNames2);
 
-    /**
-     * TODO Missing Method Documentation
-     */
     protected abstract void action();
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param isSelected TODO Missing Method Parameter Documentation
-     * @param isEnabled TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected JCheckBox getCheckbox(boolean isSelected, boolean isEnabled) {
         JCheckBox tmp = new JCheckBox();
         tmp.setEnabled(isEnabled);
-        tmp.setBackground(Color.WHITE);
+        tmp.setBackground(ThemeManager.getColor("ho.checkbox.background"));
         tmp.setSelected(isSelected);
         tmp.setHorizontalAlignment(SwingConstants.CENTER);
         return tmp;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param isEnabled TODO Missing Method Parameter Documentation
-     * @param txt TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected JLabel getLabel(boolean isEnabled, String txt) {
         JLabel tmp = new JLabel(txt);
         tmp.setEnabled(isEnabled);
@@ -163,14 +126,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         return tmp;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param file TODO Missing Method Parameter Documentation
-     * @param files TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected boolean isUnquenchable(File file, File[] files) {
         if (files == null) {
             return false;
@@ -185,12 +140,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param path TODO Missing Method Parameter Documentation
-     * @param unquenchablesFiles TODO Missing Method Parameter Documentation
-     */
     protected void clearDirectory(String path, File[] unquenchablesFiles) {
         File dir = new File(path);
 
@@ -209,11 +158,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected JPanel createButtons() {
         JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
         ((FlowLayout) buttonPanel.getLayout()).setAlignment(FlowLayout.RIGHT);
@@ -227,14 +171,14 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         cancelButton.addActionListener(this);
 
         JButton selectAllButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/CheckBoxSelected.gif")));
-        selectAllButton.setBackground(Color.WHITE);
+        selectAllButton.setBackground(ThemeManager.getColor("ho.button.background"));
         selectAllButton.setPreferredSize(new Dimension(23, 23));
         selectAllButton.setActionCommand(ACT_SET_ALL);
         selectAllButton.addActionListener(this);
 
         JButton selectNoneButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/CheckBoxNotSelected.gif")));
 
-        selectNoneButton.setBackground(Color.WHITE);
+        selectNoneButton.setBackground(ThemeManager.getColor("ho.button.background"));
         selectNoneButton.setPreferredSize(new Dimension(23, 23));
         selectNoneButton.setActionCommand(ACT_SET_NONE);
         selectNoneButton.addActionListener(this);
@@ -246,11 +190,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         return buttonPanel;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
 	protected JScrollPane createTable() {
 		table = new JTable(getModel(defaultSelected, columnNames));
 		//table.setRowHeight(25);
@@ -267,12 +206,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 		return scroll;
 	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param plugin TODO Missing Method Parameter Documentation
-     * @param withTables TODO Missing Method Parameter Documentation
-     */
     protected void deletePlugin(Object plugin, boolean withTables) {
         File[] unquenchableFiles = new File[0];
         String pluginName = plugin.getClass().getName();
@@ -299,11 +232,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param pluginname TODO Missing Method Parameter Documentation
-     */
     protected void deletePluginTables(String pluginname) {
         try {
             ArrayList<String> droptables = new ArrayList<String>();
@@ -323,12 +251,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     * @param txt TODO Missing Method Parameter Documentation
-     */
     protected void handleException(Exception e, String txt) {
         //	    JOptionPane.showMessageDialog(null,	txt
         //				,RSC.NAME,JOptionPane.ERROR_MESSAGE);
@@ -337,21 +259,10 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         showException(e, txt);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param key TODO Missing Method Parameter Documentation
-     */
     protected void show(String key) {
         JOptionPane.showMessageDialog(null, key);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param ex TODO Missing Method Parameter Documentation
-     * @param itxt TODO Missing Method Parameter Documentation
-     */
     protected void showException(Exception ex, String itxt) {
         IDebugWindow debugWindow = GUIPluginWrapper.instance().createDebugWindow(new Point(100, 200),
                                                                                  new Dimension(700,
@@ -361,11 +272,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         debugWindow.append(ex);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     private void setAll(boolean value) {
         for (int i = 0; i < table.getRowCount(); i++) {
             JCheckBox tmp = (JCheckBox) table.getValueAt(i, 0);

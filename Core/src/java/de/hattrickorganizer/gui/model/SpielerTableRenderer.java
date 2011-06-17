@@ -6,7 +6,6 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
@@ -18,23 +17,10 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
 public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
-    public static java.awt.Color SELECTION_BG = ThemeManager.instance().getColor("table.player.selection.background");//new java.awt.Color(235, 235, 235);
+    public static java.awt.Color SELECTION_BG = ThemeManager.getColor("ho.table.selection.background");//new java.awt.Color(235, 235, 235);
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param table TODO Missing Method Parameter Documentation
-     * @param value TODO Missing Method Parameter Documentation
-     * @param isSelected TODO Missing Method Parameter Documentation
-     * @param hasFocus TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final java.awt.Component getTableCellRendererComponent(JTable table, Object value,
                                                                   boolean isSelected,
                                                                   boolean hasFocus, int row,
@@ -47,18 +33,22 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
             }
 
             return component;
-        } else if (value instanceof Integer) {
-            final JComponent component = new JLabel(value.toString(), SwingConstants.LEFT);
-            component.setOpaque(true);
-
-            if (isSelected) {
-                component.setBackground(SELECTION_BG);
-            } else {
-                component.setBackground(Color.red);
-            }
-
-            return component;
-        } else if (value instanceof JComponent) {
+        } 
+       
+//        else if (value instanceof Integer) {
+//        	System.out.println("SpielerTableRenderer: Integer");
+//            final JComponent component = new JLabel(value.toString(), SwingConstants.LEFT);
+//            component.setOpaque(true);
+//
+//            if (isSelected) {
+//                component.setBackground(SELECTION_BG);
+//            } else {
+//                component.setBackground(Color.red);
+//            }
+//
+//            return component;
+//        } 
+        else if (value instanceof JComponent) {
             final JComponent component = (JComponent) value;
             component.setOpaque(true);
 
@@ -69,9 +59,9 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
             }
 
             return component;
-        } else {
+        }  else {
             JComponent component;
-
+            
             if (value != null) {
                 component = new JLabel(value.toString());
             } else {
