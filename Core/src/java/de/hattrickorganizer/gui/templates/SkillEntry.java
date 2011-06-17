@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 
 
 /**
@@ -99,7 +100,7 @@ public class SkillEntry extends TableEntry {
 	public final JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+            m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
             m_clComponent.setOpaque(true);
             m_clComponent.setBackground(m_clBGColor);

@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IHOTableEntry;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -36,8 +38,7 @@ public class TorLabelEntry extends TableEntry {
      */
     public TorLabelEntry() {
         if (BALLIMAGEICON == null) {
-            BALLIMAGEICON = new ImageIcon(de.hattrickorganizer.tools.Helper.makeColorTransparent(de.hattrickorganizer.tools.Helper
-                                                                                                 .loadImage("gui/bilder/credits/Ball.png"),
+            BALLIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/credits/Ball.png"),
                                                                                                  new Color(255,
                                                                                                            0,
                                                                                                            0))
@@ -57,8 +58,7 @@ public class TorLabelEntry extends TableEntry {
      */
     public TorLabelEntry(int tore) {
         if (BALLIMAGEICON == null) {
-            BALLIMAGEICON = new ImageIcon(de.hattrickorganizer.tools.Helper.makeColorTransparent(de.hattrickorganizer.tools.Helper
-                                                                                                 .loadImage("gui/bilder/credits/Ball.png"),
+            BALLIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/credits/Ball.png"),
                                                                                                  new Color(255,
                                                                                                            0,
                                                                                                            0))
@@ -84,10 +84,10 @@ public class TorLabelEntry extends TableEntry {
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+            m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
             m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(java.awt.Color.white);
+            m_clComponent.setBackground(ColorLabelEntry.BG_STANDARD);
         }
 
         return m_clComponent;
