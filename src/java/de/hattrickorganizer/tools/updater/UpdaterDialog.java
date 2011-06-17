@@ -5,7 +5,6 @@
  */
 package de.hattrickorganizer.tools.updater;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
@@ -122,7 +121,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
     protected JLabel getLabel(boolean isEnabled, String txt) {
         JLabel tmp = new JLabel(txt);
         tmp.setEnabled(isEnabled);
-        tmp.setBackground(Color.lightGray);
+        //tmp.setBackground(Color.lightGray);
         return tmp;
     }
 
