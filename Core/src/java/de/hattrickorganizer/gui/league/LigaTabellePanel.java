@@ -29,6 +29,7 @@ import javax.swing.JViewport;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.matchlist.Spielplan;
 
 
@@ -349,7 +350,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setSize(25, 25);
         m_jbLoeschen.setLocation(220, 5);
-        m_jbLoeschen.setBackground(Color.WHITE);
+        m_jbLoeschen.setBackground(ThemeManager.getColor("ho.button.background"));
         cbpanel.add(m_jbLoeschen);
 
         m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonDrucken"));

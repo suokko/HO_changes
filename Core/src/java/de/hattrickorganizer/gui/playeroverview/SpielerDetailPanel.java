@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,15 +24,21 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
+import de.hattrickorganizer.gui.model.SmilieRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
+import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
@@ -38,10 +47,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 /**
  * Gibt Details zum Markierten Spieler aus
  */
-public final class SpielerDetailPanel extends ImagePanel implements de.hattrickorganizer.gui.Refreshable,
-                                                              java.awt.event.FocusListener,
-                                                              java.awt.event.ItemListener,
-                                                              java.awt.event.ActionListener
+public final class SpielerDetailPanel extends ImagePanel implements Refreshable, FocusListener, ItemListener, ActionListener
 {
 
 	private static final long serialVersionUID = 3466993172643378958L;
@@ -269,7 +275,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
     protected SpielerDetailPanel() {
         initComponents();
 
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -304,7 +310,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             transvergleich();
         } else if (actionevent.getSource().equals(m_jbStatistik)) {
             HOMainFrame.instance().getStatistikMainPanel().setShowSpieler(m_clSpieler.getSpielerID());
-            de.hattrickorganizer.gui.HOMainFrame.instance().showTab(HOMainFrame.STATISTIK);
+            HOMainFrame.instance().showTab(HOMainFrame.STATISTIK);
         } else if (actionevent.getSource().equals(m_jbAnalyse1)) {
             HOMainFrame.instance().getSpielerAnalyseMainPanel()
                                                 .setSpieler4Top(m_clSpieler.getSpielerID());
@@ -339,10 +345,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
      */
     public final void focusLost(java.awt.event.FocusEvent event) {
         if (m_clSpieler != null) {
-            de.hattrickorganizer.database.DBZugriff.instance().saveSpielerNotiz(m_clSpieler
-                                                                                .getSpielerID(),
-                                                                                m_jtaNotizen
-                                                                                .getText());
+            DBZugriff.instance().saveSpielerNotiz(m_clSpieler.getSpielerID(), m_jtaNotizen.getText());
         }
     }
 
@@ -363,7 +366,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
                                                        .getSelectedItem()).getId());
                 }
 
-                de.hattrickorganizer.gui.HOMainFrame.instance().getSpielerUebersichtPanel().update();
+                HOMainFrame.instance().getSpielerUebersichtPanel().update();
             }
         }
     }
@@ -398,19 +401,17 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler
                                                                                          .getNationalitaet()));
 
-        if (de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getAufstellung()
+        if (HOVerwaltung.instance().getModel().getAufstellung()
                                                    .isSpielerAufgestellt(m_clSpieler.getSpielerID())
-            && (de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getAufstellung()
+            && (HOVerwaltung.instance().getModel().getAufstellung()
                                                        .getPositionBySpielerId(m_clSpieler
                                                                                .getSpielerID()) != null)) {
-            m_jpAufgestellt.setIcon(Helper.getImage4Position(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                               .getModel()
+            m_jpAufgestellt.setIcon(Helper.getImage4Position(HOVerwaltung.instance()                                           .getModel()
                                                                                                                                .getAufstellung()
                                                                                                                                .getPositionBySpielerId(m_clSpieler
                                                                                                                                                        .getSpielerID()),
-                                                                                        m_clSpieler
-                                                                                        .getTrikotnummer()));
-            m_jpAufgestellt.setText(de.hattrickorganizer.model.SpielerPosition.getNameForPosition(de.hattrickorganizer.model.HOVerwaltung.instance()
+                                                                                        m_clSpieler.getTrikotnummer()));
+            m_jpAufgestellt.setText(SpielerPosition.getNameForPosition(HOVerwaltung.instance()
                                                                                                                                          .getModel()
                                                                                                                                          .getAufstellung()
                                                                                                                                          .getPositionBySpielerId(m_clSpieler
@@ -455,7 +456,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
 
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
-                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bonus") + ")";
+                        + HOVerwaltung.instance().getLanguageString("Bonus") + ")";
             }
 
             m_jpGehalt.getLinks().setText(gehalttext + bonus);
@@ -505,7 +506,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
             m_jpErfahrung2.clear();
             m_jpFuehrung.setText(PlayerHelper.getNameForSkill(m_clSpieler.getFuehrung()) + "");
             m_jpFuehrung2.clear();
-            m_jpBestPos.setText(de.hattrickorganizer.model.SpielerPosition.getNameForPosition(m_clSpieler
+            m_jpBestPos.setText(SpielerPosition.getNameForPosition(m_clSpieler
                                                                                               .getIdealPosition())
                                 + " ("
                                 + m_clSpieler.calcPosValue(m_clSpieler.getIdealPosition(), true)
@@ -521,7 +522,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
                                                                            .instance().faktorGeld);
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
-                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bonus") + ")";
+                        + HOVerwaltung.instance().getLanguageString("Bonus") + ")";
             }
 
             m_jpGehalt.getLinks().setText(gehalttext + bonus);
@@ -650,13 +651,13 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
 
             final long timemillis = System.currentTimeMillis() - time.getTime();
             temp += (" (" + (int) (timemillis / 604800000) + " "
-            + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen")
+            + HOVerwaltung.instance().getLanguageString("Wochen")
             + ")");
         }
 
         m_jpImTeamSeit.setText(temp);
         m_jtaNotizen.setEditable(true);
-        m_jtaNotizen.setText(de.hattrickorganizer.database.DBZugriff.instance().getSpielerNotiz(m_clSpieler
+        m_jtaNotizen.setText(DBZugriff.instance().getSpielerNotiz(m_clSpieler
                                                                                                 .getSpielerID()));
 
         EPVData data = new EPVData(m_clSpieler);
@@ -786,8 +787,8 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         initNormalLabel(4,0,constraints,layout,panel,label);
         //m_jcbTeamInfoSmilie.setPreferredSize ( new Dimension( 40, 16 ) );
         m_jcbTeamInfoSmilie.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbTeamInfoSmilie.setBackground(Color.white);
-        m_jcbTeamInfoSmilie.setRenderer(new de.hattrickorganizer.gui.model.SmilieRenderer());
+        m_jcbTeamInfoSmilie.setBackground(ThemeManager.getColor("ho.combobox.background"));
+        m_jcbTeamInfoSmilie.setRenderer(new SmilieRenderer());
         m_jcbTeamInfoSmilie.addItemListener(this);
         setPosition(constraints,5,0);
         constraints.weightx = 1.0;
@@ -803,8 +804,8 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         m_jcbManuellerSmilie.setMaximumRowCount(10);
         //m_jcbManuellerSmilie.setPreferredSize( new Dimension( 40, 16 ) );
         m_jcbManuellerSmilie.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbManuellerSmilie.setBackground(Color.white);
-        m_jcbManuellerSmilie.setRenderer(new de.hattrickorganizer.gui.model.SmilieRenderer());
+        m_jcbManuellerSmilie.setBackground(ThemeManager.getColor("ho.combobox.background"));
+        m_jcbManuellerSmilie.setRenderer(new SmilieRenderer());
         m_jcbManuellerSmilie.addItemListener(this);
         setPosition(constraints,5,1);
         constraints.weightx = 1.0;
@@ -832,7 +833,7 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
         m_jcbUserPos.setMaximumRowCount(20);
         //m_jcbUserPos.setPreferredSize( new Dimension( 40, 16 ) );
         m_jcbUserPos.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbUserPos.setBackground(Color.white);
+        m_jcbUserPos.setBackground(ThemeManager.getColor("ho.combobox.background"));
         m_jcbUserPos.addItemListener(this);
         setPosition(constraints,5,5);
         constraints.weightx = 1.0;
@@ -1232,21 +1233,16 @@ public final class SpielerDetailPanel extends ImagePanel implements de.hattricko
      */
     private void transvergleich() {
         //Aktuellen Spieler holen
-        final de.hattrickorganizer.model.Spieler spieler = de.hattrickorganizer.gui.HOMainFrame.instance()
-                                                                                               .getSpielerUebersichtPanel()
-                                                                                               .getAktuellenSpieler();
+        final Spieler spieler = HOMainFrame.instance().getSpielerUebersichtPanel().getAktuellenSpieler();
 
         if (spieler != null) {
             try {
-                final String text = de.hattrickorganizer.net.MyConnector.instance()
-                                                                        .getTransferCompare(spieler
-                                                                                            .getSpielerID());
+                final String text = MyConnector.instance().getTransferCompare(spieler.getSpielerID());
                 String showntext = "<html><body>";
 
                 //Dialog mit Matchbericht erzeugen
                 final String titel = spieler.getName();
-                final JDialog matchdialog = new JDialog(de.hattrickorganizer.gui.HOMainFrame
-                                                        .instance(), titel);
+                final JDialog matchdialog = new JDialog(HOMainFrame.instance(), titel);
                 matchdialog.getContentPane().setLayout(new BorderLayout());
 
                 final de.hattrickorganizer.gui.matches.MatchberichtEditorPanel berichtpanel = new de.hattrickorganizer.gui.matches.MatchberichtEditorPanel();

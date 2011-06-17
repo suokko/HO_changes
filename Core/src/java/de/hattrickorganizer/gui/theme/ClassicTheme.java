@@ -19,7 +19,7 @@ public class ClassicTheme extends Theme {
 		setName("Classic");
 		setVersion("1.0");
 		put("createdDate",Timestamp.valueOf("2011-06-12 12:00:00"));
-		put("hoVersion", new BigDecimal(HOMainFrame.VERSION));
+		put("hoVersion", new BigDecimal(HOMainFrame.VERSION).setScale(4, BigDecimal.ROUND_HALF_UP));
 		put("author","HO");
 		
 		initColors();
@@ -30,6 +30,8 @@ public class ClassicTheme extends Theme {
 	 *  	
 	 */
 	private void initColors(){
+		
+		// don´t use UIManager keys !!
 		put("black", Color.BLACK);
 		put("white", Color.WHITE);
 		put("red", Color.RED);
@@ -38,9 +40,14 @@ public class ClassicTheme extends Theme {
 		put("lightGreen",new Color(220, 255, 220));
 		put("lightYellow",new Color(255, 255, 200));
 		
-		put("label.error.foreground","red");
-		put("label.info.foreground","black");
-		put("label.success.foreground","green");
+		put("ho.checkbox.background","white");
+		put("ho.combobox.background","white");
+		put("ho.panel.background","white");
+		put("ho.button.background","white");
+		
+		put("ho.label.error.foreground","red");
+		put("ho.label.foreground","black");
+		put("ho.label.success.foreground","green");
 		//player
 		put("tableEntry.player.skill.special.background","lightGreen");
 		put("tableEntry.player.skill.background","lightYellow");
@@ -49,7 +56,7 @@ public class ClassicTheme extends Theme {
 		put("tableEntry.player.position.background",new Color(220, 220, 255));
 		put("tableEntry.player.subposition.background",new Color(235, 235, 255));
 		put("tableEntry.player.isOld.foreground","gray");
-		put("table.player.selection.background",new java.awt.Color(235, 235, 235));
+		put("ho.table.selection.background",new java.awt.Color(235, 235, 235));
 		
 		// league Table
 		put("panel.league.usersteam.foreground",new Color(50, 50, 150));

@@ -23,17 +23,17 @@ import de.hattrickorganizer.tools.Helper;
 public class ColorLabelEntry extends TableEntry {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	   public static Color FG_STANDARD = ThemeManager.instance().getColor("tableEntry.foreground");//gui.UserParameter.instance().FG_STANDARD;
-	   public static Color FG_GRAU = ThemeManager.instance().getColor("gray"); // Color.gray
+	   public static Color FG_STANDARD = ThemeManager.getColor("tableEntry.foreground");//gui.UserParameter.instance().FG_STANDARD;
+	   public static Color FG_GRAU = ThemeManager.getColor("gray"); // Color.gray
 	   protected static Color FG_VERLETZT = gui.UserParameter.instance().FG_VERLETZT;
 	   static final Color FG_VERBESSERUNG = new Color(0, 200, 0);
 	   static final Color FG_VERSCHLECHTERUNG = new Color(200, 0, 0);
 	   public static Color FG_TRANSFERMARKT = gui.UserParameter.instance().FG_TRANSFERMARKT;
-	   public static final Color BG_STANDARD = ThemeManager.instance().getColor("tableEntry.background");
-	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.instance().getColor("tableEntry.player.skill.special.background");
-	   public static final Color BG_SPIELEREINZELWERTE = ThemeManager.instance().getColor("tableEntry.player.skill.background");//new Color(255, 255, 200);
-	   public static final Color BG_SPIELERPOSITONSWERTE = ThemeManager.instance().getColor("tableEntry.player.position.background");//new Color(220, 220, 255);
-	   public static final Color BG_SPIELERSUBPOSITONSWERTE = ThemeManager.instance().getColor("tableEntry.player.subposition.background");//new Color(235, 235, 255);
+	   public static final Color BG_STANDARD = ThemeManager.getColor("tableEntry.background");
+	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor("tableEntry.player.skill.special.background");
+	   public static final Color BG_SPIELEREINZELWERTE = ThemeManager.getColor("tableEntry.player.skill.background");//new Color(255, 255, 200);
+	   public static final Color BG_SPIELERPOSITONSWERTE = ThemeManager.getColor("tableEntry.player.position.background");//new Color(220, 220, 255);
+	   public static final Color BG_SPIELERSUBPOSITONSWERTE = ThemeManager.getColor("tableEntry.player.subposition.background");//new Color(235, 235, 255);
 	   public static final Color BG_FLAGGEN = BG_STANDARD; //new Color(222, 218, 210);
 
     //~ Instance fields ----------------------------------------------------------------------------

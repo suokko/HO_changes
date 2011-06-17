@@ -1,7 +1,6 @@
 // %2109680998:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +12,7 @@ import javax.swing.SwingConstants;
 
 import plugins.IVerein;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
@@ -104,7 +104,7 @@ final class TrainerstabPanel extends JPanel implements de.hattrickorganizer.gui.
         constraints.weighty = 0.0;
         constraints.insets = new Insets(4, 4, 4, 4);
 
-        this.setBackground(Color.white);
+        this.setBackground(ThemeManager.getColor("ho.panel.background"));
 
         setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Trainerstab")));
 

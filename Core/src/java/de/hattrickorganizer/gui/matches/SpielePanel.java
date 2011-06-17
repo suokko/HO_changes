@@ -49,6 +49,7 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -529,7 +530,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
         add(verticalSplitPane, BorderLayout.CENTER);
 
-        m_jbLoeschen.setBackground(Color.WHITE);
+        m_jbLoeschen.setBackground(ThemeManager.getColor("ho.button.background"));
     }
 
     /**
