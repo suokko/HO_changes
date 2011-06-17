@@ -22,10 +22,10 @@ import javax.swing.SwingConstants;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -172,7 +172,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_jbSpieler.setFocusPainted(false);
         m_jbSpieler.setEnabled(false);
         m_jbSpieler.addActionListener(this);
-        m_jbSpieler.setBackground(Color.WHITE);
+        m_jbSpieler.setBackground(ThemeManager.getColor("ho.button.background"));
         m_jbSpieler.setOpaque(true);
         m_jbSpieler.setBorder(BorderFactory.createEmptyBorder());
         panel.add(m_jbSpieler, BorderLayout.CENTER);

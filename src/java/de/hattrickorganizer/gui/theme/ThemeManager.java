@@ -5,16 +5,16 @@ package de.hattrickorganizer.gui.theme;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileInputStream;
 import java.math.BigDecimal;
+import java.util.zip.ZipFile;
 
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.backup.HOZip;
 
 
 
@@ -41,11 +41,14 @@ public final class ThemeManager {
 	private void initialize(){
 		if(!themesDir.exists()){
 			themesDir.mkdir();
-			saveTheme(defaultTheme);
 		}
 		
-		// TODO only in development phase for testing will be removed when finsihed
+		// TODO only in development phase for testing; will be removed when finsihed
 		try {
+			File themeFile = new File(themesDir,defaultTheme.getName()+".theme");
+			if(!themeFile.exists())
+				saveTheme(defaultTheme);
+			
 			setCurrentTheme(defaultTheme.getName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -53,13 +56,22 @@ public final class ThemeManager {
 		}
 	}
 	
-	public Color getColor(String key){
+	
+	public static void main(String[] args) {
+		ThemeManager.instance();
+	}
+	
+	public static Color getColor(String key){
+		return instance().getInstanceColor(key);
+	}
+	
+	private Color getInstanceColor(String key){
 		Color tmp = null;
 		if(currentTheme != null)
-			tmp = currentTheme.getColor(key);
+			tmp = currentTheme.getThemeColor(key);
 		
 		if(tmp == null)
-			tmp = defaultTheme.getColor(key);
+			tmp = defaultTheme.getThemeColor(key);
 		
 		if(tmp == null)
 			tmp =  UIManager.getColor(key);
@@ -88,25 +100,29 @@ public final class ThemeManager {
 	
 	public void saveTheme(Theme theme){
 		try {
-			File themeDir = new File(themesDir,theme.getName());
-			if(!themeDir.exists())
-				themeDir.mkdir();
+			HOZip zip = new HOZip(themesDir+File.separator+theme.getName()+".theme");
+			zip.createNewFile();
 			JAXBContext jc = JAXBContext.newInstance(Theme.class);
 			Marshaller m = jc.createMarshaller();
-			m.marshal( theme.toThemeData(), new File(themeDir,Theme.fileName) );
-		}  catch (JAXBException e) {
+			File tmpFile = new File(Theme.fileName);
+			m.marshal( theme.toThemeData(), tmpFile );
+			zip.addFile(tmpFile);
+			zip.closeArchive();
+		}  catch (Exception e) {
 			HOLogger.instance().log( ThemeManager.class, "Theme: " + theme.getName() + e);
 		}
 	}
 	 
 	public Theme loadTheme(String name) throws Exception {
-		File themeDir = new File(themesDir,name);
 		Theme theme = null;
-
+		File themeFile = new File(themesDir,name+".theme");
+		if(themeFile.exists()){
+			ZipFile zipFile = new ZipFile(themeFile);
 			JAXBContext jc = JAXBContext.newInstance(Theme.class);
-	        Unmarshaller u = jc.createUnmarshaller();
-	        ThemeData data = (ThemeData)u.unmarshal(new FileInputStream(new File(themeDir,Theme.fileName)));
+			Unmarshaller u = jc.createUnmarshaller();
+			ThemeData data = (ThemeData)u.unmarshal(zipFile.getInputStream(zipFile.getEntry(Theme.fileName)));
 			theme = new Theme(data);
+		}
 		return theme;
 	}
 	

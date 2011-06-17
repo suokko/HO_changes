@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.RasenPanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 
@@ -319,7 +320,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(1, 1, 1, 1);
 
-        setBackground(Color.white);
+        setBackground(ThemeManager.getColor("ho.panel.background"));
         setLayout(layout);
 
         JComponent tempcomponent;

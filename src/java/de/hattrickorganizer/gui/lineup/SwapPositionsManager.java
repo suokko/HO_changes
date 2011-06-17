@@ -3,9 +3,8 @@ package de.hattrickorganizer.gui.lineup;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.Updateable;
-import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.model.Lineup;
 
 public class SwapPositionsManager {
 

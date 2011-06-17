@@ -36,14 +36,14 @@ public class LigaTabelle extends ImagePanel {
 	
 	private static final long serialVersionUID = -7087165908899999232L;
 	
-    private Color PROMOTED_BACKGROUND 	= ThemeManager.instance().getColor("table.league.promoted.background");//new Color(220, 255, 220);
-    private Color RELEGATION_BACKGROUND = ThemeManager.instance().getColor("table.league.relegation.background");//new Color(255, 255, 200);
-    private Color DEMOTED_BACKGROUND 	= ThemeManager.instance().getColor("table.league.demoted.background");//new Color(255, 220, 220);
-    private Color TITLE_BACKGROUND 		= ThemeManager.instance().getColor("table.league.title.background");//new Color(230, 230, 230);
+    private Color PROMOTED_BACKGROUND 	= ThemeManager.getColor("table.league.promoted.background");//new Color(220, 255, 220);
+    private Color RELEGATION_BACKGROUND = ThemeManager.getColor("table.league.relegation.background");//new Color(255, 255, 200);
+    private Color DEMOTED_BACKGROUND 	= ThemeManager.getColor("table.league.demoted.background");//new Color(255, 220, 220);
+    private Color TITLE_BACKGROUND 		= ThemeManager.getColor("table.league.title.background");//new Color(230, 230, 230);
 
-    private Color TABLE_BACKGROUND 		= ThemeManager.instance().getColor("table.league.background");//Color.white
-    private Color TABLE_FOREGROUND 		= ThemeManager.instance().getColor("table.league.foreground");// Color.black
-    private Color USERSTEAM_FOREGROUND 	= ThemeManager.instance().getColor("panel.league.usersteam.foreground");//something blue
+    private Color TABLE_BACKGROUND 		= ThemeManager.getColor("table.league.background");//Color.white
+    private Color TABLE_FOREGROUND 		= ThemeManager.getColor("table.league.foreground");// Color.black
+    private Color USERSTEAM_FOREGROUND 	= ThemeManager.getColor("panel.league.usersteam.foreground");//something blue
     
 
     //~ Instance fields ----------------------------------------------------------------------------
