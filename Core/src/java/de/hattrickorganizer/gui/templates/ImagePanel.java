@@ -65,38 +65,38 @@ public class ImagePanel extends javax.swing.JPanel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-//    /**
-//     * TODO Missing Method Documentation
-//     *
-//     * @param g TODO Missing Method Parameter Documentation
-//     */
-//    @Override
-//	public final void paint(java.awt.Graphics g) {
-//        final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
-//
-//        paintComponent(g2d);
-//
-//        if (!m_bPrint) {
-//            //Hintergrundgrafik zeichnen -> 6 Grafiken!
-//            g2d.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null),
-//                          null);
-//            g2d.drawImage(background, background.getWidth(null), 0, background.getWidth(null),
-//                          background.getHeight(null), null);
-//            g2d.drawImage(background, background.getWidth(null) * 2, 0, background.getWidth(null),
-//                          background.getHeight(null), null);
-//            g2d.drawImage(background, 0, background.getHeight(null), background.getWidth(null),
-//                          background.getHeight(null), null);
-//            g2d.drawImage(background, background.getWidth(null), background.getHeight(null),
-//                          background.getWidth(null), background.getHeight(null), null);
-//            g2d.drawImage(background, background.getWidth(null) * 2, background.getHeight(null),
-//                          background.getWidth(null), background.getHeight(null), null);
-//
-//            //g2d.drawImage(background,null,this);
-//        }
-//
-//        paintChildren(g2d);
-//        paintBorder(g2d);
-//    }
+    /**
+     * TODO Missing Method Documentation
+     *
+     * @param g TODO Missing Method Parameter Documentation
+     */
+    @Override
+	public final void paint(java.awt.Graphics g) {
+        final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
+
+        paintComponent(g2d);
+
+        if (!m_bPrint) {
+            //Hintergrundgrafik zeichnen -> 6 Grafiken!
+            g2d.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null),
+                          null);
+            g2d.drawImage(background, background.getWidth(null), 0, background.getWidth(null),
+                          background.getHeight(null), null);
+            g2d.drawImage(background, background.getWidth(null) * 2, 0, background.getWidth(null),
+                          background.getHeight(null), null);
+            g2d.drawImage(background, 0, background.getHeight(null), background.getWidth(null),
+                          background.getHeight(null), null);
+            g2d.drawImage(background, background.getWidth(null), background.getHeight(null),
+                          background.getWidth(null), background.getHeight(null), null);
+            g2d.drawImage(background, background.getWidth(null) * 2, background.getHeight(null),
+                          background.getWidth(null), background.getHeight(null), null);
+
+            //g2d.drawImage(background,null,this);
+        }
+
+        paintChildren(g2d);
+        paintBorder(g2d);
+    }
 
     /**
      * TODO Missing Method Documentation

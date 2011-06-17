@@ -1,15 +1,7 @@
 // %2768837177:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.model.SpielerCBItem;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.PlayerHelper;
-
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -22,8 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.ISpieler;
 import plugins.IHOTableEntry;
+import plugins.ISpieler;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.SpielerPosition;
+import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
@@ -104,7 +102,7 @@ public final class SpielerLabelEntry extends TableEntry {
         //Alte Komponente wiederverwenden
         if (isSelected) {
             m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+            m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
             m_clComponent.setOpaque(true);
             m_clComponent.setBackground(ColorLabelEntry.BG_STANDARD);
@@ -295,7 +293,7 @@ public final class SpielerLabelEntry extends TableEntry {
 
         if (m_clPlayer != null) {
             if (m_clPlayer.isOld()) {
-                m_jlName.setForeground(Color.GRAY);
+                m_jlName.setForeground(ThemeManager.instance().getColor("tableEntry.player.isOld.foreground"));//Color.GRAY);
             } else {
                 m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
             }
