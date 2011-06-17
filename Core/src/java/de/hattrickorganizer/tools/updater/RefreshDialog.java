@@ -6,7 +6,6 @@
 package de.hattrickorganizer.tools.updater;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.io.File;
 import java.text.DecimalFormat;
@@ -303,7 +302,6 @@ final class RefreshDialog extends UpdaterDialog {
 		}
 		
 		tmp.setOpaque(false);
-		tmp.setBackground(Color.LIGHT_GRAY);
 		tmp.setEnabled(isEnabled);
 		return tmp;
 	}

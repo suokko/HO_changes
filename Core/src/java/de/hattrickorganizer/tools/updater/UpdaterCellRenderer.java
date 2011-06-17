@@ -1,15 +1,15 @@
 // %2709500570:de.hattrickorganizer.tools.updater%
 package de.hattrickorganizer.tools.updater;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
+
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -23,6 +23,12 @@ public final class UpdaterCellRenderer implements TableCellRenderer {
 
 		double site = 0;
 		double ho = 0;
+		
+		
+		if (value instanceof JCheckBox) {
+			return (JCheckBox) value;
+		}
+		
 		try {
 			site = Double.parseDouble(((JLabel) table.getModel().getValueAt(row, 3)).getText());
 		} catch (Exception e) {
@@ -31,34 +37,17 @@ public final class UpdaterCellRenderer implements TableCellRenderer {
 			ho = Double.parseDouble(((JLabel) table.getModel().getValueAt(row, 2)).getText());
 		} catch (Exception e1) {
 		}
-		Color highlite = Color.RED;
+
 		boolean color = false;
 		if ((ho > 0) && (ho < site)) {
 			color = true;
-		}
-
-		if (value instanceof JTextField) {
-			JTextField field = (JTextField) value;
-			field.setBorder(null);
-			if (isSelected) {
-				field.setBackground(new Color(212, 175, 250));
-				field.setForeground(Color.BLACK);
-			}
-			if (color) {
-				field.setForeground(highlite);
-			}
-			return field;
-		}
-
-		if (value instanceof JCheckBox) {
-			return (JCheckBox) value;
 		}
 
 		if (value instanceof JButton) {
 			JButton b = (JButton) value;
 			b.setBorderPainted(false);
 			if (color) {
-				b.setForeground(highlite);
+				b.setForeground(ThemeManager.getColor("ho.label.error.foreground"));
 			}
 			int labelHeight = 20; // fix table height problems with non-classic l&f
 			int tableRowHeight = table.getRowHeight(row);
@@ -76,7 +65,7 @@ public final class UpdaterCellRenderer implements TableCellRenderer {
 		}
 
 		if (color) {
-			label.setForeground(highlite);
+			label.setForeground(ThemeManager.getColor("ho.label.error.foreground"));
 		}
 		return label;
 	}
