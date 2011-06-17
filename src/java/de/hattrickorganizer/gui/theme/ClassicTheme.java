@@ -33,8 +33,23 @@ public class ClassicTheme extends Theme {
 		put("black", Color.BLACK);
 		put("white", Color.WHITE);
 		put("red", Color.RED);
+		put("gray", Color.GRAY);
+		put("green", Color.GREEN);
 		put("lightGreen",new Color(220, 255, 220));
 		put("lightYellow",new Color(255, 255, 200));
+		
+		put("label.error.foreground","red");
+		put("label.info.foreground","black");
+		put("label.success.foreground","green");
+		//player
+		put("tableEntry.player.skill.special.background","lightGreen");
+		put("tableEntry.player.skill.background","lightYellow");
+		put("tableEntry.background","white");
+		put("tableEntry.foreground","black");
+		put("tableEntry.player.position.background",new Color(220, 220, 255));
+		put("tableEntry.player.subposition.background",new Color(235, 235, 255));
+		put("tableEntry.player.isOld.foreground","gray");
+		put("table.player.selection.background",new java.awt.Color(235, 235, 235));
 		
 		// league Table
 		put("panel.league.usersteam.foreground",new Color(50, 50, 150));

@@ -1,6 +1,7 @@
 // %1614414392:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -29,7 +30,7 @@ public class DoppelLabel extends JPanel {
      *
      * @param color TODO Missing Constructuor Parameter Documentation
      */
-    public DoppelLabel(java.awt.Color color) {
+    public DoppelLabel(Color color) {
         this();
         m_jlLinks = new JLabel();
         m_jlLinks.setBackground(color);

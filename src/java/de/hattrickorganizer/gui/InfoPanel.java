@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -24,11 +25,11 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 	private static final long serialVersionUID = 4902186890362152556L;
 
 	// color for error messages
-    public static final Color FEHLERFARBE = Color.red;
+    public static final Color FEHLERFARBE = ThemeManager.instance().getColor("label.error.foreground"); // Color.red
     // color for info messages
-    public static final Color INFOFARBE = Color.black;
+    public static final Color INFOFARBE = ThemeManager.instance().getColor("label.info.foreground");//Color.black;
     // color for success messages
-    public static final Color ERFOLGSFARBE = Color.green;
+    public static final Color ERFOLGSFARBE = ThemeManager.instance().getColor("label.success.foreground");//Color.green;
 
     //~ Instance fields ----------------------------------------------------------------------------
 

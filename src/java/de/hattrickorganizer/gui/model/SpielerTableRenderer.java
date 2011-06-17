@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.TableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -18,7 +19,7 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    public static java.awt.Color SELECTION_BG = new java.awt.Color(235, 235, 235);
+    public static java.awt.Color SELECTION_BG = ThemeManager.instance().getColor("table.player.selection.background");//new java.awt.Color(235, 235, 235);
 
     //~ Methods ------------------------------------------------------------------------------------
 
