@@ -1,7 +1,6 @@
 // %2927626437:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -22,10 +21,14 @@ import javax.swing.JLayeredPane;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;
@@ -36,8 +39,7 @@ import de.hattrickorganizer.tools.Helper;
 /**
  * Panel, in dem die Spielerposition dargestellt wird und geändert werden kann
  */
-class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
-    implements ItemListener, FocusListener
+class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListener
 {
     //~ Static fields/initializers -----------------------------------------------------------------
 	private static final long serialVersionUID = 3121389904504282953L;
@@ -180,8 +182,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
      */
     public void focusGained(FocusEvent event) {
         if (getSelectedPlayer() != null) {
-            de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(getSelectedPlayer()
-                                                                                 .getSpielerID());
+            HOMainFrame.instance().setActualSpieler(getSelectedPlayer().getSpielerID());
         }
     }
 
@@ -210,8 +211,8 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         if (m_bMinimize) {
             // This is the realm of the miniposframe, no jlp...
         	setLayout(layout);
-        	setBorder(javax.swing.BorderFactory.createLineBorder(Color.lightGray));
-            setBackground(Color.WHITE);
+        	setBorder(javax.swing.BorderFactory.createLineBorder(ThemeManager.getColor("panel.lineup.position.minimized.borderColor")));//Color.lightGray));
+            setBackground(ThemeManager.getColor("panel.lineup.position.minimized.background"));//Color.WHITE);
 
             constraints.gridx = 0;
             constraints.gridy = 0;
@@ -252,7 +253,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
                 m_jcbPlayer.setEnabled(false);
             }
 
-            m_jcbPlayer.setBackground(Color.white);
+            m_jcbPlayer.setBackground(ThemeManager.getColor("ho.combobox.background"));// Color.white
 
             //Nur anzeigen, wenn mehr als eine Taktik möglich ist
             if (m_jcbTactic.getItemCount() > 1) {
@@ -263,7 +264,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
                     m_jcbTactic.setEnabled(false);
                 }
 
-                m_jcbTactic.setBackground(Color.white);
+                m_jcbTactic.setBackground(ThemeManager.getColor("ho.combobox.background"));//Color.white);
                 jlp.add(m_jcbTactic, constraints, 1);
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH,PLAYER_POSITION_PANEL_HEIGHT_FULL));
             } else {
@@ -277,9 +278,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     //-------------Listener------------------------------------------------
     public void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
-            final Lineup aufstellung = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                   .getModel()
-                                                                                   .getAufstellung();
+            final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
             final plugins.ISpieler spieler = getSelectedPlayer();
 
@@ -312,8 +311,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 
                 //CBFarben anpassen
                 if (spieler != null) {
-                    m_jcbPlayer.setForeground(de.hattrickorganizer.gui.templates.ColorLabelEntry
-                                               .getForegroundForSpieler(spieler));
+                    m_jcbPlayer.setForeground(ColorLabelEntry.getForegroundForSpieler(spieler));
                 }
 
                 //Taktikwerte anpassen
@@ -324,8 +322,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 
             //Aktualisierung der Tabellen
             if (spieler != null) {
-                de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler
-                                                                                 .getSpielerID());
+                HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
             }
 
             //Alle anderen Position aktualisieren
@@ -471,8 +468,7 @@ class PlayerPositionPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 
         //CBFarben anpassen
         if (aktuellerSpieler != null) {
-            m_jcbPlayer.setForeground(de.hattrickorganizer.gui.templates.ColorLabelEntry
-                                       .getForegroundForSpieler(aktuellerSpieler));
+            m_jcbPlayer.setForeground(ColorLabelEntry.getForegroundForSpieler(aktuellerSpieler));
         }
 
         //Speicher freigeben

@@ -4,11 +4,15 @@ package de.hattrickorganizer.gui.login;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
+
+import de.hattrickorganizer.gui.templates.RasenPanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -18,43 +22,22 @@ public class LoginWaitDialog extends JWindow implements Runnable {
 	
 	private static final long serialVersionUID = 2737470419222145110L;
 	
-    //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
-
     //    public static boolean WAIT_AUTOPROGRESSBAR = true;
-
-
-	/** TODO Missing Parameter Documentation */
-
     //    public static boolean WAIT_MANUELLPROGRESSBAR;
     private JProgressBar m_jpbProgressBar;
     private boolean m_bAutoprogressbar;
     private boolean m_bEnde;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new LoginWaitDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     */
-    public LoginWaitDialog(java.awt.Window owner) {
+    public LoginWaitDialog(Window owner) {
         this(owner, true);
     }
 
-    /**
-     * Creates a new LoginWaitDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     * @param autoprogress TODO Missing Constructuor Parameter Documentation
-     */
-    public LoginWaitDialog(java.awt.Window owner, boolean autoprogress) {
+    public LoginWaitDialog(Window owner, boolean autoprogress) {
         super(owner);
         m_bAutoprogressbar = autoprogress;
 
         //setDefaultCloseOperation( DO_NOTHING_ON_CLOSE );
-        setContentPane(new de.hattrickorganizer.gui.templates.RasenPanel());
+        setContentPane(new RasenPanel());
 
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -65,7 +48,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         constraints.insets = new Insets(1, 2, 1, 1);
         getContentPane().setLayout(layout);
 
-        final JLabel label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("BitteWarten"),
+        final JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString("BitteWarten"),
                                         SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(java.awt.Font.BOLD, 24f));
         label.setForeground(java.awt.Color.white);
@@ -89,22 +72,10 @@ public class LoginWaitDialog extends JWindow implements Runnable {
                     - (this.getSize().height / 2));
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     public final void setValue(int value) {
         m_jpbProgressBar.setValue(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getValue() {
         return m_jpbProgressBar.getValue();
     }
@@ -112,7 +83,6 @@ public class LoginWaitDialog extends JWindow implements Runnable {
     /**
      * Den ProgressbarThread beim sichtbarmachen starten und beim unsichtbarmachen beenden
      *
-     * @param sichtbar TODO Missing Constructuor Parameter Documentation
      */
     @Override
 	public final void setVisible(boolean sichtbar) {
@@ -126,9 +96,6 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         super.setVisible(sichtbar);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void run() {
         int loops = 9;
 
