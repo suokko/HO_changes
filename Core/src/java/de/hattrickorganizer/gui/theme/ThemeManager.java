@@ -21,6 +21,7 @@ import de.hattrickorganizer.tools.backup.HOZip;
 /**
  * 
  * @date 2011-06-11
+ * TODO update a ThemeVersion
  */
 public final class ThemeManager {
 	private final static ThemeManager MANAGER = new ThemeManager();
@@ -84,6 +85,14 @@ public final class ThemeManager {
 		return tmp;
 	}
 	
+	public static void put(String key,Object value){
+		instance().putInstance(key, value);
+	}
+	
+	private void putInstance(String key,Object value){
+		defaultTheme.put(key, value);
+	}
+	
 	public Object get(String key){
 		Object tmp = null;
 		if(currentTheme != null)
@@ -96,6 +105,10 @@ public final class ThemeManager {
 			tmp =  UIManager.get(key);
 		
 		return tmp;
+	}
+	
+	public void save() {
+		saveTheme(defaultTheme);
 	}
 	
 	public void saveTheme(Theme theme){

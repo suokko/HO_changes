@@ -1,11 +1,12 @@
 package de.hattrickorganizer.gui.lineup;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
+
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
  * A class that is used to overlay panels with green or red color to make selection of positions for
@@ -28,14 +29,11 @@ public class LineupAssistantSelectorOverlay extends JPanel implements MouseListe
     @Override
 	public void paintComponent(Graphics g) {
     	super.paintComponent(g);
-        Color ppColor;
         if (isSelected) {
-        	ppColor = new Color(10, 255, 10, 40); //r,g,b,alpha
+        	g.setColor(ThemeManager.getColor("selectorOverlay.selected.background"));//new Color(10, 255, 10, 40); //r,g,b,alpha
         } else {
-        	ppColor = new Color(255, 10, 10, 40); //r,g,b,alpha
+        	g.setColor(ThemeManager.getColor("selectorOverlay.background"));//new Color(255, 10, 10, 40); //r,g,b,alpha
         }
-        
-        g.setColor(ppColor);
         g.fillRect(0,0,500,500); //x,y,width,height -big enough, and then some
     }    
 	
