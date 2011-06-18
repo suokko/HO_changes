@@ -37,6 +37,7 @@ public class ClassicTheme extends Theme {
 		put("red", Color.RED);
 		put("gray", Color.GRAY);
 		put("green", Color.GREEN);
+		put("yellow", Color.YELLOW);
 		put("lightGreen",new Color(220, 255, 220));
 		put("lightYellow",new Color(255, 255, 200));
 		
@@ -56,6 +57,12 @@ public class ClassicTheme extends Theme {
 		put("tableEntry.player.position.background",new Color(220, 220, 255));
 		put("tableEntry.player.subposition.background",new Color(235, 235, 255));
 		put("tableEntry.player.isOld.foreground","gray");
+		put("tableEntry.player.isTransfer.foreground",new Color(0, 180, 0));
+		put("tableEntry.player.isInjured.foreground",new Color(200, 0, 0));
+		put("tableEntry.player.hasTwoCards.foreground",new Color(100, 100, 0));
+		put("tableEntry.player.hasRedCard.foreground",new Color(200, 20, 20));
+		put("tableEntry.player.isBruised.foreground",new Color(100, 0, 0));
+		
 		put("ho.table.selection.background",new java.awt.Color(235, 235, 235));
 		
 		// league Table
@@ -81,6 +88,15 @@ public class ClassicTheme extends Theme {
 		put("panel.leaguehistory.line8.foreground",  Color.MAGENTA);
 		put("panel.leaguehistory.cross.foreground",Color.DARK_GRAY);
 		put("panel.leaguehistory.grid.foreground",Color.LIGHT_GRAY);
+		
+		
+		//lineup
+		put("ho.label.lineupAssist.background","white");
+		put("ho.button.lineupAssist.background","yellow");
+		put("selectorOverlay.selected.background",new Color(10, 255, 10, 40));
+		put("selectorOverlay.background",new Color(255, 10, 10, 40));
+		put("panel.lineup.position.minimized.background","ho.panel.background");
+		put("panel.lineup.position.minimized.borderColor",Color.LIGHT_GRAY);
 	}
 	
 	public Color getDefaultColor(String key){

@@ -63,8 +63,6 @@ public class Theme {
 			return Timestamp.valueOf(xmlValue.getValue());
 		}else if(type.equals("Boolean")){
 			return Boolean.valueOf(xmlValue.getValue());
-		}else if(type.equals("ImageIcon")){
-				// TODO
 		}
 		return xmlValue.getValue();
 	}

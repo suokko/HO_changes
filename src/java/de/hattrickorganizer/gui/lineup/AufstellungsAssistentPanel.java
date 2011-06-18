@@ -34,6 +34,7 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
@@ -395,7 +396,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		if (infoLabel == null) {
 			infoLabel = new JLabel();
 			infoLabel.setText(HOVerwaltung.instance().getLanguageString("lineupassist.Info"));
-			infoLabel.setBackground(Color.white);
+			infoLabel.setBackground(ThemeManager.getColor("ho.label.lineupAssist.background"));
 			infoLabel.setOpaque(true);
 		}
 		posPanel.add(infoLabel, constraints, 2);
@@ -406,7 +407,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		if (overlayOk == null) {
 			overlayOk = new JButton(HOVerwaltung.instance().getLanguageString("lineupassist.OK"));
 			overlayOk.setFont(new Font("serif", Font.BOLD, 16));
-			overlayOk.setBackground(Color.yellow);
+			overlayOk.setBackground(ThemeManager.getColor("ho.button.lineupAssist.background"));
 			overlayOk.addActionListener(this);
 		}
 		posPanel.add(overlayOk, constraints, 2);
@@ -418,7 +419,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			overlayCancel = new JButton(HOVerwaltung.instance().getLanguageString("lineupassist.Cancel"));
 			overlayCancel.addActionListener(this);
 			overlayCancel.setFont(new Font("serif", Font.BOLD, 16));
-			overlayCancel.setBackground(Color.yellow);
+			overlayCancel.setBackground(ThemeManager.getColor("ho.button.lineupAssist.background"));
 		}
 		posPanel.add(overlayCancel, constraints, 2);
 
@@ -516,7 +517,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jcbWetter.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Wetter"));
 		m_jcbWetter.setSelectedIndex(1);
 		m_jcbWetter.setPreferredSize(new Dimension(50, 20));
-		m_jcbWetter.setBackground(Color.white);
+		m_jcbWetter.setBackground(ThemeManager.getColor("ho.combobox.background"));
 		m_jcbWetter.setRenderer(new de.hattrickorganizer.gui.model.WetterRenderer());
 		m_jcbWetter.addItemListener(this);
 		panel.add(m_jcbWetter);
@@ -529,7 +530,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		panel2.add(m_jchNot, BorderLayout.WEST);
 		m_jcbGruppe.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Gruppe"));
 		m_jcbGruppe.setSelectedItem(gui.UserParameter.instance().aufstellungsAssistentPanel_gruppe);
-		m_jcbGruppe.setBackground(Color.white);
+		m_jcbGruppe.setBackground(ThemeManager.getColor("ho.combobox.background"));
 		m_jcbGruppe.setRenderer(new de.hattrickorganizer.gui.model.SmilieRenderer());
 		m_jcbGruppe.addActionListener(this);
 		panel2.add(m_jcbGruppe, BorderLayout.CENTER);
