@@ -18,8 +18,10 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
-
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.Helper;
@@ -29,26 +31,18 @@ import de.hattrickorganizer.tools.Helper;
  * Zeigt die Stärken eines Matches an.
  */
 public class SpielHighlightPanel extends ImagePanel {
-    //~ Static fields/initializers -----------------------------------------------------------------
 	private static final long serialVersionUID = -6491501224900464573L;
-	/** default foreground color own team */
-    public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
-
-    //~ Instance fields ----------------------------------------------------------------------------
 
     private GridBagConstraints constraints = new GridBagConstraints();
 
-    //müssen global sein, da sie auch im refresh benutzt werden
     private GridBagLayout layout = new GridBagLayout();
     private JLabel m_clGastTeamName = new JLabel();
     private JLabel m_clGastTeamTore = new JLabel();
     private JLabel m_clHeimTeamName = new JLabel();
     private JLabel m_clHeimTeamTore = new JLabel();
     private JPanel panel = new JPanel(layout);
-//    private MatchKurzInfo m_clMatchKurzInfo;
-    private Vector<Component> m_vHighlightLabels = new Vector<Component>();
 
-    //~ Constructors -------------------------------------------------------------------------------
+    private Vector<Component> m_vHighlightLabels = new Vector<Component>();
 
     /**
      * Creates a new SpielHighlightPanel object.
@@ -65,7 +59,7 @@ public class SpielHighlightPanel extends ImagePanel {
     public SpielHighlightPanel(boolean print) {
         super(print);
 
-        setBackground(Color.WHITE);
+        setBackground(ThemeManager.getColor("ho.panel.background"));
 
         final GridBagLayout mainlayout = new GridBagLayout();
         final GridBagConstraints mainconstraints = new GridBagConstraints();
@@ -83,7 +77,7 @@ public class SpielHighlightPanel extends ImagePanel {
         constraints.insets = new Insets(5, 3, 2, 2);
 
         panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
-        panel.setBackground(Color.white);
+        panel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
         //Platzhalter
         JLabel label = new JLabel("   ");
@@ -97,7 +91,7 @@ public class SpielHighlightPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Heim"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -110,7 +104,7 @@ public class SpielHighlightPanel extends ImagePanel {
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gast"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         constraints.anchor = GridBagConstraints.CENTER;
@@ -214,13 +208,10 @@ public class SpielHighlightPanel extends ImagePanel {
         clear();
         //m_clMatchKurzInfo = info;
 
-        final Matchdetails details = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                            .getMatchDetails(info
-                                                                                             .getMatchID());
+        final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
         //Teams
-        final int teamid = de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getBasics()
-                                                                  .getTeamId();
+        final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
         m_clHeimTeamName.setText(info.getHeimName());
         m_clGastTeamName.setText(info.getGastName());
@@ -229,15 +220,15 @@ public class SpielHighlightPanel extends ImagePanel {
         m_clGastTeamTore.setText(info.getGastTore() + " ");
 
         if (info.getHeimID() == teamid) {
-            m_clHeimTeamName.setForeground(FG_EIGENESTEAM);
+            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
         } else {
-            m_clHeimTeamName.setForeground(java.awt.Color.black);
+            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
         }
 
         if (info.getGastID() == teamid) {
-            m_clGastTeamName.setForeground(FG_EIGENESTEAM);
+            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
         } else {
-            m_clGastTeamName.setForeground(java.awt.Color.black);
+            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
         }
 
         //Alle Highlights löschen

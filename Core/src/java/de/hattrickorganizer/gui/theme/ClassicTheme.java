@@ -66,7 +66,7 @@ public class ClassicTheme extends Theme {
 		put("ho.table.selection.background",new java.awt.Color(235, 235, 235));
 		
 		// league Table
-		put("panel.league.usersteam.foreground",new Color(50, 50, 150));
+		put("ho.label.ownTeam.foreground",new Color(50, 50, 150));
 		put("table.league.title.background",new Color(230, 230, 230));
 		put("table.league.promoted.background","lightGreen");
 		put("table.league.relegation.background","lightYellow");
