@@ -33,6 +33,7 @@ import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
@@ -53,15 +54,13 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static Color BEWERTUNG = Color.black;
-    private static Color MITTELFELD = Helper.TRICKOT_MITTELFELD;
-    private static Color RECHTEABWEHR = Helper.TRICKOT_AUSSENVERTEIDIGER
-                                        .darker();
-    private static Color ABWEHRZENTRUM = Helper.TRICKOT_INNENVERTEIDIGER;
-    private static Color LINKEABWEHR = Helper.TRICKOT_AUSSENVERTEIDIGER
-                                       .brighter();
-    private static Color RECHTERANGRIFF = Helper.TRICKOT_FLUEGEL.darker();
-    private static Color ANGRIFFSZENTRUM = Helper.TRICKOT_STURM;
-    private static Color LINKERANGRIFF = Helper.TRICKOT_FLUEGEL.brighter();
+    private static Color MITTELFELD = ThemeManager.getColor("ho.shirt.midfield");
+    private static Color RECHTEABWEHR = ThemeManager.getColor("ho.shirt.wingback").darker();
+    private static Color ABWEHRZENTRUM = ThemeManager.getColor("ho.shirt.centraldefence");
+    private static Color LINKEABWEHR = ThemeManager.getColor("ho.shirt.wingback").brighter();
+    private static Color RECHTERANGRIFF = ThemeManager.getColor("ho.shirt.wing").darker();
+    private static Color ANGRIFFSZENTRUM = ThemeManager.getColor("ho.shirt.forward");
+    private static Color LINKERANGRIFF = ThemeManager.getColor("ho.shirt.wing").brighter();
     private static Color GESAMT = Color.GRAY;
     private static Color STIMMUNG = Color.PINK;
     private static Color SELBSTVERTRAUEN = Color.CYAN;
