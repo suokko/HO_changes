@@ -43,7 +43,7 @@ public class LigaTabelle extends ImagePanel {
 
     private Color TABLE_BACKGROUND 		= ThemeManager.getColor("table.league.background");//Color.white
     private Color TABLE_FOREGROUND 		= ThemeManager.getColor("table.league.foreground");// Color.black
-    private Color USERSTEAM_FOREGROUND 	= ThemeManager.getColor("panel.league.usersteam.foreground");//something blue
+    
     
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -387,7 +387,7 @@ public class LigaTabelle extends ImagePanel {
                         ((ColorLabelEntry) tabellenwerte[j][1]).setFontStyle(Font.BOLD);
 
                         if (eintrag.getTeamId() == teamid) {
-                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(USERSTEAM_FOREGROUND);
+                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(ThemeManager.getColor("ho.label.ownTeam.foreground"));
                         } else {
                             ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(TABLE_FOREGROUND);//);Color.black
                         }

@@ -22,6 +22,7 @@ import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
@@ -34,17 +35,10 @@ import de.hattrickorganizer.tools.PlayerHelper;
 /**
  * Zeigt die Stärken eines Matches an
  */
-public class StaerkenvergleichPanel extends ImagePanel {
+class StaerkenvergleichPanel extends ImagePanel {
 	
 	private static final long serialVersionUID = -4203763992583137178L;
 	
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
-    public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
-
-    //~ Instance fields ----------------------------------------------------------------------------
-
     private JLabel m_clGastEinstellung = new JLabel();
     private JLabel m_clGastSelbstvertrauen = new JLabel();
     private JLabel m_clGastSterne = new JLabel();
@@ -72,19 +66,14 @@ public class StaerkenvergleichPanel extends ImagePanel {
     /**
      * Creates a new StaerkenvergleichPanel object.
      */
-    public StaerkenvergleichPanel() {
+     StaerkenvergleichPanel() {
         this(false);
     }
 
-    /**
-     * Creates a new StaerkenvergleichPanel object.
-     *
-     * @param print TODO Missing Constructuor Parameter Documentation
-     */
-    public StaerkenvergleichPanel(boolean print) {
+    StaerkenvergleichPanel(boolean print) {
         super(print);
 
-        setBackground(Color.WHITE);
+        setBackground(ThemeManager.getColor("ho.panel.background"));
 
         final GridBagLayout mainlayout = new GridBagLayout();
         final GridBagConstraints mainconstraints = new GridBagConstraints();
@@ -105,7 +94,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
         final JPanel panel = new JPanel(layout);
         panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
-        panel.setBackground(Color.white);
+        panel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
         //Match
         constraints.anchor = GridBagConstraints.WEST;
@@ -311,150 +300,35 @@ public class StaerkenvergleichPanel extends ImagePanel {
 
         //Einstellung
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Einstellung"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.0;
-        constraints.gridx = 0;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        panel.add(label);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 1;
-        constraints.gridy = 6;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clHeimEinstellung, constraints);
-        panel.add(m_clHeimEinstellung);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 4;
-        constraints.gridy = 6;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clGastEinstellung, constraints);
-        panel.add(m_clGastEinstellung);
+        add(panel,label,layout,constraints,0,6);
+        add(panel,m_clHeimEinstellung,layout,constraints,1,6);
+        add(panel,m_clGastEinstellung,layout,constraints,4,6);
 
         //Taktiktyp
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktik"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.0;
-        constraints.gridx = 0;
-        constraints.gridy = 7;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        panel.add(label);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 1;
-        constraints.gridy = 7;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clHeimTaktik, constraints);
-        panel.add(m_clHeimTaktik);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 4;
-        constraints.gridy = 7;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clGastTaktik, constraints);
-        panel.add(m_clGastTaktik);
-
+        add(panel,label,layout,constraints,0,7);
+        add(panel,m_clHeimTaktik,layout,constraints,1,7);
+        add(panel,m_clGastTaktik,layout,constraints,4,7);
+ 
         //Taktikskill
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.0;
-        constraints.gridx = 0;
-        constraints.gridy = 8;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        panel.add(label);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 1;
-        constraints.gridy = 8;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clHeimTaktikskill, constraints);
-        panel.add(m_clHeimTaktikskill);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 4;
-        constraints.gridy = 8;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clGastTaktikskill, constraints);
-        panel.add(m_clGastTaktikskill);
+        add(panel,label,layout,constraints,0,8);
+        add(panel,m_clHeimTaktikskill,layout,constraints,1,8);
+        add(panel,m_clGastTaktikskill,layout,constraints,4,8);
 
         //Stimmung
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.0;
-        constraints.gridx = 0;
-        constraints.gridy = 9;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        panel.add(label);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 1;
-        constraints.gridy = 9;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clHeimStimmung, constraints);
-        panel.add(m_clHeimStimmung);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 4;
-        constraints.gridy = 9;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clGastStimmung, constraints);
-        panel.add(m_clGastStimmung);
+        add(panel,label,layout,constraints,0,9);
+        add(panel,m_clHeimStimmung,layout,constraints,1,9);
+        add(panel,m_clGastStimmung,layout,constraints,4,9);
 
         //Selbstvertrauen
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen"));
         label.setPreferredSize(new Dimension(label.getPreferredSize().width + 10,
                                              label.getPreferredSize().height));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.0;
-        constraints.gridx = 0;
-        constraints.gridy = 10;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        panel.add(label);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 1;
-        constraints.gridy = 10;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clHeimSelbstvertrauen, constraints);
-        panel.add(m_clHeimSelbstvertrauen);
-
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1.0;
-        constraints.gridx = 4;
-        constraints.gridy = 10;
-        constraints.gridwidth = 2;
-        layout.setConstraints(m_clGastSelbstvertrauen, constraints);
-        panel.add(m_clGastSelbstvertrauen);
+        add(panel,label,layout,constraints,0,10);
+        add(panel,m_clHeimSelbstvertrauen,layout,constraints,1,10);
+        add(panel,m_clGastSelbstvertrauen,layout,constraints,4,10);
 
         mainconstraints.gridx = 0;
         mainconstraints.gridy = 0;
@@ -464,12 +338,24 @@ public class StaerkenvergleichPanel extends ImagePanel {
         clear();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    private void add(JPanel panel,JLabel label,GridBagLayout layout,GridBagConstraints constraints, int x, int y){
+    	if(x == 0){
+            constraints.weightx = 0.0;
+            constraints.gridwidth = 1;
+    	} else {
+            constraints.weightx = 1.0;
+            constraints.gridwidth = 2;
+    	}
+    		
+    	constraints.gridx = x;
+        constraints.gridy = y;
+    	constraints.anchor = GridBagConstraints.WEST;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+    	layout.setConstraints(label, constraints);
+    	panel.add(label);
+    }
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void clear() {
+    final void clear() {
         m_clZuschauer.setText(" ");
         m_clWetter.setIcon(null);
         m_clHeimTeamName.setText(" ");
@@ -497,22 +383,14 @@ public class StaerkenvergleichPanel extends ImagePanel {
         m_clGastSelbstvertrauen.setText("");
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param info TODO Missing Method Parameter Documentation
-     */
-    public final void refresh(MatchKurzInfo info) {
-        final Matchdetails details = DBZugriff.instance()
-                                                                            .getMatchDetails(info
-                                                                                             .getMatchID());
+ 
+    final void refresh(MatchKurzInfo info) {
+        final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
         m_clZuschauer.setText(details.getZuschauer() + "");
-        m_clWetter.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4Wetter(details
-                                                                                 .getWetterId()));
+        m_clWetter.setIcon(Helper.getImageIcon4Wetter(details.getWetterId()));
 
-        m_clMatchtyp.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4Spieltyp(info
-                                                                                     .getMatchTyp()));
+        m_clMatchtyp.setIcon(Helper.getImageIcon4Spieltyp(info.getMatchTyp()));
 
         String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
 
@@ -535,15 +413,15 @@ public class StaerkenvergleichPanel extends ImagePanel {
         m_clGastTeamTore.setText(info.getGastTore() + " ");
 
         if (info.getHeimID() == teamid) {
-            m_clHeimTeamName.setForeground(FG_EIGENESTEAM);
+            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
         } else {
-            m_clHeimTeamName.setForeground(java.awt.Color.black);
+            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
         }
 
         if (info.getGastID() == teamid) {
-            m_clGastTeamName.setForeground(FG_EIGENESTEAM);
+            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
         } else {
-            m_clGastTeamName.setForeground(java.awt.Color.black);
+            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
         }
 
         if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
@@ -657,8 +535,7 @@ public class StaerkenvergleichPanel extends ImagePanel {
             }
 
             if (details.getGuestTacticType() != 0) {
-                m_clGastTaktikskill.setText(PlayerHelper.getNameForSkill(details
-                                                                         .getGuestTacticSkill()));
+                m_clGastTaktikskill.setText(PlayerHelper.getNameForSkill(details.getGuestTacticSkill()));
             } else {
                 m_clGastTaktikskill.setText("");
             }
@@ -708,7 +585,6 @@ public class StaerkenvergleichPanel extends ImagePanel {
             m_clHeimSelbstvertrauen.setText("");
             m_clGastSelbstvertrauen.setText("");
 
-            //m_jbReloadMatch.setEnabled ( false ); NO!
         }
 
         repaint();
