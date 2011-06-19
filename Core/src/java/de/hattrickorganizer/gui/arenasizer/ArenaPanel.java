@@ -17,13 +17,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.logik.ArenaSizer;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -46,8 +50,8 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ArenaSizer m_clArenaSizer = new ArenaSizer();
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JButton m_jbUbernehmenGesamt = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton m_jbUbernehmenGesamt = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JTable m_jtArena = new JTable();
     private JTextField m_jtfFans = new JTextField();
     private JTextField m_jtfGesamtgroesse = new JTextField(6);
@@ -60,7 +64,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     private Stadium m_clStadium;
     private String[] UEBERSCHRIFT = {"", "", "", "", ""};
     private Stadium[] m_clStadien;
-    private Object[][] tabellenwerte;
+    private TableEntry[][] tabellenwerte;
     private int m_clTyp;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -73,7 +77,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     protected ArenaPanel(byte typ) {
         m_clTyp = typ;
 
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
 
         initComponents();
 
@@ -149,8 +153,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
      * @param focusEvent TODO Missing Method Parameter Documentation
      */
     public void focusLost(java.awt.event.FocusEvent focusEvent) {
-        de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
-                                                   ((JTextField) focusEvent.getSource()), false);
+        Helper.parseInt(HOMainFrame.instance(),((JTextField) focusEvent.getSource()), false);
     }
 
     //-------Refresh---------------------------------    
@@ -332,7 +335,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
      */
     private void initTabelle() {
         //Tablewerte setzen
-        tabellenwerte = new Object[10][5];
+        tabellenwerte = new TableEntry[10][5];
 
         //Spalten
         tabellenwerte[0][0] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
@@ -445,11 +448,11 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
                                                                             tabellenwerte));
 
         final TableColumnModel columnModel = m_jtArena.getColumnModel();
-        columnModel.getColumn(0).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(150));
-        columnModel.getColumn(1).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
-        columnModel.getColumn(2).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
-        columnModel.getColumn(3).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
-        columnModel.getColumn(4).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
+        columnModel.getColumn(0).setMinWidth(Helper.calcCellWidth(150));
+        columnModel.getColumn(1).setMinWidth(Helper.calcCellWidth(160));
+        columnModel.getColumn(2).setMinWidth(Helper.calcCellWidth(160));
+        columnModel.getColumn(3).setMinWidth(Helper.calcCellWidth(160));
+        columnModel.getColumn(4).setMinWidth(Helper.calcCellWidth(160));
     }
 
     /**
@@ -597,11 +600,11 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
                                                                                 tabellenwerte));
 
             final TableColumnModel columnModel = m_jtArena.getColumnModel();
-            columnModel.getColumn(0).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(150));
-            columnModel.getColumn(1).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
-            columnModel.getColumn(2).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
-            columnModel.getColumn(3).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
-            columnModel.getColumn(4).setMinWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(160));
+            columnModel.getColumn(0).setMinWidth(Helper.calcCellWidth(150));
+            columnModel.getColumn(1).setMinWidth(Helper.calcCellWidth(160));
+            columnModel.getColumn(2).setMinWidth(Helper.calcCellWidth(160));
+            columnModel.getColumn(3).setMinWidth(Helper.calcCellWidth(160));
+            columnModel.getColumn(4).setMinWidth(Helper.calcCellWidth(160));
 
             //Testarena
         } else {
@@ -784,16 +787,11 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
 
                 m_jtArena.setModel(new de.hattrickorganizer.gui.model.VAPTableModel(UEBERSCHRIFT,
                                                                                     tabellenwerte));
-                m_jtArena.getColumnModel().getColumn(0).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                    .calcCellWidth(150));
-                m_jtArena.getColumnModel().getColumn(1).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                    .calcCellWidth(160));
-                m_jtArena.getColumnModel().getColumn(2).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                    .calcCellWidth(160));
-                m_jtArena.getColumnModel().getColumn(3).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                    .calcCellWidth(160));
-                m_jtArena.getColumnModel().getColumn(4).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                    .calcCellWidth(160));
+                m_jtArena.getColumnModel().getColumn(0).setMinWidth(Helper.calcCellWidth(150));
+                m_jtArena.getColumnModel().getColumn(1).setMinWidth(Helper.calcCellWidth(160));
+                m_jtArena.getColumnModel().getColumn(2).setMinWidth(Helper.calcCellWidth(160));
+                m_jtArena.getColumnModel().getColumn(3).setMinWidth(Helper.calcCellWidth(160));
+                m_jtArena.getColumnModel().getColumn(4).setMinWidth(Helper.calcCellWidth(160));
             }
         }
     }

@@ -457,7 +457,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     private void markMyTeam(JLabel team, int matchTeamId, int myTeamId) {
         if (matchTeamId == myTeamId) {
             team.setFont(team.getFont().deriveFont(Font.BOLD));
-            team.setForeground(ThemeManager.getColor("panel.league.usersteam.foreground"));
+            team.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
         }
     }
 
