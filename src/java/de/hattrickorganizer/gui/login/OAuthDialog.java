@@ -2,6 +2,7 @@ package de.hattrickorganizer.gui.login;
 
 import gui.UserParameter;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -15,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.URI;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,6 +31,7 @@ import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthProvider;
 
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.lineup.CopyListener;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
@@ -91,8 +94,8 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error obtaining URL", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
 	private void doAuthorize() {
-		
 		m_sUserCode = new String(m_jtfAuthString.getText().trim());
 		
 		try {
@@ -109,30 +112,31 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	
 	private void openUrlInBrowser() {
 		boolean error = false;
-		if( !java.awt.Desktop.isDesktopSupported() ) {
+		if( !Desktop.isDesktopSupported() ) {
             HOLogger.instance().debug(getClass(), "Desktop not supported.");
-            JOptionPane.showMessageDialog(null, "Open URL failed.", "Open URL", JOptionPane.ERROR_MESSAGE);
+            CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
+        	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        Desktop desktop = Desktop.getDesktop();
 
-        if( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
-        	HOLogger.instance().debug(getClass(), "Desktop not supported.");
-        	JOptionPane.showMessageDialog(null, "Open URL failed.", "Open URL", JOptionPane.ERROR_MESSAGE);
+        if( !desktop.isSupported( Desktop.Action.BROWSE ) ) {
+        	HOLogger.instance().debug(getClass(), "Desktop BROWSE not supported.");
+        	CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
+        	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
         	return;
         }
 
         try {
-
-        	java.net.URI uri = new java.net.URI( m_sUserURL );
+        	URI uri = new URI( m_sUserURL );
         	desktop.browse( uri );
         }
         catch ( Exception e ) {
-        	HOLogger.instance().debug(getClass(), "Open URL failed.");
-        	JOptionPane.showMessageDialog(null, "Open URL failed.", "Open URL", JOptionPane.ERROR_MESSAGE);
+			HOLogger.instance().debug(getClass(), "Open URL '" + m_sUserURL + "' failed.");
+			CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
+        	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
         }
-        
         // XXX Give user help?
 	}
 	
