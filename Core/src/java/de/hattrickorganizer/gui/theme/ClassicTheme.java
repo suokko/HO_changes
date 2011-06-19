@@ -97,6 +97,20 @@ public class ClassicTheme extends Theme {
 		put("selectorOverlay.background",new Color(255, 10, 10, 40));
 		put("panel.lineup.position.minimized.background","ho.panel.background");
 		put("panel.lineup.position.minimized.borderColor",Color.LIGHT_GRAY);
+		
+		//shirts
+	    put("ho.shirt.keeper","black");
+	    put("ho.shirt.centraldefence",new Color(0, 0, 220));
+	    put("ho.shirt.wingback",new Color(0, 220, 0));
+	    put("ho.shirt.midfield",new Color(220, 220, 0));
+	    put("ho.shirt.wing",new Color(220, 140, 0));
+	    put("ho.shirt.forward",new Color(220, 0, 0));
+	    put("ho.shirt.subKeeper",new Color(200, 200, 200));
+	    put("ho.shirt.subDefence",new Color(200, 200, 255));
+	    put("ho.shirt.subMidfield",new Color(255, 255, 180));
+	    put("ho.shirt.subWing",new Color(255, 225, 180));
+	    put("ho.shirt.subForward",new Color(255, 200, 200));
+	    put("ho.shirt",new Color(230, 230, 230));
 	}
 	
 	public Color getDefaultColor(String key){

@@ -29,20 +29,15 @@ import plugins.IMatchHighlight;
 import plugins.IMatchLineup;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 
 
 /**
  * Klasse mit Hilfsmethoden, die in mehreren Dialogen/Panels benutzt werden
- */
-/**
- * Now Removed method: public static String[] getSprachDateien() This method is now in
- * LanguageFiles.java. Done by jailbird.
  */
 public class Helper extends LanguageFiles {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -266,42 +261,6 @@ public class Helper extends LanguageFiles {
     /** weather combo boxes */
 	public static final CBItem[] WETTER = { new CBItem("", 1), new CBItem("", 2), new CBItem("", 3), new CBItem("", 4) };
 
-    /** shirt colors */
-    public static Color TRICKOT_TORWART = Color.black;
-
-    /** shirt - CD */
-    public static Color TRICKOT_INNENVERTEIDIGER = new Color(0, 0, 220);
-
-    /** shirt - WB */
-    public static Color TRICKOT_AUSSENVERTEIDIGER = new Color(0, 220, 0);
-
-    /** shirt - inner mid */
-    public static Color TRICKOT_MITTELFELD = new Color(220, 220, 0);
-
-    /** shirt - winger */
-    public static Color TRICKOT_FLUEGEL = new Color(220, 140, 0);
-
-    /** shirt - striker */
-    public static Color TRICKOT_STURM = new Color(220, 0, 0);
-
-    /** shirt - spare keeper */
-    public static Color TRICKOT_RESERVE_TORWART = new Color(200, 200, 200);
-
-    /** shirt - spare CD */
-    public static Color TRICKOT_RESERVE_INNENVERTEIDIGER = new Color(200, 200, 255);
-
-    /** shirt - spare inner */
-    public static Color TRICKOT_RESERVE_MITTELFELD = new Color(255, 255, 180);
-
-    /** shirt - spare winger */
-    public static Color TRICKOT_RESERVE_FLUEGEL = new Color(255, 225, 180);
-
-    /** shirt - spare striker */
-    public static Color TRICKOT_RESERVE_STURM = new Color(255, 200, 200);
-
-    /** shirt - none */
-    public static Color TRICKOT_NONE = new Color(230, 230, 230);
-
     /** Images */
     public static ExtendedImageIcon EMPTYIMAGE;
 
@@ -503,12 +462,8 @@ public class Helper extends LanguageFiles {
 	}
 
     /**
-     * TODO Missing Method Documentation
+     * Return ImageIcon for Position
      *
-     * @param position TODO Missing Method Parameter Documentation
-     * @param trickotnummer TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static ImageIcon getImage4Position(de.hattrickorganizer.model.SpielerPosition position,
                                                           int trickotnummer) {
@@ -520,185 +475,97 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Gibt die Grafik zu der Position zurück
+     * Return ImageIcon for Position
      *
-     * @param posid TODO Missing Constructuor Parameter Documentation
-     * @param taktik TODO Missing Constructuor Parameter Documentation
-     * @param trickotnummer TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static ImageIcon getImage4Position(int posid, byte taktik, int trickotnummer) {
 		Color trickotfarbe = null;
 		Image trickotImage = null;
-
-		// Image taktikImage = null;
 		Image zusammenImage = null;
-
-		// Image scaleImage = null;
 		ImageIcon komplettIcon = null;
 
 		// Im Cache nachsehen
 		komplettIcon = (ImageIcon) m_clTrickotCache.get(new TrickotCacheKey(posid, taktik));
 
-		// if ( posid < 0 )
-		// {
-		// if ( EMPTYIMAGE == null )
-		// {
-		// EMPTYIMAGE = new ImageIcon( new BufferedImage( 14, 14,
-		// BufferedImage.TYPE_INT_ARGB ) );
-		// }
-		// komplettIcon = EMPTYIMAGE;
-		// }
-		// Nicht gefunden
 		if (komplettIcon == null) {
 			switch (posid) {
 				case ISpielerPosition.keeper: {
-					trickotfarbe = TRICKOT_TORWART;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.keeper");
 					break;
 				}
 	
 				case ISpielerPosition.rightCentralDefender:
 				case ISpielerPosition.leftCentralDefender:
 				case ISpielerPosition.middleCentralDefender: {
-					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.centraldefence");
 					break;
 				}
 	
 				case ISpielerPosition.leftBack:
 				case ISpielerPosition.rightBack: {
-					trickotfarbe = TRICKOT_AUSSENVERTEIDIGER;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.wingback");
 					break;
 				}
 	
 				case ISpielerPosition.rightInnerMidfield:
 				case ISpielerPosition.leftInnerMidfield:
 				case ISpielerPosition.centralInnerMidfield: {
-					trickotfarbe = TRICKOT_MITTELFELD;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.midfield");
 					break;
 				}
 	
 				case ISpielerPosition.leftWinger:
 				case ISpielerPosition.rightWinger: {
-					trickotfarbe = TRICKOT_FLUEGEL;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.wing");
 					break;
 				}
 	
 				case ISpielerPosition.rightForward:
 				case ISpielerPosition.leftForward:
 				case ISpielerPosition.centralForward: {
-					trickotfarbe = TRICKOT_STURM;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.forward");
 					break;
 				}
 	
 				case ISpielerPosition.substKeeper: {
-					trickotfarbe = TRICKOT_RESERVE_TORWART;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.subKeeper");
 					break;
 				}
 	
 				case ISpielerPosition.substDefender: {
-					trickotfarbe = TRICKOT_RESERVE_INNENVERTEIDIGER;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.subDefence");
 					break;
 				}
 	
 				case ISpielerPosition.substInnerMidfield: {
-					trickotfarbe = TRICKOT_RESERVE_MITTELFELD;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.subMidfield");
 					break;
 				}
 	
 				case ISpielerPosition.substWinger: {
-					trickotfarbe = TRICKOT_RESERVE_FLUEGEL;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.subWing");
 					break;
 				}
 	
 				case ISpielerPosition.substForward: {
-					trickotfarbe = TRICKOT_RESERVE_STURM;
+					trickotfarbe = ThemeManager.getColor("ho.shirt.subForward");
 					break;
 				}
 	
 				default:
-					trickotfarbe = TRICKOT_NONE;
-			}
-
-			switch (taktik) {
-				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
-				// "gui/bilder/Taktik_Defensiv.png" ), Color.white );
-				case ISpielerPosition.DEFENSIVE:
-					break;
-	
-				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
-				// "gui/bilder/Taktik_Offensiv.png" ), Color.white );
-				case ISpielerPosition.OFFENSIVE:
-					break;
-	
-				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
-				// "gui/bilder/Taktik_NachAussen.png" ), Color.white );
-				case ISpielerPosition.TOWARDS_WING:
-					break;
-	
-				// taktikImage = Helper.makeColorTransparent ( Helper.loadImage (
-				// "gui/bilder/Taktik_ZurMitte.png" ), Color.white );
-				case ISpielerPosition.TOWARDS_MIDDLE:
-					break;
-	
-//				case ISpielerPosition.ZUS_INNENV: {
-//					trickotfarbe = TRICKOT_INNENVERTEIDIGER;
-//					break;
-//				}
-//	
-//				case ISpielerPosition.ZUS_MITTELFELD: {
-//					trickotfarbe = TRICKOT_MITTELFELD;
-//					break;
-//				}
-//	
-//				case ISpielerPosition.ZUS_STUERMER:
-//				case ISpielerPosition.ZUS_STUERMER_DEF: {
-//					trickotfarbe = TRICKOT_STURM;
-//					break;
-//				}
+					trickotfarbe = ThemeManager.getColor("ho.shirt");
 			}
 
 			// Bild laden, transparenz hinzu, trikofarbe wechseln
 			trickotImage = Helper.changeColor(Helper.changeColor(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Trickot.png"),
 					Color.white), Color.black, trickotfarbe), new Color(100, 100, 100), trickotfarbe.brighter());
 
-			// trickotImage = Helper.loadImage( component,
-			// "gui/bilder/Trickot.png" );
-			// Taktik, wenn vorhanden
-			/*
-			 * BUGGY!! if ( taktikImage != null ) { //Warten, bis die Grafik
-			 * geladen worden ist java.awt.MediaTracker tracker = new
-			 * java.awt.MediaTracker(component);
-			 * tracker.addImage(taktikImage,1);
-			 * tracker.addImage(trickotImage,2); try { tracker.waitForAll(); }
-			 * catch(InterruptedException ie) { } zusammenImage =
-			 * Helper.zusammenfuehren ( trickotImage, taktikImage ); } else {
-			 * zusammenImage = trickotImage; } //Warten, bis die Grafik geladen
-			 * worden ist java.awt.MediaTracker tracker = new
-			 * java.awt.MediaTracker(component);
-			 * tracker.addImage(zusammenImage,1); try { tracker.waitForAll(); }
-			 * catch(InterruptedException ie) { }
-			 */
 			zusammenImage = trickotImage;
-
-			/*
-			 * BUG in JVM! scaleImage = zusammenImage.getScaledInstance ( 14,
-			 * 14, Image.SCALE_SMOOTH ); //Warten, bis die Grafik geladen worden
-			 * ist java.awt.MediaTracker tracker = new
-			 * java.awt.MediaTracker(component); tracker.addImage(scaleImage,1);
-			 * try { tracker.waitForAll(); } catch(InterruptedException ie) { }
-			 */
 			komplettIcon = new ImageIcon(zusammenImage);
 
 			// In den Cache hinzufügen
 			m_clTrickotCache.put(new TrickotCacheKey(posid, taktik), komplettIcon);
-
-			// HOLogger.instance().log(Helper.class, "Laden Grafik: "+
-			// position.getPosition () + "/" + position.getTaktik () );
-		} else {
-			// HOLogger.instance().log(Helper.class, "Cache Grafik: "+
-			// position.getPosition () + "/" + position.getTaktik () );
-		}
+		} 
 
 		// return new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB );
 		// Trickotnummer
@@ -735,24 +602,7 @@ public class Helper extends LanguageFiles {
 	}
 
     /**
-     * Macht einen Kreuz durch das Image
-     *
-     * @param image TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static Image getImageDurchgestrichen(Image image) {
-        return getImageDurchgestrichen(image, Color.lightGray, Color.darkGray);
-    }
-
-    /**
-     * Macht einen Kreuz durch das Image
-     *
-     * @param image TODO Missing Constructuor Parameter Documentation
-     * @param helleFarbe TODO Missing Constructuor Parameter Documentation
-     * @param dunkleFarbe TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * paint a cross over an image
      */
     public static Image getImageDurchgestrichen(Image image,
                                                          Color helleFarbe,
@@ -777,7 +627,6 @@ public class Helper extends LanguageFiles {
         }
     }
 
-    //TODO Geht noch nicht richtig
     public static ImageIcon getImageIcon4Color(Color color) {
         final BufferedImage bufferedImage = new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB);
 
@@ -789,24 +638,10 @@ public class Helper extends LanguageFiles {
         return new ImageIcon(bufferedImage);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param country TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4Country(int country) {
         return new ImageIcon(Helper.loadImage("flags/"+ country + "flag.png"));
     }
 
-    /**
-     * Gibt die Grafik für die Gruppe oder Smilie zurück
-     *
-     * @param gruppe TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4GruppeSmilie(String gruppe) {
         ImageIcon gruppenicon = null;
 
@@ -831,9 +666,6 @@ public class Helper extends LanguageFiles {
     /**
      * Gibt die Grafik für die Gruppe in 7px Grösse für die Aufstellung zurück
      *
-     * @param gruppe TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static ImageIcon getImageIcon4MiniGruppe(String gruppe) {
         ImageIcon gruppenicon = null;
@@ -859,13 +691,6 @@ public class Helper extends LanguageFiles {
         return gruppenicon;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4Spezialitaet(int wert) {
         ExtendedImageIcon icon = null;
         final Integer keywert = new Integer(wert);
@@ -899,14 +724,6 @@ public class Helper extends LanguageFiles {
         return icon;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     * @param subtyp TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
         ImageIcon icon = null;
 
@@ -1174,10 +991,7 @@ public class Helper extends LanguageFiles {
     /**
      * Gibt die Grafik für die Spieltypen zurück
      *
-     * @param spieltyp TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+    */
     public static ImageIcon getImageIcon4Spieltyp(int spieltyp) {
         ImageIcon spieltypicon = null;
         final Integer key = new Integer(spieltyp);
@@ -1270,13 +1084,6 @@ public class Helper extends LanguageFiles {
         return spieltypicon;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4Trickotnummer(int wert) {
         ImageIcon icon = null;
         final Integer keywert = new Integer(wert);
@@ -1325,25 +1132,10 @@ public class Helper extends LanguageFiles {
         return icon;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4Veraenderung(int wert) {
         return getImageIcon4Veraenderung(wert, true);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     * @param aktuell TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4Veraenderung(int wert, boolean aktuell) {
         ExtendedImageIcon icon = null;
         final Integer keywert = new Integer(wert);
@@ -1472,13 +1264,6 @@ public class Helper extends LanguageFiles {
         return icon;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static ImageIcon getImageIcon4Wetter(int wert) {
         ImageIcon icon = null;
 
@@ -1548,54 +1333,7 @@ public class Helper extends LanguageFiles {
         return icon;
     }
 
-    /////////////////////////Mathe
-    public static float getLogarithmus(int value, int base) {
-        return (float) (Math.log(value) / Math.log(base));
-    }
 
-    /**
-     * Benötigte Breite für die Spalte in den Tabellen
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static int getMaxBewertungWidth(Vector<Spieler> spieler) {
-        int bewertung = 0;
-
-        for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-            int aktuellebewertung = spieler.get(i).getBewertung();
-
-            if (aktuellebewertung == 0) {
-                aktuellebewertung = spieler.get(i).getLetzteBewertung();
-            }
-
-            bewertung = Math.max(bewertung, aktuellebewertung);
-        }
-
-        return (7 * bewertung) + 4;
-    }
-
-    /**
-     * liefert Zufalls Zahl von 0 =&lt; maxZahl
-     *
-     * @param maxZahl TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static int getRandom(int maxZahl) {
-        //a.charAt(5)
-        return (int) Math.floor(Math.random() * (double) maxZahl);
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     * @param subtyp TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static String getTooltiptext4SpielHighlight(int typ, int subtyp) {
         if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
             if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
@@ -1821,9 +1559,6 @@ public class Helper extends LanguageFiles {
     /**
      * Errechnet die Spaltenbreite für den User-Schriftgrösse
      *
-     * @param width TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static int calcCellWidth(int width) {
         return (int) (((float) width) * gui.UserParameter.instance().zellenbreitenFaktor);
@@ -1832,11 +1567,6 @@ public class Helper extends LanguageFiles {
     /**
      * Tauscht eine Farbe im Image durch eine andere
      *
-     * @param im TODO Missing Constructuor Parameter Documentation
-     * @param original TODO Missing Constructuor Parameter Documentation
-     * @param change TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static Image changeColor(Image im, Color original,
                                              Color change) {
@@ -1848,9 +1578,6 @@ public class Helper extends LanguageFiles {
     /**
      * Macht aus einem double[] mit Timevalues einen formatierten String[]
      *
-     * @param timewerte TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static String[] convertTimeMillisToFormatString(double[] timewerte) {
         final String[] returnwerte = new String[timewerte.length];
@@ -1865,9 +1592,6 @@ public class Helper extends LanguageFiles {
     /**
      * Erzeugt ein ComboBoxModel aus einem Vector
      *
-     * @param vector TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static DefaultComboBoxModel createListModel(Vector<Object> vector) {
         final DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -1896,29 +1620,9 @@ public class Helper extends LanguageFiles {
     }
 
     /**
-     * Klappt den JTree komplett auf
-     *
-     * @param tree TODO Missing Constructuor Parameter Documentation
-     */
-    public static void expandTree(javax.swing.JTree tree) {
-        final int count = tree.getRowCount();
-
-        for (int i = 0; i < count; i++) {
-            tree.expandRow(i);
-        }
-
-        if (tree.getRowCount() != count) {
-            Helper.expandTree(tree);
-        }
-    }
-
-    /**
      * Überprüft den Inhalt eines Textfields, ob der Wert aus ints mit , getrennt besteht,
      * ansonsten setzt er den Wert auf 0
      *
-     * @param text TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 	public static int[] generateIntArray(String text) {
 		// String message = "";
@@ -1986,9 +1690,6 @@ public class Helper extends LanguageFiles {
     /**
      * Lädt Grafiken auch im jar-File
      *
-     * @param datei TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 	public static BufferedImage loadImage(String datei) {
 		BufferedImage image = null;
@@ -2035,10 +1736,6 @@ public class Helper extends LanguageFiles {
     /**
      * Macht eine Farbe in dem Bild transparent
      *
-     * @param im TODO Missing Constructuor Parameter Documentation
-     * @param color TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static Image makeColorTransparent(Image im, Color color) {
         Image image = null;
@@ -2061,15 +1758,6 @@ public class Helper extends LanguageFiles {
     /**
      * Macht eine Farbe in dem Bild transparent
      *
-     * @param im TODO Missing Constructuor Parameter Documentation
-     * @param minred TODO Missing Constructuor Parameter Documentation
-     * @param mingreen TODO Missing Constructuor Parameter Documentation
-     * @param minblue TODO Missing Constructuor Parameter Documentation
-     * @param maxred TODO Missing Constructuor Parameter Documentation
-     * @param maxgreen TODO Missing Constructuor Parameter Documentation
-     * @param maxblue TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static Image makeColorTransparent(Image im, int minred, int mingreen,
                                                       int minblue, int maxred, int maxgreen,
@@ -2082,10 +1770,6 @@ public class Helper extends LanguageFiles {
     /**
      * Tauscht eine Farbe im Image durch eine andere
      *
-     * @param im TODO Missing Constructuor Parameter Documentation
-     * @param value TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static Image makeGray(Image im, float value) {
         final ImageProducer ip = new FilteredImageSource(im.getSource(), new LightGrayFilter(value));
@@ -2095,8 +1779,6 @@ public class Helper extends LanguageFiles {
     /**
      * Markiert das Element mit der angegeben Id
      *
-     * @param combobox TODO Missing Constructuor Parameter Documentation
-     * @param id TODO Missing Constructuor Parameter Documentation
      */
     public static void markierenComboBox(javax.swing.JComboBox combobox, int id) {
         final javax.swing.ComboBoxModel model = combobox.getModel();
@@ -2109,65 +1791,11 @@ public class Helper extends LanguageFiles {
         }
     }
 
-    /**
-     * Parsen mit Defaultdezimaltformat
-     *
-     * @param parent TODO Missing Constructuor Parameter Documentation
-     * @param field TODO Missing Constructuor Parameter Documentation
-     * @param negativErlaubt TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static boolean parseFloat(Window parent, JTextField field, boolean negativErlaubt) {
-        return parseFloat(parent, field, negativErlaubt, DEFAULTDEZIMALFORMAT);
-    }
-
-    /**
-     * Überprüft den Inhalt eines Textfields, ob der Wert ein float ist, ansonsten setzt er den
-     * Wert auf 0.0
-     *
-     * @param parent Window, in dem der Fehlerdialog angezeigt werden soll.
-     * @param field Das Textfeld mit dem zu prüfenden Wert
-     * @param negativErlaubt true, wenn negative Werte erlaubt sind
-     * @param format das Dezimalformat
-     *
-     * @return true, wenn der Wert im Textfeld ein float ist, ansonsten false
-     */
-    public static boolean parseFloat(Window parent, JTextField field, boolean negativErlaubt,
-                                     DecimalFormat format) {
-        String message = "";
-
-        try {
-            final float temp = Float.parseFloat(kommaToPunkt(field.getText()));
-
-            if (!negativErlaubt && (temp < 0.0f)) {
-                message = "Keinen negativen Werte erlaubt!";
-                throw new NumberFormatException();
-            }
-
-            field.setText(kommaToPunkt(String.valueOf(format.format(temp))));
-
-            return true;
-        } catch (NumberFormatException nfe) {
-            if (message.equals("")) {
-                message = "Eingabe ist keine Zahl!";
-            }
-
-            showMessage(parent, message, "Fehler", javax.swing.JOptionPane.ERROR_MESSAGE);
-            field.setText(kommaToPunkt(String.valueOf(format.format(0.0))));
-            return false;
-        }
-    }
 
     /**
      * Überprüft den Inhalt eines Textfields, ob der Wert ein int ist, ansonsten setzt er den Wert
      * auf 0
      *
-     * @param parent Window, in dem der Fehlerdialog angezeigt werden soll.
-     * @param field Das Textfeld mit dem zu prüfenden Wert
-     * @param negativErlaubt true, wenn negative Werte erlaubt sind
-     *
-     * @return true, wenn der Wert im Textfeld ein int ist, ansonsten false
      */
     public static boolean parseInt(Window parent, JTextField field, boolean negativErlaubt) {
         String message = "";
@@ -2195,42 +1823,10 @@ public class Helper extends LanguageFiles {
         }
     }
 
-    /**
-     * Überprüft den Inhalt eines Textfields, ob der Wert aus ints mit , getrennt besteht,
-     * ansonsten setzt er den Wert auf 0
-     *
-     * @param parent Window, in dem der Fehlerdialog angezeigt werden soll.
-     * @param field Das Textfeld mit dem zu prüfenden Wert
-     * @param negativErlaubt true, wenn negative Werte erlaubt sind
-     * @param maxValue der maximal erlaubte Wert
-     *
-     * @return Die Zahlen, wenn der Wert im Textfeld ints sind, ansonsten null
-     *
-     * @deprecated Keine Fehlermeldungen! Keine negativ/max Prüfung!
-     */
-    @Deprecated
-	public static int[] parseMultiInt(Window parent, JTextField field, boolean negativErlaubt,
-                                      int maxValue) {
-        return generateIntArray(field.getText());
-    }
 
     /**
      * Round to one fraction digit
      *
-     * @param wert value to round
-     *
-     * @return rounded value
-     */
-    public static double round(double wert) {
-        return Helper.round(wert, 1);
-    }
-
-    /**
-     * Round to one fraction digit
-     *
-     * @param wert value to round
-     *
-     * @return rounded value
      */
     public static float round(float wert) {
         return Helper.round(wert, 1);
@@ -2239,10 +1835,6 @@ public class Helper extends LanguageFiles {
     /**
      * Round a double value
      *
-     * @param wert value to round
-     * @param nachkommastellen number of fraction digits
-     *
-     * @return rounded value
      */
     public static double round(double wert, int nachkommastellen) {
         //Wert mit 10^nachkommastellen multiplizieren
@@ -2259,10 +1851,6 @@ public class Helper extends LanguageFiles {
     /**
      * Round a float value
      *
-     * @param wert value to round
-     * @param nachkommastellen number of fraction digits
-     *
-     * @return rounded value
      */
     public static float round(float wert, int nachkommastellen) {
         //Wert mit 10^nachkommastellen multiplizieren
@@ -2279,10 +1867,6 @@ public class Helper extends LanguageFiles {
     /**
      * Zeigt eine Meldung per JOptionPane an, aber immer nur eine!
      *
-     * @param parent TODO Missing Constructuor Parameter Documentation
-     * @param message TODO Missing Constructuor Parameter Documentation
-     * @param titel TODO Missing Constructuor Parameter Documentation
-     * @param typ TODO Missing Constructuor Parameter Documentation
      */
     public static void showMessage(Component parent, String message, String titel, int typ) {
         //new gui.ShowMessageThread( parent, message, titel, typ );
@@ -2341,10 +1925,6 @@ public class Helper extends LanguageFiles {
     /**
      * Kopiert das zweite Image auf das erste
      *
-     * @param background TODO Missing Constructuor Parameter Documentation
-     * @param foreground TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static Image zusammenfuehren(Image background, Image foreground) {
         final BufferedImage image = new BufferedImage(
@@ -2356,49 +1936,13 @@ public class Helper extends LanguageFiles {
     }
     /**
      * proof if input is a word
-     * @param input
-     * @return
      */
     public static boolean isAlpha(String input) {
         return Pattern.matches("\\w*", input);
     }
-    // -- private Methoden ----------------
-
-    /**
-     * Ersetzt Kommas durch Punkte
-     *
-     * @param text TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private static String kommaToPunkt(String text) {
-        try {
-            final StringBuffer temptext = new StringBuffer();
-
-            for (int i = 0; i < text.length(); i++) {
-                if (text.charAt(i) == ',') {
-                    //,0 weglassen WORKAROUND #FIXME
-                    if (((i + 2) == text.length()) && (text.charAt(i + 1) == '0')) {
-                        return temptext.toString();
-                    }
-
-                    temptext.append(".");
-                } else {
-                    temptext.append(String.valueOf(text.charAt(i)));
-                }
-            }
-
-            return temptext.toString();
-        } catch (Throwable t) {
-            return "0.0";
-        }
-    }
-
+ 
 	/**
 	 * Returns a NumberFormat based on the parameters
-	 * @param currencyformat
-	 * @param nachkommastellen
-	 * @return
 	 */
 	public static NumberFormat getNumberFormat(boolean currencyformat, int nachkommastellen) {
 		NumberFormat numFormat;
