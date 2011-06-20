@@ -252,7 +252,11 @@
 		<delete dir="${tmp.target}" />
 		<mkdir dir="${tmp.target}" />
 		<copy todir="${tmp.target}" preservelastmodified="yes">
-			<fileset dir="${bin.dir}" />
+			<fileset dir="${bin.dir}">
+				<exclude name="flags/**"/>
+				<exclude name="prediction/**"/>
+				<exclude name="sprache/**"/>
+			</fileset>
 		</copy>
 		<copy todir="${tmp.target}" preservelastmodified="yes">
 			<fileset dir="${src.dir}/conf/addToJar" />
