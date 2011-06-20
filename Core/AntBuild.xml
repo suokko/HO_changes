@@ -366,7 +366,7 @@
 				</exec>
 
 				<echo>Uploading new nightly (HO_${hofullversion}.zip/.deb/.rpm/.dmg/.exe) to SF</echo>
-				<exec executable="${scp.command}" failonerror="true">
+				<exec executable="${scp.command}" failonerror="false">
 					<arg value="${export.zip.dir}/HO_${hofullversion}.zip" />
 					<arg value="${export.deb.packagedir}/HO_${hofullversion}.deb" />
 					<arg value="${export.rpm.packagedir}/HO_${hofullversion}.rpm" />
