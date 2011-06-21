@@ -57,7 +57,7 @@ public class DBZugriff {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** database version */
-	private static final int DBVersion = 10;
+	private static final int DBVersion = 11;
 
 	/** 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -1737,6 +1737,8 @@ public class DBZugriff {
 						updateDBv9();
 					case 9 : 
 						updateDBv10();
+					case 10: 
+						updateDBv11();
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -1978,6 +1980,20 @@ public class DBZugriff {
 		saveUserParameter("DBVersion", 10);
 	}
 
+	/**
+	 * Update database to version 11.
+	 */
+	private void updateDBv11() throws Exception {
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
+		
+		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
+	
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		saveUserParameter("DBVersion", 11);
+	}
+	
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
