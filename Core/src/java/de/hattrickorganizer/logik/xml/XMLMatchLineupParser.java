@@ -167,6 +167,7 @@ public class XMLMatchLineupParser {
         int behavior = 0;
         int spielerID = -1;
         double rating = -1.0d;
+        double ratingStarsEndOfMatch = -1.0d;
         String name = "";
      //   int positionsCode = -1;
 
@@ -242,6 +243,9 @@ public class XMLMatchLineupParser {
             		((roleID >= ISpielerPosition.ausgewechselt) && (roleID < ISpielerPosition.ausgewechseltEnd))) {
                 tmp = (Element) ele.getElementsByTagName("RatingStars").item(0);
                 rating = Double.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",","."));
+                tmp = (Element) ele.getElementsByTagName("RatingStarsEndOfMatch").item(0);
+                ratingStarsEndOfMatch = Double.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",","."));
+                
             }
         }
 
@@ -250,7 +254,7 @@ public class XMLMatchLineupParser {
 //        HOLogger.instance().debug(getClass(),"--------------- Debug by XMLMatchLineupParse if you want it gone");      
         
         player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, name, 0);
-
+        player.setRatingStarsEndOfMatch(ratingStarsEndOfMatch);
         return player;
     }
 

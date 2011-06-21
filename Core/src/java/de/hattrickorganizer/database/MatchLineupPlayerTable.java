@@ -21,7 +21,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[13];
+		columns = new ColumnDescriptor[14];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("SpielerID",Types.INTEGER,false);
@@ -35,6 +35,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		columns[10]= new ColumnDescriptor("HoPosCode",Types.INTEGER,false);
 		columns[11]= new ColumnDescriptor("STATUS",Types.INTEGER,false);
 		columns[12]= new ColumnDescriptor("FIELDPOS",Types.INTEGER,false);
+		columns[13]= new ColumnDescriptor("RatingStarsEndOfMatch", Types.REAL, false);
 
 	}
 
@@ -274,7 +275,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 			//saven
 			try {
 				//insert vorbereiten
-				sql = "INSERT INTO "+getTableName()+" ( MatchID, TeamID, SpielerID, RoleID, Taktik, PositionCode, VName, NickName, Name, Rating, HoPosCode, STATUS, FIELDPOS ) VALUES(";
+				sql = "INSERT INTO "+getTableName()+" ( MatchID, TeamID, SpielerID, RoleID, Taktik, PositionCode, VName, NickName, Name, Rating, HoPosCode, STATUS, FIELDPOS, RatingStarsEndOfMatch ) VALUES(";
 				sql
 					+= (matchID
 						+ ","
@@ -300,6 +301,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 						+ ", 0" // Status
 						+ ","
 						+ player.getPositionCode()
+						+ ","
+						+ player.getRatingStarsEndOfMatch()
 						+ " )");
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
@@ -326,6 +329,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		int behavior;
 		int spielerID;
 		double rating;
+		double ratingStarsEndOfMatch;
 		String vname;
 		String name;
 		String nickName;
@@ -342,6 +346,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 				behavior = rs.getInt("Taktik");
 				spielerID = rs.getInt("SpielerID");
 				rating = rs.getDouble("Rating");
+				ratingStarsEndOfMatch = rs.getDouble("RatingStarsEndOfMatch");
 				vname = new String(DBZugriff.deleteEscapeSequences(rs.getString("VName")));
 				nickName = new String(DBZugriff.deleteEscapeSequences(rs.getString("NickName")));
 				name = new String(DBZugriff.deleteEscapeSequences(rs.getString("Name")));
@@ -373,6 +378,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 				
 				// Position code and field position was removed from constructor below.
 				player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, vname, nickName, name, rs.getInt("STATUS"));
+				player.setRatingStarsEndOfMatch(ratingStarsEndOfMatch);
 				vec.add(player);
 			}
 		} catch (Exception e) {
