@@ -102,6 +102,13 @@ public interface IMatchLineupPlayer {
      * @return Value of property m_dRating.
      */
     public double getRating();
+    
+    /**
+    * Getter for property m_dRatingStarsEndOfMatch.
+    *
+    * @return Value of property m_dRatingStarsEndOfMatch.
+    */
+   public double getRatingStarsEndOfMatch();
 
     //public int compareTo (Object obj);
 

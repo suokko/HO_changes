@@ -41,6 +41,7 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
 
     /** TODO Missing Parameter Documentation */
     private double m_dRating;
+    private double m_dRatingStarsEndOfMatch;
 
     /** TODO Missing Parameter Documentation */
     private int m_iFieldPos;
@@ -189,11 +190,30 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
     public final void setRating(double m_dRating) {
         this.m_dRating = m_dRating;
     }
+    
+    /**
+     * Setter for property m_dRatingStarsEndOfMatch.
+     *
+     * @param m_dRating New value of property m_dRatingStarsEndOfMatch.
+     */
+    public final void setRatingStarsEndOfMatch(double m_dRatingStarsEndOfMatch) {
+        this.m_dRatingStarsEndOfMatch = m_dRatingStarsEndOfMatch;
+    }
+    
 
     /////////////////////////////////////////////////////////////////////////////////
     //ACCESSOR
     //////////////////////////////////////////////////////////////////////////////////    
 
+    /**
+     * Getter for property RatingStarsEndOfMatch.
+     *
+     * @return Value of property RatingStarsEndOfMatch.
+     */
+    public final double getRatingStarsEndOfMatch() {
+        return m_dRatingStarsEndOfMatch;
+    }
+    
     /**
      * Getter for property m_dRating.
      *
