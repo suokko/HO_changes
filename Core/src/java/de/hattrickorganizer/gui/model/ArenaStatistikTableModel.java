@@ -396,7 +396,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			                     - m_clMatches[i + 1].getMatchDateAsTimestamp().getTime());
 			    }
 
-			    m_clData[i][10] = new ColorLabelEntry(fanzuwachs, background, false);
+			    m_clData[i][10] = new ColorLabelEntry(fanzuwachs, background, false,false,0);
 
 			    //Quotione  Zuschauer/Fans
 			    m_clData[i][11] = new ColorLabelEntry(Helper.round((float) match.getZuschaueranzahl()

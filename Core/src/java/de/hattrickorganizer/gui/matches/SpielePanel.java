@@ -61,9 +61,6 @@ import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
 
-/**
- * Bietet Übersicht über alle Spieler
- */
 public final class SpielePanel extends ImagePanel implements MouseListener, KeyListener,
                                                              Refreshable, ItemListener,
                                                              ActionListener, plugins.ISpielePanel
@@ -94,47 +91,22 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private MatchesTable m_jtSpieleTable;
     private StaerkenvergleichPanel m_jpStaerkenvergleichsPanel;
 
-    /*
-       public static final int             ALLE_SPIELE                       = 0;
-       public static final int             NUR_EIGENE_SPIELE                 = 1;
-       public static final int             NUR_EIGENE_PFLICHTSPIELE          = 2;
-       public static final int             NUR_EIGENE_POKALSPIELE            = 3;
-       public static final int             NUR_EIGENE_LIGASPIELE             = 4;
-       public static final int             NUR_EIGENE_FREUNDSCHAFTSSPIELE    = 5;
-       public static final int             NUR_FREMDE_SPIELE                 = 6;
-       public static final int             NUR_GESPIELTEN_SPIELE             = 10;
-     */
     private CBItem[] SPIELEFILTER = {
-			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),
-					ALLE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigeneSpiele"), NUR_EIGENE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigenePflichtspiele"), NUR_EIGENE_PFLICHTSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigenePokalspiele"), NUR_EIGENE_POKALSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigeneLigaspiele"), NUR_EIGENE_LIGASPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigeneFreundschaftsspiele"),
-					NUR_EIGENE_FREUNDSCHAFTSSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurFremdeSpiele"), NUR_FREMDE_SPIELE) };
+			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),ALLE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), NUR_EIGENE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), NUR_EIGENE_PFLICHTSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), NUR_EIGENE_POKALSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), NUR_EIGENE_LIGASPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),NUR_EIGENE_FREUNDSCHAFTSSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"), NUR_FREMDE_SPIELE)
+	};
 
-    // ~ Constructors
-	// -------------------------------------------------------------------------------
-
-    /**
-	 * Creates a new SpielePanel object.
-	 */
     public SpielePanel() {
         RefreshManager.instance().registerRefreshable(this);
 
         initComponents();
     }
 
-    // ~ Methods
-	// ------------------------------------------------------------------------------------
 
     /**
 	 * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden

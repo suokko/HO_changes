@@ -32,7 +32,7 @@ public class DoppelLabelEntry extends TableEntry {
         super();
         m_clLinks = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, color,
                                         SwingConstants.RIGHT);
-        m_clRechts = new ColorLabelEntry("", ColorLabelEntry.FG_VERLETZT, color,
+        m_clRechts = new ColorLabelEntry("", gui.UserParameter.instance().FG_VERLETZT, color,
                                          SwingConstants.CENTER);
         createComponent();
     }

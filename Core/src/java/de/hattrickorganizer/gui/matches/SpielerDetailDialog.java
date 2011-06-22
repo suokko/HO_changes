@@ -2,13 +2,13 @@
 package de.hattrickorganizer.gui.matches;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -22,12 +22,14 @@ import javax.swing.WindowConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.playeroverview.SpielerDetailPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerStatusLabelEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -235,29 +237,14 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             
     };
  
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new SpielerDetailDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     * @param matchplayer TODO Missing Constructuor Parameter Documentation
-     * @param matchlineup TODO Missing Constructuor Parameter Documentation
-     */
     public SpielerDetailDialog(JFrame owner, MatchLineupPlayer matchplayer, MatchLineup matchlineup) {
         super(owner);
         HOLogger.instance().log(getClass(),"SpielerDetailDialog");
-        //--SpielerDaten besorgen--
-        //Spielerdaten in DB vorhanden ( Kein Fremder Spieler )
-        final de.hattrickorganizer.model.Spieler player = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                                 .getSpielerAtDate(matchplayer
-                                                                                                                   .getSpielerId(),
-                                                                                                                   matchlineup
-                                                                                                                   .getSpielDatum());
+        final Spieler player = DBZugriff.instance().getSpielerAtDate(matchplayer.getSpielerId(),matchlineup.getSpielDatum());
 
         //Nicht gefunden
         if (player == null) {
-            de.hattrickorganizer.tools.Helper.showMessage(owner,HOVerwaltung.instance().getLanguageString("Fehler_Spielerdetails"),
+            Helper.showMessage(owner,HOVerwaltung.instance().getLanguageString("Fehler_Spielerdetails"),
                                                           HOVerwaltung.instance().getLanguageString("Fehler"),
                                                           JOptionPane.ERROR_MESSAGE);
             return;
@@ -271,120 +258,68 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         initComponents(player, matchplayer);
 
         m_jpRating.setRating((float) matchplayer.getRating() * 2, true);
-        m_jpAktuellRating.setRating(de.hattrickorganizer.database.DBZugriff.instance()
-                                                                           .getLetzteBewertung4Spieler(player
-                                                                                                       .getSpielerID()));
+        m_jpAktuellRating.setRating(DBZugriff.instance().getLetzteBewertung4Spieler(player.getSpielerID()));
         setLabels(player);
 
         pack();
-        setSize(getSize().width + de.hattrickorganizer.tools.Helper.calcCellWidth(30),
-                getSize().height + 10);
+        setSize(getSize().width + Helper.calcCellWidth(30),getSize().height + 10);
         setLocation(gui.UserParameter.instance().spielerDetails_PositionX,
                     gui.UserParameter.instance().spielerDetails_PositionY);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setVisible(true);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowActivated(WindowEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowClosed(WindowEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+
     public final void windowClosing(WindowEvent e) {
         gui.UserParameter.instance().spielerDetails_PositionX = this.getLocation().x;
         gui.UserParameter.instance().spielerDetails_PositionY = this.getLocation().y;
         setVisible(false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+
     public void windowDeactivated(WindowEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowDeiconified(WindowEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+
     public void windowIconified(WindowEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowOpened(WindowEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param m_clSpieler TODO Missing Method Parameter Documentation
-     */
     private void setLabels(de.hattrickorganizer.model.Spieler m_clSpieler) {
-        final Spieler m_clVergleichsSpieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                     .getModel()
-                                                                                     .getSpieler(m_clSpieler
-                                                                                                 .getSpielerID());
+        final Spieler m_clVergleichsSpieler = HOVerwaltung.instance().getModel().getSpieler(m_clSpieler.getSpielerID());
 
         m_jpName.setText(m_clSpieler.getName());
-        m_jpName.setFGColor(ColorLabelEntry.getForegroundForSpieler(m_clSpieler));
+        m_jpName.setFGColor(SpielerLabelEntry.getForegroundForSpieler(m_clSpieler));
         m_jpAlter.setText(m_clSpieler.getAlter() + "");
-        m_jpNationalitaet.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4Country(m_clSpieler
-                                                                                         .getNationalitaet()));
+        m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler.getNationalitaet()));
 
-        if (de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getAufstellung()
-                                                   .isSpielerAufgestellt(m_clSpieler.getSpielerID())
-            && (de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getAufstellung()
-                                                       .getPositionBySpielerId(m_clSpieler
+        if (HOVerwaltung.instance().getModel().getAufstellung().isSpielerAufgestellt(m_clSpieler.getSpielerID())
+            && (HOVerwaltung.instance().getModel().getAufstellung().getPositionBySpielerId(m_clSpieler
                                                                                .getSpielerID()) != null)) {
-            m_jpAufgestellt.setIcon(de.hattrickorganizer.tools.Helper.getImage4Position(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                               .getModel()
-                                                                                                                               .getAufstellung()
-                                                                                                                               .getPositionBySpielerId(m_clSpieler
-                                                                                                                                                       .getSpielerID()),
-                                                                                        m_clSpieler
-                                                                                        .getTrikotnummer()));
-            m_jpAufgestellt.setText(de.hattrickorganizer.model.SpielerPosition.getNameForPosition(de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                                                         .getModel()
-                                                                                                                                         .getAufstellung()
-                                                                                                                                         .getPositionBySpielerId(m_clSpieler
-                                                                                                                                                                 .getSpielerID())
-                                                                                                                                         .getPosition()));
+            m_jpAufgestellt.setIcon(Helper.getImage4Position(HOVerwaltung.instance().getModel().getAufstellung()
+                                                                                                                .getPositionBySpielerId(m_clSpieler
+                                                                                                                .getSpielerID()),
+                                                                                        m_clSpieler.getTrikotnummer()));
+            m_jpAufgestellt.setText(SpielerPosition.getNameForPosition(HOVerwaltung.instance().getModel().getAufstellung()
+                                                                                                                .getPositionBySpielerId(m_clSpieler
+                                                                                                                .getSpielerID()).getPosition()));
         } else {
-            m_jpAufgestellt.setIcon(de.hattrickorganizer.tools.Helper.getImage4Position(null,
-                                                                                        m_clSpieler
-                                                                                        .getTrikotnummer()));
+            m_jpAufgestellt.setIcon(Helper.getImage4Position(null,m_clSpieler.getTrikotnummer()));
             m_jpAufgestellt.setText("");
         }
 
@@ -409,11 +344,11 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         if (m_clVergleichsSpieler == null) {
             String bonus = "";
             final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
-            final String gehalttext = java.text.NumberFormat.getCurrencyInstance().format(gehalt);
+            final String gehalttext = NumberFormat.getCurrencyInstance().format(gehalt);
 
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
-                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bonus") + ")";
+                        + HOVerwaltung.instance().getLanguageString("Bonus") + ")";
             }
 
             m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
@@ -463,8 +398,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             m_jpErfahrung2.clear();
             m_jpFuehrung.setText(PlayerHelper.getNameForSkill(m_clSpieler.getFuehrung()) + "");
             m_jpFuehrung2.clear();
-            m_jpBestPos.setText(de.hattrickorganizer.model.SpielerPosition.getNameForPosition(m_clSpieler
-                                                                                              .getIdealPosition())
+            m_jpBestPos.setText(SpielerPosition.getNameForPosition(m_clSpieler.getIdealPosition())
                                 + " ("
                                 + m_clSpieler.calcPosValue(m_clSpieler.getIdealPosition(), true)
                                 + ")");
@@ -476,11 +410,11 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
             final int gehalt2 = (int) (m_clVergleichsSpieler.getGehalt() / gui.UserParameter
                                                                            .instance().faktorGeld);
-            final String gehalttext = java.text.NumberFormat.getCurrencyInstance().format(gehalt);
+            final String gehalttext = NumberFormat.getCurrencyInstance().format(gehalt);
 
             if (m_clSpieler.getBonus() > 0) {
                 bonus = " (" + m_clSpieler.getBonus() + "% "
-                        + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Bonus") + ")";
+                        + HOVerwaltung.instance().getLanguageString("Bonus") + ")";
             }
 
             m_jpGehalt.getLinks().setText(gehalttext + "" + bonus);
@@ -593,10 +527,8 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         m_jpToreGesamt.setText(m_clSpieler.getToreGesamt() + "");
         m_jpHattriks.setText(m_clSpieler.getHattrick() + "");
         m_jpSpezialitaet.setText(PlayerHelper.getNameForSpeciality(m_clSpieler.getSpezialitaet()));
-        m_jpSpezialitaet.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4Spezialitaet(m_clSpieler
-                                                                                             .getSpezialitaet()));
-        m_jpAggressivitaet.setText(PlayerHelper.getNameForAggressivness(m_clSpieler
-                                                                        .getAgressivitaet()));
+        m_jpSpezialitaet.setIcon(Helper.getImageIcon4Spezialitaet(m_clSpieler.getSpezialitaet()));
+        m_jpAggressivitaet.setText(PlayerHelper.getNameForAggressivness(m_clSpieler.getAgressivitaet()));
 
         //Dreher!
         m_jpAnsehen.setText(PlayerHelper.getNameForGentleness(m_clSpieler.getCharakter()));
@@ -604,12 +536,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         
      }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param player TODO Missing Method Parameter Documentation
-     * @param matchplayer TODO Missing Method Parameter Documentation
-     */
     private void initComponents(Spieler player, MatchLineupPlayer matchplayer) {
         JComponent component = null;
 
@@ -1321,7 +1247,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridy = 0;
         subconstraints.weightx = 0.0;
         label = new JLabel(rating[0] + "");
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1329,7 +1254,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridx = 2;
         subconstraints.gridy = 1;
         label = new JLabel(rating[1] + "");
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1337,7 +1261,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridx = 2;
         subconstraints.gridy = 2;
         label = new JLabel(de.hattrickorganizer.tools.Helper.round(rating[2], 2) + "");
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1346,7 +1269,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridy = 3;
         subconstraints.gridwidth = 2;
         label = new JLabel(((int) rating[3]) + "", SwingConstants.CENTER);
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1371,12 +1293,9 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subpanel = new ImagePanel(sublayout);
         subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")
                                                             + " "
-                                                            + de.hattrickorganizer.model.SpielerPosition
-                                                              .getNameForPosition(de.hattrickorganizer.model.SpielerPosition
-                                                                                  .getPosition(matchplayer
-                                                                                               .getId(),
-                                                                                               matchplayer
-                                                                                               .getTaktik()))));
+                                                            + SpielerPosition.getNameForPosition(de.hattrickorganizer.model.SpielerPosition
+                                                                                  .getPosition(matchplayer.getId(),
+                                                                                               matchplayer.getTaktik()))));
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 0;
@@ -1428,7 +1347,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridy = 0;
         subconstraints.weightx = 0.0;
         label = new JLabel(ratingPos[0] + "");
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1436,7 +1354,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridx = 2;
         subconstraints.gridy = 1;
         label = new JLabel(ratingPos[1] + "");
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1444,7 +1361,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridx = 2;
         subconstraints.gridy = 2;
         label = new JLabel(de.hattrickorganizer.tools.Helper.round(ratingPos[2], 2) + "");
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1453,7 +1369,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.gridy = 3;
         subconstraints.gridwidth = 2;
         label = new JLabel(((int) ratingPos[3]) + "", SwingConstants.CENTER);
-        label.setBackground(Color.white);
         label.setHorizontalAlignment(JLabel.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);

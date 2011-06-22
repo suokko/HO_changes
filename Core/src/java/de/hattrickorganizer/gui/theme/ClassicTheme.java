@@ -62,6 +62,8 @@ public class ClassicTheme extends Theme {
 		put("tableEntry.player.hasTwoCards.foreground",new Color(100, 100, 0));
 		put("tableEntry.player.hasRedCard.foreground",new Color(200, 20, 20));
 		put("tableEntry.player.isBruised.foreground",new Color(100, 0, 0));
+		put("tableEntry.improvement.foreground",new Color(0, 200, 0));
+		put("tableEntry.decline.foreground",new Color(200, 0, 0));
 		
 		put("ho.table.selection.background",new java.awt.Color(235, 235, 235));
 		

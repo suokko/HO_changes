@@ -1,7 +1,6 @@
 // %12896550:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
-import gui.UserParameter;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,23 +20,16 @@ import de.hattrickorganizer.tools.Helper;
  *
  */
 public class ColorLabelEntry extends TableEntry {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-	   public static Color FG_STANDARD = ThemeManager.getColor("tableEntry.foreground");//gui.UserParameter.instance().FG_STANDARD;
-	   public static Color FG_GRAU = ThemeManager.getColor("gray"); // Color.gray
-	   protected static Color FG_VERLETZT = gui.UserParameter.instance().FG_VERLETZT;
-	   static final Color FG_VERBESSERUNG = new Color(0, 200, 0);
-	   static final Color FG_VERSCHLECHTERUNG = new Color(200, 0, 0);
-	   public static Color FG_TRANSFERMARKT = gui.UserParameter.instance().FG_TRANSFERMARKT;
+	   private Color IMPROVEMENT = ThemeManager.getColor("tableEntry.improvement.foreground");
+	   private Color DECLINE = ThemeManager.getColor("tableEntry.decline.foreground");
+	   public static final Color FG_STANDARD = ThemeManager.getColor("tableEntry.foreground");//gui.UserParameter.instance().FG_STANDARD;
 	   public static final Color BG_STANDARD = ThemeManager.getColor("tableEntry.background");
 	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor("tableEntry.player.skill.special.background");
 	   public static final Color BG_SPIELEREINZELWERTE = ThemeManager.getColor("tableEntry.player.skill.background");//new Color(255, 255, 200);
 	   public static final Color BG_SPIELERPOSITONSWERTE = ThemeManager.getColor("tableEntry.player.position.background");//new Color(220, 220, 255);
 	   public static final Color BG_SPIELERSUBPOSITONSWERTE = ThemeManager.getColor("tableEntry.player.subposition.background");//new Color(235, 235, 255);
-	   public static final Color BG_FLAGGEN = BG_STANDARD; //new Color(222, 218, 210);
 
     //~ Instance fields ----------------------------------------------------------------------------
-
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;
     private Color m_clFGColor = ColorLabelEntry.FG_STANDARD;
     private Font m_clFont;
@@ -45,15 +37,23 @@ public class ColorLabelEntry extends TableEntry {
     private JLabel m_clComponent;
     private String m_sText = "";
     private String m_sTooltip = "";
+    private boolean isOpaque = true;
     
     //Für Compareto
     private double m_dZahl = Double.NEGATIVE_INFINITY;
-    private int m_iAusrichtung = SwingConstants.LEFT;
-    private int m_iFontStyle = Font.PLAIN;
-    private int m_iImageAusrichtung = SwingConstants.TRAILING;
+    private int horizontalAlignment = SwingConstants.LEFT;
+    private int fontStyle = Font.PLAIN;
+    private int imageAligment = SwingConstants.TRAILING;
 
     //~ Constructors -------------------------------------------------------------------------------
 
+    public ColorLabelEntry(String text){
+    	m_sText = text;
+        m_dZahl = Double.NEGATIVE_INFINITY;
+        isOpaque = false;
+        createComponent();
+    }
+    
     /**
      * ColorLabel ohne Icon
      *
@@ -62,17 +62,10 @@ public class ColorLabelEntry extends TableEntry {
                            int horizontalAusrichtung) {
         m_sText = text;
         m_dZahl = Double.NEGATIVE_INFINITY;
-        m_iAusrichtung = horizontalAusrichtung;
+        horizontalAlignment = horizontalAusrichtung;
         m_clFGColor = foreground;
         m_clBGColor = background;
         createComponent();
-    }
-
-    /**
-     * Creates a new ColorLabelEntry object.
-     */
-    public ColorLabelEntry(int number, Color foreground, Color background, int horizontalAusrichtung) {
-    	this(String.valueOf(number),foreground,background,horizontalAusrichtung);
     }
 
     /**
@@ -83,7 +76,7 @@ public class ColorLabelEntry extends TableEntry {
         m_sText = "";
         m_dZahl = sortindex;
         m_clIcon = icon;
-        m_iAusrichtung = horizontalAusrichtung;
+        horizontalAlignment = horizontalAusrichtung;
         m_clFGColor = foreground;
         m_clBGColor = background;
         createComponent();
@@ -97,7 +90,7 @@ public class ColorLabelEntry extends TableEntry {
         m_sText = text;
         m_dZahl = sortindex;
         m_clIcon = null;
-        m_iAusrichtung = horizontalAusrichtung;
+        horizontalAlignment = horizontalAusrichtung;
         m_clFGColor = foreground;
         m_clBGColor = background;
         createComponent();
@@ -113,7 +106,7 @@ public class ColorLabelEntry extends TableEntry {
             m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell);
         }
 
-        m_iAusrichtung = SwingConstants.RIGHT;
+        horizontalAlignment = SwingConstants.RIGHT;
         m_clBGColor = background;
     	
         // Create Component first, then change the text accordingly [setValueAsText()]
@@ -143,7 +136,7 @@ public class ColorLabelEntry extends TableEntry {
             m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell);
         }
 
-        m_iAusrichtung = SwingConstants.RIGHT;
+        horizontalAlignment = SwingConstants.RIGHT;
         m_clBGColor = background;
         m_dZahl = sortVal;
     	
@@ -156,32 +149,6 @@ public class ColorLabelEntry extends TableEntry {
         	setText("");
     }
 
-//    /**
-//     * ColorLabel zu darstellen von Veränderungen
-//     *
-//     */
-//    public ColorLabelEntry(float zahl) {
-//        this(zahl, ColorLabelEntry.BG_STANDARD, false);
-//    }
-
-
- 
-    /**
-     * ColorLabel zu darstellen von Veränderungen mit Hintergrundfarbe
-     *
-     */
-    public ColorLabelEntry(float zahl, Color bg_color, boolean currencyformat) {
-        this(zahl, bg_color, currencyformat, false,0);
-    }
-
-//    /**
-//     * Creates a new ColorLabelEntry object.
-//     *
-//     */
-//    public ColorLabelEntry(float zahl, java.awt.Color bg_color, boolean currencyformat,
-//                           boolean farbeInvertieren) {
-//        this(zahl, bg_color, currencyformat, farbeInvertieren, 0);
-//    }
 
     /**
      * ColorLabel zu darstellen von Veränderungen mit Hintergrundfarbe
@@ -189,7 +156,7 @@ public class ColorLabelEntry extends TableEntry {
      */
     public ColorLabelEntry(float zahl, Color bg_color, boolean currencyformat,
                            boolean farbeInvertieren, int nachkommastellen) {
-    	m_iAusrichtung = SwingConstants.RIGHT;
+    	horizontalAlignment = SwingConstants.RIGHT;
         createComponent();
     	setValueAsText(zahl, bg_color, currencyformat, farbeInvertieren, 
     			nachkommastellen, true);
@@ -202,7 +169,7 @@ public class ColorLabelEntry extends TableEntry {
      */
     public ColorLabelEntry(double zahl, Color bg_color, boolean currencyformat,
                            int nachkommastellen) {
-        m_iAusrichtung = SwingConstants.RIGHT;
+        horizontalAlignment = SwingConstants.RIGHT;
         createComponent();
         setValueAsText(zahl, bg_color, currencyformat, false, nachkommastellen, 
         		false);
@@ -223,14 +190,14 @@ public class ColorLabelEntry extends TableEntry {
         	if (m_dZahl > 0 && !farbeInvertieren ||
         		m_dZahl < 0 && farbeInvertieren) {
         		// Positiv
-        		m_clFGColor = ColorLabelEntry.FG_VERBESSERUNG;    		
+        		m_clFGColor = IMPROVEMENT;    		
         	} else if (m_dZahl == 0) {
         		// Neutral
         		m_sText = "";
-        		m_clFGColor = ColorLabelEntry.FG_STANDARD;    		
+        		m_clFGColor = FG_STANDARD;    		
         	} else {
         		// Negativ
-        		m_clFGColor = ColorLabelEntry.FG_VERSCHLECHTERUNG;
+        		m_clFGColor = DECLINE;
         	}
         }
         if (bg_color != null)
@@ -239,7 +206,7 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     public final void setAusrichtung(int ausrichtung) {
-        m_iAusrichtung = ausrichtung;
+        horizontalAlignment = ausrichtung;
         updateComponent();
     }
 
@@ -250,7 +217,7 @@ public class ColorLabelEntry extends TableEntry {
 
     @Override
 	public final JComponent getComponent(boolean isSelected) {
-        m_clComponent.setOpaque(true);
+        
         if (isSelected) {
             m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
@@ -258,39 +225,6 @@ public class ColorLabelEntry extends TableEntry {
         }
 
         return m_clComponent;
-    }
-
-    //--------------static------------------------------
-    public static Color getForegroundForSpieler(plugins.ISpieler spieler) {
-        Color color;
-        UserParameter userParameter = gui.UserParameter.instance();
-        
-        //Auf Transfermarkt
-        if (spieler.getTransferlisted() > 0) {
-            color = userParameter.FG_TRANSFERMARKT;
-        }
-        //Verletzt
-        else if (spieler.getVerletzt() > 0) {
-            color = userParameter.FG_VERLETZT;
-        }
-        //Gesperrt
-        else if (spieler.isGesperrt()) {
-            color = userParameter.FG_GESPERRT;
-        }
-        //Angeschlagen
-        else if (spieler.getVerletzt() == 0) {
-            color = userParameter.FG_ANGESCHLAGEN;
-        }
-        //Zwei Karten
-        else if (spieler.getGelbeKarten() == 2) {
-            color = userParameter.FG_ZWEIKARTEN;
-        }
-        //Unverletzt
-        else {
-            color = userParameter.FG_STANDARD;
-        }
-
-        return color;
     }
 
     public final void setFGColor(Color fgcolor) {
@@ -305,7 +239,7 @@ public class ColorLabelEntry extends TableEntry {
 
 
     public final void setFontStyle(int fontStyle) {
-        m_iFontStyle = fontStyle;
+        fontStyle = fontStyle;
         updateComponent();
     }
 
@@ -357,7 +291,7 @@ public class ColorLabelEntry extends TableEntry {
 
     public final void setIcon(Icon icon, int imageAusrichtung) {
         m_clIcon = icon;
-        m_iImageAusrichtung = imageAusrichtung;
+        imageAligment = imageAusrichtung;
         updateComponent();
     }
 
@@ -403,9 +337,18 @@ public class ColorLabelEntry extends TableEntry {
     public final double getZahl() {
         return m_dZahl;
     }
+    
 
+    public boolean isOpaque() {
+		return isOpaque;
+	}
 
-    @Override
+    public void setOpaque(boolean isOpaque) {
+		this.isOpaque = isOpaque;
+		m_clComponent.setOpaque(isOpaque);
+	}
+
+	@Override
 	public final void clear() {
         m_sText = "";
         m_clIcon = null;
@@ -452,11 +395,11 @@ public class ColorLabelEntry extends TableEntry {
         JLabel label;
 
         if (m_clIcon != null) {
-        	m_clComponent = new JLabel(m_sText, m_clIcon, m_iAusrichtung);
+        	m_clComponent = new JLabel(m_sText, m_clIcon, horizontalAlignment);
         } else {
-        	m_clComponent = new JLabel(m_sText, m_iAusrichtung);
+        	m_clComponent = new JLabel(m_sText, horizontalAlignment);
         }
-
+        m_clComponent.setOpaque(isOpaque);
         m_clComponent.setForeground(m_clFGColor);
         m_clComponent.setToolTipText(m_sTooltip);
 
@@ -467,11 +410,11 @@ public class ColorLabelEntry extends TableEntry {
 	public final void updateComponent() {
          m_clComponent.setText(m_sText);
          m_clComponent.setIcon(m_clIcon);
-         m_clComponent.setHorizontalAlignment(m_iAusrichtung);
-         m_clComponent.setHorizontalTextPosition(m_iImageAusrichtung);
+         m_clComponent.setHorizontalAlignment(horizontalAlignment);
+         m_clComponent.setHorizontalTextPosition(imageAligment);
          m_clComponent.setBackground(m_clBGColor);
          m_clComponent.setForeground(m_clFGColor);
-         m_clComponent.setFont(m_clFont.deriveFont(m_iFontStyle));
+         m_clComponent.setFont(m_clFont.deriveFont(fontStyle));
          m_clComponent.setToolTipText(m_sTooltip);
     }
 }

@@ -12,38 +12,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
+import de.hattrickorganizer.tools.Helper;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class MatchberichtPanel extends ImagePanel implements ActionListener {
 	
 	private static final long serialVersionUID = -9014579382145462648L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbMaximieren = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                               .loadImage("gui/bilder/MaxAufstellung.png")));
+    private JButton m_jbMaximieren = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/MaxAufstellung.png")));
     private MatchKurzInfo m_clKurzInfo;
     private MatchberichtEditorPanel m_clMatchbericht = new MatchberichtEditorPanel();
     private String m_sMatchtext = "";
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new MatchberichtPanel object.
-     *
-     * @param mitButton TODO Missing Constructuor Parameter Documentation
-     */
     public MatchberichtPanel(boolean mitButton) {
-        setBackground(ThemeManager.getColor("ho.panel.background"));
 
         setLayout(new BorderLayout());
 
@@ -59,9 +48,8 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
             constraints.insets = new Insets(4, 6, 4, 6);
 
             final ImagePanel buttonPanel = new ImagePanel(layout);
-            buttonPanel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
-            m_jbMaximieren.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Matchbericht_Maximieren"));
+            m_jbMaximieren.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Matchbericht_Maximieren"));
             m_jbMaximieren.setEnabled(false);
             m_jbMaximieren.setPreferredSize(new Dimension(25, 25));
             m_jbMaximieren.addActionListener(this);
@@ -72,30 +60,17 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
         }
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     public final void setText(String text) {
         m_sMatchtext = text;
         m_clMatchbericht.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         //Dialog mit Matchbericht erzeugen
         final String titel = m_clKurzInfo.getHeimName() + " - " + m_clKurzInfo.getGastName()
                              + " ( " + m_clKurzInfo.getHeimTore() + " : "
                              + m_clKurzInfo.getGastTore() + " )";
-        final JDialog matchdialog = new JDialog(de.hattrickorganizer.gui.HOMainFrame.instance(),
-                                                titel);
+        final JDialog matchdialog = new JDialog(HOMainFrame.instance(),titel);
         matchdialog.getContentPane().setLayout(new BorderLayout());
 
         final MatchberichtPanel berichtpanel = new MatchberichtPanel(false);
@@ -103,13 +78,10 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
         matchdialog.getContentPane().add(berichtpanel, BorderLayout.CENTER);
 
         matchdialog.setLocation(50, 50);
-        matchdialog.setSize(600, de.hattrickorganizer.gui.HOMainFrame.instance().getHeight() - 100);
+        matchdialog.setSize(600, HOMainFrame.instance().getHeight() - 100);
         matchdialog.setVisible(true);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void clear() {
         m_clKurzInfo = null;
         m_sMatchtext = "";
@@ -117,20 +89,14 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
         m_jbMaximieren.setEnabled(false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param info TODO Missing Method Parameter Documentation
-     */
+
     public final void refresh(MatchKurzInfo info) {
         m_clKurzInfo = info;
 
         if ((info != null)
             && info.getMatchDateAsTimestamp().before(new java.sql.Timestamp(System
                                                                             .currentTimeMillis()))) {
-            final Matchdetails details = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                .getMatchDetails(info
-                                                                                                 .getMatchID());
+            final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
             m_sMatchtext = details.getMatchreport();
 

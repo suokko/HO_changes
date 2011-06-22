@@ -33,6 +33,7 @@ import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -126,7 +127,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
                                                            ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
     private final ColorLabelEntry m_jpNationalitaet = new ColorLabelEntry("",
                                                                     ColorLabelEntry.FG_STANDARD,
-                                                                    ColorLabelEntry.BG_FLAGGEN,
+                                                                    ColorLabelEntry.BG_STANDARD,
                                                                     SwingConstants.CENTER);
     private final ColorLabelEntry m_jpPasspiel = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                ColorLabelEntry.BG_SPIELEREINZELWERTE,
@@ -394,27 +395,23 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      */
     private void setLabels() {
         m_jpName.setText(m_clSpieler.getName());
-        m_jpName.setFGColor(ColorLabelEntry.getForegroundForSpieler(m_clSpieler));
+        m_jpName.setFGColor(SpielerLabelEntry.getForegroundForSpieler(m_clSpieler));
         String tmpAge = m_clSpieler.getAgeStringFull();
         m_jpAlter.setText(tmpAge);
         m_jpAlter.setToolTipText(tmpAge);
-        m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler
-                                                                                         .getNationalitaet()));
+        m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler.getNationalitaet()));
 
-        if (HOVerwaltung.instance().getModel().getAufstellung()
-                                                   .isSpielerAufgestellt(m_clSpieler.getSpielerID())
+        if (HOVerwaltung.instance().getModel().getAufstellung().isSpielerAufgestellt(m_clSpieler.getSpielerID())
             && (HOVerwaltung.instance().getModel().getAufstellung()
                                                        .getPositionBySpielerId(m_clSpieler
                                                                                .getSpielerID()) != null)) {
-            m_jpAufgestellt.setIcon(Helper.getImage4Position(HOVerwaltung.instance()                                           .getModel()
-                                                                                                                               .getAufstellung()
-                                                                                                                               .getPositionBySpielerId(m_clSpieler
-                                                                                                                                                       .getSpielerID()),
+            m_jpAufgestellt.setIcon(Helper.getImage4Position(HOVerwaltung.instance().getModel()
+                                                                                    .getAufstellung()
+                                                                                    .getPositionBySpielerId(m_clSpieler.getSpielerID()),
                                                                                         m_clSpieler.getTrikotnummer()));
-            m_jpAufgestellt.setText(SpielerPosition.getNameForPosition(HOVerwaltung.instance()
-                                                                                                                                         .getModel()
-                                                                                                                                         .getAufstellung()
-                                                                                                                                         .getPositionBySpielerId(m_clSpieler
+            m_jpAufgestellt.setText(SpielerPosition.getNameForPosition(HOVerwaltung.instance().getModel()
+                                                                                              .getAufstellung()
+                                                                                              .getPositionBySpielerId(m_clSpieler
                                                                                                                                                                  .getSpielerID())
                                                                                                                                          .getPosition()));
         } else {
