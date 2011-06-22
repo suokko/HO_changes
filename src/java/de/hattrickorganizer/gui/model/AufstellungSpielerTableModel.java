@@ -701,44 +701,37 @@ public class AufstellungSpielerTableModel extends AbstractTableModel {
             //Torwart
             m_clData[i][12] = new SkillEntry(aktuellerSpieler.getTorwart()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Verteidigung
             m_clData[i][13] = new SkillEntry(aktuellerSpieler.getVerteidigung()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Spielaufbau
             m_clData[i][14] = new SkillEntry(aktuellerSpieler.getSpielaufbau()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Passpiel
             m_clData[i][15] = new SkillEntry(aktuellerSpieler.getPasspiel()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Flügelspiel
             m_clData[i][16] = new SkillEntry(aktuellerSpieler.getFluegelspiel()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Torschuss
             m_clData[i][17] = new SkillEntry(aktuellerSpieler.getTorschuss()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Standards
             m_clData[i][18] = new SkillEntry(aktuellerSpieler.getStandards()
                                              + aktuellerSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS),
-                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.FG_GRAU,
-                                             ColorLabelEntry.BG_SPIELEREINZELWERTE);
+                                             ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE);
 
             //Wert Torwart
             m_clData[i][19] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(ISpielerPosition.KEEPER,

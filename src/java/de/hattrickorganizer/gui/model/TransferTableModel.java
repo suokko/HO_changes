@@ -414,7 +414,7 @@ public class TransferTableModel extends AbstractTableModel {
             aktuellerSpieler.setSpielaufbau(aktuellerScoutEintrag.getSpielaufbau());
 
             //ID
-            m_clData[i][0] = new ColorLabelEntry(aktuellerScoutEintrag.getPlayerID(),
+            m_clData[i][0] = new ColorLabelEntry(aktuellerScoutEintrag.getPlayerID()+"",
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
@@ -422,7 +422,7 @@ public class TransferTableModel extends AbstractTableModel {
             m_clData[i][1] = new SpielerLabelEntry(aktuellerSpieler, null, 0f, false, false);
 
             //Price
-            m_clData[i][2] = new ColorLabelEntry(aktuellerScoutEintrag.getPrice(),
+            m_clData[i][2] = new ColorLabelEntry(aktuellerScoutEintrag.getPrice()+"",
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 
@@ -453,63 +453,63 @@ public class TransferTableModel extends AbstractTableModel {
                                                  ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 
             //Marktwert
-            m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getTSI(),
+            m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getTSI()+"",
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 
             //Erfahrung
-            m_clData[i][7] = new ColorLabelEntry(aktuellerSpieler.getErfahrung(),
+            m_clData[i][7] = new ColorLabelEntry(aktuellerSpieler.getErfahrung()+"",
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
 
             //Form
-            m_clData[i][8] = new ColorLabelEntry(aktuellerSpieler.getForm(),
+            m_clData[i][8] = new ColorLabelEntry(aktuellerSpieler.getForm()+"",
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
 
             //Kondition
-            m_clData[i][9] = new ColorLabelEntry(aktuellerSpieler.getKondition(),
+            m_clData[i][9] = new ColorLabelEntry(aktuellerSpieler.getKondition()+"",
                                                  ColorLabelEntry.FG_STANDARD,
                                                  ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.RIGHT);
 
             //Torwart
-            m_clData[i][10] = new ColorLabelEntry(aktuellerSpieler.getTorwart(),
+            m_clData[i][10] = new ColorLabelEntry(aktuellerSpieler.getTorwart()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);
 
             //Verteidigung
-            m_clData[i][11] = new ColorLabelEntry(aktuellerSpieler.getVerteidigung(),
+            m_clData[i][11] = new ColorLabelEntry(aktuellerSpieler.getVerteidigung()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);
 
             //Spielaufbau
-            m_clData[i][12] = new ColorLabelEntry(aktuellerSpieler.getSpielaufbau(),
+            m_clData[i][12] = new ColorLabelEntry(aktuellerSpieler.getSpielaufbau()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);
 
             //Passpiel
-            m_clData[i][13] = new ColorLabelEntry(aktuellerSpieler.getPasspiel(),
+            m_clData[i][13] = new ColorLabelEntry(aktuellerSpieler.getPasspiel()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);
 
             //Flügelspiel
-            m_clData[i][14] = new ColorLabelEntry(aktuellerSpieler.getFluegelspiel(),
+            m_clData[i][14] = new ColorLabelEntry(aktuellerSpieler.getFluegelspiel()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);
 
             //Torschuss
-            m_clData[i][15] = new ColorLabelEntry(aktuellerSpieler.getTorschuss(),
+            m_clData[i][15] = new ColorLabelEntry(aktuellerSpieler.getTorschuss()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);
 
             //Standards
-            m_clData[i][16] = new ColorLabelEntry(aktuellerSpieler.getStandards(),
+            m_clData[i][16] = new ColorLabelEntry(aktuellerSpieler.getStandards()+"",
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELEREINZELWERTE,
                                                   SwingConstants.RIGHT);

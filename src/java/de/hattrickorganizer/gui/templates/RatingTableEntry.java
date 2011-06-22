@@ -41,6 +41,8 @@ public class RatingTableEntry extends TableEntry {
     private String m_sTooltip = "";
     private boolean m_bYellowStar;
     private float m_fRating;
+    private boolean isOpaque = true;
+    private Color bgColor = ColorLabelEntry.BG_STANDARD;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -81,8 +83,9 @@ public class RatingTableEntry extends TableEntry {
      */
     @Override
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
-        m_clComponent.setBackground((isSelected)?SpielerTableRenderer.SELECTION_BG:Color.WHITE);
-        m_clComponent.setOpaque(true);
+    	// FIXME
+        m_clComponent.setBackground((isSelected)?SpielerTableRenderer.SELECTION_BG:bgColor);
+        m_clComponent.setOpaque(isOpaque);
         
         return m_clComponent;
     }
@@ -310,4 +313,24 @@ public class RatingTableEntry extends TableEntry {
                                                                                     255, 255, 255));
         }	
     }
+
+	public boolean isOpaque() {
+		return isOpaque;
+	}
+
+	public void setOpaque(boolean isOpaque) {
+		this.isOpaque = isOpaque;
+		updateComponent();
+	}
+
+	public Color getBgColor() {
+		return bgColor;
+	}
+
+	public void setBgColor(Color bgColor) {
+		this.bgColor = bgColor;
+		updateComponent();
+	}
+    
+    
 }

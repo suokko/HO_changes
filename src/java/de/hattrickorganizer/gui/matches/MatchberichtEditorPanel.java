@@ -9,6 +9,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.StyleSheet;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -70,6 +71,8 @@ public class MatchberichtEditorPanel extends ImagePanel {
         style.addRule("a { color:#006400; font-weight:bold; }");
         style.addRule("BODY, P {font: " + gui.UserParameter.instance().schriftGroesse
                       + "pt sans-serif; color:#000000}");
+        String hexColor = Integer.toHexString(ThemeManager.getColor("ho.panel.background").getRGB());
+        style.addRule("body { background: "+hexColor.substring(2)+" }");
 
         final javax.swing.text.html.HTMLEditorKit kit = new javax.swing.text.html.HTMLEditorKit();
         kit.setStyleSheet(style);
@@ -77,7 +80,8 @@ public class MatchberichtEditorPanel extends ImagePanel {
         m_jepTextModusEditorPane = new JEditorPane("text/html", " ");
         m_jepTextModusEditorPane.setEditorKit(kit);
 
-        //m_jepTextModusEditorPane.setBackground ( new Color( 240, 240, 230 ) );
+        // TODO
+        m_jepTextModusEditorPane.setBackground (ThemeManager.getColor("ho.panel.background") );
         //m_jepTextModusEditorPane.addHyperlinkListener(this);
         m_jscTextModusScrollPane = new JScrollPane(m_jepTextModusEditorPane);
         m_jscTextModusScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

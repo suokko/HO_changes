@@ -485,7 +485,7 @@ final public class UserColumnFactory {
 					return new ColorLabelEntry(Helper.getImageIcon4Country(player.getNationalitaet()),
                             player.getNationalitaet(),
                             ColorLabelEntry.FG_STANDARD,
-                            ColorLabelEntry.BG_FLAGGEN, SwingConstants.CENTER);
+                            ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 				}
 			}; 
 			

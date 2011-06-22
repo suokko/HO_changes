@@ -69,7 +69,7 @@ public class MatchScoreTableModel extends AbstractMatchTableModel {
 
 			m_clData[score][0] =
 				new ColorLabelEntry(
-					score,
+						String.valueOf(score),
 					ColorLabelEntry.FG_STANDARD,
 					ColorLabelEntry.BG_STANDARD,
 					SwingConstants.LEFT);

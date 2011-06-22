@@ -65,6 +65,7 @@ import de.hattrickorganizer.gui.playeranalysis.SpielerAnalyseMainPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
 import de.hattrickorganizer.gui.utils.HOTheme;
@@ -1810,6 +1811,14 @@ public final class HOMainFrame extends JFrame
 		interuptionsWindow.setInfoText("Initialize Database");
 		DBZugriff.instance().loadUserParameter();
 
+		
+		//init Theme
+		try {
+			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
+		} catch (Exception e) {
+			HOLogger.instance().log(HOMainFrame.class, "Can´t loadTheme:" + UserParameter.instance().theme);
+			HOLogger.instance().log(HOMainFrame.class, "Use Classic Theme ");
+		}
 		//Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
 

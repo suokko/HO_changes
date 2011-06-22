@@ -1,6 +1,7 @@
 // %1645621351:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,100 +14,50 @@ import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
  * Zeigt die Finanzen für die aktuelle oder die vorherige Woche an
  */
-final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Refreshable {
+final class FinanzenPanel extends JPanel {
 	
 	private static final long serialVersionUID = 5220006612961140628L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
-	private final ColorLabelEntry m_jpAGehaelter = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_STANDARD,
-                                                                 SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpAGesamt = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                              ColorLabelEntry.BG_STANDARD,
-                                                              SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpAJugend = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                              ColorLabelEntry.BG_STANDARD,
-                                                              SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpASonstiges = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_STANDARD,
-                                                                 SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpAStadion = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                               ColorLabelEntry.BG_STANDARD,
-                                                               SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpATrainerstab = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                   ColorLabelEntry.BG_STANDARD,
-                                                                   SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpAZinsaufwendungen = new ColorLabelEntry("",
-                                                                        ColorLabelEntry.FG_STANDARD,
-                                                                        ColorLabelEntry.BG_STANDARD,
-                                                                        SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpEGesamt = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                              ColorLabelEntry.BG_STANDARD,
-                                                              SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpESonstiges = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_STANDARD,
-                                                                 SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpESponsoren = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_STANDARD,
-                                                                 SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpEZinsertraege = new ColorLabelEntry("",
-                                                                    ColorLabelEntry.FG_STANDARD,
-                                                                    ColorLabelEntry.BG_STANDARD,
-                                                                    SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpEZuschauer = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_STANDARD,
-                                                                 SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpGesamt = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                             ColorLabelEntry.BG_STANDARD,
-                                                             SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpKontostand = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                                 ColorLabelEntry.BG_STANDARD,
-                                                                 SwingConstants.LEFT);
+	private final ColorLabelEntry m_jpAGehaelter 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpAGesamt 			= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpAJugend 			= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpASonstiges 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpAStadion 			= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpATrainerstab 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpAZinsaufwendungen = new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpEGesamt 			= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpESonstiges 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpESponsoren 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpEZinsertraege 	= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpEZuschauer 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpGesamt 			= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpKontostand 		= new ColorLabelEntry("");
     private boolean m_bAktuelleFinanzen = true;
 
+    final GridBagLayout layout = new GridBagLayout();
+    final GridBagConstraints constraints = new GridBagConstraints();
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new FinanzenPanel object.
      *
-     * @param aktuelleFinanzen TODO Missing Constructuor Parameter Documentation
      */
     protected FinanzenPanel(boolean aktuelleFinanzen) {
         m_bAktuelleFinanzen = aktuelleFinanzen;
 
         initComponents();
-
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void reInit() {
-        setLabels();
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void refresh() {
-        setLabels();
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     */
-    private void setLabels() {
-        final de.hattrickorganizer.model.Finanzen finanzen = HOVerwaltung.instance().getModel()
-                                                                         .getFinanzen();
+    void setLabels() {
+        final Finanzen finanzen = HOVerwaltung.instance().getModel().getFinanzen();
         final float faktor = gui.UserParameter.instance().faktorGeld;
 
         if (m_bAktuelleFinanzen) {
@@ -143,18 +94,14 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
-        final GridBagLayout layout = new GridBagLayout();
-        final GridBagConstraints constraints = new GridBagConstraints();
+        
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
         constraints.insets = new Insets(4, 4, 4, 4);
 
-        this.setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBackground(ThemeManager.getColor("ho.panel.background"));
 
         if (m_bAktuelleFinanzen) {
             setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("DieseWoche")));
@@ -167,22 +114,9 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         setLayout(layout);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Kontostand"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
+        add(label,m_jpKontostand.getComponent(false),0,0);
 
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpKontostand.getComponent(false), constraints);
-        add(m_jpKontostand.getComponent(false));
-
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Einnahmen"),
-        		SwingConstants.CENTER);
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Einnahmen"),SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
@@ -191,8 +125,7 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         layout.setConstraints(label, constraints);
         add(label);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ausgaben"),
-        		SwingConstants.CENTER);
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ausgaben"),SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(Font.BOLD));
         constraints.gridx = 2;
         constraints.gridy = 1;
@@ -201,184 +134,40 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         add(label);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Zuschauer"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpEZuschauer.getComponent(false), constraints);
-        add(m_jpEZuschauer.getComponent(false));
+        add(label,m_jpEZuschauer.getComponent(false),0,2);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Stadion"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpAStadion.getComponent(false), constraints);
-        add(m_jpAStadion.getComponent(false));
-
+        add(label,m_jpAStadion.getComponent(false),2,2);
+        
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sponsoren"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpESponsoren.getComponent(false), constraints);
-        add(m_jpESponsoren.getComponent(false));
-
+        add(label,m_jpESponsoren.getComponent(false),0,3);
+        
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielergehaelter"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 3;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 3;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpAGehaelter.getComponent(false), constraints);
-        add(m_jpAGehaelter.getComponent(false));
-
+        add(label,m_jpAGehaelter.getComponent(false),2,3);
+ 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Zinsertraege"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpEZinsertraege.getComponent(false), constraints);
-        add(m_jpEZinsertraege.getComponent(false));
+        add(label,m_jpEZinsertraege.getComponent(false),0,4);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 4;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpAZinsaufwendungen.getComponent(false), constraints);
-        add(m_jpAZinsaufwendungen.getComponent(false));
+        add(label,m_jpAZinsaufwendungen.getComponent(false),2,4);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sonstiges"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 5;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 5;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpESonstiges.getComponent(false), constraints);
-        add(m_jpESonstiges.getComponent(false));
+        add(label,m_jpESonstiges.getComponent(false),0,5);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sonstiges"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 5;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 5;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpASonstiges.getComponent(false), constraints);
-        add(m_jpASonstiges.getComponent(false));
+        add(label,m_jpASonstiges.getComponent(false),2,5);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Trainerstab"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpATrainerstab.getComponent(false), constraints);
-        add(m_jpATrainerstab.getComponent(false));
+        add(label,m_jpATrainerstab.getComponent(false),2,6);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Jugend"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 7;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 7;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpAJugend.getComponent(false), constraints);
-        add(m_jpAJugend.getComponent(false));
+        add(label,m_jpAJugend.getComponent(false),2,7);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 8;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 1;
-        constraints.gridy = 8;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpEGesamt.getComponent(false), constraints);
-        add(m_jpEGesamt.getComponent(false));
+        add(label,m_jpEGesamt.getComponent(false),0,8);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamtausgaben"));
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 2;
-        constraints.gridy = 8;
-        constraints.gridwidth = 1;
-        layout.setConstraints(label, constraints);
-        add(label);
-
-        constraints.anchor = GridBagConstraints.EAST;
-        constraints.gridx = 3;
-        constraints.gridy = 8;
-        constraints.gridwidth = 1;
-        layout.setConstraints(m_jpAGesamt.getComponent(false), constraints);
-        add(m_jpAGesamt.getComponent(false));
+        add(label,m_jpAGesamt.getComponent(false),2,8);
 
         if (m_bAktuelleFinanzen) {
             label = new JLabel(HOVerwaltung.instance().getLanguageString("ErwarteterGewinnVerlust"));
@@ -399,5 +188,20 @@ final class FinanzenPanel extends JPanel implements de.hattrickorganizer.gui.Ref
         constraints.gridwidth = 1;
         layout.setConstraints(m_jpGesamt.getComponent(false), constraints);
         add(m_jpGesamt.getComponent(false));
+    }
+    
+    private void add(JLabel label,Component comp, int x, int y){
+    	constraints.anchor = GridBagConstraints.WEST;
+    	constraints.gridx = x;
+    	constraints.gridy = y;
+    	constraints.gridwidth = 1;
+    	layout.setConstraints(label, constraints);
+    	add(label);
+    	constraints.anchor = GridBagConstraints.EAST;
+    	constraints.gridx = x+1;
+    	constraints.gridy = y;
+    	constraints.gridwidth = 1;
+    	layout.setConstraints(comp, constraints);
+    	add(comp);
     }
 }

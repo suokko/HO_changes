@@ -128,7 +128,7 @@ public final class ThemeManager {
 	 
 	public Theme loadTheme(String name) throws Exception {
 		Theme theme = null;
-		File themeFile = new File(themesDir,name+".theme");
+		File themeFile = new File(themesDir,name);
 		if(themeFile.exists()){
 			ZipFile zipFile = new ZipFile(themeFile);
 			JAXBContext jc = JAXBContext.newInstance(Theme.class);

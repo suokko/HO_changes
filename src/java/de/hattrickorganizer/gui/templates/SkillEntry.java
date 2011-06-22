@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -30,7 +31,7 @@ public class SkillEntry extends TableEntry {
 
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;
     private Color m_clFGColor = ColorLabelEntry.FG_STANDARD;
-    private Color m_clFGColor2 = ColorLabelEntry.FG_GRAU;
+    private Color m_clFGColor2 = ThemeManager.getColor("gray");
     private JComponent m_clComponent;
     private JLabel m_jlLabel1;
     private JLabel m_jlLabel2;
@@ -68,10 +69,9 @@ public class SkillEntry extends TableEntry {
      * @param foreground2 TODO Missing Constructuor Parameter Documentation
      * @param background TODO Missing Constructuor Parameter Documentation
      */
-    public SkillEntry(double zahl, Color foreground, Color foreground2, Color background) {
+    public SkillEntry(double zahl, Color foreground, Color background) {
         m_dZahl = zahl;
         m_clFGColor = foreground;
-        m_clFGColor2 = foreground2;
         m_clBGColor = background;
         createText();
         createComponent();
