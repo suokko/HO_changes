@@ -1,6 +1,9 @@
 // %2768837177:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import gui.UserParameter;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -222,7 +225,7 @@ public final class SpielerLabelEntry extends TableEntry {
         	}
         	
             m_jlName.setOpaque(false);
-            m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
+            m_jlName.setForeground(getForegroundForSpieler(m_clPlayer));
 
             //Trikot
             //&& m_clSpielerPositionAktuell != null )
@@ -252,7 +255,7 @@ public final class SpielerLabelEntry extends TableEntry {
     @Override
 	public final void updateComponent() {
         if (m_clPlayer != null) {
-            m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
+            m_jlName.setForeground(getForegroundForSpieler(m_clPlayer));
 
             //Trikot
             //&& m_clSpielerPositionAktuell != null )
@@ -295,7 +298,7 @@ public final class SpielerLabelEntry extends TableEntry {
             if (m_clPlayer.isOld()) {
                 m_jlName.setForeground(ThemeManager.getColor("tableEntry.player.isOld.foreground"));//Color.GRAY);
             } else {
-                m_jlName.setForeground(ColorLabelEntry.getForegroundForSpieler(m_clPlayer));
+                m_jlName.setForeground(getForegroundForSpieler(m_clPlayer));
             }
 
             if (m_bCustomName == true) {
@@ -367,4 +370,37 @@ public final class SpielerLabelEntry extends TableEntry {
         }
     	
     }
+
+	//--------------static------------------------------
+	public static Color getForegroundForSpieler(plugins.ISpieler spieler) {
+	    Color color;
+	    UserParameter userParameter = gui.UserParameter.instance();
+	    
+	    //Auf Transfermarkt
+	    if (spieler.getTransferlisted() > 0) {
+	        color = userParameter.FG_TRANSFERMARKT;
+	    }
+	    //Verletzt
+	    else if (spieler.getVerletzt() > 0) {
+	        color = userParameter.FG_VERLETZT;
+	    }
+	    //Gesperrt
+	    else if (spieler.isGesperrt()) {
+	        color = userParameter.FG_GESPERRT;
+	    }
+	    //Angeschlagen
+	    else if (spieler.getVerletzt() == 0) {
+	        color = userParameter.FG_ANGESCHLAGEN;
+	    }
+	    //Zwei Karten
+	    else if (spieler.getGelbeKarten() == 2) {
+	        color = userParameter.FG_ZWEIKARTEN;
+	    }
+	    //Unverletzt
+	    else {
+	        color = userParameter.FG_STANDARD;
+	    }
+	
+	    return color;
+	}
 }

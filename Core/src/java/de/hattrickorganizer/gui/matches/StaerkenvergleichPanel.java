@@ -269,6 +269,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         constraints.weightx = 1.0;
         constraints.gridx = 1;
         constraints.gridy = 5;
+        m_clHeimTeamRating.setOpaque(false);
         layout.setConstraints(m_clHeimTeamRating.getComponent(false), constraints);
         panel.add(m_clHeimTeamRating.getComponent(false));
 
@@ -286,6 +287,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         constraints.weightx = 1.0;
         constraints.gridx = 4;
         constraints.gridy = 5;
+        m_clGastTeamRating.setOpaque(false);
         layout.setConstraints(m_clGastTeamRating.getComponent(false), constraints);
         panel.add(m_clGastTeamRating.getComponent(false));
 

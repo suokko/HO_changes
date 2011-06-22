@@ -1,6 +1,8 @@
 // %1451261274:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 
 import java.awt.BorderLayout;
@@ -17,7 +19,7 @@ import javax.swing.JScrollPane;
 /**
  * Zeigt die allgemeinen Informationen
  */
-public class InformationsPanel extends ImagePanel {
+public class InformationsPanel extends ImagePanel implements Refreshable {
 	
 	private static final long serialVersionUID = 1218148161116371590L;
 	
@@ -36,8 +38,26 @@ public class InformationsPanel extends ImagePanel {
      */
     public InformationsPanel() {
         initComponents();
+        RefreshManager.instance().registerRefreshable(this);
     }
 
+    
+    public final void reInit() {
+    	m_jpBasics.setLabels();
+    	m_jpAktuelleFinanzen.setLabels();
+    	m_jpVorwochenFinanzen.setLabels();
+    	m_jpSonstiges.setLabels();
+    	m_jpTrainerStab.setLabels();
+    }
+
+    public final void refresh() {
+    	m_jpBasics.setLabels();
+    	m_jpAktuelleFinanzen.setLabels();
+    	m_jpVorwochenFinanzen.setLabels();
+    	m_jpSonstiges.setLabels();
+    	m_jpTrainerStab.setLabels();
+    }
+    
     //~ Methods ------------------------------------------------------------------------------------
 
     /**

@@ -59,23 +59,12 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     private boolean m_bOnScreen = false;
     GridBagConstraints m_gbcConstraints = new GridBagConstraints();
 
-    //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * Creates a new SpielerSternePanel object.
-     *
-     * @param positionsID TODO Missing Constructuor Parameter Documentation
-     */
     protected SpielerSternePanel(int positionsID, JPanel parent, int x, int y) {
         this(positionsID, false, parent, x, y);
     }
 
-    /**
-     * Creates a new SpielerSternePanel object.
-     *
-     * @param positionsID TODO Missing Constructuor Parameter Documentation
-     * @param print TODO Missing Constructuor Parameter Documentation
-     */
+ 
     protected SpielerSternePanel(int positionsID, boolean print, JPanel parent, int x, int y) {
         super(print);
 
@@ -105,21 +94,12 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     	addPanel();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(ActionEvent e) {
         new SpielerDetailDialog(de.hattrickorganizer.gui.HOMainFrame.instance(), m_clMatchPlayer,
                                 m_clMatchLineup);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     protected final void clear() {
 
     	// We want empty frames in the on field positions hidden when empty
@@ -162,7 +142,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         
         final JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(ThemeManager.getColor("ho.panel.background"));
         panel.setOpaque(true);
 
         m_jbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_Spielerdetails"));
@@ -221,12 +201,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param lineup TODO Missing Method Parameter Documentation
-     * @param player TODO Missing Method Parameter Documentation
-     */
+
     public final void refresh(MatchLineup lineup, MatchLineupPlayer player) {
         m_clMatchLineup = lineup;
         m_clMatchPlayer = player;
@@ -291,12 +266,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     	m_jpParent.repaint();
     }
 
-    /**
-     * Setzt das Label
-     *
-     * @param posid TODO Missing Constructuor Parameter Documentation
-     * @param taktik TODO Missing Constructuor Parameter Documentation
-     */
+ 
     protected final void initLabel(int posid, byte taktik) {
         
     	switch (posid) {

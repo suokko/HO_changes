@@ -26,8 +26,8 @@ import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
@@ -311,7 +311,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
                 //CBFarben anpassen
                 if (spieler != null) {
-                    m_jcbPlayer.setForeground(ColorLabelEntry.getForegroundForSpieler(spieler));
+                    m_jcbPlayer.setForeground(SpielerLabelEntry.getForegroundForSpieler(spieler));
                 }
 
                 //Taktikwerte anpassen
@@ -468,7 +468,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
         //CBFarben anpassen
         if (aktuellerSpieler != null) {
-            m_jcbPlayer.setForeground(ColorLabelEntry.getForegroundForSpieler(aktuellerSpieler));
+            m_jcbPlayer.setForeground(SpielerLabelEntry.getForegroundForSpieler(aktuellerSpieler));
         }
 
         //Speicher freigeben
