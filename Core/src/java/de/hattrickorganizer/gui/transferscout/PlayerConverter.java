@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -20,13 +22,20 @@ public class PlayerConverter {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of all 21 ratings for the active language */
-    private List<String> skills;
-    private List<Integer> skillvalues;
-    private List<String> specialities;
-    private List<Integer> specialitiesvalues;
-    private int error;
+	final private List<String> skills;
+	final private List<Integer> skillvalues;
+	final private List<String> specialities;
+	final private List<Integer> specialitiesvalues;
+	final private static Set<String> NORMALCHARS = new HashSet<String>();
+	private int error;
     final HOVerwaltung homodel = HOVerwaltung.instance();
 
+	static {
+		for (int m = 97; m <= 122; m++) { // a-z
+			NORMALCHARS.add(new String(new char[] { (char) m }));
+		}
+	}
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -601,11 +610,22 @@ public class PlayerConverter {
                 k = mytext.indexOf(singlespeciality);
 
                 if (k >= 0) {
-                    final List<Object> pair = new ArrayList<Object>();
-                    pair.add(new Integer(k));
-                    pair.add(singlespeciality);
-                    pair.add(new Integer(p));
-                    foundspecialities.add(pair);
+                	// check letter after the found specialty. Skip specialty in case of a normal letter
+                	final int k2 = k + singlespeciality.length();
+                	boolean skip = false;
+                	if (k2 + 1 < mytext.length()) {
+                		final String specadd = mytext.substring(k2, k2+1);
+                		if (NORMALCHARS.contains(specadd)) {
+                			skip = true;
+                		}
+                	}
+                	if (!skip) {
+                		final List<Object> pair = new ArrayList<Object>();
+                		pair.add(new Integer(k));
+                		pair.add(singlespeciality);
+                		pair.add(new Integer(p));
+                		foundspecialities.add(pair);
+                	}
 
                     final char[] ct = new char[singlespeciality.length()];
 
