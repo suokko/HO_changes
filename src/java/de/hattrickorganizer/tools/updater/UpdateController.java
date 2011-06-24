@@ -423,35 +423,6 @@ public final class UpdateController {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
-	public static void updateUsers() {
-		try {
-			final String s =
-				MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/users.html", false, true);
-
-			final Properties pr = new Properties();
-			pr.load(new ByteArrayInputStream(s.getBytes()));
-
-			// HO Users Update
-			try {
-				int actual = Integer.parseInt(pr.getProperty("users"));
-				int total = Integer.parseInt(pr.getProperty("totusers"));
-				HOParameter.instance().HOUsers = actual;
-				HOParameter.instance().HOTotalUsers = total;
-				de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setUserInfo(
-					actual,
-					total);
-			} catch (RuntimeException e1) {
-				HOLogger.instance().log(UpdateController.class, "Error updating users: " + e1);
-			}
-
-		} catch (Exception e) {
-			HOLogger.instance().log(UpdateController.class,"Kein Connect zum update: " + e);
-		}
-	}
-
 	public static void updateEPV(float release) {
 		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
