@@ -12,8 +12,6 @@ import javax.swing.JTextField;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
-import de.hattrickorganizer.model.HOParameter;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -35,7 +33,6 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 
     private JProgressBar m_jpbProgressBar = new JProgressBar(0, 100);
     private JTextField m_jlInfoLabel = new JTextField();
-    private JTextField m_jlUserLabel = new JTextField();
     private JTextField m_jtfKurzInfoLabel = new JTextField();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -70,13 +67,6 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
     public final void setLangInfoText(String text, Color zeichenfarbe) {
         m_jlInfoLabel.setText(text);
         m_jlInfoLabel.setForeground(zeichenfarbe);
-    }
-
-    /**
-     * Sets the amount of HO Users in the bottom panel.
-     */
-    public final void setUserInfo(int actual, int all) {
-        m_jlUserLabel.setText(actual + " " + HOVerwaltung.instance().getLanguageString("Info.users") + " ");
     }
 
     /**
@@ -163,15 +153,5 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
         layout.setConstraints(m_jpbProgressBar, constraint);
         add(m_jpbProgressBar);
 
-        setUserInfo(HOParameter.instance().HOUsers, HOParameter.instance().HOTotalUsers);
-        m_jlUserLabel.setEditable(false);
-        m_jlUserLabel.setOpaque(false);
-        constraint.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 1.0;
-        constraint.weighty = 0.0;
-        constraint.gridx = 3;
-        constraint.gridy = 0;
-        layout.setConstraints(m_jlUserLabel, constraint);
-        add(m_jlUserLabel);
     }
 }
