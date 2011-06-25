@@ -1,7 +1,6 @@
 // %3065356162:de.hattrickorganizer.credits%
 package de.hattrickorganizer.credits;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -15,7 +14,6 @@ public class Ball {
     //~ Instance fields ----------------------------------------------------------------------------
 
     //private AffineTransformation at = new AffineTransformation();
-    private Color farbe;
     private boolean goDown = true;
     private boolean goRight = true;
     private float x = 10.0f;
@@ -46,7 +44,6 @@ public class Ball {
             goDown = false;
         }
 
-        farbe = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
     }
 
     //~ Methods ------------------------------------------------------------------------------------

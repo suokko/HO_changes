@@ -127,7 +127,7 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
      */
     protected JCheckBox getCheckbox(UserColumn column) {
         JCheckBox tmp = new JCheckBox();
-        tmp.setBackground(Color.WHITE);
+        tmp.setOpaque(false);
         tmp.setSelected(column.isDisplay());
         tmp.setHorizontalAlignment(SwingConstants.CENTER);
         if(column.isEditable())

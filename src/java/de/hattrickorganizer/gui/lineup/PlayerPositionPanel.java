@@ -253,7 +253,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 m_jcbPlayer.setEnabled(false);
             }
 
-            m_jcbPlayer.setBackground(ThemeManager.getColor("ho.combobox.background"));// Color.white
+            m_jcbPlayer.setBackground(ThemeManager.getColor("tableEntry.background"));// Color.white
 
             //Nur anzeigen, wenn mehr als eine Taktik möglich ist
             if (m_jcbTactic.getItemCount() > 1) {
@@ -264,7 +264,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                     m_jcbTactic.setEnabled(false);
                 }
 
-                m_jcbTactic.setBackground(ThemeManager.getColor("ho.combobox.background"));//Color.white);
+                m_jcbTactic.setBackground(ThemeManager.getColor("tableEntry.background"));//Color.white);
                 jlp.add(m_jcbTactic, constraints, 1);
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH,PLAYER_POSITION_PANEL_HEIGHT_FULL));
             } else {

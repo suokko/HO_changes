@@ -1,7 +1,6 @@
 // %3815329211:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -462,7 +461,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     }
 
     private void markSelectedTeam(JLabel team, String teamName) {
-        if (teamName.equals(LigaTabellePanel.MARKIERTER_VEREIN)) {
+        if (teamName.equals(LigaTabellePanel.getMarkierterVerein())) {
             team.setOpaque(true);
             team.setBackground(SpielerTableRenderer.SELECTION_BG);
         }
@@ -481,7 +480,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
     private void resetMarkup(JLabel label) {
         label.setFont(label.getFont().deriveFont(Font.PLAIN));
-        label.setForeground(Color.black);
+        label.setForeground(ThemeManager.getColor("ho.label.foreground"));
         label.setOpaque(false);
     }
 }

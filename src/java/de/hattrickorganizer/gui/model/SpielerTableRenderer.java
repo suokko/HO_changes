@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 
@@ -17,7 +18,7 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
 public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    public static java.awt.Color SELECTION_BG = ThemeManager.getColor("ho.table.selection.background");//new java.awt.Color(235, 235, 235);
+    public static Color SELECTION_BG = ThemeManager.getColor("ho.table.selection.background");//new java.awt.Color(235, 235, 235);
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
                                                                   boolean isSelected,
                                                                   boolean hasFocus, int row,
                                                                   int column) {
+
         if (value instanceof TableEntry) {
             final JComponent component = ((TableEntry) value).getComponent(isSelected);
 
@@ -51,13 +53,7 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
         else if (value instanceof JComponent) {
             final JComponent component = (JComponent) value;
             component.setOpaque(true);
-
-            if (isSelected) {
-                component.setBackground(SELECTION_BG);
-            } else {
-                component.setBackground(Color.white);
-            }
-
+            component.setBackground(isSelected?SELECTION_BG:ColorLabelEntry.BG_STANDARD);
             return component;
         }  else {
             JComponent component;
@@ -69,12 +65,7 @@ public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer
             }
 
             component.setOpaque(true);
-
-            if (isSelected) {
-                component.setBackground(Color.red);
-            } else {
-                component.setBackground(Color.red);
-            }
+            component.setBackground(isSelected?SELECTION_BG:ColorLabelEntry.BG_STANDARD);
 
             return component;
         }

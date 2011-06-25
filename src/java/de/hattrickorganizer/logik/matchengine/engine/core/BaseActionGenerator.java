@@ -1,12 +1,9 @@
 // %1762772776:de.hattrickorganizer.logik.matchengine.engine.core%
 package de.hattrickorganizer.logik.matchengine.engine.core;
 
+import plugins.IMatchDetails;
 import de.hattrickorganizer.logik.matchengine.TeamData;
 import de.hattrickorganizer.logik.matchengine.engine.common.TeamGameData;
-
-import plugins.IMatchDetails;
-
-import java.text.DecimalFormat;
 
 /**
  * TODO Missing Class Documentation
@@ -14,10 +11,6 @@ import java.text.DecimalFormat;
  * @author TODO Author Name
  */
 public class BaseActionGenerator {
-	//~ Instance fields ----------------------------------------------------------------------------
-
-	/** TODO Missing Parameter Documentation */
-	DecimalFormat df = new DecimalFormat("##0.#");
 
 	//~ Methods ------------------------------------------------------------------------------------
 

@@ -21,12 +21,12 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
 import plugins.ISpieler;
-
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
@@ -164,7 +164,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
                                                       table.getPreferredSize().height + 70));
             scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-            scrollPane.getViewport().setBackground(Color.white);
+            scrollPane.getViewport().setBackground(Color.WHITE);
 
             panel.add(scrollPane, BorderLayout.NORTH);
 
@@ -176,7 +176,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
                                                       table2.getPreferredSize().height + 70));
             scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-            scrollPane.getViewport().setBackground(Color.white);
+            scrollPane.getViewport().setBackground(Color.WHITE);
 
             panel.add(scrollPane, BorderLayout.SOUTH);
 
@@ -293,7 +293,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
         m_jcbSpieler.setMaximumSize(new Dimension(200, 25));
         m_jcbSpieler.setSize(200, 25);
         m_jcbSpieler.setLocation(10, 5);
-        m_jcbSpieler.setBackground(Color.white);
+        m_jcbSpieler.setBackground(ThemeManager.getColor("tableEntry.background"));
 
         panel.add(m_jcbSpieler);
 

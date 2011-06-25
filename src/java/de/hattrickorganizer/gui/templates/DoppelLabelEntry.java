@@ -1,6 +1,9 @@
 // %1884453469:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import java.awt.Color;
+
+import javax.swing.JComponent;
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
@@ -26,9 +29,8 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * Creates a new DoppelLabelEntry object.
      *
-     * @param color TODO Missing Constructuor Parameter Documentation
      */
-    public DoppelLabelEntry(java.awt.Color color) {
+    public DoppelLabelEntry(Color color) {
         super();
         m_clLinks = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, color,
                                         SwingConstants.RIGHT);
@@ -40,8 +42,6 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * Creates a new DoppelLabelEntry object.
      *
-     * @param links TODO Missing Constructuor Parameter Documentation
-     * @param rechts TODO Missing Constructuor Parameter Documentation
      */
     public DoppelLabelEntry(TableEntry links, TableEntry rechts) {
         m_clLinks = links;
@@ -49,22 +49,13 @@ public class DoppelLabelEntry extends TableEntry {
         createComponent();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param isSelected TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
-	public final javax.swing.JComponent getComponent(boolean isSelected) {
+	public final JComponent getComponent(boolean isSelected) {
         m_clComponent.removeAll();
         m_clComponent.setOpaque(false);
 
-        final javax.swing.JComponent links = m_clLinks.getComponent(isSelected);
-        final javax.swing.JComponent rechts = m_clRechts.getComponent(isSelected);
+        final JComponent links = m_clLinks.getComponent(isSelected);
+        final JComponent rechts = m_clRechts.getComponent(isSelected);
 
         m_clComponent.add(links);
         m_clComponent.add(rechts);
@@ -72,12 +63,6 @@ public class DoppelLabelEntry extends TableEntry {
         return m_clComponent;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param links TODO Missing Method Parameter Documentation
-     * @param rechts TODO Missing Method Parameter Documentation
-     */
     public final void setLabels(TableEntry links, TableEntry rechts) {
         m_clLinks = links;
         m_clRechts = rechts;
@@ -87,7 +72,6 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * Nur benutzen, wenn es auch ein ColorLabelEntry ist!
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final ColorLabelEntry getLinks() {
         return (ColorLabelEntry) m_clLinks;
@@ -96,46 +80,25 @@ public class DoppelLabelEntry extends TableEntry {
     /**
      * Nur benutzen, wenn es auch ein ColorLabelEntry ist!
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final ColorLabelEntry getRechts() {
         return (ColorLabelEntry) m_clRechts;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final TableEntry getTableEntryLinks() {
         return m_clLinks;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final TableEntry getTableRechts() {
         return m_clRechts;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	public final void clear() {
         m_clLinks.clear();
         m_clRechts.clear();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public int compareTo(IHOTableEntry obj) {
         if (obj instanceof DoppelLabelEntry) {
@@ -146,19 +109,11 @@ public class DoppelLabelEntry extends TableEntry {
         return 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	public final void createComponent() {
-        DoppelLabel panel = new DoppelLabel();
-
-        m_clComponent = panel;
+        m_clComponent = new DoppelLabel();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	public void updateComponent() {
         m_clLinks.updateComponent();

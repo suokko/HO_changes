@@ -190,7 +190,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
                                                       table.getPreferredSize().height + 70));
             scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-            scrollPane.getViewport().setBackground(Color.white);
+            scrollPane.getViewport().setBackground(Color.WHITE);
 
             final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
                                                                                    .getInstance();

@@ -784,7 +784,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initNormalLabel(4,0,constraints,layout,panel,label);
         //m_jcbTeamInfoSmilie.setPreferredSize ( new Dimension( 40, 16 ) );
         m_jcbTeamInfoSmilie.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbTeamInfoSmilie.setBackground(ThemeManager.getColor("ho.combobox.background"));
+        m_jcbTeamInfoSmilie.setBackground(ThemeManager.getColor("tableEntry.background"));
         m_jcbTeamInfoSmilie.setRenderer(new SmilieRenderer());
         m_jcbTeamInfoSmilie.addItemListener(this);
         setPosition(constraints,5,0);
@@ -801,7 +801,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jcbManuellerSmilie.setMaximumRowCount(10);
         //m_jcbManuellerSmilie.setPreferredSize( new Dimension( 40, 16 ) );
         m_jcbManuellerSmilie.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbManuellerSmilie.setBackground(ThemeManager.getColor("ho.combobox.background"));
+        m_jcbManuellerSmilie.setBackground(ThemeManager.getColor("tableEntry.background"));
         m_jcbManuellerSmilie.setRenderer(new SmilieRenderer());
         m_jcbManuellerSmilie.addItemListener(this);
         setPosition(constraints,5,1);
@@ -830,7 +830,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jcbUserPos.setMaximumRowCount(20);
         //m_jcbUserPos.setPreferredSize( new Dimension( 40, 16 ) );
         m_jcbUserPos.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbUserPos.setBackground(ThemeManager.getColor("ho.combobox.background"));
+        m_jcbUserPos.setBackground(ThemeManager.getColor("tableEntry.background"));
         m_jcbUserPos.addItemListener(this);
         setPosition(constraints,5,5);
         constraints.weightx = 1.0;
@@ -902,6 +902,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
 
         m_jtaNotizen.addFocusListener(this);
         m_jtaNotizen.setEditable(false);
+        m_jtaNotizen.setBackground(ColorLabelEntry.BG_STANDARD);
 
         final JPanel panel2 = new ImagePanel();
         panel2.setLayout(new BorderLayout());

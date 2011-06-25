@@ -12,6 +12,7 @@ import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.RasenPanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
@@ -51,7 +52,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         final JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString("BitteWarten"),
                                         SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(java.awt.Font.BOLD, 24f));
-        label.setForeground(java.awt.Color.white);
+        label.setForeground(ThemeManager.getColor("ho.label.onGreen.foreground"));
         constraints.gridx = 0;
         constraints.gridy = 0;
         layout.setConstraints(label, constraints);

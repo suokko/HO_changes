@@ -1,47 +1,29 @@
 // %1968012293:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
  * Renderer für eine Combobox mit SpielerCBItems
  */
-public class WetterRenderer implements javax.swing.ListCellRenderer {
+public class WetterRenderer implements ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
     public ColorLabelEntry m_clEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                           ColorLabelEntry.BG_STANDARD,
+    												ThemeManager.getColor("tableEntry.background"),
                                                            SwingConstants.LEFT);
 
-    /** TODO Missing Parameter Documentation */
     public javax.swing.JLabel m_jlLeer = new javax.swing.JLabel(" ");
-    private javax.swing.ImageIcon m_clBewoelkt = de.hattrickorganizer.tools.Helper
-                                                 .getImageIcon4Wetter(IMatchDetails.WETTER_BEWOELKT);
-    private javax.swing.ImageIcon m_clLeichtBewoelkt = de.hattrickorganizer.tools.Helper
-                                                       .getImageIcon4Wetter(IMatchDetails.WETTER_WOLKIG);
-    private javax.swing.ImageIcon m_clRegen = de.hattrickorganizer.tools.Helper.getImageIcon4Wetter(IMatchDetails.WETTER_REGEN);
-    private javax.swing.ImageIcon m_clSonnig = de.hattrickorganizer.tools.Helper
-                                               .getImageIcon4Wetter(IMatchDetails.WETTER_SONNE);
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param jList TODO Missing Method Parameter Documentation
-     * @param obj TODO Missing Method Parameter Documentation
-     * @param index TODO Missing Method Parameter Documentation
-     * @param isSelected TODO Missing Method Parameter Documentation
-     * @param cellHasFocus TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final java.awt.Component getListCellRendererComponent(javax.swing.JList jList,
                                                                  Object obj, int index,
                                                                  boolean isSelected,
@@ -49,19 +31,19 @@ public class WetterRenderer implements javax.swing.ListCellRenderer {
         if (obj instanceof CBItem && (obj != null)) {
             switch (((CBItem) obj).getId()) {
                 case ISpieler.SONNIG:
-                    m_clEntry.setIcon(m_clSonnig);
+                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_SONNE));
                     break;
 
                 case ISpieler.LEICHTBEWOELKT:
-                    m_clEntry.setIcon(m_clLeichtBewoelkt);
+                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_WOLKIG));
                     break;
 
                 case ISpieler.BEWOELKT:
-                    m_clEntry.setIcon(m_clBewoelkt);
+                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_BEWOELKT));
                     break;
 
                 case ISpieler.REGEN:
-                    m_clEntry.setIcon(m_clRegen);
+                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_REGEN));
                     break;
             }
 
@@ -72,7 +54,7 @@ public class WetterRenderer implements javax.swing.ListCellRenderer {
             if (isSelected) {
                 m_jlLeer.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
             } else {
-                m_jlLeer.setBackground(java.awt.Color.white);
+                m_jlLeer.setBackground(ThemeManager.getColor("tableEntry.background"));
             }
 
             return m_jlLeer;

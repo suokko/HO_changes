@@ -15,6 +15,7 @@ import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
@@ -122,7 +123,7 @@ final public class UserColumnFactory {
 		matchDetailsColumnsArray[0] = new MatchDetailsColumn(550,"Wetter",30){
 			@Override
 			public TableEntry getTableEntry(Matchdetails matchdetails){
-				return new ColorLabelEntry(de.hattrickorganizer.tools.Helper
+				return new ColorLabelEntry(Helper
                         .getImageIcon4Wetter(matchdetails.getWetterId()),
                         matchdetails.getWetterId(),
                         ColorLabelEntry.FG_STANDARD,
@@ -346,7 +347,7 @@ final public class UserColumnFactory {
 				ColorLabelEntry entry = new ColorLabelEntry(match.getHeimName(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.LEFT);
 				entry.setFGColor((match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?MatchesColumnModel.FG_EIGENESTEAM:Color.black);
+                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
 				
 				if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) 
 					entry.setIcon(Helper.NOIMAGEICON);
@@ -366,7 +367,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.LEFT);
 				entry.setFGColor((spielerCBItem.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?MatchesColumnModel.FG_EIGENESTEAM:Color.black);
+                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
 				return entry;
 			}
 			
@@ -384,7 +385,7 @@ final public class UserColumnFactory {
 				ColorLabelEntry entry = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.LEFT);
 				entry.setFGColor((match.getGastID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?MatchesColumnModel.FG_EIGENESTEAM:Color.black);
+                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
 				
 				if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) 
 					entry.setIcon(Helper.NOIMAGEICON);
@@ -405,7 +406,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.LEFT);
 				entry.setFGColor((spielerCBItem.getGastID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?MatchesColumnModel.FG_EIGENESTEAM:Color.black);
+                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
 				return entry;
 			}
 			

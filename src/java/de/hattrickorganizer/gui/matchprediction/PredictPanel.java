@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.tools.HOLogger;
-
 import plugins.IMatchResult;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -184,8 +184,8 @@ public class PredictPanel extends JPanel {
      */
     private void initComponents() {
         setLayout(new BorderLayout());
-        setBackground(Color.white);
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
 
         final JPanel toppanel = new JPanel();
         toppanel.setOpaque(false);

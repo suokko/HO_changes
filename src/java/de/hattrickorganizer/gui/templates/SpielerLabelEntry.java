@@ -102,16 +102,8 @@ public final class SpielerLabelEntry extends TableEntry {
      */
     @Override
 	public final JComponent getComponent(boolean isSelected) {
-        //Alte Komponente wiederverwenden
-        if (isSelected) {
-            m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
-        } else {
-            m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(ColorLabelEntry.BG_STANDARD);
-        }
-
-        return m_clComponent;
+    	 m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
+         return m_clComponent;
     }
 
     /**

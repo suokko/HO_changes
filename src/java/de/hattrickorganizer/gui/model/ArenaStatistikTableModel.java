@@ -8,7 +8,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
 import plugins.IMatchKurzInfo;
-import plugins.IMatchLineup;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ProgressbarTableEntry;
 import de.hattrickorganizer.model.Finanzen;
@@ -28,33 +27,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7187251269604772672L;
 
-    public static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
-
-    //	League match.
-    public static final Color LIGASPIEL = new Color(255, 255, 200);
-    //	Qualification match.
-    public static final Color QUALISPIEL = new Color(255, 200, 200);
-    //	Cup match (standard league cup).
-    public static final Color POKALSPIEL = new Color(200, 255, 200);
-    //	Friendly (normal rules).
-    public static final Color TESTSPIEL = Color.white;
-    //	Friendly (cup rules).
-    public static final Color TESTPOKALSPIEL = Color.white;
-    //	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).
-    public static final Color INTSPIEL = Color.lightGray;
-    //	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).
-    public static final Color INTCUPSPIEL = Color.lightGray;
-    //	International friendly (normal rules).
-    public static final Color INT_TESTSPIEL = Color.white;
-    //	International friendly (cup rules).
-    public static final Color INT_TESTCUPSPIEL = Color.white;
-    //	National teams competition match (normal rules).
-    public static final Color LAENDERSPIEL = new Color(220, 220, 255);
-    //	National teams competition match (cup rules).
-    public static final Color LAENDERCUPSPIEL = new Color(220, 220, 255);
-    //	National teams friendly.
-    public static final Color TESTLAENDERSPIEL = new Color(220, 220, 255);
-
+ 
     //~ Instance fields ----------------------------------------------------------------------------
 
     public String[] m_sToolTipStrings = {
@@ -160,13 +133,6 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
      */
     public final int getColumnCount() {
         return m_sColumnNames.length;
-
-        /*
-           if ( m_clData!=null && m_clData.length > 0 && m_clData[0] != null )
-               return m_clData[0].length;
-           else
-               return 0;
-         */
     }
 
     /**
@@ -247,52 +213,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
         initData();
     }
 
-    /**
-     * Get the color for a certain match type.
-     */
-    private Color getColor4Matchtyp(int typ) {
-        switch (typ) {
-            case IMatchLineup.LIGASPIEL:
-                return LIGASPIEL;
 
-            case IMatchLineup.POKALSPIEL:
-                return POKALSPIEL;
-
-            case IMatchLineup.QUALISPIEL:
-                return QUALISPIEL;
-
-            case IMatchLineup.LAENDERCUPSPIEL:
-                return LAENDERCUPSPIEL;
-
-            case IMatchLineup.INTCUPSPIEL:
-                return INTCUPSPIEL;
-
-            case IMatchLineup.LAENDERSPIEL:
-                return LAENDERSPIEL;
-
-            case IMatchLineup.INTSPIEL:
-                return INTSPIEL;
-
-            case IMatchLineup.INT_TESTCUPSPIEL:
-                return INT_TESTCUPSPIEL;
-
-            case IMatchLineup.INT_TESTSPIEL:
-                return INT_TESTSPIEL;
-
-            case IMatchLineup.TESTLAENDERSPIEL:
-                return TESTLAENDERSPIEL;
-
-            case IMatchLineup.TESTPOKALSPIEL:
-                return TESTPOKALSPIEL;
-
-            case IMatchLineup.TESTSPIEL:
-                return TESTSPIEL;
-
-            //Fehler?
-            default:
-                return Color.white;
-        }
-    }
 
     /**
      * Gibt eine String zurück, der die Tore darstellt
@@ -336,7 +257,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 			for (int i = 0; i < m_clMatches.length; i++) {
 			    final ArenaStatistikModel match = m_clMatches[i];
-			    final Color background = getColor4Matchtyp(match.getMatchTyp());
+			    final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 			    //Datum
 			    m_clData[i][0] = new ColorLabelEntry(match.getMatchDateAsTimestamp().getTime(),
 			    		DateFormat.getDateTimeInstance().format(match.getMatchDateAsTimestamp()),
