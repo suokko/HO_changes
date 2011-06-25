@@ -8,7 +8,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
@@ -16,96 +18,87 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
  * Das StatistikPanel
  */
-public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
-    implements ActionListener, FocusListener, ItemListener, de.hattrickorganizer.gui.Refreshable
+public class AlleSpielerStatistikPanel extends ImagePanel
+    implements ActionListener, FocusListener, ItemListener, Refreshable
 {
 	private static final long serialVersionUID = -6588840565958987842L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Color FUEHRUNG = Color.gray;
-    private static Color ERFAHRUNG = Color.darkGray;
-    private static Color FORM = Color.pink;
-    private static Color KONDITION = Color.magenta;
-    private static Color TORWART = Color.black;
-    private static Color VERTEIDIGUNG = Color.blue;
-    private static Color SPIELAUFBAU = Color.yellow;
-    private static Color PASSPIEL = Color.green;
-    private static Color FLUEGEL = Color.orange;
-    private static Color TORSCHUSS = Color.red;
-    private static Color STANDARDS = Color.cyan;
+    private Color leadershipColor 	= ThemeManager.getColor("ho.statistics.leadership");//Color.gray;
+    private Color experienceColor 	= ThemeManager.getColor("ho.statistics.experience");//Color.darkGray;
+    private Color formColor 		= ThemeManager.getColor("ho.statistics.form");//Color.pink;
+    private Color staminaColor 		= ThemeManager.getColor("ho.statistics.stamina");//Color.magenta;
+    private Color keeperColor 		= ThemeManager.getColor("ho.statistics.keeper");//Color.black;
+    private Color defendingColor 	= ThemeManager.getColor("ho.statistics.defending");//Color.blue;
+    private Color playmakingColor 	= ThemeManager.getColor("ho.statistics.playmaking");//Color.yellow;
+    private Color passingColor 		= ThemeManager.getColor("ho.statistics.passing");//Color.green;
+    private Color wingerColor 		= ThemeManager.getColor("ho.statistics.winger");//Color.orange;
+    private Color scoringColor 		= ThemeManager.getColor("ho.statistics.scoring");//Color.red;
+    private Color setPiecesColor 	= ThemeManager.getColor("ho.statistics.setPieces");//Color.cyan;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Erfahrung"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(ERFAHRUNG),
-                                                             gui.UserParameter.instance().statistikAlleErfahrung);
-    private ImageCheckbox m_jchFluegel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                                           de.hattrickorganizer.tools.Helper
-                                                           .getImageIcon4Color(FLUEGEL),
-                                                           gui.UserParameter.instance().statistikAlleFluegel);
-    private ImageCheckbox m_jchForm = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form"),
-                                                        de.hattrickorganizer.tools.Helper
-                                                        .getImageIcon4Color(FORM),
-                                                        gui.UserParameter.instance().statistikAlleForm);
-    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fuehrung"),
-                                                            de.hattrickorganizer.tools.Helper
-                                                            .getImageIcon4Color(FUEHRUNG),
-                                                            gui.UserParameter.instance().statistikAlleFuehrung);
-    private ImageCheckbox m_jchKondition = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.stamina"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(KONDITION),
-                                                             gui.UserParameter.instance().statistikAlleKondition);
-    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.passing"),
-                                                            de.hattrickorganizer.tools.Helper
-                                                            .getImageIcon4Color(PASSPIEL),
-                                                            gui.UserParameter.instance().statistikAllePasspiel);
-    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.playmaking"),
-                                                               de.hattrickorganizer.tools.Helper
-                                                               .getImageIcon4Color(SPIELAUFBAU),
-                                                               gui.UserParameter.instance().statistikAlleSpielaufbau);
-    private ImageCheckbox m_jchStandards = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(STANDARDS),
-                                                             gui.UserParameter.instance().statistikAlleStandards);
-    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.scoring"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(TORSCHUSS),
-                                                             gui.UserParameter.instance().statistikAlleTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.keeper"),
-                                                           de.hattrickorganizer.tools.Helper
-                                                           .getImageIcon4Color(TORWART),
-                                                           gui.UserParameter.instance().statistikAlleTorwart);
-    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("skill.defending"),
-                                                                de.hattrickorganizer.tools.Helper
-                                                                .getImageIcon4Color(VERTEIDIGUNG),
-                                                                gui.UserParameter.instance().statistikAlleVerteidigung);
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
+    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Erfahrung"),
+                                                             experienceColor,gui.UserParameter.instance().statistikAlleErfahrung);
+    private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+                                                           wingerColor,gui.UserParameter.instance().statistikAlleFluegel);
+    private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
+                                                        formColor,gui.UserParameter.instance().statistikAlleForm);
+    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
+                                                            leadershipColor,gui.UserParameter.instance().statistikAlleFuehrung);
+    private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.stamina"),
+                                                             staminaColor,gui.UserParameter.instance().statistikAlleKondition);
+    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.passing"),
+                                                            passingColor,gui.UserParameter.instance().statistikAllePasspiel);
+    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
+                                                               playmakingColor,gui.UserParameter.instance().statistikAlleSpielaufbau);
+    private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
+                                                             setPiecesColor,gui.UserParameter.instance().statistikAlleStandards);
+    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.scoring"),
+                                                             scoringColor,gui.UserParameter.instance().statistikAlleTorschuss);
+    private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.keeper"),
+                                                           keeperColor,gui.UserParameter.instance().statistikAlleTorwart);
+    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
+                                                                defendingColor,gui.UserParameter.instance().statistikAlleVerteidigung);
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikAlleBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikAlleHilfslinien);
-    private JComboBox m_jcbGruppe = new JComboBox(de.hattrickorganizer.tools.Helper.TEAMSMILIES);
-    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikAnzahlHRF
-                                                       + "", 5);
+    private JComboBox m_jcbGruppe = new JComboBox(Helper.TEAMSMILIES);
+    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikAnzahlHRF + "", 5);
     private StatistikPanel m_clStatistikPanel;
     private boolean m_bInitialisiert;
+    
+    final GridBagLayout layout = new GridBagLayout();
+    final GridBagConstraints constraints = new GridBagConstraints();
+    final JPanel panel2 = new ImagePanel();
+    final GridBagLayout layout2 = new GridBagLayout();
+    final GridBagConstraints constraints2 = new GridBagConstraints();
+
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -113,29 +106,18 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
      * Creates a new AlleSpielerStatistikPanel object.
      */
     public AlleSpielerStatistikPanel() {
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
 
         initComponents();
 
         //initStatistik();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param init TODO Missing Method Parameter Documentation
-     */
     public final void setInitialisiert(boolean init) {
         m_bInitialisiert = init;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isInitialisiert() {
         return m_bInitialisiert;
     }
@@ -188,39 +170,20 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void doInitialisieren() {
         initStatistik();
         m_bInitialisiert = true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
-    public void focusGained(java.awt.event.FocusEvent focusEvent) {
+    public void focusGained(FocusEvent focusEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
-    public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
-                                                   ((JTextField) focusEvent.getSource()), false);
+    public final void focusLost(FocusEvent focusEvent) {
+        Helper.parseInt(HOMainFrame.instance(),((JTextField) focusEvent.getSource()), false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
-        if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+    public final void itemStateChanged(ItemEvent itemEvent) {
+        if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
             initStatistik();
         }
     }
@@ -232,30 +195,20 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         //initStatistik();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void refresh() {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         JLabel label;
 
-        final GridBagLayout layout = new GridBagLayout();
-        final GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
         constraints.insets = new Insets(2, 0, 2, 0);
 
         setLayout(layout);
 
-        final JPanel panel2 = new ImagePanel();
-        final GridBagLayout layout2 = new GridBagLayout();
-        final GridBagConstraints constraints2 = new GridBagConstraints();
+        
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.weightx = 0.0;
         constraints2.weighty = 0.0;
@@ -293,11 +246,11 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
         layout2.setConstraints(m_jbUbernehmen, constraints2);
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gruppe"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gruppe"));
         constraints2.gridx = 0;
         constraints2.gridy = 3;
         constraints2.gridwidth = 2;
@@ -306,52 +259,32 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridx = 0;
         constraints2.gridy = 4;
         m_jcbGruppe.setRenderer(new de.hattrickorganizer.gui.model.SmilieRenderer());
-        m_jcbGruppe.setBackground(Color.white);
+        m_jcbGruppe.setBackground(ThemeManager.getColor("tableEntry.background"));
         m_jcbGruppe.setMaximumRowCount(25);
         m_jcbGruppe.addItemListener(this);
         m_jcbGruppe.setMaximumSize(new Dimension(200, 25));
         layout2.setConstraints(m_jcbGruppe, constraints2);
         panel2.add(m_jcbGruppe);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 5;
-        m_jchHilflinien.setOpaque(false);
-        m_jchHilflinien.setBackground(Color.white);
         m_jchHilflinien.addActionListener(this);
-        layout2.setConstraints(m_jchHilflinien, constraints2);
-        panel2.add(m_jchHilflinien);
+        m_jchHilflinien.setOpaque(false);
+        add(m_jchHilflinien,5);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 6;
-        m_jchBeschriftung.setOpaque(false);
-        m_jchBeschriftung.setBackground(Color.white);
         m_jchBeschriftung.addActionListener(this);
-        layout2.setConstraints(m_jchBeschriftung, constraints2);
-        panel2.add(m_jchBeschriftung);
+        m_jchBeschriftung.setOpaque(false);
+        add(m_jchBeschriftung,6);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 7;
         constraints2.weightx = 0.0;
-        m_jchFuehrung.setOpaque(false);
         m_jchFuehrung.addActionListener(this);
-        layout2.setConstraints(m_jchFuehrung, constraints2);
-        panel2.add(m_jchFuehrung);
+        add(m_jchFuehrung,7);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 8;
-        m_jchErfahrung.setOpaque(false);
         m_jchErfahrung.addActionListener(this);
-        layout2.setConstraints(m_jchErfahrung, constraints2);
-        panel2.add(m_jchErfahrung);
+        add(m_jchErfahrung,8);
 
+        
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 9;
-        m_jchForm.setOpaque(false);
         m_jchForm.addActionListener(this);
         layout2.setConstraints(m_jchForm, constraints2);
         panel2.add(m_jchForm);
@@ -359,7 +292,6 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 10;
-        m_jchKondition.setOpaque(false);
         m_jchKondition.addActionListener(this);
         layout2.setConstraints(m_jchKondition, constraints2);
         panel2.add(m_jchKondition);
@@ -367,7 +299,6 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 11;
-        m_jchTorwart.setOpaque(false);
         m_jchTorwart.addActionListener(this);
         layout2.setConstraints(m_jchTorwart, constraints2);
         panel2.add(m_jchTorwart);
@@ -375,7 +306,6 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 12;
-        m_jchVerteidigung.setOpaque(false);
         m_jchVerteidigung.addActionListener(this);
         layout2.setConstraints(m_jchVerteidigung, constraints2);
         panel2.add(m_jchVerteidigung);
@@ -444,9 +374,17 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         layout.setConstraints(panel, constraints);
         add(panel);
+    }
+    
+    private void add(JComponent comp,int y){
+    	constraints2.gridwidth = 2;
+        constraints2.gridx = 0;
+        constraints2.gridy = y;
+        layout2.setConstraints(comp, constraints2);
+        panel2.add(comp);
     }
 
     /**
@@ -464,43 +402,40 @@ public class AlleSpielerStatistikPanel extends de.hattrickorganizer.gui.template
 
             final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEZIMALFORMAT_3STELLEN;
 
-            final double[][] statistikWerte = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                     .getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF,
-                                                                                                                                 m_jcbGruppe.getSelectedItem()
+            final double[][] statistikWerte = DBZugriff.instance().getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, m_jcbGruppe.getSelectedItem()
                                                                                                                                             .toString());
             final StatistikModel[] models = new StatistikModel[statistikWerte.length];
 
             //Es sind 12 Werte!
             if (statistikWerte.length > 0) {
                 models[0] = new StatistikModel(statistikWerte[0], "Fuehrung",
-                                               m_jchFuehrung.isSelected(), FUEHRUNG, format);
+                                               m_jchFuehrung.isSelected(), leadershipColor, format);
                 models[1] = new StatistikModel(statistikWerte[1], "Erfahrung",
-                                               m_jchErfahrung.isSelected(), ERFAHRUNG, format);
+                                               m_jchErfahrung.isSelected(), experienceColor, format);
                 models[2] = new StatistikModel(statistikWerte[2], "Form", m_jchForm.isSelected(),
-                                               FORM, format);
+                                               formColor, format);
                 models[3] = new StatistikModel(statistikWerte[3], "Kondition",
-                                               m_jchKondition.isSelected(), KONDITION, format);
+                                               m_jchKondition.isSelected(), staminaColor, format);
                 models[4] = new StatistikModel(statistikWerte[4], "Torwart",
-                                               m_jchTorwart.isSelected(), TORWART, format);
+                                               m_jchTorwart.isSelected(), keeperColor, format);
                 models[5] = new StatistikModel(statistikWerte[5], "Verteidigung",
-                                               m_jchVerteidigung.isSelected(), VERTEIDIGUNG, format);
+                                               m_jchVerteidigung.isSelected(), defendingColor, format);
                 models[6] = new StatistikModel(statistikWerte[6], "Spielaufbau",
-                                               m_jchSpielaufbau.isSelected(), SPIELAUFBAU, format);
+                                               m_jchSpielaufbau.isSelected(), playmakingColor, format);
                 models[7] = new StatistikModel(statistikWerte[7], "Passpiel",
-                                               m_jchPasspiel.isSelected(), PASSPIEL, format);
+                                               m_jchPasspiel.isSelected(), passingColor, format);
                 models[8] = new StatistikModel(statistikWerte[8], "Fluegelspiel",
-                                               m_jchFluegel.isSelected(), FLUEGEL, format);
+                                               m_jchFluegel.isSelected(), wingerColor, format);
                 models[9] = new StatistikModel(statistikWerte[9], "Torschuss",
-                                               m_jchTorschuss.isSelected(), TORSCHUSS, format);
+                                               m_jchTorschuss.isSelected(), scoringColor, format);
                 models[10] = new StatistikModel(statistikWerte[10], "Standards",
-                                                m_jchStandards.isSelected(), STANDARDS, format);
+                                                m_jchStandards.isSelected(), setPiecesColor, format);
             }
 
-            final String[] yBezeichnungen = de.hattrickorganizer.tools.Helper
-                                            .convertTimeMillisToFormatString(statistikWerte[11]);
+            final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[11]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                            HOVerwaltung.instance().getLanguageString("Wochen"),
                                             "", m_jchBeschriftung.isSelected(),
                                             m_jchHilflinien.isSelected());
         } catch (Exception e) {

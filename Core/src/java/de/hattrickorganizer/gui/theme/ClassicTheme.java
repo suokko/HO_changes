@@ -42,13 +42,20 @@ public class ClassicTheme extends Theme {
 		put("lightYellow",new Color(255, 255, 200));
 		
 		put("ho.checkbox.background","white");
-		put("ho.combobox.background","white");
 		put("ho.panel.background","white");
+		put("ho.panel.border",Color.darkGray);
 		put("ho.button.background","white");
 		
 		put("ho.label.error.foreground","red");
 		put("ho.label.foreground","black");
 		put("ho.label.success.foreground","green");
+		put("ho.label.onGreen.foreground","white");
+		put("ho.list.foreground","black");
+		put("ho.list.current.foreground",new Color(0, 0, 150));
+		put("matchHighlight.success.foreground","black");
+		put("matchHighlight.failed.foreground","gray");
+		
+		
 		//player
 		put("tableEntry.player.skill.special.background","lightGreen");
 		put("tableEntry.player.skill.background","lightYellow");
@@ -65,7 +72,8 @@ public class ClassicTheme extends Theme {
 		put("tableEntry.improvement.foreground",new Color(0, 200, 0));
 		put("tableEntry.decline.foreground",new Color(200, 0, 0));
 		
-		put("ho.table.selection.background",new java.awt.Color(235, 235, 235));
+		put("ho.table.selection.background",new Color(235, 235, 235));
+		put("ho.list.selection.background",new Color(220, 220, 255));
 		
 		// league Table
 		put("ho.label.ownTeam.foreground",new Color(50, 50, 150));
@@ -77,7 +85,7 @@ public class ClassicTheme extends Theme {
 		put("table.league.foreground","black");
 		
 		// matchday Panel
-		put("panel.matchday.background","table.league.background");
+		put("panel.matchday.background","ho.panel.background");
 		
 		// league history panel
 		put("panel.leaguehistory.line1.foreground", Color.GREEN);
@@ -113,6 +121,66 @@ public class ClassicTheme extends Theme {
 	    put("ho.shirt.subWing",new Color(255, 225, 180));
 	    put("ho.shirt.subForward",new Color(255, 200, 200));
 	    put("ho.shirt",new Color(230, 230, 230));
+	    
+	    put("ho.statistics.leadership","gray");
+	    put("ho.statistics.experience",Color.DARK_GRAY);
+	    put("ho.statistics.form",Color.PINK);
+	    put("ho.statistics.stamina",Color.MAGENTA);
+	    put("ho.statistics.keeper","black");
+	    put("ho.statistics.defending",Color.BLUE);
+	    put("ho.statistics.playmaking","yellow");
+	    put("ho.statistics.passing",Color.GREEN);
+	    put("ho.statistics.winger",Color.ORANGE);
+	    put("ho.statistics.scoring",Color.RED);
+	    put("ho.statistics.setPieces",Color.CYAN);
+	    
+	    put("ho.statistics.cash","black");
+	    put("ho.statistics.winLost","gray");
+	    put("ho.statistics.incomeSum",Color.GREEN);
+	    put("ho.statistics.costSum",Color.RED);
+	    put("ho.statistics.incomeSpectators",new Color(0, 180, 0));
+	    put("ho.statistics.incomeSponsors",new Color(0, 120, 60));
+	    put("ho.statistics.incomeFinancial",new Color(0, 60, 120));
+	    put("ho.statistics.incomeTemporary",new Color(0, 0, 180));
+	    put("ho.statistics.costArena",new Color(180, 0, 0));
+	    put("ho.statistics.costsPlayers",new Color(180, 36, 0));
+	    put("ho.statistics.costFinancial",new Color(180, 72, 0));
+	    put("ho.statistics.costTemporary",new Color(180, 108, 0));
+	    put("ho.statistics.costStaff",new Color(180, 144, 0));
+	    put("ho.statistics.costsYouth",new Color(180, 180, 0));
+	    put("ho.statistics.fans",Color.CYAN);
+	    put("ho.statistics.marketValue",Color.BLUE);
+	    put("ho.statistics.rating",new Color(100, 200, 0));
+	    put("ho.statistics.wage",new Color(150, 20, 20));
+	    put("ho.statistics.rating2","black");
+	    put("ho.statistics.total","gray");
+	    put("ho.statistics.mood",Color.PINK);
+	    put("ho.statistics.confidence",Color.CYAN);
+	    
+	    
+	    //matchtypes
+	    put("matchtype.league.background",new Color(255, 255, 200));
+	    put("matchtype.qualification.background",new Color(255, 200, 200));
+	    put("matchtype.cup.background",new Color(200, 255, 200));
+	    put("matchtype.background",Color.WHITE);
+	    put("matchtype.friendly.normal.background",Color.WHITE);
+	    put("matchtype.friendly.cup.background",Color.WHITE);
+	    put("matchtype.int.normal.background",Color.LIGHT_GRAY);
+	    put("matchtype.masters.background",Color.LIGHT_GRAY);
+	    put("matchtype.intFriendly.normal.background",Color.WHITE);
+	    put("matchtype.intFriendly.cup.background",Color.WHITE);
+	    put("matchtype.natMatch.normal.background",new Color(220, 220, 255));
+	    put("matchtype.natMatch.cup.background",new Color(220, 220, 255));
+	    put("matchtype.natFriendly.background",new Color(220, 220, 255));
+
+		// not yet
+	    //Youth league match.
+		//Youth friendly match.
+		//Youth friendly match (cup rules).
+		//Youth international friendly match.
+		//Youth international friendly match (Cup rules).
+		 
+	    
 	}
 	
 	public Color getDefaultColor(String key){

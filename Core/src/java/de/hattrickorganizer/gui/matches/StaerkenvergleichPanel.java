@@ -93,7 +93,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         constraints.insets = new Insets(5, 3, 2, 2);
 
         final JPanel panel = new JPanel(layout);
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         panel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
         //Match

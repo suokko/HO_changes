@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.gui.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -53,6 +54,7 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
 public class OnlineWorker {
     //~ Static fields/initializers -----------------------------------------------------------------
 
+	private final static SimpleDateFormat HT_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     /** wait Dialog */
     protected static LoginWaitDialog waitDialog;
 
@@ -362,8 +364,8 @@ public class OnlineWorker {
             tempEnd.setTimeInMillis(endDate.getTimeInMillis());
         }
 
-        String strDateFirst = MyHelper.Calendar2HTString(tempBeginn);
-        String strDateLast = MyHelper.Calendar2HTString(tempEnd);
+        String strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
+        String strDateLast = HT_FORMAT.format(tempEnd.getTime());
 
 //        //Sicherstellen das HO! eingeloggt ist
 //        assureLogin();
@@ -422,8 +424,8 @@ public class OnlineWorker {
                 tempEnd.setTimeInMillis(endDate.getTimeInMillis());
             }
 
-            strDateFirst = MyHelper.Calendar2HTString(tempBeginn);
-            strDateLast = MyHelper.Calendar2HTString(tempEnd);
+            strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
+            strDateLast = HT_FORMAT.format(tempEnd.getTime());
         }
 
         waitDialog.setValue(60);

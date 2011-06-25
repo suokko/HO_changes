@@ -16,6 +16,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.text.DateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,11 +28,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matchlist.Spielplan;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -45,22 +50,16 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    protected static Spielplan AKTUELLER_SPIELPLAN;
+    private static Spielplan AKTUELLER_SPIELPLAN;
 
     /** TODO Missing Parameter Documentation */
-    protected static String MARKIERTER_VEREIN;
+    private static String MARKIERTER_VEREIN;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbLoeschen = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                             .getImageDurchgestrichen(new java.awt.image.BufferedImage(20,
-                                                                                                                       20,
-                                                                                                                       java.awt.image.BufferedImage.TYPE_INT_ARGB),
-                                                                                      Color.red,
-                                                                                      new Color(200,
-                                                                                                0, 0))));
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbLoeschen = new JButton(new ImageIcon(Helper.getImageDurchgestrichen(new BufferedImage(20, 20,  java.awt.image.BufferedImage.TYPE_INT_ARGB),
+                                                                                      Color.red,new Color(200,0, 0))));
     private JComboBox m_jcbSaison;
     private LigaTabelle m_jpLigaTabelle;
     private SpieltagPanel m_jpSpielPlan1;
@@ -91,35 +90,22 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         fillSaisonCB();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    //--------static---------------------------
-    public static Spielplan getAktuellerSpielPlan() {
+    static Spielplan getAktuellerSpielPlan() {
         return AKTUELLER_SPIELPLAN;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static String getMarkierterVerein() {
+    static String getMarkierterVerein() {
         return MARKIERTER_VEREIN;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(m_jbLoeschen)) {
             if (m_jcbSaison.getSelectedItem() != null) {
                 final Spielplan spielplan = (Spielplan) m_jcbSaison.getSelectedItem();
                 final int value = JOptionPane.showConfirmDialog(this,
-                                                                de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ligatabelle")
+                                                                HOVerwaltung.instance().getLanguageString("Ligatabelle")
                                                                 + " "
-                                                                + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("loeschen")
+                                                                + HOVerwaltung.instance().getLanguageString("loeschen")
                                                                 + ":\n" + spielplan.toString(), "",
                                                                 JOptionPane.YES_NO_OPTION);
 
@@ -128,10 +114,8 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
                     final String[] dbvalue = {spielplan.getSaison() + "", spielplan.getLigaId()
                                              + ""};
 
-                    de.hattrickorganizer.database.DBZugriff.instance().deleteSpielplanTabelle(dbkey,
-                                                                                              dbvalue);
-                    de.hattrickorganizer.database.DBZugriff.instance().deletePaarungTabelle(dbkey,
-                                                                                            dbvalue);
+                    DBZugriff.instance().deleteSpielplanTabelle(dbkey, dbvalue);
+                    DBZugriff.instance().deletePaarungTabelle(dbkey, dbvalue);
                     AKTUELLER_SPIELPLAN = null;
 
                     RefreshManager.instance().doReInit();
@@ -141,13 +125,11 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Ligatabelle")
+            final String titel = HOVerwaltung.instance().getLanguageString("Ligatabelle")
                                  + " - "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getTeamName()
+                                 + HOVerwaltung.instance().getModel().getBasics().getTeamName()
                                  + " - "
-                                 + java.text.DateFormat.getDateTimeInstance().format(calendar
-                                                                                     .getTime());
+                                 + DateFormat.getDateTimeInstance().format(calendar.getTime());
 
             final LigaTabellePrintDialog printDialog = new LigaTabellePrintDialog();
             printDialog.doPrint(titel);
@@ -158,7 +140,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
 
     //Listener--------------
     public final void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
             //Aktuellen Spielplan bestimmen
             if (m_jcbSaison.getSelectedItem() instanceof Spielplan) {
                 AKTUELLER_SPIELPLAN = (Spielplan) m_jcbSaison.getSelectedItem();
@@ -171,110 +153,51 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void keyPressed(KeyEvent e) {
-        if (((MARKIERTER_VEREIN == null) && (m_jpLigaTabelle.getSelectedTeam() != null))
-            || !MARKIERTER_VEREIN.equals(m_jpLigaTabelle.getSelectedTeam())) {
-            MARKIERTER_VEREIN = m_jpLigaTabelle.getSelectedTeam();
-            markierungInfo();
-        }
+        doEvent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void keyReleased(KeyEvent e) {
-        if (((MARKIERTER_VEREIN == null) && (m_jpLigaTabelle.getSelectedTeam() != null))
-            || !MARKIERTER_VEREIN.equals(m_jpLigaTabelle.getSelectedTeam())) {
-            MARKIERTER_VEREIN = m_jpLigaTabelle.getSelectedTeam();
-            markierungInfo();
-        }
+        doEvent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void keyTyped(KeyEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void mouseClicked(MouseEvent e) {
-        if (((MARKIERTER_VEREIN == null) && (m_jpLigaTabelle.getSelectedTeam() != null))
-            || !MARKIERTER_VEREIN.equals(m_jpLigaTabelle.getSelectedTeam())) {
-            MARKIERTER_VEREIN = m_jpLigaTabelle.getSelectedTeam();
-            markierungInfo();
-        }
+        doEvent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void mouseEntered(MouseEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void mouseExited(MouseEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void mousePressed(MouseEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void mouseReleased(MouseEvent e) {
-        if (((MARKIERTER_VEREIN == null) && (m_jpLigaTabelle.getSelectedTeam() != null))
-            || !MARKIERTER_VEREIN.equals(m_jpLigaTabelle.getSelectedTeam())) {
-            MARKIERTER_VEREIN = m_jpLigaTabelle.getSelectedTeam();
-            markierungInfo();
-        }
+        doEvent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+    private void doEvent(){
+    	if (((MARKIERTER_VEREIN == null) && (m_jpLigaTabelle.getSelectedTeam() != null))
+                || !MARKIERTER_VEREIN.equals(m_jpLigaTabelle.getSelectedTeam())) {
+                MARKIERTER_VEREIN = m_jpLigaTabelle.getSelectedTeam();
+                markierungInfo();
+            }
+    }
     public final void reInit() {
         fillSaisonCB();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void refresh() {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void fillSaisonCB() {
         //Die Spielpläne als Objekte mit den Paarungen holen
-        final Spielplan[] spielplaene = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                               .getAllSpielplaene(true);
+        final Spielplan[] spielplaene = DBZugriff.instance().getAllSpielplaene(true);
 
         m_jcbSaison.removeItemListener(this);
 
@@ -308,9 +231,6 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         informSaisonChange();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void informSaisonChange() {
         m_jpLigaTabelle.changeSaison();
         m_jpTabellenverlaufStatistik.changeSaison();
@@ -331,7 +251,6 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         m_jpSpielPlan14.changeSaison();
     }
 
-    //----------init-----------------------------------------------
     private void initComponents() {
         setLayout(new BorderLayout());
 
@@ -340,20 +259,20 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
 
         final JPanel cbpanel = new ImagePanel(null);
         m_jcbSaison = new JComboBox();
-        m_jcbSaison.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_Saisonauswahl"));
+        m_jcbSaison.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_Saisonauswahl"));
         m_jcbSaison.addItemListener(this);
         m_jcbSaison.setSize(200, 25);
         m_jcbSaison.setLocation(10, 5);
         cbpanel.add(m_jcbSaison);
 
-        m_jbLoeschen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonLoeschen"));
+        m_jbLoeschen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonLoeschen"));
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setSize(25, 25);
         m_jbLoeschen.setLocation(220, 5);
         m_jbLoeschen.setBackground(ThemeManager.getColor("ho.button.background"));
         cbpanel.add(m_jbLoeschen);
 
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonDrucken"));
+        m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonDrucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setSize(25, 25);
         m_jbDrucken.setLocation(255, 5);
@@ -381,11 +300,6 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         add(panel, BorderLayout.CENTER);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initLigaTabelle() {
         m_jpLigaTabelle = new LigaTabelle();
         m_jpLigaTabelle.addMouseListener(this);
@@ -400,11 +314,6 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         return scrollpane;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initSpielPlan() {
         JLabel label = null;
 
@@ -536,11 +445,6 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         return scrollpane;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initTabellenverlaufStatistik() {
         m_jpTabellenverlaufStatistik = new TabellenverlaufStatistikPanel();
 
@@ -556,9 +460,6 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         return scrollpane;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void markierungInfo() {
         m_jpSpielPlan1.changeSaison();
         m_jpSpielPlan2.changeSaison();

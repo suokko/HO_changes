@@ -1,7 +1,6 @@
 // %2517784300:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -92,7 +91,7 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
         constraints.insets = new Insets(5, 3, 2, 2);
 
         final JPanel panel = new JPanel(layout);
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         panel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
         //Platzhalter

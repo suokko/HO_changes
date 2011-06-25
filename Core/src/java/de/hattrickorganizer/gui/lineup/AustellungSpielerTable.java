@@ -2,13 +2,17 @@
 package de.hattrickorganizer.gui.lineup;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.LineupColumnModel;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.model.UserColumnFactory;
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.utils.TableSorter;
 
 
@@ -38,11 +42,11 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
         super();
 
         initModel();
-        setDefaultRenderer(java.lang.Object.class,
-                           new de.hattrickorganizer.gui.model.SpielerTableRenderer());
-        setSelectionBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+        setDefaultRenderer(java.lang.Object.class,new SpielerTableRenderer());
+        setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+        setBackground(ColorLabelEntry.BG_STANDARD);
         addMouseListener(this);
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
     }
 
     //~ Methods ------------------------------------------------------------------------------------

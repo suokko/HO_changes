@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -19,6 +20,8 @@ import javax.swing.ScrollPaneConstants;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.model.Spieler;
 
 /**
  * Bietet Übersicht über alle Spieler (main class of the package)
@@ -51,11 +54,11 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     /**
      * Aktuell markierter Spieler
      */
-	public final de.hattrickorganizer.model.Spieler getAktuellenSpieler() {
+	public final Spieler getAktuellenSpieler() {
 		final int row = m_jtSpielerUebersichtTable.getSelectedRow();
 
 		if (row > -1) {
-			final de.hattrickorganizer.gui.utils.TableSorter smodel = m_jtSpielerUebersichtTable.getSorter();
+			final TableSorter smodel = m_jtSpielerUebersichtTable.getSorter();
 			return smodel.getSpieler(row);
 		}
 
@@ -97,91 +100,37 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
 	}
 
 	public final void keyPressed(java.awt.event.KeyEvent keyEvent) {
-		if (keyEvent.getSource().equals(m_jtSpielerUebersichtTable)) {
-			final int row = m_jtSpielerUebersichtTable.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTableName.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		} else if (keyEvent.getSource().equals(m_jtSpielerUebersichtTableName)) {
-			final int row = m_jtSpielerUebersichtTableName.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTable.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		}
+		doEvent(keyEvent);
 	}
 
 	public final void keyReleased(java.awt.event.KeyEvent keyEvent) {
-		if (keyEvent.getSource().equals(m_jtSpielerUebersichtTable)) {
-			final int row = m_jtSpielerUebersichtTable.getSelectedRow();
+		doEvent(keyEvent);
+	}
 
+	private void doEvent(ComponentEvent event){
+		int row =  m_jtSpielerUebersichtTable.getSelectedRow();
+		
+		if (event.getSource().equals(m_jtSpielerUebersichtTableName)) 
+			row = m_jtSpielerUebersichtTableName.getSelectedRow();
+		
 			if (row > -1) {
 				m_jtSpielerUebersichtTableName.setRowSelectionInterval(row, row);
 
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
+				final Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
 
 				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
+					HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
 				}
 			}
-		} else if (keyEvent.getSource().equals(m_jtSpielerUebersichtTableName)) {
-			final int row = m_jtSpielerUebersichtTableName.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTable.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		}
+		
 	}
-
+	
 	public void keyTyped(java.awt.event.KeyEvent keyEvent) {
 	}
 
     //----------------------Listener    
 	public final void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
-		if (mouseEvent.getSource().equals(m_jtSpielerUebersichtTable)) {
-			final int row = m_jtSpielerUebersichtTable.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTableName.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		} else if (mouseEvent.getSource().equals(m_jtSpielerUebersichtTableName)) {
-			final int row = m_jtSpielerUebersichtTableName.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTable.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		}
+		doEvent(mouseEvent);
 	}
 
     public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
@@ -194,31 +143,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     }
 
 	public final void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
-		if (mouseEvent.getSource().equals(m_jtSpielerUebersichtTable)) {
-			final int row = m_jtSpielerUebersichtTable.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTableName.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		} else if (mouseEvent.getSource().equals(m_jtSpielerUebersichtTableName)) {
-			final int row = m_jtSpielerUebersichtTableName.getSelectedRow();
-
-			if (row > -1) {
-				m_jtSpielerUebersichtTable.setRowSelectionInterval(row, row);
-
-				final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(row);
-
-				if (spieler != null) {
-					de.hattrickorganizer.gui.HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-				}
-			}
-		}
+		doEvent(mouseEvent);
 	}
 
     //----------------------------------------------------    
@@ -251,7 +176,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
 	public final void refreshHRFVergleich() {
 		m_jtSpielerUebersichtTable.refreshHRFVergleich();
 
-		final de.hattrickorganizer.model.Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(
+		final Spieler spieler = m_jtSpielerUebersichtTable.getSorter().getSpieler(
 				m_jtSpielerUebersichtTable.getSelectedRow());
 		m_jpSpielerDetailPanel.setSpieler(spieler);
 	}

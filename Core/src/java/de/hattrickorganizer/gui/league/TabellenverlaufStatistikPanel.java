@@ -1,7 +1,6 @@
 // %3066887473:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
-//import java.awt.Color;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,7 +23,6 @@ final class TabellenverlaufStatistikPanel extends JPanel {
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
-	/** TODO Missing Parameter Documentation */
     private final Color[] COLOR4LINES = {
     			ThemeManager.getColor("panel.leaguehistory.line1.foreground"), // Color.green
     			ThemeManager.getColor("panel.leaguehistory.line2.foreground"), // Color.cyan
@@ -39,7 +37,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
     private Color STANDARD_FOREGROUND = ThemeManager.getColor("table.league.foreground");
     private plugins.ITabellenVerlaufEintrag[] m_clVerlaufeintraege;
 
-    /** TODO Missing Parameter Documentation */
+
     private final int VEREINSNAMENBREITE = 180;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -53,13 +51,6 @@ final class TabellenverlaufStatistikPanel extends JPanel {
         initValues();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param g TODO Missing Method Parameter Documentation
-     */
     @Override
 	public void paint(Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
@@ -217,16 +208,10 @@ final class TabellenverlaufStatistikPanel extends JPanel {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     protected void changeSaison() {
         initValues();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initValues() {
         if (LigaTabellePanel.getAktuellerSpielPlan() != null) {
             m_clVerlaufeintraege = LigaTabellePanel.getAktuellerSpielPlan().getVerlauf()

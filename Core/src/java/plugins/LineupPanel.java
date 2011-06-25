@@ -2,7 +2,6 @@
 package plugins;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +9,8 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -315,7 +316,7 @@ public class LineupPanel extends JPanel {
 
         m_jlTeamName = new JLabel();
         m_jlTeamName.setOpaque(false);
-        m_jlTeamName.setForeground(Color.white);
+        m_jlTeamName.setForeground(ThemeManager.getColor("ho.label.onGreen.foreground"));
         m_jlTeamName.setFont(m_jlTeamName.getFont().deriveFont(Font.BOLD,
                                                                gui.UserParameter.instance().schriftGroesse
                                                                + 3));

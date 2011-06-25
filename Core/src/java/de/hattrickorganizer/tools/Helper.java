@@ -34,6 +34,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
+import de.hattrickorganizer.model.matches.Matchdetails;
 
 
 /**
@@ -337,62 +338,62 @@ public class Helper extends LanguageFiles {
 
     //Initialisierung
     static {
-        YELLOWSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star.gif"), Color.white));
-        GREYSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_grey.png"), Color.white));
+        YELLOWSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star.gif"), Color.WHITE));
+        GREYSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_grey.png"), Color.WHITE));
         NOIMAGEICON = new ImageIcon(new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB));
-        NOMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/NoMatch.png"), Color.white));
-        DOWNLOADMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/DownloadMatch.png"), Color.white));
-        SHOWMATCHICON = new ImageIcon(Helper.makeColorTransparent( Helper.loadImage("gui/bilder/ShowMatch.png"), Color.white));
-        ROTEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.png"), Color.white));
-        GELBEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.png"), Color.white));
-        DOPPELGELB = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.png"), Color.white));
-        ANGESCHLAGEN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.png"), Color.white));
-        VERLETZT = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.png"),  Color.white));
-        ANGESCHLAGEN_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen_klein.png"), Color.red));
-        VERLETZT_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt_klein.png"), Color.white));
+        NOMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/NoMatch.png"), Color.WHITE));
+        DOWNLOADMATCHICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/DownloadMatch.png"), Color.WHITE));
+        SHOWMATCHICON = new ImageIcon(Helper.makeColorTransparent( Helper.loadImage("gui/bilder/ShowMatch.png"), Color.WHITE));
+        ROTEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/disqualifiziert.png"), Color.WHITE));
+        GELBEKARTE = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_1.png"), Color.WHITE));
+        DOPPELGELB = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verwarnung_2.png"), Color.WHITE));
+        ANGESCHLAGEN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen.png"), Color.WHITE));
+        VERLETZT = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt.png"),  Color.WHITE));
+        ANGESCHLAGEN_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/angeschlagen_klein.png"), Color.RED));
+        VERLETZT_KLEIN = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/verletzt_klein.png"), Color.WHITE));
 
         TOR = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball.png"), new Color(255,0, 0))
+        		Helper.loadImage("gui/bilder/Fussball.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_FREISTOSS = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Freistoss.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Freistoss.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_MITTE = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Mitte.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Mitte.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_LINKS = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Links.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Links.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_RECHTS = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Rechts.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Rechts.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_ELFMETER = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Elfmeter.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Elfmeter.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_INDIRECT_FREEKICK = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_FreistossIndirekt.png"), new Color(255, 0,0))
+        		Helper.loadImage("gui/bilder/Fussball_FreistossIndirekt.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_LONGSHOT = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Longshot.png"), new Color(255, 0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Longshot.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_SPECIAL = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Spezial.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Spezial.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         TOR_COUNTER = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Fussball_Konter.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/Fussball_Konter.png"), Color.RED)
         		.getScaledInstance(16, 10,Image.SCALE_SMOOTH));
 
         KEINTOR = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_FREISTOSS = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_Freistoss.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_Freistoss.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_MITTE = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_Mitte.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_Mitte.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_LINKS = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_Links.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_Links.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_RECHTS = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/KeinFussball_Rechts.png"),
         		new Color(255,0,0))
@@ -401,32 +402,32 @@ public class Helper extends LanguageFiles {
         		new Color(255,0,0))
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_INDIRECT_FREEKICK = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_FreistossIndirekt.png"), new Color(255, 0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_FreistossIndirekt.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_LONGSHOT = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_Longshot.png"), new Color(255, 0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_Longshot.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
 
         KEINTOR_SPECIAL = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_Spezial.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_Spezial.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         KEINTOR_COUNTER = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/KeinFussball_Konter.png"), new Color(255,0,0))
+        		Helper.loadImage("gui/bilder/KeinFussball_Konter.png"), Color.RED)
         		.getScaledInstance(16, 10, Image.SCALE_SMOOTH));
 
         ZAHNRAD = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/zahnrad.png"), new Color(255,255,255)));
+        		Helper.loadImage("gui/bilder/zahnrad.png"), Color.WHITE));
         MANUELL = new ImageIcon(Helper.makeColorTransparent(
-        		Helper.loadImage("gui/bilder/Manuell.png"), new Color(255, 255, 255)));
+        		Helper.loadImage("gui/bilder/Manuell.png"), Color.WHITE));
 
         WEATHER_SE_RAIN_POS = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_rain_positive.png"),
-                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        		Color.RED).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         WEATHER_SE_RAIN_NEG = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_rain_negative.png"),
-                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        		Color.RED).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         WEATHER_SE_SUN_POS = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_sun_positive.png"),
-                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        		Color.RED).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
         WEATHER_SE_SUN_NEG = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/se_sun_negative.png"),
-                new Color(255, 0,0)).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
+        		Color.RED).getScaledInstance(16, 10, Image.SCALE_SMOOTH));
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -443,9 +444,9 @@ public class Helper extends LanguageFiles {
 				return gui.UserParameter.instance().FG_GESPERRT;
 			}
 		} else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
-			return Color.BLACK;
+			return ThemeManager.getColor("matchHighlight.success.foreground");
 		} else if (typ == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
-			return Color.GRAY;
+			return ThemeManager.getColor("matchHighlight.failed.foreground");
 		} else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
 			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
 				return gui.UserParameter.instance().FG_ANGESCHLAGEN;
@@ -458,7 +459,7 @@ public class Helper extends LanguageFiles {
 			}
 		}
 
-		return Color.BLACK;
+		return ThemeManager.getColor("matchHighlight.success.foreground");
 	}
 
     /**
@@ -558,7 +559,7 @@ public class Helper extends LanguageFiles {
 
 			// Bild laden, transparenz hinzu, trikofarbe wechseln
 			trickotImage = Helper.changeColor(Helper.changeColor(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Trickot.png"),
-					Color.white), Color.black, trickotfarbe), new Color(100, 100, 100), trickotfarbe.brighter());
+					Color.WHITE), Color.BLACK, trickotfarbe), new Color(100, 100, 100), trickotfarbe.brighter());
 
 			zusammenImage = trickotImage;
 			komplettIcon = new ImageIcon(zusammenImage);
@@ -604,9 +605,7 @@ public class Helper extends LanguageFiles {
     /**
      * paint a cross over an image
      */
-    public static Image getImageDurchgestrichen(Image image,
-                                                         Color helleFarbe,
-                                                         Color dunkleFarbe) {
+    public static Image getImageDurchgestrichen(Image image,Color helleFarbe, Color dunkleFarbe) {
         try {
             final BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
@@ -625,17 +624,6 @@ public class Helper extends LanguageFiles {
         } catch (Exception e) {
             return image;
         }
-    }
-
-    public static ImageIcon getImageIcon4Color(Color color) {
-        final BufferedImage bufferedImage = new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB);
-
-        final java.awt.Graphics2D g2d = (java.awt.Graphics2D) bufferedImage.getGraphics();
-
-        g2d.setColor(color);
-        g2d.fillRect(0, 0, 13, 13);
-
-        return new ImageIcon(bufferedImage);
     }
 
     public static ImageIcon getImageIcon4Country(int country) {
@@ -693,7 +681,7 @@ public class Helper extends LanguageFiles {
 
     public static ImageIcon getImageIcon4Spezialitaet(int wert) {
         ExtendedImageIcon icon = null;
-        final Integer keywert = new Integer(wert);
+        final Integer keywert = Integer.valueOf(wert);
 
         if (wert <= 0) {
             icon = EMPTYIMAGE;
@@ -994,7 +982,7 @@ public class Helper extends LanguageFiles {
     */
     public static ImageIcon getImageIcon4Spieltyp(int spieltyp) {
         ImageIcon spieltypicon = null;
-        final Integer key = new Integer(spieltyp);
+        final Integer key = Integer.valueOf(spieltyp);
 
         if (m_clSpieltypCache.containsKey(key)) {
             spieltypicon = (ImageIcon) m_clSpieltypCache.get(key);
@@ -1086,7 +1074,7 @@ public class Helper extends LanguageFiles {
 
     public static ImageIcon getImageIcon4Trickotnummer(int wert) {
         ImageIcon icon = null;
-        final Integer keywert = new Integer(wert);
+        final Integer keywert = Integer.valueOf(wert);
         int xPosText = 5;
 
         // Nicht im Cache
@@ -1100,7 +1088,7 @@ public class Helper extends LanguageFiles {
             if ((wert > 0) && (wert < 100)) {
                 final Image trickotImage = Helper.changeColor(
                 		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/Trickot.png"),
-                				Color.white), Color.black, new Color(200, 200, 200));
+                				Color.WHITE), Color.BLACK, new Color(200, 200, 200));
 
                 //Wert eintragen
                 //g2d.setComposite ( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1.0f ) );
@@ -1113,7 +1101,7 @@ public class Helper extends LanguageFiles {
 
                 g2d.setColor(Color.darkGray);
                 g2d.drawString(wert + "", xPosText, 11);
-                g2d.setColor(Color.black);
+                g2d.setColor(Color.BLACK);
                 g2d.drawString(wert + "", xPosText - 1, 11);
 
                 image = (BufferedImage) Helper.zusammenfuehren(trickotImage, image);
@@ -1138,7 +1126,7 @@ public class Helper extends LanguageFiles {
 
     public static ImageIcon getImageIcon4Veraenderung(int wert, boolean aktuell) {
         ExtendedImageIcon icon = null;
-        final Integer keywert = new Integer(wert);
+        final Integer keywert = Integer.valueOf(wert);
         int xPosText = 3;
 
         // Nicht im Cache
@@ -1267,36 +1255,36 @@ public class Helper extends LanguageFiles {
     public static ImageIcon getImageIcon4Wetter(int wert) {
         ImageIcon icon = null;
 
-        if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_SONNE) {
+        if (wert == Matchdetails.WETTER_SONNE) {
             if (SONNIG == null) {
                 SONNIG = new ImageIcon(
                 		Helper.makeColorTransparent(
-                				Helper.loadImage("gui/bilder/wetter/sonnig.gif"), Color.white)
+                				Helper.loadImage("gui/bilder/wetter/sonnig.gif"), Color.WHITE)
                 				.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = SONNIG;
-        } else if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_WOLKIG) {
+        } else if (wert == Matchdetails.WETTER_WOLKIG) {
             if (WOLKIG == null) {
                 WOLKIG = new ImageIcon(
                 		Helper.makeColorTransparent(
-                				Helper.loadImage("gui/bilder/wetter/leichtbewoelkt.gif"), Color.white)
+                				Helper.loadImage("gui/bilder/wetter/leichtbewoelkt.gif"), Color.WHITE)
                 				.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = WOLKIG;
-        } else if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_BEWOELKT) {
+        } else if (wert == Matchdetails.WETTER_BEWOELKT) {
             if (BEWOELKT == null) {
                 BEWOELKT = new ImageIcon(
-                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/bewoelkt.gif"), Color.white)
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/bewoelkt.gif"), Color.WHITE)
                 		.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
             icon = BEWOELKT;
-        } else if (wert == de.hattrickorganizer.model.matches.Matchdetails.WETTER_REGEN) {
+        } else if (wert == Matchdetails.WETTER_REGEN) {
             if (REGEN == null) {
                 REGEN = new ImageIcon(
-                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/regen.gif"), Color.white)
+                		Helper.makeColorTransparent(Helper.loadImage("gui/bilder/wetter/regen.gif"), Color.WHITE)
                 		.getScaledInstance(18, 18, Image.SCALE_SMOOTH));
             }
 
@@ -1568,8 +1556,7 @@ public class Helper extends LanguageFiles {
      * Tauscht eine Farbe im Image durch eine andere
      *
      */
-    public static Image changeColor(Image im, Color original,
-                                             Color change) {
+    public static Image changeColor(Image im, Color original, Color change) {
         final ImageProducer ip = new FilteredImageSource(im.getSource(),
         		new ColorChangeFilter(original, change));
         return Toolkit.getDefaultToolkit().createImage(ip);

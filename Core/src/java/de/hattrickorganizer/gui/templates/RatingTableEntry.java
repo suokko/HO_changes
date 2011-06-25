@@ -83,7 +83,6 @@ public class RatingTableEntry extends TableEntry {
      */
     @Override
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
-    	// FIXME
         m_clComponent.setBackground((isSelected)?SpielerTableRenderer.SELECTION_BG:bgColor);
         m_clComponent.setOpaque(isOpaque);
         

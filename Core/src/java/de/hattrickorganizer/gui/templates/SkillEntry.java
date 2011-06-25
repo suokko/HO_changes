@@ -98,14 +98,7 @@ public class SkillEntry extends TableEntry {
      */
     @Override
 	public final JComponent getComponent(boolean isSelected) {
-        if (isSelected) {
-            m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
-        } else {
-            m_clComponent.setOpaque(true);
-            m_clComponent.setBackground(m_clBGColor);
-        }
-
+        m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:m_clBGColor);
         return m_clComponent;
     }
 
@@ -205,6 +198,7 @@ public class SkillEntry extends TableEntry {
         panel.add(m_jlLabel2);
 
         m_clComponent = panel;
+        m_clComponent.setOpaque(true);
     }
 
     /**

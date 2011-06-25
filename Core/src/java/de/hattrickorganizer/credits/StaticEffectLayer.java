@@ -21,7 +21,7 @@ public class StaticEffectLayer {
 
     /** TODO Missing Parameter Documentation */
     public int y;
-    private Component component;
+//    private Component component;
     private Vector<StatischesObjekt> elementVector = new Vector<StatischesObjekt>();
     private Vector<StatischesObjekt> statischeObjekte = new Vector<StatischesObjekt>();
     private boolean background;
@@ -39,7 +39,6 @@ public class StaticEffectLayer {
      * @param background TODO Missing Constructuor Parameter Documentation
      */
     public StaticEffectLayer(Component component, boolean background) {
-        this.component = component;
         this.background = background;
 
         width = 600;

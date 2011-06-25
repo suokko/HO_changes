@@ -93,7 +93,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 				return new Object[] { element[2], new Boolean(true)};									
 			}
 		}
-		return new Object[] { new Timestamp(System.currentTimeMillis()), new Boolean(false)};						
+		return new Object[] { new Timestamp(System.currentTimeMillis()), Boolean.FALSE};						
 	}
 
 	public Vector<Object[]> getAllLevelUp(int skillCode, int spielerId) {		
@@ -103,7 +103,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			Object[] element = iter.next();
 			int code = ((Integer) element[4]).intValue();			
 			if (code==skillCode) {
-				v.add(new Object[] { element[2], new Boolean(true)});						
+				v.add(new Object[] { element[2], Boolean.TRUE});						
 			}
 		}
 		return v;

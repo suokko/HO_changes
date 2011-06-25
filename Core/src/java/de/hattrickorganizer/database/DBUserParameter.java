@@ -2,6 +2,7 @@
 package de.hattrickorganizer.database;
 
 
+import java.awt.Color;
 import java.sql.ResultSet;
 
 import de.hattrickorganizer.model.HOParameter;
@@ -224,12 +225,12 @@ public class DBUserParameter {
 
                 parameter.spieleranalyseVertikal = rs.getBoolean("SpieleranalyseVertikal");
 
-                parameter.FG_STANDARD = new java.awt.Color(rs.getInt("FarbeSpielerStandard"));
-                parameter.FG_ANGESCHLAGEN = new java.awt.Color(rs.getInt("FarbeSpielerAngeschlagen"));
-                parameter.FG_VERLETZT = new java.awt.Color(rs.getInt("FarbeSpielerVerletzt"));
-                parameter.FG_ZWEIKARTEN = new java.awt.Color(rs.getInt("FarbeSpielerZweiKarten"));
-                parameter.FG_GESPERRT = new java.awt.Color(rs.getInt("FarbeSpielerGesperrt"));
-                parameter.FG_TRANSFERMARKT = new java.awt.Color(rs.getInt("FarbeSpielerTransfermarkt"));
+                parameter.FG_STANDARD = new Color(rs.getInt("FarbeSpielerStandard"));
+                parameter.FG_ANGESCHLAGEN = new Color(rs.getInt("FarbeSpielerAngeschlagen"));
+                parameter.FG_VERLETZT = new Color(rs.getInt("FarbeSpielerVerletzt"));
+                parameter.FG_ZWEIKARTEN = new Color(rs.getInt("FarbeSpielerZweiKarten"));
+                parameter.FG_GESPERRT = new Color(rs.getInt("FarbeSpielerGesperrt"));
+                parameter.FG_TRANSFERMARKT = new Color(rs.getInt("FarbeSpielerTransfermarkt"));
 
                 parameter.statistikSpieleGesamt = rs.getBoolean("Stat_spiele_Gesamt");
                 parameter.statistikSpieleStimmung = rs.getBoolean("Stat_spiele_Stimmung");

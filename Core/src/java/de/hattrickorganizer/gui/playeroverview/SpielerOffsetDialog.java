@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.menu.option.SliderPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 
@@ -130,7 +131,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		//----Slider -----------
 		final JPanel panel = new ImagePanel();
 		panel.setLayout(new GridLayout(7, 1, 4, 4));
-		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+		panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
 
 		m_jpSpielaufbau =
 			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.playmaking"),

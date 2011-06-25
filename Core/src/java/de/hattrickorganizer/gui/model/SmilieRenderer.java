@@ -4,6 +4,8 @@ package de.hattrickorganizer.gui.model;
 import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -14,7 +16,7 @@ public final class SmilieRenderer implements javax.swing.ListCellRenderer {
 
     /** TODO Missing Parameter Documentation */
     private ColorLabelEntry m_clEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                            ColorLabelEntry.BG_STANDARD,
+    														ThemeManager.getColor("tableEntry.background"),
                                                             SwingConstants.LEFT);
 
     /** TODO Missing Parameter Documentation */
@@ -38,17 +40,16 @@ public final class SmilieRenderer implements javax.swing.ListCellRenderer {
                                                                  boolean isSelected,
                                                                  boolean cellHasFocus) {
         if (obj instanceof String && (obj != null) && !obj.equals("")) {
-            m_clEntry.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4GruppeSmilie(obj
-                                                                                          .toString()));
+            m_clEntry.setIcon(Helper.getImageIcon4GruppeSmilie(obj.toString()));
             return m_clEntry.getComponent(isSelected);
         }
 
         m_jlLeer.setOpaque(true);
 
         if (isSelected) {
-            m_jlLeer.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+            m_jlLeer.setBackground(SpielerTableRenderer.SELECTION_BG);
         } else {
-            m_jlLeer.setBackground(java.awt.Color.white);
+            m_jlLeer.setBackground(ThemeManager.getColor("tableEntry.background"));
         }
 
         return m_jlLeer;
