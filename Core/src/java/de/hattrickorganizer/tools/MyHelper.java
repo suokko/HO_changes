@@ -17,7 +17,7 @@ import java.util.Vector;
  * @author thomas.werth
  */
 public class MyHelper {
-	private final static SimpleDateFormat HT_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -27,36 +27,6 @@ public class MyHelper {
     public MyHelper() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param tempdate TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static String Calendar2HTString(Calendar tempdate) {
-//        final StringBuffer dateString = new StringBuffer();
-//        dateString.append(tempdate.get(Calendar.YEAR));
-//        dateString.append("-");
-//
-//        if ((tempdate.get(Calendar.MONTH) + 1) < 10) {
-//            dateString.append("0");
-//        }
-//
-//        dateString.append(tempdate.get(Calendar.MONTH) + 1);
-//        dateString.append("-");
-//
-//        if (tempdate.get(Calendar.DAY_OF_MONTH) < 10) {
-//            dateString.append("0");
-//        }
-//
-//        dateString.append(tempdate.get(Calendar.DAY_OF_MONTH));
-//
-//        return dateString.toString();
-    	return HT_FORMAT.format(tempdate.getTime());
-    }
 
     /**
      * fügt den Array src an den Vector dest an

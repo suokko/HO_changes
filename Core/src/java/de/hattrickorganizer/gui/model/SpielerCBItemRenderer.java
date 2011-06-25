@@ -1,6 +1,10 @@
 // %3053844359:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import java.awt.Color;
+
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+
 /**
  * Renderer für eine Combobox mit SpielerCBItems
  */
@@ -19,15 +23,14 @@ public class SpielerCBItemRenderer implements javax.swing.ListCellRenderer {
                                                                  boolean cellHasFocus) {
         if (obj instanceof SpielerCBItem) {
             final SpielerCBItem spielerCBItem = ((SpielerCBItem) obj);
-            return spielerCBItem.getListCellRendererComponent(jList, obj, index, isSelected,
-                                                              cellHasFocus);
+            return spielerCBItem.getListCellRendererComponent(jList, index, isSelected);
         } else {
             m_jlLeer.setOpaque(true);
 
             if (isSelected) {
-                m_jlLeer.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+                m_jlLeer.setBackground(SpielerTableRenderer.SELECTION_BG);
             } else {
-                m_jlLeer.setBackground(java.awt.Color.white);
+                m_jlLeer.setBackground(ColorLabelEntry.BG_STANDARD);
             }
 
             return m_jlLeer;

@@ -2,7 +2,6 @@
 package de.hattrickorganizer.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -33,7 +32,7 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 
     private JProgressBar m_jpbProgressBar = new JProgressBar(0, 100);
     private JTextField m_jlInfoLabel = new JTextField();
-    private JTextField m_jtfKurzInfoLabel = new JTextField();
+ //   private JTextField m_jtfKurzInfoLabel = new JTextField();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -50,7 +49,7 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
      * Setzt den kurzen Infotext
      */
     public final void setKurzInfoText(String text) {
-        m_jtfKurzInfoLabel.setText(text);
+       // m_jtfKurzInfoLabel.setText(text);
     }
 
     /**
@@ -92,7 +91,7 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
      * löscht den kurzen Infotext
      */
     public final void clearKurzInfo() {
-        m_jtfKurzInfoLabel.setText("");
+       // m_jtfKurzInfoLabel.setText("");
     }
 
     /**
@@ -134,16 +133,16 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
         layout.setConstraints(m_jlInfoLabel, constraint);
         add(m_jlInfoLabel);
 
-        m_jtfKurzInfoLabel.setPreferredSize(new Dimension(40, 20));
-        m_jtfKurzInfoLabel.setBackground(Color.lightGray);
-        m_jtfKurzInfoLabel.setEditable(false);
-        constraint.fill = java.awt.GridBagConstraints.NONE;
-        constraint.weightx = 0.0;
-        constraint.weighty = 1.0;
-        constraint.gridx = 1;
-        constraint.gridy = 0;
-        layout.setConstraints(m_jtfKurzInfoLabel, constraint);
-        add(m_jtfKurzInfoLabel);
+//        m_jtfKurzInfoLabel.setPreferredSize(new Dimension(40, 20));
+//        m_jtfKurzInfoLabel.setBackground(Color.lightGray);
+//        m_jtfKurzInfoLabel.setEditable(false);
+//        constraint.fill = java.awt.GridBagConstraints.NONE;
+//        constraint.weightx = 0.0;
+//        constraint.weighty = 1.0;
+//        constraint.gridx = 1;
+//        constraint.gridy = 0;
+//        layout.setConstraints(m_jtfKurzInfoLabel, constraint);
+//        add(m_jtfKurzInfoLabel);
 
         constraint.fill = java.awt.GridBagConstraints.HORIZONTAL;
         constraint.weightx = 2.0;

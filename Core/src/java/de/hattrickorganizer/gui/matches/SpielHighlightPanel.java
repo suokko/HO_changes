@@ -1,7 +1,6 @@
 // %4112883594:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -76,7 +75,7 @@ public class SpielHighlightPanel extends ImagePanel {
         constraints.weightx = 1.0;
         constraints.insets = new Insets(5, 3, 2, 2);
 
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         panel.setBackground(ThemeManager.getColor("ho.panel.background"));
 
         //Platzhalter

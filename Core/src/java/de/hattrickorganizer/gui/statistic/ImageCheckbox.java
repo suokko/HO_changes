@@ -1,10 +1,12 @@
 // %996996046:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -16,7 +18,7 @@ import javax.swing.SwingConstants;
 /**
  * Checkbox mit einem Bild
  */
-public class ImageCheckbox extends JPanel {
+class ImageCheckbox extends JPanel {
 	
 	private static final long serialVersionUID = -1973860107178938746L;
 	
@@ -25,35 +27,21 @@ public class ImageCheckbox extends JPanel {
 	private JCheckBox m_jchCheckbox = new JCheckBox();
     private JLabel m_jlLabel = new JLabel();
 
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new ImageCheckbox object.
+     *
      */
-    public ImageCheckbox() {
-        this("", null, false);
+    ImageCheckbox(String text, Color color, boolean selected) {
+        this(text, color, selected, SwingConstants.RIGHT);
     }
 
     /**
      * Creates a new ImageCheckbox object.
      *
-     * @param text TODO Missing Constructuor Parameter Documentation
-     * @param icon TODO Missing Constructuor Parameter Documentation
-     * @param selected TODO Missing Constructuor Parameter Documentation
      */
-    public ImageCheckbox(String text, ImageIcon icon, boolean selected) {
-        this(text, icon, selected, SwingConstants.RIGHT);
-    }
-
-    /**
-     * Creates a new ImageCheckbox object.
-     *
-     * @param text TODO Missing Constructuor Parameter Documentation
-     * @param icon TODO Missing Constructuor Parameter Documentation
-     * @param selected TODO Missing Constructuor Parameter Documentation
-     * @param alignment TODO Missing Constructuor Parameter Documentation
-     */
-    public ImageCheckbox(String text, ImageIcon icon, boolean selected, int alignment) {
+    ImageCheckbox(String text, Color color, boolean selected, int alignment) {
+    	setOpaque(false);
         final GridBagLayout layout2 = new GridBagLayout();
         final GridBagConstraints constraints2 = new GridBagConstraints();
         constraints2.fill = GridBagConstraints.HORIZONTAL;
@@ -76,74 +64,54 @@ public class ImageCheckbox extends JPanel {
         constraints2.weightx = 1.0;
         m_jlLabel.setHorizontalTextPosition(alignment);
         m_jlLabel.setText(text);
-        m_jlLabel.setIcon(icon);
-        m_jlLabel.setOpaque(false);
+        m_jlLabel.setIcon(getImageIcon4Color(color));
         layout2.setConstraints(m_jlLabel, constraints2);
         add(m_jlLabel);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final JCheckBox getCheckbox() {
+    final JCheckBox getCheckbox() {
         return m_jchCheckbox;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param icon TODO Missing Method Parameter Documentation
-     */
-    public final void setIcon(ImageIcon icon) {
+
+    final void setIcon(ImageIcon icon) {
         m_jlLabel.setIcon(icon);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final JLabel getLabel() {
+ 
+    final JLabel getLabel() {
         return m_jlLabel;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param selected TODO Missing Method Parameter Documentation
-     */
-    public final void setSelected(boolean selected) {
+ 
+    final void setSelected(boolean selected) {
         m_jchCheckbox.setSelected(selected);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean isSelected() {
+
+    final boolean isSelected() {
         return m_jchCheckbox.isSelected();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
-    public final void setText(String text) {
+ 
+    final void setText(String text) {
         m_jlLabel.setText(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param listener TODO Missing Method Parameter Documentation
-     */
-    public final void addActionListener(ActionListener listener) {
+
+    final void addActionListener(ActionListener listener) {
         m_jchCheckbox.addActionListener(listener);
+    }
+    
+    private ImageIcon getImageIcon4Color(Color color) {
+        final BufferedImage bufferedImage = new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB);
+
+        final java.awt.Graphics2D g2d = (java.awt.Graphics2D) bufferedImage.getGraphics();
+
+        g2d.setColor(color);
+        g2d.fillRect(0, 0, 13, 13);
+
+        return new ImageIcon(bufferedImage);
     }
 }

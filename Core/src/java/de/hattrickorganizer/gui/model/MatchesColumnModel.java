@@ -2,82 +2,42 @@ package de.hattrickorganizer.gui.model;
 
 import java.awt.Color;
 
+import plugins.IMatchLineup;
+
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 
 
 public final class MatchesColumnModel extends HOColumnModel {
 
-	 /**
-	 * 
-	 */
+	   //	League match.
+    static final Color LIGASPIEL = ThemeManager.getColor("matchtype.league.background");//new Color(255, 255, 200);
+    //	Qualification match.
+    static final Color QUALISPIEL = ThemeManager.getColor("matchtype.qualification.background");//new Color(255, 200, 200);
+    //	Cup match (standard league cup).
+    static final Color POKALSPIEL = ThemeManager.getColor("matchtype.cup.background");//new Color(200, 255, 200);
+    //	Friendly (normal rules).
+    static final Color TESTSPIEL = ThemeManager.getColor("matchtype.friendly.normal.background");//Color.white;
+    //	Friendly (cup rules).
+    static final Color TESTPOKALSPIEL = ThemeManager.getColor("matchtype.friendly.cup.background");//Color.white;
+    //	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).
+    static final Color INTSPIEL = ThemeManager.getColor("matchtype.int.normal.background");//Color.lightGray;
+    //	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).
+    static final Color INTCUPSPIEL = ThemeManager.getColor("matchtype.masters.background");//Color.lightGray;
+    //	International friendly (normal rules).
+    static final Color INT_TESTSPIEL = ThemeManager.getColor("matchtype.intFriendly.normal.background");//Color.white;
+    //	International friendly (cup rules).
+    static final Color INT_TESTCUPSPIEL = ThemeManager.getColor("matchtype.intFriendly.cup.background");//Color.white;
+    //	National teams competition match (normal rules).
+    static final Color LAENDERSPIEL = ThemeManager.getColor("matchtype.natMatch.normal.background");//new Color(220, 220, 255);
+    //	National teams competition match (cup rules).
+    static final Color LAENDERCUPSPIEL = ThemeManager.getColor("matchtype.natMatch.cup.background");//new Color(220, 220, 255);
+    //	National teams friendly.
+    static final Color TESTLAENDERSPIEL = ThemeManager.getColor("matchtype.natFriendly.background");//new Color(220, 220, 255);
+
 	private static final long serialVersionUID = -2148644586671286752L;
 
 	private MatchKurzInfo[] m_clMatches;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	League match.	
-	protected static final Color LIGASPIEL = new Color(255, 255, 200);
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Qualification match.	
-	protected static final Color QUALISPIEL = new Color(255, 200, 200);
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Cup match (standard league cup).	
-	protected static final Color POKALSPIEL = new Color(200, 255, 200);
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Friendly (normal rules).	
-	protected static final Color TESTSPIEL = Color.white;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Friendly (cup rules).	
-	protected static final Color TESTPOKALSPIEL = Color.white;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).	
-	protected static final Color INTSPIEL = Color.lightGray;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).	
-	protected static final Color INTCUPSPIEL = Color.lightGray;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	International friendly (normal rules).	
-	protected static final Color INT_TESTSPIEL = Color.white;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	International friendly (cup rules).	
-	protected static final Color INT_TESTCUPSPIEL = Color.white;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	National teams competition match (normal rules).	
-	protected static final Color LAENDERSPIEL = new Color(220, 220, 255);
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	National teams competition match (cup rules).	
-	protected static final Color LAENDERCUPSPIEL = new Color(220, 220, 255);
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	National teams friendly.
-	protected static final Color TESTLAENDERSPIEL = new Color(220, 220, 255);
-	 
-	/** TODO Missing Parameter Documentation */
-	protected static final java.awt.Color FG_EIGENESTEAM = new java.awt.Color(50, 50, 150);
-	
-	
 	
 	protected MatchesColumnModel(int id){
 		super(id,"Matches");
@@ -92,13 +52,7 @@ public final class MatchesColumnModel extends HOColumnModel {
 			initData();
 	}
 
-	   /**
-     * TODO Missing Method Documentation
-     *
-     * @param id TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+
     public final MatchKurzInfo getMatch(int id) {
         if (id > 0) {
             for (int i = 0; i < m_clMatches.length; i++) {
@@ -113,11 +67,7 @@ public final class MatchesColumnModel extends HOColumnModel {
     public boolean isEditable(){
 		return false;
 	}
-    /**
-     * Matches neu setzen
-     *
-     * @param matches TODO Missing Constructuor Parameter Documentation
-     */
+
     public final void setValues(MatchKurzInfo[] matches) {
         m_clMatches = matches;
         initData();
@@ -137,6 +87,53 @@ public final class MatchesColumnModel extends HOColumnModel {
     			m_clData[i][j] = ((MatchKurzInfoColumn)tmpDisplayedColumns[j]).getTableEntry(m_clMatches[i]);
 			}
             
+        }
+    }
+    
+    /**
+     * Get the color for a certain match type.
+     */
+    static  Color getColor4Matchtyp(int typ) {
+        switch (typ) {
+            case IMatchLineup.LIGASPIEL:
+                return LIGASPIEL;
+
+            case IMatchLineup.POKALSPIEL:
+                return POKALSPIEL;
+
+            case IMatchLineup.QUALISPIEL:
+                return QUALISPIEL;
+
+            case IMatchLineup.LAENDERCUPSPIEL:
+                return LAENDERCUPSPIEL;
+
+            case IMatchLineup.INTCUPSPIEL:
+                return INTCUPSPIEL;
+
+            case IMatchLineup.LAENDERSPIEL:
+                return LAENDERSPIEL;
+
+            case IMatchLineup.INTSPIEL:
+                return INTSPIEL;
+
+            case IMatchLineup.INT_TESTCUPSPIEL:
+                return INT_TESTCUPSPIEL;
+
+            case IMatchLineup.INT_TESTSPIEL:
+                return INT_TESTSPIEL;
+
+            case IMatchLineup.TESTLAENDERSPIEL:
+                return TESTLAENDERSPIEL;
+
+            case IMatchLineup.TESTPOKALSPIEL:
+                return TESTPOKALSPIEL;
+
+            case IMatchLineup.TESTSPIEL:
+                return TESTSPIEL;
+
+            //Fehler?
+            default:
+                return ThemeManager.getColor("matchtype.background");
         }
     }
 }

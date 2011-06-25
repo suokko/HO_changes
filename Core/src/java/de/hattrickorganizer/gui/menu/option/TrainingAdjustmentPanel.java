@@ -1,8 +1,6 @@
 // %1839835436:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,6 +12,9 @@ import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -166,11 +167,11 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
 		try {
 			offset = new Float(m_jtfTextfield.getText());
 			m_jlTotal.setText(nf.format(offset + base));
-			m_jlTotal.setForeground(java.awt.Color.BLACK);
+			m_jlTotal.setForeground(ThemeManager.getColor("ho.label.foreground"));
 			top.refresh(); // Store
 		} catch (Exception ex) {
 			// Give a hint the value was not quite what we wanted
-			m_jlTotal.setForeground(java.awt.Color.RED);
+			m_jlTotal.setForeground(ThemeManager.getColor("ho.label.error.foreground"));
 		}
 	}
 }

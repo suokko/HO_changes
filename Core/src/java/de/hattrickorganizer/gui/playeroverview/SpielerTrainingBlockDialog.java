@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
@@ -263,7 +264,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 		panel = new ImagePanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+		panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
 
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
 			addBlock(allTrainingBlocks.get(i));

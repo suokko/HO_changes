@@ -3,6 +3,10 @@ package de.hattrickorganizer.gui.playeroverview;
 
 import javax.swing.JTable;
 
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
+import de.hattrickorganizer.gui.model.ReduzedTableModel;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.utils.TableSorter;
 
 
@@ -11,8 +15,7 @@ import de.hattrickorganizer.gui.utils.TableSorter;
  *
  * @author TODO Author Name
  */
-public class SpielerUebersichtNamenTable extends JTable
-    implements de.hattrickorganizer.gui.Refreshable
+public class SpielerUebersichtNamenTable extends JTable implements Refreshable
 {
 
 	private static final long serialVersionUID = -7686660400379157142L;
@@ -22,14 +25,9 @@ public class SpielerUebersichtNamenTable extends JTable
     //TableSorter sorter;
     private TableSorter m_clTableSorter;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    //private DragSource                  m_clDragsource  =   null;
-
     /**
      * Nur Namensspalte anzeigen
      *
-     * @param model TODO Missing Constructuor Parameter Documentation
      */
     public SpielerUebersichtNamenTable(TableSorter model) {
         super();
@@ -37,21 +35,15 @@ public class SpielerUebersichtNamenTable extends JTable
         model.addMouseListenerToHeaderInTable(this);
         model.addTableModelListener(this);
         setSelectionMode(0);
-        setModel(new de.hattrickorganizer.gui.model.ReduzedTableModel(model, 0));
-        setDefaultRenderer(java.lang.Object.class,
-                           new de.hattrickorganizer.gui.model.SpielerTableRenderer());
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        setModel(new ReduzedTableModel(model, 0));
+        setDefaultRenderer(java.lang.Object.class, new SpielerTableRenderer());
+        RefreshManager.instance().registerRefreshable(this);
 
         //Kein init hier!
     }
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final TableSorter getSorter() {
         return m_clTableSorter;
     }
@@ -65,18 +57,12 @@ public class SpielerUebersichtNamenTable extends JTable
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void reInit() {
         initModelNamen();
 
         repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void refresh() {
         //Datenanpassung wird vom SpielerUbersichtsTable erledigt
         repaint();

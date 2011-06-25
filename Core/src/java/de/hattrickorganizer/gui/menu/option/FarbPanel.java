@@ -125,7 +125,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
         final JPanel panel = new ImagePanel();
         panel.setLayout(new GridLayout(6, 2, 4, 10));
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
 
 
         JLabel label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Farben"));

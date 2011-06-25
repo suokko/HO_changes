@@ -1093,8 +1093,8 @@ public final class HOMainFrame extends JFrame
 		m_jmForumItem.addActionListener(this);
 		m_jmAbout.add(m_jmForumItem);
 
-		m_jmPluginsHomepage.addActionListener(this);
-		m_jmAbout.add(m_jmPluginsHomepage);
+//		m_jmPluginsHomepage.addActionListener(this);
+//		m_jmAbout.add(m_jmPluginsHomepage);
 
 		//        m_jmChatItem.addActionListener( this );
 		//        m_jmAbout.add ( m_jmChatItem );

@@ -56,7 +56,7 @@ public class InterruptionWindow extends JFrame {
 			} catch (InterruptedException ie) {
 			}
 
-			background = makeColorTransparent(background, new Color(255, 0, 0));
+			background = makeColorTransparent(background, Color.RED);
 			tracker.addImage(background, 1);
 
 			try {

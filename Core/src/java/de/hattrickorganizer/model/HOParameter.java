@@ -52,11 +52,13 @@ public final class HOParameter extends Configuration {
     /** TODO Missing Parameter Documentation */
     public int DBVersion = 4;
 
-    /** TODO Missing Parameter Documentation */
-    public int HOTotalUsers;
+    /** @deprecated since HO! 1.431 */
+    @Deprecated
+    public int HOTotalUsers = 0;
 
-    /** TODO Missing Parameter Documentation */
-    public int HOUsers;
+    /** @deprecated since HO! 1.431 */
+    @Deprecated
+    public int HOUsers = 0;
 
 	public HashMap<String,String> getValues() {
 		HashMap<String,String> map = new HashMap<String,String>();
@@ -64,15 +66,15 @@ public final class HOParameter extends Configuration {
 		map.put("EpvRelease",String.valueOf(EpvRelease));
 		map.put("RatingsRelease",String.valueOf(RatingsRelease));		
 		map.put("DBVersion",String.valueOf(DBVersion));
-		map.put("HOTotalUsers",String.valueOf(HOTotalUsers));
-		map.put("HOUsers",String.valueOf(HOUsers));
+		//map.put("HOTotalUsers",String.valueOf(HOTotalUsers));
+		//map.put("HOUsers",String.valueOf(HOUsers));
 		return map;
 	}
 
 	public void setValues(HashMap<String,String> values) {
 		DBVersion = getIntValue(values,"DBVersion");
-		HOTotalUsers = getIntValue(values,"HOTotalUsers");
-		HOUsers = getIntValue(values,"HOUsers");		
+		//HOTotalUsers = getIntValue(values,"HOTotalUsers");
+		//HOUsers = getIntValue(values,"HOUsers");		
 		lastNews = getIntValue(values,"lastNews");
 		EpvRelease = getFloatValue(values,"EpvRelease");
 		RatingsRelease = getFloatValue(values,"RatingsRelease");

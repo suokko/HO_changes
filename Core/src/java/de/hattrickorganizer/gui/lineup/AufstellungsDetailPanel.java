@@ -27,10 +27,10 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
@@ -75,7 +75,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	private ColorLabelEntry m_jpErfahrungAktuellesSystem = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
-	private ColorLabelEntry m_jpGesamtStaerkeText = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, Color.WHITE, SwingConstants.RIGHT);
+	private ColorLabelEntry m_jpGesamtStaerkeText = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 	private ColorLabelEntry m_jpHatstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
 			SwingConstants.CENTER);
 	private ColorLabelEntry m_jpLoddarstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,

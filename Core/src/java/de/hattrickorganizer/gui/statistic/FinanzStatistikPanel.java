@@ -19,9 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -34,98 +38,63 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
 	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	private static Color KONTOSTAND = Color.black;
-    private static Color GEWINNVERLUST = Color.gray;
-    private static Color GESAMTEINNAHMEN = Color.green;
-    private static Color GESAMTAUSGABEN = Color.red;
-    private static Color ZUSCHAUER = new Color(0, 180, 0);
-    private static Color SPONSOREN = new Color(0, 120, 60);
-    private static Color ZINSERTRAEGE = new Color(0, 60, 120);
-    private static Color SONSTIGEEINNAHMEN = new Color(0, 0, 180);
-    private static Color STADION = new Color(180, 0, 0);
-    private static Color SPIELERGEHAELTER = new Color(180, 36, 0);
-    private static Color ZINSAUFWENDUNGEN = new Color(180, 72, 0);
-    private static Color SONSTIGEAUSGABEN = new Color(180, 108, 0);
-    private static Color TRAINERSTAB = new Color(180, 144, 0);
-    private static Color JUGEND = new Color(180, 180, 0);
-    private static Color FANS = Color.cyan;
-    private static Color MARKTWERT = Color.blue;
+	private Color cashColor 			= ThemeManager.getColor("ho.statistics.cash");
+    private Color winLostColor 			= ThemeManager.getColor("ho.statistics.winLost");
+    private Color incomeSumColor 		= ThemeManager.getColor("ho.statistics.incomeSum");
+    private Color costSumColor 			= ThemeManager.getColor("ho.statistics.costSum");
+    private Color incomeSpectatorsColor = ThemeManager.getColor("ho.statistics.incomeSpectators");
+    private Color incomeSponsorsColor 	= ThemeManager.getColor("ho.statistics.incomeSponsors");
+    private Color incomeFinancialColor 	= ThemeManager.getColor("ho.statistics.incomeFinancial");
+    private Color incomeTemporaryColor 	= ThemeManager.getColor("ho.statistics.incomeTemporary");
+    private Color costArena 			= ThemeManager.getColor("ho.statistics.costArena");
+    private Color costsPlayersColor 	= ThemeManager.getColor("ho.statistics.costsPlayers");
+    private Color costFinancialColor 	= ThemeManager.getColor("ho.statistics.costFinancial");
+    private Color costTemporaryColor 	= ThemeManager.getColor("ho.statistics.costTemporary");
+    private Color costStaffColor 		= ThemeManager.getColor("ho.statistics.costStaff");
+    private Color costsYouthColor 		= ThemeManager.getColor("ho.statistics.costsYouth");
+    private Color fansColor 			= ThemeManager.getColor("ho.statistics.fans");
+    private Color marketValueColor 		= ThemeManager.getColor("ho.statistics.marketValue");
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchFans = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Fans"),
-                                                        de.hattrickorganizer.tools.Helper
-                                                        .getImageIcon4Color(FANS),
-                                                        gui.UserParameter.instance().statistikFananzahl);
-    private ImageCheckbox m_jchGesamtausgaben = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamtausgaben"),
-                                                                  de.hattrickorganizer.tools.Helper
-                                                                  .getImageIcon4Color(GESAMTAUSGABEN),
-                                                                  gui.UserParameter.instance().statistikGesamtAusgaben);
-    private ImageCheckbox m_jchGesamteinnahmen = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"),
-                                                                   de.hattrickorganizer.tools.Helper
-                                                                   .getImageIcon4Color(GESAMTEINNAHMEN),
-                                                                   gui.UserParameter.instance().statistikGesamtEinnahmen);
-    private ImageCheckbox m_jchGewinnVerlust = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("GewinnVerlust"),
-                                                                 de.hattrickorganizer.tools.Helper
-                                                                 .getImageIcon4Color(GEWINNVERLUST),
-                                                                 gui.UserParameter.instance().statistikGewinnVerlust);
-    private ImageCheckbox m_jchJugend = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Jugend"),
-                                                          de.hattrickorganizer.tools.Helper
-                                                          .getImageIcon4Color(JUGEND),
-                                                          gui.UserParameter.instance().statistikJugend);
-    private ImageCheckbox m_jchKontostand = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Kontostand"),
-                                                              de.hattrickorganizer.tools.Helper
-                                                              .getImageIcon4Color(KONTOSTAND),
-                                                              gui.UserParameter.instance().statistikKontostand);
-    private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(MARKTWERT),
-                                                             gui.UserParameter.instance().statistikMarktwert);
-    private ImageCheckbox m_jchSonstigeAusgaben = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sonstiges"),
-                                                                    de.hattrickorganizer.tools.Helper
-                                                                    .getImageIcon4Color(SONSTIGEAUSGABEN),
-                                                                    gui.UserParameter.instance().statistikSonstigeAusgaben);
-    private ImageCheckbox m_jchSonstigeEinnahmen = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sonstiges"),
-                                                                     de.hattrickorganizer.tools.Helper
-                                                                     .getImageIcon4Color(SONSTIGEEINNAHMEN),
-                                                                     gui.UserParameter.instance().statistikSonstigeEinnahmen);
-    private ImageCheckbox m_jchSpielergehaelter = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spielergehaelter"),
-                                                                    de.hattrickorganizer.tools.Helper
-                                                                    .getImageIcon4Color(SPIELERGEHAELTER),
-                                                                    gui.UserParameter.instance().statistikSpielergehaelter);
-    private ImageCheckbox m_jchSponsoren = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Sponsoren"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(SPONSOREN),
-                                                             gui.UserParameter.instance().statistikSponsoren);
-    private ImageCheckbox m_jchStadion = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Stadion"),
-                                                           de.hattrickorganizer.tools.Helper
-                                                           .getImageIcon4Color(STADION),
-                                                           gui.UserParameter.instance().statistikStadion);
-    private ImageCheckbox m_jchTrainerstab = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Trainerstab"),
-                                                               de.hattrickorganizer.tools.Helper
-                                                               .getImageIcon4Color(TRAINERSTAB),
-                                                               gui.UserParameter.instance().statistikTrainerstab);
-    private ImageCheckbox m_jchZinsaufwendungen = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"),
-                                                                    de.hattrickorganizer.tools.Helper
-                                                                    .getImageIcon4Color(ZINSAUFWENDUNGEN),
-                                                                    gui.UserParameter.instance().statistikZinsaufwendungen);
-    private ImageCheckbox m_jchZinsertraege = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zinsertraege"),
-                                                                de.hattrickorganizer.tools.Helper
-                                                                .getImageIcon4Color(ZINSERTRAEGE),
-                                                                gui.UserParameter.instance().statistikZinsertraege);
-    private ImageCheckbox m_jchZuschauer = new ImageCheckbox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Zuschauer"),
-                                                             de.hattrickorganizer.tools.Helper
-                                                             .getImageIcon4Color(ZUSCHAUER),
-                                                             gui.UserParameter.instance().statistikZuschauer);
-    private JButton m_jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                            .loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbUbernehmen = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Beschriftung"),
+    private ImageCheckbox m_jchFans = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fans"),
+                                                        fansColor, gui.UserParameter.instance().statistikFananzahl);
+    private ImageCheckbox m_jchGesamtausgaben = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gesamtausgaben"),
+                                                                  costSumColor,gui.UserParameter.instance().statistikGesamtAusgaben);
+    private ImageCheckbox m_jchGesamteinnahmen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"),
+                                                                   incomeSumColor,gui.UserParameter.instance().statistikGesamtEinnahmen);
+    private ImageCheckbox m_jchGewinnVerlust = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("GewinnVerlust"),
+                                                                 winLostColor,gui.UserParameter.instance().statistikGewinnVerlust);
+    private ImageCheckbox m_jchJugend = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Jugend"),
+                                                          costsYouthColor,gui.UserParameter.instance().statistikJugend);
+    private ImageCheckbox m_jchKontostand = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Kontostand"),
+                                                              cashColor,gui.UserParameter.instance().statistikKontostand);
+    private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",marketValueColor,gui.UserParameter.instance().statistikMarktwert);
+    private ImageCheckbox m_jchSonstigeAusgaben = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sonstiges"),
+                                                                    costTemporaryColor,gui.UserParameter.instance().statistikSonstigeAusgaben);
+    private ImageCheckbox m_jchSonstigeEinnahmen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sonstiges"),
+                                                                     incomeTemporaryColor,gui.UserParameter.instance().statistikSonstigeEinnahmen);
+    private ImageCheckbox m_jchSpielergehaelter = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Spielergehaelter"),
+                                                                    costsPlayersColor,gui.UserParameter.instance().statistikSpielergehaelter);
+    private ImageCheckbox m_jchSponsoren = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sponsoren"),
+                                                             incomeSponsorsColor,gui.UserParameter.instance().statistikSponsoren);
+    private ImageCheckbox m_jchStadion = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Stadion"),
+                                                           costArena,gui.UserParameter.instance().statistikStadion);
+    private ImageCheckbox m_jchTrainerstab = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Trainerstab"),
+                                                               costStaffColor,gui.UserParameter.instance().statistikTrainerstab);
+    private ImageCheckbox m_jchZinsaufwendungen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"),
+                                                                    costFinancialColor,gui.UserParameter.instance().statistikZinsaufwendungen);
+    private ImageCheckbox m_jchZinsertraege = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsertraege"),
+                                                                incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
+    private ImageCheckbox m_jchZuschauer = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zuschauer"),
+                                                             incomeSpectatorsColor,gui.UserParameter.instance().statistikZuschauer);
+    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikFinanzenBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Hilflinien"),
+    private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
                                                       gui.UserParameter.instance().statistikFinanzenHilfslinien);
-    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikFinanzenAnzahlHRF
-                                                       + "");
+    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikFinanzenAnzahlHRF + "");
     private StatistikPanel m_clStatistikPanel;
     private boolean m_bInitialisiert;
 
@@ -142,22 +111,10 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         //initStatistik();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param init TODO Missing Method Parameter Documentation
-     */
     public final void setInitialisiert(boolean init) {
         m_bInitialisiert = init;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isInitialisiert() {
         return m_bInitialisiert;
     }
@@ -230,30 +187,18 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     public final void doInitialisieren() {
         initStatistik();
         m_bInitialisiert = true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
     public void focusGained(java.awt.event.FocusEvent focusEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
-                                                   ((JTextField) focusEvent.getSource()), false);
+        Helper.parseInt(HOMainFrame.instance(),((JTextField) focusEvent.getSource()), false);
     }
 
     //-------Refresh---------------------------------    
@@ -263,15 +208,11 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         //initStatistik();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     public void refresh() {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     private void initComponents() {
         JLabel label;
 
@@ -496,14 +437,11 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         layout.setConstraints(panel, constraints);
         add(panel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initStatistik() {
         try {
             int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
@@ -524,44 +462,44 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
 
             if (statistikWerte.length > 0) {
                 models[0] = new StatistikModel(statistikWerte[0], "Kontostand",
-                                               m_jchKontostand.isSelected(), KONTOSTAND, format);
+                                               m_jchKontostand.isSelected(), cashColor, format);
                 models[1] = new StatistikModel(statistikWerte[1], "GewinnVerlust",
-                                               m_jchGewinnVerlust.isSelected(), GEWINNVERLUST,
+                                               m_jchGewinnVerlust.isSelected(), winLostColor,
                                                format);
                 models[2] = new StatistikModel(statistikWerte[2], "Gesamteinnahmen",
-                                               m_jchGesamteinnahmen.isSelected(), GESAMTEINNAHMEN,
+                                               m_jchGesamteinnahmen.isSelected(), incomeSumColor,
                                                format);
                 models[3] = new StatistikModel(statistikWerte[3], "Gesamtausgaben",
-                                               m_jchGesamtausgaben.isSelected(), GESAMTAUSGABEN,
+                                               m_jchGesamtausgaben.isSelected(), costSumColor,
                                                format);
                 models[4] = new StatistikModel(statistikWerte[4], "Zuschauer",
-                                               m_jchZuschauer.isSelected(), ZUSCHAUER, format);
+                                               m_jchZuschauer.isSelected(), incomeSpectatorsColor, format);
                 models[5] = new StatistikModel(statistikWerte[5], "Sponsoren",
-                                               m_jchSponsoren.isSelected(), SPONSOREN, format);
+                                               m_jchSponsoren.isSelected(), incomeSponsorsColor, format);
                 models[6] = new StatistikModel(statistikWerte[6], "Zinsertraege",
-                                               m_jchZinsertraege.isSelected(), ZINSERTRAEGE, format);
+                                               m_jchZinsertraege.isSelected(), incomeFinancialColor, format);
                 models[7] = new StatistikModel(statistikWerte[7], "SonstigeEinnahmen",
                                                m_jchSonstigeEinnahmen.isSelected(),
-                                               SONSTIGEEINNAHMEN, format);
+                                               incomeTemporaryColor, format);
                 models[8] = new StatistikModel(statistikWerte[8], "Stadion",
-                                               m_jchStadion.isSelected(), STADION, format);
+                                               m_jchStadion.isSelected(), costArena, format);
                 models[9] = new StatistikModel(statistikWerte[9], "Spielergehaelter",
                                                m_jchSpielergehaelter.isSelected(),
-                                               SPIELERGEHAELTER, format);
+                                               costsPlayersColor, format);
                 models[10] = new StatistikModel(statistikWerte[10], "Zinsaufwendungen",
                                                 m_jchZinsaufwendungen.isSelected(),
-                                                ZINSAUFWENDUNGEN, format);
+                                                costFinancialColor, format);
                 models[11] = new StatistikModel(statistikWerte[11], "SonstigeAusgaben",
                                                 m_jchSonstigeAusgaben.isSelected(),
-                                                SONSTIGEAUSGABEN, format);
+                                                costTemporaryColor, format);
                 models[12] = new StatistikModel(statistikWerte[12], "Trainerstab",
-                                                m_jchTrainerstab.isSelected(), TRAINERSTAB, format);
+                                                m_jchTrainerstab.isSelected(), costStaffColor, format);
                 models[13] = new StatistikModel(statistikWerte[13], "Jugend",
-                                                m_jchJugend.isSelected(), JUGEND, format);
+                                                m_jchJugend.isSelected(), costsYouthColor, format);
                 models[14] = new StatistikModel(statistikWerte[14], "Fans", m_jchFans.isSelected(),
-                                                FANS, format2, 100);
+                                                fansColor, format2, 100);
                 models[15] = new StatistikModel(statistikWerte[15], "Marktwert",
-                                                m_jchMarktwert.isSelected(), MARKTWERT, format2, 10);
+                                                m_jchMarktwert.isSelected(), marketValueColor, format2, 10);
             }
 
             final String[] yBezeichnungen = de.hattrickorganizer.tools.Helper

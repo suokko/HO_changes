@@ -11,11 +11,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,11 +28,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
-
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.model.StatistikModel;
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
@@ -39,76 +44,59 @@ import de.hattrickorganizer.tools.Helper;
 /**
  * Das StatistikPanel
  */
-public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
-    implements ActionListener, FocusListener, de.hattrickorganizer.gui.Refreshable, ItemListener
+class SpielerStatistikPanel extends ImagePanel
+    implements ActionListener, FocusListener, Refreshable, ItemListener
 {
 	private static final long serialVersionUID = -5003282359250534295L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	private static Color FUEHRUNG = Color.gray;
-    private static Color ERFAHRUNG = Color.darkGray;
-    private static Color FORM = Color.pink;
-    private static Color KONDITION = Color.magenta;
-    private static Color TORWART = Color.black;
-    private static Color VERTEIDIGUNG = Color.blue;
-    private static Color SPIELAUFBAU = Color.yellow;
-    private static Color PASSPIEL = Color.green;
-    private static Color FLUEGEL = Color.orange;
-    private static Color TORSCHUSS = Color.red;
-    private static Color STANDARDS = Color.cyan;
-    private static Color BEWERTUNG = new Color(100, 200, 0);
 
-    //Color.blue;
-    private static Color MARKTWERT = new Color(20, 20, 150);
-
-    //Color.red;
-    private static Color GEHALT = new Color(150, 20, 20);
+    private Color leadershipColor 	= ThemeManager.getColor("ho.statistics.leadership");//Color.gray;
+    private Color experienceColor 	= ThemeManager.getColor("ho.statistics.experience");//Color.darkGray;
+    private Color formColor 		= ThemeManager.getColor("ho.statistics.form");//Color.pink;
+    private Color staminaColor 		= ThemeManager.getColor("ho.statistics.stamina");//Color.magenta;
+    private Color keeperColor 		= ThemeManager.getColor("ho.statistics.keeper");//Color.black;
+    private Color defendingColor 	= ThemeManager.getColor("ho.statistics.defending");//Color.blue;
+    private Color playmakingColor 	= ThemeManager.getColor("ho.statistics.playmaking");//Color.yellow;
+    private Color passingColor 		= ThemeManager.getColor("ho.statistics.passing");//Color.green;
+    private Color wingerColor 		= ThemeManager.getColor("ho.statistics.winger");//Color.orange;
+    private Color scoringColor 		= ThemeManager.getColor("ho.statistics.scoring");//Color.red;
+    private Color setPiecesColor 	= ThemeManager.getColor("ho.statistics.setPieces");//Color.cyan;
+    private Color ratingColor 		= ThemeManager.getColor("ho.statistics.rating");//new Color(100, 200, 0);
+    private Color marketValueColor 	= ThemeManager.getColor("ho.statistics.marketValue");
+    private Color wageColor 		= ThemeManager.getColor("ho.statistics.wage");//new Color(150, 20, 20);
 
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Bewertung"),
-                                                             Helper.getImageIcon4Color(BEWERTUNG),
-                                                             gui.UserParameter.instance().statistikBewertung);
+                                                             ratingColor,gui.UserParameter.instance().statistikBewertung);
     private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.experience"),
-                                                             Helper.getImageIcon4Color(ERFAHRUNG),
-                                                             gui.UserParameter.instance().statistikErfahrung);
+                                                             experienceColor,gui.UserParameter.instance().statistikErfahrung);
     private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.winger"),
-                                                           Helper.getImageIcon4Color(FLUEGEL),
-                                                           gui.UserParameter.instance().statistikFluegel);
+                                                           wingerColor,gui.UserParameter.instance().statistikFluegel);
     private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
-                                                        Helper.getImageIcon4Color(FORM),
-                                                        gui.UserParameter.instance().statistikForm);
+                                                        formColor,gui.UserParameter.instance().statistikForm);
     private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
-                                                            Helper.getImageIcon4Color(FUEHRUNG),
-                                                            gui.UserParameter.instance().statistikFuehrung);
+    		leadershipColor,gui.UserParameter.instance().statistikFuehrung);
     private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gehalt"),
-                                                          Helper.getImageIcon4Color(GEHALT),
-                                                          gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
+                                                          wageColor,gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
     private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.stamina"),
-                                                             Helper.getImageIcon4Color(KONDITION),
-                                                             gui.UserParameter.instance().statistikKondition);
-    private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",
-                                                             Helper.getImageIcon4Color(MARKTWERT),
+                                                             staminaColor,gui.UserParameter.instance().statistikKondition);
+    private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",marketValueColor,
                                                              gui.UserParameter.instance().statistikSpielerFinanzenMarktwert);
     private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.passing"),
-                                                            Helper.getImageIcon4Color(PASSPIEL),
-                                                            gui.UserParameter.instance().statistikPasspiel);
+                                                            passingColor,gui.UserParameter.instance().statistikPasspiel);
     private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
-                                                               Helper.getImageIcon4Color(SPIELAUFBAU),
-                                                               gui.UserParameter.instance().statistikSpielaufbau);
+                                                               playmakingColor,gui.UserParameter.instance().statistikSpielaufbau);
     private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
-                                                             Helper.getImageIcon4Color(STANDARDS),
-                                                             gui.UserParameter.instance().statistikStandards);
+                                                             setPiecesColor,gui.UserParameter.instance().statistikStandards);
     private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.scoring"),
-                                                             Helper.getImageIcon4Color(TORSCHUSS),
-                                                             gui.UserParameter.instance().statistikTorschuss);
+                                                             scoringColor,gui.UserParameter.instance().statistikTorschuss);
     private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.keeper"),
-                                                           Helper.getImageIcon4Color(TORWART),
-                                                           gui.UserParameter.instance().statistikTorwart);
+                                                           keeperColor,gui.UserParameter.instance().statistikTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
-                                                                Helper.getImageIcon4Color(VERTEIDIGUNG),
-                                                                gui.UserParameter.instance().statistikVerteidigung);
+                                                               defendingColor,gui.UserParameter.instance().statistikVerteidigung);
     private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
     private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
@@ -126,24 +114,16 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
     /**
      * Creates a new SpielerStatistikPanel object.
      */
-    public SpielerStatistikPanel() {
+    SpielerStatistikPanel() {
         de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
 
         initSpielerCB();
 
         initComponents();
 
-        //initStatistik();//Muss als einziges Tab initialisiert werden, da das erste Tab
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spielerid TODO Missing Method Parameter Documentation
-     */
-    public final void setAktuelleSpieler(int spielerid) {
+     public final void setAktuelleSpieler(int spielerid) {
         final ComboBoxModel model = m_jcbSpieler.getModel();
 
         for (int i = 0; i < model.getSize(); ++i) {
@@ -158,20 +138,10 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param init TODO Missing Method Parameter Documentation
-     */
     public final void setInitialisiert(boolean init) {
         m_bInitialisiert = init;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isInitialisiert() {
         return m_bInitialisiert;
     }
@@ -251,37 +221,19 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void doInitialisieren() {
         initStatistik();
         m_bInitialisiert = true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
     public void focusGained(java.awt.event.FocusEvent focusEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
         Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             initStatistik();
@@ -297,16 +249,10 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         //initStatistik();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void refresh() {
         //initSpielerCB();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         JLabel label;
 
@@ -374,7 +320,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         constraints2.gridy = 4;
         m_jcbSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_Spieler"));
         m_jcbSpieler.setRenderer(new SpielerCBItemRenderer());
-        m_jcbSpieler.setBackground(Color.white);
+        m_jcbSpieler.setBackground(ColorLabelEntry.BG_STANDARD);
         m_jcbSpieler.setMaximumRowCount(25);
         m_jcbSpieler.addItemListener(this);
         m_jcbSpieler.setMaximumSize(new Dimension(200, 25));
@@ -535,14 +481,11 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         layout.setConstraints(panel, constraints);
         add(panel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initSpielerCB() {
         final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
         final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler.size()];
@@ -581,7 +524,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
             cbItems[i + j] = spielerAllCBItems[j];
         }
 
-        final javax.swing.DefaultComboBoxModel cbModel = new javax.swing.DefaultComboBoxModel(cbItems);
+        final DefaultComboBoxModel cbModel = new DefaultComboBoxModel(cbItems);
 
         m_jcbSpieler.setModel(cbModel);
         m_jcbSpieler.removeItemListener(this);
@@ -591,9 +534,7 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
         m_jcbSpieler.addItemListener(this);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     private void initStatistik() {
         try {
             int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
@@ -605,11 +546,10 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
             gui.UserParameter.instance().statistikAnzahlHRF = anzahlHRF;
 
             final java.text.NumberFormat format = Helper.DEFAULTDEZIMALFORMAT;
-            final java.text.NumberFormat format2 = java.text.NumberFormat.getCurrencyInstance();
+            final java.text.NumberFormat format2 = NumberFormat.getCurrencyInstance();
 
             if (m_jcbSpieler.getSelectedItem() != null) {
-                final double[][] statistikWerte = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                         .getSpielerDaten4Statistik(((SpielerCBItem) m_jcbSpieler
+                final double[][] statistikWerte = DBZugriff.instance().getSpielerDaten4Statistik(((SpielerCBItem) m_jcbSpieler
                                                                                                                      .getSelectedItem()).getSpieler()
                                                                                                                      .getSpielerID(),
                                                                                                                     anzahlHRF);
@@ -619,37 +559,37 @@ public class SpielerStatistikPanel extends de.hattrickorganizer.gui.templates.Im
                 if (statistikWerte.length > 0) {
                     double faktor = 20 / getMaxValue(statistikWerte[0]);
                     models[0] = new StatistikModel(statistikWerte[0], "Marktwert",
-                                                   m_jchMarktwert.isSelected(), MARKTWERT, format,
+                                                   m_jchMarktwert.isSelected(), marketValueColor, format,
                                                    faktor);
                     faktor = 20 / getMaxValue(statistikWerte[1]);
                     models[1] = new StatistikModel(statistikWerte[1], "Gehalt",
-                                                   m_jchGehalt.isSelected(), GEHALT, format2, faktor);
+                                                   m_jchGehalt.isSelected(), wageColor, format2, faktor);
                     models[2] = new StatistikModel(statistikWerte[2], "Fuehrung",
-                                                   m_jchFuehrung.isSelected(), FUEHRUNG, format);
+                                                   m_jchFuehrung.isSelected(), leadershipColor, format);
                     models[3] = new StatistikModel(statistikWerte[3], "Erfahrung",
-                                                   m_jchErfahrung.isSelected(), ERFAHRUNG, format);
+                                                   m_jchErfahrung.isSelected(), experienceColor, format);
                     models[4] = new StatistikModel(statistikWerte[4], "Form",
-                                                   m_jchForm.isSelected(), FORM, format);
+                                                   m_jchForm.isSelected(), formColor, format);
                     models[5] = new StatistikModel(statistikWerte[5], "Kondition",
-                                                   m_jchKondition.isSelected(), KONDITION, format);
+                                                   m_jchKondition.isSelected(), staminaColor, format);
                     models[6] = new StatistikModel(statistikWerte[6], "Torwart",
-                                                   m_jchTorwart.isSelected(), TORWART, format);
+                                                   m_jchTorwart.isSelected(), keeperColor, format);
                     models[7] = new StatistikModel(statistikWerte[7], "Verteidigung",
-                                                   m_jchVerteidigung.isSelected(), VERTEIDIGUNG,
+                                                   m_jchVerteidigung.isSelected(), defendingColor,
                                                    format);
                     models[8] = new StatistikModel(statistikWerte[8], "Spielaufbau",
-                                                   m_jchSpielaufbau.isSelected(), SPIELAUFBAU,
+                                                   m_jchSpielaufbau.isSelected(), playmakingColor,
                                                    format);
                     models[9] = new StatistikModel(statistikWerte[9], "Passpiel",
-                                                   m_jchPasspiel.isSelected(), PASSPIEL, format);
+                                                   m_jchPasspiel.isSelected(), passingColor, format);
                     models[10] = new StatistikModel(statistikWerte[10], "Fluegelspiel",
-                                                    m_jchFluegel.isSelected(), FLUEGEL, format);
+                                                    m_jchFluegel.isSelected(), wingerColor, format);
                     models[11] = new StatistikModel(statistikWerte[11], "Torschuss",
-                                                    m_jchTorschuss.isSelected(), TORSCHUSS, format);
+                                                    m_jchTorschuss.isSelected(), scoringColor, format);
                     models[12] = new StatistikModel(statistikWerte[12], "Standards",
-                                                    m_jchStandards.isSelected(), STANDARDS, format);
+                                                    m_jchStandards.isSelected(), setPiecesColor, format);
                     models[13] = new StatistikModel(statistikWerte[13], "Bewertung",
-                                                    m_jchBewertung.isSelected(), BEWERTUNG, format);
+                                                    m_jchBewertung.isSelected(), ratingColor, format);
                 }
 
                 final String[] yBezeichnungen = Helper

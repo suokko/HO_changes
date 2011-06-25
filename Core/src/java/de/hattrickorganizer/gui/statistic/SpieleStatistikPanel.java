@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchLineupPlayer;
+import plugins.IRefreshable;
 import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
@@ -46,70 +47,58 @@ import de.hattrickorganizer.tools.PlayerHelper;
 /**
  * Das StatistikPanel
  */
-public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
-    implements ActionListener, FocusListener, ItemListener, de.hattrickorganizer.gui.Refreshable
+public class SpieleStatistikPanel extends ImagePanel
+    implements ActionListener, FocusListener, ItemListener, IRefreshable
 {
 	private static final long serialVersionUID = 3954095099686666846L;
 
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	private static Color BEWERTUNG = Color.black;
-    private static Color MITTELFELD = ThemeManager.getColor("ho.shirt.midfield");
-    private static Color RECHTEABWEHR = ThemeManager.getColor("ho.shirt.wingback").darker();
-    private static Color ABWEHRZENTRUM = ThemeManager.getColor("ho.shirt.centraldefence");
-    private static Color LINKEABWEHR = ThemeManager.getColor("ho.shirt.wingback").brighter();
-    private static Color RECHTERANGRIFF = ThemeManager.getColor("ho.shirt.wing").darker();
-    private static Color ANGRIFFSZENTRUM = ThemeManager.getColor("ho.shirt.forward");
-    private static Color LINKERANGRIFF = ThemeManager.getColor("ho.shirt.wing").brighter();
-    private static Color GESAMT = Color.GRAY;
-    private static Color STIMMUNG = Color.PINK;
-    private static Color SELBSTVERTRAUEN = Color.CYAN;
+	private Color ratingColor 			= ThemeManager.getColor("ho.statistics.rating2");
+    private Color midfieldColor 		= ThemeManager.getColor("ho.shirt.midfield");
+    private Color rightWingbackColor 	= ThemeManager.getColor("ho.shirt.wingback").darker();
+    private Color centralDefenceColor 	= ThemeManager.getColor("ho.shirt.centraldefence");
+    private Color leftWingbackColor 	= ThemeManager.getColor("ho.shirt.wingback").brighter();
+    private Color rightForwardColor 	= ThemeManager.getColor("ho.shirt.wing").darker();
+    private Color forwardColor 			= ThemeManager.getColor("ho.shirt.forward");
+    private Color leftForwardColor 		= ThemeManager.getColor("ho.shirt.wing").brighter();
+    private Color totalColor 			= ThemeManager.getColor("ho.statistics.total");
+    private Color moodColor 			= ThemeManager.getColor("ho.statistics.mood"); //Color.PINK;
+    private Color confidenceColor 		= ThemeManager.getColor("ho.statistics.confidence"); // Color.CYAN;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Abwehrzentrum"), Helper
-			.getImageIcon4Color(ABWEHRZENTRUM),
-			UserParameter.instance().statistikSpieleAbwehrzentrum);
+    private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"),
+    		centralDefenceColor,UserParameter.instance().statistikSpieleAbwehrzentrum);
 	private ImageCheckbox m_jchAngriffszentrum = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Angriffszentrum"), Helper
-			.getImageIcon4Color(ANGRIFFSZENTRUM),
+			.instance().getLanguageString("Angriffszentrum"),forwardColor,
 			UserParameter.instance().statistikSpieleAngriffszentrum);
 	private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Bewertung"), Helper
-			.getImageIcon4Color(BEWERTUNG),
+			.instance().getLanguageString("Bewertung"),ratingColor,
 			UserParameter.instance().statistikSpieleBewertung);
 	private ImageCheckbox m_jchGesamt = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Gesamtstaerke"), Helper
-			.getImageIcon4Color(GESAMT),
+			.instance().getLanguageString("Gesamtstaerke"), totalColor,
 			UserParameter.instance().statistikSpieleGesamt);
 	private ImageCheckbox m_jchLinkeAbwehr = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("linkeAbwehrseite"), Helper
-			.getImageIcon4Color(LINKEABWEHR),
+			.instance().getLanguageString("linkeAbwehrseite"),leftWingbackColor,
 			UserParameter.instance().statistikSpieleLinkeAbwehr);
 	private ImageCheckbox m_jchLinkerAngriff = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("linkeAngriffsseite"), Helper
-			.getImageIcon4Color(LINKERANGRIFF),
+			.instance().getLanguageString("linkeAngriffsseite"),leftForwardColor,
 			UserParameter.instance().statistikSpieleLinkerAngriff);
 	private ImageCheckbox m_jchMittelfeld = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Mittelfeld"), Helper
-			.getImageIcon4Color(MITTELFELD),
+			.instance().getLanguageString("Mittelfeld"), midfieldColor,
 			UserParameter.instance().statistikSpieleMittelfeld);
 	private ImageCheckbox m_jchRechteAbwehr = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("rechteAbwehrseite"), Helper
-			.getImageIcon4Color(RECHTEABWEHR),
+			.instance().getLanguageString("rechteAbwehrseite"), rightWingbackColor,
 			UserParameter.instance().statistikSpieleRechteAbwehr);
 	private ImageCheckbox m_jchRechterAngriff = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("rechteAngriffsseite"), Helper
-			.getImageIcon4Color(RECHTERANGRIFF),
+			.instance().getLanguageString("rechteAngriffsseite"),rightForwardColor,
 			UserParameter.instance().statistikSpieleRechterAngriff);
 	private ImageCheckbox m_jchSelbstvertrauen = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Selbstvertrauen"), Helper
-			.getImageIcon4Color(SELBSTVERTRAUEN),
+			.instance().getLanguageString("Selbstvertrauen"), confidenceColor,
 			UserParameter.instance().statistikSpieleSelbstvertrauen);
 	private ImageCheckbox m_jchStimmung = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Stimmung"), Helper
-			.getImageIcon4Color(STIMMUNG),
+			.instance().getLanguageString("Stimmung"),moodColor,
 			UserParameter.instance().statistikSpieleStimmung);
 	private JButton m_jbDrucken = new JButton(new ImageIcon(Helper
 			.loadImage("gui/bilder/Drucken.png")));
@@ -499,7 +488,7 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
         layout.setConstraints(panel, constraints);
         add(panel);
     }
@@ -689,32 +678,32 @@ public class SpieleStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
             if (statistikWerte.length > 0) {
                 final double faktor = 20 / getMaxValue(statistikWerte[0]);
                 models[0] = new StatistikModel(statistikWerte[0], "Bewertung",
-                                               m_jchBewertung.isSelected(), BEWERTUNG, format,
+                                               m_jchBewertung.isSelected(), ratingColor, format,
                                                faktor);
                 models[1] = new StatistikModel(statistikWerte[1], "Mittelfeld",
-                                               m_jchMittelfeld.isSelected(), MITTELFELD, format);
+                                               m_jchMittelfeld.isSelected(), midfieldColor, format);
                 models[2] = new StatistikModel(statistikWerte[2], "RechteAbwehr",
-                                               m_jchRechteAbwehr.isSelected(), RECHTEABWEHR, format);
+                                               m_jchRechteAbwehr.isSelected(), rightWingbackColor, format);
                 models[3] = new StatistikModel(statistikWerte[3], "Abwehrzentrum",
-                                               m_jchAbwehrzentrum.isSelected(), ABWEHRZENTRUM,
+                                               m_jchAbwehrzentrum.isSelected(), centralDefenceColor,
                                                format);
                 models[4] = new StatistikModel(statistikWerte[4], "LinkeAbwehr",
-                                               m_jchRechteAbwehr.isSelected(), LINKEABWEHR, format);
+                                               m_jchRechteAbwehr.isSelected(), leftWingbackColor, format);
                 models[5] = new StatistikModel(statistikWerte[5], "RechterAngriff",
-                                               m_jchRechterAngriff.isSelected(), RECHTERANGRIFF,
+                                               m_jchRechterAngriff.isSelected(), rightForwardColor,
                                                format);
                 models[6] = new StatistikModel(statistikWerte[6], "Angriffszentrum",
-                                               m_jchAngriffszentrum.isSelected(), ANGRIFFSZENTRUM,
+                                               m_jchAngriffszentrum.isSelected(), forwardColor,
                                                format);
                 models[7] = new StatistikModel(statistikWerte[7], "LinkerAngriff",
-                                               m_jchLinkerAngriff.isSelected(), LINKERANGRIFF,
+                                               m_jchLinkerAngriff.isSelected(), leftForwardColor,
                                                format);
                 models[8] = new StatistikModel(statistikWerte[8], "Gesamtstaerke",
-                                               m_jchGesamt.isSelected(), GESAMT, format3);
+                                               m_jchGesamt.isSelected(), totalColor, format3);
                 models[9] = new StatistikModel(statistikWerte[9], "Stimmung",
-                                               m_jchStimmung.isSelected(), STIMMUNG, format2);
+                                               m_jchStimmung.isSelected(), moodColor, format2);
                 models[10] = new StatistikModel(statistikWerte[10], "Selbstvertrauen",
-                                                m_jchSelbstvertrauen.isSelected(), SELBSTVERTRAUEN,
+                                                m_jchSelbstvertrauen.isSelected(), confidenceColor,
                                                 format2);
             }
 

@@ -1,13 +1,19 @@
 // %2560498359:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.LayoutManager;
+
+import javax.swing.JPanel;
+
 /**
  * JPanel mit HintergrundGrafik für Fenster
  *
  * @author Volker Fischer
  * @version 0.2.1a 28.02.02
  */
-public class RasenPanel extends javax.swing.JPanel {
+public class RasenPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
@@ -16,7 +22,7 @@ public class RasenPanel extends javax.swing.JPanel {
 	private static final long serialVersionUID = -8146276344087586861L;
 
 	/** TODO Missing Parameter Documentation */
-    public static java.awt.Image background;
+    public static Image background;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -37,7 +43,7 @@ public class RasenPanel extends javax.swing.JPanel {
      *
      * @param layout TODO Missing Constructuor Parameter Documentation
      */
-    public RasenPanel(java.awt.LayoutManager layout) {
+    public RasenPanel(LayoutManager layout) {
         super(layout);
         init(false);
     }
@@ -71,7 +77,7 @@ public class RasenPanel extends javax.swing.JPanel {
      * @param g TODO Missing Method Parameter Documentation
      */
     @Override
-	public final void paint(java.awt.Graphics g) {
+	public final void paint(Graphics g) {
         final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
 
         paintComponent(g2d);
