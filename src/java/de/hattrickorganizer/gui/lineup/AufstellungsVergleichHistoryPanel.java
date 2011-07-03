@@ -5,7 +5,9 @@ import gui.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Vector;
@@ -16,10 +18,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.AufstellungsListRenderer;
 import de.hattrickorganizer.gui.model.LineupListRenderer;
@@ -27,16 +31,15 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
 /**
  * Aufstellungen können hier gespeichert werden oder mit anderen verglichen werden
  */
-public class AufstellungsVergleichHistoryPanel extends ImagePanel
-    implements de.hattrickorganizer.gui.Refreshable, ListSelectionListener, ActionListener,
-               MouseListener
-{
+public class AufstellungsVergleichHistoryPanel extends ImagePanel implements de.hattrickorganizer.gui.Refreshable, //
+		ListSelectionListener, ActionListener, MouseListener {
 	
 	private static final long serialVersionUID = 7313614630687892362L;
 	
@@ -63,19 +66,17 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
     public AufstellungsVergleichHistoryPanel() {
         initComponents();
 
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        RefreshManager.instance().registerRefreshable(this);
 
-		// Gab mal ne Nullpointer ...
+		// There was an NPE once...
 		try {
 			m_clHRFNextAufstellung = new AufstellungCBItem(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"), 
 					HOVerwaltung.instance().getModel().getAufstellung().duplicate());
 			m_clHRFLastAufstellung = new AufstellungCBItem(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"), 
 					HOVerwaltung.instance().getModel().getLastAufstellung().duplicate());
-
-			// 2. Aufstellung
 		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), "Err: " + e);
 		}
-
         createAufstellungsListe();
     }
 
@@ -83,10 +84,6 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 
     /**
      * Ist die Übergebene Aufstellung angezeigt?
-     *
-     * @param aufstellung TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static boolean isAngezeigt(AufstellungCBItem aufstellung) {
         if (aufstellung != null) {
@@ -98,8 +95,6 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 
     /**
      * Setzt die angezeige Aufstellung
-     *
-     * @param aufstellung TODO Missing Constructuor Parameter Documentation
      */
     public static void setAngezeigteAufstellung(AufstellungCBItem aufstellung) {
         m_clAngezeigteAufstellung = aufstellung.duplicate();
@@ -107,9 +102,6 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 
     /**
      * Setzt die HRFAufstellung nach dem Import einen HRFs
-     *
-     * @param nextAufstellung TODO Missing Constructuor Parameter Documentation
-     * @param lastAufstellung TODO Missing Constructuor Parameter Documentation
      */
     public static void setHRFAufstellung(Lineup nextAufstellung, Lineup lastAufstellung) {
 		if (nextAufstellung != null) {
@@ -125,8 +117,6 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 
     /**
      * Returns Last Lineup
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static AufstellungCBItem getLastLineup() {
         return m_clHRFLastAufstellung;
@@ -135,8 +125,6 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
     /**
      * Wird vom AufstellungsDetailPanel aufgerufen, um mit der Vergleichsaufstellung anzuzeigen.
      * Wird danach wieder auf false gesetzt
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static boolean isVergleichgefordert() {
         final boolean vergleichgefordert = m_bVergleichAngestossen;
@@ -146,172 +134,142 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel
 
     /**
      * Gibt die VergleichsAufstellung zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static AufstellungCBItem getVergleichsAufstellung() {
         return m_clVergleichsAufstellung;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
+     * Handle action events.
      */
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-		final int x = HOMainFrame.instance().getLocation().x + HOMainFrame.instance().getSize().width;
-		final int y = HOMainFrame.instance().getLocation().y + HOMainFrame.instance().getSize().height;
-
-        if (actionEvent.getSource().equals(m_jbAufstellungAnzeigen)) {
-			m_clAngezeigteAufstellung = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).duplicate();
-			HOVerwaltung.instance().getModel().setAufstellung(m_clAngezeigteAufstellung.getAufstellung().duplicate());
-
-            //Alles Updaten
-            HOMainFrame.instance().getAufstellungsPanel().update();
-        } else if (actionEvent.getSource().equals(m_jbAufstellungSpeichern)) {
+    public final void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource().equals(m_jbAufstellungAnzeigen)) { // use selected lineup
+        	loadSelectedStoredLineup();
+        } else if (actionEvent.getSource().equals(m_jbAufstellungSpeichern)) { // save lineup
             String aufstellungsname = "";
-
 			if (m_jlAufstellungen.getSelectedIndex() > 1) {
 				aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText();
 			}
-
+			final int x = HOMainFrame.instance().getLocation().x + HOMainFrame.instance().getSize().width;
+			final int y = HOMainFrame.instance().getLocation().y + HOMainFrame.instance().getSize().height;
 			AufstellungsNameDialog temp = new AufstellungsNameDialog(HOMainFrame.instance(), aufstellungsname,
 					HOVerwaltung.instance().getModel().getAufstellung(), x, y);
 			temp.setVisible(true);
             reInit();
             temp = null;
-        } else if (actionEvent.getSource().equals(m_jbAufstellungLoeschen)) {
+        } else if (actionEvent.getSource().equals(m_jbAufstellungLoeschen)) { // delete stored lineup
 			String aufstellungsname = "";
-
 			if (m_jlAufstellungen.getSelectedIndex() > 0) {
 				aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText();
 			}
-        	
-            //Abfrage##
 			DBZugriff.instance().deleteAufstellung(Lineup.NO_HRF_VERBINDUNG,
 					((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText());
 			HOMainFrame.instance().getInfoPanel().setLangInfoText(
 					HOVerwaltung.instance().getLanguageString("Aufstellung") + " "
 							+ ((de.hattrickorganizer.gui.model.AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText() + " "
 							+ HOVerwaltung.instance().getLanguageString("geloescht"));
-                                                                                                    
 			File f = new File("Lineups/" + HOVerwaltung.instance().getModel().getBasics().getManager() + "/" + aufstellungsname + ".dat");
 			f.delete();
 			FileExtensionManager.deleteLineup(aufstellungsname);
-
 			((DefaultListModel) m_jlAufstellungen.getModel()).removeElement(m_jlAufstellungen.getSelectedValue());
 		}
-
         repaint();
     }
 
+    private void loadSelectedStoredLineup() {
+    	final Lineup old = HOVerwaltung.instance().getModel().getAufstellung();
+		m_clAngezeigteAufstellung = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).duplicate();
+		final Lineup new1 = m_clAngezeigteAufstellung.getAufstellung().duplicate();
+		if (old != null) { // else we lose the location (home / away / derby) here 
+			new1.setHeimspiel(old.getHeimspiel());
+		}
+		HOVerwaltung.instance().getModel().setAufstellung(new1);
+        HOMainFrame.instance().getAufstellungsPanel().update();
+    }
+    
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * Handle mouse clicked events.
      */
-	public final void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
+	public final void mouseClicked(MouseEvent mouseEvent) {
 		if (mouseEvent.getClickCount() >= 2) {
-			m_clAngezeigteAufstellung = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue())
-					.duplicate();
-			HOVerwaltung.instance().getModel().setAufstellung(m_clAngezeigteAufstellung.getAufstellung().duplicate());
-
-			// Alles Updaten
-			de.hattrickorganizer.gui.HOMainFrame.instance().getAufstellungsPanel().update();
-
+			loadSelectedStoredLineup();
 			repaint();
 		}
 	}
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * Handle mouse entered events.
      */
-    public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
+    public void mouseEntered(MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * Handle mouse exited events.
      */
-    public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
+    public void mouseExited(MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * Handle mouse pressed events.
      */
-    public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
+    public void mousePressed(MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
+     * Handle mouse released events.
      */
-    public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
+    public void mouseReleased(MouseEvent mouseEvent) {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Re-Init lineup.
      */
     public final void reInit() {
         createAufstellungsListe();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void refresh() {
-        //nix
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param listSelectionEvent TODO Missing Method Parameter Documentation
+     * Handle list selection events.
      */
-    public final void valueChanged(javax.swing.event.ListSelectionEvent listSelectionEvent) {
-        //Aufstellung markiert
-        if ((m_jlAufstellungen.getSelectedValue() != null)
-            && m_jlAufstellungen.getSelectedValue() instanceof AufstellungCBItem) {
+	public final void valueChanged(ListSelectionEvent listSelectionEvent) {
+		// Aufstellung markiert
+		if ((m_jlAufstellungen.getSelectedValue() != null) && m_jlAufstellungen.getSelectedValue() instanceof AufstellungCBItem) {
 			final AufstellungCBItem aufstellungCB = (AufstellungCBItem) m_jlAufstellungen.getSelectedValue();
+			// "Aktuelle Aufstellung" nicht zu löschen!
+			if (aufstellungCB.getText().equals(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"))
+					|| aufstellungCB.getText().equals(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"))) {
+				m_jbAufstellungAnzeigen.setEnabled(true);
+				m_jbAufstellungLoeschen.setEnabled(false);
+				m_jbAufstellungSpeichern.setEnabled(true);
+			}
+			// Geladen
+			else {
+				m_jbAufstellungAnzeigen.setEnabled(true);
+				m_jbAufstellungSpeichern.setEnabled(true);
+				m_jbAufstellungLoeschen.setEnabled(true);
+			}
+			m_bVergleichAngestossen = true;
+			m_clVergleichsAufstellung = aufstellungCB.duplicate();
+			final Lineup old = HOVerwaltung.instance().getModel().getAufstellung();
+			if (old != null) { // keep the same location (home / away / derby) 
+				m_clVergleichsAufstellung.getAufstellung().setHeimspiel(old.getHeimspiel());
+			}
+		} else { // Keine Vergleich!
+			m_jbAufstellungAnzeigen.setEnabled(false);
+			m_jbAufstellungSpeichern.setEnabled(true);
+			m_jbAufstellungLoeschen.setEnabled(false);
 
-            //"Aktuelle Aufstellung" nicht zu löschen!
-            if (aufstellungCB.getText().equals(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"))
-                || aufstellungCB.getText().equals(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"))) {
-                m_jbAufstellungAnzeigen.setEnabled(true);
-                m_jbAufstellungLoeschen.setEnabled(false);
-                m_jbAufstellungSpeichern.setEnabled(true);
-            }
-            //Geladen
-            else {
-                m_jbAufstellungAnzeigen.setEnabled(true);
-                m_jbAufstellungSpeichern.setEnabled(true);
-                m_jbAufstellungLoeschen.setEnabled(true);
-            }
-
-            m_bVergleichAngestossen = true;
-            m_clVergleichsAufstellung = aufstellungCB.duplicate();
-        }
-        //Keine Vergleich!
-        else {
-            m_jbAufstellungAnzeigen.setEnabled(false);
-            m_jbAufstellungSpeichern.setEnabled(true);
-            m_jbAufstellungLoeschen.setEnabled(false);
-
-            m_clVergleichsAufstellung = null;
-        }
-
+			m_clVergleichsAufstellung = null;
+		}
 		// gui.RefreshManager.instance ().doRefresh();
 		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsDetailPanel().refresh();
-    }
+	}
 
 	/**
-	 * TODO Missing Method Documentation
+	 * Create list with lineups.
 	 */
 	private void createAufstellungsListe() {
 		final Vector<AufstellungCBItem> aufstellungsListe = loadAufstellungsListe();
