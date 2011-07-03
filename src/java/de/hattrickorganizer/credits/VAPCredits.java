@@ -880,7 +880,7 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
     private void renderingLoop() {
     	
     	MP3PlayerWrapper mp3 = new MP3PlayerWrapper();
-    	mp3.setMP3File( "gui/sound/credits.mp3" );
+    	mp3.setMP3File( "/gui/sound/credits.mp3" );
     	mp3.start();
         //Erzeugen einer Bufferstrategie (3 Buffer)
         window.createBufferStrategy(2);
@@ -897,20 +897,6 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
         //Script starten
         creditScript();
 
-        //Sound - Test (buggy)
-
-        /*
-           try
-           {
-               java.net.URL resource = ClassLoader.getSystemResource( "credits/refrain.wav" );
-               java.applet.AudioClip audioClip = java.applet.Applet.newAudioClip( resource );
-               audioClip.loop();//Spiel nur kurz an!?
-           }
-           catch ( Exception e )
-           {
-               HOLogger.instance().log(getClass(),e);
-           }
-         */
         while (!done) {
             Graphics g = null;
 
