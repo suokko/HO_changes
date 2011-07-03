@@ -7,14 +7,12 @@ package de.hattrickorganizer.tools.updater;
 
 import gui.UserParameter;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -48,23 +46,17 @@ import de.hattrickorganizer.tools.ZipHelper;
  */
 public final class UpdateController {
     //~ Static fields/initializers -----------------------------------------------------------------
-
     private static File zip = null;
     private static File tmp = null;
 
-    /** TODO Missing Parameter Documentation */
     public static final String PLUGINS_HOMEPAGE = "http://plugins.hattrickorganizer.net";
-
-    /** TODO Missing Parameter Documentation */
     protected static final String WEB_FLAGSFILE = PLUGINS_HOMEPAGE + "/xml/flags.zip";
-
-    /** TODO Missing Parameter Documentation */
     protected static final String WEB_PLUGINFILE = PLUGINS_HOMEPAGE + "/xml/pluginVersionen.xml";
 
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * TODO Missing Method Documentation
+     * Show the plugins dialog that allows to remove a plugin. 
      */
     public static void showDeletePluginDialog() {
         try {
@@ -76,7 +68,7 @@ public final class UpdateController {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Show the language file update dialog. 
      */
     public static void showLanguageUpdateDialog() {
         try {
@@ -98,7 +90,7 @@ public final class UpdateController {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Show the library update dialog. 
      */
     public static void showPluginUpdaterLibraries() {
         try {
@@ -148,7 +140,7 @@ public final class UpdateController {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Show the normal plugins update dialog. 
      */
     public static void showPluginUpdaterNormal() {
         try {
@@ -198,7 +190,7 @@ public final class UpdateController {
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Download latest flags from the external space.
      */
     public static void updateFlags() {
         try {
@@ -214,42 +206,27 @@ public final class UpdateController {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws IOException TODO Missing Method Exception Documentation
+     * Create an zip file in the systems temp folder.
      */
     protected static File getLocalZipFile() throws IOException {
         if (zip == null) {
             zip = File.createTempFile("tmp", "zip");
         }
-
         return zip;
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws IOException TODO Missing Method Exception Documentation
+     * Create an xml file in the systems temp folder.
      */
     private static File getLocalXMLFile() throws IOException {
         if (tmp == null) {
             tmp = File.createTempFile("tmp", "xml");
         }
-
         return tmp;
     }
 
     /**
      * analyse the /sprache/languages.xml file and creates a hashtable
-     *
-     * @param elements TODO Missing Constructuor Parameter Documentation
-     * @param list TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private static Hashtable<String,HPLanguageInfo> getWebLanguages(NodeList elements, Hashtable<String,HPLanguageInfo> list) {
         HPLanguageInfo tmp = null;
@@ -271,30 +248,17 @@ public final class UpdateController {
 
     /**
      * Download the xml file from Web and save it local
-     *
-     * @param url
-     * @param tmp
-     *
-     * @return xml File
-     *
-     * @throws Exception
      */
     private static File createXMLFile(String url, File tmp) throws Exception {
         boolean showDialog = false;
         String content = "";
 
         try {
-//            if ((UserParameter.instance().LoginName == null)
-//                || (UserParameter.instance().LoginName.length() == 0)) {
-//                showDialog = true;
-//            }
-
             content = MyConnector.instance().getUsalWebPage(url, showDialog);
         } catch (Exception ex) {
             if (tmp.exists()) {
                 return tmp;
             }
-
             return null;
         }
 
@@ -310,6 +274,9 @@ public final class UpdateController {
         return tmp;
     }
 
+    /**
+     * Check the external site for the latest release version.
+     */
 	public static void check4update() {
 		VersionInfo version = MyConnector.instance().getLatestVersion();
 		if (version != null && version.getVersion() > HOMainFrame.VERSION) {
@@ -322,16 +289,9 @@ public final class UpdateController {
 					JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
-				updateHO(String.valueOf(version.getVersion()));
+				//updateHO(version.getVersion());
+				updateHO("http://downloads.sourceforge.net/ho1/" + version.getZipFileName());
 			}
-//			int update = JOptionPane.showConfirmDialog(
-//					HOMainFrame.instance(),
-//					"" + HOVerwaltung.instance().getLanguageString("updateMSG"),
-//					"Open page?",
-//					JOptionPane.YES_NO_OPTION);
-//			if (update == JOptionPane.YES_OPTION) {
-//				HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");
-//			}
 		} else {
 			final int currRev = HOMainFrame.getRevisionNumber();
 			JOptionPane.showMessageDialog(HOMainFrame.instance(), "No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
@@ -377,7 +337,7 @@ public final class UpdateController {
 	}
 	
 	/**
-	 * 
+	 * Check the external site for the latest beta version.
 	 * TODO: i18n
 	 */
 	public static void check4latestbeta() {
