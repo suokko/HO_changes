@@ -27,6 +27,7 @@ import de.hattrickorganizer.logik.LineupAssistant;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -250,15 +251,8 @@ public  class Lineup implements plugins.ILineUp {
     //    }
 
     /**
-     * errechnet die Gesamt AW Stï¿½rke
-     * 
      * Calculates the total star rating for defense
-     *
      * This is CA-rating?
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final float getAWTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         float stk = 0.0f;
@@ -270,7 +264,7 @@ public  class Lineup implements plugins.ILineUp {
         stk += calcTeamStk(spieler, ISpielerPosition.BACK_DEF, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.BACK_TOMID, mitForm);
 
-        return de.hattrickorganizer.tools.Helper.round(stk, 1);
+        return Helper.round(stk, 1);
     }
 
     /**
@@ -292,9 +286,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * bestimmt automatisch den Kapitï¿½n
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
+     * Auto-select the set best captain.
      */
     public final void setAutoKapitaen(Vector<ISpieler> spieler) {
         Spieler player = null;
@@ -319,9 +311,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * bestimmt den Standard schï¿½tzen
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
+     * Auto-select the set best pieces taker.
      */
     public final void setAutoKicker(Vector<ISpieler> spieler) {
         int maxStandard = -1;
@@ -357,6 +347,7 @@ public  class Lineup implements plugins.ILineUp {
     public final float getAverageExperience() {
     	return getAverageExperience(0);
     }
+    
     /**
      * Get the average experience of all players in lineup using a specific captain
      * 
@@ -395,24 +386,18 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * errechnet anhand der aktuellen Aufstellung die besten Elferschï¿½tzen
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the best players for penalty kicks.
      */
     public final int[] getBestElferKicker() {
-        return m_clAssi.setElferKicker(HOVerwaltung.instance().getModel().getAllSpieler(),
-                                       m_vPositionen);
+		return m_clAssi.setElferKicker(HOVerwaltung.instance().getModel().getAllSpieler(), m_vPositionen);
     }
 
     /**
      * Predicts Central Attack-Rating
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getCentralAttackRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
 	        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 	        double value = Math.max(1, rpManager.getCentralAttackRatings());
 	        if (value>1) {
@@ -426,13 +411,10 @@ public  class Lineup implements plugins.ILineUp {
 
     /**
      * Predicts cd-Rating
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getCentralDefenseRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
 	        //ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getCentralDefenseRatings());
 			if (value>1) {
@@ -445,25 +427,15 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * errechnet die Gesamt Stärke
-     * Total star rating.
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Total strength.
      */
-    public final float getGesamtStaerke(Vector<ISpieler> spieler, boolean mitForm) {
-        return de.hattrickorganizer.tools.Helper.round(getTWTeamStk(spieler, mitForm)
-                                                       + getAWTeamStk(spieler, mitForm)
-                                                       + getMFTeamStk(spieler, mitForm)
-                                                       + getSTTeamStk(spieler, mitForm), 1);
+    public final float getGesamtStaerke(Vector<ISpieler> spieler, boolean useForm) {
+		return Helper.round(getTWTeamStk(spieler, useForm) + getAWTeamStk(spieler, useForm) // 
+				+ getMFTeamStk(spieler, useForm) + getSTTeamStk(spieler, useForm), 1);
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the HT stats value for the lineup.
      */
     public final int getHATStats() {
 		int sum;
@@ -532,8 +504,6 @@ public  class Lineup implements plugins.ILineUp {
 
     /**
      * Predicts LeftAttack-Rating
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getLeftAttackRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
@@ -551,9 +521,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * Predicts ld-Rating
-     *
-     * @return TODO Missing Return Method Documentation
+     * Predicts LeftDefense-Rating
      */
     public final double getLeftDefenseRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
@@ -571,41 +539,26 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the Loddar stats value for the lineup.
      */
 	public final float getLoddarStats() {
 		LoddarStatsCalculator calculator = new LoddarStatsCalculator();
-		calculator.setRatings(getMidfieldRating(), getRightDefenseRating(),
-				getCentralDefenseRating(), getLeftDefenseRating(),
-				getRightAttackRating(), getCentralAttackRating(),
-				getLeftAttackRating());
-		calculator.setTactics(getTacticType(), getTacticLevelAimAow(),
-				getTacticLevelCounter());
+		calculator.setRatings(getMidfieldRating(), getRightDefenseRating(), getCentralDefenseRating(), getLeftDefenseRating(),
+				getRightAttackRating(), getCentralAttackRating(), getLeftAttackRating());
+		calculator.setTactics(getTacticType(), getTacticLevelAimAow(), getTacticLevelCounter());
 		return calculator.calculate();
 	}
 
 	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param x TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
+	 * convert reduced float rating (1.00....20.99) to original integer HT rating (1...80)
+	 * one +0.5 is because of correct rounding to integer
 	 */
 	public static final int HTfloat2int(double x) {
-		// convert reduced float rating (1.00....20.99) to original integer HT rating (1...80)
-		// one +0.5 is because of correct rounding to integer
 		return (int) (((x - 1.0f) * 4.0f) + 1.0f);
 	}
+	
     /**
-     * errechnet die Gesamt MF Stï¿½rke
      * Midfield and winger total star rating.
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final float getMFTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         float stk = 0.0f;
@@ -618,7 +571,7 @@ public  class Lineup implements plugins.ILineUp {
         stk += calcTeamStk(spieler, ISpielerPosition.MIDFIELDER_TOWING, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.WINGER_TOMID, mitForm);
 
-        return de.hattrickorganizer.tools.Helper.round(stk, 1);
+        return Helper.round(stk, 1);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -627,13 +580,11 @@ public  class Lineup implements plugins.ILineUp {
 
     /**
      * Predicts MF-Rating
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getMidfieldRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(),
+					(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance());
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getMFRatings());
 			if (value>1) {
@@ -701,11 +652,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param positionsid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the position type (byte in ISpielerPosition).
      */
     public final byte getEffectivePos4PositionID(int positionsid) {
         try {
@@ -761,7 +708,7 @@ public  class Lineup implements plugins.ILineUp {
 				m_sLocation = 0;
 			}
 		}
-
+//		HOLogger.instance().debug(getClass(), "getHeimspiel: " + m_sLocation);
 		return m_sLocation;
 	}
 	
@@ -851,7 +798,6 @@ public  class Lineup implements plugins.ILineUp {
      * @param m_vPositionen New value of property m_vPositionen.
      */
     public final void setPositionen(Vector<ISpielerPosition> posVec) {
-
     	// Replace the existing positions with the incoming on a one by one basis. Otherwise we will miss 3 positions when loading
     	// an old style lineup.
     	// We need to avoid the regular methods, as some required stuff like the Model may not be created yet.
@@ -891,13 +837,10 @@ public  class Lineup implements plugins.ILineUp {
 
     /**
      * Predicts Right-Attack-Rating
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getRightAttackRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getRightAttackRatings());
 			if (value>1) {
@@ -911,13 +854,10 @@ public  class Lineup implements plugins.ILineUp {
 
     /**
      * Predicts rd-Rating
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getRightDefenseRating() {
     	if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
 	        final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
-
 			//ruft konvertiertes Plugin ( in Manager ) auf und returned den Wert
 			double value = Math.max(1, rpManager.getRightDefenseRatings());
 			if (value>1) {
@@ -930,13 +870,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * errechnet die Gesamt ST Stï¿½rke
      * Team star rating for attackers
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final float getSTTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         float stk = 0.0f;
@@ -944,18 +878,11 @@ public  class Lineup implements plugins.ILineUp {
         stk += calcTeamStk(spieler, ISpielerPosition.FORWARD_DEF, mitForm);
         stk += calcTeamStk(spieler, ISpielerPosition.FORWARD_TOWING, mitForm);
 
-        return de.hattrickorganizer.tools.Helper.round(stk, 1);
+        return Helper.round(stk, 1);
     }
 
     /**
-     * Setzt einen Spieler in eine Position und sorgt dafï¿½r, daï¿½ er nicht noch woanders
-     * aufgestellt ist
-     *
-     * @param positionsid TODO Missing Constructuor Parameter Documentation
-     * @param spielerid TODO Missing Constructuor Parameter Documentation
-     * @param tactic TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Place a player to a certain position and check/solve dependencies.
      */
     public final byte setSpielerAtPosition(int positionsid, int spielerid, byte tactic) {
         final SpielerPosition pos = getPositionById(positionsid);
@@ -971,69 +898,42 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * Setzt einen Spieler in eine Position und sorgt dafï¿½r, daï¿½ er nicht noch woanders
-     * aufgestellt ist
-     *
-     * @param positionsid TODO Missing Constructuor Parameter Documentation
-     * @param spielerid TODO Missing Constructuor Parameter Documentation
+     * Place a player to a certain position and check/solve dependencies.
      */
-    public final void setSpielerAtPosition(int positionsid, int spielerid) {
-    	
-    	//Ist der Spieler noch aufgestellt?
-        if (this.isSpielerAufgestellt(spielerid)) {
-            //Den Spieler an der alten Position entfernen
-            for (int i = 0; i < m_vPositionen.size(); i++) {
-                if (((SpielerPosition) m_vPositionen.get(i)).getSpielerId() == spielerid) {
-                    //Spieler entfernen
-                    ((SpielerPosition) m_vPositionen.get(i)).setSpielerId(0, this);
-                }
-            }
-        }
-      
-        //Spieler an die neue Position setzten
-        final SpielerPosition position = getPositionById(positionsid);
-       	position.setSpielerId(spielerid, this);
-        
-        //Ist der Spielfï¿½hrer und der Kicker noch aufgestellt?
-        if (!isSpielerAufgestellt(m_iKapitaen)) {
-            //Spielfï¿½hrer entfernen
-            m_iKapitaen = 0;
-        }
-
-        if (!isSpielerAufgestellt(m_iKicker)) {
-            //Spielfï¿½hrer entfernen
-            m_iKicker = 0;
-        }
-    }
+	public final void setSpielerAtPosition(int positionsid, int spielerid) {
+		if (this.isSpielerAufgestellt(spielerid)) {
+			for (int i = 0; i < m_vPositionen.size(); i++) {
+				if (((SpielerPosition) m_vPositionen.get(i)).getSpielerId() == spielerid) {
+					((SpielerPosition) m_vPositionen.get(i)).setSpielerId(0, this);
+				}
+			}
+		}
+		final SpielerPosition position = getPositionById(positionsid);
+		position.setSpielerId(spielerid, this);
+		if (!isSpielerAufgestellt(m_iKapitaen)) {
+			m_iKapitaen = 0;
+		}
+		if (!isSpielerAufgestellt(m_iKicker)) {
+			m_iKicker = 0;
+		}
+	}
 
     /**
-     * ist der SPieler aufgestellt
-     *
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Check, if the player is in the lineup.
      */
     public final boolean isSpielerAufgestellt(int spielerId) {
         return m_clAssi.isSpielerAufgestellt(spielerId, m_vPositionen);
     }
 
     /**
-     * spielt der Spieler von Beginn an
-     *
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Check, if the player is in the starting 11.
      */
     public final boolean isSpielerInAnfangsElf(int spielerId) {
         return m_clAssi.isSpielerInAnfangsElf(spielerId, m_vPositionen);
     }
 
     /**
-     * sitzt der SPierl auf der Bank
-     *
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Check, if the player is a substitute.
      */
     public final boolean isSpielerInReserve(int spielerId) {
         return (m_clAssi.isSpielerAufgestellt(spielerId, m_vPositionen)
@@ -1041,36 +941,21 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * Gibt den Namen fï¿½r das System zurï¿½ck
-     *
-     * @param system TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the system name.
      */
     public final String getSystemName(byte system) {
         return getNameForSystem(system);
     }
 
     /**
-     * errechnet die Gesamt TW Stï¿½rke
-     * 
      * Star rating for the keeper.
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final float getTWTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
         return calcTeamStk(spieler, ISpielerPosition.KEEPER, mitForm);
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param positionsid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get tactic type for a position-id.
      */
     public final byte getTactic4PositionID(int positionsid) {
     	try {
@@ -1084,30 +969,30 @@ public  class Lineup implements plugins.ILineUp {
     /////////////////////////////////////////////////////////////////////////////////
     //    STK Funcs
     /////////////////////////////////////////////////////////////////////////////////
-    public final float getTacticLevel(int type) {
-        float value = 0.0f;
+	public final float getTacticLevel(int type) {
+		float value = 0.0f;
 
-        switch (type) {
-            case plugins.IMatchDetails.TAKTIK_PRESSING:
-                value = getTacticLevelPressing();
-                break;
+		switch (type) {
+		case plugins.IMatchDetails.TAKTIK_PRESSING:
+			value = getTacticLevelPressing();
+			break;
 
-            case plugins.IMatchDetails.TAKTIK_KONTER:
-                value = getTacticLevelCounter();
-                break;
+		case plugins.IMatchDetails.TAKTIK_KONTER:
+			value = getTacticLevelCounter();
+			break;
 
-            case plugins.IMatchDetails.TAKTIK_MIDDLE:
-            case plugins.IMatchDetails.TAKTIK_WINGS:
-                value = getTacticLevelAimAow();
-                break;
+		case plugins.IMatchDetails.TAKTIK_MIDDLE:
+		case plugins.IMatchDetails.TAKTIK_WINGS:
+			value = getTacticLevelAimAow();
+			break;
 
-            case plugins.IMatchDetails.TAKTIK_LONGSHOTS:
-                value = getTacticLevelLongShots();
-                break;
-        }
+		case plugins.IMatchDetails.TAKTIK_LONGSHOTS:
+			value = getTacticLevelLongShots();
+			break;
+		}
 
-        return value;
-    }
+		return value;
+	}
 
     /**
      * Setter for property m_iTacticType.
@@ -1184,23 +1069,20 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param name TODO Missing Method Parameter Documentation
+     * Delete lineup system.
      */
     public final void AufstellungsSystemLoeschen(String name) {
-        de.hattrickorganizer.database.DBZugriff.instance().deleteSystem(NO_HRF_VERBINDUNG, name);
+        DBZugriff.instance().deleteSystem(NO_HRF_VERBINDUNG, name);
     }
 
     /**
-     * prï¿½ft ob die aufgestellten Spieler noch implements KAder sind
+     * Check if the players are still in the team (not sold or fired).
      */
     public final void checkAufgestellteSpieler() {
         SpielerPosition pos = null;
 
         for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
-
             //existiert Spieler noch ?
             if ((HOVerwaltung.instance().getModel() != null)
                 && (HOVerwaltung.instance().getModel().getSpieler(pos.getSpielerId()) == null)) {
@@ -1214,26 +1096,16 @@ public  class Lineup implements plugins.ILineUp {
     //    Aktions Funcs
     /////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * erstellt die automatische Aufstellung
-     *
-     * @param spieler die aufszustellenden Spieler
-     * @param reihenfolge Reihenfolge in der die Mannschaftsteile besetzt werden sollen
-     * @param mitForm Formberï¿½cksichtigung
-     * @param idealPosFirst IdealPosition berï¿½cksichtigen ?
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperren TODO Missing Constructuor Parameter Documentation
-     * @param wetterBonus TODO Missing Constructuor Parameter Documentation
-     * @param wetter TODO Missing Constructuor Parameter Documentation
-     */
-    public final void doAufstellung(Vector<ISpieler> spieler, byte reihenfolge, boolean mitForm,
-                                    boolean idealPosFirst, boolean ignoreVerletzung,
-                                    boolean ignoreSperren, float wetterBonus, int wetter) {
-        m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst,
-                               ignoreVerletzung, ignoreSperren, wetterBonus, wetter);
-        setAutoKicker(null);
-        setAutoKapitaen(null);
-    }
+	/**
+	 * erstellt die automatische Aufstellung
+	 */
+	public final void doAufstellung(Vector<ISpieler> spieler, byte reihenfolge, boolean mitForm, boolean idealPosFirst,
+			boolean ignoreVerletzung, boolean ignoreSperren, float wetterBonus, int wetter) {
+		m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst, ignoreVerletzung, ignoreSperren, wetterBonus,
+				wetter);
+		setAutoKicker(null);
+		setAutoKapitaen(null);
+	}
 
     /////////////////////////////////////////////////////////////////////////////////
     //    Debug Funcs
@@ -1266,106 +1138,62 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * Cloned diese Aufstellung, erzeugt neues Objekt
-     *
-     * @return TODO Missing Return Method Documentation
+     * Clone this lineup, creates and returns a new Lineup object.
      */
-    public final Lineup duplicate() {
-        final java.util.Properties properties = new java.util.Properties();
-        Lineup clone = null;
+	public final Lineup duplicate() {
+		final Properties properties = new Properties();
+		Lineup clone = null;
 
-        try {
-            properties.setProperty("keeper",
-                                   getPositionById(ISpielerPosition.keeper).getSpielerId() + "");
-            properties.setProperty("rightback",
-                                   getPositionById(ISpielerPosition.rightBack).getSpielerId() + "");
-            properties.setProperty("insideback1",
-                                   getPositionById(ISpielerPosition.rightCentralDefender).getSpielerId()
-                                   + "");
-            properties.setProperty("insideback2",
-                                   getPositionById(ISpielerPosition.leftCentralDefender).getSpielerId()
-                                   + "");
-            properties.setProperty("insideback3",
-                    getPositionById(ISpielerPosition.middleCentralDefender).getSpielerId()
-                    + "");
-            properties.setProperty("leftback",
-                                   getPositionById(ISpielerPosition.leftBack).getSpielerId() + "");
-            properties.setProperty("rightwinger",
-                                   getPositionById(ISpielerPosition.rightWinger).getSpielerId()
-                                   + "");
-            properties.setProperty("insidemid1",
-                                   getPositionById(ISpielerPosition.rightInnerMidfield).getSpielerId() + "");
-            properties.setProperty("insidemid2",
-                                   getPositionById(ISpielerPosition.leftInnerMidfield).getSpielerId() + "");
-            properties.setProperty("insidemid3",
-                    getPositionById(ISpielerPosition.centralInnerMidfield).getSpielerId() + "");
-            properties.setProperty("leftwinger",
-                                   getPositionById(ISpielerPosition.leftWinger).getSpielerId() + "");
-            properties.setProperty("forward1",
-                                   getPositionById(ISpielerPosition.rightForward).getSpielerId() + "");
-            properties.setProperty("forward2",
-                                   getPositionById(ISpielerPosition.leftForward).getSpielerId() + "");
-            properties.setProperty("forward3",
-                    getPositionById(ISpielerPosition.centralForward).getSpielerId() + "");
-            properties.setProperty("substback",
-                                   getPositionById(ISpielerPosition.substDefender).getSpielerId() + "");
-            properties.setProperty("substinsidemid",
-                                   getPositionById(ISpielerPosition.substInnerMidfield).getSpielerId()
-                                   + "");
-            properties.setProperty("substwinger",
-                                   getPositionById(ISpielerPosition.substWinger).getSpielerId()
-                                   + "");
-            properties.setProperty("substkeeper",
-                                   getPositionById(ISpielerPosition.substKeeper).getSpielerId()
-                                   + "");
-            properties.setProperty("substforward",
-                                   getPositionById(ISpielerPosition.substForward).getSpielerId()
-                                   + "");
+		try {
+			properties.setProperty("keeper", getPositionById(ISpielerPosition.keeper).getSpielerId() + "");
+			properties.setProperty("rightback", getPositionById(ISpielerPosition.rightBack).getSpielerId() + "");
+			properties.setProperty("insideback1", getPositionById(ISpielerPosition.rightCentralDefender).getSpielerId() + "");
+			properties.setProperty("insideback2", getPositionById(ISpielerPosition.leftCentralDefender).getSpielerId() + "");
+			properties.setProperty("insideback3", getPositionById(ISpielerPosition.middleCentralDefender).getSpielerId() + "");
+			properties.setProperty("leftback", getPositionById(ISpielerPosition.leftBack).getSpielerId() + "");
+			properties.setProperty("rightwinger", getPositionById(ISpielerPosition.rightWinger).getSpielerId() + "");
+			properties.setProperty("insidemid1", getPositionById(ISpielerPosition.rightInnerMidfield).getSpielerId() + "");
+			properties.setProperty("insidemid2", getPositionById(ISpielerPosition.leftInnerMidfield).getSpielerId() + "");
+			properties.setProperty("insidemid3", getPositionById(ISpielerPosition.centralInnerMidfield).getSpielerId() + "");
+			properties.setProperty("leftwinger", getPositionById(ISpielerPosition.leftWinger).getSpielerId() + "");
+			properties.setProperty("forward1", getPositionById(ISpielerPosition.rightForward).getSpielerId() + "");
+			properties.setProperty("forward2", getPositionById(ISpielerPosition.leftForward).getSpielerId() + "");
+			properties.setProperty("forward3", getPositionById(ISpielerPosition.centralForward).getSpielerId() + "");
+			properties.setProperty("substback", getPositionById(ISpielerPosition.substDefender).getSpielerId() + "");
+			properties.setProperty("substinsidemid", getPositionById(ISpielerPosition.substInnerMidfield).getSpielerId() + "");
+			properties.setProperty("substwinger", getPositionById(ISpielerPosition.substWinger).getSpielerId() + "");
+			properties.setProperty("substkeeper", getPositionById(ISpielerPosition.substKeeper).getSpielerId() + "");
+			properties.setProperty("substforward", getPositionById(ISpielerPosition.substForward).getSpielerId() + "");
 
-            properties.setProperty("behrightback",
-                                   getPositionById(ISpielerPosition.rightBack).getTaktik() + "");
-            properties.setProperty("behinsideback1",
-                                   getPositionById(ISpielerPosition.rightCentralDefender).getTaktik() + "");
-            properties.setProperty("behinsideback2",
-                                   getPositionById(ISpielerPosition.leftCentralDefender).getTaktik() + "");
-            properties.setProperty("behinsideback3",
-                    getPositionById(ISpielerPosition.middleCentralDefender).getTaktik() + "");
-            properties.setProperty("behleftback",
-                                   getPositionById(ISpielerPosition.leftBack).getTaktik() + "");
-            properties.setProperty("behrightwinger",
-                                   getPositionById(ISpielerPosition.rightWinger).getTaktik() + "");
-            properties.setProperty("behinsidemid1",
-                                   getPositionById(ISpielerPosition.rightInnerMidfield).getTaktik() + "");
-            properties.setProperty("behinsidemid2",
-                                   getPositionById(ISpielerPosition.leftInnerMidfield).getTaktik() + "");
-            properties.setProperty("behinsidemid3",
-                    getPositionById(ISpielerPosition.centralInnerMidfield).getTaktik() + "");
-            properties.setProperty("behleftwinger",
-                                   getPositionById(ISpielerPosition.leftWinger).getTaktik() + "");
-            properties.setProperty("behforward1",
-                                   getPositionById(ISpielerPosition.rightForward).getTaktik() + "");
-            properties.setProperty("behforward2",
-                                   getPositionById(ISpielerPosition.leftForward).getTaktik() + "");
-            properties.setProperty("behforward3",
-                    getPositionById(ISpielerPosition.centralForward).getTaktik() + "");
+			properties.setProperty("behrightback", getPositionById(ISpielerPosition.rightBack).getTaktik() + "");
+			properties.setProperty("behinsideback1", getPositionById(ISpielerPosition.rightCentralDefender).getTaktik() + "");
+			properties.setProperty("behinsideback2", getPositionById(ISpielerPosition.leftCentralDefender).getTaktik() + "");
+			properties.setProperty("behinsideback3", getPositionById(ISpielerPosition.middleCentralDefender).getTaktik() + "");
+			properties.setProperty("behleftback", getPositionById(ISpielerPosition.leftBack).getTaktik() + "");
+			properties.setProperty("behrightwinger", getPositionById(ISpielerPosition.rightWinger).getTaktik() + "");
+			properties.setProperty("behinsidemid1", getPositionById(ISpielerPosition.rightInnerMidfield).getTaktik() + "");
+			properties.setProperty("behinsidemid2", getPositionById(ISpielerPosition.leftInnerMidfield).getTaktik() + "");
+			properties.setProperty("behinsidemid3", getPositionById(ISpielerPosition.centralInnerMidfield).getTaktik() + "");
+			properties.setProperty("behleftwinger", getPositionById(ISpielerPosition.leftWinger).getTaktik() + "");
+			properties.setProperty("behforward1", getPositionById(ISpielerPosition.rightForward).getTaktik() + "");
+			properties.setProperty("behforward2", getPositionById(ISpielerPosition.leftForward).getTaktik() + "");
+			properties.setProperty("behforward3", getPositionById(ISpielerPosition.centralForward).getTaktik() + "");
 
+			properties.setProperty("kicker1", getKicker() + "");
+			properties.setProperty("captain", getKapitaen() + "");
 
-            properties.setProperty("kicker1", getKicker() + "");
-            properties.setProperty("captain", getKapitaen() + "");
+			properties.setProperty("tactictype", getTacticType() + "");
+			properties.setProperty("installning", getAttitude() + "");
 
-            properties.setProperty("tactictype", getTacticType() + "");
-            properties.setProperty("installning", getAttitude() + "");
-
-            clone = new Lineup(properties);
-            clone.setHeimspiel(getHeimspiel());
-            clone.setPullBackMinute(getPullBackMinute());
-            clone.setPullBackOverride(isPullBackOverride());
-        } catch (Exception e) {
-            HOLogger.instance().error(getClass(),"Aufstellung.duplicate: " + e);
-        }
-
-        return clone;
-    }
+			clone = new Lineup(properties);
+			clone.setHeimspiel(getHeimspiel());
+			clone.setPullBackMinute(getPullBackMinute());
+			clone.setPullBackOverride(isPullBackOverride());
+		} catch (Exception e) {
+			HOLogger.instance().error(getClass(), "Aufstellung.duplicate: " + e);
+		}
+		return clone;
+	}
 
     /**
      * Determinates the current formation.
@@ -1467,31 +1295,25 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * lï¿½dt dei Aufstellung
-     *
-     * @param name TODO Missing Constructuor Parameter Documentation
+     * Load a lineup by name.
      */
     public final void load(String name) {
-        final Lineup temp = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(NO_HRF_VERBINDUNG,
-                                                                                                   name);
-        m_vPositionen = null;
-        m_vPositionen = temp.getPositionen();
-        m_iKicker = temp.getKicker();
-        m_iKapitaen = temp.getKapitaen();
+		final Lineup temp = DBZugriff.instance().getAufstellung(NO_HRF_VERBINDUNG, name);
+		m_vPositionen = null;
+		m_vPositionen = temp.getPositionen();
+		m_iKicker = temp.getKicker();
+		m_iKapitaen = temp.getKapitaen();
     }
 
     /**
-     * lï¿½dt dei Aufstellung
+     * Load a lineup from HRF.
      */
     public final void load4HRF() {
-        final Lineup temp = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(HOVerwaltung.instance()
-                                                                                                               .getModel()
-                                                                                                               .getID(),
-                                                                                                   "HRF");
-        m_vPositionen = null;
-        m_vPositionen = temp.getPositionen();
-        m_iKicker = temp.getKicker();
-        m_iKapitaen = temp.getKapitaen();
+		final Lineup temp = DBZugriff.instance().getAufstellung(HOVerwaltung.instance().getModel().getID(), "HRF");
+		m_vPositionen = null;
+		m_vPositionen = temp.getPositionen();
+		m_iKicker = temp.getKicker();
+		m_iKapitaen = temp.getKapitaen();
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -1499,15 +1321,11 @@ public  class Lineup implements plugins.ILineUp {
     /////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Lï¿½dt ein System aus der Datenbank ein
-     *
-     * @param name TODO Missing Constructuor Parameter Documentation
+     * Load a system from the DB.
      */
     public final void loadAufstellungsSystem(String name) {
-        //Aius DB laden
-        m_vPositionen = de.hattrickorganizer.database.DBZugriff.instance().getSystemPositionen(NO_HRF_VERBINDUNG,
-                                                                                                name);
-        checkAufgestellteSpieler();
+		m_vPositionen = DBZugriff.instance().getSystemPositionen(NO_HRF_VERBINDUNG, name);
+		checkAufgestellteSpieler();
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -1515,62 +1333,49 @@ public  class Lineup implements plugins.ILineUp {
     /////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * lï¿½scht die aufgestellten Spieler
+     * Remove a player.
      */
     public final void resetAufgestellteSpieler() {
         m_clAssi.resetPositionsbesetzungen(m_vPositionen);
     }
 
     /**
-     * lï¿½scht die Reservespieler
+     * Remove a spare player.
      */
-    public final void resetReserveBank() {
-        //Nur Reservespieler
-        final Vector<ISpielerPosition> vReserve = new Vector<ISpielerPosition>();
+	public final void resetReserveBank() {
+		// Nur Reservespieler
+		final Vector<ISpielerPosition> vReserve = new Vector<ISpielerPosition>();
+		for (int i = 0; i < m_vPositionen.size(); i++) {
+			if (((SpielerPosition) m_vPositionen.get(i)).getId() >= ISpielerPosition.startReserves) {
+				vReserve.add(m_vPositionen.get(i));
+			}
+		}
+		m_clAssi.resetPositionsbesetzungen(vReserve);
+	}
 
-        for (int i = 0; i < m_vPositionen.size(); i++) {
-            if (((SpielerPosition) m_vPositionen.get(i)).getId() >= ISpielerPosition.startReserves) {
-                vReserve.add(m_vPositionen.get(i));
-            }
-        }
-
-        m_clAssi.resetPositionsbesetzungen(vReserve);
+    /**
+     * Save a lineup using the given name.
+     */
+    public final void save(final String name) {
+		DBZugriff.instance().saveAufstellung(NO_HRF_VERBINDUNG, this, name);
     }
 
     /**
-     * spiechert die gesamte Aufstellung unter dem angegebenen Namen ab
-     *
-     * @param name TODO Missing Constructuor Parameter Documentation
-     */
-    public final void save(String name) {
-        de.hattrickorganizer.database.DBZugriff.instance().saveAufstellung(NO_HRF_VERBINDUNG, this,
-                                                                           name);
-    }
-
-    /**
-     * spiechert die gesamte Aufstellung unter dem angegebenen Namen ab
+     * Save a lineup.
      */
     public final void save4HRF() {
-        de.hattrickorganizer.database.DBZugriff.instance().saveAufstellung(HOVerwaltung.instance()
-                                                                                       .getModel()
-                                                                                       .getID(),
-                                                                           this, "HRF");
+		DBZugriff.instance().saveAufstellung(HOVerwaltung.instance().getModel().getID(), this, "HRF");
     }
 
     /**
-     * speichert das aktuelle System unter dem "name" in der DB
-     *
-     * @param name TODO Missing Constructuor Parameter Documentation
+     * Save the current system in the DB.
      */
     public final void saveAufstellungsSystem(String name) {
-        de.hattrickorganizer.database.DBZugriff.instance().saveSystemPositionen(NO_HRF_VERBINDUNG,
-                                                                                m_vPositionen, name);
+		DBZugriff.instance().saveSystemPositionen(NO_HRF_VERBINDUNG, m_vPositionen, name);
     }
 
     /**
-     * berechnet Anzahl Abwehr im System
-     *
-     * @return TODO Missing Return Method Documentation
+     * Calculate the amount af defenders.
      */
     private int getAnzAbwehr() {
         int anzahl = 0;
@@ -1584,9 +1389,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * berechnet Anzahl Innenverteidiger im System
-     *
-     * @return TODO Missing Return Method Documentation
+     * Calculate the amount of central defenders.
      */
     private int getAnzInnenverteidiger() {
     	int anzahl = 0;
@@ -1599,69 +1402,57 @@ public  class Lineup implements plugins.ILineUp {
     }
     
     /**
-     * berechnet Anzahl Mittelfeld im System
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the total amount of midfielders in the lineup.
      */
     private int getAnzMittelfeld() {
         int anzahl = 0;
-
         anzahl += getAnzPosImSystem(ISpielerPosition.WINGER);
         anzahl += getAnzPosImSystem(ISpielerPosition.WINGER_TOMID);
         anzahl += getAnzPosImSystem(ISpielerPosition.WINGER_OFF);
         anzahl += getAnzPosImSystem(ISpielerPosition.WINGER_DEF);
-
         return anzahl + getAnzInneresMittelfeld();
     }
 
     /**
-     * berechnet Anzahl Innere MF im System
-     *
-     * @return TODO Missing Return Method Documentation
+     * Get the amount of inner midfielders in the lineup.
      */
     private int getAnzInneresMittelfeld() {
     	int anzahl = 0;
-    	
     	anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER);
     	anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER_OFF);
     	anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER_DEF);
     	anzahl += getAnzPosImSystem(ISpielerPosition.MIDFIELDER_TOWING);
-    	
     	return anzahl;
     }
 
-	/** berechnet Anzahl Stürmer im System */
+    /**
+     * Get the amount of strikers in the lineup.
+     */
 	private int getAnzSturm() {
 		int anzahl = 0;
-
 		anzahl += getAnzPosImSystem(ISpielerPosition.FORWARD);
 		anzahl += getAnzPosImSystem(ISpielerPosition.FORWARD_DEF);
 		anzahl += getAnzPosImSystem(ISpielerPosition.FORWARD_TOWING);
-
 		return anzahl;
 	}
 
     /**
-     * ermittelt ANzahl der gesuchten Pos im aktuellen System
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Generic "counter" for the given position in the current lineup.
      */
     private int getAnzPosImSystem(byte position) {
-        SpielerPosition pos = null;
-        int anzahl = 0;
+		SpielerPosition pos = null;
+		int anzahl = 0;
 
-        for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
-            pos = (SpielerPosition) m_vPositionen.elementAt(i);
+		for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
+			pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-            if ((position == pos.getPosition()) && (pos.getId() < ISpielerPosition.startReserves) && (pos.getSpielerId() > 0)) {
-                ++anzahl;
-            }
-        }
+			if ((position == pos.getPosition()) && (pos.getId() < ISpielerPosition.startReserves) && (pos.getSpielerId() > 0)) {
+				++anzahl;
+			}
+		}
 
-        return anzahl;
-    }
+		return anzahl;
+	}
     
     /**
      * @return true if less than 11 players on field, false if 11 (or more) on field
@@ -1690,14 +1481,7 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * berechnet die stk des Spielers fï¿½r die angegebene Position
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Calculate player strength for the given position.
      */
     private float calcPlayerStk(Vector<ISpieler> spieler, int spielerId, byte position, boolean mitForm) {
         Spieler player = null;
@@ -1714,72 +1498,62 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * berechnet die STK-Summe aller aufgestllten Spieler fï¿½r diese Position
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Calculate team strength for the given position.
      */
-    private float calcTeamStk(Vector<ISpieler> spieler, byte position, boolean mitForm) {
+    private float calcTeamStk(Vector<ISpieler> spieler, byte position, boolean useForm) {
         float stk = 0.0f;
-        de.hattrickorganizer.model.SpielerPosition pos = null;
+        SpielerPosition pos = null;
 
         for (int i = 0; (m_vPositionen != null) && (spieler != null) && (i < m_vPositionen.size());
              i++) {
             pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
             if ((pos.getPosition() == position) && (pos.getId() < ISpielerPosition.startReserves)) {
-                stk += calcPlayerStk(spieler, pos.getSpielerId(), position, mitForm);
+                stk += calcPlayerStk(spieler, pos.getSpielerId(), position, useForm);
             }
         }
 
-        return de.hattrickorganizer.tools.Helper.round(stk, 1);
+        return Helper.round(stk, 1);
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Debug log lineup.
      */
     private void dumpValues() {
-        //dumpen
-        for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
-            final de.hattrickorganizer.model.Spieler temp = HOVerwaltung.instance().getModel()
-                                                                        .getSpieler(((SpielerPosition) m_vPositionen
-                                                                                     .elementAt(i))
-                                                                                    .getSpielerId());
-            String name = "";
-            float stk = 0.0f;
+		for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
+			final Spieler temp = HOVerwaltung.instance().getModel()
+					.getSpieler(((SpielerPosition) m_vPositionen.elementAt(i)).getSpielerId());
+			String name = "";
+			float stk = 0.0f;
 
-            if (temp != null) {
-                name = temp.getName();
-                stk = temp.calcPosValue(((SpielerPosition) m_vPositionen.elementAt(i)).getPosition(),
-                                        true);
-            }
+			if (temp != null) {
+				name = temp.getName();
+				stk = temp.calcPosValue(((SpielerPosition) m_vPositionen.elementAt(i)).getPosition(), true);
+			}
 
-            HOLogger.instance().log(getClass(),"PosID: "
-                               + SpielerPosition.getNameForID(((SpielerPosition) m_vPositionen.elementAt(i)).getId())
-                               + " ,Spieler :" + name + " , Stk : " + stk);
-        }
+			HOLogger.instance().log(getClass(),
+					"PosID: " + SpielerPosition.getNameForID(((SpielerPosition) m_vPositionen.elementAt(i)).getId()) // 
+							+ ", Player :" + name + " , Stk : " + stk);
+		}
 
-        if (m_iKapitaen > 0) {
-            HOLogger.instance().log(getClass(),"Kapitï¿½n : "
-                               + HOVerwaltung.instance().getModel().getSpieler(m_iKapitaen).getName());
-        }
+		if (m_iKapitaen > 0) {
+			HOLogger.instance().log(getClass(), "Captain: " + HOVerwaltung.instance().getModel().getSpieler(m_iKapitaen).getName());
+		}
 
-        if (m_iKicker > 0) {
-            HOLogger.instance().log(getClass(),"Standards : "
-                               + HOVerwaltung.instance().getModel().getSpieler(m_iKicker).getName());
-        }
+		if (m_iKicker > 0) {
+			HOLogger.instance().log(getClass(), "SetPieces: " + HOVerwaltung.instance().getModel().getSpieler(m_iKicker).getName());
+		}
+		
+		if (m_sLocation > -1) {
+			HOLogger.instance().log(getClass(), "Location: " + m_sLocation);
+		}
 
-        HOLogger.instance().log(getClass(),"TW : "
-                           + getTWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true)
-                           + " AW : "
-                           + getAWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true)
-                           + " MF : "
-                           + getMFTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true)
-                           + " ST : "
-                           + getSTTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true));
+		HOLogger.instance().log(
+				getClass(),
+				"GK: " + getTWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " DF: "
+						+ getAWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " MF : "
+						+ getMFTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " ST : "
+						+ getSTTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true));
     }
 
     /**
@@ -1846,7 +1620,6 @@ public  class Lineup implements plugins.ILineUp {
     /**
      * Initializes the 553 lineup
      */
-    
     private void initPositionen553 () {
     	if (m_vPositionen != null) {
             m_vPositionen.removeAllElements();
@@ -1876,18 +1649,11 @@ public  class Lineup implements plugins.ILineUp {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param object TODO Missing Method Parameter Documentation
-     * @param object2 TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Swap 2 players.
      */
     private SpielerPosition swap(Object object, Object object2) {
         final SpielerPosition sp = (SpielerPosition) object;
         final SpielerPosition sp2 = (SpielerPosition) object2;
-
-        // TODO Auto-generated method stub
         return new SpielerPosition(sp.getId(), sp2.getSpielerId(), sp2.getTaktik());
     }
 
