@@ -1,6 +1,9 @@
 // %634087379:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +21,6 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -52,20 +54,20 @@ class SpielerStatistikPanel extends ImagePanel
     //~ Static fields/initializers -----------------------------------------------------------------
 
 
-    private Color leadershipColor 	= ThemeManager.getColor("ho.statistics.leadership");//Color.gray;
-    private Color experienceColor 	= ThemeManager.getColor("ho.statistics.experience");//Color.darkGray;
-    private Color formColor 		= ThemeManager.getColor("ho.statistics.form");//Color.pink;
-    private Color staminaColor 		= ThemeManager.getColor("ho.statistics.stamina");//Color.magenta;
-    private Color keeperColor 		= ThemeManager.getColor("ho.statistics.keeper");//Color.black;
-    private Color defendingColor 	= ThemeManager.getColor("ho.statistics.defending");//Color.blue;
-    private Color playmakingColor 	= ThemeManager.getColor("ho.statistics.playmaking");//Color.yellow;
-    private Color passingColor 		= ThemeManager.getColor("ho.statistics.passing");//Color.green;
-    private Color wingerColor 		= ThemeManager.getColor("ho.statistics.winger");//Color.orange;
-    private Color scoringColor 		= ThemeManager.getColor("ho.statistics.scoring");//Color.red;
-    private Color setPiecesColor 	= ThemeManager.getColor("ho.statistics.setPieces");//Color.cyan;
-    private Color ratingColor 		= ThemeManager.getColor("ho.statistics.rating");//new Color(100, 200, 0);
-    private Color marketValueColor 	= ThemeManager.getColor("ho.statistics.marketValue");
-    private Color wageColor 		= ThemeManager.getColor("ho.statistics.wage");//new Color(150, 20, 20);
+    private Color leadershipColor 	= ThemeManager.getColor(HOColorName.STAT_LEADERSHIP);//Color.gray;
+    private Color experienceColor 	= ThemeManager.getColor(HOColorName.STAT_EXPERIENCE);//Color.darkGray;
+    private Color formColor 		= ThemeManager.getColor(HOColorName.STAT_FORM);//Color.pink;
+    private Color staminaColor 		= ThemeManager.getColor(HOColorName.STAT_STAMINA);//Color.magenta;
+    private Color keeperColor 		= ThemeManager.getColor(HOColorName.STAT_KEEPER);//Color.black;
+    private Color defendingColor 	= ThemeManager.getColor(HOColorName.STAT_DEFENDING);//Color.blue;
+    private Color playmakingColor 	= ThemeManager.getColor(HOColorName.STAT_PLAYMAKING);//Color.yellow;
+    private Color passingColor 		= ThemeManager.getColor(HOColorName.STAT_PASSING);//Color.green;
+    private Color wingerColor 		= ThemeManager.getColor(HOColorName.STAT_WINGER);//Color.orange;
+    private Color scoringColor 		= ThemeManager.getColor(HOColorName.STAT_SCORING);//Color.red;
+    private Color setPiecesColor 	= ThemeManager.getColor(HOColorName.STAT_SET_PIECES);//Color.cyan;
+    private Color ratingColor 		= ThemeManager.getColor(HOColorName.STAT_RATING);//new Color(100, 200, 0);
+    private Color marketValueColor 	= ThemeManager.getColor(HOColorName.STAT_MARKETVALUE);
+    private Color wageColor 		= ThemeManager.getColor(HOColorName.STAT_WAGE);//new Color(150, 20, 20);
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -97,7 +99,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                            keeperColor,gui.UserParameter.instance().statistikTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
                                                                defendingColor,gui.UserParameter.instance().statistikVerteidigung);
-    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikBeschriftung);
@@ -481,7 +483,7 @@ class SpielerStatistikPanel extends ImagePanel
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
         layout.setConstraints(panel, constraints);
         add(panel);
     }

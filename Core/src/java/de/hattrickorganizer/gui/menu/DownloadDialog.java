@@ -30,7 +30,7 @@ import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.ProxyDialog;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.utils.HOTheme;
+import de.hattrickorganizer.gui.theme.ho.HOTheme;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.extension.StadiumCreator;
@@ -68,7 +68,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 * Creates a new DownloadDialog object.
 	 */
 	public DownloadDialog() {
-		super(HOMainFrame.instance(), de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Download"), true);
+		super(HOMainFrame.instance(), HOVerwaltung.instance().getLanguageString("Download"), true);
 		initComponents();
 	}
 

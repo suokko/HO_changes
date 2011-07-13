@@ -2,11 +2,11 @@
 package de.hattrickorganizer.gui.lineup;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.model.BooleanTableCellrenderer;
 import de.hattrickorganizer.gui.model.LineupColumnModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
@@ -14,6 +14,8 @@ import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.model.UserColumnFactory;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -42,7 +44,8 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
         super();
 
         initModel();
-        setDefaultRenderer(java.lang.Object.class,new SpielerTableRenderer());
+        setDefaultRenderer(Boolean.class,new BooleanTableCellrenderer());
+        setDefaultRenderer(Object.class,new SpielerTableRenderer());
         setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
         setBackground(ColorLabelEntry.BG_STANDARD);
         addMouseListener(this);
@@ -240,9 +243,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
         if (m_clTableModel == null) {
             m_clTableModel = UserColumnController.instance().getLineupModel();//();
             
-            m_clTableModel.setValues(de.hattrickorganizer.model.HOVerwaltung.instance()
-                    .getModel()
-                    .getAllSpieler());                                                                                      
+            m_clTableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());                                                                                      
             m_clTableSorter = new TableSorter(m_clTableModel, m_clTableModel.getPositionInArray(UserColumnFactory.ID), getSortSpalte());
 
             final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
@@ -261,7 +262,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
             int[][] targetColumn = m_clTableModel.getColumnOrder();//gui.UserParameter.instance().aufstellungsspaltenreihenfolge;
 
             //Reihenfolge -> nach [][1] sortieren
-            targetColumn = de.hattrickorganizer.tools.Helper.sortintArray(targetColumn, 1);
+            targetColumn = Helper.sortintArray(targetColumn, 1);
 
             if (targetColumn != null) {
                 for (int i = 0; i < targetColumn.length; i++) {
@@ -274,8 +275,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
             m_clTableModel.setColumnsSize(getColumnModel());
         } else {
             //Werte neu setzen
-            m_clTableModel.setValues(de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                            .getAllSpieler());
+            m_clTableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
             m_clTableSorter.reallocateIndexes();
         }
 

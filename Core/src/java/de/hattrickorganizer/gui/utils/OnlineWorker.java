@@ -42,7 +42,6 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HRFFileParser;
 import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.MyHelper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -414,7 +413,8 @@ public class OnlineWorker {
             matches = parser.parseMatchesFromString(matchASP);
 
             //zu Vector adden
-            MyHelper.addArray2Vector(matches, allMatches);
+            for (int i = 0; i < matches.length; i++) 
+				allMatches.add(matches[i]);
 
             //Zeitfenster neu setzen
             tempBeginn.add(Calendar.MONTH, 3);
@@ -430,7 +430,7 @@ public class OnlineWorker {
 
         waitDialog.setValue(60);
         matches = new MatchKurzInfo[allMatches.size()];
-        MyHelper.copyVector2Array(allMatches, matches);
+        Helper.copyVector2Array(allMatches, matches);
         waitDialog.setValue(80);
 
         //Ab in die DB packen
@@ -909,8 +909,7 @@ public class OnlineWorker {
 	 * Holt für alle Kurzinfos die Lineups, wenn diese noch nicht vorhanden sind
 	 */
 	public void getAllLineups() {
-		final MatchKurzInfo[] infos = DBZugriff.instance()
-																			 .getMatchesKurzInfo(-1);
+		final MatchKurzInfo[] infos = DBZugriff.instance().getMatchesKurzInfo(-1);
 		String haveLineups = "";
 		
 		for (int i = 0; i < infos.length; i++) {

@@ -60,11 +60,6 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
     
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initBasics() {
         m_jpBasics = new BasicsPanel();
         return m_jpBasics;
@@ -134,44 +129,23 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
         final JScrollPane scrollpane = new JScrollPane(mainPanel);
         add(scrollpane);
 
-        //Panels mit den Informationen in ein GridBaglayout
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private Component initFinanzenAktuell() {
+   private Component initFinanzenAktuell() {
         m_jpAktuelleFinanzen = new FinanzenPanel(true);
         return m_jpAktuelleFinanzen;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initFinanzenLetzteWoche() {
         m_jpVorwochenFinanzen = new FinanzenPanel(false);
         return m_jpVorwochenFinanzen;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initSonstiges() {
         m_jpSonstiges = new SonstigesPanel();
         return m_jpSonstiges;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initTrainerStab() {
         m_jpTrainerStab = new TrainerstabPanel();
         return m_jpTrainerStab;

@@ -1,13 +1,20 @@
 // %3482096464:de.hattrickorganizer.gui.playeroverview%
 package de.hattrickorganizer.gui.playeroverview;
 
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageProducer;
+import java.text.DateFormat;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -18,10 +25,12 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import plugins.ISpieler;
-
+import de.hattrickorganizer.gui.print.ComponentPrintObject;
+import de.hattrickorganizer.gui.print.PrintController;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.LightGrayFilter;
 
 
 /**
@@ -35,36 +44,36 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-    private final JButton doButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Taktik_Offensiv.png")));
-    private final JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private final JButton doButton = new JButton(ThemeManager.getIcon(HOIconName.TURN));
+    private final JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private final JToggleButton aGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/A-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[1]).getImage(), 0.5f)));
 	private final JToggleButton aGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/A-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[1]).getImage(), 0.5f)));
 	private final JToggleButton bGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/B-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[2]).getImage(), 0.5f)));
 	private final JToggleButton bGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/B-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[2]).getImage(), 0.5f)));
 	private final JToggleButton cGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/C-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[3]).getImage(), 0.5f)));
 	private final JToggleButton cGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/C-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[3]).getImage(), 0.5f)));
 	private final JToggleButton dGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/D-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[4]).getImage(), 0.5f)));
 	private final JToggleButton dGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/D-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[4]).getImage(), 0.5f)));
 	private final JToggleButton eGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/E-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[5]).getImage(), 0.5f)));
 	private final JToggleButton eGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/E-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[5]).getImage(), 0.5f)));
     private final JToggleButton fGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/F-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]).getImage(), 0.5f)));
 	private final JToggleButton fGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/F-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]).getImage(), 0.5f)));
     private final JToggleButton noGruppe = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/No-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.NO_TEAM).getImage(), 0.5f)));
 	private final JToggleButton noGruppe2 = new JToggleButton(new ImageIcon(
-			Helper.makeGray(Helper.loadImage("gui/bilder/smilies/No-Team.png"), 0.5f)));
+			makeGray(ThemeManager.getIcon(HOIconName.NO_TEAM).getImage(), 0.5f)));
     private PlayerOverviewTable m_clTable;
 
     // ~ Constructors
@@ -73,23 +82,12 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
     /**
 	 * Creates a new RemoveGruppenPanel object.
 	 *
-	 * @param spielerTable
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
     public RemoveGruppenPanel(PlayerOverviewTable spielerTable) {
         m_clTable = spielerTable;
         initComponents();
     }
 
-    // ~ Methods
-	// ------------------------------------------------------------------------------------
-
-    /**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param e
-	 *            TODO Missing Method Parameter Documentation
-	 */
     public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(doButton)) {
             gruppenMarkierung();
@@ -105,40 +103,26 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param button TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private String getName4Button(JToggleButton button) {
         if (button.equals(noGruppe) || button.equals(noGruppe2)) {
             return "";
         } else if (button.equals(aGruppe) || button.equals(aGruppe2)) {
-            return "A-Team.png";
+            return HOIconName.TEAMSMILIES[1];
         } else if (button.equals(bGruppe) || button.equals(bGruppe2)) {
-            return "B-Team.png";
+            return HOIconName.TEAMSMILIES[2];
         } else if (button.equals(cGruppe) || button.equals(cGruppe2)) {
-            return "C-Team.png";
+            return HOIconName.TEAMSMILIES[3];
         } else if (button.equals(dGruppe) || button.equals(dGruppe2)) {
-            return "D-Team.png";
+            return HOIconName.TEAMSMILIES[4];
         } else if (button.equals(eGruppe) || button.equals(eGruppe2)) {
-            return "E-Team.png";
+            return HOIconName.TEAMSMILIES[5];
         } else if (button.equals(fGruppe) || button.equals(fGruppe2)) {
-            return "F-Team.png";
+            return HOIconName.TEAMSMILIES[6];
         } else {
             return "";
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obereReihe TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private JToggleButton getSelectedButton(boolean obereReihe) {
         if (obereReihe) {
             if (noGruppe.isSelected()) {
@@ -192,21 +176,17 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
             scrollPane.getViewport().setBackground(Color.WHITE);
 
-            final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
-                                                                                   .getInstance();
+            final PrintController printController = PrintController.getInstance();
 
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieleruebersicht")
+            final String titel = HOVerwaltung.instance().getLanguageString("Spieleruebersicht")
                                  + " - "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getTeamName()
+                                 + HOVerwaltung.instance().getModel().getBasics().getTeamName()
                                  + " - "
-                                 + java.text.DateFormat.getDateTimeInstance().format(calendar
-                                                                                     .getTime());
-            printController.add(new de.hattrickorganizer.gui.print.ComponentPrintObject(printController
-                                                                                        .getPf(),
+                                 + DateFormat.getDateTimeInstance().format(calendar.getTime());
+            printController.add(new ComponentPrintObject(printController.getPf(),
                                                                                         titel,
                                                                                         scrollPane,
                                                                                         de.hattrickorganizer.gui.print.ComponentPrintObject.NICHTSICHTBAR));
@@ -217,9 +197,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
+
     private void gruppenMarkierung() {
         //Von beiden Gruppen ein Button selektiert
         if ((getSelectedButton(true) != null) && (getSelectedButton(false) != null)) {
@@ -242,9 +220,6 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -260,43 +235,43 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         final String tooltipFrom = HOVerwaltung.instance().getLanguageString("tt_Gruppe_von");
         final String tooltipTo = HOVerwaltung.instance().getLanguageString("tt_Gruppe_nach");
 
-        initButton(noGruppe,tooltipFrom,"gui/bilder/smilies/No-Team.png");
+        initButton(noGruppe,tooltipFrom,"No-Team.png");
         constraints.gridx = 0;
         constraints.gridy = 0;
         layout.setConstraints(noGruppe, constraints);
         bg.add(noGruppe);
         add(noGruppe);
-        initButton(aGruppe,tooltipFrom,"gui/bilder/smilies/A-Team.png");
+        initButton(aGruppe,tooltipFrom,HOIconName.TEAMSMILIES[1]);
         constraints.gridx = 1;
         constraints.gridy = 0;
         layout.setConstraints(aGruppe, constraints);
         bg.add(aGruppe);
         add(aGruppe);
-        initButton(bGruppe,tooltipFrom,"gui/bilder/smilies/B-Team.png");
+        initButton(bGruppe,tooltipFrom,HOIconName.TEAMSMILIES[2]);
         constraints.gridx = 2;
         constraints.gridy = 0;
         layout.setConstraints(bGruppe, constraints);
         bg.add(bGruppe);
         add(bGruppe);
-        initButton(cGruppe,tooltipFrom,"gui/bilder/smilies/C-Team.png");
+        initButton(cGruppe,tooltipFrom,HOIconName.TEAMSMILIES[3]);
         constraints.gridx = 3;
         constraints.gridy = 0;
         layout.setConstraints(cGruppe, constraints);
         bg.add(cGruppe);
         add(cGruppe);
-        initButton(dGruppe,tooltipFrom,"gui/bilder/smilies/D-Team.png");
+        initButton(dGruppe,tooltipFrom,HOIconName.TEAMSMILIES[4]);
         constraints.gridx = 4;
         constraints.gridy = 0;
         layout.setConstraints(dGruppe, constraints);
         bg.add(dGruppe);
         add(dGruppe);
-        initButton(eGruppe,tooltipFrom,"gui/bilder/smilies/E-Team.png");
+        initButton(eGruppe,tooltipFrom,HOIconName.TEAMSMILIES[5]);
         constraints.gridx = 5;
         constraints.gridy = 0;
         layout.setConstraints(eGruppe, constraints);
         bg.add(eGruppe);
         add(eGruppe);
-        initButton(fGruppe,tooltipFrom,"gui/bilder/smilies/E-Team.png");
+        initButton(fGruppe,tooltipFrom,HOIconName.TEAMSMILIES[6]);
         constraints.gridx = 6;
         constraints.gridy = 0;
         layout.setConstraints(fGruppe, constraints);
@@ -305,43 +280,43 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
 
         final ButtonGroup bg2 = new ButtonGroup();
 
-        initButton(noGruppe2,tooltipTo,"gui/bilder/smilies/No-Team.png");
+        initButton(noGruppe2,tooltipTo,HOIconName.NO_TEAM);
         constraints.gridx = 0;
         constraints.gridy = 1;
         layout.setConstraints(noGruppe2, constraints);
         bg2.add(noGruppe2);
         add(noGruppe2);
-        initButton(aGruppe2,tooltipTo,"gui/bilder/smilies/A-Team.png");
+        initButton(aGruppe2,tooltipTo,HOIconName.TEAMSMILIES[1]);
         constraints.gridx = 1;
         constraints.gridy = 1;
         layout.setConstraints(aGruppe2, constraints);
         bg2.add(aGruppe2);
         add(aGruppe2);
-        initButton(bGruppe2,tooltipTo,"gui/bilder/smilies/B-Team.png");
+        initButton(bGruppe2,tooltipTo,HOIconName.TEAMSMILIES[2]);
         constraints.gridx = 2;
         constraints.gridy = 1;
         layout.setConstraints(bGruppe2, constraints);
         bg2.add(bGruppe2);
         add(bGruppe2);
-        initButton(cGruppe2,tooltipTo,"gui/bilder/smilies/C-Team.png");
+        initButton(cGruppe2,tooltipTo,HOIconName.TEAMSMILIES[3]);
         constraints.gridx = 3;
         constraints.gridy = 1;
         layout.setConstraints(cGruppe2, constraints);
         bg2.add(cGruppe2);
         add(cGruppe2);
-        initButton(dGruppe2,tooltipTo,"gui/bilder/smilies/D-Team.png");
+        initButton(dGruppe2,tooltipTo,HOIconName.TEAMSMILIES[4]);
         constraints.gridx = 4;
         constraints.gridy = 1;
         layout.setConstraints(dGruppe2, constraints);
         bg2.add(dGruppe2);
         add(dGruppe2);
-        initButton(eGruppe2,tooltipTo,"gui/bilder/smilies/E-Team.png");
+        initButton(eGruppe2,tooltipTo,HOIconName.TEAMSMILIES[5]);
         constraints.gridx = 5;
         constraints.gridy = 1;
         layout.setConstraints(eGruppe2, constraints);
         bg2.add(eGruppe2);
         add(eGruppe2);
-        initButton(fGruppe2,tooltipTo,"gui/bilder/smilies/F-Team.png");
+        initButton(fGruppe2,tooltipTo,HOIconName.TEAMSMILIES[6]);
         constraints.gridx = 6;
         constraints.gridy = 1;
         layout.setConstraints(fGruppe2, constraints);
@@ -368,10 +343,19 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
         add(m_jbDrucken);
     }
 
-    private void initButton(JToggleButton button,String tooltip,String iconPath){
+    private void initButton(JToggleButton button,String tooltip,String key){
     	button.setToolTipText(tooltip);
     	button.setPreferredSize(new Dimension(16, 16));
-    	button.setSelectedIcon(new ImageIcon(Helper.loadImage(iconPath)));
+    	button.setSelectedIcon(ThemeManager.getIcon(key));
     	button.addActionListener(this);
     }
+
+	/**
+	 * Tauscht eine Farbe im Image durch eine andere
+	 *
+	 */
+	private Image makeGray(Image im, float value) {
+	    final ImageProducer ip = new FilteredImageSource(im.getSource(), new LightGrayFilter(value));
+	    return Toolkit.getDefaultToolkit().createImage(ip);
+	}
 }

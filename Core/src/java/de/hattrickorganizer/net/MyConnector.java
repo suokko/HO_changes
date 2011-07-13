@@ -34,7 +34,7 @@ import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.VersionInfo;
 
 /**
@@ -84,10 +84,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * Creates a new instance of MyConnector.
 	 */
 	private MyConnector() {
-		m_OAConsumer = new DefaultOAuthConsumer(MyHelper.decryptString(CONSUMER_KEY),
-	            MyHelper.decryptString(CONSUMER_SECRET));
-		m_OAConsumer.setTokenWithSecret(MyHelper.decryptString(gui.UserParameter.instance().AccessToken), 
-											MyHelper.decryptString(gui.UserParameter.instance().TokenSecret));
+		m_OAConsumer = new DefaultOAuthConsumer(Helper.decryptString(CONSUMER_KEY),
+	            Helper.decryptString(CONSUMER_SECRET));
+		m_OAConsumer.setTokenWithSecret(Helper.decryptString(gui.UserParameter.instance().AccessToken), 
+											Helper.decryptString(gui.UserParameter.instance().TokenSecret));
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
@@ -551,7 +551,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		try {
 			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList");
-			list = MyHelper.generateStringArray(s, ';');
+			list = Helper.generateStringArray(s, ';');
 
 			if ((s != null) && (!s.trim().equals("")) && (s.length() > 0)) {
 				//-1 da letzter Eintrag == "" ist
@@ -1201,7 +1201,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			final String s =
 				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId);
 
-			if (MyHelper.parseDate(s) == null) {
+			if (Helper.parseDate(s) == null) {
 				return false;
 			}
 		} catch (Exception e) {

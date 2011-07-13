@@ -1,8 +1,10 @@
 // %3484484869:de.hattrickorganizer.gui.playeroverview%
 package de.hattrickorganizer.gui.playeroverview;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -34,6 +35,7 @@ import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -206,16 +208,15 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     private final DoppelLabelEntry m_jpWertSturmAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private final DoppelLabelEntry m_jpWertSturmDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private final DoppelLabelEntry m_jpWertTor = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private final JButton m_jbAnalyse1 = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoAnalyseTop.png")));
-    private final JButton m_jbAnalyse2 = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoAnalyseBottom.png")));
-    private final JButton m_jbOffsets = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/offset.png")));
-    private final JButton m_jbStatistik = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/gotoStatistik.png")));
-    private final JButton m_jbTrainingBlock = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/trainingblock.png")));
-    private final JButton m_jbTransvergleich = new JButton(new ImageIcon(Helper.makeColorTransparent(Helper
-    			.loadImage("gui/bilder/smilies/8dollar.png"), new Color(209,41,144))));
-    private final JComboBox m_jcbManuellerSmilie = new JComboBox(Helper.MANUELLSMILIES);
-    private final JComboBox m_jcbTeamInfoSmilie = new JComboBox(Helper.TEAMSMILIES);
-    private final JComboBox m_jcbUserPos = new JComboBox(de.hattrickorganizer.model.SpielerPosition.POSITIONEN);
+    private final JButton m_jbAnalyse1 = new JButton(ThemeManager.getIcon(HOIconName.GOTOANALYSETOP));
+    private final JButton m_jbAnalyse2 = new JButton(ThemeManager.getIcon(HOIconName.GOTOANALYSEBOTTOM));
+    private final JButton m_jbOffsets = new JButton(ThemeManager.getIcon(HOIconName.OFFSET));
+    private final JButton m_jbStatistik = new JButton(ThemeManager.getIcon(HOIconName.GOTOSTATISTIK));
+    private final JButton m_jbTrainingBlock = new JButton(ThemeManager.getIcon(HOIconName.TRAININGBLOCK));
+    private final JButton m_jbTransvergleich = new JButton(ThemeManager.getIcon(HOIconName.MANUELLSMILIES[8]));
+    private final JComboBox m_jcbManuellerSmilie = new JComboBox(HOIconName.MANUELLSMILIES);
+    private final JComboBox m_jcbTeamInfoSmilie = new JComboBox(HOIconName.TEAMSMILIES);
+    private final JComboBox m_jcbUserPos = new JComboBox(SpielerPosition.POSITIONEN);
     private final JTextArea m_jtaNotizen = new JTextArea(5, 12);
     private RatingTableEntry m_jpRating = new RatingTableEntry();
     private Spieler m_clSpieler;
@@ -399,13 +400,13 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         String tmpAge = m_clSpieler.getAgeStringFull();
         m_jpAlter.setText(tmpAge);
         m_jpAlter.setToolTipText(tmpAge);
-        m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler.getNationalitaet()));
+        m_jpNationalitaet.setIcon(ImageUtilities.getFlagIcon(m_clSpieler.getNationalitaet()));
 
         if (HOVerwaltung.instance().getModel().getAufstellung().isSpielerAufgestellt(m_clSpieler.getSpielerID())
             && (HOVerwaltung.instance().getModel().getAufstellung()
                                                        .getPositionBySpielerId(m_clSpieler
                                                                                .getSpielerID()) != null)) {
-            m_jpAufgestellt.setIcon(Helper.getImage4Position(HOVerwaltung.instance().getModel()
+            m_jpAufgestellt.setIcon(ImageUtilities.getImage4Position(HOVerwaltung.instance().getModel()
                                                                                     .getAufstellung()
                                                                                     .getPositionBySpielerId(m_clSpieler.getSpielerID()),
                                                                                         m_clSpieler.getTrikotnummer()));
@@ -415,9 +416,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
                                                                                                                                                                  .getSpielerID())
                                                                                                                                          .getPosition()));
         } else {
-            m_jpAufgestellt.setIcon(Helper.getImage4Position(null,
-                                                                                        m_clSpieler
-                                                                                        .getTrikotnummer()));
+            m_jpAufgestellt.setIcon(ImageUtilities.getImage4Position(null, m_clSpieler.getTrikotnummer()));
             m_jpAufgestellt.setText("");
         }
 
@@ -631,8 +630,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jpToreGesamt.setText(m_clSpieler.getToreGesamt() + "");
         m_jpHattriks.setText(m_clSpieler.getHattrick() + "");
         m_jpSpezialitaet.setText(PlayerHelper.getNameForSpeciality(m_clSpieler.getSpezialitaet()));
-        m_jpSpezialitaet.setIcon(Helper.getImageIcon4Spezialitaet(m_clSpieler
-                                                                                             .getSpezialitaet()));
+        m_jpSpezialitaet.setIcon( ThemeManager.getIcon(HOIconName.SPECIAL[m_clSpieler.getSpezialitaet()]));
         m_jpAggressivitaet.setText(PlayerHelper.getNameForAggressivness(m_clSpieler
                                                                         .getAgressivitaet()));
 
@@ -784,7 +782,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initNormalLabel(4,0,constraints,layout,panel,label);
         //m_jcbTeamInfoSmilie.setPreferredSize ( new Dimension( 40, 16 ) );
         m_jcbTeamInfoSmilie.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbTeamInfoSmilie.setBackground(ThemeManager.getColor("tableEntry.background"));
+        m_jcbTeamInfoSmilie.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
         m_jcbTeamInfoSmilie.setRenderer(new SmilieRenderer());
         m_jcbTeamInfoSmilie.addItemListener(this);
         setPosition(constraints,5,0);
@@ -801,7 +799,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jcbManuellerSmilie.setMaximumRowCount(10);
         //m_jcbManuellerSmilie.setPreferredSize( new Dimension( 40, 16 ) );
         m_jcbManuellerSmilie.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbManuellerSmilie.setBackground(ThemeManager.getColor("tableEntry.background"));
+        m_jcbManuellerSmilie.setBackground(m_jcbTeamInfoSmilie.getBackground());
         m_jcbManuellerSmilie.setRenderer(new SmilieRenderer());
         m_jcbManuellerSmilie.addItemListener(this);
         setPosition(constraints,5,1);
@@ -830,7 +828,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jcbUserPos.setMaximumRowCount(20);
         //m_jcbUserPos.setPreferredSize( new Dimension( 40, 16 ) );
         m_jcbUserPos.setPreferredSize(COMPONENTENSIZECB);
-        m_jcbUserPos.setBackground(ThemeManager.getColor("tableEntry.background"));
+        m_jcbUserPos.setBackground(m_jcbTeamInfoSmilie.getBackground());
         m_jcbUserPos.addItemListener(this);
         setPosition(constraints,5,5);
         constraints.weightx = 1.0;

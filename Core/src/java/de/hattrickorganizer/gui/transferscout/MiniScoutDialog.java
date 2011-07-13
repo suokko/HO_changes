@@ -26,6 +26,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
 import plugins.IEPVData;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.EPVData;
@@ -83,7 +84,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      */
     public MiniScoutDialog(TransferEingabePanel owner) {
         super(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutMini"));
-        this.setIconImage(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/Logo-16px.png"));
+        this.setIconImage(HOMainFrame.instance().getIconImage());
         clOwner = owner;
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();

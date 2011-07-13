@@ -1,6 +1,8 @@
 // %3802060737:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
+import gui.HOColorName;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -228,7 +230,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         //----Slider -----------
         final JPanel panel = new ImagePanel();
         panel.setLayout(new GridLayout(7, 1, 4, 4));
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
 
         m_jpSpielaufbau = new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
                                           100, 0, 10, 1.0f, 80);

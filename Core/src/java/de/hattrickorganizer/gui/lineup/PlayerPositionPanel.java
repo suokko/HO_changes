@@ -1,6 +1,8 @@
 // %2927626437:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOColorName;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -28,6 +30,7 @@ import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
@@ -211,8 +214,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         if (m_bMinimize) {
             // This is the realm of the miniposframe, no jlp...
         	setLayout(layout);
-        	setBorder(javax.swing.BorderFactory.createLineBorder(ThemeManager.getColor("panel.lineup.position.minimized.borderColor")));//Color.lightGray));
-            setBackground(ThemeManager.getColor("panel.lineup.position.minimized.background"));//Color.WHITE);
+        	setBorder(javax.swing.BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.LINEUP_POS_MIN_BORDER)));//Color.lightGray));
+            setBackground(ThemeManager.getColor(HOColorName.LINEUP_POS_MIN_BG));//Color.WHITE);
 
             constraints.gridx = 0;
             constraints.gridy = 0;
@@ -252,8 +255,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
             if (!aenderbar) {
                 m_jcbPlayer.setEnabled(false);
             }
-
-            m_jcbPlayer.setBackground(ThemeManager.getColor("tableEntry.background"));// Color.white
+            
+            m_jcbPlayer.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));// Color.white
 
             //Nur anzeigen, wenn mehr als eine Taktik möglich ist
             if (m_jcbTactic.getItemCount() > 1) {
@@ -263,8 +266,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 if (!aenderbar) {
                     m_jcbTactic.setEnabled(false);
                 }
-
-                m_jcbTactic.setBackground(ThemeManager.getColor("tableEntry.background"));//Color.white);
+                
+                m_jcbTactic.setBackground(m_jcbPlayer.getBackground());
                 jlp.add(m_jcbTactic, constraints, 1);
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH,PLAYER_POSITION_PANEL_HEIGHT_FULL));
             } else {
@@ -480,10 +483,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         //Minimized 
         if ((m_clSelectedPlayer != null) && (m_clSelectedPlayer.getSpieler() != null)) {
             m_jlPlayer.setText(m_clSelectedPlayer.getSpieler().getName());
-            m_jlPlayer.setIcon(Helper.getImage4Position(HOVerwaltung.instance().getModel().getAufstellung().getPositionBySpielerId(m_clSelectedPlayer.getSpieler()
-                                                                                                                                                                       .getSpielerID()),
-                                                                                    m_clSelectedPlayer.getSpieler()
-                                                                                                        .getTrikotnummer()));
+            m_jlPlayer.setIcon(ImageUtilities.getImage4Position(HOVerwaltung.instance().getModel().getAufstellung().getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
+                                                                                    m_clSelectedPlayer.getSpieler().getTrikotnummer()));
         } else {
             m_jlPlayer.setText("");
             m_jlPlayer.setIcon(null);
@@ -548,7 +549,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         //Minimized 
         if ((m_clSelectedPlayer != null) && (m_clSelectedPlayer.getSpieler() != null)) {
             m_jlPlayer.setText(m_clSelectedPlayer.getSpieler().getName());
-            m_jlPlayer.setIcon(Helper.getImage4Position(lineup.getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
+            m_jlPlayer.setIcon(ImageUtilities.getImage4Position(lineup.getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
                                                                                     m_clSelectedPlayer.getSpieler()
                                                                                                         .getTrikotnummer()));
         } else {

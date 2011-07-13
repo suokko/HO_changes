@@ -29,7 +29,7 @@ public class FormulaFactors {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /** singelton */
-    protected static FormulaFactors m_clInstance;
+    private static FormulaFactors m_clInstance;
 
     /** Konstante wieviel PositionsObjekte es gibt */
     protected static final int ANZ_FAKTOROBJEKTE = 19;

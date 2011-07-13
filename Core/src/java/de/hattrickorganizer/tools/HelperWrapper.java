@@ -6,8 +6,11 @@
  */
 package de.hattrickorganizer.tools;
 
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,7 +40,10 @@ import plugins.IPlugin;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.matches.SpielHighlightPanel;
 import de.hattrickorganizer.gui.menu.HRFImport;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.gui.transferscout.Player;
 import de.hattrickorganizer.gui.transferscout.PlayerConverter;
 import de.hattrickorganizer.gui.transferscout.TransferEingabePanel;
@@ -48,6 +54,7 @@ import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.MatchHelper;
+import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.Matchdetails;
@@ -75,11 +82,6 @@ public class HelperWrapper implements plugins.IHelper {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static HelperWrapper instance() {
         if (m_clInstance == null) {
             m_clInstance = new HelperWrapper();
@@ -96,27 +98,10 @@ public class HelperWrapper implements plugins.IHelper {
 		return MatchHelper.instance();
 	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     * @param subtyp TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public java.awt.Color getColor4SpielHighlight(int typ, int subtyp) {
-        return Helper.getColor4SpielHighlight(typ, subtyp);
+        return SpielHighlightPanel.getColor4SpielHighlight(typ, subtyp);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param string TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws ParseException TODO Missing Method Exception Documentation
-     */
     public Date getHattrickDate(String string) throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.UK);
         final Date d = sdf.parse(string);
@@ -133,101 +118,38 @@ public class HelperWrapper implements plugins.IHelper {
         return d;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param posid TODO Missing Method Parameter Documentation
-     * @param taktik TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImage4Position(int posid, byte taktik) {
-        return Helper.getImage4Position(posid, taktik, 0);
+        return ImageUtilities.getImage4Position(posid, taktik, 0);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param country TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4Country(int country) {
-        return Helper.getImageIcon4Country(country);
+        return ImageUtilities.getFlagIcon(country);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4Spezialitaet(int wert) {
-        return Helper.getImageIcon4Spezialitaet(wert);
+        return  ThemeManager.getIcon(HOIconName.SPECIAL[wert]);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     * @param subtyp TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
-        return Helper.getImageIcon4SpielHighlight(typ, subtyp);
+        return SpielHighlightPanel.getImageIcon4SpielHighlight(typ, subtyp);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieltyp TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4Spieltyp(int spieltyp) {
-        return Helper.getImageIcon4Spieltyp(spieltyp);
+        return ThemeManager.getIcon(HOIconName.MATCHTYPES[spieltyp]);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4Veraenderung(int wert) {
-        return Helper.getImageIcon4Veraenderung(wert);
+        return ImageUtilities.getImageIcon4Veraenderung(wert,true);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4Wetter(int wert) {
-        return Helper.getImageIcon4Wetter(wert);
+        return ThemeManager.getIcon(HOIconName.WEATHER[wert]);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param wert TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public ImageIcon getImageIcon4WetterEffekt(int wert) {
-        return Helper.getImageIcon4WetterEffekt(wert);
+        return ThemeManager.getIcon("weatherEffect" + wert);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public int getLanguageID() {
         final String id = HOVerwaltung.instance().getLanguageString("LanguageID");
 
@@ -238,11 +160,6 @@ public class HelperWrapper implements plugins.IHelper {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getLanguageName() {
         final java.io.File sprachdatei = new java.io.File("sprache/languages.properties");
 
@@ -312,157 +229,58 @@ public class HelperWrapper implements plugins.IHelper {
         return c;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForAggressivness(int value) {
         return PlayerHelper.getNameForAggressivness(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     * @param showNumber TODO Missing Method Parameter Documentation
-     * @param isMatch TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForBewertung(int value, boolean showNumber, boolean isMatch) {
         return PlayerHelper.getNameForSkill(value, showNumber, isMatch);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForCharacter(int value) {
         return PlayerHelper.getNameForCharacter(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForConfidence(int value) {
         return Team.getNameForSelbstvertrauen(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForGentleness(int value) {
         return PlayerHelper.getNameForGentleness(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForMatchTyp(int typ) {
         return MatchLineup.getName4MatchTyp(typ);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForPosition(byte value) {
         return SpielerPosition.getNameForPosition(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     * @param showNumber TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForSkill(int value, boolean showNumber) {
         return PlayerHelper.getNameForSkill(value, showNumber);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForSpeciality(int value) {
         return PlayerHelper.getNameForSpeciality(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForTaktik(int typ) {
         return Matchdetails.getNameForTaktik(typ);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForTeamorder(int typ) {
         return Matchdetails.getNameForEinstellung(typ);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForTeamspirit(int value) {
         return Team.getNameForStimmung(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getNameForTraining(int value) {
         return Team.getNameForTraining(value);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public Vector<IPlugin> getPlugins() {
         return HOMainFrame.getPlugins();
     }
@@ -508,34 +326,26 @@ public class HelperWrapper implements plugins.IHelper {
         return hoposcode;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     * @param subtyp TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String getTooltiptext4SpielHighlight(int typ, int subtyp) {
-        return Helper.getTooltiptext4SpielHighlight(typ, subtyp);
+        return MatchHighlight.getTooltiptext(typ, subtyp);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param matchID TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+    @Deprecated
     public boolean isUserMatch(String matchID) {
-        return Helper.isUserMatch(matchID);
+    	try {
+          final String input = de.hattrickorganizer.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID));
+          final de.hattrickorganizer.model.matches.Matchdetails mdetails = new de.hattrickorganizer.logik.xml.xmlMatchdetailsParser()
+                                                                           .parseMachtdetailsFromString(input);
+          final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+
+          return ((mdetails.getHeimId() == teamID) || (mdetails.getGastId() == teamID));
+      } catch (Exception e) {
+      	HOLogger.instance().warning(Helper.class, "Err: " + e);
+      }
+
+      return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     */
     public void addTempSpieler(plugins.ISpieler spieler) {
         final Spieler tempSpieler = new Spieler();
 
@@ -560,57 +370,23 @@ public class HelperWrapper implements plugins.IHelper {
         de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param timewerte TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String[] convertTimeMillisToFormatString(double[] timewerte) {
         return Helper.convertTimeMillisToFormatString(timewerte);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param src TODO Missing Method Parameter Documentation
-     * @param dest TODO Missing Method Parameter Documentation
-     */
     public void copyArray2Vector(Object[] src, Vector dest) {
-        MyHelper.copyArray2Vector(src, dest);
+        Helper.copyArray2Vector(src, dest);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param src TODO Missing Method Parameter Documentation
-     * @param dest TODO Missing Method Parameter Documentation
-     */
+ 
     public void copyVector2Array(Vector src, Object[] dest) {
-        MyHelper.copyVector2Array(src, dest);
+        Helper.copyVector2Array(src, dest);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param vector TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public DefaultComboBoxModel createListModel(Vector<Object> vector) {
         return Helper.createListModel(vector);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws Exception TODO Missing Method Exception Documentation
-     */
     public plugins.ISpieler createSpielerFromText(String text) throws Exception {
         final Player player = new PlayerConverter().build(text);
 
@@ -640,24 +416,10 @@ public class HelperWrapper implements plugins.IHelper {
         return tempSpieler;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String decodeStringFromDatabase(String text) {
         return DBZugriff.deleteEscapeSequences(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String deleteEscapeSequences(String text) {
         return DBZugriff.deleteEscapeSequences(text);
     }
@@ -665,9 +427,6 @@ public class HelperWrapper implements plugins.IHelper {
     /**
      * downloads all match related data and stores it in Database
      *
-     * @param matchID TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public boolean downloadMatchData(int matchID) {
         //Spiel nicht vorhanden, dann erst runterladen!
@@ -735,115 +494,43 @@ public class HelperWrapper implements plugins.IHelper {
         return true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String encodeString4Database(String text) {
         return DBZugriff.insertEscapeSequences(text);
     }
 
-    /**
-     * checkes wheater matchdata is already stored in db or not
-     *
-     * @param matchID TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public boolean existsMatchInDB(int matchID) {
         return DBZugriff.instance().isMatchVorhanden(matchID);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public int[] generateIntArray(String text) {
         return Helper.generateIntArray(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param werte TODO Missing Method Parameter Documentation
-     * @param trenner TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String[] generateStringArray(String werte, char trenner) {
-        return MyHelper.generateStringArray(werte, trenner);
+        return Helper.generateStringArray(werte, trenner);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void importHRF() {
         new HRFImport(HOMainFrame.instance());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String insertEscapeSequences(String text) {
         return DBZugriff.insertEscapeSequences(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public java.awt.image.BufferedImage loadImage(String datei) {
-        return Helper.loadImage(datei);
+    public Image loadImage(String datei) {
+        return ThemeManager.loadImage(datei);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param im TODO Missing Method Parameter Documentation
-     * @param color TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public java.awt.Image makeColorTransparent(java.awt.Image im, java.awt.Color color) {
-        return Helper.makeColorTransparent(im, color);
+        return ImageUtilities.makeColorTransparent(im, color);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param im TODO Missing Method Parameter Documentation
-     * @param minr TODO Missing Method Parameter Documentation
-     * @param ming TODO Missing Method Parameter Documentation
-     * @param minb TODO Missing Method Parameter Documentation
-     * @param maxr TODO Missing Method Parameter Documentation
-     * @param maxg TODO Missing Method Parameter Documentation
-     * @param maxb TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public java.awt.Image makeColorTransparent(java.awt.Image im, int minr, int ming, int minb,
                                                int maxr, int maxg, int maxb) {
-        return Helper.makeColorTransparent(im, minr, ming, minb, maxr, maxg, maxb);
+        return ImageUtilities.makeColorTransparent(im, minr, ming, minb, maxr, maxg, maxb);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param url TODO Missing Method Parameter Documentation
-     */
     public void openUrlInUserBRowser(String url) {
         try {
             de.hattrickorganizer.tools.BrowserLauncher.openURL(url);
@@ -883,49 +570,18 @@ public class HelperWrapper implements plugins.IHelper {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param date TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public java.sql.Timestamp parseDate(String date) {
-        return MyHelper.parseDate(date);
+        return Helper.parseDate(date);
     }
 
-    /**
-     * Round a double value
-     *
-     * @param wert value to round
-     * @param nachkommastellen number of fraction digits
-     *
-     * @return rounded value
-     */
     public double round(double wert, int nachkommastellen) {
         return Helper.round(wert, nachkommastellen);
     }
 
-    /**
-     * Round a float value
-     *
-     * @param wert value to round
-     * @param nachkommastellen number of fraction digits
-     *
-     * @return rounded value
-     */
     public float round(float wert, int nachkommastellen) {
         return Helper.round(wert, nachkommastellen);
     }
     
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param parent TODO Missing Method Parameter Documentation
-     * @param message TODO Missing Method Parameter Documentation
-     * @param titel TODO Missing Method Parameter Documentation
-     * @param typ TODO Missing Method Parameter Documentation
-     */
     public void showMessage(java.awt.Component parent, String message, String titel, int typ) {
         Helper.showMessage(parent, message, titel, typ);
     }
@@ -935,14 +591,6 @@ public class HelperWrapper implements plugins.IHelper {
     	return new de.hattrickorganizer.gui.utils.MP3PlayerWrapper();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param toSort TODO Missing Method Parameter Documentation
-     * @param spaltenindex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public int[][] sortintArray(int[][] toSort, int spaltenindex) {
         return Helper.sortintArray(toSort, spaltenindex);
     }

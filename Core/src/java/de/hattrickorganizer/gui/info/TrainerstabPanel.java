@@ -1,6 +1,8 @@
 // %2109680998:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
+import gui.HOColorName;
+
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -54,9 +56,6 @@ final class TrainerstabPanel extends JPanel {
         m_jpAerzte.setText(verein.getAerzte() + "");
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         
 
@@ -65,7 +64,7 @@ final class TrainerstabPanel extends JPanel {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(4, 4, 4, 4);
 
-        this.setBackground(ThemeManager.getColor("ho.panel.background"));
+        this.setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
         setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Trainerstab")));
 

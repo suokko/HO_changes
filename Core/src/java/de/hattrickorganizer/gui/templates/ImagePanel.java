@@ -1,6 +1,8 @@
 // %556564099:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import de.hattrickorganizer.gui.theme.ThemeManager;
+
 /**
  * JPanel mit HintergrundGrafik für Fenster
  *
@@ -72,30 +74,34 @@ public class ImagePanel extends javax.swing.JPanel {
      */
     @Override
 	public final void paint(java.awt.Graphics g) {
-        final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
+    	if(!ThemeManager.instance().isSet("imagePanel.background.painted")){
+    		super.paint(g);
+    	}else {
+    		final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
 
-        paintComponent(g2d);
+    		paintComponent(g2d);
 
-        if (!m_bPrint) {
-            //Hintergrundgrafik zeichnen -> 6 Grafiken!
-            g2d.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null),
+    		if (!m_bPrint) {
+    			//Hintergrundgrafik zeichnen -> 6 Grafiken!
+    			g2d.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null),
                           null);
-            g2d.drawImage(background, background.getWidth(null), 0, background.getWidth(null),
+    			g2d.drawImage(background, background.getWidth(null), 0, background.getWidth(null),
                           background.getHeight(null), null);
-            g2d.drawImage(background, background.getWidth(null) * 2, 0, background.getWidth(null),
+    			g2d.drawImage(background, background.getWidth(null) * 2, 0, background.getWidth(null),
                           background.getHeight(null), null);
-            g2d.drawImage(background, 0, background.getHeight(null), background.getWidth(null),
+    			g2d.drawImage(background, 0, background.getHeight(null), background.getWidth(null),
                           background.getHeight(null), null);
-            g2d.drawImage(background, background.getWidth(null), background.getHeight(null),
+    			g2d.drawImage(background, background.getWidth(null), background.getHeight(null),
                           background.getWidth(null), background.getHeight(null), null);
-            g2d.drawImage(background, background.getWidth(null) * 2, background.getHeight(null),
+    			g2d.drawImage(background, background.getWidth(null) * 2, background.getHeight(null),
                           background.getWidth(null), background.getHeight(null), null);
 
-            //g2d.drawImage(background,null,this);
-        }
+    			//g2d.drawImage(background,null,this);
+    		}
 
-        paintChildren(g2d);
-        paintBorder(g2d);
+    		paintChildren(g2d);
+    		paintBorder(g2d);
+    	}
     }
 
     /**

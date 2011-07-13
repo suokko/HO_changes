@@ -1,6 +1,9 @@
 // %4061149036:de.hattrickorganizer.gui.playeranalysis%
 package de.hattrickorganizer.gui.playeranalysis;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,7 +14,6 @@ import java.awt.event.ItemListener;
 import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -29,7 +31,6 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -42,7 +43,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private final JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private final JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JComboBox m_jcbSpieler;
     private JSplitPane horizontalSplitPane;
     private SpielerMatchesTable m_jtSpielerMatchesTable;
@@ -293,7 +294,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
         m_jcbSpieler.setMaximumSize(new Dimension(200, 25));
         m_jcbSpieler.setSize(200, 25);
         m_jcbSpieler.setLocation(10, 5);
-        m_jcbSpieler.setBackground(ThemeManager.getColor("tableEntry.background"));
+        m_jcbSpieler.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
 
         panel.add(m_jcbSpieler);
 

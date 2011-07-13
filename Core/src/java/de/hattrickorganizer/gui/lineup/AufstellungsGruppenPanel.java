@@ -1,21 +1,21 @@
 // %3622084902:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOIconName;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.ISpieler;
-
-import de.hattrickorganizer.model.Lineup;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.model.Lineup;
 
 
 /**
@@ -27,12 +27,12 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-	private JButton aGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/A-Team.png")));
-    private JButton bGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/B-Team.png")));
-    private JButton cGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/C-Team.png")));
-    private JButton dGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/D-Team.png")));
-    private JButton eGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/E-Team.png")));
-    private JButton fGruppe = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/smilies/F-Team.png")));
+	private JButton aGruppe = new JButton(ThemeManager.getIcon(HOIconName.TEAMSMILIES[1]));
+    private JButton bGruppe = new JButton(ThemeManager.getIcon(HOIconName.TEAMSMILIES[2]));
+    private JButton cGruppe = new JButton(ThemeManager.getIcon(HOIconName.TEAMSMILIES[3]));
+    private JButton dGruppe = new JButton(ThemeManager.getIcon(HOIconName.TEAMSMILIES[4]));
+    private JButton eGruppe = new JButton(ThemeManager.getIcon(HOIconName.TEAMSMILIES[5]));
+    private JButton fGruppe = new JButton(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]));
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -45,34 +45,22 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(aGruppe)) {
-            gruppenMarkierung("A-Team.png");
+            gruppenMarkierung(HOIconName.TEAMSMILIES[1]);
         } else if (e.getSource().equals(bGruppe)) {
-            gruppenMarkierung("B-Team.png");
+            gruppenMarkierung(HOIconName.TEAMSMILIES[2]);
         } else if (e.getSource().equals(cGruppe)) {
-            gruppenMarkierung("C-Team.png");
+            gruppenMarkierung(HOIconName.TEAMSMILIES[3]);
         } else if (e.getSource().equals(dGruppe)) {
-            gruppenMarkierung("D-Team.png");
+            gruppenMarkierung(HOIconName.TEAMSMILIES[4]);
         } else if (e.getSource().equals(eGruppe)) {
-            gruppenMarkierung("E-Team.png");
+            gruppenMarkierung(HOIconName.TEAMSMILIES[5]);
         } else if (e.getSource().equals(fGruppe)) {
-            gruppenMarkierung("F-Team.png");
+            gruppenMarkierung(HOIconName.TEAMSMILIES[6]);
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param gruppenName TODO Missing Method Parameter Documentation
-     */
     private void gruppenMarkierung(String gruppenName) {
         final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
         final Lineup aufstellung = HOVerwaltung.instance()
@@ -99,9 +87,6 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
         //gui.RefreshManager.instance ().doRefresh ();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
     	
     	// Horizontal by Blaghaid - away with size specification

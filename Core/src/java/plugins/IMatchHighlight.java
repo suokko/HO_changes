@@ -572,4 +572,7 @@ public interface IMatchHighlight {
      * @return Value of property m_iTeamID.
      */
     public int getTeamID();
+    
+    
+    public boolean isWeatherSEHighlight();
 }

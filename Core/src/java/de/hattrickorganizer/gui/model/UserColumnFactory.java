@@ -1,5 +1,8 @@
 package de.hattrickorganizer.gui.model;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.Color;
 
 import javax.swing.SwingConstants;
@@ -15,6 +18,7 @@ import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -85,7 +89,7 @@ final public class UserColumnFactory {
 		playerCBItemArray[2] = new PlayerCBItem(601,"Position"){
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
-				ColorLabelEntry colorLabelEntry = new ColorLabelEntry(Helper
+				ColorLabelEntry colorLabelEntry = new ColorLabelEntry(ImageUtilities
                         .getImage4Position(SpielerPosition
                                            .getHTPosidForHOPosition4Image((byte) spielerCBItem
                                                                           .getPosition()),
@@ -123,8 +127,7 @@ final public class UserColumnFactory {
 		matchDetailsColumnsArray[0] = new MatchDetailsColumn(550,"Wetter",30){
 			@Override
 			public TableEntry getTableEntry(Matchdetails matchdetails){
-				return new ColorLabelEntry(Helper
-                        .getImageIcon4Wetter(matchdetails.getWetterId()),
+				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.WEATHER[matchdetails.getWetterId()]),
                         matchdetails.getWetterId(),
                         ColorLabelEntry.FG_STANDARD,
                         ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
@@ -323,8 +326,7 @@ final public class UserColumnFactory {
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
 				final Color background = getColor4Matchtyp(match.getMatchTyp());
-				return new ColorLabelEntry(de.hattrickorganizer.tools.Helper
-                        .getImageIcon4Spieltyp(match.getMatchTyp()),
+				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[match.getMatchTyp()]),
                         match.getMatchTyp(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.CENTER);
 			}
@@ -332,8 +334,7 @@ final public class UserColumnFactory {
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
-				return new ColorLabelEntry(de.hattrickorganizer.tools.Helper
-                        .getImageIcon4Spieltyp(spielerCBItem.getMatchTyp()),
+				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[spielerCBItem.getMatchTyp()]),
                         spielerCBItem.getMatchTyp(),
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.CENTER);
@@ -347,16 +348,16 @@ final public class UserColumnFactory {
 				ColorLabelEntry entry = new ColorLabelEntry(match.getHeimName(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.LEFT);
 				entry.setFGColor((match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
+                        .getTeamId())?ThemeManager.getColor(HOColorName.TEAM_FG):ThemeManager.getColor(HOColorName.LABEL_FG));
 				
 				if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) 
-					entry.setIcon(Helper.NOIMAGEICON);
+					entry.setIcon(ImageUtilities.NOIMAGEICON);
 				else if (match.getHeimTore() > match.getGastTore())
-					entry.setIcon(Helper.YELLOWSTARIMAGEICON);
+					entry.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
 				else if (match.getHeimTore() < match.getGastTore())
-					entry.setIcon(Helper.NOIMAGEICON);
+					entry.setIcon(ImageUtilities.NOIMAGEICON);
 				else
-					entry.setIcon(Helper.GREYSTARIMAGEICON);
+					entry.setIcon(ThemeManager.getTransparentIcon("star_gray", Color.WHITE));
 				return entry;
 			}
 			
@@ -367,7 +368,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.LEFT);
 				entry.setFGColor((spielerCBItem.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
+                        .getTeamId())?ThemeManager.getColor(HOColorName.TEAM_FG):ThemeManager.getColor(HOColorName.LABEL_FG));
 				return entry;
 			}
 			
@@ -385,16 +386,16 @@ final public class UserColumnFactory {
 				ColorLabelEntry entry = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.LEFT);
 				entry.setFGColor((match.getGastID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
+                        .getTeamId())?ThemeManager.getColor(HOColorName.TEAM_FG):ThemeManager.getColor(HOColorName.LABEL_FG));
 				
 				if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) 
-					entry.setIcon(Helper.NOIMAGEICON);
+					entry.setIcon(ImageUtilities.NOIMAGEICON);
 				else if (match.getHeimTore() > match.getGastTore())
-					entry.setIcon(Helper.NOIMAGEICON);
+					entry.setIcon(ImageUtilities.NOIMAGEICON);
 				else if (match.getHeimTore() < match.getGastTore())
-					entry.setIcon(Helper.YELLOWSTARIMAGEICON);
+					entry.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
 				else
-					entry.setIcon(Helper.GREYSTARIMAGEICON);
+					entry.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
 				
 				return entry;
 			}
@@ -406,7 +407,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.LEFT);
 				entry.setFGColor((spielerCBItem.getGastID() == HOVerwaltung.instance().getModel().getBasics()
-                        .getTeamId())?ThemeManager.getColor("ho.label.ownTeam.foreground"):ThemeManager.getColor("ho.label.foreground"));
+                        .getTeamId())?ThemeManager.getColor(HOColorName.TEAM_FG):ThemeManager.getColor(HOColorName.LABEL_FG));
 				return entry;
 			}
 			
@@ -467,10 +468,9 @@ final public class UserColumnFactory {
 		                //Damit die Spieler ohne Trickot nach den andern kommen
 		                sort = 10000;
 		            }
+					//FIXME getImageIcon4Trickotnummer
 					
-					return new ColorLabelEntry(Helper.getImageIcon4Trickotnummer(player
-                                    .getTrikotnummer()),
-                                    	sort, java.awt.Color.black, java.awt.Color.white,
+					return new ColorLabelEntry(sort,sort+"", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD,
                                     		SwingConstants.LEFT);
 							}
 				
@@ -483,7 +483,7 @@ final public class UserColumnFactory {
 			playerAdditionalArray[1] =new PlayerColumn(20," ","Nationalitaet",25){
 				@Override
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
-					return new ColorLabelEntry(Helper.getImageIcon4Country(player.getNationalitaet()),
+					return new ColorLabelEntry(ImageUtilities.getFlagIcon(player.getNationalitaet()),
                             player.getNationalitaet(),
                             ColorLabelEntry.FG_STANDARD,
                             ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
@@ -534,8 +534,7 @@ final public class UserColumnFactory {
 								+ ")",
 							ColorLabelEntry.FG_STANDARD,
 							ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
-					
-					tmp.setIcon((player.getUserPosFlag() < 0)?Helper.ZAHNRAD:Helper.MANUELL);
+					tmp.setIcon(ThemeManager.getIcon((player.getUserPosFlag() < 0)?HOIconName.TOOTHEDWHEEL:HOIconName.HAND));
 					return tmp;
 				}
 				@Override
@@ -550,11 +549,10 @@ final public class UserColumnFactory {
 				@Override
 				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					final HOModel model = HOVerwaltung.instance().getModel();
-					if (model.getAufstellung().isSpielerAufgestellt(player
-                            .getSpielerID())
+					if (model.getAufstellung().isSpielerAufgestellt(player.getSpielerID())
                             	&& (model.getAufstellung().getPositionBySpielerId(player
                                   .getSpielerID()) != null)) {
-						return new ColorLabelEntry(Helper.getImage4Position(model.getAufstellung()
+						return new ColorLabelEntry(ImageUtilities.getImage4Position(model.getAufstellung()
                        .getPositionBySpielerId(player.getSpielerID()),
                                                player.getTrikotnummer()),
                                                -model.getAufstellung()
@@ -565,10 +563,8 @@ final public class UserColumnFactory {
                                             		   ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
 					} 
 
-					return new ColorLabelEntry(de.hattrickorganizer.tools.Helper
-												.getImage4Position(null,
-														player
-												           .getTrikotnummer()),
+					return new ColorLabelEntry(ImageUtilities.getImage4Position(null,
+														player.getTrikotnummer()),
 												-player.getTrikotnummer() - 1000,
 												ColorLabelEntry.FG_STANDARD,
 												ColorLabelEntry.BG_STANDARD,

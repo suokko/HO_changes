@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
 
@@ -213,8 +214,7 @@ public class SpielerPositionTableModel extends AbstractTableModel {
             final float[] bewertung = ((float[]) m_vSpielerBewertung.get(i));
 
             //Position
-            m_clData[i][0] = new ColorLabelEntry(de.hattrickorganizer.tools.Helper
-                                                 .getImage4Position(SpielerPosition
+            m_clData[i][0] = new ColorLabelEntry(ImageUtilities.getImage4Position(SpielerPosition
                                                                     .getHTPosidForHOPosition4Image((byte) bewertung[3]),
                                                                     (byte) 0, 0),
                                                  -SpielerPosition.getSortId((byte) bewertung[3],

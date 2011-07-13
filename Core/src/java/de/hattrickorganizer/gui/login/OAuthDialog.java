@@ -35,7 +35,7 @@ import de.hattrickorganizer.gui.lineup.CopyListener;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 public class OAuthDialog extends JDialog implements ActionListener, FocusListener, KeyListener, WindowListener {
 
@@ -104,8 +104,8 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 			HOLogger.instance().debug(getClass(), "Exception in doAuthorize");
 		}
 		
-		UserParameter.instance().AccessToken = MyHelper.cryptString(m_consumer.getToken());
-		UserParameter.instance().TokenSecret = MyHelper.cryptString(m_consumer.getTokenSecret());
+		UserParameter.instance().AccessToken = Helper.cryptString(m_consumer.getToken());
+		UserParameter.instance().TokenSecret = Helper.cryptString(m_consumer.getTokenSecret());
 		m_bFirstTry = false;
 		this.dispose();
 	}

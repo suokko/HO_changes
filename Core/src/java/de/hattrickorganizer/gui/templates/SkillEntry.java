@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.gui.templates;
 
+import gui.HOColorName;
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,6 +21,7 @@ import javax.swing.SwingConstants;
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -31,7 +34,7 @@ public class SkillEntry extends TableEntry {
 
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;
     private Color m_clFGColor = ColorLabelEntry.FG_STANDARD;
-    private Color m_clFGColor2 = ThemeManager.getColor("gray");
+    private static Color m_clFGColor2 = ThemeManager.getColor(HOColorName.SKILLENTRY2_BG);
     private JComponent m_clComponent;
     private JLabel m_jlLabel1;
     private JLabel m_jlLabel2;
@@ -99,6 +102,8 @@ public class SkillEntry extends TableEntry {
     @Override
 	public final JComponent getComponent(boolean isSelected) {
         m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:m_clBGColor);
+        m_jlLabel1.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
+        m_jlLabel2.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
         return m_clComponent;
     }
 
@@ -208,17 +213,9 @@ public class SkillEntry extends TableEntry {
         m_sText = Integer.toString((int) m_dZahl);
 
         if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-            m_sNachkomma = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT.format(de.hattrickorganizer.tools.Helper
-                                                                                         .round(m_dZahl
-                                                                                                - (int) m_dZahl,
-                                                                                                gui.UserParameter
-                                                                                                .instance().anzahlNachkommastellen));
+            m_sNachkomma = Helper.DEFAULTDEZIMALFORMAT.format(Helper.round(m_dZahl - (int) m_dZahl,gui.UserParameter.instance().anzahlNachkommastellen));
         } else {
-            m_sNachkomma = de.hattrickorganizer.tools.Helper.DEZIMALFORMAT_2STELLEN.format(de.hattrickorganizer.tools.Helper
-                                                                                           .round(m_dZahl
-                                                                                                  - (int) m_dZahl,
-                                                                                                  gui.UserParameter
-                                                                                                  .instance().anzahlNachkommastellen));
+            m_sNachkomma = Helper.DEZIMALFORMAT_2STELLEN.format(Helper.round(m_dZahl - (int) m_dZahl,  gui.UserParameter.instance().anzahlNachkommastellen));
         }
 
         int index = m_sNachkomma.indexOf(',');

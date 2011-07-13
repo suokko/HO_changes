@@ -6,11 +6,16 @@
  */
 package de.hattrickorganizer.gui.model;
 
+import gui.HOIconName;
+
+import java.awt.Color;
+
 import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;
-
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
@@ -71,11 +76,11 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 				m_clData[(home * 5) + away][2] = new ColorLabelEntry(1, "", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
 				if (home > away) {
-					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(de.hattrickorganizer.tools.Helper.YELLOWSTARIMAGEICON);
+					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
 				} else if (home < away) {
-					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
+					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(ImageUtilities.NOIMAGEICON);
 				} else {
-					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(de.hattrickorganizer.tools.Helper.GREYSTARIMAGEICON);
+					((ColorLabelEntry) m_clData[(home * 5) + away][2]).setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
 				}
 			}
 		}

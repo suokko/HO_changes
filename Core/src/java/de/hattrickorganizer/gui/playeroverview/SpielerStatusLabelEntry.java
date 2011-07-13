@@ -1,13 +1,16 @@
 // %2843598420:de.hattrickorganizer.gui.playeroverview%
 package de.hattrickorganizer.gui.playeroverview;
 
+import gui.HOIconName;
+
 import javax.swing.SwingConstants;
 
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.tools.Helper;
-
-import plugins.IHOTableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.ServerSpieler;
+import de.hattrickorganizer.model.Spieler;
 
 
 /**
@@ -37,51 +40,24 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     */
-    public final void setServerSpieler(de.hattrickorganizer.model.ServerSpieler spieler) {
+    public final void setServerSpieler(ServerSpieler spieler) {
         this.serverspieler = spieler;
         updateComponent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final de.hattrickorganizer.model.ServerSpieler getServerSpieler() {
+    public final ServerSpieler getServerSpieler() {
         return serverspieler;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     */
-    public final void setSpieler(de.hattrickorganizer.model.Spieler spieler) {
+    public final void setSpieler(Spieler spieler) {
         this.spieler = spieler;
         updateComponent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final de.hattrickorganizer.model.Spieler getSpieler() {
+    public final Spieler getSpieler() {
         return spieler;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SpielerStatusLabelEntry) {
@@ -118,36 +94,33 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
         return 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	public final void updateComponent() {
         if (spieler != null) {
             if (spieler.isGesperrt()) {
-                getLinks().setIcon(Helper.ROTEKARTE);
+                getLinks().setIcon(ThemeManager.getIcon(HOIconName.REDCARD));
             } else if (spieler.getGelbeKarten() == 1) {
-                getLinks().setIcon(Helper.GELBEKARTE);
+                getLinks().setIcon(ThemeManager.getIcon(HOIconName.YELLOWCARD));
             } else if (spieler.getGelbeKarten() >= 2) {
-                getLinks().setIcon(Helper.DOPPELGELB);
+                getLinks().setIcon(ThemeManager.getIcon(HOIconName.TWOCARDS));
             } else {
                 getLinks().clear();
             }
 
             if (spieler.getVerletzt() == 0) {
                 getRechts().setText("");
-                getRechts().setIcon(Helper.ANGESCHLAGEN);
+                getRechts().setIcon(ThemeManager.getIcon(HOIconName.PATCH));
             } else if (spieler.getVerletzt() > 0) {
                 getRechts().setText(spieler.getVerletzt() + "");
-                getRechts().setIcon(Helper.VERLETZT);
+                getRechts().setIcon(ThemeManager.getIcon(HOIconName.INJURED));
             } else {
                 getRechts().clear();
             }
         } else if (serverspieler != null) {
             if (serverspieler.isGesperrt()) {
-                getLinks().setIcon(Helper.ROTEKARTE);
+                getLinks().setIcon(ThemeManager.getIcon(HOIconName.REDCARD));
             } else if (serverspieler.isGelbVerwarnt()) {
-                getLinks().setIcon(Helper.GELBEKARTE);
+                getLinks().setIcon(ThemeManager.getIcon(HOIconName.YELLOWCARD));
             } else {
                 getLinks().clear();
             }

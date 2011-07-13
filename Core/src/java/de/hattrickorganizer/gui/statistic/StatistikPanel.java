@@ -254,32 +254,32 @@ public class StatistikPanel extends JPanel {
 		}
 	}
 
-	// gibt ein String zurück, der einen double-Wert mit n Nachkommastellen
-	// repräsentiert
-	public final String formatedDouble(double d, byte n) {
-		final String sHilf = Double.toString(d);
-		String sResultValue = "";
-
-		int i = 0;
-
-		while ((i < sHilf.length()) && (!(sHilf.charAt(i) == '.'))) {
-			sResultValue += sHilf.charAt(i);
-			i++;
-		}
-
-		if (sHilf.charAt(i) == '.') {
-			sResultValue += ',';
-			i++;
-
-			for (int j = 0; (i < sHilf.length()) && (j <= n); j++) {
-				sResultValue += sHilf.charAt(i);
-				i++;
-				j++;
-			}
-		}
-
-		return (sResultValue);
-	}
+//	// gibt ein String zurück, der einen double-Wert mit n Nachkommastellen
+//	// repräsentiert
+//	public final String formatedDouble(double d, byte n) {
+//		final String sHilf = Double.toString(d);
+//		String sResultValue = "";
+//
+//		int i = 0;
+//
+//		while ((i < sHilf.length()) && (!(sHilf.charAt(i) == '.'))) {
+//			sResultValue += sHilf.charAt(i);
+//			i++;
+//		}
+//
+//		if (sHilf.charAt(i) == '.') {
+//			sResultValue += ',';
+//			i++;
+//
+//			for (int j = 0; (i < sHilf.length()) && (j <= n); j++) {
+//				sResultValue += sHilf.charAt(i);
+//				i++;
+//				j++;
+//			}
+//		}
+//
+//		return (sResultValue);
+//	}
 
 	/**
 	 * Zeichnet die GComponent

@@ -1,19 +1,20 @@
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOIconName;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
 import de.hattrickorganizer.gui.model.SpielerCBItem;
-import de.hattrickorganizer.model.Lineup;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.model.Lineup;
 
 public class SwapPositionFeature {
 
@@ -96,8 +97,8 @@ public class SwapPositionFeature {
 
 	private void customizeSwapButton() {
 		swapButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Lineup.Swap.ToolTip"));
-		swapButton.setIcon(new ImageIcon(Helper.loadImage("gui/bilder/swap.png")));
-		swapButton.setSelectedIcon(new ImageIcon(Helper.loadImage("gui/bilder/swap-pressed.png")));
+		swapButton.setIcon(ThemeManager.getIcon(HOIconName.SWAP));
+		swapButton.setSelectedIcon(ThemeManager.getIcon(HOIconName.SWAPPRESSED));
 		swapButton.setPreferredSize(new Dimension(18, 18));
 		swapButton.setMaximumSize(new Dimension(18, 18));
 		swapButton.setMinimumSize(new Dimension(18, 18));

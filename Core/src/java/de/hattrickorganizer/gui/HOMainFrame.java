@@ -1,6 +1,7 @@
 // %3852537837:de.hattrickorganizer.gui%
 package de.hattrickorganizer.gui;
 
+import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
@@ -66,20 +67,20 @@ import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.gui.theme.ho.HOTheme;
+import de.hattrickorganizer.gui.theme.jgoodies.JGoodiesTheme;
+import de.hattrickorganizer.gui.theme.nimbus.NimbusTheme;
 import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
-import de.hattrickorganizer.gui.utils.HOTheme;
 import de.hattrickorganizer.gui.utils.InterruptionWindow;
-import de.hattrickorganizer.gui.utils.JGoodiesTheme;
-import de.hattrickorganizer.gui.utils.NimbusTheme;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
+import de.hattrickorganizer.logik.GebChecker;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.backup.BackupHelper;
 import de.hattrickorganizer.tools.extension.ExtensionListener;
@@ -258,7 +259,7 @@ public final class HOMainFrame extends JFrame
 		setDefaultFont(UserParameter.instance().schriftGroesse);
 
 		setTitle("HO! - Hattrick Organizer " + getVersionString());
-		this.setIconImage(Helper.loadImage("gui/bilder/Logo-16px.png"));
+		this.setIconImage(ThemeManager.getIcon(HOIconName.LOGO16).getImage());
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
@@ -1818,6 +1819,7 @@ public final class HOMainFrame extends JFrame
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, "Can´t loadTheme:" + UserParameter.instance().theme);
 			HOLogger.instance().log(HOMainFrame.class, "Use Classic Theme ");
+			e.printStackTrace();
 		}
 		//Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
@@ -1879,16 +1881,14 @@ public final class HOMainFrame extends JFrame
 		//Startbild weg
 		interuptionsWindow.setVisible(false);
 
-		if (de.hattrickorganizer.logik.GebChecker.checkTWGeb()) {
+		if (GebChecker.checkTWGeb()) {
 			new de.hattrickorganizer.gui.birthday.GebDialog(
-				HOMainFrame.instance(),
-				"gui/bilder/tw.jpg");
+				HOMainFrame.instance(),"birthdayTom");
 		}
 
-		if (de.hattrickorganizer.logik.GebChecker.checkVFGeb()) {
+		if (GebChecker.checkVFGeb()) {
 			new de.hattrickorganizer.gui.birthday.GebDialog(
-				HOMainFrame.instance(),
-				"gui/bilder/vf.jpg");
+				HOMainFrame.instance(),"birthdayVolker");
 		}
 
 		new ExtensionListener().run();

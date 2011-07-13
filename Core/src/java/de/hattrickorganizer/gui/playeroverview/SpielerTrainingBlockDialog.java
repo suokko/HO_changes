@@ -1,6 +1,8 @@
 // %2759382947:de.hattrickorganizer.gui.playeroverview%
 package de.hattrickorganizer.gui.playeroverview;
 
+import gui.HOColorName;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -264,7 +266,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 		panel = new ImagePanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+		panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
 
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
 			addBlock(allTrainingBlocks.get(i));

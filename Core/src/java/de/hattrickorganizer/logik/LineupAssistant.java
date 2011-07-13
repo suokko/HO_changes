@@ -12,16 +12,10 @@ import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class LineupAssistant {
    
     //~ Instance fields ----------------------------------------------------------------------------
@@ -107,8 +101,7 @@ public class LineupAssistant {
      */
     public final int[] setElferKicker(Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
         final int[] bestElfer = new int[11];
-        int kicker = HOVerwaltung.instance().getModel().getAufstellung()
-                                                            .getKicker();
+//        int kicker = HOVerwaltung.instance().getModel().getAufstellung().getKicker();
 
         initElferKicker(bestElfer);
 

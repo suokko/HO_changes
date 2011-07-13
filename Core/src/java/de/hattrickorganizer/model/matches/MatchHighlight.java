@@ -8,6 +8,9 @@
 //package model.matches;
 package de.hattrickorganizer.model.matches;
 
+import de.hattrickorganizer.model.HOVerwaltung;
+import plugins.IMatchHighlight;
+
 /**
  * DOCUMENT ME!
  *
@@ -15,51 +18,34 @@ package de.hattrickorganizer.model.matches;
  * @author Marco Senn, Tooldesign
  */
 public class MatchHighlight implements plugins.IMatchHighlight {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     private String m_sEventText = "";
 
-    /** TODO Missing Parameter Documentation */
     private String m_sGehilfeName = "";
 
-    /** TODO Missing Parameter Documentation */
     private String m_sSpielerName = "";
 
-    /** TODO Missing Parameter Documentation */
     private boolean m_sGehilfeHeim = true;
 
-    /** TODO Missing Parameter Documentation */
     private boolean m_sSpielerHeim = true;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iGastTore;
 
-    /** TODO Missing Parameter Documentation */
-    private int m_iGehilfeID;
+     private int m_iGehilfeID;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iHeimTore;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iHighlightSubTyp;
 
-    //internal variables
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHighlightTyp;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iMinute;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iSpielerID;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iTeamID;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
+ 
     /**
      * Creates a new instance of MatchHighlight
      */
@@ -300,5 +286,130 @@ public class MatchHighlight implements plugins.IMatchHighlight {
      */
     public final int getTeamID() {
         return m_iTeamID;
+    }
+    
+    
+    /**
+     * Check, if the highlight is a weather SE highlight.
+     */
+    public boolean isWeatherSEHighlight() {
+    	return (m_iHighlightTyp == HIGHLIGHT_SPEZIAL &&
+    			(m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY ||
+    					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY ||
+    					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY ||
+    					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY ||
+    					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_QUICK_RAINY ||
+    					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY));
+    }
+    
+    public static String getTooltiptext(int typ, int subtyp) {
+        if (typ == HIGHLIGHT_KARTEN) {
+            if ((subtyp == HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
+                || (subtyp == HIGHLIGHT_SUB_GELB_UNFAIR)) {
+                return HOVerwaltung.instance().getLanguageString("highlight_yellowcard");
+            } else if ((subtyp == HIGHLIGHT_SUB_ROT)
+                       || (subtyp == HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
+                       || (subtyp == HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
+                return HOVerwaltung.instance().getLanguageString("highlight_redcard");
+            }
+        } else if (typ == HIGHLIGHT_INFORMATION) {
+        	if ((subtyp == HIGHLIGHT_SUB_PFLASTER)
+        			|| (subtyp == HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
+        		return HOVerwaltung.instance().getLanguageString("Angeschlagen");
+        	} else if ((subtyp == HIGHLIGHT_SUB_VERLETZT_LEICHT)
+                   || (subtyp == HIGHLIGHT_SUB_VERLETZT_SCHWER)
+                   || (subtyp == HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
+                   || (subtyp == HIGHLIGHT_SUB_VERLETZT)
+                   || (subtyp == HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
+            return HOVerwaltung.instance().getLanguageString("Verletzt");
+        	}
+        }
+        
+        switch (subtyp) {
+                case HIGHLIGHT_SUB_FREISTOSS:
+                case HIGHLIGHT_SUB_FREISTOSS_2:
+                case HIGHLIGHT_SUB_FREISTOSS_3:
+                case HIGHLIGHT_SUB_FREISTOSS_4:
+                case HIGHLIGHT_SUB_FREISTOSS_5:
+                case HIGHLIGHT_SUB_FREISTOSS_6:
+                case HIGHLIGHT_SUB_FREISTOSS_7:
+                case HIGHLIGHT_SUB_FREISTOSS_8:
+                    return HOVerwaltung.instance().getLanguageString("highlight_freekick");
+
+                case HIGHLIGHT_SUB_DURCH_MITTE:
+                case HIGHLIGHT_SUB_DURCH_MITTE_2:
+                case HIGHLIGHT_SUB_DURCH_MITTE_3:
+                case HIGHLIGHT_SUB_DURCH_MITTE_4:
+                case HIGHLIGHT_SUB_DURCH_MITTE_5:
+                case HIGHLIGHT_SUB_DURCH_MITTE_6:
+                case HIGHLIGHT_SUB_DURCH_MITTE_7:
+                case HIGHLIGHT_SUB_DURCH_MITTE_8:
+                    return HOVerwaltung.instance().getLanguageString("highlight_middle");
+
+                case HIGHLIGHT_SUB_UEBER_LINKS:
+                case HIGHLIGHT_SUB_UEBER_LINKS_2:
+                case HIGHLIGHT_SUB_UEBER_LINKS_3:
+                case HIGHLIGHT_SUB_UEBER_LINKS_4:
+                case HIGHLIGHT_SUB_UEBER_LINKS_5:
+                case HIGHLIGHT_SUB_UEBER_LINKS_6:
+                case HIGHLIGHT_SUB_UEBER_LINKS_7:
+                case HIGHLIGHT_SUB_UEBER_LINKS_8:
+                    return HOVerwaltung.instance().getLanguageString("highlight_links");
+
+                case HIGHLIGHT_SUB_UEBER_RECHTS:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_2:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_3:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_4:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_5:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_6:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_7:
+                case HIGHLIGHT_SUB_UEBER_RECHTS_8:
+                    return HOVerwaltung.instance().getLanguageString("highlight_rechts");
+
+                case HIGHLIGHT_SUB_ELFMETER:
+                case HIGHLIGHT_SUB_ELFMETER_2:
+                case HIGHLIGHT_SUB_ELFMETER_3:
+                case HIGHLIGHT_SUB_ELFMETER_4:
+                case HIGHLIGHT_SUB_ELFMETER_5:
+                case HIGHLIGHT_SUB_ELFMETER_6:
+                case HIGHLIGHT_SUB_ELFMETER_7:
+                case HIGHLIGHT_SUB_ELFMETER_8:
+                    return HOVerwaltung.instance().getLanguageString("highlight_penalty");
+
+                case HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+                case HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
+                	return HOVerwaltung.instance().getLanguageString("highlight_freekick") + " " + HOVerwaltung.instance().getLanguageString("indirect");
+
+                case HIGHLIGHT_SUB_LONGHSHOT_1:
+                	return HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
+
+                case HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
+                case HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
+                case HIGHLIGHT_SUB_WEITSCHUSS_TOR:
+                case HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
+                case HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
+                case HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
+                case HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
+                case HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
+                case HIGHLIGHT_SUB_ECKBALL_TOR:
+                case HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
+                case HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
+                case HIGHLIGHT_SUB_UNERFAHREN_TOR:
+                case HIGHLIGHT_SUB_QUERPASS_TOR:
+                case HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
+                case HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
+                    return HOVerwaltung.instance().getLanguageString("highlight_special");
+
+                case HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
+                case HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
+                case HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
+                case HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
+                case HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
+                    return HOVerwaltung.instance().getLanguageString("highlight_counter");
+
+                default:
+                    return "";
+        }
+
     }
 }

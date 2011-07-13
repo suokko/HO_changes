@@ -1,6 +1,8 @@
 // %1374340947:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -30,6 +32,8 @@ import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
@@ -306,12 +310,12 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         m_jpName.setText(m_clSpieler.getName());
         m_jpName.setFGColor(SpielerLabelEntry.getForegroundForSpieler(m_clSpieler));
         m_jpAlter.setText(m_clSpieler.getAlter() + "");
-        m_jpNationalitaet.setIcon(Helper.getImageIcon4Country(m_clSpieler.getNationalitaet()));
+        m_jpNationalitaet.setIcon(ImageUtilities.getFlagIcon(m_clSpieler.getNationalitaet()));
 
         if (HOVerwaltung.instance().getModel().getAufstellung().isSpielerAufgestellt(m_clSpieler.getSpielerID())
             && (HOVerwaltung.instance().getModel().getAufstellung().getPositionBySpielerId(m_clSpieler
                                                                                .getSpielerID()) != null)) {
-            m_jpAufgestellt.setIcon(Helper.getImage4Position(HOVerwaltung.instance().getModel().getAufstellung()
+            m_jpAufgestellt.setIcon(ImageUtilities.getImage4Position(HOVerwaltung.instance().getModel().getAufstellung()
                                                                                                                 .getPositionBySpielerId(m_clSpieler
                                                                                                                 .getSpielerID()),
                                                                                         m_clSpieler.getTrikotnummer()));
@@ -319,18 +323,14 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
                                                                                                                 .getPositionBySpielerId(m_clSpieler
                                                                                                                 .getSpielerID()).getPosition()));
         } else {
-            m_jpAufgestellt.setIcon(Helper.getImage4Position(null,m_clSpieler.getTrikotnummer()));
+            m_jpAufgestellt.setIcon(ImageUtilities.getImage4Position(null,m_clSpieler.getTrikotnummer()));
             m_jpAufgestellt.setText("");
         }
 
         m_jpGruppeSmilie.getLinks().setAusrichtung(SwingConstants.CENTER);
         m_jpGruppeSmilie.getRechts().setAusrichtung(SwingConstants.CENTER);
-        m_jpGruppeSmilie.getLinks().setIcon(de.hattrickorganizer.tools.Helper
-                                            .getImageIcon4GruppeSmilie(m_clSpieler
-                                                                       .getTeamInfoSmilie()));
-        m_jpGruppeSmilie.getRechts().setIcon(de.hattrickorganizer.tools.Helper
-                                             .getImageIcon4GruppeSmilie(m_clSpieler
-                                                                        .getManuellerSmilie()));
+        m_jpGruppeSmilie.getLinks().setIcon(ThemeManager.getIcon(m_clSpieler.getTeamInfoSmilie()));
+        m_jpGruppeSmilie.getRechts().setIcon(ThemeManager.getIcon(m_clSpieler.getManuellerSmilie()));
 
         m_jpStatus.setSpieler(m_clSpieler);
 
@@ -527,9 +527,9 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         m_jpToreGesamt.setText(m_clSpieler.getToreGesamt() + "");
         m_jpHattriks.setText(m_clSpieler.getHattrick() + "");
         m_jpSpezialitaet.setText(PlayerHelper.getNameForSpeciality(m_clSpieler.getSpezialitaet()));
-        m_jpSpezialitaet.setIcon(Helper.getImageIcon4Spezialitaet(m_clSpieler.getSpezialitaet()));
+       	m_jpSpezialitaet.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[m_clSpieler.getSpezialitaet()]));
         m_jpAggressivitaet.setText(PlayerHelper.getNameForAggressivness(m_clSpieler.getAgressivitaet()));
-
+       
         //Dreher!
         m_jpAnsehen.setText(PlayerHelper.getNameForGentleness(m_clSpieler.getCharakter()));
         m_jpCharakter.setText(PlayerHelper.getNameForCharacter(m_clSpieler.getAnsehen()));
