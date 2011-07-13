@@ -1,6 +1,8 @@
 // %3862884693:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
+import gui.HOColorName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,13 +20,13 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ILigaTabellenEintrag;
-
 import de.hattrickorganizer.gui.model.VAPTableModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
@@ -32,17 +34,17 @@ import de.hattrickorganizer.tools.Helper;
 /**
  * A panel with a league table
  */
-public class LigaTabelle extends ImagePanel {
+class LigaTabelle extends ImagePanel {
 	
 	private static final long serialVersionUID = -7087165908899999232L;
 	
-    private Color PROMOTED_BACKGROUND 	= ThemeManager.getColor("table.league.promoted.background");//new Color(220, 255, 220);
-    private Color RELEGATION_BACKGROUND = ThemeManager.getColor("table.league.relegation.background");//new Color(255, 255, 200);
-    private Color DEMOTED_BACKGROUND 	= ThemeManager.getColor("table.league.demoted.background");//new Color(255, 220, 220);
-    private Color TITLE_BACKGROUND 		= ThemeManager.getColor("table.league.title.background");//new Color(230, 230, 230);
+    private Color PROMOTED_BACKGROUND 	= ThemeManager.getColor(HOColorName.LEAGUE_PROMOTED_BG);//new Color(220, 255, 220);
+    private Color RELEGATION_BACKGROUND = ThemeManager.getColor(HOColorName.LEAGUE_RELEGATION_BG);//new Color(255, 255, 200);
+    private Color DEMOTED_BACKGROUND 	= ThemeManager.getColor(HOColorName.LEAGUE_DEMOTED_BG);//new Color(255, 220, 220);
+    private Color TITLE_BACKGROUND 		= ThemeManager.getColor(HOColorName.LEAGUE_TITLE_BG);//new Color(230, 230, 230);
 
-    private Color TABLE_BACKGROUND 		= ThemeManager.getColor("table.league.background");//Color.white
-    private Color TABLE_FOREGROUND 		= ThemeManager.getColor("table.league.foreground");// Color.black
+    private Color TABLE_BACKGROUND 		= ThemeManager.getColor(HOColorName.LEAGUE_BG);//Color.white
+    private Color TABLE_FOREGROUND 		= ThemeManager.getColor(HOColorName.LEAGUE_FG);// Color.black
     
     
 
@@ -106,7 +108,7 @@ public class LigaTabelle extends ImagePanel {
     /**
      * Creates a new LigaTabelle object.
      */
-    public LigaTabelle() {
+     LigaTabelle() {
         initComponents();
 
         //Entrys setzen
@@ -118,7 +120,7 @@ public class LigaTabelle extends ImagePanel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    public final String getSelectedTeam() {
+    final String getSelectedTeam() {
         String team = null;
 
         if (m_jtLigaTabelle.getSelectedRow() > -1) {
@@ -369,8 +371,7 @@ public class LigaTabelle extends ImagePanel {
                 int j = -1;
 
                 for (int i = 0; i < tabelleneintraege.size(); i++) {
-                    final de.hattrickorganizer.model.lineup.LigaTabellenEintrag eintrag = (de.hattrickorganizer.model.lineup.LigaTabellenEintrag) tabelleneintraege
-                                                                                          .get(i);
+                    final LigaTabellenEintrag eintrag = (LigaTabellenEintrag) tabelleneintraege.get(i);
 
                     if (eintrag.getPunkte() > -1) {
                         j = i + 1;
@@ -387,7 +388,7 @@ public class LigaTabelle extends ImagePanel {
                         ((ColorLabelEntry) tabellenwerte[j][1]).setFontStyle(Font.BOLD);
 
                         if (eintrag.getTeamId() == teamid) {
-                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+                            ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(ThemeManager.getColor(HOColorName.TEAM_FG));
                         } else {
                             ((ColorLabelEntry) tabellenwerte[j][1]).setFGColor(TABLE_FOREGROUND);//);Color.black
                         }

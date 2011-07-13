@@ -1,6 +1,8 @@
 // %534638504:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.text.DateFormat;
 
@@ -10,6 +12,8 @@ import javax.swing.table.AbstractTableModel;
 import plugins.IMatchKurzInfo;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ProgressbarTableEntry;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
@@ -263,7 +267,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    		DateFormat.getDateTimeInstance().format(match.getMatchDateAsTimestamp()),
 			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.LEFT);
 			    //Spielart
-			    m_clData[i][1] = new ColorLabelEntry(Helper.getImageIcon4Spieltyp(match.getMatchTyp()),
+			    m_clData[i][1] = new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[match.getMatchTyp()]),
 			    		match.getMatchTyp(), ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
 			    //Gast
 			    m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
@@ -274,17 +278,17 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 			    //Sterne für Sieger!
 			    if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
-			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.NOIMAGEICON);
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(ImageUtilities.NOIMAGEICON);
 			    } else if (match.getHeimTore() > match.getGastTore()) {
-			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.YELLOWSTARIMAGEICON);
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
 			    } else if (match.getHeimTore() < match.getGastTore()) {
-			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.NOIMAGEICON);
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(ImageUtilities.NOIMAGEICON);
 			    } else {
-			        ((ColorLabelEntry) m_clData[i][3]).setIcon(Helper.GREYSTARIMAGEICON);
+			        ((ColorLabelEntry) m_clData[i][3]).setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
 			    }
 
 			    //Wetter
-			    m_clData[i][4] = new ColorLabelEntry(Helper.getImageIcon4Wetter(match.getWetter()),
+			    m_clData[i][4] = new ColorLabelEntry(ThemeManager.getIcon(HOIconName.WEATHER[match.getWetter()]),
 			                                         match.getWetter(), ColorLabelEntry.FG_STANDARD,
 			                                         background, SwingConstants.RIGHT);
 

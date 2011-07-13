@@ -3,10 +3,10 @@ package de.hattrickorganizer.gui.model;
 
 import javax.swing.SwingConstants;
 
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-
-import plugins.IHOTableEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -33,34 +33,15 @@ public class SmilieEntry extends DoppelLabelEntry {
         this.setLabels(team, manuell);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     */
-    public final void setSpieler(de.hattrickorganizer.model.Spieler spieler) {
+   public final void setSpieler(de.hattrickorganizer.model.Spieler spieler) {
         this.spieler = spieler;
         updateComponent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final de.hattrickorganizer.model.Spieler getSpieler() {
         return spieler;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SmilieEntry) {
@@ -121,22 +102,17 @@ public class SmilieEntry extends DoppelLabelEntry {
         return 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	public final void updateComponent() {
         if (spieler != null) {
             if ((spieler.getTeamInfoSmilie() != null) && !spieler.getTeamInfoSmilie().equals("")) {
-                team.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4GruppeSmilie(spieler
-                                                                                         .getTeamInfoSmilie()));
+                team.setIcon(ThemeManager.getIcon(spieler.getTeamInfoSmilie()));
             } else {
                 team.clear();
             }
 
             if ((spieler.getManuellerSmilie() != null) && !spieler.getManuellerSmilie().equals("")) {
-                manuell.setIcon(de.hattrickorganizer.tools.Helper.getImageIcon4GruppeSmilie(spieler
-                                                                                            .getManuellerSmilie()));
+                manuell.setIcon(ThemeManager.getIcon(spieler.getManuellerSmilie()));
             } else {
                 manuell.clear();
             }

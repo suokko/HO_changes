@@ -17,33 +17,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.hattrickorganizer.gui.templates.RasenPanel;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
  * Zeigt den Spielstand an
  */
 public class ChatPanel extends RasenPanel implements ActionListener, KeyListener {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1624019111726212359L;
+ 	private static final long serialVersionUID = 1624019111726212359L;
 	private ChatMessagePanel m_clChatMessagePanel = new ChatMessagePanel();
     private HOFriendlyDialog m_clChat;
-    private JButton m_jbSenden = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                           .makeColorTransparent(de.hattrickorganizer.tools.Helper
-                                                                                 .loadImage("gui/bilder/senden.png"),
+    private JButton m_jbSenden = new JButton(new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/senden.png"),
                                                                                  Color.red)));
     private JTextField m_jtfChatMessage = new JTextField();
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new instance of ChatPanel
-     *
-     * @param chat TODO Missing Constructuor Parameter Documentation
-     */
+ 
     public ChatPanel(HOFriendlyDialog chat) {
         m_clChat = chat;
 
@@ -80,52 +70,24 @@ public class ChatPanel extends RasenPanel implements ActionListener, KeyListener
         add(m_clChatMessagePanel, BorderLayout.CENTER);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(ActionEvent e) {
         m_clChat.sendMsg(m_jtfChatMessage.getText());
         m_jtfChatMessage.setText("");
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param trainer TODO Missing Method Parameter Documentation
-     * @param message TODO Missing Method Parameter Documentation
-     */
     public final void append(String trainer, String message) {
         m_clChatMessagePanel.append(trainer, message);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public void keyPressed(KeyEvent e) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             m_jbSenden.doClick();
         }
     }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
+ 
     public void keyTyped(KeyEvent e) {
     }
 }

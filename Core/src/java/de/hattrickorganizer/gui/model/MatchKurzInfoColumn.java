@@ -73,7 +73,7 @@ class MatchKurzInfoColumn extends UserColumn {
                 return MatchesColumnModel.QUALISPIEL;
 
             case IMatchLineup.LAENDERCUPSPIEL:
-                return MatchesColumnModel.LAENDERCUPSPIEL;
+                return MatchesColumnModel.LAENDERSPIEL;
 
             case IMatchLineup.INTCUPSPIEL:
                 return MatchesColumnModel.INTCUPSPIEL;
@@ -85,18 +85,14 @@ class MatchKurzInfoColumn extends UserColumn {
                 return MatchesColumnModel.INTSPIEL;
 
             case IMatchLineup.INT_TESTCUPSPIEL:
-                return MatchesColumnModel.INT_TESTCUPSPIEL;
-
             case IMatchLineup.INT_TESTSPIEL:
                 return MatchesColumnModel.INT_TESTSPIEL;
 
             case IMatchLineup.TESTLAENDERSPIEL:
-                return MatchesColumnModel.TESTLAENDERSPIEL;
+                return MatchesColumnModel.LAENDERSPIEL;
 
             case IMatchLineup.TESTPOKALSPIEL:
-                return MatchesColumnModel.TESTPOKALSPIEL;
-
-            case IMatchLineup.TESTSPIEL:
+             case IMatchLineup.TESTSPIEL:
                 return MatchesColumnModel.TESTSPIEL;
 
             //Fehler?

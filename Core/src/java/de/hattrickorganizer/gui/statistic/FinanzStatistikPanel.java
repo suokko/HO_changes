@@ -1,6 +1,9 @@
 // %3604286658:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -31,29 +33,29 @@ import de.hattrickorganizer.tools.Helper;
 /**
  * Das StatistikPanel
  */
-public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.ImagePanel
+public class FinanzStatistikPanel extends ImagePanel
     implements ActionListener, FocusListener, de.hattrickorganizer.gui.Refreshable
 {
 	private static final long serialVersionUID = 5245162268414878290L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	private Color cashColor 			= ThemeManager.getColor("ho.statistics.cash");
-    private Color winLostColor 			= ThemeManager.getColor("ho.statistics.winLost");
-    private Color incomeSumColor 		= ThemeManager.getColor("ho.statistics.incomeSum");
-    private Color costSumColor 			= ThemeManager.getColor("ho.statistics.costSum");
-    private Color incomeSpectatorsColor = ThemeManager.getColor("ho.statistics.incomeSpectators");
-    private Color incomeSponsorsColor 	= ThemeManager.getColor("ho.statistics.incomeSponsors");
-    private Color incomeFinancialColor 	= ThemeManager.getColor("ho.statistics.incomeFinancial");
-    private Color incomeTemporaryColor 	= ThemeManager.getColor("ho.statistics.incomeTemporary");
-    private Color costArena 			= ThemeManager.getColor("ho.statistics.costArena");
-    private Color costsPlayersColor 	= ThemeManager.getColor("ho.statistics.costsPlayers");
-    private Color costFinancialColor 	= ThemeManager.getColor("ho.statistics.costFinancial");
-    private Color costTemporaryColor 	= ThemeManager.getColor("ho.statistics.costTemporary");
-    private Color costStaffColor 		= ThemeManager.getColor("ho.statistics.costStaff");
-    private Color costsYouthColor 		= ThemeManager.getColor("ho.statistics.costsYouth");
-    private Color fansColor 			= ThemeManager.getColor("ho.statistics.fans");
-    private Color marketValueColor 		= ThemeManager.getColor("ho.statistics.marketValue");
+	private Color cashColor 			= ThemeManager.getColor(HOColorName.STAT_CASH);
+    private Color winLostColor 			= ThemeManager.getColor(HOColorName.STAT_WINLOST);
+    private Color incomeSumColor 		= ThemeManager.getColor(HOColorName.STAT_INCOMESUM);
+    private Color costSumColor 			= ThemeManager.getColor(HOColorName.STAT_COSTSUM);
+    private Color incomeSpectatorsColor = ThemeManager.getColor(HOColorName.STAT_INCOMESPECTATORS);
+    private Color incomeSponsorsColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMESPONSORS);
+    private Color incomeFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMEFINANCIAL);
+    private Color incomeTemporaryColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMETEMPORARY);
+    private Color costArena 			= ThemeManager.getColor(HOColorName.STAT_COSTARENA);
+    private Color costsPlayersColor 	= ThemeManager.getColor(HOColorName.STAT_COSTSPLAYERS);
+    private Color costFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_COSTFINANCIAL);
+    private Color costTemporaryColor 	= ThemeManager.getColor(HOColorName.STAT_COSTTEMPORARY);
+    private Color costStaffColor 		= ThemeManager.getColor(HOColorName.STAT_COSTSTAFF);
+    private Color costsYouthColor 		= ThemeManager.getColor(HOColorName.STAT_COSTSYOUTH);
+    private Color fansColor 			= ThemeManager.getColor(HOColorName.STAT_FANS);
+    private Color marketValueColor 		= ThemeManager.getColor(HOColorName.STAT_MARKETVALUE);
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -88,7 +90,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                                                                 incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
     private ImageCheckbox m_jchZuschauer = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zuschauer"),
                                                              incomeSpectatorsColor,gui.UserParameter.instance().statistikZuschauer);
-    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
+    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
                                                         gui.UserParameter.instance().statistikFinanzenBeschriftung);
@@ -124,7 +126,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Finanzen"));
+            m_clStatistikPanel.doPrint(HOVerwaltung.instance().getLanguageString("Finanzen"));
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
             gui.UserParameter.instance().statistikFinanzenHilfslinien = m_jchHilflinien.isSelected();
@@ -246,7 +248,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         layout2.setConstraints(m_jbDrucken, constraints2);
         panel2.add(m_jbDrucken);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Wochen"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -264,7 +266,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints2.gridx = 0;
         constraints2.gridy = 4;
         constraints2.gridwidth = 2;
-        m_jbUbernehmen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         layout2.setConstraints(m_jbUbernehmen, constraints2);
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
@@ -437,7 +439,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
         layout.setConstraints(panel, constraints);
         add(panel);
     }
@@ -506,7 +508,7 @@ public class FinanzStatistikPanel extends de.hattrickorganizer.gui.templates.Ima
                                             .convertTimeMillisToFormatString(statistikWerte[16]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"),
+                                            HOVerwaltung.instance().getLanguageString("Wochen"),
                                             "", m_jchBeschriftung.isSelected(),
                                             m_jchHilflinien.isSelected());
         } catch (Exception e) {

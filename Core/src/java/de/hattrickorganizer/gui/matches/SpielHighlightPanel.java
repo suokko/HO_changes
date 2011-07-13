@@ -1,6 +1,10 @@
 // %4112883594:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,9 +25,9 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -58,7 +62,7 @@ public class SpielHighlightPanel extends ImagePanel {
     public SpielHighlightPanel(boolean print) {
         super(print);
 
-        setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
         final GridBagLayout mainlayout = new GridBagLayout();
         final GridBagConstraints mainconstraints = new GridBagConstraints();
@@ -75,8 +79,8 @@ public class SpielHighlightPanel extends ImagePanel {
         constraints.weightx = 1.0;
         constraints.insets = new Insets(5, 3, 2, 2);
 
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
-        panel.setBackground(ThemeManager.getColor("ho.panel.background"));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
+        panel.setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
         //Platzhalter
         JLabel label = new JLabel("   ");
@@ -219,15 +223,15 @@ public class SpielHighlightPanel extends ImagePanel {
         m_clGastTeamTore.setText(info.getGastTore() + " ");
 
         if (info.getHeimID() == teamid) {
-            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
-            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
+            m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
         if (info.getGastID() == teamid) {
-            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
-            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
+            m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
         //Alle Highlights löschen
@@ -246,7 +250,7 @@ public class SpielHighlightPanel extends ImagePanel {
                 final IMatchHighlight highlight =  vMatchHighlights.get(i);
 
                 //Label vorbereiten
-                final ImageIcon icon = Helper.getImageIcon4SpielHighlight(highlight.getHighlightTyp(),
+                final ImageIcon icon = SpielHighlightPanel.getImageIcon4SpielHighlight(highlight.getHighlightTyp(),
                                                                     highlight.getHighlightSubTyp());
 
                 //Soll Highlight auch angezeigt werden? (Nur wenn Grafik vorhanden ist)
@@ -260,13 +264,12 @@ public class SpielHighlightPanel extends ImagePanel {
 
                     spielername += (" (" + highlight.getMinute() + ".)");
                     playerlabel = new JLabel(spielername, icon, SwingConstants.LEFT);
-                    playerlabel.setForeground(Helper.getColor4SpielHighlight(highlight.getHighlightTyp(),
+                    playerlabel.setForeground(SpielHighlightPanel.getColor4SpielHighlight(highlight.getHighlightTyp(),
                                                                        highlight.getHighlightSubTyp()));
-                    if (Helper.isWeatherSEHighlight(highlight.getHighlightTyp(),
-                                                                               highlight.getHighlightSubTyp())) {
+                    if (highlight.isWeatherSEHighlight()) {
                     	playerlabel.setToolTipText(removeHtml(highlight.getEventText()));
                     } else {
-                    	playerlabel.setToolTipText(Helper.getTooltiptext4SpielHighlight(highlight.getHighlightTyp(),
+                    	playerlabel.setToolTipText(MatchHighlight.getTooltiptext(highlight.getHighlightTyp(),
                                                                               highlight.getHighlightSubTyp()));
                     }
 
@@ -320,14 +323,14 @@ public class SpielHighlightPanel extends ImagePanel {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {
-                m_clHeimTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() < info.getGastTore()) {
                 m_clHeimTeamName.setIcon(null);
-                m_clGastTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
+                m_clGastTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
             } else {
-                m_clHeimTeamName.setIcon(Helper.GREYSTARIMAGEICON);
-                m_clGastTeamName.setIcon(Helper.GREYSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
+                m_clGastTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
             }
         } //Ende Finished
 
@@ -358,4 +361,285 @@ public class SpielHighlightPanel extends ImagePanel {
     	else
     		return in.replaceAll("<.*?>", "");
     }
+
+	/**
+	 * Get the color for the given highlight type and subtype.
+	 */
+	public static Color getColor4SpielHighlight(int typ, int subtyp) {
+		if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
+			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
+				return gui.UserParameter.instance().FG_ZWEIKARTEN;
+			} else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_ROT) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
+				return gui.UserParameter.instance().FG_GESPERRT;
+			}
+		} else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
+			return ThemeManager.getColor(HOColorName.LABEL_FG);
+		} else if (typ == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
+			return ThemeManager.getColor(HOColorName.MATCHHIGHLIGHT_FAILED_FG);
+		} else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
+				return gui.UserParameter.instance().FG_ANGESCHLAGEN;
+			} else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
+				return gui.UserParameter.instance().FG_VERLETZT;
+			}
+		}
+	
+		return ThemeManager.getColor(HOColorName.LABEL_FG);
+	}
+
+	public static ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
+	    ImageIcon icon = null;
+	
+	    if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
+	        if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
+	            || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
+	            icon = ThemeManager.getIcon(HOIconName.YELLOWCARD);
+	        } else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_ROT)
+	                   || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
+	                   || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
+	            icon = ThemeManager.getIcon(HOIconName.REDCARD);
+	        }
+	    } else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
+	        switch (subtyp) {
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_FREEKICK);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_8: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_MID);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_8: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_LEFT);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_8: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_RIGHT);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_PENALTY);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+	            case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2: {
+	            	icon = ThemeManager.getIcon(HOIconName.GOAL_FREEKICK2);
+	            	break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1: {
+	            	icon = ThemeManager.getIcon(HOIconName.GOAL_LONGSHOT);
+	            	break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF: {
+	                icon = ThemeManager.getIcon(HOIconName.GOAL_COUNTER);
+	                break;
+	            }
+	
+	            default:
+	                icon = ThemeManager.getIcon(HOIconName.GOAL);
+	        }
+	    } else if (typ == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
+	        switch (subtyp) {
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_FREEKICK);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_DURCH_MITTE_8: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_MID);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_LINKS_8: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_LEFT);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UEBER_RECHTS_8: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_RIGHT);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_4:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_5:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_PENALTY);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+	            case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2: {
+	            	icon = ThemeManager.getIcon(HOIconName.NOGOAL_FREEKICK2);
+	            	break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1: {
+	            	icon = ThemeManager.getIcon(HOIconName.NOGOAL_LONGSHOT);
+	            	break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_SPECIAL);
+	                break;
+	            }
+	
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
+	            case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF: {
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_COUNTER);
+	                break;
+	            }
+	
+	            default:
+	                icon = ThemeManager.getIcon(HOIconName.NOGOAL);
+	        }
+	    } else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
+	        if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER)
+	            || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
+	            icon = ThemeManager.getIcon(HOIconName.PATCHSMALL);
+	        } else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
+	                   || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
+	                   || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
+	                   || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
+	                   || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
+	            icon = ThemeManager.getIcon(HOIconName.INJUREDSMALL);
+	        }
+	    } else if (typ == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
+	    	switch (subtyp) {
+	    	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY: 	// +
+	    		icon = ThemeManager.getScaledIcon(HOIconName.WEATHER_RAIN_POS,16,10); break;
+	    	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY: 	// +
+	    		icon = ThemeManager.getScaledIcon(HOIconName.WEATHER_SUN_POS,16,10); break;
+	    	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY: 	// -
+	    	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY:		// -
+	    		icon = ThemeManager.getScaledIcon(HOIconName.WEATHER_SUN_NEG,16,10); break;
+	    	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY:		// -
+	    	case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY: 	// -
+	    		icon = ThemeManager.getScaledIcon(HOIconName.WEATHER_RAIN_NEG,16,10); break;
+	    	default:
+	    		icon = null;
+	    	}
+	    }
+	
+	    return icon;
+	}
 }

@@ -1,6 +1,10 @@
 // %3815329211:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -22,6 +26,7 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -63,7 +68,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     private JLabel m_jlThirdResult = new JLabel();
     private JLabel m_jlThirdVisitorTeam = new JLabel();
     private int m_iSpieltag = -1;
-
+    private static Color foreground = ThemeManager.getColor(HOColorName.LABEL_FG);
     
     
     protected SpieltagPanel(int spieltag) {
@@ -170,23 +175,23 @@ final class SpieltagPanel extends JPanel implements ActionListener {
                                                                                     .getMatchId())) {
                 button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielAnzeigen"));
                 button.setEnabled(true);
-                button.setIcon(Helper.SHOWMATCHICON);
-                button.setDisabledIcon(Helper.SHOWMATCHICON);
+                button.setIcon(ThemeManager.getIcon(HOIconName.SHOW_MATCH));
+                button.setDisabledIcon(ThemeManager.getIcon(HOIconName.SHOW_MATCH));
             }
             //Match noch nicht in der Datenbank
             else {
                 button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielDownloaden"));
                 button.setEnabled(true);
-                button.setIcon(Helper.DOWNLOADMATCHICON);
-                button.setDisabledIcon(Helper.DOWNLOADMATCHICON);
+                button.setIcon(ThemeManager.getIcon(HOIconName.DOWNLOAD_MATCH));
+                button.setDisabledIcon(ThemeManager.getIcon(HOIconName.DOWNLOAD_MATCH));
             }
         }
         //Noch nicht stattgefunden
         else {
             button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielNochnichtgespielt"));
             button.setEnabled(false);
-            button.setIcon(Helper.NOMATCHICON);
-            button.setDisabledIcon(Helper.NOMATCHICON);
+            button.setIcon(ThemeManager.getIcon(HOIconName.NO_MATCH));
+            button.setDisabledIcon(ThemeManager.getIcon(HOIconName.NO_MATCH));
         }
     }
 
@@ -316,23 +321,23 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
             //HomeVictory
             if (paarung.getToreHeim() > paarung.getToreGast()) {
-                homeTeam.setIcon(Helper.YELLOWSTARIMAGEICON);
-                visitorTeam.setIcon(Helper.NOIMAGEICON);
+                homeTeam.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
+                visitorTeam.setIcon(ImageUtilities.NOIMAGEICON);
             }
             //VisitorVictory
             else if (paarung.getToreHeim() < paarung.getToreGast()) {
-                homeTeam.setIcon(Helper.NOIMAGEICON);
-                visitorTeam.setIcon(Helper.YELLOWSTARIMAGEICON);
+                homeTeam.setIcon(ImageUtilities.NOIMAGEICON);
+                visitorTeam.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
             }
             //drawn
             else {
-                homeTeam.setIcon(Helper.GREYSTARIMAGEICON);
-                visitorTeam.setIcon(Helper.GREYSTARIMAGEICON);
+                homeTeam.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
+                visitorTeam.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
             }
         } else {
             result.setText(convertResult("-", "-"));
-            homeTeam.setIcon(Helper.NOIMAGEICON);
-            visitorTeam.setIcon(Helper.NOIMAGEICON);
+            homeTeam.setIcon(ImageUtilities.NOIMAGEICON);
+            visitorTeam.setIcon(ImageUtilities.NOIMAGEICON);
         }
 
         markMyTeam(homeTeam, paarung.getHeimId(), teamid);
@@ -366,7 +371,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(2, 2, 2, 2);
 
-        this.setBackground(ThemeManager.getColor("panel.matchday.background")); 
+        this.setBackground(ThemeManager.getColor(HOColorName.PANEL_BG)); 
 
         JLabel label;
 
@@ -456,7 +461,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     private void markMyTeam(JLabel team, int matchTeamId, int myTeamId) {
         if (matchTeamId == myTeamId) {
             team.setFont(team.getFont().deriveFont(Font.BOLD));
-            team.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            team.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         }
     }
 
@@ -464,6 +469,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         if (teamName.equals(LigaTabellePanel.getMarkierterVerein())) {
             team.setOpaque(true);
             team.setBackground(SpielerTableRenderer.SELECTION_BG);
+            team.setForeground(SpielerTableRenderer.SELECTION_FG);
         }
     }
 
@@ -480,7 +486,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
     private void resetMarkup(JLabel label) {
         label.setFont(label.getFont().deriveFont(Font.PLAIN));
-        label.setForeground(ThemeManager.getColor("ho.label.foreground"));
+        label.setForeground(foreground);
         label.setOpaque(false);
     }
 }

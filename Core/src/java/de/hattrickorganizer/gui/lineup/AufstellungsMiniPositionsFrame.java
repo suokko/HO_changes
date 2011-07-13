@@ -1,6 +1,8 @@
 // %80307481:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +18,6 @@ import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,14 +28,16 @@ import javax.swing.border.LineBorder;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
+import de.hattrickorganizer.gui.print.ComponentPrintObject;
+import de.hattrickorganizer.gui.print.PrintController;
 import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.model.Lineup;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 
@@ -50,8 +53,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private LineupPanel m_clAufstellungsPanel;
-    private JButton m_jbMaxFrame = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                             .loadImage("gui/bilder/MaxAufstellung.png")));
+    private JButton m_jbMaxFrame = new JButton(ThemeManager.getIcon(HOIconName.MAXLINEUP));
     private PlayerPositionPanel m_clMiddleCentralDefender;
     private PlayerPositionPanel m_clCentralInnerMidfielder;
     private PlayerPositionPanel m_clCentralForward;
@@ -99,7 +101,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
         initComponentes();
 
-        this.setIconImage(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/Logo-16px.png"));
+        this.setIconImage(HOMainFrame.instance().getIconImage());
         this.addWindowListener(this);
     }
 
@@ -108,7 +110,6 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
     /**
      * Position des MiniScouts speichern
      *
-     * @param sichtbar TODO Missing Constructuor Parameter Documentation
      */
     @Override
 	public final void setVisible(boolean sichtbar) {
@@ -121,11 +122,6 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         setVisible(false);
         de.hattrickorganizer.gui.HOMainFrame.instance().setVisible(true);
@@ -137,24 +133,19 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
      */
     public final void doPrint() {
         try {
-            final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
-                                                                                   .getInstance();
+            final PrintController printController = PrintController.getInstance();
 
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung")
+            final String titel = HOVerwaltung.instance().getLanguageString("Aufstellung")
                                  + " - "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
+                                 + HOVerwaltung.instance().getModel()
                                                                           .getBasics().getTeamName()
                                  + " - "
                                  + java.text.DateFormat.getDateTimeInstance().format(calendar
                                                                                      .getTime());
-            printController.add(new de.hattrickorganizer.gui.print.ComponentPrintObject(printController
-                                                                                        .getPf(),
-                                                                                        titel,
-                                                                                        getContentPane(),
-                                                                                        de.hattrickorganizer.gui.print.ComponentPrintObject.SICHTBAR));
+            printController.add(new ComponentPrintObject(printController.getPf(),titel,getContentPane(),ComponentPrintObject.SICHTBAR));
 
             printController.print();
         } catch (Exception e) {
@@ -164,16 +155,10 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         setVisible(false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void reInit() {
         refresh();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void refresh() {
         final boolean gruppenfilter = m_clAufstellungsPanel.getAufstellungsAssitentPanel()
                                                            .isGruppenFilter();
@@ -280,84 +265,45 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         aufstellung.checkAufgestellteSpieler();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void update() {
+   public final void update() {
         m_clAufstellungsPanel.update();
         refresh();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+
     public void windowActivated(java.awt.event.WindowEvent windowEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowClosed(java.awt.event.WindowEvent windowEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
         setVisible(false);
-        de.hattrickorganizer.gui.HOMainFrame.instance().setVisible(true);
+        HOMainFrame.instance().setVisible(true);
         dispose();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowDeactivated(java.awt.event.WindowEvent windowEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowDeiconified(java.awt.event.WindowEvent windowEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowIconified(java.awt.event.WindowEvent windowEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public void windowOpened(java.awt.event.WindowEvent windowEvent) {
     }
 
-    /**
-     * Erzeugt ein Label für den Spieler
-     *
-     * @param spielerID TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+ 
     private SpielerCBItem createSpielerLabel(int spielerID) {
-        final de.hattrickorganizer.model.Spieler spieler = de.hattrickorganizer.model.HOVerwaltung.instance()
-                                                                                                  .getModel()
-                                                                                                  .getSpieler(spielerID);
+        final Spieler spieler = HOVerwaltung.instance().getModel().getSpieler(spielerID);
 
         if (spieler != null) {
             return new SpielerCBItem(spieler.getName(), 0f, spieler);

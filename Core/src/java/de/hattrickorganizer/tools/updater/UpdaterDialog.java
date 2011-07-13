@@ -5,6 +5,9 @@
  */
 package de.hattrickorganizer.tools.updater;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
@@ -14,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -31,7 +33,6 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -111,8 +112,8 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
     protected JCheckBox getCheckbox(boolean isSelected, boolean isEnabled) {
         JCheckBox tmp = new JCheckBox();
+        tmp.setOpaque(false);
         tmp.setEnabled(isEnabled);
-        tmp.setBackground(ThemeManager.getColor("ho.checkbox.background"));
         tmp.setSelected(isSelected);
         tmp.setHorizontalAlignment(SwingConstants.CENTER);
         return tmp;
@@ -169,15 +170,15 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         cancelButton.setActionCommand(ACT_CANCEL);
         cancelButton.addActionListener(this);
 
-        JButton selectAllButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/CheckBoxSelected.gif")));
-        selectAllButton.setBackground(ThemeManager.getColor("ho.button.background"));
+        JButton selectAllButton = new JButton(ThemeManager.getIcon(HOIconName.CHECKBOXSELECTED));
+        selectAllButton.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
         selectAllButton.setPreferredSize(new Dimension(23, 23));
         selectAllButton.setActionCommand(ACT_SET_ALL);
         selectAllButton.addActionListener(this);
 
-        JButton selectNoneButton = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/CheckBoxNotSelected.gif")));
+        JButton selectNoneButton = new JButton(ThemeManager.getIcon(HOIconName.CHECKBOXNOTSELECTED));
 
-        selectNoneButton.setBackground(ThemeManager.getColor("ho.button.background"));
+        selectNoneButton.setBackground(selectAllButton.getBackground());
         selectNoneButton.setPreferredSize(new Dimension(23, 23));
         selectNoneButton.setActionCommand(ACT_SET_NONE);
         selectNoneButton.addActionListener(this);

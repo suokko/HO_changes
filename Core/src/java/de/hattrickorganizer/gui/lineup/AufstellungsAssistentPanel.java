@@ -1,6 +1,8 @@
 // %3860481451:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOColorName;
+import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
@@ -34,6 +36,7 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -50,15 +53,15 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-	private JButton m_jbElfmeter = new JButton(new ImageIcon(Helper.changeColor(Helper.loadImage("gui/bilder/credits/Ball.png"),
+	private JButton m_jbElfmeter = new JButton(new ImageIcon(ImageUtilities.changeColor(ThemeManager.loadImage("gui/bilder/credits/Ball.png"),
 			Color.red,
 			Color.white)
 			.getScaledInstance(24,
 					24,
 					Image.SCALE_SMOOTH)));
-	private final JButton m_jbLoeschen 	= new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Assist_leeren.png")));
-	private final JButton m_jbOK 			= new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Assist_start.png")));
-	private final JButton m_jbReserveLoeschen = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Assist_reserveleeren.png")));
+	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
+	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
+	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));
 	private final JCheckBox m_jchForm 	= new JCheckBox(HOVerwaltung.instance().getLanguageString("Form_beruecksichtigen"),
 			gui.UserParameter.instance().aufstellungsAssistentPanel_form);
 	private final JCheckBox m_jchGesperrte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Gesperrte_aufstellen"),
@@ -73,7 +76,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			gui.UserParameter.instance().aufstellungsAssistentPanel_not);
 	private final JCheckBox m_jchVerletzte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Verletze_aufstellen"),
 			gui.UserParameter.instance().aufstellungsAssistentPanel_verletzt);
-	private final JComboBox m_jcbGruppe 	= new JComboBox(Helper.TEAMSMILIES);
+	private final JComboBox m_jcbGruppe 	= new JComboBox(HOIconName.TEAMSMILIES);
 	private final JComboBox m_jcbWetter 	= new JComboBox(Helper.WETTER);
 	private final CBItem[] REIHENFOLGE = {
 			new CBItem(HOVerwaltung.instance().getLanguageString("AW-MF-ST"),
@@ -114,101 +117,46 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Methods ------------------------------------------------------------------------------------
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isExcludeLastMatch() {
 		return m_jchLast.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isFormBeruecksichtigen() {
 		return m_jchForm.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isGesperrtIgnorieren() {
 		return m_jchGesperrte.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final String getGruppe() {
 		return m_jcbGruppe.getSelectedItem().toString();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isGruppenFilter() {
 		return m_jchListBoxGruppenFilter.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isIdealPositionZuerst() {
 		return m_jchIdealPosition.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isNotGruppe() {
 		return m_jchNot.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final int getReihenfolge() {
 		return ((CBItem) m_jcbReihenfolge.getSelectedItem()).getId();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final boolean isVerletztIgnorieren() {
 		return m_jchVerletzte.isSelected();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final int getWetter() {
 		return ((CBItem) m_jcbWetter.getSelectedItem()).getId();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param actionEvent TODO Missing Method Parameter Documentation
-	 */
 	public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
 		final HOModel hoModel 		= HOVerwaltung.instance().getModel();
 		final HOMainFrame mainFrame = de.hattrickorganizer.gui.HOMainFrame.instance();
@@ -218,7 +166,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			hoModel.getAufstellung().resetAufgestellteSpieler();
 			hoModel.getAufstellung().setKicker(0);
 			hoModel.getAufstellung().setKapitaen(0);
-			de.hattrickorganizer.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Aufstellung_geloescht"));
+			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Aufstellung_geloescht"));
 			mainFrame.getAufstellungsPanel().update();
 
 			//gui.RefreshManager.instance ().doRefresh ();
@@ -270,11 +218,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param e TODO Missing Method Parameter Documentation
-	 */
 	public final void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			//Wetter -> Refresh
@@ -396,8 +339,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		if (infoLabel == null) {
 			infoLabel = new JLabel();
 			infoLabel.setText(HOVerwaltung.instance().getLanguageString("lineupassist.Info"));
-			infoLabel.setBackground(ThemeManager.getColor("ho.label.lineupAssist.background"));
-			infoLabel.setOpaque(true);
+			infoLabel.setOpaque(false);
 		}
 		posPanel.add(infoLabel, constraints, 2);
 
@@ -407,7 +349,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		if (overlayOk == null) {
 			overlayOk = new JButton(HOVerwaltung.instance().getLanguageString("lineupassist.OK"));
 			overlayOk.setFont(new Font("serif", Font.BOLD, 16));
-			overlayOk.setBackground(ThemeManager.getColor("ho.button.lineupAssist.background"));
+			overlayOk.setBackground(ThemeManager.getColor(HOColorName.BUTTON_ASSIST_BG));
 			overlayOk.addActionListener(this);
 		}
 		posPanel.add(overlayOk, constraints, 2);
@@ -419,7 +361,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			overlayCancel = new JButton(HOVerwaltung.instance().getLanguageString("lineupassist.Cancel"));
 			overlayCancel.addActionListener(this);
 			overlayCancel.setFont(new Font("serif", Font.BOLD, 16));
-			overlayCancel.setBackground(ThemeManager.getColor("ho.button.lineupAssist.background"));
+			overlayCancel.setBackground(overlayOk.getBackground());
 		}
 		posPanel.add(overlayCancel, constraints, 2);
 
@@ -498,12 +440,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return false;
 	}
 	
-	
-	
-	
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	private void initComponents() {
 		setLayout(new BorderLayout());
 
@@ -517,7 +453,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jcbWetter.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Wetter"));
 		m_jcbWetter.setSelectedIndex(1);
 		m_jcbWetter.setPreferredSize(new Dimension(50, 20));
-		m_jcbWetter.setBackground(ThemeManager.getColor("tableEntry.background"));
+		m_jcbWetter.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
 		m_jcbWetter.setRenderer(new de.hattrickorganizer.gui.model.WetterRenderer());
 		m_jcbWetter.addItemListener(this);
 		panel.add(m_jcbWetter);
@@ -530,7 +466,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		panel2.add(m_jchNot, BorderLayout.WEST);
 		m_jcbGruppe.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Gruppe"));
 		m_jcbGruppe.setSelectedItem(gui.UserParameter.instance().aufstellungsAssistentPanel_gruppe);
-		m_jcbGruppe.setBackground(ThemeManager.getColor("tableEntry.background"));
+		m_jcbGruppe.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
 		m_jcbGruppe.setRenderer(new de.hattrickorganizer.gui.model.SmilieRenderer());
 		m_jcbGruppe.addActionListener(this);
 		panel2.add(m_jcbGruppe, BorderLayout.CENTER);

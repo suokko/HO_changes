@@ -1,6 +1,8 @@
 // %2956927164:plugins%
 package plugins;
 
+import gui.HOColorName;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -316,7 +318,7 @@ public class LineupPanel extends JPanel {
 
         m_jlTeamName = new JLabel();
         m_jlTeamName.setOpaque(false);
-        m_jlTeamName.setForeground(ThemeManager.getColor("ho.label.onGreen.foreground"));
+        m_jlTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_ONGREEN_FG));
         m_jlTeamName.setFont(m_jlTeamName.getFont().deriveFont(Font.BOLD,
                                                                gui.UserParameter.instance().schriftGroesse
                                                                + 3));

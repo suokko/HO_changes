@@ -1,17 +1,19 @@
 // %222653727:de.hattrickorganizer.gui.playeranalysis%
 package de.hattrickorganizer.gui.playeranalysis;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -95,7 +97,7 @@ public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListene
 
         final JPanel panel = new ImagePanel(new BorderLayout());
 
-        m_jbDrehen = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/drehen.png")));
+        m_jbDrehen = new JButton(ThemeManager.getIcon(HOIconName.TURN));
         m_jbDrehen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_SpielerAnalyse_drehen"));
         m_jbDrehen.setPreferredSize(new Dimension(24, 24));
         m_jbDrehen.addActionListener(this);

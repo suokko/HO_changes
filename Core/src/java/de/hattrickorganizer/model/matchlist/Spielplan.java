@@ -18,7 +18,7 @@ import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
 import de.hattrickorganizer.model.lineup.TabellenVerlaufEintrag;
 import de.hattrickorganizer.model.lineup.Tabellenverlauf;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -174,7 +174,7 @@ public class Spielplan implements plugins.ISpielplan {
         }
 
         aSpiele = new Paarung[spiele.size()];
-        MyHelper.copyVector2Array(spiele, aSpiele);
+        Helper.copyVector2Array(spiele, aSpiele);
         java.util.Arrays.sort(aSpiele);
 
         return aSpiele;

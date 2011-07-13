@@ -1,6 +1,8 @@
 // %106548303:de.hattrickorganizer.gui.login%
 package de.hattrickorganizer.gui.login;
 
+import gui.HOColorName;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -52,7 +54,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         final JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString("BitteWarten"),
                                         SwingConstants.CENTER);
         label.setFont(label.getFont().deriveFont(java.awt.Font.BOLD, 24f));
-        label.setForeground(ThemeManager.getColor("ho.label.onGreen.foreground"));
+        label.setForeground(ThemeManager.getColor(HOColorName.LABEL_ONGREEN_FG));
         constraints.gridx = 0;
         constraints.gridy = 0;
         layout.setConstraints(label, constraints);

@@ -1,6 +1,8 @@
 // %2709500570:de.hattrickorganizer.tools.updater%
 package de.hattrickorganizer.tools.updater;
 
+import gui.HOColorName;
+
 import java.awt.Component;
 
 import javax.swing.JButton;
@@ -47,7 +49,7 @@ public final class UpdaterCellRenderer implements TableCellRenderer {
 			JButton b = (JButton) value;
 			b.setBorderPainted(false);
 			if (color) {
-				b.setForeground(ThemeManager.getColor("ho.label.error.foreground"));
+				b.setForeground(ThemeManager.getColor(HOColorName.LABEL_ERROR_FG));
 			}
 			int labelHeight = 20; // fix table height problems with non-classic l&f
 			int tableRowHeight = table.getRowHeight(row);
@@ -65,7 +67,7 @@ public final class UpdaterCellRenderer implements TableCellRenderer {
 		}
 
 		if (color) {
-			label.setForeground(ThemeManager.getColor("ho.label.error.foreground"));
+			label.setForeground(ThemeManager.getColor(HOColorName.LABEL_ERROR_FG));
 		}
 		return label;
 	}

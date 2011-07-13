@@ -8,6 +8,7 @@ package plugins;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -468,7 +469,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public java.awt.image.BufferedImage loadImage(String datei);
+    public Image loadImage(String datei);
 
     /**
      * Returns an Image with transparent pixels, where color-pixels are found in im

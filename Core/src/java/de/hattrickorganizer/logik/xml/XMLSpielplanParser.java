@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 import de.hattrickorganizer.model.matchlist.Paarung;
 import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
 
@@ -154,7 +154,7 @@ public class XMLSpielplanParser {
             ele = (Element) root.getElementsByTagName("Season").item(0);
             plan.setSaison(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-            plan.setFetchDate(MyHelper.parseDate(ele.getFirstChild().getNodeValue()));
+            plan.setFetchDate(Helper.parseDate(ele.getFirstChild().getNodeValue()));
 
             //Einträge adden
             list = root.getElementsByTagName("Match");

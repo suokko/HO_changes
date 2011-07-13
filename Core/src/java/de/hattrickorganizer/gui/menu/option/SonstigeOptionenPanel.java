@@ -231,19 +231,6 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		m_jcbNachkomma.addItemListener(this);
 		add(m_jcbNachkomma);
 
-		/*
-		 * m_jchEinzelnePositionen = new
-		 * JCheckBox(HOVerwaltung.instance().getLanguageString
-		 * ("EinzelneTabellenPositionen"));
-		 * m_jchEinzelnePositionen.setToolTipText
-		 * (HOVerwaltung.instance().getLanguageString
-		 * ("tt_Optionen_EinzelneTabellenPositionen"));
-		 * m_jchEinzelnePositionen.setOpaque(false);
-		 * m_jchEinzelnePositionen.setSelected
-		 * (gui.UserParameter.temp().einzelnePositionenAnzeigen);
-		 * m_jchEinzelnePositionen.addItemListener(this);
-		 * add(m_jchEinzelnePositionen);
-		 */
 		m_jchZahlenBewertung = new JCheckBox(HOVerwaltung.instance().getLanguageString("SkillZahlen") + " : "
 				+ HOVerwaltung.instance().getLanguageString("passabel") + " (6)");
 		m_jchZahlenBewertung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_SkillZahlen"));

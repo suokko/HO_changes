@@ -5,6 +5,8 @@
  */
 package de.hattrickorganizer.tools.updater;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.File;
@@ -12,7 +14,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -22,8 +23,8 @@ import org.w3c.dom.Document;
 import plugins.IOfficialPlugin;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.ZipHelper;
 
@@ -283,13 +284,7 @@ final class RefreshDialog extends UpdaterDialog {
      * Get the info button for the plugin.
      */
 	private JButton getButton(boolean isInfo, boolean isEnabled, HPPluginInfo pluggi) {
-		String image = "gui/bilder/empty.gif";
-
-		if (isInfo) {
-			image = "gui/bilder/info.gif";
-		}
-
-		JButton tmp = new JButton(new ImageIcon(Helper.loadImage(image)));
+		JButton tmp = new JButton(ThemeManager.getIcon(isInfo?HOIconName.INFO:HOIconName.EMPTY));
 
 		if (isInfo) {
 			String name = pluggi.getName();

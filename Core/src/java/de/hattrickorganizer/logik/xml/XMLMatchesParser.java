@@ -16,7 +16,7 @@ import plugins.IMatchKurzInfo;
 
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
 
@@ -174,7 +174,7 @@ public class XMLMatchesParser {
 
             //liste in Array kopieren
             matches = new MatchKurzInfo[liste.size()];
-            MyHelper.copyVector2Array(liste, matches);
+            Helper.copyVector2Array(liste, matches);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLMatchesParser.createMatches Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);

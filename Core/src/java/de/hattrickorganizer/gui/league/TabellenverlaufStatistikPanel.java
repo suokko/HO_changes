@@ -1,6 +1,8 @@
 // %3066887473:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
+import gui.HOColorName;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,17 +26,17 @@ final class TabellenverlaufStatistikPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private final Color[] COLOR4LINES = {
-    			ThemeManager.getColor("panel.leaguehistory.line1.foreground"), // Color.green
-    			ThemeManager.getColor("panel.leaguehistory.line2.foreground"), // Color.cyan
-    			ThemeManager.getColor("panel.leaguehistory.line3.foreground"), // Color.gray
-    			ThemeManager.getColor("panel.leaguehistory.line4.foreground"), // Color.black
-    			ThemeManager.getColor("panel.leaguehistory.line5.foreground"), // Color.orange
-    			ThemeManager.getColor("panel.leaguehistory.line6.foreground"), // Color.PINK
-    			ThemeManager.getColor("panel.leaguehistory.line7.foreground"), // Color.red
-    			ThemeManager.getColor("panel.leaguehistory.line8.foreground") // Color.MAGENTA
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE1_FG), // Color.green
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE2_FG), // Color.cyan
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE3_FG), // Color.gray
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE4_FG), // Color.black
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE5_FG), // Color.orange
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE6_FG), // Color.PINK
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE7_FG), // Color.red
+    			ThemeManager.getColor(HOColorName.LEAGUEHISTORY_LINE8_FG) // Color.MAGENTA
                                         };
     
-    private Color STANDARD_FOREGROUND = ThemeManager.getColor("table.league.foreground");
+    private Color STANDARD_FOREGROUND = ThemeManager.getColor(HOColorName.LEAGUE_FG);
     private plugins.ITabellenVerlaufEintrag[] m_clVerlaufeintraege;
 
 
@@ -59,7 +61,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Hintergrund
-        g2d.setColor(ThemeManager.getColor("table.league.background"));//Color.white);
+        g2d.setColor(ThemeManager.getColor(HOColorName.LEAGUE_BG));//Color.white);
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         if ((m_clVerlaufeintraege != null)
@@ -78,7 +80,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
             final Font normalFont = new Font("sansserif", Font.PLAIN, fontsize);
 
             //Koordinatenkreuz
-            g2d.setColor(ThemeManager.getColor("panel.leaguehistory.cross.foreground"));
+            g2d.setColor(ThemeManager.getColor(HOColorName.LEAGUEHISTORY_CROSS_FG));
 
             //Vertikal
             g2d.drawLine(getWidth() - VEREINSNAMENBREITE, 0, getWidth() - VEREINSNAMENBREITE,
@@ -92,7 +94,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
                          (getHeight() / anzahlPlaetze) + 1);
 
             //Hilfslinien
-            g2d.setColor(ThemeManager.getColor("panel.leaguehistory.grid.foreground"));
+            g2d.setColor(ThemeManager.getColor(HOColorName.LEAGUEHISTORY_GRID_FG));
 
             //Horizontal
             for (int i = 1; i < anzahlPlaetze; i++) {
@@ -109,7 +111,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
             for (int i = 0; i < m_clVerlaufeintraege.length; i++) {
                 //Platzierung
                 if (m_clVerlaufeintraege[i].getTeamId() == aktuelleTeamId) {
-                    g2d.setColor(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+                    g2d.setColor(ThemeManager.getColor(HOColorName.TEAM_FG));
                 } else if (i < COLOR4LINES.length) {
                     g2d.setColor(COLOR4LINES[i]);
                 } else {
@@ -125,7 +127,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
 
                 //Eigenes Team blau machen
                 if (m_clVerlaufeintraege[i].getTeamId() == aktuelleTeamId) {
-                    g2d.setColor(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+                    g2d.setColor(ThemeManager.getColor(HOColorName.TEAM_FG));
                 } else {
                     g2d.setColor(STANDARD_FOREGROUND);
                 }
@@ -151,7 +153,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
                 final int[] platzierungen = m_clVerlaufeintraege[i].getPlatzierungen();
 
                 if (m_clVerlaufeintraege[i].getTeamId() == aktuelleTeamId) {
-                    g2d.setColor(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+                    g2d.setColor(ThemeManager.getColor(HOColorName.TEAM_FG));
                 } else if (i < COLOR4LINES.length) {
                     g2d.setColor(COLOR4LINES[i]);
                 } else {

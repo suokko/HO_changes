@@ -10,35 +10,23 @@ import java.util.Vector;
 
 import de.hattrickorganizer.gui.model.ImageSequenzItem;
 import de.hattrickorganizer.gui.model.TrainerSequenz;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 
 
-/**
- * TrainerLibrary jetzt komplett static!
- *
- * @author Volker Fischer
- * @version 0.4b 27.10.02
- */
+
 public class TrainerLibrary {
-    //~ Static fields/initializers -----------------------------------------------------------------
 
     private static Component m_clComponent = new de.hattrickorganizer.gui.templates.ImagePanel();
     private static MediaTracker m_clTracker;
 
-    /** TODO Missing Parameter Documentation */
     public static final AlphaComposite DEFAULTALPHA = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
                                                                                  1.0f);
 
-    //public static final Color          MINTRANSPARENTCOLOR  =   new Color( 90, 15, 85 );
-
-    /** TODO Missing Parameter Documentation */
     public static final Color MINTRANSPARENTCOLOR = new Color(140, 15, 85);
 
-    /** TODO Missing Parameter Documentation */
     public static final Color MAXTRANSPARENTCOLOR = new Color(255, 100, 160);
 
-    /** TODO Missing Parameter Documentation */
-    public static boolean INITIALISIERT;
+     public static boolean INITIALISIERT;
 
     //-----------Grafiken-Anfang----------------------------------------------------	
     //--Anfang Trainer--
@@ -63,35 +51,15 @@ public class TrainerLibrary {
 
     /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer1_Frustiert;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer1_Frustiert2;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer1_Erleichtert;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer1_Erleichtert2;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer1_Stolz;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer2_Langeweile;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer2_Gespannt;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer2_Erfreut;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer2_Erfreut2;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer2_Traurig;
-
-    /** TODO Missing Parameter Documentation */
     public static transient TrainerSequenz Trainer2_Veraergert;
 
     /** TODO Missing Parameter Documentation */
@@ -690,7 +658,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Erfreut() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_erfr_1 = cache(de.hattrickorganizer.tools.Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_1.png"),
+        Trainer1_erfr_1 = cache(de.hattrickorganizer.gui.theme.ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_1.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -715,7 +683,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Erfreut2() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_erfr_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_2.png"),
+        Trainer1_erfr_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_2.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -728,7 +696,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_erfr_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_3.png"),
+        Trainer1_erfr_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_3.png"),
 	                                                       MINTRANSPARENTCOLOR
 	                                                       .getRed(),
 	                                                       MINTRANSPARENTCOLOR
@@ -741,7 +709,7 @@ public class TrainerLibrary {
 	                                                       .getGreen(),
 	                                                       MAXTRANSPARENTCOLOR
 	                                                       .getBlue()));
-        Trainer1_erfr_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_4.png"),
+        Trainer1_erfr_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erfr_4.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -770,7 +738,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Erleichtert() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_erleich_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_1.png"),
+        Trainer1_erleich_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_1.png"),
                                                               MINTRANSPARENTCOLOR
                                                               .getRed(),
                                                               MINTRANSPARENTCOLOR
@@ -783,7 +751,7 @@ public class TrainerLibrary {
                                                               .getGreen(),
                                                               MAXTRANSPARENTCOLOR
                                                               .getBlue()));
-        Trainer1_erleich_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_2.png"),
+        Trainer1_erleich_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_2.png"),
                                                               MINTRANSPARENTCOLOR
                                                               .getRed(),
                                                               MINTRANSPARENTCOLOR
@@ -809,7 +777,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Erleichtert2() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_erleich_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_3.png"),
+        Trainer1_erleich_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_3.png"),
                                                               MINTRANSPARENTCOLOR
                                                               .getRed(),
                                                               MINTRANSPARENTCOLOR
@@ -822,7 +790,7 @@ public class TrainerLibrary {
                                                               .getGreen(),
                                                               MAXTRANSPARENTCOLOR
                                                               .getBlue()));
-        Trainer1_erleich_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_4.png"),
+        Trainer1_erleich_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/erleich_4.png"),
                                                               MINTRANSPARENTCOLOR
                                                               .getRed(),
                                                               MINTRANSPARENTCOLOR
@@ -848,7 +816,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Frustriert() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_frust_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/frust_1.png"),
+        Trainer1_frust_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/frust_1.png"),
                                                             MINTRANSPARENTCOLOR
                                                             .getRed(),
                                                             MINTRANSPARENTCOLOR
@@ -874,7 +842,7 @@ public class TrainerLibrary {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
         //Trainer1_frust1 schon in loadTrainer1_Frustiert geladen
-        Trainer1_frust_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/frust_2.png"),
+        Trainer1_frust_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/frust_2.png"),
                                                             MINTRANSPARENTCOLOR
                                                             .getRed(),
                                                             MINTRANSPARENTCOLOR
@@ -900,7 +868,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Gespannt() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_gesp_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_1.png"),
+        Trainer1_gesp_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_1.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -913,7 +881,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_gesp_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_2.png"),
+        Trainer1_gesp_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_2.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -926,7 +894,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_gesp_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_3.png"),
+        Trainer1_gesp_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_3.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -939,7 +907,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_gesp_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_4.png"),
+        Trainer1_gesp_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_4.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -952,7 +920,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_gesp_5 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_5.png"),
+        Trainer1_gesp_5 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_5.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -965,7 +933,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_gesp_6 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_6.png"),
+        Trainer1_gesp_6 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_6.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -978,7 +946,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_gesp_7 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_7.png"),
+        Trainer1_gesp_7 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gesp_7.png"),
 	                                                       MINTRANSPARENTCOLOR
 	                                                       .getRed(),
 	                                                       MINTRANSPARENTCOLOR
@@ -1033,7 +1001,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Langweile() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_gelangw_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_1.png"),
+        Trainer1_gelangw_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_1.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1046,7 +1014,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer1_gelangw_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_2.png"),
+        Trainer1_gelangw_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_2.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1059,7 +1027,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer1_gelangw_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_3.png"),
+        Trainer1_gelangw_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_3.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1072,7 +1040,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer1_gelangw_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_4.png"),
+        Trainer1_gelangw_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_4.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1085,7 +1053,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer1_gelangw_5 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_5.png"),
+        Trainer1_gelangw_5 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_5.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1098,7 +1066,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer1_gelangw_6 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_6.png"),
+        Trainer1_gelangw_6 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_6.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1111,7 +1079,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer1_gelangw_7 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_7.png"),
+        Trainer1_gelangw_7 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/gelangw_7.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1170,7 +1138,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Stolz() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_stolz_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/stolz_1.png"),
+        Trainer1_stolz_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/stolz_1.png"),
                                                             MINTRANSPARENTCOLOR
                                                             .getRed(),
                                                             MINTRANSPARENTCOLOR
@@ -1195,7 +1163,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Traurig() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_trau_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_1.png"),
+        Trainer1_trau_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_1.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -1208,7 +1176,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_trau_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_2.png"),
+        Trainer1_trau_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_2.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -1221,7 +1189,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_trau_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_3.png"),
+        Trainer1_trau_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_3.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -1234,7 +1202,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_trau_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_4.png"),
+        Trainer1_trau_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_4.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -1247,7 +1215,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_trau_5 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_5.png"),
+        Trainer1_trau_5 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_5.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -1260,7 +1228,7 @@ public class TrainerLibrary {
                                                            .getGreen(),
                                                            MAXTRANSPARENTCOLOR
                                                            .getBlue()));
-        Trainer1_trau_6 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_6.png"),
+        Trainer1_trau_6 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/trau_6.png"),
                                                            MINTRANSPARENTCOLOR
                                                            .getRed(),
                                                            MINTRANSPARENTCOLOR
@@ -1290,7 +1258,7 @@ public class TrainerLibrary {
     private static void loadTrainer1_Veraergert() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer1_veraer_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/veraer_1.png"),
+        Trainer1_veraer_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/veraer_1.png"),
 		                                                     MINTRANSPARENTCOLOR
 		                                                     .getRed(),
 		                                                     MINTRANSPARENTCOLOR
@@ -1303,7 +1271,7 @@ public class TrainerLibrary {
 		                                                     .getGreen(),
 		                                                     MAXTRANSPARENTCOLOR
 		                                                     .getBlue()));
-        Trainer1_veraer_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/veraer_2.png"),
+        Trainer1_veraer_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/veraer_2.png"),
 	                                                         MINTRANSPARENTCOLOR
 	                                                         .getRed(),
 	                                                         MINTRANSPARENTCOLOR
@@ -1316,7 +1284,7 @@ public class TrainerLibrary {
 	                                                         .getGreen(),
 	                                                         MAXTRANSPARENTCOLOR
 	                                                         .getBlue()));
-        Trainer1_veraer_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/horst/veraer_3.png"),
+        Trainer1_veraer_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/horst/veraer_3.png"),
                                                              MINTRANSPARENTCOLOR
                                                              .getRed(),
                                                              MINTRANSPARENTCOLOR
@@ -1352,7 +1320,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Erfreut() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_erfr_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_1.png"),
+        Trainer2_erfr_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_1.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1377,7 +1345,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Erfreut2() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_erfr_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_2.png"),
+        Trainer2_erfr_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_2.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1390,7 +1358,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_erfr_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_3.png"),
+        Trainer2_erfr_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_3.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1403,7 +1371,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_erfr_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_4.png"),
+        Trainer2_erfr_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erfr_4.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1432,7 +1400,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Erleichtert() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_erleich_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_1.png"),
+        Trainer2_erleich_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_1.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1445,7 +1413,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_erleich_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_2.png"),
+        Trainer2_erleich_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_2.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1471,7 +1439,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Erleichtert2() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_erleich_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_3.png"),
+        Trainer2_erleich_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_3.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1484,7 +1452,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_erleich_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_4.png"),
+        Trainer2_erleich_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/erleich_4.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1510,7 +1478,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Frustriert() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_frust_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/frust_1.png"),
+        Trainer2_frust_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/frust_1.png"),
                                                                                         MINTRANSPARENTCOLOR
                                                                                         .getRed(),
                                                                                         MINTRANSPARENTCOLOR
@@ -1536,7 +1504,7 @@ public class TrainerLibrary {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
         //Trainer2_frust1 schon in loadTrainer1_Frustiert geladen
-        Trainer2_frust_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/frust_2.png"),
+        Trainer2_frust_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/frust_2.png"),
                                                                                         MINTRANSPARENTCOLOR
                                                                                         .getRed(),
                                                                                         MINTRANSPARENTCOLOR
@@ -1562,7 +1530,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Gespannt() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_gesp_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_1.png"),
+        Trainer2_gesp_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_1.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1575,7 +1543,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_gesp_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_2.png"),
+        Trainer2_gesp_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_2.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1588,7 +1556,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_gesp_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_3.png"),
+        Trainer2_gesp_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_3.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1601,7 +1569,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_gesp_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_4.png"),
+        Trainer2_gesp_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_4.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1614,7 +1582,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_gesp_5 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_5.png"),
+        Trainer2_gesp_5 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_5.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1627,7 +1595,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_gesp_6 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_6.png"),
+        Trainer2_gesp_6 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_6.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1640,7 +1608,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_gesp_7 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_7.png"),
+        Trainer2_gesp_7 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gesp_7.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1695,7 +1663,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Langweile() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_gelangw_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_1.png"),
+        Trainer2_gelangw_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_1.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1708,7 +1676,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_gelangw_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_2.png"),
+        Trainer2_gelangw_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_2.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1721,7 +1689,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_gelangw_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_3.png"),
+        Trainer2_gelangw_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_3.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1734,7 +1702,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_gelangw_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_4.png"),
+        Trainer2_gelangw_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_4.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1747,7 +1715,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_gelangw_5 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_5.png"),
+        Trainer2_gelangw_5 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_5.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1760,7 +1728,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_gelangw_6 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_6.png"),
+        Trainer2_gelangw_6 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_6.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1773,7 +1741,7 @@ public class TrainerLibrary {
                                                                                           .getGreen(),
                                                                                           MAXTRANSPARENTCOLOR
                                                                                           .getBlue()));
-        Trainer2_gelangw_7 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_7.png"),
+        Trainer2_gelangw_7 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/gelangw_7.png"),
                                                                                           MINTRANSPARENTCOLOR
                                                                                           .getRed(),
                                                                                           MINTRANSPARENTCOLOR
@@ -1832,7 +1800,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Stolz() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_stolz_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/stolz_1.png"),
+        Trainer2_stolz_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/stolz_1.png"),
                                                                                         MINTRANSPARENTCOLOR
                                                                                         .getRed(),
                                                                                         MINTRANSPARENTCOLOR
@@ -1857,7 +1825,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Traurig() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_trau_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_1.png"),
+        Trainer2_trau_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_1.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1870,7 +1838,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_trau_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_2.png"),
+        Trainer2_trau_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_2.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1883,7 +1851,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_trau_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_3.png"),
+        Trainer2_trau_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_3.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1896,7 +1864,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_trau_4 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_4.png"),
+        Trainer2_trau_4 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_4.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1909,7 +1877,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_trau_5 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_5.png"),
+        Trainer2_trau_5 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_5.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1922,7 +1890,7 @@ public class TrainerLibrary {
                                                                                        .getGreen(),
                                                                                        MAXTRANSPARENTCOLOR
                                                                                        .getBlue()));
-        Trainer2_trau_6 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_6.png"),
+        Trainer2_trau_6 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/trau_6.png"),
                                                                                        MINTRANSPARENTCOLOR
                                                                                        .getRed(),
                                                                                        MINTRANSPARENTCOLOR
@@ -1952,7 +1920,7 @@ public class TrainerLibrary {
     private static void loadTrainer2_Veraergert() {
         final Vector<ImageSequenzItem> sequenzTemp = new Vector<ImageSequenzItem>();
 
-        Trainer2_veraer_1 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/veraer_1.png"),
+        Trainer2_veraer_1 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/veraer_1.png"),
                                                                                          MINTRANSPARENTCOLOR
                                                                                          .getRed(),
                                                                                          MINTRANSPARENTCOLOR
@@ -1965,7 +1933,7 @@ public class TrainerLibrary {
                                                                                          .getGreen(),
                                                                                          MAXTRANSPARENTCOLOR
                                                                                          .getBlue()));
-        Trainer2_veraer_2 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/veraer_2.png"),
+        Trainer2_veraer_2 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/veraer_2.png"),
                                                                                          MINTRANSPARENTCOLOR
                                                                                          .getRed(),
                                                                                          MINTRANSPARENTCOLOR
@@ -1978,7 +1946,7 @@ public class TrainerLibrary {
                                                                                          .getGreen(),
                                                                                          MAXTRANSPARENTCOLOR
                                                                                          .getBlue()));
-        Trainer2_veraer_3 = cache(Helper.makeColorTransparent(loadImage("gui/bilder/trainer/otto/veraer_3.png"),
+        Trainer2_veraer_3 = cache(ImageUtilities.makeColorTransparent(loadImage("gui/bilder/trainer/otto/veraer_3.png"),
                                                                                          MINTRANSPARENTCOLOR
                                                                                          .getRed(),
                                                                                          MINTRANSPARENTCOLOR

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -76,7 +77,7 @@ public class UserPanel extends ImagePanel implements ActionListener {
     			for (int i = 0; i < table.getRowCount(); i++) {
     				User user = users.get(i);
     				
-    				if(Helper.isAlpha(table.getValueAt(i,0).toString()))
+    				if(Pattern.matches("\\w*", table.getValueAt(i,0).toString()))
     						user.setName(table.getValueAt(i,0).toString());
     				else{
     					JOptionPane.showMessageDialog(getTopLevelAncestor(),table.getValueAt(i,0)+" is incorrect!");

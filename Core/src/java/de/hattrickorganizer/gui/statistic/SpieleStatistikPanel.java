@@ -1,6 +1,8 @@
 // %119582289:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
+import gui.HOColorName;
+import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
@@ -16,7 +18,6 @@ import java.awt.event.ItemListener;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -54,17 +55,17 @@ public class SpieleStatistikPanel extends ImagePanel
 
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	private Color ratingColor 			= ThemeManager.getColor("ho.statistics.rating2");
-    private Color midfieldColor 		= ThemeManager.getColor("ho.shirt.midfield");
-    private Color rightWingbackColor 	= ThemeManager.getColor("ho.shirt.wingback").darker();
-    private Color centralDefenceColor 	= ThemeManager.getColor("ho.shirt.centraldefence");
-    private Color leftWingbackColor 	= ThemeManager.getColor("ho.shirt.wingback").brighter();
-    private Color rightForwardColor 	= ThemeManager.getColor("ho.shirt.wing").darker();
-    private Color forwardColor 			= ThemeManager.getColor("ho.shirt.forward");
-    private Color leftForwardColor 		= ThemeManager.getColor("ho.shirt.wing").brighter();
-    private Color totalColor 			= ThemeManager.getColor("ho.statistics.total");
-    private Color moodColor 			= ThemeManager.getColor("ho.statistics.mood"); //Color.PINK;
-    private Color confidenceColor 		= ThemeManager.getColor("ho.statistics.confidence"); // Color.CYAN;
+	private Color ratingColor 			= ThemeManager.getColor(HOColorName.STAT_RATING2);
+    private Color midfieldColor 		= ThemeManager.getColor(HOColorName.SHIRT_MIDFIELD);
+    private Color rightWingbackColor 	= ThemeManager.getColor(HOColorName.SHIRT_WINGBACK).darker();
+    private Color centralDefenceColor 	= ThemeManager.getColor(HOColorName.SHIRT_CENTRALDEFENCE);
+    private Color leftWingbackColor 	= ThemeManager.getColor(HOColorName.SHIRT_WINGBACK).brighter();
+    private Color rightForwardColor 	= ThemeManager.getColor(HOColorName.SHIRT_WING).darker();
+    private Color forwardColor 			= ThemeManager.getColor(HOColorName.SHIRT_FORWARD);
+    private Color leftForwardColor 		= ThemeManager.getColor(HOColorName.SHIRT_WING).brighter();
+    private Color totalColor 			= ThemeManager.getColor(HOColorName.STAT_TOTAL);
+    private Color moodColor 			= ThemeManager.getColor(HOColorName.STAT_MOOD); //Color.PINK;
+    private Color confidenceColor 		= ThemeManager.getColor(HOColorName.STAT_CONFIDENCE); // Color.CYAN;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -100,8 +101,7 @@ public class SpieleStatistikPanel extends ImagePanel
 	private ImageCheckbox m_jchStimmung = new ImageCheckbox(HOVerwaltung
 			.instance().getLanguageString("Stimmung"),moodColor,
 			UserParameter.instance().statistikSpieleStimmung);
-	private JButton m_jbDrucken = new JButton(new ImageIcon(Helper
-			.loadImage("gui/bilder/Drucken.png")));
+	private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 	private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance()
 			.getLanguageString("Uebernehmen"));
 	private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance()
@@ -150,21 +150,10 @@ public class SpieleStatistikPanel extends ImagePanel
     // ~ Methods
 	// ------------------------------------------------------------------------------------
 
-    /**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param init
-	 *            TODO Missing Method Parameter Documentation
-	 */
     public final void setInitialisiert(boolean init) {
         m_bInitialisiert = init;
     }
 
-    /**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
     public final boolean isInitialisiert() {
         return m_bInitialisiert;
     }
@@ -237,37 +226,19 @@ public class SpieleStatistikPanel extends ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void doInitialisieren() {
         initStatistik();
         m_bInitialisiert = true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
     public void focusGained(java.awt.event.FocusEvent focusEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param focusEvent TODO Missing Method Parameter Documentation
-     */
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
         Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             initStatistik();
@@ -281,15 +252,9 @@ public class SpieleStatistikPanel extends ImagePanel
         //initStatistik();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void refresh() {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         JLabel label;
 
@@ -488,7 +453,7 @@ public class SpieleStatistikPanel extends ImagePanel
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
         layout.setConstraints(panel, constraints);
         add(panel);
     }
@@ -505,8 +470,7 @@ public class SpieleStatistikPanel extends ImagePanel
             }
 
             UserParameter.instance().statistikSpielerFinanzenAnzahlHRF = anzahlHRF;
-            UserParameter.instance().statistikSpieleFilter = ((de.hattrickorganizer.gui.model.CBItem) m_jcbSpieleFilter
-                                                                  .getSelectedItem()).getId();
+            UserParameter.instance().statistikSpieleFilter = ((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId();
 
             final java.text.NumberFormat format = Helper.DEFAULTDEZIMALFORMAT;
             final java.text.NumberFormat format2 = Helper.INTEGERFORMAT;
@@ -517,20 +481,17 @@ public class SpieleStatistikPanel extends ImagePanel
 					.getMatchesKurzInfo(
 							HOVerwaltung.instance().getModel().getBasics()
 									.getTeamId(),
-							((de.hattrickorganizer.gui.model.CBItem) m_jcbSpieleFilter
-									.getSelectedItem()).getId(), true);
+							((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId(), true);
 
 			final int anzahl = Math.min(matchkurzinfos.length, anzahlHRF);
-			final int teamid = HOVerwaltung.instance().getModel().getBasics()
-					.getTeamId();
+			final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
 			final double[][] statistikWerte = new double[12][anzahl];
 
 			// Infos zusammenstellen
 			for (int i = 0; i < anzahl; i++) {
 				final Matchdetails details = DBZugriff.instance()
-						.getMatchDetails(
-								matchkurzinfos[matchkurzinfos.length - i - 1]
+						.getMatchDetails(matchkurzinfos[matchkurzinfos.length - i - 1]
 										.getMatchID());
 
                 int bewertungwert = 0;

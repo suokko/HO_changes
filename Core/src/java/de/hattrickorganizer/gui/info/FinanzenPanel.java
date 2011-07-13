@@ -1,6 +1,8 @@
 // %1645621351:de.hattrickorganizer.gui.info%
 package de.hattrickorganizer.gui.info;
 
+import gui.HOColorName;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -101,7 +103,7 @@ final class FinanzenPanel extends JPanel {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(4, 4, 4, 4);
 
-        setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
         if (m_bAktuelleFinanzen) {
             setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("DieseWoche")));

@@ -1,6 +1,9 @@
 // %155607735:de.hattrickorganizer.gui.league%
 package de.hattrickorganizer.gui.league;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -32,10 +35,10 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matchlist.Spielplan;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -49,16 +52,14 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
 	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     private static Spielplan AKTUELLER_SPIELPLAN;
 
-    /** TODO Missing Parameter Documentation */
     private static String MARKIERTER_VEREIN;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbLoeschen = new JButton(new ImageIcon(Helper.getImageDurchgestrichen(new BufferedImage(20, 20,  java.awt.image.BufferedImage.TYPE_INT_ARGB),
+    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+    private JButton m_jbLoeschen = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(20, 20,  java.awt.image.BufferedImage.TYPE_INT_ARGB),
                                                                                       Color.red,new Color(200,0, 0))));
     private JComboBox m_jcbSaison;
     private LigaTabelle m_jpLigaTabelle;
@@ -269,7 +270,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setSize(25, 25);
         m_jbLoeschen.setLocation(220, 5);
-        m_jbLoeschen.setBackground(ThemeManager.getColor("ho.button.background"));
+        m_jbLoeschen.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
         cbpanel.add(m_jbLoeschen);
 
         m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonDrucken"));

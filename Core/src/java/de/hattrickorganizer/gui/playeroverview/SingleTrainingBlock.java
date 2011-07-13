@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
 
 /**
  * Represents a single training block with start and end date
@@ -33,7 +33,7 @@ final class SingleTrainingBlock extends JPanel {
 	private JDateChooser m_jdcBlockEnd;
 	private SpielerTrainingBlockDialog parent;
 	
-    private JButton m_jbRemove = new JButton(new ImageIcon(Helper.getImageDurchgestrichen(new BufferedImage(
+    private JButton m_jbRemove = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(
     													15, 15, BufferedImage.TYPE_INT_ARGB),
     													Color.RED, new Color(200, 0, 0))));
     

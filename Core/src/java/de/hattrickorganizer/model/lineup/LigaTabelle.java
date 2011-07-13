@@ -6,7 +6,7 @@
  */
 package de.hattrickorganizer.model.lineup;
 
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 import plugins.ILigaTabelle;
 import plugins.ILigaTabellenEintrag;
@@ -243,7 +243,7 @@ public class LigaTabelle implements ILigaTabelle {
      */
     public final void sort() {
         LigaTabellenEintrag[] list = new LigaTabellenEintrag[m_vEintraege.size()];
-        MyHelper.copyVector2Array(m_vEintraege, list);
+        Helper.copyVector2Array(m_vEintraege, list);
 
         java.util.Arrays.sort(list);
 
@@ -256,7 +256,8 @@ public class LigaTabelle implements ILigaTabelle {
         m_vEintraege.clear();
 
         //zurückkopieren
-        MyHelper.copyArray2Vector(list, m_vEintraege);
-        list = null;
+        for (int j = 0; j < list.length; j++) {
+        	m_vEintraege.addElement(list[j]);
+		}
     }
 }

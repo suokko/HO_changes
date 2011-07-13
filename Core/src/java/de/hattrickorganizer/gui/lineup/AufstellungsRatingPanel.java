@@ -6,6 +6,9 @@
  */
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +20,6 @@ import java.awt.Insets;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -320,7 +322,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         constraints.weighty = 0.0;
         constraints.insets = new Insets(1, 1, 1, 1);
 
-        setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
         setLayout(layout);
 
         JComponent tempcomponent;
@@ -761,7 +763,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         temppanel = new JPanel(new BorderLayout());
         temppanel.setOpaque(false);
         copyButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.ToolTip"));
-        copyButton.setIcon(new ImageIcon(Helper.loadImage("gui/bilder/info.gif")));
+        copyButton.setIcon(ThemeManager.getIcon(HOIconName.INFO));
         copyButton.addActionListener(new CopyListener(this));
         copyButton.setPreferredSize(new Dimension(18, 18));
         copyButton.setMaximumSize(new Dimension(18, 18));

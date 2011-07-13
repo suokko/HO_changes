@@ -25,6 +25,7 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
@@ -240,16 +241,16 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         Helper.markierenComboBox(m_jcbStandard,
                                                             m_clSpieler.getStandards());
 
-        m_jlForm.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlKondition.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlErfahrung.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlSpielaufbau.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlFluegel.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlTorschuss.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlTorwart.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlPasspiel.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlVerteidigung.setIcon(Helper.getImageIcon4Veraenderung(0));        
-        m_jlStandard.setIcon(Helper.getImageIcon4Veraenderung(0));
+        m_jlForm.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlKondition.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlErfahrung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlSpielaufbau.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlFluegel.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlTorschuss.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlTorwart.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlPasspiel.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlVerteidigung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));        
+        m_jlStandard.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
 
         m_jcbForm.setEnabled(true);
         m_jcbKondition.setEnabled(true);
@@ -280,16 +281,16 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         tempSpieler.setStandards(((CBItem) m_jcbStandard.getSelectedItem()).getId());
         tempSpieler.setSpielaufbau(((CBItem) m_jcbSpielaufbau.getSelectedItem()).getId());
 
-        m_jlForm.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getForm()- m_clSpieler.getForm()));
-        m_jlKondition.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getKondition()- m_clSpieler.getKondition()));
-        m_jlErfahrung.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getErfahrung()- m_clSpieler.getErfahrung()));
-        m_jlSpielaufbau.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getSpielaufbau()- m_clSpieler.getSpielaufbau()));
-        m_jlFluegel.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getFluegelspiel()- m_clSpieler.getFluegelspiel()));
-        m_jlTorschuss.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getTorschuss()- m_clSpieler.getTorschuss()));
-        m_jlTorwart.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getTorwart()- m_clSpieler.getTorwart()));
-        m_jlPasspiel.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getPasspiel()- m_clSpieler.getPasspiel()));
-        m_jlVerteidigung.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getVerteidigung()- m_clSpieler.getVerteidigung()));
-        m_jlStandard.setIcon(Helper.getImageIcon4Veraenderung(tempSpieler.getStandards()- m_clSpieler.getStandards()));
+        m_jlForm.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getForm()- m_clSpieler.getForm(),true));
+        m_jlKondition.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getKondition()- m_clSpieler.getKondition(),true));
+        m_jlErfahrung.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getErfahrung()- m_clSpieler.getErfahrung(),true));
+        m_jlSpielaufbau.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getSpielaufbau()- m_clSpieler.getSpielaufbau(),true));
+        m_jlFluegel.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getFluegelspiel()- m_clSpieler.getFluegelspiel(),true));
+        m_jlTorschuss.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getTorschuss()- m_clSpieler.getTorschuss(),true));
+        m_jlTorwart.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getTorwart()- m_clSpieler.getTorwart(),true));
+        m_jlPasspiel.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getPasspiel()- m_clSpieler.getPasspiel(),true));
+        m_jlVerteidigung.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getVerteidigung()- m_clSpieler.getVerteidigung(),true));
+        m_jlStandard.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getStandards()- m_clSpieler.getStandards(),true));
 
         m_jpBestPos.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
                             + " (" + tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)
@@ -854,16 +855,16 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     private void resetCBs() {
         m_jlName.setText("");
 		jtfAge.setText("17.0");
-        m_jlForm.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlKondition.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlErfahrung.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlSpielaufbau.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlFluegel.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlTorschuss.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlTorwart.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlPasspiel.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlVerteidigung.setIcon(Helper.getImageIcon4Veraenderung(0));
-        m_jlStandard.setIcon(Helper.getImageIcon4Veraenderung(0));
+        m_jlForm.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlKondition.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlErfahrung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlSpielaufbau.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlFluegel.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlTorschuss.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlTorwart.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlPasspiel.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlVerteidigung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlStandard.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
 
         resetCB(m_jcbForm);
         resetCB(m_jcbErfahrung);

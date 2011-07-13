@@ -1,7 +1,9 @@
 package de.hattrickorganizer.gui.notepad;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
@@ -12,7 +14,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -24,7 +25,6 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 public class NotepadDialog extends JDialog implements ActionListener{
 
@@ -34,7 +34,7 @@ public class NotepadDialog extends JDialog implements ActionListener{
 	private final int dialogHeight = 320;
 	private final JTextArea textArea = new JTextArea();
 	private File file = null;
-	private final JButton cmdSave	 = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/disk.png")));
+	private final JButton cmdSave	 = new JButton(ThemeManager.getIcon(HOIconName.DISK));
 	
 	
 	public NotepadDialog(JFrame owner, String title){
@@ -53,7 +53,7 @@ public class NotepadDialog extends JDialog implements ActionListener{
 	    setSize(dialogWidth, dialogHeight);
 
 		cmdSave.setPreferredSize(new Dimension(25,25));
-		cmdSave.setBackground(ThemeManager.getColor("ho.button.background"));
+		cmdSave.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
 		cmdSave.addActionListener( this );
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(getButtonPanel(), BorderLayout.NORTH);

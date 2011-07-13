@@ -1,6 +1,9 @@
 // %1751165603:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,7 +21,6 @@ import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
-
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
@@ -73,7 +75,7 @@ class StaerkenvergleichPanel extends ImagePanel {
     StaerkenvergleichPanel(boolean print) {
         super(print);
 
-        setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
         final GridBagLayout mainlayout = new GridBagLayout();
         final GridBagConstraints mainconstraints = new GridBagConstraints();
@@ -93,8 +95,8 @@ class StaerkenvergleichPanel extends ImagePanel {
         constraints.insets = new Insets(5, 3, 2, 2);
 
         final JPanel panel = new JPanel(layout);
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
-        panel.setBackground(ThemeManager.getColor("ho.panel.background"));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
+        panel.setBackground(getBackground());
 
         //Match
         constraints.anchor = GridBagConstraints.WEST;
@@ -390,9 +392,8 @@ class StaerkenvergleichPanel extends ImagePanel {
         final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
         m_clZuschauer.setText(details.getZuschauer() + "");
-        m_clWetter.setIcon(Helper.getImageIcon4Wetter(details.getWetterId()));
-
-        m_clMatchtyp.setIcon(Helper.getImageIcon4Spieltyp(info.getMatchTyp()));
+        m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));
+        m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[info.getMatchTyp()]));
 
         String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
 
@@ -415,15 +416,15 @@ class StaerkenvergleichPanel extends ImagePanel {
         m_clGastTeamTore.setText(info.getGastTore() + " ");
 
         if (info.getHeimID() == teamid) {
-            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
-            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
+            m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
         if (info.getGastID() == teamid) {
-            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
-            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
+            m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
         if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
@@ -467,14 +468,14 @@ class StaerkenvergleichPanel extends ImagePanel {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {
-                m_clHeimTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() < info.getGastTore()) {
                 m_clHeimTeamName.setIcon(null);
-                m_clGastTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
+                m_clGastTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
             } else {
-                m_clHeimTeamName.setIcon(Helper.GREYSTARIMAGEICON);
-                m_clGastTeamName.setIcon(Helper.GREYSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
+                m_clGastTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
             }
 
             //Sterneanzahl
