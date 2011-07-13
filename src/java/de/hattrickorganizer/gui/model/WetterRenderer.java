@@ -1,6 +1,9 @@
 // %1968012293:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 
@@ -8,7 +11,6 @@ import plugins.IMatchDetails;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -19,7 +21,7 @@ public class WetterRenderer implements ListCellRenderer {
 
     /** TODO Missing Parameter Documentation */
     public ColorLabelEntry m_clEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-    												ThemeManager.getColor("tableEntry.background"),
+    												ThemeManager.getColor(HOColorName.TABLEENTRY_BG),
                                                            SwingConstants.LEFT);
 
     public javax.swing.JLabel m_jlLeer = new javax.swing.JLabel(" ");
@@ -29,24 +31,24 @@ public class WetterRenderer implements ListCellRenderer {
                                                                  boolean isSelected,
                                                                  boolean cellHasFocus) {
         if (obj instanceof CBItem && (obj != null)) {
+        	int wert = 0;
             switch (((CBItem) obj).getId()) {
                 case ISpieler.SONNIG:
-                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_SONNE));
+                    wert = IMatchDetails.WETTER_SONNE;
                     break;
-
                 case ISpieler.LEICHTBEWOELKT:
-                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_WOLKIG));
+                	wert = IMatchDetails.WETTER_WOLKIG;
                     break;
 
                 case ISpieler.BEWOELKT:
-                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_BEWOELKT));
+                	wert = IMatchDetails.WETTER_BEWOELKT;
                     break;
 
                 case ISpieler.REGEN:
-                    m_clEntry.setIcon(Helper.getImageIcon4Wetter(IMatchDetails.WETTER_REGEN));
+                	wert = IMatchDetails.WETTER_REGEN;
                     break;
             }
-
+            m_clEntry.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[wert]));
             return m_clEntry.getComponent(isSelected);
         } else {
             m_jlLeer.setOpaque(true);
@@ -54,7 +56,7 @@ public class WetterRenderer implements ListCellRenderer {
             if (isSelected) {
                 m_jlLeer.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
             } else {
-                m_jlLeer.setBackground(ThemeManager.getColor("tableEntry.background"));
+                m_jlLeer.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
             }
 
             return m_jlLeer;

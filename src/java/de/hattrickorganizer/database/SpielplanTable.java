@@ -8,7 +8,7 @@ import plugins.ISpielplan;
 
 import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 public final class SpielplanTable extends AbstractTable {
 
@@ -76,7 +76,7 @@ public final class SpielplanTable extends AbstractTable {
 		}
 
 		plaene = new Spielplan[vec.size()];
-		MyHelper.copyVector2Array(vec, plaene);
+		Helper.copyVector2Array(vec, plaene);
 
 		return plaene;
 	}

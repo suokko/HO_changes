@@ -14,7 +14,8 @@ import javax.swing.JPanel;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 public class TorLabelEntry extends TableEntry {
@@ -31,7 +32,7 @@ public class TorLabelEntry extends TableEntry {
 
     public TorLabelEntry(int tore) {
         if (BALLIMAGEICON == null) {
-            BALLIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/credits/Ball.png"),
+            BALLIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/credits/Ball.png"),
                                                                                                  Color.RED)
                                                                            .getScaledInstance(14,
                                                                                               14,

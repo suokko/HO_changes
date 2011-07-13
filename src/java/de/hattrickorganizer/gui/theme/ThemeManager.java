@@ -3,34 +3,28 @@
  */
 package de.hattrickorganizer.gui.theme;
 
+
 import java.awt.Color;
+import java.awt.Image;
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.zip.ZipFile;
 
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.backup.HOZip;
+import de.hattrickorganizer.gui.theme.ho.HOClassicSchema;
 
 
 
-/**
- * 
- * @date 2011-06-11
- * TODO update a ThemeVersion
- */
 public final class ThemeManager {
 	private final static ThemeManager MANAGER = new ThemeManager();
-	public static final BigDecimal VERSION = new BigDecimal("0.1");
 	private File themesDir = new File("themes");
 	
-	private ClassicTheme defaultTheme = new ClassicTheme();
-	private Theme currentTheme;
-	
+	HOClassicSchema 	classicSchema = new HOClassicSchema();
+	private ExtSchema 	extSchema;
+
 	private ThemeManager(){
 		initialize();
 	}
@@ -43,36 +37,15 @@ public final class ThemeManager {
 		if(!themesDir.exists()){
 			themesDir.mkdir();
 		}
-		
-		// TODO only in development phase for testing; will be removed when finsihed
-		try {
-			File themeFile = new File(themesDir,defaultTheme.getName()+".theme");
-			if(!themeFile.exists())
-				saveTheme(defaultTheme);
-			
-			setCurrentTheme(defaultTheme.getName());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-	
-	
-	public static void main(String[] args) {
-		ThemeManager.instance();
-	}
-	
+
 	public static Color getColor(String key){
-		return instance().getInstanceColor(key);
-	}
-	
-	private Color getInstanceColor(String key){
 		Color tmp = null;
-		if(currentTheme != null)
-			tmp = currentTheme.getThemeColor(key);
+		if(instance().extSchema != null)
+			tmp = instance().extSchema.getThemeColor(key);
 		
 		if(tmp == null)
-			tmp = defaultTheme.getThemeColor(key);
+			tmp = instance().classicSchema.getThemeColor(key);
 		
 		if(tmp == null)
 			tmp =  UIManager.getColor(key);
@@ -80,26 +53,33 @@ public final class ThemeManager {
 		// when nothing matches return a defaultColor
 		// if return null, maybe HO didn´t start
 		if(tmp == null)
-			tmp = defaultTheme.getDefaultColor(key);
+			tmp = instance().classicSchema.getDefaultColor(key);
 		
 		return tmp;
 	}
-	
-	public static void put(String key,Object value){
-		instance().putInstance(key, value);
+
+	public boolean isSet(String key){
+		Boolean tmp = null;
+		if(extSchema != null)
+			tmp = (Boolean)extSchema.get(key);
+		if(tmp == null)
+			tmp = (Boolean)classicSchema.get(key);
+		if(tmp == null)
+			tmp = Boolean.FALSE;
+		return tmp.booleanValue();
 	}
 	
-	private void putInstance(String key,Object value){
-		defaultTheme.put(key, value);
+	public void put(String key,Object value){
+		classicSchema.put(key, value);
 	}
 	
 	public Object get(String key){
 		Object tmp = null;
-		if(currentTheme != null)
-			tmp = currentTheme.get(key);
+		if(extSchema != null)
+			tmp = extSchema.get(key);
 		
 		if(tmp == null)
-			tmp = defaultTheme.get(key);
+			tmp = classicSchema.get(key);
 		
 		if(tmp == null)
 			tmp =  UIManager.get(key);
@@ -107,45 +87,105 @@ public final class ThemeManager {
 		return tmp;
 	}
 	
-	public void save() {
-		saveTheme(defaultTheme);
+	private ImageIcon getImageIcon(String key){
+		Object tmp = null;
+		if(extSchema != null){
+			tmp = extSchema.get(key);
+			if(tmp != null){
+				return extSchema.loadImageIcon(tmp.toString());
+			}
+		}
+		tmp = classicSchema.get(key);
+		if(tmp == null)
+			return null;
+		if(tmp instanceof ImageIcon)
+			return (ImageIcon)tmp;
+		return classicSchema.loadImageIcon(tmp.toString());
 	}
 	
-	public void saveTheme(Theme theme){
-		try {
-			HOZip zip = new HOZip(themesDir+File.separator+theme.getName()+".theme");
-			zip.createNewFile();
-			JAXBContext jc = JAXBContext.newInstance(Theme.class);
-			Marshaller m = jc.createMarshaller();
-			File tmpFile = new File(Theme.fileName);
-			m.marshal( theme.toThemeData(), tmpFile );
-			zip.addFile(tmpFile);
-			zip.closeArchive();
-		}  catch (Exception e) {
-			HOLogger.instance().log( ThemeManager.class, "Theme: " + theme.getName() + e);
+	private ImageIcon getScaledImageIcon(String key, int x, int y){
+		ImageIcon tmp = null;
+		if(extSchema != null){
+			tmp = (ImageIcon)extSchema.get(key+"("+x+","+y+")");
+			if(tmp == null){
+				tmp = getIcon(key);
+				
+				if(tmp != null){
+					tmp = new ImageIcon(tmp.getImage().getScaledInstance(x, y,Image.SCALE_SMOOTH));
+					extSchema.put(key+"("+x+","+y+")",tmp);
+				}
+			}
+			
 		}
+		
+		return tmp;
 	}
-	 
-	public Theme loadTheme(String name) throws Exception {
-		Theme theme = null;
-		File themeFile = new File(themesDir,name);
+	
+	public static ImageIcon getIcon(String key){
+		return instance().getImageIcon(key);
+	}
+	
+	public static ImageIcon getScaledIcon(String key,int x,int y){
+		return instance().getScaledImageIcon(key,x,y);
+	}
+	
+	public static ImageIcon getTransparentIcon(String key,Color color){
+		return instance().getTransparentImageIcon(key, color);
+	}
+	
+	private ImageIcon getTransparentImageIcon(String key,Color color){
+		ImageIcon tmp = null;
+		if(extSchema != null){
+			tmp = (ImageIcon)extSchema.get(key+"(T)");
+			if(tmp == null){
+				tmp = getIcon(key);
+				
+				if(tmp != null){
+					tmp = new ImageIcon(ImageUtilities.makeColorTransparent(tmp.getImage(),color));
+					extSchema.put(key+"(T)",tmp);
+				}
+			}
+		}
+		return tmp;
+	}
+
+	public static Image loadImage(String datei) {
+		return instance().classicSchema.loadImageIcon(datei).getImage();
+	}
+	
+	public ExtSchema loadSchema(String name) throws Exception {
+		ExtSchema theme = null;
+		File themeFile = new File(themesDir,name+".zip");
 		if(themeFile.exists()){
 			ZipFile zipFile = new ZipFile(themeFile);
-			JAXBContext jc = JAXBContext.newInstance(Theme.class);
+			JAXBContext jc = JAXBContext.newInstance(Schema.class);
 			Unmarshaller u = jc.createUnmarshaller();
-			ThemeData data = (ThemeData)u.unmarshal(zipFile.getInputStream(zipFile.getEntry(Theme.fileName)));
-			theme = new Theme(data);
+			ThemeData data = (ThemeData)u.unmarshal(zipFile.getInputStream(zipFile.getEntry(ExtSchema.fileName)));
+			theme = new ExtSchema(themeFile,data);
 		}
 		return theme;
 	}
 	
 	
 	public void setCurrentTheme(String name) throws Exception {
-		currentTheme = loadTheme(name);
+		if(name.equals(classicSchema.getName()))
+			return;
+		extSchema = loadSchema(name);
 	}
 	
+	
 	public String[] getAvailableThemeNames(){
-		return themesDir.list();
+		final String[] fileList = themesDir.list();
+		final String[] schemaNames = new String[fileList.length+1];
+		schemaNames[0] = classicSchema.getName();
+		for (int i = 0; i < fileList.length; i++) {
+			schemaNames[i+1] = fileList[i].split("[.]")[0];
+		}
+		return schemaNames;
 	}
-
+	
+	public void createNewSchemaFile(){
+		ExtSchema tmp = new ExtSchema();
+		tmp.save(themesDir);
+	}
 }

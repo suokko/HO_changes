@@ -7,42 +7,33 @@
 package de.hattrickorganizer.gui.birthday;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.logik.GebChecker;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
-public class GebDialog extends javax.swing.JDialog implements java.awt.event.ActionListener {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
+public class GebDialog extends JDialog implements ActionListener {
+
 	private static final long serialVersionUID = 6032212484981424415L;
 
-	/** TODO Missing Parameter Documentation */
-    de.hattrickorganizer.logik.GebChecker m_clGeb;
+    GebChecker m_clGeb;
 
-    /** TODO Missing Parameter Documentation */
     JButton m_clOK = new JButton();
 
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of GebDialog
      *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     * @param bild TODO Missing Constructuor Parameter Documentation
      */
     public GebDialog(JFrame owner, String bild) {
         super(owner, true);
@@ -54,13 +45,6 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
         this.setVisible(true);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_clOK)) {
             if (m_clGeb.getSekunden() < 5) {
@@ -82,17 +66,12 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param bild TODO Missing Method Parameter Documentation
-     */
     protected final void initComponents(String bild) {
         final JLabel label = new JLabel("", SwingConstants.CENTER);
 
-        setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel(new BorderLayout()));
+        setContentPane(new ImagePanel(new BorderLayout()));
 
-        label.setIcon(new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage(bild)));
+        label.setIcon(ThemeManager.getIcon(bild));
         getContentPane().add(label, BorderLayout.CENTER);
 
         m_clOK.setText("Fertig");
@@ -101,7 +80,7 @@ public class GebDialog extends javax.swing.JDialog implements java.awt.event.Act
 
         setSize(250, 260);
 
-        m_clGeb = new de.hattrickorganizer.logik.GebChecker();
+        m_clGeb = new GebChecker();
         m_clGeb.setDialog(this);
 
         new Thread(m_clGeb).start();

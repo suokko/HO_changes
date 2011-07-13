@@ -1,5 +1,7 @@
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOColorName;
+
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,9 +32,9 @@ public class LineupAssistantSelectorOverlay extends JPanel implements MouseListe
 	public void paintComponent(Graphics g) {
     	super.paintComponent(g);
         if (isSelected) {
-        	g.setColor(ThemeManager.getColor("selectorOverlay.selected.background"));//new Color(10, 255, 10, 40); //r,g,b,alpha
+        	g.setColor(ThemeManager.getColor(HOColorName.SEL_OVERLAY_SELECTION_BG));//new Color(10, 255, 10, 40); //r,g,b,alpha
         } else {
-        	g.setColor(ThemeManager.getColor("selectorOverlay.background"));//new Color(255, 10, 10, 40); //r,g,b,alpha
+        	g.setColor(ThemeManager.getColor(HOColorName.SEL_OVERLAY_BG));//new Color(255, 10, 10, 40); //r,g,b,alpha
         }
         g.fillRect(0,0,500,500); //x,y,width,height -big enough, and then some
     }    

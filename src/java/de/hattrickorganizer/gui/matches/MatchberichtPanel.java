@@ -1,6 +1,8 @@
 // %3087735495:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -8,17 +10,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.Helper;
 
 
 public class MatchberichtPanel extends ImagePanel implements ActionListener {
@@ -27,7 +28,7 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbMaximieren = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/MaxAufstellung.png")));
+    private JButton m_jbMaximieren = new JButton(ThemeManager.getIcon(HOIconName.MAXLINEUP));
     private MatchKurzInfo m_clKurzInfo;
     private MatchberichtEditorPanel m_clMatchbericht = new MatchberichtEditorPanel();
     private String m_sMatchtext = "";

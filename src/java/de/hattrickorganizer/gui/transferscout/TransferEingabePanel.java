@@ -1,21 +1,19 @@
 // %1128099595984:de.hattrickorganizer.gui.transferscout%
 package de.hattrickorganizer.gui.transferscout;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-//import java.awt.datatransfer.Clipboard;
-//import java.awt.datatransfer.DataFlavor;
-//import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -33,6 +31,7 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.ScoutEintrag;
@@ -78,8 +77,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private DoppelLabelEntry jpWertSturmDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpWertTor = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private JButton jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
-    private JButton jbDrucken = new JButton(new ImageIcon(de.hattrickorganizer.tools.Helper
-                                                          .loadImage("gui/bilder/Drucken.png")));
+    private JButton jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton jbEntfernen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
     private JButton jbHinzufuegen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
     private JButton jbMiniScout = new JButton(HOVerwaltung.instance().getLanguageString("ScoutMini"));

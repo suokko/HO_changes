@@ -2,6 +2,8 @@
 package de.hattrickorganizer.gui.templates;
 
 
+import gui.HOColorName;
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -12,6 +14,7 @@ import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.Helper;
 
@@ -20,29 +23,26 @@ import de.hattrickorganizer.tools.Helper;
  *
  */
 public class ColorLabelEntry extends TableEntry {
-	   private Color IMPROVEMENT = ThemeManager.getColor("tableEntry.improvement.foreground");
-	   private Color DECLINE = ThemeManager.getColor("tableEntry.decline.foreground");
-	   public static final Color FG_STANDARD = ThemeManager.getColor("tableEntry.foreground");//gui.UserParameter.instance().FG_STANDARD;
-	   public static final Color BG_STANDARD = ThemeManager.getColor("tableEntry.background");
-	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor("tableEntry.player.skill.special.background");
-	   public static final Color BG_SPIELEREINZELWERTE = ThemeManager.getColor("tableEntry.player.skill.background");//new Color(255, 255, 200);
-	   public static final Color BG_SPIELERPOSITONSWERTE = ThemeManager.getColor("tableEntry.player.position.background");//new Color(220, 220, 255);
-	   public static final Color BG_SPIELERSUBPOSITONSWERTE = ThemeManager.getColor("tableEntry.player.subposition.background");//new Color(235, 235, 255);
+	   private static Color IMPROVEMENT = ThemeManager.getColor(HOColorName.TABLEENTRY_IMPROVEMENT_FG);
+	   private static Color DECLINE = ThemeManager.getColor(HOColorName.TABLEENTRY_DECLINE_FG);
+	   public static final Color FG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_FG);//gui.UserParameter.instance().FG_STANDARD;
+	   public static final Color BG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_BG);
+	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);
+	   public static final Color BG_SPIELEREINZELWERTE = ThemeManager.getColor(HOColorName.PLAYER_SKILL_BG);//new Color(255, 255, 200);
+	   public static final Color BG_SPIELERPOSITONSWERTE = ThemeManager.getColor(HOColorName.PLAYER_POS_BG);//new Color(220, 220, 255);
+	   public static final Color BG_SPIELERSUBPOSITONSWERTE = ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG);//new Color(235, 235, 255);
 
     //~ Instance fields ----------------------------------------------------------------------------
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;
     private Color m_clFGColor = ColorLabelEntry.FG_STANDARD;
-    private Font m_clFont;
     private Icon m_clIcon;
     private JLabel m_clComponent;
     private String m_sText = "";
-    private String m_sTooltip = "";
-    private boolean isOpaque = true;
     
     //Für Compareto
     private double m_dZahl = Double.NEGATIVE_INFINITY;
     private int horizontalAlignment = SwingConstants.LEFT;
-    private int fontStyle = Font.PLAIN;
+//    private int fontStyle = Font.PLAIN;
     private int imageAligment = SwingConstants.TRAILING;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -50,18 +50,26 @@ public class ColorLabelEntry extends TableEntry {
     public ColorLabelEntry(String text){
     	m_sText = text;
         m_dZahl = Double.NEGATIVE_INFINITY;
-        isOpaque = false;
         createComponent();
+        m_clComponent.setOpaque(false);
     }
     
     /**
      * ColorLabel ohne Icon
      *
      */
-    public ColorLabelEntry(String text, Color foreground, Color background,
+    public ColorLabelEntry(String text, Color foreground, Color background, int horizontalAusrichtung) {
+       this(Double.NEGATIVE_INFINITY,text,foreground,background,horizontalAusrichtung);
+    }
+
+    /**
+     * ColorLabel nur mit Text und sortindex
+     */
+    public ColorLabelEntry(double sortindex, String text, Color foreground, Color background,
                            int horizontalAusrichtung) {
         m_sText = text;
-        m_dZahl = Double.NEGATIVE_INFINITY;
+        m_dZahl = sortindex;
+        m_clIcon = null;
         horizontalAlignment = horizontalAusrichtung;
         m_clFGColor = foreground;
         m_clBGColor = background;
@@ -81,29 +89,13 @@ public class ColorLabelEntry extends TableEntry {
         m_clBGColor = background;
         createComponent();
     }
-
-    /**
-     * ColorLabel nur mit Text und sortindex
-     */
-    public ColorLabelEntry(double sortindex, String text, Color foreground, Color background,
-                           int horizontalAusrichtung) {
-        m_sText = text;
-        m_dZahl = sortindex;
-        m_clIcon = null;
-        horizontalAlignment = horizontalAusrichtung;
-        m_clFGColor = foreground;
-        m_clBGColor = background;
-        createComponent();
-    }
-
     /**
      * ColorLabel mit Image zur Darstellung von Veränderungen
      *
      */
-    public ColorLabelEntry(int intzahl, double zahl, boolean aktuell, Color background,
-                           boolean mitText) {
+    public ColorLabelEntry(int intzahl, double zahl, boolean aktuell, Color background,boolean mitText) {
         if ((Math.abs(intzahl) != 0) || !mitText) {
-            m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell);
+            m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell);
         }
 
         horizontalAlignment = SwingConstants.RIGHT;
@@ -133,7 +125,7 @@ public class ColorLabelEntry extends TableEntry {
     public ColorLabelEntry(int changeVal, String text, double sortVal, boolean aktuell, Color background,
                            boolean mitText) {
         if ((Math.abs(changeVal) != 0) || !mitText) {
-            m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell);
+            m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell);
         }
 
         horizontalAlignment = SwingConstants.RIGHT;
@@ -212,7 +204,7 @@ public class ColorLabelEntry extends TableEntry {
 
     public final void setBGColor(Color bgcolor) {
         m_clBGColor = bgcolor;
-        updateComponent();
+        m_clComponent.setBackground(m_clBGColor);
     }
 
     @Override
@@ -220,10 +212,11 @@ public class ColorLabelEntry extends TableEntry {
         
         if (isSelected) {
             m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
+            
         } else {
             m_clComponent.setBackground(m_clBGColor);
         }
-
+        m_clComponent.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
         return m_clComponent;
     }
 
@@ -233,14 +226,12 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     public final void setFont(Font font) {
-        m_clFont = font;
-        updateComponent();
+    	 m_clComponent.setFont(font);
     }
 
 
     public final void setFontStyle(int fontStyle) {
-        fontStyle = fontStyle;
-        updateComponent();
+    	 m_clComponent.setFont( m_clComponent.getFont().deriveFont(fontStyle));
     }
 
  
@@ -249,7 +240,7 @@ public class ColorLabelEntry extends TableEntry {
      *
      */
     public final void setGrafischeVeraenderungswert(double zahl, boolean aktuell, boolean mitText) {
-        m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(zahl, 1),aktuell);
+        m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(zahl, 1),aktuell);
 
         if (mitText) {
             setGraphicalChangeValue(zahl);
@@ -263,7 +254,7 @@ public class ColorLabelEntry extends TableEntry {
       */
     public final void setGrafischeVeraenderungswert(int intzahl, double zahl, boolean aktuell,
                                                     boolean mitText) {
-        m_clIcon = Helper.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1),aktuell);
+        m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1),aktuell);
 
         if (mitText) {
             //Keine negativen Subskills, kann beim Levelup passieren
@@ -330,24 +321,13 @@ public class ColorLabelEntry extends TableEntry {
     }
 
     public final void setToolTipText(String text) {
-        m_sTooltip = text;
-        updateComponent();
+        m_clComponent.setToolTipText(text);
     }
 
     public final double getZahl() {
         return m_dZahl;
     }
     
-
-    public boolean isOpaque() {
-		return isOpaque;
-	}
-
-    public void setOpaque(boolean isOpaque) {
-		this.isOpaque = isOpaque;
-		m_clComponent.setOpaque(isOpaque);
-	}
-
 	@Override
 	public final void clear() {
         m_sText = "";
@@ -392,18 +372,13 @@ public class ColorLabelEntry extends TableEntry {
      */
     @Override
 	public final void createComponent() {
-        JLabel label;
+    	m_clComponent = new JLabel(m_sText, horizontalAlignment);
 
-        if (m_clIcon != null) {
-        	m_clComponent = new JLabel(m_sText, m_clIcon, horizontalAlignment);
-        } else {
-        	m_clComponent = new JLabel(m_sText, horizontalAlignment);
-        }
-        m_clComponent.setOpaque(isOpaque);
+        if (m_clIcon != null) 
+        	m_clComponent.setIcon(m_clIcon);
+         
+        m_clComponent.setOpaque(true);
         m_clComponent.setForeground(m_clFGColor);
-        m_clComponent.setToolTipText(m_sTooltip);
-
-        m_clFont = m_clComponent.getFont();
     }
 
     @Override
@@ -414,7 +389,5 @@ public class ColorLabelEntry extends TableEntry {
          m_clComponent.setHorizontalTextPosition(imageAligment);
          m_clComponent.setBackground(m_clBGColor);
          m_clComponent.setForeground(m_clFGColor);
-         m_clComponent.setFont(m_clFont.deriveFont(fontStyle));
-         m_clComponent.setToolTipText(m_sTooltip);
     }
 }

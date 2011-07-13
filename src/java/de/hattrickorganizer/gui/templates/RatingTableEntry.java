@@ -10,10 +10,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.tools.Helper;
-
 import plugins.IHOTableEntry;
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**
@@ -166,7 +166,7 @@ public class RatingTableEntry extends TableEntry {
 
         //Platzhalter
         JLabel jlabel;
-        jlabel = new JLabel(de.hattrickorganizer.tools.Helper.NOIMAGEICON);
+        jlabel = new JLabel(ImageUtilities.NOIMAGEICON);
         jlabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         m_clComponent.add(jlabel);
     }
@@ -246,7 +246,7 @@ public class RatingTableEntry extends TableEntry {
     private void setStars(JComponent panel, float f) {
 		if (f == 0) {
 			JLabel jlabel;
-			jlabel = new JLabel(Helper.NOIMAGEICON);
+			jlabel = new JLabel(ImageUtilities.NOIMAGEICON);
 			jlabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 			panel.add(jlabel);
 		}
@@ -278,36 +278,36 @@ public class RatingTableEntry extends TableEntry {
     
     private void initStarsIcons(){
     	if ((FULLSTARIMAGEICON == null) || (HALFSTARIMAGEICON == null)) {
-            FULL10STARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_10.png"),
+            FULL10STARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_10.png"),
                                                                                   210, 210, 185,
                                                                                   255, 255, 255));
-            FULLGREY10STARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_10_grey.png"),
+            FULLGREY10STARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_10_grey.png"),
                                                                                       215, 215,
                                                                                       215, 255,
                                                                                       255, 255));
-            FULL5STARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_5.png"),
+            FULL5STARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_5.png"),
                                                                                  210, 210, 185,
                                                                                  255, 255, 255));
-            FULLGREY5STARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_5_grey.png"),
+            FULLGREY5STARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_5_grey.png"),
                                                                                      215, 215, 215,
                                                                                      255, 255, 255));
-            FULL50STARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_50.png"),
+            FULL50STARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_50.png"),
                                                                                   210, 210, 185,
                                                                                   255, 255, 255));
-            FULLGREY50STARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_50_grey.png"),
+            FULLGREY50STARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_50_grey.png"),
                                                                                       215, 215,
                                                                                       215, 255,
                                                                                       255, 255));
-            FULLSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star.gif"),
+            FULLSTARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star.gif"),
                                                                                 210, 210, 185, 255,
                                                                                 255, 255));
-            HALFSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_half.gif"),
+            HALFSTARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_half.gif"),
                                                                                 210, 210, 185, 255,
                                                                                 255, 255));
-            FULLGREYSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_grey.png"),
+            FULLGREYSTARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_grey.png"),
                                                                                     215, 215, 215,
                                                                                     255, 255, 255));
-            HALFGREYSTARIMAGEICON = new ImageIcon(Helper.makeColorTransparent(Helper.loadImage("gui/bilder/star_grey_half.png"),
+            HALFGREYSTARIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/star_grey_half.png"),
                                                                                     215, 215, 215,
                                                                                     255, 255, 255));
         }	

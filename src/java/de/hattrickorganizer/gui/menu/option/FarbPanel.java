@@ -1,6 +1,7 @@
 // %3889649867:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
+import gui.HOColorName;
 import gui.UserParameter;
 
 import java.awt.Color;
@@ -125,7 +126,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
         final JPanel panel = new ImagePanel();
         panel.setLayout(new GridLayout(6, 2, 4, 10));
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
 
 
         JLabel label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Farben"));

@@ -390,7 +390,7 @@ public class Server implements java.lang.Runnable {
         //prüfen ob gesavt werden soll
         if ((args != null)
             && (args.length > 0)
-            && (de.hattrickorganizer.tools.MyHelper.decryptString("k[gmn").equals(args[0]))) {
+            && (de.hattrickorganizer.tools.Helper.decryptString("k[gmn").equals(args[0]))) {
             write2File();
         }
 

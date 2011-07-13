@@ -9,7 +9,7 @@ import plugins.IMatchLineup;
 import plugins.ISpielePanel;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 public final class MatchesKurzInfoTable extends AbstractTable {
 
@@ -47,9 +47,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	 *
 	 * @param teamId Die Teamid oder -1 für alle
 	 * @param matchtyp Welche Matches? Konstanten im SpielePanel!
-	 * @param asc TODO Missing Constructuor Parameter Documentation
 	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
@@ -144,7 +142,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 		}
 
 		matches = new MatchKurzInfo[liste.size()];
-		MyHelper.copyVector2Array(liste, matches);
+		Helper.copyVector2Array(liste, matches);
 
 		return matches;
 	}

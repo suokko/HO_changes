@@ -1,6 +1,8 @@
 // %119160480:de.hattrickorganizer.gui%
 package de.hattrickorganizer.gui;
 
+import gui.HOColorName;
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,11 +24,11 @@ public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
 	private static final long serialVersionUID = 4902186890362152556L;
 
 	// color for error messages
-    public static final Color FEHLERFARBE = ThemeManager.getColor("ho.label.error.foreground"); // Color.red
+    public static final Color FEHLERFARBE = ThemeManager.getColor(HOColorName.LABEL_ERROR_FG); // Color.red
     // color for info messages
-    public static final Color INFOFARBE = ThemeManager.getColor("ho.label.foreground");//Color.black;
+    public static final Color INFOFARBE = ThemeManager.getColor(HOColorName.LABEL_FG);//Color.black;
     // color for success messages
-    public static final Color ERFOLGSFARBE = ThemeManager.getColor("ho.label.success.foreground");//Color.green;
+    public static final Color ERFOLGSFARBE = ThemeManager.getColor(HOColorName.LABEL_SUCCESS_FG);//Color.green;
 
     //~ Instance fields ----------------------------------------------------------------------------
 

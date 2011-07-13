@@ -9,7 +9,7 @@ package de.hattrickorganizer.net.rmiHOFriendly;
 import java.sql.Timestamp;
 
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -52,7 +52,7 @@ public class ServerVerweis {
         String[] inhalt = null;
 
         try {
-            inhalt = MyHelper.generateStringArray(parse, ',');
+            inhalt = Helper.generateStringArray(parse, ',');
 
             //ID
             try {
@@ -69,9 +69,9 @@ public class ServerVerweis {
                 m_iPort = 1099;
             }
 
-            m_sInfo = MyHelper.replaceChar(inhalt[3], '§', ' ');
+            m_sInfo = Helper.replaceChar(inhalt[3], '§', ' ');
 
-            m_clDate = MyHelper.parseDate(inhalt[4]);
+            m_clDate = Helper.parseDate(inhalt[4]);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Error in ServerVerweis Konstruktor : " + e);
         }

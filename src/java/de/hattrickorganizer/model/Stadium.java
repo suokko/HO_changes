@@ -34,7 +34,7 @@ public class Stadium implements plugins.IStadium {
     private int m_iAusbauUeberdachteSitzplaetze;
 
     /** Gesamtgroesse */
-    private int m_iGesamtgroesse;
+   // private int m_iGesamtgroesse;
 
     /** Logen */
     private int m_iLogen;
@@ -64,7 +64,7 @@ public class Stadium implements plugins.IStadium {
     public Stadium(java.util.Properties properties) {
         m_sStadienname = properties.getProperty("arenaname", "");
         m_iStadiumId = Integer.parseInt(properties.getProperty("arenaid", "0"));
-        m_iGesamtgroesse = Integer.parseInt(properties.getProperty("seattotal", "0"));
+        //m_iGesamtgroesse = Integer.parseInt(properties.getProperty("seattotal", "0"));
         m_iStehplaetze = Integer.parseInt(properties.getProperty("antalstaplats", "0"));
         m_iSitzplaetze = Integer.parseInt(properties.getProperty("antalsitt", "0"));
         m_iUeberdachteSitzplaetze = Integer.parseInt(properties.getProperty("antaltak", "0"));
@@ -96,7 +96,7 @@ public class Stadium implements plugins.IStadium {
         try {
             m_sStadienname = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("StadionName"));
             m_iStadiumId = rs.getInt("ArenaID");
-            m_iGesamtgroesse = rs.getInt("GesamtGr");
+            //m_iGesamtgroesse = rs.getInt("GesamtGr");
             m_iStehplaetze = rs.getInt("AnzSteh");
             m_iSitzplaetze = rs.getInt("AnzSitz");
             m_iUeberdachteSitzplaetze = rs.getInt("AnzDach");
@@ -239,7 +239,7 @@ public class Stadium implements plugins.IStadium {
      * @param m_iGesamtgroesse New value of property m_iGesamtgroesse.
      */
     public final void setGesamtgroesse(int m_iGesamtgroesse) {
-        this.m_iGesamtgroesse = m_iGesamtgroesse;
+     //   this.m_iGesamtgroesse = m_iGesamtgroesse;
     }
 
     ////////////////////////////Accessor////////////////////////////////////////    

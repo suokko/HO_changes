@@ -1,6 +1,8 @@
 // %393632151:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import gui.HOColorName;
+import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
@@ -49,11 +51,12 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.MatchUpdater;
-import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.Matchdetails;
@@ -71,12 +74,12 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
     private AufstellungsSternePanel m_jpAufstellungGastPanel;
     private AufstellungsSternePanel m_jpAufstellungHeimPanel;
-    private JButton m_jbAufstellungUebernehmen = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/AufstellungUebernehmen.png")));
-    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbLoeschen = new JButton(new ImageIcon(Helper
+    private JButton m_jbAufstellungUebernehmen = new JButton(ThemeManager.getIcon(HOIconName.GETLINEUP));
+    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+    private JButton m_jbLoeschen = new JButton(new ImageIcon(ImageUtilities
 			.getImageDurchgestrichen(new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB), Color.red, new Color(200, 0, 0))));
-    private JButton m_jbReloadMatch = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Reload.png")));
-    private JButton m_jbSimMatch = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/simulate_match.png")));
+    private JButton m_jbReloadMatch = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
+    private JButton m_jbSimMatch = new JButton(ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
     private JComboBox m_jcbSpieleFilter;
 
     //private JSplitPane                      horizontalRightSplitPane            = null;
@@ -502,7 +505,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
         add(verticalSplitPane, BorderLayout.CENTER);
 
-        m_jbLoeschen.setBackground(ThemeManager.getColor("ho.button.background"));
+        m_jbLoeschen.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
     }
 
     /**

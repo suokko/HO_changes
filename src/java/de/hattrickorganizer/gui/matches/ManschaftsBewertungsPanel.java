@@ -1,6 +1,10 @@
 // %2517784300:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import gui.HOColorName;
+import gui.HOIconName;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -19,6 +23,7 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
@@ -71,7 +76,7 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
     ManschaftsBewertungsPanel(boolean print) {
         super(print);
 
-        setBackground(ThemeManager.getColor("ho.panel.background"));
+        setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
         final GridBagLayout mainlayout = new GridBagLayout();
         final GridBagConstraints mainconstraints = new GridBagConstraints();
@@ -91,8 +96,8 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
         constraints.insets = new Insets(5, 3, 2, 2);
 
         final JPanel panel = new JPanel(layout);
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
-        panel.setBackground(ThemeManager.getColor("ho.panel.background"));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
+        panel.setBackground(getBackground());
 
         //Platzhalter
         JLabel label = new JLabel("  ");
@@ -326,15 +331,15 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
         m_clGastTeamTore.setText(info.getGastTore() + " ");
 
         if (info.getHeimID() == teamid) {
-            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
-            m_clHeimTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
+            m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
         if (info.getGastID() == teamid) {
-            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.ownTeam.foreground"));
+            m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
-            m_clGastTeamName.setForeground(ThemeManager.getColor("ho.label.foreground"));
+            m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
         if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
@@ -343,14 +348,14 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {
-                m_clHeimTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() < info.getGastTore()) {
                 m_clHeimTeamName.setIcon(null);
-                m_clGastTeamName.setIcon(Helper.YELLOWSTARIMAGEICON);
+                m_clGastTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
             } else {
-                m_clHeimTeamName.setIcon(Helper.GREYSTARIMAGEICON);
-                m_clGastTeamName.setIcon(Helper.GREYSTARIMAGEICON);
+                m_clHeimTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
+                m_clGastTeamName.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
             }
 
             String temp;
@@ -385,24 +390,24 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
             m_clHeimLeftAtt.setText(PlayerHelper.getNameForSkill(true, details.getHomeLeftAtt()));
             m_clGastLeftAtt.setText(PlayerHelper.getNameForSkill(true, details.getGuestLeftAtt()));
 
-            m_clHeimGesamt.setIcon(Helper.getImageIcon4Veraenderung((int) (details.getHomeGesamtstaerke(false)
-                                                                                               - details.getGuestGesamtstaerke(false))));
-            m_clGastGesamt.setIcon(Helper.getImageIcon4Veraenderung((int) (details.getGuestGesamtstaerke(false)
-                                                                                               - details.getHomeGesamtstaerke(false))));
-            m_clHeimMidfield.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeMidfield()- details.getGuestMidfield()));
-            m_clGastMidfield.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestMidfield()- details.getHomeMidfield()));
-            m_clHeimRightDef.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeRightDef()- details.getGuestLeftAtt()));
-            m_clGastRightDef.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestRightDef()- details.getHomeLeftAtt()));
-            m_clHeimCenterDef.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeMidDef()- details.getGuestMidAtt()));
-            m_clGastCenterDef.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestMidDef()- details.getHomeMidAtt()));
-            m_clHeimLeftDef.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeLeftDef()- details.getGuestRightAtt()));
-            m_clGastLeftDef.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestLeftDef()- details.getHomeRightAtt()));
-            m_clHeimRightAtt.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeRightAtt()- details.getGuestLeftDef()));
-            m_clGastRightAtt.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestRightAtt()- details.getHomeLeftDef()));
-            m_clHeimCenterAtt.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeMidAtt()- details.getGuestMidDef()));
-            m_clGastCenterAtt.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestMidAtt()- details.getHomeMidDef()));
-            m_clHeimLeftAtt.setIcon(Helper.getImageIcon4Veraenderung(details.getHomeLeftAtt() - details.getGuestRightDef()));
-            m_clGastLeftAtt.setIcon(Helper.getImageIcon4Veraenderung(details.getGuestLeftAtt()- details.getHomeRightDef()));
+            m_clHeimGesamt.setIcon(ImageUtilities.getImageIcon4Veraenderung((int) (details.getHomeGesamtstaerke(false)
+                                                                                               - details.getGuestGesamtstaerke(false)),true));
+            m_clGastGesamt.setIcon(ImageUtilities.getImageIcon4Veraenderung((int) (details.getGuestGesamtstaerke(false)
+                                                                                               - details.getHomeGesamtstaerke(false)),true));
+            m_clHeimMidfield.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeMidfield()- details.getGuestMidfield(),true));
+            m_clGastMidfield.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestMidfield()- details.getHomeMidfield(),true));
+            m_clHeimRightDef.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeRightDef()- details.getGuestLeftAtt(),true));
+            m_clGastRightDef.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestRightDef()- details.getHomeLeftAtt(),true));
+            m_clHeimCenterDef.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeMidDef()- details.getGuestMidAtt(),true));
+            m_clGastCenterDef.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestMidDef()- details.getHomeMidAtt(),true));
+            m_clHeimLeftDef.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeLeftDef()- details.getGuestRightAtt(),true));
+            m_clGastLeftDef.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestLeftDef()- details.getHomeRightAtt(),true));
+            m_clHeimRightAtt.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeRightAtt()- details.getGuestLeftDef(),true));
+            m_clGastRightAtt.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestRightAtt()- details.getHomeLeftDef(),true));
+            m_clHeimCenterAtt.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeMidAtt()- details.getGuestMidDef(),true));
+            m_clGastCenterAtt.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestMidAtt()- details.getHomeMidDef(),true));
+            m_clHeimLeftAtt.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getHomeLeftAtt() - details.getGuestRightDef(),true));
+            m_clGastLeftAtt.setIcon(ImageUtilities.getImageIcon4Veraenderung(details.getGuestLeftAtt()- details.getHomeRightDef(),true));
         } //Ende Finished
 
         //Spiel noch nicht gespielt

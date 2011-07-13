@@ -18,6 +18,7 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.model.CBItem;
+import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
@@ -360,8 +361,7 @@ public class HOVerwaltung {
     	//Search in english.properties if nothing found and active language not english
     	if (!gui.UserParameter.instance().sprachDatei.equalsIgnoreCase("english")) {
     		Properties tempResource = new Properties();
-	    	final ClassLoader loader =
-				new de.hattrickorganizer.gui.templates.ImagePanel().getClass().getClassLoader();
+	    	final ClassLoader loader =new ImagePanel().getClass().getClassLoader();
 	        try {
 	        	tempResource.load(loader.getResourceAsStream("sprache/English.properties"));
 	        } catch (Exception e) {

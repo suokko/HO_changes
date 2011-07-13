@@ -14,6 +14,8 @@ import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.model.UserColumnFactory;
 import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.Helper;
 
 /**
  * The main player table.
@@ -146,7 +148,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 
 		if (m_clTableModel == null) {
 			m_clTableModel = UserColumnController.instance().getPlayerOverviewModel();
-			m_clTableModel.setValues(de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getAllSpieler());
+			m_clTableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
 			m_clTableSorter = new TableSorter(m_clTableModel, m_clTableModel.getDisplayedColumns().length - 1, getSortSpalte());
 
 			final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
@@ -165,7 +167,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 			int[][] targetColumn = m_clTableModel.getColumnOrder();// gui.UserParameter.instance().spieleruebersichtsspaltenreihenfolge;
 
 			// Reihenfolge -> nach [][1] sortieren
-			targetColumn = de.hattrickorganizer.tools.Helper.sortintArray(targetColumn, 1);
+			targetColumn = Helper.sortintArray(targetColumn, 1);
 
 			if (targetColumn != null) {
 				for (int i = 0; i < targetColumn.length; i++) {
@@ -177,7 +179,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 			m_clTableModel.setColumnsSize(getColumnModel());
 		} else {
 			// Werte neu setzen
-			m_clTableModel.setValues(de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getAllSpieler());
+			m_clTableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
 			m_clTableSorter.reallocateIndexes();
 		}
 

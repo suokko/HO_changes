@@ -1,6 +1,8 @@
 // %2768837177:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import gui.HOColorName;
+import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.Color;
@@ -21,6 +23,7 @@ import plugins.IHOTableEntry;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.Helper;
@@ -103,7 +106,8 @@ public final class SpielerLabelEntry extends TableEntry {
     @Override
 	public final JComponent getComponent(boolean isSelected) {
     	 m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
-         return m_clComponent;
+    	 m_jlName.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:getForegroundForSpieler(m_clPlayer));
+    	 return m_clComponent;
     }
 
     /**
@@ -222,11 +226,10 @@ public final class SpielerLabelEntry extends TableEntry {
             //Trikot
             //&& m_clSpielerPositionAktuell != null )
             if (m_bShowTrikot) {
-                m_jlName.setIcon(Helper.getImage4Position(m_clCurrentPlayerPosition,
+                m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition,
                                                                                      m_clPlayer
                                                                                      .getTrikotnummer()));
-                m_jlGroup.setIcon(Helper.getImageIcon4MiniGruppe(m_clPlayer
-                                                                                            .getTeamInfoSmilie()));
+                m_jlGroup.setIcon(ThemeManager.getScaledIcon(m_clPlayer.getTeamInfoSmilie(), 8, 8));
             }
 
             //            else if ( m_bShowTrikot )
@@ -252,11 +255,10 @@ public final class SpielerLabelEntry extends TableEntry {
             //Trikot
             //&& m_clSpielerPositionAktuell != null )
             if (m_bShowTrikot) {
-                m_jlName.setIcon(Helper.getImage4Position(m_clCurrentPlayerPosition,
+                m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition,
                                                                                      m_clPlayer
                                                                                      .getTrikotnummer()));
-                m_jlGroup.setIcon(Helper.getImageIcon4MiniGruppe(m_clPlayer
-                                                                                            .getTeamInfoSmilie()));
+                m_jlGroup.setIcon(ThemeManager.getScaledIcon(m_clPlayer.getTeamInfoSmilie(), 8, 8));
             }
 
             //            else if ( m_bShowTrikot )
@@ -288,7 +290,7 @@ public final class SpielerLabelEntry extends TableEntry {
 
         if (m_clPlayer != null) {
             if (m_clPlayer.isOld()) {
-                m_jlName.setForeground(ThemeManager.getColor("tableEntry.player.isOld.foreground"));//Color.GRAY);
+                m_jlName.setForeground(ThemeManager.getColor(HOColorName.PLAYER_OLD_FG));//Color.GRAY);
             } else {
                 m_jlName.setForeground(getForegroundForSpieler(m_clPlayer));
             }
@@ -302,19 +304,9 @@ public final class SpielerLabelEntry extends TableEntry {
             //Trikot
             //&& m_clSpielerPositionAktuell != null )
             if (m_bShowTrikot) {
-                m_jlName.setIcon(Helper.getImage4Position(m_clCurrentPlayerPosition,
-                                                                                     m_clPlayer
-                                                                                     .getTrikotnummer()));
-                m_jlGroup.setIcon(Helper.getImageIcon4MiniGruppe(m_clPlayer
-                                                                                            .getTeamInfoSmilie()));
+                m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition, m_clPlayer.getTrikotnummer()));
+                m_jlGroup.setIcon(ThemeManager.getScaledIcon(m_clPlayer.getTeamInfoSmilie(), 8, 8));
             }
-
-            //            else if ( m_bShowTrikot )
-            //            {
-            //                m_jlName.setIcon ( m_clLeer );
-            //                m_jlGruppe.setIcon ( tools.Helper.getImageIcon4MiniGruppe ( m_clSpieler.getTeamInfoSmilie () ) );
-            //            }
-            
             updateDisplay(m_clPlayer);
 
         } else {
@@ -335,24 +327,17 @@ public final class SpielerLabelEntry extends TableEntry {
     
     private void updateDisplay(ISpieler player){
     	// weatherEffect
+    	 m_jlWeatherEffect.setIcon(null);
     	if (m_bShowWeatherEffect) {
-            final ImageIcon wettericon = Helper.getImageIcon4WetterEffekt(PlayerHelper
-                                                                    .getWeatherEffect(HOMainFrame
-                                                                                      .getWetter(),
-                                                                                      player
-                                                                                      .getSpezialitaet()));
-            m_jlWeatherEffect.setIcon(wettericon);
-        } else {
-            m_jlWeatherEffect.setIcon(null);
+    		int effect = PlayerHelper.getWeatherEffect(HOMainFrame.getWetter(),player.getSpezialitaet());
+    		if(effect != 0){
+    			final ImageIcon wettericon = ThemeManager.getIcon("weatherEffect"+effect);
+    			m_jlWeatherEffect.setIcon(wettericon);
+    		}
         }
     	
-    	// special
-        if (player.getSpezialitaet() != 0) {
-            final ImageIcon icon = Helper.getImageIcon4Spezialitaet(player.getSpezialitaet());
-            m_jlSpezialitaet.setIcon(icon);
-        } else {
-            m_jlSpezialitaet.setIcon(null);
-        }
+    	m_jlSpezialitaet.setIcon( ThemeManager.getIcon(HOIconName.SPECIAL[player.getSpezialitaet()]));
+
         
         // positionValue
         if (m_bShowTrikot && (m_fPositionsbewertung != 0f)) {

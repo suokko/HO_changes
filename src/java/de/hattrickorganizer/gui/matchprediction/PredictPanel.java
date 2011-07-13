@@ -1,8 +1,9 @@
 // %3942717939:de.hattrickorganizer.gui.matchprediction%
 package de.hattrickorganizer.gui.matchprediction;
 
+import gui.HOColorName;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -184,8 +185,8 @@ public class PredictPanel extends JPanel {
      */
     private void initComponents() {
         setLayout(new BorderLayout());
-        setBackground(ThemeManager.getColor("ho.panel.background"));
-        setBorder(BorderFactory.createLineBorder(ThemeManager.getColor("ho.panel.border")));
+        setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
+        setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
 
         final JPanel toppanel = new JPanel();
         toppanel.setOpaque(false);

@@ -1,6 +1,8 @@
 // %2976388207:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -15,7 +17,6 @@ import java.util.Vector;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -24,11 +25,11 @@ import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
-import de.hattrickorganizer.model.Lineup;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -43,10 +44,10 @@ public class LineupPositionsPanel extends de.hattrickorganizer.gui.templates.Ras
 	
     //~ Instance fields ----------------------------------------------------------------------------
 	private LineupPanel m_clLineupPanel;
-    private JButton m_jbDrucken = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Drucken.png")));
-    private JButton m_jbFlipSide = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/Reload.png")));
-	private JButton m_jbMidiFrame = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/MidiAufstellung.png")));
-	private JButton m_jbMiniFrame = new JButton(new ImageIcon(Helper.loadImage("gui/bilder/MiniAufstellung.png")));
+    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+    private JButton m_jbFlipSide = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
+	private JButton m_jbMidiFrame = new JButton(ThemeManager.getIcon(HOIconName.MIDLINEUPFRAME));
+	private JButton m_jbMiniFrame = new JButton(ThemeManager.getIcon(HOIconName.MINLINEUPFRAME));
 
 	private PlayerPositionPanel m_clCentralForward;
 	private PlayerPositionPanel m_clCentralInnerMidfielder;

@@ -1,7 +1,8 @@
 package de.hattrickorganizer.gui.menu.option;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +20,9 @@ import de.hattrickorganizer.gui.model.HOColumnModel;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
-import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.TableEditor;
 import de.hattrickorganizer.tools.updater.TableModel;
 import de.hattrickorganizer.tools.updater.UpdaterCellRenderer;
@@ -38,7 +39,7 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 	private JComboBox m_jcbColumnModel 	= null;
 	private JTable table 				= null;
 	private final String [] columnNames = new String[]{" ", HOVerwaltung.instance().getLanguageString("column")};
-	private final ImageIcon lockedImage 	= new ImageIcon(Helper.loadImage("gui/bilder/Locked.gif"));
+	private final ImageIcon lockedImage 	= ThemeManager.getIcon(HOIconName.LOCKED);
 	protected UserColumnsPanel(){
 		initComponents();
 	}
@@ -96,14 +97,6 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
         return scroll;
     }
 
-	/**
-     * TODO Missing Method Documentation
-     *
-     * @param selected TODO Missing Method Parameter Documentation
-     * @param columnNames2 TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected TableModel getModel(UserColumn[] dbColumns) {
         Object[][] value = new Object[dbColumns.length][2];
 
@@ -117,14 +110,7 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 
         return model;
     }
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param isSelected TODO Missing Method Parameter Documentation
-     * @param isEnabled TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+
     protected JCheckBox getCheckbox(UserColumn column) {
         JCheckBox tmp = new JCheckBox();
         tmp.setOpaque(false);

@@ -40,9 +40,9 @@ public class XtraData implements plugins.IXtraData {
                                 .booleanValue();
         m_sCurrencyName = properties.getProperty("currencyname", "");
         m_sLogoURL = properties.getProperty("logourl", "");
-        m_clSeriesMatchDate = de.hattrickorganizer.tools.MyHelper.parseDate(properties.getProperty("seriesmatchdate"));
-        m_clEconomyDate = de.hattrickorganizer.tools.MyHelper.parseDate(properties.getProperty("economydate"));
-        m_clTrainingDate = de.hattrickorganizer.tools.MyHelper.parseDate(properties.getProperty("trainingdate"));
+        m_clSeriesMatchDate = de.hattrickorganizer.tools.Helper.parseDate(properties.getProperty("seriesmatchdate"));
+        m_clEconomyDate = de.hattrickorganizer.tools.Helper.parseDate(properties.getProperty("economydate"));
+        m_clTrainingDate = de.hattrickorganizer.tools.Helper.parseDate(properties.getProperty("trainingdate"));
 
         try {
             m_iLeagueLevelUnitID = Integer.parseInt(properties.getProperty("leaguelevelunitid"));

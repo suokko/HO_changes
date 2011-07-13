@@ -9,6 +9,8 @@ package de.hattrickorganizer.gui.transferscout;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import de.hattrickorganizer.gui.HOMainFrame;
+
 
 /**
  * DOCUMENT ME!
@@ -39,7 +41,7 @@ public class Wecker extends javax.swing.JFrame implements java.awt.event.ActionL
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Scout");
-        this.setIconImage(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/Logo-16px.png"));
+        this.setIconImage(HOMainFrame.instance().getIconImage());
 
         //this.setContentPane(temp);
         this.getContentPane().setLayout(new java.awt.BorderLayout());

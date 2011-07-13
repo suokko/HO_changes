@@ -252,8 +252,7 @@ public class Net {
 	}
 	
 	private void setNeuronWeight (int no, double weight) {
-		ArrayList<?> neuronList = new ArrayList<Object>();
-		neuronList = getNeuronList();
+		ArrayList<?> neuronList = getNeuronList();
 		((Neuron)neuronList.get(no)).setWeight(weight);
 	}
 
@@ -263,8 +262,7 @@ public class Net {
 	}
 
 	private void setSynapseWeight (int no, double weight) {
-		ArrayList<?> synapseList = new ArrayList<Object>();
-		synapseList = getSynapseList();
+		ArrayList<?> synapseList = getSynapseList();
 		((Synapse)synapseList.get(no)).setWeight(weight);
 	}
 	

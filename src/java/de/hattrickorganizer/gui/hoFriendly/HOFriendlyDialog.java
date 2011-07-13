@@ -5,9 +5,11 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.MatchScreen;
 import de.hattrickorganizer.model.Spielbericht;
@@ -17,19 +19,14 @@ import de.hattrickorganizer.model.SpielerPosition;
 /**
  * Ein Dialog für die Freundschaftsspiele
  */
-public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.model.MatchScreen,
-                                                        java.awt.event.WindowListener
+public class HOFriendlyDialog extends JFrame implements MatchScreen,WindowListener
 {
 	private static final long serialVersionUID = 5146409894948790465L;
 	
-    //~ Instance fields ----------------------------------------------------------------------------
-	/** TODO Missing Parameter Documentation */
     public boolean m_bAbbruch;
 
-    /** TODO Missing Parameter Documentation */
     public boolean m_bPause;
 
-    /** TODO Missing Parameter Documentation */
     public boolean m_bScreenBereit = true;
     private de.hattrickorganizer.net.rmiHOFriendly.Chat m_clChat;
     private SpielstandPanel m_jpSpielstandPanel;
@@ -42,7 +39,7 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     private String GASTTEAM = "<b color=#990000>";
     private String HEIMTEAM = "<b color=#000099>";
     private String TOR = "<b color=#333333>"
-                         + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TOR") + "</b>";
+                         + HOVerwaltung.instance().getLanguageString("TOR") + "</b>";
     private TextModusPanel m_jpTextModusPanel;
     private ZusatzInfoPanel m_jpZusatzInfoPanel;
     private boolean m_bServer = true;
@@ -50,28 +47,17 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     private int SLEEP_SHORT = 1500;
     private int SLEEP_VERYSHORT = 500;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new HOFriendlyDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     * @param server TODO Missing Constructuor Parameter Documentation
-     */
     public HOFriendlyDialog(JFrame owner, boolean server) {
         super("Waiting... - "
-              + de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("HoFriendly"));
+              + HOVerwaltung.instance().getLanguageString("HoFriendly"));
 
-        //setDefaultCloseOperation ( DO_NOTHING_ON_CLOSE );
-        //setDefaultCloseOperation ( this.DISPOSE_ON_CLOSE );
         m_bServer = server;
         initComponents();
-
-        this.setIconImage(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/Logo-16px.png"));
+        
+        this.setIconImage(HOMainFrame.instance().getIconImage());
 
         this.addWindowListener(this);
 
-        //setSize( 1024, 750 );
         setSize(new java.awt.Dimension(owner.getToolkit().getScreenSize().width,
                                        owner.getToolkit().getScreenSize().height - 32));
         setLocation(0, 0);
@@ -79,58 +65,26 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
         setVisible(true);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isAbbruch() {
         return m_bAbbruch;
     }
 
-    /**
-     * Setter for property m_clChat.
-     *
-     * @param m_clChat New value of property m_clChat.
-     */
     public final void setChat(de.hattrickorganizer.net.rmiHOFriendly.Chat m_clChat) {
         this.m_clChat = m_clChat;
     }
 
-    /**
-     * Getter for property m_clChat.
-     *
-     * @return Value of property m_clChat.
-     */
     public final de.hattrickorganizer.net.rmiHOFriendly.Chat getChat() {
         return m_clChat;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param pause TODO Missing Method Parameter Documentation
-     */
     public final void setPause(boolean pause) {
         m_bPause = pause;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isPause() {
         return m_bPause;
     }
 
-    /**
-     * gibt an ob die Chance zuende gezeichnet wurde
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isScreenBereit() {
         return m_bScreenBereit;
     }
@@ -138,9 +92,6 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     /**
      * Aktualisiert den Spielstand
      *
-     * @param schuetze TODO Missing Constructuor Parameter Documentation
-     * @param spielminute TODO Missing Constructuor Parameter Documentation
-     * @param heim TODO Missing Constructuor Parameter Documentation
      */
     public final void setSpielstand(String schuetze, int spielminute, boolean heim) {
         if (heim) {
@@ -155,13 +106,6 @@ public class HOFriendlyDialog extends JFrame implements de.hattrickorganizer.mod
     /**
      * gibt eine Auswechslung an
      *
-     * @param textKey TODO Missing Constructuor Parameter Documentation
-     * @param teamName TODO Missing Constructuor Parameter Documentation
-     * @param auswechselSpieler TODO Missing Constructuor Parameter Documentation
-     * @param einwechselSpieler TODO Missing Constructuor Parameter Documentation
-     * @param variante TODO Missing Constructuor Parameter Documentation
-     * @param spielminute TODO Missing Constructuor Parameter Documentation
-     * @param heim TODO Missing Constructuor Parameter Documentation
      */
     public final void doAuswechslung(byte textKey, String teamName, String auswechselSpieler,
                                      String einwechselSpieler, int variante, int spielminute,

@@ -1,6 +1,8 @@
 // %3969157412:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import gui.HOIconName;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -21,6 +23,8 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
 import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtNamenTable;
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -59,7 +63,6 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt das AufstellungsAssistentPanel zurück
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final AufstellungsAssistentPanel getAufstellungsAssitentPanel() {
         return m_jpAufstellungsAssistentPanel;
@@ -68,8 +71,7 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt das AufstellungsDetailPanel zurück
      *
-     * @return TODO Missing Return Method Documentation
-     */
+    */
     public final AufstellungsDetailPanel getAufstellungsDetailPanel() {
         return m_jpAufstellungsDetailPanel;
     }
@@ -77,7 +79,6 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt die NamesTabelle zurück
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final SpielerUebersichtNamenTable getAufstellungsNamensTabelle() {
         return m_jtAufstellungSpielerTableName;
@@ -86,7 +87,6 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt das AufstellungsPositionsPanel zurück
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final LineupPositionsPanel getAufstellungsPositionsPanel() {
         return m_jpAufstellungsPositionsPanel;
@@ -95,8 +95,7 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt die Tabelle zurück
      *
-     * @return TODO Missing Return Method Documentation
-     */
+    */
     public final AustellungSpielerTable getAufstellungsTabelle() {
         return m_jtAufstellungSpielerTable;
     }
@@ -104,7 +103,6 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Breite der BestPosSpalte zurückgeben
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final int getBestPosWidth() {
         return m_jtAufstellungSpielerTable.getBestPosWidth();
@@ -115,8 +113,7 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
      *
-     * @return TODO Missing Return Method Documentation
-     */
+      */
     public final int[] getDividerLocations() {
         final int[] locations = new int[4];
 
@@ -131,7 +128,6 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     /**
      * Gibt die Reihenfolge der Spalten in der Tabelle zurück
      *
-     * @return TODO Missing Return Method Documentation
      */
     public final int[][] getSpaltenreihenfolge() {
         return m_jtAufstellungSpielerTable.getSpaltenreihenfolge();
@@ -168,11 +164,6 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
     public final void keyReleased(java.awt.event.KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtAufstellungSpielerTable)) {
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
@@ -199,19 +190,10 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
+ 
     public void keyTyped(java.awt.event.KeyEvent keyEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public final void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtAufstellungSpielerTable)) {
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
@@ -238,35 +220,16 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
+
     public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public final void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtAufstellungSpielerTable)) {
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
@@ -309,33 +272,21 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 		FileExtensionManager.extractLineup("Actual");                             
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+ 
     private Component initAufstellungsDetail() {
         m_jpAufstellungsDetailPanel = new AufstellungsDetailPanel();
 
         return new JScrollPane(m_jpAufstellungsDetailPanel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+ 
     private Component initAufstellungsHistory() {
         m_jpAufstellungsVergleichHistoryPanel = new AufstellungsVergleichHistoryPanel();
 
         return m_jpAufstellungsVergleichHistoryPanel;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+
     private Component initButtons() {
         m_jpAufstellungsAssistentPanel = new AufstellungsAssistentPanel();
 
@@ -351,15 +302,12 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("",
-                          new ImageIcon(de.hattrickorganizer.tools.Helper.makeColorTransparent(de.hattrickorganizer.tools.Helper
-                                                                                               .loadImage("gui/bilder/credits/Ball.png"),
+                          new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/credits/Ball.png"),
                                                                                                Color.red)
                                                                          .getScaledInstance(13, 13,
                                                                                             Image.SCALE_SMOOTH)),
                           initButtons());
-        tabbedPane.addTab("",
-                          new ImageIcon(de.hattrickorganizer.tools.Helper.loadImage("gui/bilder/disk.png")),
-                          initAufstellungsHistory());
+        tabbedPane.addTab("",ThemeManager.getIcon(HOIconName.DISK),initAufstellungsHistory());
         horizontalLeftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
                                                  initSpielerPositionen(), initSpielerTabelle());
         horizontalRightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
@@ -377,22 +325,13 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         add(verticalSplitPane, BorderLayout.CENTER);		       
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
+
     private Component initSpielerPositionen() {
         m_jpAufstellungsPositionsPanel = new LineupPositionsPanel(this);
 
         return new JScrollPane(m_jpAufstellungsPositionsPanel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initSpielerTabelle() {
         final JPanel panel = new JPanel(new BorderLayout());
 

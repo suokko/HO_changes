@@ -396,8 +396,8 @@ public class xmlMatchOrderParser {
 					hash.put(pos + "ID", add);
 					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
 					//hash.put(pos + "Order", hash.get("Additional" + a + "Behaviour"));
-					try {
-						int role = Integer.parseInt(hash.get("Additional" + a + "Role"));
+//					try {
+						//int role = Integer.parseInt(hash.get("Additional" + a + "Role"));
 //						if (role == 3 || role == 4) {
 //							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_INNENV));
 //						} else if (role == 7 || role == 8) {
@@ -405,10 +405,10 @@ public class xmlMatchOrderParser {
 //						} else if (role == 10 || role == 11) {
 //							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
 //						}
-					} catch (Exception e) {
-						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
-						hash.put(pos + "Order", "0");
-					}
+//					} catch (Exception e) {
+//						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+//						hash.put(pos + "Order", "0");
+//					}
 				}
 			}
     		a = 2;
