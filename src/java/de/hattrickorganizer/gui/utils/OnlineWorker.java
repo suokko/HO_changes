@@ -533,18 +533,13 @@ public class OnlineWorker {
             waitDialog.setValue(50);
         } catch (Exception e) {
             //Info
-            HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                                    + " : Error fetching MatchesASP : "
-//                                                                    + gui.UserParameter.instance().htip
-                                                                    ,
-                                                                  InfoPanel.FEHLERFARBE);
-            Helper.showMessage(HOMainFrame.instance(),
-                               HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                               + " : Error fetching MatchesASP : "
-//                               + gui.UserParameter.instance().htip
-                               ,
-                               HOVerwaltung.instance().getLanguageString("Fehler"),
-                               JOptionPane.ERROR_MESSAGE);
+			HOMainFrame.instance().getInfoPanel().setLangInfoText(
+					HOVerwaltung.instance().getLanguageString("Downloadfehler") + " : Error fetching matches: " + e,
+					InfoPanel.FEHLERFARBE);
+            Helper.showMessage(HOMainFrame.instance(), HOVerwaltung.instance().getLanguageString("Downloadfehler")
+            		+ " : Error fetching matches : " + e,
+            		HOVerwaltung.instance().getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+            HOLogger.instance().log(getClass(), e);
 //            MyConnector.instance().setAuthenticated(false);
             waitDialog.setVisible(false);
             return false;
