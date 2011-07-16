@@ -12,7 +12,6 @@ import plugins.IExportMatchData;
 import plugins.IFinanzen;
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
-import plugins.IHOFriendlyManager;
 import plugins.IHOMiniModel;
 import plugins.IJDBCAdapter;
 import plugins.ILiga;
@@ -445,8 +444,8 @@ public class HOMiniModel implements IHOMiniModel {
         return HOVerwaltung.instance().getModel();
     }
 
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl) {
-		FutureTrainingManager ftm = new FutureTrainingManager(p,trainings,cotrainer,keeper,trainerLvl);
+	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
+		FutureTrainingManager ftm = new FutureTrainingManager(p,trainings,cotrainer,trainerLvl);
 		return ftm;
 	}
 

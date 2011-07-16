@@ -310,7 +310,7 @@ public interface IHOMiniModel {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl);
+	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl);
 
 
 	/**

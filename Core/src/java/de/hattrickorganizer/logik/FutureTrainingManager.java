@@ -34,7 +34,6 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	private List<ISkillup> futureSkillups;
 	private int weeksPassed = 0;
 
-	private int keeperTrainer;
 	private int coTrainer;
 	private int trainer;
 
@@ -44,10 +43,9 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	* @param p The active player
 	* @param trainings The future trainings
 	*/
-	public FutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl) {
+	public FutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
 		this.player = p;
 		this.futureSkillups = new ArrayList<ISkillup>();
-		this.keeperTrainer = keeper;
 		this.coTrainer = cotrainer;
 		this.trainer = trainerLvl;
 		this.futureTrainings = trainings;
@@ -199,7 +197,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		// Set age and skill for simulation
 		player.setAlter (age + (int)Math.floor((ageDays + 7*weeksPassed)/112d));
 		player.setValue4Skill4 (skillIndex, realSkill+curSkillUps);
-		double limit = player.getTrainingLength(trType, coTrainer, keeperTrainer, trainer, intensity, staminaTrainingPart);
+		double limit = player.getTrainingLength(trType, coTrainer, trainer, intensity, staminaTrainingPart);
 //		HOLogger.instance().debug(getClass(), "getTrLen for "+player.getName()+": weeksPassed="+weeksPassed+", age="+player.getAlter()+", skill="+getSkillValue(player, skillIndex)+", limit="+limit);
 		// Undo simulation changes on player
 		player.setAlter(age);
