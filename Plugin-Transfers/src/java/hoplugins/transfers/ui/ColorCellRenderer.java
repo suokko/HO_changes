@@ -1,6 +1,9 @@
 // %1126721330135:hoplugins.transfers.ui%
 package hoplugins.transfers.ui;
 
+import gui.HOColorName;
+import hoplugins.Commons;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -16,22 +19,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class ColorCellRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1321123377332061442L;
 
-	/** TODO Missing Parameter Documentation */
-    public static final Color GREEN = new Color(220, 255, 220);
+	public static final Color WHITE = Commons.getModel().getGUI().getColor(HOColorName.TABLEENTRY_BG);
+    public static final Color GREEN = Commons.getModel().getGUI().getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);//new Color(220, 255, 220);
+    public static final Color YELLOW = Commons.getModel().getGUI().getColor(HOColorName.PLAYER_SKILL_BG);//new Color(255, 255, 200);
 
-    /** TODO Missing Parameter Documentation */
-    public static final Color YELLOW = new Color(255, 255, 200);
-
-    //~ Instance fields ----------------------------------------------------------------------------
 
     private Color color;
 
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates an instance of ColorcellRenderer.
