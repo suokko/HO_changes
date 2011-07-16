@@ -34,8 +34,8 @@ public class StaffPanel extends JPanel {
 	/** Number of Assistant ComboBox */
     private JComboBox coTrainer;
 
-    /** Number of Keeper Assistant ComboBox */
-    private JComboBox keeperTrainer;
+//    /** Number of Keeper Assistant ComboBox */
+//    private JComboBox keeperTrainer;
 
     /** The combo boxes */
     private JComboBox trainerLevel;
@@ -43,8 +43,8 @@ public class StaffPanel extends JPanel {
     /** the current number of coTrainer */
     private int coTrainerNumber;
 
-    /** the current number of keeper Trainer */
-    private int keeperTrainerNumber;
+//    /** the current number of keeper Trainer */
+//    private int keeperTrainerNumber;
 
     /** the current level of the coach */
     private int trainerLevelNumber;
@@ -70,14 +70,14 @@ public class StaffPanel extends JPanel {
         return coTrainerNumber;
     }
 
-    /**
-     * Returns the number of keeper Trainer
-     *
-     * @return
-     */
-    public int getKeeperTrainerNumber() {
-        return keeperTrainerNumber;
-    }
+//    /**
+//     * Returns the number of keeper Trainer
+//     *
+//     * @return
+//     */
+//    public int getKeeperTrainerNumber() {
+//        return keeperTrainerNumber;
+//    }
 
     /**
      * Returns the ability of your trainer
@@ -92,7 +92,7 @@ public class StaffPanel extends JPanel {
      * Populate the staff with HO actual value, called after each Ho refresh command!
      */
     public void reload() {
-        setKeeper(Commons.getModel().getVerein().getTorwartTrainer());
+        //setKeeper(Commons.getModel().getVerein().getTorwartTrainer());
         setCoTrainer(Commons.getModel().getVerein().getCoTrainer());
         setTrainer(Commons.getModel().getTrainer().getTrainer() - 1);
     }
@@ -124,32 +124,32 @@ public class StaffPanel extends JPanel {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
-    private void setKeeper(int value) {
-        if (value > 10) {
-            value = 10;
-        }
-
-        try {
-            keeperTrainer.setSelectedIndex(value);
-        } catch (Exception e) {
-        }
-    }
-
-    /**
-     * Populate the Keeper Trainer combobox
-     */
-    private void setKeeperAssistantComboBox() {
-        keeperTrainer = new JComboBox();
-
-        for (int i = 0; i < 11; i++) {
-            keeperTrainer.addItem(new Integer(i));
-        }
-    }
+//    /**
+//     * TODO Missing Method Documentation
+//     *
+//     * @param value TODO Missing Method Parameter Documentation
+//     */
+//    private void setKeeper(int value) {
+//        if (value > 10) {
+//            value = 10;
+//        }
+//
+//        try {
+//            keeperTrainer.setSelectedIndex(value);
+//        } catch (Exception e) {
+//        }
+//    }
+//
+//    /**
+//     * Populate the Keeper Trainer combobox
+//     */
+//    private void setKeeperAssistantComboBox() {
+//        keeperTrainer = new JComboBox();
+//
+//        for (int i = 0; i < 11; i++) {
+//            keeperTrainer.addItem(new Integer(i));
+//        }
+//    }
 
     /**
      * TODO Missing Method Documentation
@@ -206,11 +206,11 @@ public class StaffPanel extends JPanel {
 
                     coTrainerNumber = n.intValue();
 
-                    // sets number of keeper trainer i exceded 10
-                    if ((keeperTrainerNumber + coTrainerNumber) > 10) {
-                        keeperTrainerNumber = 10 - coTrainerNumber;
-                        keeperTrainer.setSelectedIndex(keeperTrainerNumber);
-                    }
+//                    // sets number of keeper trainer i exceded 10
+//                    if ((keeperTrainerNumber + coTrainerNumber) > 10) {
+//                        keeperTrainerNumber = 10 - coTrainerNumber;
+//                        keeperTrainer.setSelectedIndex(keeperTrainerNumber);
+//                    }
 
                     // refresh player detail and prevision with the new staff settings
                     TrainingExperience.refreshPlayerDetail();
@@ -236,39 +236,39 @@ public class StaffPanel extends JPanel {
             });
 
         // initiates the keeper trainer combo box with the actual number of keeper trainer
-        setKeeperAssistantComboBox();
+//        setKeeperAssistantComboBox();
 
-        try {
-            keeperTrainerNumber = model.getVerein().getTorwartTrainer();
-        } catch (RuntimeException e2) {
-            keeperTrainerNumber = 0;
-        }
+//        try {
+//            keeperTrainerNumber = model.getVerein().getTorwartTrainer();
+//        } catch (RuntimeException e2) {
+//            keeperTrainerNumber = 0;
+//        }
 
-        setKeeper(keeperTrainerNumber);
-        keeperTrainer.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    // Sets new number of keeper trainer
-                    Integer n = (Integer) keeperTrainer.getSelectedItem();
-
-                    keeperTrainerNumber = n.intValue();
-
-                    // sets number of co trainer if exceded 10
-                    if ((coTrainerNumber + keeperTrainerNumber) > 10) {
-                        coTrainerNumber = 10 - keeperTrainerNumber;
-                        coTrainer.setSelectedIndex(coTrainerNumber);
-                    }
-
-                    // refresh player detail and prevision with the new staff settings				
-                    TrainingExperience.refreshPlayerDetail();
-                }
-            });
+//        setKeeper(keeperTrainerNumber);
+//        keeperTrainer.addItemListener(new ItemListener() {
+//                public void itemStateChanged(ItemEvent e) {
+//                    // Sets new number of keeper trainer
+//                    Integer n = (Integer) keeperTrainer.getSelectedItem();
+//
+//                    keeperTrainerNumber = n.intValue();
+//
+//                    // sets number of co trainer if exceded 10
+//                    if ((coTrainerNumber + keeperTrainerNumber) > 10) {
+//                        coTrainerNumber = 10 - keeperTrainerNumber;
+//                        coTrainer.setSelectedIndex(coTrainerNumber);
+//                    }
+//
+//                    // refresh player detail and prevision with the new staff settings				
+//                    TrainingExperience.refreshPlayerDetail();
+//                }
+//            });
 
         main.add(new JLabel(model.getLanguageString("Trainerlevel"))); //$NON-NLS-1$
         main.add(trainerLevel);
         main.add(new JLabel(model.getLanguageString("CoTrainer"))); //$NON-NLS-1$
         main.add(coTrainer);
-        main.add(new JLabel(model.getLanguageString("Torwarttrainer"))); //$NON-NLS-1$
-        main.add(keeperTrainer);
+//        main.add(new JLabel(model.getLanguageString("Torwarttrainer"))); //$NON-NLS-1$
+//        main.add(keeperTrainer);
         setOpaque(false);
         setLayout(new BorderLayout());
         add(new JScrollPane(main), BorderLayout.CENTER);
