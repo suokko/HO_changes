@@ -38,6 +38,9 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
 	private JTable transferTable;
     private List<PlayerTransfer> transfers = new ArrayList<PlayerTransfer>();
     private PlayerDetailPanel playerDetailPanel;
+    private ColorCellRenderer greenColumn = new ColorCellRenderer(ColorCellRenderer.GREEN);
+    private ColorCellRenderer yellowColumn = new ColorCellRenderer(ColorCellRenderer.YELLOW);
+
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -97,28 +100,28 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
         transferTable.getColumnModel().getColumn(4).setMaxWidth(20);
         transferTable.getColumnModel().getColumn(5).setPreferredWidth(150);
 
-        transferTable.getColumnModel().getColumn(8).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.GREEN));
+        transferTable.getColumnModel().getColumn(8).setCellRenderer(greenColumn);
         transferTable.getColumnModel().getColumn(8).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(9).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.GREEN));
+        transferTable.getColumnModel().getColumn(9).setCellRenderer(greenColumn);
         transferTable.getColumnModel().getColumn(9).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(10).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.GREEN));
+        transferTable.getColumnModel().getColumn(10).setCellRenderer(greenColumn);
         transferTable.getColumnModel().getColumn(10).setPreferredWidth(30);
 
-        transferTable.getColumnModel().getColumn(11).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(11).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(11).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(12).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(12).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(12).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(13).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(13).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(13).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(14).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(14).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(14).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(15).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(15).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(15).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(16).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(16).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(16).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(17).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(17).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(17).setPreferredWidth(30);
-        transferTable.getColumnModel().getColumn(18).setCellRenderer(new ColorCellRenderer(ColorCellRenderer.YELLOW));
+        transferTable.getColumnModel().getColumn(18).setCellRenderer(yellowColumn);
         transferTable.getColumnModel().getColumn(18).setPreferredWidth(30);
     }
 
