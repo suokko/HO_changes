@@ -194,11 +194,10 @@ public class PlayerCreator extends XMLCreator {
 			playerTag.appendChild(skillups);
 
 			int coTrainer = HOMiniModel.instance().getVerein().getCoTrainer();
-			int kepperTrainer = HOMiniModel.instance().getVerein().getTorwartTrainer();
 			int trainer = HOMiniModel.instance().getTrainer().getTrainer();
 			List<IFutureTrainingWeek> futures = HOMiniModel.instance().getFutureTrainingWeeks();
 
-			IFutureTrainingManager ftm = HOMiniModel.instance().getFutureTrainingManager(player, futures, coTrainer, kepperTrainer, trainer);
+			IFutureTrainingManager ftm = HOMiniModel.instance().getFutureTrainingManager(player, futures, coTrainer,  trainer);
 
 			List<ISkillup> futureSkillups = ftm.getFutureSkillups();
 

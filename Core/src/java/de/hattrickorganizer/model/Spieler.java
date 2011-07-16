@@ -689,23 +689,13 @@ public final class Spieler implements plugins.ISpieler {
         return m_sCharakter;
     }
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
-								int intensitaet, int staminaTrainingPart) {
-			return (int) Math.round(getTrainingLength(trTyp,coTrainer,twTrainer,trainerLvl,intensitaet, staminaTrainingPart));
-	}
-
     /////////////////////////////////////////////////7
     //Training ( reflected to skills)
     //TORSCHUSS is skipped due it trains two skills, won't be displayed in gui. Real calc for this is done in Trainingsmanager
     //TA_EXTERNALATTACK skipped due it trains two skills, calc must be done in trainingmanager for each skill seperate like Torschuss.no display in options gui.
     // @return duration of training based on settings and tr type, calls calcTraining for nested calculation
     ///////////////////////////////////////////////////77
-    public double getTrainingLength(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
-                                int intensitaet, int staminaTrainingPart) {
+    public double getTrainingLength(int trTyp, int coTrainer, int trainerLvl, int intensitaet, int staminaTrainingPart) {
       
     	switch (trTyp) {
             case TORWART:
@@ -2166,7 +2156,7 @@ public final class Spieler implements plugins.ISpieler {
     public void calcFullSubskills(java.sql.Timestamp hrftimestamp, int coTrainer, int twTrainer,
                                   int trainerlevel, int intensitaet, int staminaTrainingPart) {
         final Spieler oldspieler = DBZugriff.instance().getSpielerBeforeDate(hrftimestamp, getSpielerID());
-        calcFullSubskills(oldspieler, coTrainer, twTrainer, trainerlevel, intensitaet, staminaTrainingPart, hrftimestamp);
+        calcFullSubskills(oldspieler, coTrainer, trainerlevel, intensitaet, staminaTrainingPart, hrftimestamp);
     }
 
     /**
@@ -2181,7 +2171,7 @@ public final class Spieler implements plugins.ISpieler {
      * @param staminaTrainingPart TODO Missing Constructuor Parameter Documentation
      * @param hrftimestamp TODO Missing Constructuor Parameter Documentation
      */
-    public void calcFullSubskills(ISpieler old, int coTrainer, int twTrainer, int trainerlevel,
+    public void calcFullSubskills(ISpieler old, int coTrainer, int trainerlevel,
                                   int intensitaet, int staminaTrainingPart, Timestamp hrftimestamp) {
         final plugins.ITrainingPerPlayer trainingPerPlayer = de.hattrickorganizer.logik.TrainingsManager.instance()
         		.calculateFullTrainingForPlayer(this, de.hattrickorganizer.logik.TrainingsManager.instance().getTrainingsVector(), hrftimestamp);
@@ -2191,7 +2181,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_TORWART, old)) {
             m_dSubTorwart = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TORWART,
                                                                                                                           coTrainer,
-                                                                                                                          twTrainer,
                                                                                                                           trainerlevel,
                                                                                                                           intensitaet,
                                                                                                                           staminaTrainingPart),
@@ -2210,7 +2199,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_VERTEIDIGUNG, old)) {
             m_dSubVerteidigung = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getVE() / getTrainingLength(VERTEIDIGUNG,
                                                                                                                                coTrainer,
-                                                                                                                               twTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
                                                                                                                                staminaTrainingPart),
@@ -2229,7 +2217,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_SPIELAUFBAU, old)) {
             m_dSubSpielaufbau = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getSA() / getTrainingLength(SPIELAUFBAU,
                                                                                                                               coTrainer,
-                                                                                                                              twTrainer,
                                                                                                                               trainerlevel,
                                                                                                                               intensitaet,
                                                                                                                               staminaTrainingPart),
@@ -2248,7 +2235,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_PASSSPIEL, old)) {
             m_dSubPasspiel = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getPS() / getTrainingLength(PASSPIEL,
                                                                                                                            coTrainer,
-                                                                                                                           twTrainer,
                                                                                                                            trainerlevel,
                                                                                                                            intensitaet,
                                                                                                                            staminaTrainingPart),
@@ -2267,7 +2253,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_FLUEGEL, old)) {
             m_dSubFluegelspiel = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getFL() / getTrainingLength(FLUEGELSPIEL,
                                                                                                                                coTrainer,
-                                                                                                                               twTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
                                                                                                                                staminaTrainingPart),
@@ -2286,7 +2271,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_TORSCHUSS, old)) {
             m_dSubTorschuss = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getTS() / getTrainingLength(CHANCENVERWERTUNG,
                                                                                                                             coTrainer,
-                                                                                                                            twTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
                                                                                                                             staminaTrainingPart),
@@ -2305,7 +2289,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_STANDARDS, old)) {
             m_dSubStandards = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getST() / getTrainingLength(STANDARDS,
                                                                                                                             coTrainer,
-                                                                                                                            twTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
                                                                                                                             staminaTrainingPart),
@@ -2333,7 +2316,7 @@ public final class Spieler implements plugins.ISpieler {
      * @param intensitaet TODO Missing Constructuor Parameter Documentation
      * @param hrfID TODO Missing Constructuor Parameter Documentation
      */
-    public void calcIncrementalSubskills(ISpieler old, int coTrainer, int twTrainer,
+    public void calcIncrementalSubskills(ISpieler old, int coTrainer, 
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
 //        System.out.println ("calcIncSS: "+
 //        		old.getSpielerID()+", cos="+coTrainer+", tw="+twTrainer
@@ -2346,7 +2329,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_TORWART, old)) {
             m_dSubTorwart = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TORWART,
                                                                                                                           coTrainer,
-                                                                                                                          twTrainer,
                                                                                                                           trainerlevel,
                                                                                                                           intensitaet,
                                                                                                                           staminaTrainingPart),
@@ -2364,7 +2346,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_VERTEIDIGUNG, old)) {
             m_dSubVerteidigung = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getVE() / getTrainingLength(VERTEIDIGUNG,
                                                                                                                                coTrainer,
-                                                                                                                               twTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
                                                                                                                                staminaTrainingPart),
@@ -2382,7 +2363,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_SPIELAUFBAU, old)) {
             m_dSubSpielaufbau = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getSA() / getTrainingLength(SPIELAUFBAU,
                                                                                                                               coTrainer,
-                                                                                                                              twTrainer,
                                                                                                                               trainerlevel,
                                                                                                                               intensitaet,
                                                                                                                               staminaTrainingPart),
@@ -2402,7 +2382,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_PASSSPIEL, old)) {
             m_dSubPasspiel = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getPS() / getTrainingLength(PASSPIEL,
                                                                                                                            coTrainer,
-                                                                                                                           twTrainer,
                                                                                                                            trainerlevel,
                                                                                                                            intensitaet,
                                                                                                                            staminaTrainingPart),
@@ -2422,7 +2401,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_FLUEGEL, old)) {
             m_dSubFluegelspiel = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getFL() / getTrainingLength(FLUEGELSPIEL,
                                                                                                                                coTrainer,
-                                                                                                                               twTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
                                                                                                                                staminaTrainingPart),
@@ -2442,7 +2420,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_TORSCHUSS, old)) {
             m_dSubTorschuss = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getTS() / getTrainingLength(CHANCENVERWERTUNG,
                                                                                                                             coTrainer,
-                                                                                                                            twTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
                                                                                                                             staminaTrainingPart),
@@ -2462,7 +2439,6 @@ public final class Spieler implements plugins.ISpieler {
         if (!check4SkillUp(SKILL_STANDARDS, old)) {
             m_dSubStandards = de.hattrickorganizer.tools.Helper.round(trainingPerPlayer.getST() / getTrainingLength(STANDARDS,
                                                                                                                             coTrainer,
-                                                                                                                            twTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
                                                                                                                             staminaTrainingPart),

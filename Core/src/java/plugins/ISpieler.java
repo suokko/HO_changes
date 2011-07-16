@@ -419,15 +419,7 @@ public interface ISpieler {
     /////////////////////////////////////////////////7
     //Training
     ///////////////////////////////////////////////////77
-    /**
-     * @deprecated use getTrainingLength instead
-     */
-    @Deprecated
-	public int getDauerTraining(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
-                                int intensitaet, int staminaTrainingPart);
-
-	public double getTrainingLength(int trTyp, int coTrainer, int twTrainer, int trainerLvl,
-								int intensitaet, int staminaTrainingPart);
+	public double getTrainingLength(int trTyp, int coTrainer, int trainerLvl, int intensitaet, int staminaTrainingPart);
 
     /**
      * Setter for property m_iErfahrung.
