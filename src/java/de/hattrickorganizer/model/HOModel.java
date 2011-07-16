@@ -471,7 +471,6 @@ public class HOModel {
                     // Missing week, full recalculation
                     case 2: {
                         player.calcFullSubskills(old, m_clVerein.getCoTrainer(),
-                                                 m_clVerein.getTorwartTrainer(),
                                                  getTrainer().getTrainer(),
                                                  m_clTeam.getTrainingslevel(),
                                                  m_clTeam.getStaminaTrainingPart(),
@@ -482,7 +481,6 @@ public class HOModel {
                     // Previous week ok, incremental calculation
                     case 1: {
                         player.calcIncrementalSubskills(old, m_clVerein.getCoTrainer(),
-                                                        m_clVerein.getTorwartTrainer(),
                                                         getTrainer().getTrainer(),
                                                         m_clTeam.getTrainingslevel(),
                                                         m_clTeam.getStaminaTrainingPart(),

@@ -191,6 +191,7 @@ public interface IVerein {
      *
      * @return Value of property m_iTorwartTrainer.
      */
+    @Deprecated
     public int getTorwartTrainer();
 
     /**
