@@ -48,7 +48,7 @@ public class Transfers implements IPlugin, IRefreshable, ActionListener, IOffici
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Plugin version constant */
-    private final double PLUGIN_VERSION = 0.973;
+    private final double PLUGIN_VERSION = 0.974;
 
     /** Plugin Id */
     private final int PLUGIN_ID = 25;
