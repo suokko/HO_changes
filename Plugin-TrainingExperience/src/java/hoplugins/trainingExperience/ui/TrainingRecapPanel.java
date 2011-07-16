@@ -85,8 +85,6 @@ public class TrainingRecapPanel extends JPanel {
                                                                                      TrainingExperience.getStaffPanel()
                                                                                                        .getCoTrainerNumber(),
                                                                                      TrainingExperience.getStaffPanel()
-                                                                                                       .getKeeperTrainerNumber(),
-                                                                                     TrainingExperience.getStaffPanel()
                                                                                                        .getTrainerLevelNumber());
             List<ISkillup> su = ftm.getFutureSkillups();
 

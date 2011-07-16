@@ -84,8 +84,6 @@ public class PlayerDetailPanel extends JPanel {
                                                                                  TrainingExperience.getStaffPanel()
                                                                                                    .getCoTrainerNumber(),
                                                                                  TrainingExperience.getStaffPanel()
-                                                                                                   .getKeeperTrainerNumber(),
-                                                                                 TrainingExperience.getStaffPanel()
                                                                                                    .getTrainerLevelNumber());
 
         // Add future skillups

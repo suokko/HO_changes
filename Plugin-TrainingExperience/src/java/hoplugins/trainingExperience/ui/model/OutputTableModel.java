@@ -192,9 +192,7 @@ public class OutputTableModel extends AbstractTableModel {
         return player.getTrainingLength(Skills.getTrainedSkillCode(skillIndex),
                 TrainingExperience.getStaffPanel()
                                   .getCoTrainerNumber(),
-                TrainingExperience.getStaffPanel()
-                                  .getKeeperTrainerNumber(),
-                TrainingExperience.getStaffPanel()
+                                  TrainingExperience.getStaffPanel()
                                   .getTrainerLevelNumber(),
                 p_IHMM_HOMiniModel.getTeam()
                                   .getTrainingslevel(),
