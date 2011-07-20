@@ -47,7 +47,7 @@ public class Filter {
     private boolean win;
 
     /** Maximum number of games */
-    private int number;
+    private int number = 10;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -71,218 +71,100 @@ public class Filter {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param b
-     */
     public void setAutomatic(boolean b) {
         automatic = b;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isAutomatic() {
         return automatic;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param b
-     */
     public void setAwayGames(boolean b) {
         awayGames = b;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isAwayGames() {
         return awayGames;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param b
-     */
     public void setCup(boolean b) {
         cup = b;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public boolean isCup() {
         return cup;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param b
-     */
     public void setDefeat(boolean b) {
         defeat = b;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isDefeat() {
         return defeat;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param b
-     */
     public void setDraw(boolean b) {
         draw = b;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isDraw() {
         return draw;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param b
-     */
     public void setFriendly(boolean b) {
         friendly = b;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public boolean isFriendly() {
         return friendly;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param b
-     */
     public void setHomeGames(boolean b) {
         homeGames = b;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isHomeGames() {
         return homeGames;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param b
-     */
     public void setLeague(boolean b) {
         league = b;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public boolean isLeague() {
         return league;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param list
-     */
     public void setMatches(List<String> list) {
         matches = list;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public List<String> getMatches() {
         return matches;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param i
-     */
+    /** Maximum number of games */
     public void setNumber(int i) {
         number = i;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
+    /** Maximum number of games */
     public int getNumber() {
         return number;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param b
-     */
     public void setQualifier(boolean b) {
         qualifier = b;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public boolean isQualifier() {
         return qualifier;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param b
-     */
     public void setWin(boolean b) {
         win = b;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isWin() {
         return win;
     }

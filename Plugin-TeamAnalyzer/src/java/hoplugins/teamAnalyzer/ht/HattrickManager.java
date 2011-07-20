@@ -9,8 +9,10 @@ import hoplugins.teamAnalyzer.vo.PlayerInfo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -32,91 +34,55 @@ public class HattrickManager {
      * @param teamId teamid to download matches for
      */
     public static void downloadMatches(final int teamId) {
+    	final HashSet<String> matches = new HashSet<String>();
     	try {
-			final HashSet<String> matches = new HashSet<String>();
-			String xml = "";
-			try {
-				xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile("/chppxml.axd?file=matches&TeamID=" + teamId);
-			} catch (Exception e) {
-				log("Error(downloadMatches) 1: " + e);
-				return;
-			}
-
-			try {
-				IXMLParser parser = Commons.getModel().getXMLParser();
-				Document dom = parser.parseString(xml);
-				Node matchesList = dom.getElementsByTagName("MatchList").item(0);
-
-				for (int i = 0; i < matchesList.getOwnerDocument().getElementsByTagName("MatchID").getLength(); i++) {
-					if (matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i) == null) {
-						continue;
-					}
-					String matchId = matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i).getFirstChild().getNodeValue();
-					String status = matchesList.getOwnerDocument().getElementsByTagName("Status").item(i).getFirstChild().getNodeValue();
-
-					if (status.equalsIgnoreCase("FINISHED")) {
-						Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId));
-						matches.add(matchId);
-					} else {
-						continue;
-					}
-				}
-			} catch (Exception e) {
-				log("Error(downloadMatches) 2: " + e);
-				e.printStackTrace();
-			}
-			if (matches.size() < 10) {
-				downloadAdditionalMatches(teamId, matches);
-			}
-		} catch (Exception e2) {
-			log("Error(downloadMatches) 3: " + e2);
-			e2.printStackTrace();
-		}
-    }
-
-    /**
-	 * Download additional matches using the archive.
-	 *
-	 * @param teamId
-	 *            opponents team id
-	 * @param matches
-	 *            list of already loaded matches
-	 */
-    private static void downloadAdditionalMatches(final int teamId, final HashSet<String> matches) {
-    	try {
+    		boolean download = true;
     		String xml;
     		final Calendar start = Calendar.getInstance();
+			final Date oneyearold = new Date(start.getTimeInMillis() - TimeUnit.DAYS.toMillis(365));
     		final Calendar end = Calendar.getInstance();
     		start.setLenient(true);
     		start.add(Calendar.DAY_OF_YEAR, -(7*7)); // 7 week = half season
     		end.setLenient(true);
     		end.add(Calendar.DAY_OF_YEAR, -1);
     		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    		xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile("/chppxml.axd?file=matchesarchive&teamID=" + teamId
-            		+ "&FirstMatchDate=" + sdf.format(start.getTime()) + "&LastMatchDate=" + sdf.format(end.getTime()));
+    		String url;
 
-    		IXMLParser parser = Commons.getModel().getXMLParser();
-	        Document dom = parser.parseString(xml);
-	        Node matchesList = dom.getElementsByTagName("MatchList").item(0);
+    		while (download) {
+    			url = "/chppxml.axd?file=matchesarchive&teamID=" + teamId + "&FirstMatchDate=" + sdf.format(start.getTime()) + "&LastMatchDate=" + sdf.format(end.getTime());
+    			log(url + " / " + matches.size());
+    			xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(url);
 
-	        for (int i = 0; i < matchesList.getOwnerDocument().getElementsByTagName("MatchID").getLength(); i++) {
-	        	if (matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i) == null) {
-	        		continue;
-	        	}
-	            String matchId = matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i).getFirstChild().getNodeValue();
-	            if (!matches.contains(matchId)) {
-	            	Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId));
-	            	matches.add(matchId);
-	            	if (matches.size() >= 20) { // 20 matches ought to be enough for anybody.
-	            		return;
-	            	}
-	            } else {
-	                continue;
-	            }
-	        }
+    			IXMLParser parser = Commons.getModel().getXMLParser();
+    			Document dom = parser.parseString(xml);
+    			Node matchesList = dom.getElementsByTagName("MatchList").item(0);
+
+    			for (int i = 0; i < matchesList.getOwnerDocument().getElementsByTagName("MatchID").getLength(); i++) {
+    				if (matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i) == null) {
+    					continue;
+    				}
+    				String matchId = matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i).getFirstChild().getNodeValue();
+    				if (!matches.contains(matchId)) {
+    					Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId));
+    					matches.add(matchId);
+    					if (matches.size() >= Math.max(20, SystemManager.getFilter().getNumber() * 3)) { // [3 x limit] matches ought to be enough for anybody.
+    						download = false;
+    						return;
+    					}
+    				} else {
+    					continue;
+    				}
+    			}
+    			// next 7 weeks
+    			end.setTime(start.getTime());
+        		end.add(Calendar.DAY_OF_YEAR, -1);
+        		start.add(Calendar.DAY_OF_YEAR, -(7*7));
+        		if (end.getTime().before(oneyearold)) {
+        			download = false;
+        		}
+    		}
         } catch (Exception e) {
             log("Error(downloadAdditionalMatches): " + e.getMessage());
-            return;
         }
     }
 
@@ -129,9 +95,7 @@ public class HattrickManager {
         String xml = "";
 
         try {
-            xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(
-            		"/common/chppxml.axd?file=players&TeamID=" + teamId);
-
+			xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile("/common/chppxml.axd?file=players&TeamID=" + teamId);
         } catch (Exception e) {
             return;
         }
@@ -197,8 +161,7 @@ public class HattrickManager {
      * @throws Exception if error occurs
      */
     public static String downloadTeam(int teamId) throws Exception {
-        String xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(
-        		"/common/chppxml.axd?file=team&teamID="+ teamId);
+		String xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile("/common/chppxml.axd?file=team&teamID=" + teamId);
         IXMLParser parser = Commons.getModel().getXMLParser();
         Document dom = parser.parseString(xml);
         Document teamDocument = dom.getElementsByTagName("Team").item(0).getOwnerDocument();
@@ -232,11 +195,11 @@ public class HattrickManager {
     /**
      * Log to HOLogger.
      */
-    public final static void log(String message) {
-    	try {
-    	Commons.getModel().log(HattrickManager.class, message);
-    	} catch (Exception e) {
-    		System.out.println(HattrickManager.class + " - Error during log(): " + e);
-    	}
-    }
+	public final static void log(String message) {
+		try {
+			Commons.getModel().log(HattrickManager.class, message);
+		} catch (Exception e) {
+			System.out.println(HattrickManager.class + " - Error during log(): " + e);
+		}
+	}
 }
