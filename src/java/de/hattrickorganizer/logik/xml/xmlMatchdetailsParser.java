@@ -94,7 +94,7 @@ public class xmlMatchdetailsParser {
                 readGeneral(doc, md);
                 // Match lineup needs to be available, if not -> ignore match highlights/report
                 if (!DBZugriff.instance().isMatchLineupVorhanden(md.getMatchID())) {
-                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser: Cannot parse matchreport from matchdetails, lineup MUST be available first!");
+                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available first!");
                 } else {
                     readHighlights(doc, md);
                     parseMatchReport(md);
