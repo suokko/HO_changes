@@ -208,13 +208,12 @@ public class SystemManager {
     public static void updateUI() {
         TeamLineup lineup = ReportManager.getLineup();
 
+        plugin.getFilterPanel().reload();
         if (lineup != null) {
-            plugin.getFilterPanel().reload();
             plugin.getMainPanel().reload(lineup, 0, 0);
             plugin.getRecapPanel().reload(lineup);
             plugin.getRatingPanel().reload(lineup);
         } else {
-            plugin.getFilterPanel().reload();
             plugin.getMainPanel().reload(null, 0, 0);
             plugin.getRecapPanel().reload(null);
             plugin.getRatingPanel().reload(null);
