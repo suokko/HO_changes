@@ -15,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -133,25 +135,24 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
         label = new JLabel();
         getContentPane().add(label);
 
-        m_jrbLigaAndere.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_LigaDownload_Andere"));
+        m_jrbLigaAndere.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_LigaDownload_Andere"));
         m_jrbLigaAndere.setOpaque(false);
         m_jrbLigaAndere.addActionListener(this);
         bg.add(m_jrbLigaAndere);
         getContentPane().add(m_jrbLigaAndere);
 
         m_jcbLiga = new JComboBox(fillCB());
-        m_jcbLiga.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_LigaDownload_LigaID"));
+        m_jcbLiga.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_LigaDownload_LigaID"));
         m_jcbLiga.setEnabled(false);
-        m_jcbLiga.setSelectedItem(new Integer(de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                     .getLigaID4SaisonID(seasonid)));
+        m_jcbLiga.setSelectedItem(Integer.valueOf(DBZugriff.instance().getLigaID4SaisonID(seasonid)));
         m_jcbLiga.setEditable(true);
         getContentPane().add(m_jcbLiga);
 
-        m_jbOk.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
+        m_jbOk.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
         m_jbOk.addActionListener(this);
         getContentPane().add(m_jbOk);
 
-        m_jbAbbrechen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
+        m_jbAbbrechen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
         m_jbAbbrechen.addActionListener(this);
         getContentPane().add(m_jbAbbrechen);
 

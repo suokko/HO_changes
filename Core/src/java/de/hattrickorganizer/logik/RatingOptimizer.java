@@ -117,7 +117,7 @@ public class RatingOptimizer {
 		final Lineup lineup = new Lineup();
 		for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
 			IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
-			ISpieler playerData = (ISpieler) matchData.getPlayers().get(new Integer(playerMatch.getSpielerId()));
+			ISpieler playerData = (ISpieler) matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
 			
 			if (playerMatch.getId() == ISpielerPosition.setPieces) {
 				lineup.setKicker(playerMatch.getSpielerId());

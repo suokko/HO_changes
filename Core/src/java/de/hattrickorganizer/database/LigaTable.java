@@ -72,7 +72,7 @@ public final class LigaTable extends AbstractTable {
 			rs.beforeFirst();
 
 			while (rs.next()) {
-				vligaids.add(new Integer(rs.getInt("LigaID")));
+				vligaids.add(Integer.valueOf(rs.getInt("LigaID")));
 			}
 
 			//Umkopieren

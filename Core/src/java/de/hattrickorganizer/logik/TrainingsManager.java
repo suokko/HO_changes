@@ -335,7 +335,7 @@ public class TrainingsManager implements ITrainingsManager {
      */
     public double getBasePoints (int trainType, int position) {
     	TrainingPoint point = new TrainingPoint();
-        return (point.getTrainingPoint(trainType, new Integer (position)).doubleValue());
+        return (point.getTrainingPoint(trainType, Integer.valueOf(position)).doubleValue());
     }
 
     /**

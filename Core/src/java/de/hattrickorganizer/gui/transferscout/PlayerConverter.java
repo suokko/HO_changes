@@ -621,9 +621,9 @@ public class PlayerConverter {
                 	}
                 	if (!skip) {
                 		final List<Object> pair = new ArrayList<Object>();
-                		pair.add(new Integer(k));
+                		pair.add(Integer.valueOf(k));
                 		pair.add(singlespeciality);
-                		pair.add(new Integer(p));
+                		pair.add(Integer.valueOf(p));
                 		foundspecialities.add(pair);
                 	}
 

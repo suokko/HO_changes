@@ -347,9 +347,9 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 				spielerID = rs.getInt("SpielerID");
 				rating = rs.getDouble("Rating");
 				ratingStarsEndOfMatch = rs.getDouble("RatingStarsEndOfMatch");
-				vname = new String(DBZugriff.deleteEscapeSequences(rs.getString("VName")));
-				nickName = new String(DBZugriff.deleteEscapeSequences(rs.getString("NickName")));
-				name = new String(DBZugriff.deleteEscapeSequences(rs.getString("Name")));
+				vname = DBZugriff.deleteEscapeSequences(rs.getString("VName"));
+				nickName = DBZugriff.deleteEscapeSequences(rs.getString("NickName"));
+				name = DBZugriff.deleteEscapeSequences(rs.getString("Name"));
 				positionsCode = rs.getInt("PositionCode");
 				
 //				if ((roleID != positionsCode || roleID != rs.getInt("FIELDPOS")) && 

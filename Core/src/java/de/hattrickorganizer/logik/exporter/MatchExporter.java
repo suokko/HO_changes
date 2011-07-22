@@ -104,7 +104,7 @@ public class MatchExporter {
 					}
 
 					//ISpieler in ht ablegen
-					lineUpISpieler.put(new Integer(player.getSpielerId()), formerPlayerData);
+					lineUpISpieler.put(Integer.valueOf(player.getSpielerId()), formerPlayerData);
 				} //end for aufstellung
 
 				//Matchdaten ablegen da einwandfrei

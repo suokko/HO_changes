@@ -285,7 +285,7 @@ public abstract class HOColumnModel extends AbstractTableModel{
     public void setColumnsSize(TableColumnModel tableColumnModel){
     	final UserColumn[] tmpColumns = getDisplayedColumns();
     	for (int i = 0; i < tmpColumns.length; i++) {
-			tmpColumns[i].setSize(tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(i))));
+			tmpColumns[i].setSize(tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(i))));
 		}
     }
  

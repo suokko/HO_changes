@@ -97,12 +97,12 @@ public class MatchResultTable extends JTable {
 		setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		final TableColumnModel tableColumnModel = getColumnModel();
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(1))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(250));
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(1))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(250));		
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(2))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(2))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(250));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(250));		
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));
 
 		setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		setRowSelectionAllowed(true);
