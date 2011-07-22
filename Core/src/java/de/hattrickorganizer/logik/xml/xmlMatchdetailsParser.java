@@ -312,7 +312,7 @@ public class xmlMatchdetailsParser {
             				homeTeamPlayers.add(tmpplay);
             			} else {
             				objectplayername = String.valueOf(objectplayerid);
-            				broken.add(new Integer(myHighlights.size()));
+            				broken.add(Integer.valueOf(myHighlights.size()));
             			}
             		}
             		}

@@ -10,6 +10,7 @@ import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.TransferTableModel;
 import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.gui.utils.ToolTipHeader;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -79,8 +80,7 @@ public class TransferTable extends JTable implements Refreshable {
      * @param width TODO Missing Method Parameter Documentation
      */
     private void setMinWidth(int index, int width) {
-        getColumnModel().getColumn(getColumnModel().getColumnIndex(new Integer(index))).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                                                    .calcCellWidth(width));
+        getColumnModel().getColumn(getColumnModel().getColumnIndex(Integer.valueOf(index))).setMinWidth(Helper.calcCellWidth(width));
     }
 
     /**
@@ -90,8 +90,8 @@ public class TransferTable extends JTable implements Refreshable {
      * @param width TODO Missing Method Parameter Documentation
      */
     private void setPreferredWidth(int index, int width) {
-        getColumnModel().getColumn(getColumnModel().getColumnIndex(new Integer(index)))
-            .setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(width));
+        getColumnModel().getColumn(getColumnModel().getColumnIndex(Integer.valueOf(index)))
+            .setPreferredWidth(Helper.calcCellWidth(width));
     }
 
     /**
@@ -111,7 +111,7 @@ public class TransferTable extends JTable implements Refreshable {
             setModel(m_clTableSorter);
 
             for (int i = 0; i <= 35; i++) {
-                getColumnModel().getColumn(i).setIdentifier(new Integer(i));
+                getColumnModel().getColumn(i).setIdentifier(Integer.valueOf(i));
             }
 
             m_clTableSorter.addMouseListenerToHeaderInTable(this);

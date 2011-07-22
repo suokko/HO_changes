@@ -5,9 +5,9 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import plugins.IMatchResult;
-
 import de.hattrickorganizer.gui.model.MatchScoreTableModel;
 import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.tools.Helper;
 
 /**
  * TODO Missing Class Documentation
@@ -97,12 +97,12 @@ public class MatchScoreTable extends JTable {
 		setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		final TableColumnModel tableColumnModel = getColumnModel();
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));		
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(100));		
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(1))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(200));
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(1))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(200));
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(2))).setMaxWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(200));		
-		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(2))).setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(200));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0))).setMaxWidth(Helper.calcCellWidth(100));		
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0))).setPreferredWidth(Helper.calcCellWidth(100));		
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1))).setMaxWidth(Helper.calcCellWidth(200));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1))).setPreferredWidth(Helper.calcCellWidth(200));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2))).setMaxWidth(Helper.calcCellWidth(200));		
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2))).setPreferredWidth(Helper.calcCellWidth(200));
 
 		setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		setRowSelectionAllowed(true);

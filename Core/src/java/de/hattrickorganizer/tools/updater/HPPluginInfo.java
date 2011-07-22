@@ -33,7 +33,6 @@ final class HPPluginInfo {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private IOfficialPlugin officialPlugin;
-    private String className;
     private String hoversion = "";
     private String name;
     private String updateText = "";
@@ -42,13 +41,6 @@ final class HPPluginInfo {
     private double version;
     private int pluginId;
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public String toString() {
         if (name != null) {
@@ -58,29 +50,10 @@ final class HPPluginInfo {
         return "?";
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return String
-     */
-    protected String getClassName() {
-        return className;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @return Returns the hoversion.
-     */
     protected String getHoversion() {
         return hoversion;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return Returns the hoversion as double.
-     */
     protected double getHoversionAsDouble() {
         if (hoversion.equals("-")) {
             return 0.0d;
@@ -89,13 +62,6 @@ final class HPPluginInfo {
         return Double.parseDouble(hoversion);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param elements TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected static HPPluginInfo getInstance(NodeList elements) {
         HPPluginInfo hpPluginInfo = new HPPluginInfo();
 
@@ -142,139 +108,62 @@ final class HPPluginInfo {
         return hpPluginInfo;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return String
-     */
     protected String getName() {
         return name;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param officialPlugin The officialPlugin to set.
-     */
     protected void setOfficialPlugin(IOfficialPlugin officialPlugin) {
         this.officialPlugin = officialPlugin;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return Returns the officialPlugin.
-     */
     protected IOfficialPlugin getOfficialPlugin() {
         return officialPlugin;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return Returns the pluginId.
-     */
     protected int getPluginId() {
         return pluginId;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return Returns the updateText.
-     */
     protected String getUpdateText() {
         return updateText;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param version The version to set.
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
-     */
     protected void setVersion(String version) throws Exception {
         this.version = Double.parseDouble(version);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return Returns the version.
-     */
     protected double getVersion() {
         return version;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     protected void setVisible(String value) {
         visible = value.equals("0") ? true : false;
     }
 
-    /**
-     * Returns if the plugin displays in the dialogs
-     *
-     * @return boolean
-     */
     protected boolean isVisible() {
         return visible;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     protected String getZipFileName() {
         return zipFileName;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param hoversion The hoversion to set.
-     */
     private void setHoversion(String hoversion) {
         this.hoversion = hoversion;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param string
-     */
     private void setName(String string) {
         name = string;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param pluginId The pluginId to set.
-     */
     private void setPluginId(String pluginId) {
         this.pluginId = Integer.parseInt(pluginId);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param updateText The updateText to set.
-     */
     private void setUpdateText(String updateText) {
         this.updateText = updateText;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param string
-     */
     private void setZipFileName(String string) {
         zipFileName = string;
     }

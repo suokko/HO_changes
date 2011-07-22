@@ -108,7 +108,7 @@ public class NimbusTheme {
 				uid.put("TitledBorder.font", boldFont);
 				
 				uid.put("Table.intercellSpacing", new DimensionUIResource(1, 1)); //new DimensionUIResource(1, 1)
-				uid.put("Table.showGrid", new Boolean(true));
+				uid.put("Table.showGrid", Boolean.TRUE);
 				uid.put("Table.gridColor", new ColorUIResource(214, 217, 223));
 				
 				//uid.put("Table.editor".contentMargins	InsetsUIResource	javax.swing.plaf.InsetsUIResource[top=3,left=5,bottom=3,right=5]

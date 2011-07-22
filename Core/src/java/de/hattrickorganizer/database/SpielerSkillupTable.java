@@ -90,7 +90,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			Object[] element = iter.next();
 			int code = ((Integer) element[4]).intValue();			
 			if (code==skillCode) {
-				return new Object[] { element[2], new Boolean(true)};									
+				return new Object[] { element[2], Boolean.TRUE};									
 			}
 		}
 		return new Object[] { new Timestamp(System.currentTimeMillis()), Boolean.FALSE};						
@@ -145,7 +145,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			if (rs != null) {
 				rs.beforeFirst();
 				while (rs.next()) {
-					idVector.add(new Integer(rs.getInt("SpielerID")));
+					idVector.add(Integer.valueOf(rs.getInt("SpielerID")));
 				}
 			}
 		} catch (Exception e) {
@@ -162,7 +162,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			ResultSet rs = adapter.executeQuery(sql);
 			rs.beforeFirst();
 			while (rs.next()) {
-				v.add(new Object[] {new Integer(rs.getInt("HRF_ID")),new Integer(spielerId),rs.getTimestamp("datum"),new Integer(rs.getInt("Value")),new Integer(rs.getInt("Skill"))});															
+				v.add(new Object[] {Integer.valueOf(rs.getInt("HRF_ID")),Integer.valueOf(spielerId),rs.getTimestamp("datum"),Integer.valueOf(rs.getInt("Value")),Integer.valueOf(rs.getInt("Skill"))});															
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
@@ -210,7 +210,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			if (rs != null) {
 				rs.beforeFirst();
 				while (rs.next()) {
-					idVector.add(new Integer(rs.getInt("SpielerID")));
+					idVector.add(Integer.valueOf(rs.getInt("SpielerID")));
 				}
 			}
 		} catch (Exception e) {
@@ -250,7 +250,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 			while (rs.next()) {
 				int value = rs.getInt(key);
 				if (value > lastValue) {
-					v.add(new Object[] {new Integer(rs.getInt("HRF_ID")),new Integer(spielerId),rs.getTimestamp("datum"),new Integer(value),new Integer(skillCode)});															
+					v.add(new Object[] {Integer.valueOf(rs.getInt("HRF_ID")),Integer.valueOf(spielerId),rs.getTimestamp("datum"),Integer.valueOf(value),Integer.valueOf(skillCode)});															
 				}
 				lastValue = value;
 			}
