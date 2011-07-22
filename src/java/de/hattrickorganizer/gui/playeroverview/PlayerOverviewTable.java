@@ -48,7 +48,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 	 */
 	public final int getBestPosWidth() {
 		return getColumnModel().getColumn(
-				getColumnModel().getColumnIndex(new Integer(m_clTableModel.getPositionInArray(UserColumnFactory.BEST_POSITION))))
+				getColumnModel().getColumnIndex(Integer.valueOf(m_clTableModel.getPositionInArray(UserColumnFactory.BEST_POSITION))))
 				.getWidth();
 	}
 
@@ -171,7 +171,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 
 			if (targetColumn != null) {
 				for (int i = 0; i < targetColumn.length; i++) {
-					this.moveColumn(getColumnModel().getColumnIndex(new Integer(targetColumn[i][0])), targetColumn[i][1]);
+					this.moveColumn(getColumnModel().getColumnIndex(Integer.valueOf(targetColumn[i][0])), targetColumn[i][1]);
 				}
 			}
 

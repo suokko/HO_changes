@@ -123,7 +123,7 @@ public final class SpielerTable extends AbstractTable {
 						+ ","
 						+ player.getSpielerID()
 						+ ",'"
-						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(player.getName())
+						+ DBZugriff.insertEscapeSequences(player.getName())
 						+ "',"
 						+ player.getAlter()
 						+ ","
@@ -177,19 +177,19 @@ public final class SpielerTable extends AbstractTable {
 						+ ","
 						+ player.getSpezialitaet()
 						+ ",'"
-						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(player.getSpezialitaetString())
+						+ DBZugriff.insertEscapeSequences(player.getSpezialitaetString())
 						+ "',"
 						+ player.getCharakter()
 						+ ",'"
-						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(player.getCharakterString())
+						+ DBZugriff.insertEscapeSequences(player.getCharakterString())
 						+ "',"
 						+ player.getAnsehen()
 						+ ",'"
-						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(player.getAnsehenString())
+						+ DBZugriff.insertEscapeSequences(player.getAnsehenString())
 						+ "',"
 						+ player.getAgressivitaet()
 						+ ",'"
-						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(player.getAgressivitaetString())
+						+ DBZugriff.insertEscapeSequences(player.getAgressivitaetString())
 						+ "',"
 						+ player.getFuehrung()
 						+ ","
@@ -351,11 +351,11 @@ public final class SpielerTable extends AbstractTable {
 				rs.beforeFirst();
 
 				while (rs.next()) {
-					idVector.add(new Integer(rs.getInt("SpielerID")));
+					idVector.add(Integer.valueOf(rs.getInt("SpielerID")));
 				}
 
 				for (int i = 0; i < idVector.size(); i++) {
-					sql = "SELECT * from "+getTableName()+" WHERE SpielerID=" + ((Integer) idVector.get(i)).toString() + " ORDER BY Datum DESC";
+					sql = "SELECT * from "+getTableName()+" WHERE SpielerID=" + idVector.get(i) + " ORDER BY Datum DESC";
 					rs = adapter.executeQuery(sql);
 
 					if (rs.first()) {

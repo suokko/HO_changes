@@ -67,7 +67,7 @@ public class SpielerUebersichtPrintTable extends JTable {
 
         if (targetColumn != null) {
             for (int i = 0; i < targetColumn.length; i++) {
-                this.moveColumn(getColumnModel().getColumnIndex(new Integer(targetColumn[i][0])),
+                this.moveColumn(getColumnModel().getColumnIndex(Integer.valueOf(targetColumn[i][0])),
                                 targetColumn[i][1]);
             }
         }

@@ -439,7 +439,7 @@ public class TableSorter extends TableMap {
         ascending = flag;
         currentColumn = i;
         sortingColumns.removeAllElements();
-        sortingColumns.addElement(new Integer(i));
+        sortingColumns.addElement(Integer.valueOf(i));
         sort(this);
         super.tableChanged(new TableModelEvent(this));
     }

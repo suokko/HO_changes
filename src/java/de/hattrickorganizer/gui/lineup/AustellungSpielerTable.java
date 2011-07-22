@@ -164,7 +164,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
      * @return TODO Missing Return Method Documentation
      */
     protected int getBestPosWidth() {
-        return getColumnModel().getColumn(getColumnModel().getColumnIndex(new Integer(3))).getWidth();
+        return getColumnModel().getColumn(getColumnModel().getColumnIndex(Integer.valueOf(3))).getWidth();
     }
 
     /**
@@ -266,7 +266,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
 
             if (targetColumn != null) {
                 for (int i = 0; i < targetColumn.length; i++) {
-                    this.moveColumn(getColumnModel().getColumnIndex(new Integer(targetColumn[i][0])),
+                    this.moveColumn(getColumnModel().getColumnIndex(Integer.valueOf(targetColumn[i][0])),
                                     targetColumn[i][1]);
                 }
             }

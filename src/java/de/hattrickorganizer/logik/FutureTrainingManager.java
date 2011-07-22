@@ -79,7 +79,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 			weeksPassed++;
 			IFutureTrainingWeek tw = this.futureTrainings.get(index-1);
 			
-			double point = HOMiniModel.instance().getTrainingsManager().getTrainingPoint().getTrainingPoint(tw.getTyp(), new Integer(position)).doubleValue();
+			double point = HOMiniModel.instance().getTrainingsManager().getTrainingPoint().getTrainingPoint(tw.getTyp(), Integer.valueOf(position)).doubleValue();
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
 			switch (tw.getTyp()) {

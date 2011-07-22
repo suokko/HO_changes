@@ -6,6 +6,7 @@ import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.model.SpielerPositionTableModel;
 import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -99,22 +100,18 @@ final class SpielerPositionTable extends JTable {
         setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         final TableColumnModel tableColumnModel = getColumnModel();
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0)))
-                        .setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(200));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(0))).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                                                .calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(1))).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                                                .calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(1)))
-                        .setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(180));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(2))).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                                                .calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(2)))
-                        .setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(180));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(3))).setMinWidth(de.hattrickorganizer.tools.Helper
-                                                                                                .calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(new Integer(3)))
-                        .setPreferredWidth(de.hattrickorganizer.tools.Helper.calcCellWidth(180));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0)))
+                        .setPreferredWidth(Helper.calcCellWidth(200));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0))).setMinWidth(Helper.calcCellWidth(20));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1))).setMinWidth(Helper.calcCellWidth(20));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1)))
+                        .setPreferredWidth(Helper.calcCellWidth(180));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2))).setMinWidth(Helper.calcCellWidth(20));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2)))
+                        .setPreferredWidth(Helper.calcCellWidth(180));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(3))).setMinWidth(Helper.calcCellWidth(20));
+        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(3)))
+                        .setPreferredWidth(Helper.calcCellWidth(180));
         setSelectionMode(0);
         setRowSelectionAllowed(true);
 

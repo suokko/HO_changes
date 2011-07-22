@@ -58,7 +58,6 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
 
     /** TODO Missing Parameter Documentation */
     private boolean done;
-    private float frameRate;
     private int frames;
     private int goRight;
     private int goUp = -1;
@@ -810,7 +809,6 @@ public class VAPCredits implements java.awt.event.KeyListener, java.awt.event.Mo
      */
     private long frameCounter() {
         if (startZeit < (System.currentTimeMillis() - 1000)) {
-            frameRate = frames;
             frames = 0;
             startZeit = System.currentTimeMillis();
 

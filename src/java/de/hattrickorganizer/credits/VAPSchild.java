@@ -17,7 +17,6 @@ public class VAPSchild implements DynamischesObjekt {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private AlphaComposite alpha;
-    private FontEffect fontEffect;
     private Image image;
     private int x = 160;
     private int y = -200;
@@ -34,8 +33,6 @@ public class VAPSchild implements DynamischesObjekt {
     public VAPSchild(Image image, long time) {
         this.image = image;
         this.time = time;
-        fontEffect = new FontEffect("Hattrick Organizer", new Font("Egal", Font.PLAIN, 40),
-                                    Color.white, 0, 0, -1, 1, -1);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
