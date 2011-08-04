@@ -28,7 +28,7 @@
   <property>
     <datei>Danish.properties</datei>
     <lang_id>5</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>French.properties</datei>
@@ -73,7 +73,7 @@
   <property>
     <datei>Svenska.properties</datei>
     <lang_id>14</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>Finnish.properties</datei>
@@ -108,7 +108,7 @@
   <property>
     <datei>Magyar.properties</datei>
     <lang_id>21</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Slovak.properties</datei>
@@ -123,7 +123,7 @@
   <property>
     <datei>Ukranian.properties</datei>
     <lang_id>25</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
     <datei>Turkish.properties</datei>
@@ -173,7 +173,7 @@
   <property>
     <datei>Chinese.properties</datei>
     <lang_id>35</lang_id>
-    <version>3.5</version>
+    <version>3.6</version>
   </property>
   <property>
   	<datei>Hangul(Korean).properties</datei> 
@@ -188,5 +188,5 @@
   <property>
   	<datei>Hebrew.properties</datei>
   	<lang_id>38</lang_id>
-  	<version>0.1</version></property>
+  	<version>2.0</version></property>
 </languages>
