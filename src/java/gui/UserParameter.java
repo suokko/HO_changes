@@ -38,7 +38,7 @@ public final class UserParameter extends Configuration {
 //    public String LoginPWD = "";
     public String AccessToken = "";
     public String TokenSecret = "";
-    
+
     public String ProxyAuthName = "";
     public String ProxyAuthPassword = "";
 
@@ -61,7 +61,7 @@ public final class UserParameter extends Configuration {
     public String sprachDatei = "English";
     /** is proxy activ */
     public boolean ProxyAktiv;
-    /** is proxy authentification activ */
+    /** is proxy authentication activ */
     public boolean ProxyAuthAktiv;
     /** is linup groupfilter activ */
     public boolean aufstellungsAssistentPanel_cbfilter;
@@ -87,7 +87,7 @@ public final class UserParameter extends Configuration {
 
     /** option parameter */
     public boolean showHRFSaveDialog = true;
-    
+
     //Download Options
     /** XML Download checked in Download Dialog? */
     public boolean xmlDownload = true;
@@ -95,7 +95,7 @@ public final class UserParameter extends Configuration {
     public boolean fixtures = true;
     /** Current Matchlist Download checked in Download Dialog? */
     public boolean currentMatchlist = true;
-    
+
 
     //Die Spieleranalyse wird vertikal untereinander gepackt oder nicht
     public boolean spieleranalyseVertikal = true;
@@ -166,7 +166,7 @@ public final class UserParameter extends Configuration {
     public boolean statistikZinsaufwendungen;
     public boolean statistikZinsertraege;
     public boolean statistikZuschauer;
-    
+
     public boolean tempTabArenasizer = true;
     public boolean tempTabAufstellung;
     public boolean tempTabInformation = true;
@@ -183,24 +183,24 @@ public final class UserParameter extends Configuration {
 	public boolean newsCheck = false;
 	public boolean userCheck = false;
     public boolean updateCheck = false;
-	
+
     //Zahlen hinter den Bewertungen anzeigen
     public boolean zahlenFuerSkill = true;
 
     /*gibt die mindeststärke für einen Spieler an für seine Idealpos um vom Aufstellungsassi bei idealpos gesetzt zu werden*/
     public float MinIdealPosStk = 3.5f;
     public float TrainerFaktor = 1.0f;
-    
+
     //Prozentualer Abzug/Gewinn durch Wettereffekt
     public float WetterEffektBonus = 0.2f;
 
     //Sonstiges
     //Faktor, durch den Geld geteilt werden muß für die Währung (Gleiche Währungsfaktoren zusammenfassen)
     public float faktorGeld = 1f;
-    //Faktor für Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet    
+    //Faktor für Zeilenbreite in den Tabellen, Wird nicht gespeichert, sondern berechnet
     public float zellenbreitenFaktor = 1.0f;
-    
-    
+
+
     // These defaults are never used anywhere, they are read from db,
     // and are initialized from the config update routine.
     // General training no longer exists
@@ -214,7 +214,7 @@ public final class UserParameter extends Configuration {
     public float TRAINING_OFFSET_SETPIECES = 0f;
     public float TRAINING_OFFSET_GOALKEEPING = 0f;
     public float TRAINING_OFFSET_DEFENDING = 0f;
-    
+
   //Faktoren
     public float TRAINING_OFFSET_AGE = 1.0f;
     public float TRAINING_OFFSET_ASSISTANTS = 1.0f;
@@ -236,7 +236,7 @@ public final class UserParameter extends Configuration {
     //Breite der BestPos-Spalte
 
     /** @deprecated column width configurable
-     * @since 1.361 
+     * @since 1.361
      * */
     @Deprecated
 	public int bestPostWidth = 140;
@@ -294,7 +294,7 @@ public final class UserParameter extends Configuration {
     //TransferScoutPanel
     public int transferScoutPanel_horizontalSplitPane = 300;
     //Id der Währung
-	
+
 	// Rating offset
 	public float leftDefenceOffset = 0.0f;
 	public float middleDefenceOffset = 0.0f;
@@ -307,7 +307,7 @@ public final class UserParameter extends Configuration {
     public int waehrungsID = 3;
 
 	public int simulatorMatches = 0;
-	
+
 	// Lineup Assistant Position Filters
 	public boolean assistantSaved = false;
 	public boolean assistant101 = true;
@@ -323,9 +323,9 @@ public final class UserParameter extends Configuration {
 	public boolean assistant111 = true;
 	public boolean assistant112 = true;
 	public boolean assistant113 = true;
-	
+
 	public String theme = "Classic";
-	
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -348,24 +348,24 @@ public final class UserParameter extends Configuration {
 
         return m_clUserParameter;
     }
-    
+
     public static UserParameter temp() {
     	if (m_clUserParameter == null)
           instance();
         if (m_clTemp == null) {
         	m_clTemp = new UserParameter();
-        	m_clTemp.setValues(m_clUserParameter.getValues());        	
+        	m_clTemp.setValues(m_clUserParameter.getValues());
         }
         return m_clTemp;
     }
-    
+
     public static void saveTempParameter() {
     	if (m_clTemp != null) {
     		m_clUserParameter.setValues(m_clTemp.getValues());
     		deleteTempParameter();
     	}
     }
-    
+
     public static void deleteTempParameter() {
     	m_clTemp = null;
     }
@@ -380,10 +380,10 @@ public final class UserParameter extends Configuration {
 		map.put("FG_ZWEIKARTEN",String.valueOf(FG_ZWEIKARTEN.getRGB()));
 //		map.put("LoginName",String.valueOf(LoginName));
 //		map.put("LoginPWD",MyHelper.cryptString(String.valueOf(LoginPWD)));
-		
+
 		map.put("AccessToken",String.valueOf(AccessToken));
 		map.put("TokenSecret", String.valueOf(TokenSecret));
-		
+
 		map.put("ProxyAuthName",String.valueOf(ProxyAuthName));
 		map.put("ProxyAuthPassword",String.valueOf(ProxyAuthPassword));
 		map.put("ProxyHost",String.valueOf(ProxyHost));
@@ -407,7 +407,7 @@ public final class UserParameter extends Configuration {
 		map.put("einzelnePositionenAnzeigen",String.valueOf(einzelnePositionenAnzeigen));
 		map.put("xmlDownload",String.valueOf(xmlDownload));
 		map.put("fixtures",String.valueOf(fixtures));
-		map.put("currentMatchlist",String.valueOf(currentMatchlist));		
+		map.put("currentMatchlist",String.valueOf(currentMatchlist));
 		map.put("logoutOnExit",String.valueOf(logoutOnExit));
 		map.put("showHRFSaveDialog",String.valueOf(showHRFSaveDialog));
 		map.put("spieleranalyseVertikal",String.valueOf(spieleranalyseVertikal));
@@ -544,7 +544,7 @@ public final class UserParameter extends Configuration {
 		map.put("middleAttackOffset",String.valueOf(middleAttackOffset));
 		map.put("rightAttackOffset",String.valueOf(rightAttackOffset));
 		map.put("waehrungsID",String.valueOf(waehrungsID));
-		map.put("simulatorMatches",String.valueOf(simulatorMatches));		
+		map.put("simulatorMatches",String.valueOf(simulatorMatches));
 		map.put("assistant101", String.valueOf(assistant101));
 		map.put("assistant102", String.valueOf(assistant102));
 		map.put("assistant103", String.valueOf(assistant103));
@@ -570,12 +570,12 @@ public final class UserParameter extends Configuration {
 		FG_TRANSFERMARKT = getColorValue(values,"FG_TRANSFERMARKT");
 		FG_VERLETZT = getColorValue(values,"FG_VERLETZT");
 		FG_ZWEIKARTEN = getColorValue(values,"FG_ZWEIKARTEN");
-		
+
 //		LoginName = getStringValue(values,"LoginName");
 //		LoginPWD = MyHelper.decryptString(getStringValue(values,"LoginPWD"));
 		AccessToken = getStringValue(values,"AccessToken");
 		TokenSecret = getStringValue(values, "TokenSecret");
-		
+
 		ProxyAuthName = getStringValue(values,"ProxyAuthName");
 		ProxyAuthPassword = getStringValue(values,"ProxyAuthPassword");
 		ProxyHost = getStringValue(values,"ProxyHost");
@@ -587,7 +587,7 @@ public final class UserParameter extends Configuration {
 		spielPlanImport_Path = getStringValue(values,"spielPlanImport_Path");
 		sprachDatei = getStringValue(values,"sprachDatei");
 		skin = getStringValue(values, "skin");
-		
+
 		ProxyAktiv = getBooleanValue(values,"ProxyAktiv");
 		ProxyAuthAktiv = getBooleanValue(values,"ProxyAuthAktiv");
 		aufstellungsAssistentPanel_cbfilter = getBooleanValue(values,"aufstellungsAssistentPanel_cbfilter");
@@ -672,13 +672,13 @@ public final class UserParameter extends Configuration {
 		tempTabSpiele = getBooleanValue(values,"tempTabSpiele");
 		tempTabSpieleranalyse = getBooleanValue(values,"tempTabSpieleranalyse");
 		tempTabSpieleruebersicht = getBooleanValue(values,"tempTabSpieleruebersicht");
-		tempTabStatistik = getBooleanValue(values,"tempTabStatistik");	
+		tempTabStatistik = getBooleanValue(values,"tempTabStatistik");
 		tempTabTransferscout = getBooleanValue(values,"tempTabTransferscout");
 		newsCheck = getBooleanValue(values,"newsCheck");
 		userCheck = getBooleanValue(values,"userCheck");
 		updateCheck = getBooleanValue(values,"updateCheck");
 		zahlenFuerSkill = getBooleanValue(values,"zahlenFuerSkill");
-		
+
 		TRAINING_OFFSET_AGE = getFloatValue(values,"AlterFaktor");
 		TRAINING_OFFSET_ASSISTANTS = getFloatValue(values,"CoTrainerFaktor");
 		TRAINING_OFFSET_INTENSITY = getFloatValue(values,"IntensitaetFaktor");
@@ -693,7 +693,7 @@ public final class UserParameter extends Configuration {
 		midfieldOffset = getFloatValue(values,"midfieldOffset");
 		leftAttackOffset = getFloatValue(values,"leftAttackOffset");
 		middleAttackOffset = getFloatValue(values,"middleAttackOffset");
-		rightAttackOffset = getFloatValue(values,"rightAttackOffset");			
+		rightAttackOffset = getFloatValue(values,"rightAttackOffset");
 		DAUER_ALLGEMEIN = getFloatValue(values,"DAUER_ALLGEMEIN");
 		TRAINING_OFFSET_SCORING = getFloatValue(values,"DAUER_CHANCENVERWERTUNG");
 		TRAINING_OFFSET_WINGER = getFloatValue(values,"DAUER_FLUEGELSPIEL");
@@ -740,7 +740,7 @@ public final class UserParameter extends Configuration {
 		transferScoutPanel_horizontalSplitPane = getIntValue(values,"transferScoutPanel_horizontalSplitPane");
 		waehrungsID = getIntValue(values,"waehrungsID");
 		simulatorMatches = getIntValue(values,"simulatorMatches");
-		
+
 		assistant101 = getBooleanValue(values, "assistant101");
 		assistant102 = getBooleanValue(values, "assistant102");
 		assistant103 = getBooleanValue(values, "assistant103");
@@ -755,7 +755,7 @@ public final class UserParameter extends Configuration {
 		assistant112 = getBooleanValue(values, "assistant112");
 		assistant113 = getBooleanValue(values, "assistant113");
 		assistantSaved = getBooleanValue(values,"assistantSaved");
-		
+
 		theme = getStringValue(values, "theme");
 	}
 
