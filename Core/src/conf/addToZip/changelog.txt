@@ -1,9 +1,25 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
 forum at http://forum.hattrickorganizer.net if you have any questions!
 
+Changelist HO! 1.431
+====================
+-
+
+Language updates:
+-----------------
+- Add Hebrew as new HO language (thx Mod-Transy)
+- Update Chinese translations (thx tianbing)
+- Update Danish translations (thx Max_Schreck)
+- Update Magyar translations (thx salt00)
+- Update Svenska translations (thx KrustyTheClown)
+- Update Ukranian translations (thx oleh_deneb)
+
+
 Changelist HO! 1.430
+====================
 - Publishing a proper release based on 1.429
 - Some minor fixes
+
 
 Changelist HO! 1.429
 ====================
@@ -18,6 +34,8 @@ Changelist HO! 1.429
 - The set piece taker is no longer automatically first on the penalty shooter list.
 - Changed formation experience ordering according to Hattrick
 
+Language updates:
+-----------------
 - Update Catalan translations (thx CAT-fike)
 - Update Finnish translations (thx -Lupi-)
 - Update French translations (thx Butboja)
@@ -54,6 +72,7 @@ Changelist HO! 1.428
 - Prediction type can again be selected manually in the lineup screen
 - Removed some traces of the now gone economists and gk trainers
 
+
 Changelist HO! 1.427
 ====================
 - automatically select prediction type (thx Smaug)
@@ -62,6 +81,7 @@ Changelist HO! 1.427
 - update some graphics
 - fix bug with fraction digit in fanclub size
 - fix home/away determination for DBs with illegal matches (announced but never played)
+
 
 Changelist HO! 1.426
 ====================
@@ -305,7 +325,6 @@ Converter Plugin:
 - Adaption to CHPP change (worlddetails)
 
 
-
 Changelist HO! 1.398
 ====================
 - TeamAnalyzer: fix a problem with matches with less than 11 players
@@ -320,7 +339,6 @@ Changelist HO! 1.398
 - prevent NSEEx in RatingUtil (Commons)
 - prevent NPE in HTCalendarFactory (Commons)
 
-
  Special Note 1:
  ---------------
  To those who did not notice yet: with the help of our fellow user Odicin we
@@ -329,7 +347,6 @@ Changelist HO! 1.398
  November. If you use these plugins and have problems with the update of new
  flags, make sure to have the latest version installed.
  Check this menu: File -> Update -> Plugins -> Normal.
-
 
  Special Note 2:
  ---------------
