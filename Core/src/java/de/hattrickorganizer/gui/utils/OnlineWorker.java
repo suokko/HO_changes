@@ -43,7 +43,6 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HRFFileParser;
 import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.MyHelper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -432,7 +431,7 @@ public class OnlineWorker {
 
         waitDialog.setValue(60);
         matches = new MatchKurzInfo[allMatches.size()];
-        MyHelper.copyVector2Array(allMatches, matches);
+        Helper.copyVector2Array(allMatches, matches);
         waitDialog.setValue(80);
 
         //Ab in die DB packen
