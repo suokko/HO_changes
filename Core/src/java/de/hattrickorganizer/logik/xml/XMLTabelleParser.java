@@ -10,8 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.hattrickorganizer.model.lineup.LigaTabelle;
-import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
+import de.hattrickorganizer.model.series.LigaTabelle;
+import de.hattrickorganizer.model.series.LigaTabellenEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
