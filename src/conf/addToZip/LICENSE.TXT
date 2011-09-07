@@ -20,10 +20,10 @@ hsqldb.jar
 http://www.hsqldb.org
 HSQLDB has its own license, see hsqldb_lic.txt
 
-signpost-core-1.2.jar
-http://code.google.com/p/oauth-signpost/
-Signpost uses Apache License, version 2.0
-http://commons.apache.org/codec/license.html 
+scribe-1.2.2.jar
+https://github.com/fernandezpablo85/scribe-java
+It uses the MIT license.
+http://www.opensource.org/licenses/mit-license.php
 
 commons-codec-1.4.jar
 The commons codec uses Apache License, version 2.0.

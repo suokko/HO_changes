@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import plugins.IMatchKurzInfo;
+import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
@@ -42,6 +43,7 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HRFFileParser;
 import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.MyHelper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 
@@ -430,7 +432,7 @@ public class OnlineWorker {
 
         waitDialog.setValue(60);
         matches = new MatchKurzInfo[allMatches.size()];
-        Helper.copyVector2Array(allMatches, matches);
+        MyHelper.copyVector2Array(allMatches, matches);
         waitDialog.setValue(80);
 
         //Ab in die DB packen
@@ -730,6 +732,74 @@ public class OnlineWorker {
 
         return true;
     }
+    
+    /**
+     * Uploads the given lineup to Hattrick
+     * 
+     * @param matchId The id of the match in question. If left at 0 the match ID from the model will be used (next match).
+     * @param lineup The lineup object to be uploaded
+     * @param clearOrders If true will submit 5 empty match orders
+     * @param setPenShooters If true will submit the shooters as suggested by the lineup tool
+     *
+     * @return true if success, false if something failed
+     */
+    
+    public final String setMatchOrder(int matchId, de.hattrickorganizer.model.Lineup lineup) {
+    	
+    	String result;
+    	// Tell the Connector that we will require match order rights.
+    	
+    	// Building the order string as described in the match order API piece by piece.
+    	
+    	String orders = "{\"positions\":[" + createPositionString(ISpielerPosition.keeper, lineup);
+    	
+    	
+    	for (int i = ISpielerPosition.rightBack ; i <= ISpielerPosition.substForward ; i++) {
+    		orders += "," + createPositionString(i, lineup);
+    	}
+    	
+    	orders += "," + "{\"id\":\"" + lineup.getKapitaen() + "\",\"behaviour\":\"0\"}";
+    	orders += "," + "{\"id\":\"" + lineup.getKicker() + "\",\"behaviour\":\"0\"}";
+    	
+    	// Some better source wanted...
+    	int[] shooters = lineup.getBestElferKicker();
+        
+    	for (int i = 0 ; i < shooters.length ; i++) {
+    		orders += "," + "{\"id\":\"" + shooters[i] + "\" , \"behaviour\":\"0\"}";
+    	}
+    	
+    	
+    	orders += "], \"settings\":{\"tactic\": \"" + lineup.getTacticType() + "\","
+				+ "\"speechLevel\":\"" + lineup.getAttitude() + "\", \"newLineup\":\"\"},"
+				+ "\"substitutions\":[]}";
+    	
+    	
+    	try {
+    		result = uploadLineup(matchId, orders);
+    	} catch (Exception e) {
+    		result = "";
+    	}
+    	
+    	HOLogger.instance().debug(getClass(), "Upload done:\n" + result);
+    	
+    	return result;
+    	
+    }
+    
+    private String createPositionString(int roleId, de.hattrickorganizer.model.Lineup lineup) {
+    	
+    	int id = 0;
+    	int behaviour = 0;
+    	
+    	plugins.ISpieler spieler = lineup.getPlayerByPositionID(roleId);
+    	if (spieler != null) {
+    		id = spieler.getSpielerID();
+    		behaviour = lineup.getTactic4PositionID(roleId);
+    	}
+    	
+    	return "{\"id\":\"" + id + "\",\"behaviour\":\"" + behaviour + "\"}";
+    }
+    
 
     /**
      * generiert ein String Datum
@@ -857,6 +927,19 @@ public class OnlineWorker {
 
         return lineUp;
     }
+    
+    protected String uploadLineup(int matchId, String orderString ) {
+	    String result;
+    	try {
+	        result = MyConnector.instance().setMatchOrder(matchId, orderString);
+	        return result;
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return "";
+    	}
+	        
+    } 
+    
 
     ////////////////////////////////////////////////////////////////////////////////
     //Helper

@@ -12,18 +12,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 import javax.swing.JOptionPane;
 
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.basic.DefaultOAuthConsumer;
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Response;
+import org.scribe.model.SignatureType;
+import org.scribe.model.Token;
+import org.scribe.model.Verb;
+import org.scribe.oauth.OAuthService;
+
 import sun.misc.BASE64Encoder;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.OAuthDialog;
@@ -34,7 +38,7 @@ import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.MyHelper;
 import de.hattrickorganizer.tools.updater.VersionInfo;
 
 /**
@@ -45,49 +49,48 @@ import de.hattrickorganizer.tools.updater.VersionInfo;
 public class MyConnector implements plugins.IDownloadHelper {
 	//~ Static fields/initializers -----------------------------------------------------------------
 	static final private int chppID = 3330;
-//	static final private String chppKey = "F283F8D8-9589-428D-87CD-96A2D9A73451";
-//	static final private String htUrl = "www.hattrick.org";
-//	static final private String htUrl = "stage.hattrick.org";
 	static final private String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
 	public static String m_sIDENTIFIER =
 		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
-	private final static String VERSION_MATCHORDERS = "1.6";
+	private final static String VERSION_MATCHORDERS = "1.8";
 	private final static String VERSION_TRAINING = "1.5";
 	private final static String VERSION_MATCHLINEUP = "1.4";
-	
+
 	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
 	//~ Instance fields ----------------------------------------------------------------------------
 
+	private static boolean requireSetMatchorder = false;
+
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
-//	private String m_sCookie;
-//	private Map<String, String> cookie = new HashMap<String, String>();
 	private String m_sProxyHost = "";
 	private String m_sProxyPort = "";
-//	private String m_sUserName = "";
-//	private String m_sUserPwd = "";
 	private boolean m_bAuthenticated;
 	private boolean m_bProxyAuthentifactionNeeded;
 	private boolean m_bUseProxy;
 	private int m_iUserID = -1;
 
-	private OAuthConsumer m_OAConsumer;
-	private OAuthProvider m_OAProvider;
-	
+	private OAuthService m_OAService;
+	private Token m_OAAccessToken;
+
 	final static private boolean DEBUGSAVE = false;
 	final static private String SAVEDIR = "C:/temp/ho/";
+
+
 
 	//~ Constructors -------------------------------------------------------------------------------
 	/**
 	 * Creates a new instance of MyConnector.
 	 */
 	private MyConnector() {
-		m_OAConsumer = new DefaultOAuthConsumer(Helper.decryptString(CONSUMER_KEY),
-	            Helper.decryptString(CONSUMER_SECRET));
-		m_OAConsumer.setTokenWithSecret(Helper.decryptString(gui.UserParameter.instance().AccessToken), 
-											Helper.decryptString(gui.UserParameter.instance().TokenSecret));
+		m_OAService = new ServiceBuilder()
+		.provider(HattrickAPI.class)
+		.apiKey(MyHelper.decryptString(CONSUMER_KEY))
+		.apiSecret(MyHelper.decryptString(CONSUMER_SECRET))
+		.signatureType(SignatureType.Header)
+		.build();
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
@@ -115,6 +118,13 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return "http://plugins.hattrickorganizer.net";
 	}
 
+	public static boolean isRequireSetMatchorder() {
+		return requireSetMatchorder;
+	}
+
+	public static void setRequireSetMatchorder(boolean requireSetMatchorder) {
+		MyConnector.requireSetMatchorder = requireSetMatchorder;
+	}
 
 	/**
 	 * Fetch our arena
@@ -143,74 +153,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return getPage(url);
 	}
 
-//	/**
-//	 * um nach einem Fehler zu resetten
-//	 */
-//	public void setAuthenticated(boolean value) {
-//		m_bAuthenticated = value;
-//		m_sCookie = null;
-//		cookie = new HashMap<String, String>();
-//	}
-//
-//	/**
-//	 * Getter for m_bAuthenticated.
-//	 */
-//	public boolean isAuthenticated() {
-//		return m_bAuthenticated;
-//	}
-
-//	/**
-//	 * Get and extract the cookies.
-//	 */
-//	private void getCookie() throws IOException {
-//		final HttpURLConnection httpurlconnection =
-//			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip)).openConnection();
-//		httpurlconnection.setRequestMethod("GET");
-//		infoHO(httpurlconnection);
-//
-//		HttpURLConnection.setFollowRedirects(true);
-//		httpurlconnection.connect();
-//		extractCookie(httpurlconnection.getHeaderField("set-cookie"));
-//
-//		httpurlconnection.disconnect();
-//	}
-
-//	private void extractCookie(String v) {
-//		if (v != null) {
-//			m_sCookie = v;
-//		}
-//		if (m_sCookie == null) {
-//			return;
-//		}
-//		StringTokenizer st = new StringTokenizer(m_sCookie, ";");
-//
-//		// the specification dictates that the first name/value pair
-//		// in the string is the cookie name and value, so let's handle
-//		// them as a special case:
-//		if (st.hasMoreTokens()) {
-//			String token = st.nextToken();
-//			String name = token.substring(0, token.indexOf("="));
-//			String value = token.substring(token.indexOf("=") + 1, token.length());
-//			cookie.put(name, value);
-//		}
-//
-//		while (st.hasMoreTokens()) {
-//			String token = st.nextToken();
-//            if(token.indexOf("=")>0)
-//			    cookie.put(token.substring(0, token.indexOf("=")).toLowerCase(), token.substring(token.indexOf("=") + 1, token.length()));
-//            else {
-//                cookie.put(token, "");
-//            }
-//		}
-//	}
-
-	/////////////////////////////////////////////////////////////////////////////////
-	//Cookie Funcs
-	////////////////////////////////////////////////////////////////////////////////
-//	public boolean isCookieSet() {
-//		return m_sCookie != null;
-//	}
-
 	/**
 	 * holt die Finanzen
 	 */
@@ -219,19 +161,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		return getPage(url);
 	}
-
-//	/**
-//	 * lädt die IP Adress-Seite
-//	 */
-//	public String getHattrickIPAdress() throws IOException {
-//		final String surl = "http://"+htUrl+"/chppxml.ashx?common/chppxml.axd?file=servers";
-//		final de.hattrickorganizer.logik.xml.XMLMenuParser worker =
-//			new de.hattrickorganizer.logik.xml.XMLMenuParser();
-//		final String page = getWebPage(surl);
-//
-//		//tools.Helper.showMessage ( null, page, model.HOVerwaltung.instance().getLanguageString("Fehler"), javax.swing.JOptionPane.ERROR_MESSAGE );
-//		return worker.parseMenuFromString(page);
-//	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//get-XML-Files
@@ -246,24 +175,17 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @return the complete file as String
 	 */
 	public String getHattrickXMLFile(String file) throws IOException {
-//		if (!isAuthenticated()) {
-//			final de.hattrickorganizer.gui.login.LoginDialog ld =
-//				new de.hattrickorganizer.gui.login.LoginDialog(
-//					de.hattrickorganizer.gui.HOMainFrame.instance());
-//			ld.setVisible(true);
-//		}
-
 		String url;
-		
+
 		// An attempt at solving old syntaxes.
-		
+
 		if (file.contains("chppxml.axd")) {
 			file = file.substring(file.indexOf("?"));
 		} else if (file.contains(".asp")) {
 			String s = file.substring(0, file.indexOf("?")).replace(".asp", "").replace("/common/", "");
 			file = "?file=" + s + "&" + file.substring(file.indexOf("?")+1); 
 		} 
-		
+
 		url =  htUrl + file;
 		return getPage(url);
 	}
@@ -298,7 +220,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt das MatchArchiv als xml
 	 */
 	public String getMatchArchiv(int teamId, String firstDate, String lastDate)
-		throws IOException {
+	throws IOException {
 		String url = htUrl + "?file=matchesarchive";
 
 		if (teamId > 0) {
@@ -321,7 +243,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
 		String url = htUrl + "?file=matchlineup&version=" +
-				VERSION_MATCHLINEUP;
+		VERSION_MATCHLINEUP;
 
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
@@ -330,7 +252,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
-		
+
 		if (DEBUGSAVE) {
 			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR+"matchlineup_m"
@@ -350,7 +272,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
 		String url = htUrl + "?file=matchorders&version="
-				+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
+		+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
 
 		if (DEBUGSAVE) {
 			final String ret = getPage(url);
@@ -364,6 +286,25 @@ public class MyConnector implements plugins.IDownloadHelper {
 			return getPage(url);
 		}
 	}
+
+	public String setMatchOrder(int matchId, String orderString) throws IOException {
+		requireSetMatchorder = true;
+
+		String urlpara = "?file=matchorders&version="
+			+ VERSION_MATCHORDERS;
+		if (matchId > 0) {
+			urlpara += "&matchID=" + matchId;
+		}
+		urlpara += "&isYouth=false" + "&actionType=setmatchorder";
+
+		HashMap<String, String> paras = new HashMap<String, String>();
+		paras.put("lineup", orderString);
+		String result = readStream(postWebFileWithBodyParameters(htUrl+urlpara, paras, true));
+		requireSetMatchorder = false;
+		return result;
+
+	}
+
 
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
@@ -411,34 +352,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getPage(String url) throws IOException {
 		return getWebPage(url);
 	}
-
-//	/**
-//	 * Get the content from a web page as string.
-//	 */
-//	public String getPage(String surl, boolean needLogin) throws IOException {
-//
-//		
-//		if (needLogin && !isAuthenticated()) {
-//			login();
-//		}
-//
-//		if (!isCookieSet()) {
-//			getCookie();
-//		}
-//
-//		String page = getWebPage(surl);
-//		if ( (page!=null) && (page.length()>1) ) {
-//			return page;
-//		}
-//
-//		// Timeout on an Hattrick page
-//		if (needLogin) {
-//		login();
-//			getCookie();
-//			return getWebPage(surl);
-//		}
-//		return "";
-//	}
 
 	/**
 	 * holt die Spielerdaten
@@ -551,7 +464,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		try {
 			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList");
-			list = Helper.generateStringArray(s, ';');
+			list = MyHelper.generateStringArray(s, ';');
 
 			if ((s != null) && (!s.trim().equals("")) && (s.length() > 0)) {
 				//-1 da letzter Eintrag == "" ist
@@ -595,83 +508,12 @@ public class MyConnector implements plugins.IDownloadHelper {
 	/////////////////////////////////////////////////////////////////////////////////
 	//get-HTML-Files
 	////////////////////////////////////////////////////////////////////////////////
-	//    /**
-	//     *lädt das HRF
-	//     */
-	//    public String getHRF() throws IOException
-	//    {
-	//        String s = "http://" + gui.UserParameter.instance ().htip + "/Common/hrf.asp";
-	//        return getPage(s, !isAuthenticated() );
-	//    }
-	//
-	//    public String getMatchReport(String machtId ) throws IOException
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/matchDetails.asp?matchID=" + machtId + "&site=HT";
-	//        String s2 = getPage(s1, true);
-	//        s2 = s2.substring(s2.indexOf("</HEAD>") + 8, s2.length());
-	//        String s3 = "<LINK REL=STYLESHEET HREF=\"Css/mac.css\" TYPE=\"text/css\">";
-	//        s2 = "<HTML><HEAD>" + s3 + "</HEAD>" + s2;
-	//
-	//        return s2;
-	//    }
-	//
-	//    /**
-	//     *holt die html Seite
-	//     */
-	//    public String getMatchDetails(String machtId) throws Exception
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/matchDetails.asp?matchID=" + machtId + "&site=HT";
-	//        return getPage(s1, true);
-	//    }
-	//
-	//    public String getMatchLineup(String machtId, String teamId)        throws Exception
-	//    {
-	//        String s2 = "http://" + gui.UserParameter.instance ().htip + "/Common/matchLineup.asp?matchID=" + machtId + "&teamID=" + teamId + "&site=HT";
-	//        return getPage(s2, true);
-	//    }
-	//
-	//    public String getAktuellerSpielplan(  String teamId ) throws Exception
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/matches.asp?action=" + "&teamID=" + teamId + "&site=HT";
-	//        return getPage(s1, true);
-	//    }
-	//
-	//    public String getVereinschronik( String teamId ) throws Exception
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/otherEvents.asp?action=teamHistory" + "&teamID=" + teamId + "&site=HT";
-	//        return getPage(s1, true);
-	//    }
-	//
-	//    public String getBisherigeTransfers( String teamId ) throws Exception
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/transferHistory.asp?action=" + "&teamID=" + teamId + "&site=HT";
-	//        return getPage(s1, true);
-	//    }
-	//
-	//    public String getLetzteAufstellung( String teamId ) throws Exception
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/matchLineup.asp?action=lastMatch" + "&teamID=" + teamId + "&site=HT";
-	//        return getPage(s1, true);
-	//    }
-	//
-	//
-	//    public String getTabelle( String ligaId ) throws Exception
-	//    {
-	//        String s1 = "http://" + gui.UserParameter.instance ().htip + "/Common/leagueDetails.asp?LeagueLevelUnitID=" + ligaId + "&site=HT";
-	//        return getPage(s1, true);
-	//    }
 
 	/**
 	 * lädt die Tabelle
 	 */
 	public String getTransferCompare(int playerID) throws IOException {
-//		if (!isAuthenticated()) {
-//			final de.hattrickorganizer.gui.login.LoginDialog ld =
-//				new de.hattrickorganizer.gui.login.LoginDialog(
-//					de.hattrickorganizer.gui.HOMainFrame.instance());
-//			ld.setVisible(true);
-//		}
-
+		
 		String url =  htUrl + "?file=playerdetails&playerID="+playerID;
 
 		return getPage(url);
@@ -699,41 +541,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return m_bUseProxy;
 	}
 
-//	/**
-//	 * Setter for property m_sUserName.
-//	 *
-//	 * @param m_sUserName New value of property m_sUserName.
-//	 */
-//	public void setUserName(java.lang.String m_sUserName) {
-//		this.m_sUserName = m_sUserName;
-//	}
-//
-//	/**
-//	 * Getter for property m_sUserName.
-//	 *
-//	 * @return Value of property m_sUserName.
-//	 */
-//	public java.lang.String getUserName() {
-//		return m_sUserName;
-//	}
-//
-//	/**
-//	 * Setter for property m_sUserPwd.
-//	 *
-//	 * @param m_sUserPwd New value of property m_sUserPwd.
-//	 */
-//	public void setUserPwd(java.lang.String m_sUserPwd) {
-//		this.m_sUserPwd = m_sUserPwd;
-//	}
-//
-//	/**
-//	 * Getter for property m_sUserPwd.
-//	 *
-//	 * @return Value of property m_sUserPwd.
-//	 */
-//	public java.lang.String getUserPwd() {
-//		return m_sUserPwd;
-//	}
 
 	/**
 	 * holt die Vereinsdaten
@@ -752,30 +559,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getWebPage(String surl, boolean showError, boolean shortTimeOut) throws IOException {
 		final InputStream resultingInputStream = getWebFile(surl, showError, shortTimeOut);
-
-		if (resultingInputStream != null) {
-			final BufferedReader bufferedreader =
-				new BufferedReader(new InputStreamReader(resultingInputStream, "UTF-8"));
-
-			final StringBuffer s2 = new StringBuffer();
-			String line;
-
-			line = bufferedreader.readLine();
-
-			if (line != null) {
-				s2.append(line);
-
-				while ((line = bufferedreader.readLine()) != null) {
-					s2.append('\n');
-					s2.append(line);
-				}
-			}
-			bufferedreader.close();
-
-			return s2.toString();
-		} else {
-			return "";
-		}
+		
+		return readStream(resultingInputStream);
 	}
 
 	/**
@@ -806,7 +591,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Get information about the latest HO beta.
 	 */
@@ -819,7 +604,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 				VersionInfo ret = new VersionInfo();
 				String line;
-				
+
 				while ((line = br.readLine()) != null) {
 					int pos = line.indexOf("=");
 					if (pos > 0) {
@@ -887,9 +672,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 	//Proxy
 	////////////////////////////////////////////////////////////////////////////////
 	public void enableProxy() {
-		//for test
-		//boolean proxyAuth = false;
-		///Proxy Quark
 		if (m_bUseProxy) {
 			System.getProperties().put("https.proxyHost", m_sProxyHost);
 			System.getProperties().put("https.proxyPort", m_sProxyPort);
@@ -910,10 +692,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String xmlFile = "";
 
 		try {
-//			if (!isAuthenticated()) {
-//				final LoginDialog ld = new LoginDialog(HOMainFrame.instance());
-//				ld.setVisible(true);
-//			}
 			xmlFile =  htUrl + "?file=teamdetails&teamID=" + teamID;
 			xmlFile = getPage(xmlFile);
 		} catch (Exception e) {
@@ -924,202 +702,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return new xmlTeamDetailsParser().fetchRegionID(xmlFile);
 	}
 
-//	/**
-//	 * Check, if a security code is set (actionType checksecuritycode).
-//	 */
-//	public boolean hasSecLogin() throws Exception {
-//		boolean checkOK;
-//		try {
-//			String url =
-//				"http://"
-//				+ gui.UserParameter.instance().htip
-//				+ "/common/chppxml.axd?file=login&actionType=checksecuritycode&chppID="+chppID
-//				+ "&chppKey="+chppKey+"&loginname="+m_sUserName;
-//
-//			final Document doc = XMLManager.instance().parseString(getPage(url, false));
-//			Element ele = null;
-//			Element tmpEle = null;
-//
-//			//get Root element :
-//			ele = doc.getDocumentElement();
-//
-//			//get specific sub element of root element
-//			tmpEle = (Element) ele.getElementsByTagName("HasSecurityCode").item(0);
-//
-//			//get it's value
-//			String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-//			checkOK = value.trim().equalsIgnoreCase("True");
-//
-//			//get specific sub element of team element
-//			//tmpEle = (Element) ele.getElementsByTagName("ActionSuccessful").item(0);
-//			//tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
-//
-//			//04.09.2008 aik: diabled the 2nd check, IsAuthenticated is always False upon initial check
-//			//get it's value
-//			//value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-//			//checkOK = checkOK && value.trim().equalsIgnoreCase("True");
-//		} catch (Exception e) {
-//			HOLogger.instance().log(getClass(),e);
-//			checkOK = false;
-//			throw e;
-//		}
-//		return checkOK;
-//	}
 
-	/////////////////////////////////////////////////////////////////////////////////
-	//HT-LOGIN / Logout
-	////////////////////////////////////////////////////////////////////////////////
-//	public boolean login() throws IOException {
-//		String page = "";
-//		boolean loggedIn = false;
-//
-////		if ((m_sUserPwd == null) || (m_sUserPwd.length() == 0)) {
-////			throw new IOException("Password not set");
-////		}
-////
-////		if (!isCookieSet()) {
-////			getCookie();
-////		}
-//
-//		final HttpURLConnection httpurlconnection =
-//			(HttpURLConnection) (new URL("http://" + gui.UserParameter.instance().htip
-//				+ "/common/chppxml.axd?file=login&actionType=login&loginname=" + m_sUserName
-//				+ "&readonlypassword=" + m_sUserPwd + "&chppID=" + chppID + "&chppKey=" + chppKey)).openConnection();
-//
-////		httpurlconnection.setRequestMethod("GET");
-////
-////		httpurlconnection.setRequestProperty("cookie", getCookieString());
-//
-//		infoHO(httpurlconnection);
-//
-//		HttpURLConnection.setFollowRedirects(true);
-//		httpurlconnection.connect();
-//
-////		String s2 = httpurlconnection.getHeaderField("set-cookie");
-////
-////		if ((s2 != null) && !s2.equals(m_sCookie)) {
-////			//HOLogger.instance().log(getClass()," got a new Cookie: " + s2);
-////			extractCookie(s2);
-////		}
-//
-//		final String encoding = httpurlconnection.getContentEncoding();
-//		InputStream resultingInputStream = null;
-//
-//		//create the appropriate stream wrapper based on
-//		//the encoding type
-//		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-//			resultingInputStream =
-//				new GZIPInputStream(httpurlconnection.getInputStream());
-//			HOLogger.instance().log(getClass()," Read GZIP.");
-//		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
-//			resultingInputStream =
-//				new InflaterInputStream(
-//					httpurlconnection.getInputStream(),
-//					new java.util.zip.Inflater(true));
-//			HOLogger.instance().log(getClass()," Read Deflated.");
-//		} else {
-//			resultingInputStream = httpurlconnection.getInputStream();
-//			HOLogger.instance().log(getClass()," Read Normal.");
-//		}
-//
-//		if (resultingInputStream != null) {
-//			final BufferedReader bufferedreader =
-//				new BufferedReader(new InputStreamReader(resultingInputStream, "UTF-8"));
-//
-//			final StringBuffer sb2 = new StringBuffer();
-//			String line;
-//
-//			line = bufferedreader.readLine();
-//
-//			if (line != null) {
-//				sb2.append(line);
-//
-//				while ((line = bufferedreader.readLine()) != null) {
-//					sb2.append('\n');
-//					sb2.append(line);
-//				}
-//			}
-//
-//			bufferedreader.close();
-//			page = sb2.toString();
-//		}
-//
-//		httpurlconnection.disconnect();
-//
-//		if (page.length() > 0) {
-//			//xml auswerten
-//			try {
-//				final Document doc = XMLManager.instance().parseString(page);
-//				Element ele = null;
-//				Element tmpEle = null;
-//
-//				//get Root element :
-//				ele = doc.getDocumentElement();
-//
-//				//get specific sub element of root element
-//				tmpEle = (Element) ele.getElementsByTagName("IsAuthenticated").item(0);
-//
-//				//get it's value
-//				String value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-//				loggedIn = value.trim().equalsIgnoreCase("True");
-//
-//				tmpEle = (Element) ele.getElementsByTagName("LoginResult").item(0);
-//				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-//				loggedIn = loggedIn && "0".equals(value.trim());
-//
-//				tmpEle = (Element) ele.getElementsByTagName("UserID").item(0);
-//
-//				//get it's value
-//				value = XMLManager.instance().getFirstChildNodeValue(tmpEle);
-//
-//				try {
-//					m_iUserID = Integer.parseInt(value);
-//					if (m_iUserID > 0) {
-//						// TODO: store user ID (necessary e.g. for the youthclub plugin)
-//					}
-//				} catch (NumberFormatException nfe) {
-//				}
-//			} catch (Exception e) {
-//				HOLogger.instance().log(getClass(),e);
-//				loggedIn = false;
-//			};
-//		}
-//
-//		m_bAuthenticated = loggedIn;
-//
-//		return loggedIn;
-//	}
-
-//	private String getCookieString() {
-//		StringBuffer cookieStringBuffer = new StringBuffer();
-//		Iterator<String> cookieNames = cookie.keySet().iterator();
-//		while (cookieNames.hasNext()) {
-//			String cookieName = cookieNames.next();
-//			cookieStringBuffer.append(cookieName);
-//			cookieStringBuffer.append("=");
-//			cookieStringBuffer.append((String) cookie.get(cookieName));
-//			if (cookieNames.hasNext())
-//				cookieStringBuffer.append(";");
-//		}
-//		return cookieStringBuffer.toString();
-//	}
-
-//	/**
-//	 * Log off from HT.
-//	 */
-//	public void logout() throws IOException {
-//		try {
-//			getPage("http://" + gui.UserParameter.instance().htip + "/common/chppxml.axd?file=login&action=logout", true);
-//			m_bAuthenticated = false;
-//			m_sCookie = null;
-//			cookie = new HashMap<String, String>();
-//		} catch (IOException ioexception) {
-//			m_bAuthenticated = false;
-//			m_sCookie = null;
-//			cookie = new HashMap<String, String>();
-//			throw ioexception;
-//		}
-//	}
 
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
 		return getFileFromWeb(url, displaysettingsScreen, false);
@@ -1129,12 +712,12 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * Get a file from a web server as input stream.
 	 */
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen, boolean showErrorMessage)
-		throws IOException {
+	throws IOException {
 		if (displaysettingsScreen) {
 			//Show Screen
 			final de.hattrickorganizer.gui.login.ProxyDialog proxyDialog =
 				new de.hattrickorganizer.gui.login.ProxyDialog(
-					de.hattrickorganizer.gui.HOMainFrame.instance());
+						de.hattrickorganizer.gui.HOMainFrame.instance());
 			proxyDialog.setVisible(true);
 		}
 
@@ -1149,7 +732,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			//Show Screen
 			final de.hattrickorganizer.gui.login.ProxyDialog proxyDialog =
 				new de.hattrickorganizer.gui.login.ProxyDialog(
-					de.hattrickorganizer.gui.HOMainFrame.instance());
+						de.hattrickorganizer.gui.HOMainFrame.instance());
 			proxyDialog.setVisible(true);
 		}
 
@@ -1175,9 +758,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			request =
 				"http://tooldesign.ch/ho/index.php?cmd=registerServer&ip=" + ipAdress
-			/*123.123.123.123*/
-			+"&port=" + port /*1234*/
-			+"&info=" + info /*Infotext"*/;
+				/*123.123.123.123*/
+				+"&port=" + port /*1234*/
+				+"&info=" + info /*Infotext"*/;
 			result = getWebPage(request);
 
 			try {
@@ -1201,7 +784,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			final String s =
 				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId);
 
-			if (Helper.parseDate(s) == null) {
+			if (MyHelper.parseDate(s) == null) {
 				return false;
 			}
 		} catch (Exception e) {
@@ -1221,7 +804,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		//Verhindern das eigen Spiele gesendet werden!
 		if ((sb == null)
-			|| (sb.Heim().getTeamName().trim().equals(sb.Gast().getTeamName().trim()))) {
+				|| (sb.Heim().getTeamName().trim().equals(sb.Gast().getTeamName().trim()))) {
 			//Kein Send nötig return success
 			return true;
 		}
@@ -1229,25 +812,25 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			request += "&teamID=";
 			request
-				+= de
+			+= de
+			.hattrickorganizer
+			.model
+			.HOVerwaltung
+			.instance()
+			.getModel()
+			.getBasics()
+			.getTeamId();
+			request += "&teamName=";
+			request
+			+= java.net.URLEncoder.encode(
+					de
 					.hattrickorganizer
 					.model
 					.HOVerwaltung
 					.instance()
 					.getModel()
 					.getBasics()
-					.getTeamId();
-			request += "&teamName=";
-			request
-				+= java.net.URLEncoder.encode(
-					de
-						.hattrickorganizer
-						.model
-						.HOVerwaltung
-						.instance()
-						.getModel()
-						.getBasics()
-						.getTeamName(),
+					.getTeamName(),
 					"UTF-8");
 			request += "&goalsHome=";
 			request += sb.ToreHeim();
@@ -1283,7 +866,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			final String s =
 				getWebPage(
-					"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId);
+						"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId);
 
 			if (!s.trim().equals("True")) {
 				return false;
@@ -1300,103 +883,185 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * Get a web page using a URLconnection.
 	 */
 	private InputStream getWebFile(String surl, boolean showErrorMessage, 
-					boolean shortTimeOut) throws IOException {
-		
+			boolean shortTimeOut) throws IOException {
+
 		OAuthDialog authDialog = null;
-		URL url = new URL(surl);
-		HttpURLConnection httpurlconnection = (HttpURLConnection) url.openConnection();
-		
+		Response response = null;
+
 		boolean tryAgain = true;
-		while (tryAgain == true) {
-			try {
+		try {
+			while (tryAgain == true) {
+				OAuthRequest request = new OAuthRequest(Verb.GET, surl);	
 
-				httpurlconnection.setRequestMethod("GET");
-				infoHO(httpurlconnection);
+				infoHO(request);
 
-				//		if (needCookie) {
-				//			httpurlconnection.setRequestProperty("cookie", getCookieString());
-				//		}
+				m_OAService.signRequest(m_OAAccessToken, request);
+				response = request.send();
+				if (response.getCode() == 401) {
 
-				if (shortTimeOut) {
-					httpurlconnection.setConnectTimeout(7500);
-					httpurlconnection.setReadTimeout(8500);
-				} else {
-					httpurlconnection.setConnectTimeout(45000);
-					httpurlconnection.setReadTimeout(60000);
-				}
-
-
-				m_OAConsumer.sign(httpurlconnection);
-				httpurlconnection.connect();
-
-				if (httpurlconnection.getResponseCode() == 401) {
-					// 401 is authorization failed...
-
-					// Ask user to do authorization magic
 					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAConsumer);
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService);
 					}
 					authDialog.setVisible(true);
 					// A way out for a user unable to authorize for some reason
 					if (authDialog.getUserCancel() == true) {
 						return null;
 					}
-					
-		            // Open a fresh connection for the next attempt
-		            httpurlconnection = (HttpURLConnection) url.openConnection();
+
+					m_OAAccessToken = authDialog.getAccessToken();
+
+					// Try again...
 				} else {				
 					tryAgain = false;
-				}
-			} catch (Exception sox) {
-				HOLogger.instance().log(getClass(), sox);
-				if (showErrorMessage) {
-					JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
-				}
-				return null;
-				
+
+					// We are done!
+				}	
+			}	
+
+		} catch (Exception sox) {
+			HOLogger.instance().log(getClass(), sox);
+			if (showErrorMessage) {
+				JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
 			}
+			return null;
+
+		}
+		
+		return getResultStream(response);
+	}
+
+
+
+	/**
+	 * Post a web file containing body parameters
+	 * 
+	 * @param surl the full url with parameters
+	 * @param bodyprop A hash map of string, string where key is parameter key and value is parameter value
+	 * @param showErrorMessage Whether to show message on error or not
+	 * @throws IOException 
+	 */
+	public InputStream postWebFileWithBodyParameters(String surl, HashMap<String, String> bodyParas, boolean showErrorMessage) throws IOException {
+
+		OAuthDialog authDialog = null;
+		Response response = null;
+
+		boolean tryAgain = true;
+		try {
+			while (tryAgain == true) {
+				OAuthRequest request = new OAuthRequest(Verb.POST, surl);	
+
+				for (Map.Entry<String, String> entry : bodyParas.entrySet()) {
+					request.addBodyParameter(entry.getKey(), entry.getValue());
+				}
+
+				infoHO(request);
+				request.addHeader("Content-Type", "application/x-www-form-urlencoded");
+				request.setConnectionKeepAlive(true);
+
+				m_OAService.signRequest(m_OAAccessToken, request);
+				response = request.send();
+				if (response.getCode() == 401) {
+
+					if (authDialog == null) {
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService);
+					}
+					authDialog.setVisible(true);
+					// A way out for a user unable to authorize for some reason
+					if (authDialog.getUserCancel() == true) {
+						return null;
+					}
+
+					m_OAAccessToken = authDialog.getAccessToken();
+
+					// Try again...
+				} else {				
+					tryAgain = false;
+
+					// We are done!
+				}	
+			}
+		} catch (Exception sox) {
+			HOLogger.instance().log(getClass(), sox);
+			if (showErrorMessage) {
+				JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
+			}
+			return null;
+
 		}
 
-		final String encoding = httpurlconnection.getContentEncoding();
-		InputStream resultingInputStream = null;
+		return getResultStream(response);
+	}
 
-		// create the appropriate stream wrapper based on
-		// the encoding type
+
+	private InputStream getResultStream(Response response) throws IOException{
+		
+		if (response == null) { 
+			return null;
+		}
+		InputStream resultingInputStream;
+		String encoding = response.getHeader("Content-Encoding");
 		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-			resultingInputStream = new GZIPInputStream(httpurlconnection.getInputStream());
+			resultingInputStream = new GZIPInputStream(response.getStream());
 			HOLogger.instance().log(getClass(), " Read GZIP.");
 		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
-			resultingInputStream = new InflaterInputStream(httpurlconnection.getInputStream(), new Inflater(true));
+			resultingInputStream = new InflaterInputStream(response.getStream(), new Inflater(true));
 			HOLogger.instance().log(getClass(), " Read Deflated.");
 		} else {
-			resultingInputStream = httpurlconnection.getInputStream();
+			resultingInputStream = response.getStream();
 			HOLogger.instance().log(getClass(), " Read Normal.");
 		}
 		return resultingInputStream;
+	}
+	
+	
+	private String readStream(InputStream stream) throws IOException {
+
+		if (stream != null) {
+			final BufferedReader bufferedreader =
+				new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+
+			final StringBuffer s2 = new StringBuffer();
+			String line;
+
+			line = bufferedreader.readLine();
+
+			if (line != null) {
+				s2.append(line);
+
+				while ((line = bufferedreader.readLine()) != null) {
+					s2.append('\n');
+					s2.append(line);
+				}
+			}
+			bufferedreader.close();
+
+			return s2.toString();
+		} else {
+			return "";
+		}
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//Identifikation
 	////////////////////////////////////////////////////////////////////////////////
-	private void infoHO(URLConnection httpurlconnection) {
+	
+
+	private void infoHO(OAuthRequest request) {
 		//try
 		//        {
-		httpurlconnection.setRequestProperty("accept-language", "de");
-		httpurlconnection.setRequestProperty("connection", "Keep-Alive");
-		httpurlconnection.setRequestProperty("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
+		request.addHeader("accept-language", "de");
+		request.addHeader("connection", "Keep-Alive");
+		request.addHeader("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
 
-		//httpurlconnection.setRequestProperty("accept-encoding", "compress, gzip");
-		httpurlconnection.setRequestProperty("accept-encoding", "gzip, deflate");
-		httpurlconnection.setRequestProperty("user-agent", m_sIDENTIFIER);
-
-		//Host einfach übernehmen
-		httpurlconnection.setRequestProperty("host", httpurlconnection.getURL().getHost());
+		request.addHeader("accept-encoding", "gzip, deflate");
+		request.addHeader("user-agent", m_sIDENTIFIER);
 
 		//ProxyAuth hier einbinden da diese Funk immer aufgerufen wird
 		if (m_bProxyAuthentifactionNeeded) {
 			final String pw = m_ProxyUserName + ":" + m_ProxyUserPWD;
 			final String epw = (new BASE64Encoder()).encode(pw.getBytes());
-			httpurlconnection.setRequestProperty("Proxy-Authorization", "Basic " + epw);
+			request.addHeader("Proxy-Authorization", "Basic " + epw);
 		}
 	}
 
