@@ -91,6 +91,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 		.apiSecret(MyHelper.decryptString(CONSUMER_SECRET))
 		.signatureType(SignatureType.Header)
 		.build();
+		
+		m_OAAccessToken = new Token(MyHelper.decryptString(gui.UserParameter.instance().AccessToken),
+			MyHelper.decryptString(gui.UserParameter.instance().TokenSecret));
+		
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
