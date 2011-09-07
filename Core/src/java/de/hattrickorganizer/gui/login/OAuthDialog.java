@@ -25,17 +25,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import oauth.signpost.OAuth;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.basic.DefaultOAuthProvider;
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
+import org.scribe.oauth.OAuthService;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.lineup.CopyListener;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.MyHelper;
 
 public class OAuthDialog extends JDialog implements ActionListener, FocusListener, KeyListener, WindowListener {
 
@@ -49,9 +49,6 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
 
-	String REQUEST_TOKEN_ENDPOINT_URL = "https://chpp.hattrick.org/oauth/request_token.ashx";
-	String AUTHORIZE_WEBSITE_URL = "https://chpp.hattrick.org/oauth/authorize.aspx";
-	String ACCESS_TOKEN_ENDPOINT_URL = "https://chpp.hattrick.org/oauth/access_token.ashx";
 
 	private HOMainFrame m_clMainFrame;
 	
@@ -66,18 +63,22 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	private boolean m_bUserCancel = false;
 	private boolean m_bFirstTry = true;
 	
-	private OAuthConsumer m_consumer;
-	OAuthProvider m_provider = new DefaultOAuthProvider(
-			REQUEST_TOKEN_ENDPOINT_URL, ACCESS_TOKEN_ENDPOINT_URL,
-			AUTHORIZE_WEBSITE_URL);
-
+	private OAuthService m_service;
+	Token m_AccessToken;
+	Token m_RequestToken;
+	private String scopes = "";
 	
-	public OAuthDialog(HOMainFrame mainFrame, OAuthConsumer consumer) {
+	public OAuthDialog(HOMainFrame mainFrame, OAuthService service) {
 		super(mainFrame, HOVerwaltung.instance().getLanguageString("oauth.Title"), true);
 
 		this.m_clMainFrame = mainFrame;
-		this.m_consumer = consumer;
+		this.m_service = service;
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+		if (MyConnector.isRequireSetMatchorder()) {
+			scopes = "&scope=set_matchorder";
+		}
+		
 		addWindowListener(this);
 		obtainUserURL();
 		initComponents();
@@ -88,24 +89,31 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	private void obtainUserURL() {
 		
        try {
-    	   m_sUserURL = m_provider.retrieveRequestToken(m_consumer, OAuth.OUT_OF_BAND);
-       } catch (Exception e){
-			HOLogger.instance().debug(getClass(), "Exception in obtainUserCode: " + e.getMessage());
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Error obtaining URL", JOptionPane.ERROR_MESSAGE);
+    	   
+    	   
+    	   
+    	   m_RequestToken = m_service.getRequestToken();
+    	   m_sUserURL = m_service.getAuthorizationUrl(m_RequestToken);
+    	   m_sUserURL += scopes;
+       } catch (Exception e) {
+    	   HOLogger.instance().error(getClass(), "Exception in obtainUserCode: " + e.getMessage());
+    	   JOptionPane.showMessageDialog(null, e.getMessage(), "Error obtaining URL", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
 	private void doAuthorize() {
-		m_sUserCode = new String(m_jtfAuthString.getText().trim());
+		
+		Verifier verifier = new Verifier(m_jtfAuthString.getText().trim());
 		
 		try {
-			m_provider.retrieveAccessToken(m_consumer, m_sUserCode);
+			
+			m_AccessToken = m_service.getAccessToken(m_RequestToken, verifier);
+			UserParameter.instance().AccessToken = MyHelper.cryptString(m_AccessToken.getToken());
+			UserParameter.instance().TokenSecret = MyHelper.cryptString(m_AccessToken.getSecret());
+			
 		} catch (Exception e) {
-			HOLogger.instance().debug(getClass(), "Exception in doAuthorize");
+			HOLogger.instance().error(getClass(), "Exception in doAuthorize: " + e.getMessage());
 		}
-		
-		UserParameter.instance().AccessToken = Helper.cryptString(m_consumer.getToken());
-		UserParameter.instance().TokenSecret = Helper.cryptString(m_consumer.getTokenSecret());
 		m_bFirstTry = false;
 		this.dispose();
 	}
@@ -133,7 +141,7 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
         	desktop.browse( uri );
         }
         catch ( Exception e ) {
-			HOLogger.instance().debug(getClass(), "Open URL '" + m_sUserURL + "' failed.");
+			HOLogger.instance().error(getClass(), "Open URL '" + m_sUserURL + "' failed: " + e.getMessage());
 			CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
         	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
         }
@@ -142,6 +150,10 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	
 	public boolean getUserCancel() {
 		return m_bUserCancel;
+	}
+	
+	public Token getAccessToken() {
+		return m_AccessToken;
 	}
 	
 	public final void actionPerformed(ActionEvent actionEvent) {
