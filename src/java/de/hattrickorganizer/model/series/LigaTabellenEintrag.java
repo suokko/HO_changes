@@ -4,7 +4,7 @@
  *
  * Created on 7. Oktober 2003, 11:36
  */
-package de.hattrickorganizer.model.lineup;
+package de.hattrickorganizer.model.series;
 
 import plugins.ILigaTabellenEintrag;
 

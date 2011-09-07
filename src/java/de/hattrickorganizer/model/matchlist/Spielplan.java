@@ -13,10 +13,10 @@ import plugins.ILigaTabelle;
 import plugins.ILigaTabellenEintrag;
 import plugins.IPaarung;
 import plugins.ITabellenverlauf;
-import de.hattrickorganizer.model.lineup.LigaTabelle;
-import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
-import de.hattrickorganizer.model.lineup.TabellenVerlaufEintrag;
-import de.hattrickorganizer.model.lineup.Tabellenverlauf;
+import de.hattrickorganizer.model.series.LigaTabelle;
+import de.hattrickorganizer.model.series.LigaTabellenEintrag;
+import de.hattrickorganizer.model.series.TabellenVerlaufEintrag;
+import de.hattrickorganizer.model.series.Tabellenverlauf;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
