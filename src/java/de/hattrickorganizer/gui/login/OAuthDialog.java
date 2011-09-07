@@ -35,7 +35,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 
 public class OAuthDialog extends JDialog implements ActionListener, FocusListener, KeyListener, WindowListener {
 
@@ -108,8 +108,8 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 		try {
 			
 			m_AccessToken = m_service.getAccessToken(m_RequestToken, verifier);
-			UserParameter.instance().AccessToken = MyHelper.cryptString(m_AccessToken.getToken());
-			UserParameter.instance().TokenSecret = MyHelper.cryptString(m_AccessToken.getSecret());
+			UserParameter.instance().AccessToken = Helper.cryptString(m_AccessToken.getToken());
+			UserParameter.instance().TokenSecret = Helper.cryptString(m_AccessToken.getSecret());
 			
 		} catch (Exception e) {
 			HOLogger.instance().error(getClass(), "Exception in doAuthorize: " + e.getMessage());

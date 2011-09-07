@@ -38,7 +38,7 @@ import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.MyHelper;
+import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.VersionInfo;
 
 /**
@@ -87,13 +87,13 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private MyConnector() {
 		m_OAService = new ServiceBuilder()
 		.provider(HattrickAPI.class)
-		.apiKey(MyHelper.decryptString(CONSUMER_KEY))
-		.apiSecret(MyHelper.decryptString(CONSUMER_SECRET))
+		.apiKey(Helper.decryptString(CONSUMER_KEY))
+		.apiSecret(Helper.decryptString(CONSUMER_SECRET))
 		.signatureType(SignatureType.Header)
 		.build();
 		
-		m_OAAccessToken = new Token(MyHelper.decryptString(gui.UserParameter.instance().AccessToken),
-			MyHelper.decryptString(gui.UserParameter.instance().TokenSecret));
+		m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
+			Helper.decryptString(gui.UserParameter.instance().TokenSecret));
 		
 	}
 
@@ -468,7 +468,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		try {
 			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList");
-			list = MyHelper.generateStringArray(s, ';');
+			list = Helper.generateStringArray(s, ';');
 
 			if ((s != null) && (!s.trim().equals("")) && (s.length() > 0)) {
 				//-1 da letzter Eintrag == "" ist
@@ -788,7 +788,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			final String s =
 				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId);
 
-			if (MyHelper.parseDate(s) == null) {
+			if (Helper.parseDate(s) == null) {
 				return false;
 			}
 		} catch (Exception e) {
