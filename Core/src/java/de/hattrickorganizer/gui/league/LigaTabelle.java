@@ -26,7 +26,7 @@ import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.lineup.LigaTabellenEintrag;
+import de.hattrickorganizer.model.series.LigaTabellenEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 

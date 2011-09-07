@@ -4,7 +4,7 @@
  *
  * Created on 7. Oktober 2003, 11:35
  */
-package de.hattrickorganizer.model.lineup;
+package de.hattrickorganizer.model.series;
 
 import de.hattrickorganizer.tools.Helper;
 
@@ -256,8 +256,7 @@ public class LigaTabelle implements ILigaTabelle {
         m_vEintraege.clear();
 
         //zurückkopieren
-        for (int j = 0; j < list.length; j++) {
-        	m_vEintraege.addElement(list[j]);
-		}
+        Helper.copyArray2Vector(list, m_vEintraege);
+        list = null;
     }
 }
