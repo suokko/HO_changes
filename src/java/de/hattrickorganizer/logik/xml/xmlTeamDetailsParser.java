@@ -139,12 +139,17 @@ public class xmlTeamDetailsParser {
             hash.put("Loginname", (XMLManager.instance().getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastLoginDate").item(0);
             hash.put("LastLoginDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            
+            // Is this in the xml? - Blaghaid
             ele = (Element) root.getElementsByTagName("Email").item(0);
             hash.put("Email", (XMLManager.instance().getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("ICQ").item(0);
             hash.put("ICQ", (XMLManager.instance().getFirstChildNodeValue(ele)));
 
+            ele = (Element) root.getElementsByTagName("HasSupporter").item(0);
+            hash.put("HasSupporter", (XMLManager.instance().getFirstChildNodeValue(ele)));
+      
             //Root wechseln
             root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
             ele = (Element) root.getElementsByTagName("TeamID").item(0);

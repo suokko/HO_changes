@@ -50,7 +50,7 @@ public class ConvertXml2Hrf {
     protected Hashtable<?, ?> m_htEconomy;
     protected Hashtable<?, ?> m_htLiga;
     protected Hashtable<?, ?> m_htNextLineup;
-    protected Hashtable<?, ?> m_htTeamdeatils;
+    protected Hashtable<?, ?> m_htTeamdetails;
     protected Hashtable<?, ?> m_htTraining;
     protected Hashtable<?, ?> m_htWorld;
     protected MatchLineup m_clLineUp;
@@ -91,9 +91,9 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(10);
             m_htClub = new XMLClubParser().parseClubFromString(mc.getVerein());
             waitDialog.setValue(15);
-            m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),m_htTeamdeatils.get("TeamID").toString());
+            m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),m_htTeamdetails.get("TeamID").toString());
             waitDialog.setValue(20);
-            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(),m_htTeamdeatils.get("LeagueID").toString());
+            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(),m_htTeamdetails.get("LeagueID").toString());
             waitDialog.setValue(25);
             m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1).toString());
             waitDialog.setValue(30);
@@ -107,7 +107,7 @@ public class ConvertXml2Hrf {
 
             //MatchOrder
             waitDialog.setValue(50);
-            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatchesASP(Integer.parseInt(m_htTeamdeatils.get("TeamID").toString()), false));
+            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatchesASP(Integer.parseInt(m_htTeamdetails.get("TeamID").toString()), false));
             waitDialog.setValue(52);
 
             // Automatisch alle MatchLineups runterladen
@@ -125,7 +125,7 @@ public class ConvertXml2Hrf {
             if (m_clLineUp != null) {
                 final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID()));
 
-                if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdeatils.get("TeamID").toString())) {
+                if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdetails.get("TeamID").toString())) {
                     m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp.getHeim();
 
                     if (md != null) {
@@ -231,19 +231,20 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("[basics]\n");
         m_sHRFBuffer.append("application=HO\n");
         m_sHRFBuffer.append("appversion=" + de.hattrickorganizer.gui.HOMainFrame.VERSION + "\n");
-        m_sHRFBuffer.append("date=" + m_htTeamdeatils.get("FetchedDate") + "\n");
+        m_sHRFBuffer.append("date=" + m_htTeamdetails.get("FetchedDate") + "\n");
         m_sHRFBuffer.append("season=" + m_htWorld.get("Season") + "\n");
         m_sHRFBuffer.append("matchround=" + m_htWorld.get("MatchRound") + "\n");
-        m_sHRFBuffer.append("teamID=" + m_htTeamdeatils.get("TeamID") + "\n");
-        m_sHRFBuffer.append("teamName=" + m_htTeamdeatils.get("TeamName") + "\n");
-        m_sHRFBuffer.append("owner=" + m_htTeamdeatils.get("Loginname") + "\n");
-        m_sHRFBuffer.append("ownerEmail=" + m_htTeamdeatils.get("Email") + "\n");
-        m_sHRFBuffer.append("ownerICQ=" + m_htTeamdeatils.get("ICQ") + "\n");
-        m_sHRFBuffer.append("ownerHomepage=" + m_htTeamdeatils.get("HomePage") + "\n");
+        m_sHRFBuffer.append("teamID=" + m_htTeamdetails.get("TeamID") + "\n");
+        m_sHRFBuffer.append("teamName=" + m_htTeamdetails.get("TeamName") + "\n");
+        m_sHRFBuffer.append("owner=" + m_htTeamdetails.get("Loginname") + "\n");
+        m_sHRFBuffer.append("ownerEmail=" + m_htTeamdetails.get("Email") + "\n");
+        m_sHRFBuffer.append("ownerICQ=" + m_htTeamdetails.get("ICQ") + "\n");
+        m_sHRFBuffer.append("ownerHomepage=" + m_htTeamdetails.get("HomePage") + "\n");
         m_sHRFBuffer.append("countryID=" + m_htWorld.get("CountryID") + "\n");
-        m_sHRFBuffer.append("leagueID=" + m_htTeamdeatils.get("LeagueID") + "\n");
+        m_sHRFBuffer.append("leagueID=" + m_htTeamdetails.get("LeagueID") + "\n");
 //        m_sHRFBuffer.append("arenaID=" + m_htArena.get("ArenaID") + "\n");
-        m_sHRFBuffer.append("regionID=" + m_htTeamdeatils.get("RegionID") + "\n");
+        m_sHRFBuffer.append("regionID=" + m_htTeamdetails.get("RegionID") + "\n");
+        m_sHRFBuffer.append("hasSupporter=" + m_htTeamdetails.get("HasSupporter") + "\n");
     }
 
     /**
@@ -259,8 +260,8 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("massor=" + m_htClub.get("Physiotherapists") + "\n");
         m_sHRFBuffer.append("lakare=" + m_htClub.get("Doctors") + "\n");
         m_sHRFBuffer.append("juniorverksamhet=" + m_htClub.get("YouthLevel") + "\n");
-        m_sHRFBuffer.append("undefeated=" + m_htTeamdeatils.get("NumberOfUndefeated") + "\n");
-        m_sHRFBuffer.append("victories=" + m_htTeamdeatils.get("NumberOfVictories") + "\n");
+        m_sHRFBuffer.append("undefeated=" + m_htTeamdetails.get("NumberOfUndefeated") + "\n");
+        m_sHRFBuffer.append("victories=" + m_htTeamdetails.get("NumberOfVictories") + "\n");
         m_sHRFBuffer.append("fanclub=" + m_htEconomy.get("FanClubSize") + "\n");
     }
 
@@ -314,7 +315,7 @@ public class ConvertXml2Hrf {
      */
     protected final void createLastLineUp() {
         m_sHRFBuffer.append("[lastlineup]" + "\n");
-        m_sHRFBuffer.append("trainer=" + m_htTeamdeatils.get("TrainerID") + "\n");
+        m_sHRFBuffer.append("trainer=" + m_htTeamdetails.get("TrainerID") + "\n");
 
            
         try {
@@ -404,7 +405,7 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("[lineup]" + "\n");
 
         try {
-            m_sHRFBuffer.append("trainer=" + m_htTeamdeatils.get("TrainerID") + "\n");
+            m_sHRFBuffer.append("trainer=" + m_htTeamdetails.get("TrainerID") + "\n");
             m_sHRFBuffer.append("installning=" + m_htNextLineup.get("Attitude") + "\n");
 			m_sHRFBuffer.append("tactictype="+ (m_htNextLineup.get("TacticType").toString().trim().equals("") ? "0" : m_htNextLineup.get("TacticType").toString().trim()) + "\n");
            
@@ -592,13 +593,13 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("CurrencyName=" + m_htWorld.get("CurrencyName") + "\n");
         m_sHRFBuffer.append("CurrencyRate="
                             + m_htWorld.get("CurrencyRate").toString().replace(',', '.') + "\n");
-        m_sHRFBuffer.append("LogoURL=" + m_htTeamdeatils.get("LogoURL") + "\n");
+        m_sHRFBuffer.append("LogoURL=" + m_htTeamdetails.get("LogoURL") + "\n");
         m_sHRFBuffer.append("HasPromoted=" + m_htClub.get("HasPromoted") + "\n");
 
         m_sHRFBuffer.append("TrainerID=" + m_htTraining.get("TrainerID") + "\n");
         m_sHRFBuffer.append("TrainerName=" + m_htTraining.get("TrainerName") + "\n");
         m_sHRFBuffer.append("ArrivalDate=" + m_htTraining.get("ArrivalDate") + "\n");
-        m_sHRFBuffer.append("LeagueLevelUnitID=" + m_htTeamdeatils.get("LeagueLevelUnitID") + "\n");
+        m_sHRFBuffer.append("LeagueLevelUnitID=" + m_htTeamdetails.get("LeagueLevelUnitID") + "\n");
     }
 
     /**

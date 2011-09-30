@@ -1985,9 +1985,11 @@ public class DBZugriff {
 	 */
 	private void updateDBv11() throws Exception {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
-		
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
-	
+		
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE BASICS ADD COLUMN HasSupporter BOOLEAN");
+		m_clJDBCAdapter.executeUpdate("UPDATE BASICS SET HasSupporter = 'false' WHERE HasSupporter IS NULL");
+		
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
 		// do version checking again before applying!
