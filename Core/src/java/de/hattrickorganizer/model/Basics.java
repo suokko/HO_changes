@@ -39,6 +39,8 @@ public final class Basics implements plugins.IBasics {
     /** Region Id */
     private int m_iRegionId;
     
+    private boolean m_bHasSupporter;
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -88,6 +90,12 @@ public final class Basics implements plugins.IBasics {
         } catch (Exception e) {
             m_iRegionId = 0;
         }
+        
+        try {
+        	m_bHasSupporter = Boolean.parseBoolean(properties.getProperty("hassupporter", "false"));
+        } catch (Exception e) {
+        	m_bHasSupporter = false;
+        }
     }
 
     /**
@@ -104,6 +112,7 @@ public final class Basics implements plugins.IBasics {
             m_iSpieltag = rs.getInt("Spieltag");
             m_clDatum = rs.getTimestamp("Datum");
             m_iRegionId = rs.getInt("Region");
+            m_bHasSupporter = rs.getBoolean("HasSupporter");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor Basics: " + e.toString());
         }
@@ -154,8 +163,24 @@ public final class Basics implements plugins.IBasics {
             }
         }
     }
+    
+    
 
     /**
+	 * @return the m_bHasSupporter
+	 */
+	public boolean isHasSupporter() {
+		return m_bHasSupporter;
+	}
+
+	/**
+	 * @param m_bHasSupporter the m_bHasSupporter to set
+	 */
+	public void setHasSupporter(boolean m_bHasSupporter) {
+		this.m_bHasSupporter = m_bHasSupporter;
+	}
+
+	/**
      * Setter for property m_iLand.
      *
      * @param m_iLand New value of property m_iLand.
