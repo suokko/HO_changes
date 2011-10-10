@@ -17,6 +17,7 @@ import plugins.IMatchLineupPlayer;
 import plugins.IPaarung;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 import plugins.IVerein;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
@@ -188,6 +189,7 @@ public class DBZugriff {
 		tables.put(FutureTrainingTable.TABLENAME, new FutureTrainingTable(adapter));
 		tables.put(UserConfigurationTable.TABLENAME, new UserConfigurationTable(adapter));
 		tables.put(SpielerSkillupTable.TABLENAME, new SpielerSkillupTable(adapter));
+		tables.put(MatchSubstitutionTable.TABLENAME, new MatchSubstitutionTable(adapter));
 
 	}
 
@@ -1113,6 +1115,49 @@ public class DBZugriff {
 		((StadionTable) getTable(StadionTable.TABLENAME)).saveStadion(hrfId, stadion);
 	}
 
+	
+    //	------------------------------- MatchSubstitutionTable -------------------------------------------------
+	
+	/**
+	 * Returns an array with substitution belonging to the match-team.
+	 *
+	 * @param teamId The teamId for the team in question
+	 * @param matchId The matchId for the match in question
+	 *
+	 */
+	public ISubstitution[] getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
+		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByMatchTeam(teamId, matchId);
+	}
+	
+	/**
+	 * Returns an array with substitution belonging to given hrfId
+	 *
+	 * @param hrfId The teamId for the team in question
+	 *
+	 */
+	public ISubstitution[] getMatchSubstitutionsByHrf(int hrfId) {
+		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByHrf(hrfId);
+	}
+	
+
+	/**
+	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
+	 * All previous substitutions for the team/match combination will be deleted.
+	 */
+	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, ISubstitution[] subs) {	
+		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByMatchTeam(matchId, teamId, subs);
+		
+	}
+		
+	/**
+	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
+	 * All previous substitutions for the hrf will be deleted.
+	 */
+	public void storeMatchSubstitutionsByHrf(int hrfId, ISubstitution[] subs) {
+		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByHrf(hrfId, subs);
+	}
+	
+	
 	//	------------------------------- TeamTable -------------------------------------------------
 
 	/**
@@ -1989,6 +2034,8 @@ public class DBZugriff {
 		
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE BASICS ADD COLUMN HasSupporter BOOLEAN");
 		m_clJDBCAdapter.executeUpdate("UPDATE BASICS SET HasSupporter = 'false' WHERE HasSupporter IS NULL");
+		
+		getTable(MatchSubstitutionTable.TABLENAME).createTable();
 		
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
