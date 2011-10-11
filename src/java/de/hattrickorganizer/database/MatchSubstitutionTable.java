@@ -27,7 +27,8 @@ public class MatchSubstitutionTable extends AbstractTable{
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("HrfID",Types.INTEGER, false);
-		columns[3]= new ColumnDescriptor("PlayerOrderID",Types.INTEGER,false);
+		// Seb - as this is unique, it can be the primary key.
+		columns[3]= new ColumnDescriptor("PlayerOrderID",Types.INTEGER,false,true);
 		columns[4]= new ColumnDescriptor("PlayerIn",Types.INTEGER,false);
 		columns[5]= new ColumnDescriptor("PlayerOut",Types.INTEGER,false);
 		columns[6]= new ColumnDescriptor("OrderType",Types.INTEGER,false);
@@ -39,9 +40,14 @@ public class MatchSubstitutionTable extends AbstractTable{
 		columns[12]= new ColumnDescriptor("Standing",Types.INTEGER,false);
 	}
 
+	/** Seb - changed to have indexes on MatchID + TeamID, one on PlayerOrderID and one on hrfid*/
 	@Override
 	protected String[] getCreateIndizeStatements() {
-		return new String[] { "CREATE INDEX IMATCHSUBSTITUTION_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")" };
+		return new String[] {  
+				"CREATE INDEX IMATCHSUBSTITUTION_1 ON "+getTableName()+"("+columns[3].getColumnName()+")",
+				"CREATE INDEX IMATCHSUBSTITUTION_2 ON "+getTableName()+"("+columns[0].getColumnName()+","+columns[1].getColumnName()+")",
+				"CREATE INDEX IMATCHSUBSTITUTION_3 ON "+getTableName()+"("+columns[2].getColumnName()+")"
+		};
 	}
 
 	/**
@@ -96,10 +102,10 @@ public class MatchSubstitutionTable extends AbstractTable{
 	private void storeSub(int matchId, int teamId, int hrfId, ISubstitution[] subs) {
 		String sql = null;
 		final String[] where = { "MatchID", "TeamID", "HrfID" };
-		final String[] werte = { "" + matchId, "" + teamId, "" + hrfId } ;
-
+		final String[] vals = { "" + matchId, "" + teamId, "" + hrfId } ;
+// Changed werte to vals, local var
 		// Get rid of any old subs for the inputs.
-		delete(where, werte);
+		delete(where, vals);
 
 		for (int i = 0;(i < subs.length); i++) {
 
