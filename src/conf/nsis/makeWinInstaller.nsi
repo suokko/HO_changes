@@ -78,7 +78,7 @@ VIProductVersion "$HOVERSION"
 ;!define MUI_FINISHPAGE_RUN "$INSTDIR\HO.bat"
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\changelog.txt"
 !define MUI_FINISHPAGE_LINK "Hattrick Organizer Homepage"
-!define MUI_FINISHPAGE_LINK_LOCATION "http://www.hattrickorganizer.net"
+!define MUI_FINISHPAGE_LINK_LOCATION "http://sourceforge.net/projects/ho1/"
 
 !insertmacro MUI_PAGE_FINISH
 
