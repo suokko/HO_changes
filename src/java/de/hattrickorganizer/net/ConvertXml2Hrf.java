@@ -87,7 +87,7 @@ public class ConvertXml2Hrf {
             //Hashtable's füllen
         	final MyConnector mc = MyConnector.instance();
             waitDialog.setValue(5);
-            m_htTeamdeatils = new xmlTeamDetailsParser().parseTeamdetailsFromString(mc.getTeamdetails(-1));
+            m_htTeamdetails = new xmlTeamDetailsParser().parseTeamdetailsFromString(mc.getTeamdetails(-1));
             waitDialog.setValue(10);
             m_htClub = new XMLClubParser().parseClubFromString(mc.getVerein());
             waitDialog.setValue(15);
