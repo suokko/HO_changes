@@ -115,11 +115,11 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	public static String getHOSite() {
-		return "http://www.hattrickorganizer.net";
+		return "http://ho1.sourceforge.net/";
 	}
 
 	public static String getPluginSite() {
-		return "http://plugins.hattrickorganizer.net";
+		return "http://ho1.sourceforge.net/onlinefiles";
 	}
 
 	public static boolean isRequireSetMatchorder() {
