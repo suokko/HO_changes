@@ -49,7 +49,7 @@ public final class UpdateController {
     private static File zip = null;
     private static File tmp = null;
 
-    public static final String PLUGINS_HOMEPAGE = "http://plugins.hattrickorganizer.net";
+    public static final String PLUGINS_HOMEPAGE = "http://ho1.sourceforge.net/onlinefiles";
     protected static final String WEB_FLAGSFILE = PLUGINS_HOMEPAGE + "/xml/flags.zip";
     protected static final String WEB_PLUGINFILE = PLUGINS_HOMEPAGE + "/xml/pluginVersionen.xml";
 
