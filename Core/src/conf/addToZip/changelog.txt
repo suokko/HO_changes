@@ -1,9 +1,10 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
-forum at http://forum.hattrickorganizer.net if you have any questions!
+forum at http://sourceforge.net/projects/ho1/forums if you have any questions!
 
 Changelist HO! 1.431
 ====================
--
+- Removed General and Stamina Training from Future Trainings 
+- Changed wed server from hattrickorganizer.net to ho1.sourceforge.net
 
 Language updates:
 -----------------
