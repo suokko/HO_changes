@@ -36,7 +36,6 @@ public class StaffListener extends InputListener {
     public void setStaff(StaffInner newStaff) {
         StaffInner inner = (StaffInner) targetCell.getOperation().getInner();
         inner.addAssistantCoaches(newStaff.getAssistantCoaches());
-        inner.addAssistantKeeper(newStaff.getAssistantKeeper());
         inner.addPhisio(newStaff.getPhisio());
         inner.addPsico(newStaff.getPsico());
         inner.addDoctor(newStaff.getDoctor());
@@ -48,7 +47,6 @@ public class StaffListener extends InputListener {
             HTWeek theWeek = WeekHeader.instance().getColumnWeek(i);
             StaffInner ss = TeamPlanner.getExtrasPane().getStaff(theWeek);
             ss.addAssistantCoaches(newStaff.getAssistantCoaches());
-            ss.addAssistantKeeper(newStaff.getAssistantKeeper());
             ss.addPhisio(newStaff.getPhisio());
             ss.addPsico(newStaff.getPsico());
             ss.addDoctor(newStaff.getDoctor());
