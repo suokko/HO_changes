@@ -71,11 +71,6 @@ public class StaffDialog extends JDialog {
         newValues[0] = new JTextField(inner.getAssistantCoaches() + "");
         p.add(newValues[0]);
 
-        p.add(new JLabel("Assistant Keeper", SwingConstants.LEFT));
-        p.add(new JLabel((total.getAssistantKeeper() - inner.getAssistantKeeper()) + "", SwingConstants.LEFT));
-        newValues[1] = new JTextField(inner.getAssistantKeeper() + "");
-        p.add(newValues[1]);
-
         p.add(new JLabel("Phisio", SwingConstants.LEFT));
         p.add(new JLabel((total.getPhisio() - inner.getPhisio()) + "", SwingConstants.LEFT));
         newValues[2] = new JTextField(inner.getPhisio() + "");
@@ -103,7 +98,6 @@ public class StaffDialog extends JDialog {
                 public void actionPerformed(ActionEvent arg0) {
                     StaffInner ss = new StaffInner();
                     ss.setAssistantCoaches(getIntValue(0) - original.getAssistantCoaches());
-                    ss.setAssistantKeeper(getIntValue(1) - original.getAssistantKeeper());
                     ss.setPhisio(getIntValue(2) - original.getPhisio());
                     ss.setPsico(getIntValue(3) - original.getPsico());
                     ss.setDoctor(getIntValue(4) - original.getDoctor());
