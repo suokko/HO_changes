@@ -92,7 +92,6 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 				case ITeam.TA_ABWEHRVERHALTEN :
 				case ITeam.TA_CHANCEN :
 				case ITeam.TA_STANDARD :
-				case ITeam.TA_KONDITION :
 				case ITeam.TA_EXTERNALATTACK :
 					processTraining(getSkillForTraining(tw.getTyp()), point, tw);
 					break;
@@ -302,8 +301,6 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 			case ISpieler.SKILL_STANDARDS :
 				return ISpieler.STANDARDS;
 
-			case ISpieler.SKILL_KONDITION :
-				return ISpieler.KONDITION;
 		}
 
 		return 0;
@@ -343,8 +340,6 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 			case ITeam.TA_STANDARD:
 				return ISpieler.SKILL_STANDARDS;
 
-			case ITeam.TA_KONDITION:
-				return ISpieler.SKILL_KONDITION;
 		}
 
 		return 0;
