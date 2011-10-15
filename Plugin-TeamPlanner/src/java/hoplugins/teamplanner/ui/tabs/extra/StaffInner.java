@@ -44,24 +44,6 @@ public class StaffInner implements InnerData {
     /**
      * Missing Method Documentation
      *
-     * @param i Missing Method Parameter Documentation
-     */
-    public void setAssistantKeeper(int i) {
-        assistantKeeper = i;
-    }
-
-    /**
-     * Missing Method Documentation
-     *
-     * @return Missing Return Method Documentation
-     */
-    public int getAssistantKeeper() {
-        return assistantKeeper;
-    }
-
-    /**
-     * Missing Method Documentation
-     *
      * @return Missing Return Method Documentation
      */
     public String getDescription() {
