@@ -24,7 +24,6 @@ public final class ScoutTable extends AbstractTable {
 		columns[2]= new ColumnDescriptor("Info",Types.VARCHAR,false,256);
 		columns[3]= new ColumnDescriptor("Age",Types.INTEGER,false);
 		columns[4]= new ColumnDescriptor("Marktwert",Types.INTEGER,false);
-		//columns[5]= new ColumnDescriptor("Finanzberater",Types.VARCHAR,true,127);
 		columns[5]= new ColumnDescriptor("Speciality",Types.INTEGER,false);
 		columns[6]= new ColumnDescriptor("Kondition",Types.INTEGER,false);
 		columns[7]= new ColumnDescriptor("Erfahrung",Types.INTEGER,false);
