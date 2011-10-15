@@ -214,12 +214,11 @@ public final class UserParameter extends Configuration {
     public float TRAINING_OFFSET_SETPIECES = 0f;
     public float TRAINING_OFFSET_GOALKEEPING = 0f;
     public float TRAINING_OFFSET_DEFENDING = 0f;
-
+    public float TRAINING_OFFSET_OSMOSIS = 0f;
   //Faktoren
     public float TRAINING_OFFSET_AGE = 1.0f;
     public float TRAINING_OFFSET_ASSISTANTS = 1.0f;
     public float TRAINING_OFFSET_INTENSITY = 1.0f;
-
     //Timezone
     public int TimeZoneDifference;
 
