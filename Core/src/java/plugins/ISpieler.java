@@ -729,16 +729,6 @@ public interface ISpieler {
     public int getPasspiel();
 
     /**
-     * gibt an ob der angeforderte Skill beim diesem Trainingstyp trainiert wird
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     * @param trainingstype TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public boolean isSkillTrained(int skill, int trainingstype);
-
-    /**
      * Setter for property m_iSpezialitaet.
      *
      * @param m_iSpezialitaet New value of property m_iSpezialitaet.
