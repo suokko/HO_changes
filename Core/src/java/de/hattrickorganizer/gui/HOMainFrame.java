@@ -480,7 +480,7 @@ public final class HOMainFrame extends JFrame
 		} else if (source.equals(m_jmPluginsHomepage)) { // Plugins Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(UpdateController.PLUGINS_HOMEPAGE);
 		} else if (source.equals(m_jmForumItem)) { // Forum
-			HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/projects/ho1/forums");
+			HelperWrapper.instance().openUrlInUserBRowser("http://forum.hattrickorganizer.net/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
 		}
