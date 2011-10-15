@@ -96,10 +96,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 			m_clSpieler.setTrainingsOffsetTorwart(m_jpTorwart.getValue() / 100d);
 			m_clSpieler.setTrainingsOffsetVerteidigung(m_jpVerteidigung.getValue() / 100d);
 
-			//Subskills neu berechnen
-			// TODO Calc Subskills commented, no need to do that
-			//m_clSpieler.calcFullSubskills( database.DBZugriff.instance ().getBasics ( database.DBZugriff.instance ().getHRF_IDByDate ()  ).getDatum (),  model.HOVerwaltung.instance().getModel().getVerein().getCoTrainer(), model.HOVerwaltung.instance().getModel().getVerein().getTorwartTrainer(), model.HOVerwaltung.instance().getModel().getTrainer().getTrainer(), model.HOVerwaltung.instance().getModel().getTeam().getTrainingslevel() );
-			//Alle Spieler neu speichern (nur einer ist zu aufwendig ;)
+			// Recalcualte subskills
 			DBZugriff.instance().saveSpieler(
 				HOVerwaltung.instance().getModel().getID(),
 				HOVerwaltung.instance().getModel().getAllSpieler(),
