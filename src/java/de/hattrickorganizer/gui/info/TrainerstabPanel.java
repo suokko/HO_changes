@@ -29,11 +29,9 @@ final class TrainerstabPanel extends JPanel {
 
     private final ColorLabelEntry m_jpAerzte 		= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpCoTrainer 	= new ColorLabelEntry("");
-    private final ColorLabelEntry m_jpFinanzberater = new ColorLabelEntry("");
     private final ColorLabelEntry m_jpPRManager 	= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpPhysiotherapeuten = new ColorLabelEntry("");
     private final ColorLabelEntry m_jpPsychologen 	= new ColorLabelEntry("");
-    private final ColorLabelEntry m_jpTWTrainer 	= new ColorLabelEntry("");
 
     final GridBagLayout layout = new GridBagLayout();
     final GridBagConstraints constraints = new GridBagConstraints();
@@ -47,11 +45,9 @@ final class TrainerstabPanel extends JPanel {
     void setLabels() {
         final IVerein verein = HOVerwaltung.instance().getModel().getVerein();
 
-        m_jpTWTrainer.setText(verein.getTorwartTrainer() + "");
         m_jpCoTrainer.setText(verein.getCoTrainer() + "");
         m_jpPsychologen.setText(verein.getPsychologen() + "");
         m_jpPRManager.setText(verein.getPRManager() + "");
-        m_jpFinanzberater.setText(verein.getFinanzberater() + "");
         m_jpPhysiotherapeuten.setText(verein.getMasseure() + "");
         m_jpAerzte.setText(verein.getAerzte() + "");
     }
