@@ -170,8 +170,6 @@ public class SkillUp {
 		IHOMiniModel miniModel = Commons.getModel();
 		IJDBCAdapter adapter = miniModel.getAdapter();
 		String assistentName = "COTRAINER";
-		if (skill == ISpieler.SKILL_TORWART)
-			assistentName = "TWTRAINER";
 		String myQuery = "select avg (cast ("+assistentName+" as float)) as AVGASSISTANTS"
 			+" from VEREIN "
 			+" where HRF_ID="+hrfList.get(0);
