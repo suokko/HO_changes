@@ -47,7 +47,7 @@ public final class LanguagesDialog extends UpdaterDialog {
     protected final String PROP_REFRESH = HOVerwaltung.instance().getLanguageString("Refresh");
 
     /** TODO Missing Parameter Documentation */
-    protected final String WEB_LANGUAGE_DIR = UpdateController.PLUGINS_HOMEPAGE + "/Sprache/";
+    protected final String WEB_LANGUAGE_DIR = UpdateController.PLUGINS_HOMEPAGE + "/sprache/";
 
     /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> hash;
