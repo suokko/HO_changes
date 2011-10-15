@@ -57,7 +57,7 @@ public final class VereinTable extends AbstractTable {
 			statement = "INSERT INTO "+getTableName()+" ( TWTrainer , COTrainer , Physiologen , Pschyologen , Finanzberater , PRManager , Aerzte , Jugend , Siege , Ungeschlagen , Fans , HRF_ID ) VALUES(";
 			statement
 				+= (""
-					+ verein.getTorwartTrainer()
+					+ 0
 					+ ","
 					+ verein.getCoTrainer()
 					+ ","
@@ -65,7 +65,7 @@ public final class VereinTable extends AbstractTable {
 					+ ","
 					+ verein.getPsychologen()
 					+ ","
-					+ verein.getFinanzberater()
+					+ 0
 					+ ","
 					+ verein.getPRManager()
 					+ ","
