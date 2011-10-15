@@ -112,7 +112,6 @@ public class ExtrasPane extends AbstractOperationPane {
     @Override
 	protected void loadInputData() {
         int coTrainer = Commons.getModel().getVerein().getCoTrainer();
-        int keeperTrainer = Commons.getModel().getVerein().getTorwartTrainer();
         int psico = Commons.getModel().getVerein().getPsychologen();
         int doctor = Commons.getModel().getVerein().getAerzte();
         int phisio = Commons.getModel().getVerein().getMasseure();
@@ -122,7 +121,6 @@ public class ExtrasPane extends AbstractOperationPane {
             StaffInner inner = (StaffInner) Util.getOperationData(model, STAFF_ROW, i).getInner();
             StaffInner total = inner.getTotal();
             total.setAssistantCoaches(coTrainer);
-            total.setAssistantKeeper(keeperTrainer);
             total.setDoctor(doctor);
             total.setPhisio(phisio);
             total.setPsico(psico);
