@@ -135,7 +135,6 @@ public class TeamPlayerManager {
     	TeamPlayerData data = getTeamPlayer(spielerId);
     	ISpieler spieler = data.getData();
     	int coTrainer = Commons.getModel().getVerein().getCoTrainer();
-    	//int keeperTrainer = Commons.getModel().getVerein().getTorwartTrainer(); // not used any longer
     	ISpieler t = Commons.getModel().getTrainer();
     	int trainer = 0;
     	if (t != null) {
@@ -189,7 +188,6 @@ public class TeamPlayerManager {
     	}
 
     	int coTrainer = Commons.getModel().getVerein().getCoTrainer();
-    	//int kepperTrainer = Commons.getModel().getVerein().getTorwartTrainer(); //deprecated
     	ISpieler t = Commons.getModel().getTrainer();
     	int trainer = 0;
     	if (t != null) {
