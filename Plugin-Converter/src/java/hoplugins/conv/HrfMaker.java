@@ -345,9 +345,6 @@ abstract class HrfMaker {
 				if (element.getTagName().equals("Specialists")) {
 					analyzeClub(nodelist.item(i).getChildNodes());
 				}
-				if (element.getTagName().equals("KeeperTrainers")) {
-					setTag(element, clubValue, 1);
-				}
 				if (element.getTagName().equals("AssistantTrainers")) {
 					setTag(element, clubValue, 2);
 				}
@@ -356,9 +353,6 @@ abstract class HrfMaker {
 				}
 				if (element.getTagName().equals("PressSpokesmen")) {
 					setTag(element, clubValue, 4);
-				}
-				if (element.getTagName().equals("Economists")) {
-					setTag(element, clubValue, 5);
 				}
 				if (element.getTagName().equals("Physiotherapists")) {
 					setTag(element, clubValue, 6);
