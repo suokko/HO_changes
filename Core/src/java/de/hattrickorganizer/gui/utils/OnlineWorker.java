@@ -7,7 +7,6 @@
 package de.hattrickorganizer.gui.utils;
 
 import java.io.IOException;
-import java.rmi.AccessException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
