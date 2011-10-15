@@ -81,7 +81,7 @@ public class FutureSettingPanel extends JPanel {
         List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
     	IFutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
-        training.setSelectedIndex(firstFutureTraining.getTyp() - 2); // Needed to -2 for removal of General and Stamina training
+        training.setSelectedIndex(firstFutureTraining.getTyp());
         intensity = new IntensityComboBox();
         intensity.setSelectedIndex(firstFutureTraining.getIntensitaet());
         staminaTrainingPart = new IntensityComboBox();
