@@ -703,13 +703,6 @@ public final class Spieler implements plugins.ISpieler {
                 return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_GOALKEEPING + TrainingsManager.BASE_DURATION_GOALKEEPING, 
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
 
-            case ALLGEMEIN: 
-                return calcTraining(gui.UserParameter.instance().DAUER_ALLGEMEIN,  
-                		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getForm());
-
-            case KONDITION:
-                return gui.UserParameter.instance().TRAINING_OFFSET_STAMINA;
-
             case SPIELAUFBAU:
                 return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_PLAYMAKING + TrainingsManager.BASE_DURATION_PLAYMAKING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getSpielaufbau());
@@ -1263,72 +1256,6 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * gibt an ob der angeforderte Skill beim diesem Trainingstyp trainiert wird
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     * @param trainingstype TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     * @deprecated Never used, better system integrated in Trainingmanager
-     */
-    @Deprecated
-	public boolean isSkillTrained(int skill, int trainingstype) {
-        boolean isTrained = false;
-
-        switch (trainingstype) {
-            case ITeam.TA_ALLGEMEIN:
-                isTrained = skill == SKILL_FORM;
-                break;
-
-            case ITeam.TA_CHANCEN:
-                isTrained = skill == SKILL_TORSCHUSS;
-                break;
-
-            case ITeam.TA_SCHUSSTRAINING:
-                isTrained = (skill == SKILL_TORSCHUSS) || (skill == SKILL_STANDARDS);
-                break;
-
-            case ITeam.TA_FLANKEN:
-                isTrained = skill == SKILL_FLUEGEL;
-                break;
-
-            case ITeam.TA_KONDITION:
-                isTrained = skill == SKILL_KONDITION;
-                break;
-
-            case ITeam.TA_PASSSPIEL:
-                isTrained = skill == SKILL_PASSSPIEL;
-                break;
-
-            case ITeam.TA_SPIELAUFBAU:
-                isTrained = skill == SKILL_SPIELAUFBAU;
-                break;
-
-            case ITeam.TA_STANDARD:
-                isTrained = skill == SKILL_STANDARDS;
-                break;
-
-            case ITeam.TA_TORWART:
-                isTrained = skill == SKILL_TORWART;
-                break;
-
-            case ITeam.TA_VERTEIDIGUNG:
-                isTrained = skill == SKILL_VERTEIDIGUNG;
-                break;
-
-            case TA_STEILPAESSE:
-                isTrained = skill == SKILL_PASSSPIEL;
-                break;
-
-            case TA_ABWEHRVERHALTEN:
-                isTrained = skill == SKILL_VERTEIDIGUNG;
-                break;
-        }
-
-        return isTrained;
-    }
-
-    /**
      * Setter for property m_iSpezialitaet.
      *
      * @param m_iSpezialitaet New value of property m_iSpezialitaet.
@@ -1406,16 +1333,6 @@ public final class Spieler implements plugins.ISpieler {
 
         return m_bSpielberechtigt.booleanValue();
 
-        /*
-           try
-           {
-               return database.DBZugriff.instance ().getSpielerSpielberechtigt ( m_iSpielerID );
-           }
-           catch ( Exception e )
-           {
-               return true;
-           }
-         **/
     }
 
     /**
@@ -2144,28 +2061,11 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param hrftimestamp TODO Missing Method Parameter Documentation
-     * @param coTrainer TODO Missing Method Parameter Documentation
-     * @param twTrainer TODO Missing Method Parameter Documentation
-     * @param trainerlevel TODO Missing Method Parameter Documentation
-     * @param intensitaet TODO Missing Method Parameter Documentation
-     * @param staminaTrainingPart TODO Missing Method Parameter Documentation
-     */
-    public void calcFullSubskills(java.sql.Timestamp hrftimestamp, int coTrainer, int twTrainer,
-                                  int trainerlevel, int intensitaet, int staminaTrainingPart) {
-        final Spieler oldspieler = DBZugriff.instance().getSpielerBeforeDate(hrftimestamp, getSpielerID());
-        calcFullSubskills(oldspieler, coTrainer, trainerlevel, intensitaet, staminaTrainingPart, hrftimestamp);
-    }
-
-    /**
      * Berechnet die Subskills  Wird beim Speichern des HRFs in der Datenbank aufgerufen direkt
      * bevor die Spieler gespeichert werden.
      *
      * @param old TODO Missing Constructuor Parameter Documentation
      * @param coTrainer TODO Missing Constructuor Parameter Documentation
-     * @param twTrainer TODO Missing Constructuor Parameter Documentation
      * @param trainerlevel TODO Missing Constructuor Parameter Documentation
      * @param intensitaet TODO Missing Constructuor Parameter Documentation
      * @param staminaTrainingPart TODO Missing Constructuor Parameter Documentation
@@ -2311,17 +2211,12 @@ public final class Spieler implements plugins.ISpieler {
      *
      * @param old TODO Missing Constructuor Parameter Documentation
      * @param coTrainer TODO Missing Constructuor Parameter Documentation
-     * @param twTrainer TODO Missing Constructuor Parameter Documentation
      * @param trainerlevel TODO Missing Constructuor Parameter Documentation
      * @param intensitaet TODO Missing Constructuor Parameter Documentation
      * @param hrfID TODO Missing Constructuor Parameter Documentation
      */
     public void calcIncrementalSubskills(ISpieler old, int coTrainer, 
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
-//        System.out.println ("calcIncSS: "+
-//        		old.getSpielerID()+", cos="+coTrainer+", tw="+twTrainer
-//        		+", tr="+trainerlevel+", ti="+intensitaet+", ss="+staminaTrainingPart
-//        		+", hrf="+hrfID);
     	final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
         final plugins.ITrainingPerPlayer trainingPerPlayer =
         	de.hattrickorganizer.logik.TrainingsManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
