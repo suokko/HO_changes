@@ -26,16 +26,6 @@ public class Trainings {
         int type = ITeam.TA_ALLGEMEIN;
         IHOMiniModel p_IHMM_miniModel = Commons.getModel();
 
-        // Compares the training name with all the training names in HO, 
-        //when a match is found it returns the right code 
-        if (selection.equals(p_IHMM_miniModel.getLanguageString("training.general"))) { //$NON-NLS-1$
-            type = ITeam.TA_ALLGEMEIN;
-        }
-
-        if (selection.equals(p_IHMM_miniModel.getLanguageString("Kondition"))) { //$NON-NLS-1$
-            type = ITeam.TA_KONDITION;
-        }
-
         if (selection.equals(p_IHMM_miniModel.getLanguageString("training.set_pieces"))) { //$NON-NLS-1$
             type = ITeam.TA_STANDARD;
         }
@@ -94,15 +84,6 @@ public class Trainings {
     public static String getTrainingDescription(int type) {
         IHOMiniModel p_IHMM_miniModel = Commons.getModel();
         String selectedTrain = ""; //$NON-NLS-1$
-
-        // based on the type returns the right HO property
-        if (type == ITeam.TA_ALLGEMEIN) {
-            selectedTrain = new String(p_IHMM_miniModel.getLanguageString("training.general")); //$NON-NLS-1$
-        }
-
-        if (type == ITeam.TA_KONDITION) {
-            selectedTrain = new String(p_IHMM_miniModel.getLanguageString("Kondition")); //$NON-NLS-1$
-        }
 
         if (type == ITeam.TA_STANDARD) {
             selectedTrain = new String(p_IHMM_miniModel.getLanguageString("training.set_pieces")); //$NON-NLS-1$
