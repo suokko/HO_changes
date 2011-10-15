@@ -264,14 +264,6 @@ public final class Team implements plugins.ITeam {
             case TA_STANDARD:
                 return HOVerwaltung.instance().getLanguageString("training.set_pieces");
 
-            case TA_KONDITION:
-                return HOVerwaltung.instance().getLanguageString("Kondition");
-
-            case TA_ALLGEMEIN:
-
-                //Fehlt
-                return HOVerwaltung.instance().getLanguageString("training.general");
-
             default:
                 return HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
