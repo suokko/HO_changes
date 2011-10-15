@@ -190,11 +190,9 @@ public final class RSC {
     /** TODO Missing Parameter Documentation */
     protected static final String[][] clubValueDefault = new String[][]{
                                                              {"[club]", ""},
-                                                             {"mvTranare=", RSC.DEFAULT},
                                                              {"hjTranare=", DEFAULT},
                                                              {"psykolog=", DEFAULT},
                                                              {"presstalesman=", DEFAULT},
-                                                             {"ekonom=", DEFAULT},
                                                              {"massor=", DEFAULT},
                                                              {"lakare=", DEFAULT},
                                                              {"juniorverksamhet=", DEFAULT},
