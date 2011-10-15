@@ -233,9 +233,7 @@ public class Skills {
             case ISpieler.SKILL_STANDARDS:
                 return ISpieler.STANDARDS;
 
-            case ISpieler.SKILL_KONDITION:
-                return ISpieler.KONDITION;
-        }
+          }
 
         return 0;
     }
