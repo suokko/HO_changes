@@ -138,11 +138,9 @@ public class NthrfConvertXml2Hrf {
 	 */
 	protected final void createClub(NtTeamDetailsParser details) throws Exception {
 		m_sHRFBuffer.append("[club]\n");
-		m_sHRFBuffer.append("mvTranare=0\n");		// KeeperTrainers
 		m_sHRFBuffer.append("hjTranare=0\n");		// AssistantTrainers
 		m_sHRFBuffer.append("psykolog=0\n");		// Psychologists
 		m_sHRFBuffer.append("presstalesman=0\n");	// PressSpokesmen
-		m_sHRFBuffer.append("ekonom=0\n");			// Economists
 		m_sHRFBuffer.append("massor=0\n");			// Physiotherapists
 		m_sHRFBuffer.append("lakare=0\n");			// Doctors
 		m_sHRFBuffer.append("juniorverksamhet=0\n");// YouthLevel
