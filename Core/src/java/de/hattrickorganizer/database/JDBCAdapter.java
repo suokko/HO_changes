@@ -11,16 +11,12 @@ import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
- * stellt die Verbindungsfunktionen zur Datenbank her
+ *	Provides the connection functions to the database
  */
 public class JDBCAdapter implements plugins.IJDBCAdapter {
-    //~ Instance fields ----------------------------------------------------------------------------
-
     private Connection m_clConnection;
     private Statement m_clStatement;
     private DBInfo m_clDBInfo;
-
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates new JDBCApapter
@@ -28,10 +24,8 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     public JDBCAdapter() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
     /**
-     * trennt die Verbindung
+     * Closes the connection
      */
     public final void disconnect() {
         try {
@@ -48,7 +42,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     }
 
     /**
-     * Führt einen SQL select - befehl aus
+     * Execute a SQL Select statement
      *
      * @param Sql Sql query
      *
@@ -65,7 +59,6 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
             //HOLogger.instance().log(getClass(), Sql );
             resultat = m_clStatement.executeQuery(Sql);
 
-            //statement.close();
             return resultat;
         } catch (Exception e) {
             HOLogger.instance().error(getClass(),"JDBCAdapter.executeQuery : " + e + "\nStatement: " + Sql);
@@ -90,11 +83,8 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
             if (m_clConnection.isClosed()) {
                 return 0;
             }
-
             //HOLogger.instance().log(getClass(), Sql );
             ret = m_clStatement.executeUpdate(Sql);
-
-            //statement.close();
             return ret;
         } catch (Exception e) {
             HOLogger.instance().error(getClass(),"JDBCAdapter.executeUpdate : " + e + "\nStatement: " + Sql);
@@ -103,25 +93,23 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     }
 
     /**
-     * verbindet unter angabe der Parameter
+     * Connects to the requested database
      *
-     * @param URL bezeichnet den Pfad zum Server
-     * @param User der Username
-     * @param PWD Password
-     * @param Treiber der zu verwendende Treiber
+     * @param URL	The path to the Server
+     * @param User 	User
+     * @param PWD 	Password
+     * @param Driver The driver to user
      * 
      */
-    public final void connect(String URL, String User, String PWD, String Treiber) throws Exception{
+    public final void connect(String URL, String User, String PWD, String Driver) throws Exception{
         try {
-            //            Class.forName(Treiber);
-            Class.forName(Treiber);
-            			
+        	// Initialise the Database Driver Object
+            Class.forName(Driver);
             m_clConnection = DriverManager.getConnection(URL, User, PWD);
             m_clStatement = m_clConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                            ResultSet.CONCUR_READ_ONLY);
             
         } catch (Exception e) {
-            //vapEngine.Verwaltung.instance ().writeLog ( "JDBCAdapter.connect : " + e.getMessage() ); 
             if (m_clConnection != null) {
                 try {
                     m_clConnection.close();
@@ -130,8 +118,6 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
                 }
             }
             HOLogger.instance().error(getClass(),"JDBCAdapter.connect : " + e.getMessage());
-
-            //System.exit( 1 );            
             throw e;
         }
 
@@ -153,10 +139,7 @@ public class JDBCAdapter implements plugins.IJDBCAdapter {
     		return getDBInfo().getAllTablesNames();
 		} catch (Exception e) {
 			HOLogger.instance().error(getClass(),"JDBCAdapter.getAllTableNames : " + e);
-			String[] fuck = new String[1];
-			fuck[0] = e.getMessage();
-			return fuck;
+			return new String[] {e.getMessage()};
 		}
-    	
     }
 }
