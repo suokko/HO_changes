@@ -252,11 +252,9 @@ public class ConvertXml2Hrf {
      */
     protected final void createClub() throws Exception {
         m_sHRFBuffer.append("[club]\n");
-        m_sHRFBuffer.append("mvTranare=" + m_htClub.get("KeeperTrainers") + "\n");
         m_sHRFBuffer.append("hjTranare=" + m_htClub.get("AssistantTrainers") + "\n");
         m_sHRFBuffer.append("psykolog=" + m_htClub.get("Psychologists") + "\n");
         m_sHRFBuffer.append("presstalesman=" + m_htClub.get("PressSpokesmen") + "\n");
-        m_sHRFBuffer.append("ekonom=" + m_htClub.get("Economists") + "\n");
         m_sHRFBuffer.append("massor=" + m_htClub.get("Physiotherapists") + "\n");
         m_sHRFBuffer.append("lakare=" + m_htClub.get("Doctors") + "\n");
         m_sHRFBuffer.append("juniorverksamhet=" + m_htClub.get("YouthLevel") + "\n");
