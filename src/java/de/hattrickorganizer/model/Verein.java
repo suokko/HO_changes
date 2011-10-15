@@ -33,8 +33,6 @@ public final class Verein implements plugins.IVerein {
     private int m_iCoTrainer;
     /** FanClub */
     private int m_iFans;
-    /** economists */
-    private int m_iFinanzberater;
     /** Jugendmannschaft */
     private int m_iJugend;
     /** Investition */
@@ -50,8 +48,6 @@ public final class Verein implements plugins.IVerein {
     /** TeamID */
     private int m_iTeamID = -1;
 
-    /** Torwarttrainer */
-    private int m_iTorwartTrainer;
     /** Ungeschlagen für # Spiele */
     private int m_iUngeschlagen;
 
@@ -67,11 +63,9 @@ public final class Verein implements plugins.IVerein {
      * Creates a new Club object based on properties (e.g. from an hrf file).
      */
     public Verein(Properties properties) throws Exception {
-		m_iTorwartTrainer = DF.parse(properties.getProperty("mvtranare", "0")).intValue();
         m_iCoTrainer = DF.parse(properties.getProperty("hjtranare", "0")).intValue();
         m_iPsychologen = DF.parse(properties.getProperty("psykolog", "0")).intValue();
         m_iPRManager = DF.parse(properties.getProperty("presstalesman", "0")).intValue();
-        m_iFinanzberater = DF.parse(properties.getProperty("ekonom", "0")).intValue();
         m_iMasseure = DF.parse(properties.getProperty("massor", "0")).intValue();
         m_iAerzte = DF.parse(properties.getProperty("lakare", "0")).intValue();
         m_iJugend = DF.parse(properties.getProperty("juniorverksamhet", "0")).intValue();
@@ -85,11 +79,9 @@ public final class Verein implements plugins.IVerein {
      */
     public Verein(ResultSet rs) throws Exception {
         try {
-            m_iTorwartTrainer = rs.getInt("TWTrainer");
             m_iCoTrainer = rs.getInt("COTrainer");
             m_iPsychologen = rs.getInt("Pschyologen");
             m_iPRManager = rs.getInt("PRManager");
-            m_iFinanzberater = rs.getInt("Finanzberater");
             m_iMasseure = rs.getInt("Physiologen");
             m_iAerzte = rs.getInt("Aerzte");
             m_iJugend = rs.getInt("Jugend");
@@ -198,24 +190,6 @@ public final class Verein implements plugins.IVerein {
      */
     public int getFans() {
         return m_iFans;
-    }
-
-    /**
-     * Setter for property m_iFinanzberater.
-     *
-     * @param m_iFinanzberater New value of property m_iFinanzberater.
-     */
-    public void setFinanzberater(int m_iFinanzberater) {
-        this.m_iFinanzberater = m_iFinanzberater;
-    }
-
-    /**
-     * Getter for property m_iFinanzberater.
-     *
-     * @return Value of property m_iFinanzberater.
-     */
-    public int getFinanzberater() {
-        return m_iFinanzberater;
     }
 
     /**
@@ -360,28 +334,6 @@ public final class Verein implements plugins.IVerein {
      */
     public java.lang.String getTeamName() {
         return m_sTeamName;
-    }
-
-    /**
-     * Setter for property m_iTorwartTrainer.
-     *
-     * @param m_iTorwartTrainer New value of property m_iTorwartTrainer.
-     */
-    public void setTorwartTrainer(int m_iTorwartTrainer) {
-        this.m_iTorwartTrainer = m_iTorwartTrainer;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////    
-    //Accessor
-    ////////////////////////////////////////////////////////////////////////////////    
-
-    /**
-     * Getter for property m_iTorwartTrainer.
-     *
-     * @return Value of property m_iTorwartTrainer.
-     */
-    public int getTorwartTrainer() {
-        return m_iTorwartTrainer;
     }
 
     /**
