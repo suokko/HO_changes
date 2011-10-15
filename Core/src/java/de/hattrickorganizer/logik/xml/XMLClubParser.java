@@ -112,14 +112,10 @@ public class XMLClubParser {
             club.put("PressSpokesmen", XMLManager.instance().getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("AssistantTrainers").item(0);
             club.put("AssistantTrainers", XMLManager.instance().getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("Economists").item(0);
-            club.put("Economists", XMLManager.instance().getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("Physiotherapists").item(0);
             club.put("Physiotherapists", XMLManager.instance().getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("Psychologists").item(0);
             club.put("Psychologists", XMLManager.instance().getFirstChildNodeValue(ele));
-            ele = (Element) root.getElementsByTagName("KeeperTrainers").item(0);
-            club.put("KeeperTrainers", XMLManager.instance().getFirstChildNodeValue(ele));
 
             //und nochmal root wechseln
             root = (Element) doc.getDocumentElement().getElementsByTagName("YouthSquad").item(0);
@@ -181,14 +177,10 @@ public class XMLClubParser {
             club.setPRManager(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("AssistantTrainers").item(0);
             club.setCoTrainer(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-            ele = (Element) root.getElementsByTagName("Economists").item(0);
-            club.setFinanzberater(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("Physiotherapists").item(0);
             club.setMasseure(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("Psychologists").item(0);
             club.setPsychologen(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-            ele = (Element) root.getElementsByTagName("KeeperTrainers").item(0);
-            club.setTorwartTrainer(Integer.parseInt(ele.getFirstChild().getNodeValue()));
 
             //und nochmal root wechseln
             root = (Element) doc.getDocumentElement().getElementsByTagName("YouthSquad").item(0);
