@@ -1,5 +1,5 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
-forum at http://sourceforge.net/projects/ho1/forums if you have any questions!
+forum at http://forum.hattrickorganizer.net/index.php if you have any questions!
 
 Changelist HO! 1.431
 ====================
