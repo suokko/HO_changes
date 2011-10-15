@@ -88,7 +88,7 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
 import de.hattrickorganizer.tools.updater.UpdateController;
 
 /**
- * Das Hauptfenster
+ * The Main HO window
  */
 public final class HOMainFrame extends JFrame
 	implements Refreshable, WindowListener, ActionListener, ChangeListener {
@@ -159,7 +159,7 @@ public final class HOMainFrame extends JFrame
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
 
-	//----Menue--------------------------------
+	// Menus
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
 	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
 	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
@@ -171,7 +171,6 @@ public final class HOMainFrame extends JFrame
 
 	private final JMenuItem m_jmImportItem =new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
 	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
-	private final JMenuItem m_jmPluginsHomepage = new JMenuItem("HO! " + HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
 	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen")
 			+ " (7 " + HOVerwaltung.instance().getLanguageString("Wochen") + ")");
@@ -202,16 +201,12 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
-	//----Komponenten--------------------------
+	// Components
 	private JTabbedPane m_jtpTabbedPane;
 	private KeeperToolDialog keeperTool;
 
-//	private SkillAenderungsPanel m_jpSkillAenderungsPanel=   null;
 	private LigaTabellePanel m_jpLigaTabelle;
 
-//	private JMenuItem m_jmChatItem = new JMenuItem( model.HOVerwaltung.instance().getLanguageString("Chat") );
-	//eventuell Menuitem Vector für Plugins anlegen
-	//-----------------------------------------
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
 	private SpielePanel m_jpSpielePanel;
 	private SpielerAnalyseMainPanel m_jpSpielerAnalysePanel;
@@ -375,7 +370,6 @@ public final class HOMainFrame extends JFrame
 		return m_jpSpielerAnalysePanel;
 	}
 
-	//------------------Get-----------------------------------------
 	public SpielerUebersichtsPanel getSpielerUebersichtPanel() {
 		return m_jpSpielerUebersicht;
 	}
@@ -387,7 +381,6 @@ public final class HOMainFrame extends JFrame
 		return m_jpStatistikPanel;
 	}
 
-	//------Getter------------------------------------------
 	public JTabbedPane getTabbedPane() {
 		return m_jtpTabbedPane;
 	}
@@ -447,8 +440,7 @@ public final class HOMainFrame extends JFrame
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
 				HOVerwaltung.instance().recalcSubskills(true, from);
 			}
-		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen
-														// mode
+		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen mode
 			FullScreen.instance().toggle(this);
 		} else if (source.equals(m_jmBeendenItem)) { // Quit
 			// Restore normal window mode (i.e. leave full screen)
@@ -477,8 +469,6 @@ public final class HOMainFrame extends JFrame
 			new VAPCredits(this);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
-		} else if (source.equals(m_jmPluginsHomepage)) { // Plugins Homepage
-			HelperWrapper.instance().openUrlInUserBRowser(UpdateController.PLUGINS_HOMEPAGE);
 		} else if (source.equals(m_jmForumItem)) { // Forum
 			HelperWrapper.instance().openUrlInUserBRowser("http://forum.hattrickorganizer.net/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
@@ -859,8 +849,7 @@ public final class HOMainFrame extends JFrame
 		m_jmVerschiedenes.add(m_jmiSpiele);
 
 		//Spieleranalyse
-		m_jmiSpieleranalyse.setAccelerator(
-			KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+		m_jmiSpieleranalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		m_jmiSpieleranalyse.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleranalyse);
 
@@ -885,22 +874,6 @@ public final class HOMainFrame extends JFrame
 		m_jmVerschiedenes.add(m_jmiVerschiedenes);
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
-
-		/////
-		//HOFriendly
-//		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
-//		m_jmHoFriendly.addActionListener(this);
-//		m_jmHoFriendlyMenu.add(m_jmHoFriendly);
-//
-//		m_jmHoFriendlyMenu.addSeparator();
-//
-//		m_jmIPAdresse.addActionListener(this);
-//		m_jmHoFriendlyMenu.add(m_jmIPAdresse);
-//
-//		m_jmRatingItem.addActionListener(this);
-//		m_jmHoFriendlyMenu.add(m_jmRatingItem);
-//
-//		m_jmMenuBar.add(m_jmHoFriendlyMenu);
 
 		//Tool Menu
 		m_jmiKeeperTool.addActionListener(this);
@@ -933,11 +906,6 @@ public final class HOMainFrame extends JFrame
 		m_jmForumItem.addActionListener(this);
 		m_jmAbout.add(m_jmForumItem);
 
-//		m_jmPluginsHomepage.addActionListener(this);
-//		m_jmAbout.add(m_jmPluginsHomepage);
-
-		//        m_jmChatItem.addActionListener( this );
-		//        m_jmAbout.add ( m_jmChatItem );
 		m_jmHattrickItem.addActionListener(this);
 		m_jmAbout.add(m_jmHattrickItem);
 
