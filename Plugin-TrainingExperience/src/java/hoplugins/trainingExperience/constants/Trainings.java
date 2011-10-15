@@ -23,7 +23,7 @@ public class Trainings {
      * @return training code
      */
     public static int getTrainingCode(String selection) {
-        int type = ITeam.TA_ALLGEMEIN;
+        int type = ITeam.TA_STANDARD;
         IHOMiniModel p_IHMM_miniModel = Commons.getModel();
 
         if (selection.equals(p_IHMM_miniModel.getLanguageString("training.set_pieces"))) { //$NON-NLS-1$
