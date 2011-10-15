@@ -571,10 +571,7 @@ public class HOModel {
     	case ISpieler.TORWART:
     		skill = ISpieler.SKILL_TORWART;
     		break;
-    	case ISpieler.KONDITION:
-    		skill = ISpieler.SKILL_KONDITION;
-    		break;
-		}
+    	}
     	if (skill >= 0) {
     		beforeSkill = before.getValue4Skill4(skill);
     		afterSkill = after.getValue4Skill4(skill);
