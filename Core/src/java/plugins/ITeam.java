@@ -32,18 +32,20 @@ public interface ITeam {
     public static final int SV_nichtVorhanden = 0;
 
     //training types
-    public static final int TA_EXTERNALATTACK = 10;		// wing attacks
-    public static final int TA_ABWEHRVERHALTEN = 9;	// def. positions
-    public static final int TA_STEILPAESSE = 8;		// through passes
-    public static final int TA_TORWART = 7;				// goalkeeping
-    public static final int TA_SPIELAUFBAU = 6;			// playmaking
-    public static final int TA_PASSSPIEL = 5;			// short passes
-    public static final int TA_SCHUSSTRAINING = 4;		// shooting
-    public static final int TA_FLANKEN = 3;				// crossing / winger
-    public static final int TA_CHANCEN = 2;				// scoring
-    public static final int TA_VERTEIDIGUNG = 1;		// defending
-    public static final int TA_STANDARD = 0;			// set pieces
-    
+    public static final int TA_EXTERNALATTACK = 12;		// wing attacks
+    public static final int TA_ABWEHRVERHALTEN = 11;	// def. positions
+    public static final int TA_STEILPAESSE = 10;		// through passes
+    public static final int TA_TORWART = 9;				// goalkeeping
+    public static final int TA_SPIELAUFBAU = 8;			// playmaking
+    public static final int TA_PASSSPIEL = 7;			// short passes
+    public static final int TA_SCHUSSTRAINING = 6;		// shooting
+    public static final int TA_FLANKEN = 5;				// crossing / winger
+    public static final int TA_CHANCEN = 4;				// scoring
+    public static final int TA_VERTEIDIGUNG = 3;		// defending
+    public static final int TA_STANDARD = 2;			// set pieces
+    public static final int TA_KONDITION = 1;			// stamina - @deprecated
+    public static final int TA_ALLGEMEIN = 0;			// general / form - @deprecated
+
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
