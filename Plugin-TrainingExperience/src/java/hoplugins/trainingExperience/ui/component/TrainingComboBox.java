@@ -12,8 +12,6 @@ import javax.swing.JComboBox;
  * ComboBox to edit the TrainingType
  *
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
- * 
- * Removed General and Stamina Training
  */
 public class TrainingComboBox extends JComboBox {
     //~ Constructors -------------------------------------------------------------------------------
@@ -28,6 +26,8 @@ public class TrainingComboBox extends JComboBox {
 
         IHOMiniModel p_IHMM_HOMiniModel = Commons.getModel();
 
+        addItem(p_IHMM_HOMiniModel.getLanguageString("training.general")); //$NON-NLS-1$
+        addItem(p_IHMM_HOMiniModel.getLanguageString("Kondition")); //$NON-NLS-1$
         addItem(p_IHMM_HOMiniModel.getLanguageString("training.set_pieces")); //$NON-NLS-1$
         addItem(p_IHMM_HOMiniModel.getLanguageString("training.defending")); //$NON-NLS-1$
         addItem(p_IHMM_HOMiniModel.getLanguageString("training.scoring")); //$NON-NLS-1$
