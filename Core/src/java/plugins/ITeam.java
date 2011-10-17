@@ -43,8 +43,10 @@ public interface ITeam {
     public static final int TA_CHANCEN = 4;				// scoring
     public static final int TA_VERTEIDIGUNG = 3;		// defending
     public static final int TA_STANDARD = 2;			// set pieces
-    public static final int TA_KONDITION = 1;			// stamina - @deprecated
-    public static final int TA_ALLGEMEIN = 0;			// general / form - @deprecated
+    @Deprecated
+    public static final int TA_KONDITION = 1;			// stamina - deprecated
+    @Deprecated
+    public static final int TA_ALLGEMEIN = 0;			// general / form - deprecated
 
     //~ Methods ------------------------------------------------------------------------------------
 
