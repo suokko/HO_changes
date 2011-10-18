@@ -3,11 +3,12 @@ package hoplugins.trainingExperience.ui.model;
 
 import hoplugins.Commons;
 import hoplugins.TrainingExperience;
-
+import gui.NVPComboItem;
 import hoplugins.trainingExperience.constants.Trainings;
 
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
+import plugins.ITeam;
 
 import java.util.Iterator;
 import java.util.List;
@@ -54,30 +55,24 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
         IFutureTrainingWeek train = (IFutureTrainingWeek) p_V_trainingsVector.get(row);
 
         if (col == 2) {
-            String selection = value.toString();
-
-            train.setTyp(Trainings.getTrainingCode(selection));
+            NVPComboItem sel = (NVPComboItem)value;
+            train.setTyp(sel.getValue());
         }
-
-        if (col == 3) {
+        else if (col == 3) {
             Integer intense = (Integer) value;
-
             train.setIntensitaet(intense.intValue());
         }
-
-        if (col == 4) {
+        else if (col == 4) {
             Integer staminaTrainingPart = (Integer) value;
-
             train.setStaminaTrainingPart(staminaTrainingPart.intValue());
         }
-
         Commons.getModel().saveFutureTraining(train);
         fireTableCellUpdated(row, col);
         TrainingExperience.refreshPlayerDetail();
     }
 
     /**
-     * Populate the table with the future trainings stored in the db,  if not present, create it
+     * Populate the table with the future training stored in the db,  if not present, create it
      * new and saves it
      */
     @Override
@@ -103,7 +98,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
                 } else {
                     train.setIntensitaet(100);
                     train.setStaminaTrainingPart(5);
-                    train.setTyp(0);
+                    train.setTyp(ITeam.TA_STANDARD);
                 }
 
                 Commons.getModel().saveFutureTraining(train);
@@ -114,7 +109,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
             aobj = (new Object[]{
                        train.getWeek() + "", //$NON-NLS-1$
                        train.getSeason() + "", //$NON-NLS-1$
-                       selectedTrain, 
+                       new NVPComboItem(train.getTyp(), selectedTrain), 
                        new Integer(train.getIntensitaet()), 
                        new Integer(train.getStaminaTrainingPart())
                    });
