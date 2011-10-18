@@ -1,10 +1,10 @@
 // %1956788941:hoplugins.trainingExperience.ui.component%
 package hoplugins.trainingExperience.ui.component;
 
+import gui.NVPComboBox;
 import hoplugins.Commons;
 import hoplugins.TrainingExperience;
 
-import hoplugins.trainingExperience.constants.Trainings;
 import hoplugins.trainingExperience.ui.model.FutureTrainingsTableModel;
 
 import plugins.IFutureTrainingWeek;
@@ -36,7 +36,7 @@ public class FutureSettingPanel extends JPanel {
 	private FutureTrainingsTableModel futureModel;
     private JComboBox intensity;
     private JComboBox staminaTrainingPart;
-    private JComboBox training;
+    private TrainingComboBox training;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ public class FutureSettingPanel extends JPanel {
     /**
      * Populate the Future training table with the future training
      */
-    protected void resetFutureTraininhgs() {
+    protected void resetFutureTrainings() {
         IHOMiniModel p_IHMM_miniModel = Commons.getModel();
         List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
 
@@ -64,7 +64,7 @@ public class FutureSettingPanel extends JPanel {
             IFutureTrainingWeek train = iter.next();
             train.setIntensitaet(intensity.getSelectedIndex());
             train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
-            train.setTyp(Trainings.getTrainingCode((String) training.getSelectedItem()));
+            train.setTyp(training.getSelectedItemValue());
             p_IHMM_miniModel.saveFutureTraining(train);
         }
 
@@ -81,7 +81,7 @@ public class FutureSettingPanel extends JPanel {
         List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
     	IFutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
-        training.setSelectedIndex(firstFutureTraining.getTyp());
+        training.setSelectedItem(firstFutureTraining.getTyp());
         intensity = new IntensityComboBox();
         intensity.setSelectedIndex(firstFutureTraining.getIntensitaet());
         staminaTrainingPart = new IntensityComboBox();
@@ -91,7 +91,7 @@ public class FutureSettingPanel extends JPanel {
 
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    resetFutureTraininhgs();
+                    resetFutureTrainings();
                 }
             });
         add(training);
