@@ -1,7 +1,7 @@
 // %1126721451244:hoplugins.trainingExperience.ui.component%
 package hoplugins.trainingExperience.ui.component;
 
-import gui.NVPComboBox;
+import javax.swing.JComboBox;
 import hoplugins.trainingExperience.constants.Trainings;
 import plugins.ITeam;
 
@@ -11,7 +11,7 @@ import plugins.ITeam;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  * Seb04 - Simplified and removed General and STamina training.
  */
-public class TrainingComboBox extends NVPComboBox {
+public class TrainingComboBox extends JComboBox {
 	private static final long serialVersionUID = 303608674207819922L;
 	/**
      * Creates a new TrainingComboBox object.
@@ -20,7 +20,7 @@ public class TrainingComboBox extends NVPComboBox {
         super();
         for (int i = ITeam.TA_STANDARD; i <= ITeam.TA_EXTERNALATTACK;  i++)
         {
-        	addItem(i, Trainings.getTrainingDescription(i));
+        	addItem(new CBItem(Trainings.getTrainingDescription(i), i));
         }
     }
 }
