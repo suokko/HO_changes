@@ -4,6 +4,7 @@ package hoplugins.trainingExperience.ui.model;
 import hoplugins.Commons;
 
 import hoplugins.trainingExperience.constants.Trainings;
+import hoplugins.trainingExperience.ui.component.CBItem;
 
 import plugins.IHOMiniModel;
 import plugins.ITrainingWeek;
@@ -49,22 +50,16 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         aobj[col] = value;
 
         ITrainingWeek train = (ITrainingWeek) p_V_trainingsVector.get(p_V_data.size() - row - 1);
-
         if (col == 2) {
-            String selection = value.toString();
-
-            train.setTyp(Trainings.getTrainingCode(selection));
+            CBItem sel = (CBItem)value;
+            train.setTyp(sel.getId());
         }
-
-        if (col == 3) {
+        else if (col == 3) {
             Integer intense = (Integer) value;
-
             train.setIntensitaet(intense.intValue());
         }
-
-        if (col == 4) {
+        else if (col == 4) {
             Integer staminaTrainingPart = (Integer) value;
-
             train.setStaminaTrainingPart(staminaTrainingPart.intValue());
         }
 
@@ -92,7 +87,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
             aobj = (new Object[]{
                        train.getHattrickWeek() + "", //$NON-NLS-1$
                        train.getHattrickSeason() + "", //$NON-NLS-1$
-                       selectedTrain,
+                       new CBItem(selectedTrain, train.getTyp()),
                        new Integer(train.getIntensitaet()),
                        new Integer(train.getStaminaTrainingPart())
                    });
