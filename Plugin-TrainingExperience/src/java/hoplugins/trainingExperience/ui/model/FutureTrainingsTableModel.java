@@ -3,8 +3,8 @@ package hoplugins.trainingExperience.ui.model;
 
 import hoplugins.Commons;
 import hoplugins.TrainingExperience;
-import gui.NVPComboItem;
 import hoplugins.trainingExperience.constants.Trainings;
+import hoplugins.trainingExperience.ui.component.CBItem;
 
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
@@ -55,8 +55,8 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
         IFutureTrainingWeek train = (IFutureTrainingWeek) p_V_trainingsVector.get(row);
 
         if (col == 2) {
-            NVPComboItem sel = (NVPComboItem)value;
-            train.setTyp(sel.getValue());
+            CBItem sel = (CBItem)value;
+            train.setTyp(sel.getId());
         }
         else if (col == 3) {
             Integer intense = (Integer) value;
@@ -109,7 +109,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
             aobj = (new Object[]{
                        train.getWeek() + "", //$NON-NLS-1$
                        train.getSeason() + "", //$NON-NLS-1$
-                       new NVPComboItem(train.getTyp(), selectedTrain), 
+                       new CBItem(selectedTrain, train.getTyp()), 
                        new Integer(train.getIntensitaet()), 
                        new Integer(train.getStaminaTrainingPart())
                    });
