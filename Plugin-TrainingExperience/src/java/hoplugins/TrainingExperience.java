@@ -36,7 +36,7 @@ public class TrainingExperience implements IPlugin, IRefreshable, IOfficialPlugi
 	private static int PLUGINID = 23;
 	
 	/** Plugin Version */
-	private static double PLUGINVERSION = 1.253d;
+	private static double PLUGINVERSION = 1.254d;
 	
 	/** Plugin Name */
 	private static String PLUGINNAME = "Training Experience";
@@ -151,8 +151,8 @@ public class TrainingExperience implements IPlugin, IRefreshable, IOfficialPlugi
     }
 
     /**
-     * Refresh all the previsions, this is used when we don't have downloaded anything from HT  but
-     * the user has changed something in the staff or in the future trainings
+     * Refresh all the previsions, this is used when we haven't downloaded anything from HT but
+     * the user has changed something in the staff or in the future training
      */
     public static void refreshPlayerDetail() {
         // reload the past skillups		
