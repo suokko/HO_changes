@@ -1,10 +1,10 @@
 // %1956788941:hoplugins.trainingExperience.ui.component%
 package hoplugins.trainingExperience.ui.component;
 
-import gui.NVPComboBox;
 import hoplugins.Commons;
 import hoplugins.TrainingExperience;
 
+import hoplugins.trainingExperience.constants.Trainings;
 import hoplugins.trainingExperience.ui.model.FutureTrainingsTableModel;
 
 import plugins.IFutureTrainingWeek;
@@ -36,7 +36,7 @@ public class FutureSettingPanel extends JPanel {
 	private FutureTrainingsTableModel futureModel;
     private JComboBox intensity;
     private JComboBox staminaTrainingPart;
-    private TrainingComboBox training;
+    private JComboBox training;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ public class FutureSettingPanel extends JPanel {
             IFutureTrainingWeek train = iter.next();
             train.setIntensitaet(intensity.getSelectedIndex());
             train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
-            train.setTyp(training.getSelectedItemValue());
+            train.setTyp(((CBItem)training.getSelectedItem()).getId());
             p_IHMM_miniModel.saveFutureTraining(train);
         }
 
@@ -81,7 +81,8 @@ public class FutureSettingPanel extends JPanel {
         List<IFutureTrainingWeek> futureTrainings = p_IHMM_miniModel.getFutureTrainingWeeks();
     	IFutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
-        training.setSelectedItem(firstFutureTraining.getTyp());
+        final int ttyp = firstFutureTraining.getTyp();
+        training.setSelectedItem(new CBItem(Trainings.getTrainingDescription(ttyp), ttyp));
         intensity = new IntensityComboBox();
         intensity.setSelectedIndex(firstFutureTraining.getIntensitaet());
         staminaTrainingPart = new IntensityComboBox();
