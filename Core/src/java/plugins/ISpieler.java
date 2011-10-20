@@ -127,9 +127,11 @@ public interface ISpieler {
 
     public static final int TA_EXTERNALATTACK = ITeam.TA_EXTERNALATTACK;
     /** TODO Missing Parameter Documentation */
+    @Deprecated
     public static final int ALLGEMEIN = ITeam.TA_ALLGEMEIN;
 
     /** TODO Missing Parameter Documentation */
+    @Deprecated
     public static final int KONDITION = ITeam.TA_KONDITION;
 
     /** TODO Missing Parameter Documentation */
