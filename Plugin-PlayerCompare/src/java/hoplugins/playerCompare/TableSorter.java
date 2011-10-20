@@ -280,7 +280,7 @@ public class TableSorter extends AbstractTableModel {
         return tableModel.getColumnName(column);
     }
 
-    public Class getColumnClass(int column) {
+    public Class<?> getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 
