@@ -29,10 +29,7 @@ public class FansCalculator extends Calculator {
     /** Missing Parameter Documentation */
     private static final int RELEGATED = -1;
 
-    /** Missing Parameter Documentation */
-    private static final int NORMAL = 0;
-
-    //~ Methods ------------------------------------------------------------------------------------
+       //~ Methods ------------------------------------------------------------------------------------
 
     /**
      * Missing Method Documentation
