@@ -236,13 +236,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 					
 					roleId = rs.getInt("RoleID"); 
 					
-					boolean playerIsSetPieceOrCaptain = ((player.getId() == ISpielerPosition.captain) || (player.getId() == ISpielerPosition.setPieces));
-					boolean positionIsSetPieceOrCaptain = ((roleId == ISpielerPosition.captain) || (roleId == ISpielerPosition.setPieces));
-	
-					// If they player is neither set piece taker or captain, and is found on a position which is none of the two, we have found
-					// a player with an old ID, and want to get rid of him as the first delete missed its target.
-					
-					if (!playerIsSetPieceOrCaptain && !positionIsSetPieceOrCaptain) {	
+					if ((roleId >= 0) && (roleId < ISpielerPosition.setPieces)) {
+						// We got an old roleId
 						deleteMatchLineupPlayer(new MatchLineupPlayer(roleId, 0, player.getSpielerId(), 0, "", 0), matchID, teamID);
 					}
 				}
@@ -265,6 +260,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 * @param matchID TODO Missing Method Parameter Documentation
 	 * @param teamID TODO Missing Method Parameter Documentation
 	 */
+	@SuppressWarnings("deprecation")
 	protected void storeMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
 		if (player != null) {
 			final String[] where = { "MatchID" , "TeamID", "RoleID"};
@@ -377,8 +373,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 				}
 				
 				// Position code and field position was removed from constructor below.
-				player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, vname, nickName, name, rs.getInt("STATUS"));
-				player.setRatingStarsEndOfMatch(ratingStarsEndOfMatch);
+				player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, vname, nickName, name, rs.getInt("STATUS"), ratingStarsEndOfMatch);
 				vec.add(player);
 			}
 		} catch (Exception e) {

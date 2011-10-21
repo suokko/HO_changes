@@ -61,6 +61,13 @@ public interface IMatchLineupPlayer {
      * @return Value of property m_iFieldPos.
      */
     public int getFieldPos();
+    
+    /**
+     * Setter for property m_iFieldPos.
+     *
+     * @param pos Value of property m_iFieldPos.
+     */
+    public void setFieldPos(int pos);
 
     //Wrapper for ISpielerPosition
 

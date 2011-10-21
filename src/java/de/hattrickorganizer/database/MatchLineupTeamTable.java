@@ -2,10 +2,15 @@ package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.Vector;
+
+import plugins.IMatchLineupPlayer;
+import plugins.ISubstitution;
 
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.MatchLineupTeam;
 import de.hattrickorganizer.tools.HOLogger;
+import de.hattrickorganizer.tools.Helper;
 
 public final class MatchLineupTeamTable extends AbstractTable {
 
@@ -38,6 +43,10 @@ public final class MatchLineupTeamTable extends AbstractTable {
 		String sql = null;
 		ResultSet rs = null;
 
+		if (matchID == 337596917) {
+			System.out.println("Stop!");
+		}
+		
 		try {
 			sql = "SELECT * FROM "+getTableName()+" WHERE MatchID = " + matchID + " AND TeamID = " + teamID;
 
@@ -47,7 +56,29 @@ public final class MatchLineupTeamTable extends AbstractTable {
 
 			// Plan auslesen
 			team = new MatchLineupTeam(DBZugriff.deleteEscapeSequences(rs.getString("TeamName")), teamID, rs.getInt("Erfahrung"));
-			team.setAufstellung(DBZugriff.instance().getMatchLineupPlayers(matchID, teamID));
+			
+			
+			java.util.Vector<IMatchLineupPlayer> lineup = new Vector<IMatchLineupPlayer>();
+			java.util.Vector<IMatchLineupPlayer> starters = new Vector<IMatchLineupPlayer>();
+			java.util.Vector<IMatchLineupPlayer> all = DBZugriff.instance().getMatchLineupPlayers(matchID, teamID);
+			IMatchLineupPlayer pl;
+			for (int i = 0; i < all.size() ; i++) {
+				pl = all.get(i);
+				if (pl.getFieldPos() > 1000) {
+					pl.setFieldPos(pl.getFieldPos() - 1000);
+					starters.add(pl);
+				} else {
+					lineup.add(pl);
+				}
+				
+			}
+			
+			team.setAufstellung(lineup);
+			team.setStartingPlayers(starters);
+			
+			java.util.Vector<ISubstitution> subs = new java.util.Vector<ISubstitution>();
+			Helper.copyArray2Vector(DBZugriff.instance().getMatchSubstitutionsByMatchTeam(teamID, matchID), subs);
+			team.setSubstitutions(subs);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchLineupTeam Error" + e);
 
@@ -82,6 +113,32 @@ public final class MatchLineupTeamTable extends AbstractTable {
 				for (int i = 0; i < team.getAufstellung().size(); i++) {
 					DBZugriff.instance().storeMatchLineupPlayer((MatchLineupPlayer) team.getAufstellung().elementAt(i), matchID, team.getTeamID());
 				}
+				
+				// Store Substitution
+				ISubstitution sub;
+				ISubstitution[] subs = new ISubstitution[team.getSubstitutions().size()];
+				int arrayIndex = 0;
+				for (int i = 0; i < team.getSubstitutions().size(); i++ ) {
+					sub = team.getSubstitutions().get(i);
+					if (sub != null) {
+						subs[arrayIndex] = sub;
+						arrayIndex++;
+					}
+				}
+				DBZugriff.instance().storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), subs);
+				
+				// Store StartingLineup
+				MatchLineupPlayer starter;
+				plugins.IMatchLineupPlayer pl;
+				for (int i = 0; i < team.getStartingPlayers().size(); i++) {
+					pl = team.getStartingPlayers().get(i);
+					// We add 1000 to starting lineup roleIds while in the db
+					starter = new MatchLineupPlayer(1000 + pl.getFieldPos(), pl.getTaktik(), pl.getSpielerId(), 0, pl.getSpielerName(), pl.getStatus());
+					DBZugriff.instance().storeMatchLineupPlayer(starter, matchID, team.getTeamID());
+				}
+				
+				
+				
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeMatchLineupTeam Error" + e);
 				HOLogger.instance().log(getClass(),e);

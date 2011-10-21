@@ -66,4 +66,18 @@ public interface IMatchLineupTeam {
      * @return TODO Missing Return Method Documentation
      */
     public byte determinateSystem();
+ 
+    /**
+     * Returns a vector with substitutions. Sorted on minute, orderID.
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+	public java.util.Vector<ISubstitution> getSubstitutions();
+	    
+	/**
+     * Returns a vector with the players of the starting lineup. No particular order.
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+	public java.util.Vector<IMatchLineupPlayer> getStartingPlayers();
 }
