@@ -138,6 +138,8 @@ public class HRFFileParser {
 
                     //Eins vorhanden
                     if (indexGleichheitszeichen > 0) {
+                    	if(properties == null) 
+                    		properties = new Properties();
                         properties.setProperty(zeile.substring(0, indexGleichheitszeichen)
                                                     .toLowerCase(),
                                                zeile.substring(indexGleichheitszeichen + 1));
