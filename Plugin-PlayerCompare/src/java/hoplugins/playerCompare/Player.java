@@ -7,7 +7,6 @@
 package hoplugins.playerCompare;
 
 import hoplugins.PlayerCompare;
-import plugins.IHOMiniModel;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 /**
