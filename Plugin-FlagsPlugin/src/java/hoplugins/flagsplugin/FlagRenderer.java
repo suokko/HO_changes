@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.text.NumberFormat;
-import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,18 +19,16 @@ import javax.swing.ListCellRenderer;
 
 public class FlagRenderer extends JLabel implements ListCellRenderer {
 	//private Properties paises;
-    private HashMap<String,Integer> invert;
     private plugins.IHOMiniModel hoModel;
     private transient FlagCollection flagSet;
     final public static NumberFormat numberFormat = NumberFormat.getInstance();
 	private static final long serialVersionUID = 7966608444470977408L;
 
-    public FlagRenderer(plugins.IHOMiniModel mod, HashMap<String,Integer> hm) {
+    public FlagRenderer(plugins.IHOMiniModel mod) {
         setOpaque(true);
         setHorizontalAlignment(LEADING);
         setVerticalAlignment(CENTER);
         hoModel = mod;
-        invert = hm;
         flagSet = null;
         setOpaque(true);
         numberFormat.setMaximumFractionDigits(2);
