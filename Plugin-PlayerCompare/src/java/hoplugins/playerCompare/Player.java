@@ -18,7 +18,6 @@ import plugins.ISpielerPosition;
  */
 public class Player
 {
-	private IHOMiniModel m_miniModel;
 	private ISpieler spieler;
 	
 	private String name;
@@ -92,9 +91,8 @@ public class Player
 	private int spezialitaet;
 	
 	//Konstruktor
-	public Player(IHOMiniModel model, ISpieler player)
+	public Player(ISpieler player)
 	{
-		m_miniModel = model;
 		spieler = player;
 
 		setSpielerDaten();
@@ -111,11 +109,11 @@ public class Player
 	}
 	
 	/* @function getPositionCompareAsString(int position)
-	 * liefert einen String zurück in der Form ("1.35;0.15") wobei
-	 * die 1.35 für den neuen Positionswert steht und die 0.15 für die Veränderung
+	 * liefert einen String zurï¿½ck in der Form ("1.35;0.15") wobei
+	 * die 1.35 fï¿½r den neuen Positionswert steht und die 0.15 fï¿½r die Verï¿½nderung
 	 * zum Originalwert des Spielers 
 	 * 
-	 * int position: Wert, für die Ermittlung der Position
+	 * int position: Wert, fï¿½r die Ermittlung der Position
 	 * 
 	 * return: String
 	 */
@@ -201,11 +199,11 @@ public class Player
 	}
 	
 	/* @function getSkillCompareAsDouble(int skill)
-	 * liefert einen Double zurück in der Form (5.06) wobei
-	 * die 5 für den neuen Skillwert steht und die 06 für den alten Wert
+	 * liefert einen Double zurï¿½ck in der Form (5.06) wobei
+	 * die 5 fï¿½r den neuen Skillwert steht und die 06 fï¿½r den alten Wert
 	 * multipliziert mit 0.01 
 	 * 
-	 * int skill: Wert, für die Ermittlung des Skills
+	 * int skill: Wert, fï¿½r die Ermittlung des Skills
 	 * 
 	 * return: double
 	 */
@@ -259,11 +257,11 @@ public class Player
 	}
 	
 	/* @function getSkillCompareAsString(int skill)
-	 * liefert einen String zurück in der Form ("5;-1") wobei
-	 * die 5 für den neuen Skillwert steht und die -1 für die Veränderung
+	 * liefert einen String zurï¿½ck in der Form ("5;-1") wobei
+	 * die 5 fï¿½r den neuen Skillwert steht und die -1 fï¿½r die Verï¿½nderung
 	 * zum Originalwert des Spielers 
 	 * 
-	 * int skill: Wert, für die Ermittlung des Skills
+	 * int skill: Wert, fï¿½r die Ermittlung des Skills
 	 * 
 	 * return: String
 	 */
@@ -317,10 +315,10 @@ public class Player
 	}
 	
 	/* @function changeSkill(int skill, int wert)
-	 * Funktion, die die Werte des Spielers in der Datenbank ändert.
+	 * Funktion, die die Werte des Spielers in der Datenbank ï¿½ndert.
 	 * Wird von changePlayerSkillValues() aufgerufen. 
 	 * 
-	 * int skill: Wert, für die Ermittlung des zu ändernden Skills
+	 * int skill: Wert, fï¿½r die Ermittlung des zu ï¿½ndernden Skills
 	 * int wert: Neuer Wert, der in die Datenbank geschrieben wird
 	 */
 	public void changeSkill(int skill, int wert)
@@ -372,8 +370,8 @@ public class Player
 	
 	/* @function changePlayerSkillValues(boolean richtung)
 	 * Funktion, die die Werte des Spielers ermittelt, um sie in der 
-	 * Datenbank zu ändern. Übergibt diese Werte an changeSkill().
-	 * Wird benötigt, um die Stärke auf den einzelnen Position mit 
+	 * Datenbank zu ï¿½ndern. ï¿½bergibt diese Werte an changeSkill().
+	 * Wird benï¿½tigt, um die Stï¿½rke auf den einzelnen Position mit 
 	 * Spieler.calcPositionValue() zu berechnen
 	 * 
 	 * boolean richtung: bezeichnet, ob neue Werte oder die originalen Werte
@@ -383,14 +381,14 @@ public class Player
 	 */
 	public void changePlayerSkillValues(boolean richtung)
 	{
-		// Array für die Originalwerte
+		// Array fï¿½r die Originalwerte
 		int[] alteWerte = getOldSkillWerte();
 		
 		if(richtung == true)
 		{
-			// Array für die neugesetzten Werte (passabel, gut, usw.)
+			// Array fï¿½r die neugesetzten Werte (passabel, gut, usw.)
 			int[] neueWerte = PlayerCompare.getNewStaerke();
-			// Array für die neugesetzten Werte (+1,+2, usw.)
+			// Array fï¿½r die neugesetzten Werte (+1,+2, usw.)
 			int[] changedSkills = PlayerCompare.getChangeStaerkeBy();
 			
 			for(int j = 0; j < 10; j++)
@@ -436,7 +434,7 @@ public class Player
 		setName(spieler.getName());
 		setAlter(spieler.getAlter());
 		setGehalt(spieler.getGehalt());
-		setTsi(spieler.getMarkwert());
+		setTsi(spieler.getTSI());
 		setNation(spieler.getNationalitaet());
 		setFuehrung(spieler.getFuehrung());
 		setGruppe(spieler.getTeamInfoSmilie());
@@ -535,52 +533,52 @@ public class Player
 	
 	public void setOldPositionValues()
 	{
-		setPosWertTWOld(spieler.calcPosValue(ISpielerPosition.TORWART,true));
-		setPosWertIVOld(spieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER,true));
-		setPosWertIV_AOld(spieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_AUS,true));
-		setPosWertIV_OOld(spieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_OFF,true));
-		setPosWertAVOld(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER,true));
-		setPosWertAV_IOld(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_IN,true));
-		setPosWertAV_OOld(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_OFF,true));
-		setPosWertAV_DOld(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_DEF,true));
-		setPosWertMIOld(spieler.calcPosValue(ISpielerPosition.MITTELFELD,true));
-		setPosWertMI_OOld(spieler.calcPosValue(ISpielerPosition.MITTELFELD_OFF,true));
-		setPosWertMI_DOld(spieler.calcPosValue(ISpielerPosition.MITTELFELD_DEF,true));
-		setPosWertMI_AOld(spieler.calcPosValue(ISpielerPosition.MITTELFELD_AUS,true));
-		setPosWertFLOld(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL,true));
-		setPosWertFL_DOld(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_DEF,true));
-		setPosWertFL_IOld(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_IN,true));
-		setPosWertFL_OOld(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_OFF,true));
-		setPosWertSTOld(spieler.calcPosValue(ISpielerPosition.STURM,true));
-		setPosWertST_DOld(spieler.calcPosValue(ISpielerPosition.STURM_DEF,true));
+		setPosWertTWOld(spieler.calcPosValue(ISpielerPosition.KEEPER,true));
+		setPosWertIVOld(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
+		setPosWertIV_AOld(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
+		setPosWertIV_OOld(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
+		setPosWertAVOld(spieler.calcPosValue(ISpielerPosition.BACK,true));
+		setPosWertAV_IOld(spieler.calcPosValue(ISpielerPosition.BACK_TOMID,true));
+		setPosWertAV_OOld(spieler.calcPosValue(ISpielerPosition.BACK_OFF,true));
+		setPosWertAV_DOld(spieler.calcPosValue(ISpielerPosition.BACK_DEF,true));
+		setPosWertMIOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER,true));
+		setPosWertMI_OOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
+		setPosWertMI_DOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
+		setPosWertMI_AOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
+		setPosWertFLOld(spieler.calcPosValue(ISpielerPosition.WINGER,true));
+		setPosWertFL_DOld(spieler.calcPosValue(ISpielerPosition.WINGER_DEF,true));
+		setPosWertFL_IOld(spieler.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
+		setPosWertFL_OOld(spieler.calcPosValue(ISpielerPosition.WINGER_OFF,true));
+		setPosWertSTOld(spieler.calcPosValue(ISpielerPosition.FORWARD,true));
+		setPosWertST_DOld(spieler.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
 		setBestPositionOld(spieler.getIdealPosition());
 		setBestPosStaerkeOld(spieler.getIdealPosStaerke(true));
 	}
 	
 	public void setNewPositionValues()
 	{
-		setPosWertTW(spieler.calcPosValue(ISpielerPosition.TORWART,true));
-		setPosWertIV(spieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER,true));
-		setPosWertIV_A(spieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_AUS,true));
-		setPosWertIV_O(spieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_OFF,true));
-		setPosWertAV(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER,true));
-		setPosWertAV_I(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_IN,true));
-		setPosWertAV_O(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_OFF,true));
-		setPosWertAV_D(spieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_DEF,true));
-		setPosWertMI(spieler.calcPosValue(ISpielerPosition.MITTELFELD,true));
-		setPosWertMI_O(spieler.calcPosValue(ISpielerPosition.MITTELFELD_OFF,true));
-		setPosWertMI_D(spieler.calcPosValue(ISpielerPosition.MITTELFELD_DEF,true));
-		setPosWertMI_A(spieler.calcPosValue(ISpielerPosition.MITTELFELD_AUS,true));
-		setPosWertFL(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL,true));
-		setPosWertFL_D(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_DEF,true));
-		setPosWertFL_I(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_IN,true));
-		setPosWertFL_O(spieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_OFF,true));
-		setPosWertST(spieler.calcPosValue(ISpielerPosition.STURM,true));
-		setPosWertST_D(spieler.calcPosValue(ISpielerPosition.STURM_DEF,true));
+		setPosWertTW(spieler.calcPosValue(ISpielerPosition.KEEPER,true));
+		setPosWertIV(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
+		setPosWertIV_A(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
+		setPosWertIV_O(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
+		setPosWertAV(spieler.calcPosValue(ISpielerPosition.BACK,true));
+		setPosWertAV_I(spieler.calcPosValue(ISpielerPosition.BACK_TOMID,true));
+		setPosWertAV_O(spieler.calcPosValue(ISpielerPosition.BACK_OFF,true));
+		setPosWertAV_D(spieler.calcPosValue(ISpielerPosition.BACK_DEF,true));
+		setPosWertMI(spieler.calcPosValue(ISpielerPosition.MIDFIELDER,true));
+		setPosWertMI_O(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
+		setPosWertMI_D(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
+		setPosWertMI_A(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
+		setPosWertFL(spieler.calcPosValue(ISpielerPosition.WINGER,true));
+		setPosWertFL_D(spieler.calcPosValue(ISpielerPosition.WINGER_DEF,true));
+		setPosWertFL_I(spieler.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
+		setPosWertFL_O(spieler.calcPosValue(ISpielerPosition.WINGER_OFF,true));
+		setPosWertST(spieler.calcPosValue(ISpielerPosition.FORWARD,true));
+		setPosWertST_D(spieler.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
 		setBestPosition(spieler.getIdealPosition());
 		setBestPosStaerke(spieler.getIdealPosStaerke(true));
 		
-		//Aufruf zum Zurücksetzen der Skillwerte
+		//Aufruf zum Zurï¿½cksetzen der Skillwerte
 		changePlayerSkillValues(false);
 	}
 	
