@@ -54,20 +54,7 @@ public class RatingsPanel {
     private JLabel Team2Tactic;
     private JLabel Team2Tacticskill;
     private JLabel Team2Teamspirit;
-    private JLabel TeamDif11;
-    private JLabel TeamDif12;
-    private JLabel TeamDif13;
-    private JLabel TeamDif14;
-    private JLabel TeamDif15;
-    private JLabel TeamDif16;
-    private JLabel TeamDif17;
-    private JLabel TeamDif21;
-    private JLabel TeamDif22;
-    private JLabel TeamDif23;
-    private JLabel TeamDif24;
-    private JLabel TeamDif25;
-    private JLabel TeamDif26;
-    private JLabel TeamDif27;
+    
     private boolean doDebug = false;
     /*private double Team1AttackCenterValue = 0;
     private double Team1AttackLeftValue = 0;
@@ -178,12 +165,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif11 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif21 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
@@ -211,12 +198,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif12 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif22 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
@@ -244,12 +231,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif13 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif23 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
@@ -277,12 +264,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif14 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif24 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
@@ -310,12 +297,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif15 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif25 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
@@ -343,12 +330,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif16 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif26 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
@@ -376,12 +363,12 @@ public class RatingsPanel {
 
         gbc.gridx = 2;
         gbc.gridy = zeile;
-        jlabel = TeamDif17 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 3;
         gbc.gridy = zeile;
-        jlabel = TeamDif27 = new JLabel();
+        jlabel = new JLabel();
         p3b.add(jlabel, gbc);
 
         gbc.gridx = 0;
