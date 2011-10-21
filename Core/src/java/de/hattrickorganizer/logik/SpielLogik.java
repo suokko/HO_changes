@@ -729,7 +729,7 @@ public class SpielLogik {
                         spielbericht.TorchancenHeim((byte) (spielbericht.TorchancenHeim() + 1));
 
                         //Tor
-                        if (torchanceheim == ANGRIFF_ERFOLGREICH) {
+                        if (torchanceheim == ANGRIFF_ERFOLGREICH && schuetze != null) {
                             //Sonderfall Elfmeter
                             if ((torart == TA_HANDELFMETER) || (torart == TA_FOULELFMETER)) {
                                 if (ElfmeterBerechnen()) {
@@ -756,7 +756,8 @@ public class SpielLogik {
                                 }
                             }
                         } else {
-                            schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
+                        	if(schuetze != null)
+                        		schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
                         }
 
                         //Torchance anzeigen
@@ -819,7 +820,7 @@ public class SpielLogik {
                         spielbericht.TorchancenGast((byte) (spielbericht.TorchancenGast() + 1));
 
                         //Tor
-                        if (torchancegast == ANGRIFF_ERFOLGREICH) {
+                        if (torchancegast == ANGRIFF_ERFOLGREICH && schuetze != null) {
                             //Sonderfall Elfmeter
                             if ((torart == TA_HANDELFMETER) || (torart == TA_FOULELFMETER)) {
                                 if (ElfmeterBerechnen()) {
@@ -846,7 +847,8 @@ public class SpielLogik {
                                 }
                             }
                         } else {
-                            schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
+                        	if (schuetze != null)
+                        		schuetze.setAnzTorChancen((byte) (schuetze.getAnzTorChancen() + 1));
                         }
 
                         //Torchance anzeigen
