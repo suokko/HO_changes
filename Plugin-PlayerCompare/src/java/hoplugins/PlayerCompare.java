@@ -34,16 +34,12 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	private int m_pluginID = 45;
 	
 	private JPanel m_jpPanel;
-	private JPanel m_topPanel;
-	private JPanel m_bottomPanel;
 	private JPanel m_topTablePanel;
 	private JPanel m_topButtonPanel;
 	private JPanel p_SpielerDetail = null;
 	
 	private JScrollPane m_scrollPaneTableTop;
 	private JScrollPane m_scrollPaneButtons;
-	private JScrollPane m_scrollPaneTop;
-	private JScrollPane m_scrollPaneBottom;
 	private JScrollPane m_scrollPaneTableBottom;
 	private JScrollPane m_scrollPanePlayer;
 	private JScrollPane m_scrollPanePlayerGesamt;
@@ -51,7 +47,6 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	private JSplitPane m_splitPane;
 	private JSplitPane m_splitPaneTop;
 	private JSplitPane m_splitPaneBottom;
-	private JSplitPane m_splitPaneLeft;
 	
 	private PlayerTableModel m_playerTableModelTop;
 	private PlayerTableModel m_playerTableModelBottom;
@@ -59,9 +54,6 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	
 	private JLabel m_L_type;
 	private JLabel m_L_header;
-	private JLabel m_L_setze;
-	private JLabel m_L_auf;
-	private JLabel m_L_empty;
 	private JLabel m_L_erfahrung;
 	private JLabel m_L_form;
 	private JLabel m_L_kondition;
@@ -72,8 +64,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	private JLabel m_L_fluegelspiel;
 	private JLabel m_L_torschuss;
 	private JLabel m_L_standards;
-	private JLabel m_L_oder;
-	
+		
 	private static JComboBox m_CB_type;
 	private JComboBox m_CB_erfahrung;
 	private JComboBox m_CB_form;
@@ -99,14 +90,13 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	
 	private static IDebugWindow debugWindow;
 	
-	private Vector m_V_setPlayers;
-	private Vector m_V_allPlayer;
+	private Vector<Player> m_V_setPlayers;
+	private Vector<ISpieler> m_V_allPlayer;
 	private Player[] m_ar_allPlayer;
 	private Player[] m_ar_setPlayer;
 	
 	private String sTabName = new String();
 	
-	private String[] m_faehigkeiten;
 	private String[] m_staerke;
 	
 //	*** Hinzugefügt 18.08.04 siehe Z.1226***
@@ -185,42 +175,41 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		};
 		
 		//Members f�r Labelbeschriftungen werden gesetzt
-		m_L_erfahrung = new JLabel(m_clModel.getResource ().getProperty ("Erfahrung"));
-		m_L_form = new JLabel(m_clModel.getResource ().getProperty ("Form"));
-		m_L_kondition = new JLabel(m_clModel.getResource ().getProperty ("Kondition"));
-		m_L_torwart = new JLabel(m_clModel.getResource ().getProperty ("Torwart"));
-		m_L_verteidigung = new JLabel(m_clModel.getResource ().getProperty ("Verteidigung"));
-		m_L_spielaufbau = new JLabel(m_clModel.getResource ().getProperty ("Spielaufbau"));
-		m_L_passpiel = new JLabel(m_clModel.getResource ().getProperty ("Passpiel"));
-		m_L_fluegelspiel = new JLabel(m_clModel.getResource ().getProperty ("Fluegelspiel"));
-		m_L_torschuss = new JLabel(m_clModel.getResource ().getProperty ("Torschuss"));
-		m_L_standards = new JLabel(m_clModel.getResource ().getProperty ("Standards"));
-		m_L_oder = new JLabel("oder");
+		m_L_erfahrung = new JLabel(m_clModel.getLanguageString("Erfahrung"));
+		m_L_form = new JLabel(m_clModel.getLanguageString("Form"));
+		m_L_kondition = new JLabel(m_clModel.getLanguageString("Kondition"));
+		m_L_torwart = new JLabel(m_clModel.getLanguageString("Torwart"));
+		m_L_verteidigung = new JLabel(m_clModel.getLanguageString("Verteidigung"));
+		m_L_spielaufbau = new JLabel(m_clModel.getLanguageString("Spielaufbau"));
+		m_L_passpiel = new JLabel(m_clModel.getLanguageString("Passpiel"));
+		m_L_fluegelspiel = new JLabel(m_clModel.getLanguageString("Fluegelspiel"));
+		m_L_torschuss = new JLabel(m_clModel.getLanguageString("Torschuss"));
+		m_L_standards = new JLabel(m_clModel.getLanguageString("Standards"));
 		
 		//Members f�r die Choices werden gesetzt
 		m_staerke = new String[]
 		{
 				"---",
-				m_clModel.getResource ().getProperty ("katastrophal"),
-				m_clModel.getResource ().getProperty ("erbaermlich"),
-				m_clModel.getResource ().getProperty ("armselig"),
-				m_clModel.getResource ().getProperty ("schwach"),
-				m_clModel.getResource ().getProperty ("durchschnittlich"),
-				m_clModel.getResource ().getProperty ("passabel"),
-				m_clModel.getResource ().getProperty ("gut"),
-				m_clModel.getResource ().getProperty ("sehr_gut"),
-				m_clModel.getResource ().getProperty ("hervorragend"),
-				m_clModel.getResource ().getProperty ("grossartig"),
-				m_clModel.getResource ().getProperty ("brilliant"),
-				m_clModel.getResource ().getProperty ("fantastisch"),
-				m_clModel.getResource ().getProperty ("Weltklasse"),
-				m_clModel.getResource ().getProperty ("uebernatuerlich"),
-				m_clModel.getResource ().getProperty ("gigantisch"),
-				m_clModel.getResource ().getProperty ("ausserirdisch"),
-				m_clModel.getResource ().getProperty ("mythisch"),
-				m_clModel.getResource ().getProperty ("maerchenhaft"),
-				m_clModel.getResource ().getProperty ("galaktisch"),
-				m_clModel.getResource ().getProperty ("goettlich"),
+				m_clModel.getLanguageString("katastrophal"),
+				m_clModel.getLanguageString("erbaermlich"),
+				m_clModel.getLanguageString("armselig"),
+				m_clModel.getLanguageString("schwach"),
+				m_clModel.getLanguageString("durchschnittlich"),
+				m_clModel.getLanguageString("passabel"),
+				m_clModel.getLanguageString("gut"),
+				m_clModel.getLanguageString("sehr_gut"),
+				m_clModel.getLanguageString("hervorragend"),
+				m_clModel.getLanguageString("grossartig"),
+				m_clModel.getLanguageString("brilliant"),
+				m_clModel.getLanguageString("fantastisch"),
+				m_clModel.getLanguageString("Weltklasse"),
+				m_clModel.getLanguageString("uebernatuerlich"),
+				m_clModel.getLanguageString("gigantisch"),
+				m_clModel.getLanguageString("ausserirdisch"),
+				m_clModel.getLanguageString("mythisch"),
+				m_clModel.getLanguageString("maerchenhaft"),
+				m_clModel.getLanguageString("galaktisch"),
+				m_clModel.getLanguageString("goettlich"),
 		};
 		
 		
@@ -284,11 +273,11 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		//JComboBoxen erstellen
 		m_CB_type = new JComboBox();
 		m_CB_type.addItem(m_properties.getProperty("gewaehlte"));
-		m_CB_type.addItem(m_clModel.getResource().getProperty ( "Torwart" ) );
-		m_CB_type.addItem(m_clModel.getResource().getProperty ( "Verteidigung" ) );
-		m_CB_type.addItem(m_clModel.getResource().getProperty ( "Mittelfeld" ) );
-		m_CB_type.addItem(m_clModel.getResource().getProperty ( "Fluegelspiel" ) );
-		m_CB_type.addItem(m_clModel.getResource().getProperty ( "Sturm" ) );
+		m_CB_type.addItem(m_clModel.getLanguageString( "Torwart" ) );
+		m_CB_type.addItem(m_clModel.getLanguageString( "Verteidigung" ) );
+		m_CB_type.addItem(m_clModel.getLanguageString( "Mittelfeld" ) );
+		m_CB_type.addItem(m_clModel.getLanguageString( "Fluegelspiel" ) );
+		m_CB_type.addItem(m_clModel.getLanguageString( "Sturm" ) );
 		m_CB_type.addItem(m_properties.getProperty ( "GruppeA" ) );
 		m_CB_type.addItem(m_properties.getProperty ( "GruppeB" ) );
 		m_CB_type.addItem(m_properties.getProperty ( "GruppeC" ) );
@@ -579,11 +568,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		m_topButtonPanel.add(m_btReset);
 		
 		//Panel f�r die Buttons
-		m_topPanel = new JPanel(new BorderLayout());
-		
-		
-		
-		
+			
 		m_scrollPaneButtons = new JScrollPane(m_topButtonPanel);	//ScrollPane f�r die Buttons
 		m_scrollPaneTableBottom = new JScrollPane();	//ScrollPane f�r Tabelle der verglichenen Spieler
 		m_scrollPanePlayer = new JScrollPane();			//ScrollPane f�r die DetailTabelle
@@ -1377,7 +1362,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		// SpielerArray f�llen
 		for(int counter = 0; counter < m_anzSpieler; counter++)
 		{
-			m_ar_allPlayer[counter] = new Player(m_clModel, (ISpieler)m_V_allPlayer.elementAt(counter));
+			m_ar_allPlayer[counter] = new Player((ISpieler)m_V_allPlayer.elementAt(counter));
 		}
     }
     
