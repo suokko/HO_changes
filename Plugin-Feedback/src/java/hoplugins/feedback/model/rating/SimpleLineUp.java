@@ -261,7 +261,7 @@ public class SimpleLineUp {
             return pos.getPosition();
         }
 
-        return ISpielerPosition.UNBESTIMMT;
+        return ISpielerPosition.UNKNOWN;
     }
 
     /**
@@ -310,7 +310,7 @@ public class SimpleLineUp {
         try {
             return getPositionById(positionsid).getTaktik();
         } catch (Exception e) {
-            return plugins.ISpielerPosition.UNBESTIMMT;
+            return plugins.ISpielerPosition.UNKNOWN;
         }
     }
 
@@ -349,17 +349,17 @@ public class SimpleLineUp {
 
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideBack1, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideBack2, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightCentralDefender, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftCentralDefender, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideMid1, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.insideMid2, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightInnerMidfield, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftInnerMidfield, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.forward1, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.forward2, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substBack, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInsideMid, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightForward, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftForward, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substDefender, 0, (byte) 0));
+        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInnerMidfield, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
