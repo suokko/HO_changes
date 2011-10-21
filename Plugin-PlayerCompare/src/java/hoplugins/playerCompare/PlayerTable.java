@@ -14,6 +14,10 @@ import javax.swing.table.*;
  */
 public class PlayerTable extends JTable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1453037819569111763L;
 	private IHOMiniModel m_HOModel;
 	private PlayerTableModel plTableModel;
 	private int anzCols;
@@ -28,7 +32,6 @@ public class PlayerTable extends JTable{
 		plTableModel1 = ptm;
 		PlayerCompare.appendText("Name in PlayerTable: " + ptm.getValueAt(0,1));
 		anzCols1 = tm.getColumnCount();
-		int vColIndex = 0;
 	    TableColumn col;
 	    for(int qq = 0; qq < anzCols1; qq++)
 	    {
@@ -58,7 +61,6 @@ public class PlayerTable extends JTable{
 		m_HOModel = iHoMiniMod;
 		plTableModel = ptm;
 		anzCols = tm.getColumnCount();
-		int vColIndex = 0;
 	    TableColumn col;
 	
 	    for(int pp = 0; pp < anzCols; pp++)
@@ -70,52 +72,52 @@ public class PlayerTable extends JTable{
 	    		col.setCellRenderer(new MyTableCellRenderer(m_HOModel,plTableModel));
 	    		PlayerCompare.appendText("Werte in Schleife PlayerTable: " + ptm.getValueAt(0,pp));
 	    	}
-	    	if((ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("TOR"))
-	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("IV"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("IVA"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("IVO"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("AV"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("AVI"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("AVO"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("AVD"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("MIT"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("MITD"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("MITA"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("MITO"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FLG"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FLGI"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FLGO"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FLGD"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("STU"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("STUD"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("Gruppe"))
+	    	if((ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("TOR"))
+	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("IV"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("IVA"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("IVO"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("AV"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("AVI"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("AVO"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("AVD"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("MIT"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("MITD"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("MITA"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("MITO"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FLG"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FLGI"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FLGO"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FLGD"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("STU"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("STUD"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("Gruppe"))
 	    	)
 	    	{
 	    		width = 60;
 	    	}
-	    	else if((ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("Name"))
-	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("BestePosition"))
+	    	else if((ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("Name"))
+	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("BestePosition"))
 	    			)
 	    	{
 	    		width = 175;
 	    	}
-	    	else if((ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FUE"))
-	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("ER"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FO"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("KO"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("TW"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("VE"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("SA"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("PS"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("FL"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("TS"))
-					|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("ST"))
+	    	else if((ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FUE"))
+	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("ER"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FO"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("KO"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("TW"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("VE"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("SA"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("PS"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FL"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("TS"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("ST"))
 					)
 	    	{
 	    		width = 40;
 	    	}
-	    	else if((ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("Gehalt"))
-	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getResource().getProperty("ID"))
+	    	else if((ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("Gehalt"))
+	    			|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("ID"))
 					|| (ptm.getColumnName(pp)).equals("TSI")
 					)
 	    	{
