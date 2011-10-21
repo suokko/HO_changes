@@ -55,7 +55,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private static MyConnector m_clInstance;
 	private final static String VERSION_MATCHORDERS = "1.8";
 	private final static String VERSION_TRAINING = "1.5";
-	private final static String VERSION_MATCHLINEUP = "1.4";
+	private final static String VERSION_MATCHLINEUP = "1.6";
 
 	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
