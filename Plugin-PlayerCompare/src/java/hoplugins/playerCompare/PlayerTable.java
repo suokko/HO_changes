@@ -19,17 +19,14 @@ public class PlayerTable extends JTable{
 	 */
 	private static final long serialVersionUID = 1453037819569111763L;
 	private IHOMiniModel m_HOModel;
-	private PlayerTableModel plTableModel;
 	private int anzCols;
 	private IHOMiniModel m_HOModel1;
-	private PlayerTableModel plTableModel1;
 	private int anzCols1;
 	//public PlayerTable(PlayerTableModel tm){
 	public PlayerTable(TableSorter tm, IHOMiniModel iHoMiniMod, PlayerTableModel ptm,boolean small)
 	{
 		super(tm); 
 		m_HOModel1 = iHoMiniMod;
-		plTableModel1 = ptm;
 		PlayerCompare.appendText("Name in PlayerTable: " + ptm.getValueAt(0,1));
 		anzCols1 = tm.getColumnCount();
 	    TableColumn col;
@@ -37,7 +34,7 @@ public class PlayerTable extends JTable{
 	    {
 	    	int width = 0;
 	    	col = this.getColumnModel().getColumn(qq);
-	    	col.setCellRenderer(new MyTableCellRenderer(m_HOModel1,plTableModel1));
+	    	col.setCellRenderer(new MyTableCellRenderer(m_HOModel1));
 	    	PlayerCompare.appendText("Werte in Schleife PlayerTable: " + ptm.getValueAt(0,qq));
 	    	if(qq == 0)
 	    	{
@@ -59,7 +56,6 @@ public class PlayerTable extends JTable{
 		
 		super(tm); 
 		m_HOModel = iHoMiniMod;
-		plTableModel = ptm;
 		anzCols = tm.getColumnCount();
 	    TableColumn col;
 	
@@ -69,7 +65,7 @@ public class PlayerTable extends JTable{
 	    	col = this.getColumnModel().getColumn(pp);
 	    	if(pp > 0)
 	    	{
-	    		col.setCellRenderer(new MyTableCellRenderer(m_HOModel,plTableModel));
+	    		col.setCellRenderer(new MyTableCellRenderer(m_HOModel));
 	    		PlayerCompare.appendText("Werte in Schleife PlayerTable: " + ptm.getValueAt(0,pp));
 	    	}
 	    	if((ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("TOR"))
