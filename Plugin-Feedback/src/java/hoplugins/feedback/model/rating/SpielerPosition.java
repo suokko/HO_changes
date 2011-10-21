@@ -159,40 +159,40 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
      */
     public static int getHTPosidForHOPosition4Image(byte posId) {
         switch (posId) {
-            case TORWART:
+            case KEEPER:
                 return keeper;
 
-            case INNENVERTEIDIGER:
-            case INNENVERTEIDIGER_AUS:
-            case INNENVERTEIDIGER_OFF:
-                return insideBack1;
+            case CENTRAL_DEFENDER:
+            case CENTRAL_DEFENDER_TOWING:
+            case CENTRAL_DEFENDER_OFF:
+                return rightCentralDefender;
 
-            case AUSSENVERTEIDIGER:
-            case AUSSENVERTEIDIGER_IN:
-            case AUSSENVERTEIDIGER_OFF:
-            case AUSSENVERTEIDIGER_DEF:
+            case BACK:
+            case BACK_TOMID:
+            case BACK_OFF:
+            case BACK_DEF:
                 return rightBack;
 
-            case MITTELFELD:
-            case MITTELFELD_OFF:
-            case MITTELFELD_DEF:
-            case MITTELFELD_AUS:
-                return insideMid1;
+            case MIDFIELDER:
+            case MIDFIELDER_OFF:
+            case MIDFIELDER_DEF:
+            case MIDFIELDER_TOWING:
+                return rightInnerMidfield;
 
-            case FLUEGELSPIEL:
-            case FLUEGELSPIEL_IN:
-            case FLUEGELSPIEL_OFF:
-            case FLUEGELSPIEL_DEF:
+            case WINGER:
+            case WINGER_TOMID:
+            case WINGER_OFF:
+            case WINGER_DEF:
                 return rightWinger;
 
-            case STURM:
-            case STURM_AUS:
-            case STURM_DEF:
-                return forward1;
+            case FORWARD:
+            case FORWARD_TOWING:
+            case FORWARD_DEF:
+                return rightForward;
 
-            case AUSGEWECHSELT1:
-            case AUSGEWECHSELT2:
-            case AUSGEWECHSELT3:
+            case SUBSTITUTED1:
+            case SUBSTITUTED2:
+            case SUBSTITUTED3:
                 return ausgewechselt;
 
             default: {
@@ -213,66 +213,66 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
     	final IHOMiniModel model = Commons.getModel();
 
         switch (posId) {
-            case TORWART:
+            case KEEPER:
                 return model.getLanguageString("TORW");
 
-            case INNENVERTEIDIGER:
+            case CENTRAL_DEFENDER:
                 return model.getLanguageString("IV");
 
-            case INNENVERTEIDIGER_AUS:
+            case CENTRAL_DEFENDER_TOWING:
                 return model.getLanguageString("IVA");
 
-            case INNENVERTEIDIGER_OFF:
+            case CENTRAL_DEFENDER_OFF:
                 return model.getLanguageString("IVO");
 
-            case AUSSENVERTEIDIGER:
+            case BACK:
                 return model.getLanguageString("AV");
 
-            case AUSSENVERTEIDIGER_IN:
+            case BACK_TOMID:
                 return model.getLanguageString("AVI");
 
-            case AUSSENVERTEIDIGER_OFF:
+            case BACK_OFF:
                 return model.getLanguageString("AVO");
 
-            case AUSSENVERTEIDIGER_DEF:
+            case BACK_DEF:
                 return model.getLanguageString("AVD");
 
-            case MITTELFELD:
+            case MIDFIELDER:
                 return model.getLanguageString("MIT");
 
-            case MITTELFELD_OFF:
+            case MIDFIELDER_OFF:
                 return model.getLanguageString("MITO");
 
-            case MITTELFELD_DEF:
+            case MIDFIELDER_DEF:
                 return model.getLanguageString("MITD");
 
-            case MITTELFELD_AUS:
+            case MIDFIELDER_TOWING:
                 return model.getLanguageString("MITA");
 
-            case FLUEGELSPIEL:
+            case WINGER:
                 return model.getLanguageString("FLG");
 
-            case FLUEGELSPIEL_IN:
+            case WINGER_TOMID:
                 return model.getLanguageString("FLGI");
 
-            case FLUEGELSPIEL_OFF:
+            case WINGER_OFF:
                 return model.getLanguageString("FLGO");
 
-            case FLUEGELSPIEL_DEF:
+            case WINGER_DEF:
                 return model.getLanguageString("FLGD");
 
-            case STURM:
+            case FORWARD:
                 return model.getLanguageString("STU");
 
-            case STURM_AUS:
+            case FORWARD_TOWING:
                 return model.getLanguageString("STUA");
 
-            case STURM_DEF:
+            case FORWARD_DEF:
                 return model.getLanguageString("STUD");
 
-            case AUSGEWECHSELT1:
-            case AUSGEWECHSELT2:
-            case AUSGEWECHSELT3:
+            case SUBSTITUTED1:
+            case SUBSTITUTED2:
+            case SUBSTITUTED3:
                 return model.getLanguageString("Ausgewechselt");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
@@ -296,10 +296,10 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
             case rightBack:
                 return "rightBack";
 
-            case insideBack1:
+            case rightCentralDefender:
                 return "insideBack1";
 
-            case insideBack2:
+            case leftCentralDefender:
                 return "insideBack2";
 
             case leftBack:
@@ -308,25 +308,25 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
             case rightWinger:
                 return "rightWinger";
 
-            case insideMid1:
+            case rightInnerMidfield:
                 return "insideMid1";
 
-            case insideMid2:
+            case leftInnerMidfield:
                 return "insideMid2";
 
             case leftWinger:
                 return "leftWinger";
 
-            case forward1:
+            case rightForward:
                 return "forward1";
 
-            case forward2:
+            case leftForward:
                 return "forward2";
 
-            case substBack:
+            case substDefender:
                 return "substBack";
 
-            case substInsideMid:
+            case substInnerMidfield:
                 return "substInsideMid";
 
             case substWinger:
@@ -353,69 +353,69 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
     	final IHOMiniModel model = Commons.getModel();
 
         switch (posId) {
-            case TORWART:
+            case KEEPER:
                 return model.getLanguageString("Torwart");
 
-            case INNENVERTEIDIGER:
+            case CENTRAL_DEFENDER:
                 return model.getLanguageString("Innenverteidiger");
 
-            case INNENVERTEIDIGER_AUS:
+            case CENTRAL_DEFENDER_TOWING:
                 return model.getLanguageString("Innenverteidiger_Aus");
 
-            case INNENVERTEIDIGER_OFF:
+            case CENTRAL_DEFENDER_OFF:
                 return model.getLanguageString("Innenverteidiger_Off");
 
-            case AUSSENVERTEIDIGER:
+            case BACK:
                 return model.getLanguageString("Aussenverteidiger");
 
-            case AUSSENVERTEIDIGER_IN:
+            case BACK_TOMID:
                 return model.getLanguageString("Aussenverteidiger_In");
 
-            case AUSSENVERTEIDIGER_OFF:
+            case BACK_OFF:
                 return model.getLanguageString("Aussenverteidiger_Off");
 
-            case AUSSENVERTEIDIGER_DEF:
+            case BACK_DEF:
                 return model.getLanguageString("Aussenverteidiger_Def");
 
-            case MITTELFELD:
+            case MIDFIELDER:
                 return model.getLanguageString("Mittelfeld");
 
-            case MITTELFELD_OFF:
+            case MIDFIELDER_OFF:
                 return model.getLanguageString("Mittelfeld_Off");
 
-            case MITTELFELD_DEF:
+            case MIDFIELDER_DEF:
                 return model.getLanguageString("Mittelfeld_Def");
 
-            case MITTELFELD_AUS:
+            case MIDFIELDER_TOWING:
                 return model.getLanguageString("Mittelfeld_Aus");
 
-            case FLUEGELSPIEL:
+            case WINGER:
                 return model.getLanguageString("Fluegel");
 
-            case FLUEGELSPIEL_IN:
+            case WINGER_TOMID:
                 return model.getLanguageString("Fluegelspiel_In");
 
-            case FLUEGELSPIEL_OFF:
+            case WINGER_OFF:
                 return model.getLanguageString("Fluegelspiel_Off");
 
-            case FLUEGELSPIEL_DEF:
+            case WINGER_DEF:
                 return model.getLanguageString("Fluegelspiel_Def");
 
-            case STURM:
+            case FORWARD:
                 return model.getLanguageString("Sturm");
 
-            case STURM_DEF:
+            case FORWARD_DEF:
                 return model.getLanguageString("Sturm_Def");
 
-            case STURM_AUS:
+            case FORWARD_TOWING:
                 return model.getLanguageString("Sturm_Aus");
 
-            case AUSGEWECHSELT1:
-            case AUSGEWECHSELT2:
-            case AUSGEWECHSELT3:
+            case SUBSTITUTED1:
+            case SUBSTITUTED2:
+            case SUBSTITUTED3:
                 return model.getLanguageString("Ausgewechselt");
 
-            case TRAINER:
+            case COACH:
                 return model.getLanguageString("Trainer");
 
             //HOLogger.instance().log(getClass(), "Unbestimmte Position: " + posId );
@@ -444,110 +444,110 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
     public static byte getPosition(int id, byte taktik) {
         switch (id) {
             case keeper:
-                return TORWART;
+                return KEEPER;
 
             case rightBack:
             case leftBack: {
-                if (taktik == ZUR_MITTE) {
-                    return AUSSENVERTEIDIGER_IN;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == OFFENSIV) {
-                    return AUSSENVERTEIDIGER_OFF;
-                } else if (taktik == DEFENSIV) {
-                    return AUSSENVERTEIDIGER_DEF;
+                if (taktik == TOWARDS_MIDDLE) {
+                    return BACK_TOMID;
+                } else if (taktik == OLD_EXTRA_MIDFIELD) {
+                    return MIDFIELDER;
+                } else if (taktik == OLD_EXTRA_FORWARD) {
+                    return FORWARD;
+                } else if (taktik == OLD_EXTRA_DEFENDER) {
+                    return CENTRAL_DEFENDER;
+                } else if (taktik == OFFENSIVE) {
+                    return BACK_OFF;
+                } else if (taktik == DEFENSIVE) {
+                    return BACK_DEF;
                 } else {
-                    return AUSSENVERTEIDIGER;
+                    return BACK;
                 }
             }
 
-            case insideBack1:
-            case insideBack2: {
-                if (taktik == NACH_AUSSEN) {
-                    return INNENVERTEIDIGER_AUS;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == OFFENSIV) {
-                    return INNENVERTEIDIGER_OFF;
+            case rightCentralDefender:
+            case leftCentralDefender: {
+                if (taktik == TOWARDS_WING) {
+                    return CENTRAL_DEFENDER_TOWING;
+                } else if (taktik == OLD_EXTRA_MIDFIELD) {
+                    return MIDFIELDER;
+                } else if (taktik == OLD_EXTRA_FORWARD) {
+                    return FORWARD;
+                } else if (taktik == OFFENSIVE) {
+                    return CENTRAL_DEFENDER_OFF;
                 } else {
-                    return INNENVERTEIDIGER;
+                    return CENTRAL_DEFENDER;
                 }
             }
 
             case rightWinger:
             case leftWinger: {
-                if (taktik == ZUR_MITTE) {
-                    return FLUEGELSPIEL_IN;
-                } else if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == OFFENSIV) {
-                    return FLUEGELSPIEL_OFF;
-                } else if (taktik == DEFENSIV) {
-                    return FLUEGELSPIEL_DEF;
+                if (taktik == TOWARDS_MIDDLE) {
+                    return WINGER_TOMID;
+                } else if (taktik == OLD_EXTRA_DEFENDER) {
+                    return CENTRAL_DEFENDER;
+                } else if (taktik == OLD_EXTRA_FORWARD) {
+                    return FORWARD;
+                } else if (taktik == OLD_EXTRA_MIDFIELD) {
+                    return MIDFIELDER;
+                } else if (taktik == OFFENSIVE) {
+                    return WINGER_OFF;
+                } else if (taktik == DEFENSIVE) {
+                    return WINGER_DEF;
                 } else {
-                    return FLUEGELSPIEL;
+                    return WINGER;
                 }
             }
 
-            case insideMid1:
-            case insideMid2: {
-                if (taktik == NACH_AUSSEN) {
-                    return MITTELFELD_AUS;
-                } else if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == ZUS_STUERMER) {
-                    return STURM;
-                } else if (taktik == OFFENSIV) {
-                    return MITTELFELD_OFF;
-                } else if (taktik == DEFENSIV) {
-                    return MITTELFELD_DEF;
+            case rightInnerMidfield:
+            case leftInnerMidfield: {
+                if (taktik == TOWARDS_WING) {
+                    return MIDFIELDER_TOWING;
+                } else if (taktik == OLD_EXTRA_DEFENDER) {
+                    return CENTRAL_DEFENDER;
+                } else if (taktik == OLD_EXTRA_FORWARD) {
+                    return FORWARD;
+                } else if (taktik == OFFENSIVE) {
+                    return MIDFIELDER_OFF;
+                } else if (taktik == DEFENSIVE) {
+                    return MIDFIELDER_DEF;
                 } else {
-                    return MITTELFELD;
+                    return MIDFIELDER;
                 }
             }
 
-            case forward1:
-            case forward2: {
-                if (taktik == ZUS_INNENV) {
-                    return INNENVERTEIDIGER;
-                } else if (taktik == ZUS_MITTELFELD) {
-                    return MITTELFELD;
-                } else if (taktik == DEFENSIV) {
-                    return STURM_DEF;
-                } else if (taktik == NACH_AUSSEN) {
-                    return STURM_AUS;
+            case rightForward:
+            case leftForward: {
+                if (taktik == OLD_EXTRA_DEFENDER) {
+                    return CENTRAL_DEFENDER;
+                } else if (taktik == OLD_EXTRA_MIDFIELD) {
+                    return MIDFIELDER;
+                } else if (taktik == DEFENSIVE) {
+                    return FORWARD_DEF;
+                } else if (taktik == TOWARDS_WING) {
+                    return FORWARD_TOWING;
                 } else {
-                    return STURM;
+                    return FORWARD;
                 }
             }
 
-            case substBack:
-                return INNENVERTEIDIGER;
+            case substDefender:
+                return CENTRAL_DEFENDER;
 
-            case substInsideMid:
-                return MITTELFELD;
+            case substInnerMidfield:
+                return MIDFIELDER;
 
             case substWinger:
-                return FLUEGELSPIEL;
+                return WINGER;
 
             case substKeeper:
-                return TORWART;
+                return KEEPER;
 
             case substForward:
-                return STURM;
+                return FORWARD;
         }
 
-        return UNBESTIMMT;
+        return UNKNOWN;
     }
 
     /**
@@ -588,11 +588,11 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
     public final int getSortId() {
         int id = this.getPosition();
 
-		if (id == ISpielerPosition.STURM_AUS)  {
+		if (id == ISpielerPosition.FORWARD_TOWING)  {
 			id = 18;
 		}
 
-        if (this.getId() >= ISpielerPosition.beginnReservere)  {
+        if (this.getId() >= ISpielerPosition.oldSubstKeeper)  {
             id += 20;
         }
 
@@ -796,8 +796,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
         final SpielerPosition position = obj;
 
         //Beide aufgestellt ?
-        if ((this.getId() < ISpielerPosition.beginnReservere)
-            && (position.getId() < ISpielerPosition.beginnReservere)) {
+        if ((this.getId() < ISpielerPosition.oldSubstKeeper)
+            && (position.getId() < ISpielerPosition.oldSubstKeeper)) {
             if (this.getPosition() < position.getPosition()) {
                 return -1;
             } else if (this.getPosition() == position.getPosition()) {
@@ -807,13 +807,13 @@ public class SpielerPosition implements java.io.Serializable, Comparable<Spieler
             }
         }
         //this aufgestellt ?
-        else if ((this.getId() < ISpielerPosition.beginnReservere)
-                 && (position.getId() >= ISpielerPosition.beginnReservere)) {
+        else if ((this.getId() < ISpielerPosition.oldSubstKeeper)
+                 && (position.getId() >= ISpielerPosition.oldSubstKeeper)) {
             return -1;
         }
         //position aufgestellt
-        else if ((this.getId() >= ISpielerPosition.beginnReservere)
-                 && (position.getId() < ISpielerPosition.beginnReservere)) {
+        else if ((this.getId() >= ISpielerPosition.oldSubstKeeper)
+                 && (position.getId() < ISpielerPosition.oldSubstKeeper)) {
             return 1;
         }
         //keiner aufgestellt
