@@ -355,7 +355,7 @@ public class PotW implements ActionListener,IPlugin,ChangeListener, plugins.IRef
 				ListIterator<MatchLineupPlayer> p = spieler.listIterator(0);
 				while (p.hasNext()) {
 					MatchLineupPlayer mlp = p.next();
-					if ((mlp.PositionCode == ISpielerPosition.TORWART) && (mlp.Rating > g.Rating)) { g = mlp;	}
+					if ((mlp.PositionCode == ISpielerPosition.KEEPER) && (mlp.Rating > g.Rating)) { g = mlp;	}
 					//Außenverteidiger
 					if ((mlp.PositionCode >= 4) && (mlp.PositionCode <= 7) && (mlp.Rating > lwb.Rating)) { if (mlp.Rating > rwb.Rating) { lwb = rwb; rwb = mlp; } else { lwb = mlp; }	 }
 					//Flügel
