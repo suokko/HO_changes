@@ -7,9 +7,7 @@
 package hoplugins.playerCompare;
 
 //import gui.UserParameter;
-import hoplugins.PlayerCompare;
 import java.sql.*;
-import java.util.*;
 
 //import javax.swing.ImageIcon;
 //import javax.swing.JLabel;
@@ -25,8 +23,6 @@ import plugins.*;
  */
 public class CalculateSpieler
 {
-
-	private Vector m_spieler;
 	private IHOMiniModel m_iHoMiniModel;
 	private int[] oldValues;
 	private int[] newValues;
@@ -36,13 +32,12 @@ public class CalculateSpieler
 	public CalculateSpieler(IHOMiniModel miniModel)
 	{
 		m_iHoMiniModel = miniModel;
-		m_spieler = new Vector();
 	}
 
 	public CalcPlayer setPlayer(ISpieler spieler, boolean recalculate)
 	{
 		tmpSpieler = spieler;
-		CalcPlayer tmpCalcPlayer = new CalcPlayer(m_iHoMiniModel,tmpSpieler.getSpielerID());
+		CalcPlayer tmpCalcPlayer = new CalcPlayer();
 		oldValues = new int[10];
 		newValues = new int[10];
 		
@@ -119,7 +114,7 @@ public class CalculateSpieler
 		tmpCalcPlayer.setGruppe(tmpSpieler.getTeamInfoSmilie());
 		tmpCalcPlayer.setSpezialitaet(tmpSpieler.getSpezialitaet());
 		tmpCalcPlayer.setGehalt(tmpSpieler.getGehalt());
-		tmpCalcPlayer.setTSI(tmpSpieler.getMarkwert());
+		tmpCalcPlayer.setTSI(tmpSpieler.getTSI());
 		tmpCalcPlayer.setID(tmpSpieler.getSpielerID());
 		tmpCalcPlayer.setFuehrung(tmpSpieler.getFuehrung());
 		
@@ -136,24 +131,24 @@ public class CalculateSpieler
 		tmpCalcPlayer.setOldStandards(tmpSpieler.getStandards());
 		
 		//***** Set old strength for positions *****
-		tmpCalcPlayer.setOldTW(tmpSpieler.calcPosValue(ISpielerPosition.TORWART,true));
-		tmpCalcPlayer.setOldAV(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER,true));
-		tmpCalcPlayer.setOldAVdef(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_DEF,true));
-		tmpCalcPlayer.setOldAVoff(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_OFF,true));
-		tmpCalcPlayer.setOldAVinnen(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_IN,true));
-		tmpCalcPlayer.setOldIV(tmpSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER,true));
-		tmpCalcPlayer.setOldIVaussen(tmpSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_AUS,true));
-		tmpCalcPlayer.setOldIVoff(tmpSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_OFF,true));
-		tmpCalcPlayer.setOldMI(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD,true));
-		tmpCalcPlayer.setOldMIaussen(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD_AUS,true));
-		tmpCalcPlayer.setOldMIdef(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD_DEF,true));
-		tmpCalcPlayer.setOldMIoff(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD_OFF,true));
-		tmpCalcPlayer.setOldFL(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL,true));
-		tmpCalcPlayer.setOldFLdef(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_DEF,true));
-		tmpCalcPlayer.setOldFLinnen(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_IN,true));
-		tmpCalcPlayer.setOldFLoff(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_OFF,true));
-		tmpCalcPlayer.setOldST(tmpSpieler.calcPosValue(ISpielerPosition.STURM,true));
-		tmpCalcPlayer.setOldSTdef(tmpSpieler.calcPosValue(ISpielerPosition.STURM_DEF,true));
+		tmpCalcPlayer.setOldTW(tmpSpieler.calcPosValue(ISpielerPosition.KEEPER,true));
+		tmpCalcPlayer.setOldAV(tmpSpieler.calcPosValue(ISpielerPosition.BACK,true));
+		tmpCalcPlayer.setOldAVdef(tmpSpieler.calcPosValue(ISpielerPosition.BACK_DEF,true));
+		tmpCalcPlayer.setOldAVoff(tmpSpieler.calcPosValue(ISpielerPosition.BACK_OFF,true));
+		tmpCalcPlayer.setOldAVinnen(tmpSpieler.calcPosValue(ISpielerPosition.BACK_TOMID,true));
+		tmpCalcPlayer.setOldIV(tmpSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
+		tmpCalcPlayer.setOldIVaussen(tmpSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
+		tmpCalcPlayer.setOldIVoff(tmpSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
+		tmpCalcPlayer.setOldMI(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER,true));
+		tmpCalcPlayer.setOldMIaussen(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
+		tmpCalcPlayer.setOldMIdef(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
+		tmpCalcPlayer.setOldMIoff(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
+		tmpCalcPlayer.setOldFL(tmpSpieler.calcPosValue(ISpielerPosition.WINGER,true));
+		tmpCalcPlayer.setOldFLdef(tmpSpieler.calcPosValue(ISpielerPosition.WINGER_DEF,true));
+		tmpCalcPlayer.setOldFLinnen(tmpSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
+		tmpCalcPlayer.setOldFLoff(tmpSpieler.calcPosValue(ISpielerPosition.WINGER_OFF,true));
+		tmpCalcPlayer.setOldST(tmpSpieler.calcPosValue(ISpielerPosition.FORWARD,true));
+		tmpCalcPlayer.setOldSTdef(tmpSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
 		tmpCalcPlayer.setOldBestPosition(tmpSpieler.getIdealPosition());
 		tmpCalcPlayer.setOldBestPositionStaerke(tmpSpieler.getIdealPosStaerke(true));
 		
@@ -173,24 +168,24 @@ public class CalculateSpieler
 		tmpCalcPlayer.setStandards(tmpSpieler.getStandards());
 		
 		//***** Set new strength for positions *****
-		tmpCalcPlayer.setTW(tmpSpieler.calcPosValue(ISpielerPosition.TORWART,true));
-		tmpCalcPlayer.setAV(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER,true));
-		tmpCalcPlayer.setAVdef(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_DEF,true));
-		tmpCalcPlayer.setAVoff(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_OFF,true));
-		tmpCalcPlayer.setAVinnen(tmpSpieler.calcPosValue(ISpielerPosition.AUSSENVERTEIDIGER_IN,true));
-		tmpCalcPlayer.setIV(tmpSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER,true));
-		tmpCalcPlayer.setIVaussen(tmpSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_AUS,true));
-		tmpCalcPlayer.setIVoff(tmpSpieler.calcPosValue(ISpielerPosition.INNENVERTEIDIGER_OFF,true));
-		tmpCalcPlayer.setMI(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD,true));
-		tmpCalcPlayer.setMIaussen(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD_AUS,true));
-		tmpCalcPlayer.setMIdef(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD_DEF,true));
-		tmpCalcPlayer.setMIoff(tmpSpieler.calcPosValue(ISpielerPosition.MITTELFELD_OFF,true));
-		tmpCalcPlayer.setFL(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL,true));
-		tmpCalcPlayer.setFLdef(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_DEF,true));
-		tmpCalcPlayer.setFLinnen(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_IN,true));
-		tmpCalcPlayer.setFLoff(tmpSpieler.calcPosValue(ISpielerPosition.FLUEGELSPIEL_OFF,true));
-		tmpCalcPlayer.setST(tmpSpieler.calcPosValue(ISpielerPosition.STURM,true));
-		tmpCalcPlayer.setSTdef(tmpSpieler.calcPosValue(ISpielerPosition.STURM_DEF,true));
+		tmpCalcPlayer.setTW(tmpSpieler.calcPosValue(ISpielerPosition.KEEPER,true));
+		tmpCalcPlayer.setAV(tmpSpieler.calcPosValue(ISpielerPosition.BACK,true));
+		tmpCalcPlayer.setAVdef(tmpSpieler.calcPosValue(ISpielerPosition.BACK_DEF,true));
+		tmpCalcPlayer.setAVoff(tmpSpieler.calcPosValue(ISpielerPosition.BACK_OFF,true));
+		tmpCalcPlayer.setAVinnen(tmpSpieler.calcPosValue(ISpielerPosition.BACK_TOMID,true));
+		tmpCalcPlayer.setIV(tmpSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
+		tmpCalcPlayer.setIVaussen(tmpSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
+		tmpCalcPlayer.setIVoff(tmpSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
+		tmpCalcPlayer.setMI(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER,true));
+		tmpCalcPlayer.setMIaussen(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
+		tmpCalcPlayer.setMIdef(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
+		tmpCalcPlayer.setMIoff(tmpSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
+		tmpCalcPlayer.setFL(tmpSpieler.calcPosValue(ISpielerPosition.WINGER,true));
+		tmpCalcPlayer.setFLdef(tmpSpieler.calcPosValue(ISpielerPosition.WINGER_DEF,true));
+		tmpCalcPlayer.setFLinnen(tmpSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
+		tmpCalcPlayer.setFLoff(tmpSpieler.calcPosValue(ISpielerPosition.WINGER_OFF,true));
+		tmpCalcPlayer.setST(tmpSpieler.calcPosValue(ISpielerPosition.FORWARD,true));
+		tmpCalcPlayer.setSTdef(tmpSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
 		tmpCalcPlayer.setBestPosition(tmpSpieler.getIdealPosition());
 		tmpCalcPlayer.setBestPositionStaerke(tmpSpieler.getIdealPosStaerke(true));
 		
