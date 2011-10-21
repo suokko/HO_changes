@@ -6,11 +6,6 @@
  */
 package hoplugins.playerCompare;
 
-import plugins.IHOMiniModel;
-import plugins.ISpieler;
-
-import java.sql.*;
-
 //import java.util.*;
 
 /**
@@ -21,9 +16,6 @@ import java.sql.*;
  */
 public class CalcPlayer{
 
-	private IHOMiniModel m_miniModel;
-	private int m_spielerID;
-	private ResultSet m_resultSet;
 	private String name;
 	private int alter;
 	private int id;
@@ -95,12 +87,7 @@ public class CalcPlayer{
 	private int spezialitaet;
 	
 	public CalcPlayer(){};
-	public CalcPlayer(IHOMiniModel miniModel, int spielerID)
-	{
-		m_miniModel = miniModel;
-		m_spielerID = spielerID;
-	}
-	
+		
 	public void setName(String spName)
 	{
 		name = spName;
