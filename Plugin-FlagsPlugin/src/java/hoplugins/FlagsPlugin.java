@@ -308,7 +308,7 @@ public class FlagsPlugin implements plugins.IPlugin, ActionListener, WindowListe
     }
 
     private JScrollPane createScroll(FlagCollection fc, JList lista) {
-        FlagRenderer frender = new FlagRenderer(hoModel, invertCountries);
+        FlagRenderer frender = new FlagRenderer(hoModel);
         frender.setFlagCollection(fc);  // ACA OJO!!!!!!!!!
         frender.setPreferredSize(new Dimension(200,20));
         lista.setCellRenderer(frender);
