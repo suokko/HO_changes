@@ -62,11 +62,11 @@ public class BackupHelper {
 				 for (int i = 0; i < files.length; i++) {
 					if(i == 0 || (toDelete != null && toDelete.lastModified() > files[i].lastModified())){
 						toDelete = files[i];
-					}
-					 
+					}	 
 				}
-				 toDelete.delete();
-				 deleteOldFiles(dbDirectory);
+				if (toDelete != null)
+					toDelete.delete();
+				deleteOldFiles(dbDirectory);
 			 }
 		  }
 	 
