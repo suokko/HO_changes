@@ -6,12 +6,15 @@
  */
 package de.hattrickorganizer.model.matches;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 import plugins.ILineUp;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 
 
 /**
@@ -27,6 +30,10 @@ public class MatchLineupTeam implements IMatchLineupTeam {
 
     /** TODO Missing Parameter Documentation */
     protected Vector<IMatchLineupPlayer> m_vAufstellung = new Vector<IMatchLineupPlayer>();
+    
+    protected Vector<ISubstitution> m_vSubstitutions = new Vector<ISubstitution>();
+    
+    protected Vector<IMatchLineupPlayer> m_vStarting = new Vector<IMatchLineupPlayer>();
 
     /** TODO Missing Parameter Documentation */
     protected int m_iErfahrung;
@@ -70,8 +77,78 @@ public class MatchLineupTeam implements IMatchLineupTeam {
     public final Vector<IMatchLineupPlayer> getAufstellung() {
         return m_vAufstellung;
     }
+    
+    /**
+     * Setter for property m_vSubstitutions.
+     *
+     * @param m_vSubstitution New value of property m_vSubstitutions.
+     */
+    public final void setSubstitutions(Vector<ISubstitution> m_vSubstitution) {
+        this.m_vSubstitutions = m_vSubstitution;
+        
+        // Make sure substitutions are sorted first on minute, then by ID.
+        Collections.sort(m_vSubstitution, new Comparator<ISubstitution>(){
+        		public int compare(ISubstitution o1, ISubstitution o2) {
+        			
+        			if (o1.getMatchMinuteCriteria() == o2.getMatchMinuteCriteria()) {
+        				if (o1.getPlayerOrderId() == o2.getPlayerOrderId()) {
+               				return 0;
+        				}
+        				if (o1.getPlayerOrderId() < o2.getPlayerOrderId()) {
+        					return -1;
+        				}
+        				
+        				return 1;
+        				
+        			}
+        			
+        			if (o1.getMatchMinuteCriteria() < o2.getMatchMinuteCriteria()) {
+        				return -1;
+        			}
+        			
+        			
+        			// minutes in o1 is greater than o2
+        			return 1;
+        		}
+        		
+        		public boolean equals(ISubstitution o1, ISubstitution o2) {
+        			// Lazy solution, a proper would compare all fields, but we don't need that.
+        			if (o1 == o2) {
+        				return true;
+        			} else {
+        				return false;
+        			}
+        		}
+        	});
+    }
 
     /**
+     * Getter for property m_vSubstitutions.
+     *
+     * @return Value of property m_vSubstitutions.
+     */
+    public final Vector<ISubstitution> getSubstitutions() {
+        return m_vSubstitutions;
+    }
+    
+    
+    
+   	/**
+	 * @param Getter for the starting lineup
+	 */
+	public Vector<IMatchLineupPlayer> getStartingPlayers() {
+		return m_vStarting;
+	}
+
+	
+	/**
+	 * @param m_vStarting the m_vStarting to set
+	 */
+	public void setStartingPlayers(Vector<IMatchLineupPlayer> m_vStarting) {
+		this.m_vStarting = m_vStarting;
+	}
+
+	/**
      * Setter for property m_iErfahrung.
      *
      * @param m_iErfahrung New value of property m_iErfahrung.

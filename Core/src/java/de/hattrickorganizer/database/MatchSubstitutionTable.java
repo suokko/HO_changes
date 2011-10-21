@@ -23,24 +23,21 @@ public class MatchSubstitutionTable extends AbstractTable{
 	@Override
 	protected void initColumns() {
 	
-		columns = new ColumnDescriptor[13];
+		columns = new ColumnDescriptor[12];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("HrfID",Types.INTEGER, false);
-		// Seb - as this is unique, it can be the primary key.
-		columns[3]= new ColumnDescriptor("PlayerOrderID",Types.INTEGER,false,true);
+		columns[3]= new ColumnDescriptor("PlayerOrderID",Types.INTEGER,false);
 		columns[4]= new ColumnDescriptor("PlayerIn",Types.INTEGER,false);
 		columns[5]= new ColumnDescriptor("PlayerOut",Types.INTEGER,false);
 		columns[6]= new ColumnDescriptor("OrderType",Types.INTEGER,false);
-		columns[7]= new ColumnDescriptor("Minute",Types.INTEGER,false);
-		columns[8]= new ColumnDescriptor("MatchMinuteCriteria",Types.INTEGER,false);
-		columns[9]= new ColumnDescriptor("Pos",Types.INTEGER,false);
-		columns[10]= new ColumnDescriptor("Behaviour",Types.INTEGER,false);
-		columns[11]= new ColumnDescriptor("Card",Types.INTEGER,false);
-		columns[12]= new ColumnDescriptor("Standing",Types.INTEGER,false);
+		columns[7]= new ColumnDescriptor("MatchMinuteCriteria",Types.INTEGER,false);
+		columns[8]= new ColumnDescriptor("Pos",Types.INTEGER,false);
+		columns[9]= new ColumnDescriptor("Behaviour",Types.INTEGER,false);
+		columns[10]= new ColumnDescriptor("Card",Types.INTEGER,false);
+		columns[11]= new ColumnDescriptor("Standing",Types.INTEGER,false);
 	}
 
-	/** Seb - changed to have indexes on MatchID + TeamID, one on PlayerOrderID and one on hrfid*/
 	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {  
@@ -102,10 +99,10 @@ public class MatchSubstitutionTable extends AbstractTable{
 	private void storeSub(int matchId, int teamId, int hrfId, ISubstitution[] subs) {
 		String sql = null;
 		final String[] where = { "MatchID", "TeamID", "HrfID" };
-		final String[] vals = { "" + matchId, "" + teamId, "" + hrfId } ;
-// Changed werte to vals, local var
+		final String[] values = { "" + matchId, "" + teamId, "" + hrfId } ;
+
 		// Get rid of any old subs for the inputs.
-		delete(where, vals);
+		delete(where, values);
 
 		for (int i = 0;(i < subs.length); i++) {
 
@@ -115,13 +112,12 @@ public class MatchSubstitutionTable extends AbstractTable{
 
 			try {
 				sql = "INSERT INTO "+getTableName()+" (  MatchID, TeamID, HrfID, PlayerOrderID, PlayerIn, PlayerOut, OrderType,";
-				sql += " Minute, MatchMinuteCriteria, Pos, Behaviour, Card, Standing ) VALUES(";
+				sql += " MatchMinuteCriteria, Pos, Behaviour, Card, Standing ) VALUES(";
 				sql += matchId + "," + teamId + "," + hrfId + "," +
 					subs[i].getPlayerOrderId() + "," +
 					subs[i].getPlayerIn() + "," +
 					subs[i].getPlayerOut() + "," +
 					subs[i].getOrderType() + "," +
-					subs[i].getMinute() + "," +
 					subs[i].getMatchMinuteCriteria() + "," +
 					subs[i].getPos() + "," +
 					subs[i].getBehaviour() + "," +
@@ -152,7 +148,6 @@ public class MatchSubstitutionTable extends AbstractTable{
 						rs.getInt("PlayerIn"),
 						rs.getInt("PlayerOut"),
 						(byte)rs.getInt("OrderType"),
-						(byte)rs.getInt("Minute"),
 						(byte)rs.getInt("MatchMinuteCriteria"),
 						(byte)rs.getInt("Pos"),
 						(byte)rs.getInt("Behaviour"),

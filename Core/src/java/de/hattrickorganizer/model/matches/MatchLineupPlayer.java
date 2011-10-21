@@ -43,11 +43,6 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
     private double m_dRating;
     private double m_dRatingStarsEndOfMatch;
 
-    /** TODO Missing Parameter Documentation */
-    private int m_iFieldPos;
-
-    /** TODO Missing Parameter Documentation */
-    private int m_iPositionCode;
 
     /** TODO Missing Parameter Documentation */
     private int m_iStatus;
@@ -78,9 +73,7 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
         //setName( name );
         m_sSpielerName = name;
         m_dRating = rating;
-        m_iPositionCode = roleID;
-        m_iStatus = status;
-        m_iFieldPos = roleID; // Why the two positions? Also the same input before 553 change.
+       m_iStatus = status;
     }
 
     /**
@@ -98,18 +91,27 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      * @param fieldPos TODO Missing Constructuor Parameter Documentation
      */
     public MatchLineupPlayer(int roleID, int behaivior, int spielerID, double rating, String vname,
-                             String nickName, String name, int status) {
+                             String nickName, String name, int status, double ratingStarsEndOfMatch) {
         super(roleID, spielerID, (byte) behaivior);
 
         m_sSpielerName = name;
         m_sNickName = nickName;
         m_sSpielerVName = vname;
         m_dRating = rating;
-        m_iPositionCode = roleID;
         m_iStatus = status;
-        m_iFieldPos = roleID;
+        m_dRatingStarsEndOfMatch = ratingStarsEndOfMatch;
     }
 
+    public MatchLineupPlayer(MatchLineupPlayer p) {
+    	super (p.getFieldPos(), p.getSpielerId(), p.getTaktik());
+    	
+    	m_sSpielerName = p.getSpielerName();
+        m_sNickName = p.getNickName();
+        m_sSpielerVName = p.getSpielerVName();
+        m_dRating = p.getRating();
+        m_iStatus = p.getStatus();
+        m_dRatingStarsEndOfMatch = p.getRatingStarsEndOfMatch();
+    }
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -118,7 +120,7 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      * @param m_iFieldPos New value of property m_iFieldPos.
      */
     public final void setFieldPos(int m_iFieldPos) {
-        this.m_iFieldPos = m_iFieldPos;
+        setId(m_iFieldPos);
     }
 
     /**
@@ -127,7 +129,7 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      * @return Value of property m_iFieldPos.
      */
     public final int getFieldPos() {
-        return m_iFieldPos;
+        return getId();
     }
 
     /**
@@ -169,8 +171,9 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      *
      * @param m_iPositionCode New value of property m_iPositionCode.
      */
+    @Deprecated
     public final void setPositionCode(int m_iPositionCode) {
-        this.m_iPositionCode = m_iPositionCode;
+        setId(m_iPositionCode);
     }
 
     /**
@@ -178,8 +181,9 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      *
      * @return Value of property m_iPositionCode.
      */
+    @Deprecated
     public final int getPositionCode() {
-        return m_iPositionCode;
+        return getId();
     }
 
     /**
