@@ -4,7 +4,6 @@
 package hoplugins.playerCompare;
 
 import hoplugins.*;
-import hoplugins.playerCompare.*;
 import plugins.*;
 import java.awt.*;
 import java.text.*;
@@ -12,18 +11,19 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
-import gui.UserParameter;
 
 /**
  * @author KickMuck
  */
 public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 	
-	//***** Klassenvariable für das HOMiniModel *****
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6249868492929346343L;
+	//***** Klassenvariable fï¿½r das HOMiniModel *****
 	private IHOMiniModel m_IHOmodel;
-//	***** Klassenvariable für das TableModel *****
-	private PlayerTableModel plTableModel;
-	private PlayerTableModel plTableModel1;
+//	***** Klassenvariable fï¿½r das TableModel *****
 	//***** Festlegen der Farben *****
 	private Color gelb = new Color(255,255,200);
 	private Color gruen = new Color (220,255,220);
@@ -47,14 +47,11 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 	private int natWert;
 	private Font f;
 	private DecimalFormat df = new DecimalFormat("#,###,##0.00");
-	private int shit = 0;
-	private int zaehler = 0;
 	
 	//***** Konstruktor *****
-	public MyTableCellRenderer(IHOMiniModel minimod,PlayerTableModel ptm)
+	public MyTableCellRenderer(IHOMiniModel minimod)
 	{
 		m_IHOmodel = minimod;
-		plTableModel = ptm;
 	}
 	
 	public Component getTableCellRendererComponent(JTable table,
@@ -64,11 +61,11 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
             int row,
             int column)
 	{
-		//***** Festlegen des Fonts für die Gruppenanzeige
+		//***** Festlegen des Fonts fï¿½r die Gruppenanzeige
 		f = new Font(table.getFont().getFontName(), Font.PLAIN, (table.getFont().getSize()) + 2);
 		
 		//***** Grafische Darstellung der Spalten ***** 
-		if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("Name")))
+		if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Name")))
 		{	
 			label = new JLabel();
 			
@@ -127,7 +124,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setBackground(table.getBackground());
 		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("Gruppe")))
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Gruppe")))
 		{
 			label = new JLabel();
 			
@@ -208,7 +205,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			}
 			
 		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("BestePosition")))
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("BestePosition")))
 		{
 			label = new JLabel();
 			
@@ -218,20 +215,19 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			label.setBackground(table.getBackground());
 		}
 		
-		else if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("ER"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FUE"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FO"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("KO"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("TW"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("VE"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("SA"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("PS"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FL"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("TS"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("ST"))
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ER"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FUE"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FO"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("KO"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("TW"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("VE"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("SA"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("PS"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FL"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("TS"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ST"))
 				)
 		{
-			int i = 0;
 			double skillwert = 0;
 			String skillwertS = "";
 			try
@@ -254,9 +250,9 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			Icon ii = m_IHOmodel.getHelper().getImageIcon4Veraenderung(changeWert);
 			label = new JLabel(""+skillWertNew,ii,JLabel.CENTER);
 			label.setHorizontalTextPosition(JLabel.LEADING);
-			if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("ER"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FUE"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FO"))
+			if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ER"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FUE"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FO"))
 				)
 			{
 				label.setBackground(gruen);
@@ -267,29 +263,28 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			}
 			
 		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("IVA"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("IVO"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("AVI"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("AVD"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("AVO"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("MITA"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("MITD"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("MITO"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FLGI"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FLGO"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FLGD"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("STUD"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("TOR"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("IV"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("AV"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("MIT"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FLG"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("STU"))
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("IVA"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("IVO"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("AVI"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("AVD"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("AVO"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MITA"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MITD"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MITO"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FLGI"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FLGO"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FLGD"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("STUD"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("TOR"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("IV"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("AV"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MIT"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FLG"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("STU"))
 				)
 		{
 			int i = 0;
 			float neuerWert = 0;
-			float alterWert = 0;
 			String []skill = new String[2];
 			float changeValue = 0;
 			String chValue = "";
@@ -334,12 +329,12 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			label.add(wertNeu);
 			label.add(wertAlt);
 			
-			if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("TOR"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("IV"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("AV"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("MIT"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("FLG"))
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("STU"))
+			if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("TOR"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("IV"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("AV"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MIT"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FLG"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("STU"))
 				)
 			{
 				label.setBackground(dunkelblau);
@@ -355,7 +350,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			
 			label.validate();
 		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("Gehalt")))
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Gehalt")))
 		{
 			label = new JLabel();
 			IXtraData extraData = m_IHOmodel.getXtraDaten();
@@ -366,7 +361,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			label.setBackground(table.getBackground());
 		}
 		else if(table.getColumnName(column).equals("TSI")
-				|| table.getColumnName(column).equals(m_IHOmodel.getResource().getProperty("ID"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ID"))
 				)
 		{
 			label = new JLabel();
