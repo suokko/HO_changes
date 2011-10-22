@@ -14,7 +14,6 @@ import java.util.Vector;
 import plugins.IEPVData;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import plugins.ITeam;
 import plugins.ITrainingWeek;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.TrainingsManager;
