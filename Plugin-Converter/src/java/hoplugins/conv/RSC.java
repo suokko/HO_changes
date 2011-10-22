@@ -414,15 +414,15 @@ public final class RSC {
      */
     public static void initializeStrings(IHOMiniModel miniModel) {
         MINIMODEL = miniModel;
-        PROP_FILE = MINIMODEL.getResource().getProperty("Datei");
-        PROP_ADD = MINIMODEL.getResource().getProperty("Speichern");
-        PROP_CANCEL = MINIMODEL.getResource().getProperty("Abbrechen");
-        PROP_ERROR = MINIMODEL.getResource().getProperty("Fehler");
+        PROP_FILE = MINIMODEL.getLanguageString("Datei");
+        PROP_ADD = MINIMODEL.getLanguageString("Speichern");
+        PROP_CANCEL = MINIMODEL.getLanguageString("Abbrechen");
+        PROP_ERROR = MINIMODEL.getLanguageString("Fehler");
         PROP_DEFAULT_ERROR_MESSAGE = "see pluginUpdaterErr.log for details";
-        PROP_NO_SERVER = MINIMODEL.getResource().getProperty("KeinServer");
-        PROP_FILE_NOT_FOUND = MINIMODEL.getResource().getProperty("DateiNichtGefunden");
-        PROP_NAME = MINIMODEL.getResource().getProperty("Name");
-        PROP_PLAYERS = MINIMODEL.getResource().getProperty("Spieleruebersicht");
+        PROP_NO_SERVER = MINIMODEL.getLanguageString("KeinServer");
+        PROP_FILE_NOT_FOUND = MINIMODEL.getLanguageString("DateiNichtGefunden");
+        PROP_NAME = MINIMODEL.getLanguageString("Name");
+        PROP_PLAYERS = MINIMODEL.getLanguageString("Spieleruebersicht");
         ICON_UP = new javax.swing.ImageIcon(MINIMODEL.getHelper().makeColorTransparent(MINIMODEL.getHelper()
                                                                                                 .loadImage("gui/bilder/Taktik_Defensiv.png"),
                                                                                        210, 210,
@@ -535,45 +535,45 @@ public final class RSC {
     protected static void initPlayerColumns() {
         playerColumns = new CColumn[20];
         playerColumns[0] = new CColumn(PLAYER_ID,
-                                       MINIMODEL.getResource().getProperty("Spieler")
-                                       + MINIMODEL.getResource().getProperty("ID"));
+                                       MINIMODEL.getLanguageString("Spieler")
+                                       + MINIMODEL.getLanguageString("ID"));
         playerColumns[1] = new CColumn(PLAYER_NAME, PROP_NAME);
         playerColumns[2] = new CColumn(PLAYER_AGE,
-                                       MINIMODEL.getResource().getProperty("FaktorSpieleralter"));
-        playerColumns[3] = new CColumn(PLAYER_SALARY, MINIMODEL.getResource().getProperty("Gehalt"));
+                                       MINIMODEL.getLanguageString("FaktorSpieleralter"));
+        playerColumns[3] = new CColumn(PLAYER_SALARY, MINIMODEL.getLanguageString("Gehalt"));
         playerColumns[4] = new CColumn(PLAYER_VERLETZT,
-                                       MINIMODEL.getResource().getProperty("Verletzt"));
+                                       MINIMODEL.getLanguageString("Verletzt"));
 
         playerColumns[5] = new CColumn(PLAYER_LEADERSHIP,
-                                       MINIMODEL.getResource().getProperty("Fuehrung"));
+                                       MINIMODEL.getLanguageString("Fuehrung"));
         playerColumns[6] = new CColumn(PLAYER_EXPERIENCE,
-                                       MINIMODEL.getResource().getProperty("Erfahrung"));
-        playerColumns[7] = new CColumn(PLAYER_FORM, MINIMODEL.getResource().getProperty("Form"));
+                                       MINIMODEL.getLanguageString("Erfahrung"));
+        playerColumns[7] = new CColumn(PLAYER_FORM, MINIMODEL.getLanguageString("Form"));
         playerColumns[8] = new CColumn(PLAYER_STAMINA,
-                                       MINIMODEL.getResource().getProperty("Kondition"));
-        playerColumns[9] = new CColumn(PLAYER_KEEPER, MINIMODEL.getResource().getProperty("Torwart"));
+                                       MINIMODEL.getLanguageString("Kondition"));
+        playerColumns[9] = new CColumn(PLAYER_KEEPER, MINIMODEL.getLanguageString("Torwart"));
 
         playerColumns[10] = new CColumn(PLAYER_DEFENCE,
-                                        MINIMODEL.getResource().getProperty("Verteidigung"));
+                                        MINIMODEL.getLanguageString("Verteidigung"));
         playerColumns[11] = new CColumn(PLAYER_WING,
-                                        MINIMODEL.getResource().getProperty("Fluegelspiel"));
+                                        MINIMODEL.getLanguageString("Fluegelspiel"));
         playerColumns[12] = new CColumn(PLAYER_PLAYMAKING,
-                                        MINIMODEL.getResource().getProperty("Spielaufbau"));
+                                        MINIMODEL.getLanguageString("Spielaufbau"));
         playerColumns[13] = new CColumn(PLAYER_PASSING,
-                                        MINIMODEL.getResource().getProperty("Passpiel"));
+                                        MINIMODEL.getLanguageString("Passpiel"));
         playerColumns[14] = new CColumn(PLAYER_SCORING,
-                                        MINIMODEL.getResource().getProperty("Torschuss"));
+                                        MINIMODEL.getLanguageString("Torschuss"));
 
         playerColumns[15] = new CColumn(PLAYER_GENTLESS,
-                                        MINIMODEL.getResource().getProperty("Ansehen"));
+                                        MINIMODEL.getLanguageString("Ansehen"));
         playerColumns[16] = new CColumn(PLAYER_CHARACTER,
-                                        MINIMODEL.getResource().getProperty("Charakter"));
+                                        MINIMODEL.getLanguageString("Charakter"));
         playerColumns[17] = new CColumn(PLAYER_SPECIAL,
-                                        MINIMODEL.getResource().getProperty("Spezialitaet"));
+                                        MINIMODEL.getLanguageString("Spezialitaet"));
         playerColumns[18] = new CColumn(PLAYER_GENTLESS,
-                                        MINIMODEL.getResource().getProperty("Notizen"));
+                                        MINIMODEL.getLanguageString("Notizen"));
         playerColumns[19] = new CColumn(PLAYER_CHARACTER,
-                                        MINIMODEL.getResource().getProperty("Nationalitaet"));
+                                        MINIMODEL.getLanguageString("Nationalitaet"));
     }
 
     /**
