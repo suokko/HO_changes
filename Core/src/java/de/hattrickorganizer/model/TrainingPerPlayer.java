@@ -326,14 +326,14 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 		if (trainingDate.getTimeInMillis() > skillupTime.getTime()) {
 			if (TrainingsManager.TRAININGDEBUG) {
 				HOLogger.instance().debug(getClass(), 
-						"isAfterSkillup: traindate "+trainingDate.getTime().toLocaleString() 
+						"isAfterSkillup: traindate "+trainingDate.getTime().toString() 
 						+ " (" + skillType + ") is after skillup");
 			}
 			return true;	
 		} else {
 			if (TrainingsManager.TRAININGDEBUG) {
 				HOLogger.instance().debug(getClass(), 
-						"isAfterSkillup: traindate "+trainingDate.getTime().toLocaleString() 
+						"isAfterSkillup: traindate "+trainingDate.getTime().toString() 
 						+ " (" + skillType + ") is NOT after skillup");
 			}
 			return false;
@@ -350,7 +350,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 			if (TrainingsManager.TRAININGDEBUG) {
 				HOLogger.instance().debug(getClass(), 
 						"Ignoring train results for player " + spieler.getName() + " (" + spieler.getSpielerID() + ") at "
-						+ trainingDate.getTime().toLocaleString() + " because of TrainingBlock!"); 
+						+ trainingDate.getTime().toString() + " because of TrainingBlock!"); 
 			}    		
     		return;
     	}
