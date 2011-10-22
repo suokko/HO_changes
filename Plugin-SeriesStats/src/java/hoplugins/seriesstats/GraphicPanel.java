@@ -358,7 +358,7 @@ public class GraphicPanel extends JPanel
                 int schriftbreite = (int)( ( g.getFontMetrics ().stringWidth ( m_clYAchseBeschriftung[0] ) + 10 ) * 1.5 );
                 
                 
-		int x1,x2,y1,y2;
+		int x2,y2;
 		int mengeBeschriftung=((b-SL-SR)/schriftbreite);
 		if (mengeBeschriftung==0) mengeBeschriftung=1;
 		int abstandBeschriftung=(m_clYAchseBeschriftung.length/mengeBeschriftung);
@@ -377,8 +377,6 @@ public class GraphicPanel extends JPanel
 //		}
 		for(int i=0;i<m_clYAchseBeschriftung.length;i++)
 		{
-			x1=x2;
-			y1=y2;
 			y2=this.getHeight ()-SU+15;
 			x2=(int)(((double)(b-SL-SR))/(m_clYAchseBeschriftung.length)*(m_clYAchseBeschriftung.length-i-1)+SL);
 //			y2=(int)((h-SU-((double)(h-SU-SO)/(max-min)*(werte[i]-min))));
