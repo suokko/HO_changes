@@ -1256,6 +1256,20 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
+     * gibt an ob der angeforderte Skill beim diesem Trainingstyp trainiert wird
+     *
+     * @param skill TODO Missing Constructuor Parameter Documentation
+     * @param trainingstype TODO Missing Constructuor Parameter Documentation
+     *
+     * @return TODO Missing Return Method Documentation
+     * @deprecated Never used, better system integrated in Trainingmanager
+     */
+    @Deprecated
+	public boolean isSkillTrained(int skill, int trainingstype) {
+        return false;
+    }
+
+    /**
      * Setter for property m_iSpezialitaet.
      *
      * @param m_iSpezialitaet New value of property m_iSpezialitaet.
