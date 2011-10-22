@@ -121,7 +121,7 @@ public class SkillUp {
 
 	@Override
 	public String toString () {
-		return ("Skillup: ("+(lastSkillup==null?"?":lastSkillup.toLocaleString())+" -> "+timestamp.toLocaleString()+", "+ getHtSeason()+"."+getHtWeek()+", hrfId="+hrfId+") playerId="+player.getSpielerID()+", skill="+skill+", value="+value+", length="+getLength()+", avgAge="+getAvgPlayerAge()+", avgAssis="+getAvgAssistants());
+		return ("Skillup: ("+(lastSkillup==null?"?":lastSkillup.toString())+" -> "+timestamp.toString()+", "+ getHtSeason()+"."+getHtWeek()+", hrfId="+hrfId+") playerId="+player.getSpielerID()+", skill="+skill+", value="+value+", length="+getLength()+", avgAge="+getAvgPlayerAge()+", avgAssis="+getAvgAssistants());
 	}
 	
 	public String toUrl () {
