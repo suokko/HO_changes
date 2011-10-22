@@ -4,7 +4,6 @@ package de.hattrickorganizer.logik.matchengine.engine.core;
 import de.hattrickorganizer.logik.matchengine.TeamData;
 import de.hattrickorganizer.logik.matchengine.engine.common.Action;
 import de.hattrickorganizer.logik.matchengine.engine.common.TeamGameData;
-import de.hattrickorganizer.tools.HOLogger;
 
 import plugins.IMatchDetails;
 
