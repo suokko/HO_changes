@@ -50,6 +50,22 @@ public interface IVerein {
     public int getFans();
 
     /**
+     * Setter for property m_iFinanzberater.
+     *
+     * @param m_iFinanzberater New value of property m_iFinanzberater.
+     */
+    @Deprecated
+    public void setFinanzberater(int m_iFinanzberater);
+
+    /**
+     * Getter for property m_iFinanzberater.
+     *
+     * @return Value of property m_iFinanzberater.
+     */
+    @Deprecated
+    public int getFinanzberater();
+
+    /**
      * Setter for property m_iJugend.
      *
      * @param m_iJugend New value of property m_iJugend.
@@ -161,9 +177,25 @@ public interface IVerein {
      */
     public java.lang.String getTeamName();
 
+    /**
+     * Setter for property m_iTorwartTrainer.
+     *
+     * @param m_iTorwartTrainer New value of property m_iTorwartTrainer.
+     */
+    @Deprecated
+    public void setTorwartTrainer(int m_iTorwartTrainer);
+
     ////////////////////////////////////////////////////////////////////////////////    
     //Accessor
     ////////////////////////////////////////////////////////////////////////////////    
+
+    /**
+     * Getter for property m_iTorwartTrainer.
+     *
+     * @return Value of property m_iTorwartTrainer.
+     */
+    @Deprecated
+    public int getTorwartTrainer();
 
     /**
      * Setter for property m_iUngeschlagen.
