@@ -3,7 +3,6 @@ package de.hattrickorganizer.gui.playeroverview;
 
 import gui.HOColorName;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -193,7 +192,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 			for (int i=0; i<allTrainingBlocks.size(); i++) {
 				SingleTrainingBlock curBlock = allTrainingBlocks.get(i);
 				HOLogger.instance().log(getClass(), 
-						"Block found from: "+curBlock.getBlockStart().toLocaleString()+" to:"+curBlock.getBlockEnd().toLocaleString());
+						"Block found from: "+curBlock.getBlockStart().toString()+" to:"+curBlock.getBlockEnd().toString());
 			}
 			// TODO save training blocks
 			saveBlocks();
