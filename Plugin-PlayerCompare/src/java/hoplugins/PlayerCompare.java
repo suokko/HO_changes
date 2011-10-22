@@ -922,8 +922,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 					);
         	
         	int selectedType = m_CB_type.getSelectedIndex();
-        	m_V_setPlayers = new Vector();
-        	String [] position = new String[2];
+        	m_V_setPlayers = new Vector<Player>();
         	switch(selectedType)
 			{
         		case 0:
