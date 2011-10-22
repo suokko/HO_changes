@@ -129,10 +129,6 @@ public class StadiumIncomeCalculator extends Calculator {
                     int stadiumSize = getStadiumSize(TeamPlanner.getFuturePane()
                                                                 .getYearSetting(week.getSeason())
                                                                 .getSerie() + 1);
-                    int teams = (int) Math.pow(2, getCupRounds() - week.getWeek() + 1);
-                    int opponentRanking = teams - teamRank;
-                    int opponentSerie = getSerie(opponentRanking);
-
                     // TODO Income depends on serie of the opponent?
                     income += ((getIncome(week, stadiumSize, true) * 1) / 3);
                 }
@@ -200,28 +196,7 @@ public class StadiumIncomeCalculator extends Calculator {
         int money = (int) (attendance * multiplier);
         return money;
     }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param opponentRanking
-     *
-     * @return
-     */
-    private int getSerie(int opponentRanking) {
-        int rank = opponentRanking;
-        int count = 0;
-        int serie = 0;
-
-        while (opponentRanking > count) {
-            serie++;
-            count += getSeriesSize(serie);
-        }
-
-        return serie;
-    }
-
-    /**
+   /**
      * Missing Method Documentation
      *
      * @param level Missing Method Parameter Documentation
