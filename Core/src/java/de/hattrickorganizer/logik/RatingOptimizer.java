@@ -20,7 +20,6 @@ import plugins.ISpielerPosition;
 import plugins.ITeam;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
-import de.hattrickorganizer.model.AufstellungOld;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
