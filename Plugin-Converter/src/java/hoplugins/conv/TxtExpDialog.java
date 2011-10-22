@@ -37,6 +37,10 @@ import plugins.ISpieler;
  *  
  */
 public class TxtExpDialog extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2115800843836242944L;
 	private int width, height;
 	private JPanel optionPanel;
 	private JPanel southPanel;
