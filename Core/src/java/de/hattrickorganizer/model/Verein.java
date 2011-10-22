@@ -193,6 +193,25 @@ public final class Verein implements plugins.IVerein {
     }
 
     /**
+     * Setter for property m_iFinanzberater.
+     *
+     * @param m_iFinanzberater New value of property m_iFinanzberater.
+     */
+    @Deprecated
+    public void setFinanzberater(int m_iFinanzberater) {
+    }
+
+    /**
+     * Getter for property m_iFinanzberater.
+     *
+     * @return Value of property m_iFinanzberater.
+     */
+    @Deprecated
+    public int getFinanzberater() {
+        return 0;
+    }
+
+    /**
      * Setter for property m_iJugend.
      *
      * @param m_iJugend New value of property m_iJugend.
@@ -334,6 +353,28 @@ public final class Verein implements plugins.IVerein {
      */
     public java.lang.String getTeamName() {
         return m_sTeamName;
+    }
+
+    /**
+     * Setter for property m_iTorwartTrainer.
+     *
+     * @param m_iTorwartTrainer New value of property m_iTorwartTrainer.
+     */
+    @Deprecated
+    public void setTorwartTrainer(int m_iTorwartTrainer) {}
+
+    ////////////////////////////////////////////////////////////////////////////////    
+    //Accessor
+    ////////////////////////////////////////////////////////////////////////////////    
+
+    /**
+     * Getter for property m_iTorwartTrainer.
+     *
+     * @return Value of property m_iTorwartTrainer.
+     */
+    @Deprecated
+    public int getTorwartTrainer() {
+        return 0;
     }
 
     /**
