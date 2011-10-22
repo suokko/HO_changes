@@ -80,6 +80,6 @@ public class TrainingsWeek {
 
 	@Override
 	public String toString () {
-		return ("TrainingsWeek: ("+timestamp.toLocaleString()+", "+ getHtSeason()+"."+getHtWeek()+", hrfId="+hrfId+"): TYP="+getTrainingType()+", TI="+getTrainingIntensity()+", SS="+getStaminaTrainingPart());
+		return ("TrainingsWeek: ("+timestamp.toString()+", "+ getHtSeason()+"."+getHtWeek()+", hrfId="+hrfId+"): TYP="+getTrainingType()+", TI="+getTrainingIntensity()+", SS="+getStaminaTrainingPart());
 	}
 }
