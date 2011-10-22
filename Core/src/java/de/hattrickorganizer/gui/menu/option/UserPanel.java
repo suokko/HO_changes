@@ -4,7 +4,6 @@ package de.hattrickorganizer.gui.menu.option;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.User;
-import de.hattrickorganizer.tools.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
