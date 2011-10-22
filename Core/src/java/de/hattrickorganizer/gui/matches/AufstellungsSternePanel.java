@@ -269,7 +269,7 @@ public class AufstellungsSternePanel extends RasenPanel {
 				}
 
 				default:
-					HOLogger.instance().log(getClass(), getClass().getName() + ": Unknown player position: " + player.getPositionCode());
+					HOLogger.instance().log(getClass(), getClass().getName() + ": Unknown player position: " + player.getPosition());
 				}
 			}
 		}
