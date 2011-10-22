@@ -26,8 +26,6 @@ public class Report {
 
     /** The spot place on the lineup */
     private int spot;
-    private int status;
-
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -39,8 +37,6 @@ public class Report {
         this.spot = pp.getId();
         this.position = pp.getPositionCode();
         this.playerId = pp.getSpielerId();
-
-        this.status = pp.getStatus();
     }
 
     /**
