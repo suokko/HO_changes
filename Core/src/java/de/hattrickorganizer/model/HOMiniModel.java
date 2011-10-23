@@ -444,6 +444,10 @@ public class HOMiniModel implements IHOMiniModel {
         return HOVerwaltung.instance().getModel();
     }
 
+	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl) {
+		return getFutureTrainingManager(p, trainings, cotrainer, trainerLvl);
+	}
+
 	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
 		FutureTrainingManager ftm = new FutureTrainingManager(p,trainings,cotrainer,trainerLvl);
 		return ftm;
