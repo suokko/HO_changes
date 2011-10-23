@@ -875,6 +875,22 @@ public final class HOMainFrame extends JFrame
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
+
+		//HOFriendly
+//		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
+//		m_jmHoFriendly.addActionListener(this);
+//		m_jmHoFriendlyMenu.add(m_jmHoFriendly);
+//
+//		m_jmHoFriendlyMenu.addSeparator();
+//
+//		m_jmIPAdresse.addActionListener(this);
+//		m_jmHoFriendlyMenu.add(m_jmIPAdresse);
+//
+//		m_jmRatingItem.addActionListener(this);
+//		m_jmHoFriendlyMenu.add(m_jmRatingItem);
+//
+//		m_jmMenuBar.add(m_jmHoFriendlyMenu);
+		
 		//Tool Menu
 		m_jmiKeeperTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiKeeperTool);
