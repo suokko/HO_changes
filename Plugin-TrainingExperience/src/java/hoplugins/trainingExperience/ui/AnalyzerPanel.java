@@ -90,13 +90,10 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
         if (CMD_SELECT_ALL.equals(e.getActionCommand())) {
             for (Iterator<ButtonModel> iter = this.buttonModels.values().iterator(); iter.hasNext();) {
                 ButtonModel bModel = iter.next();
-
                 bModel.setSelected(true);
             }
-
             this.oldPlayers.setSelected(true);
         }
-
         updateTableModel();
     }
 
@@ -108,7 +105,6 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
         this.skillupsOld = getSkillups(Commons.getModel().getAllOldSpieler());
         updateFilterPanel();
         updateTableModel();
-
         updateUI();
     }
 
@@ -356,6 +352,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
         filterPanel.add(createSkillSelector(ISpieler.SKILL_FLUEGEL));
         filterPanel.add(createSkillSelector(ISpieler.SKILL_VERTEIDIGUNG));
         filterPanel.add(createSkillSelector(ISpieler.SKILL_TORSCHUSS));
+        filterPanel.add(createSkillSelector(ISpieler.SKILL_STANDARDS));
         filterPanel.add(createSkillSelector(ISpieler.SKILL_KONDITION));
         filterPanel.add(createSkillSelector(ISpieler.SKILL_EXPIERIENCE));
 
