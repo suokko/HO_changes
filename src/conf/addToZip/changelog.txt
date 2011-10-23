@@ -3,10 +3,8 @@ forum at http://forum.hattrickorganizer.net/index.php if you have any questions!
 
 Changelist HO! 1.431
 ====================
-- Added Set Pieces filter to training analyzer
 - Added better error message when file save on download fails
-- Removed General and Stamina Training from Future Trainings 
-- Changed web server from hattrickorganizer.net to ho1.sourceforge.net
+
 
 Language updates:
 -----------------
@@ -16,6 +14,12 @@ Language updates:
 - Update Magyar translations (thx salt00)
 - Update Svenska translations (thx KrustyTheClown)
 - Update Ukranian translations (thx oleh_deneb)
+
+Plugin Updates:
+---------------
+- Training Experience: Added set piece filter, and removed occurences of no longer
+existing general and stamina training.
+
 
 
 Changelist HO! 1.430

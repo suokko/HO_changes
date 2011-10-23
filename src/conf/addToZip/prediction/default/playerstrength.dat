@@ -17,6 +17,9 @@
 # xp = 7.16% * xp			(finalXpMultiplier)
 # xp = 1 + xp				(finalXpDelta)
 # 
+# loyaltyaddition = loyaltyMax*loyalty/20
+#
+# skill = skill + homegrownbonus + loyaltyaddition
 # result = skill
 # result = result * 1 * stamina		(resultMultiStamina)
 # result = result * 1 * form		(resultMultiForm)
@@ -48,6 +51,9 @@ staminaPower=0.6
 #formPower=0.5			# Square Root
 formPower=0.45
 xpPower=0.5			# Square Root
+homegrownbonus=0.25
+loyaltyMax=0.5 
+
 finalXpMultiplier=0.0716
 finalXpDelta=1
 resultMultiStamina=1
