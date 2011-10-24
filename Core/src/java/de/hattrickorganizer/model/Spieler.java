@@ -140,6 +140,9 @@ public final class Spieler implements plugins.ISpieler {
 
     /** Hattricks */
     private int m_iHattrick;
+    
+    /** Home Grown */
+    private boolean m_bHomeGrown = true;
 
     /** Kondition */
     private int m_iKondition = 1;
@@ -151,6 +154,9 @@ public final class Spieler implements plugins.ISpieler {
 
     /** Letzte Bewertung */
     private int m_iLastBewertung = -1;
+
+    /** Loyalty */
+    private int m_iLoyalty = -1;
 
     /** Markwert */
     private int m_iTSI;
@@ -180,7 +186,7 @@ public final class Spieler implements plugins.ISpieler {
 
     /** Standards */
     private int m_iStandards = 1;
-
+    
     /** Tore Freundschaftspiel */
     private int m_iToreFreund;
 
@@ -270,6 +276,8 @@ public final class Spieler implements plugins.ISpieler {
             m_iAgressivitaet = rs.getInt("iAgressivitaet");
             m_sAgressivitaet = DBZugriff.deleteEscapeSequences(rs.getString("sAgressivitaet"));
             m_iErfahrung = rs.getInt("Erfahrung");
+            m_iLoyalty = rs.getInt("Loyalty");
+            m_bHomeGrown = rs.getBoolean("HomeGrown");
             m_iFuehrung = rs.getInt("Fuehrung");
             m_iGehalt = rs.getInt("Gehalt");
             m_iNationalitaet = rs.getInt("Land");
@@ -334,6 +342,8 @@ public final class Spieler implements plugins.ISpieler {
     public Spieler(java.util.Properties properties, Timestamp hrfdate)
       throws Exception
     {
+    	// Separate first, nick and last names are available. Utilize them?
+    	
         m_iSpielerID = Integer.parseInt(properties.getProperty("id", "0"));
         m_sName = properties.getProperty("name", "");
         m_iAlter = Integer.parseInt(properties.getProperty("ald", "0"));
@@ -356,6 +366,8 @@ public final class Spieler implements plugins.ISpieler {
         m_iAgressivitaet = Integer.parseInt(properties.getProperty("aggressiveness", "0"));
         m_sAgressivitaet = properties.getProperty("aggressivenesslabel", "");
         m_iErfahrung = Integer.parseInt(properties.getProperty("rut", "0"));
+        m_bHomeGrown = Boolean.parseBoolean(properties.getProperty("homegr", "TRUE"));
+        m_iLoyalty = Integer.parseInt(properties.getProperty("loy", "-1"));
         m_iFuehrung = Integer.parseInt(properties.getProperty("led", "0"));
         m_iGehalt = Integer.parseInt(properties.getProperty("sal", "0"));
         m_iNationalitaet = Integer.parseInt(properties.getProperty("countryid", "0"));
@@ -906,6 +918,25 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
+     * Setter for m_bHomeGrown
+     *
+     * @return Value of property m_bHomeGrown.
+     */
+    public void setHomeGrown(boolean hg) {
+    	m_bHomeGrown = hg;
+    }
+
+    /**
+     * Getter for m_bHomeGrown
+     *
+     * @return Value of property m_bHomeGrown
+     */
+    public boolean isHomeGrown() {
+    	return m_bHomeGrown;
+    }
+    
+    
+    /**
      * TODO Missing Method Documentation
      *
      * @return TODO Missing Return Method Documentation
@@ -1044,6 +1075,26 @@ public final class Spieler implements plugins.ISpieler {
         return m_iLastBewertung;
     }
 
+    
+    /**
+     * Returns the loyalty stat
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public int getLoyalty() {
+    	return m_iLoyalty;
+    }
+    
+    /**
+     * Sets the loyalty stat
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public void  setLoyalty(int loy) {
+    	m_iLoyalty = loy;
+    }
+    
+    
     /**
      * Setter for property m_sManuellerSmilie.
      *

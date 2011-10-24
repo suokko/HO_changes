@@ -536,7 +536,14 @@ public interface ISpieler {
      * @return Value of property m_iHattrick.
      */
     public int getHattrick();
-
+    
+    /**
+     * Getter for m_bHomeGrown
+     *
+     * @return Value of property m_bHomeGrown
+     */
+    public boolean isHomeGrown();
+    
     /**
      * TODO Missing Method Documentation
      *
@@ -614,6 +621,14 @@ public interface ISpieler {
      */
     public int getLetzteBewertung();
 
+    /**
+     * Returns the loalty stat of the player
+     *
+     * @return TODO Missing Return Method Documentation
+    */
+    public int getLoyalty();
+    
+    
     /**
      * Setter for property m_sManuellerSmilie.
      *
@@ -738,7 +753,7 @@ public interface ISpieler {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Deprecated
+
     public boolean isSkillTrained(int skill, int trainingstype);
 
     /**
