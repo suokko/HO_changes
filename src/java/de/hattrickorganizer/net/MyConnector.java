@@ -56,6 +56,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private final static String VERSION_MATCHORDERS = "1.8";
 	private final static String VERSION_TRAINING = "1.5";
 	private final static String VERSION_MATCHLINEUP = "1.6";
+	private final static String VERSION_PLAYERS = "2.1";
+	private final static String VERSION_PLAYERDETAILS = "2.0";
 
 	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
@@ -361,7 +363,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * holt die Spielerdaten
 	 */
 	public String getPlayersAsp() throws IOException {
-		final String url = htUrl + "?file=players";
+		final String url = htUrl + "?file=players&version=" + VERSION_PLAYERS;
 
 		return getPage(url);
 	}
@@ -518,7 +520,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getTransferCompare(int playerID) throws IOException {
 		
-		String url =  htUrl + "?file=playerdetails&playerID="+playerID;
+		String url =  htUrl + "?file=playerdetails&playerID="+playerID+"&version=" + VERSION_PLAYERDETAILS;
 
 		return getPage(url);
 	}

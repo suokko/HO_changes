@@ -775,6 +775,17 @@ public class RatingPredictionManager implements IRatingPredictionManager
             if (subSkill > 1)
             	subSkill = 1;
             skill = skill + subSkill;
+            
+            // For home grown players
+            if (spieler.isHomeGrown()) {
+            	skill += config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "homegrownbonus");
+            }
+            
+            // Loyalty bonus
+            skill += config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltyMax") 
+            			* spieler.getLoyalty() 
+            			/ config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltySkillMax");
+            
             retVal = calcPlayerStrength(config.getPlayerStrengthParameters(), 
             		getSkillName(skillType), spieler.getKondition(), spieler.getErfahrung(), skill, spieler.getForm(), useForm);
 //            System.out.println("calcPlayerStrength for "+spieler.getSpielerID()

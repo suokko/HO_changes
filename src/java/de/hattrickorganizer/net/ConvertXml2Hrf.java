@@ -14,6 +14,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.logik.xml.XMLArenaParser;
@@ -354,6 +355,27 @@ public class ConvertXml2Hrf {
 			m_sHRFBuffer.append("behforward1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getTaktik() + "\n");
 			m_sHRFBuffer.append("behforward2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getTaktik() + "\n");
 			m_sHRFBuffer.append("behforward3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik() + "\n");
+			
+			
+			java.util.Vector<ISubstitution> subs = m_clTeam.getSubstitutions();
+			
+			
+			
+			for (int i = 0; i < subs.size(); i++) {
+				ISubstitution sub = subs.get(i);
+				if (sub != null) {
+					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + sub.getPlayerOrderId() + "\n");
+					m_sHRFBuffer.append("subst" + i + "playerIn=" + sub.getPlayerIn() + "\n");
+					m_sHRFBuffer.append("subst" + i + "playerOut=" + sub.getPlayerOut() + "\n");
+					m_sHRFBuffer.append("subst" + i + "orderType=" + sub.getOrderType() + "\n");
+					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + sub.getMatchMinuteCriteria() + "\n");
+					m_sHRFBuffer.append("subst" + i + "pos=" + sub.getPos() + "\n");
+					m_sHRFBuffer.append("subst" + i + "behaviour=" + sub.getBehaviour() + "\n");
+					m_sHRFBuffer.append("subst" + i + "card=" + sub.getCard() + "\n");
+				}
+			}
+			
+			
         } catch (Exception e) {
         	HOLogger.instance().debug(getClass(), "Error(last lineup): " + e);
         }
@@ -442,6 +464,21 @@ public class ConvertXml2Hrf {
 			m_sHRFBuffer.append("behforward1=" + getPlayerOrderForNextLineup("RightForwardOrder") + "\n");
 			m_sHRFBuffer.append("behforward2=" + getPlayerOrderForNextLineup("LeftForwardOrder") + "\n");
 			m_sHRFBuffer.append("behforward3=" + getPlayerOrderForNextLineup("CentralForwardOrder") + "\n");
+			
+			for (int i = 0; i < 5; i++) {
+				if (m_htNextLineup.get("subst" + i + "playerOrderID") != null) {
+					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + m_htNextLineup.get("subst" + i + "playerOrderID") + "\n");
+					m_sHRFBuffer.append("subst" + i + "playerIn=" + m_htNextLineup.get("subst" + i + "playerIn") + "\n");
+					m_sHRFBuffer.append("subst" + i + "playerOut=" + m_htNextLineup.get("subst" + i + "playerOut") + "\n");
+					m_sHRFBuffer.append("subst" + i + "orderType=" + m_htNextLineup.get("subst" + i + "orderType") + "\n");
+					m_sHRFBuffer.append("subst" + i + "minute=" + m_htNextLineup.get("subst" + i + "minute") + "\n");
+					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + m_htNextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
+					m_sHRFBuffer.append("subst" + i + "pos=" + m_htNextLineup.get("subst" + i + "pos") + "\n");
+					m_sHRFBuffer.append("subst" + i + "behaviour=" + m_htNextLineup.get("subst" + i + "behaviour") + "\n");
+					m_sHRFBuffer.append("subst" + i + "card=" + m_htNextLineup.get("subst" + i + "card") + "\n");
+				}
+			}
+			
         } catch (Exception e) {
         	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
         }
@@ -457,7 +494,20 @@ public class ConvertXml2Hrf {
             ht = (Hashtable<?, ?>) m_vSpieler.elementAt(i);
 
             m_sHRFBuffer.append("[player" + ht.get("PlayerID").toString() + "]" + "\n");
-            m_sHRFBuffer.append("name=" + ht.get("PlayerName").toString() + "\n");
+           
+            if (ht.get("NickName").toString().length()>0) {
+            	m_sHRFBuffer.append("name=" + 
+            		ht.get("FirstName").toString() + " '" +
+            		ht.get("NickName").toString() + "' " +
+            		ht.get("LastName").toString() + "\n");
+            } else {
+            	m_sHRFBuffer.append("name=" + 
+                		ht.get("FirstName").toString() + " " +
+                		ht.get("LastName").toString() + "\n");
+            }
+            m_sHRFBuffer.append("firstname=" + ht.get("FirstName").toString() + "\n");
+            m_sHRFBuffer.append("nickname=" + ht.get("NickName").toString() + "\n");
+            m_sHRFBuffer.append("lastname=" + ht.get("LastName").toString() + "\n");
             m_sHRFBuffer.append("ald=" + ht.get("Age").toString() + "\n");
             m_sHRFBuffer.append("agedays=" + ht.get("AgeDays").toString() + "\n");
             m_sHRFBuffer.append("ska=" + ht.get("InjuryLevel").toString() + "\n");
@@ -471,6 +521,8 @@ public class ConvertXml2Hrf {
             m_sHRFBuffer.append("bac=" + ht.get("DefenderSkill").toString() + "\n");
             m_sHRFBuffer.append("mlv=" + ht.get("KeeperSkill").toString() + "\n");
             m_sHRFBuffer.append("rut=" + ht.get("Experience").toString() + "\n");
+            m_sHRFBuffer.append("loy=" + ht.get("Loyalty").toString() + "\n");
+            m_sHRFBuffer.append("homegr=" + ht.get("MotherClubBonus").toString() + "\n");
             m_sHRFBuffer.append("led=" + ht.get("Leadership").toString() + "\n");
             m_sHRFBuffer.append("sal=" + ht.get("Salary").toString() + "\n");
             m_sHRFBuffer.append("mkt=" + ht.get("MarketValue").toString() + "\n");
