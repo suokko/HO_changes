@@ -25,7 +25,9 @@ public class ImageUtilities {
 
     /** Hashtable mit Veränderungspfeilgrafiken nach Integer als Key */
     private static Hashtable<Integer,ImageIcon> m_clPfeilCache = new Hashtable<Integer,ImageIcon>();
+    private static Hashtable<Integer,ImageIcon> m_clPfeilWideCache = new Hashtable<Integer,ImageIcon>();
     private static Hashtable<Integer,ImageIcon> m_clPfeilLightCache = new Hashtable<Integer,ImageIcon>();
+    private static Hashtable<Integer,ImageIcon> m_clPfeilWideLightCache = new Hashtable<Integer,ImageIcon>();
     /** Cache für Transparent gemachte Bilder */
     public static HashMap<Image,Image> m_clTransparentsCache = new HashMap<Image,Image>();
     
@@ -238,6 +240,116 @@ public class ImageUtilities {
 	        return icon;
 	    }
 
+	/**
+	 * Creates a wide image for use where value can be greater than 99
+	 * @param wert the Value
+	 * @param aktuell
+	 * @return an icon representation of the value
+	 */
+	public static ImageIcon getWideImageIcon4Veraenderung(int value, boolean current) {
+        ImageIcon icon = null;
+        final Integer keywert = Integer.valueOf(value);
+        int xPosText = 8;
+
+        // Not in cache
+        if ((!m_clPfeilWideCache.containsKey(keywert) && current)
+            || (!m_clPfeilWideCache.containsKey(keywert) && !current)) {
+            final BufferedImage image = new BufferedImage(24, 14, BufferedImage.TYPE_INT_ARGB);
+            final java.awt.Graphics2D g2d = (java.awt.Graphics2D) image.getGraphics();
+            if (value != 0)
+            {
+               if (value > 0) {
+	                final int[] xpoints = {5, 11, 12, 18, 15, 15, 8, 8, 5};
+	                final int[] ypoints = {6, 0, 0, 6, 6, 13, 13, 6, 6};
+	                //Fill polygon
+	                if (!current) {
+	                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+	                }
+	                int farbwert = Math.min(240, 90 + (50 * value));
+	                g2d.setColor(new Color(0, farbwert, 0));
+	                g2d.fillPolygon(xpoints, ypoints, xpoints.length);
+	
+	                //Polygon Frame
+	                farbwert = Math.min(255, 105 + (50 * value));
+	                g2d.setColor(new Color(40, farbwert, 40));
+	                g2d.drawPolygon(xpoints, ypoints, xpoints.length);
+	
+	                //Enter value
+	                if (!current) {
+	                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+	                }
+	                g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.PLAIN, 10));
+	
+	                //For 1 and 2, use white at top
+	                if (value < 3) {
+	                    g2d.setColor(Color.black);
+	                    g2d.drawString(value + "", xPosText, 11);
+	                    g2d.setColor(Color.white);
+	                    g2d.drawString(value + "", xPosText + 1, 11);
+	                }
+	                // Black writing (only for positive)
+	                else {
+	                    // Reposition by value length
+	                	if (value > 9)
+	                		xPosText -= ((Integer.toString(value).length() - 1) * 3);
+	                	
+	                    g2d.setColor(Color.white);
+	                    g2d.drawString(value + "", xPosText, 11);
+	                    g2d.setColor(Color.black);
+	                    g2d.drawString(value + "", xPosText + 1, 11);
+	                }
+	            } else {
+	                final int[] xpoints = {5, 11, 12, 18, 15, 15, 8, 8, 5};
+	                final int[] ypoints = {7, 13, 13, 7, 7, 0, 0, 7, 7};
+	
+	                //Fill Polygon
+	                if (!current) {
+	                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+	                }
+	
+	                int farbwert = Math.min(240, 90 - (50 * value));
+	                g2d.setColor(new Color(farbwert, 0, 0));
+	                g2d.fillPolygon(xpoints, ypoints, xpoints.length);
+	
+	                //Polygon Frame
+	                farbwert = Math.min(255, 105 - (50 * value));
+	                g2d.setColor(new Color(farbwert, 40, 40));
+	                g2d.drawPolygon(xpoints, ypoints, xpoints.length);
+	
+	                //Enter value
+	                if (!current) {
+	                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+	                }
+	
+	                g2d.setFont(new java.awt.Font("sansserif", java.awt.Font.PLAIN, 10));
+	                // No need to worry about space for - as absolute value is used.
+	                if (Math.abs(value) > 9)
+	            		xPosText -= ((Integer.toString(Math.abs(value)).length() - 1) * 3);
+	                g2d.setColor(Color.black);
+	                g2d.drawString(Math.abs(value) + "", xPosText, 11);
+	                g2d.setColor(Color.white);
+	                g2d.drawString(Math.abs(value) + "", xPosText + 1, 11);
+	            }
+            }
+            //Make the Icon and cache it
+            icon = new ImageIcon(image);
+            if (current) {
+            	m_clPfeilWideCache.put(keywert, icon);
+            } else {
+                m_clPfeilWideLightCache.put(keywert, icon);
+            }
+        }
+        //In Cache
+        else {
+            if (current) {
+                icon = m_clPfeilWideCache.get(keywert);
+            } else {
+                icon = m_clPfeilWideLightCache.get(keywert);
+            }
+        }
+        return icon;
+    }
+	
 	public static ImageIcon NOIMAGEICON = new ImageIcon(new BufferedImage(14, 14, BufferedImage.TYPE_INT_ARGB));
 
 	/**
