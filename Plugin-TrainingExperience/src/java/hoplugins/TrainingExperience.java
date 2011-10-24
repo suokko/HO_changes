@@ -36,7 +36,7 @@ public class TrainingExperience implements IPlugin, IRefreshable, IOfficialPlugi
 	private static int PLUGINID = 23;
 	
 	/** Plugin Version */
-	private static double PLUGINVERSION = 1.254d;
+	private static double PLUGINVERSION = 1.255d;
 	
 	/** Plugin Name */
 	private static String PLUGINNAME = "Training Experience";
