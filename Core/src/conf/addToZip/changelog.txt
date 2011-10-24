@@ -18,8 +18,9 @@ Language updates:
 Plugin Updates:
 ---------------
 - Training Experience: Added set piece filter, and removed occurences of no longer
-existing general and stamina training.
-- Changed icon drawing on Training Experience Analyzer panel to show values > 99
+existing general and stamina training
+- Training Experience: Changed icon drawing on Analyzer panel to show values > 99, updated 
+- Updated to v 1.255
 
 
 Changelist HO! 1.430
