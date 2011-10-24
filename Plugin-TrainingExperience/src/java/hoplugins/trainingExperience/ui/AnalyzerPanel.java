@@ -270,7 +270,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        panel.add(new JLabel(Commons.getModel().getHelper().getImageIcon4Veraenderung(change)));
+        panel.add(new JLabel(Commons.getModel().getHelper().getWideImageIcon4Veraenderung(change)));
         panel.add(cBox);
 
         return panel;

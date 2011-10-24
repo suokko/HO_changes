@@ -111,6 +111,7 @@ public interface IHelper {
      */
     public ImageIcon getImageIcon4Veraenderung(int wert);
 
+    public ImageIcon getWideImageIcon4Veraenderung(int value);
     /**
      * Returns an Image for the weather
      *

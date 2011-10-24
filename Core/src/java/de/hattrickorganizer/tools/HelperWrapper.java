@@ -142,6 +142,9 @@ public class HelperWrapper implements plugins.IHelper {
         return ImageUtilities.getImageIcon4Veraenderung(wert,true);
     }
 
+    public ImageIcon getWideImageIcon4Veraenderung(int value) {
+        return ImageUtilities.getWideImageIcon4Veraenderung(value, true);
+    }
     public ImageIcon getImageIcon4Wetter(int wert) {
         return ThemeManager.getIcon(HOIconName.WEATHER[wert]);
     }
