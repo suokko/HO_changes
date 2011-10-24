@@ -103,6 +103,10 @@ public class XMLPlayerParser {
         player.setAgeDays(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Experience").item(0);
         player.setErfahrung(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
+        tmp = (Element) ele.getElementsByTagName("Loyalty").item(0);
+        player.setLoyalty(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
+        tmp = (Element) ele.getElementsByTagName("MotherClubBonus").item(0);
+        player.setHomeGrown(Boolean.parseBoolean(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Leadership").item(0);
         player.setFuehrung(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
         tmp = (Element) ele.getElementsByTagName("Specialty").item(0);

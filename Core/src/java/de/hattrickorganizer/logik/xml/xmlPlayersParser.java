@@ -80,8 +80,12 @@ public class xmlPlayersParser {
                 //ht füllen
                 ele = (Element) root.getElementsByTagName("PlayerID").item(0);
                 hash.put("PlayerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
-                ele = (Element) root.getElementsByTagName("PlayerName").item(0);
-                hash.put("PlayerName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                ele = (Element) root.getElementsByTagName("FirstName").item(0);
+                hash.put("FirstName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                ele = (Element) root.getElementsByTagName("NickName").item(0);
+                hash.put("NickName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                ele = (Element) root.getElementsByTagName("LastName").item(0);
+                hash.put("LastName", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("PlayerNumber").item(0);
                 hash.put("PlayerNumber", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("Age").item(0);
@@ -98,6 +102,10 @@ public class xmlPlayersParser {
                 hash.put("Statement", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("Experience").item(0);
                 hash.put("Experience", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                ele = (Element) root.getElementsByTagName("Loyalty").item(0);
+                hash.put("Loyalty", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                ele = (Element) root.getElementsByTagName("MotherClubBonus").item(0);
+                hash.put("MotherClubBonus", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("Leadership").item(0);
                 hash.put("Leadership", (XMLManager.instance().getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("Salary").item(0);

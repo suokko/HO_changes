@@ -20,7 +20,7 @@ public final class SpielerTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[58];
+		columns = new ColumnDescriptor[60];
 		columns[0] = new ColumnDescriptor("HRF_ID", Types.INTEGER, false);
 		columns[1] = new ColumnDescriptor("Datum", Types.TIMESTAMP, false);
 		columns[2] = new ColumnDescriptor("GelbeKarten", Types.INTEGER, false);
@@ -79,7 +79,8 @@ public final class SpielerTable extends AbstractTable {
 		columns[55] = new ColumnDescriptor("CapsU20", Types.INTEGER, false);
 		columns[56] = new ColumnDescriptor("AgeDays", Types.INTEGER, false);
 		columns[57] = new ColumnDescriptor("TrainingBlock", Types.BOOLEAN, false);
-
+		columns[58] = new ColumnDescriptor("Loyalty", Types.INTEGER, false);
+		columns[59] = new ColumnDescriptor("HomeGrown", Types.BOOLEAN, false);
 	}
 
 	@Override
@@ -116,7 +117,7 @@ public final class SpielerTable extends AbstractTable {
 						+ "iAgressivitaet , sAgressivitaet , Fuehrung , Erfahrung , Gehalt , "
 						+ "Bonus , Land , Marktwert , Verletzt , ToreFreund , ToreLiga , TorePokal , "
 						+ "ToreGesamt , Hattrick , Bewertung , TrainerTyp, Trainer, HRF_ID, Datum, "
-						+ "PlayerNumber, TransferListed,  Caps, CapsU20, TrainingBlock ) VALUES(";
+						+ "PlayerNumber, TransferListed,  Caps, CapsU20, TrainingBlock, Loyalty, HomeGrown ) VALUES(";
 				statement
 					+= (""
 						+ player.getGelbeKarten()
@@ -234,6 +235,10 @@ public final class SpielerTable extends AbstractTable {
 						+ player.getU20Laenderspiele()
 						+ ","
 						+ player.hasTrainingBlock()
+						+ ","
+						+ player.getLoyalty()
+						+ ","
+						+ player.isHomeGrown()
 						+ " )");
 				adapter.executeUpdate(statement);
 			}
@@ -533,7 +538,7 @@ public final class SpielerTable extends AbstractTable {
 
 					//Info, da der Spieler für den Vergleich in der Spielerübersicht benutzt wird
 					player.setOld(true);
-					HOLogger.instance().log(getClass(),"Spieler " + player.getName() + " vom " + rs.getTimestamp("Datum"));
+//					HOLogger.instance().log(getClass(),"Spieler " + player.getName() + " vom " + rs.getTimestamp("Datum"));
 				}
 			}
 		} catch (Exception e) {
