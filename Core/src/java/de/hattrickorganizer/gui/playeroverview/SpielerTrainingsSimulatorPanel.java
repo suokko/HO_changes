@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,6 +14,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,8 +36,8 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Hier kann ein Spieler erstellt werden, bzw die Parameter verändert werden, um sich die
- * Änderungen anzeigen zu lassen
+ * This is a Skill Tester, where parameters of a player can be changed to see
+ * what effect this will have on ratings for the player.
  */
 final class SpielerTrainingsSimulatorPanel extends ImagePanel
     implements de.hattrickorganizer.gui.Refreshable, ItemListener, ActionListener, FocusListener
@@ -78,7 +80,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 									            ColorLabelEntry.BG_STANDARD,
 									            SwingConstants.RIGHT);
     private final JButton m_jbAddTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AddTempspieler"));
-    private final  JButton m_jbRemoveTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("RemoveTempspieler"));
+    private final JButton m_jbRemoveTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("RemoveTempspieler"));
     private final JComboBox m_jcbErfahrung = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbFluegel = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbForm = new JComboBox(Helper.EINSTUFUNG_FORM);
@@ -90,6 +92,8 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     private final JComboBox m_jcbTorwart = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbVerteidigung = new JComboBox(Helper.EINSTUFUNG);
 	private final JComboBox m_jcbSpeciality = new JComboBox(Helper.EINSTUFUNG_SPECIALITY);    
+	private final JComboBox m_jcbLoyalty = new JComboBox(Helper.EINSTUFUNG);
+	private final JCheckBox m_jchHomegrown = new JCheckBox();
 	private JTextField jtfAge = new JTextField("17.0");	    
     private final JLabel m_jlErfahrung = new JLabel();
     private final JLabel m_jlFluegel = new JLabel();
@@ -102,6 +106,8 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     private final JLabel m_jlTorschuss = new JLabel();
     private final JLabel m_jlTorwart = new JLabel();
     private final JLabel m_jlVerteidigung = new JLabel();
+    private final JLabel m_jlLoyalty = new JLabel();
+    private final JLabel m_jlHomeGrown = new JLabel();
     private Spieler m_clSpieler;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -169,8 +175,8 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
             tempSpieler.setPasspiel(((CBItem) m_jcbPasspiel.getSelectedItem()).getId());
             tempSpieler.setStandards(((CBItem) m_jcbStandard.getSelectedItem()).getId());
             tempSpieler.setSpielaufbau(((CBItem) m_jcbSpielaufbau.getSelectedItem()).getId());
-            
-
+            tempSpieler.setLoyalty(((CBItem) m_jcbLoyalty.getSelectedItem()).getId());
+            tempSpieler.setHomeGrown(m_jchHomegrown.isSelected());
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
             de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
             de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
@@ -186,18 +192,15 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
      *
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
-        if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+    public final void itemStateChanged(ItemEvent itemEvent) {
+    	final int iState = itemEvent.getStateChange();
+        if (iState == ItemEvent.DESELECTED || iState == ItemEvent.SELECTED) {
             if (m_clSpieler != null) {
                 setLabels();
             } else {
                 resetLabels();
             }
         }
-
-        //        invalidate();
-        //        validate();            
-        //        repaint();
     }
 
     /**
@@ -221,26 +224,19 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlName.setText(m_clSpieler.getName());
 		jtfAge.setText(m_clSpieler.getAlter()+"."+m_clSpieler.getAgeDays());
         Helper.markierenComboBox(m_jcbForm, m_clSpieler.getForm());
-        Helper.markierenComboBox(m_jcbErfahrung,
-                                                            m_clSpieler.getErfahrung());
-        Helper.markierenComboBox(m_jcbKondition,
-                                                            m_clSpieler.getKondition());
-        Helper.markierenComboBox(m_jcbSpielaufbau,
-                                                            m_clSpieler.getSpielaufbau());
-        Helper.markierenComboBox(m_jcbFluegel,
-                                                            m_clSpieler.getFluegelspiel());
-        Helper.markierenComboBox(m_jcbTorschuss,
-                                                            m_clSpieler.getTorschuss());
+        Helper.markierenComboBox(m_jcbErfahrung, m_clSpieler.getErfahrung());
+        Helper.markierenComboBox(m_jcbKondition, m_clSpieler.getKondition());
+        Helper.markierenComboBox(m_jcbSpielaufbau, m_clSpieler.getSpielaufbau());
+        Helper.markierenComboBox(m_jcbFluegel, m_clSpieler.getFluegelspiel());
+        Helper.markierenComboBox(m_jcbTorschuss, m_clSpieler.getTorschuss());
         Helper.markierenComboBox(m_jcbTorwart, m_clSpieler.getTorwart());
         Helper.markierenComboBox(m_jcbPasspiel, m_clSpieler.getPasspiel());
-        Helper.markierenComboBox(m_jcbVerteidigung,
-                                                            m_clSpieler.getVerteidigung());
-		Helper.markierenComboBox(m_jcbSpeciality,
-															m_clSpieler.getSpezialitaet());
-                                                            
-        Helper.markierenComboBox(m_jcbStandard,
-                                                            m_clSpieler.getStandards());
-
+        Helper.markierenComboBox(m_jcbVerteidigung, m_clSpieler.getVerteidigung());
+		Helper.markierenComboBox(m_jcbSpeciality, m_clSpieler.getSpezialitaet());
+        Helper.markierenComboBox(m_jcbStandard, m_clSpieler.getStandards());
+        Helper.markierenComboBox(m_jcbLoyalty, m_clSpieler.getLoyalty());
+        m_jchHomegrown.setSelected(m_clSpieler.isHomeGrown());
+        
         m_jlForm.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
         m_jlKondition.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
         m_jlErfahrung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
@@ -251,7 +247,9 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlPasspiel.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
         m_jlVerteidigung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));        
         m_jlStandard.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
-
+        m_jlLoyalty.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlHomeGrown.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        
         m_jcbForm.setEnabled(true);
         m_jcbKondition.setEnabled(true);
         m_jcbSpielaufbau.setEnabled(true);
@@ -262,6 +260,8 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jcbVerteidigung.setEnabled(true);
 		m_jcbSpeciality.setEnabled(true);
         m_jcbStandard.setEnabled(true);
+        m_jcbLoyalty.setEnabled(true);
+        m_jchHomegrown.setEnabled(true);
     }
 
     /**
@@ -280,6 +280,8 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         tempSpieler.setPasspiel(((CBItem) m_jcbPasspiel.getSelectedItem()).getId());
         tempSpieler.setStandards(((CBItem) m_jcbStandard.getSelectedItem()).getId());
         tempSpieler.setSpielaufbau(((CBItem) m_jcbSpielaufbau.getSelectedItem()).getId());
+        tempSpieler.setLoyalty(((CBItem) m_jcbLoyalty.getSelectedItem()).getId());
+        tempSpieler.setHomeGrown(m_jchHomegrown.isSelected());
 
         m_jlForm.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getForm()- m_clSpieler.getForm(),true));
         m_jlKondition.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getKondition()- m_clSpieler.getKondition(),true));
@@ -291,7 +293,17 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlPasspiel.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getPasspiel()- m_clSpieler.getPasspiel(),true));
         m_jlVerteidigung.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getVerteidigung()- m_clSpieler.getVerteidigung(),true));
         m_jlStandard.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getStandards()- m_clSpieler.getStandards(),true));
-
+        m_jlLoyalty.setIcon(ImageUtilities.getImageIcon4Veraenderung(tempSpieler.getLoyalty()- m_clSpieler.getLoyalty(), true));
+        int hg = 0;
+        if (m_clSpieler.isHomeGrown() != tempSpieler.isHomeGrown())
+        {
+        	if (m_clSpieler.isHomeGrown())
+        		hg = -1;
+        	else
+        		hg = 1;
+        }
+        m_jlHomeGrown.setIcon(ImageUtilities.getImageIcon4Veraenderung(hg, true));
+        
         m_jpBestPos.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
                             + " (" + tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)
                             + ")");
@@ -732,6 +744,41 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlStandard, eingabenconstraints);
         panel.add(m_jlStandard);
 
+        // Add loyalty label and combo
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("player.loyalty"));
+        eingabenconstraints.gridx = 0;
+        eingabenconstraints.gridy = 7;
+        eingabenLayout.setConstraints(label, eingabenconstraints);
+        panel.add(label);
+        m_jcbLoyalty.setPreferredSize(CBSIZE);
+        m_jcbLoyalty.addItemListener(this);
+        eingabenconstraints.gridx = 1;
+        eingabenconstraints.gridy = 7;
+        eingabenLayout.setConstraints(m_jcbLoyalty, eingabenconstraints);
+        panel.add(m_jcbLoyalty);
+        eingabenconstraints.gridx = 2;
+        eingabenconstraints.gridy = 7;
+        m_jlLoyalty.setPreferredSize(PFEILSIZE);
+        eingabenLayout.setConstraints(m_jlLoyalty, eingabenconstraints);
+        panel.add(m_jlLoyalty);
+        
+        // Add homegrown label and checkbox
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("player.homegrown"));
+        eingabenconstraints.gridx = 3;
+        eingabenconstraints.gridy = 7;
+        eingabenLayout.setConstraints(label, eingabenconstraints);
+        panel.add(label);
+        m_jchHomegrown.addItemListener(this);
+        eingabenconstraints.gridx = 4;
+        eingabenconstraints.gridy = 7;
+        eingabenLayout.setConstraints(m_jchHomegrown, eingabenconstraints);
+        panel.add(m_jchHomegrown);
+        eingabenconstraints.gridx = 5;
+        eingabenconstraints.gridy = 7;
+        m_jlHomeGrown.setPreferredSize(PFEILSIZE);
+        eingabenLayout.setConstraints(m_jlHomeGrown, eingabenconstraints);
+        panel.add(m_jlHomeGrown);
+        
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.NORTH;
@@ -865,7 +912,9 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlPasspiel.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
         m_jlVerteidigung.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
         m_jlStandard.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
-
+        m_jlLoyalty.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        m_jlHomeGrown.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
+        
         resetCB(m_jcbForm);
         resetCB(m_jcbErfahrung);
         resetCB(m_jcbKondition);
@@ -877,8 +926,14 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         resetCB(m_jcbVerteidigung);
         resetCB(m_jcbSpeciality);
         resetCB(m_jcbStandard);
+        resetCB(m_jcbLoyalty);
+        resetCheckBox(m_jchHomegrown);
     }
 
+    private void resetCheckBox(JCheckBox chk){
+    	chk.setSelected(false);
+    	chk.setEnabled(false);
+    }
     
     private void resetCB(JComboBox cb){
     	Helper.markierenComboBox(cb, ISpieler.katastrophal);
