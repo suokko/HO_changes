@@ -653,6 +653,21 @@ public class RatingPredictionManager implements IRatingPredictionManager
 			return false;
     }
 
+    public static float getLoyaltyHomegrownBonus(ISpieler spieler) {
+    	float bonus = 0f;
+    	 if (spieler.isHomeGrown()) {
+         	bonus += config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "homegrownbonus");
+         }
+         
+         // Loyalty bonus
+         bonus += (float)config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltyMax") 
+         			* spieler.getLoyalty() 
+         			/ (float)config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltySkillMax");
+    	
+    	
+    	return bonus;
+    }
+    
     public double[][] getAllPlayerStrength (int skillType, boolean useLeft, boolean useMiddle, boolean useRight) {
     	double[][] retArray = new double[ISpielerPosition.NUM_POSITIONS][ISpieler.NUM_SPECIALTIES];
 //    	System.out.println ("getAllPlayerStrength: st="+skillType+", l="+useLeft+", m="+useMiddle+", r="+useRight);
@@ -776,16 +791,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
             	subSkill = 1;
             skill = skill + subSkill;
             
-            // For home grown players
-            if (spieler.isHomeGrown()) {
-            	skill += config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "homegrownbonus");
-            }
-            
-            // Loyalty bonus
-            skill += config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltyMax") 
-            			* spieler.getLoyalty() 
-            			/ config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltySkillMax");
-            
+            // Add loyalty and homegrown bonuses
+            skill += getLoyaltyHomegrownBonus(spieler);
+               
             retVal = calcPlayerStrength(config.getPlayerStrengthParameters(), 
             		getSkillName(skillType), spieler.getKondition(), spieler.getErfahrung(), skill, spieler.getForm(), useForm);
 //            System.out.println("calcPlayerStrength for "+spieler.getSpielerID()

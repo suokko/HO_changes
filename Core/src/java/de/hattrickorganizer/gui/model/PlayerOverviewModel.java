@@ -34,25 +34,24 @@ public final  class PlayerOverviewModel extends HOColumnModel {
 	 */
 	private void initialize() {
 		UserColumn[] basic =  UserColumnFactory.createPlayerBasicArray();
-		columns = new UserColumn[47];
+		columns = new UserColumn[49];
 		columns[0] =basic[0];
-		columns[46] = basic[1];
+		columns[48] = basic[1];
 		
 		UserColumn[] skills =  UserColumnFactory.createPlayerSkillArray();
-		for (int i = 8; i < skills.length+8; i++) {
-			columns[i] = skills[i-8];
+		for (int i = 9; i < skills.length+9; i++) {
+			columns[i] = skills[i-9];
 		}
 		
 		UserColumn[] positions =  UserColumnFactory.createPlayerPositionArray();
-		for (int i = 19; i < positions.length+19; i++) {
-			columns[i] = positions[i-19];
+		for (int i = 21; i < positions.length+21; i++) {
+			columns[i] = positions[i-21];
 		}
 		
 		UserColumn[] goals =  UserColumnFactory.createGoalsColumnsArray();
-		for (int i = 39; i < goals.length+39; i++) {
-			columns[i] = goals[i-39];
+		for (int i = 41; i < goals.length+41; i++) {
+			columns[i] = goals[i-41];
 		}
-		
 		UserColumn[] add =  UserColumnFactory.createPlayerAdditionalArray();
 		columns[1] = add[0];
 		columns[2] = add[1];
@@ -61,10 +60,11 @@ public final  class PlayerOverviewModel extends HOColumnModel {
 		columns[5] = add[4];
 		columns[6] = add[5];
 		columns[7] = add[6];
-		columns[43] = add[7];
-		columns[44] = add[8];
-		columns[38] = add[9];
-		columns[45] = add[10];
+		columns[8] = add[11]; // Motherclub
+		columns[45] = add[7];
+		columns[46] = add[8];
+		columns[40] = add[9];
+		columns[47] = add[10];
 	}
 	
 	/**

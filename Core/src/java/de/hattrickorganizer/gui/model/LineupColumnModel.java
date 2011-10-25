@@ -21,23 +21,23 @@ public class LineupColumnModel extends HOColumnModel {
 	
 	private void initialize() {
 		UserColumn[] basic =  UserColumnFactory.createPlayerBasicArray();
-		columns = new UserColumn[47];
+		columns = new UserColumn[49];
 		columns[0] = basic[0];
-		columns[46] = basic[1];
+		columns[48] = basic[1];
 		
 		UserColumn[] skills =  UserColumnFactory.createPlayerSkillArray();
-		for (int i = 9; i < skills.length+9; i++) {
-			columns[i] = skills[i-9];
+		for (int i = 10; i < skills.length+10; i++) {
+			columns[i] = skills[i-10];
 		}
 		
 		UserColumn[] positions =  UserColumnFactory.createPlayerPositionArray();
-		for (int i = 20; i < positions.length+20; i++) {
-			columns[i] = positions[i-20];
+		for (int i = 22; i < positions.length+22; i++) {
+			columns[i] = positions[i-22];
 		}
 		
 		UserColumn[] goals =  UserColumnFactory.createGoalsColumnsArray();
-		for (int i = 40; i < goals.length+40; i++) {
-			columns[i] = goals[i-40];
+		for (int i = 42; i < goals.length+42; i++) {
+			columns[i] = goals[i-42];
 		}
 		
 		UserColumn[] add =  UserColumnFactory.createPlayerAdditionalArray();
@@ -54,9 +54,10 @@ public class LineupColumnModel extends HOColumnModel {
 		columns[6] = add[4];
 		columns[7] = add[5];
 		columns[8] = add[6];
-		columns[44] = add[7];
-		columns[45] = add[8];
-		columns[39] = add[9];
+		columns[9] = add[11]; // Homegrown
+		columns[46] = add[7];
+		columns[47] = add[8];
+		columns[41] = add[9];
 	}
 	
     /**
