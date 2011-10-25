@@ -193,8 +193,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
     public final void itemStateChanged(ItemEvent itemEvent) {
-    	final int iState = itemEvent.getStateChange();
-        if (iState == ItemEvent.DESELECTED || iState == ItemEvent.SELECTED) {
+        if ((itemEvent.getStateChange() == ItemEvent.SELECTED) || (itemEvent.getSource() == m_jchHomegrown)) {
             if (m_clSpieler != null) {
                 setLabels();
             } else {

@@ -2041,8 +2041,35 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN HomeGrown BOOLEAN");
 		m_clJDBCAdapter.executeUpdate("UPDATE SPIELER SET HomeGrown = 'false' WHERE HomeGrown IS NULL");
 		
-		
 		getTable(MatchSubstitutionTable.TABLENAME).createTable();
+		
+		// Test if we got 49 user table columns, if not, wipe the preferences
+		String sql = "SELECT * FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 2000 AND 3000";
+		ResultSet rs = m_clJDBCAdapter.executeQuery(sql);
+		int rows = 0;
+		while (rs.next()) {
+			rows++;
+		}
+		
+		if (rows != 49) {
+			HOLogger.instance().debug(getClass(), "Reseting player overview rows. Found " + rows + " rows, wanted 49");
+			sql = "DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 2000 AND 3000";
+			m_clJDBCAdapter.executeQuery(sql);
+		}
+
+		// The same for lineup overview columns
+		sql = "SELECT * FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 3000 AND 4000";
+		rs = m_clJDBCAdapter.executeQuery(sql);
+		rows = 0;
+		while (rs.next()) {
+			rows++;
+		}
+		
+		if (rows != 49) {
+			HOLogger.instance().debug(getClass(), "Reseting lineup overview rows. Found " + rows + " rows, wanted 49");
+			sql = "DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 3000 AND 4000";
+			m_clJDBCAdapter.executeQuery(sql);
+		}
 		
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might

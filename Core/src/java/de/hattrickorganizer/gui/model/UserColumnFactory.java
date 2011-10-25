@@ -207,18 +207,19 @@ final public class UserColumnFactory {
 	 * @return PlayerSkillColumn []
 	 */
 	protected static PlayerSkillColumn[] createPlayerSkillArray(){
-		final PlayerSkillColumn[] playerSkillArray = new PlayerSkillColumn[11];
+		final PlayerSkillColumn[] playerSkillArray = new PlayerSkillColumn[12];
 		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "FUE",		"Fuehrung",				ISpieler.SKILL_LEADERSHIP); 
 		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ER",		"Erfahrung",			ISpieler.SKILL_EXPIERIENCE); 
 		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"Form",					ISpieler.SKILL_FORM); 
 		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "KO",		"Kondition",			ISpieler.SKILL_KONDITION); 
-		playerSkillArray[4]  = new PlayerSkillColumn( 	120, "TW",		"Torwart",				ISpieler.SKILL_TORWART); 
-		playerSkillArray[5]  = new PlayerSkillColumn( 	130, "VE",		"Verteidigung",			ISpieler.SKILL_VERTEIDIGUNG); 
-		playerSkillArray[6]  = new PlayerSkillColumn( 	140, "SA",		"Spielaufbau",			ISpieler.SKILL_SPIELAUFBAU); 
-		playerSkillArray[7]  = new PlayerSkillColumn( 	150, "PS",		"Passpiel",				ISpieler.SKILL_PASSSPIEL); 
-		playerSkillArray[8]  = new PlayerSkillColumn( 	160, "FL",		"Fluegelspiel",			ISpieler.SKILL_FLUEGEL); 
-		playerSkillArray[9]  = new PlayerSkillColumn( 	170, "TS",		"Torschuss",			ISpieler.SKILL_TORSCHUSS); 
-		playerSkillArray[10] = new PlayerSkillColumn( 	180, "ST",		"Standards",			ISpieler.SKILL_STANDARDS); 
+		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "LOY",		"Loyalty",				ISpieler.SKILL_LOYALTY); 
+		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "TW",		"Torwart",				ISpieler.SKILL_TORWART); 
+		playerSkillArray[6]  = new PlayerSkillColumn( 	130, "VE",		"Verteidigung",			ISpieler.SKILL_VERTEIDIGUNG); 
+		playerSkillArray[7]  = new PlayerSkillColumn( 	140, "SA",		"Spielaufbau",			ISpieler.SKILL_SPIELAUFBAU); 
+		playerSkillArray[8]  = new PlayerSkillColumn( 	150, "PS",		"Passpiel",				ISpieler.SKILL_PASSSPIEL); 
+		playerSkillArray[9]  = new PlayerSkillColumn( 	160, "FL",		"Fluegelspiel",			ISpieler.SKILL_FLUEGEL); 
+		playerSkillArray[10]  = new PlayerSkillColumn( 	170, "TS",		"Torschuss",			ISpieler.SKILL_TORSCHUSS); 
+		playerSkillArray[11] = new PlayerSkillColumn( 	180, "ST",		"Standards",			ISpieler.SKILL_STANDARDS); 
 
 		return playerSkillArray;
 	}
@@ -458,7 +459,7 @@ final public class UserColumnFactory {
 	 * @return PlayerColumn[]
 	 */
 	protected static PlayerColumn[] createPlayerAdditionalArray(){
-			final PlayerColumn [] playerAdditionalArray = new PlayerColumn[11];
+			final PlayerColumn [] playerAdditionalArray = new PlayerColumn[12];
 			
 			playerAdditionalArray[0] =new PlayerColumn(10," "," ",0){
 				@Override
@@ -705,6 +706,17 @@ final public class UserColumnFactory {
                             );
 				}
 			};
+			
+			playerAdditionalArray[11] = new PlayerColumn(437, "MC", "Motherclub",  25) {
+				@Override
+				public TableEntry getTableEntry(Spieler player,Spieler playerCompare){
+					HomegrownEntry home = new HomegrownEntry();
+					home.setSpieler(player);
+					setPreferredWidth(35);
+					return  home;
+				}
+			};
+				
 			return playerAdditionalArray;
 
 			

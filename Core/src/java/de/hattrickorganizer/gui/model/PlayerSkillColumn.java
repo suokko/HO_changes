@@ -55,7 +55,8 @@ class PlayerSkillColumn extends PlayerColumn {
 		if(skill == ISpieler.SKILL_EXPIERIENCE
 				||  skill == ISpieler.SKILL_FORM
 				|| skill == ISpieler.SKILL_KONDITION
-				|| skill == ISpieler.SKILL_LEADERSHIP){
+				|| skill == ISpieler.SKILL_LEADERSHIP
+				|| skill == ISpieler.SKILL_LOYALTY){
 		return new ColorLabelEntry(getSkill(player),
                 background,
                 false, 0);
@@ -108,6 +109,7 @@ class PlayerSkillColumn extends PlayerColumn {
 		case ISpieler.SKILL_FORM: 			return player.getForm();
 		case ISpieler.SKILL_KONDITION: 		return player.getKondition();
 		case ISpieler.SKILL_LEADERSHIP:		return player.getFuehrung();
+		case ISpieler.SKILL_LOYALTY: 		return player.getLoyalty();
 		
 		}
 		return 0;

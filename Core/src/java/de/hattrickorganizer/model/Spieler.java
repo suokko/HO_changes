@@ -1516,6 +1516,9 @@ public final class Spieler implements plugins.ISpieler {
                                  (float) m_dSubStandards + (float) m_dTrainingsOffsetStandards);
                 break;
 
+            case SKILL_LOYALTY:
+            	value = 0;
+            
             default:
                 return 0f;
         }
@@ -2002,6 +2005,9 @@ public final class Spieler implements plugins.ISpieler {
 
             case SKILL_LEADERSHIP:
                 return m_iFuehrung;
+                
+            case SKILL_LOYALTY:
+            	return m_iLoyalty;
 
             default:
                 return 0;
@@ -2059,6 +2065,9 @@ public final class Spieler implements plugins.ISpieler {
 			case SKILL_LEADERSHIP:
 				setFuehrung(value);
 				break;
+				
+			case SKILL_LOYALTY:
+				setLoyalty(value);
 		}
 	}
 
@@ -2445,14 +2454,17 @@ public final class Spieler implements plugins.ISpieler {
          * (calling RPM.calcPlayerStrength() is quite expensive and
          * this method is used very often)
          */
+        
+        float loy = RatingPredictionManager.getLoyaltyHomegrownBonus(this);
+        
         String key = fo.getPosition() + ":"
-        					+ Helper.round(getTorwart() + getSubskill4SkillWithOffset(SKILL_TORWART), 2) + "|"
-        					+ Helper.round(getSpielaufbau() + getSubskill4SkillWithOffset(SKILL_SPIELAUFBAU), 2) + "|"
-        					+ Helper.round(getVerteidigung() + getSubskill4SkillWithOffset(SKILL_VERTEIDIGUNG), 2) + "|"
-        					+ Helper.round(getFluegelspiel() + getSubskill4SkillWithOffset(SKILL_FLUEGEL), 2) + "|"
-        					+ Helper.round(getPasspiel() + getSubskill4SkillWithOffset(SKILL_PASSSPIEL), 2) + "|"
-        					+ Helper.round(getStandards() + getSubskill4SkillWithOffset(SKILL_STANDARDS), 2) + "|"
-        					+ Helper.round(getTorschuss() + getSubskill4SkillWithOffset(SKILL_TORSCHUSS), 2) + "|"
+        					+ Helper.round(getTorwart() + getSubskill4SkillWithOffset(SKILL_TORWART) + loy, 2) + "|"
+        					+ Helper.round(getSpielaufbau() + getSubskill4SkillWithOffset(SKILL_SPIELAUFBAU) + loy, 2) + "|"
+        					+ Helper.round(getVerteidigung() + getSubskill4SkillWithOffset(SKILL_VERTEIDIGUNG) + loy, 2) + "|"
+        					+ Helper.round(getFluegelspiel() + getSubskill4SkillWithOffset(SKILL_FLUEGEL) + loy, 2) + "|"
+        					+ Helper.round(getPasspiel() + getSubskill4SkillWithOffset(SKILL_PASSSPIEL) + loy, 2) + "|"
+        					+ Helper.round(getStandards() + getSubskill4SkillWithOffset(SKILL_STANDARDS) + loy, 2) + "|"
+        					+ Helper.round(getTorschuss() + getSubskill4SkillWithOffset(SKILL_TORSCHUSS) + loy, 2) + "|"
         					+ getForm() + "|"
         					+ getKondition() + "|"
         					+ getErfahrung() + "|"
