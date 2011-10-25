@@ -161,6 +161,7 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 		put(STAR,"gui/bilder/star.gif");
 		put(STAR_GRAY,"gui/bilder/star_grey.png");
 		
+		put(HOMEGROWN, "gui/bilder/motherclub.png");
 		}
 
 	private void initBooleans() {

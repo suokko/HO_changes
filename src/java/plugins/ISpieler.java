@@ -255,6 +255,9 @@ public interface ISpieler {
     
     /** TODO Missing Parameter Documentation */
     public static final int SKILL_LEADERSHIP = 10;
+    
+    /** TODO Missing Parameter Documentation */
+    public static final int SKILL_LOYALTY = 11;
 
     //~ Methods ------------------------------------------------------------------------------------
 
