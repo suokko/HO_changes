@@ -250,6 +250,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlHomeGrown.setIcon(ImageUtilities.getImageIcon4Veraenderung(0,true));
         
         m_jcbForm.setEnabled(true);
+        m_jcbErfahrung.setEnabled(true);
         m_jcbKondition.setEnabled(true);
         m_jcbSpielaufbau.setEnabled(true);
         m_jcbFluegel.setEnabled(true);
