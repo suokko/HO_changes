@@ -744,7 +744,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         panel.add(m_jlStandard);
 
         // Add loyalty label and combo
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("player.loyalty"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Loyalty"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 7;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -762,7 +762,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         panel.add(m_jlLoyalty);
         
         // Add homegrown label and checkbox
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("player.homegrown"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 7;
         eingabenLayout.setConstraints(label, eingabenconstraints);
