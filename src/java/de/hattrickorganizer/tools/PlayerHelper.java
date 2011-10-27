@@ -329,13 +329,13 @@ public class PlayerHelper {
         if (zahlen) {
             if (isMatch) {
                 bewertung += (" ("
-                + de.hattrickorganizer.tools.Helper.round(bewertungwert
-                                                          + getValue4Sublevel(sublevel), 2) + ")");
+                +  Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(Helper.round(bewertungwert + getValue4Sublevel(sublevel), 2))
+                 + ")");
             } else {
                 bewertung += (" ("
-                + de.hattrickorganizer.tools.Helper.round(bewertungwertfloat,
-                                                          gui.UserParameter.instance().anzahlNachkommastellen)
-                + ")");
+                		+ Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+                 		.format(Helper.round(bewertungwertfloat, gui.UserParameter.instance().anzahlNachkommastellen)) + ")");
             }
         }
 
