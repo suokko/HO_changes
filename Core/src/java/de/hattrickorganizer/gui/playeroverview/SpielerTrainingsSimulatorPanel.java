@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
@@ -54,8 +56,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     //~ Instance fields ----------------------------------------------------------------------------
 
     private final ColorLabelEntry m_jpBestPos = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                              ColorLabelEntry.BG_STANDARD,
-                                                             SwingConstants.LEFT);
+    		ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
     private final DoppelLabelEntry m_jpWertAussenVert = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private final DoppelLabelEntry m_jpWertAussenVertDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private final DoppelLabelEntry m_jpWertAussenVertIn = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
@@ -75,12 +76,10 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     private final DoppelLabelEntry m_jpWertSturmAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private final DoppelLabelEntry m_jpWertSturmDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private final DoppelLabelEntry m_jpWertTor = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private final ColorLabelEntry m_jpEPV = new ColorLabelEntry("",
-									            ColorLabelEntry.FG_STANDARD,
-									            ColorLabelEntry.BG_STANDARD,
-									            SwingConstants.RIGHT);
-    private final JButton m_jbAddTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("AddTempspieler"));
-    private final JButton m_jbRemoveTempSpieler = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("RemoveTempspieler"));
+    private final ColorLabelEntry m_jpEPV = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+    		ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
+    private final JButton m_jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
+    private final JButton m_jbRemoveTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("RemoveTempspieler"));
     private final JComboBox m_jcbErfahrung = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbFluegel = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbForm = new JComboBox(Helper.EINSTUFUNG_FORM);
@@ -133,7 +132,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
             setLabels();
             setCBs();
 
-            //Remove für Tempspieler
+            //Remove for Temp player
             if (spieler.getSpielerID() < 0) {
                 m_jbRemoveTempSpieler.setEnabled(true);
             } else {
@@ -144,7 +143,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
             resetCBs();
             m_jbRemoveTempSpieler.setEnabled(false);
         }
-
         invalidate();
         validate();
         repaint();
@@ -178,12 +176,12 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
             tempSpieler.setLoyalty(((CBItem) m_jcbLoyalty.getSelectedItem()).getId());
             tempSpieler.setHomeGrown(m_jchHomegrown.isSelected());
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
-            de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
-            de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
+            RefreshManager.instance().doReInit();
+            HOMainFrame.instance().showTab(HOMainFrame.SPIELERUEBERSICHT);
         } else if (e.getSource().equals(m_jbRemoveTempSpieler)) {
             HOVerwaltung.instance().getModel().removeSpieler(m_clSpieler);
-            de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
-            de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
+            RefreshManager.instance().doReInit();
+            HOMainFrame.instance().showTab(HOMainFrame.SPIELERUEBERSICHT);
         }
     }
 
@@ -305,183 +303,91 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlHomeGrown.setIcon(ImageUtilities.getImageIcon4Veraenderung(hg, true));
         
         m_jpBestPos.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
-                            + " (" + tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)
-                            + ")");
-        m_jpWertTor.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.KEEPER,true),
-                                                                               gui.UserParameter
-                                                                               .instance().anzahlNachkommastellen)+ "");
-        m_jpWertTor.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.KEEPER,true)
-                                                 - m_clSpieler.calcPosValue(ISpielerPosition.KEEPER,true), false);
-        m_jpWertInnenVert.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true),
-                                                                                     gui.UserParameter
-                                                                                     .instance().anzahlNachkommastellen)+ "");
+        		+ " (" + Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)) + ")");
+        m_jpWertTor.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen).
+        		format(tempSpieler.calcPosValue(ISpielerPosition.KEEPER, true)));
+        m_jpWertTor.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.KEEPER, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.KEEPER,true), false);
+        m_jpWertInnenVert.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER, true)));
         m_jpWertInnenVert.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true)
-                                                       - m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true), false);
-        m_jpWertInnenVertAus.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,
-                                                                                                      true),
-                                                                                        gui.UserParameter
-                                                                                        .instance().anzahlNachkommastellen)+ "");
-        m_jpWertInnenVertAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,
-                                                                                   true)
-                                                          - m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,
-                                                                                     true), false);
-        m_jpWertInnenVertOff.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,
-                                                                                                      true),
-                                                                                        gui.UserParameter
-                                                                                        .instance().anzahlNachkommastellen)
-                                                + "");
-        m_jpWertInnenVertOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,
-                                                                                   true)
-                                                          - m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,
-                                                                                     true), false);
-        m_jpWertAussenVert.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.BACK,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        m_jpWertAussenVert.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK,
-                                                                                 true)
-                                                        - m_clSpieler.calcPosValue(ISpielerPosition.BACK,
-                                                                                   true), false);
-        m_jpWertAussenVertIn.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID,
-                                                                                                      true),
-                                                                                        gui.UserParameter
-                                                                                        .instance().anzahlNachkommastellen)
-                                                + "");
-        m_jpWertAussenVertIn.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID,
-                                                                                   true)
-                                                          - m_clSpieler.calcPosValue(ISpielerPosition.BACK_TOMID,
-                                                                                     true), false);
-        m_jpWertAussenVertOff.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF,
-                                                                                                       true),
-                                                                                         gui.UserParameter
-                                                                                         .instance().anzahlNachkommastellen)
-                                                 + "");
-        m_jpWertAussenVertOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF,
-                                                                                    true)
-                                                           - m_clSpieler.calcPosValue(ISpielerPosition.BACK_OFF,
-                                                                                      true), false);
-        m_jpWertAussenVertDef.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF,
-                                                                                                       true),
-                                                                                         gui.UserParameter
-                                                                                         .instance().anzahlNachkommastellen)
-                                                 + "");
-        m_jpWertAussenVertDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF,
-                                                                                    true)
-                                                           - m_clSpieler.calcPosValue(ISpielerPosition.BACK_DEF,
-                                                                                      true), false);
-        m_jpWertMittelfeld.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.MIDFIELDER,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        m_jpWertMittelfeld.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER,
-                                                                                 true)
-                                                        - m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER,
-                                                                                   true), false);
-        m_jpWertMittelfeldAus.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,
-                                                                                                       true),
-                                                                                         gui.UserParameter
-                                                                                         .instance().anzahlNachkommastellen)
-                                                 + "");
-        m_jpWertMittelfeldAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,
-                                                                                    true)
-                                                           - m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,
-                                                                                      true), false);
-        m_jpWertMittelfeldOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                         .calcPosValue(ISpielerPosition.MIDFIELDER_OFF,
-                                                                                                       true),
-                                                                                         gui.UserParameter
-                                                                                         .instance().anzahlNachkommastellen)
-                                                 + "");
-        m_jpWertMittelfeldOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,
-                                                                                    true)
-                                                           - m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,
-                                                                                      true), false);
-        m_jpWertMittelfeldDef.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,
-                                                                                                       true),
-                                                                                         gui.UserParameter
-                                                                                         .instance().anzahlNachkommastellen)
-                                                 + "");
-        m_jpWertMittelfeldDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,
-                                                                                    true)
-                                                           - m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,
-                                                                                      true), false);
-        m_jpWertFluegel.getLinks().setText(Helper.round(tempSpieler
-                                                                                   .calcPosValue(ISpielerPosition.WINGER,
-                                                                                                 true),
-                                                                                   gui.UserParameter
-                                                                                   .instance().anzahlNachkommastellen)
-                                           + "");
-        m_jpWertFluegel.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER,
-                                                                              true)
-                                                     - m_clSpieler.calcPosValue(ISpielerPosition.WINGER,
-                                                                                true), false);
-        m_jpWertFluegelIn.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID,
-                                                                                                   true),
-                                                                                     gui.UserParameter
-                                                                                     .instance().anzahlNachkommastellen)
-                                             + "");
-        m_jpWertFluegelIn.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID,
-                                                                                true)
-                                                       - m_clSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID,
-                                                                                  true), false);
-        m_jpWertFluegelOff.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        m_jpWertFluegelOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF,
-                                                                                 true)
-                                                        - m_clSpieler.calcPosValue(ISpielerPosition.WINGER_OFF,
-                                                                                   true), false);
-        m_jpWertFluegelDef.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        m_jpWertFluegelDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF,
-                                                                                 true)
-                                                        - m_clSpieler.calcPosValue(ISpielerPosition.WINGER_DEF,
-                                                                                   true), false);
-        m_jpWertSturm.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.FORWARD,
-                                                                                               true),
-                                                                                 gui.UserParameter
-                                                                                 .instance().anzahlNachkommastellen)
-                                         + "");
-        m_jpWertSturm.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD,
-                                                                            true)
-                                                   - m_clSpieler.calcPosValue(ISpielerPosition.FORWARD,
-                                                                              true), false);
-        
-        m_jpWertSturmAus.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING,
-														        			true),
-														  gui.UserParameter
-														  .instance().anzahlNachkommastellen)
-														+ "");
-        m_jpWertSturmAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING,
-                																				true)
-                																				- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING,
-                																						true), false);
-        m_jpWertSturmDef.getLinks().setText(Helper.round(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF,
-                                                                                                  true),
-                                                                                    gui.UserParameter
-                                                                                    .instance().anzahlNachkommastellen)
-                                            + "");
-        m_jpWertSturmDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF,
-                                                                               true)
-                                                      - m_clSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF,
-                                                                                 true), false);
+        		- m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true), false);
+        m_jpWertInnenVertAus.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true)));
+        m_jpWertInnenVertAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true), false);
+        m_jpWertInnenVertOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true)));
+        m_jpWertInnenVertOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true), false);
+        m_jpWertAussenVert.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK, true)));
+        m_jpWertAussenVert.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.BACK, true), false);
+        m_jpWertAussenVertIn.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen).
+        		format(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true)));
+        m_jpWertAussenVertIn.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true), false);
+        m_jpWertAussenVertOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true)));
+        m_jpWertAussenVertOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true), false);
+        m_jpWertAussenVertDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true)));
+        m_jpWertAussenVertDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true), false);
+        m_jpWertMittelfeld.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true)));
+        m_jpWertMittelfeld.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true), false);
+        m_jpWertMittelfeldAus.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true)));
+        m_jpWertMittelfeldAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true), false);
+        m_jpWertMittelfeldOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true)));
+        m_jpWertMittelfeldOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true), false);
+        m_jpWertMittelfeldDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true)));
+        m_jpWertMittelfeldDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true), false);
+        m_jpWertFluegel.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER, true)));
+        m_jpWertFluegel.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER, true), false);
+        m_jpWertFluegelIn.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true)));
+        m_jpWertFluegelIn.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true), false);
+        m_jpWertFluegelOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true)));
+        m_jpWertFluegelOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true), false);
+        m_jpWertFluegelDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true)));
+        m_jpWertFluegelDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true), false);
+        m_jpWertSturm.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD, true)));
+        m_jpWertSturm.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD, true), false);
+        m_jpWertSturmAus.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true)));
+        m_jpWertSturmAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true), false);
+        m_jpWertSturmDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true)));
+        m_jpWertSturmDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true)
+        		- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true), false);
 		tempSpieler.setAlter(getAge());
 		tempSpieler.setAgeDays(getAgeDays());
 		tempSpieler.setFuehrung(m_clSpieler.getFuehrung());
 		tempSpieler.setSpezialitaet(m_clSpieler.getSpezialitaet());		        
-        EPVData data = new EPVData(tempSpieler);
-        double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);        
-        final String epvtext = java.text.NumberFormat.getCurrencyInstance().format(price);
-        m_jpEPV.setText( epvtext );        
+        m_jpEPV.setText(java.text.NumberFormat.getCurrencyInstance()
+        		.format(HOVerwaltung.instance().getModel().getEPV()
+        		.getPrice(new EPVData(tempSpieler))));        
     }
 
 	private int getAge() {
@@ -977,7 +883,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 			} else {
 				resetLabels();
 			}
-
 		}		
 	}
 }
