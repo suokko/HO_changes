@@ -12,9 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.FocusEvent;
 import java.text.NumberFormat;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,9 +41,11 @@ import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
+import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
-
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
 
 /**
  * A player can be created and modified here.
@@ -55,55 +62,55 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ColorLabelEntry jpBestPos = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-                                                            ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
-    private DoppelLabelEntry jpWertAussenVert = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private DoppelLabelEntry jpWertAussenVertDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertAussenVertIn = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertAussenVertOff = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertFluegel = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private DoppelLabelEntry jpWertFluegelDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertFluegelIn = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertFluegelOff = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertInnenVert = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertInnenVertAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertInnenVertOff = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertMittelfeld = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private DoppelLabelEntry jpWertMittelfeldAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertMittelfeldDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertMittelfeldOff = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertSturm = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-    private DoppelLabelEntry jpWertSturmAus = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertSturmDef = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-    private DoppelLabelEntry jpWertTor = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
+    private ColorLabelEntry jpBestPosition = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+    		ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+    private DoppelLabelEntry jpRatingWingback = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWingbackDefensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWingbackTowardsMiddle = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWingbackOffensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWinger = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWingerDefensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWingerTowardsMiddle = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingWingerOffensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingDefender = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingDefenderTowardsWing = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingDefenderOffensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingMidfielder = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingMidfielderTowardsWing = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingMidfielderDefensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingMidfielderOffensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingForward = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingForwardTowardsWing = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingForwardDefensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+    private DoppelLabelEntry jpRatingKeeper = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private JButton jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
-    private JButton jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton jbEntfernen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
-    private JButton jbHinzufuegen = new JButton(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+    private JButton jbPrint = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+    private JButton jbRemove = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
+    private JButton jbAdd = new JButton(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
     private JButton jbMiniScout = new JButton(HOVerwaltung.instance().getLanguageString("ScoutMini"));
-    private JButton jbUebernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbApply = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbRemoveAll = new JButton(HOVerwaltung.instance().getLanguageString("Scout.RemoveAll"));
-    //private JButton jbClipBoard = new JButton("From Clipboard");
-    private JComboBox jcbErfahrung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbFluegel = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbForm = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_FORM);
-    private JComboBox jcbKondition = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_KONDITION);
-    private JComboBox jcbPasspiel = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbSpeciality = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_SPECIALITY);
-    private JComboBox jcbSpielaufbau = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbStandard = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbTorschuss = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbTorwart = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbVerteidigung = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JLabel jlStatus = new JLabel(HOVerwaltung.instance().getLanguageString("scout_status")
-                                         + ": ");
+    private JComboBox jcbExperience = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbWinger = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbForm = new JComboBox(Helper.EINSTUFUNG_FORM);
+    private JComboBox jcbStamina = new JComboBox(Helper.EINSTUFUNG_KONDITION);
+    private JComboBox jcbPassing = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbSpeciality = new JComboBox(Helper.EINSTUFUNG_SPECIALITY);
+    private JComboBox jcbPlaymaking = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbSetPieces = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbScoring = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbKeeper = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbDefending = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbLoyalty = new JComboBox(Helper.EINSTUFUNG);
+    private JCheckBox jchHomegrown = new JCheckBox();
+    private JLabel jlStatus = new JLabel(HOVerwaltung.instance().getLanguageString("scout_status") + ": ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
-    private JTextArea jtaNotizen = new JTextArea();
-    private JTextField jtfAlter = new JTextField("17.0");
+    private JTextArea jtaNotes = new JTextArea();
+    private JTextField jtfAge = new JTextField("17.0");
     private JTextField jtfTSI = new JTextField("1000");
     private JTextField jtfPrice = new JTextField("0");
 	private JLabel jtfEPV = new JLabel("",SwingConstants.RIGHT);
-    private ScoutEintrag clScoutEintrag;
+    private ScoutEintrag clScoutEntry;
     private SpinnerDateModel clSpinnerModel = new SpinnerDateModel();
     private JSpinner jsSpinner = new JSpinner(clSpinnerModel);
     private JTextField jtfName = new JTextField();
@@ -140,32 +147,28 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      */
     public final void setScoutEintrag(ScoutEintrag scoutEintrag) {
         if (scoutEintrag != null) {
-            clScoutEintrag = scoutEintrag;
-
+            clScoutEntry = scoutEintrag;
             // If scout entry already exists
-            if (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(clScoutEintrag
-                                                                                   .getPlayerID()) != null) {
-                jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_ersetzen"));
-                jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
-                jbEntfernen.setEnabled(true);
+            if (clOwner.getTransferTable().getTransferTableModel()
+            		.getScoutEintrag(clScoutEntry.getPlayerID()) != null) {
+                jbAdd.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_ersetzen"));
+                jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
+                jbRemove.setEnabled(true);
             } else {
-                jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
-                jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
-                jbEntfernen.setEnabled(false);
+                jbAdd.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
+                jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+                jbRemove.setEnabled(false);
             }
-
-            jbHinzufuegen.setEnabled(true);
+            jbAdd.setEnabled(true);
         } else {
-            clScoutEintrag = new ScoutEintrag();
-            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
-            jbEntfernen.setEnabled(false);
-            jbHinzufuegen.setEnabled(false);
+            clScoutEntry = new ScoutEintrag();
+            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+            jbRemove.setEnabled(false);
+            jbAdd.setEnabled(false);
         }
-
         setCBs();
         setLabels();
         checkFields();
-
         invalidate();
         validate();
         repaint();
@@ -176,67 +179,60 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param actionEvent Event fired when button is pressed.
      */
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(jbUebernehmen)) {
+    public final void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource().equals(jbApply)) {
             copyPaste();
-        //} else if (actionEvent.getSource().equals(jbClipBoard)) {
-        //	copyFromClipBoard();
     	} else if (actionEvent.getSource().equals(jbAddTempSpieler)) {
             final Spieler tempSpieler = new Spieler();
             tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
             tempSpieler.setSpielerID(getNextTempSpielerID());
-
             if (jtfName.getText().trim().equals("")) {
                 tempSpieler.setName("Temp " + Math.abs(1000 + tempSpieler.getSpielerID()));
             } else {
                 tempSpieler.setName(jtfName.getText());
             }
-
             tempSpieler.setTSI(Integer.parseInt(jtfTSI.getText()));
             tempSpieler.setSpezialitaet(((CBItem) jcbSpeciality.getSelectedItem()).getId());
-            tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
-            tempSpieler.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
-            tempSpieler.setErfahrung(((CBItem) jcbErfahrung.getSelectedItem()).getId());
+            tempSpieler.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
+            tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
+            tempSpieler.setErfahrung(((CBItem) jcbExperience.getSelectedItem()).getId());
             tempSpieler.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
-            tempSpieler.setKondition(((CBItem) jcbKondition.getSelectedItem()).getId());
-            tempSpieler.setVerteidigung(((CBItem) jcbVerteidigung.getSelectedItem()).getId());
-            tempSpieler.setTorschuss(((CBItem) jcbTorschuss.getSelectedItem()).getId());
-            tempSpieler.setTorwart(((CBItem) jcbTorwart.getSelectedItem()).getId());
-            tempSpieler.setFluegelspiel(((CBItem) jcbFluegel.getSelectedItem()).getId());
-            tempSpieler.setPasspiel(((CBItem) jcbPasspiel.getSelectedItem()).getId());
-            tempSpieler.setStandards(((CBItem) jcbStandard.getSelectedItem()).getId());
-            tempSpieler.setSpielaufbau(((CBItem) jcbSpielaufbau.getSelectedItem()).getId());
-
+            tempSpieler.setKondition(((CBItem) jcbStamina.getSelectedItem()).getId());
+            tempSpieler.setVerteidigung(((CBItem)jcbDefending.getSelectedItem()).getId());
+            tempSpieler.setTorschuss(((CBItem) jcbScoring.getSelectedItem()).getId());
+            tempSpieler.setTorwart(((CBItem) jcbKeeper.getSelectedItem()).getId());
+            tempSpieler.setFluegelspiel(((CBItem) jcbWinger.getSelectedItem()).getId());
+            tempSpieler.setPasspiel(((CBItem) jcbPassing.getSelectedItem()).getId());
+            tempSpieler.setStandards(((CBItem) jcbSetPieces.getSelectedItem()).getId());
+            tempSpieler.setSpielaufbau(((CBItem) jcbPlaymaking.getSelectedItem()).getId());
+            tempSpieler.setLoyalty(((CBItem)jcbLoyalty.getSelectedItem()).getId());
+            tempSpieler.setHomeGrown(jchHomegrown.isSelected());
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
-            de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
-            de.hattrickorganizer.gui.HOMainFrame.instance().showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELERUEBERSICHT);
+            RefreshManager.instance().doReInit();
+            HOMainFrame.instance().showTab(HOMainFrame.SPIELERUEBERSICHT);
         }
-
 		else if (actionEvent.getSource().equals(jbRemoveAll)) {
 			clOwner.removeScoutEntries();
 		}
     	else {
-            clScoutEintrag.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
-            clScoutEintrag.setPrice(Integer.parseInt(jtfPrice.getText()));
-            clScoutEintrag.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
-            clScoutEintrag.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
-            clScoutEintrag.setTSI(Integer.parseInt(jtfTSI.getText()));
-            clScoutEintrag.setName(jtfName.getText());
-            clScoutEintrag.setInfo(jtaNotizen.getText());
-            clScoutEintrag.setDeadline(new java.sql.Timestamp(clSpinnerModel.getDate().getTime()));
-
-            // clScoutEintrag.setDeadline(new java.sql.Timestamp( zeitlong ) );
-            if (actionEvent.getSource().equals(jbHinzufuegen)) {
-                clOwner.addScoutEintrag(clScoutEintrag);
-            } else if (actionEvent.getSource().equals(jbEntfernen)) {
-                clOwner.removeScoutEintrag(clScoutEintrag);
+            clScoutEntry.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
+            clScoutEntry.setPrice(Integer.parseInt(jtfPrice.getText()));
+            clScoutEntry.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
+            clScoutEntry.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
+            clScoutEntry.setTSI(Integer.parseInt(jtfTSI.getText()));
+            clScoutEntry.setName(jtfName.getText());
+            clScoutEntry.setInfo(jtaNotes.getText());
+            clScoutEntry.setDeadline(new java.sql.Timestamp(clSpinnerModel.getDate().getTime()));
+            if (actionEvent.getSource().equals(jbAdd)) {
+                clOwner.addScoutEintrag(clScoutEntry);
+            } else if (actionEvent.getSource().equals(jbRemove)) {
+                clOwner.removeScoutEintrag(clScoutEntry);
             } else if (actionEvent.getSource().equals(jbMiniScout)) {
                 new MiniScoutDialog(this);
-            } else if (actionEvent.getSource().equals(jbDrucken)) {
+            } else if (actionEvent.getSource().equals(jbPrint)) {
                 clOwner.drucken();
             }
         }
-
         checkFields();
     }
 
@@ -245,7 +241,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param focusEvent Event fired when panel receives focus
      */
-    public void focusGained(java.awt.event.FocusEvent focusEvent) {
+    public void focusGained(FocusEvent focusEvent) {
     }
 
     /**
@@ -253,21 +249,16 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param focusEvent Event fired when panel losts focus
      */
-    public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfTSI, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfPlayerID, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfPrice, false)) {
+    public final void focusLost(FocusEvent focusEvent) {
+        if (!Helper.parseInt(HOMainFrame.instance(), jtfTSI, false)
+            || !Helper.parseInt(HOMainFrame.instance(), jtfPlayerID, false)
+            || !Helper.parseInt(HOMainFrame.instance(), jtfPrice, false)) {
             return;
         }
-
         checkFields();
-        if (focusEvent.getSource().equals(jtfAlter)) {
+        if (focusEvent.getSource().equals(jtfAge)) {
 			setLabels();
         }
-
     }
 
     /**
@@ -275,8 +266,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param itemEvent Indicates which item has changed
      */
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
-        if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+    public final void itemStateChanged(ItemEvent itemEvent) {
+        if (itemEvent.getStateChange() == ItemEvent.SELECTED || itemEvent.getSource() == jchHomegrown) {
             setLabels();
         }
     }
@@ -286,7 +277,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param keyEvent Event fired when a key is pressed
      */
-    public void keyPressed(java.awt.event.KeyEvent keyEvent) {
+    public void keyPressed(KeyEvent keyEvent) {
     }
 
     /**
@@ -294,7 +285,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param keyEvent Event fired when a key is released
      */
-    public final void keyReleased(java.awt.event.KeyEvent keyEvent) {
+    public final void keyReleased(KeyEvent keyEvent) {
         checkFields();
     }
 
@@ -303,64 +294,58 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      *
      * @param keyEvent Fired when a key is typed
      */
-    public void keyTyped(java.awt.event.KeyEvent keyEvent) {
+    public void keyTyped(KeyEvent keyEvent) {
     }
 
     /**
      * Set checkboxes to their corresponding value
      */
     private void setCBs() {
-        clSpinnerModel.setValue(clScoutEintrag.getDeadline());
-
-        //m_jtfDatum.setText ( java.text.DateFormat.getDateTimeInstance ().format ( m_clScoutEintrag.getDeadline () ) );
-        jtfPlayerID.setText(clScoutEintrag.getPlayerID() + "");
-        jtfName.setText(clScoutEintrag.getName());
-        jtfPrice.setText(clScoutEintrag.getPrice() + "");
-        jtfAlter.setText(clScoutEintrag.getAlter() + "." + clScoutEintrag.getAgeDays());
-        jtfTSI.setText(clScoutEintrag.getTSI() + "");
-        jtaNotizen.setText(clScoutEintrag.getInfo());
+        clSpinnerModel.setValue(clScoutEntry.getDeadline());
+        jtfPlayerID.setText(clScoutEntry.getPlayerID() + "");
+        jtfName.setText(clScoutEntry.getName());
+        jtfPrice.setText(clScoutEntry.getPrice() + "");
+        jtfAge.setText(clScoutEntry.getAlter() + "." + clScoutEntry.getAgeDays());
+        jtfTSI.setText(clScoutEntry.getTSI() + "");
+        jtaNotes.setText(clScoutEntry.getInfo());
         jcbSpeciality.removeItemListener(this);
-        jcbErfahrung.removeItemListener(this);
+        jcbExperience.removeItemListener(this);
         jcbForm.removeItemListener(this);
-        jcbKondition.removeItemListener(this);
-        jcbSpielaufbau.removeItemListener(this);
-        jcbFluegel.removeItemListener(this);
-        jcbTorschuss.removeItemListener(this);
-        jcbTorwart.removeItemListener(this);
-        jcbPasspiel.removeItemListener(this);
-        jcbVerteidigung.removeItemListener(this);
-        jcbStandard.removeItemListener(this);
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbSpeciality,
-                                                            clScoutEintrag.getSpeciality());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbErfahrung,
-                                                            clScoutEintrag.getErfahrung());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbForm, clScoutEintrag.getForm());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbKondition,
-                                                            clScoutEintrag.getKondition());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbSpielaufbau,
-                                                            clScoutEintrag.getSpielaufbau());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbFluegel,
-                                                            clScoutEintrag.getFluegelspiel());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbTorschuss,
-                                                            clScoutEintrag.getTorschuss());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbTorwart, clScoutEintrag.getTorwart());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbPasspiel,
-                                                            clScoutEintrag.getPasspiel());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbVerteidigung,
-                                                            clScoutEintrag.getVerteidigung());
-        de.hattrickorganizer.tools.Helper.markierenComboBox(jcbStandard,
-                                                            clScoutEintrag.getStandards());
+        jcbStamina.removeItemListener(this);
+        jcbPlaymaking.removeItemListener(this);
+        jcbWinger.removeItemListener(this);
+        jcbScoring.removeItemListener(this);
+        jcbKeeper.removeItemListener(this);
+        jcbPassing.removeItemListener(this);
+        jcbDefending.removeItemListener(this);
+        jcbSetPieces.removeItemListener(this);
+        jcbLoyalty.removeActionListener(this);
+        jchHomegrown.removeActionListener(this);
+        Helper.markierenComboBox(jcbSpeciality, clScoutEntry.getSpeciality());
+        Helper.markierenComboBox(jcbExperience, clScoutEntry.getErfahrung());
+        Helper.markierenComboBox(jcbForm, clScoutEntry.getForm());
+        Helper.markierenComboBox(jcbStamina, clScoutEntry.getKondition());
+        Helper.markierenComboBox(jcbPlaymaking, clScoutEntry.getSpielaufbau());
+        Helper.markierenComboBox(jcbWinger, clScoutEntry.getFluegelspiel());
+        Helper.markierenComboBox(jcbScoring, clScoutEntry.getTorschuss());
+        Helper.markierenComboBox(jcbKeeper, clScoutEntry.getTorwart());
+        Helper.markierenComboBox(jcbPassing, clScoutEntry.getPasspiel());
+        Helper.markierenComboBox(jcbDefending, clScoutEntry.getVerteidigung());
+        Helper.markierenComboBox(jcbSetPieces, clScoutEntry.getStandards());
+        Helper.markierenComboBox(jcbLoyalty, clScoutEntry.getLoyalty());
+        jchHomegrown.setSelected(clScoutEntry.isHomegrown());
         jcbSpeciality.addItemListener(this);
-        jcbErfahrung.addItemListener(this);
+        jcbExperience.addItemListener(this);
         jcbForm.addItemListener(this);
-        jcbKondition.addItemListener(this);
-        jcbSpielaufbau.addItemListener(this);
-        jcbFluegel.addItemListener(this);
-        jcbTorschuss.addItemListener(this);
-        jcbTorwart.addItemListener(this);
-        jcbPasspiel.addItemListener(this);
-        jcbVerteidigung.addItemListener(this);
-        jcbStandard.addItemListener(this);
+        jcbStamina.addItemListener(this);
+        jcbPlaymaking.addItemListener(this);
+        jcbWinger.addItemListener(this);
+        jcbScoring.addItemListener(this);
+        jcbKeeper.addItemListener(this);
+        jcbPassing.addItemListener(this);
+        jcbDefending.addItemListener(this);
+        jcbSetPieces.addItemListener(this);
+        jchHomegrown.addItemListener(this);
     }
 
     /**
@@ -368,155 +353,81 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
      */
     private void setLabels() {
         final Spieler tempSpieler = new Spieler();
-        tempSpieler.setSpezialitaet(((CBItem) jcbSpeciality.getSelectedItem()).getId());
-        tempSpieler.setErfahrung(((CBItem) jcbErfahrung.getSelectedItem()).getId());
-		tempSpieler.setFuehrung(3);
-        tempSpieler.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
-        tempSpieler.setKondition(((CBItem) jcbKondition.getSelectedItem()).getId());
-        tempSpieler.setVerteidigung(((CBItem) jcbVerteidigung.getSelectedItem()).getId());
-        tempSpieler.setTorschuss(((CBItem) jcbTorschuss.getSelectedItem()).getId());
-        tempSpieler.setTorwart(((CBItem) jcbTorwart.getSelectedItem()).getId());
-        tempSpieler.setFluegelspiel(((CBItem) jcbFluegel.getSelectedItem()).getId());
-        tempSpieler.setPasspiel(((CBItem) jcbPasspiel.getSelectedItem()).getId());
-        tempSpieler.setStandards(((CBItem) jcbStandard.getSelectedItem()).getId());
-        tempSpieler.setSpielaufbau(((CBItem) jcbSpielaufbau.getSelectedItem()).getId());
-        tempSpieler.setAlter(Integer.parseInt(jtfAlter.getText().replaceFirst("\\..*", "")));
-        tempSpieler.setAgeDays(Integer.parseInt(jtfAlter.getText().replaceFirst(".*\\.", "")));
-		IEPVData data = new EPVData(tempSpieler);
+        tempSpieler.setSpezialitaet(((CBItem)jcbSpeciality.getSelectedItem()).getId());
+        tempSpieler.setErfahrung(((CBItem)jcbExperience.getSelectedItem()).getId());
+		tempSpieler.setFuehrung(3); // Huh???
+        tempSpieler.setForm(((CBItem)jcbForm.getSelectedItem()).getId());
+        tempSpieler.setKondition(((CBItem)jcbStamina.getSelectedItem()).getId());
+        tempSpieler.setVerteidigung(((CBItem)jcbDefending.getSelectedItem()).getId());
+        tempSpieler.setTorschuss(((CBItem)jcbScoring.getSelectedItem()).getId());
+        tempSpieler.setTorwart(((CBItem)jcbKeeper.getSelectedItem()).getId());
+        tempSpieler.setFluegelspiel(((CBItem)jcbWinger.getSelectedItem()).getId());
+        tempSpieler.setPasspiel(((CBItem)jcbPassing.getSelectedItem()).getId());
+        tempSpieler.setStandards(((CBItem)jcbSetPieces.getSelectedItem()).getId());
+        tempSpieler.setSpielaufbau(((CBItem)jcbPlaymaking.getSelectedItem()).getId());
+        tempSpieler.setLoyalty(((CBItem)jcbLoyalty.getSelectedItem()).getId());
+        tempSpieler.setHomeGrown(jchHomegrown.isSelected());
+        tempSpieler.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
+        tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
+        IEPVData data = new EPVData(tempSpieler);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));
-
-        jpBestPos.setText(de.hattrickorganizer.model.SpielerPosition.getNameForPosition(tempSpieler
-                                                                                        .getIdealPosition())
-                          + " (" + tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)
-                          + ")");
-        jpWertTor.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                             .calcPosValue(ISpielerPosition.KEEPER,
-                                                                                           true),
-                                                                             gui.UserParameter
-                                                                             .instance().anzahlNachkommastellen)
-                                     + "");
-        jpWertInnenVert.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                   .calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,
-                                                                                                 true),
-                                                                                   gui.UserParameter
-                                                                                   .instance().anzahlNachkommastellen)
-                                           + "");
-        jpWertInnenVertAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        jpWertInnenVertOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        jpWertAussenVert.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.BACK,
-                                                                                                  true),
-                                                                                    gui.UserParameter
-                                                                                    .instance().anzahlNachkommastellen)
-                                            + "");
-        jpWertAussenVertIn.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                      .calcPosValue(ISpielerPosition.BACK_TOMID,
-                                                                                                    true),
-                                                                                      gui.UserParameter
-                                                                                      .instance().anzahlNachkommastellen)
-                                              + "");
-        jpWertAussenVertOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.BACK_OFF,
-                                                                                                     true),
-                                                                                       gui.UserParameter
-                                                                                       .instance().anzahlNachkommastellen)
-                                               + "");
-        jpWertAussenVertDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.BACK_DEF,
-                                                                                                     true),
-                                                                                       gui.UserParameter
-                                                                                       .instance().anzahlNachkommastellen)
-                                               + "");
-        jpWertMittelfeld.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.MIDFIELDER,
-                                                                                                  true),
-                                                                                    gui.UserParameter
-                                                                                    .instance().anzahlNachkommastellen)
-                                            + "");
-        jpWertMittelfeldAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,
-                                                                                                     true),
-                                                                                       gui.UserParameter
-                                                                                       .instance().anzahlNachkommastellen)
-                                               + "");
-        jpWertMittelfeldOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.MIDFIELDER_OFF,
-                                                                                                     true),
-                                                                                       gui.UserParameter
-                                                                                       .instance().anzahlNachkommastellen)
-                                               + "");
-        jpWertMittelfeldDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                       .calcPosValue(ISpielerPosition.MIDFIELDER_DEF,
-                                                                                                     true),
-                                                                                       gui.UserParameter
-                                                                                       .instance().anzahlNachkommastellen)
-                                               + "");
-        jpWertFluegel.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                 .calcPosValue(ISpielerPosition.WINGER,
-                                                                                               true),
-                                                                                 gui.UserParameter
-                                                                                 .instance().anzahlNachkommastellen)
-                                         + "");
-        jpWertFluegelIn.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                   .calcPosValue(ISpielerPosition.WINGER_TOMID,
-                                                                                                 true),
-                                                                                   gui.UserParameter
-                                                                                   .instance().anzahlNachkommastellen)
-                                           + "");
-        jpWertFluegelOff.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.WINGER_OFF,
-                                                                                                  true),
-                                                                                    gui.UserParameter
-                                                                                    .instance().anzahlNachkommastellen)
-                                            + "");
-        jpWertFluegelDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                    .calcPosValue(ISpielerPosition.WINGER_DEF,
-                                                                                                  true),
-                                                                                    gui.UserParameter
-                                                                                    .instance().anzahlNachkommastellen)
-                                            + "");
-        jpWertSturm.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                               .calcPosValue(ISpielerPosition.FORWARD,
-                                                                                             true),
-                                                                               gui.UserParameter
-                                                                               .instance().anzahlNachkommastellen)
-                                       + "");
-
-        jpWertSturmAus.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                																.calcPosValue(ISpielerPosition.FORWARD_TOWING,
-															                              true),
-															                    gui.UserParameter
-															                    .instance().anzahlNachkommastellen) + "");
-        jpWertSturmDef.getLinks().setText(de.hattrickorganizer.tools.Helper.round(tempSpieler
-                                                                                  .calcPosValue(ISpielerPosition.FORWARD_DEF,
-                                                                                                true),
-                                                                                  gui.UserParameter
-                                                                                  .instance().anzahlNachkommastellen)
-                                          + "");
-
-        clScoutEintrag.setSpeciality(((CBItem) jcbSpeciality.getSelectedItem()).getId());
-        clScoutEintrag.setErfahrung(((CBItem) jcbErfahrung.getSelectedItem()).getId());
-        clScoutEintrag.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
-        clScoutEintrag.setKondition(((CBItem) jcbKondition.getSelectedItem()).getId());
-        clScoutEintrag.setVerteidigung(((CBItem) jcbVerteidigung.getSelectedItem()).getId());
-        clScoutEintrag.setTorschuss(((CBItem) jcbTorschuss.getSelectedItem()).getId());
-        clScoutEintrag.setTorwart(((CBItem) jcbTorwart.getSelectedItem()).getId());
-        clScoutEintrag.setFluegelspiel(((CBItem) jcbFluegel.getSelectedItem()).getId());
-        clScoutEintrag.setPasspiel(((CBItem) jcbPasspiel.getSelectedItem()).getId());
-        clScoutEintrag.setStandards(((CBItem) jcbStandard.getSelectedItem()).getId());
-        clScoutEintrag.setSpielaufbau(((CBItem) jcbSpielaufbau.getSelectedItem()).getId());
-
+        jpBestPosition.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
+        		+ " (" + 
+        		Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true))
+        		 + ")");
+        jpRatingKeeper.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.KEEPER, true)) + "");
+        jpRatingDefender.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER, true)) + "");
+        jpRatingDefenderTowardsWing.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true)) + "");
+        jpRatingDefenderOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true)) + "");
+        jpRatingWingback.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK, true)) + "");
+        jpRatingWingbackTowardsMiddle.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true)) + "");
+        jpRatingWingbackOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true)) + "");
+        jpRatingWingbackDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true)) + "");
+        jpRatingMidfielder.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true)) + "");
+        jpRatingMidfielderTowardsWing.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true)) + "");
+        jpRatingMidfielderOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true)) + "");
+        jpRatingMidfielderDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true)) + "");
+        jpRatingWinger.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER, true)) + "");
+        jpRatingWingerTowardsMiddle.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true)) + "");
+        jpRatingWingerOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true)) + "");
+        jpRatingWingerDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true)) + "");
+        jpRatingForward.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD, true)) + "");
+        jpRatingForwardTowardsWing.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true)) + "");
+        jpRatingForwardDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true)) + "");
+        clScoutEntry.setSpeciality(((CBItem) jcbSpeciality.getSelectedItem()).getId());
+        clScoutEntry.setErfahrung(((CBItem) jcbExperience.getSelectedItem()).getId());
+        clScoutEntry.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
+        clScoutEntry.setKondition(((CBItem) jcbStamina.getSelectedItem()).getId());
+        clScoutEntry.setVerteidigung(((CBItem) jcbDefending.getSelectedItem()).getId());
+        clScoutEntry.setTorschuss(((CBItem) jcbScoring.getSelectedItem()).getId());
+        clScoutEntry.setTorwart(((CBItem) jcbKeeper.getSelectedItem()).getId());
+        clScoutEntry.setFluegelspiel(((CBItem) jcbWinger.getSelectedItem()).getId());
+        clScoutEntry.setPasspiel(((CBItem) jcbPassing.getSelectedItem()).getId());
+        clScoutEntry.setStandards(((CBItem) jcbSetPieces.getSelectedItem()).getId());
+        clScoutEntry.setSpielaufbau(((CBItem) jcbPlaymaking.getSelectedItem()).getId());
+        clScoutEntry.setLoyalty(((CBItem) jcbLoyalty.getSelectedItem()).getId());
+        clScoutEntry.setHomegrown(jchHomegrown.isSelected());
     }
 
     /**
@@ -533,42 +444,16 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             valid = false;
         }
 
-        if (valid
-            && (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(id) != null)) {
-            jbHinzufuegen.setEnabled(true);
-            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
-            jbEntfernen.setEnabled(true);
+        if (valid && (clOwner.getTransferTable().getTransferTableModel().getScoutEintrag(id) != null)) {
+            jbAdd.setEnabled(true);
+            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutErsetzen"));
+            jbRemove.setEnabled(true);
         } else {
-            jbHinzufuegen.setEnabled(true);
-            jbHinzufuegen.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
-            jbEntfernen.setEnabled(false);
+            jbAdd.setEnabled(true);
+            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+            jbRemove.setEnabled(false);
         }
     }
-
-    /* Not used anymore
-    private void copyFromClipBoard() {
-    	try {
-			Clipboard clipboard = getToolkit().getSystemClipboard ();
-			Transferable trans = clipboard.getContents(this);
-			DataFlavor[] dfs = trans.getTransferDataFlavors();
-			for (int m=0; m<dfs.length; m++) {
-				System.out.println(dfs[m].getHumanPresentableName() + " / " + dfs[m].getMimeType() + " - " + dfs[m].getPrimaryType() + " - " + dfs[m].getSubType());
-				if ((trans != null) && (trans.isDataFlavorSupported (dfs[m]))) {
-					String tempString = "" + trans.getTransferData(dfs[m]); //DataFlavor.stringFlavor);
-					System.out.println(tempString);
-					System.out.println("---------------------------------------------------------------------------");
-				}
-			}
-//			if ((trans != null) && (trans.isDataFlavorSupported (DataFlavor.stringFlavor))) {
-//				String tempString;
-//				tempString = (String) trans.getTransferData(DataFlavor.stringFlavor);
-//				System.out.println(tempString);
-//			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
-    */
 
     /**
      * Calls playerconverter and fills boxes to the corresponding values
@@ -583,44 +468,50 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             if (player != null) {
                 jtfPlayerID.setText(player.getPlayerID() + "");
                 jtfName.setText(player.getPlayerName());
-                jtfAlter.setText(player.getAge() + "." + player.getAgeDays());
+                jtfAge.setText(player.getAge() + "." + player.getAgeDays());
                 jtfPrice.setText(player.getPrice() + "");
                 jtfTSI.setText(player.getTSI() + "");
-                jtaNotizen.setText(player.getInfo());
+                jtaNotes.setText(player.getInfo());
 
                 jcbSpeciality.removeItemListener(this);
                 Helper.markierenComboBox(jcbSpeciality,player.getSpeciality());
                 jcbSpeciality.addItemListener(this);
-                jcbErfahrung.removeItemListener(this);
-                Helper.markierenComboBox(jcbErfahrung,player.getExperience());
-                jcbErfahrung.addItemListener(this);
+                jcbExperience.removeItemListener(this);
+                Helper.markierenComboBox(jcbExperience,player.getExperience());
+                jcbExperience.addItemListener(this);
                 jcbForm.removeItemListener(this);
                 Helper.markierenComboBox(jcbForm, player.getForm());
                 jcbForm.addItemListener(this);
-                jcbKondition.removeItemListener(this);
-                Helper.markierenComboBox(jcbKondition,player.getStamina());
-                jcbKondition.addItemListener(this);
-                jcbVerteidigung.removeItemListener(this);
-                Helper.markierenComboBox(jcbVerteidigung,player.getDefense());
-                jcbVerteidigung.addItemListener(this);
-                jcbTorschuss.removeItemListener(this);
-                Helper.markierenComboBox(jcbTorschuss, player.getAttack());
-                jcbTorschuss.addItemListener(this);
-                jcbTorwart.removeItemListener(this);
-                Helper.markierenComboBox(jcbTorwart,player.getGoalKeeping());
-                jcbTorwart.addItemListener(this);
-                jcbFluegel.removeItemListener(this);
-                Helper.markierenComboBox(jcbFluegel, player.getWing());
-                jcbFluegel.addItemListener(this);
-                jcbPasspiel.removeItemListener(this);
-                Helper.markierenComboBox(jcbPasspiel, player.getPassing());
-                jcbPasspiel.addItemListener(this);
-                jcbStandard.removeItemListener(this);
-                Helper.markierenComboBox(jcbStandard,player.getSetPieces());
-                jcbStandard.addItemListener(this);
-
+                jcbStamina.removeItemListener(this);
+                Helper.markierenComboBox(jcbStamina,player.getStamina());
+                jcbStamina.addItemListener(this);
+                jcbDefending.removeItemListener(this);
+                Helper.markierenComboBox(jcbDefending,player.getDefense());
+                jcbDefending.addItemListener(this);
+                jcbScoring.removeItemListener(this);
+                Helper.markierenComboBox(jcbScoring, player.getAttack());
+                jcbScoring.addItemListener(this);
+                jcbKeeper.removeItemListener(this);
+                Helper.markierenComboBox(jcbKeeper,player.getGoalKeeping());
+                jcbKeeper.addItemListener(this);
+                jcbWinger.removeItemListener(this);
+                Helper.markierenComboBox(jcbWinger, player.getWing());
+                jcbWinger.addItemListener(this);
+                jcbPassing.removeItemListener(this);
+                Helper.markierenComboBox(jcbPassing, player.getPassing());
+                jcbPassing.addItemListener(this);
+                jcbSetPieces.removeItemListener(this);
+                Helper.markierenComboBox(jcbSetPieces,player.getSetPieces());
+                jcbSetPieces.addItemListener(this);
+                jcbLoyalty.removeItemListener(this);
+                Helper.markierenComboBox(jcbLoyalty,player.getLoyalty());
+                jcbLoyalty.addItemListener(this);
+                jchHomegrown.removeItemListener(this);
+                jchHomegrown.setSelected(player.isHomwGrown());
+                jchHomegrown.addItemListener(this);
+                
                 // Listener stays here for recalculation of rating
-                Helper.markierenComboBox(jcbSpielaufbau,player.getPlayMaking());
+                Helper.markierenComboBox(jcbPlaymaking,player.getPlayMaking());
 
                 // Normally not working. Thus last positioned
                 final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("dd.MM.yy HH:mm",
@@ -643,18 +534,14 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 case 1:
                     message = HOVerwaltung.instance().getLanguageString("scout_warning");
                     break;
-
                 case 2:
                     message = HOVerwaltung.instance().getLanguageString("scout_error");
                     break;
-
                 default:
                     message = HOVerwaltung.instance().getLanguageString("scout_success");
             }
         }
-
-        jlStatus.setText(HOVerwaltung.instance().getLanguageString("scout_status") + ": "
-                         + message);
+        jlStatus.setText(HOVerwaltung.instance().getLanguageString("scout_status") + ": " + message);
     }
 
     /**
@@ -675,7 +562,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         // Entries
         panel = new ImagePanel();
-        panel.setLayout(new GridLayout(9, 4, 4, 4));
+        panel.setLayout(new GridLayout(10, 4, 4, 4));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("ID"));
         panel.add(label);
@@ -691,9 +578,9 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
         panel.add(label);
-        jtfAlter.setHorizontalAlignment(JLabel.RIGHT);
-        jtfAlter.addFocusListener(this);
-        panel.add(jtfAlter);
+        jtfAge.setHorizontalAlignment(JLabel.RIGHT);
+        jtfAge.addFocusListener(this);
+        panel.add(jtfAge);
 
         label = new JLabel("TSI");
         panel.add(label);
@@ -723,8 +610,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.experience"));
         panel.add(label);
-        jcbErfahrung.addItemListener(this);
-        panel.add(jcbErfahrung);
+        jcbExperience.addItemListener(this);
+        panel.add(jcbExperience);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
         panel.add(label);
@@ -733,44 +620,54 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
         panel.add(label);
-        jcbKondition.addItemListener(this);
-        panel.add(jcbKondition);
+        jcbStamina.addItemListener(this);
+        panel.add(jcbStamina);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
         panel.add(label);
-        jcbTorwart.addItemListener(this);
-        panel.add(jcbTorwart);
+        jcbKeeper.addItemListener(this);
+        panel.add(jcbKeeper);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
         panel.add(label);
-        jcbSpielaufbau.addItemListener(this);
-        panel.add(jcbSpielaufbau);
+        jcbPlaymaking.addItemListener(this);
+        panel.add(jcbPlaymaking);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
         panel.add(label);
-        jcbPasspiel.addItemListener(this);
-        panel.add(jcbPasspiel);
+        jcbPassing.addItemListener(this);
+        panel.add(jcbPassing);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
         panel.add(label);
-        jcbFluegel.addItemListener(this);
-        panel.add(jcbFluegel);
+        jcbWinger.addItemListener(this);
+        panel.add(jcbWinger);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
         panel.add(label);
-        jcbVerteidigung.addItemListener(this);
-        panel.add(jcbVerteidigung);
+        jcbDefending.addItemListener(this);
+        panel.add(jcbDefending);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
         panel.add(label);
-        jcbTorschuss.addItemListener(this);
-        panel.add(jcbTorschuss);
+        jcbScoring.addItemListener(this);
+        panel.add(jcbScoring);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
         panel.add(label);
-        jcbStandard.addItemListener(this);
-        panel.add(jcbStandard);
+        jcbSetPieces.addItemListener(this);
+        panel.add(jcbSetPieces);
 
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Loyalty"));
+        panel.add(label);
+        jcbLoyalty.addItemListener(this);
+        panel.add(jcbLoyalty);
+        
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
+        panel.add(label);
+        jchHomegrown.addItemListener(this);
+        panel.add(jchHomegrown);
+        
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.NORTH;
@@ -781,8 +678,8 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel = new ImagePanel();
         panel.setLayout(new BorderLayout());
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Notizen")));
-        jtaNotizen.addFocusListener(this);
-        panel.add(new JScrollPane(jtaNotizen), BorderLayout.CENTER);
+        jtaNotes.addFocusListener(this);
+        panel.add(new JScrollPane(jtaNotes), BorderLayout.CENTER);
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
@@ -797,11 +694,9 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("CopyPaste")));
         jtaCopyPaste.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_CopyPaste"));
         panel.add(new JScrollPane(jtaCopyPaste), BorderLayout.NORTH);
-        jbUebernehmen.addActionListener(this);
-        //jbClipBoard.addActionListener(this);
-        layout.setConstraints(jbUebernehmen, constraints);
-        panel.add(jbUebernehmen, BorderLayout.CENTER);
-        //panel.add(jbClipBoard, BorderLayout.CENTER);
+        jbApply.addActionListener(this);
+        layout.setConstraints(jbApply, constraints);
+        panel.add(jbApply, BorderLayout.CENTER);
         panel.add(jlStatus, BorderLayout.SOUTH);
 
         constraints.fill = GridBagConstraints.BOTH;
@@ -818,83 +713,83 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("BestePosition"));
         panel.add(label);
-        panel.add(jpBestPos.getComponent(false));
+        panel.add(jpBestPosition.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
         panel.add(label);
-        panel.add(jpWertTor.getComponent(false));
+        panel.add(jpRatingKeeper.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger"));
         panel.add(label);
-        panel.add(jpWertInnenVert.getComponent(false));
+        panel.add(jpRatingDefender.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"));
         panel.add(label);
-        panel.add(jpWertInnenVertAus.getComponent(false));
+        panel.add(jpRatingDefenderTowardsWing.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"));
         panel.add(label);
-        panel.add(jpWertInnenVertOff.getComponent(false));
+        panel.add(jpRatingDefenderOffensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger"));
         panel.add(label);
-        panel.add(jpWertAussenVert.getComponent(false));
+        panel.add(jpRatingWingback.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"));
         panel.add(label);
-        panel.add(jpWertAussenVertIn.getComponent(false));
+        panel.add(jpRatingWingbackTowardsMiddle.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"));
         panel.add(label);
-        panel.add(jpWertAussenVertOff.getComponent(false));
+        panel.add(jpRatingWingbackOffensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"));
         panel.add(label);
-        panel.add(jpWertAussenVertDef.getComponent(false));
+        panel.add(jpRatingWingbackDefensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld"));
         panel.add(label);
-        panel.add(jpWertMittelfeld.getComponent(false));
+        panel.add(jpRatingMidfielder.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"));
         panel.add(label);
-        panel.add(jpWertMittelfeldAus.getComponent(false));
+        panel.add(jpRatingMidfielderTowardsWing.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"));
         panel.add(label);
-        panel.add(jpWertMittelfeldOff.getComponent(false));
+        panel.add(jpRatingMidfielderOffensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"));
         panel.add(label);
-        panel.add(jpWertMittelfeldDef.getComponent(false));
+        panel.add(jpRatingMidfielderDefensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
         panel.add(label);
-        panel.add(jpWertFluegel.getComponent(false));
+        panel.add(jpRatingWinger.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"));
         panel.add(label);
-        panel.add(jpWertFluegelIn.getComponent(false));
+        panel.add(jpRatingWingerTowardsMiddle.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"));
         panel.add(label);
-        panel.add(jpWertFluegelOff.getComponent(false));
+        panel.add(jpRatingWingerOffensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"));
         panel.add(label);
-        panel.add(jpWertFluegelDef.getComponent(false));
+        panel.add(jpRatingWingerDefensive.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm"));
         panel.add(label);
-        panel.add(jpWertSturm.getComponent(false));
+        panel.add(jpRatingForward.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Aus"));
         panel.add(label);
-        panel.add(jpWertSturmAus.getComponent(false));
+        panel.add(jpRatingForwardTowardsWing.getComponent(false));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Def"));
         panel.add(label);
-        panel.add(jpWertSturmDef.getComponent(false));
+        panel.add(jpRatingForwardDefensive.getComponent(false));
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = 1;
@@ -907,22 +802,22 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(6, 1, 4, 4));
 
-        jbHinzufuegen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
-        jbHinzufuegen.addActionListener(this);
-        panel.add(jbHinzufuegen);
-        jbEntfernen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_entfernen"));
-        jbEntfernen.addActionListener(this);
-        jbEntfernen.setEnabled(false);
-        panel.add(jbEntfernen);
+        jbAdd.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
+        jbAdd.addActionListener(this);
+        panel.add(jbAdd);
+        jbRemove.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_entfernen"));
+        jbRemove.addActionListener(this);
+        jbRemove.setEnabled(false);
+        panel.add(jbRemove);
 		jbRemoveAll.addActionListener(this);
 		jbRemoveAll.setToolTipText(HOVerwaltung.instance().getLanguageString("Scout.tt_RemoveAll"));
 		panel.add(jbRemoveAll);
         jbMiniScout.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_Miniscout"));
         jbMiniScout.addActionListener(this);
         panel.add(jbMiniScout);
-        jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_drucken"));
-        jbDrucken.addActionListener(this);
-        panel.add(jbDrucken);
+        jbPrint.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_drucken"));
+        jbPrint.addActionListener(this);
+        panel.add(jbPrint);
         jbAddTempSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_add_tempspieler"));
         jbAddTempSpieler.addActionListener(this);
         panel.add(jbAddTempSpieler);

@@ -700,6 +700,11 @@ public class PlayerConverter {
     	player.setPassing((skillvalues.get(((Integer) (foundskills.get(8)).get(2)).intValue())).intValue());
     	player.setAttack((skillvalues.get(((Integer) (foundskills.get(9)).get(2)).intValue())).intValue());
     	player.setSetPieces((skillvalues.get(((Integer) (foundskills.get(10)).get(2)).intValue())).intValue());
+    	if (foundskills.size() > 11)
+    	{
+    		player.setLoyalty((skillvalues.get(((Integer) (foundskills.get(11)).get(2)).intValue())).intValue());
+    		player.setHomeGrown((skillvalues.get(((Integer)(foundskills.get(12)).get(2)).intValue())).intValue() == 1);
+    	}
     }
 
     /**
@@ -712,13 +717,18 @@ public class PlayerConverter {
 	    player.setExperience((skillvalues.get(((Integer) (foundskills.get(2)).get(2)).intValue())).intValue());
 	    player.setLeadership((skillvalues.get(((Integer) (foundskills.get(3)).get(2)).intValue())).intValue());
 
-	    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) (foundskills.get(5)).get(2)).intValue())).intValue());
+   	    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) (foundskills.get(5)).get(2)).intValue())).intValue());
 	    player.setDefense(((Integer) skillvalues.get(((Integer) (foundskills.get(9)).get(2)).intValue())).intValue());
 	    player.setPlayMaking(((Integer) skillvalues.get(((Integer) (foundskills.get(6)).get(2)).intValue())).intValue());
 	    player.setWing(((Integer) skillvalues.get(((Integer) (foundskills.get(8)).get(2)).intValue())).intValue());
 	    player.setPassing(((Integer) skillvalues.get(((Integer) (foundskills.get(7)).get(2)).intValue())).intValue());
 	    player.setAttack(((Integer) skillvalues.get(((Integer) (foundskills.get(10)).get(2)).intValue())).intValue());
 	    player.setSetPieces(((Integer) skillvalues.get(((Integer) (foundskills.get(11)).get(2)).intValue())).intValue());
+	    if (foundskills.size() > 12)
+	    {
+		    player.setLoyalty(((Integer) skillvalues.get(((Integer) (foundskills.get(12)).get(2)).intValue())).intValue());
+		    player.setHomeGrown((skillvalues.get(((Integer)(foundskills.get(13)).get(2)).intValue())).intValue() == 1);
+	    }
     }
 
     public static int getPrice(String bid, String curbid) {

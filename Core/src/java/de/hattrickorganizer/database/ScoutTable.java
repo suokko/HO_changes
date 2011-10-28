@@ -18,7 +18,7 @@ public final class ScoutTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[24];
+		columns = new ColumnDescriptor[26];
 		columns[0]= new ColumnDescriptor("PlayerID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("Name",Types.VARCHAR,true,127);
 		columns[2]= new ColumnDescriptor("Info",Types.VARCHAR,false,256);
@@ -43,6 +43,8 @@ public final class ScoutTable extends AbstractTable {
 		columns[21]= new ColumnDescriptor("baseWage",Types.INTEGER,false);
 		columns[22]= new ColumnDescriptor("Nationality",Types.INTEGER,false);
 		columns[23]= new ColumnDescriptor("Leadership",Types.INTEGER,false);
+		columns[24]= new ColumnDescriptor("Loyalty",Types.INTEGER,false);
+		columns[25]= new ColumnDescriptor("MotherClub",Types.BOOLEAN,false);
 	}
 
 	/**
@@ -54,7 +56,7 @@ public final class ScoutTable extends AbstractTable {
 	protected void saveScoutList(Vector<ScoutEintrag> list) {
 		String sql = "";
 		String bool = "0";
-
+		String hg = "0";
 		// What should be done when list = null?? jailbird.
 		if (list != null) {
 			// Delete already existing list
@@ -68,10 +70,14 @@ public final class ScoutTable extends AbstractTable {
 				} else {
 					bool = "0";
 				}
+				if (scout.isHomegrown())
+					hg = "1";
+				else
+					hg = "0";
 
 				// Prepare insert statement
 				sql =
-					"INSERT INTO "+getTableName()+" (Name, Info, Age, AgeDays, Marktwert, Kondition, Erfahrung,  Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Deadline, Wecker, PlayerID, Speciality, Price, Agreeability, baseWage, Nationality, Leadership ) VALUES (";
+					"INSERT INTO "+getTableName()+" (Name, Info, Age, AgeDays, Marktwert, Kondition, Erfahrung,  Form, Torwart, Verteidigung, Spielaufbau, Fluegel, Torschuss, Passpiel, Standards, Deadline, Wecker, PlayerID, Speciality, Price, Agreeability, baseWage, Nationality, Leadership, Loyalty, MotherClub ) VALUES (";
 				sql
 					+= ("'"
 						+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(scout.getName())
@@ -121,6 +127,10 @@ public final class ScoutTable extends AbstractTable {
 						+ scout.getNationality()
 						+ ", "
 						+ scout.getLeadership()
+						+ ", "
+						+ scout.getLoyalty()
+						+ ", "
+						+ hg
 						+ ")");
 
 				try {

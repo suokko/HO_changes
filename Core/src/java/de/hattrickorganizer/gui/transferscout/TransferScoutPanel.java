@@ -7,7 +7,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
@@ -17,8 +18,10 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.ScoutThread;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
-
-
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.gui.print.ComponentPrintObject;
+import de.hattrickorganizer.gui.print.PrintController;
+import de.hattrickorganizer.gui.utils.TableSorter;
 /**
  * The TransferScout main Panel
  */
@@ -97,25 +100,16 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
             scrollPane.getViewport().setBackground(Color.white);
 
-            final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
-                                                                                   .getInstance();
-
+            final PrintController printController = PrintController.getInstance();
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-
-            final String titel = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TransferScout")
+            final String title = HOVerwaltung.instance().getLanguageString("TransferScout")
                                  + " - "
-                                 + de.hattrickorganizer.model.HOVerwaltung.instance().getModel()
-                                                                          .getBasics().getTeamName()
+                                 + HOVerwaltung.instance().getModel().getBasics().getTeamName()
                                  + " - "
-                                 + java.text.DateFormat.getDateTimeInstance().format(calendar
-                                                                                     .getTime());
-            printController.add(new de.hattrickorganizer.gui.print.ComponentPrintObject(printController
-                                                                                        .getPf(),
-                                                                                        titel,
-                                                                                        scrollPane,
-                                                                                        de.hattrickorganizer.gui.print.ComponentPrintObject.NICHTSICHTBAR));
-
+                                 + java.text.DateFormat.getDateTimeInstance().format(calendar.getTime());
+            printController.add(new ComponentPrintObject(printController.getPf(), title,
+            		scrollPane, ComponentPrintObject.NICHTSICHTBAR));
             printController.print();
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
@@ -127,7 +121,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param keyEvent TODO Missing Method Parameter Documentation
      */
-    public final void keyPressed(java.awt.event.KeyEvent keyEvent) {
+    public final void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtTransferTable)) {
             newSelectionInform();
         }
@@ -138,7 +132,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param keyEvent TODO Missing Method Parameter Documentation
      */
-    public final void keyReleased(java.awt.event.KeyEvent keyEvent) {
+    public final void keyReleased(KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtTransferTable)) {
             newSelectionInform();
         }
@@ -149,11 +143,11 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param keyEvent TODO Missing Method Parameter Documentation
      */
-    public void keyTyped(java.awt.event.KeyEvent keyEvent) {
+    public void keyTyped(KeyEvent keyEvent) {
     }
 
     //------------Listener---------------------------------------------------
-    public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
+    public void mouseClicked(MouseEvent mouseEvent) {
     }
 
     /**
@@ -161,7 +155,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param mouseEvent TODO Missing Method Parameter Documentation
      */
-    public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
+    public void mouseEntered(MouseEvent mouseEvent) {
     }
 
     /**
@@ -169,7 +163,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param mouseEvent TODO Missing Method Parameter Documentation
      */
-    public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
+    public void mouseExited(MouseEvent mouseEvent) {
     }
 
     /**
@@ -177,7 +171,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param mouseEvent TODO Missing Method Parameter Documentation
      */
-    public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
+    public void mousePressed(MouseEvent mouseEvent) {
     }
 
     /**
@@ -185,7 +179,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      *
      * @param mouseEvent TODO Missing Method Parameter Documentation
      */
-    public final void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
+    public final void mouseReleased(MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtTransferTable)) {
             newSelectionInform();
         }
@@ -194,10 +188,8 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
     //------------------------------------------------------
     public final void newSelectionInform() {
         final int row = m_jtTransferTable.getSelectedRow();
-
         if (row > -1) {
-            final de.hattrickorganizer.gui.utils.TableSorter model = (de.hattrickorganizer.gui.utils.TableSorter) m_jtTransferTable
-                                                                     .getModel();
+            final TableSorter model = (TableSorter)m_jtTransferTable.getModel();
             m_jpTransferEingabePanel.setScoutEintrag(model.getScoutEintrag(row).duplicate());
         } else {
             //m_jpTransferEingabePanel.setSpieler( null );
@@ -234,9 +226,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      * TODO Missing Method Documentation
      */
     public final void saveScoutListe() {
-        de.hattrickorganizer.database.DBZugriff.instance().saveScoutList(
-                                                                         m_jtTransferTable.getTransferTableModel()
-                                                                                          .getScoutListe());
+        DBZugriff.instance().saveScoutList(m_jtTransferTable.getTransferTableModel().getScoutListe());
     }
 
     /**

@@ -28,7 +28,6 @@ public class TransferTable extends JTable implements Refreshable {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    //private DragSource                  m_clDragsource  =   null;
     public TransferTable() {
         super();
         m_clTableModel = new TransferTableModel(DBZugriff.instance().getScoutList());
@@ -149,48 +148,5 @@ public class TransferTable extends JTable implements Refreshable {
         setRowSelectionAllowed(true);
 
         m_clTableSorter.initsort();
-
-        //setGridColor(new Color(220, 220, 220));
-        //getTableHeader().setReorderingAllowed( false );
-        //m_clDragsource = new DragSource();
-        //m_clDragsource.createDefaultDragGestureRecognizer( this, 1, this );
     }
-
-    //----------------Listener-------------------------------------------
-
-    /*
-       public void dragEnter(DragSourceDragEvent dragsourcedragevent)
-       {
-       }
-    
-       public void dragOver(DragSourceDragEvent dragsourcedragevent)
-       {
-       }
-    
-       public void dropActionChanged(DragSourceDragEvent dragsourcedragevent)
-       {
-       }
-    
-       public void dragExit(DragSourceEvent dragsourceevent)
-       {
-       }
-    
-       public void dragDropEnd(DragSourceDropEvent dragsourcedropevent)
-       {
-       }
-    
-       public void dragGestureRecognized(DragGestureEvent draggestureevent)
-       {
-           int row = getSelectedRow();
-           if ( row >= 0 )
-           {
-               Spieler spieler = m_clTableModel.getSpieler( row );
-               if( spieler != null )
-               {
-                   SpielerTransferable spielertransferable = new SpielerTransferable( spieler );
-                   m_clDragsource.startDrag(draggestureevent, DragSource.DefaultCopyNoDrop, spielertransferable, this);
-               }
-           }
-       }
-     */
 }
