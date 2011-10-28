@@ -36,14 +36,16 @@ public abstract class Schema  {
 		cache.clear();
 		List<ThemeData.XmlValue> list = data.getXmlValue();
 		for (ThemeData.XmlValue xmlValue : list) {
+			if(xmlValue.getType().startsWith("UI")){
+				UIManager.put(xmlValue.getKey(), createObjectFromXmlValue(xmlValue));
+			}
 			cache.put(xmlValue.getKey(), createObjectFromXmlValue(xmlValue));
 		}
 	}
 	
 	private Object createObjectFromXmlValue(ThemeData.XmlValue xmlValue){
 		final String type = xmlValue.getType();
-		if (type.equals("Color")){
-			
+		if (type.contains("Color")){
 			String[] rgb = xmlValue.getValue().split(",");
 			if(rgb.length==3)
 				return new Color(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2]));
@@ -56,11 +58,11 @@ public abstract class Schema  {
 				int a = Integer.parseInt(rgb[3]);
 				return new Color(r,g,b,a);
 			}
-		}else if (type.equals("BigDecimal")){
+		}else if (type.contains("BigDecimal")){
 			return new BigDecimal(xmlValue.getValue());
-		}else if(type.equals("Timestamp")){
+		}else if(type.contains("Timestamp")){
 			return Timestamp.valueOf(xmlValue.getValue());
-		}else if(type.equals("Boolean")){
+		}else if(type.contains("Boolean")){
 			return Boolean.valueOf(xmlValue.getValue());
 		}
 		return xmlValue.getValue();
