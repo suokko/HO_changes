@@ -30,6 +30,8 @@ public class Player {
     private int stamina;
     private int tsi;
     private int wing;
+    private int loyalty;
+    private boolean homegrown;
     private String booked = null;
     private int agreeability;
     private int baseWage;
@@ -512,7 +514,42 @@ public class Player {
     	return this.booked;
     }
 
+    /**
+     * Setter for loyalty
+     *
+     * @param i Set loyalty to i
+     */
+    public final void setLoyalty(int i) {
+        loyalty = i;
+    }
 
+    /**
+     * Getter for loyalty
+     *
+     * @return Returns loyalty
+     */
+    public final int getLoyalty() {
+        return loyalty;
+    }
+    
+    /**
+     * Setter for homegrown
+     *
+     * @param b Set homegrown to b
+     */
+    public final void setHomeGrown(boolean b) {
+    	homegrown = b;
+    }
+
+    /**
+     * Getter for homegrown
+     *
+     * @return Returns homegrown
+     */
+    public final boolean isHomwGrown() {
+        return homegrown;
+    }
+    
     /**
      * Creates a string representation of the object
      *
@@ -538,6 +575,8 @@ public class Player {
         buffer.append(", defense = " + defense);
         buffer.append(", attack = " + attack);
         buffer.append(", setPieces = " + setPieces);
+        buffer.append(", loyalty = " + loyalty);
+        buffer.append(", homegrown = " + homegrown);
         buffer.append(", agreeability = " + agreeability);
         buffer.append(", baseWage = " + baseWage);
         buffer.append(", nationality = " + nationality);

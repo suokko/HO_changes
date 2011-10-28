@@ -75,7 +75,9 @@ public class ScoutEintrag {
 
     /** Verteidigung */
     protected int m_iVerteidigung = 0;
-    
+    // Loyalty
+    protected int m_iLoyalty = 0;
+    protected boolean m_bHomegrown = false;
     protected int m_iAgreeability = 0;
     protected int m_ibaseWage = 2500;
     protected int m_iNationality = 0;
@@ -122,6 +124,8 @@ public class ScoutEintrag {
             m_ibaseWage = rs.getInt("baseWage");
             m_iNationality = rs.getInt("Nationality");
             m_iLeadership = rs.getInt("Leadership");
+            m_iLoyalty = rs.getInt("Loyalty");
+            m_bHomegrown = rs.getBoolean("MotherClub");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor ScoutEintrag : " + e.toString());
         }
@@ -496,6 +500,42 @@ public class ScoutEintrag {
     }
 
     /**
+     * Setter for property m_iLoyalty.
+     *
+     * @param iLoyalty New value of property m_iLoyalty.
+     */
+    public final void setLoyalty(int iLoyalty) {
+        this.m_iLoyalty = iLoyalty;
+    }
+
+    /**
+     * Getter for property m_iLoyalty.
+     *
+     * @return Value of property m_iLoyalty.
+     */
+    public final int getLoyalty() {
+        return m_iLoyalty;
+    }
+    
+    /**
+     * Setter for property m_bWecker.
+     *
+     * @param bHomegrown New value of property m_bWecker.
+     */
+    public final void setHomegrown(boolean bHomegrown) {
+        this.m_bHomegrown = bHomegrown;
+    }
+
+    /**
+     * Getter for property m_bHomegrown.
+     *
+     * @return Value of property m_bHomegrown.
+     */
+    public final boolean isHomegrown() {
+        return m_bHomegrown;
+    }
+    
+    /**
      * Setter for property m_bWecker.
      *
      * @param m_bWecker New value of property m_bWecker.
@@ -616,7 +656,8 @@ public class ScoutEintrag {
         eintrag.setbaseWage(getbaseWage());
         eintrag.setNationality(getNationality());
         eintrag.setLeadership(getLeadership());
-
+        eintrag.setLoyalty(getLoyalty());
+        eintrag.setHomegrown(isHomegrown());
         return eintrag;
     }
 
