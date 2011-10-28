@@ -12,8 +12,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
-
+import java.awt.event.ItemEvent;
+import java.awt.event.ActionEvent;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,7 +36,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
-
+import de.hattrickorganizer.tools.Helper;
 
 /**
  * MiniScout dialog
@@ -60,6 +62,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     private JComboBox jcbStamina = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_KONDITION);
     private JComboBox jcbStandards = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
     private JComboBox jcbWinger = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
+    private JComboBox jcbLoyalty = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
+    private JCheckBox jchHomegrown = new JCheckBox();
     private JLabel jlRating = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt")
                                          + ": 0.0");
     private JLabel jlStatus = new JLabel("Status: ");
@@ -83,7 +87,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      * @param owner the parent control holding this dialog
      */
     public MiniScoutDialog(TransferEingabePanel owner) {
-        super(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ScoutMini"));
+        super(HOVerwaltung.instance().getLanguageString("ScoutMini"));
         this.setIconImage(HOMainFrame.instance().getIconImage());
         clOwner = owner;
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -100,7 +104,6 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     @Override
 	public final void setVisible(boolean isVisible) {
         super.setVisible(isVisible);
-
         if (!isVisible) {
             gui.UserParameter.instance().miniscout_PositionX = this.getLocation().x;
             gui.UserParameter.instance().miniscout_PositionY = this.getLocation().y;
@@ -112,7 +115,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      *
      * @param actionEvent event given when pressed a button
      */
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+    public final void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(jbApply)) {
             clOwner.setScoutEintrag(createScoutEintrag());
             this.setVisible(false);
@@ -144,12 +147,9 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      * @param e event when window loses focus
      */
     public final void focusLost(FocusEvent e) {
-        if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfTSI, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfPlayerID, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfPrice, false)) {
+        if (!Helper.parseInt(HOMainFrame.instance(), jtfTSI, false)
+            || !Helper.parseInt(HOMainFrame.instance(), jtfPlayerID, false)
+            || !Helper.parseInt(HOMainFrame.instance(), jtfPrice, false)) {
             return;
         }
 		if (e.getSource().equals(jtfAge)) {
@@ -162,8 +162,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      *
      * @param itemEvent event when combobox changes
      */
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
-        if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+    public final void itemStateChanged(ItemEvent itemEvent) {
+        if (itemEvent.getStateChange() == ItemEvent.SELECTED || itemEvent.getSource() == jchHomegrown) {
             spielervalueChanged();
         }
     }
@@ -188,47 +188,48 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
                 jtaNotes.setText(player.getInfo());
 
                 jcbSpeciality.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbSpeciality,
-                                                                    player.getSpeciality());
+                Helper.markierenComboBox(jcbSpeciality, player.getSpeciality());
                 jcbSpeciality.addItemListener(this);
                 jcbExperience.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbExperience,
-                                                                    player.getExperience());
+                Helper.markierenComboBox(jcbExperience, player.getExperience());
                 jcbExperience.addItemListener(this);
                 jcbForm.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbForm, player.getForm());
+                Helper.markierenComboBox(jcbForm, player.getForm());
                 jcbForm.addItemListener(this);
                 jcbStamina.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbStamina, player.getStamina());
+                Helper.markierenComboBox(jcbStamina, player.getStamina());
                 jcbStamina.addItemListener(this);
                 jcbDefense.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbDefense, player.getDefense());
+                Helper.markierenComboBox(jcbDefense, player.getDefense());
                 jcbDefense.addItemListener(this);
                 jcbAttacking.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbAttacking, player.getAttack());
+                Helper.markierenComboBox(jcbAttacking, player.getAttack());
                 jcbAttacking.addItemListener(this);
                 jcbKeeper.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbKeeper,
-                                                                    player.getGoalKeeping());
+                Helper.markierenComboBox(jcbKeeper, player.getGoalKeeping());
                 jcbKeeper.addItemListener(this);
                 jcbWinger.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbWinger, player.getWing());
+                Helper.markierenComboBox(jcbWinger, player.getWing());
                 jcbWinger.addItemListener(this);
                 jcbPassing.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbPassing, player.getPassing());
+                Helper.markierenComboBox(jcbPassing, player.getPassing());
                 jcbPassing.addItemListener(this);
                 jcbStandards.removeItemListener(this);
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbStandards,
-                                                                    player.getSetPieces());
+                Helper.markierenComboBox(jcbStandards, player.getSetPieces());
                 jcbStandards.addItemListener(this);
-
+                jcbLoyalty.removeItemListener(this);
+                Helper.markierenComboBox(jcbLoyalty,player.getLoyalty());
+                jcbLoyalty.addItemListener(this);
+                jchHomegrown.removeItemListener(this);
+                jchHomegrown.setSelected(player.isHomwGrown());
+                jchHomegrown.addItemListener(this);
+                
                 // Listener stays here for recalculation of rating
-                de.hattrickorganizer.tools.Helper.markierenComboBox(jcbPlaymaking,
-                                                                    player.getPlayMaking());
+                Helper.markierenComboBox(jcbPlaymaking, player.getPlayMaking());
 
                 // Normally not working. Thus last positioned
                 final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("dd.MM.yy HH:mm",
-                                                                                               java.util.Locale.GERMANY);
+                		java.util.Locale.GERMANY);
                 final java.util.Date date = simpleFormat.parse(player.getExpiryDate() + " "
                                                                + player.getExpiryTime());
                 jsSpinner.setValue(date);
@@ -243,20 +244,16 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         if (message.equals("")) {
             switch (pc.getError()) {
                 case 1:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_warning");
+                    message = HOVerwaltung.instance().getLanguageString("scout_warning");
                     break;
-
                 case 2:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_error");
+                    message = HOVerwaltung.instance().getLanguageString("scout_error");
                     break;
-
                 default:
-                    message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_success");
+                    message = HOVerwaltung.instance().getLanguageString("scout_success");
             }
         }
-
-        jlStatus.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_status") + ": "
-                         + message);
+        jlStatus.setText(HOVerwaltung.instance().getLanguageString("scout_status") + ": " + message);
     }
 
     /**
@@ -267,15 +264,11 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
     private ScoutEintrag createScoutEintrag() {
         final ScoutEintrag entry = new ScoutEintrag();
 
-        if (!de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfTSI, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfPlayerID, false)
-            || !de.hattrickorganizer.tools.Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame
-                                                           .instance(), jtfPrice, false)) {
+        if (!Helper.parseInt(HOMainFrame.instance(), jtfTSI, false)
+            || !Helper.parseInt(HOMainFrame.instance(), jtfPlayerID, false)
+            || !Helper.parseInt(HOMainFrame.instance(), jtfPrice, false)) {
             return entry;
         }
-
         entry.setPlayerID(Integer.parseInt(jtfPlayerID.getText()));
         entry.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
         entry.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
@@ -292,11 +285,12 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         entry.setPasspiel(((CBItem) jcbPassing.getSelectedItem()).getId());
         entry.setStandards(((CBItem) jcbStandards.getSelectedItem()).getId());
         entry.setSpielaufbau(((CBItem) jcbPlaymaking.getSelectedItem()).getId());
+        entry.setLoyalty(((CBItem) jcbLoyalty.getSelectedItem()).getId());
+        entry.setHomegrown(jchHomegrown.isSelected());
         entry.setName(jtfName.getText());
         entry.setInfo(jtaNotes.getText());
         //entry.setDeadline(new java.sql.Timestamp( zeitlong ) );
         entry.setDeadline(new java.sql.Timestamp(clSpinnerModel.getDate().getTime()));
-
         return entry;
     }
 
@@ -319,7 +313,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
 
         // Textfields and Comboboxes
         panel = new ImagePanel();
-        panel.setLayout(new GridLayout(9, 4, 4, 4));
+        panel.setLayout(new GridLayout(10, 4, 4, 4));
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("ID"));
         panel.add(label);
@@ -414,6 +408,16 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         jcbStandards.addItemListener(this);
         panel.add(jcbStandards);
 
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Loyalty"));
+        panel.add(label);
+        jcbLoyalty.addItemListener(this);
+        panel.add(jcbLoyalty);
+        
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
+        panel.add(label);
+        jchHomegrown.addItemListener(this);
+        panel.add(jchHomegrown);
+        
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.NORTH;
@@ -493,8 +497,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
 
         setLocation(gui.UserParameter.instance().miniscout_PositionX,
                     gui.UserParameter.instance().miniscout_PositionY);
-        de.hattrickorganizer.gui.HOMainFrame.instance().setVisible(false);
-
+        HOMainFrame.instance().setVisible(false);
         setVisible(true);
     }
 
@@ -515,6 +518,8 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
         tempSpieler.setPasspiel(((CBItem) jcbPassing.getSelectedItem()).getId());
         tempSpieler.setStandards(((CBItem) jcbStandards.getSelectedItem()).getId());
         tempSpieler.setSpielaufbau(((CBItem) jcbPlaymaking.getSelectedItem()).getId());
+        tempSpieler.setLoyalty(((CBItem) jcbLoyalty.getSelectedItem()).getId());
+        tempSpieler.setHomeGrown(jchHomegrown.isSelected());
         tempSpieler.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
         tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
 		IEPVData data = new EPVData(tempSpieler);
