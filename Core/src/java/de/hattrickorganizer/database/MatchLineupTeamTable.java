@@ -42,10 +42,6 @@ public final class MatchLineupTeamTable extends AbstractTable {
 		MatchLineupTeam team = null;
 		String sql = null;
 		ResultSet rs = null;
-
-		if (matchID == 337596917) {
-			System.out.println("Stop!");
-		}
 		
 		try {
 			sql = "SELECT * FROM "+getTableName()+" WHERE MatchID = " + matchID + " AND TeamID = " + teamID;
