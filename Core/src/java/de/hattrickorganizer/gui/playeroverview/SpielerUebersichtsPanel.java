@@ -33,7 +33,6 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
 	//~ Instance fields ----------------------------------------------------------------------------
 
     //Die Namen sind nicht mehr aktuelle!!
-    //private JSplitPane                      horizontalLeftSplitPane             = null;
 	private JSplitPane horizontalRightSplitPane;
 	private JSplitPane verticalSplitPane;
 	private SpielerDetailPanel m_jpSpielerDetailPanel;
@@ -78,8 +77,6 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
 	 */
 	public final int[] getDividerLocations() {
 		final int[] locations = new int[3];
-
-		// horizontalLeftSplitPane.getDividerLocation ();
 		locations[0] = 0;
 		locations[1] = horizontalRightSplitPane.getDividerLocation();
 		locations[2] = verticalSplitPane.getDividerLocation();
@@ -122,7 +119,6 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
 					HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
 				}
 			}
-		
 	}
 	
 	public void keyTyped(java.awt.event.KeyEvent keyEvent) {
@@ -245,41 +241,46 @@ public class SpielerUebersichtsPanel extends ImagePanel implements MouseListener
     private Component initSpielerTabelle() {
         final JPanel panel = new JPanel(new BorderLayout());
 
+        // table with the player's details
 		m_jtSpielerUebersichtTable = new PlayerOverviewTable();
 		m_jtSpielerUebersichtTable.addMouseListener(this);
 		m_jtSpielerUebersichtTable.addKeyListener(this);
 
-		final JScrollPane scrollpane = new JScrollPane(m_jtSpielerUebersichtTable);
-		scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
-
+		// table with the player's name
 		m_jtSpielerUebersichtTableName = new SpielerUebersichtNamenTable(m_jtSpielerUebersichtTable.getSorter());
         m_jtSpielerUebersichtTableName.addMouseListener(this);
-        m_jtSpielerUebersichtTableName.addKeyListener(this);
+        m_jtSpielerUebersichtTableName.addKeyListener(this);        
 
-        final JScrollPane scrollpane2 = new JScrollPane(m_jtSpielerUebersichtTableName);
-
-        //scrollpane2.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
-        scrollpane2.setPreferredSize(new Dimension(170, 100));
-
-        scrollpane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        //Weil auch im scrollpane immer!
-        scrollpane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        //Weil auch im scrollpane2 immer!
+        final JScrollPane scrollpane = new JScrollPane(m_jtSpielerUebersichtTableName);
         scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        // Make horizontal scrollbar move top table also
-		final JScrollBar bar1 = scrollpane2.getVerticalScrollBar();
-		final JScrollBar bar2 = scrollpane.getVerticalScrollBar();
-		bar2.addAdjustmentListener(new AdjustmentListener() {
+        scrollpane.setPreferredSize(new Dimension(170, 100));
+        
+        final JScrollPane scrollpane2 = new JScrollPane(m_jtSpielerUebersichtTable);
+		scrollpane2.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+		scrollpane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		final JScrollBar bar = scrollpane.getVerticalScrollBar();
+        final JScrollBar bar2 = scrollpane2.getVerticalScrollBar();
+		// setVisibile(false) does not have an effect, so we set the size to false
+		// we can' disable the scrollbar with VERTICAL_SCROLLBAR_NEVER because this 
+		// will disable mouse wheel scrolling
+		bar.setPreferredSize(new Dimension(0,0)); 
+		
+		// Synchronize vertical scrolling
+		AdjustmentListener adjustmentListener = new AdjustmentListener() {
 			public void adjustmentValueChanged(AdjustmentEvent e) {
-				bar1.setValue(e.getValue());
+				if (e.getSource() == bar2) {
+					bar.setValue(e.getValue());
+				} else {
+					bar2.setValue(e.getValue());
+				}
 			}
-		});
+		};
+		bar.addAdjustmentListener(adjustmentListener);
+		bar2.addAdjustmentListener(adjustmentListener);
 
-		panel.add(scrollpane, BorderLayout.CENTER);
-		panel.add(scrollpane2, BorderLayout.WEST);
+		panel.add(scrollpane, BorderLayout.WEST);
+		panel.add(scrollpane2, BorderLayout.CENTER);
 
 		return panel;
     }

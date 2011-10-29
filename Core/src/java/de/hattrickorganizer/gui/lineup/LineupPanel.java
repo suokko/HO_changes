@@ -339,38 +339,41 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         m_jtAufstellungSpielerTable.addMouseListener(this);
         m_jtAufstellungSpielerTable.addKeyListener(this);
 
-        final JScrollPane scrollpane = new JScrollPane(m_jtAufstellungSpielerTable);
-        scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
-
         m_jtAufstellungSpielerTableName = new SpielerUebersichtNamenTable(m_jtAufstellungSpielerTable
                                                                           .getSorter());
         m_jtAufstellungSpielerTableName.addMouseListener(this);
         m_jtAufstellungSpielerTableName.addKeyListener(this);
 
-        final JScrollPane scrollpane2 = new JScrollPane(m_jtAufstellungSpielerTableName);
-
-        //scrollpane2.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
-        scrollpane2.setPreferredSize(new Dimension(170, 100));
-
-        scrollpane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        //Weil auch im scrollpane immer!
-        scrollpane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        //Weil auch im scrollpane2 immer!
+        final JScrollPane scrollpane = new JScrollPane(m_jtAufstellungSpielerTableName);
+        scrollpane.setPreferredSize(new Dimension(170, 100));
         scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        // Make horizontal scrollbar move top table also
-        final JScrollBar bar1 = scrollpane2.getVerticalScrollBar();
-        final JScrollBar bar2 = scrollpane.getVerticalScrollBar();
-        bar2.addAdjustmentListener(new AdjustmentListener() {
-                public void adjustmentValueChanged(AdjustmentEvent e) {
-                    bar1.setValue(e.getValue());
-                }
-            });
+        final JScrollPane scrollpane2 = new JScrollPane(m_jtAufstellungSpielerTable);
+        scrollpane2.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+        scrollpane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        panel.add(scrollpane, BorderLayout.CENTER);
-        panel.add(scrollpane2, BorderLayout.WEST);
+		final JScrollBar bar = scrollpane.getVerticalScrollBar();
+        final JScrollBar bar2 = scrollpane2.getVerticalScrollBar();
+		// setVisibile(false) does not have an effect, so we set the size to false
+		// we can' disable the scrollbar with VERTICAL_SCROLLBAR_NEVER because this 
+		// will disable mouse wheel scrolling
+		bar.setPreferredSize(new Dimension(0,0)); 
+		
+		// Synchronize vertical scrolling
+		AdjustmentListener adjustmentListener = new AdjustmentListener() {
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				if (e.getSource() == bar2) {
+					bar.setValue(e.getValue());
+				} else {
+					bar2.setValue(e.getValue());
+				}
+			}
+		};
+		bar.addAdjustmentListener(adjustmentListener);
+		bar2.addAdjustmentListener(adjustmentListener);
+
+		panel.add(scrollpane, BorderLayout.WEST);
+		panel.add(scrollpane2, BorderLayout.CENTER);
 
         return panel;
     }
