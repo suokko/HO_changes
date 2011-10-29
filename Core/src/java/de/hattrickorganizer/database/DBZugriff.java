@@ -108,9 +108,14 @@ public class DBZugriff {
 				String msg = e.getMessage();
 				boolean recover = User.getCurrentUser().isHSQLDB();
 
+				System.out.println(e.getMessage());
+				
 				if (msg.indexOf("The database is already in use by another process") > -1) {
-					msg =
-						"The database is already in use. You have another HO running or the database is still closing, wait and try again";
+					if (msg.indexOf("Permission denied") > -1) {
+						msg = "Could not write to database. Make sure you have write access to the HO directory and its sub-directories.";
+					} else {
+						msg = "The database is already in use. You have another HO running\n or the database is still closing, wait and try again.";
+					}
 					recover = false;
 				} else {
 					msg =
