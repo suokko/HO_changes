@@ -22,8 +22,10 @@ import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.LineupAssistant;
+import de.hattrickorganizer.model.lineup.Substitution;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
@@ -54,6 +56,9 @@ public  class Lineup implements plugins.ILineUp {
 
     /** positions */
     private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
+    
+    // A list of 5 substitution positions, position indicates order.
+    private Vector<Substitution> m_vSubstitutions = new Vector<Substitution>();
 
     /** Attitude */
     private int m_iAttitude;
@@ -96,6 +101,7 @@ public  class Lineup implements plugins.ILineUp {
      */
 	public Lineup(Properties properties) throws Exception {
 		try {
+			
 			// Positionen erzeugen
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper,
 					Integer.parseInt(properties.getProperty("keeper", "0")), (byte) 0));
@@ -150,6 +156,37 @@ public  class Lineup implements plugins.ILineUp {
 					Integer.parseInt(properties.getProperty("substforward", "0")), (byte) 0));
 			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
 			m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
+			
+
+			// Init the substitution array
+			
+			for (int i = 0; i < 5; i++) {
+				m_vSubstitutions.add(new Substitution(i));
+			}
+			
+			
+			// and read the sub contents
+			for (int i = 0; i < 5; i++) {
+			
+//				System.out.println("Construct: " + properties.getProperty("subst" + i + "playerorderid"));
+				
+//				System.out.println("Teksten: subst" + i + "playerorderid");
+				if (properties.getProperty("subst" + i + "playerorderid") != null) {
+					Substitution sub = new Substitution();
+					sub.setPlayerOrderId(Integer.parseInt(properties.getProperty("subst" + i + "playerorderid")));
+					sub.setPlayerIn(Integer.parseInt(properties.getProperty("subst" + i + "playerin")));
+					sub.setPlayerOut(Integer.parseInt(properties.getProperty("subst" + i + "playerout")));
+					sub.setOrderType(Byte.parseByte(properties.getProperty("subst" + i + "ordertype")));
+					sub.setMatchMinuteCriteria(Byte.parseByte(properties.getProperty("subst" + i + "matchminutecriteria")));
+					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
+					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i + "behaviour")));
+					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
+					// Hopefully this never breaks...
+					setSubstitution(sub.getPlayerOrderId(), sub);
+				}
+			}
+			
+			
 			
 		} catch (Exception e) {
 			HOLogger.instance().warning(getClass(), "Aufstellung.<init1>: " + e);
@@ -939,7 +976,88 @@ public  class Lineup implements plugins.ILineUp {
         return (m_clAssi.isSpielerAufgestellt(spielerId, m_vPositionen)
                && !m_clAssi.isSpielerInAnfangsElf(spielerId, m_vPositionen));
     }
+ 
+    
+    /**
+     * Returns the requested substitution object
+     *
+     */
+    public ISubstitution getSubstitution(int i) {
+    	if ((i > 4) || (i < 0)) {
+    		return null;
+    	}
+    	
+    	for (int j = 0; j < 5; j++) {
+    		if (m_vSubstitutions.get(j).getPlayerOrderId() == i) {
+    			return m_vSubstitutions.get(j);
+    		}
+    	}
+    	HOLogger.instance().debug(getClass(), "getSubstitution did not find sub: " + i);
+    	return null;
+    }
+    
+    
+    /**
+     * Returns an array with any substitutions (max 5). It may have empty slots or be empty if less than 5 are set.
+     *
+     */
+    public ISubstitution[] getSubstitutionArray() {
+    	Substitution[] arr = new Substitution[5];
+    	int insert = 0;
 
+    	// We skip the empty positions, and dont't leave empty slots between filled.
+    	
+    	for (int read = 0; read < 5 ; read++) {
+    		if (!m_vSubstitutions.get(read).isEmpty())
+    		{
+    			arr[insert] = m_vSubstitutions.get(read);
+    			insert++;
+    		}
+    	}
+    	return arr;
+    }
+    
+    
+    /**
+     * Sets the given substitution object at position i. i must be between 0 and 4
+     */
+    public void setSubstitution(int i, ISubstitution incSub) {
+    	Substitution sub = null; 
+    	if ((i > 4) || (i < 0)) {
+    		// Rude, silent, reject
+    		return;
+    	}
+    	
+    	for (int j = 0; j < 5; j++) {
+    		if (m_vSubstitutions.get(j).getPlayerOrderId() == i) {
+    			sub = m_vSubstitutions.get(j);
+    		}
+    	}
+    	
+    	if (sub == null) {
+    		HOLogger.instance().debug(getClass(), "setSubstitution did not find sub: " + i);
+    		return;
+    	}
+    	
+    	// We keep the playerorderid
+    	sub.setPlayerIn(incSub.getPlayerIn());
+    	sub.setPlayerOut(incSub.getPlayerOut());
+    	sub.setOrderType(incSub.getOrderType());
+    	sub.setMatchMinuteCriteria(incSub.getMatchMinuteCriteria());
+    	sub.setPos(incSub.getPos());
+    	sub.setBehaviour(incSub.getBehaviour());
+    	sub.setCard(incSub.getCard());
+    	sub.setStanding(incSub.getStanding());
+    }
+    
+    /**
+     * Sets the provided list of substitutions as the substitution list. A proper list got max 5 positions.
+     */
+ 
+    public void setSubstitionList(List<Substitution> subs) {
+    	m_vSubstitutions = new Vector<Substitution>(subs);
+    }
+ 
     /**
      * Get the system name.
      */
@@ -1110,32 +1228,32 @@ public  class Lineup implements plugins.ILineUp {
     /////////////////////////////////////////////////////////////////////////////////
     //    Debug Funcs
     /////////////////////////////////////////////////////////////////////////////////
-    public final void dump() {
-        HOLogger.instance().log(getClass(),"Std-aufstellung");
-        dumpValues();
-        HOLogger.instance().log(getClass(),"idelaPos");
-
-        //3-5-2
-        initPositionen352();
-
-        //353 mit idealpos first
-        doAufstellung(HOVerwaltung.instance().getModel().getAllSpieler(),
-                      ILineUp.MF_AW_ST, true, true, false,
-                      false, 0.2f, ISpieler.LEICHTBEWOELKT);
-
-        //dumpen
-        dumpValues();
-        HOLogger.instance().log(getClass(),"Ohne idelaPos");
-
-        //3-5-2 aufgestellte SPieler leeren
-        resetAufgestellteSpieler();
-
-        //353 mit idealpos first
-        doAufstellung(HOVerwaltung.instance().getModel().getAllSpieler(),
-                      ILineUp.MF_AW_ST, true, false,
-                      false, false, 0.2f, ISpieler.LEICHTBEWOELKT);
-        dumpValues();
-    }
+//    public final void dump() {
+//        HOLogger.instance().log(getClass(),"Std-aufstellung");
+//        dumpValues();
+//        HOLogger.instance().log(getClass(),"idelaPos");
+//
+//        //3-5-2
+//        initPositionen352();
+//
+//        //353 mit idealpos first
+//        doAufstellung(HOVerwaltung.instance().getModel().getAllSpieler(),
+//                      ILineUp.MF_AW_ST, true, true, false,
+//                      false, 0.2f, ISpieler.LEICHTBEWOELKT);
+//
+//        //dumpen
+//        dumpValues();
+//        HOLogger.instance().log(getClass(),"Ohne idelaPos");
+//
+//        //3-5-2 aufgestellte SPieler leeren
+//        resetAufgestellteSpieler();
+//
+//        //353 mit idealpos first
+//        doAufstellung(HOVerwaltung.instance().getModel().getAllSpieler(),
+//                      ILineUp.MF_AW_ST, true, false,
+//                      false, false, 0.2f, ISpieler.LEICHTBEWOELKT);
+//        dumpValues();
+//    }
 
     /**
      * Clone this lineup, creates and returns a new Lineup object.
@@ -1185,6 +1303,20 @@ public  class Lineup implements plugins.ILineUp {
 			properties.setProperty("tactictype", getTacticType() + "");
 			properties.setProperty("installning", getAttitude() + "");
 
+			for (int i = 0; i < m_vSubstitutions.size(); i++) {
+				Substitution sub = m_vSubstitutions.get(i);
+				if (sub != null) {
+					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerIn());
+					properties.setProperty("subst" + i + "playerin", "" + sub.getPlayerIn());
+					properties.setProperty("subst" + i + "playerout", "" + sub.getPlayerOut());
+					properties.setProperty("subst" + i + "ordertype", "" + sub.getOrderType());
+					properties.setProperty("subst" + i + "matchminutecriteria", "" + sub.getMatchMinuteCriteria());
+					properties.setProperty("subst" + i + "pos", "" + sub.getPos());
+					properties.setProperty("subst" + i + "behaviour", "" + sub.getBehaviour());
+					properties.setProperty("subst" + i + "card", "" + sub.getCard());
+				}
+			}
+			
 			clone = new Lineup(properties);
 			clone.setHeimspiel(getHeimspiel());
 			clone.setPullBackMinute(getPullBackMinute());
@@ -1556,67 +1688,12 @@ public  class Lineup implements plugins.ILineUp {
 						+ getSTTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true));
     }
 
-    /**
-     * stellt das 4-4-2 Grundsystem ein
-     */
-    private void initPositionen352() {
-        if (m_vPositionen != null) {
-            m_vPositionen.removeAllElements();
-        } else {
-            m_vPositionen = new Vector<ISpielerPosition>();
-        }
-
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack, 0, (byte) 0));
-//        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightCentralDefender, 0,
-//                                              ISpielerPosition.ZUS_MITTELFELD));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftCentralDefender, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightInnerMidfield, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftInnerMidfield, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightForward, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftForward, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substDefender, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInnerMidfield, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
-    }
-
+    
     /////////////////////////////////////////////////////////////////////////////////
     //  INIT
     /////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * stellt das 4-4-2 Grundsystem ein
-     */
-    private void initPositionen442() {
-        if (m_vPositionen != null) {
-            m_vPositionen.removeAllElements();
-        } else {
-            m_vPositionen = new Vector<ISpielerPosition>();
-        }
-
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightCentralDefender, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftCentralDefender, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightInnerMidfield, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftInnerMidfield, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightForward, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftForward, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substDefender, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInnerMidfield, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
-        m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
-    }
-    
+        
     /**
      * Initializes the 553 lineup
      */
@@ -1646,6 +1723,11 @@ public  class Lineup implements plugins.ILineUp {
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
+        
+        for (int i = 0; i < 5 ; i++) {
+        	m_vSubstitutions.add(new Substitution(i));
+        }
+        
     }
 
     /**
