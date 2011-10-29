@@ -7,6 +7,7 @@ package de.hattrickorganizer.gui.theme;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import javax.swing.ImageIcon;
@@ -160,7 +161,10 @@ public final class ThemeManager {
 			ZipFile zipFile = new ZipFile(themeFile);
 			JAXBContext jc = JAXBContext.newInstance(Schema.class);
 			Unmarshaller u = jc.createUnmarshaller();
-			ThemeData data = (ThemeData)u.unmarshal(zipFile.getInputStream(zipFile.getEntry(ExtSchema.fileName)));
+			ZipEntry dataEntry = zipFile.getEntry(ExtSchema.fileName);
+			if(dataEntry == null)
+				throw new Exception("data.xml is missing");
+			ThemeData data = (ThemeData)u.unmarshal(zipFile.getInputStream(dataEntry));
 			theme = new ExtSchema(themeFile,data);
 		}
 		return theme;
