@@ -44,28 +44,27 @@ public abstract class Schema  {
 	}
 	
 	private Object createObjectFromXmlValue(ThemeData.XmlValue xmlValue){
-		final String type = xmlValue.getType();
+		final String type = xmlValue.getType().trim();
+		final String value = xmlValue.getValue().trim();
 		if (type.contains("Color")){
-			String[] rgb = xmlValue.getValue().split(",");
+			String[] rgb = value.split(",");
+			int r = Integer.parseInt(rgb[0].trim());
+			int g = Integer.parseInt(rgb[1].trim());
+			int b = Integer.parseInt(rgb[2].trim());
 			if(rgb.length==3)
-				return new Color(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2]));
+				return new Color(r,g,b);
 			else if(rgb.length==4){
-				// I don´t know why, but inline-code causes error by using a zip File
-				// so this is a workaround
-				int r = Integer.parseInt(rgb[0]);
-				int g = Integer.parseInt(rgb[1]);
-				int b = Integer.parseInt(rgb[2]);
-				int a = Integer.parseInt(rgb[3]);
+				int a = Integer.parseInt(rgb[3].trim());
 				return new Color(r,g,b,a);
 			}
 		}else if (type.contains("BigDecimal")){
-			return new BigDecimal(xmlValue.getValue());
+			return new BigDecimal(value);
 		}else if(type.contains("Timestamp")){
-			return Timestamp.valueOf(xmlValue.getValue());
+			return Timestamp.valueOf(value);
 		}else if(type.contains("Boolean")){
-			return Boolean.valueOf(xmlValue.getValue());
+			return Boolean.valueOf(value);
 		}
-		return xmlValue.getValue();
+		return value;
 	}
 	
 	public Object get(String key){
