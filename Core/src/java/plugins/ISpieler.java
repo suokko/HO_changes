@@ -12,7 +12,7 @@ package plugins;
  * @author thomas.werth
  */
 /**
- * Interface to acces Player Data
+ * Interface to access Player Data
  */
 public interface ISpieler {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -547,6 +547,7 @@ public interface ISpieler {
      */
     public boolean isHomeGrown();
     
+    public void setHomeGrown(boolean hg);
     /**
      * TODO Missing Method Documentation
      *
@@ -631,7 +632,9 @@ public interface ISpieler {
     */
     public int getLoyalty();
     
+    public void setLoyalty(int lolayty);
     
+
     /**
      * Setter for property m_sManuellerSmilie.
      *
@@ -1260,4 +1263,5 @@ public interface ISpieler {
      * @param isBlocked	new value
      */
     public void setTrainingBlock (boolean isBlocked);
+    
 }
