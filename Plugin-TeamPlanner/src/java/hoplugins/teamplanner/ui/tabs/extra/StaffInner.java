@@ -116,10 +116,10 @@ public class StaffInner implements InnerData {
      */
     public int getMoney() {
         if (expenses) {
-            return getFired() * 1500;
+            return getFired() * 1800;
         }
 
-        return getChanges() * -1500;
+        return getChanges() * -1800;
     }
 
     /**
