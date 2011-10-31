@@ -284,11 +284,9 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 
 		final JScrollBar bar = scrollpane.getVerticalScrollBar();
 		final JScrollBar bar2 = scrollpane2.getVerticalScrollBar();
-		// setVisibile(false) does not have an effect, so we set the size to
-		// false
-		// we can' disable the scrollbar with VERTICAL_SCROLLBAR_NEVER because
-		// this
-		// will disable mouse wheel scrolling
+		// setVisibile(false) does not have an effect, so we set the size to false.
+		// We can't disable the scrollbar with VERTICAL_SCROLLBAR_NEVER because this
+		// will disable mouse wheel scrolling.
 		bar.setPreferredSize(new Dimension(0, 0));
 
 		// Synchronize vertical scrolling
