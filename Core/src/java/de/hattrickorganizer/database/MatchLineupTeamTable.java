@@ -110,28 +110,29 @@ public final class MatchLineupTeamTable extends AbstractTable {
 					DBZugriff.instance().storeMatchLineupPlayer((MatchLineupPlayer) team.getAufstellung().elementAt(i), matchID, team.getTeamID());
 				}
 				
-				// Store Substitution
-				ISubstitution sub;
-				ISubstitution[] subs = new ISubstitution[team.getSubstitutions().size()];
-				int arrayIndex = 0;
-				for (int i = 0; i < team.getSubstitutions().size(); i++ ) {
-					sub = team.getSubstitutions().get(i);
-					if (sub != null) {
-						subs[arrayIndex] = sub;
-						arrayIndex++;
-					}
-				}
-				DBZugriff.instance().storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), subs);
-				
-				// Store StartingLineup
-				MatchLineupPlayer starter;
-				plugins.IMatchLineupPlayer pl;
-				for (int i = 0; i < team.getStartingPlayers().size(); i++) {
-					pl = team.getStartingPlayers().get(i);
-					// We add 1000 to starting lineup roleIds while in the db
-					starter = new MatchLineupPlayer(1000 + pl.getFieldPos(), pl.getTaktik(), pl.getSpielerId(), 0, pl.getSpielerName(), pl.getStatus());
-					DBZugriff.instance().storeMatchLineupPlayer(starter, matchID, team.getTeamID());
-				}
+//				// Store Substitution
+//				// Not in first 1.431 dev release
+//				ISubstitution sub;
+//				ISubstitution[] subs = new ISubstitution[team.getSubstitutions().size()];
+//				int arrayIndex = 0;
+//				for (int i = 0; i < team.getSubstitutions().size(); i++ ) {
+//					sub = team.getSubstitutions().get(i);
+//					if (sub != null) {
+//						subs[arrayIndex] = sub;
+//						arrayIndex++;
+//					}
+//				}
+//				DBZugriff.instance().storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), subs);
+//				
+//				// Store StartingLineup
+//				MatchLineupPlayer starter;
+//				plugins.IMatchLineupPlayer pl;
+//				for (int i = 0; i < team.getStartingPlayers().size(); i++) {
+//					pl = team.getStartingPlayers().get(i);
+//					// We add 1000 to starting lineup roleIds while in the db
+//					starter = new MatchLineupPlayer(1000 + pl.getFieldPos(), pl.getTaktik(), pl.getSpielerId(), 0, pl.getSpielerName(), pl.getStatus());
+//					DBZugriff.instance().storeMatchLineupPlayer(starter, matchID, team.getTeamID());
+//				}
 				
 				
 				

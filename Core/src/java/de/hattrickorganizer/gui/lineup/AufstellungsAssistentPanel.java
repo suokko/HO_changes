@@ -179,6 +179,71 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			displayGUI();
 
 		} else if (actionEvent.getSource().equals(m_jbElfmeter)) {
+//			RefreshManager.instance().doRefresh();
+//			
+//			final RatingPredictionManager rpManager = new de.hattrickorganizer.prediction.RatingPredictionManager(HOVerwaltung.instance().getModel().getAufstellung(), HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(), RatingPredictionConfig.getInstance() );
+//	        
+//			System.out.println("========= Mimick Start");
+//	        System.out.println("Midfield: " + rpManager.getMFRatings());
+//			System.out.println("RightDef: " + rpManager.getRightDefenseRatings());
+//			System.out.println("CentralDef: " + rpManager.getCentralDefenseRatings());
+//			System.out.println("LeftDef: " + rpManager.getLeftDefenseRatings());
+//			System.out.println("RightAttack: " + rpManager.getRightAttackRatings());
+//			System.out.println("CentralAttack: " + rpManager.getCentralAttackRatings());
+//			System.out.println("LeftAttack: " + rpManager.getLeftAttackRatings());
+//	        System.out.println("Offset: " + UserParameter.instance().leftAttackOffset);
+//	        System.out.println("========= Mimick End");
+	        
+//			HOMainFrame.instance().getOnlineWorker().setMatchOrder(337596921, HOVerwaltung.instance().getModel().getAufstellung(), false, false);
+			
+//			System.out.println(HOMainFrame.instance().getOnlineWorker().setMatchOrder(337596923, HOVerwaltung.instance().getModel().getAufstellung()));
+//	
+//			System.out.println("Region: " + HOVerwaltung.instance().getModel().getBasics().getRegionId());
+//			System.out.println("HasSupporter: " + HOVerwaltung.instance().getModel().getBasics().isHasSupporter());
+//			
+//			MatchLineupTeam team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(337596917).getGast();
+//			MatchStatistics stats = new MatchStatistics(337596917 , team.getAufstellung(), team.getStartingPlayers(), team.getSubstitutions());
+//			
+//			System.out.println("Cebrain minute -1. Expected 0: " + stats.getPlayerFieldPositionAtMinute(184108536, -1));
+//			System.out.println("Cebrain minute 8. Expected some midfield: " + stats.getPlayerFieldPositionAtMinute(184108536, 8));
+//			System.out.println("Cebrain minute 17. Expected as above: " + stats.getPlayerFieldPositionAtMinute(184108536, 17));
+//			System.out.println("Cebrain minute 18. Expected 0: " + stats.getPlayerFieldPositionAtMinute(184108536, 18));
+//			System.out.println("Cebrain minute 20. Expected 0: " + stats.getPlayerFieldPositionAtMinute(184108536, 20));
+//			
+//			
+//			System.out.println("Sørensen minute 20. Expected some forward: " + stats.getPlayerFieldPositionAtMinute(206964119, 20));
+//			System.out.println("Sørensen minute 91. Expected 0: " + stats.getPlayerFieldPositionAtMinute(206964119, 91));
+//			
+//			team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(348473274).getGast();
+//			stats = new MatchStatistics(348473274 , team.getAufstellung(), team.getStartingPlayers(), team.getSubstitutions());
+//			
+//	
+//			System.out.println("Wierda minute 30. Expected 103: " + stats.getPlayerFieldPositionAtMinute(115641569, 30));
+//			System.out.println("Wierda minute 60. Expected 102: " + stats.getPlayerFieldPositionAtMinute(115641569, 60));
+//			
+//			System.out.println("Talas minute 30. Expected mf: " + stats.getPlayerFieldPositionAtMinute(114600765, 30));
+//			System.out.println("Heggland minute 30. Expected mf: " + stats.getPlayerFieldPositionAtMinute(151628155, 30));
+//			System.out.println("Talas minute 60. Expected swap: " + stats.getPlayerFieldPositionAtMinute(114600765, 60));
+//			System.out.println("Heggland minute 60. Expected swap: " + stats.getPlayerFieldPositionAtMinute(151628155, 60));
+//		
+//			team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(348247807).getHeim();
+//			stats = new MatchStatistics(348247807 , team.getAufstellung(), team.getStartingPlayers(), team.getSubstitutions());
+//			
+//			System.out.println("Wierda minute 20. Expected mf: " + stats.getPlayerFieldPositionAtMinute(115641569, 20));
+//			System.out.println("Gjovik minute 20. Expected sub: " + stats.getPlayerFieldPositionAtMinute(166130215 , 20));
+//			System.out.println("Wierda minute 60. Expected subbed: " + stats.getPlayerFieldPositionAtMinute(115641569, 60));
+//			System.out.println("Gjovik minute 60. Expected mf: " + stats.getPlayerFieldPositionAtMinute(166130215 , 60));
+			
+			
+//			new SubstitutionPanel(HOVerwaltung.instance().getModel().getAufstellung().getSubstitution(0), "1").setVisible(true);
+//			Substitution sub = new Substitution(1,151628155 , 182974603, (byte)3, (byte)33, (byte)102, (byte)2, (byte)1, (byte)3);
+//			new SubstitutionPanel(sub, "1").setVisible(true);
+			Spieler spieler = (Spieler)HOVerwaltung.instance().getModel().getAufstellung().getPlayerByPositionID(ISpielerPosition.keeper);
+			spieler.setHomeGrown(true);
+			spieler.setLoyalty((int)Math.round(Math.random()*20));
+			
+			new de.hattrickorganizer.model.matches.StatisticsTestFrame().setVisible(true);
+			
 			new ElfmeterSchuetzenDialog(mainFrame);
 		} else if (actionEvent.getSource().equals(m_jchListBoxGruppenFilter)
 				|| actionEvent.getSource().equals(m_jchLast)) {

@@ -42,9 +42,9 @@ public class HomegrownEntry extends TableEntry{
 
 				if (entry.getSpieler().isHomeGrown() != getSpieler().isHomeGrown()) {
 					if (getSpieler().isHomeGrown() == true) {
-						return -1;
-					} else {
 						return 1;
+					} else {
+						return -1;
 					}
 				}
 			}
