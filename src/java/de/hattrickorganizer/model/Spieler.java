@@ -142,7 +142,7 @@ public final class Spieler implements plugins.ISpieler {
     private int m_iHattrick;
     
     /** Home Grown */
-    private boolean m_bHomeGrown = true;
+    private boolean m_bHomeGrown = false;
 
     /** Kondition */
     private int m_iKondition = 1;
@@ -156,7 +156,7 @@ public final class Spieler implements plugins.ISpieler {
     private int m_iLastBewertung = -1;
 
     /** Loyalty */
-    private int m_iLoyalty = -1;
+    private int m_iLoyalty = 0;
 
     /** Markwert */
     private int m_iTSI;
@@ -366,8 +366,8 @@ public final class Spieler implements plugins.ISpieler {
         m_iAgressivitaet = Integer.parseInt(properties.getProperty("aggressiveness", "0"));
         m_sAgressivitaet = properties.getProperty("aggressivenesslabel", "");
         m_iErfahrung = Integer.parseInt(properties.getProperty("rut", "0"));
-        m_bHomeGrown = Boolean.parseBoolean(properties.getProperty("homegr", "TRUE"));
-        m_iLoyalty = Integer.parseInt(properties.getProperty("loy", "-1"));
+        m_bHomeGrown = Boolean.parseBoolean(properties.getProperty("homegr", "FALSE"));
+        m_iLoyalty = Integer.parseInt(properties.getProperty("loy", "0"));
         m_iFuehrung = Integer.parseInt(properties.getProperty("led", "0"));
         m_iGehalt = Integer.parseInt(properties.getProperty("sal", "0"));
         m_iNationalitaet = Integer.parseInt(properties.getProperty("countryid", "0"));
