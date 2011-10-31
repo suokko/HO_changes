@@ -6,17 +6,17 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -26,8 +26,7 @@ import de.hattrickorganizer.model.Spieler;
 /**
  * Bietet Übersicht über alle Spieler (main class of the package)
  */
-public class SpielerUebersichtsPanel extends ImagePanel implements
-		MouseListener, KeyListener {
+public class SpielerUebersichtsPanel extends ImagePanel {
 
 	private static final long serialVersionUID = -5795792661614081193L;
 
@@ -51,6 +50,7 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 	 */
 	public SpielerUebersichtsPanel() {
 		initComponents();
+		addTableSelectionListeners();
 	}
 
 	/**
@@ -102,54 +102,6 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 		m_jtSpielerUebersichtTable.saveColumnOrder();
 	}
 
-	public final void keyPressed(java.awt.event.KeyEvent keyEvent) {
-		doEvent(keyEvent);
-	}
-
-	public final void keyReleased(java.awt.event.KeyEvent keyEvent) {
-		doEvent(keyEvent);
-	}
-
-	private void doEvent(ComponentEvent event) {
-		int row = m_jtSpielerUebersichtTable.getSelectedRow();
-
-		if (event.getSource().equals(m_jtSpielerUebersichtTableName))
-			row = m_jtSpielerUebersichtTableName.getSelectedRow();
-
-		if (row > -1) {
-			m_jtSpielerUebersichtTableName.setRowSelectionInterval(row, row);
-
-			final Spieler spieler = m_jtSpielerUebersichtTable.getSorter()
-					.getSpieler(row);
-
-			if (spieler != null) {
-				HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-			}
-		}
-	}
-
-	public void keyTyped(java.awt.event.KeyEvent keyEvent) {
-	}
-
-	// ----------------------Listener
-	public final void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
-		doEvent(mouseEvent);
-	}
-
-	public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
-	}
-
-	public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
-	}
-
-	public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
-	}
-
-	public final void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
-		doEvent(mouseEvent);
-	}
-
-	// ----------------------------------------------------
 	public final void newSelectionInform() {
 		final int row = m_jtSpielerUebersichtTable.getSelectedRow();
 
@@ -200,18 +152,11 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 		setLayout(new BorderLayout());
 
 		final Component tabelle = initSpielerTabelle();
-
-		// horizontalLeftSplitPane = new JSplitPane(
-		// JSplitPane.HORIZONTAL_SPLIT, false, initSpielerTabelle(),
-		// initSpielerDetail() );
 		horizontalRightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				false, initSpielerDetail(), initSpielerHistory());
 		verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
 				tabelle, horizontalRightSplitPane);
 
-		// horizontalLeftSplitPane.setDividerLocation(
-		// gui.UserParameter.instance
-		// ().spielerUebersichtsPanel_horizontalLeftSplitPane );
 		horizontalRightSplitPane.setDividerLocation(gui.UserParameter
 				.instance().spielerUebersichtsPanel_horizontalRightSplitPane);
 		verticalSplitPane
@@ -260,23 +205,17 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 
 		// table with the player's details
 		m_jtSpielerUebersichtTable = new PlayerOverviewTable();
-		m_jtSpielerUebersichtTable.addMouseListener(this);
-		m_jtSpielerUebersichtTable.addKeyListener(this);
 
 		// table with the player's name
 		m_jtSpielerUebersichtTableName = new SpielerUebersichtNamenTable(
 				m_jtSpielerUebersichtTable.getSorter());
-		m_jtSpielerUebersichtTableName.addMouseListener(this);
-		m_jtSpielerUebersichtTableName.addKeyListener(this);
 
-		final JScrollPane scrollpane = new JScrollPane(
-				m_jtSpielerUebersichtTableName);
+		JScrollPane scrollpane = new JScrollPane(m_jtSpielerUebersichtTableName);
 		scrollpane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollpane.setPreferredSize(new Dimension(170, 100));
 
-		final JScrollPane scrollpane2 = new JScrollPane(
-				m_jtSpielerUebersichtTable);
+		JScrollPane scrollpane2 = new JScrollPane(m_jtSpielerUebersichtTable);
 		scrollpane2.getViewport().setScrollMode(
 				JViewport.BACKINGSTORE_SCROLL_MODE);
 		scrollpane2
@@ -284,9 +223,9 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 
 		final JScrollBar bar = scrollpane.getVerticalScrollBar();
 		final JScrollBar bar2 = scrollpane2.getVerticalScrollBar();
-		// setVisibile(false) does not have an effect, so we set the size to false.
-		// We can't disable the scrollbar with VERTICAL_SCROLLBAR_NEVER because this
-		// will disable mouse wheel scrolling.
+		// setVisibile(false) does not have an effect, so we set the size to
+		// false. We can't disable the scrollbar with VERTICAL_SCROLLBAR_NEVER
+		// because this will disable mouse wheel scrolling.
 		bar.setPreferredSize(new Dimension(0, 0));
 
 		// Synchronize vertical scrolling
@@ -306,5 +245,51 @@ public class SpielerUebersichtsPanel extends ImagePanel implements
 		panel.add(scrollpane2, BorderLayout.CENTER);
 
 		return panel;
+	}
+
+	private void selectRow(JTable table, int row) {
+		if (row > -1) {
+			table.setRowSelectionInterval(row, row);
+		} else {
+			table.clearSelection();
+		}
+	}
+
+	/**
+	 * Adds ListSelectionListener which keep the row selection of the table with
+	 * the players name and the table with the players details in sync.
+	 */
+	private void addTableSelectionListeners() {
+		m_jtSpielerUebersichtTable.getSelectionModel()
+				.addListSelectionListener(new ListSelectionListener() {
+
+					public void valueChanged(ListSelectionEvent e) {
+						if (!e.getValueIsAdjusting()) {
+							selectRow(m_jtSpielerUebersichtTableName,
+									m_jtSpielerUebersichtTable.getSelectedRow());
+						}
+					}
+				});
+
+		m_jtSpielerUebersichtTableName.getSelectionModel()
+				.addListSelectionListener(new ListSelectionListener() {
+
+					public void valueChanged(ListSelectionEvent e) {
+						if (!e.getValueIsAdjusting()) {
+							int row = m_jtSpielerUebersichtTableName
+									.getSelectedRow();
+							selectRow(m_jtSpielerUebersichtTable, row);
+							if (row > -1) {
+								Spieler spieler = m_jtSpielerUebersichtTable
+										.getSorter().getSpieler(row);
+
+								if (spieler != null) {
+									HOMainFrame.instance().setActualSpieler(
+											spieler.getSpielerID());
+								}
+							}
+						}
+					}
+				});
 	}
 }
