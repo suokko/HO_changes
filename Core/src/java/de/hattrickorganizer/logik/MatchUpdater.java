@@ -60,20 +60,21 @@ public class MatchUpdater {
     	for (int i = 0 ; (i < players.size()) ; i++)  {
     		DBZugriff.instance().updateMatchLineupPlayer( (MatchLineupPlayer)players.get(i), matchID, team.getTeamID());
     	}
-    	
-    	// Refresh the starting lineup. They need a 1000 bump in roleID
-    	MatchLineupPlayer tmp = null;
-    	MatchLineupPlayer p = null;
-    	players = team.getStartingPlayers();
-    	for (int i = 0 ; (i < players.size()) ; i++)  {
-    		tmp = new MatchLineupPlayer((MatchLineupPlayer)players.get(i));
-    		tmp.setFieldPos(tmp.getFieldPos()+1000);
-    		DBZugriff.instance().updateMatchLineupPlayer( tmp, matchID, team.getTeamID());
-    	}
-    	
-    	// Store substitutions
-    	ISubstitution[] subs = new ISubstitution[team.getSubstitutions().size()];
-    	Helper.copyVector2Array(team.getSubstitutions(), subs);
-    	DBZugriff.instance().storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), subs);
+    
+//    	 Not in 1.431 first dev
+//    	// Refresh the starting lineup. They need a 1000 bump in roleID
+//    	MatchLineupPlayer tmp = null;
+//    	MatchLineupPlayer p = null;
+//    	players = team.getStartingPlayers();
+//    	for (int i = 0 ; (i < players.size()) ; i++)  {
+//    		tmp = new MatchLineupPlayer((MatchLineupPlayer)players.get(i));
+//    		tmp.setFieldPos(tmp.getFieldPos()+1000);
+//    		DBZugriff.instance().updateMatchLineupPlayer( tmp, matchID, team.getTeamID());
+//    	}
+//    	
+//    	// Store substitutions
+//    	ISubstitution[] subs = new ISubstitution[team.getSubstitutions().size()];
+//    	Helper.copyVector2Array(team.getSubstitutions(), subs);
+//    	DBZugriff.instance().storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), subs);
     }
 }
