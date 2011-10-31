@@ -61,6 +61,23 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
+     * Selects the player with the given id.
+     * 
+     * @param idPlayer the id of the player to select.
+     */
+    public void setPlayer(int idPlayer) {
+    	m_jtAufstellungSpielerTableName.setSpieler(idPlayer);
+    	m_jtAufstellungSpielerTable.setSpieler(idPlayer);
+    }
+    
+    /**
+     * Refreshes the view.
+     */
+    public void refresh() {
+    	m_jtAufstellungSpielerTable.refresh();
+    }
+    
+    /**
      * Gibt das AufstellungsAssistentPanel zurück
      *
      */
@@ -77,27 +94,11 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
     }
 
     /**
-     * Gibt die NamesTabelle zurück
-     *
-     */
-    public final SpielerUebersichtNamenTable getAufstellungsNamensTabelle() {
-        return m_jtAufstellungSpielerTableName;
-    }
-
-    /**
      * Gibt das AufstellungsPositionsPanel zurück
      *
      */
     public final LineupPositionsPanel getAufstellungsPositionsPanel() {
         return m_jpAufstellungsPositionsPanel;
-    }
-
-    /**
-     * Gibt die Tabelle zurück
-     *
-    */
-    public final AustellungSpielerTable getAufstellungsTabelle() {
-        return m_jtAufstellungSpielerTable;
     }
 
     /**
