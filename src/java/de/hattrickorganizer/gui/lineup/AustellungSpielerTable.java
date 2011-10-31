@@ -154,8 +154,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
      */
     public void refresh() {
         reInitModel();
-
-        repaint();
+        repaint(); // TODO fire TableModelEvent instead
     }
 
     /**

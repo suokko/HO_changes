@@ -336,10 +336,8 @@ public final class HOMainFrame extends JFrame
 	}
 
 	public void setActualSpieler(int playerID) {
-		getAufstellungsPanel().getAufstellungsTabelle().setSpieler(playerID);
-		getAufstellungsPanel().getAufstellungsNamensTabelle().setSpieler(playerID);
-		getSpielerUebersichtPanel().getSpielerUebersichtTable().setSpieler(playerID);
-		getSpielerUebersichtPanel().getSpielerUebersichtNamenTable().setSpieler(playerID);
+		getAufstellungsPanel().setPlayer(playerID);
+		getSpielerUebersichtPanel().setPlayer(playerID);
 		getSpielerUebersichtPanel().newSelectionInform();
 	}
 
