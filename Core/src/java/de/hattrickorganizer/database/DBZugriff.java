@@ -107,12 +107,12 @@ public class DBZugriff {
 
 				String msg = e.getMessage();
 				boolean recover = User.getCurrentUser().isHSQLDB();
-
-				System.out.println(e.getMessage());
 				
 				if (msg.indexOf("The database is already in use by another process") > -1) {
-					if (msg.indexOf("Permission denied") > -1) {
-						msg = "Could not write to database. Make sure you have write access to the HO directory and its sub-directories.";
+					if ((msg.indexOf("Permission denied") > -1) 
+							|| msg.indexOf("system cannot find the path") > -1) {
+						msg = "Could not write to database. Make sure you have write access to the HO directory and its sub-directories.\n" +
+								"If under Windows make sure to stay out of Program Files or similar.";
 					} else {
 						msg = "The database is already in use. You have another HO running\n or the database is still closing, wait and try again.";
 					}
@@ -135,6 +135,9 @@ public class DBZugriff {
 						// wait
 					}
 				}
+				
+				HOLogger.instance().error(null, msg);
+				
 				System.exit(-1);
 			}
 
@@ -2054,37 +2057,6 @@ public class DBZugriff {
 		
 		getTable(MatchSubstitutionTable.TABLENAME).createTable();
 		
-		// Test if we got 49 user table columns, if not, wipe the preferences
-		String sql = "SELECT * FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 2000 AND 3000";
-		ResultSet rs = m_clJDBCAdapter.executeQuery(sql);
-		int rows = 0;
-		while (rs.next()) {
-			rows++;
-		}
-		
-		if (rows != 49) {
-			HOLogger.instance().debug(getClass(), "Reseting player overview rows. Found " + rows + " rows, wanted 49");
-			sql = "DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 2000 AND 3000";
-			m_clJDBCAdapter.executeQuery(sql);
-		}
-
-		// The same for lineup overview columns
-		sql = "SELECT * FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 3000 AND 4000";
-		rs = m_clJDBCAdapter.executeQuery(sql);
-		rows = 0;
-		while (rs.next()) {
-			rows++;
-		}
-		
-		if (rows != 49) {
-			HOLogger.instance().debug(getClass(), "Reseting lineup overview rows. Found " + rows + " rows, wanted 49");
-			sql = "DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 3000 AND 4000";
-			m_clJDBCAdapter.executeQuery(sql);
-		}
-		
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
 		saveUserParameter("DBVersion", 11);
 	}
 	
@@ -2190,6 +2162,13 @@ public class DBZugriff {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.429...");
 			updateConfigTo1429(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.429);
 		}
+		
+		if (lastConfigUpdate < 1.431 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.431)) {
+
+			HOLogger.instance().log(getClass(), "Updating configuration to version 1.431...");
+			updateConfigTo1431(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.431);
+		}
+		
 	}
 
 	private void updateConfigTo1410_1 (boolean alreadyApplied) {
@@ -2248,6 +2227,25 @@ public class DBZugriff {
 		}
 		// always set the LastConfUpdate as last step
 		saveUserParameter("LastConfUpdate", 1.429);
+	}
+	
+	private void updateConfigTo1431 (boolean alreadyApplied) {
+		
+		if (!alreadyApplied){
+			try {
+				HOLogger.instance().debug(getClass(), "Reseting player overview rows.");
+				String sql = "DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 2000 AND 3000";
+				m_clJDBCAdapter.executeQuery(sql);
+	
+				HOLogger.instance().debug(getClass(), "Reseting lineup overview rows.");
+				sql = "DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN 3000 AND 4000";
+				m_clJDBCAdapter.executeQuery(sql);
+			} catch (Exception e) {
+				HOLogger.instance().debug(getClass(), "Error updating to config 1431: " + e.getMessage());
+			}
+		}
+		// always set the LastConfUpdate as last step
+		saveUserParameter("LastConfUpdate", 1.431);
 	}
 	
 
