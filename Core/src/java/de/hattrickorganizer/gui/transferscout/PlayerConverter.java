@@ -712,7 +712,7 @@ public class PlayerConverter {
 	    player.setExperience((skillvalues.get(((Integer) (foundskills.get(2)).get(2)).intValue())).intValue());
 	    player.setLeadership((skillvalues.get(((Integer) (foundskills.get(3)).get(2)).intValue())).intValue());
 
-   	    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) (foundskills.get(5)).get(2)).intValue())).intValue());
+   	    player.setGoalKeeping(((Integer) skillvalues.get(((Integer) (foundskills.get(6)).get(2)).intValue())).intValue());
 	    player.setDefense(((Integer) skillvalues.get(((Integer) (foundskills.get(10)).get(2)).intValue())).intValue());
 	    player.setPlayMaking(((Integer) skillvalues.get(((Integer) (foundskills.get(7)).get(2)).intValue())).intValue());
 	    player.setWing(((Integer) skillvalues.get(((Integer) (foundskills.get(9)).get(2)).intValue())).intValue());
