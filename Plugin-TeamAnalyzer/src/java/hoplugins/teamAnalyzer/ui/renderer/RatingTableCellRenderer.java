@@ -5,6 +5,7 @@ import hoplugins.commons.utils.PluginProperty;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -50,6 +51,7 @@ public class RatingTableCellRenderer extends DefaultTableCellRenderer {
 			  this.setText(curText);
 			  return this;
 		  } else {
+			  
 			  this.setIcon(null);
 			  this.setText(null);
 			  this.setForeground(Color.BLACK);
@@ -60,9 +62,13 @@ public class RatingTableCellRenderer extends DefaultTableCellRenderer {
 			  else if (column == 1)
 				  // rating (as number) is right aligned
 				  this.setHorizontalAlignment(SwingConstants.TRAILING);
-			  else if (column == 2)
+			  else if (column == 2){
 				  // icon is centered
+				  if(value instanceof ImageIcon)
+					  this.setIcon((ImageIcon)value);
 				  this.setHorizontalAlignment(SwingConstants.CENTER);
+				  return this;
+			  }
 			  else
 				  // Everything (what?) else is left aligned
 				  this.setHorizontalAlignment(SwingConstants.LEADING);
