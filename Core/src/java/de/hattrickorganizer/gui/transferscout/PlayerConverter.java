@@ -589,11 +589,11 @@ public class PlayerConverter {
             // check format
             try {
 				p = mytext.indexOf("/20");
-				if (p > -1 && mytext.indexOf("/20", p+5) > -1 && foundskills.size() >= 11) {
+				if (p > -1 && mytext.indexOf("/20", p+5) > -1 && foundskills.size() >= 12) {
 					setSkillsBarStyle(player, foundskills);
-				} else if (foundskills.size() >= 12) {
+				} else if (foundskills.size() >= 13) {
 					setSkillsClassicStyle(player, foundskills);
-				} else if (foundskills.size() == 11) { // no "20" in the text, but 11 skills (e.g. IE6)
+				} else if (foundskills.size() == 12) { // no "20" in the text, but 12 skills (e.g. IE6)
 					setSkillsBarStyle(player, foundskills);
 				}
 			} catch (Exception e) {
