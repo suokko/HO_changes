@@ -1,5 +1,5 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
-forum at http://forum.hattrickorganizer.net/index.php if you have any questions!
+forum at https://sourceforge.net/apps/phpbb/ho1/ if you have any questions!
 
 Changelist HO! 1.431
 ====================
@@ -18,16 +18,29 @@ Language updates:
 - Add Hebrew as new HO language (thx Mod-Transy)
 - Update Chinese translations (thx tianbing)
 - Update Danish translations (thx Max_Schreck)
+- Update French translations (thx fierz1998)
+- Update German translations (thx Werder0405)
+- Update Hebrew translations (thx Mod-Transy)
+- Update Hrvatski(Croatian) translations (thx -Iuve-)
+- Update Italiano translations (thx silkevicious)
 - Update Magyar translations (thx salt00)
-- Update Svenska translations (thx KrustyTheClown)
+- Update Nederlands translations (thx BrammieG)
+- Update Polish translations (thx aMiUK)
+- Update Portugues translations (thx Aristodemos)
+- Update PortuguesBrasil translations (thx garcilp)
+- Update Romanian translations (thx Spify)
+- Update Slovak translations (thx Refri)
+- Update Spanish translations (thx Baler0)
+- Update Spanish_sudamericano translations (thx Baler0)
+- Update Svenska translations (thx KrustyTheClown, Ehlana)
 - Update Ukranian translations (thx oleh_deneb)
 
 Plugin Updates:
 ---------------
-- Training Experience v 1.255: 
+- Training Experience v 1.255:
   - Added set piece filter, and removed occurrences of no longer existing general and stamina training
   - Changed icon drawing on Analyzer panel to show values > 99
-  
+
 - Team Analyzer v 2.81:
   - Fixed icon issue with Nimbus skin
 
