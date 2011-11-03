@@ -31,7 +31,7 @@ public class PlayerAnalysisModel extends HOColumnModel {
 	}
 	
 	private void initialize() {
-		columns = new UserColumn[51];
+		columns = new UserColumn[53];
 
 		final UserColumn[] add =  UserColumnFactory.createPlayerAdditionalArray();
 		final MatchKurzInfoColumn [] matches = UserColumnFactory.createMatchesArray();
@@ -58,51 +58,51 @@ public class PlayerAnalysisModel extends HOColumnModel {
 		columns[12] = matchdetails[3];
 		columns[13] = cbItems[0];
 		columns[14] = cbItems[1];
+		columns[15] = add[11];
+		columns[16] = skills[0];
+		columns[17] = skills[1];
+		columns[18] = skills[2];
+		columns[19] = skills[3];
+		columns[20] = skills[4];
 		
-		columns[15] = skills[0];
-		columns[16] = skills[1];
-		columns[17] = skills[2];
-		columns[18] = skills[3];
-		columns[19] = skills[4];
-		
-		columns[20] = skills[5];
-		columns[21] = skills[6];
-		columns[22] = skills[7];
-		columns[23] = skills[8];
-		columns[24] = skills[9];
-		
-		columns[25] = skills[10];
+		columns[21] = skills[5];
+		columns[22] = skills[6];
+		columns[23] = skills[7];
+		columns[24] = skills[8];
+		columns[25] = skills[9];
+		columns[26] = skills[10];
+		columns[27] = skills[11];
 
-		columns[26] = positions[0];
-		columns[27] = positions[1];
-		columns[28] = positions[2];
-		columns[29] = positions[3];
-		columns[30] = positions[4];
+		columns[28] = positions[0];
+		columns[29] = positions[1];
+		columns[30] = positions[2];
+		columns[31] = positions[3];
+		columns[32] = positions[4];
 		
-		columns[31] = positions[5];
-		columns[32] = positions[6];
-		columns[33] = positions[7];
-		columns[34] = positions[8];
-		columns[35] = positions[9];
+		columns[33] = positions[5];
+		columns[34] = positions[6];
+		columns[35] = positions[7];
+		columns[36] = positions[8];
+		columns[37] = positions[9];
 
-		columns[36] = positions[10];
-		columns[37] = positions[11];
-		columns[38] = positions[12];
-		columns[39] = positions[13];
-		columns[40] = positions[14];
+		columns[38] = positions[10];
+		columns[39] = positions[11];
+		columns[40] = positions[12];
+		columns[41] = positions[13];
+		columns[42] = positions[14];
 		
-		columns[41] = positions[15];
-		columns[42] = positions[16];
-		columns[43] = positions[17];
-		columns[44] = positions[18];
+		columns[43] = positions[15];
+		columns[44] = positions[16];
+		columns[45] = positions[17];
+		columns[46] = positions[18];
 
-		columns[45] = goals[0];
-		columns[46] = goals[1];
-		columns[47] = goals[2];
-		columns[48] = goals[3];
+		columns[47] = goals[0];
+		columns[48] = goals[1];
+		columns[49] = goals[2];
+		columns[50] = goals[3];
 							
-		columns[49] = add[7];
-		columns[50] = add[8];
+		columns[51] = add[7];
+		columns[52] = add[8];
 	}
 	
 
