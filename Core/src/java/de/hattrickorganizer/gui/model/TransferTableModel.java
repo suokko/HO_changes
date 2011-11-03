@@ -129,6 +129,8 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("Alter"), 
 	    //TSI
 	    "TSI", 
+	    // Homegrown
+	    HOVerwaltung.instance().getLanguageString("MC"),
 	    //Erfahrung
 	    HOVerwaltung.instance().getLanguageString("ER"),
 	    //Form
@@ -137,8 +139,6 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("KO"),
 	    // Loyalty
 	    HOVerwaltung.instance().getLanguageString("LOY"),
-	    // Homegrown
-	    HOVerwaltung.instance().getLanguageString("MC"),
 	    //Torwart
 	    HOVerwaltung.instance().getLanguageString("TW"),
 	    //Verteidigung
@@ -443,24 +443,24 @@ public class TransferTableModel extends AbstractTableModel {
             //Marktwert
             m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getTSI()+"",
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
-            //Erfahrung
-            m_clData[i][7] = new ColorLabelEntry(aktuellerSpieler.getErfahrung()+"",
-            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
-            //Form
-            m_clData[i][8] = new ColorLabelEntry(aktuellerSpieler.getForm()+"",
-            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
-            //Kondition
-            m_clData[i][9] = new ColorLabelEntry(aktuellerSpieler.getKondition()+"",
-            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.RIGHT);
-            // Loyalty
-            m_clData[i][10] = new ColorLabelEntry(aktuellerSpieler.getLoyalty()+"",
-            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE,
-                    SwingConstants.RIGHT);
             // Homegrown
             HomegrownEntry home = new HomegrownEntry();
             home.setSpieler(aktuellerSpieler);
-            m_clData[i][11] = home;
-            
+            m_clData[i][7] = home;
+            //Erfahrung
+            m_clData[i][8] = new ColorLabelEntry(aktuellerSpieler.getErfahrung()+"",
+            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
+            //Form
+            m_clData[i][9] = new ColorLabelEntry(aktuellerSpieler.getForm()+"",
+            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELERSONDERWERTE, SwingConstants.RIGHT);
+            //Kondition
+            m_clData[i][10] = new ColorLabelEntry(aktuellerSpieler.getKondition()+"",
+            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.RIGHT);
+            // Loyalty
+            m_clData[i][11] = new ColorLabelEntry(aktuellerSpieler.getLoyalty()+"",
+            		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE,
+                    SwingConstants.RIGHT);
+           
             //Torwart
             m_clData[i][12] = new ColorLabelEntry(aktuellerSpieler.getTorwart()+"",
                                                   ColorLabelEntry.FG_STANDARD,
