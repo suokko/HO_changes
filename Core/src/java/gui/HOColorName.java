@@ -82,6 +82,7 @@ public interface HOColorName {
 	public static final String STAT_LEADERSHIP 			= "stat.leadership";
 	public static final String STAT_EXPERIENCE 			= "stat.experience";;
 	public static final String STAT_FORM 				= "stat.form";;
+	public static final String STAT_LOYALTY				= "stat.loyalty";;
 	public static final String STAT_STAMINA 			= "stat.stamina";
 	public static final String STAT_KEEPER 				= "stat.keeper";
 	public static final String STAT_DEFENDING 			= "stat.defending";

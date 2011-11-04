@@ -106,7 +106,8 @@ public final class UserParameter extends Configuration {
     public boolean statistikAlleFuehrung = true;
     public boolean statistikAlleHilfslinien = true;
     public boolean statistikAlleKondition = true;
-
+    public boolean statistikAllLoyalty;
+    
     public boolean statistikAllePasspiel;
     public boolean statistikAlleSpielaufbau;
     public boolean statistikAlleStandards;
@@ -130,6 +131,7 @@ public final class UserParameter extends Configuration {
     public boolean statistikJugend;
     public boolean statistikKondition = true;
     public boolean statistikKontostand = true;
+    public boolean statistikLoyalty;
     public boolean statistikMarktwert;
     public boolean statistikPasspiel;
     public boolean statistikSonstigeAusgaben;
@@ -417,6 +419,7 @@ public final class UserParameter extends Configuration {
 		map.put("statistikAlleFuehrung",String.valueOf(statistikAlleFuehrung));
 		map.put("statistikAlleHilfslinien",String.valueOf(statistikAlleHilfslinien));
 		map.put("statistikAlleKondition",String.valueOf(statistikAlleKondition));
+		map.put("statistikAllLoyalty",String.valueOf(statistikAllLoyalty));
 		map.put("statistikAllePasspiel",String.valueOf(statistikAllePasspiel));
 		map.put("statistikAlleSpielaufbau",String.valueOf(statistikAlleSpielaufbau));
 		map.put("statistikAlleStandards",String.valueOf(statistikAlleStandards));
@@ -439,6 +442,7 @@ public final class UserParameter extends Configuration {
 		map.put("statistikHilfslinien",String.valueOf(statistikHilfslinien));
 		map.put("statistikJugend",String.valueOf(statistikJugend));
 		map.put("statistikKondition",String.valueOf(statistikKondition));
+		map.put("statistikLoyalty",String.valueOf(statistikLoyalty));
 		map.put("statistikKontostand",String.valueOf(statistikKontostand));
 		map.put("statistikMarktwert",String.valueOf(statistikMarktwert));
 		map.put("statistikPasspiel",String.valueOf(statistikPasspiel));
@@ -610,6 +614,7 @@ public final class UserParameter extends Configuration {
 		statistikAlleFuehrung = getBooleanValue(values,"statistikAlleFuehrung");
 		statistikAlleHilfslinien = getBooleanValue(values,"statistikAlleHilfslinien");
 		statistikAlleKondition = getBooleanValue(values,"statistikAlleKondition");
+		statistikAllLoyalty = getBooleanValue(values,"statistikAllLoyalty");
 		statistikAllePasspiel = getBooleanValue(values,"statistikAllePasspiel");
 		statistikAlleSpielaufbau = getBooleanValue(values,"statistikAlleSpielaufbau");
 		statistikAlleStandards = getBooleanValue(values,"statistikAlleStandards");
@@ -632,6 +637,7 @@ public final class UserParameter extends Configuration {
 		statistikHilfslinien = getBooleanValue(values,"statistikHilfslinien");
 		statistikJugend = getBooleanValue(values,"statistikJugend");
 		statistikKondition = getBooleanValue(values,"statistikKondition");
+		statistikLoyalty = getBooleanValue(values,"statistikLoyalty");
 		statistikKontostand = getBooleanValue(values,"statistikKontostand");
 		statistikMarktwert = getBooleanValue(values,"statistikMarktwert");
 		statistikPasspiel = getBooleanValue(values,"statistikPasspiel");
