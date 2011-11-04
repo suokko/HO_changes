@@ -109,7 +109,7 @@ public final class ThemeManager {
 		if(extSchema != null){
 			tmp = (ImageIcon)extSchema.get(key+"("+x+","+y+")");
 			if(tmp == null){
-				tmp = getIcon(key);
+				tmp = getImageIcon(key);
 				
 				if(tmp != null){
 					tmp = new ImageIcon(tmp.getImage().getScaledInstance(x, y,Image.SCALE_SMOOTH));
@@ -117,6 +117,16 @@ public final class ThemeManager {
 				}
 			}
 			
+		} else {
+			tmp = (ImageIcon)classicSchema.get(key+"("+x+","+y+")");
+			if(tmp == null){
+				tmp = getImageIcon(key);
+				
+				if(tmp != null){
+					tmp = new ImageIcon(tmp.getImage().getScaledInstance(x, y,Image.SCALE_SMOOTH));
+					classicSchema.put(key+"("+x+","+y+")",tmp);
+				}
+			}
 		}
 		
 		return tmp;
