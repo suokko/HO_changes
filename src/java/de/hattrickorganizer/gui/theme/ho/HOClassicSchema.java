@@ -265,6 +265,7 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 	    put(STAT_EXPERIENCE,Color.DARK_GRAY);
 	    put(STAT_FORM,Color.PINK);
 	    put(STAT_STAMINA,Color.MAGENTA);
+	    put(STAT_LOYALTY,new Color(180, 180, 0));
 	    put(STAT_KEEPER,Color.BLACK);
 	    put(STAT_DEFENDING,Color.BLUE);
 	    put(STAT_PLAYMAKING,Color.YELLOW);

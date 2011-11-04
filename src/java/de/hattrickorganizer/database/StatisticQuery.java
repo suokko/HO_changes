@@ -21,7 +21,7 @@ public class StatisticQuery {
 	public static double[][] getSpielerDaten4Statistik(int spielerId, int anzahlHRF) {
 
 		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
-		final int anzahlSpalten = 15;
+		final int anzahlSpalten = 16;
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
@@ -52,8 +52,9 @@ public class StatisticQuery {
 					tempwerte[11] = rs.getDouble("Torschuss") + rs.getDouble("SubTorschuss");
 					tempwerte[12] = rs.getDouble("Standards") + rs.getDouble("SubStandards");
 					tempwerte[13] = rs.getDouble("Bewertung") / 2d;
-					tempwerte[14] = rs.getTimestamp("Datum").getTime();
-
+					tempwerte[14] = rs.getDouble("Loyalty");
+					tempwerte[15] = rs.getTimestamp("Datum").getTime();
+					
 					//TSI, alle Marktwerte / 1000 teilen
 					if (rs.getTimestamp("Datum").before(DBZugriff.TSIDATE)) {
 						tempwerte[0] /= 1000d;
@@ -69,10 +70,10 @@ public class StatisticQuery {
 
 					//Alle Ratings, die == 0 sind -> bis zu 6 Tage vorher nach Rating suchen
 					if (werte[13] == 0) {
-						final Timestamp hrftime = new Timestamp((long) werte[14]);
+						final Timestamp hrftime = new Timestamp((long) werte[15]);
 
 						//6 Tage vorher
-						final Timestamp beforetime = new Timestamp((long) werte[14] - 518400000);
+						final Timestamp beforetime = new Timestamp((long) werte[15] - 518400000);
 						rs =
 							DBZugriff.instance().getAdapter().executeQuery(
 								"SELECT Bewertung FROM SPIELER WHERE Bewertung>0 AND Datum>='"
@@ -255,7 +256,7 @@ public class StatisticQuery {
 
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
 		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
-		final int anzahlSpalten = 12;
+		final int anzahlSpalten = 13;
 
 		//int minid = model.HOVerwaltung.instance ().getModel ().getID () - anzahlHRF;
 		double[][] returnWerte = new double[0][0];
@@ -296,7 +297,7 @@ public class StatisticQuery {
 					tempwerte[8] = rs.getDouble("Fluegel") + rs.getDouble("SubFluegel");
 					tempwerte[9] = rs.getDouble("Torschuss") + rs.getDouble("SubTorschuss");
 					tempwerte[10] = rs.getDouble("Standards") + rs.getDouble("SubStandards");
-
+					tempwerte[11] = rs.getDouble("Loyalty");
 					//Initialisierung
 					if (letzteHRFID == -1) {
 						//HRFID neu setzen, notwendig, wenn letzteid -1 war
@@ -337,7 +338,7 @@ public class StatisticQuery {
 					}
 
 					//Datum
-					summewerte[11] = rs.getTimestamp("Datum").getTime();
+					summewerte[12] = rs.getTimestamp("Datum").getTime();
 
 					//Spieleranzahl pro HRF erhöhen
 					spielerProHRFID++;
