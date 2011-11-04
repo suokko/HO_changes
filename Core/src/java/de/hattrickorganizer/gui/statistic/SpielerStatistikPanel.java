@@ -58,6 +58,7 @@ class SpielerStatistikPanel extends ImagePanel
     private Color experienceColor 	= ThemeManager.getColor(HOColorName.STAT_EXPERIENCE);//Color.darkGray;
     private Color formColor 		= ThemeManager.getColor(HOColorName.STAT_FORM);//Color.pink;
     private Color staminaColor 		= ThemeManager.getColor(HOColorName.STAT_STAMINA);//Color.magenta;
+    private Color loyaltyColor		= ThemeManager.getColor(HOColorName.STAT_LOYALTY);
     private Color keeperColor 		= ThemeManager.getColor(HOColorName.STAT_KEEPER);//Color.black;
     private Color defendingColor 	= ThemeManager.getColor(HOColorName.STAT_DEFENDING);//Color.blue;
     private Color playmakingColor 	= ThemeManager.getColor(HOColorName.STAT_PLAYMAKING);//Color.yellow;
@@ -81,6 +82,8 @@ class SpielerStatistikPanel extends ImagePanel
                                                         formColor,gui.UserParameter.instance().statistikForm);
     private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
     		leadershipColor,gui.UserParameter.instance().statistikFuehrung);
+    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Loyalty"),
+    		loyaltyColor, gui.UserParameter.instance().statistikLoyalty);
     private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gehalt"),
                                                           wageColor,gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
     private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.stamina"),
@@ -183,6 +186,9 @@ class SpielerStatistikPanel extends ImagePanel
         } else if (actionEvent.getSource().equals(m_jchErfahrung.getCheckbox())) {
             m_clStatistikPanel.setShow("Erfahrung", m_jchErfahrung.isSelected());
             gui.UserParameter.instance().statistikErfahrung = m_jchErfahrung.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchLoyalty.getCheckbox())) {
+            m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
+            gui.UserParameter.instance().statistikLoyalty = m_jchLoyalty.isSelected();
         } else if (actionEvent.getSource().equals(m_jchForm.getCheckbox())) {
             m_clStatistikPanel.setShow("Form", m_jchForm.isSelected());
             gui.UserParameter.instance().statistikForm = m_jchForm.isSelected();
@@ -372,6 +378,22 @@ class SpielerStatistikPanel extends ImagePanel
         panel2.add(m_jchErfahrung);
 
         constraints2.gridwidth = 1;
+        constraints2.gridx = 0;
+        constraints2.gridy = 10;
+        m_jchMarktwert.setOpaque(false);
+        m_jchMarktwert.addActionListener(this);
+        layout2.setConstraints(m_jchMarktwert, constraints2);
+        panel2.add(m_jchMarktwert);
+
+        constraints2.gridwidth = 1;
+        constraints2.gridx = 0;
+        constraints2.gridy = 11;
+        m_jchGehalt.setOpaque(false);
+        m_jchGehalt.addActionListener(this);
+        layout2.setConstraints(m_jchGehalt, constraints2);
+        panel2.add(m_jchGehalt);
+        
+        constraints2.gridwidth = 1;
         constraints2.gridx = 1;
         constraints2.gridy = 5;
         m_jchForm.setOpaque(false);
@@ -390,6 +412,14 @@ class SpielerStatistikPanel extends ImagePanel
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
         constraints2.gridy = 7;
+        m_jchLoyalty.setOpaque(false);
+        m_jchLoyalty.addActionListener(this);
+        layout2.setConstraints(m_jchLoyalty, constraints2);
+        panel2.add(m_jchLoyalty);
+
+        constraints2.gridwidth = 1;
+        constraints2.gridx = 1;
+        constraints2.gridy = 8;
         m_jchTorwart.setOpaque(false);
         m_jchTorwart.addActionListener(this);
         layout2.setConstraints(m_jchTorwart, constraints2);
@@ -397,7 +427,7 @@ class SpielerStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 8;
+        constraints2.gridy = 9;
         m_jchVerteidigung.setOpaque(false);
         m_jchVerteidigung.addActionListener(this);
         layout2.setConstraints(m_jchVerteidigung, constraints2);
@@ -405,7 +435,7 @@ class SpielerStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 9;
+        constraints2.gridy = 10;
         m_jchSpielaufbau.setOpaque(false);
         m_jchSpielaufbau.addActionListener(this);
         layout2.setConstraints(m_jchSpielaufbau, constraints2);
@@ -413,7 +443,7 @@ class SpielerStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 10;
+        constraints2.gridy = 11;
         m_jchPasspiel.setOpaque(false);
         m_jchPasspiel.addActionListener(this);
         layout2.setConstraints(m_jchPasspiel, constraints2);
@@ -421,7 +451,7 @@ class SpielerStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 11;
+        constraints2.gridy = 12;
         m_jchFluegel.setOpaque(false);
         m_jchFluegel.addActionListener(this);
         layout2.setConstraints(m_jchFluegel, constraints2);
@@ -429,7 +459,7 @@ class SpielerStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 12;
+        constraints2.gridy = 13;
         m_jchTorschuss.setOpaque(false);
         m_jchTorschuss.addActionListener(this);
         layout2.setConstraints(m_jchTorschuss, constraints2);
@@ -437,27 +467,11 @@ class SpielerStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 13;
+        constraints2.gridy = 14;
         m_jchStandards.setOpaque(false);
         m_jchStandards.addActionListener(this);
         layout2.setConstraints(m_jchStandards, constraints2);
         panel2.add(m_jchStandards);
-
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 10;
-        m_jchMarktwert.setOpaque(false);
-        m_jchMarktwert.addActionListener(this);
-        layout2.setConstraints(m_jchMarktwert, constraints2);
-        panel2.add(m_jchMarktwert);
-
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 11;
-        m_jchGehalt.setOpaque(false);
-        m_jchGehalt.addActionListener(this);
-        layout2.setConstraints(m_jchGehalt, constraints2);
-        panel2.add(m_jchGehalt);
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
@@ -557,7 +571,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                                                                                     anzahlHRF);
                 final StatistikModel[] models = new StatistikModel[statistikWerte.length];
 
-                //Es sind 13 Werte!
+                //Es sind 15 Werte!
                 if (statistikWerte.length > 0) {
                     double faktor = 20 / getMaxValue(statistikWerte[0]);
                     models[0] = new StatistikModel(statistikWerte[0], "Marktwert",
@@ -592,10 +606,12 @@ class SpielerStatistikPanel extends ImagePanel
                                                     m_jchStandards.isSelected(), setPiecesColor, format);
                     models[13] = new StatistikModel(statistikWerte[13], "Bewertung",
                                                     m_jchBewertung.isSelected(), ratingColor, format);
+                    models[14] = new StatistikModel(statistikWerte[14], "Loyalty",
+                            						m_jchLoyalty.isSelected(), loyaltyColor, format);
                 }
 
                 final String[] yBezeichnungen = Helper
-                                                .convertTimeMillisToFormatString(statistikWerte[14]);
+                                                .convertTimeMillisToFormatString(statistikWerte[15]);
 
                 m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
                                                 HOVerwaltung.instance().getLanguageString("Wochen"),
