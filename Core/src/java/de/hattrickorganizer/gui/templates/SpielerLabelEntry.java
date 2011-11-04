@@ -201,7 +201,6 @@ public final class SpielerLabelEntry extends TableEntry {
         m_jlGroup.setVerticalAlignment(SwingConstants.BOTTOM);
         m_jlGroup.setOpaque(false);
         m_jlGroup.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
-
         spezPanel.add(m_jlGroup);
 
         constraints.fill = GridBagConstraints.NONE;
@@ -229,7 +228,10 @@ public final class SpielerLabelEntry extends TableEntry {
                 m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition,
                                                                                      m_clPlayer
                                                                                      .getTrikotnummer()));
-                m_jlGroup.setIcon(ThemeManager.getScaledIcon(m_clPlayer.getTeamInfoSmilie(), 8, 8));
+                String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
+                if(teamInfoSmilie == "")
+                	teamInfoSmilie = "No-Team.png";
+                m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
             }
 
             //            else if ( m_bShowTrikot )
@@ -258,7 +260,10 @@ public final class SpielerLabelEntry extends TableEntry {
                 m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition,
                                                                                      m_clPlayer
                                                                                      .getTrikotnummer()));
-                m_jlGroup.setIcon(ThemeManager.getScaledIcon(m_clPlayer.getTeamInfoSmilie(), 8, 8));
+                String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
+                if(teamInfoSmilie == "")
+                	teamInfoSmilie = "No-Team.png";
+                m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
             }
 
             //            else if ( m_bShowTrikot )
@@ -305,7 +310,11 @@ public final class SpielerLabelEntry extends TableEntry {
             //&& m_clSpielerPositionAktuell != null )
             if (m_bShowTrikot) {
                 m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition, m_clPlayer.getTrikotnummer()));
-                m_jlGroup.setIcon(ThemeManager.getScaledIcon(m_clPlayer.getTeamInfoSmilie(), 8, 8));
+                String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
+                
+                if(teamInfoSmilie.trim().isEmpty() )
+                	teamInfoSmilie = "No-Team.png";
+                m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
             }
             updateDisplay(m_clPlayer);
 
