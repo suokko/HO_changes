@@ -4,7 +4,7 @@ public interface HOIconName {
 
 	public static final String[] MATCHTYPES 	= { "","MatchType1","MatchType2","MatchType3","MatchType4","MatchType5","MatchType6","MatchType7","MatchType8","MatchType9","MatchType10","MatchType11","MatchType12"};
 	public static final String[] WEATHER 		= { "weather0","weather1","weather2","weather3"};
-	public static final String[] SPECIAL 		= { "","special1","special2","special3","special4","special5"};
+	public static final String[] SPECIAL 		= { "","special1","special2","special3","special4","special5", "special6"};
 	public static final String[] TEAMSMILIES 	= { "", "A-Team.png","B-Team.png", "C-Team.png", "D-Team.png", "E-Team.png", "F-Team.png" };
 	public static final String[] MANUELLSMILIES = { "", "1bigsmile.png","2smile.png", "3normal.png", "4sad.png", "5verysad.png","6clown.png", "7trainer.png", "8dollar.png", "9coach.png" };
 	
