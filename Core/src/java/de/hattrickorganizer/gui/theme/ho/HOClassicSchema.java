@@ -85,6 +85,7 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 		put(SPECIAL[3],"gui/bilder/spec3.png");
 		put(SPECIAL[4],"gui/bilder/spec4.png");
 		put(SPECIAL[5],"gui/bilder/spec5.png");
+		put(SPECIAL[6],"gui/bilder/spec6.png");
 		
 		put(TOOTHEDWHEEL,"gui/bilder/zahnrad.png");
 		put(HAND,"gui/bilder/Manuell.png");
