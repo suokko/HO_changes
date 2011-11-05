@@ -19,6 +19,7 @@ Language updates:
 - Add Hebrew as new HO language (thx Mod-Transy)
 - Update Chinese translations (thx tianbing)
 - Update Danish translations (thx Max_Schreck)
+- Update Finnish translations (thx paragon81)
 - Update French translations (thx fierz1998)
 - Update German translations (thx Werder0405)
 - Update Hebrew translations (thx Mod-Transy)
@@ -33,6 +34,7 @@ Language updates:
 - Update Slovak translations (thx Refri)
 - Update Spanish translations (thx Baler0)
 - Update Spanish_sudamericano translations (thx Baler0)
+- Update Srpski + Srpski (lat) translations (thx FoxWMB)
 - Update Svenska translations (thx KrustyTheClown, Ehlana)
 - Update Ukranian translations (thx oleh_deneb)
 
