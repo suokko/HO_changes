@@ -149,11 +149,21 @@ public final class ThemeManager {
 		if(extSchema != null){
 			tmp = (ImageIcon)extSchema.get(key+"(T)");
 			if(tmp == null){
-				tmp = getIcon(key);
+				tmp = getImageIcon(key);
 				
 				if(tmp != null){
 					tmp = new ImageIcon(ImageUtilities.makeColorTransparent(tmp.getImage(),color));
 					extSchema.put(key+"(T)",tmp);
+				}
+			}
+		} else {
+			tmp = (ImageIcon)classicSchema.get(key+"(T)");
+			if(tmp == null){
+				tmp = getImageIcon(key);
+				
+				if(tmp != null){
+					tmp = new ImageIcon(ImageUtilities.makeColorTransparent(tmp.getImage(),color));
+					classicSchema.put(key+"(T)",tmp);
 				}
 			}
 		}
