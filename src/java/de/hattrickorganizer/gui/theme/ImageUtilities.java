@@ -30,7 +30,7 @@ public class ImageUtilities {
     private static Hashtable<Integer,ImageIcon> m_clPfeilWideLightCache = new Hashtable<Integer,ImageIcon>();
     /** Cache für Transparent gemachte Bilder */
     public static HashMap<Image,Image> m_clTransparentsCache = new HashMap<Image,Image>();
-    
+    public static ImageIcon MINILEER = new ImageIcon(new BufferedImage(8, 8, BufferedImage.TYPE_INT_ARGB));
 	/**
 	 * Tauscht eine Farbe im Image durch eine andere
 	 *

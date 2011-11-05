@@ -228,10 +228,7 @@ public final class SpielerLabelEntry extends TableEntry {
                 m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition,
                                                                                      m_clPlayer
                                                                                      .getTrikotnummer()));
-                String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
-                if(teamInfoSmilie == "")
-                	teamInfoSmilie = "No-Team.png";
-                m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
+                showGroupIcon();
             }
 
             //            else if ( m_bShowTrikot )
@@ -260,10 +257,7 @@ public final class SpielerLabelEntry extends TableEntry {
                 m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition,
                                                                                      m_clPlayer
                                                                                      .getTrikotnummer()));
-                String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
-                if(teamInfoSmilie == "")
-                	teamInfoSmilie = "No-Team.png";
-                m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
+                showGroupIcon();
             }
 
             //            else if ( m_bShowTrikot )
@@ -310,11 +304,7 @@ public final class SpielerLabelEntry extends TableEntry {
             //&& m_clSpielerPositionAktuell != null )
             if (m_bShowTrikot) {
                 m_jlName.setIcon(ImageUtilities.getImage4Position(m_clCurrentPlayerPosition, m_clPlayer.getTrikotnummer()));
-                String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
-                
-                if(teamInfoSmilie.trim().isEmpty() )
-                	teamInfoSmilie = "No-Team.png";
-                m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
+                showGroupIcon();
             }
             updateDisplay(m_clPlayer);
 
@@ -326,6 +316,15 @@ public final class SpielerLabelEntry extends TableEntry {
         m_clComponent.setPreferredSize(new Dimension(Helper.calcCellWidth(130),Helper.calcCellWidth(18)));  // Was 150,18 - setting lower solved lineup problem
     }
     
+    
+    private void showGroupIcon(){
+    	String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
+        
+        if(teamInfoSmilie.trim().isEmpty() )
+        	m_jlGroup.setIcon(ImageUtilities.MINILEER);
+        else
+        	m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
+    }
     private void setEmptyLabel(){
         m_jlName.setText("");
         m_jlName.setIcon(null);
