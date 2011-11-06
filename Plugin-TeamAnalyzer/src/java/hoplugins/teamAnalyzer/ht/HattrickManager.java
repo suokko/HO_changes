@@ -44,7 +44,7 @@ public class HattrickManager {
     		start.setLenient(true);
     		start.add(Calendar.DAY_OF_YEAR, -(7*7)); // 7 week = half season
     		end.setLenient(true);
-    		end.add(Calendar.DAY_OF_YEAR, -1);
+    		end.add(Calendar.DAY_OF_YEAR, 1);
     		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     		String url;
 
@@ -75,7 +75,6 @@ public class HattrickManager {
     			}
     			// next 7 weeks
     			end.setTime(start.getTime());
-        		end.add(Calendar.DAY_OF_YEAR, -1);
         		start.add(Calendar.DAY_OF_YEAR, -(7*7));
         		if (end.getTime().before(oneyearold)) {
         			download = false;
