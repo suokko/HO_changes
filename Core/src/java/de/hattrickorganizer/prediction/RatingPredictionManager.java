@@ -388,7 +388,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
 
     private static int getSkillByName (String skillName) {
-    	skillName = skillName.toLowerCase();
+    	skillName = skillName.toLowerCase(java.util.Locale.ENGLISH);
     	if (skillName.equals("goalkeeping"))
     		return GOALKEEPING;
     	else if (skillName.equals("defending"))
@@ -408,7 +408,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
 
     private static int getSideByName (String sideName) {
-    	sideName = sideName.toLowerCase();
+    	sideName = sideName.toLowerCase(java.util.Locale.ENGLISH);
     	if (sideName.equals("thisside"))
     		return THISSIDE;
     	else if (sideName.equals("otherside"))
