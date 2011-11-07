@@ -1,11 +1,15 @@
 package de.hattrickorganizer.gui.lineup.substitution;
 
+import gui.UserParameter;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -16,8 +20,11 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.table.AbstractTableModel;
 
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.GUIUtilities;
 
 public class SubstitutionOverview extends JPanel {
@@ -122,6 +129,7 @@ public class SubstitutionOverview extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			BehaviorDialog dlg = new BehaviorDialog(
 					SwingUtilities.getWindowAncestor(SubstitutionOverview.this));
+			dlg.setLocationRelativeTo(SubstitutionOverview.this);
 			dlg.setVisible(true);
 		}
 	}
@@ -134,16 +142,36 @@ public class SubstitutionOverview extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei,
+						HOVerwaltung.instance().getClass().getClassLoader());
+				HOVerwaltung.instance().loadLatestHoModel();
+
 				try {
 					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 				} catch (Exception e) {
 					// use standard LaF
 				}
 				JDialog dlg = new JDialog();
+				dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 				dlg.getContentPane().add(new SubstitutionOverview());
 				dlg.pack();
 				dlg.setSize(new Dimension(800, 600));
 				dlg.setVisible(true);
+
+				dlg.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						System.exit(0);
+					}
+				});
+			}
+		});
+
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+
+			@Override
+			public void run() {
+				DBZugriff.instance().disconnect();
 			}
 		});
 	}
