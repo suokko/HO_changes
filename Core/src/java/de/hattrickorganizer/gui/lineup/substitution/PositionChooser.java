@@ -2,7 +2,6 @@ package de.hattrickorganizer.gui.lineup.substitution;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -12,184 +11,267 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import de.hattrickorganizer.gui.lineup.substitution.PositionSelectionEvent.Change;
+
+import plugins.ISpieler;
+import plugins.ISpielerPosition;
+
 public class PositionChooser extends JPanel {
 
 	private static final long serialVersionUID = 7378929734827883010L;
-	private static final Color COLOR_BG = new Color( 39, 127, 49 );
-    private final Color COLOR_POS_DEFAULT = COLOR_BG;
-    private final Color COLOR_POS_OCCUPIED = Color.LIGHT_GRAY;
-    private final Color COLOR_POS_FOCUSED = Color.YELLOW;
-    private int positionChoosen = 0;
+	private static final Color COLOR_BG = new Color(39, 127, 49);
+	private final Color COLOR_POS_DEFAULT = COLOR_BG;
+	private final Color COLOR_POS_OCCUPIED = Color.LIGHT_GRAY;
+	private final Color COLOR_POS_SELECTED = Color.YELLOW;
+	private final LinkedHashMap<Integer, PositionPanel> positions = new LinkedHashMap<Integer, PositionPanel>();
+	private final List<PositionSelectionListener> positionSelectionListeners = new ArrayList<PositionSelectionListener>();
+	private Integer selected;
 
-    public PositionChooser() {
-        initComponents();
-    }
+	public PositionChooser() {
+		positions.put(new Integer(ISpielerPosition.keeper), new PositionPanel(ISpielerPosition.keeper));
+		positions.put(new Integer(ISpielerPosition.rightBack), new PositionPanel(ISpielerPosition.rightBack));
+		positions.put(new Integer(ISpielerPosition.rightCentralDefender), new PositionPanel(
+				ISpielerPosition.rightCentralDefender));
+		positions.put(new Integer(ISpielerPosition.middleCentralDefender), new PositionPanel(
+				ISpielerPosition.middleCentralDefender));
+		positions.put(new Integer(ISpielerPosition.leftCentralDefender), new PositionPanel(
+				ISpielerPosition.leftCentralDefender));
+		positions.put(new Integer(ISpielerPosition.leftBack), new PositionPanel(ISpielerPosition.leftBack));
+		positions.put(new Integer(ISpielerPosition.rightWinger), new PositionPanel(
+				ISpielerPosition.rightWinger));
+		positions.put(new Integer(ISpielerPosition.rightInnerMidfield), new PositionPanel(
+				ISpielerPosition.rightInnerMidfield));
+		positions.put(new Integer(ISpielerPosition.centralInnerMidfield), new PositionPanel(
+				ISpielerPosition.centralInnerMidfield));
+		positions.put(new Integer(ISpielerPosition.leftInnerMidfield), new PositionPanel(
+				ISpielerPosition.leftInnerMidfield));
+		positions.put(new Integer(ISpielerPosition.leftWinger),
+				new PositionPanel(ISpielerPosition.leftWinger));
+		positions.put(new Integer(ISpielerPosition.rightForward), new PositionPanel(
+				ISpielerPosition.rightForward));
+		positions.put(new Integer(ISpielerPosition.centralForward), new PositionPanel(
+				ISpielerPosition.centralForward));
+		positions.put(new Integer(ISpielerPosition.leftForward), new PositionPanel(
+				ISpielerPosition.leftForward));
 
-    private void setPositionChoosen( int pos ) {
-        this.positionChoosen = pos;
-        System.out.println( "####-setPositionChoosen " + this.positionChoosen );
-    }
+		initComponents();
+	}
 
-    private void initComponents() {
-        setLayout( new GridBagLayout() );
-        setBorder( BorderFactory.createLineBorder( Color.WHITE ) );
-        setBackground( COLOR_BG );
+	public void init(HashMap<Integer, PlayerPositionItem> lineupPositions) {
+		for (Integer positionKey : this.positions.keySet()) {
+			PlayerPositionItem item = lineupPositions.get(positionKey);
+			if (item != null) {
+				this.positions.get(positionKey).setPlayer(item.getSpieler());
+			} else {
+				this.positions.get(positionKey).setPlayer(null);
+			}
+		}
+	}
 
-        MouseListener myMouseListener = new MyMouseListener();
+	public void select(Integer position) {
+		if (this.selected == position) {
+			return;
+		}
+		if (this.selected != null) {
+			this.positions.get(this.selected).setSelected(false);
+			firePositionSelectionChanged(new PositionSelectionEvent(this.selected, Change.DESELECTED));
+		}
+		this.selected = position;
+		if (this.selected != null) {
+			this.positions.get(this.selected).setSelected(true);
+			firePositionSelectionChanged(new PositionSelectionEvent(this.selected, Change.SELECTED));
+		}
+	}
 
-        int space = 4;
-        int position = 1;
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets( space, space, 0, 0 );
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 2;
-        PositionPanel pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
+	public void addPositionSelectionListener(PositionSelectionListener listener) {
+		this.positionSelectionListeners.add(listener);
+	}
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        gbc.gridx = GridBagConstraints.RELATIVE;
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        gbc.insets = new Insets( space, space, 0, space );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
+	public void removePositionSelectionListener(PositionSelectionListener listener) {
+		this.positionSelectionListeners.remove(listener);
+	}
 
-        gbc.gridy = 2;
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        gbc.insets = new Insets( space, space, 0, space );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
+	private void firePositionSelectionChanged(PositionSelectionEvent event) {
+		for (int i = this.positionSelectionListeners.size() - 1; i >= 0; i--) {
+			this.positionSelectionListeners.get(i).selectionChanged(event);
+		}
+	}
 
-        gbc.gridy = 3;
-        gbc.gridx = 1;
-        gbc.insets = new Insets( space, space, space, 0 );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        gbc.gridx = GridBagConstraints.RELATIVE;
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-        pos = new PositionPanel( position++ );
-        pos.addMouseListener( myMouseListener );
-        add( pos, gbc );
-    }
+	private void initComponents() {
+		setLayout(new GridBagLayout());
+		setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		setBackground(COLOR_BG);
 
-    public static void main( String[] args ) {
-        EventQueue.invokeLater( new Runnable() {
+		MouseListener myMouseListener = new MyMouseListener();
 
-            public void run() {
-                JDialog dlg = new JDialog();
-                dlg.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-                dlg.getContentPane().setLayout( new BorderLayout() );
-                dlg.getContentPane().add( new PositionChooser(), BorderLayout.CENTER );
-                dlg.pack();
-                dlg.setVisible( true );
-            }
-        } );
-    }
+		Iterator<PositionPanel> positionPanelIterator = positions.values().iterator();
+		int space = 4;
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(space, space, 0, 0);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 2;
+		PositionPanel pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
 
-    private class PositionPanel extends JPanel {
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		gbc.insets = new Insets(space, space, 0, space);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+
+		gbc.gridy = 2;
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		gbc.insets = new Insets(space, space, 0, space);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+
+		gbc.gridy = 3;
+		gbc.gridx = 1;
+		gbc.insets = new Insets(space, space, space, 0);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+		pos = positionPanelIterator.next();
+		pos.addMouseListener(myMouseListener);
+		add(pos, gbc);
+	}
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+
+			public void run() {
+				JDialog dlg = new JDialog();
+				dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				dlg.getContentPane().setLayout(new BorderLayout());
+				dlg.getContentPane().add(new PositionChooser(), BorderLayout.CENTER);
+				dlg.pack();
+				dlg.setVisible(true);
+			}
+		});
+	}
+
+	private class PositionPanel extends JPanel {
 
 		private static final long serialVersionUID = 6025107478898829134L;
-		private boolean occupied;
-        private int position;
+		private Integer position;
+		private ISpieler player;
+		private boolean selected = false;
 
-        public PositionPanel( int position ) {
-            this( position, false );
-        }
+		public PositionPanel(Integer position) {
+			this.position = position;
+			initComponents();
+		}
 
-        public PositionPanel( int position, boolean occupied ) {
-            this.position = position;
-            this.occupied = occupied;
-            initComponents();
-        }
+		public void setPlayer(ISpieler player) {
+			this.player = player;
+			if (isOccupied()) {
+				setBackground(COLOR_POS_OCCUPIED);
+				setToolTipText(player.getName());
+			} else {
+				setBackground(COLOR_POS_DEFAULT);
+				setToolTipText(null);
+			}
+		}
 
-        public int getPosition() {
-            return this.position;
-        }
+		public ISpieler getPlayer() {
+			return this.player;
+		}
 
-        public boolean isOccupied() {
-            return this.occupied;
-        }
+		public Integer getPosition() {
+			return this.position;
+		}
 
-        private void initComponents() {
-            setBorder( BorderFactory.createLineBorder( Color.WHITE ) );
-            Dimension size = new Dimension( 14, 10 );
-            setMinimumSize( size );
-            setMaximumSize( size );
-            setPreferredSize( size );
-            if ( !this.occupied ) {
-                setBackground( COLOR_POS_DEFAULT );
-            } else {
-                setBackground( COLOR_POS_OCCUPIED );
-            }
-        }
-    }
+		public boolean isOccupied() {
+			return this.player != null;
+		}
 
-    private class MyMouseListener extends MouseAdapter {
+		public void setSelected(boolean select) {
+			this.selected = select;
+			updateView();
+		}
 
-        @Override
-        public void mouseEntered( MouseEvent e ) {
-            setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );
-        }
+		public boolean isSelected() {
+			return this.selected;
+		}
 
-        @Override
-        public void mouseExited( MouseEvent e ) {
-            setCursor( Cursor.getPredefinedCursor( Cursor.DEFAULT_CURSOR ) );
-        }
+		private void initComponents() {
+			setBorder(BorderFactory.createLineBorder(Color.WHITE));
+			Dimension size = new Dimension(14, 10);
+			setMinimumSize(size);
+			setMaximumSize(size);
+			setPreferredSize(size);
+			setBackground(COLOR_POS_DEFAULT);
+		}
 
-        @Override
-        public void mouseClicked( MouseEvent e ) {
-            for ( int i = 0; i < PositionChooser.this.getComponentCount(); i++ ) {
-                Component c = PositionChooser.this.getComponent( i );
-                if ( c instanceof PositionPanel ) {
+		private void updateView() {
+			if (isSelected()) {
+				setBackground(COLOR_POS_SELECTED);
+			} else if (isOccupied()) {
+				setBackground(COLOR_POS_OCCUPIED);
+			} else {
+				setBackground(COLOR_POS_DEFAULT);
+			}
+		}
+	}
 
-                    if ( c.getBackground() == COLOR_POS_FOCUSED ) {
-                        if ( ( ( PositionPanel ) c ).isOccupied() ) {
-                            c.setBackground( COLOR_POS_OCCUPIED );
-                        } else {
-                            c.setBackground( COLOR_POS_DEFAULT );
-                        }
-                    }
-                }
-            }
+	private class MyMouseListener extends MouseAdapter {
 
-            PositionPanel posPanel = ( PositionPanel ) e.getSource();
-            posPanel.setBackground( COLOR_POS_FOCUSED );
-            setPositionChoosen( posPanel.getPosition() );
-        }
-    }
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			PositionPanel posPanel = (PositionPanel) e.getSource();
+			select(posPanel.getPosition());
+		}
+	}
 }
-
