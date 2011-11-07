@@ -12,6 +12,7 @@ Changelist HO! 1.431
 - Added better error message when database is unable to create its file.
 - Fixed sort issue on player tables.
 - Minor fixes and tweaks.
+- Fixed localization issue messing up ratings for some locales
 
 
 Language updates:
@@ -46,6 +47,7 @@ Plugin Updates:
 
 - Team Analyzer v 2.81:
   - Fixed icon issue with Nimbus skin
+  - Match download is updated to work better
 
 
 Changelist HO! 1.430
