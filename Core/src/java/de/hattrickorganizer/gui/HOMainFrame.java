@@ -6,6 +6,7 @@ import gui.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -25,8 +26,11 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Vector;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.InputMap;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -56,6 +60,8 @@ import de.hattrickorganizer.gui.keepertool.KeeperToolDialog;
 import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
+import de.hattrickorganizer.gui.lineup.SubstitutionPanel;
+import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.menu.DownloadDialog;
 import de.hattrickorganizer.gui.menu.HRFImport;
@@ -927,6 +933,19 @@ public final class HOMainFrame extends JFrame
 
 		m_jmCreditsItem.addActionListener(this);
 		m_jmAbout.add(m_jmCreditsItem);
+
+		Action substitutionTest = new AbstractAction("Substitution test") {
+			
+			public void actionPerformed(ActionEvent e) {
+				JDialog dlg = new JDialog();
+				dlg.getContentPane().add(new SubstitutionOverview());
+				dlg.setSize(new Dimension(800, 600));
+				dlg.setLocationRelativeTo(getContentPane());
+				dlg.setVisible(true);
+			}
+		};
+		// UNCOMMENT FOR Substitution test (Menu About->Substitution test)		
+//		m_jmAbout.add(substitutionTest);
 
 		m_jmMenuBar.add(m_jmAbout);
 
