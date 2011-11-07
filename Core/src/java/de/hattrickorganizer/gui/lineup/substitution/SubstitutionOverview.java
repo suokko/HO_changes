@@ -33,8 +33,7 @@ public class SubstitutionOverview extends JPanel {
 	private void initComponents() {
 		setLayout(new BorderLayout());
 		this.substitutionTable = new JTable();
-		this.substitutionTable
-				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.substitutionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane tableScrollPane = new JScrollPane();
 		tableScrollPane.getViewport().add(this.substitutionTable);
 
@@ -79,8 +78,7 @@ public class SubstitutionOverview extends JPanel {
 		add(buttonPanel, BorderLayout.SOUTH);
 
 		GUIUtilities.equalizeComponentSizes(editButton, removeButton);
-		GUIUtilities.equalizeComponentSizes(substitutionButton, behaviorButton,
-				positionSwapButton);
+		GUIUtilities.equalizeComponentSizes(substitutionButton, behaviorButton, positionSwapButton);
 
 		editButton.setEnabled(false);
 		removeButton.setEnabled(false);
@@ -91,8 +89,7 @@ public class SubstitutionOverview extends JPanel {
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 6969656858380680460L;
-		private String[] columnNames = new String[] { "Type",
-				"Affected Player", "When" };
+		private String[] columnNames = new String[] { "Type", "Affected Player", "When" };
 
 		public int getRowCount() {
 			// TODO Auto-generated method stub
@@ -138,8 +135,7 @@ public class SubstitutionOverview extends JPanel {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UIManager
-							.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 				} catch (Exception e) {
 					// use standard LaF
 				}
