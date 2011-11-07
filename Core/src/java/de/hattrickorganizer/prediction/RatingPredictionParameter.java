@@ -49,7 +49,7 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
 				String line = null;
 				Properties curProperties = null;
 				while(br != null && (line = br.readLine()) != null) {
-					line = line.toLowerCase();
+					line = line.toLowerCase(java.util.Locale.ENGLISH);
 					// # begins a Comment
 					line = line.replaceFirst ("#.*", "");
 					// Trim
@@ -112,8 +112,8 @@ public class RatingPredictionParameter implements IRatingPredictionParameter {
     }
     
     public double getParam (String section, String key, double defVal) {
-    	key = key.toLowerCase();
-    	section = section.toLowerCase();
+    	key = key.toLowerCase(java.util.Locale.ENGLISH);
+    	section = section.toLowerCase(java.util.Locale.ENGLISH);
     	if (allProps.containsKey(section)) {
     		Properties props = allProps.get(section);
     		String propString = props.getProperty(key, "" + defVal);
