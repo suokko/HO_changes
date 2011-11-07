@@ -94,9 +94,14 @@ public class BehaviorView extends JPanel {
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(positionComboBox, gbc);
 
+		PositionChooser positionChooser = new PositionChooser();
+		gbc.gridy = 5;
+		gbc.insets = new Insets(2, 10, 8, 10);
+		add(positionChooser, gbc);
+		
 		JLabel redCardsLabel = new JLabel("Red cards:");
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(4, 10, 4, 2);
 		gbc.fill = GridBagConstraints.NONE;
@@ -107,13 +112,13 @@ public class BehaviorView extends JPanel {
 		redCardsComboBox.setMinimumSize(comboBoxSize);
 		redCardsComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(redCardsComboBox, gbc);
 
 		JLabel standingLabel = new JLabel("Standing:");
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(standingLabel, gbc);
 
@@ -121,7 +126,7 @@ public class BehaviorView extends JPanel {
 		stadingComboBox.setMinimumSize(comboBoxSize);
 		stadingComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(stadingComboBox, gbc);
 
