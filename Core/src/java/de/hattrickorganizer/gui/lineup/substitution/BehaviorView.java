@@ -4,19 +4,15 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import de.hattrickorganizer.tools.StringUtilities;
 
 public class BehaviorView extends JPanel {
 
@@ -38,8 +34,7 @@ public class BehaviorView extends JPanel {
 		add(behaviorLabel, gbc);
 
 		JComboBox behaviorComboBox = new JComboBox();
-		Dimension comboBoxSize = new Dimension(200,
-				behaviorComboBox.getPreferredSize().height);
+		Dimension comboBoxSize = new Dimension(200, behaviorComboBox.getPreferredSize().height);
 		behaviorComboBox.setMinimumSize(comboBoxSize);
 		behaviorComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
@@ -53,9 +48,8 @@ public class BehaviorView extends JPanel {
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(whenLabel, gbc);
 
-		final JTextField whenTextField = new JTextField();
-		Dimension textFieldSize = new Dimension(100,
-				whenTextField.getPreferredSize().height);
+		final WhenTextField whenTextField = new WhenTextField();
+		Dimension textFieldSize = new Dimension(200, whenTextField.getPreferredSize().height);
 		whenTextField.setMinimumSize(textFieldSize);
 		whenTextField.setPreferredSize(textFieldSize);
 		gbc.gridx = 1;
@@ -67,8 +61,7 @@ public class BehaviorView extends JPanel {
 		whenSlider.addChangeListener(new ChangeListener() {
 
 			public void stateChanged(ChangeEvent e) {
-				whenTextField.setText(String.valueOf(whenSlider.getModel()
-						.getValue()));
+				whenTextField.setValue(Integer.valueOf(whenSlider.getModel().getValue()));
 			}
 		});
 		gbc.gridx = 1;
@@ -100,7 +93,7 @@ public class BehaviorView extends JPanel {
 		gbc.gridy = 4;
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(positionComboBox, gbc);
-		
+
 		JLabel redCardsLabel = new JLabel("Red cards:");
 		gbc.gridx = 0;
 		gbc.gridy = 5;
@@ -132,35 +125,15 @@ public class BehaviorView extends JPanel {
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(stadingComboBox, gbc);
 
-		whenTextField.getDocument().addDocumentListener(new DocumentListener() {
+		whenTextField.addPropertyChangeListener("value", new PropertyChangeListener() {
 
-			public void removeUpdate(DocumentEvent e) {
-				updateSlider();
-			}
-
-			public void insertUpdate(DocumentEvent e) {
-				updateSlider();
-			}
-
-			public void changedUpdate(DocumentEvent e) {
-				updateSlider();
-			}
-
-			private void updateSlider() {
-				SwingUtilities.invokeLater(new Runnable() {
-
-					public void run() {
-						String str = whenTextField.getText();
-						int value = 0;
-						if (StringUtilities.isNumeric(str)) {
-							int parsed = Integer.parseInt(str);
-							if (parsed >= 0 && parsed <= 119) {
-								value = parsed;
-							}
-						}
-						whenSlider.setValue(value);
-					}
-				});
+			public void propertyChange(PropertyChangeEvent evt) {
+				Integer value = (Integer) whenTextField.getValue();
+				if (value != null) {
+					whenSlider.setValue(value.intValue());
+				} else {
+					whenSlider.setValue(0);
+				}
 			}
 		});
 	}
