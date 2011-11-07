@@ -60,7 +60,6 @@ import de.hattrickorganizer.gui.keepertool.KeeperToolDialog;
 import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
-import de.hattrickorganizer.gui.lineup.SubstitutionPanel;
 import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.menu.DownloadDialog;
@@ -474,7 +473,7 @@ public final class HOMainFrame extends JFrame
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmForumItem)) { // Forum
-			HelperWrapper.instance().openUrlInUserBRowser("http://forum.hattrickorganizer.net/index.php");
+			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
 		}
