@@ -141,7 +141,7 @@ public class HRFFileParser {
                     	if(properties == null) 
                     		properties = new Properties();
                         properties.setProperty(zeile.substring(0, indexGleichheitszeichen)
-                                                    .toLowerCase(),
+                                                    .toLowerCase(java.util.Locale.ENGLISH),
                                                zeile.substring(indexGleichheitszeichen + 1));
                     }
                 }

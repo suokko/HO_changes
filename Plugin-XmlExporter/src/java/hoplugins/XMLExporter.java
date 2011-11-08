@@ -636,7 +636,7 @@ public class XMLExporter implements IPlugin, ActionListener, IOfficialPlugin {
 	}
 
 	public double getVersion() {
-		return 1.051D;
+		return 1.052D;
 	}
 
 	private String hadSkillup(int skill, ISpieler player, Timestamp matchdate) {

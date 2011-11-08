@@ -100,7 +100,7 @@ public class Net {
 
 	private int getOutParIndex (String name) {
 		for (int i=0; i < outputParams.length; i++) {
-			if (outputParams[i].toLowerCase().equals(name.toLowerCase()))
+			if (outputParams[i].toLowerCase(java.util.Locale.ENGLISH).equals(name.toLowerCase(java.util.Locale.ENGLISH)))
 				return i;
 		}
 		return -1;
@@ -108,7 +108,7 @@ public class Net {
 
 	private int getInParIndex (String name) {
 		for (int i=0; i < inputParams.length; i++) {
-			if (inputParams[i].toLowerCase().equals(name.toLowerCase()))
+			if (inputParams[i].toLowerCase(java.util.Locale.ENGLISH).equals(name.toLowerCase(java.util.Locale.ENGLISH)))
 				return i;
 		}
 		return -1;

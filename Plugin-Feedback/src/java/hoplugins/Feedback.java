@@ -42,7 +42,7 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Plugin version constant */
-    public static final double PLUGIN_VERSION = 0.50;
+    public static final double PLUGIN_VERSION = 0.51;
 
     /** Plugin Id */
     private static final int PLUGIN_ID = 42;
@@ -181,10 +181,10 @@ public class Feedback implements IPlugin, IRefreshable, IOfficialPlugin {
         	if (url != null) {
         		String result = Commons.getModel().getDownloadHelper()
     				.getUsalWebPage(url,false, true);
-        		if (result.toLowerCase().equals("success") ||
-        				result.toLowerCase().equals("skipped"))
+        		if (result.toLowerCase(java.util.Locale.ENGLISH).equals("success") ||
+        				result.toLowerCase(java.util.Locale.ENGLISH).equals("skipped"))
         			return FeedbackConstants.UPLOAD_OK;
-        		else if (result.toLowerCase().equals("stop"))
+        		else if (result.toLowerCase(java.util.Locale.ENGLISH).equals("stop"))
         			return FeedbackConstants.UPLOAD_STOP;
         		else
         			System.out.println("Result='"+result+"'");
