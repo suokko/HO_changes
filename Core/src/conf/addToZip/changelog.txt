@@ -22,6 +22,7 @@ Language updates:
 - Update Danish translations (thx Max_Schreck)
 - Update Finnish translations (thx paragon81)
 - Update French translations (thx fierz1998)
+- Update Galego translations (thx GZ-ivanff)
 - Update German translations (thx Werder0405)
 - Update Hebrew translations (thx Mod-Transy)
 - Update Hrvatski(Croatian) translations (thx -Iuve-)
@@ -35,9 +36,10 @@ Language updates:
 - Update Slovak translations (thx Refri)
 - Update Spanish translations (thx Baler0)
 - Update Spanish_sudamericano translations (thx Baler0)
-- Update Srpski + Srpski (lat) translations (thx FoxWMB)
+- Update Srpski + Srpski (lat) translations (thx FoxWMB, ljushaff)
 - Update Svenska translations (thx KrustyTheClown, Ehlana)
 - Update Ukranian translations (thx oleh_deneb)
+- Update Vlaams translations (thx icarus95)
 
 Plugin Updates:
 ---------------
