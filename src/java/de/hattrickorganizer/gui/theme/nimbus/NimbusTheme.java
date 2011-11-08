@@ -31,7 +31,7 @@ public class NimbusTheme {
 		    }
 			
 			if (nimbus != null) {
-				if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+				if (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).startsWith("mac")) {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					Object mbUI = UIManager.get("MenuBarUI");
 					Object mUI = UIManager.get("MenuUI");

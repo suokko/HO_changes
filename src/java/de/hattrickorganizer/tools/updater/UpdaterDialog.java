@@ -238,7 +238,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
             Object [] tables = DBZugriff.instance().getAdapter().getDBInfo().getAllTablesNames();
     
             for (int i = 0; i < tables.length; i++) {
-				if(tables[i].toString().toUpperCase().startsWith(pluginname.toUpperCase())) {
+				if(tables[i].toString().toUpperCase(java.util.Locale.ENGLISH).startsWith(pluginname.toUpperCase(java.util.Locale.ENGLISH))) {
                     droptables.add(tables[i].toString());
                 }
 			}

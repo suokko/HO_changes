@@ -198,7 +198,7 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
             final int i = filename.lastIndexOf('.');
 
             if ((i > 0) && (i < (filename.length() - 1))) {
-                return filename.substring(i + 1).toLowerCase();
+                return filename.substring(i + 1).toLowerCase(java.util.Locale.ENGLISH);
             }
 
             ;
@@ -282,7 +282,7 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
             filters = new Hashtable<String,ExampleFileFilter>(5);
         }
 
-        filters.put(extension.toLowerCase(), this);
+        filters.put(extension.toLowerCase(java.util.Locale.ENGLISH), this);
         fullDescription = null;
     }
 

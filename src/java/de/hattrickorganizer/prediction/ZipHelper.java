@@ -50,7 +50,7 @@ public class ZipHelper
             {
                 ZipEntry zipentry = enumeration.nextElement();
                 String filename;
-                if((filename = dir + File.separatorChar + zipentry.getName()).toUpperCase().endsWith(s.toUpperCase()))
+                if((filename = dir + File.separatorChar + zipentry.getName()).toUpperCase(java.util.Locale.ENGLISH).endsWith(s.toUpperCase(java.util.Locale.ENGLISH)))
                     extractZipEntry(zipentry, filename);
             }
 

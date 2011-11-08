@@ -270,7 +270,7 @@ public final class HOMainFrame extends JFrame
 	}
 	
 	final public static boolean isMac() {
-		return (System.getProperty("os.name").toLowerCase().indexOf("mac") != -1);
+		return (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).indexOf("mac") != -1);
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
@@ -1348,7 +1348,7 @@ public final class HOMainFrame extends JFrame
 				
 				// Um die systemweite MenuBar von Mac OS X zu verwenden
 				// http://www.pushing-pixels.org/?p=366
-				if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+				if (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).startsWith("mac")) {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					Object mbUI = UIManager.get("MenuBarUI");
 					Object mUI = UIManager.get("MenuUI");
