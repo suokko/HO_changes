@@ -39,7 +39,7 @@ public class ZipHelper {
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
 				String fileName = destDir + File.separatorChar + entry.getName();
-				if (fileName.toUpperCase().endsWith(fileToExtract.toUpperCase())) {
+				if (fileName.toUpperCase(java.util.Locale.ENGLISH).endsWith(fileToExtract.toUpperCase(java.util.Locale.ENGLISH))) {
 					saveEntry(entry, fileName);
 				}
 
@@ -58,7 +58,7 @@ public class ZipHelper {
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
 				String fileName = entry.getName();
-				if (fileName.toUpperCase().endsWith(fileToExtract.toUpperCase())) {
+				if (fileName.toLowerCase(java.util.Locale.ENGLISH).endsWith(fileToExtract.toLowerCase(java.util.Locale.ENGLISH))) {
 					return zipFile.getInputStream(entry);
 				}
 			}

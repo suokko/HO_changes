@@ -66,7 +66,7 @@ public class NtLineupParser {
             ele = (Element)root.getElementsByTagName("MatchID").item(0);
             matchId = Long.parseLong(xm.getFirstChildNodeValue(ele));
             ele = (Element)root.getElementsByTagName("IsYouth").item(0);
-            isYouth = Boolean.getBoolean(xm.getFirstChildNodeValue(ele).toLowerCase());
+            isYouth = Boolean.getBoolean(xm.getFirstChildNodeValue(ele).toLowerCase(java.util.Locale.ENGLISH));
             ele = (Element)root.getElementsByTagName("MatchType").item(0);
             matchType = Integer.parseInt(xm.getFirstChildNodeValue(ele));
             ele = (Element)root.getElementsByTagName("MatchDate").item(0);

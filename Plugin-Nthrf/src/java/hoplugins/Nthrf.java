@@ -24,7 +24,7 @@ public class Nthrf implements IPlugin, IRefreshable, IOfficialPlugin {
 	private static IHOMiniModel miniModel;
 
 	// plugin version constant
-	public static final double PLUGIN_VERSION = 0.2;
+	public static final double PLUGIN_VERSION = 0.21;
 	// plugin id
 	private static final int PLUGIN_ID = 44;
 	// debug mode

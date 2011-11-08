@@ -45,27 +45,27 @@ public class PlayerConverter {
         // Get all skills for active language
         // This should be the same language as in Hattrick
         skills = new ArrayList<String>();
-        skills.add(homodel.getLanguageString("nonexisting").toLowerCase());
-        skills.add(homodel.getLanguageString("katastrophal").toLowerCase());
-        skills.add(homodel.getLanguageString("erbaermlich").toLowerCase());
-        skills.add(homodel.getLanguageString("armselig").toLowerCase());
-        skills.add(homodel.getLanguageString("schwach").toLowerCase());
-        skills.add(homodel.getLanguageString("durchschnittlich").toLowerCase());
-        skills.add(homodel.getLanguageString("passabel").toLowerCase());
-        skills.add(homodel.getLanguageString("gut").toLowerCase());
-        skills.add(homodel.getLanguageString("sehr_gut").toLowerCase());
-        skills.add(homodel.getLanguageString("hervorragend").toLowerCase());
-        skills.add(homodel.getLanguageString("grossartig").toLowerCase());
-        skills.add(homodel.getLanguageString("brilliant").toLowerCase());
-        skills.add(homodel.getLanguageString("fantastisch").toLowerCase());
-        skills.add(homodel.getLanguageString("Weltklasse").toLowerCase());
-        skills.add(homodel.getLanguageString("uebernatuerlich").toLowerCase());
-        skills.add(homodel.getLanguageString("gigantisch").toLowerCase());
-        skills.add(homodel.getLanguageString("ausserirdisch").toLowerCase());
-        skills.add(homodel.getLanguageString("mythisch").toLowerCase());
-        skills.add(homodel.getLanguageString("maerchenhaft").toLowerCase());
-        skills.add(homodel.getLanguageString("galaktisch").toLowerCase());
-        skills.add(homodel.getLanguageString("goettlich").toLowerCase());
+        skills.add(homodel.getLanguageString("nonexisting").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("katastrophal").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("erbaermlich").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("armselig").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("schwach").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("durchschnittlich").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("passabel").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("gut").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("sehr_gut").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("hervorragend").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("grossartig").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("brilliant").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("fantastisch").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("Weltklasse").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("uebernatuerlich").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("gigantisch").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("ausserirdisch").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("mythisch").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("maerchenhaft").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("galaktisch").toLowerCase(java.util.Locale.ENGLISH));
+        skills.add(homodel.getLanguageString("goettlich").toLowerCase(java.util.Locale.ENGLISH));
 
         skillvalues = new ArrayList<Integer>();
 
@@ -97,12 +97,12 @@ public class PlayerConverter {
         // Get all specialities for active language
         // This should be the same language as in Hattrick
         specialities = new ArrayList<String>();
-        specialities.add(homodel.getLanguageString("sp_Technical").toLowerCase());
-        specialities.add(homodel.getLanguageString("sp_Quick").toLowerCase());
-        specialities.add(homodel.getLanguageString("sp_Powerful").toLowerCase());
-        specialities.add(homodel.getLanguageString("sp_Unpredictable").toLowerCase());
-        specialities.add(homodel.getLanguageString("sp_Head").toLowerCase());
-        specialities.add(homodel.getLanguageString("sp_Regainer").toLowerCase());
+        specialities.add(homodel.getLanguageString("sp_Technical").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("sp_Quick").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("sp_Powerful").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("sp_Unpredictable").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("sp_Head").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("sp_Regainer").toLowerCase(java.util.Locale.ENGLISH));
 
         specialitiesvalues = new ArrayList<Integer>();
 
@@ -524,13 +524,13 @@ public class PlayerConverter {
             for (int cl = 0; cl < cs.length; cl++) {
                 cs[cl] = '*';
             }
-            mytext = mytext.replaceAll(teamname, new String(cs)).toLowerCase();
+            mytext = mytext.replaceAll(teamname, new String(cs)).toLowerCase(java.util.Locale.ENGLISH);
 
             cs = new char[name.length()];
             for (int cl = 0; cl < cs.length; cl++) {
                 cs[cl] = '*';
             }
-            mytext = mytext.replaceAll(name.toLowerCase(), new String(cs)).toLowerCase();
+            mytext = mytext.replaceAll(name.toLowerCase(java.util.Locale.ENGLISH), new String(cs)).toLowerCase(java.util.Locale.ENGLISH);
 
             // We can search all the skills in text now
             p = skills.size() - 1;
