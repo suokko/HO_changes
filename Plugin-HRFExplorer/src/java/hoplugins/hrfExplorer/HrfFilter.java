@@ -39,7 +39,7 @@ public class HrfFilter extends javax.swing.filechooser.FileFilter
 		
 		if(i > 0 && i < s.length() -1)
 		{
-			suffix = s.substring(i + 1).toLowerCase();
+			suffix = s.substring(i + 1).toLowerCase(java.util.Locale.ENGLISH);
 		}
 		return suffix;
 	}
