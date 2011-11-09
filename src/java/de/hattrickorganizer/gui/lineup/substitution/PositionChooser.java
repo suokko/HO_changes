@@ -39,30 +39,30 @@ public class PositionChooser extends JPanel {
 	private Integer selected;
 
 	public PositionChooser() {
-		positions.put(new Integer(ISpielerPosition.keeper), new PositionPanel(ISpielerPosition.keeper));
-		positions.put(new Integer(ISpielerPosition.rightBack), new PositionPanel(ISpielerPosition.rightBack));
-		positions.put(new Integer(ISpielerPosition.rightCentralDefender), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.keeper), new PositionPanel(ISpielerPosition.keeper));
+		positions.put(Integer.valueOf(ISpielerPosition.rightBack), new PositionPanel(ISpielerPosition.rightBack));
+		positions.put(Integer.valueOf(ISpielerPosition.rightCentralDefender), new PositionPanel(
 				ISpielerPosition.rightCentralDefender));
-		positions.put(new Integer(ISpielerPosition.middleCentralDefender), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.middleCentralDefender), new PositionPanel(
 				ISpielerPosition.middleCentralDefender));
-		positions.put(new Integer(ISpielerPosition.leftCentralDefender), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.leftCentralDefender), new PositionPanel(
 				ISpielerPosition.leftCentralDefender));
-		positions.put(new Integer(ISpielerPosition.leftBack), new PositionPanel(ISpielerPosition.leftBack));
-		positions.put(new Integer(ISpielerPosition.rightWinger), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.leftBack), new PositionPanel(ISpielerPosition.leftBack));
+		positions.put(Integer.valueOf(ISpielerPosition.rightWinger), new PositionPanel(
 				ISpielerPosition.rightWinger));
-		positions.put(new Integer(ISpielerPosition.rightInnerMidfield), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.rightInnerMidfield), new PositionPanel(
 				ISpielerPosition.rightInnerMidfield));
-		positions.put(new Integer(ISpielerPosition.centralInnerMidfield), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.centralInnerMidfield), new PositionPanel(
 				ISpielerPosition.centralInnerMidfield));
-		positions.put(new Integer(ISpielerPosition.leftInnerMidfield), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.leftInnerMidfield), new PositionPanel(
 				ISpielerPosition.leftInnerMidfield));
-		positions.put(new Integer(ISpielerPosition.leftWinger),
+		positions.put(Integer.valueOf(ISpielerPosition.leftWinger),
 				new PositionPanel(ISpielerPosition.leftWinger));
-		positions.put(new Integer(ISpielerPosition.rightForward), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.rightForward), new PositionPanel(
 				ISpielerPosition.rightForward));
-		positions.put(new Integer(ISpielerPosition.centralForward), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.centralForward), new PositionPanel(
 				ISpielerPosition.centralForward));
-		positions.put(new Integer(ISpielerPosition.leftForward), new PositionPanel(
+		positions.put(Integer.valueOf(ISpielerPosition.leftForward), new PositionPanel(
 				ISpielerPosition.leftForward));
 
 		initComponents();

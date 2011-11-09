@@ -23,6 +23,5 @@ public class Divider extends JPanel {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
 		add(new JSeparator(), gbc);
-
 	}
 }
