@@ -12,20 +12,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import de.hattrickorganizer.gui.lineup.substitution.PositionSelectionEvent.Change;
-
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.lineup.substitution.PositionSelectionEvent.Change;
 
 public class PositionChooser extends JPanel {
 
@@ -68,7 +67,7 @@ public class PositionChooser extends JPanel {
 		initComponents();
 	}
 
-	public void init(HashMap<Integer, PlayerPositionItem> lineupPositions) {
+	public void init(Map<Integer, PlayerPositionItem> lineupPositions) {
 		for (Integer positionKey : this.positions.keySet()) {
 			PlayerPositionItem item = lineupPositions.get(positionKey);
 			if (item != null) {

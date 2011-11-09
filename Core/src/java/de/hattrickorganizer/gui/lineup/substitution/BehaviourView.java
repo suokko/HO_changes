@@ -8,8 +8,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -19,6 +19,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.lineup.substitution.PositionSelectionEvent.Change;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -35,13 +36,14 @@ public class BehaviourView extends JPanel {
 		initComponents();
 		addListeners();
 
-		HashMap<Integer, PlayerPositionItem> lineupPositions = SubstitutionDataProvider.getLineupPositions();
-		Collection<PlayerPositionItem> players = lineupPositions.values();
+		Map<Integer, PlayerPositionItem> lineupPositions = SubstitutionDataProvider.getLineupPositions();
 
-		this.playerComboBox.setModel(new DefaultComboBoxModel(players.toArray()));
+		this.playerComboBox.setModel(new DefaultComboBoxModel(lineupPositions.values().toArray()));
 		this.playerComboBox.setSelectedItem(null);
 
-		this.positionComboBox.setModel(new DefaultComboBoxModel(players.toArray()));
+		List<PlayerPositionItem> positions = SubstitutionDataProvider.getFieldPositions(
+				ISpielerPosition.keeper, ISpielerPosition.startReserves);
+		this.positionComboBox.setModel(new DefaultComboBoxModel(positions.toArray()));
 		this.positionComboBox.setSelectedItem(null);
 
 		this.positionChooser.init(lineupPositions);

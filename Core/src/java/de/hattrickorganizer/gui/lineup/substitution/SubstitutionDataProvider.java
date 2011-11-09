@@ -1,6 +1,9 @@
 package de.hattrickorganizer.gui.lineup.substitution;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
@@ -10,9 +13,9 @@ import de.hattrickorganizer.model.Lineup;
 
 public class SubstitutionDataProvider {
 
-	public static HashMap<Integer, PlayerPositionItem> getLineupPositions() {
+	public static Map<Integer, PlayerPositionItem> getLineupPositions() {
 
-		HashMap<Integer, PlayerPositionItem> positionMap = new HashMap<Integer, PlayerPositionItem>();
+		LinkedHashMap<Integer, PlayerPositionItem> positionMap = new LinkedHashMap<Integer, PlayerPositionItem>();
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
 		for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.startReserves; i++) {
@@ -26,6 +29,17 @@ public class SubstitutionDataProvider {
 		return positionMap;
 	}
 
+	public static List<PlayerPositionItem> getFieldPositions(int start, int end) {
+		List<PlayerPositionItem> playerItems = new ArrayList<PlayerPositionItem>();
+
+		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
+		for (int i = start; i < end; i++) {
+			playerItems.add(new PlayerPositionItem(Integer.valueOf(i), lineup.getPlayerByPositionID(i)));
+		}
+
+		return playerItems;
+	}
+	
 	public static String getPosNameById(int pos) {
 
 		switch (pos) {
