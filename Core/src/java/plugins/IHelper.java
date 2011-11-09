@@ -470,7 +470,7 @@ public interface IHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Image loadImage(String datei);
+    public java.awt.image.BufferedImage loadImage(String datei);
 
     /**
      * Returns an Image with transparent pixels, where color-pixels are found in im
