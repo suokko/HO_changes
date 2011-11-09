@@ -48,7 +48,7 @@ public class SubstitutionOverview extends JPanel {
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
-		JButton editButton = new JButton("Edit");
+		JButton editButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Edit"));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -56,17 +56,18 @@ public class SubstitutionOverview extends JPanel {
 		gbc.insets = new Insets(8, 10, 2, 4);
 		buttonPanel.add(editButton, gbc);
 
-		JButton removeButton = new JButton("Remove");
+		JButton removeButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Remove"));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.insets = new Insets(2, 10, 2, 4);
 		buttonPanel.add(removeButton, gbc);
 
-		JButton substitutionButton = new JButton("New substitution");
+		JButton substitutionButton = new JButton();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(8, 4, 2, 10);
 		buttonPanel.add(substitutionButton, gbc);
+		substitutionButton.setAction(new SubstitutionAction());
 
 		JButton behaviorButton = new JButton();
 		gbc.gridx = 1;
@@ -75,12 +76,13 @@ public class SubstitutionOverview extends JPanel {
 		buttonPanel.add(behaviorButton, gbc);
 		behaviorButton.setAction(new BehaviorAction());
 
-		JButton positionSwapButton = new JButton("New position swap");
+		JButton positionSwapButton = new JButton();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.insets = new Insets(2, 4, 10, 10);
 		gbc.weightx = 1.0;
 		buttonPanel.add(positionSwapButton, gbc);
+		positionSwapButton.setAction(new PositionSwapAction());
 
 		add(buttonPanel, BorderLayout.SOUTH);
 
@@ -123,14 +125,39 @@ public class SubstitutionOverview extends JPanel {
 		private static final long serialVersionUID = 3753611559396928213L;
 
 		public BehaviorAction() {
-			super("New behavior");
+			super(HOVerwaltung.instance().getLanguageString("subs.Behavior"));
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			BehaviorDialog dlg = new BehaviorDialog(
+			BehaviourDialog dlg = new BehaviourDialog(
 					SwingUtilities.getWindowAncestor(SubstitutionOverview.this));
+			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
 			dlg.setVisible(true);
+		}
+	}
+	
+	private class PositionSwapAction extends AbstractAction {
+
+		private static final long serialVersionUID = 3753611559396928213L;
+
+		public PositionSwapAction() {
+			super(HOVerwaltung.instance().getLanguageString("subs.TypeSwap"));
+		}
+
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	private class SubstitutionAction extends AbstractAction {
+
+		private static final long serialVersionUID = 2005264416271904159L;
+
+		public SubstitutionAction() {
+			super(HOVerwaltung.instance().getLanguageString("subs.TypeSub"));
+		}
+
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 
