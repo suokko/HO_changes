@@ -12,13 +12,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.GUIUtilities;
 
-public class BehaviorDialog extends JDialog {
+public class BehaviourDialog extends JDialog {
 
 	private static final long serialVersionUID = 1875761460780943159L;
 
-	public BehaviorDialog(Window parent) {
+	public BehaviourDialog(Window parent) {
 		super(parent);
 		setModal(true);
 		initComponents();
@@ -29,20 +30,20 @@ public class BehaviorDialog extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
-		JButton okButton = new JButton("Ok");
+		JButton okButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Ok"));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.weightx = 1.0;
 		gbc.insets = new Insets(12, 8, 8, 2);
 		buttonPanel.add(okButton, gbc);
 
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Cancel"));
 		gbc.gridx = 1;
 		gbc.weightx = 0.0;
 		gbc.insets = new Insets(12, 2, 8, 8);
 		buttonPanel.add(cancelButton, gbc);
 
-		getContentPane().add(new BehaviorView(), BorderLayout.CENTER);
+		getContentPane().add(new BehaviourView(), BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
 		ActionListener listener = new ActionListener() {

@@ -20,8 +20,25 @@ import de.hattrickorganizer.tools.StringUtilities;
 public class WhenTextField extends JFormattedTextField {
 
 	private static final long serialVersionUID = 1207880109251770680L;
+	private String noValueDisplayString;
+	private String valueDisplayString;
 
-	public WhenTextField() {
+	/**
+	 * Creates a new WhenTextField.
+	 * 
+	 * @param noValueDisplayString
+	 *            the string to display if the textield is in "display mode"
+	 *            (does not contain the cursor, as opposed to "edit mode") and
+	 *            the field has no value.
+	 * @param valueDisplayString
+	 *            the string to display if the textield is in "display mode"
+	 *            (does not contain the cursor, as opposed to "edit mode") and
+	 *            the field has a value. The string has to contain
+	 *            <code>{0}</code> which will be replaced by the value.
+	 */
+	public WhenTextField(String noValueDisplayString, String valueDisplayString) {
+		this.noValueDisplayString = noValueDisplayString;
+		this.valueDisplayString = valueDisplayString;
 		init();
 	}
 
@@ -32,7 +49,9 @@ public class WhenTextField extends JFormattedTextField {
 				editFormatter);
 		setFormatterFactory(factory);
 		setValue(Integer.valueOf(0));
+	}
 
+	private void addListeners() {
 		addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -52,14 +71,12 @@ public class WhenTextField extends JFormattedTextField {
 					try {
 						commitEdit();
 						transferFocus();
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (ParseException ex) {
+						throw new RuntimeException(ex);
 					}
 				}
 			}
 		});
-
 	}
 
 	private class DisplayFormatter extends JFormattedTextField.AbstractFormatter {
@@ -68,7 +85,7 @@ public class WhenTextField extends JFormattedTextField {
 
 		@Override
 		public Object stringToValue(String text) throws ParseException {
-			// TODO Auto-generated method stub
+			// not needed
 			return null;
 		}
 
@@ -76,9 +93,9 @@ public class WhenTextField extends JFormattedTextField {
 		public String valueToString(Object obj) throws ParseException {
 			Integer value = (Integer) obj;
 			if (value == null || value.intValue() == 0) {
-				return "anytime";
+				return noValueDisplayString;
 			}
-			return MessageFormat.format("after {0,number,integer} minutes", value);
+			return MessageFormat.format(valueDisplayString, value);
 		}
 
 	}
