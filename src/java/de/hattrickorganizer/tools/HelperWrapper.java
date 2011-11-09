@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -521,8 +522,8 @@ public class HelperWrapper implements plugins.IHelper {
         return DBZugriff.insertEscapeSequences(text);
     }
 
-    public Image loadImage(String datei) {
-        return ThemeManager.loadImage(datei);
+    public BufferedImage loadImage(String datei) {
+    	return ImageUtilities.toBufferedImage(ThemeManager.loadImage(datei));
     }
 
     public java.awt.Image makeColorTransparent(java.awt.Image im, java.awt.Color color) {
