@@ -7,18 +7,23 @@ import java.util.Map;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 
 public class SubstitutionDataProvider {
 
+	public static void getSubstitutions() {
+		ISubstitution[] subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionArray();
+	}
+	
 	public static Map<Integer, PlayerPositionItem> getLineupPositions() {
 
 		LinkedHashMap<Integer, PlayerPositionItem> positionMap = new LinkedHashMap<Integer, PlayerPositionItem>();
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
-		for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.startReserves; i++) {
+		for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.substForward + 1; i++) {
 			ISpieler player = lineup.getPlayerByPositionID(i);
 			if (player != null) {
 				positionMap.put(new Integer(i),
