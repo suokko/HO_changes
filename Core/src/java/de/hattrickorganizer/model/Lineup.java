@@ -413,7 +413,7 @@ public  class Lineup implements plugins.ILineUp {
     		if (captain != null) {
     			value = ((float)(value + captain.getErfahrung())/12) * (1f-(float)(7-captain.getFuehrung())*0.05f);
     		} else {
-    			HOLogger.instance().log(getClass(), "Can't calc average experience, captain not set.");
+    			// HOLogger.instance().log(getClass(), "Can't calc average experience, captain not set.");
     			value = -1f;
     		}
     	} catch (Exception e) {
