@@ -58,7 +58,7 @@ public  class Lineup implements plugins.ILineUp {
     private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
     
     // A list of 5 substitution positions, position indicates order.
-    private Vector<Substitution> m_vSubstitutions = new Vector<Substitution>();
+    private ArrayList<ISubstitution> m_vSubstitutions = new ArrayList<ISubstitution>();
 
     /** Attitude */
     private int m_iAttitude;
@@ -164,14 +164,12 @@ public  class Lineup implements plugins.ILineUp {
 				m_vSubstitutions.add(new Substitution(i));
 			}
 			
-			
 			// and read the sub contents
 			for (int i = 0; i < 5; i++) {
 			
-//				System.out.println("Construct: " + properties.getProperty("subst" + i + "playerorderid"));
-				
-//				System.out.println("Teksten: subst" + i + "playerorderid");
-				if (properties.getProperty("subst" + i + "playerorderid") != null) {
+				if ((properties.getProperty("subst" + i + "playerorderid") != null) && 
+						(Integer.parseInt(properties.getProperty("subst" + i + "playerorderid")) >= 0)) {
+
 					Substitution sub = new Substitution();
 					sub.setPlayerOrderId(Integer.parseInt(properties.getProperty("subst" + i + "playerorderid")));
 					sub.setPlayerIn(Integer.parseInt(properties.getProperty("subst" + i + "playerin")));
@@ -998,23 +996,12 @@ public  class Lineup implements plugins.ILineUp {
     
     
     /**
-     * Returns an array with any substitutions (max 5). It may have empty slots or be empty if less than 5 are set.
+     * Returns an array with any substitutions (max 5). It may have slots with orderID -1.
      *
      */
-    public ISubstitution[] getSubstitutionArray() {
-    	Substitution[] arr = new Substitution[5];
-    	int insert = 0;
-
-    	// We skip the empty positions, and dont't leave empty slots between filled.
-    	
-    	for (int read = 0; read < 5 ; read++) {
-    		if (!m_vSubstitutions.get(read).isEmpty())
-    		{
-    			arr[insert] = m_vSubstitutions.get(read);
-    			insert++;
-    		}
-    	}
-    	return arr;
+    public List<ISubstitution> getSubstitutionList() {
+       	
+    	return m_vSubstitutions;
     }
     
     
@@ -1028,9 +1015,10 @@ public  class Lineup implements plugins.ILineUp {
     		return;
     	}
     	
-    	for (int j = 0; j < 5; j++) {
-    		if (m_vSubstitutions.get(j).getPlayerOrderId() == i) {
-    			sub = m_vSubstitutions.get(j);
+    	for (ISubstitution s: m_vSubstitutions) {
+    		if (s.getPlayerOrderId() == i) {
+    			sub = (Substitution) s;
+    			break;
     		}
     	}
     	
@@ -1054,8 +1042,8 @@ public  class Lineup implements plugins.ILineUp {
      * Sets the provided list of substitutions as the substitution list. A proper list got max 5 positions.
      */
  
-    public void setSubstitionList(List<Substitution> subs) {
-    	m_vSubstitutions = new Vector<Substitution>(subs);
+    public void setSubstitionList(List<ISubstitution> subs) {
+    	m_vSubstitutions = new ArrayList<ISubstitution>(subs);
     }
  
     /**
@@ -1304,9 +1292,9 @@ public  class Lineup implements plugins.ILineUp {
 			properties.setProperty("installning", getAttitude() + "");
 
 			for (int i = 0; i < m_vSubstitutions.size(); i++) {
-				Substitution sub = m_vSubstitutions.get(i);
+				ISubstitution sub = m_vSubstitutions.get(i);
 				if (sub != null) {
-					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerIn());
+					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerOrderId());
 					properties.setProperty("subst" + i + "playerin", "" + sub.getPlayerIn());
 					properties.setProperty("subst" + i + "playerout", "" + sub.getPlayerOut());
 					properties.setProperty("subst" + i + "ordertype", "" + sub.getOrderType());
