@@ -357,10 +357,9 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jpAge.setText(m_clPlayer.getAgeStringFull());
         m_jpNationality.setIcon(ImageUtilities.getFlagIcon(m_clPlayer.getNationalitaet()));
         if (m_clPlayer.isHomeGrown())
-        {
         	m_jpMotherClub.setIcon( ThemeManager.getIcon(HOIconName.HOMEGROWN));
-        	m_jpMotherClub.setToolTipText(HOVerwaltung.instance().getLanguageString("Motherclub"));
-        }
+        else
+        	m_jpMotherClub.clear();
         Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
         if (lineup.isSpielerAufgestellt(m_clPlayer.getSpielerID())
             && (lineup.getPositionBySpielerId(m_clPlayer.getSpielerID()) != null)) {
