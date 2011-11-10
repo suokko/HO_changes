@@ -356,13 +356,8 @@ public class ConvertXml2Hrf {
 			m_sHRFBuffer.append("behforward2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getTaktik() + "\n");
 			m_sHRFBuffer.append("behforward3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik() + "\n");
 			
-			
-			java.util.Vector<ISubstitution> subs = m_clTeam.getSubstitutions();
-			
-			
-			
-			for (int i = 0; i < subs.size(); i++) {
-				ISubstitution sub = subs.get(i);
+			int i = 0;
+			for (ISubstitution sub:  m_clTeam.getSubstitutions()) {
 				if (sub != null) {
 					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + sub.getPlayerOrderId() + "\n");
 					m_sHRFBuffer.append("subst" + i + "playerIn=" + sub.getPlayerIn() + "\n");
@@ -372,6 +367,7 @@ public class ConvertXml2Hrf {
 					m_sHRFBuffer.append("subst" + i + "pos=" + sub.getPos() + "\n");
 					m_sHRFBuffer.append("subst" + i + "behaviour=" + sub.getBehaviour() + "\n");
 					m_sHRFBuffer.append("subst" + i + "card=" + sub.getCard() + "\n");
+					i++;
 				}
 			}
 			
