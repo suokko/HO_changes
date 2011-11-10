@@ -192,9 +192,8 @@ public final class ThemeManager {
 	
 	
 	public void setCurrentTheme(String name) throws Exception {
-		if(name.equals(classicSchema.getName()))
-			return;
-		extSchema = loadSchema(name);
+		if(name != null && !name.equals(classicSchema.getName()))
+			extSchema = loadSchema(name);
 	}
 	
 	
