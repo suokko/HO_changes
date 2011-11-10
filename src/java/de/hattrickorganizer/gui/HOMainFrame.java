@@ -1656,9 +1656,10 @@ public final class HOMainFrame extends JFrame
 		try {
 			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
 		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class, "Can´t loadTheme:" + UserParameter.instance().theme);
-			HOLogger.instance().log(HOMainFrame.class, "Use Classic Theme ");
-			e.printStackTrace();
+			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
+			JOptionPane.showMessageDialog(null,
+					"Can´t load Theme: " + UserParameter.instance().theme,
+					"Theme", JOptionPane.WARNING_MESSAGE);
 		}
 		//Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
