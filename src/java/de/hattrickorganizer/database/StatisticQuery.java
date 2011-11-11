@@ -256,13 +256,11 @@ public class StatisticQuery {
 
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
 		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
-		final int anzahlSpalten = 13;
-
-		//int minid = model.HOVerwaltung.instance ().getModel ().getID () - anzahlHRF;
+		final int anzahlSpalten = 15;
+		final float faktor = gui.UserParameter.instance().faktorGeld;
 		double[][] returnWerte = new double[0][0];
 		final Vector<double[]> vWerte = new Vector<double[]>();
 
-		//ResultSet  rs = DBZugriff.instance().getAdapter().executeQuery( "SELECT * FROM Spieler WHERE HRF_ID>" + minid  + " AND Trainer=0 ORDER BY HRF_ID" );// Geht nicht -> + " ORDER BY SpielerID DESC" );
 		String statement = "SELECT * FROM SPIELER";
 
 		//Eine Gruppe gewählt
@@ -298,6 +296,11 @@ public class StatisticQuery {
 					tempwerte[9] = rs.getDouble("Torschuss") + rs.getDouble("SubTorschuss");
 					tempwerte[10] = rs.getDouble("Standards") + rs.getDouble("SubStandards");
 					tempwerte[11] = rs.getDouble("Loyalty");
+					tempwerte[12] = rs.getDouble("Marktwert");
+					if (rs.getTimestamp("Datum").before(DBZugriff.TSIDATE)) {
+						tempwerte[12] /= 1000d;
+					}
+					tempwerte[13] = rs.getDouble("Gehalt") / faktor;
 					//Initialisierung
 					if (letzteHRFID == -1) {
 						//HRFID neu setzen, notwendig, wenn letzteid -1 war
@@ -338,7 +341,7 @@ public class StatisticQuery {
 					}
 
 					//Datum
-					summewerte[12] = rs.getTimestamp("Datum").getTime();
+					summewerte[14] = rs.getTimestamp("Datum").getTime();
 
 					//Spieleranzahl pro HRF erhöhen
 					spielerProHRFID++;
