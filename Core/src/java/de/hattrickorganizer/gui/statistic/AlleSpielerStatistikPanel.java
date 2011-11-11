@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.statistic;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import gui.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,6 +16,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -39,7 +41,7 @@ import de.hattrickorganizer.tools.Helper;
 
 
 /**
- * Das StatistikPanel
+ * The Team statistics panel
  */
 public class AlleSpielerStatistikPanel extends ImagePanel
     implements ActionListener, FocusListener, ItemListener, Refreshable
@@ -60,41 +62,48 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     private Color wingerColor 		= ThemeManager.getColor(HOColorName.STAT_WINGER);//Color.orange;
     private Color scoringColor 		= ThemeManager.getColor(HOColorName.STAT_SCORING);//Color.red;
     private Color setPiecesColor 	= ThemeManager.getColor(HOColorName.STAT_SET_PIECES);//Color.cyan;
-
+    private Color TSIColor 			= ThemeManager.getColor(HOColorName.STAT_MARKETVALUE);
+    private Color wageColor 		= ThemeManager.getColor(HOColorName.STAT_WAGE);
     //~ Instance fields ----------------------------------------------------------------------------
+    private UserParameter gup = gui.UserParameter.instance();
+    private HOVerwaltung hov = HOVerwaltung.instance();
+    private ImageCheckbox m_jchExperience = new ImageCheckbox(hov.getLanguageString("Erfahrung"), 
+    		experienceColor, gup.statistikAlleErfahrung);
+    private ImageCheckbox m_jchWinger = new ImageCheckbox(hov.getLanguageString("Fluegelspiel"), 
+    		wingerColor, gup.statistikAlleFluegel);
+    private ImageCheckbox m_jchForm = new ImageCheckbox(hov.getLanguageString("Form"), 
+    		formColor, gup.statistikAlleForm);
+    private ImageCheckbox m_jchLeadership = new ImageCheckbox(hov.getLanguageString("Fuehrung"), 
+    		leadershipColor, gup.statistikAlleFuehrung);
+    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(hov.getLanguageString("Loyalty"), 
+    		loyaltyColor, gup.statistikAllLoyalty);
+    private ImageCheckbox m_jchStamina = new ImageCheckbox(hov.getLanguageString("skill.stamina"), 
+    		staminaColor, gup.statistikAlleKondition);
+    private ImageCheckbox m_jchPassing = new ImageCheckbox(hov.getLanguageString("skill.passing"), 
+    		passingColor, gup.statistikAllePasspiel);
+    private ImageCheckbox m_jchPlaymaking = new ImageCheckbox(hov.getLanguageString("skill.playmaking"), 
+    		playmakingColor, gup.statistikAlleSpielaufbau);
+    private ImageCheckbox m_jchSetPieces = new ImageCheckbox(hov.getLanguageString("skill.set_pieces"), 
+    		setPiecesColor, gup.statistikAlleStandards);
+    private ImageCheckbox m_jchScoring = new ImageCheckbox(hov.getLanguageString("skill.scoring"), 
+    		scoringColor, gup.statistikAlleTorschuss);
+    private ImageCheckbox m_jchKeeper = new ImageCheckbox(hov.getLanguageString("skill.keeper"),
+    		keeperColor,gup.statistikAlleTorwart);
+    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(hov.getLanguageString("skill.defending"),
+    		defendingColor,gup.statistikAlleVerteidigung);
+    private ImageCheckbox m_jchTSI = new ImageCheckbox("TSI", TSIColor, gup.statistikAllTSI);
+    private ImageCheckbox m_jchWages = new ImageCheckbox(hov.getLanguageString("Gehalt"),
+    		wageColor,gup.statistikAllWages);
 
-    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Erfahrung"),
-                                                             experienceColor,gui.UserParameter.instance().statistikAlleErfahrung);
-    private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
-                                                           wingerColor,gui.UserParameter.instance().statistikAlleFluegel);
-    private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
-                                                        formColor,gui.UserParameter.instance().statistikAlleForm);
-    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
-                                                            leadershipColor,gui.UserParameter.instance().statistikAlleFuehrung);
-    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Loyalty"),
-            												loyaltyColor,gui.UserParameter.instance().statistikAllLoyalty);
-    private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.stamina"),
-                                                             staminaColor,gui.UserParameter.instance().statistikAlleKondition);
-    private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.passing"),
-                                                            passingColor,gui.UserParameter.instance().statistikAllePasspiel);
-    private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
-                                                               playmakingColor,gui.UserParameter.instance().statistikAlleSpielaufbau);
-    private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
-                                                             setPiecesColor,gui.UserParameter.instance().statistikAlleStandards);
-    private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.scoring"),
-                                                             scoringColor,gui.UserParameter.instance().statistikAlleTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.keeper"),
-                                                           keeperColor,gui.UserParameter.instance().statistikAlleTorwart);
-    private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
-                                                                defendingColor,gui.UserParameter.instance().statistikAlleVerteidigung);
-    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
-                                                        gui.UserParameter.instance().statistikAlleBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
-                                                      gui.UserParameter.instance().statistikAlleHilfslinien);
+    
+    private JButton m_jbPrint = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+    private JButton m_jbUbernehmen = new JButton(hov.getLanguageString("Uebernehmen"));
+    private JCheckBox m_jchInscription = new JCheckBox(hov.getLanguageString("Beschriftung"),
+    		gup.statistikAlleBeschriftung);
+    private JCheckBox m_jchHelpLines = new JCheckBox(hov.getLanguageString("Hilflinien"),
+    		gup.statistikAlleHilfslinien);
     private JComboBox m_jcbGruppe = new JComboBox(HOIconName.TEAMSMILIES);
-    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikAnzahlHRF + "", 5);
+    private JTextField m_jtfNumberOfHRF = new JTextField(gup.statistikAnzahlHRF + "", 5);
     private StatistikPanel m_clStatistikPanel;
     private boolean m_bInitialisiert;
     
@@ -112,12 +121,8 @@ public class AlleSpielerStatistikPanel extends ImagePanel
      */
     public AlleSpielerStatistikPanel() {
         RefreshManager.instance().registerRefreshable(this);
-
         initComponents();
-
-        //initStatistik();
     }
-
 
     public final void setInitialisiert(boolean init) {
         m_bInitialisiert = init;
@@ -131,50 +136,56 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
-        } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verein"));
-        } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
-            m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
-            gui.UserParameter.instance().statistikAlleHilfslinien = m_jchHilflinien.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchBeschriftung)) {
-            m_clStatistikPanel.setBeschriftung(m_jchBeschriftung.isSelected());
-            gui.UserParameter.instance().statistikAlleBeschriftung = m_jchBeschriftung.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchFuehrung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Fuehrung", m_jchFuehrung.isSelected());
-            gui.UserParameter.instance().statistikAlleFuehrung = m_jchFuehrung.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchErfahrung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Erfahrung", m_jchErfahrung.isSelected());
-            gui.UserParameter.instance().statistikAlleErfahrung = m_jchErfahrung.isSelected();
+        } else if (actionEvent.getSource().equals(m_jbPrint)) {
+            m_clStatistikPanel.doPrint(hov.getLanguageString("Verein"));
+        } else if (actionEvent.getSource().equals(m_jchHelpLines)) {
+            m_clStatistikPanel.setHilfslinien(m_jchHelpLines.isSelected());
+            gup.statistikAlleHilfslinien = m_jchHelpLines.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchInscription)) {
+            m_clStatistikPanel.setBeschriftung(m_jchInscription.isSelected());
+            gup.statistikAlleBeschriftung = m_jchInscription.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchLeadership.getCheckbox())) {
+            m_clStatistikPanel.setShow("Fuehrung", m_jchLeadership.isSelected());
+            gup.statistikAlleFuehrung = m_jchLeadership.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchTSI.getCheckbox())) {
+            m_clStatistikPanel.setShow("Marktwert", m_jchTSI.isSelected());
+            gup.statistikAllTSI = m_jchTSI.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchWages.getCheckbox())) {
+            m_clStatistikPanel.setShow("Gehalt", m_jchWages.isSelected());
+            gup.statistikAllWages = m_jchWages.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchExperience.getCheckbox())) {
+            m_clStatistikPanel.setShow("Erfahrung", m_jchExperience.isSelected());
+            gup.statistikAlleErfahrung = m_jchExperience.isSelected();
         } else if (actionEvent.getSource().equals(m_jchForm.getCheckbox())) {
             m_clStatistikPanel.setShow("Form", m_jchForm.isSelected());
-            gui.UserParameter.instance().statistikAlleForm = m_jchForm.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchKondition.getCheckbox())) {
-            m_clStatistikPanel.setShow("Kondition", m_jchKondition.isSelected());
-            gui.UserParameter.instance().statistikAlleKondition = m_jchKondition.isSelected();
+            gup.statistikAlleForm = m_jchForm.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchStamina.getCheckbox())) {
+            m_clStatistikPanel.setShow("Kondition", m_jchStamina.isSelected());
+            gup.statistikAlleKondition = m_jchStamina.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoyalty.getCheckbox())) {
             m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
-            gui.UserParameter.instance().statistikAllLoyalty = m_jchLoyalty.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchTorwart.getCheckbox())) {
-            m_clStatistikPanel.setShow("Torwart", m_jchTorwart.isSelected());
-            gui.UserParameter.instance().statistikAlleTorwart = m_jchTorwart.isSelected();
+            gup.statistikAllLoyalty = m_jchLoyalty.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchKeeper.getCheckbox())) {
+            m_clStatistikPanel.setShow("Torwart", m_jchKeeper.isSelected());
+            gup.statistikAlleTorwart = m_jchKeeper.isSelected();
         } else if (actionEvent.getSource().equals(m_jchVerteidigung.getCheckbox())) {
             m_clStatistikPanel.setShow("Verteidigung", m_jchVerteidigung.isSelected());
-            gui.UserParameter.instance().statistikAlleVerteidigung = m_jchVerteidigung.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchSpielaufbau.getCheckbox())) {
-            m_clStatistikPanel.setShow("Spielaufbau", m_jchSpielaufbau.isSelected());
-            gui.UserParameter.instance().statistikAlleSpielaufbau = m_jchSpielaufbau.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchPasspiel.getCheckbox())) {
-            m_clStatistikPanel.setShow("Passpiel", m_jchPasspiel.isSelected());
-            gui.UserParameter.instance().statistikAllePasspiel = m_jchPasspiel.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchFluegel.getCheckbox())) {
-            m_clStatistikPanel.setShow("Fluegelspiel", m_jchFluegel.isSelected());
-            gui.UserParameter.instance().statistikAlleFluegel = m_jchFluegel.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchTorschuss.getCheckbox())) {
-            m_clStatistikPanel.setShow("Torschuss", m_jchTorschuss.isSelected());
-            gui.UserParameter.instance().statistikAlleTorschuss = m_jchTorschuss.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchStandards.getCheckbox())) {
-            m_clStatistikPanel.setShow("Standards", m_jchStandards.isSelected());
-            gui.UserParameter.instance().statistikAlleStandards = m_jchStandards.isSelected();
+            gup.statistikAlleVerteidigung = m_jchVerteidigung.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchPlaymaking.getCheckbox())) {
+            m_clStatistikPanel.setShow("Spielaufbau", m_jchPlaymaking.isSelected());
+            gup.statistikAlleSpielaufbau = m_jchPlaymaking.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchPassing.getCheckbox())) {
+            m_clStatistikPanel.setShow("Passpiel", m_jchPassing.isSelected());
+            gup.statistikAllePasspiel = m_jchPassing.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchWinger.getCheckbox())) {
+            m_clStatistikPanel.setShow("Fluegelspiel", m_jchWinger.isSelected());
+            gup.statistikAlleFluegel = m_jchWinger.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchScoring.getCheckbox())) {
+            m_clStatistikPanel.setShow("Torschuss", m_jchScoring.isSelected());
+            gup.statistikAlleTorschuss = m_jchScoring.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchSetPieces.getCheckbox())) {
+            m_clStatistikPanel.setShow("Standards", m_jchSetPieces.isSelected());
+            gup.statistikAlleStandards = m_jchSetPieces.isSelected();
         }
     }
 
@@ -199,8 +210,6 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     //-------Refresh---------------------------------    
     public final void reInit() {
         m_bInitialisiert = false;
-
-        //initStatistik();
     }
 
     public void refresh() {
@@ -209,13 +218,12 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     private void initComponents() {
         JLabel label;
 
-         constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
         constraints.insets = new Insets(2, 0, 2, 0);
 
         setLayout(layout);
-
         
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.weightx = 0.0;
@@ -229,13 +237,13 @@ public class AlleSpielerStatistikPanel extends ImagePanel
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
-        m_jbDrucken.setPreferredSize(new Dimension(25, 25));
-        m_jbDrucken.addActionListener(this);
-        layout2.setConstraints(m_jbDrucken, constraints2);
-        panel2.add(m_jbDrucken);
+        m_jbPrint.setToolTipText(hov.getLanguageString("tt_Statistik_drucken"));
+        m_jbPrint.setPreferredSize(new Dimension(25, 25));
+        m_jbPrint.addActionListener(this);
+        layout2.setConstraints(m_jbPrint, constraints2);
+        panel2.add(m_jbPrint);
 
-        label = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Wochen"));
+        label = new JLabel(hov.getLanguageString("Wochen"));
         constraints2.fill = GridBagConstraints.HORIZONTAL;
         constraints2.anchor = GridBagConstraints.WEST;
         constraints2.gridx = 0;
@@ -243,22 +251,22 @@ public class AlleSpielerStatistikPanel extends ImagePanel
         constraints2.gridwidth = 1;
         layout2.setConstraints(label, constraints2);
         panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
-        m_jtfAnzahlHRF.addFocusListener(this);
+        m_jtfNumberOfHRF.setHorizontalAlignment(SwingConstants.RIGHT);
+        m_jtfNumberOfHRF.addFocusListener(this);
         constraints2.gridx = 1;
         constraints2.gridy = 1;
-        layout2.setConstraints(m_jtfAnzahlHRF, constraints2);
-        panel2.add(m_jtfAnzahlHRF);
+        layout2.setConstraints(m_jtfNumberOfHRF, constraints2);
+        panel2.add(m_jtfNumberOfHRF);
 
         constraints2.gridx = 0;
         constraints2.gridy = 2;
         constraints2.gridwidth = 2;
         layout2.setConstraints(m_jbUbernehmen, constraints2);
-        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
+        m_jbUbernehmen.setToolTipText(hov.getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
         m_jbUbernehmen.addActionListener(this);
         panel2.add(m_jbUbernehmen);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gruppe"));
+        label = new JLabel(hov.getLanguageString("Gruppe"));
         constraints2.gridx = 0;
         constraints2.gridy = 3;
         constraints2.gridwidth = 2;
@@ -274,96 +282,55 @@ public class AlleSpielerStatistikPanel extends ImagePanel
         layout2.setConstraints(m_jcbGruppe, constraints2);
         panel2.add(m_jcbGruppe);
 
-        m_jchHilflinien.addActionListener(this);
-        m_jchHilflinien.setOpaque(false);
-        add(m_jchHilflinien,5);
+        m_jchHelpLines.addActionListener(this);
+        add(m_jchHelpLines,5);
 
-        m_jchBeschriftung.addActionListener(this);
-        m_jchBeschriftung.setOpaque(false);
-        add(m_jchBeschriftung,6);
+        m_jchInscription.addActionListener(this);
+        m_jchInscription.setOpaque(false);
+        add(m_jchInscription,6);
 
         constraints2.weightx = 0.0;
-        m_jchFuehrung.addActionListener(this);
-        add(m_jchFuehrung,7);
+        m_jchLeadership.addActionListener(this);
+        add(m_jchLeadership,7);
 
-        m_jchErfahrung.addActionListener(this);
-        add(m_jchErfahrung,8);
+        m_jchExperience.addActionListener(this);
+        add(m_jchExperience,8);
 
+        m_jchTSI.addActionListener(this);
+        add(m_jchTSI, 9);
+
+        m_jchWages.addActionListener(this);
+        add(m_jchWages, 10);
         
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 9;
         m_jchForm.addActionListener(this);
-        layout2.setConstraints(m_jchForm, constraints2);
-        panel2.add(m_jchForm);
+        add(m_jchForm, 11);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 10;
-        m_jchKondition.addActionListener(this);
-        layout2.setConstraints(m_jchKondition, constraints2);
-        panel2.add(m_jchKondition);
+        m_jchStamina.addActionListener(this);
+        add(m_jchStamina, 12);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 11;
         m_jchLoyalty.addActionListener(this);
-        layout2.setConstraints(m_jchLoyalty, constraints2);
-        panel2.add(m_jchLoyalty);
+        add(m_jchLoyalty, 13);
         
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 12;
-        m_jchTorwart.addActionListener(this);
-        layout2.setConstraints(m_jchTorwart, constraints2);
-        panel2.add(m_jchTorwart);
+        m_jchKeeper.addActionListener(this);
+        add(m_jchKeeper, 14);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 13;
         m_jchVerteidigung.addActionListener(this);
-        layout2.setConstraints(m_jchVerteidigung, constraints2);
-        panel2.add(m_jchVerteidigung);
+        add(m_jchVerteidigung, 15);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 14;
-        m_jchSpielaufbau.setOpaque(false);
-        m_jchSpielaufbau.addActionListener(this);
-        layout2.setConstraints(m_jchSpielaufbau, constraints2);
-        panel2.add(m_jchSpielaufbau);
+        m_jchPlaymaking.addActionListener(this);
+        add(m_jchPlaymaking, 16);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 15;
-        m_jchPasspiel.setOpaque(false);
-        m_jchPasspiel.addActionListener(this);
-        layout2.setConstraints(m_jchPasspiel, constraints2);
-        panel2.add(m_jchPasspiel);
+        m_jchPassing.addActionListener(this);
+        add(m_jchPassing, 17);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 16;
-        m_jchFluegel.setOpaque(false);
-        m_jchFluegel.addActionListener(this);
-        layout2.setConstraints(m_jchFluegel, constraints2);
-        panel2.add(m_jchFluegel);
+        m_jchWinger.addActionListener(this);
+        add(m_jchWinger, 18);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 17;
-        m_jchTorschuss.setOpaque(false);
-        m_jchTorschuss.addActionListener(this);
-        layout2.setConstraints(m_jchTorschuss, constraints2);
-        panel2.add(m_jchTorschuss);
+        m_jchScoring.addActionListener(this);
+        add(m_jchScoring, 19);
 
-        constraints2.gridwidth = 2;
-        constraints2.gridx = 0;
-        constraints2.gridy = 18;
-        m_jchStandards.setOpaque(false);
-        m_jchStandards.addActionListener(this);
-        layout2.setConstraints(m_jchStandards, constraints2);
-        panel2.add(m_jchStandards);
+        m_jchSetPieces.addActionListener(this);
+        add(m_jchSetPieces, 20);
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
@@ -404,56 +371,68 @@ public class AlleSpielerStatistikPanel extends ImagePanel
 
     private void initStatistik() {
         try {
-            int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
-
+            int anzahlHRF = Integer.parseInt(m_jtfNumberOfHRF.getText());
             if (anzahlHRF <= 0) {
                 anzahlHRF = 1;
             }
-
-            gui.UserParameter.instance().statistikAnzahlHRF = anzahlHRF;
-
-            final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEZIMALFORMAT_3STELLEN;
-
-            final double[][] statistikWerte = DBZugriff.instance().getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, m_jcbGruppe.getSelectedItem()
-                                                                                                                                            .toString());
+            gup.statistikAnzahlHRF = anzahlHRF;
+            final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT;
+            final java.text.NumberFormat format2 = NumberFormat.getCurrencyInstance();
+            final double[][] statistikWerte = DBZugriff.instance().
+            	getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, m_jcbGruppe.getSelectedItem().toString());
             final StatistikModel[] models = new StatistikModel[statistikWerte.length];
 
-            //Es sind 12 Werte!
+            //There are 14 values
             if (statistikWerte.length > 0) {
-                models[0] = new StatistikModel(statistikWerte[0], "Fuehrung",
-                                               m_jchFuehrung.isSelected(), leadershipColor, format);
+            	models[0] = new StatistikModel(statistikWerte[0], "Fuehrung",
+                                               m_jchLeadership.isSelected(), leadershipColor, format);
                 models[1] = new StatistikModel(statistikWerte[1], "Erfahrung",
-                                               m_jchErfahrung.isSelected(), experienceColor, format);
+                                               m_jchExperience.isSelected(), experienceColor, format);
                 models[2] = new StatistikModel(statistikWerte[2], "Form", m_jchForm.isSelected(),
                                                formColor, format);
                 models[3] = new StatistikModel(statistikWerte[3], "Kondition",
-                                               m_jchKondition.isSelected(), staminaColor, format);
+                                               m_jchStamina.isSelected(), staminaColor, format);
                 models[4] = new StatistikModel(statistikWerte[4], "Torwart",
-                                               m_jchTorwart.isSelected(), keeperColor, format);
+                                               m_jchKeeper.isSelected(), keeperColor, format);
                 models[5] = new StatistikModel(statistikWerte[5], "Verteidigung",
                                                m_jchVerteidigung.isSelected(), defendingColor, format);
                 models[6] = new StatistikModel(statistikWerte[6], "Spielaufbau",
-                                               m_jchSpielaufbau.isSelected(), playmakingColor, format);
+                                               m_jchPlaymaking.isSelected(), playmakingColor, format);
                 models[7] = new StatistikModel(statistikWerte[7], "Passpiel",
-                                               m_jchPasspiel.isSelected(), passingColor, format);
+                                               m_jchPassing.isSelected(), passingColor, format);
                 models[8] = new StatistikModel(statistikWerte[8], "Fluegelspiel",
-                                               m_jchFluegel.isSelected(), wingerColor, format);
+                                               m_jchWinger.isSelected(), wingerColor, format);
                 models[9] = new StatistikModel(statistikWerte[9], "Torschuss",
-                                               m_jchTorschuss.isSelected(), scoringColor, format);
+                                               m_jchScoring.isSelected(), scoringColor, format);
                 models[10] = new StatistikModel(statistikWerte[10], "Standards",
-                                                m_jchStandards.isSelected(), setPiecesColor, format);
+                                                m_jchSetPieces.isSelected(), setPiecesColor, format);
                 models[11] = new StatistikModel(statistikWerte[11], "Loyalty",
                         						m_jchLoyalty.isSelected(), loyaltyColor, format);
+                double faktor = 20 / getMaxValue(statistikWerte[12]);
+                models[12] = new StatistikModel(statistikWerte[12], "Marktwert",
+						m_jchTSI.isSelected(), TSIColor, format, faktor);
+                faktor = 20 / getMaxValue(statistikWerte[13]);
+                models[13] = new StatistikModel(statistikWerte[13], "Gehalt",
+						m_jchTSI.isSelected(), wageColor, format2, faktor);
             }
 
             final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[12]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            HOVerwaltung.instance().getLanguageString("Wochen"),
-                                            "", m_jchBeschriftung.isSelected(),
-                                            m_jchHilflinien.isSelected());
+                                            hov.getLanguageString("Wochen"),
+                                            "", m_jchInscription.isSelected(),
+                                            m_jchHelpLines.isSelected());
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"SpielerStatistikPanel.initStatistik : " + e);
         }
+    }
+    public final double getMaxValue(double[] werte) {
+        double max = 0;
+        for (int i = 0; (werte != null) && (i < werte.length); i++) {
+            if (werte[i] > max) {
+                max = werte[i];
+            }
+        }
+        return (max);
     }
 }
