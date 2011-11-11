@@ -15,7 +15,7 @@ import de.hattrickorganizer.model.Lineup;
 public class SubstitutionDataProvider {
 
 	public static void getSubstitutions() {
-		ISubstitution[] subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionArray();
+		List<ISubstitution> subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList();
 	}
 	
 	public static Map<Integer, PlayerPositionItem> getLineupPositions() {
