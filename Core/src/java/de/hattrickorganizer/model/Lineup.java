@@ -156,14 +156,7 @@ public  class Lineup implements plugins.ILineUp {
 					Integer.parseInt(properties.getProperty("substforward", "0")), (byte) 0));
 			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
 			m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
-			
-
-			// Init the substitution array
-			
-			for (int i = 0; i < 5; i++) {
-				m_vSubstitutions.add(new Substitution(i));
-			}
-			
+		
 			// and read the sub contents
 			for (int i = 0; i < 5; i++) {
 			
@@ -179,8 +172,9 @@ public  class Lineup implements plugins.ILineUp {
 					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i + "behaviour")));
 					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
-					// Hopefully this never breaks...
-					setSubstitution(sub.getPlayerOrderId(), sub);
+					m_vSubstitutions.add(sub);
+				} else {
+					break;
 				}
 			}
 			
@@ -1005,38 +999,38 @@ public  class Lineup implements plugins.ILineUp {
     }
     
     
-    /**
-     * Sets the given substitution object at position i. i must be between 0 and 4
-     */
-    public void setSubstitution(int i, ISubstitution incSub) {
-    	Substitution sub = null; 
-    	if ((i > 4) || (i < 0)) {
-    		// Rude, silent, reject
-    		return;
-    	}
-    	
-    	for (ISubstitution s: m_vSubstitutions) {
-    		if (s.getPlayerOrderId() == i) {
-    			sub = (Substitution) s;
-    			break;
-    		}
-    	}
-    	
-    	if (sub == null) {
-    		HOLogger.instance().debug(getClass(), "setSubstitution did not find sub: " + i);
-    		return;
-    	}
-    	
-    	// We keep the playerorderid
-    	sub.setPlayerIn(incSub.getPlayerIn());
-    	sub.setPlayerOut(incSub.getPlayerOut());
-    	sub.setOrderType(incSub.getOrderType());
-    	sub.setMatchMinuteCriteria(incSub.getMatchMinuteCriteria());
-    	sub.setPos(incSub.getPos());
-    	sub.setBehaviour(incSub.getBehaviour());
-    	sub.setCard(incSub.getCard());
-    	sub.setStanding(incSub.getStanding());
-    }
+//    /**
+//     * Sets the given substitution object at position i. i must be between 0 and 4
+//     */
+//    public void setSubstitution(int i, ISubstitution incSub) {
+//    	Substitution sub = null; 
+//    	if ((i > 4) || (i < 0)) {
+//    		// Rude, silent, reject
+//    		return;
+//    	}
+//    	
+//    	for (ISubstitution s: m_vSubstitutions) {
+//    		if (s.getPlayerOrderId() == i) {
+//    			sub = (Substitution) s;
+//    			break;
+//    		}
+//    	}
+//    	
+//    	if (sub == null) {
+//    		HOLogger.instance().debug(getClass(), "setSubstitution did not find sub: " + i);
+//    		return;
+//    	}
+//    	
+//    	// We keep the playerorderid
+//    	sub.setPlayerIn(incSub.getPlayerIn());
+//    	sub.setPlayerOut(incSub.getPlayerOut());
+//    	sub.setOrderType(incSub.getOrderType());
+//    	sub.setMatchMinuteCriteria(incSub.getMatchMinuteCriteria());
+//    	sub.setPos(incSub.getPos());
+//    	sub.setBehaviour(incSub.getBehaviour());
+//    	sub.setCard(incSub.getCard());
+//    	sub.setStanding(incSub.getStanding());
+//    }
     
     /**
      * Sets the provided list of substitutions as the substitution list. A proper list got max 5 positions.
