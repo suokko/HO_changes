@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -36,17 +37,13 @@ public abstract class Schema  {
 		cache.clear();
 		List<ThemeData.XmlValue> list = data.getXmlValue();
 		for (ThemeData.XmlValue xmlValue : list) {
-			if(xmlValue.getType().startsWith("UI")){
-				UIManager.put(xmlValue.getKey(), createObjectFromXmlValue(xmlValue));
-			}
 			cache.put(xmlValue.getKey(), createObjectFromXmlValue(xmlValue));
 		}
 	}
 	
 	private Object createObjectFromXmlValue(ThemeData.XmlValue xmlValue){
-		final String type = xmlValue.getType().trim();
 		final String value = xmlValue.getValue().trim();
-		if (type.contains("Color")){
+		if (Pattern.matches("\\d{1,3}(,\\d{1,3}){1,3}", value)){
 			String[] rgb = value.split(",");
 			int r = Integer.parseInt(rgb[0].trim());
 			int g = Integer.parseInt(rgb[1].trim());
@@ -57,11 +54,7 @@ public abstract class Schema  {
 				int a = Integer.parseInt(rgb[3].trim());
 				return new Color(r,g,b,a);
 			}
-		}else if (type.contains("BigDecimal")){
-			return new BigDecimal(value);
-		}else if(type.contains("Timestamp")){
-			return Timestamp.valueOf(value);
-		}else if(type.contains("Boolean")){
+		}else if(value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")){
 			return Boolean.valueOf(value);
 		}
 		return value;
@@ -79,18 +72,8 @@ public abstract class Schema  {
 	/**
 	 * extra method because color value can be a name or a Color
 	 */
-	public Color getThemeColor(String key){
-		Object obj = cache.get(key);
-		if(obj!= null && obj instanceof Color)
-			return (Color)obj;
-		
-		if(obj != null && obj instanceof String)
-			return getThemeColor(obj.toString());
-		
-		if(obj == null)
-			obj = UIManager.getColor(key);
-		
-		return (Color)obj;
+	public Object getThemeColor(String key){
+		return cache.get(key);
 	}
 	
 	public String getVersion() {
@@ -146,7 +129,6 @@ public abstract class Schema  {
 	private ThemeData.XmlValue toXmlValue(String e,Object obj){
 		ThemeData.XmlValue xmlValue = new ThemeData.XmlValue();
 		xmlValue.setKey(e);
-		xmlValue.setType(obj.getClass().getSimpleName());
 		xmlValue.setValue(obj.toString());
 		
 		if(obj instanceof Color){
