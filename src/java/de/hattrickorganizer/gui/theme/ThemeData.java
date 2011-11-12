@@ -113,8 +113,6 @@ public final class ThemeData {
         @javax.xml.bind.annotation.XmlValue
         String value;
         @XmlAttribute
-        String type;
-        @XmlAttribute
         String key;
 
         /**
@@ -139,30 +137,6 @@ public final class ThemeData {
          */
         void setValue(String value) {
             this.value = value;
-        }
-
-        /**
-         * Gets the value of the type property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        String getType() {
-            return type;
-        }
-
-        /**
-         * Sets the value of the type property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        void setType(String value) {
-            this.type = value;
         }
 
         /**
