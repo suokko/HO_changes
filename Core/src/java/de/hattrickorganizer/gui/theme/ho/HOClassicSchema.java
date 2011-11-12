@@ -189,14 +189,14 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 	 *  	
 	 */
 	private void initColors(){
-		put(PANEL_BG,Color.WHITE);
+		put(PANEL_BG,"white");
 		put(PANEL_BORDER,"dark_gray");
-		put(BUTTON_BG,Color.WHITE);
-		put(BUTTON_ASSIST_BG,Color.YELLOW);
+		put(BUTTON_BG,"white");
+		put(BUTTON_ASSIST_BG,"yellow");
 		
 		put(LABEL_ERROR_FG,Color.RED);
 		put(LABEL_SUCCESS_FG,"green");
-		put(LABEL_ONGREEN_FG,Color.WHITE);
+		put(LABEL_ONGREEN_FG,"white");
 		put(LABEL_FG,"black");
 		put(LIST_FG,"black");
 		put(LIST_CURRENT_FG,new Color(0, 0, 150));
@@ -209,7 +209,7 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 		//player
 		put(PLAYER_SKILL_SPECIAL_BG,"lightGreen");
 		put(PLAYER_SKILL_BG,"lightYellow");
-		put(TABLEENTRY_BG,Color.WHITE);
+		put(TABLEENTRY_BG,"white");
 		put(TABLEENTRY_FG,"black");
 		put(PLAYER_POS_BG,new Color(220, 220, 255));
 		put(PLAYER_SUBPOS_BG,new Color(235, 235, 255));
@@ -232,13 +232,13 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 		put(LEAGUEHISTORY_LINE1_FG, Color.GREEN);
 		put(LEAGUEHISTORY_LINE2_FG,  Color.CYAN);
 		put(LEAGUEHISTORY_LINE3_FG,  Color.GRAY);
-		put(LEAGUEHISTORY_LINE4_FG,  Color.BLACK);
+		put(LEAGUEHISTORY_LINE4_FG,  "black");
 		put(LEAGUEHISTORY_LINE5_FG,  Color.ORANGE);
 		put(LEAGUEHISTORY_LINE6_FG,  Color.PINK);
 		put(LEAGUEHISTORY_LINE7_FG,  Color.RED);
 		put(LEAGUEHISTORY_LINE8_FG,  Color.MAGENTA);
 		put(LEAGUEHISTORY_CROSS_FG, Color.DARK_GRAY);
-		put(LEAGUEHISTORY_GRID_FG,Color.LIGHT_GRAY);
+		put(LEAGUEHISTORY_GRID_FG,"light_gray");
 		
 		
 		//lineup
@@ -246,10 +246,10 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 		put(SEL_OVERLAY_SELECTION_BG,new Color(10, 255, 10, 40));
 		put(SEL_OVERLAY_BG,new Color(255, 10, 10, 40));
 		put(LINEUP_POS_MIN_BG,PANEL_BG);
-		put(LINEUP_POS_MIN_BORDER,Color.LIGHT_GRAY);
+		put(LINEUP_POS_MIN_BORDER,"light_gray");
 		
 		//shirts
-	    put(SHIRT_KEEPER,Color.BLACK);
+	    put(SHIRT_KEEPER,"black");
 	    put(SHIRT_CENTRALDEFENCE,new Color(0, 0, 220));
 	    put(SHIRT_WINGBACK,new Color(0, 220, 0));
 	    put(SHIRT_MIDFIELD,new Color(220, 220, 0));
@@ -267,15 +267,15 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 	    put(STAT_FORM,Color.PINK);
 	    put(STAT_STAMINA,Color.MAGENTA);
 	    put(STAT_LOYALTY,new Color(180, 180, 0));
-	    put(STAT_KEEPER,Color.BLACK);
+	    put(STAT_KEEPER,"black");
 	    put(STAT_DEFENDING,Color.BLUE);
-	    put(STAT_PLAYMAKING,Color.YELLOW);
+	    put(STAT_PLAYMAKING,"yellow");
 	    put(STAT_PASSING,Color.GREEN);
 	    put(STAT_WINGER,Color.ORANGE);
 	    put(STAT_SCORING,Color.RED);
 	    put(STAT_SET_PIECES,Color.CYAN);
 	    
-	    put(STAT_CASH,Color.BLACK);
+	    put(STAT_CASH,"black");
 	    put(STAT_WINLOST,Color.GRAY);
 	    put(STAT_INCOMESUM,Color.GREEN);
 	    put(STAT_COSTSUM,Color.RED);
@@ -293,7 +293,7 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 	    put(STAT_MARKETVALUE,Color.BLUE);
 	    put(STAT_RATING,new Color(100, 200, 0));
 	    put(STAT_WAGE,new Color(150, 20, 20));
-	    put(STAT_RATING2,Color.BLACK);
+	    put(STAT_RATING2,"black");
 	    put(STAT_TOTAL,Color.GRAY);
 	    put(STAT_MOOD,Color.PINK);
 	    put(STAT_CONFIDENCE,Color.CYAN);
@@ -305,8 +305,8 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 	    put(MATCHTYPE_CUP_BG,"lightYellow");
 	    put(MATCHTYPE_BG,"white");
 	    put(MATCHTYPE_FRIENDLY_BG,"white");
-	    put(MATCHTYPE_INT_BG,Color.LIGHT_GRAY);
-	    put(MATCHTYPE_MASTERS_BG,Color.LIGHT_GRAY);
+	    put(MATCHTYPE_INT_BG,"light_gray");
+	    put(MATCHTYPE_MASTERS_BG,"light_gray");
 	    put(MATCHTYPE_INTFRIENDLY_BG,"white");
 	    put(MATCHTYPE_NATIONAL_BG,new Color(220, 220, 255));
 	    

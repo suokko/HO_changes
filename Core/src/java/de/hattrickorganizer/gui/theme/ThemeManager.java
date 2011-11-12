@@ -41,22 +41,28 @@ public final class ThemeManager {
 	}
 
 	public static Color getColor(String key){
-		Color tmp = null;
-		if(instance().extSchema != null)
-			tmp = instance().extSchema.getThemeColor(key);
+		Object obj = null;
+		if(instance().extSchema != null){
+			obj = instance().extSchema.getThemeColor(key);
+			if(obj!= null && obj instanceof Color)
+				return (Color)obj;
+			if(obj != null && obj instanceof String)
+				return getColor(obj.toString());
+		}
 		
-		if(tmp == null)
-			tmp = instance().classicSchema.getThemeColor(key);
+		obj = instance().classicSchema.getThemeColor(key);
+		if(obj!= null && obj instanceof Color)
+			return (Color)obj;
+		if(obj != null && obj instanceof String)
+			return getColor(obj.toString());
 		
-		if(tmp == null)
-			tmp =  UIManager.getColor(key);
+		if(obj == null)
+			obj = UIManager.getColor(key);
 		
-		// when nothing matches return a defaultColor
-		// if return null, maybe HO didn´t start
-		if(tmp == null)
-			tmp = instance().classicSchema.getDefaultColor(key);
-		
-		return tmp;
+		if(obj == null)
+			return instance().classicSchema.getDefaultColor(key);
+
+		return (Color)obj;
 	}
 
 	public boolean isSet(String key){
