@@ -21,7 +21,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[14];
+		columns = new ColumnDescriptor[16];
 		columns[0]= new ColumnDescriptor("MatchID",Types.INTEGER,false);
 		columns[1]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("SpielerID",Types.INTEGER,false);
@@ -36,7 +36,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		columns[11]= new ColumnDescriptor("STATUS",Types.INTEGER,false);
 		columns[12]= new ColumnDescriptor("FIELDPOS",Types.INTEGER,false);
 		columns[13]= new ColumnDescriptor("RatingStarsEndOfMatch", Types.REAL, false);
-
+		columns[14]= new ColumnDescriptor("StartPosition", Types.INTEGER, false);
+		columns[15]= new ColumnDescriptor("StartBehaviour", Types.INTEGER, false);
 	}
 
 	@Override
@@ -200,6 +201,18 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	}
 	
 	/**
+	 * Deletes all players from the given match
+	 * @param matchID TODO Missing Method Parameter Documentation
+	 * 
+	 * @author blaghaid
+	 */
+	protected void deleteMatchLineupPlayers(int matchID) {
+		final String[] where = { "MatchID"};
+		final String[] werte = { "" + matchID};			
+		delete(where, werte);			
+	}
+	
+	/**
 	 * Updates a match lineup based on the given inputs
 	 *
 	 * @param player TODO Missing Method Parameter Documentation
@@ -263,15 +276,19 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	@SuppressWarnings("deprecation")
 	protected void storeMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
 		if (player != null) {
-			final String[] where = { "MatchID" , "TeamID", "RoleID"};
-			final String[] werte = { "" + matchID, "" + teamID, "" + player.getId()};			
+			
+			// Need to check for spieler, there may now be multiple players with -1 role.
+			// Should we delete here, anyways? Isn't that for update?
+			
+			final String[] where = { "MatchID" , "TeamID", "RoleID", "SpielerID"};
+			final String[] werte = { "" + matchID, "" + teamID, "" + player.getId(), "" + player.getSpielerId()};			
 			delete(where, werte);			
 			String sql = null;
 
 			//saven
 			try {
 				//insert vorbereiten
-				sql = "INSERT INTO "+getTableName()+" ( MatchID, TeamID, SpielerID, RoleID, Taktik, PositionCode, VName, NickName, Name, Rating, HoPosCode, STATUS, FIELDPOS, RatingStarsEndOfMatch ) VALUES(";
+				sql = "INSERT INTO "+getTableName()+" ( MatchID, TeamID, SpielerID, RoleID, Taktik, PositionCode, VName, NickName, Name, Rating, HoPosCode, STATUS, FIELDPOS, RatingStarsEndOfMatch, StartPosition, StartBehaviour ) VALUES(";
 				sql
 					+= (matchID
 						+ ","
@@ -299,6 +316,10 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 						+ player.getPositionCode()
 						+ ","
 						+ player.getRatingStarsEndOfMatch()
+						+ ","
+						+ player.getStartPosition()
+						+ ","
+						+ player.getStartBehavior()
 						+ " )");
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
@@ -324,6 +345,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		int roleID;
 		int behavior;
 		int spielerID;
+		int startPos;
+		int startBeh;
 		double rating;
 		double ratingStarsEndOfMatch;
 		String vname;
@@ -347,12 +370,8 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 				nickName = DBZugriff.deleteEscapeSequences(rs.getString("NickName"));
 				name = DBZugriff.deleteEscapeSequences(rs.getString("Name"));
 				positionsCode = rs.getInt("PositionCode");
-				
-//				if ((roleID != positionsCode || roleID != rs.getInt("FIELDPOS")) && 
-//						(positionsCode != -1 || rs.getInt("FIELDPOS") != -1)) {
-//					HOLogger.instance().debug(getClass(),"Unexpected database output - RoleID: " + roleID + 
-//							" PosCode: " + positionsCode + " FieldPos: " + rs.getInt("FIELDPOS") + " Behavior: " + behavior);
-//				}
+				startPos = rs.getInt("StartPosition");
+				startBeh = rs.getInt("StartBehaviour");
 				
 				switch (behavior) {
 					case ISpielerPosition.OLD_EXTRA_DEFENDER :
@@ -373,7 +392,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 				}
 				
 				// Position code and field position was removed from constructor below.
-				player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, vname, nickName, name, rs.getInt("STATUS"), ratingStarsEndOfMatch);
+				player = new MatchLineupPlayer(roleID, behavior, spielerID, rating, vname, nickName, name, rs.getInt("STATUS"), ratingStarsEndOfMatch, startPos, startBeh);
 				vec.add(player);
 			}
 		} catch (Exception e) {

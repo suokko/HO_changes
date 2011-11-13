@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.model.matches;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
@@ -31,10 +32,8 @@ public class MatchLineupTeam implements IMatchLineupTeam {
     /** TODO Missing Parameter Documentation */
     protected Vector<IMatchLineupPlayer> m_vAufstellung = new Vector<IMatchLineupPlayer>();
     
-    protected Vector<ISubstitution> m_vSubstitutions = new Vector<ISubstitution>();
-    
-    protected Vector<IMatchLineupPlayer> m_vStarting = new Vector<IMatchLineupPlayer>();
-
+    protected ArrayList<ISubstitution> m_vSubstitutions = new ArrayList<ISubstitution>();
+  
     /** TODO Missing Parameter Documentation */
     protected int m_iErfahrung;
 
@@ -83,8 +82,9 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @param m_vSubstitution New value of property m_vSubstitutions.
      */
-    public final void setSubstitutions(Vector<ISubstitution> m_vSubstitution) {
-        this.m_vSubstitutions = m_vSubstitution;
+    public final void setSubstitutions(ArrayList<ISubstitution> m_vSubstitution) {
+        
+    	this.m_vSubstitutions = m_vSubstitution;
         
         // Make sure substitutions are sorted first on minute, then by ID.
         Collections.sort(m_vSubstitution, new Comparator<ISubstitution>(){
@@ -127,28 +127,11 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @return Value of property m_vSubstitutions.
      */
-    public final Vector<ISubstitution> getSubstitutions() {
+    public final ArrayList<ISubstitution> getSubstitutions() {
         return m_vSubstitutions;
     }
     
-    
-    
-   	/**
-	 * @param Getter for the starting lineup
-	 */
-	public Vector<IMatchLineupPlayer> getStartingPlayers() {
-		return m_vStarting;
-	}
-
-	
-	/**
-	 * @param m_vStarting the m_vStarting to set
-	 */
-	public void setStartingPlayers(Vector<IMatchLineupPlayer> m_vStarting) {
-		this.m_vStarting = m_vStarting;
-	}
-
-	/**
+   /**
      * Setter for property m_iErfahrung.
      *
      * @param m_iErfahrung New value of property m_iErfahrung.
@@ -167,20 +150,23 @@ public class MatchLineupTeam implements IMatchLineupTeam {
     }
 
     /**
-     * Liefert Einen Spieler per ID aus der Aufstellung
+     * Returns a player by ID, players in captain and set piece
+     * positions are ignored.
+     * 
+     * @param id The spielerId of the player
      *
-     * @param id TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * @return The object matching the criteria, or null if none found
      */
     public final IMatchLineupPlayer getPlayerByID(int id) {
-        MatchLineupPlayer player = null;
-
-        for (int i = 0; (m_vAufstellung != null) && (i < m_vAufstellung.size()); i++) {
-            player = (MatchLineupPlayer) m_vAufstellung.elementAt(i);
-
+    	
+        for (IMatchLineupPlayer player : m_vAufstellung) {
             if (player.getSpielerId() == id) {
-                return player;
+            	if ((player.getId() == ISpielerPosition.captain)
+            			|| (player.getId() == ISpielerPosition.setPieces)) {
+            		// ignore
+            	} else {
+            		return player;
+            	}
             }
         }
 

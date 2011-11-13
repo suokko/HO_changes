@@ -32,17 +32,12 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
     /** TODO Missing Parameter Documentation */
     private String m_sSpielerVName = "";
 
-    /////////////////////////////////////////////////////////////////////////////////
-    //MEMBER
-    //////////////////////////////////////////////////////////////////////////////////    
-    //Super.ID = RoleID
-    //Super.SpielerID = SpielerID
-    //Super.taktik= behaivior
-
+    
     /** TODO Missing Parameter Documentation */
     private double m_dRating;
     private double m_dRatingStarsEndOfMatch;
-
+    private int m_iStartPosition = -1;
+    private int m_iStartBehavior = -1;
 
     /** TODO Missing Parameter Documentation */
     private int m_iStatus;
@@ -91,7 +86,7 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
      * @param fieldPos TODO Missing Constructuor Parameter Documentation
      */
     public MatchLineupPlayer(int roleID, int behaivior, int spielerID, double rating, String vname,
-                             String nickName, String name, int status, double ratingStarsEndOfMatch) {
+                             String nickName, String name, int status, double ratingStarsEndOfMatch, int startPos, int startBeh) {
         super(roleID, spielerID, (byte) behaivior);
 
         m_sSpielerName = name;
@@ -100,6 +95,9 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
         m_dRating = rating;
         m_iStatus = status;
         m_dRatingStarsEndOfMatch = ratingStarsEndOfMatch;
+        m_iStartBehavior = startBeh;
+        m_iStartPosition = startPos;
+        
     }
 
     public MatchLineupPlayer(MatchLineupPlayer p) {
@@ -281,6 +279,34 @@ public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatch
         return m_iStatus;
     }
 
+    /**
+     * @return the startPosition
+     */
+    public int getStartPosition() {
+    	return m_iStartPosition;
+    }
+    
+    /**
+     * @param startPosition the startPosition to set
+     */
+    public void setStartPosition(int startPosition) {
+    	this.m_iStartPosition = startPosition;
+    }
+    
+    /**
+     * @return the startBehavior
+     */
+    public int getStartBehavior() {
+    	return m_iStartBehavior;
+    }
+    
+    /**
+     * @param startBehavior the startBehavior to set
+     */
+    public void setStartBehavior(int startBehavior) {
+    	this.m_iStartBehavior = startBehavior;
+    }
+    
     ////////////////////////////////////////////////////////////////////////////////
     //Helper
     ////////////////////////////////////////////////////////////////////////////////

@@ -72,12 +72,5 @@ public interface IMatchLineupTeam {
      *
      * @return TODO Missing Return Method Documentation
      */
-	public java.util.Vector<ISubstitution> getSubstitutions();
-	    
-	/**
-     * Returns a vector with the players of the starting lineup. No particular order.
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-	public java.util.Vector<IMatchLineupPlayer> getStartingPlayers();
+	public java.util.ArrayList<ISubstitution> getSubstitutions();
 }

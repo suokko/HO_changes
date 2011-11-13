@@ -280,7 +280,7 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 					return;
 				}
 
-				stats = new MatchStatistics(match, team.getAufstellung(), team.getStartingPlayers(), team.getSubstitutions());
+				stats = new MatchStatistics(match, team);
 				resultLabel.setText(getPosName(stats.getPlayerFieldPositionAtMinute(player, minute)));
 
 			} catch (NumberFormatException ex) {
@@ -317,7 +317,7 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 					displayError("Team for given match not found. Check matchID.");
 					return;
 				}
-				stats = new MatchStatistics(match, team.getAufstellung(), team.getStartingPlayers(), team.getSubstitutions());
+				stats = new MatchStatistics(match, team);
 				resultLabel.setText(stats.getMinutesPlayedInPositions(player, positions) + "");
 
 

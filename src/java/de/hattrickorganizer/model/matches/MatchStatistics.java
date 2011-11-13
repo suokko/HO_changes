@@ -1,32 +1,21 @@
 package de.hattrickorganizer.model.matches;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
 
 import plugins.IMatchHighlight;
-import plugins.IMatchLineupPlayer;
-import plugins.ISpielerPosition;
-
 import plugins.ISubstitution;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.tools.HOLogger;
 
 public class MatchStatistics {
 
-	protected Vector<IMatchLineupPlayer> m_vEndLineup = new Vector<IMatchLineupPlayer>();
-
-	protected Vector<ISubstitution> m_vSubstitutions = new Vector<ISubstitution>();
-
-	protected Vector<IMatchLineupPlayer> m_vStartLineup = new Vector<IMatchLineupPlayer>();
-
-	private int m_iMatchID;
-
-	public MatchStatistics(int matchid, Vector<IMatchLineupPlayer> endLineup, Vector<IMatchLineupPlayer> startLineup, Vector<ISubstitution> substitutions) {
-		m_vEndLineup = endLineup;
-		m_vSubstitutions = substitutions;
-		m_vStartLineup = startLineup;
-		m_iMatchID = matchid;
+	private MatchLineupTeam teamLineup;
+	private int matchId;
+	private int endMinute = -111;
+	
+	public MatchStatistics(int matchid, MatchLineupTeam team) {
+		this.matchId = matchid;
+		teamLineup = team;
 	}
 
 
@@ -40,25 +29,34 @@ public class MatchStatistics {
 	public int getMinutesPlayedInPositions(int spielerId, int[] accepted) {
 
 		boolean inPosition = false;
+		MatchLineupPlayer player = (MatchLineupPlayer) teamLineup.getPlayerByID(spielerId);
+		java.util.List<ISubstitution> substitutions = teamLineup.getSubstitutions();
+		
+		if (player == null) {
+			return 0;
+		}
+		
+		
 		int enterMin = -1;
 		int minPlayed = 0;
 
+		
+		
 		// Those in the starting lineup entered at minute 0
-		for (int i = 0; i < m_vStartLineup.size(); i++) {
-			if ( (m_vStartLineup.get(i).getSpielerId() == spielerId) && (isInAcceptedPositions(m_vStartLineup.get(i).getFieldPos(), accepted))) {
-				enterMin = 0;
-				inPosition = true;
-				break;
-			}
+			
+		if ( isInAcceptedPositions(player.getStartPosition(), accepted)) {
+			enterMin = 0;
+			inPosition = true;
 		}
-
+			
+		
 		// The substitutions are sorted on minute. Look for substitutions involving the player, and check his position
 		// after the substitution (on the substitution minute). Work through the list, and add minutes depending on
 		// entering/leaving the accepted position list.
 
 		ISubstitution sub;
-		for (int i = 0; i < m_vSubstitutions.size(); i++) {
-			sub = m_vSubstitutions.get(i);
+		for (int i = 0; i < substitutions.size(); i++) {
+			sub = substitutions.get(i);
 			if (sub == null) { 
 				HOLogger.instance().debug(getClass(), "getMinutesPlayedError, null in substitution list");
 				break; 
@@ -107,7 +105,7 @@ public class MatchStatistics {
 	}
 
 
-	private int getPlayerFieldPostitionAfterSubstitution(int spielerId, int arrIndex) {
+	private int getPlayerFieldPostitionAfterSubstitution(int spielerId, int arrIndex, java.util.List<ISubstitution> substitutions ) {
 		// arrIndex should be the index of the sub in the substitution vector. We have 100%
 		// trust in our caller (this is a private method), and never verify that.
 
@@ -123,18 +121,18 @@ public class MatchStatistics {
 
 		if (arrIndex < 0) {
 			// We have run out of substitutions. Start lineup got answer
-			return getStartlineupPositionForSpielerId(spielerId);
+			return ((MatchLineupPlayer) teamLineup.getPlayerByID(spielerId)).getStartPosition();
 		}
 
-		ISubstitution tmpSub = m_vSubstitutions.get(arrIndex);
+		ISubstitution tmpSub = substitutions.get(arrIndex);
 
 		if ((tmpSub.getPlayerIn() != spielerId) && (tmpSub.getPlayerOut() != spielerId)) {
 			// This substitution is not exciting, check the next one
-			return getPlayerFieldPostitionAfterSubstitution(spielerId, arrIndex -1);
+			return getPlayerFieldPostitionAfterSubstitution(spielerId, arrIndex -1, substitutions);
 		}
 
 		for (int i = arrIndex ; i >= 0 ; i--)	{
-			tmpSub = m_vSubstitutions.get(i);
+			tmpSub = substitutions.get(i);
 			if (tmpSub.getPlayerOut() == spielerId) {
 
 				if (tmpSub.getPlayerIn() == spielerId) {
@@ -159,7 +157,7 @@ public class MatchStatistics {
 				}
 
 				HOLogger.instance().debug(getClass(),"getPlayerFieldPostitionAfterSubstitution had a playerOut fall through. " + 
-						m_iMatchID + " " + spielerId + " " + tmpSub.getPlayerOrderId());
+						matchId + " " + spielerId + " " + tmpSub.getPlayerOrderId());
 			}
 
 			if (tmpSub.getPlayerIn() == spielerId) {
@@ -175,75 +173,55 @@ public class MatchStatistics {
 					//A player swap. We need to know where the other player came from.
 					//We figure this out by asking where he was at the end of the previous sub
 					//object (it is safe no matter the value of i).
-					return getPlayerFieldPostitionAfterSubstitution(tmpSub.getPlayerOut(), i-1);
+					return getPlayerFieldPostitionAfterSubstitution(tmpSub.getPlayerOut(), i-1, substitutions);
 				}
 
 				HOLogger.instance().debug(getClass(),"getPlayerFieldPostitionAfterSubstitution had a playerIn fall through. " + 
-						m_iMatchID + " " + spielerId + " " + tmpSub.getPlayerOrderId());
+						matchId + " " + spielerId + " " + tmpSub.getPlayerOrderId());
 			}
 		} // End for loop
 
 		HOLogger.instance().debug(getClass(), "getPlayerFieldPostitionAfterSubstitution reached the end, which should never happen " + 
-				m_iMatchID + " " + spielerId + " " + tmpSub.getPlayerOrderId());
+				matchId + " " + spielerId + " " + tmpSub.getPlayerOrderId());
 		return -1;
 	}
 
 
 	public int getPlayerFieldPositionAtMinute(int spielerId, int minute) {
+		
+		java.util.List<ISubstitution> substitutions = teamLineup.getSubstitutions();
+		
 		// Captain and set piece taker don't count...
 
 		if ((minute >= getMatchEndMinute()) || (minute < 0)) {
 			// The player is at home (they travel fast)...
 			return -1;
 		}
-
+		
+		if (teamLineup.getPlayerByID(spielerId) == null) {
+			// Was never on the field
+			return -1;
+		}
+		
 		// Look for the last substitution before the given minute
 		// Check if the player is involved. If not keep checking back in time until match start.
 
 		ISubstitution tmpSub = null;
-		for (int i = m_vSubstitutions.size() -1 ; i >= 0 ; i--)	{
+		for (int i = substitutions.size() -1 ; i >= 0 ; i--)	{
 
-			tmpSub = m_vSubstitutions.get(i);
+			tmpSub = substitutions.get(i);
 			if (tmpSub.getMatchMinuteCriteria() > minute) {
 				//This is after our minute. Next, please.
 				continue;
 			}
 
 			if ((tmpSub.getPlayerOut() == spielerId) || (tmpSub.getPlayerIn() == spielerId)) {
-				return getPlayerFieldPostitionAfterSubstitution(spielerId, i);
+				return getPlayerFieldPostitionAfterSubstitution(spielerId, i, substitutions);
 			}
 		} 
 
 		// We survived all the subs, lets see if we found him in the starting lineup.
-		return getStartlineupPositionForSpielerId(spielerId);
-	}
-
-
-	public int getStartlineupPositionForSpielerId(int spielerId) {
-		int tmpPos;
-		for (int i = 0; i < m_vStartLineup.size(); i++) {
-			if (m_vStartLineup.get(i).getSpielerId() == spielerId) {
-				tmpPos = m_vStartLineup.get(i).getFieldPos();
-				if ((tmpPos >= ISpielerPosition.keeper) && (tmpPos <= ISpielerPosition.substForward)) {
-					// Not some captain or set piece taker
-					// This starting lineup position is our answer.
-					return tmpPos;
-				}
-			}
-		}
-		return -1;
-	}
-
-
-
-	public boolean hasPlayed(int spielerId){
-		boolean ret = false;
-
-		// TODO change to use minutes played instead
-		if (getPlayerMap(-1).get(new Integer(spielerId)) != null) {
-			ret = true;
-		}
-		return ret;
+		return ((MatchLineupPlayer) teamLineup.getPlayerByID(spielerId)).getStartPosition();
 	}
 
 	/**
@@ -252,81 +230,17 @@ public class MatchStatistics {
 	 * @return the last minute or -1 if not found
 	 */
 	public int getMatchEndMinute() {
-		Vector<IMatchHighlight> hls = DBZugriff.instance().getMatchDetails(m_iMatchID).getHighlights();
-		for (int i = 0; i < hls.size() ; i++) {
-			if ((hls.get(i).getHighlightTyp() == 0) && (hls.get(i).getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_BESTER_SPIELER)) {
-				return hls.get(i).getMinute();
-			}
-		}
-		return -1;
-	}
-
-
-	private HashMap<Integer, IMatchLineupPlayer> getPlayerMap(int roleId) {
-		// Is this needed?
-		HashMap<Integer, IMatchLineupPlayer> map = new HashMap<Integer, IMatchLineupPlayer>(); 
-		boolean addAll = false;
-		if (roleId == -1) {
-			addAll = true;
-		}
-
-
-		// First startlineup, then subarrivals, last endlineup. That should give the "best" data quality in the map.
-
-		for (int i = 0; i < m_vStartLineup.size() ; i++) {
-			if ((addAll == true) || (m_vStartLineup.get(i).getFieldPos() == roleId)) {
-				map.put(new Integer(m_vStartLineup.get(i).getSpielerId()), m_vStartLineup.get(i));
-			}
-		}
-
-		for (int i = 0; i > m_vSubstitutions.size() ; i++) {
-			ISubstitution sub = m_vSubstitutions.get(i);
-			if (sub != null) {
-				if ((addAll == true) || (sub.getPos() == roleId)) {
-					int playerId = sub.getPlayerIn();
-					if (playerId > 0) {
-						map.put(new Integer(playerId), new MatchLineupPlayer((int)sub.getPos(), (int)sub.getBehaviour(), playerId, 0,  "", 0));
-					}
+		if (endMinute == -111) { 
+			Vector<IMatchHighlight> hls = DBZugriff.instance().getMatchDetails(matchId).getHighlights();
+			for (int i = 0; i < hls.size() ; i++) {
+				if ((hls.get(i).getHighlightTyp() == 0) && (hls.get(i).getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_BESTER_SPIELER)) {
+					endMinute = hls.get(i).getMinute();
+					break;
 				}
 			}
 		}
-
-		for (int i = 0; i < m_vEndLineup.size() ; i++) {
-			if ((addAll == true) || (m_vEndLineup.get(i).getFieldPos() == roleId)) {
-				map.put(new Integer(m_vEndLineup.get(i).getSpielerId()), m_vEndLineup.get(i));
-			}
-		}
-		return map;
-	}
-
-	public java.util.List<Integer> getAllPlayersThatPlayed() {
-		// Consider name and if objects should be returned when feedback needs it...
-		HashMap<Integer, IMatchLineupPlayer> map = getPlayerMap(-1);
-
-		java.util.ArrayList<Integer> list = new ArrayList<Integer>();
-
-		java.util.Iterator<IMatchLineupPlayer> it = map.values().iterator();
-		IMatchLineupPlayer pl = null;
-		while (it.hasNext()) {
-			pl = it.next();
-			list.add(new Integer(pl.getSpielerId()));
-		}
-		return list;
-	}
-
-
-	// TODO Do we want this one? Duplicate from the team lineup.
-	private MatchLineupPlayer getPlayerByPosition(int id) {
-		MatchLineupPlayer player = null;
-
-		for (int i = 0; (m_vEndLineup != null) && (i < m_vEndLineup.size()); i++) {
-			player = (MatchLineupPlayer) m_vEndLineup.elementAt(i);
-
-			if (player.getId() == id) {
-				return player;
-			}
-		}
-		return new MatchLineupPlayer(-1, 0, -1, -1d, "", 0);
+		
+		return endMinute;
 	}
 
 }
