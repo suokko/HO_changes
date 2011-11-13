@@ -84,6 +84,12 @@ public interface IHelper {
     public ImageIcon getImageIcon4Spezialitaet(int wert);
 
     /**
+     * Returns the homegrown image icon
+     *
+     * @return TODO Missing Return Method Documentation
+     */
+    public ImageIcon getImageIconForHomeGrown();
+    /**
      * Returns an Image represent the Matchhighlight
      *
      * @param typ Use constant values from IMatchHighlight
