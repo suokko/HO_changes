@@ -21,10 +21,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 	 * 
 	 */
 	private static final long serialVersionUID = -6249868492929346343L;
-	//***** Klassenvariable f�r das HOMiniModel *****
 	private IHOMiniModel m_IHOmodel;
-//	***** Klassenvariable f�r das TableModel *****
-	//***** Festlegen der Farben *****
 	private Color gelb = new Color(255,255,200);
 	private Color gruen = new Color (220,255,220);
 	private Color dklgruen = new Color (0,200,0);
@@ -61,14 +58,10 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
             int row,
             int column)
 	{
-		//***** Festlegen des Fonts f�r die Gruppenanzeige
 		f = new Font(table.getFont().getFontName(), Font.PLAIN, (table.getFont().getSize()) + 2);
-		
-		//***** Grafische Darstellung der Spalten ***** 
 		if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Name")))
 		{	
 			label = new JLabel();
-			
 			int i = 0;
 			int spezWert = 0;
 			StringTokenizer tk = new StringTokenizer(table.getValueAt(row,column).toString(),";");
@@ -214,7 +207,38 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			label.setText(m_IHOmodel.getHelper().getNameForPosition(tmpPos) + " ("+ tmpFloat +")");
 			label.setBackground(table.getBackground());
 		}
-		
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MC")))
+		{
+			label = new JLabel();
+			double skillwert = 0;
+			String skillwertS = "";
+			try
+			{
+				skillwertS = (table.getValueAt(row,column)).toString();
+			}
+			catch(Exception e){}
+			
+			try
+			{
+				skillwert = Double.parseDouble(skillwertS);
+			}
+			catch(Exception e){}
+			
+			int skillWertNew = new Double(skillwert).intValue();
+			int skillWertOld = new Double((skillwert - skillWertNew) * 100 + 0.1).intValue();
+			int changeWert = skillWertNew - skillWertOld;
+			if (skillwert == 2 || skillWertNew == 2 || skillWertOld == 2)
+			{
+				label.setIcon(m_IHOmodel.getHelper().getImageIconForHomeGrown());
+				label.setHorizontalAlignment(SwingConstants.CENTER);
+			}
+			if (changeWert < 0)
+				label.setBackground(Color.RED);
+			else if (changeWert > 0)
+				label.setBackground(Color.GREEN);
+			else
+				label.setBackground(table.getBackground());
+		}
 		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ER"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FUE"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FO"))
@@ -226,6 +250,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FL"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("TS"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ST"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("LOY"))
 				)
 		{
 			double skillwert = 0;
@@ -281,6 +306,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MIT"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FLG"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("STU"))
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("STUA"))
 				)
 		{
 			int i = 0;

@@ -17,180 +17,184 @@ import plugins.ISpielerPosition;
  */
 public class Player
 {
-	private ISpieler spieler;
-	
-	private String name;
-	private int alter;
-	private int id;
-	private int gehalt;
-	private int tsi;
-	private int nation;
-	private int fuehrung;
-	private int erfahrung;
-	private int kondi;
-	private int form;
-	private int tw;
-	private int ve;
-	private int sp;
-	private int ps;
-	private int fl;
-	private int ts;
-	private int st;
-	private int erfahrungOld;
-	private int kondiOld;
-	private int formOld;
-	private int twOld;
-	private int veOld;
-	private int spOld;
-	private int psOld;
-	private int flOld;
-	private int tsOld;
-	private int stOld;
-	private float posWertTW;
-	private float posWertIV;
-	private float posWertIV_A;
-	private float posWertIV_O;
-	private float posWertAV;
-	private float posWertAV_I;
-	private float posWertAV_O;
-	private float posWertAV_D;
-	private float posWertMI;
-	private float posWertMI_A;
-	private float posWertMI_O;
-	private float posWertMI_D;
-	private float posWertFL;
-	private float posWertFL_I;
-	private float posWertFL_O;
-	private float posWertFL_D;
-	private float posWertST;
-	private float posWertST_D;
-	private float posWertTWOld;
-	private float posWertIVOld;
-	private float posWertIV_AOld;
-	private float posWertIV_OOld;
-	private float posWertAVOld;
-	private float posWertAV_IOld;
-	private float posWertAV_OOld;
-	private float posWertAV_DOld;
-	private float posWertMIOld;
-	private float posWertMI_AOld;
-	private float posWertMI_OOld;
-	private float posWertMI_DOld;
-	private float posWertFLOld;
-	private float posWertFL_IOld;
-	private float posWertFL_OOld;
-	private float posWertFL_DOld;
-	private float posWertSTOld;
-	private float posWertST_DOld;
-	private byte bestPosition;
-	private float bestPosStaerke;
-	private byte bestPositionOld;
-	private float bestPosStaerkeOld;
-	private String gruppe;
-	private int spezialitaet;
+	private ISpieler m_Player;
+	private String m_Name;
+	private int m_Age;
+	private int m_ID;
+	private int m_Wages;
+	private int m_TSI;
+	private int m_Nationality;
+	private int m_Leadership;
+	private int m_Experience;
+	private int m_Stamina;
+	private int m_Form;
+	private int m_Keeping;
+	private int m_Defending;
+	private int m_Playmaking;
+	private int m_Passing;
+	private int m_Winger;
+	private int m_Scoring;
+	private int m_SetPieces;
+	private int m_Loyalty;
+	private int m_HomeGrown;
+	private int m_OldExperience;
+	private int m_OldStamina;
+	private int m_OldForm;
+	private int m_OldKeeping;
+	private int m_OldDefending;
+	private int m_OldPlaymaking;
+	private int m_OldPassing;
+	private int m_OldWinger;
+	private int m_OldScoring;
+	private int m_OldSetPieces;
+	private int m_OldLoyalty;
+	private int m_OldHomeGrown;
+	private float m_PosVal_GK;
+	private float m_PosVal_CD;
+	private float m_PosVal_CD_TW;
+	private float m_PosVal_CD_O;
+	private float m_PosVal_WB;
+	private float m_PosVal_WB_TM;
+	private float m_PosVal_WB_O;
+	private float m_PosVal_WB_D;
+	private float m_PosVal_IM;
+	private float m_PosVal_IM_TW;
+	private float m_PosVal_IM_O;
+	private float m_PosVal_IM_D;
+	private float m_PosVal_W;
+	private float m_PosVal_W_TM;
+	private float m_PosVal_W_O;
+	private float m_PosVal_W_D;
+	private float m_PosVal_F;
+	private float m_PosVal_F_D;
+	private float m_PosVal_F_TW;
+	private float m_OldPosVal_GK;
+	private float m_OldPosVal_CD;
+	private float m_OldPosVal_CD_TW;
+	private float m_OldPosVal_CD_O;
+	private float m_OldPosVal_WB;
+	private float m_OldPosVal_WB_TM;
+	private float m_OldPosVal_WB_O;
+	private float m_OldPosVal_WB_D;
+	private float m_OldPosVal_IM;
+	private float m_OldPosVal_IM_TW;
+	private float m_OldPosVal_IM_O;
+	private float m_OldPosVal_IM_D;
+	private float m_OldPosVal_W;
+	private float m_OldPosVal_W_TM;
+	private float m_OldPosVal_W_O;
+	private float m_OldPosVal_W_D;
+	private float m_OldPosVal_F;
+	private float m_OldPosVal_F_D;
+	private float m_OldPosVal_F_TW;
+	private byte m_BestPosition;
+	private float m_BestPositionRating;
+	private byte m_OldBestPosition;
+	private float m_OldBestPositionRating;
+	private String m_Group;
+	private int m_Speciality;
 	
 	//Konstruktor
 	public Player(ISpieler player)
 	{
-		spieler = player;
-
-		setSpielerDaten();
+		m_Player = player;
+		setPlayerValues();
 		setOldSkillValues();
 		setOldPositionValues();
 		setNewSkillValues();
 		setNewPositionValues();
-		setSpielerDaten();
+		setPlayerValues();
 	}
 	
-	public Player()
-	{
-		
-	}
+	public Player()	{}
 	
 	/* @function getPositionCompareAsString(int position)
-	 * liefert einen String zur�ck in der Form ("1.35;0.15") wobei
-	 * die 1.35 f�r den neuen Positionswert steht und die 0.15 f�r die Ver�nderung
-	 * zum Originalwert des Spielers 
+	 * returns a string in the format ("1.35;0.15") where the first value is the
+	 * new position value and the second is the change from the original value
 	 * 
-	 * int position: Wert, f�r die Ermittlung der Position
+	 * int position
 	 * 
 	 * return: String
 	 */
-	public String getPositionCompareAsString(int position)
+	public String getPositionCompareAsString(byte position)
 	{
 		String s = "";
 		switch(position)
 		{
-			case 0:{
-				s += getPosWertTW() + ";" + (getPosWertTW() - getPosWertTWOld());
+			case ISpielerPosition.KEEPER: {
+				s += getPosVal_GK() + ";" + (getPosVal_GK() - getOldPosVal_GK());
 				break;
 			}
-			case 1:{
-				s += getPosWertIV() + ";" + (getPosWertIV() - getPosWertIVOld());
+			case ISpielerPosition.CENTRAL_DEFENDER: {
+				s += getPosVal_CD() + ";" + (getPosVal_CD() - getOldPosVal_CD());
 				break;
 			}
-			case 2:{
-				s += getPosWertIV_A() + ";" + (getPosWertIV_A() - getPosWertIV_AOld());
+			case ISpielerPosition.CENTRAL_DEFENDER_OFF: {
+				s += getPosVal_CD_O() + ";" + (getPosVal_CD_O() - getOldPosVal_CD_O());
 				break;
 			}
-			case 3:{
-				s += getPosWertIV_O() + ";" + (getPosWertIV_O() - getPosWertIV_OOld());
+			case ISpielerPosition.CENTRAL_DEFENDER_TOWING: {
+				s += getPosVal_CD_TW() + ";" + (getPosVal_CD_TW() - getOldPosVal_CD_TW());
 				break;
 			}
-			case 4:{
-				s += getPosWertAV() + ";" + (getPosWertAV() - getPosWertAVOld());
+			case ISpielerPosition.BACK: {
+				s += getPosVAL_WB() + ";" + (getPosVAL_WB() - getOldPosVal_WB());
 				break;
 			}
-			case 5:{
-				s += getPosWertAV_I() + ";" + (getPosWertAV_I() - getPosWertAV_IOld());
+			case ISpielerPosition.BACK_TOMID: {
+				s += getPosVal_WB_TM() + ";" + (getPosVal_WB_TM() - getOldPosVal_WB_TM());
 				break;
 			}
-			case 6:{
-				s += getPosWertAV_O() + ";" + (getPosWertAV_O() - getPosWertAV_OOld());
+			case ISpielerPosition.BACK_OFF: {
+				s += getPosVal_WB_O() + ";" + (getPosVal_WB_O() - getOldPosVal_WB_O());
 				break;
 			}
-			case 7:{
-				s += getPosWertAV_D() + ";" + (getPosWertAV_D() - getPosWertAV_DOld());
+			case ISpielerPosition.BACK_DEF: {
+				s += getPosVal_WB_D() + ";" + (getPosVal_WB_D() - getOldPosVAL_WB_D());
 				break;
 			}
-			case 8:{
-				s += getPosWertMI() + ";" + (getPosWertMI() - getPosWertMIOld());
+			case ISpielerPosition.MIDFIELDER: {
+				s += getPosVal_IM() + ";" + (getPosVal_IM() - getOldPosVal_IM());
 				break;
 			}
-			case 9:{
-				s += getPosWertMI_A() + ";" + (getPosWertMI_A() - getPosWertMI_AOld());
+			case ISpielerPosition.MIDFIELDER_OFF: {
+				s += getPosVal_IM_O() + ";" + (getPosVal_IM_O() - getOldPosVal_IM_O());
 				break;
 			}
-			case 10:{
-				s += getPosWertMI_O() + ";" + (getPosWertMI_O() - getPosWertMI_OOld());
+			case ISpielerPosition.MIDFIELDER_DEF: {
+				s += getPosVal_IM_D() + ";" + (getPosVal_IM_D() - getOldPosVal_IM_D());
 				break;
 			}
-			case 11:{
-				s += getPosWertMI_D() + ";" + (getPosWertMI_D() - getPosWertMI_DOld());
+			case ISpielerPosition.MIDFIELDER_TOWING: {
+				s += getPosVal_IM_TW() + ";" + (getPosVal_IM_TW() - getOldPosVal_IM_TW());
 				break;
 			}
-			case 12:{
-				s += getPosWertFL() + ";" + (getPosWertFL() - getPosWertFLOld());
+			case ISpielerPosition.WINGER: {
+				s += getPosVal_W() + ";" + (getPosVal_W() - getOldPosVal_W());
 				break;
 			}
-			case 13:{
-				s += getPosWertFL_I() + ";" + (getPosWertFL_I() - getPosWertFL_IOld());
+			case ISpielerPosition.WINGER_OFF:{
+				s += getPosVal_W_O() + ";" + (getPosVal_W_O() - getOldPosVal_W_O());
 				break;
 			}
-			case 14:{
-				s += getPosWertFL_O() + ";" + (getPosWertFL_O() - getPosWertFL_OOld());
+			case ISpielerPosition.WINGER_DEF:{
+				s += getPosVal_W_D() + ";" + (getPosVal_W_D() - getOldPosVal_W_D());
 				break;
 			}
-			case 15:{
-				s += getPosWertFL_D() + ";" + (getPosWertFL_D() - getPosWertFL_DOld());
+			case ISpielerPosition.WINGER_TOMID: {
+				s += getPosVal_W_TM() + ";" + (getPosVal_W_TM() - getOldPosVal_W_TM());
 				break;
 			}
-			case 16:{
-				s += getPosWertST() + ";" + (getPosWertST() - getPosWertSTOld());
+			case ISpielerPosition.FORWARD:{
+				s += getPosVal_F() + ";" + (getPosVal_F() - getOldPosVal_F());
 				break;
 			}
-			case 17:{
-				s += getPosWertST_D() + ";" + (getPosWertST_D() - getPosWertST_DOld());
+			case ISpielerPosition.FORWARD_DEF:{
+				s += getPosVal_F_D() + ";" + (getPosVal_F_D() - getOldPosVal_F_D());
+				break;
+			}
+			case ISpielerPosition.FORWARD_TOWING:{
+				s += getPosVal_F_TW() + ";" + (getPosVal_F_TW() - getOldPosVal_F_TW());
 				break;
 			}
 		}
@@ -198,11 +202,10 @@ public class Player
 	}
 	
 	/* @function getSkillCompareAsDouble(int skill)
-	 * liefert einen Double zur�ck in der Form (5.06) wobei
-	 * die 5 f�r den neuen Skillwert steht und die 06 f�r den alten Wert
-	 * multipliziert mit 0.01 
+	 * returns a Double in format (5.06) where 5 is the new skill value
+	 * and 06  is the old value multiplied by 0.01
 	 * 
-	 * int skill: Wert, f�r die Ermittlung des Skills
+	 * int skill
 	 * 
 	 * return: double
 	 */
@@ -212,43 +215,51 @@ public class Player
 		switch(skill)
 		{
 			case 0:{
-				combined = getErfahrung() + (getErfahrungOld() * 0.01);
+				combined = getExperience() + (getOldExperience() * 0.01);
 				break;
 			}
 			case 1:{
-				combined = getForm() + (getFormOld() * 0.01);
+				combined = getForm() + (getOldForm() * 0.01);
 				break;
 			}
 			case 2:{
-				combined = getKondi() + (getKondiOld() * 0.01);
+				combined = getStamina() + (getOldStamina() * 0.01);
 				break;
 			}
 			case 3:{
-				combined = getTw() + (getTwOld() * 0.01);
+				combined = getKeeping() + (getOldKeeping() * 0.01);
 				break;
 			}
 			case 4:{
-				combined = getVe() + (getVeOld() * 0.01);
+				combined = getDefending() + (getOldDefending() * 0.01);
 				break;
 			}
 			case 5:{
-				combined = getSp() + (getSpOld() * 0.01);
+				combined = getPlaymaking() + (getOldPlaymaking() * 0.01);
 				break;
 			}
 			case 6:{
-				combined = getPs() + (getPsOld() * 0.01);
+				combined = getPassing() + (getOldPassing() * 0.01);
 				break;
 			}
 			case 7:{
-				combined = getFl() + (getFlOld() * 0.01);
+				combined = getWinger() + (getOldWinger() * 0.01);
 				break;
 			}
 			case 8:{
-				combined = getTs() + (getTsOld() * 0.01);
+				combined = getScoring() + (getOldScoring() * 0.01);
 				break;
 			}
 			case 9:{
-				combined = getSt() + (getStOld() * 0.01);
+				combined = getSetPieces() + (getOldSetPieces() * 0.01);
+				break;
+			}
+			case 10:{
+				combined = getLoyalty() + (getOldLoyalty() * 0.01);
+				break;
+			}
+			case 11:{
+				combined = getHomeGrown() + (getOldHomeGrown() * 0.01);
 				break;
 			}
 		}
@@ -256,11 +267,10 @@ public class Player
 	}
 	
 	/* @function getSkillCompareAsString(int skill)
-	 * liefert einen String zur�ck in der Form ("5;-1") wobei
-	 * die 5 f�r den neuen Skillwert steht und die -1 f�r die Ver�nderung
-	 * zum Originalwert des Spielers 
+	 * returns a string in the format ("5;-1") where 
+	 * 5  is the new skill value and -1 the change to the original skill
 	 * 
-	 * int skill: Wert, f�r die Ermittlung des Skills
+	 * int skill
 	 * 
 	 * return: String
 	 */
@@ -270,43 +280,51 @@ public class Player
 		switch(skill)
 		{
 			case 0:{
-				s += getErfahrung() + ";" + (getErfahrung() - getErfahrungOld());
+				s += getExperience() + ";" + (getExperience() - getOldExperience());
 				break;
 			}
 			case 1:{
-				s += getForm() + ";" + (getForm() - getFormOld());
+				s += getForm() + ";" + (getForm() - getOldForm());
 				break;
 			}
 			case 2:{
-				s += getKondi() + ";" + (getKondi() - getKondiOld());
+				s += getStamina() + ";" + (getStamina() - getOldStamina());
 				break;
 			}
 			case 3:{
-				s += getTw() + ";" + (getTw() - getTwOld());
+				s += getKeeping() + ";" + (getKeeping() - getOldKeeping());
 				break;
 			}
 			case 4:{
-				s += getVe() + ";" + (getVe() - getVeOld());
+				s += getDefending() + ";" + (getDefending() - getOldDefending());
 				break;
 			}
 			case 5:{
-				s += getSp() + ";" + (getSp() - getSpOld());
+				s += getPlaymaking() + ";" + (getPlaymaking() - getOldPlaymaking());
 				break;
 			}
 			case 6:{
-				s += getPs() + ";" + (getPs() - getPsOld());
+				s += getPassing() + ";" + (getPassing() - getOldPassing());
 				break;
 			}
 			case 7:{
-				s += getFl() + ";" + (getFl() - getFlOld());
+				s += getWinger() + ";" + (getWinger() - getOldWinger());
 				break;
 			}
 			case 8:{
-				s += getTs() + ";" + (getTs() - getTsOld());
+				s += getScoring() + ";" + (getScoring() - getOldScoring());
 				break;
 			}
 			case 9:{
-				s += getSt() + ";" + (getSt() - getStOld());
+				s += getSetPieces() + ";" + (getSetPieces() - getOldSetPieces());
+				break;
+			}
+			case 10: {
+				s += getLoyalty() + ";" + (getLoyalty() - getOldLoyalty());
+				break;
+			}
+			case 11: {
+				s += getHomeGrown() + ";" + getOldHomeGrown();
 				break;
 			}
 		}
@@ -314,105 +332,114 @@ public class Player
 	}
 	
 	/* @function changeSkill(int skill, int wert)
-	 * Funktion, die die Werte des Spielers in der Datenbank �ndert.
-	 * Wird von changePlayerSkillValues() aufgerufen. 
-	 * 
-	 * int skill: Wert, f�r die Ermittlung des zu �ndernden Skills
-	 * int wert: Neuer Wert, der in die Datenbank geschrieben wird
+	 * Function that changes the values of the players
+	 * Called by changePlayerSkillValues() 
 	 */
 	public void changeSkill(int skill, int wert)
 	{
 		switch(skill)
 		{
 			case 0:{
-				spieler.setErfahrung(wert);
+				m_Player.setErfahrung(wert);
 				break;
 			}
 			case 1:{
-				spieler.setForm(wert);
+				m_Player.setForm(wert);
 				break;
 			}
 			case 2:{
-				spieler.setKondition(wert);
+				m_Player.setKondition(wert);
 				break;
 			}
 			case 3:{
-				spieler.setTorwart(wert);
+				m_Player.setTorwart(wert);
 				break;
 			}
 			case 4:{
-				spieler.setVerteidigung(wert);
+				m_Player.setVerteidigung(wert);
 				break;
 			}
 			case 5:{
-				spieler.setSpielaufbau(wert);
+				m_Player.setSpielaufbau(wert);
 				break;
 			}
 			case 6:{
-				spieler.setPasspiel(wert);
+				m_Player.setPasspiel(wert);
 				break;
 			}
 			case 7:{
-				spieler.setFluegelspiel(wert);
+				m_Player.setFluegelspiel(wert);
 				break;
 			}
 			case 8:{
-				spieler.setTorschuss(wert);
+				m_Player.setTorschuss(wert);
 				break;
 			}
 			case 9:{
-				spieler.setStandards(wert);
-				//break;
+				m_Player.setStandards(wert);
+				break;
+			}
+			case 10: {
+				m_Player.setLoyalty(wert);
+				break;
+			}
+			case 11:
+			{
+				if (wert == 2)
+					m_Player.setHomeGrown(true);
+				else if (wert == 1)
+					m_Player.setHomeGrown(false);
+				break;
 			}
 		}
 	}
 	
-	/* @function changePlayerSkillValues(boolean richtung)
-	 * Funktion, die die Werte des Spielers ermittelt, um sie in der 
-	 * Datenbank zu �ndern. �bergibt diese Werte an changeSkill().
-	 * Wird ben�tigt, um die St�rke auf den einzelnen Position mit 
-	 * Spieler.calcPositionValue() zu berechnen
+	/* @function changePlayerSkillValues(boolean direction)
+	 * Function that calculates the values of the player
+	 * for changing in the data store.
+	 * Is used to calculate the rating of each position with 
+	 * Spieler.calcPositionValue()
 	 * 
-	 * boolean richtung: bezeichnet, ob neue Werte oder die originalen Werte
-	 * 		in die DB eingetragen werden sollen
-	 * 		true: es werden die neuen Werte eingetragen
-	 * 		false: es werden die Originalwerte eingetragen
+	 * boolean direction: determines if the new or original values 
+	 * 		should be saved in the database
+	 * 		true: save new values
+	 * 		false: save old values
 	 */
-	public void changePlayerSkillValues(boolean richtung)
+	public void changePlayerSkillValues(boolean direction)
 	{
-		// Array f�r die Originalwerte
-		int[] alteWerte = getOldSkillWerte();
+		// Array for the old values
+		int[] oldSkillValues = getOldSkillValues();
 		
-		if(richtung == true)
+		if(direction == true)
 		{
-			// Array f�r die neugesetzten Werte (passabel, gut, usw.)
-			int[] neueWerte = PlayerCompare.getNewStaerke();
-			// Array f�r die neugesetzten Werte (+1,+2, usw.)
-			int[] changedSkills = PlayerCompare.getChangeStaerkeBy();
+			// Array for newly set values
+			int[] newRatings = PlayerCompare.getNewRating();
+			// Array for the changes
+			int[] changedSkills = PlayerCompare.getChangeRatingBy();
 			
-			for(int j = 0; j < 10; j++)
+			for(int j = 0; j < newRatings.length; j++)
 			{
-				if(neueWerte[j] == 0)
+				if(newRatings[j] == 0)
 				{
 					if(changedSkills[j] != 0)
 					{
-						setNewSkillValues(j, (alteWerte[j] + changedSkills[j]));
-						changeSkill(j, (alteWerte[j] + changedSkills[j]));
+						setNewSkillValues(j, (oldSkillValues[j] + changedSkills[j]));
+						changeSkill(j, (oldSkillValues[j] + changedSkills[j]));
 					}
 				}
 				else
 				{
-					setNewSkillValues(j, neueWerte[j]);
-					changeSkill(j, neueWerte[j]);
+					setNewSkillValues(j, newRatings[j]);
+					changeSkill(j, newRatings[j]);
 				}
 			}
 			setNewPositionValues();
 		}
 		else
 		{
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < oldSkillValues.length; i++)
 			{
-				changeSkill(i, alteWerte[i]);
+				changeSkill(i, oldSkillValues[i]);
 			}
 		}
 		
@@ -420,67 +447,74 @@ public class Player
 	
 	public void resetPlayers()
 	{
-		int[] alteWerte = getOldSkillWerte();
-		for(int i = 0; i < 10; i++)
+		int[] oldSkillValues = getOldSkillValues();
+		for(int i = 0; i < oldSkillValues.length; i++)
 		{
-			changeSkill(i, alteWerte[i]);
-			setNewSkillValues(i,alteWerte[i]);
+			changeSkill(i, oldSkillValues[i]);
+			setNewSkillValues(i,oldSkillValues[i]);
 		}
 	}
-	public void setSpielerDaten()
+	
+	public void setPlayerValues()
 	{
-		setId(spieler.getSpielerID());
-		setName(spieler.getName());
-		setAlter(spieler.getAlter());
-		setGehalt(spieler.getGehalt());
-		setTsi(spieler.getTSI());
-		setNation(spieler.getNationalitaet());
-		setFuehrung(spieler.getFuehrung());
-		setGruppe(spieler.getTeamInfoSmilie());
-		setSpezialitaet(spieler.getSpezialitaet());
+		setID(m_Player.getSpielerID());
+		setName(m_Player.getName());
+		setAge(m_Player.getAlter());
+		setWages(m_Player.getGehalt());
+		setTSI(m_Player.getTSI());
+		setNationality(m_Player.getNationalitaet());
+		setLeadership(m_Player.getFuehrung());
+		setGroup(m_Player.getTeamInfoSmilie());
+		setSpeciality(m_Player.getSpezialitaet());
 	}
 	
 	public void setOldSkillValues()
 	{
-		setErfahrungOld(spieler.getErfahrung());
-		setFormOld(spieler.getForm());
-		setKondiOld(spieler.getKondition());
-		setTwOld(spieler.getTorwart());
-		setVeOld(spieler.getVerteidigung());
-		setSpOld(spieler.getSpielaufbau());
-		setPsOld(spieler.getPasspiel());
-		setFlOld(spieler.getFluegelspiel());
-		setTsOld(spieler.getTorschuss());
-		setStOld(spieler.getStandards());
+		setOldExperience(m_Player.getErfahrung());
+		setOldForm(m_Player.getForm());
+		setOldStamina(m_Player.getKondition());
+		setOldKeeping(m_Player.getTorwart());
+		setOldDefending(m_Player.getVerteidigung());
+		setOldPlaymaking(m_Player.getSpielaufbau());
+		setOldPassing(m_Player.getPasspiel());
+		setOldWinger(m_Player.getFluegelspiel());
+		setOldScoring(m_Player.getTorschuss());
+		setOldSetPieces(m_Player.getStandards());
+		setOldLoyalty(m_Player.getLoyalty());
+		setOldHomeGrown(m_Player.isHomeGrown() ? 2 : 1);
 	}
 	
-	public int[] getOldSkillWerte()
+	public int[] getOldSkillValues()
 	{
-		int[] zurueck = new int[10];
-		zurueck[0] = this.getErfahrungOld();
-		zurueck[1] = this.getFormOld();
-		zurueck[2] = this.getKondiOld();
-		zurueck[3] = this.getTwOld();
-		zurueck[4] = this.getVeOld();
-		zurueck[5] = this.getSpOld();
-		zurueck[6] = this.getPsOld();
-		zurueck[7] = this.getFlOld();
-		zurueck[8] = this.getTsOld();
-		zurueck[9] = this.getStOld();
-		return zurueck;
+		int[] oldSkills = new int[12];
+		oldSkills[0] = getOldExperience();
+		oldSkills[1] = getOldForm();
+		oldSkills[2] = getOldStamina();
+		oldSkills[3] = getOldKeeping();
+		oldSkills[4] = getOldDefending();
+		oldSkills[5] = getOldPlaymaking();
+		oldSkills[6] = getOldPassing();
+		oldSkills[7] = getOldWinger();
+		oldSkills[8] = getOldScoring();
+		oldSkills[9] = getOldSetPieces();
+		oldSkills[10] = getOldLoyalty();
+		oldSkills[11] = getOldHomeGrown();
+		return oldSkills;
 	}
 	public void setNewSkillValues()
 	{
-		setErfahrung(spieler.getErfahrung());
-		setForm(spieler.getForm());
-		setKondi(spieler.getKondition());
-		setTw(spieler.getTorwart());
-		setVe(spieler.getVerteidigung());
-		setSp(spieler.getSpielaufbau());
-		setPs(spieler.getPasspiel());
-		setFl(spieler.getFluegelspiel());
-		setTs(spieler.getTorschuss());
-		setSt(spieler.getStandards());
+		setExperience(m_Player.getErfahrung());
+		setForm(m_Player.getForm());
+		setStamina(m_Player.getKondition());
+		setKeeping(m_Player.getTorwart());
+		setDefending(m_Player.getVerteidigung());
+		setPlaymaking(m_Player.getSpielaufbau());
+		setPassing(m_Player.getPasspiel());
+		setWinger(m_Player.getFluegelspiel());
+		setScoring(m_Player.getTorschuss());
+		setSetPieces(m_Player.getStandards());
+		setLoyalty(m_Player.getLoyalty());
+		setHomeGrown(m_Player.isHomeGrown() ? 2 : 1);
 	}
 	
 	public void setNewSkillValues(int skill, int wert)
@@ -488,7 +522,7 @@ public class Player
 		switch(skill)
 		{
 			case 0:{
-				setErfahrung(wert);
+				setExperience(wert);
 				break;
 			}
 			case 1:{
@@ -496,35 +530,43 @@ public class Player
 				break;
 			}
 			case 2:{
-				setKondi(wert);
+				setStamina(wert);
 				break;
 			}
 			case 3:{
-				setTw(wert);
+				setKeeping(wert);
 				break;
 			}
 			case 4:{
-				setVe(wert);
+				setDefending(wert);
 				break;
 			}
 			case 5:{
-				setSp(wert);
+				setPlaymaking(wert);
 				break;
 			}
 			case 6:{
-				setPs(wert);
+				setPassing(wert);
 				break;
 			}
 			case 7:{
-				setFl(wert);
+				setWinger(wert);
 				break;
 			}
 			case 8:{
-				setTs(wert);
+				setScoring(wert);
 				break;
 			}
 			case 9:{
-				setSt(wert);
+				setSetPieces(wert);
+				break;
+			}
+			case 10: {
+				setLoyalty(wert);
+				break;
+			}
+			case 11: {
+				setHomeGrown(wert);
 				break;
 			}
 		}
@@ -532,467 +574,503 @@ public class Player
 	
 	public void setOldPositionValues()
 	{
-		setPosWertTWOld(spieler.calcPosValue(ISpielerPosition.KEEPER,true));
-		setPosWertIVOld(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
-		setPosWertIV_AOld(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
-		setPosWertIV_OOld(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
-		setPosWertAVOld(spieler.calcPosValue(ISpielerPosition.BACK,true));
-		setPosWertAV_IOld(spieler.calcPosValue(ISpielerPosition.BACK_TOMID,true));
-		setPosWertAV_OOld(spieler.calcPosValue(ISpielerPosition.BACK_OFF,true));
-		setPosWertAV_DOld(spieler.calcPosValue(ISpielerPosition.BACK_DEF,true));
-		setPosWertMIOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER,true));
-		setPosWertMI_OOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
-		setPosWertMI_DOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
-		setPosWertMI_AOld(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
-		setPosWertFLOld(spieler.calcPosValue(ISpielerPosition.WINGER,true));
-		setPosWertFL_DOld(spieler.calcPosValue(ISpielerPosition.WINGER_DEF,true));
-		setPosWertFL_IOld(spieler.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
-		setPosWertFL_OOld(spieler.calcPosValue(ISpielerPosition.WINGER_OFF,true));
-		setPosWertSTOld(spieler.calcPosValue(ISpielerPosition.FORWARD,true));
-		setPosWertST_DOld(spieler.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
-		setBestPositionOld(spieler.getIdealPosition());
-		setBestPosStaerkeOld(spieler.getIdealPosStaerke(true));
+		setOldPos_GK(m_Player.calcPosValue(ISpielerPosition.KEEPER,true));
+		setOldPosVal_CD(m_Player.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
+		setOldPosVal_CD_TW(m_Player.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
+		setOldPosVal_CD_O(m_Player.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
+		setOldPosVal_WB(m_Player.calcPosValue(ISpielerPosition.BACK,true));
+		setOldPosVal_WB_TM(m_Player.calcPosValue(ISpielerPosition.BACK_TOMID,true));
+		setOldPosVal_WB_O(m_Player.calcPosValue(ISpielerPosition.BACK_OFF,true));
+		setOldPosVal_WB_D(m_Player.calcPosValue(ISpielerPosition.BACK_DEF,true));
+		setOldPosVal_IM(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER,true));
+		setOldPosVal_IM_O(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
+		setOldPosVal_IM_D(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
+		setOldPosVal_IM_TW(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
+		setOldPosVal_W(m_Player.calcPosValue(ISpielerPosition.WINGER,true));
+		setOldPosVal_W_D(m_Player.calcPosValue(ISpielerPosition.WINGER_DEF,true));
+		setOldPosVal_W_TM(m_Player.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
+		setOldPosVal_W_O(m_Player.calcPosValue(ISpielerPosition.WINGER_OFF,true));
+		setOldPosVal_F(m_Player.calcPosValue(ISpielerPosition.FORWARD,true));
+		setOldPosVal_F_D(m_Player.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
+		setOldPosVal_F_TW(m_Player.calcPosValue(ISpielerPosition.FORWARD_TOWING,true));
+		setOldBestPosition(m_Player.getIdealPosition());
+		setOldBestPositionRating(m_Player.getIdealPosStaerke(true));
 	}
 	
 	public void setNewPositionValues()
 	{
-		setPosWertTW(spieler.calcPosValue(ISpielerPosition.KEEPER,true));
-		setPosWertIV(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
-		setPosWertIV_A(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
-		setPosWertIV_O(spieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
-		setPosWertAV(spieler.calcPosValue(ISpielerPosition.BACK,true));
-		setPosWertAV_I(spieler.calcPosValue(ISpielerPosition.BACK_TOMID,true));
-		setPosWertAV_O(spieler.calcPosValue(ISpielerPosition.BACK_OFF,true));
-		setPosWertAV_D(spieler.calcPosValue(ISpielerPosition.BACK_DEF,true));
-		setPosWertMI(spieler.calcPosValue(ISpielerPosition.MIDFIELDER,true));
-		setPosWertMI_O(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
-		setPosWertMI_D(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
-		setPosWertMI_A(spieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
-		setPosWertFL(spieler.calcPosValue(ISpielerPosition.WINGER,true));
-		setPosWertFL_D(spieler.calcPosValue(ISpielerPosition.WINGER_DEF,true));
-		setPosWertFL_I(spieler.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
-		setPosWertFL_O(spieler.calcPosValue(ISpielerPosition.WINGER_OFF,true));
-		setPosWertST(spieler.calcPosValue(ISpielerPosition.FORWARD,true));
-		setPosWertST_D(spieler.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
-		setBestPosition(spieler.getIdealPosition());
-		setBestPosStaerke(spieler.getIdealPosStaerke(true));
-		
-		//Aufruf zum Zur�cksetzen der Skillwerte
+		setPosVal_GK(m_Player.calcPosValue(ISpielerPosition.KEEPER,true));
+		setPosVal_CD(m_Player.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true));
+		setPosVal_CD_TW(m_Player.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING,true));
+		setPosVal_CD_O(m_Player.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF,true));
+		setPosVal_WB(m_Player.calcPosValue(ISpielerPosition.BACK,true));
+		setPosVAL_WB_TM(m_Player.calcPosValue(ISpielerPosition.BACK_TOMID,true));
+		setPosVal_WB_O(m_Player.calcPosValue(ISpielerPosition.BACK_OFF,true));
+		setPosVAL_WB_D(m_Player.calcPosValue(ISpielerPosition.BACK_DEF,true));
+		setPosVal_IM(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER,true));
+		setPosVal_IM_O(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER_OFF,true));
+		setPosVal_IM_D(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER_DEF,true));
+		setPosVal_IM_TW(m_Player.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING,true));
+		setPosVal_W(m_Player.calcPosValue(ISpielerPosition.WINGER,true));
+		setPosVal_W_D(m_Player.calcPosValue(ISpielerPosition.WINGER_DEF,true));
+		setPosVal_W_TM(m_Player.calcPosValue(ISpielerPosition.WINGER_TOMID,true));
+		setPosVal_W_O(m_Player.calcPosValue(ISpielerPosition.WINGER_OFF,true));
+		setPosVal_F(m_Player.calcPosValue(ISpielerPosition.FORWARD,true));
+		setPosVal_F_D(m_Player.calcPosValue(ISpielerPosition.FORWARD_DEF,true));
+		setPosVal_F_TW(m_Player.calcPosValue(ISpielerPosition.FORWARD_TOWING,true));
+		setBestPosition(m_Player.getIdealPosition());
+		setBestPositionRating(m_Player.getIdealPosStaerke(true));
 		changePlayerSkillValues(false);
 	}
 	
-	public int getAlter() {
-		return alter;
+	public int getAge() {
+		return m_Age;
 	}
-	public void setAlter(int alter) {
-		this.alter = alter;
+	public void setAge(int val) {
+		m_Age = val;
 	}
 	public byte getBestPosition() {
-		return bestPosition;
+		return m_BestPosition;
 	}
-	public void setBestPosition(byte bestPosition) {
-		this.bestPosition = bestPosition;
+	public void setBestPosition(byte val) {
+		m_BestPosition = val;
 	}
-	public byte getBestPositionOld() {
-		return bestPositionOld;
+	public byte getOldBestPosition() {
+		return m_OldBestPosition;
 	}
-	public void setBestPositionOld(byte bestPositionOld) {
-		this.bestPositionOld = bestPositionOld;
+	public void setOldBestPosition(byte val) {
+		m_OldBestPosition = val;
 	}
-	public float getBestPosStaerke() {
-		return bestPosStaerke;
+	public float getBestPositionRating() {
+		return m_BestPositionRating;
 	}
-	public void setBestPosStaerke(float bestPosStaerke) {
-		this.bestPosStaerke = bestPosStaerke;
+	public void setBestPositionRating(float val) {
+		m_BestPositionRating = val;
 	}
-	public float getBestPosStaerkeOld() {
-		return bestPosStaerkeOld;
+	public float getOldBestPositionRating() {
+		return m_OldBestPositionRating;
 	}
-	public void setBestPosStaerkeOld(float bestPosStaerkeOld) {
-		this.bestPosStaerkeOld = bestPosStaerkeOld;
+	public void setOldBestPositionRating(float val) {
+		m_OldBestPositionRating = val;
 	}
-	public int getErfahrung() {
-		return erfahrung;
+	public int getExperience() {
+		return m_Experience;
 	}
-	public void setErfahrung(int erfahrung) {
-		this.erfahrung = erfahrung;
+	public void setExperience(int val) {
+		m_Experience = val;
 	}
-	public int getErfahrungOld() {
-		return erfahrungOld;
+	public int getOldExperience() {
+		return m_OldExperience;
 	}
-	public void setErfahrungOld(int erfahrungOld) {
-		this.erfahrungOld = erfahrungOld;
+	public void setOldExperience(int val) {
+		m_OldExperience = val;
 	}
-	public int getFl() {
-		return fl;
+	public int getWinger() {
+		return m_Winger;
 	}
-	public void setFl(int fl) {
-		this.fl = fl;
+	public void setWinger(int val) {
+		m_Winger = val;
 	}
-	public int getFlOld() {
-		return flOld;
+	public int getOldWinger() {
+		return m_OldWinger;
 	}
-	public void setFlOld(int flOld) {
-		this.flOld = flOld;
+	public void setOldWinger(int val) {
+		m_OldWinger = val;
 	}
 	public int getForm() {
-		return form;
+		return m_Form;
 	}
 	public void setForm(int form) {
-		this.form = form;
+		m_Form = form;
 	}
-	public int getFormOld() {
-		return formOld;
+	public int getOldForm() {
+		return m_OldForm;
 	}
-	public void setFormOld(int formOld) {
-		this.formOld = formOld;
+	public void setOldForm(int val) {
+		m_OldForm = val;
 	}
-	public int getFuehrung() {
-		return fuehrung;
+	public int getLeadership() {
+		return m_Leadership;
 	}
-	public void setFuehrung(int fuehrung) {
-		this.fuehrung = fuehrung;
+	public void setLeadership(int val) {
+		m_Leadership = val;
 	}
-	public int getGehalt() {
-		return gehalt;
+	public int getWages() {
+		return m_Wages;
 	}
-	public void setGehalt(int gehalt) {
-		this.gehalt = gehalt;
+	public void setWages(int val) {
+		m_Wages = val;
 	}
-	public String getGruppe() {
-		return gruppe;
+	public String getGroup() {
+		return m_Group;
 	}
-	public void setGruppe(String gruppe) {
-		this.gruppe = gruppe;
+	public void setGroup(String val) {
+		m_Group = val;
 	}
 	public int getId() {
-		return id;
+		return m_ID;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setID(int val) {
+		m_ID = val;
 	}
-	public int getKondi() {
-		return kondi;
+	public int getStamina() {
+		return m_Stamina;
 	}
-	public void setKondi(int kondi) {
-		this.kondi = kondi;
+	public void setStamina(int val) {
+		m_Stamina = val;
 	}
-	public int getKondiOld() {
-		return kondiOld;
+	public int getOldStamina() {
+		return m_OldStamina;
 	}
-	public void setKondiOld(int kondiOld) {
-		this.kondiOld = kondiOld;
+	public void setOldStamina(int val) {
+		m_OldStamina = val;
 	}
 	public String getName() {
-		return name;
+		return m_Name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		m_Name = name;
 	}
-	public int getNation() {
-		return nation;
+	public int getNationality() {
+		return m_Nationality;
 	}
-	public void setNation(int nation) {
-		this.nation = nation;
+	public void setNationality(int val) {
+		m_Nationality = val;
 	}
-	public float getPosWertAV() {
-		return posWertAV;
+	public float getPosVAL_WB() {
+		return m_PosVal_WB;
 	}
-	public void setPosWertAV(float posWertAV) {
-		this.posWertAV = posWertAV;
+	public void setPosVal_WB(float val) {
+		m_PosVal_WB = val;
 	}
-	public float getPosWertAV_D() {
-		return posWertAV_D;
+	public float getOldPosVal_WB() {
+		return m_OldPosVal_WB;
 	}
-	public void setPosWertAV_D(float posWertAV_D) {
-		this.posWertAV_D = posWertAV_D;
+	public void setOldPosVal_WB(float val) {
+		m_OldPosVal_WB = val;
 	}
-	public float getPosWertAV_DOld() {
-		return posWertAV_DOld;
+	public float getPosVal_WB_D() {
+		return m_PosVal_WB_D;
 	}
-	public void setPosWertAV_DOld(float posWertAV_DOld) {
-		this.posWertAV_DOld = posWertAV_DOld;
+	public void setPosVAL_WB_D(float val) {
+		m_PosVal_WB_D = val;
 	}
-	public float getPosWertAV_I() {
-		return posWertAV_I;
+	public float getOldPosVAL_WB_D() {
+		return m_OldPosVal_WB_D;
 	}
-	public void setPosWertAV_I(float posWertAV_I) {
-		this.posWertAV_I = posWertAV_I;
+	public void setOldPosVal_WB_D(float val) {
+		m_OldPosVal_WB_D = val;
 	}
-	public float getPosWertAV_IOld() {
-		return posWertAV_IOld;
+	public float getPosVal_WB_TM() {
+		return m_PosVal_WB_TM;
 	}
-	public void setPosWertAV_IOld(float posWertAV_IOld) {
-		this.posWertAV_IOld = posWertAV_IOld;
+	public void setPosVAL_WB_TM(float val) {
+		m_PosVal_WB_TM = val;
 	}
-	public float getPosWertAV_O() {
-		return posWertAV_O;
+	public float getOldPosVal_WB_TM() {
+		return m_OldPosVal_WB_TM;
 	}
-	public void setPosWertAV_O(float posWertAV_O) {
-		this.posWertAV_O = posWertAV_O;
+	public void setOldPosVal_WB_TM(float val) {
+		m_OldPosVal_WB_TM = val;
 	}
-	public float getPosWertAV_OOld() {
-		return posWertAV_OOld;
+	public float getPosVal_WB_O() {
+		return m_PosVal_WB_O;
 	}
-	public void setPosWertAV_OOld(float posWertAV_OOld) {
-		this.posWertAV_OOld = posWertAV_OOld;
+	public void setPosVal_WB_O(float val) {
+		m_PosVal_WB_O = val;
 	}
-	public float getPosWertAVOld() {
-		return posWertAVOld;
+	public float getOldPosVal_WB_O() {
+		return m_OldPosVal_WB_O;
 	}
-	public void setPosWertAVOld(float posWertAVOld) {
-		this.posWertAVOld = posWertAVOld;
+	public void setOldPosVal_WB_O(float val) {
+		m_OldPosVal_WB_O = val;
 	}
-	public float getPosWertFL() {
-		return posWertFL;
+	public float getPosVal_W() {
+		return m_PosVal_W;
 	}
-	public void setPosWertFL(float posWertFL) {
-		this.posWertFL = posWertFL;
+	public void setPosVal_W(float val) {
+		m_PosVal_W = val;
 	}
-	public float getPosWertFL_D() {
-		return posWertFL_D;
+	public float getOldPosVal_W() {
+		return m_OldPosVal_W;
 	}
-	public void setPosWertFL_D(float posWertFL_D) {
-		this.posWertFL_D = posWertFL_D;
+	public void setOldPosVal_W(float val) {
+		m_OldPosVal_W = val;
 	}
-	public float getPosWertFL_DOld() {
-		return posWertFL_DOld;
+	public float getPosVal_W_D() {
+		return m_PosVal_W_D;
 	}
-	public void setPosWertFL_DOld(float posWertFL_DOld) {
-		this.posWertFL_DOld = posWertFL_DOld;
+	public void setPosVal_W_D(float val) {
+		m_PosVal_W_D = val;
 	}
-	public float getPosWertFL_I() {
-		return posWertFL_I;
+	public float getOldPosVal_W_D() {
+		return m_OldPosVal_W_D;
 	}
-	public void setPosWertFL_I(float posWertFL_I) {
-		this.posWertFL_I = posWertFL_I;
+	public void setOldPosVal_W_D(float val) {
+		m_OldPosVal_W_D = val;
 	}
-	public float getPosWertFL_IOld() {
-		return posWertFL_IOld;
+	public float getPosVal_W_TM() {
+		return m_PosVal_W_TM;
 	}
-	public void setPosWertFL_IOld(float posWertFL_IOld) {
-		this.posWertFL_IOld = posWertFL_IOld;
+	public void setPosVal_W_TM(float val) {
+		m_PosVal_W_TM = val;
 	}
-	public float getPosWertFL_O() {
-		return posWertFL_O;
+	public float getOldPosVal_W_TM() {
+		return m_OldPosVal_W_TM;
 	}
-	public void setPosWertFL_O(float posWertFL_O) {
-		this.posWertFL_O = posWertFL_O;
+	public void setOldPosVal_W_TM(float val) {
+		m_OldPosVal_W_TM = val;
 	}
-	public float getPosWertFL_OOld() {
-		return posWertFL_OOld;
+	public float getPosVal_W_O() {
+		return m_PosVal_W_O;
 	}
-	public void setPosWertFL_OOld(float posWertFL_OOld) {
-		this.posWertFL_OOld = posWertFL_OOld;
+	public void setPosVal_W_O(float val) {
+		m_PosVal_W_O = val;
 	}
-	public float getPosWertFLOld() {
-		return posWertFLOld;
+	public float getOldPosVal_W_O() {
+		return m_OldPosVal_W_O;
 	}
-	public void setPosWertFLOld(float posWertFLOld) {
-		this.posWertFLOld = posWertFLOld;
+	public void setOldPosVal_W_O(float val) {
+		m_OldPosVal_W_O = val;
 	}
-	public float getPosWertIV() {
-		return posWertIV;
+	public float getPosVal_CD() {
+		return m_PosVal_CD;
 	}
-	public void setPosWertIV(float posWertIV) {
-		this.posWertIV = posWertIV;
+	public void setPosVal_CD(float val) {
+		m_PosVal_CD = val;
 	}
-	public float getPosWertIV_A() {
-		return posWertIV_A;
+	public float getOldPosVal_CD() {
+		return m_OldPosVal_CD;
 	}
-	public void setPosWertIV_A(float posWertIV_A) {
-		this.posWertIV_A = posWertIV_A;
+	public void setOldPosVal_CD(float val) {
+		m_OldPosVal_CD = val;
 	}
-	public float getPosWertIV_AOld() {
-		return posWertIV_AOld;
+	public float getPosVal_CD_TW() {
+		return m_PosVal_CD_TW;
 	}
-	public void setPosWertIV_AOld(float posWertIV_AOld) {
-		this.posWertIV_AOld = posWertIV_AOld;
+	public void setPosVal_CD_TW(float val) {
+		m_PosVal_CD_TW = val;
 	}
-	public float getPosWertIV_O() {
-		return posWertIV_O;
+	public float getOldPosVal_CD_TW() {
+		return m_OldPosVal_CD_TW;
 	}
-	public void setPosWertIV_O(float posWertIV_O) {
-		this.posWertIV_O = posWertIV_O;
+	public void setOldPosVal_CD_TW(float val) {
+		m_OldPosVal_CD_TW = val;
 	}
-	public float getPosWertIV_OOld() {
-		return posWertIV_OOld;
+	public float getPosVal_CD_O() {
+		return m_PosVal_CD_O;
 	}
-	public void setPosWertIV_OOld(float posWertIV_OOld) {
-		this.posWertIV_OOld = posWertIV_OOld;
+	public void setPosVal_CD_O(float val) {
+		m_PosVal_CD_O = val;
 	}
-	public float getPosWertIVOld() {
-		return posWertIVOld;
+	public float getOldPosVal_CD_O() {
+		return m_OldPosVal_CD_O;
 	}
-	public void setPosWertIVOld(float posWertIVOld) {
-		this.posWertIVOld = posWertIVOld;
+	public void setOldPosVal_CD_O(float val) {
+		m_OldPosVal_CD_O = val;
 	}
-	public float getPosWertMI() {
-		return posWertMI;
+	public float getPosVal_IM() {
+		return m_PosVal_IM;
 	}
-	public void setPosWertMI(float posWertMI) {
-		this.posWertMI = posWertMI;
+	public void setPosVal_IM(float val) {
+		m_PosVal_IM = val;
 	}
-	public float getPosWertMI_A() {
-		return posWertMI_A;
+	public float getOldPosVal_IM() {
+		return m_OldPosVal_IM;
 	}
-	public void setPosWertMI_A(float posWertMI_A) {
-		this.posWertMI_A = posWertMI_A;
+	public void setOldPosVal_IM(float val) {
+		m_OldPosVal_IM = val;
 	}
-	public float getPosWertMI_AOld() {
-		return posWertMI_AOld;
+	public float getPosVal_IM_TW() {
+		return m_PosVal_IM_TW;
 	}
-	public void setPosWertMI_AOld(float posWertMI_AOld) {
-		this.posWertMI_AOld = posWertMI_AOld;
+	public void setPosVal_IM_TW(float val) {
+		m_PosVal_IM_TW = val;
 	}
-	public float getPosWertMI_D() {
-		return posWertMI_D;
+	public float getOldPosVal_IM_TW() {
+		return m_OldPosVal_IM_TW;
 	}
-	public void setPosWertMI_D(float posWertMI_D) {
-		this.posWertMI_D = posWertMI_D;
+	public void setOldPosVal_IM_TW(float val) {
+		m_OldPosVal_IM_TW = val;
 	}
-	public float getPosWertMI_DOld() {
-		return posWertMI_DOld;
+	public float getPosVal_IM_D() {
+		return m_PosVal_IM_D;
 	}
-	public void setPosWertMI_DOld(float posWertMI_DOld) {
-		this.posWertMI_DOld = posWertMI_DOld;
+	public void setPosVal_IM_D(float val) {
+		m_PosVal_IM_D = val;
 	}
-	public float getPosWertMI_O() {
-		return posWertMI_O;
+	public float getOldPosVal_IM_D() {
+		return m_OldPosVal_IM_D;
 	}
-	public void setPosWertMI_O(float posWertMI_O) {
-		this.posWertMI_O = posWertMI_O;
+	public void setOldPosVal_IM_D(float val) {
+		m_OldPosVal_IM_D = val;
 	}
-	public float getPosWertMI_OOld() {
-		return posWertMI_OOld;
+	public float getPosVal_IM_O() {
+		return m_PosVal_IM_O;
 	}
-	public void setPosWertMI_OOld(float posWertMI_OOld) {
-		this.posWertMI_OOld = posWertMI_OOld;
+	public void setPosVal_IM_O(float val) {
+		m_PosVal_IM_O = val;
 	}
-	public float getPosWertMIOld() {
-		return posWertMIOld;
+	public float getOldPosVal_IM_O() {
+		return m_OldPosVal_IM_O;
 	}
-	public void setPosWertMIOld(float posWertMIOld) {
-		this.posWertMIOld = posWertMIOld;
+	public void setOldPosVal_IM_O(float val) {
+		m_OldPosVal_IM_O = val;
 	}
-	public float getPosWertST() {
-		return posWertST;
+	public float getPosVal_F() {
+		return m_PosVal_F;
 	}
-	public void setPosWertST(float posWertST) {
-		this.posWertST = posWertST;
+	public void setPosVal_F(float val) {
+		m_PosVal_F = val;
 	}
-	public float getPosWertST_D() {
-		return posWertST_D;
+	public float getOldPosVal_F() {
+		return m_OldPosVal_F;
 	}
-	public void setPosWertST_D(float posWertST_D) {
-		this.posWertST_D = posWertST_D;
+	public void setOldPosVal_F(float val) {
+		m_OldPosVal_F = val;
 	}
-	public float getPosWertST_DOld() {
-		return posWertST_DOld;
+	public float getPosVal_F_D() {
+		return m_PosVal_F_D;
 	}
-	public void setPosWertST_DOld(float posWertST_DOld) {
-		this.posWertST_DOld = posWertST_DOld;
+	public void setPosVal_F_D(float val) {
+		m_PosVal_F_D = val;
 	}
-	public float getPosWertSTOld() {
-		return posWertSTOld;
+	public float getOldPosVal_F_D() {
+		return m_OldPosVal_F_D;
 	}
-	public void setPosWertSTOld(float posWertSTOld) {
-		this.posWertSTOld = posWertSTOld;
+	public void setOldPosVal_F_D(float val) {
+		m_OldPosVal_F_D = val;
 	}
-	public float getPosWertTW() {
-		return posWertTW;
+	public float getPosVal_F_TW() {
+		return m_PosVal_F_TW;
 	}
-	public void setPosWertTW(float posWertTW) {
-		this.posWertTW = posWertTW;
+	public void setPosVal_F_TW(float val) {
+		m_PosVal_F_TW = val;
 	}
-	public float getPosWertTWOld() {
-		return posWertTWOld;
+	public float getOldPosVal_F_TW() {
+		return m_OldPosVal_F_TW;
 	}
-	public void setPosWertTWOld(float posWertTWOld) {
-		this.posWertTWOld = posWertTWOld;
+	public void setOldPosVal_F_TW(float val) {
+		m_OldPosVal_F_TW = val;
 	}
-	public int getPs() {
-		return ps;
+	public float getPosVal_GK() {
+		return m_PosVal_GK;
 	}
-	public void setPs(int ps) {
-		this.ps = ps;
+	public void setPosVal_GK(float val) {
+		m_PosVal_GK = val;
 	}
-	public int getPsOld() {
-		return psOld;
+	public float getOldPosVal_GK() {
+		return m_OldPosVal_GK;
 	}
-	public void setPsOld(int psOld) {
-		this.psOld = psOld;
+	public void setOldPos_GK(float val) {
+		m_OldPosVal_GK = val;
 	}
-	public int getSp() {
-		return sp;
+	public int getPassing() {
+		return m_Passing;
 	}
-	public void setSp(int sp) {
-		this.sp = sp;
+	public void setPassing(int val) {
+		m_Passing = val;
 	}
-	public int getSpezialitaet() {
-		return spezialitaet;
+	public int getOldPassing() {
+		return m_OldPassing;
 	}
-	public void setSpezialitaet(int spezialitaet) {
-		this.spezialitaet = spezialitaet;
+	public void setOldPassing(int val) {
+		m_OldPassing = val;
 	}
-	public int getSpOld() {
-		return spOld;
+	public int getPlaymaking() {
+		return m_Playmaking;
 	}
-	public void setSpOld(int spOld) {
-		this.spOld = spOld;
+	public void setPlaymaking(int val) {
+		m_Playmaking = val;
 	}
-	public int getSt() {
-		return st;
+	public int getOldPlaymaking() {
+		return m_OldPlaymaking;
 	}
-	public void setSt(int st) {
-		this.st = st;
+	public void setOldPlaymaking(int val) {
+		m_OldPlaymaking = val;
 	}
-	public int getStOld() {
-		return stOld;
+	public int getSpeciality() {
+		return m_Speciality;
 	}
-	public void setStOld(int stOld) {
-		this.stOld = stOld;
+	public void setSpeciality(int val) {
+		m_Speciality = val;
 	}
-	public int getTs() {
-		return ts;
+	public int getSetPieces() {
+		return m_SetPieces;
 	}
-	public void setTs(int ts) {
-		this.ts = ts;
+	public void setSetPieces(int val) {
+		m_SetPieces = val;
 	}
-	public int getTsi() {
-		return tsi;
+	public int getOldSetPieces() {
+		return m_OldSetPieces;
 	}
-	public void setTsi(int tsi) {
-		this.tsi = tsi;
+	public void setOldSetPieces(int val) {
+		m_OldSetPieces = val;
 	}
-	public int getTsOld() {
-		return tsOld;
+	public int getScoring() {
+		return m_Scoring;
 	}
-	public void setTsOld(int tsOld) {
-		this.tsOld = tsOld;
+	public void setScoring(int val) {
+		m_Scoring = val;
 	}
-	public int getTw() {
-		return tw;
+	public int getOldScoring() {
+		return m_OldScoring;
 	}
-	public void setTw(int tw) {
-		this.tw = tw;
+	public void setOldScoring(int val) {
+		m_OldScoring = val;
 	}
-	public int getTwOld() {
-		return twOld;
+	public int getTSI() {
+		return m_TSI;
 	}
-	public void setTwOld(int twOld) {
-		this.twOld = twOld;
+	public void setTSI(int val) {
+		m_TSI = val;
 	}
-	public int getVe() {
-		return ve;
+	public int getKeeping() {
+		return m_Keeping;
 	}
-	public void setVe(int ve) {
-		this.ve = ve;
+	public void setKeeping(int val) {
+		m_Keeping = val;
 	}
-	public int getVeOld() {
-		return veOld;
+	public int getOldKeeping() {
+		return m_OldKeeping;
 	}
-	public void setVeOld(int veOld) {
-		this.veOld = veOld;
+	public void setOldKeeping(int val) {
+		m_OldKeeping = val;
+	}
+	public int getDefending() {
+		return m_Defending;
+	}
+	public void setDefending(int val) {
+		m_Defending = val;
+	}
+	public int getOldDefending() {
+		return m_OldDefending;
+	}
+	public void setOldDefending(int val) {
+		m_OldDefending = val;
+	}
+	public int getLoyalty() {
+		return m_Loyalty;
+	}
+	public void setLoyalty(int val) {
+		m_Loyalty = val;
+	}
+	public int getOldLoyalty() {
+		return m_OldLoyalty;
+	}
+	public void setOldLoyalty(int val) {
+		m_OldLoyalty= val;
+	}
+	public int getHomeGrown() {
+		return m_HomeGrown;
+	}
+	public void setHomeGrown(int val) {
+		m_HomeGrown = val;
+	}
+	public int getOldHomeGrown() {
+		return m_OldHomeGrown;
+	}
+	public void setOldHomeGrown(int val) {
+		m_OldHomeGrown= val;
 	}
 }
