@@ -127,8 +127,8 @@ public class HelperWrapper implements plugins.IHelper {
         return ImageUtilities.getFlagIcon(country);
     }
 
-    public ImageIcon getImageIcon4Spezialitaet(int wert) {
-        return  ThemeManager.getIcon(HOIconName.SPECIAL[wert]);
+    public ImageIcon getImageIconForHomeGrown() {
+    	return ThemeManager.getIcon(HOIconName.HOMEGROWN);
     }
 
     public ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
@@ -149,7 +149,9 @@ public class HelperWrapper implements plugins.IHelper {
     public ImageIcon getImageIcon4Wetter(int wert) {
         return ThemeManager.getIcon(HOIconName.WEATHER[wert]);
     }
-
+    public ImageIcon getImageIcon4Spezialitaet(int wert) {
+        return  ThemeManager.getIcon(HOIconName.SPECIAL[wert]);
+    }
     public ImageIcon getImageIcon4WetterEffekt(int wert) {
         return ThemeManager.getIcon("weatherEffect" + wert);
     }
