@@ -3,6 +3,7 @@
  */
 package hoplugins.playerCompare;
 
+import gui.HOIconName;
 import hoplugins.*;
 import plugins.*;
 import java.awt.*;
@@ -229,7 +230,7 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			int changeWert = skillWertNew - skillWertOld;
 			if (skillwert == 2 || skillWertNew == 2 || skillWertOld == 2)
 			{
-				label.setIcon(m_IHOmodel.getHelper().getImageIconForHomeGrown());
+				label.setIcon(m_IHOmodel.getHelper().getImageIcon(HOIconName.HOMEGROWN));
 				label.setHorizontalAlignment(SwingConstants.CENTER);
 			}
 			if (changeWert < 0)
