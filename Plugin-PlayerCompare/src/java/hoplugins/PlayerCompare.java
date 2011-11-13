@@ -20,23 +20,23 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	
 	private plugins.IHOMiniModel m_clModel = null;
 	//Members for Tables
-	private PlayerTable m_jTableTop = null;	//Tabelle für alle Spieler
-	private JTable m_jTableBot = null;		//Tabelle für alle verglichenen Spieler
-	private JTable m_jTableDetail = null;	//Tabelle für Spielerdetails
+	private PlayerTable m_jTableTop = null;	//Table for all players
+	private JTable m_jTableBottom = null;	//Table for all compared players
+	private JTable m_jTableDetail = null;	//Table for player details
 	// Members for Buttons
-	private JButton m_btCompare;	//Button -> Vergleichen
-	private JButton m_btHelp;		//Button -> Hilfe
+	private JButton m_btCompare;	//Button -> Compare
+	private JButton m_btHelp;		//Button -> Help
 	private JButton m_btReset;		//Button -> Reset
 	private JButton m_btDebugWindow;//Button -> DebugWindow
 	
 	private String m_PluginName = "PlayerCompare";
-	private float m_pluginVersion = 1.11f;
+	private float m_pluginVersion = 1.2f;
 	private int m_pluginID = 45;
 	
 	private JPanel m_jpPanel;
 	private JPanel m_topTablePanel;
 	private JPanel m_topButtonPanel;
-	private JPanel p_SpielerDetail = null;
+	private JPanel p_PlayerDetail = null;
 	
 	private JScrollPane m_scrollPaneTableTop;
 	private JScrollPane m_scrollPaneButtons;
@@ -52,66 +52,68 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	private PlayerTableModel m_playerTableModelBottom;
 	private PlayerTableModel m_playerTableModelDetail;
 	
-	private JLabel m_L_type;
-	private JLabel m_L_header;
-	private JLabel m_L_erfahrung;
-	private JLabel m_L_form;
-	private JLabel m_L_kondition;
-	private JLabel m_L_torwart;
-	private JLabel m_L_verteidigung;
-	private JLabel m_L_spielaufbau;
-	private JLabel m_L_passpiel;
-	private JLabel m_L_fluegelspiel;
-	private JLabel m_L_torschuss;
-	private JLabel m_L_standards;
+	private JLabel m_L_GroupBy;
+	private JLabel m_L_Header;
+	private JLabel m_L_Experience;
+	private JLabel m_L_Form;
+	private JLabel m_L_Stamina;
+	private JLabel m_L_Keeping;
+	private JLabel m_L_Defending;
+	private JLabel m_L_Playmaking;
+	private JLabel m_L_Passing;
+	private JLabel m_L_Winger;
+	private JLabel m_L_Scoring;
+	private JLabel m_L_SetPieces;
+	private JLabel m_L_Loyalty;
+	private JLabel m_L_HomeGrown;
 		
 	private static JComboBox m_CB_type;
-	private JComboBox m_CB_erfahrung;
-	private JComboBox m_CB_form;
-	private JComboBox m_CB_kondition;
-	private JComboBox m_CB_torwart;
-	private JComboBox m_CB_verteidigung;
-	private JComboBox m_CB_spielaufbau;
-	private JComboBox m_CB_passpiel;
-	private JComboBox m_CB_fluegelspiel;
-	private JComboBox m_CB_torschuss;
-	private JComboBox m_CB_standards;
+	private JComboBox m_CB_Experience;
+	private JComboBox m_CB_Form;
+	private JComboBox m_CB_Stamina;
+	private JComboBox m_CB_Keeping;
+	private JComboBox m_CB_Defending;
+	private JComboBox m_CB_Playmaking;
+	private JComboBox m_CB_Passing;
+	private JComboBox m_CB_Winger;
+	private JComboBox m_CB_Scoring;
+	private JComboBox m_CB_SetPieces;
+	private JComboBox m_CB_Loyalty;
+	private JComboBox m_CB_Homegrown;
 	
-	private JComboBox m_CB_Nr_erfahrung;
-	private JComboBox m_CB_Nr_form;
-	private JComboBox m_CB_Nr_kondition;
-	private JComboBox m_CB_Nr_torwart;
-	private JComboBox m_CB_Nr_verteidigung;
-	private JComboBox m_CB_Nr_spielaufbau;
-	private JComboBox m_CB_Nr_passpiel;
-	private JComboBox m_CB_Nr_fluegelspiel;
-	private JComboBox m_CB_Nr_torschuss;
-	private JComboBox m_CB_Nr_standards;
+	private JComboBox m_CB_Nr_Experience;
+	private JComboBox m_CB_Nr_Form;
+	private JComboBox m_CB_Nr_Stamina;
+	private JComboBox m_CB_Nr_Keeping;
+	private JComboBox m_CB_Nr_Defending;
+	private JComboBox m_CB_Nr_Playmaking;
+	private JComboBox m_CB_Nr_Passing;
+	private JComboBox m_CB_Nr_Winger;
+	private JComboBox m_CB_Nr_Scoring;
+	private JComboBox m_CB_Nr_SetPieces;
+	private JComboBox m_CB_Nr_Loyalty;
 	
 	private static IDebugWindow debugWindow;
 	
 	private Vector<Player> m_V_setPlayers;
-	private Vector<ISpieler> m_V_allPlayer;
-	private Player[] m_ar_allPlayer;
-	private Player[] m_ar_setPlayer;
+	private Vector<ISpieler> m_V_allPlayers;
+	private Player[] m_ar_allPlayers;
+	private Player[] m_ar_setPlayers;
 	
 	private String sTabName = new String();
 	
-	private String[] m_staerke;
+	private String[] m_rating;
 	
-//	*** Hinzugefügt 18.08.04 siehe Z.1226***
 	private static int m_selectedRow;
-//	*** Hinzugefügt 18.08.04 ***
 	private int m_i_ptmTopCount;
-	private int m_anzSpieler; //Anzahl der Spieler
+	private int m_numberOfPlayers;
 	
-	private static int []newPos;
-	private static int []newStaerke;
-	private static int []changedStaerke;
+	private static int []newRating;
+	private static int []changedRating;
 	
 	private boolean m_b_refresh = true;
 		
-	private Color hellblau = new Color (235,235,255);
+	private Color lightblue = new Color (235,235,255);
 	
 	private static Properties m_properties;
 	 
@@ -128,7 +130,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		
 		debugWindow = m_clModel.getGUI ().createDebugWindow ( new java.awt.Point( 100, 200 ), new java.awt.Dimension( 200,  100 ) );
 		
-//		einlesen der Sprache-Files
+		// Read the language files
 		try
         {
 			m_properties = new Properties();
@@ -147,47 +149,44 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
         	debugWindow.append("Textdateifehler: " + e);
 		}
         
-        //alle Spieler holen und in Array speichern
-        getAllPlayer();
+        // get all players ans save them in an array
+        getAllPlayers();
 		
 		
-//		--- Hinzugefügt 29.08.04---		
-		// Hauptpanel erstellen
 		m_jpPanel = hOMiniModel.getGUI().createImagePanel ();
 		m_jpPanel.setLayout (new BorderLayout());
-		
-		//FocusListener für Neuanzeige bei Tabwechsel
 		m_jpPanel.addFocusListener(this);
-		
-		//Tab registrieren, damit bei update die obere Tabelle refresht wird
+		// Register tab for refresh
 		m_clModel.getGUI().registerRefreshable(this);
 		
-		//Default Werte für die skill-Auswahlen werden gesetzt
-		newStaerke = new int[]
+		//Default values for skill selection
+		newRating = new int[]
 		{
-				0,6,0,0,0,0,0,0,0,0
+				0,6,0,0,0,0,0,0,0,0,10,0
 		};
 		
-//		Default Werte für die skill-Ver�nderungen setzen
-		changedStaerke = new int[]
+		// Default values for skill changes
+		changedRating = new int[]
 		{
-				0,0,0,0,0,0,0,0,0,0
+				0,0,0,0,0,0,0,0,0,0,0,0
 		};
 		
-		//Members f�r Labelbeschriftungen werden gesetzt
-		m_L_erfahrung = new JLabel(m_clModel.getLanguageString("Erfahrung"));
-		m_L_form = new JLabel(m_clModel.getLanguageString("Form"));
-		m_L_kondition = new JLabel(m_clModel.getLanguageString("Kondition"));
-		m_L_torwart = new JLabel(m_clModel.getLanguageString("Torwart"));
-		m_L_verteidigung = new JLabel(m_clModel.getLanguageString("Verteidigung"));
-		m_L_spielaufbau = new JLabel(m_clModel.getLanguageString("Spielaufbau"));
-		m_L_passpiel = new JLabel(m_clModel.getLanguageString("Passpiel"));
-		m_L_fluegelspiel = new JLabel(m_clModel.getLanguageString("Fluegelspiel"));
-		m_L_torschuss = new JLabel(m_clModel.getLanguageString("Torschuss"));
-		m_L_standards = new JLabel(m_clModel.getLanguageString("Standards"));
+		// Set the labels
+		m_L_Experience = new JLabel(m_clModel.getLanguageString("Erfahrung"));
+		m_L_Form = new JLabel(m_clModel.getLanguageString("Form"));
+		m_L_Stamina = new JLabel(m_clModel.getLanguageString("Kondition"));
+		m_L_Keeping = new JLabel(m_clModel.getLanguageString("Torwart"));
+		m_L_Defending = new JLabel(m_clModel.getLanguageString("Verteidigung"));
+		m_L_Playmaking = new JLabel(m_clModel.getLanguageString("Spielaufbau"));
+		m_L_Passing = new JLabel(m_clModel.getLanguageString("Passpiel"));
+		m_L_Winger = new JLabel(m_clModel.getLanguageString("Fluegelspiel"));
+		m_L_Scoring = new JLabel(m_clModel.getLanguageString("Torschuss"));
+		m_L_SetPieces = new JLabel(m_clModel.getLanguageString("Standards"));
+		m_L_Loyalty = new JLabel(m_clModel.getLanguageString("Loyalty"));
+		m_L_HomeGrown = new JLabel(m_clModel.getLanguageString("Motherclub"));
 		
-		//Members f�r die Choices werden gesetzt
-		m_staerke = new String[]
+		//Set up standard ratings for combos
+		m_rating = new String[]
 		{
 				"---",
 				m_clModel.getLanguageString("katastrophal"),
@@ -214,45 +213,30 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		
 		
 		//************** Start Debug Window *******************************************************
-		m_btDebugWindow       =    new JButton("DebugWindow");
-        m_btDebugWindow.setToolTipText( "Shows the DebugWindow" );        
-        m_btDebugWindow.addActionListener( this );
-        debugWindow = m_clModel.getGUI ().createDebugWindow ( new java.awt.Point( 100, 200 ), new java.awt.Dimension( 800,  400 ) );
-		//************* Ende Debug Window *********************************************************
+		m_btDebugWindow = new JButton("DebugWindow");
+        m_btDebugWindow.setToolTipText("Shows the DebugWindow");        
+        m_btDebugWindow.addActionListener(this);
+        debugWindow = m_clModel.getGUI().createDebugWindow(new java.awt.Point(100, 200),
+        		new java.awt.Dimension(800, 400));
+		//************* End Debug Window *********************************************************
 		
-
-		//Tabellenmodell f�r obere Tabelle erstellen
-		m_playerTableModelTop = new PlayerTableModel(hOMiniModel,m_ar_allPlayer,1);
-		
-		//*********TableSorter einbinden ******************
+		// Create table model for top table
+		m_playerTableModelTop = new PlayerTableModel(hOMiniModel, m_ar_allPlayers, 1);
 		TableSorter sorter = new TableSorter(m_playerTableModelTop); 
-		//Tabelle erstellen
-		m_jTableTop = new PlayerTable(sorter,m_clModel,m_playerTableModelTop);
-		//TableSorter an die Tabelle anh�ngen
+		m_jTableTop = new PlayerTable(sorter, m_clModel,m_playerTableModelTop);
 		sorter.setTableHeader(m_jTableTop.getTableHeader());
-		//Anzahl der Zeilen der oberen Tabelle ermitteln
+		// Calculate number of rows in top table
 		m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
-		
-		//Panel f�r f�r die obere Tabelle erstellen
 		m_topTablePanel = new JPanel(new GridLayout(1,2));
-		
-		//JScrollPane f�r die obere Tabelle erstellen und Tabelle einf�gen
 		m_scrollPaneTableTop = new JScrollPane(m_jTableTop);
-		
-		//ScrollPane in das Panel einf�gen
 		m_topTablePanel.add(m_scrollPaneTableTop);
-		
-		//Panel f�r die Buttons
 		m_topButtonPanel = new JPanel();
 		m_topButtonPanel.getInsets(new Insets(5,5,5,5));
 		
-		//Layout f�r das Button Panel
 		GridBagLayout gbl = new GridBagLayout();
 	    GridBagConstraints gbc = new GridBagConstraints();
-	    
 		m_topButtonPanel.setLayout(gbl);
-		
-		//Buttons erstellen
+
 		m_btCompare = new JButton(m_properties.getProperty("Vergleichen"));
 		m_btCompare.addActionListener(this);
 		m_btCompare.setToolTipText(m_properties.getProperty("ttCompare"));
@@ -260,331 +244,299 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		m_btHelp = new JButton(m_properties.getProperty("Hilfe"));
 		m_btHelp.addActionListener(this);
 		m_btHelp.setToolTipText(m_properties.getProperty("helpWindow"));        
-        m_btHelp.setLocation ( 25, 300 );
-        m_btHelp.setSize ( 120, 25 );  
+        m_btHelp.setLocation(25, 300);
+        m_btHelp.setSize(120, 25);  
 		
 		m_btReset = new JButton("Reset");
 		m_btReset.setToolTipText(m_properties.getProperty("btReset"));
 		m_btReset.addActionListener(this);
 		
-		m_L_type = new JLabel(m_properties.getProperty("vergleichen_alle"));
-		m_L_header = new JLabel(m_properties.getProperty("setze_alle"));
+		m_L_GroupBy = new JLabel(m_properties.getProperty("vergleichen_alle"));
+		m_L_Header = new JLabel(m_properties.getProperty("setze_alle"));
 		
-		//JComboBoxen erstellen
+		//Create controls
 		m_CB_type = new JComboBox();
 		m_CB_type.addItem(m_properties.getProperty("gewaehlte"));
-		m_CB_type.addItem(m_clModel.getLanguageString( "Torwart" ) );
-		m_CB_type.addItem(m_clModel.getLanguageString( "Verteidigung" ) );
-		m_CB_type.addItem(m_clModel.getLanguageString( "Mittelfeld" ) );
-		m_CB_type.addItem(m_clModel.getLanguageString( "Fluegelspiel" ) );
-		m_CB_type.addItem(m_clModel.getLanguageString( "Sturm" ) );
-		m_CB_type.addItem(m_properties.getProperty ( "GruppeA" ) );
-		m_CB_type.addItem(m_properties.getProperty ( "GruppeB" ) );
-		m_CB_type.addItem(m_properties.getProperty ( "GruppeC" ) );
-		m_CB_type.addItem(m_properties.getProperty ( "GruppeD" ) );
-		m_CB_type.addItem(m_properties.getProperty ( "GruppeE" ) );
-		m_CB_type.addItem(m_properties.getProperty( "alle" ) );
+		m_CB_type.addItem(m_clModel.getLanguageString("Torwart"));
+		m_CB_type.addItem(m_clModel.getLanguageString("Verteidigung"));
+		m_CB_type.addItem(m_clModel.getLanguageString("Mittelfeld"));
+		m_CB_type.addItem(m_clModel.getLanguageString("Fluegelspiel"));
+		m_CB_type.addItem(m_clModel.getLanguageString("Sturm"));
+		m_CB_type.addItem(m_properties.getProperty("GruppeA"));
+		m_CB_type.addItem(m_properties.getProperty("GruppeB"));
+		m_CB_type.addItem(m_properties.getProperty("GruppeC"));
+		m_CB_type.addItem(m_properties.getProperty("GruppeD"));
+		m_CB_type.addItem(m_properties.getProperty("GruppeE"));
+		m_CB_type.addItem(m_properties.getProperty("alle"));
 		m_CB_type.addItemListener(this);
 		
-//		***********************
-		m_CB_erfahrung = new JComboBox();
-		fillComboBox(m_CB_erfahrung,m_staerke.length);
-		m_CB_erfahrung.setSelectedIndex(0);
-		m_CB_erfahrung.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_erfahrung = new JComboBox();
-		fillComboBox(m_CB_Nr_erfahrung);
-		m_CB_Nr_erfahrung.setSelectedIndex(0);
-		m_CB_Nr_erfahrung.addItemListener(this);
-//		***********************
-		m_CB_form = new JComboBox();
-		fillComboBox(m_CB_form,9);
-		m_CB_form.setSelectedIndex(6);
-		m_CB_form.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_form = new JComboBox();
-		fillComboBox(m_CB_Nr_form);
-		m_CB_Nr_form.setSelectedIndex(0);
-		m_CB_Nr_form.addItemListener(this);
-//		***********************
-		m_CB_kondition = new JComboBox();
-		fillComboBox(m_CB_kondition,10);
-		m_CB_kondition.setSelectedIndex(0);
-		m_CB_kondition.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_kondition = new JComboBox();
-		fillComboBox(m_CB_Nr_kondition);
-		m_CB_Nr_kondition.setSelectedIndex(0);
-		m_CB_Nr_kondition.addItemListener(this);
-//		***********************
-		m_CB_torwart = new JComboBox();
-		fillComboBox(m_CB_torwart,m_staerke.length);
-		m_CB_torwart.setSelectedIndex(0);
-		m_CB_torwart.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_torwart = new JComboBox();
-		fillComboBox(m_CB_Nr_torwart);
-		m_CB_Nr_torwart.setSelectedIndex(0);
-		m_CB_Nr_torwart.addItemListener(this);
-//		***********************
-		m_CB_verteidigung = new JComboBox();
-		fillComboBox(m_CB_verteidigung,m_staerke.length);
-		m_CB_verteidigung.setSelectedIndex(0);
-		m_CB_verteidigung.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_verteidigung = new JComboBox();
-		fillComboBox(m_CB_Nr_verteidigung);
-		m_CB_Nr_verteidigung.setSelectedIndex(0);
-		m_CB_Nr_verteidigung.addItemListener(this);
-//		***********************
-		m_CB_spielaufbau = new JComboBox();
-		fillComboBox(m_CB_spielaufbau,m_staerke.length);
-		m_CB_spielaufbau.setSelectedIndex(0);
-		m_CB_spielaufbau.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_spielaufbau = new JComboBox();
-		fillComboBox(m_CB_Nr_spielaufbau);
-		m_CB_Nr_spielaufbau.setSelectedIndex(0);
-		m_CB_Nr_spielaufbau.addItemListener(this);
-//		***********************
-		m_CB_passpiel = new JComboBox();
-		fillComboBox(m_CB_passpiel,m_staerke.length);
-		m_CB_passpiel.setSelectedIndex(0);
-		m_CB_passpiel.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_passpiel = new JComboBox();
-		fillComboBox(m_CB_Nr_passpiel);
-		m_CB_Nr_passpiel.setSelectedIndex(0);
-		m_CB_Nr_passpiel.addItemListener(this);
-//		***********************
-		m_CB_fluegelspiel = new JComboBox();
-		fillComboBox(m_CB_fluegelspiel,m_staerke.length);
-		m_CB_fluegelspiel.setSelectedIndex(0);
-		m_CB_fluegelspiel.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_fluegelspiel = new JComboBox();
-		fillComboBox(m_CB_Nr_fluegelspiel);
-		m_CB_Nr_fluegelspiel.setSelectedIndex(0);
-		m_CB_Nr_fluegelspiel.addItemListener(this);
-//		***********************
-		m_CB_torschuss = new JComboBox();
-		fillComboBox(m_CB_torschuss,m_staerke.length);
-		m_CB_torschuss.setSelectedIndex(0);
-		m_CB_torschuss.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_torschuss = new JComboBox();
-		fillComboBox(m_CB_Nr_torschuss);
-		m_CB_Nr_torschuss.setSelectedIndex(0);
-		m_CB_Nr_torschuss.addItemListener(this);
-//		***********************
-		m_CB_standards = new JComboBox();
-		fillComboBox(m_CB_standards,m_staerke.length);
-		m_CB_standards.setSelectedIndex(0);
-		m_CB_standards.addItemListener(this);
-//		----------------------------------------
-		m_CB_Nr_standards = new JComboBox();
-		fillComboBox(m_CB_Nr_standards);
-		m_CB_Nr_standards.setSelectedIndex(0);
-		m_CB_Nr_standards.addItemListener(this);
-//		***********************
+		// Experience
+		m_CB_Experience = new JComboBox();
+		fillComboBox(m_CB_Experience, m_rating.length);
+		m_CB_Experience.setSelectedIndex(0);
+		m_CB_Experience.addItemListener(this);
+		m_CB_Nr_Experience = new JComboBox();
+		fillComboBox(m_CB_Nr_Experience);
+		m_CB_Nr_Experience.setSelectedIndex(0);
+		m_CB_Nr_Experience.addItemListener(this);
+		// Form
+		m_CB_Form = new JComboBox();
+		fillComboBox(m_CB_Form,9);
+		m_CB_Form.setSelectedIndex(6);
+		m_CB_Form.addItemListener(this);
+		m_CB_Nr_Form = new JComboBox();
+		fillComboBox(m_CB_Nr_Form);
+		m_CB_Nr_Form.setSelectedIndex(0);
+		m_CB_Nr_Form.addItemListener(this);
+		// Stamina
+		m_CB_Stamina = new JComboBox();
+		fillComboBox(m_CB_Stamina,10);
+		m_CB_Stamina.setSelectedIndex(0);
+		m_CB_Stamina.addItemListener(this);
+		m_CB_Nr_Stamina = new JComboBox();
+		fillComboBox(m_CB_Nr_Stamina);
+		m_CB_Nr_Stamina.setSelectedIndex(0);
+		m_CB_Nr_Stamina.addItemListener(this);
+		// Goal Keeping
+		m_CB_Keeping = new JComboBox();
+		fillComboBox(m_CB_Keeping,m_rating.length);
+		m_CB_Keeping.setSelectedIndex(0);
+		m_CB_Keeping.addItemListener(this);
+		m_CB_Nr_Keeping = new JComboBox();
+		fillComboBox(m_CB_Nr_Keeping);
+		m_CB_Nr_Keeping.setSelectedIndex(0);
+		m_CB_Nr_Keeping.addItemListener(this);
+		// Defending
+		m_CB_Defending = new JComboBox();
+		fillComboBox(m_CB_Defending,m_rating.length);
+		m_CB_Defending.setSelectedIndex(0);
+		m_CB_Defending.addItemListener(this);
+		m_CB_Nr_Defending = new JComboBox();
+		fillComboBox(m_CB_Nr_Defending);
+		m_CB_Nr_Defending.setSelectedIndex(0);
+		m_CB_Nr_Defending.addItemListener(this);
+		// Playmaking
+		m_CB_Playmaking = new JComboBox();
+		fillComboBox(m_CB_Playmaking,m_rating.length);
+		m_CB_Playmaking.setSelectedIndex(0);
+		m_CB_Playmaking.addItemListener(this);
+		m_CB_Nr_Playmaking = new JComboBox();
+		fillComboBox(m_CB_Nr_Playmaking);
+		m_CB_Nr_Playmaking.setSelectedIndex(0);
+		m_CB_Nr_Playmaking.addItemListener(this);
+		// Passing
+		m_CB_Passing = new JComboBox();
+		fillComboBox(m_CB_Passing,m_rating.length);
+		m_CB_Passing.setSelectedIndex(0);
+		m_CB_Passing.addItemListener(this);
+		m_CB_Nr_Passing = new JComboBox();
+		fillComboBox(m_CB_Nr_Passing);
+		m_CB_Nr_Passing.setSelectedIndex(0);
+		m_CB_Nr_Passing.addItemListener(this);
+		// Winger
+		m_CB_Winger = new JComboBox();
+		fillComboBox(m_CB_Winger,m_rating.length);
+		m_CB_Winger.setSelectedIndex(0);
+		m_CB_Winger.addItemListener(this);
+		m_CB_Nr_Winger = new JComboBox();
+		fillComboBox(m_CB_Nr_Winger);
+		m_CB_Nr_Winger.setSelectedIndex(0);
+		m_CB_Nr_Winger.addItemListener(this);
+		// Scoring
+		m_CB_Scoring = new JComboBox();
+		fillComboBox(m_CB_Scoring,m_rating.length);
+		m_CB_Scoring.setSelectedIndex(0);
+		m_CB_Scoring.addItemListener(this);
+		m_CB_Nr_Scoring = new JComboBox();
+		fillComboBox(m_CB_Nr_Scoring);
+		m_CB_Nr_Scoring.setSelectedIndex(0);
+		m_CB_Nr_Scoring.addItemListener(this);
+		// Set Pieces
+		m_CB_SetPieces = new JComboBox();
+		fillComboBox(m_CB_SetPieces, m_rating.length);
+		m_CB_SetPieces.setSelectedIndex(0);
+		m_CB_SetPieces.addItemListener(this);
+		m_CB_Nr_SetPieces = new JComboBox();
+		fillComboBox(m_CB_Nr_SetPieces);
+		m_CB_Nr_SetPieces.setSelectedIndex(0);
+		m_CB_Nr_SetPieces.addItemListener(this);
+		// Loyalty
+		m_CB_Loyalty = new JComboBox();
+		fillComboBox(m_CB_Loyalty, m_rating.length);
+		m_CB_Loyalty.setSelectedIndex(10);
+		m_CB_Loyalty.addItemListener(this);
+		m_CB_Nr_Loyalty = new JComboBox();
+		fillComboBox(m_CB_Nr_Loyalty);
+		m_CB_Nr_Loyalty.setSelectedIndex(0);
+		m_CB_Nr_Loyalty.addItemListener(this);
+		// Homegrown
+		m_CB_Homegrown = new JComboBox();
+		m_CB_Homegrown.addItem("---");
+		m_CB_Homegrown.addItem("No");
+		m_CB_Homegrown.addItem("Yes");
+		m_CB_Homegrown.setSelectedIndex(0);
+		m_CB_Homegrown.addItemListener(this);
 		
-		
-		//Komponenten in das Layout einf�gen
+		// Add components to the layout
 		gbc.insets = new Insets(5,3,10,3);
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(m_L_type, gbc);
-		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
+		gbl.setConstraints(m_L_GroupBy, gbc);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbl.setConstraints(m_CB_type, gbc);
 		//*******************************
 		gbc.gridwidth = 4;
-		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_L_header, gbc);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbl.setConstraints(m_L_Header, gbc);
 		gbc.gridwidth = 1;
 		//*******************************
 		gbc.insets = new Insets(3,3,3,3);
-		gbl.setConstraints(m_L_erfahrung, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_erfahrung, gbc);
-//		*******
-		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_erfahrung, gbc);
+		gbl.setConstraints(m_L_Experience, gbc);
+		gbl.setConstraints(m_CB_Experience, gbc);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbl.setConstraints(m_CB_Nr_Experience, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_form, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_form, gbc);
-//		*******
+		//*******************************
+		gbl.setConstraints(m_L_Form, gbc);
+		gbl.setConstraints(m_CB_Form, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_form, gbc);
+		gbl.setConstraints(m_CB_Nr_Form, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_kondition, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_kondition, gbc);
-//		*******
+		gbl.setConstraints(m_L_Stamina, gbc);
+		gbl.setConstraints(m_CB_Stamina, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_kondition, gbc);
+		gbl.setConstraints(m_CB_Nr_Stamina, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_torwart, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_torwart, gbc);
-//		*******
+		gbl.setConstraints(m_L_Keeping, gbc);
+		gbl.setConstraints(m_CB_Keeping, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_torwart, gbc);
+		gbl.setConstraints(m_CB_Nr_Keeping, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_verteidigung, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_verteidigung, gbc);
-//		*******
+		gbl.setConstraints(m_L_Defending, gbc);
+		gbl.setConstraints(m_CB_Defending, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_verteidigung, gbc);
+		gbl.setConstraints(m_CB_Nr_Defending, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_spielaufbau, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_spielaufbau, gbc);
-//		*******
+		gbl.setConstraints(m_L_Playmaking, gbc);
+		gbl.setConstraints(m_CB_Playmaking, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_spielaufbau, gbc);
+		gbl.setConstraints(m_CB_Nr_Playmaking, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_passpiel, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_passpiel, gbc);
-//		*******
+		gbl.setConstraints(m_L_Passing, gbc);
+		gbl.setConstraints(m_CB_Passing, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_passpiel, gbc);
+		gbl.setConstraints(m_CB_Nr_Passing, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_fluegelspiel, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_fluegelspiel, gbc);
-//		*******
+		gbl.setConstraints(m_L_Winger, gbc);
+		gbl.setConstraints(m_CB_Winger, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_fluegelspiel, gbc);
+		gbl.setConstraints(m_CB_Nr_Winger, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_torschuss, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_torschuss, gbc);
-//		*******
+		gbl.setConstraints(m_L_Scoring, gbc);
+		gbl.setConstraints(m_CB_Scoring, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_torschuss, gbc);
+		gbl.setConstraints(m_CB_Nr_Scoring, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
-		gbl.setConstraints(m_L_standards, gbc);
-		//gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_standards, gbc);
-//		*******
+		gbl.setConstraints(m_L_SetPieces, gbc);
+		gbl.setConstraints(m_CB_SetPieces, gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
-		gbl.setConstraints(m_CB_Nr_standards, gbc);
+		gbl.setConstraints(m_CB_Nr_SetPieces, gbc);
 		//*******
 		gbc.gridwidth = 1;
-//		*******************************
+		gbl.setConstraints(m_L_Loyalty, gbc);
+		gbl.setConstraints(m_CB_Loyalty, gbc);
+		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
+		gbl.setConstraints(m_CB_Nr_Loyalty, gbc);
+		//*******
+		gbc.gridwidth = 1;
+		gbl.setConstraints(m_L_HomeGrown, gbc);
+		gbc.gridwidth = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
+		gbl.setConstraints(m_CB_Homegrown, gbc);
+		//*******
+		gbc.gridwidth = 1;
+		// *******************************
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
 		gbc.insets = new Insets(10,3,0,3);
 		gbl.setConstraints(m_btCompare, gbc);
 		gbc.gridwidth = 1;
-//		*******************************
+		// *******************************
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
 		gbc.insets = new Insets(0,3,0,3);
 		gbl.setConstraints(m_btHelp, gbc);
 		gbc.gridwidth = 1;
-//		*******************************
+		// *******************************
 		gbc.gridwidth = GridBagConstraints.REMAINDER; //end row
 		gbc.insets = new Insets(0,3,0,3);
 		gbl.setConstraints(m_btReset, gbc);
+		// *******************************
 		
-//		*******************************
-		
-		//Buttons dem Panel hinzuf�gen
-		m_topButtonPanel.add(m_L_type);
+		//Add Buttons to the Panel
+		m_topButtonPanel.add(m_L_GroupBy);
 		m_topButtonPanel.add(m_CB_type);
-		m_topButtonPanel.add(m_L_header);
-		m_topButtonPanel.add(m_L_erfahrung);
-		m_topButtonPanel.add(m_CB_erfahrung);
-		//********
-		m_topButtonPanel.add(m_CB_Nr_erfahrung);
-		//********
-		m_topButtonPanel.add(m_L_form);
-		m_topButtonPanel.add(m_CB_form);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_form);
-		//********
-		m_topButtonPanel.add(m_L_kondition);
-		m_topButtonPanel.add(m_CB_kondition);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_kondition);
-		//********
-		m_topButtonPanel.add(m_L_torwart);
-		m_topButtonPanel.add(m_CB_torwart);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_torwart);
-		//********
-		m_topButtonPanel.add(m_L_verteidigung);
-		m_topButtonPanel.add(m_CB_verteidigung);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_verteidigung);
-		//********
-		m_topButtonPanel.add(m_L_spielaufbau);
-		m_topButtonPanel.add(m_CB_spielaufbau);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_spielaufbau);
-		//********
-		m_topButtonPanel.add(m_L_passpiel);
-		m_topButtonPanel.add(m_CB_passpiel);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_passpiel);
-		//********
-		m_topButtonPanel.add(m_L_fluegelspiel);
-		m_topButtonPanel.add(m_CB_fluegelspiel);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_fluegelspiel);
-		//********
-		m_topButtonPanel.add(m_L_torschuss);
-		m_topButtonPanel.add(m_CB_torschuss);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_torschuss);
-		//********
-		m_topButtonPanel.add(m_L_standards);
-		m_topButtonPanel.add(m_CB_standards);
-//		********
-		m_topButtonPanel.add(m_CB_Nr_standards);
-		//********
+		m_topButtonPanel.add(m_L_Header);
+		m_topButtonPanel.add(m_L_Experience);
+		m_topButtonPanel.add(m_CB_Experience);
+		m_topButtonPanel.add(m_CB_Nr_Experience);
+		m_topButtonPanel.add(m_L_Form);
+		m_topButtonPanel.add(m_CB_Form);
+		m_topButtonPanel.add(m_CB_Nr_Form);
+		m_topButtonPanel.add(m_L_Stamina);
+		m_topButtonPanel.add(m_CB_Stamina);
+		m_topButtonPanel.add(m_CB_Nr_Stamina);
+		m_topButtonPanel.add(m_L_Keeping);
+		m_topButtonPanel.add(m_CB_Keeping);
+		m_topButtonPanel.add(m_CB_Nr_Keeping);
+		m_topButtonPanel.add(m_L_Defending);
+		m_topButtonPanel.add(m_CB_Defending);
+		m_topButtonPanel.add(m_CB_Nr_Defending);
+		m_topButtonPanel.add(m_L_Playmaking);
+		m_topButtonPanel.add(m_CB_Playmaking);
+		m_topButtonPanel.add(m_CB_Nr_Playmaking);
+		m_topButtonPanel.add(m_L_Passing);
+		m_topButtonPanel.add(m_CB_Passing);
+		m_topButtonPanel.add(m_CB_Nr_Passing);
+		m_topButtonPanel.add(m_L_Winger);
+		m_topButtonPanel.add(m_CB_Winger);
+		m_topButtonPanel.add(m_CB_Nr_Winger);
+		m_topButtonPanel.add(m_L_Scoring);
+		m_topButtonPanel.add(m_CB_Scoring);
+		m_topButtonPanel.add(m_CB_Nr_Scoring);
+		m_topButtonPanel.add(m_L_SetPieces);
+		m_topButtonPanel.add(m_CB_SetPieces);
+		m_topButtonPanel.add(m_CB_Nr_SetPieces);
+		m_topButtonPanel.add(m_L_Loyalty);
+		m_topButtonPanel.add(m_CB_Loyalty);
+		m_topButtonPanel.add(m_CB_Nr_Loyalty);
+		m_topButtonPanel.add(m_L_HomeGrown);
+		m_topButtonPanel.add(m_CB_Homegrown);
+
 		m_topButtonPanel.add(m_btCompare);
 		m_topButtonPanel.add(m_btHelp);
 		m_topButtonPanel.add(m_btReset);
 		
-		//Panel f�r die Buttons
-			
-		m_scrollPaneButtons = new JScrollPane(m_topButtonPanel);	//ScrollPane f�r die Buttons
-		m_scrollPaneTableBottom = new JScrollPane();	//ScrollPane f�r Tabelle der verglichenen Spieler
-		m_scrollPanePlayer = new JScrollPane();			//ScrollPane f�r die DetailTabelle
-		m_scrollPanePlayerGesamt = new JScrollPane();   //ScrollPane f�r m_scrollpanePlayer und Namen
+		// Panel for the buttons
+		m_scrollPaneButtons = new JScrollPane(m_topButtonPanel);
+		m_scrollPaneTableBottom = new JScrollPane();
+		m_scrollPanePlayer = new JScrollPane();
+		m_scrollPanePlayerGesamt = new JScrollPane();
 		
-		p_SpielerDetail = new JPanel(new BorderLayout());
+		p_PlayerDetail = new JPanel(new BorderLayout());
 		
 		setDummyPlayerDetails();
-// 		oberes SplitPane erstellen
 		m_splitPaneTop =new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,m_scrollPaneTableTop,m_scrollPaneButtons);
-//		unteres SplitPane erstellen
 		m_splitPaneBottom = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,m_scrollPaneTableBottom,m_scrollPanePlayerGesamt);
-//		oberes und unteres SplitPane in ein neues SplitPane packen
 		m_splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,m_splitPaneTop,m_splitPaneBottom);
 
-//		Breite des Fensters ermitteln, um die Divider setzen zu k�nnen
 		int tmpBreite = m_clModel.getUserSettings().hoMainFrame_width;
 		int devLocation = tmpBreite - 300;
 		int devLocationBottom = tmpBreite -300;
@@ -597,17 +549,17 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		m_clModel.getGUI().addTab(sTabName,m_jpPanel);
 	}
 
-	public void fillComboBox(JComboBox jcb, int laenge)
+	public void fillComboBox(JComboBox jcb, int len)
 	{
-		for(int i = 0; i < laenge; i++)
+		for(int i = 0; i < len; i++)
 		{
 			if(i>0)
 			{	
-				jcb.addItem(m_staerke[i]+" ("+i+")");
+				jcb.addItem(m_rating[i]+" ("+i+")");
 			}
 			else
 			{
-				jcb.addItem(m_staerke[i]);
+				jcb.addItem(m_rating[i]);
 			}
 		}
 	}
@@ -622,7 +574,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	
 	/**
 	 * appendText(String)
-	 * - schreibt einen beliebigen Text in das DebugWindow
+	 * - writes the text to the DebugWindow
 	 */
 	public static void appendText(String text)
 	{
@@ -630,34 +582,31 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	}
 	
     /** 
-	 * Liefert den Namen des Plugins für die Beschriftung des Tabs.
-	 * @return Liefert den Namen des Plugins
+	 * Gets the name of the plugin for the Tab description
+	 * @return The name of the plugin
 	 */
 	public String getName()
 	{
-		return m_PluginName + " V " + m_pluginVersion;
+		return m_PluginName;
 	}
     
     public void refresh()
     {
-    	//nur refreshen, wenn kein button gedr�ckt wurde und damit m_b_refresh nicht neu gesetzt wurde
+    	// only refresh if no button was pressed so that m_b_refresh doesn't get set
     	if(m_b_refresh == true)
     	{
-    		//Bildschirm leeren
     		m_scrollPaneTableTop.setViewportView(null);
-    		//Spieler neu aus der DB holen
-    		getAllPlayer();
-    		//neue Tabelle erstellen
-    		m_playerTableModelTop = new PlayerTableModel(m_clModel,m_ar_allPlayer,1);
+    		//Get players
+    		getAllPlayers();
+    		m_playerTableModelTop = new PlayerTableModel(m_clModel,m_ar_allPlayers,1);
     		TableSorter sorter = new TableSorter(m_playerTableModelTop);
     		m_jTableTop = new PlayerTable(sorter,m_clModel,m_playerTableModelTop);
     		sorter.setTableHeader(m_jTableTop.getTableHeader());
     		m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
-    		//neue Tabelle auf den Bildschirm bringen
     		m_scrollPaneTableTop.setViewportView(m_jTableTop);
     	}
-    	//wenn ein Button gedr�ckt wurde, m_b_refresh wieder auf true setzen,
-    	//damit beim n�chsten update wieder refresht wird
+    	// If a button was pressed, m_b_refresh is set to true,
+    	// so that the next update causes a refresh
     	else
     	{
     		m_b_refresh = true;
@@ -669,13 +618,11 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     	if(ie.getSource().equals(m_CB_type))
     	{
     		int cbType = m_CB_type.getSelectedIndex();
-    	
 	    	for(int i = 0; i < m_i_ptmTopCount; i++)
 	    	{
 	    		int spielerID = ((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue();
 				int pos = m_clModel.getSpieler(spielerID).getIdealPosition();
 				String group = m_clModel.getSpieler(spielerID).getTeamInfoSmilie();
-				
 	    		if(cbType == 1 && pos == 0
 	    				|| cbType == 2 && (pos > 0 && pos < 8)
 						|| cbType == 3 && (pos > 7 && pos < 12)
@@ -706,144 +653,151 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	    		m_playerTableModelTop.fireTableRowsUpdated(i,i);
 	    	}
     	}
-    	else if(ie.getSource().equals(m_CB_erfahrung))
+    	else if(ie.getSource().equals(m_CB_Experience))
     	{
-    		if(m_CB_erfahrung.getSelectedIndex() != 0)
+    		if(m_CB_Experience.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_erfahrung.setSelectedIndex(0);
+    			m_CB_Nr_Experience.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_form))
+    	else if(ie.getSource().equals(m_CB_Form))
     	{
-    		if(m_CB_form.getSelectedIndex() != 0)
+    		if(m_CB_Form.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_form.setSelectedIndex(0);
+    			m_CB_Nr_Form.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_kondition))
+    	else if(ie.getSource().equals(m_CB_Stamina))
     	{
-    		if(m_CB_kondition.getSelectedIndex() != 0)
+    		if(m_CB_Stamina.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_kondition.setSelectedIndex(0);
+    			m_CB_Nr_Stamina.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_torwart))
+    	else if(ie.getSource().equals(m_CB_Keeping))
     	{
-    		if(m_CB_torwart.getSelectedIndex() != 0)
+    		if(m_CB_Keeping.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_torwart.setSelectedIndex(0);
+    			m_CB_Nr_Keeping.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_verteidigung))
+    	else if(ie.getSource().equals(m_CB_Defending))
     	{
-    		if(m_CB_verteidigung.getSelectedIndex() != 0)
+    		if(m_CB_Defending.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_verteidigung.setSelectedIndex(0);
+    			m_CB_Nr_Defending.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_spielaufbau))
+    	else if(ie.getSource().equals(m_CB_Playmaking))
     	{
-    		if(m_CB_spielaufbau.getSelectedIndex() != 0)
+    		if(m_CB_Playmaking.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_spielaufbau.setSelectedIndex(0);
+    			m_CB_Nr_Playmaking.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_passpiel))
+    	else if(ie.getSource().equals(m_CB_Passing))
     	{
-    		if(m_CB_passpiel.getSelectedIndex() != 0)
+    		if(m_CB_Passing.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_passpiel.setSelectedIndex(0);
+    			m_CB_Nr_Passing.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_fluegelspiel))
+    	else if(ie.getSource().equals(m_CB_Winger))
     	{
-    		if(m_CB_fluegelspiel.getSelectedIndex() != 0)
+    		if(m_CB_Winger.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_fluegelspiel.setSelectedIndex(0);
+    			m_CB_Nr_Winger.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_torschuss))
+    	else if(ie.getSource().equals(m_CB_Scoring))
     	{
-    		if(m_CB_torschuss.getSelectedIndex() != 0)
+    		if(m_CB_Scoring.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_torschuss.setSelectedIndex(0);
+    			m_CB_Nr_Scoring.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_standards))
+    	else if(ie.getSource().equals(m_CB_SetPieces))
     	{
-    		if(m_CB_standards.getSelectedIndex() != 0)
+    		if(m_CB_SetPieces.getSelectedIndex() != 0)
     		{
-    			m_CB_Nr_standards.setSelectedIndex(0);
+    			m_CB_Nr_SetPieces.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_erfahrung))
+    	else if(ie.getSource().equals(m_CB_Loyalty))
     	{
-    		if(m_CB_Nr_erfahrung.getSelectedIndex() != 0)
+    		if(m_CB_Loyalty.getSelectedIndex() != 0)
     		{
-    			m_CB_erfahrung.setSelectedIndex(0);
+    			m_CB_Nr_Loyalty.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_form))
+    	else if(ie.getSource().equals(m_CB_Nr_Experience))
     	{
-    		if(m_CB_Nr_form.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Experience.getSelectedIndex() != 0)
     		{
-    			m_CB_form.setSelectedIndex(0);
+    			m_CB_Experience.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_kondition))
+    	else if(ie.getSource().equals(m_CB_Nr_Form))
     	{
-    		if(m_CB_Nr_kondition.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Form.getSelectedIndex() != 0)
     		{
-    			m_CB_kondition.setSelectedIndex(0);
+    			m_CB_Form.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_torwart))
+    	else if(ie.getSource().equals(m_CB_Nr_Stamina))
     	{
-    		if(m_CB_Nr_torwart.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Stamina.getSelectedIndex() != 0)
     		{
-    			m_CB_torwart.setSelectedIndex(0);
+    			m_CB_Stamina.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_verteidigung))
+    	else if(ie.getSource().equals(m_CB_Nr_Keeping))
     	{
-    		if(m_CB_Nr_verteidigung.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Keeping.getSelectedIndex() != 0)
     		{
-    			m_CB_verteidigung.setSelectedIndex(0);
+    			m_CB_Keeping.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_spielaufbau))
+    	else if(ie.getSource().equals(m_CB_Nr_Defending))
     	{
-    		if(m_CB_Nr_spielaufbau.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Defending.getSelectedIndex() != 0)
     		{
-    			m_CB_spielaufbau.setSelectedIndex(0);
+    			m_CB_Defending.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_passpiel))
+    	else if(ie.getSource().equals(m_CB_Nr_Playmaking))
     	{
-    		if(m_CB_Nr_passpiel.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Playmaking.getSelectedIndex() != 0)
     		{
-    			m_CB_passpiel.setSelectedIndex(0);
+    			m_CB_Playmaking.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_fluegelspiel))
+    	else if(ie.getSource().equals(m_CB_Nr_Passing))
     	{
-    		if(m_CB_Nr_fluegelspiel.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Passing.getSelectedIndex() != 0)
     		{
-    			m_CB_fluegelspiel.setSelectedIndex(0);
+    			m_CB_Passing.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_torschuss))
+    	else if(ie.getSource().equals(m_CB_Nr_Winger))
     	{
-    		if(m_CB_Nr_torschuss.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Winger.getSelectedIndex() != 0)
     		{
-    			m_CB_torschuss.setSelectedIndex(0);
+    			m_CB_Winger.setSelectedIndex(0);
     		}
     	}
-    	else if(ie.getSource().equals(m_CB_Nr_standards))
+    	else if(ie.getSource().equals(m_CB_Nr_Scoring))
     	{
-    		if(m_CB_Nr_standards.getSelectedIndex() != 0)
+    		if(m_CB_Nr_Scoring.getSelectedIndex() != 0)
     		{
-    			m_CB_standards.setSelectedIndex(0);
+    			m_CB_Scoring.setSelectedIndex(0);
+    		}
+    	}
+    	else if(ie.getSource().equals(m_CB_Nr_SetPieces))
+    	{
+    		if(m_CB_Nr_SetPieces.getSelectedIndex() != 0)
+    		{
+    			m_CB_SetPieces.setSelectedIndex(0);
     		}
     	}
     }
@@ -878,47 +832,44 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     	{
     		actionPerformed(new ActionEvent(m_btCompare,0,""));
     	}
-    	
     }
     
-    public void focusLost(FocusEvent fe)
-    {
-    	
-    }
+    public void focusLost(FocusEvent fe) {}
     
     public void actionPerformed(ActionEvent e)
     {
     	resetPlayer();
     	setDummyPlayerDetails();
-    	//***********************************************************************
     	m_b_refresh = false;
         if(e.getSource().equals(m_btCompare))
         {
         	PlayerCompare.appendText("Compare Button gedr�ckt");
         	m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
-            
-        	setNewStaerke(m_CB_erfahrung.getSelectedIndex(),
-        			m_CB_form.getSelectedIndex(),
-        			m_CB_kondition.getSelectedIndex(),
-        			m_CB_torwart.getSelectedIndex(),
-        			m_CB_verteidigung.getSelectedIndex(),
-        			m_CB_spielaufbau.getSelectedIndex(),
-        			m_CB_passpiel.getSelectedIndex(),
-        			m_CB_fluegelspiel.getSelectedIndex(),
-        			m_CB_torschuss.getSelectedIndex(),
-        			m_CB_standards.getSelectedIndex()
-					);
+        	setNewRating(m_CB_Experience.getSelectedIndex(),
+        			m_CB_Form.getSelectedIndex(),
+        			m_CB_Stamina.getSelectedIndex(),
+        			m_CB_Keeping.getSelectedIndex(),
+        			m_CB_Defending.getSelectedIndex(),
+        			m_CB_Playmaking.getSelectedIndex(),
+        			m_CB_Passing.getSelectedIndex(),
+        			m_CB_Winger.getSelectedIndex(),
+        			m_CB_Scoring.getSelectedIndex(),
+        			m_CB_SetPieces.getSelectedIndex(),
+        			m_CB_Loyalty.getSelectedIndex(),
+        			m_CB_Homegrown.getSelectedIndex());
         	
-        	setChangeStaerkeBy(m_CB_Nr_erfahrung.getSelectedIndex(),
-        			m_CB_Nr_form.getSelectedIndex(),
-        			m_CB_Nr_kondition.getSelectedIndex(),
-        			m_CB_Nr_torwart.getSelectedIndex(),
-        			m_CB_Nr_verteidigung.getSelectedIndex(),
-        			m_CB_Nr_spielaufbau.getSelectedIndex(),
-        			m_CB_Nr_passpiel.getSelectedIndex(),
-        			m_CB_Nr_fluegelspiel.getSelectedIndex(),
-        			m_CB_Nr_torschuss.getSelectedIndex(),
-        			m_CB_Nr_standards.getSelectedIndex()
+        	setChangeRatingBy(m_CB_Nr_Experience.getSelectedIndex(),
+        			m_CB_Nr_Form.getSelectedIndex(),
+        			m_CB_Nr_Stamina.getSelectedIndex(),
+        			m_CB_Nr_Keeping.getSelectedIndex(),
+        			m_CB_Nr_Defending.getSelectedIndex(),
+        			m_CB_Nr_Playmaking.getSelectedIndex(),
+        			m_CB_Nr_Passing.getSelectedIndex(),
+        			m_CB_Nr_Winger.getSelectedIndex(),
+        			m_CB_Nr_Scoring.getSelectedIndex(),
+        			m_CB_Nr_SetPieces.getSelectedIndex(),
+        			m_CB_Loyalty.getSelectedIndex(),
+        			0
 					);
         	
         	int selectedType = m_CB_type.getSelectedIndex();
@@ -1150,42 +1101,35 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
         		}
 			}
         	
-        	//Erstellen eines Arrays aus einem Vector f�r das TableModel
-        	m_ar_setPlayer = new Player[m_V_setPlayers.size()];
-        	for(int counter = 0; counter < m_ar_setPlayer.length; counter++)
+        	// Create array from a tablemodel vector
+        	m_ar_setPlayers = new Player[m_V_setPlayers.size()];
+        	for(int counter = 0; counter < m_ar_setPlayers.length; counter++)
         	{
-        		m_ar_setPlayer[counter] = (Player)m_V_setPlayers.elementAt(counter);
+        		m_ar_setPlayers[counter] = (Player)m_V_setPlayers.elementAt(counter);
         	}
         	
         	PlayerCompare.appendText("ActionListener m_btCompare");
-        	m_playerTableModelBottom = new PlayerTableModel(m_clModel,m_ar_setPlayer,2);
-//        	*********TableSorter einbinden ******************
+        	m_playerTableModelBottom = new PlayerTableModel(m_clModel,m_ar_setPlayers,2);
     		TableSorter sorter2 = new TableSorter(m_playerTableModelBottom); //ADDED THIS
-        	m_jTableBot = new PlayerTable(sorter2,m_clModel,m_playerTableModelBottom);
-//        	*** Hinzugef�gt 18.08.04 ***
-        	m_jTableBot.setRowSelectionAllowed(true);
-        	//PcMouseListener ml = new PcMouseListener();
-        	m_jTableBot.addMouseListener(this);
+        	m_jTableBottom = new PlayerTable(sorter2,m_clModel,m_playerTableModelBottom);
+        	m_jTableBottom.setRowSelectionAllowed(true);
+        	m_jTableBottom.addMouseListener(this);
         	
-        	sorter2.setTableHeader(m_jTableBot.getTableHeader()); //ADDED THIS
+        	sorter2.setTableHeader(m_jTableBottom.getTableHeader()); //ADDED THIS
         	
-        	m_scrollPaneTableBottom.setViewportView(m_jTableBot);
+        	m_scrollPaneTableBottom.setViewportView(m_jTableBottom);
     		m_scrollPaneTableBottom.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     		m_scrollPaneTableBottom.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     		
         }
         
         if ( e.getSource ().equals ( m_btDebugWindow ) )
-        //if(e.getSource().equals(m_btHelp))
         {
-        	
             debugWindow.setVisible ( true );
-            
         }
         
         if(e.getSource().equals(m_btHelp))
         {
-        	//neuer Frame f�r das Hilfefenster
             JFrame helpFrame = new JFrame("Help for plugin 'PlayerCompare'");
             
             JTextArea helpArea = new JTextArea();
@@ -1299,37 +1243,38 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
             helpSP.setPreferredSize(new Dimension(250, 500));
             helpFrame.getContentPane().add(helpSP, "Center");
             helpFrame.setSize(700, 400);
-            helpFrame.show();
+            helpFrame.setVisible(true);
         }
         
         if(e.getSource().equals(m_btReset))
         {
-        	setNewStaerke(0,0,0,0,0,0,0,0,0,0);
-        	m_CB_erfahrung.setSelectedIndex(0);
-        	m_CB_form.setSelectedIndex(6);
-        	m_CB_kondition.setSelectedIndex(0);
-        	m_CB_torwart.setSelectedIndex(0);
-        	m_CB_verteidigung.setSelectedIndex(0);
-        	m_CB_spielaufbau.setSelectedIndex(0);
-        	m_CB_passpiel.setSelectedIndex(0);
-        	m_CB_fluegelspiel.setSelectedIndex(0);
-        	m_CB_torschuss.setSelectedIndex(0);
-        	m_CB_standards.setSelectedIndex(0);
+        	setNewRating(0,0,0,0,0,0,0,0,0,0,0,0);
+        	m_CB_Experience.setSelectedIndex(0);
+        	m_CB_Form.setSelectedIndex(6);
+        	m_CB_Stamina.setSelectedIndex(0);
+        	m_CB_Keeping.setSelectedIndex(0);
+        	m_CB_Defending.setSelectedIndex(0);
+        	m_CB_Playmaking.setSelectedIndex(0);
+        	m_CB_Passing.setSelectedIndex(0);
+        	m_CB_Winger.setSelectedIndex(0);
+        	m_CB_Scoring.setSelectedIndex(0);
+        	m_CB_SetPieces.setSelectedIndex(0);
+        	m_CB_Loyalty.setSelectedIndex(10);
+        	m_CB_Homegrown.setSelectedIndex(0);
         	m_CB_type.setSelectedIndex(0);
         	
-        	//*** 17.08.04 ***
-        	setChangeStaerkeBy(0,0,0,0,0,0,0,0,0,0);
-        	m_CB_Nr_erfahrung.setSelectedIndex(0);
-        	m_CB_Nr_form.setSelectedIndex(0);
-        	m_CB_Nr_kondition.setSelectedIndex(0);
-        	m_CB_Nr_torwart.setSelectedIndex(0);
-        	m_CB_Nr_verteidigung.setSelectedIndex(0);
-        	m_CB_Nr_spielaufbau.setSelectedIndex(0);
-        	m_CB_Nr_passpiel.setSelectedIndex(0);
-        	m_CB_Nr_fluegelspiel.setSelectedIndex(0);
-        	m_CB_Nr_torschuss.setSelectedIndex(0);
-        	m_CB_Nr_standards.setSelectedIndex(0);
-        	//*** 17.08.04 ***
+        	setChangeRatingBy(0,0,0,0,0,0,0,0,0,0,0,0);
+        	m_CB_Nr_Experience.setSelectedIndex(0);
+        	m_CB_Nr_Form.setSelectedIndex(0);
+        	m_CB_Nr_Stamina.setSelectedIndex(0);
+        	m_CB_Nr_Keeping.setSelectedIndex(0);
+        	m_CB_Nr_Defending.setSelectedIndex(0);
+        	m_CB_Nr_Playmaking.setSelectedIndex(0);
+        	m_CB_Nr_Passing.setSelectedIndex(0);
+        	m_CB_Nr_Winger.setSelectedIndex(0);
+        	m_CB_Nr_Scoring.setSelectedIndex(0);
+        	m_CB_Nr_SetPieces.setSelectedIndex(0);
+        	m_CB_Nr_Loyalty.setSelectedIndex(0);
         	m_scrollPaneTableBottom.setViewportView(null);
         	
         	for(int i = 0; i < m_i_ptmTopCount; i++)
@@ -1346,46 +1291,42 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     } 
     /**
      * 
-     * getAllPlayer():
-     * - holt �ber das MiniModel alle Spieler aus der DB und f�gt sie �ber eine Schleife in
-     * 	das Array m_ar_allPlayer ein
-     * - setzt die Anzahl der Spieler
+     * getAllPlayers():
+     * - Fetches all players via the MiniModel
      *
      */
-    public void getAllPlayer()
+    public void getAllPlayers()
     {
-		m_V_allPlayer = m_clModel.getAllSpieler();
-		m_anzSpieler = m_V_allPlayer.size();//Anzahl der Spieler ermitteln und m_ar_allPlayer erstellen
-		m_ar_allPlayer = new Player[m_anzSpieler]; //Initialisierung f�r Player-Array
-		
-		// SpielerArray f�llen
-		for(int counter = 0; counter < m_anzSpieler; counter++)
+		m_V_allPlayers = m_clModel.getAllSpieler();
+		m_numberOfPlayers = m_V_allPlayers.size();
+		m_ar_allPlayers = new Player[m_numberOfPlayers];
+		for(int counter = 0; counter < m_numberOfPlayers; counter++)
 		{
-			m_ar_allPlayer[counter] = new Player((ISpieler)m_V_allPlayer.elementAt(counter));
+			m_ar_allPlayers[counter] = new Player((ISpieler)m_V_allPlayers.elementAt(counter));
 		}
     }
     
     /**
      * fetchPlayer(int id)
-     * - sucht einen Spieler mit der ID id aus dem Array aller Spieler
+     * - searches for a player with id in the player array
      */
     public void fetchPlayer(int id)
     {
-    	for(int i = 0; i < m_ar_allPlayer.length; i++)
+    	for(int i = 0; i < m_ar_allPlayers.length; i++)
     	{
-    		if(m_ar_allPlayer[i].getId() == id)
+    		if(m_ar_allPlayers[i].getId() == id)
     		{
-    			m_ar_allPlayer[i].changePlayerSkillValues(true);
-    			m_V_setPlayers.addElement(m_ar_allPlayer[i]);
+    			m_ar_allPlayers[i].changePlayerSkillValues(true);
+    			m_V_setPlayers.addElement(m_ar_allPlayers[i]);
     		}
     	}
     }
     
     public void resetPlayer()
     {
-    	for(int i = 0; i < m_ar_allPlayer.length; i++)
+    	for(int i = 0; i < m_ar_allPlayers.length; i++)
     	{
-    		m_ar_allPlayer[i].resetPlayers();
+    		m_ar_allPlayers[i].resetPlayers();
     	}
     }
     
@@ -1405,8 +1346,8 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     	p_SpielerName.add(l_SpielerName);
     	p_SpielerName.add(platzhalter,BorderLayout.WEST);
    
-    	p_SpielerDetail.removeAll();
-    	p_SpielerDetail.setPreferredSize(new Dimension(150,40));
+    	p_PlayerDetail.removeAll();
+    	p_PlayerDetail.setPreferredSize(new Dimension(150,40));
  
     	m_playerTableModelDetail = null;
     	
@@ -1414,79 +1355,64 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     	m_scrollPanePlayer.validate();
     	m_playerTableModelDetail = new PlayerTableModel(m_clModel,dummy);
 		
-//    	*********TableSorter einbinden ******************
 		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); //ADDED THIS
 		m_jTableDetail = new PlayerTable(sorter3,m_clModel,m_playerTableModelDetail,true);
-//		TableSorter an die Tabelle anh�ngen
 		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
 		m_scrollPanePlayer.setViewportView(m_jTableDetail);
-		p_SpielerDetail.add(p_SpielerName,BorderLayout.NORTH);
-		p_SpielerDetail.add(m_scrollPanePlayer);
-		p_SpielerDetail.validate();
-		m_scrollPanePlayerGesamt.setViewportView(p_SpielerDetail);
+		p_PlayerDetail.add(p_SpielerName,BorderLayout.NORTH);
+		p_PlayerDetail.add(m_scrollPanePlayer);
+		p_PlayerDetail.validate();
+		m_scrollPanePlayerGesamt.setViewportView(p_PlayerDetail);
 		m_scrollPanePlayerGesamt.validate();
     }
     
-    public void setPos(int er, int fo, int ko, int tw, int ve, int sa,int ps, int fl, int ts, int st)
-    {
-    	newPos[0] = er;
-    	newPos[1] = fo;
-    	newPos[2] = ko;
-    	newPos[3] = tw;
-    	newPos[4] = ve;
-    	newPos[5] = sa;
-    	newPos[6] = ps;
-    	newPos[7] = fl;
-    	newPos[8] = ts;
-    	newPos[9] = st;
-    }
+   
     
     /**
      * setNewStaerke()
      * - setzt die neuen Werte f�r die eingestellten Skills
      */
-    public void setNewStaerke(int er, int fo, int ko, int tw, int ve, int sa,int ps, int fl, int ts, int st)
+    public void setNewRating(int er, int fo, int ko, int tw, int ve, int sa,int ps, int fl, int ts, int st, int loy, int hg)
     {
-    	newStaerke[0] = er;
-    	newStaerke[1] = fo;
-    	newStaerke[2] = ko;
-    	newStaerke[3] = tw;
-    	newStaerke[4] = ve;
-    	newStaerke[5] = sa;
-    	newStaerke[6] = ps;
-    	newStaerke[7] = fl;
-    	newStaerke[8] = ts;
-    	newStaerke[9] = st;
+    	newRating[0] = er;
+    	newRating[1] = fo;
+    	newRating[2] = ko;
+    	newRating[3] = tw;
+    	newRating[4] = ve;
+    	newRating[5] = sa;
+    	newRating[6] = ps;
+    	newRating[7] = fl;
+    	newRating[8] = ts;
+    	newRating[9] = st;
+    	newRating[10] = loy;
+    	newRating[11] = hg;
     }
     
-    public void setChangeStaerkeBy(int er, int fo, int ko, int tw, int ve, int sa,int ps, int fl, int ts, int st)
+    public void setChangeRatingBy(int er, int fo, int ko, int tw, int ve, int sa,int ps, int fl, int ts, int st, int loy, int hg)
     {
-    	PlayerCompare.appendText("in setChangeSt�rkeby()");
-    	changedStaerke[0] = er;
-    	changedStaerke[1] = fo;
-    	changedStaerke[2] = ko;
-    	changedStaerke[3] = tw;
-    	changedStaerke[4] = ve;
-    	changedStaerke[5] = sa;
-    	changedStaerke[6] = ps;
-    	changedStaerke[7] = fl;
-    	changedStaerke[8] = ts;
-    	changedStaerke[9] = st;
+    	PlayerCompare.appendText("in setChangeRatingBy()");
+    	changedRating[0] = er;
+    	changedRating[1] = fo;
+    	changedRating[2] = ko;
+    	changedRating[3] = tw;
+    	changedRating[4] = ve;
+    	changedRating[5] = sa;
+    	changedRating[6] = ps;
+    	changedRating[7] = fl;
+    	changedRating[8] = ts;
+    	changedRating[9] = st;
+    	changedRating[10] = loy;
+    	changedRating[11] = hg;
+    }
+
+    public static int[] getNewRating()
+    {
+    	return newRating;
     }
     
-    public static int[] getNewPos()
+    public static int[] getChangeRatingBy()
     {
-    	return newPos;
-    }
-    
-    public static int[] getNewStaerke()
-    {
-    	return newStaerke;
-    }
-    
-    public static int[] getChangeStaerkeBy()
-    {
-    	return changedStaerke;
+    	return changedRating;
     }
     
     public static int getSelectedTypeIndex()
@@ -1501,33 +1427,30 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     
     public void setSelectedRow()
     {
-    	m_selectedRow = m_jTableBot.getSelectedRow();
+    	m_selectedRow = m_jTableBottom.getSelectedRow();
     }
     
     public int getSelectedRow()
     {
     	return m_selectedRow;
     }
-//	********** Beginn Mouse Events ******************
+//	********** Begin Mouse Events ******************
     public void mouseClicked(MouseEvent e)
 	{
-    	
     	JLabel l_SpielerName = new JLabel();
     	JLabel platzhalter = new JLabel("  ");
     	JPanel p_SpielerName = new JPanel(new BorderLayout());
     	l_SpielerName.setPreferredSize(new Dimension(100,30));
-    	p_SpielerDetail.removeAll();
-    	p_SpielerDetail.setPreferredSize(new Dimension(150,30));
-    	p_SpielerDetail.setBackground(hellblau);
+    	p_PlayerDetail.removeAll();
+    	p_PlayerDetail.setPreferredSize(new Dimension(150,30));
+    	p_PlayerDetail.setBackground(lightblue);
     	Player tmpPlayer = null;
     	m_playerTableModelDetail = null;
     	m_scrollPanePlayer.setViewportView(null);
     	m_scrollPanePlayer.validate();
     	setSelectedRow();
 		int row = getSelectedRow();
-		String id = "" + m_jTableBot.getValueAt(row,m_jTableBot.getColumnCount()-1);
-		String posWertAlt = "";
-		String posWertNeu = "";
+		String id = "" + m_jTableBottom.getValueAt(row,m_jTableBottom.getColumnCount()-1);
 		int tmpAnzahl = m_V_setPlayers.size();
 		for(int u = 0; u < tmpAnzahl; u++)
 		{
@@ -1540,17 +1463,15 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		}
 		p_SpielerName.add(platzhalter,BorderLayout.WEST);
 		p_SpielerName.add(l_SpielerName);
-		p_SpielerDetail.add(p_SpielerName,BorderLayout.NORTH);
+		p_PlayerDetail.add(p_SpielerName,BorderLayout.NORTH);
 		m_playerTableModelDetail = new PlayerTableModel(m_clModel,tmpPlayer);
 		
-//    	*********TableSorter einbinden ******************
 		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); //ADDED THIS
 		m_jTableDetail = new PlayerTable(sorter3,m_clModel,m_playerTableModelDetail,true);
-//		TableSorter an die Tabelle anh�ngen
 		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
 		m_scrollPanePlayer.setViewportView(m_jTableDetail);
-		p_SpielerDetail.add(m_scrollPanePlayer);
-		p_SpielerDetail.validate();
+		p_PlayerDetail.add(m_scrollPanePlayer);
+		p_PlayerDetail.validate();
 	}
     public void mouseEntered(MouseEvent e)
 	{
@@ -1568,7 +1489,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	{
 		
 	}
-//  ********** Ende Mouse Events ******************
+//  ********** End Mouse Events ******************
     
     /**
      * Liefert die Plugin-ID

@@ -22,7 +22,7 @@ public class PlayerTable extends JTable{
 	private int anzCols;
 	private IHOMiniModel m_HOModel1;
 	private int anzCols1;
-	//public PlayerTable(PlayerTableModel tm){
+	
 	public PlayerTable(TableSorter tm, IHOMiniModel iHoMiniMod, PlayerTableModel ptm,boolean small)
 	{
 		super(tm); 
@@ -86,6 +86,7 @@ public class PlayerTable extends JTable{
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FLGD"))
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("STU"))
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("STUD"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("STUA"))
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("Gruppe"))
 	    	)
 	    	{
@@ -108,6 +109,8 @@ public class PlayerTable extends JTable{
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("FL"))
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("TS"))
 					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("ST"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("LOY"))
+					|| (ptm.getColumnName(pp)).equals(m_HOModel.getLanguageString("MC"))
 					)
 	    	{
 	    		width = 40;

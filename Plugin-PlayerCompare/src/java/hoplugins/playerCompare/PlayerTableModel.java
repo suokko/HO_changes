@@ -29,90 +29,85 @@ public class PlayerTableModel extends DefaultTableModel{
 	 */
 	private static final long serialVersionUID = -5133382441969026697L;
 	private int m_anzZeilen;
-//	private PlayerTableModel model;
 	private IHOMiniModel m_iHoMiniModel;
 	private Player tmpPlayer;
 	private String[] columnNames;
 	private Object[][] data;
-//	private Object[][] daten;
-	//private int[] oldValues;
-	//private double[] m_d_IdealStaerke;
-	
+
 	public PlayerTableModel(IHOMiniModel miniModel, Player m_spieler)
 	{
 		m_iHoMiniModel = miniModel;
 		columnNames = new String[3];
-		m_anzZeilen = 18;
-		
+		m_anzZeilen = 19;
 		
 		columnNames[0] = PlayerCompare.getPCProperties("original");
 		columnNames[1] = PlayerCompare.getPCProperties("position");
 		columnNames[2] = PlayerCompare.getPCProperties("geaendert");
 		
-		data = new Object[18][3];
+		data = new Object[19][3];
 		
-		data[0][0] = new Float(m_spieler.getPosWertTWOld());
+		data[0][0] = new Float(m_spieler.getOldPosVal_GK());
 		data[0][1] = new String(m_iHoMiniModel.getLanguageString("TORW"));
-		data[0][2] = new Float(m_spieler.getPosWertTW());
-		data[1][0] = new Float(m_spieler.getPosWertIVOld());
+		data[0][2] = new Float(m_spieler.getPosVal_GK());
+		data[1][0] = new Float(m_spieler.getOldPosVal_CD());
 		data[1][1] = new String(m_iHoMiniModel.getLanguageString("IV"));
-		data[1][2] = new Float(m_spieler.getPosWertIV());
-		data[2][0] = new Float(m_spieler.getPosWertIV_AOld());
+		data[1][2] = new Float(m_spieler.getPosVal_CD());
+		data[2][0] = new Float(m_spieler.getOldPosVal_CD_TW());
 		data[2][1] = new String(m_iHoMiniModel.getLanguageString("IVA"));
-		data[2][2] = new Float(m_spieler.getPosWertIV_A());
-		data[3][0] = new Float(m_spieler.getPosWertIV_OOld());
+		data[2][2] = new Float(m_spieler.getPosVal_CD_TW());
+		data[3][0] = new Float(m_spieler.getOldPosVal_CD_O());
 		data[3][1] = new String(m_iHoMiniModel.getLanguageString("IVO"));
-		data[3][2] = new Float(m_spieler.getPosWertIV_O());
-		data[4][0] = new Float(m_spieler.getPosWertAVOld());
+		data[3][2] = new Float(m_spieler.getPosVal_CD_O());
+		data[4][0] = new Float(m_spieler.getOldPosVal_WB());
 		data[4][1] = new String(m_iHoMiniModel.getLanguageString("AV"));
-		data[4][2] = new Float(m_spieler.getPosWertAV());
-		data[5][0] = new Float(m_spieler.getPosWertAV_IOld());
+		data[4][2] = new Float(m_spieler.getPosVAL_WB());
+		data[5][0] = new Float(m_spieler.getOldPosVal_WB_TM());
 		data[5][1] = new String(m_iHoMiniModel.getLanguageString("AVI"));
-		data[5][2] = new Float(m_spieler.getPosWertAV_I());
-		data[6][0] = new Float(m_spieler.getPosWertAV_OOld());
+		data[5][2] = new Float(m_spieler.getPosVal_WB_TM());
+		data[6][0] = new Float(m_spieler.getOldPosVal_WB_O());
 		data[6][1] = new String(m_iHoMiniModel.getLanguageString("AVO"));
-		data[6][2] = new Float(m_spieler.getPosWertAV_O());
-		data[7][0] = new Float(m_spieler.getPosWertAV_DOld());
+		data[6][2] = new Float(m_spieler.getPosVal_WB_O());
+		data[7][0] = new Float(m_spieler.getOldPosVAL_WB_D());
 		data[7][1] = new String(m_iHoMiniModel.getLanguageString("AVD"));
-		data[7][2] = new Float(m_spieler.getPosWertAV_D());
-		data[8][0] = new Float(m_spieler.getPosWertMIOld());
+		data[7][2] = new Float(m_spieler.getPosVal_WB_D());
+		data[8][0] = new Float(m_spieler.getOldPosVal_IM());
 		data[8][1] = new String(m_iHoMiniModel.getLanguageString("MIT"));
-		data[8][2] = new Float(m_spieler.getPosWertMI());
-		data[9][0] = new Float(m_spieler.getPosWertMI_AOld());
+		data[8][2] = new Float(m_spieler.getPosVal_IM());
+		data[9][0] = new Float(m_spieler.getOldPosVal_IM_TW());
 		data[9][1] = new String(m_iHoMiniModel.getLanguageString("MITA"));
-		data[9][2] = new Float(m_spieler.getPosWertMI_A());
-		data[10][0] = new Float(m_spieler.getPosWertMI_OOld());
+		data[9][2] = new Float(m_spieler.getPosVal_IM_TW());
+		data[10][0] = new Float(m_spieler.getOldPosVal_IM_O());
 		data[10][1] = new String(m_iHoMiniModel.getLanguageString("MITO"));
-		data[10][2] = new Float(m_spieler.getPosWertMI_O());
-		data[11][0] = new Float(m_spieler.getPosWertMI_DOld());
+		data[10][2] = new Float(m_spieler.getPosVal_IM_O());
+		data[11][0] = new Float(m_spieler.getOldPosVal_IM_D());
 		data[11][1] = new String(m_iHoMiniModel.getLanguageString("MITD"));
-		data[11][2] = new Float(m_spieler.getPosWertMI_D());
-		data[12][0] = new Float(m_spieler.getPosWertFLOld());
+		data[11][2] = new Float(m_spieler.getPosVal_IM_D());
+		data[12][0] = new Float(m_spieler.getOldPosVal_W());
 		data[12][1] = new String(m_iHoMiniModel.getLanguageString("FLG"));
-		data[12][2] = new Float(m_spieler.getPosWertFL());
-		data[13][0] = new Float(m_spieler.getPosWertFL_IOld());
+		data[12][2] = new Float(m_spieler.getPosVal_W());
+		data[13][0] = new Float(m_spieler.getOldPosVal_W_TM());
 		data[13][1] = new String(m_iHoMiniModel.getLanguageString("FLGI"));
-		data[13][2] = new Float(m_spieler.getPosWertFL_I());
-		data[14][0] = new Float(m_spieler.getPosWertFL_OOld());
+		data[13][2] = new Float(m_spieler.getPosVal_W_TM());
+		data[14][0] = new Float(m_spieler.getOldPosVal_W_O());
 		data[14][1] = new String(m_iHoMiniModel.getLanguageString("FLGO"));
-		data[14][2] = new Float(m_spieler.getPosWertFL_O());
-		data[15][0] = new Float(m_spieler.getPosWertFL_DOld());
+		data[14][2] = new Float(m_spieler.getPosVal_W_O());
+		data[15][0] = new Float(m_spieler.getOldPosVal_W_D());
 		data[15][1] = new String(m_iHoMiniModel.getLanguageString("FLGD"));
-		data[15][2] = new Float(m_spieler.getPosWertFL_D());
-		data[16][0] = new Float(m_spieler.getPosWertSTOld());
+		data[15][2] = new Float(m_spieler.getPosVal_W_D());
+		data[16][0] = new Float(m_spieler.getOldPosVal_F());
 		data[16][1] = new String(m_iHoMiniModel.getLanguageString("STU"));
-		data[16][2] = new Float(m_spieler.getPosWertST());
-		data[17][0] = new Float(m_spieler.getPosWertST_DOld());
+		data[16][2] = new Float(m_spieler.getPosVal_F());
+		data[17][0] = new Float(m_spieler.getOldPosVal_F_D());
 		data[17][1] = new String(m_iHoMiniModel.getLanguageString("STUD"));
-		data[17][2] = new Float(m_spieler.getPosWertST_D());
-		PlayerCompare.appendText("PlayerTableModel PosWertSturm: " + m_spieler.getPosWertST());
+		data[17][2] = new Float(m_spieler.getPosVal_F_D());
+		data[18][0] = new Float(m_spieler.getOldPosVal_F_TW());
+		data[18][1] = new String(m_iHoMiniModel.getLanguageString("STUA"));
+		data[18][2] = new Float(m_spieler.getPosVal_F_TW());
 	}
-
 	
 	public PlayerTableModel(IHOMiniModel miniModel, Player[] spieler, int call)
 	{
-		//*** Hinzugef�gt 18.08.04 ***
-		columnNames = new String[38];
+		columnNames = new String[41];
 		
 		m_iHoMiniModel = miniModel;
 		
@@ -122,38 +117,41 @@ public class PlayerTableModel extends DefaultTableModel{
 		columnNames[3] = "";
 		columnNames[4] = m_iHoMiniModel.getLanguageString("BestePosition");
 		columnNames[5] = m_iHoMiniModel.getLanguageString("Gruppe");
-		columnNames[6] = m_iHoMiniModel.getLanguageString("FUE");
-		columnNames[7] = m_iHoMiniModel.getLanguageString("ER");
-		columnNames[8] = m_iHoMiniModel.getLanguageString("FO");
-		columnNames[9] = m_iHoMiniModel.getLanguageString("KO");
-		columnNames[10] = m_iHoMiniModel.getLanguageString("TW");
-		columnNames[11] = m_iHoMiniModel.getLanguageString("VE");
-		columnNames[12] = m_iHoMiniModel.getLanguageString("SA");
-		columnNames[13] = m_iHoMiniModel.getLanguageString("PS");
-		columnNames[14] = m_iHoMiniModel.getLanguageString("FL");
-		columnNames[15] = m_iHoMiniModel.getLanguageString("TS");
-		columnNames[16] = m_iHoMiniModel.getLanguageString("ST");
-		columnNames[17] = m_iHoMiniModel.getLanguageString("TOR");
-		columnNames[18] = m_iHoMiniModel.getLanguageString("IV");
-		columnNames[19] = m_iHoMiniModel.getLanguageString("IVA");
-		columnNames[20] = m_iHoMiniModel.getLanguageString("IVO");
-		columnNames[21] = m_iHoMiniModel.getLanguageString("AV");
-		columnNames[22] = m_iHoMiniModel.getLanguageString("AVI");
-		columnNames[23] = m_iHoMiniModel.getLanguageString("AVO");
-		columnNames[24] = m_iHoMiniModel.getLanguageString("AVD");
-		columnNames[25] = m_iHoMiniModel.getLanguageString("MIT");
-		columnNames[26] = m_iHoMiniModel.getLanguageString("MITA");
-		columnNames[27] = m_iHoMiniModel.getLanguageString("MITO");
-		columnNames[28] = m_iHoMiniModel.getLanguageString("MITD");
-		columnNames[29] = m_iHoMiniModel.getLanguageString("FLG");
-		columnNames[30] = m_iHoMiniModel.getLanguageString("FLGI");
-		columnNames[31] = m_iHoMiniModel.getLanguageString("FLGO");
-		columnNames[32] = m_iHoMiniModel.getLanguageString("FLGD");
-		columnNames[33] = m_iHoMiniModel.getLanguageString("STU");
-		columnNames[34] = m_iHoMiniModel.getLanguageString("STUD");
-		columnNames[35] = m_iHoMiniModel.getLanguageString("Gehalt");
-		columnNames[36] = "TSI";
-		columnNames[37] = m_iHoMiniModel.getLanguageString("ID");
+		columnNames[6] = m_iHoMiniModel.getLanguageString("MC");
+		columnNames[7] = m_iHoMiniModel.getLanguageString("FUE");
+		columnNames[8] = m_iHoMiniModel.getLanguageString("ER");
+		columnNames[9] = m_iHoMiniModel.getLanguageString("FO");
+		columnNames[10] = m_iHoMiniModel.getLanguageString("KO");
+		columnNames[11] = m_iHoMiniModel.getLanguageString("LOY");
+		columnNames[12] = m_iHoMiniModel.getLanguageString("TW");
+		columnNames[13] = m_iHoMiniModel.getLanguageString("VE");
+		columnNames[14] = m_iHoMiniModel.getLanguageString("SA");
+		columnNames[15] = m_iHoMiniModel.getLanguageString("PS");
+		columnNames[16] = m_iHoMiniModel.getLanguageString("FL");
+		columnNames[17] = m_iHoMiniModel.getLanguageString("TS");
+		columnNames[18] = m_iHoMiniModel.getLanguageString("ST");
+		columnNames[19] = m_iHoMiniModel.getLanguageString("TOR");
+		columnNames[20] = m_iHoMiniModel.getLanguageString("IV");
+		columnNames[21] = m_iHoMiniModel.getLanguageString("IVA");
+		columnNames[22] = m_iHoMiniModel.getLanguageString("IVO");
+		columnNames[23] = m_iHoMiniModel.getLanguageString("AV");
+		columnNames[24] = m_iHoMiniModel.getLanguageString("AVI");
+		columnNames[25] = m_iHoMiniModel.getLanguageString("AVO");
+		columnNames[26] = m_iHoMiniModel.getLanguageString("AVD");
+		columnNames[27] = m_iHoMiniModel.getLanguageString("MIT");
+		columnNames[28] = m_iHoMiniModel.getLanguageString("MITA");
+		columnNames[29] = m_iHoMiniModel.getLanguageString("MITO");
+		columnNames[30] = m_iHoMiniModel.getLanguageString("MITD");
+		columnNames[31] = m_iHoMiniModel.getLanguageString("FLG");
+		columnNames[32] = m_iHoMiniModel.getLanguageString("FLGI");
+		columnNames[33] = m_iHoMiniModel.getLanguageString("FLGO");
+		columnNames[34] = m_iHoMiniModel.getLanguageString("FLGD");
+		columnNames[35] = m_iHoMiniModel.getLanguageString("STU");
+		columnNames[36] = m_iHoMiniModel.getLanguageString("STUD");
+		columnNames[37] = m_iHoMiniModel.getLanguageString("STUA");
+		columnNames[38] = m_iHoMiniModel.getLanguageString("Gehalt");
+		columnNames[39] = "TSI";
+		columnNames[40] = m_iHoMiniModel.getLanguageString("ID");
 		
 		m_anzZeilen = spieler.length;
 			
@@ -166,60 +164,59 @@ public class PlayerTableModel extends DefaultTableModel{
 			if(call == 1)
 			{
 				data[counter][0] = new Boolean(false);
-				data[counter][4] = new Float(tmpPlayer.getBestPositionOld() + (tmpPlayer.getBestPosStaerkeOld()) / 100);
+				data[counter][4] = new Float(tmpPlayer.getOldBestPosition() + (tmpPlayer.getOldBestPositionRating()) / 100);
 			}
 			else
 			{
 				data[counter][0] = "";
-				data[counter][4] = new Float(tmpPlayer.getBestPosition() + (tmpPlayer.getBestPosStaerke()) / 100);
+				data[counter][4] = new Float(tmpPlayer.getBestPosition() + (tmpPlayer.getBestPositionRating()) / 100);
 			}
 			
-			data[counter][1] = new String(tmpPlayer.getName()+";"+tmpPlayer.getSpezialitaet());
-			data[counter][2] = new Integer(tmpPlayer.getNation());
-			data[counter][3] = new Integer(tmpPlayer.getAlter());
-			data[counter][5] = new String(tmpPlayer.getGruppe());
-			data[counter][6] = new Double(tmpPlayer.getFuehrung() + (tmpPlayer.getFuehrung() * 0.01));
-			data[counter][7] = new Double(tmpPlayer.getSkillCompareAsDouble(0));
-			data[counter][8] = new Double(tmpPlayer.getSkillCompareAsDouble(1));
-			data[counter][9] = new Double(tmpPlayer.getSkillCompareAsDouble(2));
-			data[counter][10] = new Double(tmpPlayer.getSkillCompareAsDouble(3));
-			data[counter][11] = new Double(tmpPlayer.getSkillCompareAsDouble(4));
-			data[counter][12] = new Double(tmpPlayer.getSkillCompareAsDouble(5));
-			data[counter][13] = new Double(tmpPlayer.getSkillCompareAsDouble(6));
-			data[counter][14] = new Double(tmpPlayer.getSkillCompareAsDouble(7));
-			data[counter][15] = new Double(tmpPlayer.getSkillCompareAsDouble(8));
-			data[counter][16] = new Double(tmpPlayer.getSkillCompareAsDouble(9));
-			data[counter][17] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.KEEPER));
-			data[counter][18] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.CENTRAL_DEFENDER));
-			data[counter][19] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.CENTRAL_DEFENDER_TOWING));
-			data[counter][20] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.CENTRAL_DEFENDER_OFF));
-			data[counter][21] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK));
-			data[counter][22] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK_TOMID));
-			data[counter][23] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK_OFF));
-			data[counter][24] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK_DEF));
-			data[counter][25] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER));
-			data[counter][26] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER_TOWING));
-			data[counter][27] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER_OFF));
-			data[counter][28] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER_DEF));
-			data[counter][29] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER));
-			data[counter][30] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_TOMID));
-			data[counter][31] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_OFF));
-			data[counter][32] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_DEF));
-			data[counter][33] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD));
-			data[counter][34] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD_DEF));
-			
-			data[counter][35] = new Integer((tmpPlayer.getGehalt())/10);
-			data[counter][36] = new Integer(tmpPlayer.getTsi());
-			data[counter][37] = new Integer(tmpPlayer.getId());
+			data[counter][1] = new String(tmpPlayer.getName()+";"+tmpPlayer.getSpeciality());
+			data[counter][2] = new Integer(tmpPlayer.getNationality());
+			data[counter][3] = new Integer(tmpPlayer.getAge());
+			data[counter][5] = new String(tmpPlayer.getGroup());
+			data[counter][6] = new Double(tmpPlayer.getSkillCompareAsDouble(11));
+			data[counter][7] = new Double(tmpPlayer.getLeadership() + (tmpPlayer.getLeadership() * 0.01));
+			data[counter][8] = new Double(tmpPlayer.getSkillCompareAsDouble(0));
+			data[counter][9] = new Double(tmpPlayer.getSkillCompareAsDouble(1));
+			data[counter][10] = new Double(tmpPlayer.getSkillCompareAsDouble(2));
+			data[counter][11] = new Double(tmpPlayer.getSkillCompareAsDouble(10));
+			data[counter][12] = new Double(tmpPlayer.getSkillCompareAsDouble(3));
+			data[counter][13] = new Double(tmpPlayer.getSkillCompareAsDouble(4));
+			data[counter][14] = new Double(tmpPlayer.getSkillCompareAsDouble(5));
+			data[counter][15] = new Double(tmpPlayer.getSkillCompareAsDouble(6));
+			data[counter][16] = new Double(tmpPlayer.getSkillCompareAsDouble(7));
+			data[counter][17] = new Double(tmpPlayer.getSkillCompareAsDouble(8));
+			data[counter][18] = new Double(tmpPlayer.getSkillCompareAsDouble(9));
+			data[counter][19] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.KEEPER));
+			data[counter][20] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.CENTRAL_DEFENDER));
+			data[counter][21] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.CENTRAL_DEFENDER_TOWING));
+			data[counter][22] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.CENTRAL_DEFENDER_OFF));
+			data[counter][23] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK));
+			data[counter][24] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK_TOMID));
+			data[counter][25] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK_OFF));
+			data[counter][26] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.BACK_DEF));
+			data[counter][27] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER));
+			data[counter][28] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER_TOWING));
+			data[counter][29] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER_OFF));
+			data[counter][30] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.MIDFIELDER_DEF));
+			data[counter][31] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER));
+			data[counter][32] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_TOMID));
+			data[counter][33] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_OFF));
+			data[counter][34] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_DEF));
+			data[counter][35] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD));
+			data[counter][36] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD_DEF));
+			data[counter][37] = new String(tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD_TOWING));			
+			data[counter][38] = new Integer((tmpPlayer.getWages())/10);
+			data[counter][39] = new Integer(tmpPlayer.getTSI());
+			data[counter][40] = new Integer(tmpPlayer.getId());
 			counter++;
 		}
 	}
 
 	public boolean isCellEditable(int row, int col)
 	{
-		/********* N�tiges Einbinden der Spalte 8 f�r Testweise Einbinden CellEditor
-		if(col == 0 || col == 8)
-		***************************************************************************/
 		if(col == 0 && this.getColumnCount() > 3)
 		{
 			return true;
