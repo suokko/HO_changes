@@ -156,5 +156,16 @@ public final class MatchLineupTable extends AbstractTable {
 			}
 		}
 	}
-
+	
+	public void updateMatchLineup(MatchLineup lineup) {
+		
+		// first - delete all old players.
+		((MatchLineupPlayerTable) DBZugriff.instance().getTable(MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayers(lineup.getMatchID());
+		
+		// and store new
+		storeMatchLineup(lineup);
+		
+		// Substitutions should be safely taken care of without a special delete
+	}
+	
 }

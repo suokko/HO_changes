@@ -2,12 +2,10 @@ package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.Vector;
 
 import plugins.ISubstitution;
 import de.hattrickorganizer.model.lineup.Substitution;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 public class MatchSubstitutionTable extends AbstractTable{
 	/** tablename **/
@@ -54,7 +52,7 @@ public class MatchSubstitutionTable extends AbstractTable{
 	 * @param matchId The matchId for the match in question
 	 *
 	 */
-	public ISubstitution[] getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
+	public java.util.List<ISubstitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
 		return getSubBySql("SELECT * FROM "+getTableName()+" WHERE MatchID = " + matchId + " AND TeamID = " + teamId);
 
 	}
@@ -66,7 +64,7 @@ public class MatchSubstitutionTable extends AbstractTable{
 	 * @param hrfId The teamId for the team in question
 	 *
 	 */
-	public ISubstitution[] getMatchSubstitutionsByHrf(int hrfId) {
+	public java.util.List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId) {
 		return getSubBySql("SELECT * FROM "+getTableName()+" WHERE HrfID = " + hrfId);
 	}
 
@@ -75,7 +73,7 @@ public class MatchSubstitutionTable extends AbstractTable{
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the team/match combination will be deleted.
 	 */
-	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, ISubstitution[] subs) {
+	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, java.util.List<ISubstitution> subs) {
 		if ((matchId == DUMMY) || (teamId == DUMMY)) {
 			// Rather not...
 			return;
@@ -87,7 +85,7 @@ public class MatchSubstitutionTable extends AbstractTable{
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the hrf will be deleted.
 	 */
-	public void storeMatchSubstitutionsByHrf(int hrfId, ISubstitution[] subs) {
+	public void storeMatchSubstitutionsByHrf(int hrfId, java.util.List<ISubstitution> subs) {
 		if (hrfId == DUMMY)  {
 			// Rather not...
 			return;
@@ -96,7 +94,7 @@ public class MatchSubstitutionTable extends AbstractTable{
 	}
 
 
-	private void storeSub(int matchId, int teamId, int hrfId, ISubstitution[] subs) {
+	private void storeSub(int matchId, int teamId, int hrfId, java.util.List<ISubstitution> subs) {
 		String sql = null;
 		final String[] where = { "MatchID", "TeamID", "HrfID" };
 		final String[] values = { "" + matchId, "" + teamId, "" + hrfId } ;
@@ -104,9 +102,9 @@ public class MatchSubstitutionTable extends AbstractTable{
 		// Get rid of any old subs for the inputs.
 		delete(where, values);
 
-		for (int i = 0;(i < subs.length); i++) {
+		for (ISubstitution sub: subs) {
 
-			if (subs[i] == null) {
+			if (sub == null) {
 				continue;
 			}
 
@@ -114,15 +112,15 @@ public class MatchSubstitutionTable extends AbstractTable{
 				sql = "INSERT INTO "+getTableName()+" (  MatchID, TeamID, HrfID, PlayerOrderID, PlayerIn, PlayerOut, OrderType,";
 				sql += " MatchMinuteCriteria, Pos, Behaviour, Card, Standing ) VALUES(";
 				sql += matchId + "," + teamId + "," + hrfId + "," +
-					subs[i].getPlayerOrderId() + "," +
-					subs[i].getPlayerIn() + "," +
-					subs[i].getPlayerOut() + "," +
-					subs[i].getOrderType() + "," +
-					subs[i].getMatchMinuteCriteria() + "," +
-					subs[i].getPos() + "," +
-					subs[i].getBehaviour() + "," +
-					subs[i].getCard() + "," +
-					subs[i].getStanding() + " )";
+					sub.getPlayerOrderId() + "," +
+					sub.getPlayerIn() + "," +
+					sub.getPlayerOut() + "," +
+					sub.getOrderType() + "," +
+					sub.getMatchMinuteCriteria() + "," +
+					sub.getPos() + "," +
+					sub.getBehaviour() + "," +
+					sub.getCard() + "," +
+					sub.getStanding() + " )";
 
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
@@ -133,11 +131,10 @@ public class MatchSubstitutionTable extends AbstractTable{
 	}
 
 
-	private ISubstitution[] getSubBySql(String sql) {
-		Substitution[] substs= new Substitution[0];
+	private java.util.List<ISubstitution> getSubBySql(String sql) {
 		Substitution sub = null;
 		ResultSet rs = null;
-		final Vector<Substitution> list = new Vector<Substitution>();
+		final java.util.ArrayList<ISubstitution> subst = new java.util.ArrayList<ISubstitution>();
 
 		try {
 			rs = adapter.executeQuery(sql);
@@ -153,16 +150,13 @@ public class MatchSubstitutionTable extends AbstractTable{
 						(byte)rs.getInt("Behaviour"),
 						(byte)rs.getInt("Card"),
 						(byte)rs.getInt("Standing"));
-				list.add(sub);
+				subst.add(sub);
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchSubstitutions Error" + e);
 		}
-
-		substs = new Substitution[list.size()];
-		Helper.copyVector2Array(list, substs);
-
-		return substs;
+	
+		return subst;
 	}
 
 }
