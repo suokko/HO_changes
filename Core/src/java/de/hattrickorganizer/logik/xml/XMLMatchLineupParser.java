@@ -6,14 +6,12 @@
  */
 package de.hattrickorganizer.logik.xml;
 
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
@@ -341,14 +339,13 @@ public class XMLMatchLineupParser {
 		//Einträge adden
 		list = tmp.getElementsByTagName("Player");
 
-		HashMap<Integer, Integer> tempPlayerList = new HashMap<Integer, Integer>();
 		for (int i = 0; (list != null) && (i < list.getLength()); i++) {
 
 			// We want to stop an api error that has repositioned players as substituted.
 			// They are both shown as substituted and in a position. (hopefully) substituted
 			// players are always last in the API, there are at least signs of a fixed order.
 			MatchLineupPlayer player = createPlayer((Element) list.item(i));
-			if (tempPlayerList.get(player.getSpielerId()) != null) {
+			if (team.getPlayerByID(player.getSpielerId()) != null) {
 				if ((player.getId() >= ISpielerPosition.ausgewechselt) 
 						&& (player.getId() < ISpielerPosition.ausgewechseltEnd)) {
 
@@ -357,33 +354,46 @@ public class XMLMatchLineupParser {
 				}
 			}
 
-			tempPlayerList.put(player.getSpielerId(), player.getId());
 			team.add2Aufstellung(player);
 		}
 
 		
 		// The starting lineup
 		list = starting.getElementsByTagName("Player");
-		Vector<IMatchLineupPlayer> starters = new Vector<IMatchLineupPlayer>();
-
+		
 		for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-
-			MatchLineupPlayer player = createStartPlayer((Element) list.item(i));
-			starters.add(player);
+			MatchLineupPlayer startPlayer = createStartPlayer((Element) list.item(i));
+						
+			// Merge with the existing player, but ignore captain and set piece position
+			if (startPlayer.getStartPosition() >= ISpielerPosition.startLineup) {
+				MatchLineupPlayer lineupPlayer = (MatchLineupPlayer) team.getPlayerByID(startPlayer.getSpielerId());
+				if (lineupPlayer != null) {
+					lineupPlayer.setStartPosition(startPlayer.getStartPosition());
+					lineupPlayer.setStartBehavior(startPlayer.getStartBehavior());
+				} else {
+					// He was not already in the lineup, so add him
+					team.add2Aufstellung(startPlayer);
+				}
+			}
 		}
-
-		team.setStartingPlayers(starters);
-
+	
 		// Substitutions
 
 		list = subs.getElementsByTagName("Substitution");
-		Vector<ISubstitution> substitutions = new Vector<ISubstitution>();
+		ArrayList<ISubstitution> substitutions = new ArrayList<ISubstitution>();
 
 		for (int i = 0; (list != null) && (i < list.getLength()); i++) {
 
 			ISubstitution s = createSubstitution((Element) list.item(i), i);
-
 			substitutions.add(s);
+			// We need to make sure the players involved are in the team lineup
+			// If missing, we only know the ID
+			if ((s.getPlayerIn() > 0) && (team.getPlayerByID(s.getPlayerIn()) == null )) {
+				team.add2Aufstellung(new MatchLineupPlayer(-1, -1, s.getPlayerIn(), -1d, "", -1));
+			}
+			if ((s.getPlayerOut() > 0) && (team.getPlayerByID(s.getPlayerOut()) == null)) {
+				team.add2Aufstellung(new MatchLineupPlayer(-1, -1, s.getPlayerOut(), -1d, "", -1));
+			}
 		}
 		team.setSubstitutions(substitutions);
 
@@ -477,7 +487,9 @@ public class XMLMatchLineupParser {
 		}
 
 		
-		player = new MatchLineupPlayer(roleID, behavior, spielerID, 0, name, 0);
+		player = new MatchLineupPlayer(-1, -1, spielerID, 0, name, 0);
+		player.setStartBehavior(behavior);
+		player.setStartPosition(roleID);
 		return player;
 	}
 }

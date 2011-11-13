@@ -1023,6 +1023,17 @@ public class DBZugriff {
 		((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).storeMatchLineup(lineup);
 	}
 
+	
+	/**
+	 * Updates an existing match lineup with the data provided
+	 * 
+	 * @param matchId the matchId of the match to be updated
+	 * @param matchLineup the lineup object containing the data
+	 */
+	public void updateMatchLineup(MatchLineup lineup) {
+		((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).updateMatchLineup(lineup);
+	}
+	
 	//	------------------------------- MatchesKurzInfoTable -------------------------------------------------
 
 	/**
@@ -1133,7 +1144,7 @@ public class DBZugriff {
 	 * @param matchId The matchId for the match in question
 	 *
 	 */
-	public ISubstitution[] getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
+	public List<ISubstitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByMatchTeam(teamId, matchId);
 	}
 	
@@ -1143,7 +1154,7 @@ public class DBZugriff {
 	 * @param hrfId The teamId for the team in question
 	 *
 	 */
-	public ISubstitution[] getMatchSubstitutionsByHrf(int hrfId) {
+	public List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByHrf(hrfId);
 	}
 	
@@ -1152,7 +1163,7 @@ public class DBZugriff {
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the team/match combination will be deleted.
 	 */
-	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, ISubstitution[] subs) {	
+	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, List<ISubstitution> subs) {	
 		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByMatchTeam(matchId, teamId, subs);
 		
 	}
@@ -1161,7 +1172,7 @@ public class DBZugriff {
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the hrf will be deleted.
 	 */
-	public void storeMatchSubstitutionsByHrf(int hrfId, ISubstitution[] subs) {
+	public void storeMatchSubstitutionsByHrf(int hrfId, List<ISubstitution> subs) {
 		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByHrf(hrfId, subs);
 	}
 	
@@ -2055,8 +2066,18 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN MotherClub BOOLEAN");
 		m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET MotherClub = 'false' WHERE MotherClub IS NULL");
 		
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN StartPosition INTEGER");
+		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartPosition = -1 WHERE StartPosition IS NULL");
+		
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN StartBehaviour INTEGER");
+		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartBehaviour = -1 WHERE StartBehaviour IS NULL");
+		
 		getTable(MatchSubstitutionTable.TABLENAME).createTable();
 		
+		
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
 		saveUserParameter("DBVersion", 11);
 	}
 	
