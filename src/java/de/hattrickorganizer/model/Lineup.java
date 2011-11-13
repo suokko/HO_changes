@@ -970,24 +970,24 @@ public  class Lineup implements plugins.ILineUp {
     }
  
     
-    /**
-     * Returns the requested substitution object
-     *
-     */
-    public ISubstitution getSubstitution(int i) {
-    	if ((i > 4) || (i < 0)) {
-    		return null;
-    	}
-    	
-    	for (int j = 0; j < 5; j++) {
-    		if (m_vSubstitutions.get(j).getPlayerOrderId() == i) {
-    			return m_vSubstitutions.get(j);
-    		}
-    	}
-    	HOLogger.instance().debug(getClass(), "getSubstitution did not find sub: " + i);
-    	return null;
-    }
-    
+//    /**
+//     * Returns the requested substitution object
+//     *
+//     */
+//    public ISubstitution getSubstitution(int i) {
+//    	if ((i > 4) || (i < 0)) {
+//    		return null;
+//    	}
+//    	
+//    	for (int j = 0; j < 5; j++) {
+//    		if (m_vSubstitutions.get(j).getPlayerOrderId() == i) {
+//    			return m_vSubstitutions.get(j);
+//    		}
+//    	}
+//    	HOLogger.instance().debug(getClass(), "getSubstitution did not find sub: " + i);
+//    	return null;
+//    }
+//    
     
     /**
      * Returns an array with any substitutions (max 5). It may have slots with orderID -1.
@@ -1705,11 +1705,6 @@ public  class Lineup implements plugins.ILineUp {
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
         m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
-        
-        for (int i = 0; i < 5 ; i++) {
-        	m_vSubstitutions.add(new Substitution(i));
-        }
-        
     }
 
     /**
