@@ -127,8 +127,8 @@ public class HelperWrapper implements plugins.IHelper {
         return ImageUtilities.getFlagIcon(country);
     }
 
-    public ImageIcon getImageIconForHomeGrown() {
-    	return ThemeManager.getIcon(HOIconName.HOMEGROWN);
+    public ImageIcon getImageIcon(String key) {
+    	return ThemeManager.getIcon(key);
     }
 
     public ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {

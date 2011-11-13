@@ -8,7 +8,6 @@ package plugins;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Image;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -84,11 +83,11 @@ public interface IHelper {
     public ImageIcon getImageIcon4Spezialitaet(int wert);
 
     /**
-     * Returns the homegrown image icon
+     * Returns the named icon
      *
      * @return TODO Missing Return Method Documentation
      */
-    public ImageIcon getImageIconForHomeGrown();
+    public ImageIcon getImageIcon(String name);
     /**
      * Returns an Image represent the Matchhighlight
      *
