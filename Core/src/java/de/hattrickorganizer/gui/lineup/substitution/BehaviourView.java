@@ -58,6 +58,14 @@ public class BehaviourView extends JPanel {
 
 	}
 
+	/**
+	 * Initializes the view with the given {@link ISubstitution}. The given
+	 * object will not be changed. To retrieve the data from the view, use
+	 * {@link #getSubstitution()} method.
+	 * 
+	 * @param sub
+	 *            the substitution to initialize the view.
+	 */
 	public void init(ISubstitution sub) {
 		ComboBoxModel model = this.playerComboBox.getModel();
 		for (int i = 0; i < model.getSize(); i++) {
@@ -82,6 +90,13 @@ public class BehaviourView extends JPanel {
 		this.whenTextField.setValue(Integer.valueOf(sub.getMatchMinuteCriteria()));
 	}
 
+	/**
+	 * Gets a new {@link ISubstitution} which represents the values chosen in
+	 * the view. Note that <i>new</i> is returned and not the one which may be
+	 * provided to the {@link #init(ISubstitution)} method.
+	 * 
+	 * @return
+	 */
 	public ISubstitution getSubstitution() {
 		ISubstitution sub = new Substitution();
 		sub.setBehaviour((byte) getSelectedId(this.behaviourComboBox));
