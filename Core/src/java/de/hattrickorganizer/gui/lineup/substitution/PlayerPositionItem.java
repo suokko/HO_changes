@@ -23,7 +23,7 @@ public class PlayerPositionItem {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		if (this.position != null) {
-			builder.append(SubstitutionDataProvider.getPosNameById(this.position.intValue()));
+			builder.append(Lookup.getPosition(this.position.byteValue()));
 			builder.append(" - ");
 		}
 		if (this.player != null) {

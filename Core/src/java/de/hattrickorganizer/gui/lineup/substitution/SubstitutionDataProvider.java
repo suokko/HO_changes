@@ -44,52 +44,6 @@ public class SubstitutionDataProvider {
 
 		return playerItems;
 	}
-	
-	public static String getPosNameById(int pos) {
-
-		switch (pos) {
-		case ISpielerPosition.keeper:
-			return HOVerwaltung.instance().getLanguageString("subs.gk");
-		case ISpielerPosition.rightBack:
-			return HOVerwaltung.instance().getLanguageString("subs.rb");
-		case ISpielerPosition.rightCentralDefender:
-			return HOVerwaltung.instance().getLanguageString("subs.rcd");
-		case ISpielerPosition.middleCentralDefender:
-			return HOVerwaltung.instance().getLanguageString("subs.mcd");
-		case ISpielerPosition.leftCentralDefender:
-			return HOVerwaltung.instance().getLanguageString("subs.lcd");
-		case ISpielerPosition.leftBack:
-			return HOVerwaltung.instance().getLanguageString("subs.rb");
-		case ISpielerPosition.rightWinger:
-			return HOVerwaltung.instance().getLanguageString("subs.rw");
-		case ISpielerPosition.rightInnerMidfield:
-			return HOVerwaltung.instance().getLanguageString("subs.rim");
-		case ISpielerPosition.centralInnerMidfield:
-			return HOVerwaltung.instance().getLanguageString("subs.cim");
-		case ISpielerPosition.leftInnerMidfield:
-			return HOVerwaltung.instance().getLanguageString("subs.lim");
-		case ISpielerPosition.leftWinger:
-			return HOVerwaltung.instance().getLanguageString("subs.rw");
-		case ISpielerPosition.rightForward:
-			return HOVerwaltung.instance().getLanguageString("subs.rfw");
-		case ISpielerPosition.centralForward:
-			return HOVerwaltung.instance().getLanguageString("subs.cfw");
-		case ISpielerPosition.leftForward:
-			return HOVerwaltung.instance().getLanguageString("subs.lfw");
-		case ISpielerPosition.substKeeper:
-			return HOVerwaltung.instance().getLanguageString("subs.subgk");
-		case ISpielerPosition.substDefender:
-			return HOVerwaltung.instance().getLanguageString("subs.subdef");
-		case ISpielerPosition.substInnerMidfield:
-			return HOVerwaltung.instance().getLanguageString("subs.submid");
-		case ISpielerPosition.substWinger:
-			return HOVerwaltung.instance().getLanguageString("subs.subwing");
-		case ISpielerPosition.substForward:
-			return HOVerwaltung.instance().getLanguageString("subs.subfw");
-		default:
-			return "";
-		}
-	}
 
 	/**
 	 * Returns an {@link CBItem} array with all standings which can be chosen
