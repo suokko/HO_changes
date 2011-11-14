@@ -320,7 +320,7 @@ public final class SpielerLabelEntry extends TableEntry {
     private void showGroupIcon(){
     	String teamInfoSmilie = m_clPlayer.getTeamInfoSmilie();
         
-        if(teamInfoSmilie.trim().isEmpty() )
+        if(teamInfoSmilie.trim().equals("") )
         	m_jlGroup.setIcon(ImageUtilities.MINILEER);
         else
         	m_jlGroup.setIcon(ThemeManager.getScaledIcon(teamInfoSmilie, 8, 8));
