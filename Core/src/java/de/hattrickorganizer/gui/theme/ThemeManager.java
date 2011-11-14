@@ -4,6 +4,8 @@
 package de.hattrickorganizer.gui.theme;
 
 
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;

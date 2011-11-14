@@ -1658,8 +1658,8 @@ public final class HOMainFrame extends JFrame
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
 			JOptionPane.showMessageDialog(null,
-					"Can´t load Theme: " + UserParameter.instance().theme,
-					"Theme", JOptionPane.WARNING_MESSAGE);
+					e.getMessage(),
+					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
 		}
 		//Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
