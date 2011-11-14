@@ -2,7 +2,6 @@ package de.hattrickorganizer.gui.login;
 
 import gui.UserParameter;
 
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -16,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.net.URI;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -119,33 +117,45 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	}
 	
 	private void openUrlInBrowser() {
-		boolean error = false;
-		if( !Desktop.isDesktopSupported() ) {
-            HOLogger.instance().debug(getClass(), "Desktop not supported.");
-            CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
-        	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Desktop desktop = Desktop.getDesktop();
-
-        if( !desktop.isSupported( Desktop.Action.BROWSE ) ) {
-        	HOLogger.instance().debug(getClass(), "Desktop BROWSE not supported.");
-        	CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
-        	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
-        	return;
-        }
-
-        try {
-        	URI uri = new URI( m_sUserURL );
-        	desktop.browse( uri );
-        }
-        catch ( Exception e ) {
-			HOLogger.instance().error(getClass(), "Open URL '" + m_sUserURL + "' failed: " + e.getMessage());
-			CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
-        	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
-        }
-        // XXX Give user help?
+		// Lifted from the web http://www.centerkey.com/java/browser/ ...  
+		final String[] browsers = { "google-chrome", "firefox", "opera",
+			      "epiphany", "konqueror", "conkeror", "midori", "kazehakase", "mozilla" };
+		
+		 try {  //attempt to use Desktop library from JDK 1.6+
+	         Class<?> d = Class.forName("java.awt.Desktop");
+	         d.getDeclaredMethod("browse", new Class[] {java.net.URI.class}).invoke(
+	            d.getDeclaredMethod("getDesktop").invoke(null),
+	            new Object[] {java.net.URI.create(m_sUserURL)});
+	         //above code mimicks:  java.awt.Desktop.getDesktop().browse()
+	         }
+	      catch (Exception ignore) {  //library not available or failed
+	         String osName = System.getProperty("os.name");
+	         try {
+	            if (osName.startsWith("Mac OS")) {
+	               Class.forName("com.apple.eio.FileManager").getDeclaredMethod(
+	                  "openURL", new Class[] {String.class}).invoke(null,
+	                  new Object[] {m_sUserURL});
+	               }
+	            else if (osName.startsWith("Windows"))
+	               Runtime.getRuntime().exec(
+	                  "rundll32 url.dll,FileProtocolHandler " + m_sUserURL);
+	            else { //assume Unix or Linux
+	               String browser = null;
+	               for (String b : browsers)
+	                  if (browser == null && Runtime.getRuntime().exec(new String[]
+	                        {"which", b}).getInputStream().read() != -1)
+	                     Runtime.getRuntime().exec(new String[] {browser = b, m_sUserURL});
+	               if (browser == null)
+	                  throw new Exception(java.util.Arrays.toString(browsers));
+	               }
+	            }
+	         catch (Exception e) {
+	        	HOLogger.instance().error(getClass(), "Opening URL failed: " + e.getMessage() );
+	            CopyListener.copyToClipboard(m_sUserURL); // copy to clipboard
+	         	JOptionPane.showMessageDialog(null, "Open URL failed. It has been copied into your system clipboard, please paste it manually into your browsers address bar.", "Open URL", JOptionPane.ERROR_MESSAGE);
+	  
+	         }
+	      }
 	}
 	
 	public boolean getUserCancel() {
