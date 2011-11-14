@@ -1,14 +1,16 @@
 package de.hattrickorganizer.model.lineup;
 
+import plugins.ISubstitution;
+
 /**
  * A class holding information about substitutions and order changes
  * 
  * @author blaghaid
- *
+ * 
  */
-public class Substitution implements plugins.ISubstitution{
+public class Substitution implements plugins.ISubstitution {
 
-	private int playerOrderID = -1; 
+	private int playerOrderID = -1;
 	private int playerIn = -1;
 	private int playerOut = -1;
 	private byte orderType = -1;
@@ -18,12 +20,10 @@ public class Substitution implements plugins.ISubstitution{
 	private byte card = -1;
 	private byte standing = -1;
 
-
 	public Substitution(int playerOrderID, int playerIn, int playerOut, byte orderType,
-			byte matchMinuteCriteria, byte pos, byte behaviour,
-			byte card, byte standing) {
+			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, byte standing) {
 		super();
-		
+
 		this.playerOrderID = playerOrderID;
 		this.playerIn = playerIn;
 		this.playerOut = playerOut;
@@ -35,23 +35,22 @@ public class Substitution implements plugins.ISubstitution{
 		this.standing = standing;
 	}
 
-	public Substitution (int id) {
+	public Substitution(int id) {
 		this.playerOrderID = id;
-		
-	}
-	
-	public Substitution () {
+
 	}
 
-	
+	public Substitution() {
+	}
+
 	public int getPlayerOrderId() {
 		return playerOrderID;
 	}
-	
+
 	public void setPlayerOrderId(int id) {
 		this.playerOrderID = id;
 	}
-	
+
 	public int getPlayerIn() {
 		return playerIn;
 	}
@@ -115,7 +114,7 @@ public class Substitution implements plugins.ISubstitution{
 	public void setStanding(byte standing) {
 		this.standing = standing;
 	}
-	
+
 	public void setEmpty() {
 		playerIn = -1;
 		playerOut = -1;
@@ -126,15 +125,27 @@ public class Substitution implements plugins.ISubstitution{
 		card = -1;
 		standing = -1;
 	}
-	
+
 	public boolean isEmpty() {
 		if (playerIn > 0) {
 			return true;
 		}
 		return false;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void merge(ISubstitution other) {
+		setBehaviour(other.getBehaviour());
+		setCard(other.getCard());
+		setMatchMinuteCriteria(other.getMatchMinuteCriteria());
+		setOrderType(other.getOrderType());
+		setPlayerIn(other.getPlayerIn());
+		setPlayerOrderId(other.getPlayerOrderId());
+		setPlayerOut(other.getPlayerOut());
+		setPos(other.getPos());
+		setStanding(other.getStanding());
+	}
+
 }
-
-
-
-
