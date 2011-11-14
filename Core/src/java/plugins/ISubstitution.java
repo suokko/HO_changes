@@ -4,7 +4,6 @@ public interface ISubstitution {
 
 	// See the match order API for meanings
 
-
 	// Red card criteria
 	public static final byte IGNORE_RED_CARD_STATUSIgnore = -1;
 	public static final byte MY_PLAYER_RED_CARDED = 1;
@@ -31,6 +30,11 @@ public interface ISubstitution {
 	public static final byte NOT_IN_THE_LEAD = 6;
 	public static final byte IN_THE_LEAD_BY_MORE_THAN_TWO = 7;
 	public static final byte DOWN_BY_MORE_THAN_TWO = 8;
+
+	// Order type
+	public static final byte SUBSTITUTION = 0;
+	public static final byte BEHAVIOUR = 1;
+	public static final byte POSITION_SWAP = 2;
 
 	public int getPlayerOrderId();
 
@@ -67,4 +71,15 @@ public interface ISubstitution {
 	public byte getStanding();
 
 	public void setStanding(byte standing);
+
+	/**
+	 * Merges the data from the given <code>ISubstitution</code> into this
+	 * <code>ISubstitution</code>. This method should be used e.g. when a model
+	 * has to be updated with data from a different <code>ISubstitution</code>
+	 * instance but and object identity has to be preserved.
+	 * 
+	 * @param other
+	 *            the <code>ISubstitution</code> to get the data from.
+	 */
+	public void merge(ISubstitution other);
 }
