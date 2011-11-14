@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -39,7 +38,7 @@ public class HattrickManager {
     		boolean download = true;
     		String xml;
     		final Calendar start = Calendar.getInstance();
-			final Date oneyearold = new Date(start.getTimeInMillis() - TimeUnit.DAYS.toMillis(365));
+			final Date oneyearold = new Date(start.getTimeInMillis() - 31536000000l);
     		final Calendar end = Calendar.getInstance();
     		start.setLenient(true);
     		start.add(Calendar.DAY_OF_YEAR, -(7*7)); // 7 week = half season
