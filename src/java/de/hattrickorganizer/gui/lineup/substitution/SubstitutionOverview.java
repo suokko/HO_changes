@@ -3,13 +3,19 @@ package de.hattrickorganizer.gui.lineup.substitution;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -21,8 +27,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
+import plugins.ISubstitution;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.GUIUtilities;
@@ -31,15 +40,54 @@ public class SubstitutionOverview extends JPanel {
 
 	private static final long serialVersionUID = -625638866350314110L;
 	private JTable substitutionTable;
+	private JButton editButton;
+	private JButton removeButton;
+	private EditAction editAction;
 
 	public SubstitutionOverview() {
 		initComponents();
-		this.substitutionTable.setModel(new SubstitutionsTableModel());
+		addListeners();
+		refresh();
+	}
+
+	private void refresh() {
+		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
+		model.setData(HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList());
+	}
+
+	private void addListeners() {
+		this.substitutionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					tableSelectionChanged();
+				}
+			}
+		});
+
+		this.editAction = new EditAction();
+		this.editAction.setEnabled(false);
+		this.editButton.setAction(this.editAction);
+	}
+
+	private void tableSelectionChanged() {
+		int selectedRowIndex = this.substitutionTable.getSelectedRow();
+		boolean enable = false;
+		if (selectedRowIndex != -1) {
+			ISubstitution sub = ((SubstitutionsTableModel) this.substitutionTable.getModel())
+					.getSubstitution(selectedRowIndex);
+			if (sub.getOrderType() == ISubstitution.BEHAVIOUR) {
+				enable = true;
+			}
+		}
+		this.editButton.setEnabled(enable);
+		this.removeButton.setEnabled(enable);
 	}
 
 	private void initComponents() {
 		setLayout(new BorderLayout());
 		this.substitutionTable = new JTable();
+		this.substitutionTable.setModel(new SubstitutionsTableModel());
 		this.substitutionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane tableScrollPane = new JScrollPane();
 		tableScrollPane.getViewport().add(this.substitutionTable);
@@ -48,19 +96,19 @@ public class SubstitutionOverview extends JPanel {
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
-		JButton editButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Edit"));
+		this.editButton = new JButton();
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(8, 10, 2, 4);
-		buttonPanel.add(editButton, gbc);
+		buttonPanel.add(this.editButton, gbc);
 
-		JButton removeButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Remove"));
+		this.removeButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Remove"));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.insets = new Insets(2, 10, 2, 4);
-		buttonPanel.add(removeButton, gbc);
+		buttonPanel.add(this.removeButton, gbc);
 
 		JButton substitutionButton = new JButton();
 		gbc.gridx = 1;
@@ -86,11 +134,10 @@ public class SubstitutionOverview extends JPanel {
 
 		add(buttonPanel, BorderLayout.SOUTH);
 
-		GUIUtilities.equalizeComponentSizes(editButton, removeButton);
+		GUIUtilities.equalizeComponentSizes(this.editButton, this.removeButton);
 		GUIUtilities.equalizeComponentSizes(substitutionButton, behaviorButton, positionSwapButton);
 
-		editButton.setEnabled(false);
-		removeButton.setEnabled(false);
+		this.removeButton.setEnabled(false);
 		substitutionButton.setEnabled(false);
 		positionSwapButton.setEnabled(false);
 	}
@@ -98,11 +145,21 @@ public class SubstitutionOverview extends JPanel {
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 6969656858380680460L;
-		private String[] columnNames = new String[] { "Type", "Affected Player", "When" };
+		private List<ISubstitution> data = new ArrayList<ISubstitution>();
+		private String[] columnNames = new String[] { "Order", "Affected Player", "Second aff. player",
+				"When", "New behaviour", "New position", "Standing", "Red cards" };
+
+		public ISubstitution getSubstitution(int rowIndex) {
+			return this.data.get(rowIndex);
+		}
+
+		public void setData(List<ISubstitution> data) {
+			this.data = data;
+			fireTableDataChanged();
+		}
 
 		public int getRowCount() {
-			// TODO Auto-generated method stub
-			return 0;
+			return this.data.size();
 		}
 
 		public int getColumnCount() {
@@ -110,8 +167,38 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO Auto-generated method stub
-			return null;
+			ISubstitution sub = this.data.get(rowIndex);
+			switch (columnIndex) {
+			case 0:
+				return Lookup.getOrderType(sub.getOrderType());
+			case 1:
+				if (sub.getPlayerIn() != -1) {
+					return HOVerwaltung.instance().getModel().getSpieler(sub.getPlayerIn()).getName();
+				}
+				return "";
+			case 2:
+				if (sub.getPlayerOut() != -1 && sub.getPlayerIn() != sub.getPlayerOut()) {
+					return HOVerwaltung.instance().getModel().getSpieler(sub.getPlayerOut()).getName();
+				}
+				return "";
+			case 3:
+				if (sub.getMatchMinuteCriteria() > 0) {
+					return MessageFormat.format(HOVerwaltung.instance()
+							.getLanguageString("subs.MinuteAfterX"), Integer.valueOf(sub
+							.getMatchMinuteCriteria()));
+				}
+				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
+			case 4:
+				return Lookup.getBehaviour(sub.getBehaviour());
+			case 5:
+				return Lookup.getPosition(sub.getPos());
+			case 6:
+				return Lookup.getStanding(sub.getStanding());
+			case 7:
+				return Lookup.getRedCard(sub.getCard());
+			}
+
+			return "";
 		}
 
 		@Override
@@ -129,14 +216,26 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			BehaviourDialog dlg = new BehaviourDialog(
-					SwingUtilities.getWindowAncestor(SubstitutionOverview.this));
+			BehaviourDialog dlg = null;
+			Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
+			if (windowAncestor instanceof Frame) {
+				dlg = new BehaviourDialog((Frame) windowAncestor);
+			} else {
+				dlg = new BehaviourDialog((Dialog) windowAncestor);
+			}
+
 			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
 			dlg.setVisible(true);
+
+			if (!dlg.isCanceled()) {
+				ISubstitution sub = dlg.getSubstitution();
+				HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList().add(sub);
+				refresh();
+			}
 		}
 	}
-	
+
 	private class PositionSwapAction extends AbstractAction {
 
 		private static final long serialVersionUID = 3753611559396928213L;
@@ -148,7 +247,7 @@ public class SubstitutionOverview extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 		}
 	}
-	
+
 	private class SubstitutionAction extends AbstractAction {
 
 		private static final long serialVersionUID = 2005264416271904159L;
@@ -158,6 +257,33 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+		}
+	}
+
+	private class EditAction extends AbstractAction {
+
+		private static final long serialVersionUID = 715531467677812457L;
+
+		public EditAction() {
+			super(HOVerwaltung.instance().getLanguageString("subs.Edit"));
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			int selectedRowIndex = substitutionTable.getSelectedRow();
+			ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+					.getSubstitution(selectedRowIndex);
+
+			BehaviourDialog dlg = null;
+			Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
+			if (windowAncestor instanceof Frame) {
+				dlg = new BehaviourDialog((Frame) windowAncestor);
+			} else {
+				dlg = new BehaviourDialog((Dialog) windowAncestor);
+			}
+			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
+			dlg.setLocationRelativeTo(SubstitutionOverview.this);
+			dlg.init(sub);
+			dlg.setVisible(true);
 		}
 	}
 

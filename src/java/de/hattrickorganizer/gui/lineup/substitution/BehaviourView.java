@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,14 +21,21 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 import de.hattrickorganizer.gui.lineup.substitution.PositionSelectionEvent.Change;
+import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.lineup.Substitution;
+import de.hattrickorganizer.tools.Helper;
 
 public class BehaviourView extends JPanel {
 
 	private static final long serialVersionUID = 6041242290064429972L;
 	private JComboBox playerComboBox;
+	private JComboBox behaviourComboBox;
 	private JComboBox positionComboBox;
+	private JComboBox redCardsComboBox;
+	private JComboBox standingComboBox;
 	private PositionChooser positionChooser;
 	private JSlider whenSlider;
 	private WhenTextField whenTextField;
@@ -48,6 +56,60 @@ public class BehaviourView extends JPanel {
 
 		this.positionChooser.init(lineupPositions);
 
+	}
+
+	public void init(ISubstitution sub) {
+		ComboBoxModel model = this.playerComboBox.getModel();
+		for (int i = 0; i < model.getSize(); i++) {
+			if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub.getPlayerIn()) {
+				playerComboBox.setSelectedItem(model.getElementAt(i));
+				break;
+			}
+		}
+
+		model = this.positionComboBox.getModel();
+		for (int i = 0; i < model.getSize(); i++) {
+			if (((PlayerPositionItem) model.getElementAt(i)).getPosition().byteValue() == sub.getPos()) {
+				positionComboBox.setSelectedItem(model.getElementAt(i));
+				break;
+			}
+		}
+
+		Helper.markierenComboBox(this.behaviourComboBox, sub.getBehaviour());
+		Helper.markierenComboBox(this.redCardsComboBox, sub.getCard());
+		Helper.markierenComboBox(this.standingComboBox, sub.getStanding());
+
+		this.whenTextField.setValue(Integer.valueOf(sub.getMatchMinuteCriteria()));
+	}
+
+	public ISubstitution getSubstitution() {
+		ISubstitution sub = new Substitution();
+		sub.setBehaviour((byte) getSelectedId(this.behaviourComboBox));
+		sub.setCard((byte) getSelectedId(this.redCardsComboBox));
+		sub.setMatchMinuteCriteria(((Integer) this.whenTextField.getValue()).byteValue());
+		sub.setOrderType(ISubstitution.BEHAVIOUR);
+		PlayerPositionItem item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();
+		if (item != null) {
+			sub.setPlayerIn(item.getSpieler().getSpielerID());
+		}
+		// sub.setPlayerOrderId(id); ???????????
+		item = (PlayerPositionItem) this.positionComboBox.getSelectedItem();
+		if (item != null) {
+			if (item.getSpieler() != null) {
+				sub.setPlayerOut(item.getSpieler().getSpielerID());
+			}
+			sub.setPos(item.getPosition().byteValue());
+		}
+		sub.setStanding((byte) getSelectedId(this.standingComboBox));
+		return sub;
+	}
+
+	private int getSelectedId(JComboBox comboBox) {
+		CBItem item = (CBItem) comboBox.getSelectedItem();
+		if (item != null) {
+			return item.getId();
+		}
+		return -1;
 	}
 
 	private void addListeners() {
@@ -139,12 +201,12 @@ public class BehaviourView extends JPanel {
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(behaviourLabel, gbc);
 
-		JComboBox behaviourComboBox = new JComboBox(SubstitutionDataProvider.getBehaviourItems());
-		behaviourComboBox.setMinimumSize(comboBoxSize);
-		behaviourComboBox.setPreferredSize(comboBoxSize);
+		this.behaviourComboBox = new JComboBox(SubstitutionDataProvider.getBehaviourItems());
+		this.behaviourComboBox.setMinimumSize(comboBoxSize);
+		this.behaviourComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(4, 2, 4, 10);
-		add(behaviourComboBox, gbc);
+		add(this.behaviourComboBox, gbc);
 
 		JLabel whenLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.when"));
 		gbc.gridx = 0;
@@ -206,12 +268,12 @@ public class BehaviourView extends JPanel {
 		gbc.weightx = 0.0;
 		add(redCardsLabel, gbc);
 
-		JComboBox redCardsComboBox = new JComboBox(SubstitutionDataProvider.getRedCardItems());
-		redCardsComboBox.setMinimumSize(comboBoxSize);
-		redCardsComboBox.setPreferredSize(comboBoxSize);
+		this.redCardsComboBox = new JComboBox(SubstitutionDataProvider.getRedCardItems());
+		this.redCardsComboBox.setMinimumSize(comboBoxSize);
+		this.redCardsComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(4, 2, 4, 10);
-		add(redCardsComboBox, gbc);
+		add(this.redCardsComboBox, gbc);
 
 		JLabel standingLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Standing"));
 		gbc.gridx = 0;
@@ -219,12 +281,12 @@ public class BehaviourView extends JPanel {
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(standingLabel, gbc);
 
-		JComboBox stadingComboBox = new JComboBox(SubstitutionDataProvider.getStandingItems());
-		stadingComboBox.setMinimumSize(comboBoxSize);
-		stadingComboBox.setPreferredSize(comboBoxSize);
+		this.standingComboBox = new JComboBox(SubstitutionDataProvider.getStandingItems());
+		this.standingComboBox.setMinimumSize(comboBoxSize);
+		this.standingComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(4, 2, 4, 10);
-		add(stadingComboBox, gbc);
+		add(this.standingComboBox, gbc);
 	}
 
 }
