@@ -172,6 +172,7 @@ public  class Lineup implements plugins.ILineUp {
 					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i + "behaviour")));
 					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
+					sub.setStanding(Byte.parseByte(properties.getProperty("subst" + i + "standing")));
 					m_vSubstitutions.add(sub);
 				} else {
 					break;
@@ -1296,6 +1297,7 @@ public  class Lineup implements plugins.ILineUp {
 					properties.setProperty("subst" + i + "pos", "" + sub.getPos());
 					properties.setProperty("subst" + i + "behaviour", "" + sub.getBehaviour());
 					properties.setProperty("subst" + i + "card", "" + sub.getCard());
+					properties.setProperty("subst" + i + "standing", "" + sub.getStanding());
 				}
 			}
 			
