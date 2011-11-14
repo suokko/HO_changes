@@ -63,8 +63,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
 	//~ Instance fields ----------------------------------------------------------------------------
 
-	private static boolean requireSetMatchorder = false;
-
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
 	private String m_sProxyHost = "";
@@ -123,15 +121,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public static String getPluginSite() {
 		return "http://ho1.sourceforge.net/onlinefiles";
 	}
-
-	public static boolean isRequireSetMatchorder() {
-		return requireSetMatchorder;
-	}
-
-	public static void setRequireSetMatchorder(boolean requireSetMatchorder) {
-		MyConnector.requireSetMatchorder = requireSetMatchorder;
-	}
-
+	
 	/**
 	 * Fetch our arena
 	 *
@@ -294,8 +284,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	public String setMatchOrder(int matchId, String orderString) throws IOException {
-		requireSetMatchorder = true;
-
+		String scope = "set_matchorder";
 		String urlpara = "?file=matchorders&version="
 			+ VERSION_MATCHORDERS;
 		if (matchId > 0) {
@@ -305,8 +294,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		HashMap<String, String> paras = new HashMap<String, String>();
 		paras.put("lineup", orderString);
-		String result = readStream(postWebFileWithBodyParameters(htUrl+urlpara, paras, true));
-		requireSetMatchorder = false;
+		String result = readStream(postWebFileWithBodyParameters(htUrl+urlpara, paras, true, scope));
 		return result;
 
 	}
@@ -906,7 +894,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				if (response.getCode() == 401) {
 
 					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService);
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
 					}
 					authDialog.setVisible(true);
 					// A way out for a user unable to authorize for some reason
@@ -944,9 +932,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @param surl the full url with parameters
 	 * @param bodyprop A hash map of string, string where key is parameter key and value is parameter value
 	 * @param showErrorMessage Whether to show message on error or not
+	 * @param scope The scope of the request is required, if no scope, put "". Example: "set_matchorder".
 	 * @throws IOException 
 	 */
-	public InputStream postWebFileWithBodyParameters(String surl, HashMap<String, String> bodyParas, boolean showErrorMessage) throws IOException {
+	public InputStream postWebFileWithBodyParameters(String surl, HashMap<String, String> bodyParas, boolean showErrorMessage, String scope) throws IOException {
 
 		OAuthDialog authDialog = null;
 		Response response = null;
@@ -969,7 +958,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				if (response.getCode() == 401) {
 
 					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService);
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
 					}
 					authDialog.setVisible(true);
 					// A way out for a user unable to authorize for some reason

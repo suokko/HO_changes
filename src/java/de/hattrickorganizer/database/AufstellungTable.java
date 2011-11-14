@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import plugins.ISubstitution;
+
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -60,6 +62,7 @@ public final class AufstellungTable extends AbstractTable {
 
 		if (auf != null) {
 			auf.setPositionen(DBZugriff.instance().getSystemPositionen(hrfID, name));
+			auf.setSubstitionList(new java.util.ArrayList<ISubstitution>(DBZugriff.instance().getMatchSubstitutionsByHrf(hrfID, name)));
 		}
 
 		return auf;
@@ -144,6 +147,10 @@ public final class AufstellungTable extends AbstractTable {
 
 			//Standard sys saven
 			DBZugriff.instance().saveSystemPositionen(hrfId, aufstellung.getPositionen(), name);
+			
+			// Save Substitutions
+			DBZugriff.instance().storeMatchSubstitutionsByHrf(hrfId, aufstellung.getSubstitutionList(), name);
+	
 		}
 	}
 	

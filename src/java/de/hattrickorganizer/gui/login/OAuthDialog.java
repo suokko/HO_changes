@@ -31,9 +31,9 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.lineup.CopyListener;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.StringUtilities;
 
 public class OAuthDialog extends JDialog implements ActionListener, FocusListener, KeyListener, WindowListener {
 
@@ -66,15 +66,16 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	Token m_RequestToken;
 	private String scopes = "";
 	
-	public OAuthDialog(HOMainFrame mainFrame, OAuthService service) {
+	
+	public OAuthDialog(HOMainFrame mainFrame, OAuthService service, String scope) {
 		super(mainFrame, HOVerwaltung.instance().getLanguageString("oauth.Title"), true);
 
 		this.m_clMainFrame = mainFrame;
 		this.m_service = service;
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-		if (MyConnector.isRequireSetMatchorder()) {
-			scopes = "&scope=set_matchorder";
+		if (!StringUtilities.isEmpty(scope)) {
+			scopes = "&scope=" + scope;
 		}
 		
 		addWindowListener(this);
@@ -87,9 +88,6 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	private void obtainUserURL() {
 		
        try {
-    	   
-    	   
-    	   
     	   m_RequestToken = m_service.getRequestToken();
     	   m_sUserURL = m_service.getAuthorizationUrl(m_RequestToken);
     	   m_sUserURL += scopes;
