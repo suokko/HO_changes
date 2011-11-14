@@ -1,14 +1,11 @@
 package de.hattrickorganizer.gui.theme;
 
 import java.awt.Color;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 import javax.xml.bind.annotation.XmlRegistry;
 
 
@@ -74,14 +71,6 @@ public abstract class Schema  {
 	 */
 	public Object getThemeColor(String key){
 		return cache.get(key);
-	}
-	
-	public String getVersion() {
-		return (String)cache.get("version");
-	}
-
-	public void setVersion(String version) {
-		cache.put("version",version);
 	}
 
 	public String getName() {

@@ -1,6 +1,8 @@
 // %556564099:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import gui.HOBooleanName;
+import gui.HOIconName;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
@@ -74,7 +76,7 @@ public class ImagePanel extends javax.swing.JPanel {
      */
     @Override
 	public final void paint(java.awt.Graphics g) {
-    	if(!ThemeManager.instance().isSet("imagePanel.background.painted")){
+    	if(!ThemeManager.instance().isSet(HOBooleanName.IMAGEPANEL_BG_PAINTED)){
     		super.paint(g);
     	}else {
     		final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
@@ -114,10 +116,7 @@ public class ImagePanel extends javax.swing.JPanel {
 
         if (background == null) {
             final java.awt.MediaTracker tracker = new java.awt.MediaTracker(this);
-
-            final java.net.URL resource = getClass().getClassLoader().getResource("gui/bilder/Background.jpg");
-            background = getToolkit().createImage(resource);
-
+            background = ThemeManager.getIcon(HOIconName.IMAGEPANEL_BACKGROUND).getImage();
             tracker.addImage(background, 1);
 
             //Der MediaTracker wartet, bis alle Grafiken als Image-Objekte verfügbar sind.
