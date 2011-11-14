@@ -1149,13 +1149,14 @@ public class DBZugriff {
 	}
 	
 	/**
-	 * Returns an array with substitution belonging to given hrfId
+	 * Returns an array with substitution belonging to given hrfId and name
 	 *
 	 * @param hrfId The teamId for the team in question
+	 * @param lineupName The name of the lineup
 	 *
 	 */
-	public List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId) {
-		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByHrf(hrfId);
+	public List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
+		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByHrf(hrfId, lineupName);
 	}
 	
 
@@ -1172,8 +1173,8 @@ public class DBZugriff {
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the hrf will be deleted.
 	 */
-	public void storeMatchSubstitutionsByHrf(int hrfId, List<ISubstitution> subs) {
-		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByHrf(hrfId, subs);
+	public void storeMatchSubstitutionsByHrf(int hrfId, List<ISubstitution> subs, String lineupName) {
+		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByHrf(hrfId, subs, lineupName);
 	}
 	
 	
@@ -2073,6 +2074,8 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartBehaviour = -1 WHERE StartBehaviour IS NULL");
 		
 		getTable(MatchSubstitutionTable.TABLENAME).createTable();
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHSUBSTITUTION ADD COLUMN LineupName VARCHAR");
+		m_clJDBCAdapter.executeUpdate("UPDATE MATCHSUBSTITUTION SET LineupName = 'D' WHERE LineupName IS NULL");
 		
 		
 		// Always set field DBVersion to the new value as last action.

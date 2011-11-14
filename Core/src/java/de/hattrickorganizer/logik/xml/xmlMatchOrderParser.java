@@ -356,7 +356,6 @@ public class xmlMatchOrderParser {
           if (tmp != null) {
         	  behaviour = XMLManager.instance().getFirstChildNodeValue(tmp);
           }
-
     	
         hash.put("subst" + num + "playerOrderID", playerOrderID);
         hash.put("subst" + num + "playerIn", playerIn);
@@ -367,7 +366,7 @@ public class xmlMatchOrderParser {
         hash.put("subst" + num + "pos", pos);
         hash.put("subst" + num + "behaviour", behaviour);
         hash.put("subst" + num + "card", card);
-          
+        hash.put("subst" + num + "standing", standing);
      	
     }
 

@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import plugins.IMatchKurzInfo;
 import plugins.ISpielerPosition;
+import plugins.ISubstitution;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
@@ -682,13 +684,31 @@ public class OnlineWorker {
     	for (int i = 0 ; i < shooters.length ; i++) {
     		orders += "," + "{\"id\":\"" + shooters[i] + "\" , \"behaviour\":\"0\"}";
     	}
-    	
-    	
+
+
     	orders += "], \"settings\":{\"tactic\": \"" + lineup.getTacticType() + "\","
-				+ "\"speechLevel\":\"" + lineup.getAttitude() + "\", \"newLineup\":\"\"},"
-				+ "\"substitutions\":[]}";
+    	+ "\"speechLevel\":\"" + lineup.getAttitude() + "\", \"newLineup\":\"\"},";
+
+
+    	orders += "\"substitutions\":[";
     	
-    	
+    	Iterator<ISubstitution> iter = lineup.getSubstitutionList().iterator();
+    	while (iter.hasNext()) {
+    		ISubstitution sub = iter.next();
+    		orders+= "{\"playerin\":\"" + sub.getPlayerIn() + "\","  
+    		+ "\"playerout\":\"" + sub.getPlayerOut() + "\","
+    		+ "\"orderType\":\"" + sub.getOrderType() + "\","
+    		+ "\"min\":\"" + sub.getMatchMinuteCriteria() + "\","
+    		+ "\"pos\":\"" + sub.getPos() + "\","
+    		+ "\"beh\":\"" + sub.getBehaviour() + "\","
+    		+ "\"card\":\"" + sub.getCard() + "\","
+    		+ "\"standing\":\"" + sub.getStanding() + "\"}";
+    		if (iter.hasNext()) {
+    			orders+= ",";
+    		}
+    	}
+    	orders += "]}";
+
     	try {
     		result = uploadLineup(matchId, orders);
     	} catch (Exception e) {
@@ -698,7 +718,6 @@ public class OnlineWorker {
     	HOLogger.instance().debug(getClass(), "Upload done:\n" + result);
     	
     	return result;
-    	
     }
     
     private String createPositionString(int roleId, de.hattrickorganizer.model.Lineup lineup) {

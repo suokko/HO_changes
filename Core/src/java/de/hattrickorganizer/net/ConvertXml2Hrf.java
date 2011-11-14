@@ -367,6 +367,7 @@ public class ConvertXml2Hrf {
 					m_sHRFBuffer.append("subst" + i + "pos=" + sub.getPos() + "\n");
 					m_sHRFBuffer.append("subst" + i + "behaviour=" + sub.getBehaviour() + "\n");
 					m_sHRFBuffer.append("subst" + i + "card=" + sub.getCard() + "\n");
+					m_sHRFBuffer.append("subst" + i + "standing=" + sub.getStanding() + "\n");
 					i++;
 				}
 			}
@@ -467,11 +468,11 @@ public class ConvertXml2Hrf {
 					m_sHRFBuffer.append("subst" + i + "playerIn=" + m_htNextLineup.get("subst" + i + "playerIn") + "\n");
 					m_sHRFBuffer.append("subst" + i + "playerOut=" + m_htNextLineup.get("subst" + i + "playerOut") + "\n");
 					m_sHRFBuffer.append("subst" + i + "orderType=" + m_htNextLineup.get("subst" + i + "orderType") + "\n");
-					m_sHRFBuffer.append("subst" + i + "minute=" + m_htNextLineup.get("subst" + i + "minute") + "\n");
 					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + m_htNextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
 					m_sHRFBuffer.append("subst" + i + "pos=" + m_htNextLineup.get("subst" + i + "pos") + "\n");
 					m_sHRFBuffer.append("subst" + i + "behaviour=" + m_htNextLineup.get("subst" + i + "behaviour") + "\n");
 					m_sHRFBuffer.append("subst" + i + "card=" + m_htNextLineup.get("subst" + i + "card") + "\n");
+					m_sHRFBuffer.append("subst" + i + "standing=" + m_htNextLineup.get("subst" + i + "standing") + "\n");
 				}
 			}
 			
