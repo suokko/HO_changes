@@ -2,6 +2,8 @@ package gui;
 
 public interface HOIconName {
 
+	public static final String IMAGEPANEL_BACKGROUND = "imagePanel.background";
+	
 	public static final String[] MATCHTYPES 	= { "","MatchType1","MatchType2","MatchType3","MatchType4","MatchType5","MatchType6","MatchType7","MatchType8","MatchType9","MatchType10","MatchType11","MatchType12"};
 	public static final String[] WEATHER 		= { "weather0","weather1","weather2","weather3"};
 	public static final String[] SPECIAL 		= { "","special1","special2","special3","special4","special5", "special6"};

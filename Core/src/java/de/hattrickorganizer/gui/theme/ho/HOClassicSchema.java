@@ -3,21 +3,20 @@
  */
 package de.hattrickorganizer.gui.theme.ho;
 
+import gui.HOBooleanName;
 import gui.HOColorName;
 import gui.HOIconName;
 
 import java.awt.Color;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
 
 import javax.swing.ImageIcon;
 
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.theme.Schema;
 import de.hattrickorganizer.tools.HOLogger;
 
-public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
+public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HOBooleanName {
 
 	public HOClassicSchema(){
 		initialize();
@@ -25,11 +24,6 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 	
 	private void initialize(){
 		setName("Classic");
-		setVersion("1.0");
-		put("createdDate",Timestamp.valueOf("2011-06-12 12:00:00"));
-		put("hoVersion", new BigDecimal(HOMainFrame.VERSION).setScale(4, BigDecimal.ROUND_HALF_UP));
-		put("author","HO");
-		
 		initCachedColors();
 		initColors();
 		initBooleans();
@@ -163,10 +157,11 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName{
 		put(STAR_GRAY,"gui/bilder/star_grey.png");
 		
 		put(HOMEGROWN, "gui/bilder/motherclub.png");
+		put(IMAGEPANEL_BACKGROUND,"gui/bilder/Background.jpg");
 		}
 
 	private void initBooleans() {
-		put("imagePanel.background.painted",Boolean.TRUE);
+		put(IMAGEPANEL_BG_PAINTED,Boolean.TRUE);
 		
 	}
 
