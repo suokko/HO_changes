@@ -6,29 +6,26 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import javax.swing.ImageIcon;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlRegistry;
 
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.backup.HOZip;
 
-@XmlRegistry
+
 public class ExtSchema extends Schema {
 
 	private Hashtable<String, Object> contents = new Hashtable<String, Object>();
 	private File themeFile;
-	static String fileName = "data.xml";
+	static String fileName = "data.txt";
 
 	ExtSchema() {
 
 	}
 
-	public ExtSchema(File fileName, ThemeData data) {
+	public ExtSchema(File fileName, Properties data) {
 		super(data);
 		this.themeFile = fileName;
 		init();
@@ -95,18 +92,4 @@ public class ExtSchema extends Schema {
 		return image;
 	}
 	
-	public void save(File dir){
-		try {
-			HOZip zip = new HOZip(dir+File.separator+getName()+".zip");
-			zip.createNewFile();
-			JAXBContext jc = JAXBContext.newInstance(Schema.class);
-			Marshaller m = jc.createMarshaller();
-			File tmpFile = new File(fileName);
-			m.marshal( toThemeData(), tmpFile );
-			zip.addFile(tmpFile);
-			zip.closeArchive();
-		}  catch (Exception e) {
-			HOLogger.instance().log( ThemeManager.class, "Schema: " + getName() + e);
-		}
-	}
 }

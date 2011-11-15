@@ -4,18 +4,15 @@
 package de.hattrickorganizer.gui.theme;
 
 
-import gui.HOIconName;
-
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
 
 import de.hattrickorganizer.gui.theme.ho.HOClassicSchema;
 
@@ -182,23 +179,22 @@ public final class ThemeManager {
 		return instance().classicSchema.loadImageIcon(datei).getImage();
 	}
 	
+ 
+	
 	public ExtSchema loadSchema(String name) throws Exception {
 		ExtSchema theme = null;
 		File themeFile = new File(themesDir,name+".zip");
 		if(themeFile.exists()){
 			ZipFile zipFile = new ZipFile(themeFile);
-			JAXBContext jc = JAXBContext.newInstance(Schema.class);
-			Unmarshaller u = jc.createUnmarshaller();
+			Properties p = new Properties();
 			ZipEntry dataEntry = zipFile.getEntry(ExtSchema.fileName);
 			if(dataEntry == null)
-				throw new Exception("data.xml is missing");
-			ThemeData data = (ThemeData)u.unmarshal(zipFile.getInputStream(dataEntry));
-			theme = new ExtSchema(themeFile,data);
+				throw new Exception("data.txt is missing");
+			p.load(zipFile.getInputStream(dataEntry));
+			theme = new ExtSchema(themeFile,p);
 		}
 		return theme;
 	}
-	
-	
 	public void setCurrentTheme(String name) throws Exception {
 		if(name != null && !name.equals(classicSchema.getName()))
 			extSchema = loadSchema(name);
@@ -215,8 +211,4 @@ public final class ThemeManager {
 		return schemaNames;
 	}
 	
-	public void createNewSchemaFile(){
-		ExtSchema tmp = new ExtSchema();
-		tmp.save(themesDir);
-	}
 }
