@@ -980,10 +980,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
         }
         deDefender *= params.getParam("counter", "multiDe", 1.0);
         psDefender *= params.getParam("counter", "multiPs", 1.0);
-        
         retVal += deDefender + psDefender;
-        
         retVal *= params.getParam("counter", "postMulti", 1.0);
+        retVal += params.getParam("counter", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "counter");
     	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
     	return (float)retVal;
