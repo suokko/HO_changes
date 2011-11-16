@@ -14,7 +14,7 @@ import java.util.*;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 
-public class ColumnSorter implements Comparator {
+class ColumnSorter implements Comparator {
 	
     int colIndex;
     boolean ascending;

@@ -3,24 +3,30 @@
  */
 package hoplugins.playerCompare;
 
+import gui.HOColorName;
 import gui.HOIconName;
-import hoplugins.*;
-import plugins.*;
-import java.awt.*;
-import java.text.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.table.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import java.util.StringTokenizer;
+
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.TableCellRenderer;
+
+import plugins.IHOMiniModel;
+import plugins.IXtraData;
 
 /**
  * @author KickMuck
  */
-public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
-	
-	/**
-	 * 
-	 */
+public class MyTableCellRenderer  implements TableCellRenderer{
+
 	private static final long serialVersionUID = -6249868492929346343L;
 	private IHOMiniModel m_IHOmodel;
 	private Color gelb = new Color(255,255,200);
@@ -30,12 +36,6 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 	private Color dklrot = new Color (200,0,0);
 	private Color hellblau = new Color (235,235,255);
 	private Color dunkelblau = new Color (220,220,255);
-	private Color grau = new Color (240,240,240);
-	private Color gruppeA = new Color(50,200,50);
-	private Color gruppeB = new Color(160,220,50);
-	private Color gruppeC = new Color(240,240,0);
-	private Color gruppeD = new Color(240,156,0);
-	private Color gruppeE = new Color(230,83,0);
 	//***** Anlegen der JLabel *****
 	private JLabel label;
 	private JLabel wertNeu;
@@ -43,13 +43,16 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 	//***** weitere Klassenvariablen *****
 	private String[] name = new String[2];
 	private int natWert;
-	private Font f;
 	private DecimalFormat df = new DecimalFormat("#,###,##0.00");
 	
 	//***** Konstruktor *****
 	public MyTableCellRenderer(IHOMiniModel minimod)
 	{
 		m_IHOmodel = minimod;
+		gelb = minimod.getGUI().getColor(HOColorName.PLAYER_SKILL_BG);
+		gruen= minimod.getGUI().getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);
+		hellblau = minimod.getGUI().getColor(HOColorName.PLAYER_SUBPOS_BG);
+		dunkelblau = minimod.getGUI().getColor(HOColorName.PLAYER_POS_BG);
 	}
 	
 	public Component getTableCellRendererComponent(JTable table,
@@ -59,10 +62,9 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
             int row,
             int column)
 	{
-		f = new Font(table.getFont().getFontName(), Font.PLAIN, (table.getFont().getSize()) + 2);
-		if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Name")))
-		{	
-			label = new JLabel();
+		label = new JLabel();
+
+		if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Name"))) {	
 			int i = 0;
 			int spezWert = 0;
 			StringTokenizer tk = new StringTokenizer(table.getValueAt(row,column).toString(),";");
@@ -70,160 +72,45 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 		         name[i]=tk.nextToken();
 		         i++;
 		    }
-			try
-			{
+			try	{
 				spezWert = Integer.parseInt(name[1]);
 			}
 			catch(Exception e){}
 			
 			Icon ic = m_IHOmodel.getHelper().getImageIcon4Spezialitaet(spezWert);
 			label.setLayout(new BorderLayout());
-			JLabel l1 = new JLabel(name[0]);
-			JLabel l2 = new JLabel(ic,JLabel.LEFT);
-			label.add(l1,BorderLayout.CENTER);
+			label.setText(name[0]);
+			JLabel l2 = new JLabel(ic,SwingConstants.LEFT);
 			label.add(l2,BorderLayout.EAST);
 			label.setBackground(table.getBackground());
 			label.validate();
 		}
-		else if(table.getColumnName(column).equals(PlayerCompare.getPCProperties("original")))
-		{
-			//PlayerCompare.appendText("Spalte: " + table.getColumnName(column));
-			label = new JLabel();
-			label.setText(value.toString());
-			label.setHorizontalAlignment(CENTER);
-			label.setBackground(dunkelblau);
-		}
-		else if(table.getColumnName(column).equals(PlayerCompare.getPCProperties("position")))
-		{
-			//PlayerCompare.appendText("Spalte: " + table.getColumnName(column));
-			label = new JLabel();
-			label.setText(value.toString());
-			label.setHorizontalAlignment(CENTER);
-			label.setBackground(hellblau);
-		}
-		else if(table.getColumnName(column).equals(PlayerCompare.getPCProperties("geaendert")))
-		{
-			//PlayerCompare.appendText("Spalte: " + table.getColumnName(column));
-			label = new JLabel();
-			label.setText(value.toString());
-			label.setHorizontalAlignment(CENTER);
-			label.setBackground(dunkelblau);
-		}
-		else if(column == 2)
-		{
-			label = new JLabel();
-			
+		else if(column == 2) {
 			natWert = ((Integer)table.getValueAt(row,column)).intValue();
 			label.setIcon(m_IHOmodel.getHelper().getImageIcon4Country(natWert));
 			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setBackground(table.getBackground());
 		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Gruppe")))
-		{
-			label = new JLabel();
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Gruppe")))	{
+
 			
 			String group = ((String)table.getValueAt(row,column)).toString();
-			if(group.equals("A-Team.png"))
-			{
-				label.setLayout(new BorderLayout());
-				label.setBackground(table.getBackground());
-				label.setHorizontalAlignment(SwingConstants.CENTER);
-				
-				JLabel aLabel = new JLabel("A",SwingConstants.CENTER);
-				aLabel.setPreferredSize(new Dimension(15,15));
-				aLabel.setBackground(gruppeA);
-				aLabel.setOpaque(true);
-				aLabel.setBorder(new LineBorder(Color.BLACK,1));
-				aLabel.setFont(f);
-				label.add(aLabel,BorderLayout.WEST);
-			}
-			else if(group.equals("B-Team.png"))
-			{
-				label.setLayout(new BorderLayout());
-				label.setBackground(table.getBackground());
-				label.setHorizontalAlignment(SwingConstants.CENTER);
-				
-				JLabel aLabel = new JLabel("B",SwingConstants.CENTER);
-				aLabel.setPreferredSize(new Dimension(15,15));
-				aLabel.setBackground(gruppeB);
-				aLabel.setOpaque(true);
-				aLabel.setBorder(new LineBorder(Color.BLACK,1));
-				aLabel.setFont(f);
-				label.add(aLabel,BorderLayout.WEST);
-			}
-			else if(group.equals("C-Team.png"))
-			{
-				label.setLayout(new BorderLayout());
-				label.setBackground(table.getBackground());
-				label.setHorizontalAlignment(SwingConstants.CENTER);
-				
-				JLabel aLabel = new JLabel("C",SwingConstants.CENTER);
-				aLabel.setPreferredSize(new Dimension(15,15));
-				aLabel.setBackground(gruppeC);
-				aLabel.setOpaque(true);
-				aLabel.setBorder(new LineBorder(Color.BLACK,1));
-				aLabel.setFont(f);
-				label.add(aLabel,BorderLayout.WEST);
-			}
-			else if(group.equals("D-Team.png"))
-			{
-				label.setLayout(new BorderLayout());
-				label.setBackground(table.getBackground());
-				label.setHorizontalAlignment(SwingConstants.CENTER);
-				
-				JLabel aLabel = new JLabel("D",SwingConstants.CENTER);
-				aLabel.setPreferredSize(new Dimension(15,15));
-				aLabel.setBackground(gruppeD);
-				aLabel.setOpaque(true);
-				aLabel.setBorder(new LineBorder(Color.BLACK,1));
-				aLabel.setFont(f);
-				label.add(aLabel,BorderLayout.WEST);
-			}
-			else if(group.equals("E-Team.png"))
-			{
-				label.setLayout(new BorderLayout());
-				label.setBackground(table.getBackground());
-				label.setHorizontalAlignment(SwingConstants.CENTER);
-				
-				JLabel aLabel = new JLabel("E",SwingConstants.CENTER);
-				aLabel.setPreferredSize(new Dimension(15,15));
-				aLabel.setBackground(gruppeE);
-				aLabel.setOpaque(true);
-				aLabel.setBorder(new LineBorder(Color.BLACK,1));
-				aLabel.setFont(f);
-				label.add(aLabel,BorderLayout.WEST);
-			}
-			else
-			{
-				label.setBackground(table.getBackground());
-			}
-			
-		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("BestePosition")))
-		{
-			label = new JLabel();
-			
+			if(group != null && group.length() > 3)
+				label.setIcon(m_IHOmodel.getHelper().getImageIcon(group));
+			label.setBackground(table.getBackground());
+		} else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("BestePosition")))		{
 			byte tmpPos = ((Float)table.getValueAt(row,column)).byteValue();
 			float tmpFloat = m_IHOmodel.getHelper().round((((Float)table.getValueAt(row,column)).floatValue() - tmpPos)*100,m_IHOmodel.getUserSettings().anzahlNachkommastellen);
 			label.setText(m_IHOmodel.getHelper().getNameForPosition(tmpPos) + " ("+ tmpFloat +")");
 			label.setBackground(table.getBackground());
-		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MC")))
-		{
-			label = new JLabel();
+		} else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("MC"))) {
 			double skillwert = 0;
 			String skillwertS = "";
-			try
-			{
+			try	{
 				skillwertS = (table.getValueAt(row,column)).toString();
-			}
-			catch(Exception e){}
-			
-			try
-			{
 				skillwert = Double.parseDouble(skillwertS);
-			}
-			catch(Exception e){}
+
+			} catch(Exception e){}
 			
 			int skillWertNew = new Double(skillwert).intValue();
 			int skillWertOld = new Double((skillwert - skillWertNew) * 100 + 0.1).intValue();
@@ -259,23 +146,17 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			try
 			{
 				skillwertS = (table.getValueAt(row,column)).toString();
-			}
-			catch(Exception e){}
-			
-			try
-			{
 				skillwert = Double.parseDouble(skillwertS);
 			}
 			catch(Exception e){}
-			
 			
 			int skillWertNew = new Double(skillwert).intValue();
 			int skillWertOld = new Double((skillwert - skillWertNew) * 100 + 0.1).intValue();
 			int changeWert = skillWertNew - skillWertOld;
 			
 			Icon ii = m_IHOmodel.getHelper().getImageIcon4Veraenderung(changeWert);
-			label = new JLabel(""+skillWertNew,ii,JLabel.CENTER);
-			label.setHorizontalTextPosition(JLabel.LEADING);
+			label = new JLabel(""+skillWertNew,ii,SwingConstants.CENTER);
+			label.setHorizontalTextPosition(SwingConstants.LEADING);
 			if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ER"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FUE"))
 				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("FO"))
@@ -336,12 +217,10 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 				wertAlt.setForeground(dklgruen);
 				wertAlt.setText(chValue);
 			}
-			else if(changeValue == 0)
-			{
+			else if(changeValue == 0){
 				wertAlt.setText("-");
 			}
-			else
-			{
+			else {
 				chValue += Float.toString(changeValue);
 				wertAlt.setForeground(dklrot);
 				wertAlt.setText("" + changeValue);
@@ -351,7 +230,6 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			wertNeu.setHorizontalAlignment(SwingConstants.RIGHT);
 			wertAlt.setHorizontalAlignment(SwingConstants.CENTER);
 			
-			label = new JLabel();
 			label.setLayout(new GridLayout());
 			label.add(wertNeu);
 			label.add(wertAlt);
@@ -377,46 +255,34 @@ public class MyTableCellRenderer extends JLabel implements TableCellRenderer{
 			
 			label.validate();
 		}
-		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Gehalt")))
-		{
-			label = new JLabel();
+		else if(table.getColumnName(column).equals(m_IHOmodel.getLanguageString("Gehalt")))	{
 			IXtraData extraData = m_IHOmodel.getXtraDaten();
 			String curr = "" + df.format(Double.parseDouble(value.toString())) + " " + extraData.getCurrencyName();
 			label.setText(curr);
 			
-			label.setHorizontalAlignment(JLabel.RIGHT);
+			label.setHorizontalAlignment(SwingConstants.RIGHT);
 			label.setBackground(table.getBackground());
 		}
 		else if(table.getColumnName(column).equals("TSI")
-				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ID"))
-				)
-		{
-			label = new JLabel();
+				|| table.getColumnName(column).equals(m_IHOmodel.getLanguageString("ID"))){
 			label.setText(value.toString());
-			label.setHorizontalAlignment(JLabel.RIGHT);
+			label.setHorizontalAlignment(SwingConstants.RIGHT);
 			label.setBackground(table.getBackground());
 		}
-		else if((table.getValueAt(0,column) instanceof Boolean) == false)
-		//else
-		{
-			label = new JLabel();
+		else if((table.getValueAt(0,column) instanceof Boolean) == false) {
 			label.setText(value.toString());
-			label.setHorizontalAlignment(JLabel.CENTER);
+			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setBackground(table.getBackground());
 		}
 		label.setOpaque(true);
 		label.setFont(table.getFont());
 		label.setForeground(table.getForeground());
+
 		
-		
-		if(isSelected)
-		{
-			label.setBackground(grau);
-		}
-		else
-		{
-			
-		}
+		if(isSelected){
+			label.setBackground(table.getSelectionBackground());
+			label.setForeground(table.getSelectionForeground());
+		} 
 		if(table.getValueAt(row,0) == Boolean.TRUE)
 		{
 			label.setBackground(rot);
