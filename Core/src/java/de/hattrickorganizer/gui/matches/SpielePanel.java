@@ -671,7 +671,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 m_jpMatchberichtPanel.clear();
                 m_jpAufstellungHeimPanel.clearAll();
                 m_jpAufstellungGastPanel.clearAll();
-                HOLogger.instance().log(getClass(),"SpielePanel.newSelectionInform: Keine Match zum Eintrag in der Tabelle gefunden! "
+                HOLogger.instance().log(getClass(),"SpielePanel.newSelectionInform: No match for found for table entry! "
                                    + e);
             }
         } else {
@@ -691,30 +691,21 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
      */
     private void refresh(MatchKurzInfo info) {
     	m_clMatchKurzInfo = info;
-
     	m_jbLoeschen.setEnabled(true);
-    	m_jbDrucken.setEnabled(true);
     	m_jbSimMatch.setEnabled(true);
-
-    	//Reload möglich?
-//    	HOLogger.instance().log(getClass(),info.getMatchDateAsTimestamp() + " "
-//    			+ new Timestamp(System.currentTimeMillis()) + " "
-//    			+ info.getMatchDateAsTimestamp().before(new Timestamp(System.currentTimeMillis()))
-//    			+ " " + info.getMatchStatus());
-
     	if (info.getMatchDateAsTimestamp().before(new Timestamp(System.currentTimeMillis()))) {
     		m_jbReloadMatch.setEnabled(true);
+    		final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+	    	if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
+	    		m_jbAufstellungUebernehmen.setEnabled(true);
+	    	} else {
+	    		m_jbAufstellungUebernehmen.setEnabled(false);
+	    	}
+	    	m_jbDrucken.setEnabled(true);
     	} else {
     		m_jbReloadMatch.setEnabled(false);
-    	}
-
-    	//Eigenes Spiel dabei
-    	final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-
-    	if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
-    		m_jbAufstellungUebernehmen.setEnabled(true);
-    	} else {
     		m_jbAufstellungUebernehmen.setEnabled(false);
+    		m_jbDrucken.setEnabled(false);
     	}
     }
 }
