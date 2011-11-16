@@ -416,7 +416,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
 						m_jchTSI.isSelected(), wageColor, format2, faktor);
             }
 
-            final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[12]);
+            final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[14]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
                                             hov.getLanguageString("Wochen"),
