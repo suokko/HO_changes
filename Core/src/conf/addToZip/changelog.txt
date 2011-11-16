@@ -5,17 +5,17 @@ Changelist HO! 1.431
 ====================
 
 - Added Loyalty and Mother Club Bonus.
-  - Rating prediction is updated.
-  - Added in most places we could think of.
-  - Column preferences are cleared in lineup and squad view due to column changes.
+ 	. Rating prediction is updated.
+ 	. Added in most places we could think of.
+ 	. Column preferences are cleared in lineup and squad view due to column changes.
 - Added better error message when file save on download fails.
 - Added better error message when database is unable to create its file.
 - Fixed sort issue on player tables.
 - Minor fixes and tweaks.
 - Fixed localization issue messing up ratings for some locales
 
-- Theme Manager is added - customize the looks!
-- See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
+- Theme Manager is added - customize the looks! (Thanks fusselhirn!)
+	. See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
 
 
 Language updates:
