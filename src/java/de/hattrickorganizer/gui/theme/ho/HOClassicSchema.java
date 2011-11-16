@@ -299,10 +299,10 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 	    
 	    //matchtypes
 	    put(MATCHTYPE_LEAGUE_BG,"lightYellow");
-	    put(MATCHTYPE_QUALIFIKATION_BG,"lightYellow");
-	    put(MATCHTYPE_CUP_BG,"lightYellow");
+	    put(MATCHTYPE_QUALIFIKATION_BG,new Color(255, 200, 200));
+	    put(MATCHTYPE_CUP_BG,new Color(200, 255, 200));
 	    put(MATCHTYPE_BG,"white");
-	    put(MATCHTYPE_FRIENDLY_BG,"white");
+	    put(MATCHTYPE_FRIENDLY_BG,Color.WHITE);
 	    put(MATCHTYPE_INT_BG,"light_gray");
 	    put(MATCHTYPE_MASTERS_BG,"light_gray");
 	    put(MATCHTYPE_INTFRIENDLY_BG,"white");
