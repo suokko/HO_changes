@@ -14,6 +14,9 @@ Changelist HO! 1.431
 - Minor fixes and tweaks.
 - Fixed localization issue messing up ratings for some locales
 
+- Theme Manager is added - customize the looks!
+- See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
+
 
 Language updates:
 -----------------
