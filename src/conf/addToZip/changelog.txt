@@ -27,6 +27,7 @@ Language updates:
 - Update Hebrew translations (thx Mod-Transy)
 - Update Hrvatski(Croatian) translations (thx -Iuve-)
 - Update Italiano translations (thx silkevicious)
+- Update Lithuanian translations (thx Kacerga)
 - Update Magyar translations (thx salt00)
 - Update Nederlands translations (thx BrammieG)
 - Update Polish translations (thx aMiUK)
@@ -38,6 +39,7 @@ Language updates:
 - Update Spanish_sudamericano translations (thx Baler0)
 - Update Srpski + Srpski (lat) translations (thx FoxWMB, ljushaff)
 - Update Svenska translations (thx KrustyTheClown, Ehlana)
+- Update Turkish translations (thx QUARESMAA7)
 - Update Ukranian translations (thx oleh_deneb)
 - Update Vlaams translations (thx icarus95)
 
