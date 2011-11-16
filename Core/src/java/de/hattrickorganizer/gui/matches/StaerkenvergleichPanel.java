@@ -390,11 +390,12 @@ class StaerkenvergleichPanel extends ImagePanel {
  
     final void refresh(MatchKurzInfo info) {
         final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
-
         m_clZuschauer.setText(details.getZuschauer() + "");
-        m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));
+        if(info.getMatchStatus() == IMatchKurzInfo.FINISHED)
+        	m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));
+        else
+        	m_clWetter.setIcon(null);
         m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[info.getMatchTyp()]));
-
         String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
 
         if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
