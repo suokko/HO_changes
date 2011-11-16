@@ -30,7 +30,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 	private JButton m_btDebugWindow;//Button -> DebugWindow
 	
 	private String m_PluginName = "PlayerCompare";
-	private float m_pluginVersion = 1.2f;
+	private float m_pluginVersion = 1.4f;
 	private int m_pluginID = 45;
 	
 	private JPanel m_jpPanel;
@@ -1356,7 +1356,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
     	m_playerTableModelDetail = new PlayerTableModel(m_clModel,dummy);
 		
 		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); //ADDED THIS
-		m_jTableDetail = new PlayerTable(sorter3,m_clModel,m_playerTableModelDetail,true);
+		m_jTableDetail = new PlayerTable(sorter3,m_clModel);
 		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
 		m_scrollPanePlayer.setViewportView(m_jTableDetail);
 		p_PlayerDetail.add(p_SpielerName,BorderLayout.NORTH);
@@ -1467,7 +1467,7 @@ public class PlayerCompare implements IPlugin,IOfficialPlugin, MouseListener, Ac
 		m_playerTableModelDetail = new PlayerTableModel(m_clModel,tmpPlayer);
 		
 		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); //ADDED THIS
-		m_jTableDetail = new PlayerTable(sorter3,m_clModel,m_playerTableModelDetail,true);
+		m_jTableDetail = new PlayerTable(sorter3,m_clModel);
 		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
 		m_scrollPanePlayer.setViewportView(m_jTableDetail);
 		p_PlayerDetail.add(m_scrollPanePlayer);
