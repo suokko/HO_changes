@@ -954,7 +954,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         }
 
         retVal *= params.getParam("aim_aow", "postMulti", 1.0);
-        retVal += params.getParam("counter", "postDelta", 0);
+        retVal += params.getParam("aim_aow", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "aim_aow");
     	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
     	return (float)retVal;
@@ -1011,7 +1011,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         }
 
         retVal *= params.getParam("pressing", "postMulti", 1.0);
-        retVal += params.getParam("counter", "postDelta", 0);
+        retVal += params.getParam("pressing", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "pressing");
     	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
     	return (float)retVal;
@@ -1039,7 +1039,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         }
         
         retVal *= params.getParam("longshots", "postMulti", 1.0);
-        retVal += params.getParam("counter", "postDelta", 0);
+        retVal += params.getParam("longshots", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "longshots");
     	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
     	return (float)retVal;
