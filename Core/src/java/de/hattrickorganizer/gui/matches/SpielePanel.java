@@ -21,7 +21,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.sql.Timestamp;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -693,7 +692,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     	m_clMatchKurzInfo = info;
     	m_jbLoeschen.setEnabled(true);
     	m_jbSimMatch.setEnabled(true);
-    	if (info.getMatchDateAsTimestamp().before(new Timestamp(System.currentTimeMillis()))) {
+    	if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
     		m_jbReloadMatch.setEnabled(true);
     		final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 	    	if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
