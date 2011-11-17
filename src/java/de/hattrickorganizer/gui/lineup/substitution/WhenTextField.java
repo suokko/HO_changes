@@ -40,6 +40,7 @@ public class WhenTextField extends JFormattedTextField {
 		this.noValueDisplayString = noValueDisplayString;
 		this.valueDisplayString = valueDisplayString;
 		init();
+		addListeners();
 	}
 
 	private void init() {

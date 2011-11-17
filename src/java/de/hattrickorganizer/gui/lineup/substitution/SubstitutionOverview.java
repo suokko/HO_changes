@@ -270,7 +270,7 @@ public class SubstitutionOverview extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
-			ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+			final ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
 			BehaviourDialog dlg = null;
@@ -284,6 +284,12 @@ public class SubstitutionOverview extends JPanel {
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
 			dlg.init(sub);
 			dlg.setVisible(true);
+
+			if (!dlg.isCanceled()) {
+				sub.merge(dlg.getSubstitution());
+				((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
+						selectedRowIndex, selectedRowIndex);
+			}
 		}
 	}
 
