@@ -1,9 +1,10 @@
 package de.hattrickorganizer.gui.theme;
 
+import gui.HOBooleanName;
+
 import java.awt.Color;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -28,7 +29,7 @@ public abstract class Schema  {
 	
 
 	/**
-	 * Sets values from .xml-file
+	 * Sets values from .txt-file
 	 * @param data
 	 */
 	void setThemeData(Properties data){
@@ -36,12 +37,16 @@ public abstract class Schema  {
 		Enumeration<Object> keys = data.keys();
 		while(keys.hasMoreElements()){
 			String key = keys.nextElement().toString();
-			cache.put(key, createObjectFromXmlValue(data.getProperty(key)));
+			String value = data.getProperty(key).trim();
+			// i know that is not THE best solution, but currently i don´t know a better
+			if(key.equalsIgnoreCase(HOBooleanName.IMAGEPANEL_BG_PAINTED))
+				cache.put(key, Boolean.valueOf(value.equalsIgnoreCase("true")));
+			else
+				cache.put(key, createObjectFromXmlValue(value));
 		}
 	}
 	
 	private Object createObjectFromXmlValue(String value){
-		value = value.trim();
 		if (Pattern.matches("\\d{1,3}(,\\d{1,3}){1,3}", value)){
 			String[] rgb = value.split(",");
 			int r = Integer.parseInt(rgb[0].trim());
@@ -53,8 +58,6 @@ public abstract class Schema  {
 				int a = Integer.parseInt(rgb[3].trim());
 				return new Color(r,g,b,a);
 			}
-		}else if(value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")){
-			return Boolean.valueOf(value);
 		}
 		return value;
 	}

@@ -98,6 +98,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if( actionEvent.getSource() == themeComboBox) {
         	temp.theme = themeComboBox.getSelectedItem().toString();
+        	OptionManager.instance().setRestartNeeded();
         }
     }
 
