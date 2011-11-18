@@ -366,6 +366,9 @@ public class PlayerHelper {
             case ISpieler.KOPFBALLSTARK:
                 return HOVerwaltung.instance().getLanguageString("sp_Head");
 
+            case ISpieler.REGAINER:
+                return HOVerwaltung.instance().getLanguageString("sp_Regainer");
+                
             default:
                 return "";
         }
