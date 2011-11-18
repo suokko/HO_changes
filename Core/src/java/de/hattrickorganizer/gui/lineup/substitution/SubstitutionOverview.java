@@ -100,42 +100,38 @@ public class SubstitutionOverview extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(8, 10, 2, 4);
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(10, 10, 2, 10);
 		buttonPanel.add(this.editButton, gbc);
 
 		this.removeButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Remove"));
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.insets = new Insets(2, 10, 2, 4);
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 10, 10, 10);
 		buttonPanel.add(this.removeButton, gbc);
 
 		JButton substitutionButton = new JButton();
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(8, 4, 2, 10);
+		gbc.gridy++;
+		gbc.insets = new Insets(10, 10, 2, 10);
 		buttonPanel.add(substitutionButton, gbc);
 		substitutionButton.setAction(new SubstitutionAction());
 
 		JButton behaviorButton = new JButton();
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.insets = new Insets(2, 4, 2, 10);
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 10, 2, 10);
 		buttonPanel.add(behaviorButton, gbc);
 		behaviorButton.setAction(new BehaviorAction());
 
 		JButton positionSwapButton = new JButton();
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.insets = new Insets(2, 4, 10, 10);
-		gbc.weightx = 1.0;
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 10, 2, 10);
+		gbc.weighty= 1.0;
 		buttonPanel.add(positionSwapButton, gbc);
 		positionSwapButton.setAction(new PositionSwapAction());
 
-		add(buttonPanel, BorderLayout.SOUTH);
+		add(buttonPanel, BorderLayout.EAST);
 
-		GUIUtilities.equalizeComponentSizes(this.editButton, this.removeButton);
-		GUIUtilities.equalizeComponentSizes(substitutionButton, behaviorButton, positionSwapButton);
+		GUIUtilities.equalizeComponentSizes(this.editButton, this.removeButton, substitutionButton,
+				behaviorButton, positionSwapButton);
 
 		this.removeButton.setEnabled(false);
 		substitutionButton.setEnabled(false);
