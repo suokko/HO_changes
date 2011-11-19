@@ -88,6 +88,7 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.backup.BackupHelper;
+import de.hattrickorganizer.tools.developer.SQLDialog;
 import de.hattrickorganizer.tools.extension.ExtensionListener;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 import de.hattrickorganizer.tools.updater.UpdateController;
@@ -878,21 +879,18 @@ public final class HOMainFrame extends JFrame
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-
-		//HOFriendly
-//		m_jmHoFriendly.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
-//		m_jmHoFriendly.addActionListener(this);
-//		m_jmHoFriendlyMenu.add(m_jmHoFriendly);
-//
-//		m_jmHoFriendlyMenu.addSeparator();
-//
-//		m_jmIPAdresse.addActionListener(this);
-//		m_jmHoFriendlyMenu.add(m_jmIPAdresse);
-//
-//		m_jmRatingItem.addActionListener(this);
-//		m_jmHoFriendlyMenu.add(m_jmRatingItem);
-//
-//		m_jmMenuBar.add(m_jmHoFriendlyMenu);
+		if(isDevelopment()){
+	        JMenu menu = new JMenu("Developer");
+	        JMenuItem newItem = new JMenuItem("SQL Editor");
+	        newItem.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					new SQLDialog().setVisible(true);
+				}
+			});
+	        menu.add(newItem);
+	        m_jmMenuBar.add(menu);
+		}
 		
 		//Tool Menu
 		m_jmiKeeperTool.addActionListener(this);
