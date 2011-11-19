@@ -19,19 +19,19 @@ import plugins.ISubstitution;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.GUIUtilities;
 
-public class BehaviourDialog extends JDialog {
+public class SubstitutionEditDialog extends JDialog {
 
 	private static final long serialVersionUID = 1875761460780943159L;
 	private SubstitutionEditView behaviourView;
 	private boolean canceled = true;
 
-	public BehaviourDialog(Dialog parent) {
+	public SubstitutionEditDialog(Dialog parent) {
 		super(parent, true);
 		initComponents();
 		pack();
 	}
 	
-	public BehaviourDialog(Frame parent) {
+	public SubstitutionEditDialog(Frame parent) {
 		super(parent, true);
 		initComponents();
 		pack();

@@ -223,12 +223,12 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			BehaviourDialog dlg = null;
+			SubstitutionEditDialog dlg = null;
 			Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
 			if (windowAncestor instanceof Frame) {
-				dlg = new BehaviourDialog((Frame) windowAncestor);
+				dlg = new SubstitutionEditDialog((Frame) windowAncestor);
 			} else {
-				dlg = new BehaviourDialog((Dialog) windowAncestor);
+				dlg = new SubstitutionEditDialog((Dialog) windowAncestor);
 			}
 
 			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
@@ -280,12 +280,12 @@ public class SubstitutionOverview extends JPanel {
 			final ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
-			BehaviourDialog dlg = null;
+			SubstitutionEditDialog dlg = null;
 			Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
 			if (windowAncestor instanceof Frame) {
-				dlg = new BehaviourDialog((Frame) windowAncestor);
+				dlg = new SubstitutionEditDialog((Frame) windowAncestor);
 			} else {
-				dlg = new BehaviourDialog((Dialog) windowAncestor);
+				dlg = new SubstitutionEditDialog((Dialog) windowAncestor);
 			}
 			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
