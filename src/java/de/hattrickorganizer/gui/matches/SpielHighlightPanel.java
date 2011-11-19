@@ -384,7 +384,8 @@ public class SpielHighlightPanel extends ImagePanel {
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
-					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)
+					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_TORWART_FELDSPIELER)) {
 				return gui.UserParameter.instance().FG_VERLETZT;
 			}
 		}
@@ -482,6 +483,7 @@ public class SpielHighlightPanel extends ImagePanel {
 	            case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
+	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
@@ -595,7 +597,8 @@ public class SpielHighlightPanel extends ImagePanel {
 	            case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
-	            case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR: {
+	            case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR: 
+	            case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF: {
 	                icon = ThemeManager.getIcon(HOIconName.NOGOAL_SPECIAL);
 	                break;
 	            }
