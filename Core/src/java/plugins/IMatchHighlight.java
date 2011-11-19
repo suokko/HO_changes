@@ -84,6 +84,9 @@ public interface IMatchHighlight {
     /** Equal ball possession */
     public static final int HIGHLIGHT_SUB_BALLBESITZ_AUSGEGLICHEN = 47;
 
+    /** 	Penalty contest: Goal by Technical (no nerves) */
+    public static final int HIGHLIGHT_SUB_PENALTY_TOR_TECH_NO_NERVES = 55;
+
     /** Penalty Goal */
     public static final int HIGHLIGHT_SUB_PENALTY_TOR = 56;
 
@@ -114,9 +117,18 @@ public interface IMatchHighlight {
     /** missing experience */
     public static final int HIGHLIGHT_SUB_FEHLENDE_ERFAHRUNG = 65;
 
+    /** 	Remove underestimation at pause (goaldiff = 0)  */
+    public static final int HIGHLIGHT_SUB_FEHLENDE_ERFAHRUNG_REMOVE_NODIFF = 66;
+    
+    /** 	Remove underestimation at pause (goaldiff = 1)  */
+    public static final int HIGHLIGHT_SUB_FEHLENDE_ERFAHRUNG_REMOVE_ONEDIFF = 67;
+    
     /** pressing successful */
     public static final int HIGHLIGHT_SUB_PRESSING_ERFOLGREICH = 68;
-
+    
+    /** 	Remove underestimation */
+    public static final int HIGHLIGHT_SUB_FEHLENDE_ERFAHRUNG_REMOVE = 69;
+    
     /** overtime */
     public static final int HIGHLIGHT_SUB_VERLAENGERUNG = 70;
 
@@ -125,6 +137,12 @@ public interface IMatchHighlight {
 
     /** won in overtime */
     public static final int HIGHLIGHT_SUB_SIEG_IN_VERLAENGERUNG = 72;
+    
+    /** won in overtime */
+    public static final int HIGHLIGHT_SUB_KEIN_SIEG_NACH_ELFMETER_SCHIESSES_COIN = 73;
+
+    /** 	New captain  */
+    public static final int HIGHLIGHT_SUB_NEW_CAPTAIN = 80;
 
     /** bruised */
     public static final int HIGHLIGHT_SUB_PFLASTER = 90;
@@ -147,6 +165,8 @@ public interface IMatchHighlight {
     /** injured, no replacement player */
     public static final int HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI = 96;
 
+    /** injured, no replacement player */
+    public static final int HIGHLIGHT_SUB_VERLETZT_TORWART_FELDSPIELER = 97;
     
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Basic events (HIGHLIGHT_ERFOLGREICH and HIGHLIGHT_FEHLGESCHLAGEN only)
@@ -289,9 +309,12 @@ public interface IMatchHighlight {
     /** (positive) unpredicatable SE */
     public static final int HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR = 8;
 
-    /** (negative) unpredicatable SE */
-    public static final int HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR = 9;
+    /** (negative) SE: Goal: Unpredictable, own goal  */
+    public static final int HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR = 25;
 
+    /** (negative) unpredicatable SE own goal*/
+    public static final int HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR = 9;
+    
     /** (positive) quick SE */
     public static final int HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR = 15;
 
@@ -354,6 +377,8 @@ public interface IMatchHighlight {
     /** long shot */
     public static final int HIGHLIGHT_SUB_LONGHSHOT_1 = 87;
 
+    /** SE: Quick rushes, stopped by quick defender  */
+    public static final int HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF = 89;
     
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Informal events (HIGHLIGHT_SPEZIAL only)
@@ -421,6 +446,12 @@ public interface IMatchHighlight {
     /** Tactic Long shots */
     public static final int HIGHLIGHT_SUB_TACTIC_LONGSHOTS = 36;
 
+    /** Tactic AIM */
+    public static final int HIGHLIGHT_SUB_TACTIC_AIM = 43;
+
+    /** Tactic AOW */
+    public static final int HIGHLIGHT_SUB_TACTIC_AOW = 44;
+
     /* Substitutions */
     /** Substitution at deficit */
     public static final int HIGHLIGHT_SUB_SUBSTITUTION_DEFICIT = 50;
@@ -441,7 +472,14 @@ public interface IMatchHighlight {
     /** Tactic change, score is even */
     public static final int HIGHLIGHT_SUB_TACTICCHANGE_EVEN = 62;
 
-    
+    /** 	Player position swap: team is behind  */
+    public static final int HIGHLIGHT_SUB_POSITION_SWAP_DEFICIT = 70;
+
+    /** 	Player position swap: team is ahead  */
+    public static final int HIGHLIGHT_SUB_POSITION_SWAP_LEAD = 71;
+
+    /** 	Player position swap: minute */
+    public static final int HIGHLIGHT_SUB_POSITION_SWAP_MINUTE = 72;
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Informal events (HIGHLIGHT_KARTEN only)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

@@ -218,58 +218,37 @@ public class SpecialEventsDM
     			|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN ) {
     		// Non-weather SE
     		switch(highlight.getHighlightSubTyp()) {
-    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
-    			return unberechenbarIcon;
-
-    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-    			return unberechenbarIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
     			return cannonIcon;
-
+    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
+    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
-    			return unberechenbarIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
+    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR:
     			return unberechenbarIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
-    			return schnellIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
     			return schnellIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
     			return downIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-    			return cornerIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
     			return cornerIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
     			return oldmanIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
     			return babyIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
-    			return wingIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
     			return wingIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
     			return ballZaubererIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
     			return counterIcon;
-
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -289,6 +268,7 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
     		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
+    		case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF:
     			return miniModel.getHelper().getImageIcon4SpielHighlight(IMatchHighlight.HIGHLIGHT_ERFOLGREICH,
     					highlight.getHighlightSubTyp()); // Always return the icon for "SUCCESS" because we only want the chance type icon
     		}
@@ -382,14 +362,12 @@ public class SpecialEventsDM
         		case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
         		case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
         			return SPECIALTYSE;
-
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
         		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
         			return COUNTER;
-
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -399,7 +377,6 @@ public class SpecialEventsDM
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
         		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
         			return FREEKICK;
-
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -409,11 +386,9 @@ public class SpecialEventsDM
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
         		case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
         			return PENALTY;
-
         		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
         		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
         			return IFK;
-
         		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
         			return LONGSHOT;
     		}
@@ -515,6 +490,8 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
     			return PluginProperty.getString("UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR");
 
+    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR:
+    			return PluginProperty.getString("UNVORHERSEHBAR_EIGENTOR");
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
     			return PluginProperty.getString("UNVORHERSEHBAR_BALLVERLUST_TOR");
 
@@ -547,7 +524,8 @@ public class SpecialEventsDM
 
     		case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
     			return PluginProperty.getString("TECHNIKER_ANGREIFER_TOR");
-
+    		case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF:
+    			return PluginProperty.getString("QUICK_RUSH_STOPPED_BY_DEF");
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
@@ -639,7 +617,7 @@ public class SpecialEventsDM
         	case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
         		return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
         	case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-        		return getStandardsSpielerName(matchId) + " - " + highlight.getSpielerName();
+        		return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
         	case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
         		return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
         	case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
