@@ -223,7 +223,7 @@ public class BehaviourView extends JPanel {
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(this.behaviourComboBox, gbc);
 
-		JLabel whenLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.when"));
+		JLabel whenLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.When"));
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.insets = new Insets(4, 10, 4, 2);
