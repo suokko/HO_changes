@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
@@ -40,6 +41,7 @@ public class SubstitutionOverview extends JPanel {
 
 	private static final long serialVersionUID = -625638866350314110L;
 	private JTable substitutionTable;
+	private DetailsView detailsView;
 	private JButton editButton;
 	private JButton removeButton;
 	private EditAction editAction;
@@ -73,15 +75,17 @@ public class SubstitutionOverview extends JPanel {
 	private void tableSelectionChanged() {
 		int selectedRowIndex = this.substitutionTable.getSelectedRow();
 		boolean enable = false;
+		ISubstitution substitution = null;
 		if (selectedRowIndex != -1) {
-			ISubstitution sub = ((SubstitutionsTableModel) this.substitutionTable.getModel())
+			substitution = ((SubstitutionsTableModel) this.substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
-			if (sub.getOrderType() == ISubstitution.BEHAVIOUR) {
+			if (substitution.getOrderType() == ISubstitution.BEHAVIOUR) {
 				enable = true;
 			}
 		}
 		this.editButton.setEnabled(enable);
 		this.removeButton.setEnabled(enable);
+		this.detailsView.setSubstitution(substitution);
 	}
 
 	private void initComponents() {
@@ -92,7 +96,14 @@ public class SubstitutionOverview extends JPanel {
 		JScrollPane tableScrollPane = new JScrollPane();
 		tableScrollPane.getViewport().add(this.substitutionTable);
 
-		add(tableScrollPane, BorderLayout.CENTER);
+		this.detailsView = new DetailsView();
+		add(this.detailsView, BorderLayout.SOUTH);
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitPane.add(tableScrollPane, 0);
+		splitPane.add(this.detailsView, 1);
+		splitPane.setDividerLocation(160);
+		add(splitPane, BorderLayout.CENTER);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
@@ -124,7 +135,7 @@ public class SubstitutionOverview extends JPanel {
 		JButton positionSwapButton = new JButton();
 		gbc.gridy++;
 		gbc.insets = new Insets(2, 10, 2, 10);
-		gbc.weighty= 1.0;
+		gbc.weighty = 1.0;
 		buttonPanel.add(positionSwapButton, gbc);
 		positionSwapButton.setAction(new PositionSwapAction());
 
