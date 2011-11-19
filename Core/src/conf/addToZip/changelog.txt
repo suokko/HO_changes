@@ -16,6 +16,8 @@ Changelist HO! 1.431
 - Added new parameter to ratings, called postDelta, which is added after postMulti has been applied (defaults to 0).
 - Modified button behaviour on matches screen to be enabled/disabled appropriately
 - Fixed player regainer string not showing.
+- Fixed wrong set piece taker on corners
+- Added missing match events
 - Theme Manager is added - customize the looks! (Thanks fusselhirn!)
 	. See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
 
