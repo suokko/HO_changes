@@ -28,7 +28,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.lineup.Substitution;
 import de.hattrickorganizer.tools.Helper;
 
-public class BehaviourView extends JPanel {
+public class SubstitutionEditView extends JPanel {
 
 	private static final long serialVersionUID = 6041242290064429972L;
 	private JComboBox playerComboBox;
@@ -40,7 +40,7 @@ public class BehaviourView extends JPanel {
 	private JSlider whenSlider;
 	private WhenTextField whenTextField;
 
-	public BehaviourView() {
+	public SubstitutionEditView() {
 		initComponents();
 		addListeners();
 

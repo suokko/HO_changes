@@ -22,7 +22,7 @@ import de.hattrickorganizer.tools.GUIUtilities;
 public class BehaviourDialog extends JDialog {
 
 	private static final long serialVersionUID = 1875761460780943159L;
-	private BehaviourView behaviourView;
+	private SubstitutionEditView behaviourView;
 	private boolean canceled = true;
 
 	public BehaviourDialog(Dialog parent) {
@@ -66,7 +66,7 @@ public class BehaviourDialog extends JDialog {
 		gbc.insets = new Insets(12, 2, 8, 8);
 		buttonPanel.add(cancelButton, gbc);
 
-		this.behaviourView = new BehaviourView();
+		this.behaviourView = new SubstitutionEditView();
 		getContentPane().add(this.behaviourView, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
