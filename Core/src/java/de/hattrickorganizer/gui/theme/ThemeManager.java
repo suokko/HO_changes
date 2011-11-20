@@ -7,7 +7,10 @@ package de.hattrickorganizer.gui.theme;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -192,6 +195,17 @@ public final class ThemeManager {
 				throw new Exception("data.txt is missing");
 			p.load(zipFile.getInputStream(dataEntry));
 			theme = new ExtSchema(themeFile,p);
+			
+			// check
+			Collection<Object> c = p.values();
+			for (Iterator<Object> iterator = c.iterator(); iterator.hasNext();) {
+				String txt = iterator.next().toString().trim();
+				if(	Pattern.matches("([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)", txt)){
+					ZipEntry tmp = zipFile.getEntry(txt);
+						if(tmp == null)
+							throw new Exception(txt+" is missing");
+					}
+			} // for
 		}
 		return theme;
 	}
