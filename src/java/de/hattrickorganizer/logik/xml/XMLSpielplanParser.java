@@ -74,10 +74,17 @@ public class XMLSpielplanParser {
      */
     public final Spielplan parseSpielplanFromString(String input) {
         Document doc = null;
-
-        doc = XMLManager.instance().parseString(input);
-
-        return createSpielplan(doc);
+        Spielplan plan = null;
+        try
+        {
+        	doc = XMLManager.instance().parseString(input);
+        	plan = createSpielplan(doc);
+        }
+        catch (RuntimeException e) {
+            HOLogger.instance().error(getClass(),"parseSpielplanFromString: " + e + "\ninput xml was:\n " + input);
+            throw e;
+        }
+        return plan;
     }
 
     /**
