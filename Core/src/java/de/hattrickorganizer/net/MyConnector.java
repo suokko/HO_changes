@@ -900,6 +900,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 						if (authDialog.getUserCancel() == true)
 							return null;
 						m_OAAccessToken = authDialog.getAccessToken();
+						if (m_OAAccessToken == null)
+							m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
+									Helper.decryptString(gui.UserParameter.instance().TokenSecret)); 
 						break;
 					case 200:
 					case 201:
@@ -962,6 +965,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 						if (authDialog.getUserCancel() == true)
 							return null;
 						m_OAAccessToken = authDialog.getAccessToken();
+						if (m_OAAccessToken == null)
+							m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
+									Helper.decryptString(gui.UserParameter.instance().TokenSecret));
 						// Try again...
 						break;
 					case 200:
