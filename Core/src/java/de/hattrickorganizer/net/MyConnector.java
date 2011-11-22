@@ -106,7 +106,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (m_clInstance == null) {
 			m_clInstance = new MyConnector();
 		}
-
 		return m_clInstance;
 	}
 
@@ -891,36 +890,35 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 				m_OAService.signRequest(m_OAAccessToken, request);
 				response = request.send();
-				if (response.getCode() == 401) {
-
-					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
+				switch (response.getCode())
+				{
+					case 401:
+					{
+						if (authDialog == null) 
+							authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
+						authDialog.setVisible(true);
+						// A way out for a user unable to authorize for some reason
+						if (authDialog.getUserCancel() == true)
+							return null;
+						m_OAAccessToken = authDialog.getAccessToken();
 					}
-					authDialog.setVisible(true);
-					// A way out for a user unable to authorize for some reason
-					if (authDialog.getUserCancel() == true) {
-						return null;
-					}
-
-					m_OAAccessToken = authDialog.getAccessToken();
-
-					// Try again...
-				} else {				
-					tryAgain = false;
-
-					// We are done!
-				}	
+					case 200:
+					case 201:
+						// We are done!
+						tryAgain = false;
+						break;
+					case 407:
+						throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
+					default:
+						throw new RuntimeException("HTTP Response Code: " + response.getCode());
+				}
 			}	
-
 		} catch (Exception sox) {
-			HOLogger.instance().log(getClass(), sox);
-			if (showErrorMessage) {
-				JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
-			}
+			HOLogger.instance().error(getClass(), sox);
+			if (showErrorMessage)
+				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
 			return null;
-
 		}
-		
 		return getResultStream(response);
 	}
 
@@ -955,35 +953,35 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 				m_OAService.signRequest(m_OAAccessToken, request);
 				response = request.send();
-				if (response.getCode() == 401) {
-
-					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
-					}
-					authDialog.setVisible(true);
-					// A way out for a user unable to authorize for some reason
-					if (authDialog.getUserCancel() == true) {
-						return null;
-					}
-
-					m_OAAccessToken = authDialog.getAccessToken();
-
-					// Try again...
-				} else {				
-					tryAgain = false;
-
-					// We are done!
-				}	
+				switch (response.getCode())
+				{
+					case 401: {
+						if (authDialog == null)
+							authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
+						authDialog.setVisible(true);
+						// A way out for a user unable to authorize for some reason
+						if (authDialog.getUserCancel() == true)
+							return null;
+						m_OAAccessToken = authDialog.getAccessToken();
+						// Try again...
+					} 
+					case 200:
+					case 201:
+						// We are done!
+						tryAgain = false;
+						break;
+					case 407:
+						throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
+					default:
+						throw new RuntimeException("HTTP Response Code: " + response.getCode());
+				}
 			}
 		} catch (Exception sox) {
-			HOLogger.instance().log(getClass(), sox);
-			if (showErrorMessage) {
-				JOptionPane.showMessageDialog(null, surl, "error", JOptionPane.ERROR_MESSAGE);
-			}
+			HOLogger.instance().error(getClass(), sox);
+			if (showErrorMessage)
+				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
 			return null;
-
 		}
-
 		return getResultStream(response);
 	}
 
@@ -1048,7 +1046,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		request.addHeader("accept-language", "de");
 		request.addHeader("connection", "Keep-Alive");
 		request.addHeader("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
-
 		request.addHeader("accept-encoding", "gzip, deflate");
 		request.addHeader("user-agent", m_sIDENTIFIER);
 
