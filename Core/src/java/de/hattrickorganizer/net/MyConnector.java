@@ -893,7 +893,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 				switch (response.getCode())
 				{
 					case 401:
-					{
 						if (authDialog == null) 
 							authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
 						authDialog.setVisible(true);
@@ -901,7 +900,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 						if (authDialog.getUserCancel() == true)
 							return null;
 						m_OAAccessToken = authDialog.getAccessToken();
-					}
+						break;
 					case 200:
 					case 201:
 						// We are done!
@@ -955,7 +954,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				response = request.send();
 				switch (response.getCode())
 				{
-					case 401: {
+					case 401:
 						if (authDialog == null)
 							authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
 						authDialog.setVisible(true);
@@ -964,7 +963,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 							return null;
 						m_OAAccessToken = authDialog.getAccessToken();
 						// Try again...
-					} 
+						break;
 					case 200:
 					case 201:
 						// We are done!
