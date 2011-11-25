@@ -49,6 +49,8 @@ class StaerkenvergleichPanel extends ImagePanel {
     private JLabel m_clGastTaktikskill = new JLabel();
     private JLabel m_clGastTeamName = new JLabel();
     private JLabel m_clGastTeamTore = new JLabel();
+    private JLabel m_clGastTeamHatstats = new JLabel();
+    private JLabel m_clGastTeamLoddar = new JLabel();
     private JLabel m_clHeimEinstellung = new JLabel();
     private JLabel m_clHeimSelbstvertrauen = new JLabel();
     private JLabel m_clHeimSterne = new JLabel();
@@ -57,6 +59,8 @@ class StaerkenvergleichPanel extends ImagePanel {
     private JLabel m_clHeimTaktikskill = new JLabel();
     private JLabel m_clHeimTeamName = new JLabel();
     private JLabel m_clHeimTeamTore = new JLabel();
+    private JLabel m_clHeimTeamHatstats = new JLabel();
+    private JLabel m_clHeimTeamLoddar = new JLabel();
     private JLabel m_clMatchtyp = new JLabel();
     private JLabel m_clWetter = new JLabel();
     private JLabel m_clZuschauer = new JLabel();
@@ -185,7 +189,7 @@ class StaerkenvergleichPanel extends ImagePanel {
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Heim"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -197,7 +201,7 @@ class StaerkenvergleichPanel extends ImagePanel {
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Gast"));
         label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 1));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -302,37 +306,49 @@ class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(m_clGastSterne, constraints);
         panel.add(m_clGastSterne);
 
+        // Hatstats
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Hatstats"));
+        add(panel,label,layout,constraints,0,6);
+        add(panel,m_clHeimTeamHatstats,layout,constraints,1,6);
+        add(panel,m_clGastTeamHatstats,layout,constraints,4,6);
+                
+     // Loddar Stats
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("LoddarStats"));
+        add(panel,label,layout,constraints,0,7);
+        add(panel,m_clHeimTeamLoddar,layout,constraints,1,7);
+        add(panel,m_clGastTeamLoddar,layout,constraints,4,7);
+        
         //Einstellung
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Einstellung"));
-        add(panel,label,layout,constraints,0,6);
-        add(panel,m_clHeimEinstellung,layout,constraints,1,6);
-        add(panel,m_clGastEinstellung,layout,constraints,4,6);
+        add(panel,label,layout,constraints,0,8);
+        add(panel,m_clHeimEinstellung,layout,constraints,1,8);
+        add(panel,m_clGastEinstellung,layout,constraints,4,8);
 
         //Taktiktyp
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktik"));
-        add(panel,label,layout,constraints,0,7);
-        add(panel,m_clHeimTaktik,layout,constraints,1,7);
-        add(panel,m_clGastTaktik,layout,constraints,4,7);
+        add(panel,label,layout,constraints,0,9);
+        add(panel,m_clHeimTaktik,layout,constraints,1,9);
+        add(panel,m_clGastTaktik,layout,constraints,4,9);
  
         //Taktikskill
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
-        add(panel,label,layout,constraints,0,8);
-        add(panel,m_clHeimTaktikskill,layout,constraints,1,8);
-        add(panel,m_clGastTaktikskill,layout,constraints,4,8);
+        add(panel,label,layout,constraints,0,10);
+        add(panel,m_clHeimTaktikskill,layout,constraints,1,10);
+        add(panel,m_clGastTaktikskill,layout,constraints,4,10);
 
         //Stimmung
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung"));
-        add(panel,label,layout,constraints,0,9);
-        add(panel,m_clHeimStimmung,layout,constraints,1,9);
-        add(panel,m_clGastStimmung,layout,constraints,4,9);
+        add(panel,label,layout,constraints,0,11);
+        add(panel,m_clHeimStimmung,layout,constraints,1,11);
+        add(panel,m_clGastStimmung,layout,constraints,4,11);
 
         //Selbstvertrauen
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen"));
         label.setPreferredSize(new Dimension(label.getPreferredSize().width + 10,
                                              label.getPreferredSize().height));
-        add(panel,label,layout,constraints,0,10);
-        add(panel,m_clHeimSelbstvertrauen,layout,constraints,1,10);
-        add(panel,m_clGastSelbstvertrauen,layout,constraints,4,10);
+        add(panel,label,layout,constraints,0,12);
+        add(panel,m_clHeimSelbstvertrauen,layout,constraints,1,12);
+        add(panel,m_clGastSelbstvertrauen,layout,constraints,4,12);
 
         mainconstraints.gridx = 0;
         mainconstraints.gridy = 0;
@@ -374,7 +390,10 @@ class StaerkenvergleichPanel extends ImagePanel {
         m_clGastTeamName.setIcon(null);
         m_clHeimSterne.setText(" ");
         m_clGastSterne.setText(" ");
-
+        m_clHeimTeamHatstats.setText(" ");
+        m_clGastTeamHatstats.setText(" ");
+        m_clHeimTeamLoddar.setText(" ");
+        m_clGastTeamLoddar.setText(" ");
         m_clHeimEinstellung.setText("");
         m_clGastEinstellung.setText("");
         m_clHeimTaktik.setText("");
@@ -486,6 +505,12 @@ class StaerkenvergleichPanel extends ImagePanel {
             m_clHeimTeamRating.setRating(heimSterne * 2);
             m_clGastTeamRating.setRating(gastSterne * 2);
 
+            m_clHeimTeamHatstats.setText(details.getHomeHatStats() + "");
+            m_clGastTeamHatstats.setText(details.getAwayHatStats() + "");
+            
+            m_clHeimTeamLoddar.setText(Helper.round(details.getHomeLoddarStats(), 2) + "");
+            m_clGastTeamLoddar.setText(Helper.round(details.getAwayLoddarStats(), 2) + "");
+            
             //Einstellung
             String heimEinstellung = "";
             String gastEinstellung = "";
@@ -577,7 +602,10 @@ class StaerkenvergleichPanel extends ImagePanel {
             m_clGastTeamName.setIcon(null);
             m_clHeimSterne.setText(" ");
             m_clGastSterne.setText(" ");
-
+            m_clHeimTeamHatstats.setText(" ");
+            m_clGastTeamHatstats.setText(" ");
+            m_clHeimTeamLoddar.setText(" ");
+            m_clGastTeamLoddar.setText(" ");
             m_clHeimEinstellung.setText("");
             m_clGastEinstellung.setText("");
             m_clHeimTaktik.setText("");
@@ -588,9 +616,7 @@ class StaerkenvergleichPanel extends ImagePanel {
             m_clGastStimmung.setText("");
             m_clHeimSelbstvertrauen.setText("");
             m_clGastSelbstvertrauen.setText("");
-
         }
-
         repaint();
     }
 }
