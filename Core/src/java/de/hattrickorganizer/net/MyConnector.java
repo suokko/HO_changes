@@ -226,7 +226,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
-		String LineupString = "";
+		String lineupString = "";
 		String url = htUrl + "?file=matchlineup&version=" +
 		VERSION_MATCHLINEUP;
 
@@ -237,34 +237,34 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
-		LineupString = getWebPage(url, true);
+		lineupString = getWebPage(url, true);
 		if (DEBUGSAVE) {
 			FileWriter fw = new FileWriter(new File(SAVEDIR+"matchlineup_m"
 					+ matchId + "_t" + teamId + "_"
 					+ System.currentTimeMillis() + ".xml"));
-			fw.write(LineupString);
+			fw.write(lineupString);
 			fw.flush();
 			fw.close();
 		}
-		return LineupString; 
+		return lineupString; 
 	}
 
 	/**
 	 * lädt die Aufstellung zu einem Spiel
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
-		String MatchOrderString = "";
+		String matchOrderString = "";
 		String url = htUrl + "?file=matchorders&version="
 		+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
-		MatchOrderString = getWebPage(url, true);
+		matchOrderString = getWebPage(url, true);
 		if (DEBUGSAVE) {
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchorders_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
-			fw.write(MatchOrderString);
+			fw.write(matchOrderString);
 			fw.flush();
 			fw.close();
 		}
-		return MatchOrderString;
+		return matchOrderString;
 	}
 
 	public String setMatchOrder(int matchId, String orderString) throws IOException {
@@ -287,21 +287,21 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchdetails(int matchId) throws IOException {
-		String MatchDetailsString = "";
+		String matchDetailsString = "";
 		String url = htUrl + "?file=matchdetails";
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
 		url += "&matchEvents=true";
-		MatchDetailsString = getWebPage(url, true);
+		matchDetailsString = getWebPage(url, true);
 		if (DEBUGSAVE) {
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchdetails_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
-			fw.write(MatchDetailsString);
+			fw.write(matchDetailsString);
 			fw.flush();
 			fw.close();
 		} 
-		return MatchDetailsString;
+		return matchDetailsString;
 	}
 
 	/**
