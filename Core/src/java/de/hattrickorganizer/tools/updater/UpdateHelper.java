@@ -98,12 +98,8 @@ public class UpdateHelper {
                         nonVisibles.add(tmp);
                     }
                 }
-                 // if PLUGIN
             }
-             // elements
         }
-         // for
-
         return list;
     }
 
@@ -116,21 +112,15 @@ public class UpdateHelper {
 
         try {
             FileOutputStream outStream = new FileOutputStream(targetFile);
-//            if ((gui.UserParameter.instance().LoginName == null) || (gui.UserParameter.instance().LoginName.length() == 0)) {
-//                showDialog = true;
-//            }
-
-            InputStream in = MyConnector.instance().getFileFromWeb(urlName, showDialog, true);
+            InputStream in = MyConnector.instance().getFileFromWeb(urlName, true);
             BufferedOutputStream out = new BufferedOutputStream(outStream);
-
-            while (true) {
+            while (true) 
+            {
                 data = in.read();
-                if (data == -1) {
+                if (data == -1)
                     break;
-                }
                 out.write(data);
             }
-
             out.flush();
             out.close();
             in.close();

@@ -98,7 +98,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(25);
             m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1).toString());
             waitDialog.setValue(30);
-            m_vSpieler = new xmlPlayersParser().parsePlayersFromString(mc.getPlayersAsp());
+            m_vSpieler = new xmlPlayersParser().parsePlayersFromString(mc.getPlayers());
             waitDialog.setValue(35);
             m_htEconomy = new xmlEconomyParser().parseEconomyFromString(mc.getEconomy());
             waitDialog.setValue(40);
@@ -108,7 +108,7 @@ public class ConvertXml2Hrf {
 
             //MatchOrder
             waitDialog.setValue(50);
-            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatchesASP(Integer.parseInt(m_htTeamdetails.get("TeamID").toString()), false));
+            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatches(Integer.parseInt(m_htTeamdetails.get("TeamID").toString()), false));
             waitDialog.setValue(52);
 
             // Automatisch alle MatchLineups runterladen

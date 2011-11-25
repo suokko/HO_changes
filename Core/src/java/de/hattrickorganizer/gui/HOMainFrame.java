@@ -155,57 +155,59 @@ public final class HOMainFrame extends JFrame
 	private LineupPanel m_jpAufstellung;
 	private InfoPanel m_jpInfoPanel;
 
+	private static HOVerwaltung m_hov = HOVerwaltung.instance();
+	private static UserParameter m_up = UserParameter.instance();
 	private InformationsPanel m_jpInformation;
 	private InjuryDialog injuryTool;
-	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
-	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
-	private final JMenu m_jmPluginMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
-	private final JMenu m_jmPluginsRefresh = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
-	private final JMenu m_jmToolsMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Tools"));
-	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
-	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
+	private final JMenu m_jmAbout = new JMenu(m_hov.getLanguageString("About"));
+	private final JMenu m_jmDatei = new JMenu(m_hov.getLanguageString("Datei"));
+	private final JMenu m_jmPluginMenu = new JMenu(m_hov.getLanguageString("Plugins"));
+	private final JMenu m_jmPluginsRefresh = new JMenu(m_hov.getLanguageString("Plugins"));
+	private final JMenu m_jmToolsMenu = new JMenu(m_hov.getLanguageString("Tools"));
+	private final JMenu m_jmUpdating = new JMenu(m_hov.getLanguageString("Refresh"));
+	private final JMenu m_jmVerschiedenes = new JMenu(m_hov.getLanguageString("Funktionen"));
 
 	// Menus
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
-	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
-	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
-	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Download"));
-	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Forum"));
-	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Hattrick"));
-	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
-	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
+	private final JMenuItem m_jmBeendenItem = new JMenuItem(m_hov.getLanguageString("Beenden"));
+	private final JMenuItem m_jmCreditsItem = new JMenuItem(m_hov.getLanguageString("Credits"));
+	private final JMenuItem m_jmDownloadItem = new JMenuItem(m_hov.getLanguageString("Download"));
+	private final JMenuItem m_jmForumItem = new JMenuItem(m_hov.getLanguageString("Forum"));
+	private final JMenuItem m_jmHattrickItem = new JMenuItem(m_hov.getLanguageString("Hattrick"));
+	private final JMenuItem m_jmHomepageItem = new JMenuItem(m_hov.getLanguageString("Homepage"));
+	private final JMenuItem m_jmFullScreenItem = new JMenuItem(m_hov.getLanguageString("FullScreen.toggle"));
 
-	private final JMenuItem m_jmImportItem =new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
-	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
-	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
-	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen")
-			+ " (7 " + HOVerwaltung.instance().getLanguageString("Wochen") + ")");
-	private final JMenuItem m_jmiArena = new JMenuItem(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
-	private final JMenuItem m_jmiAufstellung = new JMenuItem(HOVerwaltung.instance().getLanguageString("Aufstellung"));
-	private final JMenuItem m_jmiFlags = new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
-	private final JMenuItem m_jmiHO = new JMenuItem("HO!");
-	private final JMenuItem m_jmiHObeta = new JMenuItem("HO! (Beta)");
-	private final JMenuItem m_jmiEPV = new JMenuItem("EPV");
-	private final JMenuItem m_jmiRatings = new JMenuItem("Ratings");
+	private final JMenuItem m_jmImportItem =new JMenuItem(m_hov.getLanguageString("HRFImportieren"));
+	private final JMenuItem m_jmOptionen = new JMenuItem(m_hov.getLanguageString("Optionen"));
+	private final JMenuItem m_jmTraining = new JMenuItem(m_hov.getLanguageString("SubskillsBerechnen"));
+	private final JMenuItem m_jmTraining2 = new JMenuItem(m_hov.getLanguageString("SubskillsBerechnen")
+			+ " (7 " + m_hov.getLanguageString("Wochen") + ")");
+	private final JMenuItem m_jmiArena = new JMenuItem(m_hov.getLanguageString("ArenaSizer"));
+	private final JMenuItem m_jmiAufstellung = new JMenuItem(m_hov.getLanguageString("Aufstellung"));
+	private final JMenuItem m_jmiFlags = new JMenuItem(m_hov.getLanguageString("Flaggen"));
+	private final JMenuItem m_jmiHO = new JMenuItem(m_hov.getLanguageString("HO"));
+	private final JMenuItem m_jmiHObeta = new JMenuItem(m_hov.getLanguageString("HO") + " (" + m_hov.getLanguageString("Beta") +")");
+	private final JMenuItem m_jmiEPV = new JMenuItem(m_hov.getLanguageString("EPV"));
+	private final JMenuItem m_jmiRatings = new JMenuItem(m_hov.getLanguageString("Ratings"));
 
-	private final JMenuItem m_jmiInjuryCalculator = new JMenuItem(HOVerwaltung.instance().getLanguageString("InjuryCalculator"));
-	private final JMenuItem m_jmiKeeperTool = new JMenuItem(HOVerwaltung.instance().getLanguageString("KeeperTool"));
-	private final JMenuItem m_jmiNotepad = new JMenuItem(HOVerwaltung.instance().getLanguageString("Notizen"));
-	private final JMenuItem m_jmiExporter = new JMenuItem("XML Exporter");
-	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem("CSV PlayerExport"); // TODO L10N
-	private final JMenuItem m_jmiDbCleanupTool= new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
+	private final JMenuItem m_jmiInjuryCalculator = new JMenuItem(m_hov.getLanguageString("InjuryCalculator"));
+	private final JMenuItem m_jmiKeeperTool = new JMenuItem(m_hov.getLanguageString("KeeperTool"));
+	private final JMenuItem m_jmiNotepad = new JMenuItem(m_hov.getLanguageString("Notizen"));
+	private final JMenuItem m_jmiExporter = new JMenuItem(m_hov.getLanguageString("XMLExporter"));
+	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem(m_hov.getLanguageString("CSVExporter"));
+	private final JMenuItem m_jmiDbCleanupTool= new JMenuItem(m_hov.getLanguageString("dbcleanup"));
 
-	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
-	private final JMenuItem m_jmiLigatabelle = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
-	private final JMenuItem m_jmiPluginsDelete = new JMenuItem(HOVerwaltung.instance().getLanguageString("loeschen"));
-	private final JMenuItem m_jmiPluginsLibrary = new JMenuItem(HOVerwaltung.instance().getLanguageString("Libraries"));
-	private final JMenuItem m_jmiPluginsNormal = new JMenuItem(HOVerwaltung.instance().getLanguageString("Normal"));
-	private final JMenuItem m_jmiSpiele = new JMenuItem(HOVerwaltung.instance().getLanguageString("Spiele"));
-	private final JMenuItem m_jmiSpieleranalyse = new JMenuItem(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
-	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
-	private final JMenuItem m_jmiStatistik = new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
-	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
-	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
+	private final JMenuItem m_jmiLanguages = new JMenuItem(m_hov.getLanguageString("Sprachdatei"));
+	private final JMenuItem m_jmiLigatabelle = new JMenuItem(m_hov.getLanguageString("Ligatabelle"));
+	private final JMenuItem m_jmiPluginsDelete = new JMenuItem(m_hov.getLanguageString("loeschen"));
+	private final JMenuItem m_jmiPluginsLibrary = new JMenuItem(m_hov.getLanguageString("Libraries"));
+	private final JMenuItem m_jmiPluginsNormal = new JMenuItem(m_hov.getLanguageString("Normal"));
+	private final JMenuItem m_jmiSpiele = new JMenuItem(m_hov.getLanguageString("Spiele"));
+	private final JMenuItem m_jmiSpieleranalyse = new JMenuItem(m_hov.getLanguageString("SpielerAnalyse"));
+	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(m_hov.getLanguageString("Spieleruebersicht"));
+	private final JMenuItem m_jmiStatistik = new JMenuItem(m_hov.getLanguageString("Statistik"));
+	private final JMenuItem m_jmiTransferscout = new JMenuItem(m_hov.getLanguageString("TransferScout"));
+	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(m_hov.getLanguageString("Verschiedenes"));
 
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
@@ -432,7 +434,7 @@ public final class HOMainFrame extends JFrame
 			if (JOptionPane.showConfirmDialog(this,
 					"Depending on database volume this process takes several minutes. Start recalculation ?", "Subskill Recalculation",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-				HOVerwaltung.instance().recalcSubskills(true, null);
+				m_hov.recalcSubskills(true, null);
 			}
 		} else if (source.equals(m_jmTraining2)) { // recalc training (7 weeks)
 			Calendar cal = Calendar.getInstance();
@@ -442,7 +444,7 @@ public final class HOMainFrame extends JFrame
 					+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?", "Subskill Recalculation",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
-				HOVerwaltung.instance().recalcSubskills(true, from);
+				m_hov.recalcSubskills(true, from);
 			}
 		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen mode
 			FullScreen.instance().toggle(this);
@@ -482,7 +484,7 @@ public final class HOMainFrame extends JFrame
 			keeperTool.reload();
 			keeperTool.setVisible(true);
 		} else if (source.equals(m_jmiNotepad)) {
-			NotepadDialog notepad = new NotepadDialog(this, HOVerwaltung.instance().getLanguageString("Notizen"));
+			NotepadDialog notepad = new NotepadDialog(this, m_hov.getLanguageString("Notizen"));
 			notepad.setVisible(true);
 		} else if (source.equals(m_jmiExporter)) {
 			XMLExporter exporter = new XMLExporter();
@@ -543,7 +545,7 @@ public final class HOMainFrame extends JFrame
 		HOLogger.instance().debug(getClass(), "Shutting down HO!");
 
 		//Keine Sicherheitsabfrage mehr
-		//int value = JOptionPane.showConfirmDialog( this, model.HOVerwaltung.instance().getLanguageString("BeendenMeldung"), model.HOVerwaltung.instance().getLanguageString("BeendenTitel"), JOptionPane.YES_NO_OPTION);
+		//int value = JOptionPane.showConfirmDialog( this, model.m_hov.getLanguageString("BeendenMeldung"), model.m_hov.getLanguageString("BeendenTitel"), JOptionPane.YES_NO_OPTION);
 		//        int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
 		//        if ( value == JOptionPane.OK_OPTION )
 		//aktuelle UserParameter speichern
@@ -621,7 +623,7 @@ public final class HOMainFrame extends JFrame
 
 		//Irgendein Fehler -> neue Datei aussuchen!
 		//new gui.menue.optionen.InitOptionsDialog();
-		gui.UserParameter.instance().sprachDatei = "English";
+		m_up.sprachDatei = "English";
 	}
 
 	/**
@@ -639,39 +641,39 @@ public final class HOMainFrame extends JFrame
 		//Spieler
 		m_jpSpielerUebersicht = new SpielerUebersichtsPanel();
 
-		if (!gui.UserParameter.instance().tempTabSpieleruebersicht) {
+		if (!m_up.tempTabSpieleruebersicht) {
 			m_jtpTabbedPane.addTab(
-				HOVerwaltung.instance().getLanguageString("Spieleruebersicht"),
+				m_hov.getLanguageString("Spieleruebersicht"),
 				m_jpSpielerUebersicht);
 		}
 
 		//Aufstellung
 		m_jpAufstellung = new LineupPanel();
 
-		if (!gui.UserParameter.instance().tempTabAufstellung) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), m_jpAufstellung);
+		if (!m_up.tempTabAufstellung) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Aufstellung"), m_jpAufstellung);
 		}
 
 		//Tabelle
 		m_jpLigaTabelle = new LigaTabellePanel();
 
-		if (!gui.UserParameter.instance().tempTabLigatabelle) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"), m_jpLigaTabelle);
+		if (!m_up.tempTabLigatabelle) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Ligatabelle"), m_jpLigaTabelle);
 		}
 
 		//Spiele
 		m_jpSpielePanel = new SpielePanel();
 
-		if (!gui.UserParameter.instance().tempTabSpiele) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), m_jpSpielePanel);
+		if (!m_up.tempTabSpiele) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Spiele"), m_jpSpielePanel);
 		}
 
 		//SpielerAnalyse
 		m_jpSpielerAnalysePanel = new SpielerAnalyseMainPanel();
 
-		if (!gui.UserParameter.instance().tempTabSpieleranalyse) {
+		if (!m_up.tempTabSpieleranalyse) {
 			m_jtpTabbedPane.addTab(
-				HOVerwaltung.instance().getLanguageString("SpielerAnalyse"),
+				m_hov.getLanguageString("SpielerAnalyse"),
 				m_jpSpielerAnalysePanel);
 		}
 
@@ -679,39 +681,39 @@ public final class HOMainFrame extends JFrame
 		//        m_jtpTraining = new JTabbedPane();
 		//        //Trainingshilfe
 		//        m_jpTrainingshelfer = new TrainingsPanel();
-		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"), m_jpTrainingshelfer );
+		//        m_jtpTraining.addTab ( model.m_hov.getLanguageString("Training"), m_jpTrainingshelfer );
 		//        //SkillAenderung
 		//        m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
-		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training") + " 2", m_jpSkillAenderungsPanel );
+		//        m_jtpTraining.addTab ( model.m_hov.getLanguageString("Training") + " 2", m_jpSkillAenderungsPanel );
 		//        //Adden
-		//        m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"), m_jtpTraining );
+		//        m_jtpTabbedPane.addTab ( model.m_hov.getLanguageString("Training"), m_jtpTraining );
 		//
 		//Transferscout
 		m_jpTransferScout = new TransferScoutPanel();
 
-		if (!gui.UserParameter.instance().tempTabTransferscout) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TransferScout"), m_jpTransferScout);
+		if (!m_up.tempTabTransferscout) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("TransferScout"), m_jpTransferScout);
 		}
 
 		//Arena
 		m_jpArenaSizer = new ArenaSizerPanel();
 
-		if (!gui.UserParameter.instance().tempTabArenasizer) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ArenaSizer"), m_jpArenaSizer);
+		if (!m_up.tempTabArenasizer) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("ArenaSizer"), m_jpArenaSizer);
 		}
 
 		//Sonstiges
 		m_jpInformation = new InformationsPanel();
 
-		if (!gui.UserParameter.instance().tempTabInformation) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"), m_jpInformation);
+		if (!m_up.tempTabInformation) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Verschiedenes"), m_jpInformation);
 		}
 
 		//Statistiken
 		m_jpStatistikPanel = new StatistikMainPanel();
 
-		if (!gui.UserParameter.instance().tempTabStatistik) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), m_jpStatistikPanel);
+		if (!m_up.tempTabStatistik) {
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Statistik"), m_jpStatistikPanel);
 		}
 
 		//Matchpaneltest
@@ -956,13 +958,13 @@ public final class HOMainFrame extends JFrame
 	 * Proxyeinstellungen
 	 */
 	public void initProxy() {
-		if (gui.UserParameter.instance().ProxyAktiv) {
-			MyConnector.instance().setProxyHost(gui.UserParameter.instance().ProxyHost);
-			MyConnector.instance().setUseProxy(gui.UserParameter.instance().ProxyAktiv);
-			MyConnector.instance().setProxyPort(gui.UserParameter.instance().ProxyPort);
-			MyConnector.instance().setProxyAuthentifactionNeeded(gui.UserParameter.instance().ProxyAuthAktiv);
-			MyConnector.instance().setProxyUserName(gui.UserParameter.instance().ProxyAuthName);
-			MyConnector.instance().setProxyUserPWD(gui.UserParameter.instance().ProxyAuthPassword);
+		if (m_up.ProxyAktiv) {
+			MyConnector.instance().setProxyHost(m_up.ProxyHost);
+			MyConnector.instance().setUseProxy(m_up.ProxyAktiv);
+			MyConnector.instance().setProxyPort(m_up.ProxyPort);
+			MyConnector.instance().setProxyAuthentifactionNeeded(m_up.ProxyAuthAktiv);
+			MyConnector.instance().setProxyUserName(m_up.ProxyAuthName);
+			MyConnector.instance().setProxyUserPWD(m_up.ProxyAuthPassword);
 			MyConnector.instance().enableProxy();
 		}
 	}
@@ -996,10 +998,10 @@ public final class HOMainFrame extends JFrame
 		//Die Währung auf die aus dem HRF setzen
 		try {
 			float faktorgeld =
-				(float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
+				(float) m_hov.getModel().getXtraDaten().getCurrencyRate();
 
 			if (faktorgeld > -1) {
-				gui.UserParameter.instance().faktorGeld = faktorgeld;
+				m_up.faktorGeld = faktorgeld;
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, "Währungsanpassung gescheitert!");
@@ -1051,57 +1053,57 @@ public final class HOMainFrame extends JFrame
 		switch (tabnumber) {
 			case SPIELERUEBERSICHT :
 				component = m_jpSpielerUebersicht;
-				titel = HOVerwaltung.instance().getLanguageString("Spieleruebersicht");
-				temporaer = gui.UserParameter.instance().tempTabSpieleruebersicht;
+				titel = m_hov.getLanguageString("Spieleruebersicht");
+				temporaer = m_up.tempTabSpieleruebersicht;
 				break;
 
 			case AUFSTELLUNG :
 				component = m_jpAufstellung;
 				m_jpAufstellung.update(); // - blaghaid
-				titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
-				temporaer = gui.UserParameter.instance().tempTabAufstellung;
+				titel = m_hov.getLanguageString("Aufstellung");
+				temporaer = m_up.tempTabAufstellung;
 				break;
 
 			case LIGATABELLE :
 				component = m_jpLigaTabelle;
-				titel = HOVerwaltung.instance().getLanguageString("Ligatabelle");
-				temporaer = gui.UserParameter.instance().tempTabLigatabelle;
+				titel = m_hov.getLanguageString("Ligatabelle");
+				temporaer = m_up.tempTabLigatabelle;
 				break;
 
 			case SPIELE :
 				component = m_jpSpielePanel;
-				titel = HOVerwaltung.instance().getLanguageString("Spiele");
-				temporaer = gui.UserParameter.instance().tempTabSpiele;
+				titel = m_hov.getLanguageString("Spiele");
+				temporaer = m_up.tempTabSpiele;
 				break;
 
 			case SPIELERANALYSE :
 				component = m_jpSpielerAnalysePanel;
-				titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse");
-				temporaer = gui.UserParameter.instance().tempTabSpieleranalyse;
+				titel = m_hov.getLanguageString("SpielerAnalyse");
+				temporaer = m_up.tempTabSpieleranalyse;
 				break;
 
 			case STATISTIK :
 				component = m_jpStatistikPanel;
-				titel = HOVerwaltung.instance().getLanguageString("Statistik");
-				temporaer = gui.UserParameter.instance().tempTabStatistik;
+				titel = m_hov.getLanguageString("Statistik");
+				temporaer = m_up.tempTabStatistik;
 				break;
 
 			case TRANSFERSCOUT :
 				component = m_jpTransferScout;
-				titel = HOVerwaltung.instance().getLanguageString("TransferScout");
-				temporaer = gui.UserParameter.instance().tempTabTransferscout;
+				titel = m_hov.getLanguageString("TransferScout");
+				temporaer = m_up.tempTabTransferscout;
 				break;
 
 			case ARENASIZER :
 				component = m_jpArenaSizer;
-				titel = HOVerwaltung.instance().getLanguageString("ArenaSizer");
-				temporaer = gui.UserParameter.instance().tempTabArenasizer;
+				titel = m_hov.getLanguageString("ArenaSizer");
+				temporaer = m_up.tempTabArenasizer;
 				break;
 
 			case INFORMATIONEN :
 				component = m_jpInformation;
-				titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");
-				temporaer = gui.UserParameter.instance().tempTabInformation;
+				titel = m_hov.getLanguageString("Verschiedenes");
+				temporaer = m_up.tempTabInformation;
 				break;
 
 			default :
@@ -1379,90 +1381,90 @@ public final class HOMainFrame extends JFrame
 
 		m_jtpTabbedPane.removeChangeListener(this);
 
-		if (gui.UserParameter.instance().tempTabSpieleruebersicht) {
+		if (m_up.tempTabSpieleruebersicht) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
+					m_hov.getLanguageString("Spieleruebersicht"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabAufstellung) {
+		if (m_up.tempTabAufstellung) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("Aufstellung"));
+					m_hov.getLanguageString("Aufstellung"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabLigatabelle) {
+		if (m_up.tempTabLigatabelle) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("Ligatabelle"));
+					m_hov.getLanguageString("Ligatabelle"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabSpiele) {
+		if (m_up.tempTabSpiele) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("Spiele"));
+					m_hov.getLanguageString("Spiele"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabSpieleranalyse) {
+		if (m_up.tempTabSpieleranalyse) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
+					m_hov.getLanguageString("SpielerAnalyse"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabStatistik) {
+		if (m_up.tempTabStatistik) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("Statistik"));
+					m_hov.getLanguageString("Statistik"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabTransferscout) {
+		if (m_up.tempTabTransferscout) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("TransferScout"));
+					m_hov.getLanguageString("TransferScout"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabArenasizer) {
+		if (m_up.tempTabArenasizer) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("ArenaSizer"));
+					m_hov.getLanguageString("ArenaSizer"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-		if (gui.UserParameter.instance().tempTabInformation) {
+		if (m_up.tempTabInformation) {
 			index =
 				m_jtpTabbedPane.indexOfTab(
-					HOVerwaltung.instance().getLanguageString("Verschiedenes"));
+					m_hov.getLanguageString("Verschiedenes"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1662,9 +1664,6 @@ public final class HOMainFrame extends JFrame
 		//Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
 
-		//.setArgs ( args );
-		HOVerwaltung.instance();
-
 		//Beim ersten Start Sprache erfragen
 		if (DBZugriff.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
@@ -1683,9 +1682,9 @@ public final class HOMainFrame extends JFrame
 		// TODO
 		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
 
-		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei, loader);
+		m_hov.setResource(UserParameter.instance().sprachDatei, loader);
 		interuptionsWindow.setInfoText("Load latest Data");
-		HOVerwaltung.instance().loadLatestHoModel();
+		m_hov.loadLatestHoModel();
 		interuptionsWindow.setInfoText("Load  XtraDaten");
 
 		// TableColumn
@@ -1693,10 +1692,10 @@ public final class HOMainFrame extends JFrame
 
 		//Die Währung auf die aus dem HRF setzen
 		float faktorgeld =
-			(float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
+			(float) m_hov.getModel().getXtraDaten().getCurrencyRate();
 
 		if (faktorgeld > -1) {
-			gui.UserParameter.instance().faktorGeld = faktorgeld;
+			m_up.faktorGeld = faktorgeld;
 		}
 
 		//Training

@@ -20,7 +20,9 @@ Changelist HO! 1.431
 - Added missing match events
 - Theme Manager is added - customize the looks! (Thanks fusselhirn!)
 	. See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
-
+- HRF saving is now optional
+- Added rest of HOMainFrame non language string to language files
+- Reworked Download to abort on failure
 
 Language updates:
 -----------------

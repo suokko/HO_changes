@@ -31,6 +31,8 @@ import de.hattrickorganizer.gui.login.ProxyDialog;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ho.HOTheme;
+import de.hattrickorganizer.gui.utils.OnlineWorker;
+import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.extension.StadiumCreator;
@@ -220,59 +222,72 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 * The download action.
 	 */
 	private void startDownload() {
+		boolean bOK = false;
+		OnlineWorker worker = HOMainFrame.instance().getOnlineWorker();
+		HOModel model = HOVerwaltung.instance().getModel();
 		if (m_jchEigenenSpiele.isSelected()) {
-			// Nur, wenn der Spielplan gezogen wurde auch die Lineups holen
-			if (HOMainFrame.instance().getOnlineWorker().getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), false)) {
-				// Zu allen vorhandenen Matches die Lineups holen, wenn noch
-				// nicht vorhanden
-				HOMainFrame.instance().getOnlineWorker().getAllLineups();
+			// Only get lineups for own fixtures
+			bOK = worker.getMatches(model.getBasics().getTeamId(), false);
+			if (bOK)
+			{
+				worker.getAllLineups();
 				StadiumCreator.extractHistoric();
 			}
 		}
-
-		if (m_jchMatchArchiv.isSelected()) {
-			final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
-			tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
-			if (HOMainFrame.instance().getOnlineWorker().getMatchArchiv(HOVerwaltung.instance().getModel().getBasics().getTeamId(),
-					tempdate)) {
-				// Zu allen vorhandenen Matches die Lineups holen, wenn noch
-				// nicht vorhanden
-				HOMainFrame.instance().getOnlineWorker().getAllLineups();
+		if (bOK)
+		{
+			if (m_jchMatchArchiv.isSelected()) {
+				final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
+				tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
+				bOK = worker.getMatchArchive(model.getBasics().getTeamId(), tempdate);
+				if (bOK)
+				{
+					// Get all lineups for matches, if they don't exist already
+					worker.getAllLineups();
+				}
 			}
-		}
-
-		if (m_jchSpielplan.isSelected()) {
-			// Immer aktuelle Saison und Liga
-			// ligaid );
-			HOMainFrame.instance().getOnlineWorker().getSpielplan(-1, -1);
-			StandingCreator.extractActual();
-		}
-
-		if (m_jchAlterSpielplan.isSelected()) {
-			if (m_jlAlterSeasons.getSelectedValues() != null) {
-				final Object[] saisons = m_jlAlterSeasons.getSelectedValues();
-
-				for (int i = 0; i < saisons.length; i++) {
-					if (saisons[i] instanceof CBItem) {
-						// Liga
-						final int saisonid = ((CBItem) saisons[i]).getId();
-
-						// Abfragen!
-						final LigaAuswahlDialog auswahlDialog = new LigaAuswahlDialog(this, saisonid);
-						final int ligaid = auswahlDialog.getLigaID();
-
-						if (ligaid > -2) {
-							HOMainFrame.instance().getOnlineWorker().getSpielplan(saisonid, ligaid);
+			if (bOK)
+			{
+				if (m_jchSpielplan.isSelected()) {
+					// Always get actual season and league
+					bOK = worker.getSpielplan(-1, -1);
+					if (bOK)
+						StandingCreator.extractActual();
+				}
+				if (bOK)
+				{
+					if (m_jchAlterSpielplan.isSelected()) 
+					{
+						if (m_jlAlterSeasons.getSelectedValues() != null) 
+						{
+							final Object[] saisons = m_jlAlterSeasons.getSelectedValues();
+							for (int i = 0; i < saisons.length; i++) {
+								if (saisons[i] instanceof CBItem) {
+									// Liga
+									final int saisonid = ((CBItem)saisons[i]).getId();
+			
+									// Abfragen!
+									final LigaAuswahlDialog auswahlDialog = new LigaAuswahlDialog(this, saisonid);
+									final int ligaid = auswahlDialog.getLigaID();
+			
+									if (ligaid > -2) {
+										bOK = worker.getSpielplan(saisonid, ligaid);
+									}
+									if (!bOK)
+										break;
+								}
+							}
 						}
+					}
+					if (bOK)
+					{
+						// Als letztes, damit die Matches für die Trainingsberechnung schon
+						// vorhanden sind
+						if (m_jchHRF.isSelected()) 
+							worker.getHrf();
 					}
 				}
 			}
-		}
-
-		// Als letztes, damit die Matches für die Trainingsberechnung schon
-		// vorhanden sind
-		if (m_jchHRF.isSelected()) {
-			HOMainFrame.instance().getOnlineWorker().getHrf();
 		}
 	}
 }
