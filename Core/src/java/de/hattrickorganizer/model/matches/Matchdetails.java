@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.ITeamLineup;
 import de.hattrickorganizer.model.TeamLineup;
@@ -1167,5 +1168,116 @@ public class Matchdetails implements plugins.IMatchDetails {
 		this.soldVIP = soldVIP;
 	}
 
+	public final int getHomeHatStats() 
+    {
+    	return (getHomeMidfield() * 3) + getHomeLeftAtt() + 
+    			getHomeRightAtt() + getHomeMidAtt() + 
+    			getHomeMidDef() + getHomeLeftDef() + 
+    			getHomeRightDef();
+    }
+	public final int getAwayHatStats() 
+    {
+    	return (getGuestMidfield() * 3) + getGuestLeftAtt() + 
+		getGuestRightAtt() + getGuestMidAtt() + 
+		getGuestMidDef() + getGuestLeftDef() + 
+		getGuestRightDef();
+    }
+	public final double getHomeLoddarStats()
+	{
+        final double MIDFIELD_SHIFT = 0.0;
+        final double COUNTERATTACK_WEIGHT = 0.25;
+        final double DEFENSE_WEIGHT = 0.47;
+        final double ATTACK_WEIGHT = 1 - DEFENSE_WEIGHT;
+        final double CENTRAL_WEIGHT = 0.37;
+        final double WINGER_WEIGTH = (1 - CENTRAL_WEIGHT) / 2d;
 
+        double correctedCentralWeigth = CENTRAL_WEIGHT;
+
+        switch (getHomeTacticType()) {
+            case IMatchDetails.TAKTIK_MIDDLE:
+                correctedCentralWeigth = CENTRAL_WEIGHT + (((0.2 * (getHomeTacticSkill() - 1)) / 19d) + 0.2);
+                break;
+
+            case IMatchDetails.TAKTIK_WINGS:
+                correctedCentralWeigth = CENTRAL_WEIGHT - (((0.2 * (getHomeTacticSkill() - 1)) / 19d) + 0.2);
+                break;
+
+            default:
+                break;
+        }
+
+        final double correctedWingerWeight = (1 - correctedCentralWeigth) / 2d;
+
+        double counterCorrection = 0;
+
+        if (getHomeTacticType() == IMatchDetails.TAKTIK_KONTER) {
+            counterCorrection = (COUNTERATTACK_WEIGHT * 2 * getHomeTacticSkill()) / (getHomeTacticSkill() + 20);
+        }
+
+        // Calculate attack rating
+        final double attackStrength = (ATTACK_WEIGHT + counterCorrection) * ((correctedCentralWeigth * hq(getHomeMidAtt()))
+                                      + (correctedWingerWeight * (hq(getHomeLeftAtt()) + hq(getHomeRightAtt()))));
+
+        // Calculate defense rating
+        final double defenseStrength = DEFENSE_WEIGHT * ((CENTRAL_WEIGHT * hq(getHomeMidDef()))
+                                       + (WINGER_WEIGTH * (hq(getHomeLeftDef()) + hq(getHomeRightDef()))));
+
+        // Calculate midfield rating
+        final double midfieldFactor = MIDFIELD_SHIFT + ((1 - MIDFIELD_SHIFT) * hq(getHomeMidfield()));
+
+        // Calculate and return the LoddarStats rating
+        return 80 * midfieldFactor * (defenseStrength + attackStrength);
+	}
+	
+	public final double getAwayLoddarStats()
+	{
+        final double MIDFIELD_SHIFT = 0.0;
+        final double COUNTERATTACK_WEIGHT = 0.25;
+        final double DEFENSE_WEIGHT = 0.47;
+        final double ATTACK_WEIGHT = 1 - DEFENSE_WEIGHT;
+        final double CENTRAL_WEIGHT = 0.37;
+        final double WINGER_WEIGTH = (1 - CENTRAL_WEIGHT) / 2d;
+
+        double correctedCentralWeigth = CENTRAL_WEIGHT;
+
+        switch (getGuestTacticType()) {
+            case IMatchDetails.TAKTIK_MIDDLE:
+                correctedCentralWeigth = CENTRAL_WEIGHT + (((0.2 * (getGuestTacticSkill() - 1)) / 19d) + 0.2);
+                break;
+
+            case IMatchDetails.TAKTIK_WINGS:
+                correctedCentralWeigth = CENTRAL_WEIGHT - (((0.2 * (getGuestTacticSkill() - 1)) / 19d) + 0.2);
+                break;
+
+            default:
+                break;
+        }
+
+        final double correctedWingerWeight = (1 - correctedCentralWeigth) / 2d;
+
+        double counterCorrection = 0;
+
+        if (getGuestTacticType() == IMatchDetails.TAKTIK_KONTER) {
+            counterCorrection = (COUNTERATTACK_WEIGHT * 2 * getGuestTacticSkill()) / (getGuestTacticSkill() + 20);
+        }
+
+        // Calculate attack rating
+        final double attackStrength = (ATTACK_WEIGHT + counterCorrection) * ((correctedCentralWeigth * hq(getGuestMidAtt()))
+                                      + (correctedWingerWeight * (hq(getGuestLeftAtt()) + hq(getGuestRightAtt()))));
+
+        // Calculate defense rating
+        final double defenseStrength = DEFENSE_WEIGHT * ((CENTRAL_WEIGHT * hq(getGuestMidDef()))
+                                       + (WINGER_WEIGTH * (hq(getGuestLeftDef()) + hq(getGuestRightDef()))));
+
+        // Calculate midfield rating
+        final double midfieldFactor = MIDFIELD_SHIFT + ((1 - MIDFIELD_SHIFT) * hq(getGuestMidfield()));
+
+        // Calculate and return the LoddarStats rating
+        return 80 * midfieldFactor * (defenseStrength + attackStrength);
+	}
+	
+	 private double hq(double value)
+	 {
+	        return (2 * value) / (value + 80);
+	 }
 }
