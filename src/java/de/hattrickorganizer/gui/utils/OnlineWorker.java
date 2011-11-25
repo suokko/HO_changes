@@ -6,7 +6,10 @@
  */
 package de.hattrickorganizer.gui.utils;
 
+import gui.UserParameter;
+
 import java.io.IOException;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,10 +47,10 @@ import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.net.ConvertXml2Hrf;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.HRFFileParser;
+import de.hattrickorganizer.tools.HRFStringParser;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
-
+import de.hattrickorganizer.logik.TrainingsManager;
 
 /**
  * DOCUMENT ME!
@@ -76,241 +79,179 @@ public class OnlineWorker {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * saugt das HRF
+     * Get and optionally save HRF
      *
-     * @return TODO Missing Return Method Documentation
+     * @return True if all OK, false if something went wrong
      */
-    public final boolean getHrf() {
+    public final boolean getHrf() 
+    {
         String hrf = "";
-
+        boolean bOK = false;
+        int value;
+        HOMainFrame homf = HOMainFrame.instance();
+        HOVerwaltung hov = HOVerwaltung.instance();
+        UserParameter up = gui.UserParameter.instance();
+        InfoPanel info = homf.getInfoPanel();
+        HOModel homodel = null;
         // Show wait dialog
-        waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
+        waitDialog = new LoginWaitDialog(homf, false);
         waitDialog.setVisible(true);
-
-        try {
+        try 
+        {
             hrf = new ConvertXml2Hrf().createHrf(waitDialog);
-        } catch (Exception e) {
+            bOK = true;
+        } 
+        catch (Exception e) {
             //Info
-            HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                                                           + " : Error converting xml 2 HRF. Corrupt/Missing Data : ",
-                                                                                           InfoPanel.FEHLERFARBE);
-            Helper.showMessage(HOMainFrame.instance(),
-                               HOVerwaltung.instance().getLanguageString("Downloadfehler")
+            info.setLangInfoText(hov.getLanguageString("Downloadfehler") 
+            		+ " : Error converting xml 2 HRF. Corrupt/Missing Data : ", 
+            		InfoPanel.FEHLERFARBE);
+            Helper.showMessage(homf, hov.getLanguageString("Downloadfehler")
                                + " : Error converting xml 2 HRF. Corrupt/Missing Data : \n"
                                + e.toString() + "\n",
-                               HOVerwaltung.instance().getLanguageString("Fehler"),
+                               hov.getLanguageString("Fehler"),
                                JOptionPane.ERROR_MESSAGE);
-            waitDialog.setVisible(false);
-            return false;
+            bOK = false;
         }
-
-        //Sprachdatei anbinden
-        if ((hrf.indexOf("playingMatch=true") > -1) || (hrf.indexOf("NOT AVAILABLE") > -1)) {
-            JOptionPane.showMessageDialog(HOMainFrame.instance(),
-                                                      HOVerwaltung.instance().getLanguageString("NO_HRF_Spiel"),
-                                                      HOVerwaltung.instance().getLanguageString("NO_HRF_ERROR"),
-                                                      1);
-            waitDialog.setVisible(false);
-            return false;
-        }
-
-        final GregorianCalendar calendar = (GregorianCalendar) Calendar
-                                                     .getInstance();
-        String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
-
-        if (month.length() < 2) {
-            month = "0" + month;
-        }
-
-        String day = calendar.get(Calendar.DAY_OF_MONTH) + "";
-
-        if (day.length() < 2) {
-            day = "0" + day;
-        }
-
-        final String name = calendar.get(Calendar.YEAR) + "-" + month + "-"
-                            + day + ".hrf";
-
-        final java.io.File pfad = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath);
-        java.io.File file = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath
-                                             + java.io.File.separator + name);
-
-        //Anzeigen wenn nicht deaktiviert oder pfad noch nicht gesetzt oder Datei schon existiert
-        if (gui.UserParameter.instance().showHRFSaveDialog
-            || !pfad.exists()
-            || !pfad.isDirectory()
-            || file.exists()) {
-            final JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-            fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("FileExport"));
-
-            final ExampleFileFilter filter = new ExampleFileFilter();
-            filter.addExtension("hrf");
-            filter.setDescription("Hattrick HRF");
-            fileChooser.setFileFilter(filter);
-
-            try {
-                if (pfad.exists() && pfad.isDirectory()) {
-                    fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath));
-                }
-            } catch (Exception e) {
-            }
-
-            fileChooser.setSelectedFile(file);
-
-            final int returnVal = fileChooser.showSaveDialog(HOMainFrame
-                                                             .instance());
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                file = fileChooser.getSelectedFile();
-            } else {
-                file = null;
-            }
-        }
-
-        if ((file != null) && (file.getPath() != null)) {
-            int value;
-
-            //Endung nicht dxf?
-            if (!file.getPath().endsWith(".hrf")) {
-                file = new java.io.File(file.getAbsolutePath() + ".hrf");
-            }
-
-            //Datei schon vorhanden?
-            if (file.exists()) {
-                value = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-                                                      HOVerwaltung.instance().getLanguageString("overwrite"),
-                                                      "", JOptionPane.YES_NO_OPTION);
-            }
-            //Datei nicht vorhanden?
-            else {
-                value = JOptionPane.OK_OPTION;
-            }
-
-            //Pfad speichern
-            gui.UserParameter.instance().hrfImport_HRFPath = file.getParentFile().getAbsolutePath();
-
-            //Speichern
-            if (value == JOptionPane.OK_OPTION) {
-            	boolean bOK = false;
-            	java.io.File datei = null;
-            	try
-            	{
-            		 datei = saveFile(file.getPath(), hrf);
-            		 bOK = true;
-            	}
-            	catch (Exception e)
-            	{
-            		Helper.showMessage(HOMainFrame.instance(),
-                            "Failed to save downloaded file.\nError: " + e.getMessage(),
-                            HOVerwaltung.instance().getLanguageString("Fehler"),
-                            JOptionPane.ERROR_MESSAGE);
-            	}
-            	if(bOK)
-            	{
-            		//HRFParser
-            		final HOModel homodel = new HRFFileParser().parse(datei);
-            		if (homodel == null) 
-            		{
-            			//Info
-            			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Importfehler"),
-                                                                                                   InfoPanel.FEHLERFARBE);
-            			//Error
-            			Helper.showMessage(HOMainFrame.instance(),
-                                           HOVerwaltung.instance().getLanguageString("Importfehler"),
-                                           HOVerwaltung.instance().getLanguageString("Fehler"),
-                                           JOptionPane.ERROR_MESSAGE);
-            		} 
-            		else 
-            		{
-            			//Info
-            			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFSave"));
-            			//Data was imported previously?
-            			final String oldHRFName = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                     .getHRFName4Date(homodel.getBasics()
-                                                                                                             .getDatum());
-            			value = JOptionPane.OK_OPTION;
-            			//Re-import
-            			if (oldHRFName != null) 
-            			{
-            				value = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-                                                                  HOVerwaltung.instance().getLanguageString("ErneutImportieren")
-                                                                  + " " + oldHRFName,
-                                                                  HOVerwaltung.instance().getLanguageString("Frage"),
-                                                                  JOptionPane.YES_NO_OPTION);
-            			}
-            			//Save
-            			if (value == JOptionPane.OK_OPTION) 
-            			{
-            				homodel.saveHRF();
-            				//Spielplan übernehmen!
-            				homodel.setSpielplan(HOVerwaltung.instance()
-            										.getModel()
-                                                    .getSpielplan());
-
-            				//OldPlayer dem Model hinzufügen
-            				homodel.setAllOldSpieler(de.hattrickorganizer.database.DBZugriff.instance()
-            											.getAllSpieler());
-            				//nur Anzeige aktualisieren wenn neues model aktueller ist
-            				if ((homodel != null) && ((HOVerwaltung.instance().getModel() == null)
-            						|| (homodel.getBasics().getDatum().after(HOVerwaltung.instance()
-            								.getModel().getBasics().getDatum())))) 
-            				{
-            					Date lastTrainingDate = Calendar.getInstance().getTime();
-            					Date lastEconomyDate = Calendar.getInstance().getTime();
-            					if (HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate() != null) 
-            					{
-            						lastTrainingDate = new Date(HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate().getTime());
-            						lastEconomyDate = new Date(HOVerwaltung.instance().getModel().getXtraDaten().getEconomyDate().getTime());                            	
-            					} 
-            					// Reimport Skillup
-            					DBZugriff.instance().checkSkillup(homodel);
-            					//Show
-            					HOVerwaltung.instance().setModel(homodel);
-            					//Recalculate Training
-            					//Training->Subskill calculation
-            					de.hattrickorganizer.logik.TrainingsManager.instance()
-                                			.calculateTrainings(de.hattrickorganizer.database.DBZugriff.instance()
-                                					.getTrainingsVector());
-            					homodel.calcSubskills();
-            					//Aufstellung in liste als Aktuelle Aufstellungsetzen und als Angezeigte Aufstellung
-            					AufstellungsVergleichHistoryPanel.setHRFAufstellung(homodel.getAufstellung(),
-            							homodel.getLastAufstellung());
-            					AufstellungsVergleichHistoryPanel
-            						.setAngezeigteAufstellung(new AufstellungCBItem(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"),
-            								homodel.getAufstellung()));
-            					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-            					FileExtensionManager.extractLineup("Actual");
-														
-            					// If training update happened, regenerate HOE Files
-            					if (homodel.getXtraDaten().getTrainingDate().after(lastTrainingDate)) 
-            					{
-            						HOLogger.instance().log(getClass(),"Regenerate HOE Training Files");
-            						FileExtensionManager.trainingUpdate();	
-            					}
-            					// If economy update happened, regenerate HOE Files
-            					if (homodel.getXtraDaten().getEconomyDate().after(lastEconomyDate)) 
-            					{
-            						HOLogger.instance().log(getClass(),"Regenerate HOE Economy Files");
-            						FileExtensionManager.economyUpate();	
-            					}
-            				}
-            				//Info
-            				HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFErfolg"));
-            			}
-            			// Cancelled
-            			else 
-            			{
-            				//Info
-            				HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFAbbruch"),
-                                                                             InfoPanel.FEHLERFARBE);
-            			}
-            		}
-            	}
-            }
+        if (bOK)
+        {
+	        if ((hrf.indexOf("playingMatch=true") > -1) || (hrf.indexOf("NOT AVAILABLE") > -1)) {
+	            JOptionPane.showMessageDialog(homf, hov.getLanguageString("NO_HRF_Spiel"), hov.getLanguageString("NO_HRF_ERROR"), 1);
+	            bOK = false;
+	        }
+	        if(bOK)
+	        {
+	        	// Create HOModelo from the hrf data
+	    		homodel = new HRFStringParser().parse(hrf);
+	    		if (homodel == null) 
+	    		{
+	    			//Info
+	    			info.setLangInfoText(hov.getLanguageString("Importfehler"), InfoPanel.FEHLERFARBE);
+	    			//Error
+	    			Helper.showMessage(homf, hov.getLanguageString("Importfehler"),
+	                                   hov.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+	    		} 
+	    		else 
+	    		{
+	    			homodel.saveHRF();
+	    			homodel.setSpielplan(hov.getModel().getSpielplan());
+	
+    				// Add old players to the model
+    				homodel.setAllOldSpieler(DBZugriff.instance().getAllSpieler());
+    				// Only update when the model is newer than existing
+    				if ((homodel != null) && ((hov.getModel() == null)
+    						|| (homodel.getBasics().getDatum().after(hov.getModel().getBasics().getDatum())))) 
+    				{
+    					Date lastTrainingDate = Calendar.getInstance().getTime();
+    					Date lastEconomyDate = lastTrainingDate;
+    					if (hov.getModel().getXtraDaten().getTrainingDate() != null) 
+    					{
+    						lastTrainingDate = new Date(hov.getModel().getXtraDaten().getTrainingDate().getTime());
+    						lastEconomyDate = new Date(hov.getModel().getXtraDaten().getEconomyDate().getTime());                            	
+    					} 
+    					// Reimport Skillup
+    					DBZugriff.instance().checkSkillup(homodel);
+    					//Show
+    					hov.setModel(homodel);
+    					//Recalculate Training
+    					//Training->Subskill calculation
+    					TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
+    					homodel.calcSubskills();
+    					AufstellungsVergleichHistoryPanel.setHRFAufstellung(homodel.getAufstellung(), homodel.getLastAufstellung());
+    					AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(
+    							new AufstellungCBItem(hov.getLanguageString("AktuelleAufstellung"), homodel.getAufstellung()));
+    					homf.getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
+    					FileExtensionManager.extractLineup("Actual");
+												
+    					// If training update happened, regenerate HOE Files
+    					if (homodel.getXtraDaten().getTrainingDate().after(lastTrainingDate)) 
+    					{
+    						HOLogger.instance().log(getClass(),"Regenerate HOE Training Files");
+    						FileExtensionManager.trainingUpdate();	
+    					}
+    					// If economy update happened, regenerate HOE Files
+    					if (homodel.getXtraDaten().getEconomyDate().after(lastEconomyDate)) 
+    					{
+    						HOLogger.instance().log(getClass(),"Regenerate HOE Economy Files");
+    						FileExtensionManager.economyUpate();	
+    					}
+    				}
+    				//Info
+    				info.setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFErfolg"));
+		        	info.setLangInfoText(hov.getLanguageString("HRFSave"));
+	    			final GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+					String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
+					if (month.length() < 2) 
+						month = "0" + month;
+					String day = calendar.get(Calendar.DAY_OF_MONTH) + "";
+					if (day.length() < 2)
+						day = "0" + day;
+					final String name = calendar.get(Calendar.YEAR) + "-" + month + "-" + day + ".hrf";
+					final File pfad = new File(up.hrfImport_HRFPath);
+					File file = new File(up.hrfImport_HRFPath + java.io.File.separator + name);
+					// Show dialog if path not set or the file already exists
+					if (up.showHRFSaveDialog || !pfad.exists() || !pfad.isDirectory() || file.exists()) 
+					{
+					    final JFileChooser fileChooser = new JFileChooser();
+					    fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+					    fileChooser.setDialogTitle(hov.getLanguageString("FileExport"));
+					    final ExampleFileFilter filter = new ExampleFileFilter();
+					    filter.addExtension("hrf");
+					    filter.setDescription("Hattrick HRF");
+					    fileChooser.setFileFilter(filter);
+					    try 
+					    {
+					        if (pfad.exists() && pfad.isDirectory()) 
+					            fileChooser.setCurrentDirectory(new File(up.hrfImport_HRFPath));
+					    } 
+					    catch (Exception e) {}
+					    fileChooser.setSelectedFile(file);
+					    final int returnVal = fileChooser.showSaveDialog(homf);
+					    if (returnVal == JFileChooser.APPROVE_OPTION) 
+					        file = fileChooser.getSelectedFile();
+					    else 
+					        file = null;
+					}
+					
+					if ((file != null) && (file.getPath() != null)) 
+					{
+					    
+					    // File doesn't end with .hrf?
+					    if (!file.getPath().endsWith(".hrf")) 
+					        file = new java.io.File(file.getAbsolutePath() + ".hrf");
+					    // File exists?
+					    if (file.exists()) 
+					        value = JOptionPane.showConfirmDialog(homf, hov.getLanguageString("overwrite"), "", JOptionPane.YES_NO_OPTION);
+					    else 
+					        value = JOptionPane.OK_OPTION;
+					
+					    // Save Path
+					    up.hrfImport_HRFPath = file.getParentFile().getAbsolutePath();
+					    // Save
+					    if (value == JOptionPane.OK_OPTION) 
+					    {
+					    	
+					    	File datei = null;
+					    	try
+					    	{
+					    		 datei = saveFile(file.getPath(), hrf);
+					    		 bOK = true;
+					    	}
+					    	catch (Exception e)
+					    	{
+					    		Helper.showMessage(homf, "Failed to save downloaded file.\nError: " + e.getMessage(),
+					                    hov.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+					    	}
+					    }
+					 // Canceled
+		    			else 
+		    				info.setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFAbbruch"), InfoPanel.FEHLERFARBE);
+					}
+	    		}
+			}
         }
         waitDialog.setVisible(false);
-        return true;
+        return bOK;
     }
 
     /**
@@ -321,9 +262,8 @@ public class OnlineWorker {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean getMatchArchiv(int teamId,
-                                        GregorianCalendar firstDate /*, GregorianCalendar lastDate*/) {
-        String matchASP = "";
+    public final boolean getMatchArchive(int teamId, GregorianCalendar firstDate) {
+        String matchesString = "";
         MatchKurzInfo[] matches = null;
         final Vector<MatchKurzInfo> allMatches = new Vector<MatchKurzInfo>();
         final GregorianCalendar tempBeginn = firstDate;
@@ -348,16 +288,15 @@ public class OnlineWorker {
         while (tempBeginn.before(endDate)) {
             try {
                 waitDialog.setValue(10);
-                matchASP = MyConnector.instance().getMatchArchiv(teamId, strDateFirst, strDateLast);
+                matchesString = MyConnector.instance().getMatchArchiv(teamId, strDateFirst, strDateLast);
                 waitDialog.setValue(20);
             } catch (Exception e) {
                 //Info
                 HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                                                                + " : Error fetching MatchArchiv : "
                                                                                                , InfoPanel.FEHLERFARBE);
-                Helper.showMessage(HOMainFrame
-                                                              .instance(),
-                                                              HOVerwaltung.instance().getLanguageString("Downloadfehler")
+                Helper.showMessage(HOMainFrame.instance(),
+                		HOVerwaltung.instance().getLanguageString("Downloadfehler")
                                                               + " : Error fetching MatchArchiv : "
                                                               ,HOVerwaltung.instance().getLanguageString("Fehler"),
                                                               JOptionPane.ERROR_MESSAGE);
@@ -367,7 +306,7 @@ public class OnlineWorker {
 
             final xmlMatchArchivParser parser = new xmlMatchArchivParser();
             waitDialog.setValue(40);
-            matches = parser.parseMatchesFromString(matchASP);
+            matches = parser.parseMatchesFromString(matchesString);
 
             //zu Vector adden
             for (int i = 0; i < matches.length; i++) 
@@ -391,9 +330,8 @@ public class OnlineWorker {
         waitDialog.setValue(80);
 
         //Ab in die DB packen
-        if (matches != null) {
-            de.hattrickorganizer.database.DBZugriff.instance().storeMatchKurzInfos(matches);
-        }
+        if (matches != null)
+            DBZugriff.instance().storeMatchKurzInfos(matches);
 
         waitDialog.setValue(100);
         waitDialog.setVisible(false);
@@ -401,10 +339,8 @@ public class OnlineWorker {
         //Automatisch alle MatchLineups runterladen
         for (int i = 0; (matches != null) && (i < matches.length); i++) {
             //Match noch nicht in der DB
-            if ((de.hattrickorganizer.database.DBZugriff.instance().isMatchVorhanden(matches[i]
-                                                                                     .getMatchID()))
-                && (!de.hattrickorganizer.database.DBZugriff.instance().isMatchLineupVorhanden(matches[i]
-                                                                                               .getMatchID()))
+            if ((DBZugriff.instance().isMatchVorhanden(matches[i].getMatchID()))
+                && (!DBZugriff.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
                 && (matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED)) {
                 getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
                                matches[i].getGastID());
@@ -413,7 +349,6 @@ public class OnlineWorker {
                 	updateMatch(HOMiniModel.instance(), matches[i].getMatchID());
             }
         }
-
         return true;
     }
 
@@ -434,10 +369,8 @@ public class OnlineWorker {
         waitDialog.setValue(10);
         details = fetchDetails(matchId, waitDialog);
 
-        //#############
-        //details Ab in die DB packen
         if (details != null) {
-            de.hattrickorganizer.database.DBZugriff.instance().storeMatchDetails(details);
+            DBZugriff.instance().storeMatchDetails(details);
         } else {
             success = false;
         }
@@ -461,17 +394,20 @@ public class OnlineWorker {
      * @return TODO Missing Return Method Documentation
      */
     public final boolean getMatches(int teamId, boolean forceRefresh) {
-        String matchASP = "";
+        String matchesString = "";
         MatchKurzInfo[] matches = null;
-
-        //Wairt Dialog zeigen
+        boolean bOK = false;
         waitDialog = new LoginWaitDialog(HOMainFrame.instance());
         waitDialog.setVisible(true);
         waitDialog.setValue(10);
 
         try {
-            matchASP = MyConnector.instance().getMatchesASP(teamId, forceRefresh);
-            waitDialog.setValue(50);
+            matchesString = MyConnector.instance().getMatches(teamId, forceRefresh);
+            bOK = (matchesString != null && matchesString.length() > 0);
+            if (bOK)
+            	waitDialog.setValue(50);
+            else
+            	waitDialog.setVisible(false);
         } catch (Exception e) {
             //Info
 			HOMainFrame.instance().getInfoPanel().setLangInfoText(
@@ -484,43 +420,43 @@ public class OnlineWorker {
             waitDialog.setVisible(false);
             return false;
         }
-
-        final XMLMatchesParser parser = new XMLMatchesParser();
-        waitDialog.setValue(70);
-        matches = parser.parseMatchesFromString(matchASP);
-
-        waitDialog.setValue(80);
-
-        //Ab in die DB packen
-        if (matches != null) {
-            DBZugriff.instance().storeMatchKurzInfos(matches);
+        if (bOK)
+        {
+	        final XMLMatchesParser parser = new XMLMatchesParser();
+	        waitDialog.setValue(70);
+	        matches = parser.parseMatchesFromString(matchesString);
+	
+	        waitDialog.setValue(80);
+	
+	        // Store in DB
+	        if (matches != null) {
+	            DBZugriff.instance().storeMatchKurzInfos(matches);
+	        }
+	
+	        waitDialog.setValue(100);
+	        waitDialog.setVisible(false);
+	
+	        // Automatically download all MatchLineups
+	        for (int i = 0; (matches != null) && (i < matches.length); i++) {
+	        	int curMatchId = matches[i].getMatchID();
+	        	Matchdetails curDetails = DBZugriff.instance().getMatchDetails(curMatchId); 
+	            // No match in DB
+	        	if (DBZugriff.instance().isMatchVorhanden(curMatchId)
+	            		&& matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED
+	            		&& (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId) ||
+	            				curDetails == null ||
+	            				curDetails.getMatchreport() == null ||
+	            				curDetails.getMatchreport().trim().length() == 0
+	            				))
+	        	{
+	                boolean retLineup = getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
+	                boolean retDetails = getMatchDetails(curMatchId);
+	                HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails);
+	                MatchUpdater.updateMatch(HOMiniModel.instance(),matches[i].getMatchID());
+	            }
+	        }
         }
-
-        waitDialog.setValue(100);
-        waitDialog.setVisible(false);
-
-        //Automatisch alle MatchLineups runterladen
-        for (int i = 0; (matches != null) && (i < matches.length); i++) {
-        	int curMatchId = matches[i].getMatchID();
-        	Matchdetails curDetails = DBZugriff.instance().getMatchDetails(curMatchId); 
-            //Match noch nicht in der DB
-        	
-            if (DBZugriff.instance().isMatchVorhanden(curMatchId)
-            		&& matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED
-            		&& (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId) ||
-            				curDetails == null ||
-            				curDetails.getMatchreport() == null ||
-            				curDetails.getMatchreport().trim().length() == 0
-            				)
-                ) {
-                boolean retLineup = getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
-                boolean retDetails = getMatchDetails(curMatchId);
-                HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails);
-                MatchUpdater.updateMatch(HOMiniModel.instance(),matches[i].getMatchID());
-            }
-        }
-
-        return true;
+        return bOK;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -537,6 +473,7 @@ public class OnlineWorker {
      * @return TODO Missing Return Method Documentation
      */
     public final boolean getMatchlineup(int matchId, int teamId1, int teamId2) {
+    	boolean bOK = false;
         MatchLineup lineUp1 = null;
         MatchLineup lineUp2 = null;
 
@@ -547,107 +484,95 @@ public class OnlineWorker {
 
         //Lineups holen
         lineUp1 = fetchLineup(matchId, teamId1);
-        waitDialog.setValue(50);
-
-        if (teamId2 > 0) {
-            lineUp2 = fetchLineup(matchId, teamId2);
+        if (lineUp1 != null)
+        {
+        	bOK = true;
+	        waitDialog.setValue(50);
+	        if (teamId2 > 0)
+	            lineUp2 = fetchLineup(matchId, teamId2);
+	
+	        // Merge the two
+	        if ((lineUp2 != null)) 
+	        {
+	            if (lineUp1.getHeim() == null) 
+	                lineUp1.setHeim((MatchLineupTeam) lineUp2.getHeim());
+	            else if (lineUp1.getGast() == null)
+	                lineUp1.setGast((MatchLineupTeam) lineUp2.getGast());
+	        } 
+	        else 
+	        {
+	            // Get the 2nd lineup
+	            if (lineUp1.getHeim() == null) 
+	            {
+	                lineUp2 = fetchLineup(matchId, lineUp1.getHeimId());
+	                if (lineUp2 != null)
+	                    lineUp1.setHeim((MatchLineupTeam)lineUp2.getHeim());
+	            } 
+	            else 
+	            {
+	                lineUp2 = fetchLineup(matchId, lineUp1.getGastId());
+	                if (lineUp2 != null) 
+	                    lineUp1.setGast((MatchLineupTeam)lineUp2.getGast());
+	            }
+	        }
+	        DBZugriff.instance().storeMatchLineup(lineUp1);
         }
-
-        //mergen der beiden
-        if ((lineUp2 != null) && (lineUp1 != null)) {
-            if (lineUp1.getHeim() == null) {
-                lineUp1.setHeim((MatchLineupTeam) lineUp2.getHeim());
-            } else if (lineUp1.getGast() == null) {
-                lineUp1.setGast((MatchLineupTeam) lineUp2.getGast());
-            }
-        } else if (lineUp1 != null) {
-            //lineup 2 saugen
-            if (lineUp1.getHeim() == null) {
-                lineUp2 = fetchLineup(matchId, lineUp1.getHeimId());
-
-                if (lineUp2 != null) {
-                    lineUp1.setHeim((MatchLineupTeam) lineUp2.getHeim());
-                }
-            } else {
-                lineUp2 = fetchLineup(matchId, lineUp1.getGastId());
-
-                if (lineUp2 != null) {
-                    lineUp1.setGast((MatchLineupTeam) lineUp2.getGast());
-                }
-            }
-        }
-
-        //lineup1 Ab in die DB packen
-        if (lineUp1 != null) {
-            DBZugriff.instance().storeMatchLineup(lineUp1);
-        }
-
         waitDialog.setVisible(false);
-
-        return true;
+        return bOK;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    //Spielplan
+    // Fixtures
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * saugt den Spielplan
+     * Get the Fixtures list
      *
-     * @param season angabe der Saison ( optinal &lt; 1 für aktuelle
-     * @param ligaID TODO Missing Constructuor Parameter Documentation
+     * @param season - The season, -1 for current
+     * @param leagueID - The ID of the league to get the fixtures for
      *
-     * @return TODO Missing Return Method Documentation
+     * @return true on sucess, false on failure
      */
-    public final boolean getSpielplan(int season, int ligaID) {
+    public final boolean getSpielplan(int season, int leagueID) {
+    	boolean bOK = false;
         String leagueFixtures = "";
-
-        //Wairt Dialog zeigen
+        HOVerwaltung hov = HOVerwaltung.instance();
         waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
         waitDialog.setVisible(true);
-
-        try {
+        try 
+        {
             waitDialog.setValue(10);
-            leagueFixtures = MyConnector.instance().getLeagueFixtures(season, ligaID);
+            leagueFixtures = MyConnector.instance().getLeagueFixtures(season, leagueID);
+            bOK = (leagueFixtures != null && leagueFixtures.length() > 0);
             waitDialog.setValue(50);
-        } catch (Exception e) {
-            //Info
+        }
+        catch (Exception e) 
+        {
             HOLogger.instance().log(getClass(),e);
-            HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                                                           + " : Error fetching leagueFixture xml. Corrupt/Missing Data :"
-//                                                                                         + gui.UserParameter.instance().htip
-                                                                                           ,
-                                                                                           InfoPanel.FEHLERFARBE);
-            Helper.showMessage(HOMainFrame
-                                                          .instance(),
-                                                          HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                          + " : Error fetching leagueFixture xml. Corrupt/Missing Data :"
-//                                                          + gui.UserParameter.instance().htip
-                                                          ,
-                                                          HOVerwaltung.instance().getLanguageString("Fehler"),
-                                                          JOptionPane.ERROR_MESSAGE);
-//            MyConnector.instance().setAuthenticated(false);
+            HOMainFrame.instance().getInfoPanel().setLangInfoText(
+            		hov.getLanguageString("Downloadfehler")
+            		+ " : Error fetching leagueFixture: " + e.getMessage(),
+            		InfoPanel.FEHLERFARBE);
+            Helper.showMessage(HOMainFrame.instance(),
+            		hov.getLanguageString("Downloadfehler")
+                    + " : Error fetching leagueFixture: " + e.getMessage(),
+                    hov.getLanguageString("Fehler"),
+                    JOptionPane.ERROR_MESSAGE);
             waitDialog.setVisible(false);
             return false;
         }
-
-        final XMLSpielplanParser parser = new XMLSpielplanParser();
-
-        //Ins Modell packen
-        HOVerwaltung.instance().getModel().setSpielplan(parser
-                                                                                   .parseSpielplanFromString(leagueFixtures));
-        waitDialog.setValue(70);
-
-        //in DB saven
-        HOVerwaltung.instance().getModel().saveSpielplan2DB();
-        waitDialog.setValue(90);
-
-        //                }
-        //            }
-        //}
+        if (bOK)
+        {
+        	HOModel hom = hov.getModel();
+	        final XMLSpielplanParser parser = new XMLSpielplanParser();
+	        hom.setSpielplan(parser.parseSpielplanFromString(leagueFixtures));
+	        waitDialog.setValue(70);
+	        //Save to DB
+	        hom.saveSpielplan2DB();
+	        waitDialog.setValue(90);
+        }
         waitDialog.setVisible(false);
-
-        return true;
+        return bOK;
     }
     
     /**
@@ -733,32 +658,7 @@ public class OnlineWorker {
     	
     	return "{\"id\":\"" + id + "\",\"behaviour\":\"" + behaviour + "\"}";
     }
-    
-
     /**
-     * generiert ein String Datum
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final String getDate() {
-        final GregorianCalendar calendar = (GregorianCalendar) Calendar
-                                                     .getInstance();
-        String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
-
-        if (month.length() < 2) {
-            month = "0" + month;
-        }
-
-        String day = calendar.get(Calendar.DAY_OF_MONTH) + "";
-
-        if (day.length() < 2) {
-            day = "0" + day;
-        }
-
-        return calendar.get(Calendar.YEAR) + "-" + month + "-" + day;
-    }
-
-        /**
      * TODO Missing Method Documentation
      *
      * @param matchID TODO Missing Method Parameter Documentation
@@ -773,12 +673,11 @@ public class OnlineWorker {
         try {
             matchDetails = MyConnector.instance().getMatchdetails(matchID);
             waitDialog.setValue(20);
-
             final xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
-            
             details = parser.parseMachtdetailsFromString(matchDetails);
             waitDialog.setValue(40);
-            if (details == null) {
+            if (details == null) 
+            {
             	HOLogger.instance().warning(getClass(), "Unable to fetch details for match " + matchID);            	
             	return null;
             }
@@ -786,28 +685,22 @@ public class OnlineWorker {
             waitDialog.setValue(50);
             String regionIdAsString = (String)new XMLArenaParser().parseArenaFromString(arenaString).get("RegionID");
             int regionId = Integer.parseInt(regionIdAsString);
-            
             details.setRegionId(regionId);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             //Info
-            HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                                                           + ": Error fetching Matchdetails XML.: "
-//                                                                                         + gui.UserParameter.instance().htip
-                                                                                           ,
-                                                                                           InfoPanel.FEHLERFARBE);
-            Helper.showMessage(HOMainFrame
-                                                          .instance(),
-                                                          HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                          + ": Error fetching Matchdetails XML.: "
-//                                                          + gui.UserParameter.instance().htip
-                                                          ,
-                                                          HOVerwaltung.instance().getLanguageString("Fehler"),
-                                                          JOptionPane.ERROR_MESSAGE);
-//            MyConnector.instance().setAuthenticated(false);
+            HOMainFrame.instance().getInfoPanel().setLangInfoText(
+            		HOVerwaltung.instance().getLanguageString("Downloadfehler")
+            		+ ": Error fetching Matchdetails XML.: ", InfoPanel.FEHLERFARBE);
+            Helper.showMessage(HOMainFrame.instance(),
+            		HOVerwaltung.instance().getLanguageString("Downloadfehler")
+                    + ": Error fetching Matchdetails XML.: ",
+                    HOVerwaltung.instance().getLanguageString("Fehler"),
+                    JOptionPane.ERROR_MESSAGE);
             waitDialog.setVisible(false);
             return null;
         }
-
         return details;
     }
 
@@ -822,33 +715,31 @@ public class OnlineWorker {
     protected final MatchLineup fetchLineup(int matchID, int teamID) {
         String matchLineup = "";
         MatchLineup lineUp = null;
-
-        try {
+        boolean bOK = false;
+        try 
+        {
             matchLineup = MyConnector.instance().getMatchLineup(matchID, teamID);
-        } catch (Exception e) {
+            bOK = (matchLineup != null && matchLineup.length() > 0);
+        } 
+        catch (Exception e) 
+        {
             //Info
-            HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                                                           + " : Error fetching Matchlineup :"
-//                                                                                         + gui.UserParameter.instance().htip
-                                                                                           ,
-                                                                                           InfoPanel.FEHLERFARBE);
-            Helper.showMessage(HOMainFrame
-                                                          .instance(),
-                                                          HOVerwaltung.instance().getLanguageString("Downloadfehler")
-                                                          + " : Error fetching Matchlineup :"
-//                                                          + gui.UserParameter.instance().htip
-                                                          ,
-                                                          HOVerwaltung.instance().getLanguageString("Fehler"),
-                                                          JOptionPane.ERROR_MESSAGE);
-//            MyConnector.instance().setAuthenticated(false);
+            HOMainFrame.instance().getInfoPanel().
+            	setLangInfoText(HOVerwaltung.instance().getLanguageString("Downloadfehler")
+            			+ " : Error fetching Matchlineup :", InfoPanel.FEHLERFARBE);
+            Helper.showMessage(HOMainFrame.instance(),
+            		HOVerwaltung.instance().getLanguageString("Downloadfehler")
+            		+ " : Error fetching Matchlineup :",
+            		HOVerwaltung.instance().getLanguageString("Fehler"),
+            		JOptionPane.ERROR_MESSAGE);
             waitDialog.setVisible(false);
             return null;
         }
-
-        final XMLMatchLineupParser parser = new XMLMatchLineupParser();
-
-        lineUp = parser.parseMatchLineupFromString(matchLineup);
-
+        if (bOK)
+        {
+	        final XMLMatchLineupParser parser = new XMLMatchLineupParser();
+	        lineUp = parser.parseMatchLineupFromString(matchLineup);
+        }
         return lineUp;
     }
     
@@ -878,19 +769,14 @@ public class OnlineWorker {
      * @return The saved file
      * @throws IOException 
      */
-    protected final java.io.File saveFile(String fileName, String content) throws IOException {
-        //utf-8
+    protected final File saveFile(String fileName, String content) throws IOException {
         java.io.OutputStreamWriter outWrit = null;
         java.io.File outFile = null;
         java.io.BufferedWriter out = null;
- 
     	outFile = new java.io.File(fileName);
         if (outFile.exists()) 
-        {
         	outFile.delete();
-        }
         outFile.createNewFile();
-        //utf 8 schreiben
         outWrit = new java.io.OutputStreamWriter(new java.io.FileOutputStream(outFile), "UTF-8");
         out = new java.io.BufferedWriter(outWrit);
         out.write(content);
@@ -900,32 +786,32 @@ public class OnlineWorker {
     }
 
 	/**
-	 * Holt für alle Kurzinfos die Lineups, wenn diese noch nicht vorhanden sind
+	 * Get all lineups for MatchKurzInfos, if they're not there already
 	 */
 	public void getAllLineups() {
 		final MatchKurzInfo[] infos = DBZugriff.instance().getMatchesKurzInfo(-1);
 		String haveLineups = "";
-		
+		boolean bOK = false;
+		OnlineWorker ow = HOMainFrame.instance().getOnlineWorker();
 		for (int i = 0; i < infos.length; i++) {
 			int curMatchId = infos[i].getMatchID();
-			if (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId)) {
-				//Prüfen, ob Lineup schon gezogen werden kann!
-				if (infos[i].getMatchDateAsTimestamp().before(new java.sql.Timestamp(System
-																					 .currentTimeMillis()))) {
+			if (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId)) 
+			{
+				// Check if the lineup is available
+				if (infos[i].getMatchStatus() == IMatchKurzInfo.FINISHED) 
+				{
 					HOLogger.instance().log(getClass(),"Get Lineup : " + curMatchId);
-
-					//Nur weiter, wenn das Lineup gezogen wurde
-					if (HOMainFrame.instance().getOnlineWorker()
-															.getMatchlineup(curMatchId,
-																			infos[i].getHeimID(),
-																			infos[i].getGastID())) {
-						HOMainFrame.instance().getOnlineWorker()
-															.getMatchDetails(curMatchId);
-					}
-				} else {
+					bOK = ow.getMatchlineup(curMatchId, infos[i].getHeimID(), infos[i].getGastID());
+					if (bOK) 
+						bOK = ow.getMatchDetails(curMatchId);
+					else
+						break;															
+				} 
+				else 
 					HOLogger.instance().log(getClass(),"Not Played : " + curMatchId);
-				}
-			} else {
+			} 
+			else 
+			{
 				// Match lineup already available
 				if (haveLineups.length() > 0)
 					haveLineups += ", ";
@@ -935,8 +821,4 @@ public class OnlineWorker {
 		if (haveLineups.length() > 0)
 			HOLogger.instance().log(getClass(),"Have Lineups : " + haveLineups);
 	}
-
-    /////////////////////////////////////////////////////////////////////////////////
-    //TEST
-    /////////////////////////////////////////////////////////////////////////////////
 }

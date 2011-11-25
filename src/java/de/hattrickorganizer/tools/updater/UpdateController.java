@@ -381,6 +381,11 @@ public final class UpdateController {
 				updateEPV(data.getRelease());
 			}
 		}
+		else
+			JOptionPane.showMessageDialog(null, 
+					HOVerwaltung.instance().getLanguageString("LatestVersion") + "(" + HOParameter.instance().EpvRelease + ")", HOVerwaltung.instance().getLanguageString("EPV"),
+					  JOptionPane.INFORMATION_MESSAGE);
+
 	}
 
 	public static void updateEPV(float release) {
@@ -412,13 +417,17 @@ public final class UpdateController {
 				JOptionPane.showConfirmDialog(
 					HOMainFrame.instance(),
 					HOVerwaltung.instance().getLanguageString("updateFile"),
-					HOVerwaltung.instance().getLanguageString("update")+"?",
+					HOVerwaltung.instance().getLanguageString("Ratings")+"?",
 					JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateRatings(data.getRelease());
 			}
 		}
+		else
+			JOptionPane.showMessageDialog(null, 
+					HOVerwaltung.instance().getLanguageString("LatestVersion") + "(" + HOParameter.instance().RatingsRelease + ")", HOVerwaltung.instance().getLanguageString("Ratings"),
+					  JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public static void updateRatings(float release) {
@@ -436,9 +445,6 @@ public final class UpdateController {
 	        HOLogger.instance().log(UpdateController.class, "Unzip " + tmp + " to: " + (System.getProperty("user.dir") + File.separator + "prediction"));
 	        zip.unzip(System.getProperty("user.dir") + File.separator + "prediction");
 	        tmp.delete();
-//			File target = new File("ratings.dat");
-//			target.delete();
-//			tmp.renameTo(target);
 			HOParameter.instance().RatingsRelease = release;
 		} catch (Exception e) {
 			HOLogger.instance().log(UpdateController.class,"Rating update unzip: " + e);
@@ -467,15 +473,6 @@ public final class UpdateController {
 								if (update == JOptionPane.YES_OPTION) {
 									UpdateController.updateHO(news.getVersion());
 								}
-//								int update = JOptionPane.showConfirmDialog(
-//										HOMainFrame.instance(),
-//										"" + HOVerwaltung.instance().getLanguageString("updateMSG"),
-//										"Open page?",
-//										JOptionPane.YES_NO_OPTION);
-//								if (update == JOptionPane.YES_OPTION) {
-//									HelperWrapper.instance().openUrlInUserBRowser("http://sourceforge.net/project/showfiles.php?group_id=167702");
-//								}
-
 							}
 							break;
 						}
