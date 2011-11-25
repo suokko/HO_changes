@@ -354,7 +354,6 @@ public class TSForecast extends 	WindowAdapter
 
   public void hyperlinkUpdate(javax.swing.event.HyperlinkEvent e) {
     if (e.getEventType() == javax.swing.event.HyperlinkEvent.EventType.ACTIVATED) {
-      JEditorPane pane = (JEditorPane) e.getSource();
       try {
         String os = System.getProperty("os.name");
         if ( os != null && os.startsWith("Windows"))
@@ -431,7 +430,7 @@ public class TSForecast extends 	WindowAdapter
     if(resultset != null && resultset.first()) {
       strLabel += m_Language.getProperty("Staff", "Your staff includes ") 
                + resultset.getInt("PSCHYOLOGEN") + " " 
-               + m_clModel.getResource().getProperty("Psychologen", "Sport Psychologists")
+               + m_clModel.getLanguageString("Psychologen")
                + ". ";
     }
     resultset = ijdbcadapter.executeQuery("select TRAININGSINTENSITAET from TEAM order by HRF_ID desc");
@@ -454,7 +453,7 @@ public class TSForecast extends 	WindowAdapter
     m_jtCupMatches.addItemListener( this);
     jpanel.add( m_jtCupMatches);
     
-    m_jtRelegationMatch = new JCheckBox( m_clModel.getResource().getProperty("QualifikationSpiel", "Qualification"), false);
+    m_jtRelegationMatch = new JCheckBox( m_clModel.getLanguageString("QualifikationSpiel"), false);
     m_jtRelegationMatch.setToolTipText( m_Language.getProperty("ShowQMatch", "show qualification match"));
     m_jtRelegationMatch.setAlignmentX( 0.0F);
     m_jtRelegationMatch.addItemListener( this);
@@ -470,7 +469,7 @@ public class TSForecast extends 	WindowAdapter
     m_jtHistory.addItemListener( this);
     jpanel.add( m_jtHistory);
     
-    m_jtConfidence = new CheckBox( m_clModel.getResource().getProperty("Selbstvertrauen", "Confidence"), m_Confidence.getColor(), false);
+    m_jtConfidence = new CheckBox( m_clModel.getLanguageString("Selbstvertrauen"), m_Confidence.getColor(), false);
     m_jtConfidence.setAlignmentX( 0.0F);
     m_jtConfidence.addItemListener( this);
     jpanel.add(m_jtConfidence);
