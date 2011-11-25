@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -40,7 +41,7 @@ import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.VersionInfo;
-
+import de.hattrickorganizer.gui.login.ProxyDialog;
 /**
  * DOCUMENT ME!
  *
@@ -50,8 +51,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	//~ Static fields/initializers -----------------------------------------------------------------
 	static final private int chppID = 3330;
 	static final private String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
-	public static String m_sIDENTIFIER =
-		"HO! Hattrick Organizer V" + de.hattrickorganizer.gui.HOMainFrame.VERSION;
+	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V" + HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
 	private final static String VERSION_MATCHORDERS = "1.8";
 	private final static String VERSION_TRAINING = "1.5";
@@ -78,23 +78,18 @@ public class MyConnector implements plugins.IDownloadHelper {
 	final static private boolean DEBUGSAVE = false;
 	final static private String SAVEDIR = "C:/temp/ho/";
 
-
-
 	//~ Constructors -------------------------------------------------------------------------------
 	/**
 	 * Creates a new instance of MyConnector.
 	 */
 	private MyConnector() {
-		m_OAService = new ServiceBuilder()
-		.provider(HattrickAPI.class)
-		.apiKey(Helper.decryptString(CONSUMER_KEY))
-		.apiSecret(Helper.decryptString(CONSUMER_SECRET))
-		.signatureType(SignatureType.Header)
-		.build();
-		
-		m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
-			Helper.decryptString(gui.UserParameter.instance().TokenSecret));
-		
+		m_OAService = new ServiceBuilder().provider(HattrickAPI.class)
+			.apiKey(Helper.decryptString(CONSUMER_KEY))
+			.apiSecret(Helper.decryptString(CONSUMER_SECRET))
+			.signatureType(SignatureType.Header).build();
+		m_OAAccessToken = new Token(
+				Helper.decryptString(gui.UserParameter.instance().AccessToken),
+				Helper.decryptString(gui.UserParameter.instance().TokenSecret));
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
@@ -141,11 +136,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @throws IOException
 	 */
 	public String getArena(int arenaId) throws IOException {
-		String url = htUrl +"?file=arenadetails";
-
+		String url = htUrl + "?file=arenadetails";
 		if (arenaId > 0)
-			url += "&arenaID="+arenaId;
-		return getPage(url);
+			url += "&arenaID=" + arenaId;
+		return getWebPage(url, true);
 	}
 
 	/**
@@ -154,7 +148,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getEconomy() throws IOException {
 		final String url = htUrl + "?file=economy";
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +176,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		} 
 
 		url =  htUrl + file;
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/**
@@ -191,24 +185,19 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getLeagueDetails() throws IOException {
 		final String url = htUrl + "?file=leaguedetails";
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/**
 	 * lädt den Spielplan
 	 */
-	public String getLeagueFixtures(int season, int ligaID) throws IOException {
+	public String getLeagueFixtures(int season, int leagueID) throws IOException {
 		String url = htUrl + "?file=leaguefixtures";
-
-		if (season > 0) {
-			url += ("&season=" + season);
-		}
-
-		if (ligaID > 0) {
-			url += ("&leagueLevelUnitID=" + ligaID);
-		}
-
-		return getPage(url);
+		if (season > 0)
+			url += "&season=" + season;
+		if (leagueID > 0)
+			url += "&leagueLevelUnitID=" + leagueID;
+		return getWebPage(url, true);
 	}
 
 	/**
@@ -230,13 +219,14 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&LastMatchDate=" + lastDate);
 		}
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchLineup(int matchId, int teamId) throws IOException {
+		String LineupString = "";
 		String url = htUrl + "?file=matchlineup&version=" +
 		VERSION_MATCHLINEUP;
 
@@ -247,39 +237,34 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
-
+		LineupString = getWebPage(url, true);
 		if (DEBUGSAVE) {
-			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR+"matchlineup_m"
 					+ matchId + "_t" + teamId + "_"
 					+ System.currentTimeMillis() + ".xml"));
-			fw.write(ret);
+			fw.write(LineupString);
 			fw.flush();
 			fw.close();
-			return ret;
-		} else {
-			return getPage(url);
 		}
+		return LineupString; 
 	}
 
 	/**
 	 * lädt die Aufstellung zu einem Spiel
 	 */
 	public String getMatchOrder(int matchId) throws IOException {
+		String MatchOrderString = "";
 		String url = htUrl + "?file=matchorders&version="
 		+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
-
+		MatchOrderString = getWebPage(url, true);
 		if (DEBUGSAVE) {
-			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchorders_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
-			fw.write(ret);
+			fw.write(MatchOrderString);
 			fw.flush();
 			fw.close();
-			return ret;
-		} else {
-			return getPage(url);
 		}
+		return MatchOrderString;
 	}
 
 	public String setMatchOrder(int matchId, String orderString) throws IOException {
@@ -295,7 +280,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		paras.put("lineup", orderString);
 		String result = readStream(postWebFileWithBodyParameters(htUrl+urlpara, paras, true, scope));
 		return result;
-
 	}
 
 
@@ -303,56 +287,43 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
 	public String getMatchdetails(int matchId) throws IOException {
+		String MatchDetailsString = "";
 		String url = htUrl + "?file=matchdetails";
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
 		url += "&matchEvents=true";
-
+		MatchDetailsString = getWebPage(url, true);
 		if (DEBUGSAVE) {
-			final String ret = getPage(url);
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchdetails_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
-			fw.write(ret);
+			fw.write(MatchDetailsString);
 			fw.flush();
 			fw.close();
-			return ret;
-		} else {
-			return getPage(url);
-		}
+		} 
+		return MatchDetailsString;
 	}
 
 	/**
-	 * lädt die matches.asp seite als xml
+	 * Get Matches
 	 */
-	public String getMatchesASP(int teamId, boolean forceRefresh) throws IOException {
+	public String getMatches(int teamId, boolean forceRefresh) throws IOException {
 		String url = htUrl + "?file=matches";
 
-		if (teamId > 0) {
-			url += ("&teamID=" + teamId);
-		}
-
-		if (forceRefresh) {
+		if (teamId > 0)
+			url += "&teamID=" + teamId;
+		if (forceRefresh) 
 			url += "&actionType=refreshCache";
-		}
-
-		return getPage(url);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////
-	//internel getPage Funcs
-	////////////////////////////////////////////////////////////////////////////////
-	public String getPage(String url) throws IOException {
-		return getWebPage(url);
+		return getWebPage(url, true);
 	}
 
 	/**
-	 * holt die Spielerdaten
+	 * Get Players
 	 */
-	public String getPlayersAsp() throws IOException {
+	public String getPlayers() throws IOException {
 		final String url = htUrl + "?file=players&version=" + VERSION_PLAYERS;
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/**
@@ -423,7 +394,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @return Value of property m_ProxyUserName.
 	 */
-	public java.lang.String getProxyUserName() {
+	public String getProxyUserName() {
 		return m_ProxyUserName;
 	}
 
@@ -432,7 +403,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 *
 	 * @param m_ProxyUserPWD New value of property m_ProxyUserPWD.
 	 */
-	public void setProxyUserPWD(java.lang.String m_ProxyUserPWD) {
+	public void setProxyUserPWD(String m_ProxyUserPWD) {
 		this.m_ProxyUserPWD = m_ProxyUserPWD;
 	}
 
@@ -456,7 +427,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		ServerVerweis[] server = null;
 
 		try {
-			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList");
+			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList", false);
 			list = Helper.generateStringArray(s, ';');
 
 			if ((s != null) && (!s.trim().equals("")) && (s.length() > 0)) {
@@ -486,7 +457,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&teamID=" + teamId);
 		}
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/**
@@ -495,23 +466,12 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getTraining() throws IOException {
 		final String url =  htUrl + "?file=training&version="+ VERSION_TRAINING;
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
 	//get-HTML-Files
 	////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * lädt die Tabelle
-	 */
-	public String getTransferCompare(int playerID) throws IOException {
-		
-		String url =  htUrl + "?file=playerdetails&playerID="+playerID+"&version=" + VERSION_PLAYERDETAILS;
-
-		return getPage(url);
-	}
-
 	/**
 	 * Setter for property m_UseProxy.
 	 *
@@ -540,18 +500,18 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getVerein() throws IOException {
 		final String url = htUrl + "?file=club";
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
-	public String getWebPage(String surl) throws IOException {
-		return getWebPage(surl, true, false); // show connect error
+	private String getWebPage(String surl, boolean bIsCHPP) throws IOException {
+		return getWebPage(surl, true, bIsCHPP); // show connect error
 	}
 
 	/**
 	 * Get the content of a web page in one string.
 	 */
-	public String getWebPage(String surl, boolean showError, boolean shortTimeOut) throws IOException {
-		final InputStream resultingInputStream = getWebFile(surl, showError, shortTimeOut);
+	private String getWebPage(String surl, boolean showError, boolean bIsCHPP) throws IOException {
+		final InputStream resultingInputStream = getWebFile(surl, showError, bIsCHPP);
 		
 		return readStream(resultingInputStream);
 	}
@@ -562,7 +522,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getWorldDetails() throws IOException {
 		final String url =  htUrl + "?file=worlddetails";
 
-		return getPage(url);
+		return getWebPage(url, true);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -572,14 +532,20 @@ public class MyConnector implements plugins.IDownloadHelper {
 		VersionInfo ret = new VersionInfo();
 		ret.setBeta(false);
 		ret.setVersion(HOMainFrame.VERSION);
-		try {
-			final String s = getWebPage(MyConnector.getPluginSite() + "/version.htm", false, true);
-			try {
+		try 
+		{
+			final String s = getWebPage(MyConnector.getPluginSite() + "/version.htm", false);
+			try 
+			{
 				ret.setVersion(Double.parseDouble(s));
-			} catch (NumberFormatException e) {
+			} 
+			catch (NumberFormatException e) 
+			{
 				HOLogger.instance().debug(getClass(), "Error parsing version '" + s + "': " + e);
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			HOLogger.instance().log(getClass(), "Unable to connect to the update server (HO): " + e);
 		}
 		return ret;
@@ -592,7 +558,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		BufferedReader br = null;
 		InputStream is = null;
 		try {
-			is = getWebFile(MyConnector.getPluginSite()+"/betaversion.htm", false, true);
+			is = getNonCHPPWebFile(MyConnector.getPluginSite()+"/betaversion.htm", false);
 			if (is != null) {
 				br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 				VersionInfo ret = new VersionInfo();
@@ -628,7 +594,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public Extension getEpvVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getResourceSite()+"/downloads/epv.xml");
+				getWebPage(MyConnector.getResourceSite()+"/downloads/epv.xml", false);
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
@@ -640,7 +606,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public Extension getRatingsVersion() {
 		try {
 			final String s =
-				getWebPage(MyConnector.getResourceSite()+"/downloads/ratings.xml");
+				getWebPage(MyConnector.getResourceSite()+"/downloads/ratings.xml", false);
 
 			return (new XMLExtensionParser()).parseExtension(s);
 		} catch (Exception e) {
@@ -651,7 +617,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	public News getLatestNews() {
 		try {
-			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false, true);
+			final String s = MyConnector.instance().getWebPage(MyConnector.getResourceSite()+"/downloads/news.xml", false);
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
@@ -686,7 +652,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		try {
 			xmlFile =  htUrl + "?file=teamdetails&teamID=" + teamID;
-			xmlFile = getPage(xmlFile);
+			xmlFile = getWebPage(xmlFile, true);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
 			return "-1";
@@ -708,12 +674,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	throws IOException {
 		if (displaysettingsScreen) {
 			//Show Screen
-			final de.hattrickorganizer.gui.login.ProxyDialog proxyDialog =
-				new de.hattrickorganizer.gui.login.ProxyDialog(
-						de.hattrickorganizer.gui.HOMainFrame.instance());
+			final ProxyDialog proxyDialog = new ProxyDialog(HOMainFrame.instance());
 			proxyDialog.setVisible(true);
 		}
-
 		return getWebFile(url, showErrorMessage, false);
 	}
 
@@ -721,6 +684,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * Get the content of a normal (non-HT) web page in one string.
 	 */
 	public String getUsalWebPage(String url, boolean displaysettingsScreen, boolean shortTimeOut) throws IOException {
+		return getUsalWebPage(url, displaysettingsScreen);
+	}
+
+	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
 		if (displaysettingsScreen) {
 			//Show Screen
 			final de.hattrickorganizer.gui.login.ProxyDialog proxyDialog =
@@ -729,11 +696,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebPage(url, false, shortTimeOut);
-	}
-
-	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
-		return getUsalWebPage(url, displaysettingsScreen, false);
+		return getWebPage(url, false);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -754,7 +717,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				/*123.123.123.123*/
 				+"&port=" + port /*1234*/
 				+"&info=" + info /*Infotext"*/;
-			result = getWebPage(request);
+			result = getWebPage(request, false);
 
 			try {
 				i = Integer.parseInt(result);
@@ -775,7 +738,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public boolean sendAlive(int matchId) {
 		try {
 			final String s =
-				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId);
+				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId, false);
 
 			if (Helper.parseDate(s) == null) {
 				return false;
@@ -842,7 +805,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			request += "&CupID=0";
 
 			//HOLogger.instance().log(getClass(), request );
-			s = getWebPage(request);
+			s = getWebPage(request, false);
 
 			//HOLogger.instance().log(getClass(), s );
 		} catch (Exception e) {
@@ -859,7 +822,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		try {
 			final String s =
 				getWebPage(
-						"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId);
+						"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId, false);
 
 			if (!s.trim().equals("True")) {
 				return false;
@@ -875,23 +838,34 @@ public class MyConnector implements plugins.IDownloadHelper {
 	/**
 	 * Get a web page using a URLconnection.
 	 */
-	private InputStream getWebFile(String surl, boolean showErrorMessage, 
-			boolean shortTimeOut) throws IOException {
-
+	private InputStream getCHPPWebFile(String surl, boolean showErrorMessage)
+	{
+		InputStream returnStream = null;
 		OAuthDialog authDialog = null;
 		Response response = null;
-
+		int iResponse = 200;
 		boolean tryAgain = true;
 		try {
 			while (tryAgain == true) {
 				OAuthRequest request = new OAuthRequest(Verb.GET, surl);	
 
 				infoHO(request);
-
-				m_OAService.signRequest(m_OAAccessToken, request);
-				response = request.send();
-				switch (response.getCode())
+				if (m_OAAccessToken == null || m_OAAccessToken.getToken().length() == 0)
+					iResponse = 401;
+				else
 				{
+					m_OAService.signRequest(m_OAAccessToken, request);
+					response = request.send();
+					iResponse = response.getCode();
+				}
+				switch (iResponse)
+				{
+					case 200:
+					case 201:
+						// We are done!
+						returnStream = getResultStream(response);
+						tryAgain = false;
+						break;
 					case 401:
 						if (authDialog == null) 
 							authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
@@ -904,27 +878,60 @@ public class MyConnector implements plugins.IDownloadHelper {
 							m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
 									Helper.decryptString(gui.UserParameter.instance().TokenSecret)); 
 						break;
-					case 200:
-					case 201:
-						// We are done!
-						tryAgain = false;
-						break;
 					case 407:
 						throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
 					default:
-						throw new RuntimeException("HTTP Response Code: " + response.getCode());
+						throw new RuntimeException("HTTP Response Code: " + iResponse);
 				}
 			}	
-		} catch (Exception sox) {
+		} 
+		catch (Exception sox) 
+		{
+			HOLogger.instance().error(getClass(), sox);
+			if (showErrorMessage)
+				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+			returnStream = null;
+		}
+		return returnStream;
+	}
+	private InputStream getNonCHPPWebFile(String surl, boolean showErrorMessage) 
+	{
+		InputStream returnStream = null;
+		try 
+		{
+			Response response = null;
+			OAuthRequest request = new OAuthRequest(Verb.GET, surl);	
+			infoHO(request);
+			response = request.send();
+			int iResponse = response.getCode();
+			switch (iResponse)
+			{
+				case 200:
+				case 201:
+					returnStream = getResultStream(response);
+					break;
+				case 407:
+					throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
+				default:
+					throw new RuntimeException("HTTP Response Code: " + iResponse);
+			}
+		}	
+		catch (Exception sox) 
+		{
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
 				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		return getResultStream(response);
+		return returnStream;
 	}
-
-
+	private InputStream getWebFile(String surl, boolean showErrorMessage, boolean needsOAuth) 
+	{
+		if (needsOAuth)
+			return getCHPPWebFile(surl, showErrorMessage);
+		else
+			return getNonCHPPWebFile(surl, showErrorMessage);
+	}
 
 	/**
 	 * Post a web file containing body parameters
@@ -933,29 +940,32 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 * @param bodyprop A hash map of string, string where key is parameter key and value is parameter value
 	 * @param showErrorMessage Whether to show message on error or not
 	 * @param scope The scope of the request is required, if no scope, put "". Example: "set_matchorder".
-	 * @throws IOException 
 	 */
-	public InputStream postWebFileWithBodyParameters(String surl, HashMap<String, String> bodyParas, boolean showErrorMessage, String scope) throws IOException {
-
+	public InputStream postWebFileWithBodyParameters(String surl, HashMap<String, String> bodyParas, boolean showErrorMessage, String scope) 
+	{
+		InputStream returnStream = null;
 		OAuthDialog authDialog = null;
 		Response response = null;
-
+		int iResponse = 200;
 		boolean tryAgain = true;
-		try {
-			while (tryAgain == true) {
+		try 
+		{
+			while (tryAgain == true) 
+			{
 				OAuthRequest request = new OAuthRequest(Verb.POST, surl);	
-
-				for (Map.Entry<String, String> entry : bodyParas.entrySet()) {
+				for (Map.Entry<String, String> entry : bodyParas.entrySet())
 					request.addBodyParameter(entry.getKey(), entry.getValue());
-				}
-
 				infoHO(request);
 				request.addHeader("Content-Type", "application/x-www-form-urlencoded");
-				request.setConnectionKeepAlive(true);
-
-				m_OAService.signRequest(m_OAAccessToken, request);
-				response = request.send();
-				switch (response.getCode())
+				if (m_OAAccessToken == null || m_OAAccessToken.getToken().length() == 0)
+					iResponse = 401;
+				else
+				{
+					m_OAService.signRequest(m_OAAccessToken, request);
+					response = request.send();
+					iResponse = response.getCode();
+				}
+				switch (iResponse)
 				{
 					case 401:
 						if (authDialog == null)
@@ -973,71 +983,64 @@ public class MyConnector implements plugins.IDownloadHelper {
 					case 200:
 					case 201:
 						// We are done!
+						returnStream = getResultStream(response);
 						tryAgain = false;
 						break;
 					case 407:
 						throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
 					default:
-						throw new RuntimeException("HTTP Response Code: " + response.getCode());
+						throw new RuntimeException("HTTP Response Code: " + iResponse);
 				}
 			}
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
 				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
-			return null;
+			returnStream = null;
 		}
-		return getResultStream(response);
+		return returnStream;
 	}
 
-
 	private InputStream getResultStream(Response response) throws IOException{
-		
-		if (response == null) { 
-			return null;
-		}
-		InputStream resultingInputStream;
-		String encoding = response.getHeader("Content-Encoding");
-		if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
-			resultingInputStream = new GZIPInputStream(response.getStream());
-			HOLogger.instance().log(getClass(), " Read GZIP.");
-		} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
-			resultingInputStream = new InflaterInputStream(response.getStream(), new Inflater(true));
-			HOLogger.instance().log(getClass(), " Read Deflated.");
-		} else {
-			resultingInputStream = response.getStream();
-			HOLogger.instance().log(getClass(), " Read Normal.");
+		InputStream resultingInputStream = null;
+		if (response != null) 
+		{
+			String encoding = response.getHeader("Content-Encoding");
+			if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
+				resultingInputStream = new GZIPInputStream(response.getStream());
+				HOLogger.instance().log(getClass(), " Read GZIP.");
+			} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
+				resultingInputStream = new InflaterInputStream(response.getStream(), new Inflater(true));
+				HOLogger.instance().log(getClass(), " Read Deflated.");
+			} else {
+				resultingInputStream = response.getStream();
+				HOLogger.instance().log(getClass(), " Read Normal.");
+			}
 		}
 		return resultingInputStream;
 	}
 	
-	
-	private String readStream(InputStream stream) throws IOException {
-
-		if (stream != null) {
-			final BufferedReader bufferedreader =
-				new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-
+	private String readStream(InputStream stream) throws IOException 
+	{
+		String sReturn = "";
+		if (stream != null) 
+		{
+			final BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 			final StringBuffer s2 = new StringBuffer();
-			String line;
-
-			line = bufferedreader.readLine();
-
-			if (line != null) {
+			String line = bufferedreader.readLine();
+			if (line != null) 
+			{
 				s2.append(line);
-
-				while ((line = bufferedreader.readLine()) != null) {
+				while ((line = bufferedreader.readLine()) != null) 
+				{
 					s2.append('\n');
 					s2.append(line);
 				}
 			}
 			bufferedreader.close();
-
-			return s2.toString();
-		} else {
-			return "";
+			sReturn  = s2.toString();
 		}
-
+		return sReturn;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -1046,10 +1049,9 @@ public class MyConnector implements plugins.IDownloadHelper {
 	
 
 	private void infoHO(OAuthRequest request) {
-		//try
-		//        {
 		request.addHeader("accept-language", "de");
-		request.addHeader("connection", "Keep-Alive");
+		request.setConnectionKeepAlive(true);
+		request.setConnectTimeout(1, TimeUnit.MINUTES);
 		request.addHeader("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
 		request.addHeader("accept-encoding", "gzip, deflate");
 		request.addHeader("user-agent", m_sIDENTIFIER);

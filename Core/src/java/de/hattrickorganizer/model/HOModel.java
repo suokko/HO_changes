@@ -53,7 +53,7 @@ public class HOModel {
     public HOModel() {
         //erst einbauen wenn db angebunden ist
         try {
-            m_iID = de.hattrickorganizer.database.DBZugriff.instance().getMaxHrfId() + 1;
+            m_iID = DBZugriff.instance().getMaxHrfId() + 1;
         } catch (Exception e) {
         }
     }
@@ -412,8 +412,8 @@ public class HOModel {
                calcDate    =   m_clBasics.getDatum ();
            }
          */
-        final int previousHrfId = de.hattrickorganizer.database.DBZugriff.instance().getPreviousHRF(m_iID);
-        final Timestamp previousTrainingDate = de.hattrickorganizer.database.DBZugriff.instance()
+        final int previousHrfId = DBZugriff.instance().getPreviousHRF(m_iID);
+        final Timestamp previousTrainingDate = DBZugriff.instance()
                                                                                       .getXtraDaten(previousHrfId)
                                                                                       .getTrainingDate();
         final Timestamp actualTrainingDate = m_clXtraDaten.getTrainingDate();
@@ -595,7 +595,7 @@ public class HOModel {
      * TODO Missing Method Documentation
      */
     public final void loadStdAufstellung() {
-        m_clAufstellung = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(-1,
+        m_clAufstellung = DBZugriff.instance().getAufstellung(-1,
                                                                                             Lineup.DEFAULT_NAME);
 
         //prüfen ob alle aufgstellen Spieler noch existieren
@@ -606,7 +606,7 @@ public class HOModel {
      * TODO Missing Method Documentation
      */
     public final void loadStdLastAufstellung() {
-        m_clLastAufstellung = de.hattrickorganizer.database.DBZugriff.instance().getAufstellung(-1,
+        m_clLastAufstellung = DBZugriff.instance().getAufstellung(-1,
                                                                                                 Lineup.DEFAULT_NAMELAST);
 
         //prüfen ob alle aufgstellen Spieler noch existieren
@@ -621,31 +621,7 @@ public class HOModel {
     public final void removeSpieler(Spieler spieler) {
         m_vSpieler.remove(spieler);
     }
-
-    //---------------------------Tabelle---------------------------------------
-
-    /**
-     * Getter for property m_clLigaTabelle.
-     */
-
-    /*    public model.ligaTabelle.LigaTabelle getLigaTabelle ()
-       {
-           return m_clLigaTabelle;
-       }
-     */
-
-    /**
-     * Setter for property m_clLigaTabelle.
-     */
-
-    /*    public void setLigaTabelle (model.ligaTabelle.LigaTabelle m_clLigaTabelle)
-       {
-           this.m_clLigaTabelle = m_clLigaTabelle;
-       }
-     */
-
-    /////////////////////////////Laden/Speichern/////////////////////
-
+   
     /**
      * speichert das Model in der DB
      */
@@ -653,90 +629,37 @@ public class HOModel {
     //java.sql.Timestamp hrfDateiDatum )
     public final synchronized void saveHRF() {
         //HRF //TODO Datum angabe in Modell aus file last modified übernehmen ersetzen
-        de.hattrickorganizer.database.DBZugriff.instance().saveHRF(m_iID,
-                                                                   java.text.DateFormat.getDateTimeInstance()
-                                                                                       .format(new java.util.Date(System
-                                                                                                                  .currentTimeMillis())),
-                                                                   m_clBasics.getDatum());
+        DBZugriff.instance().saveHRF(m_iID,
+        		java.text.DateFormat.getDateTimeInstance().format(new java.util.Date(
+        				System.currentTimeMillis())), m_clBasics.getDatum());
 
-        //java.text.DateFormat.getDateTimeInstance ().format( new java.sql.Timestamp(  System.currentTimeMillis () ) ), hrfDateiDatum );
         //basics
-        de.hattrickorganizer.database.DBZugriff.instance().saveBasics(m_iID, m_clBasics);
-
+        DBZugriff.instance().saveBasics(m_iID, m_clBasics);
         //Verein
-        de.hattrickorganizer.database.DBZugriff.instance().saveVerein(m_iID, m_clVerein);
-
+        DBZugriff.instance().saveVerein(m_iID, m_clVerein);
         //Team
-        de.hattrickorganizer.database.DBZugriff.instance().saveTeam(m_iID, m_clTeam);
-
+        DBZugriff.instance().saveTeam(m_iID, m_clTeam);
         //Finanzen
-        de.hattrickorganizer.database.DBZugriff.instance().saveFinanzen(m_iID, m_clFinanzen,
-                                                                        m_clBasics.getDatum());
-
+        DBZugriff.instance().saveFinanzen(m_iID, m_clFinanzen, m_clBasics.getDatum());
         //Stadion
-        de.hattrickorganizer.database.DBZugriff.instance().saveStadion(m_iID, m_clStadium);
-
+        DBZugriff.instance().saveStadion(m_iID, m_clStadium);
         //Liga
-        de.hattrickorganizer.database.DBZugriff.instance().saveLiga(m_iID, m_clLiga);
-
+        DBZugriff.instance().saveLiga(m_iID, m_clLiga);
         //Aufstellung + aktu Sys als Standard saven
-        de.hattrickorganizer.database.DBZugriff.instance().saveAufstellung(m_iID, m_clAufstellung,
-                                                                           Lineup.DEFAULT_NAME);
-
+        DBZugriff.instance().saveAufstellung(m_iID, m_clAufstellung, Lineup.DEFAULT_NAME);
         //Aufstellung + aktu Sys als Standard saven
-        de.hattrickorganizer.database.DBZugriff.instance().saveAufstellung(m_iID,
-                                                                           m_clLastAufstellung,
-                                                                           Lineup.DEFAULT_NAMELAST);
-
+        DBZugriff.instance().saveAufstellung(m_iID, m_clLastAufstellung, Lineup.DEFAULT_NAMELAST);
         //Xtra Daten
-        de.hattrickorganizer.database.DBZugriff.instance().saveXtraDaten(m_iID, m_clXtraDaten);
-
+        DBZugriff.instance().saveXtraDaten(m_iID, m_clXtraDaten);
         //Spieler
-        de.hattrickorganizer.database.DBZugriff.instance().saveSpieler(m_iID, m_vSpieler,
-                                                                       m_clBasics.getDatum());
-
-        //Training->Subskillberechnung, TrainingsVec neu berechnen!
-        //        logik.TrainingsManager.instance().fillWithData( logik.TrainingsManager.instance().calculateTrainings( database.DBZugriff.instance().getTrainingsVector() ) );
-        //        calcSubskills(); //Spieler werden dann dort gespeichert!
+        DBZugriff.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
     }
-
-    /**
-     * speichert das Model in der DB
-     */
-
-    /*    public synchronizd void save(  )
-       {
-           //HRF //TODO Datum angabe in Modell aus file last modified übernehmen ersetzen
-           database.DBZugriff.instance ().saveHRF ( m_iID, java.text.DateFormat.getDateTimeInstance ().format( new java.util.Date(  System.currentTimeMillis () ) ), m_clBasics.getDatum () );
-           //basics
-           database.DBZugriff.instance ().saveBasics ( m_iID, m_clBasics );
-           //Verein
-           database.DBZugriff.instance ().saveVerein ( m_iID, m_clVerein );
-           //Team
-           database.DBZugriff.instance ().saveTeam ( m_iID, m_clTeam );
-           //Finanzen
-           database.DBZugriff.instance ().saveFinanzen ( m_iID, m_clFinanzen, m_clBasics.getDatum () );
-           //Stadion
-           database.DBZugriff.instance ().saveStadion ( m_iID, m_clStadium );
-           //Liga
-           database.DBZugriff.instance ().saveLiga ( m_iID, m_clLiga );
-           //Spieler
-           database.DBZugriff.instance ().saveSpieler ( m_iID, m_vSpieler, m_clBasics.getDatum () );
-           //Aufstellung + aktu Sys als Standard saven
-           database.DBZugriff.instance ().saveAufstellung ( Aufstellung.NO_HRF_VERBINDUNG, m_clAufstellung, Aufstellung.DEFAULT_NAME );
-           //Aufstellung + aktu Sys als Standard saven
-           database.DBZugriff.instance ().saveAufstellung ( Aufstellung.NO_HRF_VERBINDUNG, m_clLastAufstellung, Aufstellung.DEFAULT_NAMELAST );
-           //Xtra Daten
-           database.DBZugriff.instance ().saveXtraDaten ( m_iID, m_clXtraDaten );
-       }
-     */
 
     /**
      * Speichert den Spielplan in der DB
      */
     public final synchronized void saveSpielplan2DB() {
-        if (m_clSpielplan != null) {
-            de.hattrickorganizer.database.DBZugriff.instance().storeSpielplan(m_clSpielplan);
-        }
+        if (m_clSpielplan != null) 
+            DBZugriff.instance().storeSpielplan(m_clSpielplan);
     }
 }
