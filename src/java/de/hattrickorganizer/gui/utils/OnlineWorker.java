@@ -115,8 +115,11 @@ public class OnlineWorker {
         }
         if (bOK)
         {
-	        if ((hrf.indexOf("playingMatch=true") > -1) || (hrf.indexOf("NOT AVAILABLE") > -1)) {
+	        if (hrf.indexOf("playingMatch=true") > -1) {
 	            JOptionPane.showMessageDialog(homf, hov.getLanguageString("NO_HRF_Spiel"), hov.getLanguageString("NO_HRF_ERROR"), 1);
+	            bOK = false;
+	        } else if (hrf.indexOf("NOT AVAILABLE") > -1) {
+	            JOptionPane.showMessageDialog(homf, hov.getLanguageString("NO_HRF_ERROR"), hov.getLanguageString("NO_HRF_ERROR"), 1);
 	            bOK = false;
 	        }
 	        if(bOK)
