@@ -921,7 +921,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
 				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
-			return null;
+			returnStream = null;
 		}
 		return returnStream;
 	}
