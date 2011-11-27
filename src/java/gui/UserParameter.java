@@ -150,6 +150,8 @@ public final class UserParameter extends Configuration {
     public boolean statistikSpieleRechterAngriff = true;
     public boolean statistikSpieleSelbstvertrauen;
     public boolean statistikSpieleStimmung;
+    public boolean statistikSpieleHatStats;
+    public boolean statistikSpieleLoddarStats;
     public boolean statistikSpielerFinanzenBeschriftung = true;
 
     //Unused
@@ -464,6 +466,8 @@ public final class UserParameter extends Configuration {
 		map.put("statistikSpieleRechterAngriff",String.valueOf(statistikSpieleRechterAngriff));
 		map.put("statistikSpieleSelbstvertrauen",String.valueOf(statistikSpieleSelbstvertrauen));
 		map.put("statistikSpieleStimmung",String.valueOf(statistikSpieleStimmung));
+		map.put("statistikSpieleHatStats",String.valueOf(statistikSpieleHatStats));
+		map.put("statistikSpieleLoddarStats",String.valueOf(statistikSpieleLoddarStats));
 		map.put("statistikSpielerFinanzenBeschriftung",String.valueOf(statistikSpielerFinanzenBeschriftung));
 		map.put("statistikSpielerFinanzenGehalt",String.valueOf(statistikSpielerFinanzenGehalt));
 		map.put("statistikSpielerFinanzenHilfslinien",String.valueOf(statistikSpielerFinanzenHilfslinien));
@@ -661,6 +665,9 @@ public final class UserParameter extends Configuration {
 		statistikSpieleRechterAngriff = getBooleanValue(values,"statistikSpieleRechterAngriff");
 		statistikSpieleSelbstvertrauen = getBooleanValue(values,"statistikSpieleSelbstvertrauen");
 		statistikSpieleStimmung = getBooleanValue(values,"statistikSpieleStimmung");
+	    statistikSpieleHatStats = getBooleanValue(values,"statistikSpieleHatStats");
+	    statistikSpieleLoddarStats = getBooleanValue(values,"statistikSpieleLoddarStats");
+
 		statistikSpielerFinanzenBeschriftung = getBooleanValue(values,"statistikSpielerFinanzenBeschriftung");
 		statistikSpielerFinanzenGehalt = getBooleanValue(values,"statistikSpielerFinanzenGehalt");
 		statistikSpielerFinanzenHilfslinien = getBooleanValue(values,"statistikSpielerFinanzenHilfslinien");

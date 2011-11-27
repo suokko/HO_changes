@@ -44,7 +44,6 @@ import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
 
-
 /**
  * Das StatistikPanel
  */
@@ -64,9 +63,10 @@ public class SpieleStatistikPanel extends ImagePanel
     private Color forwardColor 			= ThemeManager.getColor(HOColorName.SHIRT_FORWARD);
     private Color leftForwardColor 		= ThemeManager.getColor(HOColorName.SHIRT_WING).brighter();
     private Color totalColor 			= ThemeManager.getColor(HOColorName.STAT_TOTAL);
-    private Color moodColor 			= ThemeManager.getColor(HOColorName.STAT_MOOD); //Color.PINK;
-    private Color confidenceColor 		= ThemeManager.getColor(HOColorName.STAT_CONFIDENCE); // Color.CYAN;
-
+    private Color moodColor 			= ThemeManager.getColor(HOColorName.STAT_MOOD);
+    private Color confidenceColor 		= ThemeManager.getColor(HOColorName.STAT_CONFIDENCE);
+    private Color hatStatsColor 		= ThemeManager.getColor(HOColorName.STAT_HATSTATS);
+    private Color loddarStatsColor 		= ThemeManager.getColor(HOColorName.STAT_LODDAR);
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ImageCheckbox m_jchAbwehrzentrum = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"),
@@ -101,6 +101,12 @@ public class SpieleStatistikPanel extends ImagePanel
 	private ImageCheckbox m_jchStimmung = new ImageCheckbox(HOVerwaltung
 			.instance().getLanguageString("Stimmung"),moodColor,
 			UserParameter.instance().statistikSpieleStimmung);
+	private ImageCheckbox m_jchHatStats = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("Hatstats"),hatStatsColor,
+			UserParameter.instance().statistikSpieleHatStats);
+	private ImageCheckbox m_jchLoddarStats = new ImageCheckbox(HOVerwaltung
+			.instance().getLanguageString("LoddarStats"),loddarStatsColor,
+			UserParameter.instance().statistikSpieleLoddarStats);
 	private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 	private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance()
 			.getLanguageString("Uebernehmen"));
@@ -219,6 +225,12 @@ public class SpieleStatistikPanel extends ImagePanel
         } else if (actionEvent.getSource().equals(m_jchStimmung.getCheckbox())) {
             m_clStatistikPanel.setShow("Stimmung", m_jchStimmung.isSelected());
             UserParameter.instance().statistikSpieleStimmung = m_jchStimmung.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchHatStats.getCheckbox())) {
+            m_clStatistikPanel.setShow("Hatstats", m_jchHatStats.isSelected());
+            UserParameter.instance().statistikSpieleHatStats = m_jchHatStats.isSelected();
+        } else if (actionEvent.getSource().equals(m_jchLoddarStats.getCheckbox())) {
+            m_clStatistikPanel.setShow("LoddarStats", m_jchLoddarStats.isSelected());
+            UserParameter.instance().statistikSpieleLoddarStats = m_jchLoddarStats.isSelected();
         } else if (actionEvent.getSource().equals(m_jchSelbstvertrauen.getCheckbox())) {
             m_clStatistikPanel.setShow("Selbstvertrauen", m_jchSelbstvertrauen.isSelected());
             UserParameter.instance().statistikSpieleSelbstvertrauen = m_jchSelbstvertrauen
@@ -352,6 +364,22 @@ public class SpieleStatistikPanel extends ImagePanel
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 8;
+        m_jchHatStats.setOpaque(false);
+        m_jchHatStats.addActionListener(this);
+        layout2.setConstraints(m_jchHatStats, constraints2);
+        panel2.add(m_jchHatStats);
+        
+        constraints2.gridwidth = 2;
+        constraints2.gridx = 0;
+        constraints2.gridy = 9;
+        m_jchLoddarStats.setOpaque(false);
+        m_jchLoddarStats.addActionListener(this);
+        layout2.setConstraints(m_jchLoddarStats, constraints2);
+        panel2.add(m_jchLoddarStats);
+        
+        constraints2.gridwidth = 2;
+        constraints2.gridx = 0;
+        constraints2.gridy = 10;
         m_jchGesamt.setOpaque(false);
         m_jchGesamt.addActionListener(this);
         layout2.setConstraints(m_jchGesamt, constraints2);
@@ -359,7 +387,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 9;
+        constraints2.gridy = 11;
         m_jchMittelfeld.setOpaque(false);
         m_jchMittelfeld.addActionListener(this);
         layout2.setConstraints(m_jchMittelfeld, constraints2);
@@ -367,7 +395,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 10;
+        constraints2.gridy = 12;
         m_jchRechteAbwehr.setOpaque(false);
         m_jchRechteAbwehr.addActionListener(this);
         layout2.setConstraints(m_jchRechteAbwehr, constraints2);
@@ -375,7 +403,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 11;
+        constraints2.gridy = 13;
         m_jchAbwehrzentrum.setOpaque(false);
         m_jchAbwehrzentrum.addActionListener(this);
         layout2.setConstraints(m_jchAbwehrzentrum, constraints2);
@@ -383,7 +411,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 12;
+        constraints2.gridy = 14;
         m_jchLinkeAbwehr.setOpaque(false);
         m_jchLinkeAbwehr.addActionListener(this);
         layout2.setConstraints(m_jchLinkeAbwehr, constraints2);
@@ -391,7 +419,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 13;
+        constraints2.gridy = 15;
         m_jchRechterAngriff.setOpaque(false);
         m_jchRechterAngriff.addActionListener(this);
         layout2.setConstraints(m_jchRechterAngriff, constraints2);
@@ -399,7 +427,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 14;
+        constraints2.gridy = 16;
         m_jchAngriffszentrum.setOpaque(false);
         m_jchAngriffszentrum.addActionListener(this);
         layout2.setConstraints(m_jchAngriffszentrum, constraints2);
@@ -407,7 +435,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 15;
+        constraints2.gridy = 17;
         m_jchLinkerAngriff.setOpaque(false);
         m_jchLinkerAngriff.addActionListener(this);
         layout2.setConstraints(m_jchLinkerAngriff, constraints2);
@@ -415,7 +443,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 16;
+        constraints2.gridy = 18;
         m_jchStimmung.setOpaque(false);
         m_jchStimmung.addActionListener(this);
         layout2.setConstraints(m_jchStimmung, constraints2);
@@ -423,7 +451,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
-        constraints2.gridy = 17;
+        constraints2.gridy = 19;
         m_jchSelbstvertrauen.setOpaque(false);
         m_jchSelbstvertrauen.addActionListener(this);
         layout2.setConstraints(m_jchSelbstvertrauen, constraints2);
@@ -486,8 +514,8 @@ public class SpieleStatistikPanel extends ImagePanel
 			final int anzahl = Math.min(matchkurzinfos.length, anzahlHRF);
 			final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
-			final double[][] statistikWerte = new double[12][anzahl];
-
+			final double[][] statistikWerte = new double[14][anzahl];
+			
 			// Infos zusammenstellen
 			for (int i = 0; i < anzahl; i++) {
 				final Matchdetails details = DBZugriff.instance()
@@ -495,7 +523,7 @@ public class SpieleStatistikPanel extends ImagePanel
 										.getMatchID());
 
                 int bewertungwert = 0;
-
+                double loddarStats = 0;
                 // Für match
                 int sublevel = 0;
 
@@ -549,6 +577,9 @@ public class SpieleStatistikPanel extends ImagePanel
                     sublevel = ((int) temp) % 4;
                     statistikWerte[8][i] = (((int) temp - 1) / 4) + 1
                                            + PlayerHelper.getValue4Sublevel(sublevel);
+                    statistikWerte[11][i] = details.getHomeHatStats();
+                    // Calculate and return the LoddarStats rating
+                    statistikWerte[12][i] = details.getHomeLoddarStats();
                 } else {
                     sublevel = (details.getGuestMidfield()) % 4;
 
@@ -596,6 +627,9 @@ public class SpieleStatistikPanel extends ImagePanel
                     sublevel = ((int) temp) % 4;
                     statistikWerte[8][i] = (((int) temp - 1) / 4) + 1
                                            + PlayerHelper.getValue4Sublevel(sublevel);
+                    statistikWerte[11][i] = details.getAwayHatStats();
+                    // Calculate and return the LoddarStats rating
+                    statistikWerte[12][i] = details.getAwayLoddarStats();
                 }
 
                 //Stimmung, Selbstvertrauen
@@ -608,7 +642,7 @@ public class SpieleStatistikPanel extends ImagePanel
 				statistikWerte[9][i] = stimmungSelbstvertrauen[0];
 				statistikWerte[10][i] = stimmungSelbstvertrauen[1];
 
-				statistikWerte[11][i] = matchkurzinfos[matchkurzinfos.length
+				statistikWerte[13][i] = matchkurzinfos[matchkurzinfos.length
 						- i - 1].getMatchDateAsTimestamp().getTime();
 
 				final Vector<IMatchLineupPlayer> team = DBZugriff.instance()
@@ -635,9 +669,9 @@ public class SpieleStatistikPanel extends ImagePanel
 
             final StatistikModel[] models = new StatistikModel[statistikWerte.length];
 
-            //Es sind 9 Werte!
+            //Es sind 13 Werte!
             if (statistikWerte.length > 0) {
-                final double faktor = 20 / getMaxValue(statistikWerte[0]);
+                double faktor = 20 / getMaxValue(statistikWerte[0]);
                 models[0] = new StatistikModel(statistikWerte[0], "Bewertung",
                                                m_jchBewertung.isSelected(), ratingColor, format,
                                                faktor);
@@ -666,9 +700,17 @@ public class SpieleStatistikPanel extends ImagePanel
                 models[10] = new StatistikModel(statistikWerte[10], "Selbstvertrauen",
                                                 m_jchSelbstvertrauen.isSelected(), confidenceColor,
                                                 format2);
+                faktor = 20 / getMaxValue(statistikWerte[11]);
+                models[11] = new StatistikModel(statistikWerte[11], "Hatstats",
+                        m_jchHatStats.isSelected(), hatStatsColor,
+                        format2, faktor);
+                faktor = 20 / getMaxValue(statistikWerte[12]);
+                models[12] = new StatistikModel(statistikWerte[12], "LoddarStats",
+                        m_jchLoddarStats.isSelected(), loddarStatsColor,
+                        format3, faktor);
             }
 
-            final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[11]);
+            final String[] yBezeichnungen = Helper.convertTimeMillisToFormatString(statistikWerte[13]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
                                             HOVerwaltung.instance().getLanguageString("Spiele"),
@@ -683,5 +725,8 @@ public class SpieleStatistikPanel extends ImagePanel
         //double[] werte = { 1d, 2d, 1.5d, 3d, 2.5d };
         //StatistikModel[] model   = { new StatistikModel( werte, "Fuehrung", true, FUEHRUNG ) };
         //m_clStatistikPanel.setModel ( model );
+    }
+    private double hq(double value) {
+        return (2 * value) / (value + 80);
     }
 }
