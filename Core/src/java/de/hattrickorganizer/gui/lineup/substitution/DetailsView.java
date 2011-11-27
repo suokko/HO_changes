@@ -131,6 +131,7 @@ public class DetailsView extends JPanel {
 
 		this.orderTypeEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.orderTypeEntry.setBold(true);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(10, 2, 2, 10);
 		Component component = this.orderTypeEntry.getComponent(false);
