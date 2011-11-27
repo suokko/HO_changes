@@ -125,4 +125,8 @@ public interface HOColorName {
 	public static final String SEL_OVERLAY_BG 			= "selectorOverlay.bg";
 	public static final String LINEUP_POS_MIN_BG 		= "lineup.pos.min.bg";
 	public static final String LINEUP_POS_MIN_BORDER	= "lineup.pos.min.border";
+	
+	//1.431
+	public static final String MATCHDETAILS_PROGRESSBAR_GREEN = "matchdetails.progressbar.green";
+	public static final String MATCHDETAILS_PROGRESSBAR_RED = "matchdetails.progressbar.red";
 }

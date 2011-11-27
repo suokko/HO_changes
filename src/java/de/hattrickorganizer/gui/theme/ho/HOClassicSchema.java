@@ -157,7 +157,10 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 		
 		put(HOMEGROWN, "gui/bilder/motherclub.png");
 		put(IMAGEPANEL_BACKGROUND,"gui/bilder/Background.jpg");
-		}
+		
+		// 1.431
+		put(STATISTICS,"gui/bilder/Statistic.gif");
+	}
 
 	private void initBooleans() {
 		put(IMAGEPANEL_BG_PAINTED,Boolean.TRUE);
@@ -306,6 +309,9 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 	    put(MATCHTYPE_INTFRIENDLY_BG,"white");
 	    put(MATCHTYPE_NATIONAL_BG,new Color(220, 220, 255));
 	    
+	    //1.431
+	    put(MATCHDETAILS_PROGRESSBAR_GREEN,new Color(0,124,0));
+	    put(MATCHDETAILS_PROGRESSBAR_RED,new Color(124,0,0));
 	}
 	
 	public Color getDefaultColor(String key){
