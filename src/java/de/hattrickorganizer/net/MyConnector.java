@@ -37,7 +37,6 @@ import de.hattrickorganizer.logik.xml.XMLNewsParser;
 import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
 import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.News;
-import de.hattrickorganizer.net.rmiHOFriendly.ServerVerweis;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.VersionInfo;
@@ -416,38 +415,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return m_ProxyUserPWD;
 	}
 
-	/**
-	 * holt die Liste der verfügbaren Server aus der I-Net-Server-DB
-	 *
-	 * @return Array-Liste mit ServerVerweis Objekten
-	 */
-	public ServerVerweis[] getServerList() {
-		String[] list = new String[0];
-		String s = null;
-		ServerVerweis[] server = null;
-
-		try {
-			s = getWebPage("http://tooldesign.ch/ho/index.php?cmd=getServerList", false);
-			list = Helper.generateStringArray(s, ';');
-
-			if ((s != null) && (!s.trim().equals("")) && (s.length() > 0)) {
-				//-1 da letzter Eintrag == "" ist
-				server = new ServerVerweis[list.length - 1];
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"MyConnector.getServerList: Kein Connect zur FriendlyDB" + e);
-		}
-
-		//gleich Einträge erstellen
-		for (int i = 0; i < (list.length - 1); i++) {
-			if (server != null) {
-				server[i] = new ServerVerweis(list[i]);
-			}
-		}
-
-		return server;
-	}
-
+	
 	/**
 	 * holt die Teamdetails
 	 */
@@ -745,90 +713,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"MyConnector.sendAlive: Kein Connect zur FriendlyDB" + e);
-			HOLogger.instance().log(getClass(),e);
-		}
-
-		return true;
-	}
-
-	/**
-	 * holt die Liste der verfügbaren Server aus der I-Net-Server-DB
-	 */
-	public boolean sendSpielbericht(de.hattrickorganizer.model.Spielbericht sb, boolean isServer) {
-		String request = "http://tooldesign.ch/ho/index.php?cmd=sendSB";
-		String s = null;
-
-		//Verhindern das eigen Spiele gesendet werden!
-		if ((sb == null)
-				|| (sb.Heim().getTeamName().trim().equals(sb.Gast().getTeamName().trim()))) {
-			//Kein Send nötig return success
-			return true;
-		}
-
-		try {
-			request += "&teamID=";
-			request
-			+= de
-			.hattrickorganizer
-			.model
-			.HOVerwaltung
-			.instance()
-			.getModel()
-			.getBasics()
-			.getTeamId();
-			request += "&teamName=";
-			request
-			+= java.net.URLEncoder.encode(
-					de
-					.hattrickorganizer
-					.model
-					.HOVerwaltung
-					.instance()
-					.getModel()
-					.getBasics()
-					.getTeamName(),
-					"UTF-8");
-			request += "&goalsHome=";
-			request += sb.ToreHeim();
-			request += "&goalsGuest=";
-			request += sb.ToreGast();
-			request += "&Home=";
-			request += java.net.URLEncoder.encode(sb.Heim().getTeamName(), "UTF-8");
-			request += "&Guest=";
-			request += java.net.URLEncoder.encode(sb.Gast().getTeamName(), "UTF-8");
-
-			//Damit man einfach rausbekommt ob Absender Heim oder Gast ist
-			request += "&isHome=";
-			request += ((isServer) ? "1" : "0");
-
-			//noch unused , für später reserviert
-			request += "&CupID=0";
-
-			//HOLogger.instance().log(getClass(), request );
-			s = getWebPage(request, false);
-
-			//HOLogger.instance().log(getClass(), s );
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"Send Fehlgeschlagen" + e);
-		}
-
-		return (s != null && s.trim().equalsIgnoreCase("True"));
-	}
-
-	/**
-	 * Informiert die DB das der Server nicht mehr zur verfügung steht
-	 */
-	public boolean unregisterServer(int matchId) {
-		try {
-			final String s =
-				getWebPage(
-						"http://tooldesign.ch/ho/index.php?cmd=unregisterServer&id=" + matchId, false);
-
-			if (!s.trim().equals("True")) {
-				return false;
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"MyConnector.unregisterServer: Kein Connect zur FriendlyDB" + e);
 			HOLogger.instance().log(getClass(),e);
 		}
 
