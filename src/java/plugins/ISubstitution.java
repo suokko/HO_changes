@@ -32,9 +32,10 @@ public interface ISubstitution {
 	public static final byte DOWN_BY_MORE_THAN_TWO = 8;
 
 	// Order type
-	public static final byte SUBSTITUTION = 0;
-	public static final byte BEHAVIOUR = 1;
-	public static final byte POSITION_SWAP = 2;
+	// In the HT-API, position swap has id 3, normal substitution and behaviour
+	// change both have id 1.
+	public static final byte OTHER = 1;
+	public static final byte POSITION_SWAP = 3;
 
 	public int getPlayerOrderId();
 
@@ -48,9 +49,9 @@ public interface ISubstitution {
 
 	public void setPlayerOut(int playerOut);
 
-	public byte getOrderType();
+	public MatchOrderType getOrderType();
 
-	public void setOrderType(byte orderType);
+	public void setOrderType(MatchOrderType orderType);
 
 	public byte getMatchMinuteCriteria();
 
