@@ -114,6 +114,8 @@ public interface HOColorName {
 	public static final String STAT_TOTAL				= "stat.total";
 	public static final String STAT_MOOD				= "stat.mood";
 	public static final String STAT_CONFIDENCE			= "stat.confidence";
+	public static final String STAT_HATSTATS			= "stat.hatstats";
+	public static final String STAT_LODDAR				= "stat.loddar";
 	
 	public static final String MATCHHIGHLIGHT_FAILED_FG	= "matchHighlight.failed.fg";
 	

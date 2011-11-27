@@ -8,11 +8,7 @@ import gui.HOColorName;
 import gui.HOIconName;
 
 import java.awt.Color;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
-import java.util.Set;
 
 import javax.swing.ImageIcon;
 
@@ -295,6 +291,8 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 	    put(STAT_TOTAL,Color.GRAY);
 	    put(STAT_MOOD,Color.PINK);
 	    put(STAT_CONFIDENCE,Color.CYAN);
+	    put(STAT_HATSTATS, Color.YELLOW);
+	    put(STAT_LODDAR,new Color(150, 20, 20));
 	    
 	    
 	    //matchtypes
