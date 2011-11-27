@@ -9,11 +9,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -79,14 +77,17 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 			.getImageDurchgestrichen(new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB), Color.red, new Color(200, 0, 0))));
     private JButton m_jbReloadMatch = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
     private JButton m_jbSimMatch = new JButton(ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
+    private JButton m_jbStatistics = new JButton(ThemeManager.getIcon(HOIconName.STATISTICS));
+    
     private JComboBox m_jcbSpieleFilter;
 
-    //private JSplitPane                      horizontalRightSplitPane            = null;
+
     private JPanel aufstellungsPanel;
     private JSplitPane horizontalLeftSplitPane;
     private JSplitPane verticalSplitPane;
     private JTabbedPane m_jtpSpieldetails;
     private ManschaftsBewertungsPanel m_jpManschaftsBewertungsPanel;
+    private ManschaftsBewertungs2Panel m_jpManschaftsBewertungs2Panel;
     private MatchKurzInfo m_clMatchKurzInfo;
     private MatchberichtPanel m_jpMatchberichtPanel;
     private SpielHighlightPanel m_jpSpielHighlightPanel;
@@ -273,6 +274,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 d.setTitle(match);
                 d.setVisible(true);
         	}
+        } else if (e.getSource().equals(m_jbStatistics)) {
+        	//TODO Dialog with Values
         }
     }
 
@@ -511,16 +514,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
      * Initialise player details GUI components.
      */
     private Component initSpieldetails() {
-        final GridBagLayout mainlayout = new GridBagLayout();
-        final GridBagConstraints mainconstraints = new GridBagConstraints();
-        mainconstraints.anchor = GridBagConstraints.NORTH;
-        mainconstraints.fill = GridBagConstraints.BOTH;
-        mainconstraints.weighty = 1.0;
-        mainconstraints.weightx = 1.0;
-        mainconstraints.insets = new Insets(4, 6, 4, 6);
-
-        final JPanel mainpanel = new ImagePanel(mainlayout);
-
+        final JPanel mainpanel = new ImagePanel(new BorderLayout());
         m_jtpSpieldetails = new JTabbedPane();
 
         //Allgemein
@@ -532,7 +526,11 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         m_jpManschaftsBewertungsPanel = new ManschaftsBewertungsPanel();
         m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Bewertung"),
                                  new JScrollPane(m_jpManschaftsBewertungsPanel));
-
+        //Bewertung2
+        m_jpManschaftsBewertungs2Panel = new ManschaftsBewertungs2Panel();
+        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Bewertung")+" 2",
+                                 new JScrollPane(m_jpManschaftsBewertungs2Panel));
+        
         //Highlights
         m_jpSpielHighlightPanel = new SpielHighlightPanel();
         m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Highlights"),
@@ -543,75 +541,49 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Matchbericht"),
                                  m_jpMatchberichtPanel);
 
-        mainconstraints.gridx = 0;
-        mainconstraints.gridy = 0;
-        mainlayout.setConstraints(m_jtpSpieldetails, mainconstraints);
-        mainpanel.add(m_jtpSpieldetails);
+        mainpanel.add(m_jtpSpieldetails,BorderLayout.CENTER);
 
-        final JPanel buttonPanel = new ImagePanel();
-        final GridBagLayout buttonlayout = new GridBagLayout();
-        final GridBagConstraints buttonconstraints = new GridBagConstraints();
-        buttonconstraints.anchor = GridBagConstraints.NORTH;
-        buttonconstraints.fill = GridBagConstraints.NONE;
-        buttonconstraints.weighty = 0.0;
-        buttonconstraints.weightx = 0.0;
-        buttonconstraints.insets = new Insets(4, 6, 4, 6);
-        buttonPanel.setLayout(buttonlayout);
+        final JPanel buttonPanel = new ImagePanel(new FlowLayout(FlowLayout.LEFT));
 
         //Reloadbutton
         m_jbReloadMatch.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_reload"));
         m_jbReloadMatch.addActionListener(this);
         m_jbReloadMatch.setPreferredSize(new Dimension(24, 24));
         m_jbReloadMatch.setEnabled(false);
-        buttonconstraints.gridx = 0;
-        buttonconstraints.gridy = 0;
-        buttonlayout.setConstraints(m_jbReloadMatch, buttonconstraints);
         buttonPanel.add(m_jbReloadMatch);
 
         m_jbLoeschen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_loeschen"));
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setPreferredSize(new Dimension(24, 24));
         m_jbLoeschen.setEnabled(false);
-        buttonconstraints.gridx = 1;
-        buttonconstraints.gridy = 0;
-        buttonlayout.setConstraints(m_jbLoeschen, buttonconstraints);
         buttonPanel.add(m_jbLoeschen);
 
         m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_drucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setPreferredSize(new Dimension(24, 24));
         m_jbDrucken.setEnabled(false);
-        buttonconstraints.gridx = 2;
-        buttonconstraints.gridy = 0;
-        buttonlayout.setConstraints(m_jbDrucken, buttonconstraints);
         buttonPanel.add(m_jbDrucken);
 
         m_jbAufstellungUebernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_aufstellunguebernehmen"));
         m_jbAufstellungUebernehmen.addActionListener(this);
         m_jbAufstellungUebernehmen.setPreferredSize(new Dimension(24, 24));
         m_jbAufstellungUebernehmen.setEnabled(false);
-        buttonconstraints.gridx = 3;
-        buttonconstraints.gridy = 0;
-        buttonlayout.setConstraints(m_jbAufstellungUebernehmen, buttonconstraints);
         buttonPanel.add(m_jbAufstellungUebernehmen);
         
         m_jbSimMatch.setToolTipText(HOVerwaltung.instance().getLanguageString("Simulate"));
         m_jbSimMatch.addActionListener(this);
         m_jbSimMatch.setPreferredSize(new Dimension(24, 24));
         m_jbSimMatch.setEnabled(false);
-        buttonconstraints.gridx = 4;
-        buttonconstraints.gridy = 0;
-        buttonlayout.setConstraints(m_jbSimMatch, buttonconstraints);
         buttonPanel.add(m_jbSimMatch);
 
-        mainconstraints.gridx = 0;
-        mainconstraints.gridy = 1;
-        mainconstraints.weighty = 0.0;
-        mainconstraints.fill = GridBagConstraints.NONE;
-        mainconstraints.anchor = GridBagConstraints.SOUTHWEST;
-        mainlayout.setConstraints(buttonPanel, mainconstraints);
-        mainpanel.add(buttonPanel);
+        //FIXME
+        m_jbStatistics.setVisible(false);
+        m_jbStatistics.setToolTipText(HOVerwaltung.instance().getLanguageString("Statistik"));
+        m_jbStatistics.addActionListener(this);
+        m_jbStatistics.setPreferredSize(new Dimension(24, 24));
+        buttonPanel.add(m_jbStatistics);
 
+        mainpanel.add(buttonPanel,BorderLayout.SOUTH);
         return mainpanel;
     }
 
@@ -652,6 +624,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 refresh(info);
                 m_jpStaerkenvergleichsPanel.refresh(info);
                 m_jpManschaftsBewertungsPanel.refresh(info);
+                m_jpManschaftsBewertungs2Panel.refresh(info);
                 m_jpSpielHighlightPanel.refresh(info);
                 m_jpMatchberichtPanel.refresh(info);
 
@@ -666,6 +639,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 clear();
                 m_jpStaerkenvergleichsPanel.clear();
                 m_jpManschaftsBewertungsPanel.clear();
+                m_jpManschaftsBewertungs2Panel.clear();
                 m_jpSpielHighlightPanel.clear();
                 m_jpMatchberichtPanel.clear();
                 m_jpAufstellungHeimPanel.clearAll();
@@ -678,6 +652,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             clear();
             m_jpStaerkenvergleichsPanel.clear();
             m_jpManschaftsBewertungsPanel.clear();
+            m_jpManschaftsBewertungs2Panel.clear();
             m_jpSpielHighlightPanel.clear();
             m_jpMatchberichtPanel.clear();
             m_jpAufstellungHeimPanel.clearAll();
