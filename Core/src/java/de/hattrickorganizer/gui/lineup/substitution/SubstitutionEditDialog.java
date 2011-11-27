@@ -16,23 +16,24 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import plugins.ISubstitution;
+import plugins.MatchOrderType;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.GUIUtilities;
 
 public class SubstitutionEditDialog extends JDialog {
 
 	private static final long serialVersionUID = 1875761460780943159L;
-	private byte orderType;
+	private MatchOrderType orderType;
 	private SubstitutionEditView behaviourView;
 	private boolean canceled = true;
 
-	public SubstitutionEditDialog(Dialog parent, byte orderType) {
+	public SubstitutionEditDialog(Dialog parent, MatchOrderType orderType) {
 		super(parent, true);
 		this.orderType = orderType;
 		initDialog();
 	}
 
-	public SubstitutionEditDialog(Frame parent, byte orderType) {
+	public SubstitutionEditDialog(Frame parent, MatchOrderType orderType) {
 		super(parent, true);
 		this.orderType = orderType;
 		initDialog();
@@ -61,13 +62,13 @@ public class SubstitutionEditDialog extends JDialog {
 	private void setDlgTitle() {
 		String dlgTitleKey = null;
 		switch (this.orderType) {
-		case ISubstitution.BEHAVIOUR:
+		case NEW_BEHAVIOUR:
 			dlgTitleKey = "subs.TypeOrder";
 			break;
-		case ISubstitution.SUBSTITUTION:
+		case SUBSTITUTION:
 			dlgTitleKey = "subs.TypeSub";
 			break;
-		case ISubstitution.POSITION_SWAP:
+		case POSITION_SWAP:
 			dlgTitleKey = "subs.TypeSwap";
 			break;
 		}

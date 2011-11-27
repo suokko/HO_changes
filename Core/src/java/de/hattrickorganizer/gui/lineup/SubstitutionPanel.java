@@ -120,7 +120,7 @@ public class SubstitutionPanel extends JDialog implements ItemListener{
 
 	private void setValues(ISubstitution sub) {
 
-		orderCB.setSelectedItem(getMatchingItem(orderValues, sub.getOrderType()));
+		orderCB.setSelectedItem(getMatchingItem(orderValues, sub.getOrderType().getId()));
 		redCardCB.setSelectedItem(getMatchingItem(redcardValues, sub.getCard()));
 		matchMinuteTF.setText(""+sub.getMatchMinuteCriteria());
 

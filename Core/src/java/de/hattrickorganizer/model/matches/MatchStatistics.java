@@ -145,12 +145,12 @@ public class MatchStatistics {
 					return -1;
 				}
 
-				if (tmpSub.getOrderType() == 1) {
+				if (tmpSub.getOrderType().getId() == 1) {
 					// Normal substitution and he left the field
 					return -1;
 				}
 
-				if (tmpSub.getOrderType() == 3) {
+				if (tmpSub.getOrderType().getId() == 3) {
 					// Player swap
 					// The sub object got his new position
 					return tmpSub.getPos();
@@ -164,12 +164,12 @@ public class MatchStatistics {
 				// Repositioning is already caught.
 				// Sent off does not exist here.
 
-				if (tmpSub.getOrderType() == 1) {
+				if (tmpSub.getOrderType().getId() == 1) {
 					//A sub entering. His position is in the sub object.
 					return tmpSub.getPos();
 				}
 
-				if (tmpSub.getOrderType() == 3) {
+				if (tmpSub.getOrderType().getId() == 3) {
 					//A player swap. We need to know where the other player came from.
 					//We figure this out by asking where he was at the end of the previous sub
 					//object (it is safe no matter the value of i).

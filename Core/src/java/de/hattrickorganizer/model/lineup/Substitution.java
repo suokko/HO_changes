@@ -1,6 +1,7 @@
 package de.hattrickorganizer.model.lineup;
 
 import plugins.ISubstitution;
+import plugins.MatchOrderType;
 
 /**
  * A class holding information about substitutions and order changes
@@ -13,14 +14,14 @@ public class Substitution implements plugins.ISubstitution {
 	private int playerOrderID = -1;
 	private int playerIn = -1;
 	private int playerOut = -1;
-	private byte orderType = -1;
+	private MatchOrderType orderType = MatchOrderType.SUBSTITUTION;
 	private byte matchMinuteCriteria = -1;
 	private byte pos = -1;
 	private byte behaviour = -1;
 	private byte card = -1;
 	private byte standing = -1;
 
-	public Substitution(int playerOrderID, int playerIn, int playerOut, byte orderType,
+	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
 			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, byte standing) {
 		super();
 
@@ -67,11 +68,11 @@ public class Substitution implements plugins.ISubstitution {
 		this.playerOut = playerOut;
 	}
 
-	public byte getOrderType() {
+	public MatchOrderType getOrderType() {
 		return orderType;
 	}
 
-	public void setOrderType(byte orderType) {
+	public void setOrderType(MatchOrderType orderType) {
 		this.orderType = orderType;
 	}
 
@@ -113,24 +114,6 @@ public class Substitution implements plugins.ISubstitution {
 
 	public void setStanding(byte standing) {
 		this.standing = standing;
-	}
-
-	public void setEmpty() {
-		playerIn = -1;
-		playerOut = -1;
-		orderType = -1;
-		matchMinuteCriteria = -1;
-		pos = -1;
-		behaviour = -1;
-		card = -1;
-		standing = -1;
-	}
-
-	public boolean isEmpty() {
-		if (playerIn > 0) {
-			return true;
-		}
-		return false;
 	}
 
 	/**
