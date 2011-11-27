@@ -390,4 +390,9 @@ public class ColorLabelEntry extends TableEntry {
          m_clComponent.setBackground(m_clBGColor);
          m_clComponent.setForeground(m_clFGColor);
     }
+    
+    public void setBold(boolean bold) {
+    	int style = (bold) ? Font.BOLD : Font.PLAIN;
+    	this.m_clComponent.setFont(this.m_clComponent.getFont().deriveFont(style));
+    }
 }
