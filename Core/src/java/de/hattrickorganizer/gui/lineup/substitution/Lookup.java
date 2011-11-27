@@ -1,18 +1,18 @@
 package de.hattrickorganizer.gui.lineup.substitution;
 
 import plugins.ISpielerPosition;
-import plugins.ISubstitution;
+import plugins.MatchOrderType;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 public class Lookup {
 
-	public static String getOrderType(byte id) {
-		switch (id) {
-		case ISubstitution.BEHAVIOUR:
+	public static String getOrderType(MatchOrderType orderType) {
+		switch (orderType) {
+		case NEW_BEHAVIOUR:
 			return HOVerwaltung.instance().getLanguageString("subs.TypeOrder");
-		case ISubstitution.POSITION_SWAP:
+		case POSITION_SWAP:
 			return HOVerwaltung.instance().getLanguageString("subs.TypeSwap");
-		case ISubstitution.SUBSTITUTION:
+		case SUBSTITUTION:
 			return HOVerwaltung.instance().getLanguageString("subs.TypeSub");
 		}
 		return null;

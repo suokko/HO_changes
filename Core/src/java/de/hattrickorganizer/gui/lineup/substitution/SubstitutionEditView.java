@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
+import plugins.MatchOrderType;
 import de.hattrickorganizer.gui.lineup.substitution.PositionSelectionEvent.Change;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -31,7 +32,7 @@ import de.hattrickorganizer.tools.Helper;
 public class SubstitutionEditView extends JPanel {
 
 	private static final long serialVersionUID = 6041242290064429972L;
-	private byte orderType;
+	private MatchOrderType orderType;
 	private JComboBox playerComboBox;
 	private JComboBox playerInComboBox;
 	private JComboBox behaviourComboBox;
@@ -42,7 +43,7 @@ public class SubstitutionEditView extends JPanel {
 	private JSlider whenSlider;
 	private WhenTextField whenTextField;
 
-	public SubstitutionEditView(byte orderType) {
+	public SubstitutionEditView(MatchOrderType orderType) {
 		this.orderType = orderType;
 		initComponents();
 		addListeners();
@@ -369,10 +370,10 @@ public class SubstitutionEditView extends JPanel {
 	}
 
 	private boolean isSubstitution() {
-		return this.orderType == ISubstitution.SUBSTITUTION;
+		return this.orderType == MatchOrderType.SUBSTITUTION;
 	}
 
 	private boolean isPositionSwap() {
-		return this.orderType == ISubstitution.POSITION_SWAP;
+		return this.orderType == MatchOrderType.POSITION_SWAP;
 	}
 }

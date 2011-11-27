@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import plugins.ISubstitution;
+import plugins.MatchOrderType;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.GUIUtilities;
@@ -145,7 +146,7 @@ public class SubstitutionOverview extends JPanel {
 		this.removeButton.setEnabled(false);
 	}
 
-	private void doNewOrder(byte orderType) {
+	private void doNewOrder(MatchOrderType orderType) {
 		SubstitutionEditDialog dlg = getSubstitutionEditDialog(orderType);
 		dlg.setLocationRelativeTo(SubstitutionOverview.this);
 		dlg.setVisible(true);
@@ -231,7 +232,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			doNewOrder(ISubstitution.BEHAVIOUR);
+			doNewOrder(MatchOrderType.NEW_BEHAVIOUR);
 		}
 	}
 
@@ -244,7 +245,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			doNewOrder(ISubstitution.POSITION_SWAP);
+			doNewOrder(MatchOrderType.POSITION_SWAP);
 		}
 	}
 
@@ -257,7 +258,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			doNewOrder(ISubstitution.SUBSTITUTION);
+			doNewOrder(MatchOrderType.SUBSTITUTION);
 		}
 	}
 
@@ -287,7 +288,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 	}
 
-	private SubstitutionEditDialog getSubstitutionEditDialog(byte orderType) {
+	private SubstitutionEditDialog getSubstitutionEditDialog(MatchOrderType orderType) {
 		SubstitutionEditDialog dlg = null;
 		Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
 		if (windowAncestor instanceof Frame) {

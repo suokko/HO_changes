@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISubstitution;
+import plugins.MatchOrderType;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -50,7 +51,7 @@ public class DetailsView extends JPanel {
 	}
 
 	private void updateData() {
-		byte idOrderType = -1;
+		MatchOrderType matchOrderType = null;
 		String orderType = "";
 		String playerIn = "";
 		String playerOut = "";
@@ -60,10 +61,10 @@ public class DetailsView extends JPanel {
 		String redCards = "";
 
 		if (this.substitution != null) {
-			idOrderType = this.substitution.getOrderType();
+			matchOrderType = this.substitution.getOrderType();
 
 			HOModel hoModel = HOVerwaltung.instance().getModel();
-			orderType = Lookup.getOrderType(this.substitution.getOrderType());
+			orderType = Lookup.getOrderType(matchOrderType);
 
 			ISpieler in = hoModel.getSpieler(this.substitution.getPlayerIn());
 			playerIn = (in != null) ? in.getName() : "";
@@ -94,18 +95,18 @@ public class DetailsView extends JPanel {
 		this.redCardsEntry.setText(redCards);
 		this.standingEntry.setText(standing);
 
-		switch (idOrderType) {
-		case ISubstitution.SUBSTITUTION:
+		switch (matchOrderType) {
+		case SUBSTITUTION:
 			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
 			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
 			this.newPositionLabel.setEnabled(true);
 			break;
-		case ISubstitution.BEHAVIOUR:
+		case NEW_BEHAVIOUR:
 			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Player"));
 			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
 			this.newPositionLabel.setEnabled(true);
 			break;
-		case ISubstitution.POSITION_SWAP:
+		case POSITION_SWAP:
 			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));
 			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.RepositionWith"));
 			this.newPositionLabel.setEnabled(false);

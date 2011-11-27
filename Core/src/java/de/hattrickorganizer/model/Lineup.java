@@ -23,6 +23,7 @@ import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
+import plugins.MatchOrderType;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.LineupAssistant;
 import de.hattrickorganizer.model.lineup.Substitution;
@@ -163,11 +164,25 @@ public  class Lineup implements plugins.ILineUp {
 				if ((properties.getProperty("subst" + i + "playerorderid") != null) && 
 						(Integer.parseInt(properties.getProperty("subst" + i + "playerorderid")) >= 0)) {
 
+					byte orderTypeId = Byte.parseByte(properties.getProperty("subst" + i + "ordertype"));
+					int playerIn = Integer.parseInt(properties.getProperty("subst" + i + "playerin"));
+					int playerOut = Integer.parseInt(properties.getProperty("subst" + i + "playerout"));
+					MatchOrderType matchOrderType;
+					if (orderTypeId == 3) {
+						matchOrderType = MatchOrderType.POSITION_SWAP;
+					} else {
+						if (playerIn == playerOut) {
+							matchOrderType = MatchOrderType.NEW_BEHAVIOUR;
+						} else {
+							matchOrderType = MatchOrderType.SUBSTITUTION;
+						}
+					}
+					
 					Substitution sub = new Substitution();
 					sub.setPlayerOrderId(Integer.parseInt(properties.getProperty("subst" + i + "playerorderid")));
-					sub.setPlayerIn(Integer.parseInt(properties.getProperty("subst" + i + "playerin")));
-					sub.setPlayerOut(Integer.parseInt(properties.getProperty("subst" + i + "playerout")));
-					sub.setOrderType(Byte.parseByte(properties.getProperty("subst" + i + "ordertype")));
+					sub.setPlayerIn(playerIn);
+					sub.setPlayerOut(playerOut);
+					sub.setOrderType(matchOrderType);
 					sub.setMatchMinuteCriteria(Byte.parseByte(properties.getProperty("subst" + i + "matchminutecriteria")));
 					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i + "behaviour")));
@@ -968,27 +983,7 @@ public  class Lineup implements plugins.ILineUp {
     public final boolean isSpielerInReserve(int spielerId) {
         return (m_clAssi.isSpielerAufgestellt(spielerId, m_vPositionen)
                && !m_clAssi.isSpielerInAnfangsElf(spielerId, m_vPositionen));
-    }
- 
-    
-//    /**
-//     * Returns the requested substitution object
-//     *
-//     */
-//    public ISubstitution getSubstitution(int i) {
-//    	if ((i > 4) || (i < 0)) {
-//    		return null;
-//    	}
-//    	
-//    	for (int j = 0; j < 5; j++) {
-//    		if (m_vSubstitutions.get(j).getPlayerOrderId() == i) {
-//    			return m_vSubstitutions.get(j);
-//    		}
-//    	}
-//    	HOLogger.instance().debug(getClass(), "getSubstitution did not find sub: " + i);
-//    	return null;
-//    }
-//    
+    }   
     
     /**
      * Returns an array with any substitutions (max 5). It may have slots with orderID -1.
@@ -998,40 +993,6 @@ public  class Lineup implements plugins.ILineUp {
        	
     	return m_vSubstitutions;
     }
-    
-    
-//    /**
-//     * Sets the given substitution object at position i. i must be between 0 and 4
-//     */
-//    public void setSubstitution(int i, ISubstitution incSub) {
-//    	Substitution sub = null; 
-//    	if ((i > 4) || (i < 0)) {
-//    		// Rude, silent, reject
-//    		return;
-//    	}
-//    	
-//    	for (ISubstitution s: m_vSubstitutions) {
-//    		if (s.getPlayerOrderId() == i) {
-//    			sub = (Substitution) s;
-//    			break;
-//    		}
-//    	}
-//    	
-//    	if (sub == null) {
-//    		HOLogger.instance().debug(getClass(), "setSubstitution did not find sub: " + i);
-//    		return;
-//    	}
-//    	
-//    	// We keep the playerorderid
-//    	sub.setPlayerIn(incSub.getPlayerIn());
-//    	sub.setPlayerOut(incSub.getPlayerOut());
-//    	sub.setOrderType(incSub.getOrderType());
-//    	sub.setMatchMinuteCriteria(incSub.getMatchMinuteCriteria());
-//    	sub.setPos(incSub.getPos());
-//    	sub.setBehaviour(incSub.getBehaviour());
-//    	sub.setCard(incSub.getCard());
-//    	sub.setStanding(incSub.getStanding());
-//    }
     
     /**
      * Sets the provided list of substitutions as the substitution list. A proper list got max 5 positions.
@@ -1292,7 +1253,7 @@ public  class Lineup implements plugins.ILineUp {
 					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerOrderId());
 					properties.setProperty("subst" + i + "playerin", "" + sub.getPlayerIn());
 					properties.setProperty("subst" + i + "playerout", "" + sub.getPlayerOut());
-					properties.setProperty("subst" + i + "ordertype", "" + sub.getOrderType());
+					properties.setProperty("subst" + i + "ordertype", "" + sub.getOrderType().getId());
 					properties.setProperty("subst" + i + "matchminutecriteria", "" + sub.getMatchMinuteCriteria());
 					properties.setProperty("subst" + i + "pos", "" + sub.getPos());
 					properties.setProperty("subst" + i + "behaviour", "" + sub.getBehaviour());
