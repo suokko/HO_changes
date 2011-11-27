@@ -87,4 +87,7 @@ public interface HOIconName {
 	public static final String STAR_GRAY = "star_gray";
 
 	public static final String HOMEGROWN = "homegrown";
+	
+	// 1.431
+	public static final String STATISTICS = "statistics";
 }
