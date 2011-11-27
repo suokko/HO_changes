@@ -84,16 +84,31 @@ public class SubstitutionEditView extends JPanel {
 	 */
 	public void init(ISubstitution sub) {
 		this.orderType = sub.getOrderType();
-		ComboBoxModel model = this.playerComboBox.getModel();
-		for (int i = 0; i < model.getSize(); i++) {
-			if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub.getPlayerIn()) {
-				playerComboBox.setSelectedItem(model.getElementAt(i));
-				break;
+
+		if (sub.getPlayerOut() != -1) {
+			ComboBoxModel model = this.playerComboBox.getModel();
+			for (int i = 0; i < model.getSize(); i++) {
+				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub
+						.getPlayerOut()) {
+					playerComboBox.setSelectedItem(model.getElementAt(i));
+					break;
+				}
+			}
+		}
+
+		if (!isNewBehaviour() && sub.getPlayerIn() != -1) {
+			ComboBoxModel model = this.playerInComboBox.getModel();
+			for (int i = 0; i < model.getSize(); i++) {
+				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub
+						.getPlayerIn()) {
+					playerInComboBox.setSelectedItem(model.getElementAt(i));
+					break;
+				}
 			}
 		}
 
 		if (!isPositionSwap()) {
-			model = this.positionComboBox.getModel();
+			ComboBoxModel model = this.positionComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
 				if (((PlayerPositionItem) model.getElementAt(i)).getPosition().byteValue() == sub.getPos()) {
 					positionComboBox.setSelectedItem(model.getElementAt(i));
@@ -375,5 +390,9 @@ public class SubstitutionEditView extends JPanel {
 
 	private boolean isPositionSwap() {
 		return this.orderType == MatchOrderType.POSITION_SWAP;
+	}
+
+	private boolean isNewBehaviour() {
+		return this.orderType == MatchOrderType.NEW_BEHAVIOUR;
 	}
 }
