@@ -148,21 +148,23 @@ public class SubstitutionEditView extends JPanel {
 			item = (PlayerPositionItem) this.positionComboBox.getSelectedItem();
 			if (item != null) {
 				if (item.getSpieler() != null) {
-					sub.setPlayerOut(item.getSpieler().getSpielerID());
+					sub.setPos(item.getPosition().byteValue());
 				}
 				sub.setPos(item.getPosition().byteValue());
 			}
 		}
 
+		item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();
+		if (item != null) {
+			sub.setPlayerOut(item.getSpieler().getSpielerID());
+		}
 		if (isPositionSwap() || isSubstitution()) {
 			item = (PlayerPositionItem) this.playerInComboBox.getSelectedItem();
 			if (item != null) {
 				sub.setPlayerIn(item.getSpieler().getSpielerID());
 			}
-			item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();
-			if (item != null) {
-				sub.setPlayerOut(item.getSpieler().getSpielerID());
-			}
+		} else if (isNewBehaviour()) {
+			sub.setPlayerIn(-1);
 		}
 		return sub;
 	}
