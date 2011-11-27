@@ -17,13 +17,21 @@ public class SubstitutionDataProvider {
 	public static void getSubstitutions() {
 		List<ISubstitution> subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList();
 	}
-	
+
 	public static Map<Integer, PlayerPositionItem> getLineupPositions() {
+		return getPositionsMap(ISpielerPosition.startLineup, ISpielerPosition.substForward);
+	}
+
+	public static Map<Integer, PlayerPositionItem> getSubstitutionPositions() {
+		return getPositionsMap(ISpielerPosition.substKeeper, ISpielerPosition.substForward);
+	}
+
+	public static Map<Integer, PlayerPositionItem> getPositionsMap(int start, int end) {
 
 		LinkedHashMap<Integer, PlayerPositionItem> positionMap = new LinkedHashMap<Integer, PlayerPositionItem>();
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
-		for (int i = ISpielerPosition.startLineup; i < ISpielerPosition.substForward + 1; i++) {
+		for (int i = start; i <= end; i++) {
 			ISpieler player = lineup.getPlayerByPositionID(i);
 			if (player != null) {
 				positionMap.put(new Integer(i),
@@ -38,7 +46,7 @@ public class SubstitutionDataProvider {
 		List<PlayerPositionItem> playerItems = new ArrayList<PlayerPositionItem>();
 
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
-		for (int i = start; i < end; i++) {
+		for (int i = start; i <= end; i++) {
 			playerItems.add(new PlayerPositionItem(Integer.valueOf(i), lineup.getPlayerByPositionID(i)));
 		}
 

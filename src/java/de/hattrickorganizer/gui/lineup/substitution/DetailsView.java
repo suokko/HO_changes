@@ -31,6 +31,9 @@ public class DetailsView extends JPanel {
 	private ColorLabelEntry newPositionEntry;
 	private ColorLabelEntry standingEntry;
 	private ColorLabelEntry redCardsEntry;
+	private JLabel playerLabel;
+	private JLabel playerInLabel;
+	private JLabel newPositionLabel;
 
 	public DetailsView() {
 		initComponents();
@@ -47,6 +50,7 @@ public class DetailsView extends JPanel {
 	}
 
 	private void updateData() {
+		byte idOrderType = -1;
 		String orderType = "";
 		String playerIn = "";
 		String playerOut = "";
@@ -56,6 +60,8 @@ public class DetailsView extends JPanel {
 		String redCards = "";
 
 		if (this.substitution != null) {
+			idOrderType = this.substitution.getOrderType();
+
 			HOModel hoModel = HOVerwaltung.instance().getModel();
 			orderType = Lookup.getOrderType(this.substitution.getOrderType());
 
@@ -87,6 +93,28 @@ public class DetailsView extends JPanel {
 		this.newPositionEntry.setText(newPosition);
 		this.redCardsEntry.setText(redCards);
 		this.standingEntry.setText(standing);
+
+		switch (idOrderType) {
+		case ISubstitution.SUBSTITUTION:
+			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
+			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+			this.newPositionLabel.setEnabled(true);
+			break;
+		case ISubstitution.BEHAVIOUR:
+			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Player"));
+			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+			this.newPositionLabel.setEnabled(true);
+			break;
+		case ISubstitution.POSITION_SWAP:
+			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));
+			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.RepositionWith"));
+			this.newPositionLabel.setEnabled(false);
+			break;
+		default:
+			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
+			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+			this.newPositionLabel.setEnabled(true);
+		}
 	}
 
 	private void initComponents() {
@@ -108,31 +136,33 @@ public class DetailsView extends JPanel {
 		component.setPreferredSize(COMPONENTENSIZE);
 		add(component, gbc);
 
-		// Player in
+		// Player (Out/Reposition)
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.insets = new Insets(2, 10, 2, 2);
-		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.In")), gbc);
-
-		this.playerInEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
-		gbc.gridx = 1;
-		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.playerInEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
-
-		// Player out
-		gbc.gridx = 0;
-		gbc.gridy++;
-		gbc.insets = new Insets(2, 10, 2, 2);
-		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Out")), gbc);
+		this.playerLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Out"));
+		add(this.playerLabel, gbc);
 
 		this.playerOutEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
 		component = this.playerOutEntry.getComponent(false);
+		component.setPreferredSize(COMPONENTENSIZE);
+		add(component, gbc);
+
+		// Player (In/With)
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 10, 2, 2);
+		this.playerInLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.In"));
+		add(this.playerInLabel, gbc);
+
+		this.playerInEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		gbc.gridx = 1;
+		gbc.insets = new Insets(2, 2, 2, 10);
+		component = this.playerInEntry.getComponent(false);
 		component.setPreferredSize(COMPONENTENSIZE);
 		add(component, gbc);
 
@@ -154,7 +184,8 @@ public class DetailsView extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.insets = new Insets(2, 10, 2, 2);
-		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Position")), gbc);
+		this.newPositionLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Position"));
+		add(this.newPositionLabel, gbc);
 
 		this.newPositionEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);

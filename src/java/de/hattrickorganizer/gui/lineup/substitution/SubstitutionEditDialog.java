@@ -22,22 +22,25 @@ import de.hattrickorganizer.tools.GUIUtilities;
 public class SubstitutionEditDialog extends JDialog {
 
 	private static final long serialVersionUID = 1875761460780943159L;
+	private byte orderType;
 	private SubstitutionEditView behaviourView;
 	private boolean canceled = true;
 
-	public SubstitutionEditDialog(Dialog parent) {
+	public SubstitutionEditDialog(Dialog parent, byte orderType) {
 		super(parent, true);
-		initComponents();
-		pack();
+		this.orderType = orderType;
+		initDialog();
 	}
-	
-	public SubstitutionEditDialog(Frame parent) {
+
+	public SubstitutionEditDialog(Frame parent, byte orderType) {
 		super(parent, true);
-		initComponents();
-		pack();
+		this.orderType = orderType;
+		initDialog();
 	}
 
 	public void init(ISubstitution sub) {
+		this.orderType = sub.getOrderType();
+		setDlgTitle();
 		this.behaviourView.init(sub);
 	}
 
@@ -47,6 +50,28 @@ public class SubstitutionEditDialog extends JDialog {
 
 	public ISubstitution getSubstitution() {
 		return this.behaviourView.getSubstitution();
+	}
+	
+	private void initDialog() {
+		setDlgTitle();
+		initComponents();
+		pack();
+	}
+
+	private void setDlgTitle() {
+		String dlgTitleKey = null;
+		switch (this.orderType) {
+		case ISubstitution.BEHAVIOUR:
+			dlgTitleKey = "subs.TypeOrder";
+			break;
+		case ISubstitution.SUBSTITUTION:
+			dlgTitleKey = "subs.TypeSub";
+			break;
+		case ISubstitution.POSITION_SWAP:
+			dlgTitleKey = "subs.TypeSwap";
+			break;
+		}
+		setTitle(HOVerwaltung.instance().getLanguageString(dlgTitleKey));
 	}
 
 	private void initComponents() {
@@ -66,7 +91,7 @@ public class SubstitutionEditDialog extends JDialog {
 		gbc.insets = new Insets(12, 2, 8, 8);
 		buttonPanel.add(cancelButton, gbc);
 
-		this.behaviourView = new SubstitutionEditView();
+		this.behaviourView = new SubstitutionEditView(this.orderType);
 		getContentPane().add(this.behaviourView, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 

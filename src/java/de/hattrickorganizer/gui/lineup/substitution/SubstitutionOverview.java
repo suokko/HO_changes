@@ -79,9 +79,7 @@ public class SubstitutionOverview extends JPanel {
 		if (selectedRowIndex != -1) {
 			substitution = ((SubstitutionsTableModel) this.substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
-			if (substitution.getOrderType() == ISubstitution.BEHAVIOUR) {
-				enable = true;
-			}
+			enable = true;
 		}
 		this.editButton.setEnabled(enable);
 		this.removeButton.setEnabled(enable);
@@ -145,8 +143,18 @@ public class SubstitutionOverview extends JPanel {
 				behaviorButton, positionSwapButton);
 
 		this.removeButton.setEnabled(false);
-		substitutionButton.setEnabled(false);
-		positionSwapButton.setEnabled(false);
+	}
+
+	private void doNewOrder(byte orderType) {
+		SubstitutionEditDialog dlg = getSubstitutionEditDialog(orderType);
+		dlg.setLocationRelativeTo(SubstitutionOverview.this);
+		dlg.setVisible(true);
+
+		if (!dlg.isCanceled()) {
+			ISubstitution sub = dlg.getSubstitution();
+			HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList().add(sub);
+			refresh();
+		}
 	}
 
 	private class SubstitutionsTableModel extends AbstractTableModel {
@@ -223,23 +231,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			SubstitutionEditDialog dlg = null;
-			Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
-			if (windowAncestor instanceof Frame) {
-				dlg = new SubstitutionEditDialog((Frame) windowAncestor);
-			} else {
-				dlg = new SubstitutionEditDialog((Dialog) windowAncestor);
-			}
-
-			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
-			dlg.setLocationRelativeTo(SubstitutionOverview.this);
-			dlg.setVisible(true);
-
-			if (!dlg.isCanceled()) {
-				ISubstitution sub = dlg.getSubstitution();
-				HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList().add(sub);
-				refresh();
-			}
+			doNewOrder(ISubstitution.BEHAVIOUR);
 		}
 	}
 
@@ -252,6 +244,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			doNewOrder(ISubstitution.POSITION_SWAP);
 		}
 	}
 
@@ -264,6 +257,7 @@ public class SubstitutionOverview extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			doNewOrder(ISubstitution.SUBSTITUTION);
 		}
 	}
 
@@ -280,14 +274,7 @@ public class SubstitutionOverview extends JPanel {
 			final ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
-			SubstitutionEditDialog dlg = null;
-			Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
-			if (windowAncestor instanceof Frame) {
-				dlg = new SubstitutionEditDialog((Frame) windowAncestor);
-			} else {
-				dlg = new SubstitutionEditDialog((Dialog) windowAncestor);
-			}
-			dlg.setTitle(HOVerwaltung.instance().getLanguageString("subs.TypeOrder"));
+			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
 			dlg.init(sub);
 			dlg.setVisible(true);
@@ -298,6 +285,17 @@ public class SubstitutionOverview extends JPanel {
 						selectedRowIndex, selectedRowIndex);
 			}
 		}
+	}
+
+	private SubstitutionEditDialog getSubstitutionEditDialog(byte orderType) {
+		SubstitutionEditDialog dlg = null;
+		Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
+		if (windowAncestor instanceof Frame) {
+			dlg = new SubstitutionEditDialog((Frame) windowAncestor, orderType);
+		} else {
+			dlg = new SubstitutionEditDialog((Dialog) windowAncestor, orderType);
+		}
+		return dlg;
 	}
 
 	/**
