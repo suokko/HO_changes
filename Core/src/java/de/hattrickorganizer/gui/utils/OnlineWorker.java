@@ -625,7 +625,7 @@ public class OnlineWorker {
     		ISubstitution sub = iter.next();
     		orders+= "{\"playerin\":\"" + sub.getPlayerIn() + "\","  
     		+ "\"playerout\":\"" + sub.getPlayerOut() + "\","
-    		+ "\"orderType\":\"" + sub.getOrderType() + "\","
+    		+ "\"orderType\":\"" + sub.getOrderType().getId() + "\","
     		+ "\"min\":\"" + sub.getMatchMinuteCriteria() + "\","
     		+ "\"pos\":\"" + sub.getPos() + "\","
     		+ "\"beh\":\"" + sub.getBehaviour() + "\","

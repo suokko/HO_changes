@@ -362,7 +362,7 @@ public class ConvertXml2Hrf {
 					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + sub.getPlayerOrderId() + "\n");
 					m_sHRFBuffer.append("subst" + i + "playerIn=" + sub.getPlayerIn() + "\n");
 					m_sHRFBuffer.append("subst" + i + "playerOut=" + sub.getPlayerOut() + "\n");
-					m_sHRFBuffer.append("subst" + i + "orderType=" + sub.getOrderType() + "\n");
+					m_sHRFBuffer.append("subst" + i + "orderType=" + sub.getOrderType().getId() + "\n");
 					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + sub.getMatchMinuteCriteria() + "\n");
 					m_sHRFBuffer.append("subst" + i + "pos=" + sub.getPos() + "\n");
 					m_sHRFBuffer.append("subst" + i + "behaviour=" + sub.getBehaviour() + "\n");

@@ -1,5 +1,8 @@
 package de.hattrickorganizer.gui.lineup.substitution;
 
+import gui.HOColorName;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -15,6 +18,7 @@ import plugins.ISpieler;
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
@@ -26,15 +30,15 @@ public class DetailsView extends JPanel {
 	private static final long serialVersionUID = -8046083206070885556L;
 	private ISubstitution substitution;
 	private ColorLabelEntry orderTypeEntry;
-	private ColorLabelEntry playerInEntry;
-	private ColorLabelEntry playerOutEntry;
+	private ColorLabelEntry firstPlayerEntry;
+	private ColorLabelEntry secondPlayerEntry;
 	private ColorLabelEntry whenEntry;
+	private ColorLabelEntry newBehaviourEntry;
 	private ColorLabelEntry newPositionEntry;
 	private ColorLabelEntry standingEntry;
 	private ColorLabelEntry redCardsEntry;
 	private JLabel playerLabel;
 	private JLabel playerInLabel;
-	private JLabel newPositionLabel;
 
 	public DetailsView() {
 		initComponents();
@@ -42,35 +46,88 @@ public class DetailsView extends JPanel {
 
 	public void setSubstitution(ISubstitution sub) {
 		this.substitution = sub;
-		updateView();
 		updateData();
+		updateView();
 	}
 
 	private void updateView() {
+		if (this.substitution != null) {
+			String color = (this.substitution.getPlayerOut() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.firstPlayerEntry.setBGColor(ThemeManager.getColor(color));
 
+			color = (this.substitution.getPlayerIn() != -1 && this.substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.secondPlayerEntry.setBGColor(ThemeManager.getColor(color));
+
+			color = (this.substitution.getMatchMinuteCriteria() > 0) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.whenEntry.setBGColor(ThemeManager.getColor(color));
+
+			color = (this.substitution.getPos() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.newPositionEntry.setBGColor(ThemeManager.getColor(color));
+
+			color = (this.substitution.getBehaviour() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.newBehaviourEntry.setBGColor(ThemeManager.getColor(color));
+
+			color = (this.substitution.getCard() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.redCardsEntry.setBGColor(ThemeManager.getColor(color));
+
+			color = (this.substitution.getStanding() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+					: HOColorName.TABLEENTRY_BG;
+			this.standingEntry.setBGColor(ThemeManager.getColor(color));
+
+			switch (this.substitution.getOrderType()) {
+			case SUBSTITUTION:
+				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
+				this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+				break;
+			case NEW_BEHAVIOUR:
+				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Player"));
+				this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+				break;
+			case POSITION_SWAP:
+				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));
+				this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.RepositionWith"));
+				break;
+			}
+		} else {
+			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
+			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+
+			Color color = ThemeManager.getColor(HOColorName.TABLEENTRY_BG);
+			this.firstPlayerEntry.setBGColor(color);
+			this.secondPlayerEntry.setBGColor(color);
+			this.whenEntry.setBGColor(color);
+			this.newPositionEntry.setBGColor(color);
+			this.newBehaviourEntry.setBGColor(color);
+			this.redCardsEntry.setBGColor(color);
+			this.standingEntry.setBGColor(color);
+		}
 	}
 
 	private void updateData() {
-		MatchOrderType matchOrderType = null;
 		String orderType = "";
 		String playerIn = "";
 		String playerOut = "";
 		String when = "";
+		String newBehaviour = "";
 		String newPosition = "";
 		String standing = "";
 		String redCards = "";
 
 		if (this.substitution != null) {
-			matchOrderType = this.substitution.getOrderType();
-
 			HOModel hoModel = HOVerwaltung.instance().getModel();
-			orderType = Lookup.getOrderType(matchOrderType);
+			orderType = Lookup.getOrderType(this.substitution.getOrderType());
 
-			ISpieler in = hoModel.getSpieler(this.substitution.getPlayerIn());
-			playerIn = (in != null) ? in.getName() : "";
+			ISpieler out = hoModel.getSpieler(this.substitution.getPlayerOut());
+			playerOut = (out != null) ? out.getName() : "";
 			if (this.substitution.getPlayerOut() != this.substitution.getPlayerIn()) {
-				ISpieler out = hoModel.getSpieler(this.substitution.getPlayerOut());
-				playerOut = (out != null) ? out.getName() : "";
+				ISpieler in = hoModel.getSpieler(this.substitution.getPlayerIn());
+				playerIn = (in != null) ? in.getName() : "";
 			}
 
 			if (this.substitution.getMatchMinuteCriteria() > 0) {
@@ -84,38 +141,18 @@ public class DetailsView extends JPanel {
 				newPosition = Lookup.getPosition(this.substitution.getPos());
 			}
 
+			newBehaviour = Lookup.getBehaviour(this.substitution.getBehaviour());
 			redCards = Lookup.getRedCard(this.substitution.getCard());
 			standing = Lookup.getStanding(this.substitution.getStanding());
 		}
 		this.orderTypeEntry.setText(orderType);
-		this.playerInEntry.setText(playerIn);
-		this.playerOutEntry.setText(playerOut);
+		this.firstPlayerEntry.setText(playerOut);
+		this.secondPlayerEntry.setText(playerIn);
 		this.whenEntry.setText(when);
+		this.newBehaviourEntry.setText(newBehaviour);
 		this.newPositionEntry.setText(newPosition);
 		this.redCardsEntry.setText(redCards);
 		this.standingEntry.setText(standing);
-
-		switch (matchOrderType) {
-		case SUBSTITUTION:
-			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
-			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
-			this.newPositionLabel.setEnabled(true);
-			break;
-		case NEW_BEHAVIOUR:
-			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Player"));
-			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
-			this.newPositionLabel.setEnabled(true);
-			break;
-		case POSITION_SWAP:
-			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));
-			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.RepositionWith"));
-			this.newPositionLabel.setEnabled(false);
-			break;
-		default:
-			this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
-			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
-			this.newPositionLabel.setEnabled(true);
-		}
 	}
 
 	private void initComponents() {
@@ -145,11 +182,11 @@ public class DetailsView extends JPanel {
 		this.playerLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Out"));
 		add(this.playerLabel, gbc);
 
-		this.playerOutEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+		this.firstPlayerEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.playerOutEntry.getComponent(false);
+		component = this.firstPlayerEntry.getComponent(false);
 		component.setPreferredSize(COMPONENTENSIZE);
 		add(component, gbc);
 
@@ -160,11 +197,11 @@ public class DetailsView extends JPanel {
 		this.playerInLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.In"));
 		add(this.playerInLabel, gbc);
 
-		this.playerInEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+		this.secondPlayerEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.playerInEntry.getComponent(false);
+		component = this.secondPlayerEntry.getComponent(false);
 		component.setPreferredSize(COMPONENTENSIZE);
 		add(component, gbc);
 
@@ -182,12 +219,25 @@ public class DetailsView extends JPanel {
 		component.setPreferredSize(COMPONENTENSIZE);
 		add(component, gbc);
 
+		// New behaviour
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 10, 2, 2);
+		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Behavior")), gbc);
+
+		this.newBehaviourEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		gbc.gridx = 1;
+		gbc.insets = new Insets(2, 2, 2, 10);
+		component = this.newBehaviourEntry.getComponent(false);
+		component.setPreferredSize(COMPONENTENSIZE);
+		add(component, gbc);
+
 		// New position
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.insets = new Insets(2, 10, 2, 2);
-		this.newPositionLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Position"));
-		add(this.newPositionLabel, gbc);
+		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Position")), gbc);
 
 		this.newPositionEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
