@@ -667,58 +667,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 		return getWebPage(url, false);
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////
-	//HO-Friendly Funcs
-	////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * registriert einen HO! Friendly Server im Internet
-	 */
-	public int registerServer(String ipAdress, int port, String info) {
-		int i = -1;
-		String result = "";
-		String request = "";
-
-		try {
-			request =
-				"http://tooldesign.ch/ho/index.php?cmd=registerServer&ip=" + ipAdress
-				/*123.123.123.123*/
-				+"&port=" + port /*1234*/
-				+"&info=" + info /*Infotext"*/;
-			result = getWebPage(request, false);
-
-			try {
-				i = Integer.parseInt(result);
-			} catch (NumberFormatException e) {
-				i = -1;
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"MyConnector.registerServer: Kein Connect zur FriendlyDB" + e);
-			HOLogger.instance().log(getClass(),e);
-		}
-
-		return i;
-	}
-
-	/**
-	 * Informiert Inet Db das Friendly-Server weiterhin lauscht
-	 */
-	public boolean sendAlive(int matchId) {
-		try {
-			final String s =
-				getWebPage("http://tooldesign.ch/ho/index.php?cmd=keepAlive&id=" + matchId, false);
-
-			if (Helper.parseDate(s) == null) {
-				return false;
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"MyConnector.sendAlive: Kein Connect zur FriendlyDB" + e);
-			HOLogger.instance().log(getClass(),e);
-		}
-
-		return true;
-	}
-
 	/**
 	 * Get a web page using a URLconnection.
 	 */
@@ -934,8 +882,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	private void infoHO(OAuthRequest request) {
 		request.addHeader("accept-language", "de");
-		request.setConnectionKeepAlive(true);
-		request.setConnectTimeout(1, TimeUnit.MINUTES);
+		request.addHeader("connection", "Keep-Alive");
 		request.addHeader("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
 		request.addHeader("accept-encoding", "gzip, deflate");
 		request.addHeader("user-agent", m_sIDENTIFIER);
