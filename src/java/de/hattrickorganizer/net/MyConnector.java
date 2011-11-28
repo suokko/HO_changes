@@ -882,7 +882,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	private void infoHO(OAuthRequest request) {
 		request.addHeader("accept-language", "de");
-		request.addHeader("connection", "Keep-Alive");
+		request.setConnectionKeepAlive(true);
+		request.setConnectTimeout(60, TimeUnit.SECONDS);
 		request.addHeader("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
 		request.addHeader("accept-encoding", "gzip, deflate");
 		request.addHeader("user-agent", m_sIDENTIFIER);
