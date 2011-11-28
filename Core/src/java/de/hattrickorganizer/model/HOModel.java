@@ -35,7 +35,6 @@ public class HOModel {
     private Basics m_clBasics;
     private EPV epv = new EPV();
     private Finanzen m_clFinanzen;
-//    private HOFriendlyManager m_clFriendlyManager = new HOFriendlyManager();
     private Liga m_clLiga;
     private Spielplan m_clSpielplan;
     private Stadium m_clStadium;
@@ -173,15 +172,6 @@ public class HOModel {
     public final Finanzen getFinanzen() {
         return m_clFinanzen;
     }
-
-//    /**
-//     * TODO Missing Method Documentation
-//     *
-//     * @return TODO Missing Return Method Documentation
-//     */
-//    public final HOFriendlyManager getHOFriendlyManager() {
-//        return m_clFriendlyManager;
-//    }
 
     /**
      * Setter for property m_iID.
