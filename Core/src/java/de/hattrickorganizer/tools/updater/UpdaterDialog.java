@@ -45,7 +45,6 @@ import de.hattrickorganizer.model.HOVerwaltung;
 abstract class UpdaterDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
-	// protected String PROP_NO_SERVER = HOVerwaltung.instance().getLanguageString("KeinServer");
 	private static final long serialVersionUID = -991600939074866793L;
 	protected JTable table;
 	protected String ACT_SHOW_INFO = "ShowInfo";
