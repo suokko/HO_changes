@@ -29,7 +29,7 @@ public class ZipHelper {
 			throw new Exception("The JarFile cannot be located");
 		}
 	}
-	
+
 	public boolean extractFile(String fileToExtract, String destDir) {
 		File file = new File(destDir);
 		file.mkdirs();
@@ -39,7 +39,8 @@ public class ZipHelper {
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
 				String fileName = destDir + File.separatorChar + entry.getName();
-				if (fileName.toUpperCase(java.util.Locale.ENGLISH).endsWith(fileToExtract.toUpperCase(java.util.Locale.ENGLISH))) {
+				if (fileName.toUpperCase(java.util.Locale.ENGLISH).endsWith(
+						fileToExtract.toUpperCase(java.util.Locale.ENGLISH))) {
 					saveEntry(entry, fileName);
 				}
 
@@ -58,7 +59,8 @@ public class ZipHelper {
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
 				String fileName = entry.getName();
-				if (fileName.toLowerCase(java.util.Locale.ENGLISH).endsWith(fileToExtract.toLowerCase(java.util.Locale.ENGLISH))) {
+				if (fileName.toLowerCase(java.util.Locale.ENGLISH).endsWith(
+						fileToExtract.toLowerCase(java.util.Locale.ENGLISH))) {
 					return zipFile.getInputStream(entry);
 				}
 			}
@@ -76,10 +78,12 @@ public class ZipHelper {
 
 	/**
 	 * unzip a file
-	 *
-	 * @param tmpZipFile TODO Missing Constructuor Parameter Documentation
-	 * @param destDir TODO Missing Constructuor Parameter Documentation
-	 *
+	 * 
+	 * @param tmpZipFile
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param destDir
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public boolean unzip(String destDir) {
@@ -87,7 +91,6 @@ public class ZipHelper {
 		file.mkdirs();
 
 		try {
-
 			Enumeration<? extends ZipEntry> e = zipFile.entries();
 
 			while (e.hasMoreElements()) {
@@ -123,7 +126,6 @@ public class ZipHelper {
 
 		if (!f.isDirectory()) {
 			FileOutputStream fos = new FileOutputStream(f);
-
 			int len = 0;
 
 			while ((len = is.read(buffer)) != -1) {
@@ -131,12 +133,11 @@ public class ZipHelper {
 			}
 
 			fos.flush();
-
 			fos.close();
 			is.close();
 		}
 	}
-	
+
 	public Enumeration<? extends ZipEntry> getFileList() {
 		return zipFile.entries();
 	}
