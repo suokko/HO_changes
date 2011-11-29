@@ -135,14 +135,4 @@ public class ZipHelper {
 	private String getSystemIndependentPath(String str) {
 		return str.replace('\\', '/');
 	}
-	
-	public static void main(String[] args) {
-		try {
-			ZipHelper zh = new ZipHelper("/home/chr/tmp/TeamAnalyzer-2.83.zip");
-			zh.unzip("/home/chr/tmp/y");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
