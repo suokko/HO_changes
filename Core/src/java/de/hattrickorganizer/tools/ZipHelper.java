@@ -107,7 +107,7 @@ public class ZipHelper {
 	}
 
 	private void saveEntry(ZipEntry entry, String fileName) throws IOException, FileNotFoundException {
-		File f = new File(fileName);
+		File f = new File(getSystemIndependentPath(fileName));
 
 		if (!f.getParentFile().exists()) {
 			f.getParentFile().mkdirs();
@@ -138,7 +138,12 @@ public class ZipHelper {
 		}
 	}
 
+	private String getSystemIndependentPath(String str) {
+		return str.replace('\\', '/');
+	}
+
 	public Enumeration<? extends ZipEntry> getFileList() {
 		return zipFile.entries();
 	}
+
 }
