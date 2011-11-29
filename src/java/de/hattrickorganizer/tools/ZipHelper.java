@@ -108,36 +108,41 @@ public class ZipHelper {
 	private void saveEntry(ZipEntry entry, String fileName) throws IOException, FileNotFoundException {
 		File f = new File(getSystemIndependentPath(fileName));
 
+		if (entry.isDirectory() && !f.exists()) {
+			f.mkdir();
+			return;
+		}
+
 		if (!f.getParentFile().exists()) {
 			f.getParentFile().mkdirs();
-		}
-
-		if (entry.isDirectory()) {
-			f.mkdir();
-		}
-
-		if (!f.exists()) {
-			f.createNewFile();
 		}
 
 		InputStream is = zipFile.getInputStream(entry);
 		byte[] buffer = new byte[2048];
 
-		if (!f.isDirectory()) {
-			FileOutputStream fos = new FileOutputStream(f);
-			int len = 0;
+		FileOutputStream fos = new FileOutputStream(f);
+		int len = 0;
 
-			while ((len = is.read(buffer)) != -1) {
-				fos.write(buffer, 0, len);
-			}
-
-			fos.flush();
-			fos.close();
-			is.close();
+		while ((len = is.read(buffer)) != -1) {
+			fos.write(buffer, 0, len);
 		}
+
+		fos.flush();
+		fos.close();
+		is.close();
 	}
 
 	private String getSystemIndependentPath(String str) {
 		return str.replace('\\', '/');
+	}
+	
+	public static void main(String[] args) {
+		try {
+			ZipHelper zh = new ZipHelper("/home/chr/tmp/TeamAnalyzer-2.83.zip");
+			zh.unzip("/home/chr/tmp/y");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
