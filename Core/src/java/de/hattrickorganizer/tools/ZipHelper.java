@@ -53,7 +53,8 @@ public class ZipHelper {
 	public void close() {
 		try {
 			zipFile.close();
-		} catch (IOException e) {
+		} catch (IOException ex) {
+			HOLogger.instance().log(ZipHelper.class, ex);
 		}
 	}
 
@@ -98,7 +99,8 @@ public class ZipHelper {
 					return zipFile.getInputStream(entry);
 				}
 			}
-		} catch (IOException e1) {
+		} catch (IOException ex) {
+			HOLogger.instance().log(ZipHelper.class, ex);
 		}
 		return null;
 	}
