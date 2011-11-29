@@ -52,23 +52,6 @@ public class ZipHelper {
 
 	}
 
-	public InputStream getFile(String fileToExtract) {
-		Enumeration<? extends ZipEntry> e = zipFile.entries();
-
-		try {
-			while (e.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry) e.nextElement();
-				String fileName = entry.getName();
-				if (fileName.toLowerCase(java.util.Locale.ENGLISH).endsWith(
-						fileToExtract.toLowerCase(java.util.Locale.ENGLISH))) {
-					return zipFile.getInputStream(entry);
-				}
-			}
-		} catch (IOException e1) {
-		}
-		return null;
-	}
-
 	public void close() {
 		try {
 			zipFile.close();
@@ -106,6 +89,23 @@ public class ZipHelper {
 		return true;
 	}
 
+	private InputStream getFile(String fileToExtract) {
+		Enumeration<? extends ZipEntry> e = zipFile.entries();
+
+		try {
+			while (e.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) e.nextElement();
+				String fileName = entry.getName();
+				if (fileName.toLowerCase(java.util.Locale.ENGLISH).endsWith(
+						fileToExtract.toLowerCase(java.util.Locale.ENGLISH))) {
+					return zipFile.getInputStream(entry);
+				}
+			}
+		} catch (IOException e1) {
+		}
+		return null;
+	}
+
 	private void saveEntry(ZipEntry entry, String fileName) throws IOException, FileNotFoundException {
 		File f = new File(getSystemIndependentPath(fileName));
 
@@ -141,9 +141,4 @@ public class ZipHelper {
 	private String getSystemIndependentPath(String str) {
 		return str.replace('\\', '/');
 	}
-
-	public Enumeration<? extends ZipEntry> getFileList() {
-		return zipFile.entries();
-	}
-
 }
