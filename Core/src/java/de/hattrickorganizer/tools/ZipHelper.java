@@ -30,7 +30,7 @@ public class ZipHelper {
 		}
 	}
 
-	public boolean extractFile(String fileToExtract, String destDir) {
+	public void extractFile(String fileToExtract, String destDir) {
 		File file = new File(destDir);
 		file.mkdirs();
 		try {
@@ -45,11 +45,9 @@ public class ZipHelper {
 				}
 
 			}
-		} catch (Exception e1) {
-			return false;
+		} catch (Exception ex) {
+			HOLogger.instance().log(ZipHelper.class, ex);
 		}
-		return true;
-
 	}
 
 	public void close() {
@@ -69,7 +67,7 @@ public class ZipHelper {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public boolean unzip(String destDir) {
+	public void unzip(String destDir) {
 		File file = new File(destDir);
 		file.mkdirs();
 
@@ -83,10 +81,9 @@ public class ZipHelper {
 			}
 
 			zipFile.close();
-		} catch (Exception e1) {
-			return false;
+		} catch (Exception ex) {
+			HOLogger.instance().log(ZipHelper.class, ex);
 		}
-		return true;
 	}
 
 	private InputStream getFile(String fileToExtract) {
