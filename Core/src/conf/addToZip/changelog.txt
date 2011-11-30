@@ -24,6 +24,7 @@ Changelist HO! 1.431
 - Added rest of HOMainFrame non language string to language files
 - Reworked Download to abort on failure
 - Added Hatstats and Loddar stats to Matches view
+- XXXXXXXX Added a tab from MatchesOverview to matchdetails
 
 Language updates:
 -----------------
