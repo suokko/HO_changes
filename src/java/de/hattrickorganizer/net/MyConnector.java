@@ -743,16 +743,16 @@ public class MyConnector implements plugins.IDownloadHelper {
 					returnStream = getResultStream(response);
 					break;
 				case 407:
-					throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
+					throw new RuntimeException("Download Error\nHTTP Response Code 407: Proxy authentication required.");
 				default:
-					throw new RuntimeException("HTTP Response Code: " + iResponse);
+					throw new RuntimeException("Download Error\nHTTP Response Code: " + iResponse);
 			}
 		}	
 		catch (Exception sox) 
 		{
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
-				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl, "error", JOptionPane.ERROR_MESSAGE);
 			returnStream = null;
 		}
 		return returnStream;
@@ -819,15 +819,15 @@ public class MyConnector implements plugins.IDownloadHelper {
 						tryAgain = false;
 						break;
 					case 407:
-						throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
+						throw new RuntimeException("Download Error\nHTTP Response Code 407: Proxy authentication required.");
 					default:
-						throw new RuntimeException("HTTP Response Code: " + iResponse);
+						throw new RuntimeException("Download Error\nHTTP Response Code: " + iResponse);
 				}
 			}
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
-				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl, "error", JOptionPane.ERROR_MESSAGE);
 			returnStream = null;
 		}
 		return returnStream;

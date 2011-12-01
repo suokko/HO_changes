@@ -805,8 +805,12 @@ public class OnlineWorker {
 				{
 					HOLogger.instance().log(getClass(),"Get Lineup : " + curMatchId);
 					bOK = ow.getMatchlineup(curMatchId, infos[i].getHeimID(), infos[i].getGastID());
-					if (bOK) 
+					if (bOK){ 
 						bOK = ow.getMatchDetails(curMatchId);
+						if (!bOK){
+							break;
+						}
+					}
 					else
 						break;															
 				} 
