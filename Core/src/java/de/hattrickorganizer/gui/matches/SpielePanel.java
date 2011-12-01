@@ -526,10 +526,10 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         m_jpManschaftsBewertungsPanel = new ManschaftsBewertungsPanel();
         m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Bewertung"),
                                  new JScrollPane(m_jpManschaftsBewertungsPanel));
-        //Bewertung2
-        m_jpManschaftsBewertungs2Panel = new ManschaftsBewertungs2Panel();
-        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Bewertung")+" 2",
-                                 new JScrollPane(m_jpManschaftsBewertungs2Panel));
+//        //Bewertung2
+//        m_jpManschaftsBewertungs2Panel = new ManschaftsBewertungs2Panel();
+//        m_jtpSpieldetails.addTab(HOVerwaltung.instance().getLanguageString("Bewertung")+" 2",
+//                                 new JScrollPane(m_jpManschaftsBewertungs2Panel));
         
         //Highlights
         m_jpSpielHighlightPanel = new SpielHighlightPanel();
