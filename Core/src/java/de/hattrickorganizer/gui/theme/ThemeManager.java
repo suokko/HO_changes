@@ -206,6 +206,8 @@ public final class ThemeManager {
 							throw new Exception(txt+" is missing");
 					}
 			} // for
+		} else {
+			throw new Exception("File "+name+".zip is missing");
 		}
 		return theme;
 	}
