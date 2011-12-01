@@ -63,6 +63,9 @@ Plugin Updates:
 - Team Analyzer v 2.83:
   - Fixed icon issue with Nimbus skin
   - Match download is updated to work better
+  
+- Special Events v 1.24
+  - Added missing events
 
 
 Changelist HO! 1.430
