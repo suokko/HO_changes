@@ -46,7 +46,7 @@ public class ZipHelper {
 
 			}
 		} catch (Exception ex) {
-			HOLogger.instance().log(ZipHelper.class, ex);
+			HOLogger.instance().error(ZipHelper.class, ex);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class ZipHelper {
 		try {
 			zipFile.close();
 		} catch (IOException ex) {
-			HOLogger.instance().log(ZipHelper.class, ex);
+			HOLogger.instance().error(ZipHelper.class, ex);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ZipHelper {
 
 			zipFile.close();
 		} catch (Exception ex) {
-			HOLogger.instance().log(ZipHelper.class, ex);
+			HOLogger.instance().error(ZipHelper.class, ex);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class ZipHelper {
 				}
 			}
 		} catch (IOException ex) {
-			HOLogger.instance().log(ZipHelper.class, ex);
+			HOLogger.instance().error(ZipHelper.class, ex);
 		}
 		return null;
 	}
