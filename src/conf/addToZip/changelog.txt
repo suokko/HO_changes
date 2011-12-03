@@ -8,23 +8,26 @@ Changelist HO! 1.431
  	. Rating prediction is updated.
  	. Added in most places we could think of.
  	. Column preferences are cleared in lineup and squad view due to column changes.
-- Added better error message when file save on download fails.
+
+- Theme Manager is added - customize the looks! (Thanks fusselhirn!)
+	. See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
+
+- Download modifications
+	. Added better error message when file save on download fails.
+	. HRF saving is now optional. You can actually cancel!
+	. Reworked Download to abort on failure. Cancel only once!
+
 - Added better error message when database is unable to create its file.
 - Fixed sort issue on player tables.
-- Minor fixes and tweaks.
 - Fixed localization issue messing up ratings for some locales
 - Added new parameter to ratings, called postDelta, which is added after postMulti has been applied (defaults to 0).
 - Modified button behaviour on matches screen to be enabled/disabled appropriately
 - Fixed player regainer string not showing.
 - Fixed wrong set piece taker on corners
 - Added missing match events
-- Theme Manager is added - customize the looks! (Thanks fusselhirn!)
-	. See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
-- HRF saving is now optional
 - Added rest of HOMainFrame non language string to language files
-- Reworked Download to abort on failure
 - Added Hatstats and Loddar stats to Matches view
-- XXXXXXXX Added a tab from MatchesOverview to matchdetails
+- Minor fixes and tweaks that is probably not mentioned...
 
 Language updates:
 -----------------
