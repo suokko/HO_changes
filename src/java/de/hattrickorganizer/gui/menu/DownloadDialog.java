@@ -222,71 +222,67 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 * The download action.
 	 */
 	private void startDownload() {
-		boolean bOK = false;
+		boolean bOK = true;
 		OnlineWorker worker = HOMainFrame.instance().getOnlineWorker();
 		HOModel model = HOVerwaltung.instance().getModel();
 		if (m_jchEigenenSpiele.isSelected()) {
 			// Only get lineups for own fixtures
 			bOK = worker.getMatches(model.getBasics().getTeamId(), false);
-			if (bOK)
-			{
+			if (bOK) {
 				worker.getAllLineups();
 				StadiumCreator.extractHistoric();
 			}
 		}
-		if (bOK)
-		{
+		if (bOK) {
 			if (m_jchMatchArchiv.isSelected()) {
 				final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
 				tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
 				bOK = worker.getMatchArchive(model.getBasics().getTeamId(), tempdate);
-				if (bOK)
-				{
+				if (bOK) {
 					// Get all lineups for matches, if they don't exist already
 					worker.getAllLineups();
 				}
 			}
-			if (bOK)
-			{
-				if (m_jchSpielplan.isSelected()) {
-					// Always get actual season and league
-					bOK = worker.getSpielplan(-1, -1);
-					if (bOK)
-						StandingCreator.extractActual();
+		}
+		if (bOK)
+		{
+			if (m_jchSpielplan.isSelected()) {
+				// Always get actual season and league
+				bOK = worker.getSpielplan(-1, -1);
+				if (bOK){
+					StandingCreator.extractActual();
 				}
-				if (bOK)
-				{
-					if (m_jchAlterSpielplan.isSelected()) 
-					{
-						if (m_jlAlterSeasons.getSelectedValues() != null) 
-						{
-							final Object[] saisons = m_jlAlterSeasons.getSelectedValues();
-							for (int i = 0; i < saisons.length; i++) {
-								if (saisons[i] instanceof CBItem) {
-									// Liga
-									final int saisonid = ((CBItem)saisons[i]).getId();
-			
-									// Abfragen!
-									final LigaAuswahlDialog auswahlDialog = new LigaAuswahlDialog(this, saisonid);
-									final int ligaid = auswahlDialog.getLigaID();
-			
-									if (ligaid > -2) {
-										bOK = worker.getSpielplan(saisonid, ligaid);
-									}
-									if (!bOK)
-										break;
-								}
+			}
+		}
+		if (bOK) {
+			if (m_jchAlterSpielplan.isSelected()) {
+				if (m_jlAlterSeasons.getSelectedValues() != null) {
+					final Object[] saisons = m_jlAlterSeasons.getSelectedValues();
+					for (int i = 0; i < saisons.length; i++) {
+						if (saisons[i] instanceof CBItem) {
+							// Liga
+							final int saisonid = ((CBItem)saisons[i]).getId();
+	
+							// Abfragen!
+							final LigaAuswahlDialog auswahlDialog = new LigaAuswahlDialog(this, saisonid);
+							final int ligaid = auswahlDialog.getLigaID();
+	
+							if (ligaid > -2) {
+								bOK = worker.getSpielplan(saisonid, ligaid);
+							}
+							if (!bOK) {
+								break;
 							}
 						}
 					}
-					if (bOK)
-					{
-						// Als letztes, damit die Matches für die Trainingsberechnung schon
-						// vorhanden sind
-						if (m_jchHRF.isSelected()) 
-							worker.getHrf();
-					}
 				}
+			}
+		}
+		if (bOK) {
+			// Als letztes, damit die Matches für die Trainingsberechnung schon
+			// vorhanden sind
+			if (m_jchHRF.isSelected()) {
+				worker.getHrf();
 			}
 		}
 	}
