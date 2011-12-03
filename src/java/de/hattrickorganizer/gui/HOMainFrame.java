@@ -119,7 +119,7 @@ public final class HOMainFrame extends JFrame
 	private static int revision = 0;
 
 	/** Is this a development version? */
-	private static final boolean DEVELOPMENT = true;
+	private static final boolean DEVELOPMENT = false;
 
 	/**
 	 * After that date, the user gets a nag screen if he starts his old HO version,
