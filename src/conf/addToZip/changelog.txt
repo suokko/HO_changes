@@ -64,7 +64,7 @@ Plugin Updates:
   - Added set piece filter, and removed occurrences of no longer existing general and stamina training
   - Changed icon drawing on Analyzer panel to show values > 99
 
-- Team Analyzer v 2.83:
+- Team Analyzer v 2.82:
   - Fixed icon issue with Nimbus skin
   - Match download is updated to work better
 
