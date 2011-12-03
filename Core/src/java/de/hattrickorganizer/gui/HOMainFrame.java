@@ -120,6 +120,9 @@ public final class HOMainFrame extends JFrame
 
 	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;
+	
+	/**enable functions for the developers */
+	private static final boolean DEVELOPER_MODE = false;
 
 	/**
 	 * After that date, the user gets a nag screen if he starts his old HO version,
@@ -881,7 +884,7 @@ public final class HOMainFrame extends JFrame
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-		if(isDevelopment()){
+		if(DEVELOPER_MODE){
 	        JMenu menu = new JMenu("Developer");
 	        JMenuItem newItem = new JMenuItem("SQL Editor");
 	        newItem.addActionListener(new ActionListener() {
