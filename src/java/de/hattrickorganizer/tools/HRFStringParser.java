@@ -68,7 +68,7 @@ public class HRFStringParser {
             Properties properties = null;
 
             //Load hrf string into a stream
-            final ByteArrayInputStream bis = new ByteArrayInputStream(hrf.getBytes());
+            final ByteArrayInputStream bis = new ByteArrayInputStream(hrf.getBytes("UTF-8"));
             final InputStreamReader isr = new InputStreamReader(bis, "UTF-8");
             hrfReader = new BufferedReader(isr);
             String lineString = "";
