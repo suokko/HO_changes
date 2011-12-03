@@ -92,8 +92,7 @@ public final class BackupDialog extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == okButton){
 			try {
-				ZipHelper zip = new ZipHelper((File) list.getSelectedValue());
-				zip.unzip(User.getCurrentUser().getDBPath());				
+				ZipHelper.unzip((File) list.getSelectedValue(), new File(User.getCurrentUser().getDBPath()));
 			} catch (Exception e1) {
 				HOLogger.instance().log(getClass(),e1);
 			}								

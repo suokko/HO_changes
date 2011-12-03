@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.zip.ZipFile;
 
 import javax.swing.JOptionPane;
 
@@ -36,267 +37,264 @@ import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.ZipHelper;
 
-
 /**
  * DOCUMENT ME!
- *
+ * 
  * @author Thorsten Dietz
- *
+ * 
  * @since 1.35
  */
 public final class UpdateController {
-    //~ Static fields/initializers -----------------------------------------------------------------
-    private static File zip = null;
-    private static File tmp = null;
+	// ~ Static fields/initializers
+	// -----------------------------------------------------------------
+	private static File zip = null;
+	private static File tmp = null;
 
-    public static final String PLUGINS_HOMEPAGE = "http://ho1.sourceforge.net/onlinefiles";
-    protected static final String WEB_FLAGSFILE = PLUGINS_HOMEPAGE + "/xml/flags.zip";
-    protected static final String WEB_PLUGINFILE = PLUGINS_HOMEPAGE + "/xml/pluginVersionen.xml";
+	public static final String PLUGINS_HOMEPAGE = "http://ho1.sourceforge.net/onlinefiles";
+	protected static final String WEB_FLAGSFILE = PLUGINS_HOMEPAGE + "/xml/flags.zip";
+	protected static final String WEB_PLUGINFILE = PLUGINS_HOMEPAGE + "/xml/pluginVersionen.xml";
 
-    //~ Methods ------------------------------------------------------------------------------------
+	// ~ Methods
+	// ------------------------------------------------------------------------------------
 
-    /**
-     * Show the plugins dialog that allows to remove a plugin. 
-     */
-    public static void showDeletePluginDialog() {
-        try {
-            DeleteDialog dialog = new DeleteDialog();
-            dialog.setVisible(true);
-        } catch (Exception e1) {
-            HOLogger.instance().log(UpdateController.class,e1);
-        }
-    }
+	/**
+	 * Show the plugins dialog that allows to remove a plugin.
+	 */
+	public static void showDeletePluginDialog() {
+		try {
+			DeleteDialog dialog = new DeleteDialog();
+			dialog.setVisible(true);
+		} catch (Exception e1) {
+			HOLogger.instance().log(UpdateController.class, e1);
+		}
+	}
 
-    /**
-     * Show the language file update dialog. 
-     */
-    public static void showLanguageUpdateDialog() {
-        try {
-            File file = createXMLFile(PLUGINS_HOMEPAGE + "/xml/languages.xml",
-                                      new File(System.getProperty("user.dir") + File.separator
-                                               + "sprache" + File.separator + "languages.xml"));
+	/**
+	 * Show the language file update dialog.
+	 */
+	public static void showLanguageUpdateDialog() {
+		try {
+			File file = createXMLFile(PLUGINS_HOMEPAGE + "/xml/languages.xml",
+					new File(System.getProperty("user.dir") + File.separator + "sprache" + File.separator
+							+ "languages.xml"));
 
-            Document doc = UpdateHelper.instance().getDocument(file);
+			Document doc = UpdateHelper.instance().getDocument(file);
 
-            Hashtable<String, HPLanguageInfo> list = getWebLanguages(doc.getDocumentElement().getChildNodes(),
-                                             new Hashtable<String, HPLanguageInfo>());
+			Hashtable<String, HPLanguageInfo> list = getWebLanguages(
+					doc.getDocumentElement().getChildNodes(), new Hashtable<String, HPLanguageInfo>());
 
-            LanguagesDialog dialog = new LanguagesDialog(list);
+			LanguagesDialog dialog = new LanguagesDialog(list);
 
-            dialog.setVisible(true);
-        } catch (Exception e1) {
-            HOLogger.instance().log(UpdateController.class,e1);
-        }
-    }
+			dialog.setVisible(true);
+		} catch (Exception e1) {
+			HOLogger.instance().log(UpdateController.class, e1);
+		}
+	}
 
-    /**
-     * Show the library update dialog. 
-     */
-    public static void showPluginUpdaterLibraries() {
-        try {
-            File file = createXMLFile(WEB_PLUGINFILE, getLocalXMLFile());
+	/**
+	 * Show the library update dialog.
+	 */
+	public static void showPluginUpdaterLibraries() {
+		try {
+			File file = createXMLFile(WEB_PLUGINFILE, getLocalXMLFile());
 
-            if (file == null) {
-                JOptionPane.showMessageDialog(null, "Where is my xml file?", "Error",
-                                              JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+			if (file == null) {
+				JOptionPane.showMessageDialog(null, "Where is my xml file?", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
-            Document doc = UpdateHelper.instance().getDocument(file);
-            ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
-            ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
-            ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(doc.getDocumentElement()
-                                                                      .getChildNodes(),
-                                                                   new ArrayList<HPPluginInfo>(), tmp);
+			Document doc = UpdateHelper.instance().getDocument(file);
+			ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
+			ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
+			ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(
+					doc.getDocumentElement().getChildNodes(), new ArrayList<HPPluginInfo>(), tmp);
 
-            nonVisibles = list;
-            list = tmp;
+			nonVisibles = list;
+			list = tmp;
 
-            Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
-            int listSize = list.size();
+			Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
+			int listSize = list.size();
 
-            for (int i = 0; i < listSize; i++) {
-                HPPluginInfo hpp = (HPPluginInfo) list.get(i);
+			for (int i = 0; i < listSize; i++) {
+				HPPluginInfo hpp = (HPPluginInfo) list.get(i);
 
-                for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
-                    IPlugin element = iter.next();
+				for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
+					IPlugin element = iter.next();
 
-                    if (element instanceof IOfficialPlugin
-                        && (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
-                        hpp.setOfficialPlugin((IOfficialPlugin) element);
-                    }
-                     // if
-                }
-                 // for iter
-            }
-             // for list
+					if (element instanceof IOfficialPlugin
+							&& (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
+						hpp.setOfficialPlugin((IOfficialPlugin) element);
+					}
+					// if
+				}
+				// for iter
+			}
+			// for list
 
-            RefreshDialog dialog = new RefreshDialog(list);
-            dialog.setOtherPlugins(nonVisibles);
-            dialog.setVisible(true);
-        } catch (Exception e1) {
-            HOLogger.instance().log(UpdateController.class,e1);
-        }
-    }
+			RefreshDialog dialog = new RefreshDialog(list);
+			dialog.setOtherPlugins(nonVisibles);
+			dialog.setVisible(true);
+		} catch (Exception e1) {
+			HOLogger.instance().log(UpdateController.class, e1);
+		}
+	}
 
-    /**
-     * Show the normal plugins update dialog. 
-     */
-    public static void showPluginUpdaterNormal() {
-        try {
-            File file = createXMLFile(WEB_PLUGINFILE, getLocalXMLFile());
+	/**
+	 * Show the normal plugins update dialog.
+	 */
+	public static void showPluginUpdaterNormal() {
+		try {
+			File file = createXMLFile(WEB_PLUGINFILE, getLocalXMLFile());
 
-            if (file == null) {
-                JOptionPane.showMessageDialog(null, "Where is my xml file?", "Error",
-                                              JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+			if (file == null) {
+				JOptionPane.showMessageDialog(null, "Where is my xml file?", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
-            Document doc = UpdateHelper.instance().getDocument(file);
-            ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
-            ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
+			Document doc = UpdateHelper.instance().getDocument(file);
+			ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
+			ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
 
-            ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(doc.getDocumentElement()
-                                                                      .getChildNodes(),
-                                                                   new ArrayList<HPPluginInfo>(), tmp);
+			ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(
+					doc.getDocumentElement().getChildNodes(), new ArrayList<HPPluginInfo>(), tmp);
 
-            nonVisibles = tmp;
+			nonVisibles = tmp;
 
-            Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
-            int listSize = list.size();
+			Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
+			int listSize = list.size();
 
-            for (int i = 0; i < listSize; i++) {
-                HPPluginInfo hpp = list.get(i);
+			for (int i = 0; i < listSize; i++) {
+				HPPluginInfo hpp = list.get(i);
 
-                for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
-                    IPlugin element = iter.next();
+				for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
+					IPlugin element = iter.next();
 
-                    if (element instanceof IOfficialPlugin
-                        && (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
-                        hpp.setOfficialPlugin((IOfficialPlugin) element);
-                    }
-                     // if
-                }
-                 // for iter
-            }
-             // for list
+					if (element instanceof IOfficialPlugin
+							&& (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
+						hpp.setOfficialPlugin((IOfficialPlugin) element);
+					}
+					// if
+				}
+				// for iter
+			}
+			// for list
 
-            RefreshDialog dialog = new RefreshDialog(list);
-            dialog.setOtherPlugins(nonVisibles);
-            dialog.setVisible(true);
-        } catch (Exception e1) {
-            HOLogger.instance().log(UpdateController.class,e1);
-        }
-    }
+			RefreshDialog dialog = new RefreshDialog(list);
+			dialog.setOtherPlugins(nonVisibles);
+			dialog.setVisible(true);
+		} catch (Exception e1) {
+			HOLogger.instance().log(UpdateController.class, e1);
+		}
+	}
 
-    /**
-     * Download latest flags from the external space.
-     */
-    public static void updateFlags() {
-        try {
-            UpdateHelper.instance().download(WEB_FLAGSFILE, getLocalZipFile());
-            ZipHelper zip = new ZipHelper(getLocalZipFile());
-            zip.unzip(System.getProperty("user.dir"));
-            JOptionPane.showMessageDialog(null,
-                                          HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
-                                          "HO!", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e1) {
-            HOLogger.instance().log(UpdateController.class,e1);
-        }
-    }
+	/**
+	 * Download latest flags from the external space.
+	 */
+	public static void updateFlags() {
+		try {
+			UpdateHelper.instance().download(WEB_FLAGSFILE, getLocalZipFile());
+			ZipHelper.unzip(getLocalZipFile(), new File( System.getProperty("user.dir")));
+			JOptionPane.showMessageDialog(null,
+					HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "HO!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (Exception e1) {
+			HOLogger.instance().log(UpdateController.class, e1);
+		}
+	}
 
-    /**
-     * Create an zip file in the systems temp folder.
-     */
-    protected static File getLocalZipFile() throws IOException {
-        if (zip == null) {
-            zip = File.createTempFile("tmp", "zip");
-        }
-        return zip;
-    }
+	/**
+	 * Create an zip file in the systems temp folder.
+	 */
+	protected static File getLocalZipFile() throws IOException {
+		if (zip == null) {
+			zip = File.createTempFile("tmp", "zip");
+		}
+		return zip;
+	}
 
-    /**
-     * Create an xml file in the systems temp folder.
-     */
-    private static File getLocalXMLFile() throws IOException {
-        if (tmp == null) {
-            tmp = File.createTempFile("tmp", "xml");
-        }
-        return tmp;
-    }
+	/**
+	 * Create an xml file in the systems temp folder.
+	 */
+	private static File getLocalXMLFile() throws IOException {
+		if (tmp == null) {
+			tmp = File.createTempFile("tmp", "xml");
+		}
+		return tmp;
+	}
 
-    /**
-     * analyse the /sprache/languages.xml file and creates a hashtable
-     */
-    private static Hashtable<String,HPLanguageInfo> getWebLanguages(NodeList elements, Hashtable<String,HPLanguageInfo> list) {
-        HPLanguageInfo tmp = null;
-        Element element = null;
+	/**
+	 * analyse the /sprache/languages.xml file and creates a hashtable
+	 */
+	private static Hashtable<String, HPLanguageInfo> getWebLanguages(NodeList elements,
+			Hashtable<String, HPLanguageInfo> list) {
+		HPLanguageInfo tmp = null;
+		Element element = null;
 
-        for (int i = 0; i < elements.getLength(); i++) {
-            if (elements.item(i) instanceof Element) {
-                element = (Element) elements.item(i);
+		for (int i = 0; i < elements.getLength(); i++) {
+			if (elements.item(i) instanceof Element) {
+				element = (Element) elements.item(i);
 
-                if (element.getTagName().equals("property")) {
-                    tmp = HPLanguageInfo.instance(element.getChildNodes());
-                    list.put(tmp.getFilename(), tmp);
-                }
-            }
-        }
+				if (element.getTagName().equals("property")) {
+					tmp = HPLanguageInfo.instance(element.getChildNodes());
+					list.put(tmp.getFilename(), tmp);
+				}
+			}
+		}
 
-        return list;
-    }
+		return list;
+	}
 
-    /**
-     * Download the xml file from Web and save it local
-     */
-    private static File createXMLFile(String url, File tmp) throws Exception {
-        boolean showDialog = false;
-        String content = "";
+	/**
+	 * Download the xml file from Web and save it local
+	 */
+	private static File createXMLFile(String url, File tmp) throws Exception {
+		boolean showDialog = false;
+		String content = "";
 
-        try {
-            content = MyConnector.instance().getUsalWebPage(url, showDialog);
-        } catch (Exception ex) {
-            if (tmp.exists()) {
-                return tmp;
-            }
-            return null;
-        }
+		try {
+			content = MyConnector.instance().getUsalWebPage(url, showDialog);
+		} catch (Exception ex) {
+			if (tmp.exists()) {
+				return tmp;
+			}
+			return null;
+		}
 
-        if (tmp.exists()) {
-            tmp.delete();
-        }
+		if (tmp.exists()) {
+			tmp.delete();
+		}
 
-        FileWriter writer = new FileWriter(tmp);
-        writer.write(content);
-        writer.flush();
-        writer.close();
+		FileWriter writer = new FileWriter(tmp);
+		writer.write(content);
+		writer.flush();
+		writer.close();
 
-        return tmp;
-    }
+		return tmp;
+	}
 
-    /**
-     * Check the external site for the latest release version.
-     */
+	/**
+	 * Check the external site for the latest release version.
+	 */
 	public static void check4update() {
 		VersionInfo version = MyConnector.instance().getLatestVersion();
 		if (version != null && version.getVersion() > HOMainFrame.VERSION) {
-			int update =
-				JOptionPane.showConfirmDialog(
-					HOMainFrame.instance(),
+			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
 					HOVerwaltung.instance().getLanguageString("updateMSG") + "\n"
-						+ HOVerwaltung.instance().getLanguageString("update") + "?",
-					HOVerwaltung.instance().getLanguageString("update")+"?",
-					JOptionPane.YES_NO_OPTION);
+							+ HOVerwaltung.instance().getLanguageString("update") + "?", HOVerwaltung
+							.instance().getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
-				//updateHO(version.getVersion());
+				// updateHO(version.getVersion());
 				updateHO("http://downloads.sourceforge.net/ho1/" + version.getZipFileName());
 			}
 		} else {
 			final int currRev = HOMainFrame.getRevisionNumber();
-			JOptionPane.showMessageDialog(HOMainFrame.instance(), "No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
-					+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance().getLanguageString("update"),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(HOMainFrame.instance(),
+					"No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
+							+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance()
+							.getLanguageString("update"), JOptionPane.INFORMATION_MESSAGE);
 
 		}
 	}
@@ -306,7 +304,7 @@ public final class UpdateController {
 		ver = ver.replaceAll("\\.", "");
 		updateHO("http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip");
 	}
-	
+
 	public static void updateHO(final String urlString) {
 		File tmp = new File("update.zip");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
@@ -317,74 +315,68 @@ public final class UpdateController {
 			return;
 		}
 		wait.setVisible(false);
-		ZipHelper zip = null;
+		ZipFile zipFile = null;
 		try {
-			zip = new ZipHelper("update.zip");
+			zipFile = new ZipFile("update.zip");
 			String dir = System.getProperty("user.dir");
-			zip.extractFile("HO.bat", dir);
-			zip.extractFile("HO.sh", dir);
-			zip.extractFile("HOLauncher.class", dir);
+			ZipHelper.extractFile(zipFile, "HO.bat", dir);
+			ZipHelper.extractFile(zipFile, "HO.sh", dir);
+			ZipHelper.extractFile(zipFile, "HOLauncher.class", dir);
 		} catch (Exception e) {
 			HOLogger.instance().log(UpdateController.class, e);
 			return;
 		} finally {
-			if (zip != null) zip.close();
+			ZipHelper.close(zipFile);
 		}
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
-				"", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null,
+				HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
+				JOptionPane.INFORMATION_MESSAGE);
 
 		HOMainFrame.instance().beenden();
 	}
-	
+
 	/**
-	 * Check the external site for the latest beta version.
-	 * TODO: i18n
+	 * Check the external site for the latest beta version. TODO: i18n
 	 */
 	public static void check4latestbeta() {
 		final VersionInfo vi = MyConnector.instance().getLatestBetaVersion();
 		final int currRev = HOMainFrame.getRevisionNumber();
-		if (vi != null && vi.isValid() && 
-				(vi.getVersion() >= HOMainFrame.VERSION || (currRev > 1 && currRev < vi.getBuild())))  {
-			int update =
-				JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-					"Update your HO to this "+(vi.isBeta()?" beta":"")+"version:"
-						+ "\n\nVersion: " + vi.getVersionString()
-						+ "\nReleased: " + vi.getReleaseDate()
-						+ "\n\n"
-						+ HOVerwaltung.instance().getLanguageString("update") + "?",
-					HOVerwaltung.instance().getLanguageString("update")+"?",
-					JOptionPane.YES_NO_OPTION);
+		if (vi != null && vi.isValid()
+				&& (vi.getVersion() >= HOMainFrame.VERSION || (currRev > 1 && currRev < vi.getBuild()))) {
+			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), "Update your HO to this "
+					+ (vi.isBeta() ? " beta" : "") + "version:" + "\n\nVersion: " + vi.getVersionString()
+					+ "\nReleased: " + vi.getReleaseDate() + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("update") + "?", HOVerwaltung.instance()
+					.getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateHO("http://downloads.sourceforge.net/ho1/" + vi.getZipFileName());
 			}
 		} else {
-			JOptionPane.showMessageDialog(HOMainFrame.instance(), "No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
-					+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance().getLanguageString("update"),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(HOMainFrame.instance(),
+					"No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
+							+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance()
+							.getLanguageString("update"), JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
 	public static void check4EPVUpdate() {
 		Extension data = MyConnector.instance().getEpvVersion();
-		if (HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().EpvRelease) {
+		if (HOMainFrame.VERSION >= data.getMinimumHOVersion()
+				&& data.getRelease() > HOParameter.instance().EpvRelease) {
 			// Info anzeigen, dass es ein Update gibt
 			// Show update info
-			int update =
-				JOptionPane.showConfirmDialog(
-					HOMainFrame.instance(),
-					HOVerwaltung.instance().getLanguageString("updateFile"),
-					HOVerwaltung.instance().getLanguageString("update")+"?",
-					JOptionPane.YES_NO_OPTION);
+			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
+					.getLanguageString("updateFile"), HOVerwaltung.instance().getLanguageString("update")
+					+ "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateEPV(data.getRelease());
 			}
-		}
-		else
-			JOptionPane.showMessageDialog(null, 
-					HOVerwaltung.instance().getLanguageString("LatestVersion") + "(" + HOParameter.instance().EpvRelease + ")", HOVerwaltung.instance().getLanguageString("EPV"),
-					  JOptionPane.INFORMATION_MESSAGE);
+		} else
+			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("LatestVersion")
+					+ "(" + HOParameter.instance().EpvRelease + ")", HOVerwaltung.instance()
+					.getLanguageString("EPV"), JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
@@ -392,8 +384,8 @@ public final class UpdateController {
 		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
 		wait.setVisible(true);
-		if (!UpdateHelper.instance().download(
-				MyConnector.getResourceSite()+"/downloads/epvWeights.mlp", tmp)) {
+		if (!UpdateHelper.instance().download(MyConnector.getResourceSite() + "/downloads/epvWeights.mlp",
+				tmp)) {
 			wait.setVisible(false);
 			tmp.delete();
 			return;
@@ -403,55 +395,60 @@ public final class UpdateController {
 		tmp.renameTo(target);
 		HOParameter.instance().EpvRelease = release;
 		wait.setVisible(false);
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
-									  JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null,
+				HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
 	public static void check4RatingsUpdate() {
 		Extension data = MyConnector.instance().getRatingsVersion();
-		HOLogger.instance().log(UpdateController.class, "Check: " + HOMainFrame.VERSION + ">=" + (data != null ? data.getMinimumHOVersion() : -1f) + " && " + (data != null ? data.getRelease(): -1f) +" > " + HOParameter.instance().RatingsRelease);
-		if (data != null && HOMainFrame.VERSION >= data.getMinimumHOVersion() && data.getRelease()>HOParameter.instance().RatingsRelease) {
-			//Infro anzeigen das es ein Update gibt
-			int update =
-				JOptionPane.showConfirmDialog(
-					HOMainFrame.instance(),
-					HOVerwaltung.instance().getLanguageString("updateFile"),
-					HOVerwaltung.instance().getLanguageString("Ratings")+"?",
-					JOptionPane.YES_NO_OPTION);
+		HOLogger.instance().log(
+				UpdateController.class,
+				"Check: " + HOMainFrame.VERSION + ">=" + (data != null ? data.getMinimumHOVersion() : -1f)
+						+ " && " + (data != null ? data.getRelease() : -1f) + " > "
+						+ HOParameter.instance().RatingsRelease);
+		if (data != null && HOMainFrame.VERSION >= data.getMinimumHOVersion()
+				&& data.getRelease() > HOParameter.instance().RatingsRelease) {
+			// Infro anzeigen das es ein Update gibt
+			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
+					.getLanguageString("updateFile"), HOVerwaltung.instance().getLanguageString("Ratings")
+					+ "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateRatings(data.getRelease());
 			}
-		}
-		else
-			JOptionPane.showMessageDialog(null, 
-					HOVerwaltung.instance().getLanguageString("LatestVersion") + "(" + HOParameter.instance().RatingsRelease + ")", HOVerwaltung.instance().getLanguageString("Ratings"),
-					  JOptionPane.INFORMATION_MESSAGE);
+		} else
+			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("LatestVersion")
+					+ "(" + HOParameter.instance().RatingsRelease + ")", HOVerwaltung.instance()
+					.getLanguageString("Ratings"), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public static void updateRatings(float release) {
 		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
 		wait.setVisible(true);
-		if (!UpdateHelper.instance().download(
-				MyConnector.getResourceSite()+"/downloads/prediction.zip", tmp)) {
+		if (!UpdateHelper.instance().download(MyConnector.getResourceSite() + "/downloads/prediction.zip",
+				tmp)) {
 			wait.setVisible(false);
 			tmp.delete();
 			return;
 		}
 		try {
-	        ZipHelper zip = new ZipHelper(tmp);
-	        HOLogger.instance().log(UpdateController.class, "Unzip " + tmp + " to: " + (System.getProperty("user.dir") + File.separator + "prediction"));
-	        zip.unzip(System.getProperty("user.dir") + File.separator + "prediction");
-	        tmp.delete();
+			File targetDir = new File((System.getProperty("user.dir") + File.separator + "prediction"));
+			HOLogger.instance().log(
+					UpdateController.class,
+					"Unzip " + tmp + " to: " + targetDir.getAbsolutePath());
+			ZipHelper.unzip(tmp, targetDir);
+			tmp.delete();
 			HOParameter.instance().RatingsRelease = release;
 		} catch (Exception e) {
-			HOLogger.instance().log(UpdateController.class,"Rating update unzip: " + e);
+			HOLogger.instance().log(UpdateController.class, "Rating update unzip: " + e);
 		}
 		wait.setVisible(false);
-		JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
-									  JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null,
+				HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
@@ -461,77 +458,56 @@ public final class UpdateController {
 			if (HOMainFrame.VERSION >= news.getMinimumHOVersion()) {
 				HOParameter.instance().lastNews = news.getId();
 				switch (news.getType()) {
-					case News.HO :
-						{
-							if (!UserParameter.instance().updateCheck && news.getVersion()>HOMainFrame.VERSION) {
-								int update =
-									JOptionPane.showConfirmDialog(
-										HOMainFrame.instance(),
-										HOVerwaltung.instance().getLanguageString("updateMSG"),
-										HOVerwaltung.instance().getLanguageString("update") + "?",
-										JOptionPane.YES_NO_OPTION);
-								if (update == JOptionPane.YES_OPTION) {
-									UpdateController.updateHO(news.getVersion());
-								}
-							}
-							break;
+				case News.HO: {
+					if (!UserParameter.instance().updateCheck && news.getVersion() > HOMainFrame.VERSION) {
+						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung
+								.instance().getLanguageString("updateMSG"), HOVerwaltung.instance()
+								.getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
+						if (update == JOptionPane.YES_OPTION) {
+							UpdateController.updateHO(news.getVersion());
 						}
-					case News.EPV :
-						{
-							if (news.getVersion() > HOParameter.instance().EpvRelease) {
-								int update =
-									JOptionPane.showConfirmDialog(
-										HOMainFrame.instance(),
-										news.getMessages().get(0),
-										HOVerwaltung.instance().getLanguageString("update") + "?",
-										JOptionPane.YES_NO_OPTION);
-								if (update == JOptionPane.YES_OPTION) {
-									UpdateController.updateEPV(news.getVersion());
-								}
-							}
-							break;
+					}
+					break;
+				}
+				case News.EPV: {
+					if (news.getVersion() > HOParameter.instance().EpvRelease) {
+						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), news.getMessages()
+								.get(0), HOVerwaltung.instance().getLanguageString("update") + "?",
+								JOptionPane.YES_NO_OPTION);
+						if (update == JOptionPane.YES_OPTION) {
+							UpdateController.updateEPV(news.getVersion());
 						}
+					}
+					break;
+				}
 
-					case News.RATINGS :
-						{
-							if (news.getVersion() > HOParameter.instance().RatingsRelease) {
+				case News.RATINGS: {
+					if (news.getVersion() > HOParameter.instance().RatingsRelease) {
 
-								int update =
-									JOptionPane.showConfirmDialog(
-										HOMainFrame.instance(),
-										news.getMessages().get(0),
-										HOVerwaltung.instance().getLanguageString("update") + "?",
-										JOptionPane.YES_NO_OPTION);
-								if (update == JOptionPane.YES_OPTION) {
+						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), news.getMessages()
+								.get(0), HOVerwaltung.instance().getLanguageString("update") + "?",
+								JOptionPane.YES_NO_OPTION);
+						if (update == JOptionPane.YES_OPTION) {
 
-									UpdateController.updateRatings(news.getVersion());
-								}
-							}
-							break;
+							UpdateController.updateRatings(news.getVersion());
 						}
+					}
+					break;
+				}
 
-					case News.PLUGIN :
-						{
-							JOptionPane.showMessageDialog(
-								HOMainFrame.instance().getOwner(),
-								new NewsPanel(news),
-								"Plugin News",
-								JOptionPane.INFORMATION_MESSAGE);
-							break;
-						}
-					case News.MESSAGE :
-						{
-							JOptionPane.showMessageDialog(
-								HOMainFrame.instance().getOwner(),
-								new NewsPanel(news),
-								"HO News",
-								JOptionPane.INFORMATION_MESSAGE);
-							break;
-						}
-					default :
-						{
-							// Unsupported Message Type
-						}
+				case News.PLUGIN: {
+					JOptionPane.showMessageDialog(HOMainFrame.instance().getOwner(), new NewsPanel(news),
+							"Plugin News", JOptionPane.INFORMATION_MESSAGE);
+					break;
+				}
+				case News.MESSAGE: {
+					JOptionPane.showMessageDialog(HOMainFrame.instance().getOwner(), new NewsPanel(news),
+							"HO News", JOptionPane.INFORMATION_MESSAGE);
+					break;
+				}
+				default: {
+					// Unsupported Message Type
+				}
 				}
 
 			}

@@ -160,9 +160,7 @@ final class RefreshDialog extends UpdaterDialog {
 							deletePlugin(officialPlugin, false);
 						}
 
-						ZipHelper zip = new ZipHelper(UpdateController.getLocalZipFile());
-						zip.unzip(HOPLUGINS_DIRECTORY);
-
+						ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(HOPLUGINS_DIRECTORY));
                     }// selected
                 }// for
 
@@ -171,6 +169,8 @@ final class RefreshDialog extends UpdaterDialog {
 
 				JOptionPane.showMessageDialog(null, PROP_NEW_START, "", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
+				e.printStackTrace();
+				
 				JOptionPane.showMessageDialog(null, PROP_FILE_NOT_FOUND + ": " + ((HPPluginInfo) object[i]).getZipFileName(), "",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -224,9 +224,8 @@ final class RefreshDialog extends UpdaterDialog {
 							continue;
 						}
 
-						ZipHelper zip = new ZipHelper(UpdateController.getLocalZipFile());
-						zip.unzip(HOPLUGINS_DIRECTORY);
-						
+						ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(HOPLUGINS_DIRECTORY));
+				
                         ok = true;
                     } else {
                         // überprüfen, ob die aktuelleste Version und wenn nicht
@@ -243,8 +242,7 @@ final class RefreshDialog extends UpdaterDialog {
 										}
 
 										deletePlugin(runplugins[k], false);
-										ZipHelper zip = new ZipHelper(UpdateController.getLocalZipFile());
-										zip.unzip(HOPLUGINS_DIRECTORY);
+										ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(HOPLUGINS_DIRECTORY));
 									}
 								}
                             }// instanceof

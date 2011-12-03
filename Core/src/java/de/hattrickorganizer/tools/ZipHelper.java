@@ -7,114 +7,116 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+/**
+ * Utility class for handling ZipFiles.
+ * 
+ */
 public class ZipHelper {
 
-	/* local reference to the JarFile */
-	private static ZipFile zipFile = null;
-
-	public ZipHelper(String filename) throws Exception {
-		try {
-			zipFile = new ZipFile(new File(filename));
-		} catch (Exception e) {
-			throw new Exception("The JarFile cannot be located");
-		}
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+	private ZipHelper() {
+		// do nothing
 	}
 
-	public ZipHelper(File file) throws Exception {
-		try {
-			zipFile = new ZipFile(file);
-		} catch (Exception e) {
-			throw new Exception("The JarFile cannot be located");
-		}
-	}
+	/**
+	 * Extracts the file with the given entryName to the specified directory. If
+	 * not existing, the destination directory is created.
+	 * 
+	 * @param zipFile
+	 *            the zip file to extract a file from.
+	 * @param entryName
+	 *            the name of the entry to extract.
+	 * @param destDir
+	 *            the destination directory.
+	 * @throws IOException
+	 *             if an io error occurs while extracting.
+	 */
+	public static void extractFile(ZipFile zipFile, String entryName, String destDir) throws IOException {
 
-	public void extractFile(String fileToExtract, String destDir) {
 		File file = new File(destDir);
 		file.mkdirs();
-		try {
-			Enumeration<? extends ZipEntry> e = zipFile.entries();
+		Enumeration<? extends ZipEntry> e = zipFile.entries();
 
-			while (e.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry) e.nextElement();
-				String fileName = destDir + File.separatorChar + entry.getName();
-				if (fileName.toUpperCase(java.util.Locale.ENGLISH).endsWith(
-						fileToExtract.toUpperCase(java.util.Locale.ENGLISH))) {
-					saveEntry(entry, fileName);
-				}
-
+		while (e.hasMoreElements()) {
+			ZipEntry entry = (ZipEntry) e.nextElement();
+			String fileName = destDir + File.separatorChar + entry.getName();
+			if (fileName.toUpperCase(java.util.Locale.ENGLISH).endsWith(
+					entryName.toUpperCase(java.util.Locale.ENGLISH))) {
+				saveEntry(zipFile, entry, fileName);
 			}
-		} catch (Exception ex) {
-			HOLogger.instance().error(ZipHelper.class, ex);
-		}
-	}
-
-	public void close() {
-		try {
-			zipFile.close();
-		} catch (IOException ex) {
-			HOLogger.instance().error(ZipHelper.class, ex);
 		}
 	}
 
 	/**
-	 * unzip a file
+	 * Closes a zip file. This method is null safe, if the given zipFile is
+	 * null, this methos does nothing. The method will not throw an exception.
+	 * If an exception occurs, it will be logged by HOLogger.
 	 * 
-	 * @param tmpZipFile
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param destDir
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
+	 * @param zipFile
+	 *            the zip file to close.
 	 */
-	public void unzip(String destDir) {
-		File file = new File(destDir);
-		file.mkdirs();
+	public static void close(ZipFile zipFile) {
+		if (zipFile != null) {
+			try {
+				zipFile.close();
+			} catch (Exception ex) {
+				HOLogger.instance().error(ZipHelper.class, ex);
+			}
+		}
+	}
 
+	/**
+	 * Extracts a zip file to a directory. If the destination directory does not
+	 * exist, it will be created.
+	 * 
+	 * @param file
+	 *            the file to extract.
+	 * @param destDir
+	 *            the destination directory.
+	 * @throws ZipException
+	 *             if a ZIP error has occurred
+	 * @throws IOException
+	 *             if an I/O error has occurred
+	 */
+	public static void unzip(File file, File destDir) throws ZipException, IOException {
+		destDir.mkdirs();
+		ZipFile zipFile = null;
 		try {
+			zipFile = new ZipFile(file);
+			String destDirStr = destDir.getAbsolutePath() + File.separatorChar;
 			Enumeration<? extends ZipEntry> e = zipFile.entries();
-
 			while (e.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) e.nextElement();
-				String fileName = destDir + File.separatorChar + entry.getName();
-				saveEntry(entry, fileName);
-			}
-
-			zipFile.close();
-		} catch (Exception ex) {
-			HOLogger.instance().error(ZipHelper.class, ex);
-		}
-	}
-
-	private InputStream getFile(String fileToExtract) {
-		Enumeration<? extends ZipEntry> e = zipFile.entries();
-
-		try {
-			while (e.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry) e.nextElement();
-				String fileName = entry.getName();
-				if (fileName.toLowerCase(java.util.Locale.ENGLISH).endsWith(
-						fileToExtract.toLowerCase(java.util.Locale.ENGLISH))) {
-					return zipFile.getInputStream(entry);
+				String fileName = destDirStr + entry.getName();
+				if (HOLogger.instance().getLogLevel() == HOLogger.DEBUG) {
+					HOLogger.instance().debug(ZipHelper.class,
+							zipFile.getName() + ": " + "extracting " + entry.getName() + " to " + fileName);
 				}
+				saveEntry(zipFile, entry, fileName);
 			}
-		} catch (IOException ex) {
-			HOLogger.instance().error(ZipHelper.class, ex);
+		} finally {
+			close(zipFile);
 		}
-		return null;
 	}
 
-	private void saveEntry(ZipEntry entry, String fileName) throws IOException, FileNotFoundException {
+	private static void saveEntry(ZipFile zipFile, ZipEntry entry, String fileName) throws IOException,
+			FileNotFoundException {
 		File f = new File(getSystemIndependentPath(fileName));
-
-		if (entry.isDirectory() && !f.exists()) {
-			f.mkdir();
-			return;
-		}
 
 		if (!f.getParentFile().exists()) {
 			f.getParentFile().mkdirs();
+		}
+
+		if (entry.isDirectory()) {
+			if (!f.exists()) {
+				f.mkdir();
+			}
+			return;
 		}
 
 		InputStream is = zipFile.getInputStream(entry);
@@ -132,7 +134,7 @@ public class ZipHelper {
 		is.close();
 	}
 
-	private String getSystemIndependentPath(String str) {
+	private static String getSystemIndependentPath(String str) {
 		return str.replace('\\', '/');
 	}
 }
