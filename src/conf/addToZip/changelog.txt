@@ -16,7 +16,8 @@ Changelist HO! 1.431
 	. Added better error message when file save on download fails.
 	. HRF saving is now optional. You can actually cancel!
 	. Reworked Download to abort on failure. Cancel only once!
-
+	. CHPP is now checked for status via it's XML
+	
 - Added better error message when database is unable to create its file.
 - Fixed sort issue on player tables.
 - Fixed localization issue messing up ratings for some locales
