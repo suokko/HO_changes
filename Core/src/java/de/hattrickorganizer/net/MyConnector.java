@@ -32,6 +32,7 @@ import org.scribe.oauth.OAuthService;
 import sun.misc.BASE64Encoder;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.OAuthDialog;
+import de.hattrickorganizer.logik.xml.XMLCHPPPreParser;
 import de.hattrickorganizer.logik.xml.XMLExtensionParser;
 import de.hattrickorganizer.logik.xml.XMLNewsParser;
 import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
@@ -138,7 +139,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String url = htUrl + "?file=arenadetails";
 		if (arenaId > 0)
 			url += "&arenaID=" + arenaId;
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -147,7 +148,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getEconomy() throws IOException {
 		final String url = htUrl + "?file=economy";
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +176,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		} 
 
 		url =  htUrl + file;
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -184,7 +185,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getLeagueDetails() throws IOException {
 		final String url = htUrl + "?file=leaguedetails";
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -196,7 +197,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += "&season=" + season;
 		if (leagueID > 0)
 			url += "&leagueLevelUnitID=" + leagueID;
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -218,7 +219,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&LastMatchDate=" + lastDate);
 		}
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -236,7 +237,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
-		lineupString = getWebPage(url, true);
+		lineupString = getCHPPWebFile(url);
 		if (DEBUGSAVE) {
 			FileWriter fw = new FileWriter(new File(SAVEDIR+"matchlineup_m"
 					+ matchId + "_t" + teamId + "_"
@@ -255,7 +256,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		String matchOrderString = "";
 		String url = htUrl + "?file=matchorders&version="
 		+ VERSION_MATCHORDERS + "&matchID=" + matchId + "&isYouth=false";
-		matchOrderString = getWebPage(url, true);
+		matchOrderString = getCHPPWebFile(url);
 		if (DEBUGSAVE) {
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchorders_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
@@ -292,7 +293,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&matchID=" + matchId);
 		}
 		url += "&matchEvents=true";
-		matchDetailsString = getWebPage(url, true);
+		matchDetailsString = getCHPPWebFile(url);
 		if (DEBUGSAVE) {
 			FileWriter fw = new FileWriter(new File(SAVEDIR + "matchdetails_m"
 					+ matchId + "_" + System.currentTimeMillis() + ".xml"));
@@ -313,7 +314,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += "&teamID=" + teamId;
 		if (forceRefresh) 
 			url += "&actionType=refreshCache";
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -322,7 +323,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getPlayers() throws IOException {
 		final String url = htUrl + "?file=players&version=" + VERSION_PLAYERS;
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
@@ -425,16 +426,16 @@ public class MyConnector implements plugins.IDownloadHelper {
 			url += ("&teamID=" + teamId);
 		}
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/**
 	 * Get the training XML data.
 	 */
 	public String getTraining() throws IOException {
-		final String url =  htUrl + "?file=training&version="+ VERSION_TRAINING;
+		final String url = htUrl + "?file=training&version="+ VERSION_TRAINING;
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -468,19 +469,14 @@ public class MyConnector implements plugins.IDownloadHelper {
 	 */
 	public String getVerein() throws IOException {
 		final String url = htUrl + "?file=club";
-		return getWebPage(url, true);
-	}
-
-	private String getWebPage(String surl, boolean bIsCHPP) throws IOException {
-		return getWebPage(surl, true, bIsCHPP); // show connect error
+		return getCHPPWebFile(url);
 	}
 
 	/**
 	 * Get the content of a web page in one string.
 	 */
-	private String getWebPage(String surl, boolean showError, boolean bIsCHPP) throws IOException {
-		final InputStream resultingInputStream = getWebFile(surl, showError, bIsCHPP);
-		
+	private String getWebPage(String surl, boolean showError) throws IOException {
+		final InputStream resultingInputStream = getNonCHPPWebFile(surl, showError);
 		return readStream(resultingInputStream);
 	}
 
@@ -490,7 +486,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public String getWorldDetails() throws IOException {
 		final String url =  htUrl + "?file=worlddetails";
 
-		return getWebPage(url, true);
+		return getCHPPWebFile(url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +616,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		try {
 			xmlFile =  htUrl + "?file=teamdetails&teamID=" + teamID;
-			xmlFile = getWebPage(xmlFile, true);
+			xmlFile = getCHPPWebFile(xmlFile);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
 			return "-1";
@@ -628,8 +624,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		return new xmlTeamDetailsParser().fetchRegionID(xmlFile);
 	}
-
-
 
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
 		return getFileFromWeb(url, displaysettingsScreen, false);
@@ -645,7 +639,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			final ProxyDialog proxyDialog = new ProxyDialog(HOMainFrame.instance());
 			proxyDialog.setVisible(true);
 		}
-		return getWebFile(url, showErrorMessage, false);
+		return getNonCHPPWebFile(url, showErrorMessage);
 	}
 
 	/**
@@ -664,15 +658,15 @@ public class MyConnector implements plugins.IDownloadHelper {
 			proxyDialog.setVisible(true);
 		}
 
-		return getWebPage(url, false);
+		return getWebPage(url, true);
 	}
 
 	/**
 	 * Get a web page using a URLconnection.
 	 */
-	private InputStream getCHPPWebFile(String surl, boolean showErrorMessage)
+	private String getCHPPWebFile(String surl)
 	{
-		InputStream returnStream = null;
+		String returnString = "";
 		OAuthDialog authDialog = null;
 		Response response = null;
 		int iResponse = 200;
@@ -695,7 +689,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 					case 200:
 					case 201:
 						// We are done!
-						returnStream = getResultStream(response);
+						returnString = readStream(getResultStream(response));
+						String sError = (new XMLCHPPPreParser()).Error(returnString);
+						if (sError.length() > 0)
+							throw new RuntimeException(sError);
 						tryAgain = false;
 						break;
 					case 401:
@@ -720,11 +717,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 		catch (Exception sox) 
 		{
 			HOLogger.instance().error(getClass(), sox);
-			if (showErrorMessage)
-				JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
-			returnStream = null;
+			JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+			returnString = "";
 		}
-		return returnStream;
+		return returnString;
 	}
 	private InputStream getNonCHPPWebFile(String surl, boolean showErrorMessage) 
 	{
@@ -757,14 +753,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		}
 		return returnStream;
 	}
-	private InputStream getWebFile(String surl, boolean showErrorMessage, boolean needsOAuth) 
-	{
-		if (needsOAuth)
-			return getCHPPWebFile(surl, showErrorMessage);
-		else
-			return getNonCHPPWebFile(surl, showErrorMessage);
-	}
-
+	
 	/**
 	 * Post a web file containing body parameters
 	 * 
@@ -799,6 +788,15 @@ public class MyConnector implements plugins.IDownloadHelper {
 				}
 				switch (iResponse)
 				{
+					case 200:
+					case 201:
+						// We are done!
+						returnStream = getResultStream(response);
+						String sError = (new XMLCHPPPreParser()).Error(readStream(returnStream));
+						if (sError.length() > 0)
+							throw new RuntimeException(sError);
+						tryAgain = false;
+						break;
 					case 401:
 						if (authDialog == null)
 							authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
@@ -811,12 +809,6 @@ public class MyConnector implements plugins.IDownloadHelper {
 							m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
 									Helper.decryptString(gui.UserParameter.instance().TokenSecret));
 						// Try again...
-						break;
-					case 200:
-					case 201:
-						// We are done!
-						returnStream = getResultStream(response);
-						tryAgain = false;
 						break;
 					case 407:
 						throw new RuntimeException("Download Error\nHTTP Response Code 407: Proxy authentication required.");
