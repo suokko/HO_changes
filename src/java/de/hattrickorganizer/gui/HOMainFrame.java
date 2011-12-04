@@ -88,7 +88,6 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.backup.BackupHelper;
-import de.hattrickorganizer.tools.developer.SQLDialog;
 import de.hattrickorganizer.tools.extension.ExtensionListener;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 import de.hattrickorganizer.tools.updater.UpdateController;
@@ -96,38 +95,37 @@ import de.hattrickorganizer.tools.updater.UpdateController;
 /**
  * The Main HO window
  */
-public final class HOMainFrame extends JFrame
-	implements Refreshable, WindowListener, ActionListener, ChangeListener {
-	//~ Static fields/initializers -----------------------------------------------------------------
+public final class HOMainFrame extends JFrame implements Refreshable, WindowListener, ActionListener,
+		ChangeListener {
+	// ~ Static fields/initializers
+	// -----------------------------------------------------------------
 
 	private static final long serialVersionUID = -6333275250973872365L;
 
 	/**
-	 * Release Notes:
-	 * ==============
-	 * The first SVN commit AFTER a release should include
-	 *      an increased VERSION number with DEVELOPMENT set to true
-	 *      an updated VERSION number in conf/addToZip/version.txt
-	 *      new headers in conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt
-	 * The last SVN commit BEFORE a release should set DEVELOPMENT to false
-	 *      and set WARN_DATE to 12 (?) months after the release date
+	 * Release Notes: ============== The first SVN commit AFTER a release should
+	 * include an increased VERSION number with DEVELOPMENT set to true an
+	 * updated VERSION number in conf/addToZip/version.txt new headers in
+	 * conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt The last
+	 * SVN commit BEFORE a release should set DEVELOPMENT to false and set
+	 * WARN_DATE to 12 (?) months after the release date
 	 */
 
 	/** HO Version */
 	public static final double VERSION = 1.431d;
-	
+
 	private static int revision = 0;
 
 	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;
-	
-	/**enable functions for the developers */
+
+	/** enable functions for the developers */
 	private static final boolean DEVELOPER_MODE = false;
 
 	/**
-	 * After that date, the user gets a nag screen if he starts his old HO version,
-	 * set to empty string for no warning
-	 * (DEVELOPMENT versions do not show the nag screen)
+	 * After that date, the user gets a nag screen if he starts his old HO
+	 * version, set to empty string for no warning (DEVELOPMENT versions do not
+	 * show the nag screen)
 	 */
 	private static final String WARN_DATE = "2012-06-30 00:00:00.0";
 
@@ -137,13 +135,13 @@ public final class HOMainFrame extends JFrame
 	private static final String LIMITED_DATE = "2004-09-01 00:00:00.0";
 	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
 
-	//---------Konstanten----------------------
-	public static final int SPIELERUEBERSICHT = 0;	// player overview
-	public static final int AUFSTELLUNG = 1; 		// lineup
-	public static final int LIGATABELLE = 2;		// league table
-	public static final int SPIELE = 3;				// matches
-	public static final int SPIELERANALYSE = 4;		// player analysis
-	public static final int STATISTIK = 5;			// statistics
+	// ---------Konstanten----------------------
+	public static final int SPIELERUEBERSICHT = 0; // player overview
+	public static final int AUFSTELLUNG = 1; // lineup
+	public static final int LIGATABELLE = 2; // league table
+	public static final int SPIELE = 3; // matches
+	public static final int SPIELERANALYSE = 4; // player analysis
+	public static final int STATISTIK = 5; // statistics
 	public static final int TRANSFERSCOUT = 6;
 	public static final int ARENASIZER = 7;
 	public static final int INFORMATIONEN = 8;
@@ -152,7 +150,8 @@ public final class HOMainFrame extends JFrame
 	public static final int READY = 1;
 
 	private static int status = READY;
-	//~ Instance fields ----------------------------------------------------------------------------
+	// ~ Instance fields
+	// ----------------------------------------------------------------------------
 
 	private ArenaSizerPanel m_jpArenaSizer;
 	private LineupPanel m_jpAufstellung;
@@ -180,7 +179,7 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmHomepageItem = new JMenuItem(m_hov.getLanguageString("Homepage"));
 	private final JMenuItem m_jmFullScreenItem = new JMenuItem(m_hov.getLanguageString("FullScreen.toggle"));
 
-	private final JMenuItem m_jmImportItem =new JMenuItem(m_hov.getLanguageString("HRFImportieren"));
+	private final JMenuItem m_jmImportItem = new JMenuItem(m_hov.getLanguageString("HRFImportieren"));
 	private final JMenuItem m_jmOptionen = new JMenuItem(m_hov.getLanguageString("Optionen"));
 	private final JMenuItem m_jmTraining = new JMenuItem(m_hov.getLanguageString("SubskillsBerechnen"));
 	private final JMenuItem m_jmTraining2 = new JMenuItem(m_hov.getLanguageString("SubskillsBerechnen")
@@ -189,7 +188,8 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiAufstellung = new JMenuItem(m_hov.getLanguageString("Aufstellung"));
 	private final JMenuItem m_jmiFlags = new JMenuItem(m_hov.getLanguageString("Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem(m_hov.getLanguageString("HO"));
-	private final JMenuItem m_jmiHObeta = new JMenuItem(m_hov.getLanguageString("HO") + " (" + m_hov.getLanguageString("Beta") +")");
+	private final JMenuItem m_jmiHObeta = new JMenuItem(m_hov.getLanguageString("HO") + " ("
+			+ m_hov.getLanguageString("Beta") + ")");
 	private final JMenuItem m_jmiEPV = new JMenuItem(m_hov.getLanguageString("EPV"));
 	private final JMenuItem m_jmiRatings = new JMenuItem(m_hov.getLanguageString("Ratings"));
 
@@ -198,7 +198,7 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiNotepad = new JMenuItem(m_hov.getLanguageString("Notizen"));
 	private final JMenuItem m_jmiExporter = new JMenuItem(m_hov.getLanguageString("XMLExporter"));
 	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem(m_hov.getLanguageString("CSVExporter"));
-	private final JMenuItem m_jmiDbCleanupTool= new JMenuItem(m_hov.getLanguageString("dbcleanup"));
+	private final JMenuItem m_jmiDbCleanupTool = new JMenuItem(m_hov.getLanguageString("dbcleanup"));
 
 	private final JMenuItem m_jmiLanguages = new JMenuItem(m_hov.getLanguageString("Sprachdatei"));
 	private final JMenuItem m_jmiLigatabelle = new JMenuItem(m_hov.getLanguageString("Ligatabelle"));
@@ -207,7 +207,8 @@ public final class HOMainFrame extends JFrame
 	private final JMenuItem m_jmiPluginsNormal = new JMenuItem(m_hov.getLanguageString("Normal"));
 	private final JMenuItem m_jmiSpiele = new JMenuItem(m_hov.getLanguageString("Spiele"));
 	private final JMenuItem m_jmiSpieleranalyse = new JMenuItem(m_hov.getLanguageString("SpielerAnalyse"));
-	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(m_hov.getLanguageString("Spieleruebersicht"));
+	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(
+			m_hov.getLanguageString("Spieleruebersicht"));
 	private final JMenuItem m_jmiStatistik = new JMenuItem(m_hov.getLanguageString("Statistik"));
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(m_hov.getLanguageString("TransferScout"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(m_hov.getLanguageString("Verschiedenes"));
@@ -228,27 +229,31 @@ public final class HOMainFrame extends JFrame
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
-	private boolean isAppTerminated = false; ///< set when HO should be terminated
+	private boolean isAppTerminated = false; // /< set when HO should be
+												// terminated
 
-	//~ Constructors -------------------------------------------------------------------------------
+	// ~ Constructors
+	// -------------------------------------------------------------------------------
 
 	/**
 	 * Singleton
 	 */
 	private HOMainFrame() {
-		
+
 		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 
 		// Log Operating System
-		HOLogger.instance().info(getClass(), "Operating system found: "
-				+ System.getProperty("os.name")
-				+ " on " + System.getProperty("os.arch")
-				+ " (" + System.getProperty("os.version") + ")");
+		HOLogger.instance().info(
+				getClass(),
+				"Operating system found: " + System.getProperty("os.name") + " on "
+						+ System.getProperty("os.arch") + " (" + System.getProperty("os.version") + ")");
 
 		// Log Java version
-		HOLogger.instance().info(getClass(), "Using java: "
-				+ System.getProperty("java.version") + " ("+ System.getProperty("java.vendor") + ")");
+		HOLogger.instance().info(
+				getClass(),
+				"Using java: " + System.getProperty("java.version") + " ("
+						+ System.getProperty("java.vendor") + ")");
 
 		RefreshManager.instance().registerRefreshable(this);
 
@@ -262,7 +267,6 @@ public final class HOMainFrame extends JFrame
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 
-
 		// Catch Apple-Q for MacOS
 		if (isMac()) {
 			addMacOSListener();
@@ -274,18 +278,21 @@ public final class HOMainFrame extends JFrame
 
 		RefreshManager.instance().doRefresh();
 	}
-	
+
 	final public static boolean isMac() {
 		return (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).indexOf("mac") != -1);
 	}
 
-	//~ Methods ------------------------------------------------------------------------------------
+	// ~ Methods
+	// ------------------------------------------------------------------------------------
 
 	/**
-	 * This method creates a MacOS specific listener for the quit operation ("Command-Q")
-	 *
-	 * We need to use reflections here, because the com.apple.eawt.* classes are Apple specific
-	 *
+	 * This method creates a MacOS specific listener for the quit operation
+	 * ("Command-Q")
+	 * 
+	 * We need to use reflections here, because the com.apple.eawt.* classes are
+	 * Apple specific
+	 * 
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void addMacOSListener() {
@@ -297,19 +304,22 @@ public final class HOMainFrame extends JFrame
 
 			// Create the ApplicationListener
 			Class<?> applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
-			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] { applicationListenerClass },
-				new InvocationHandler() {
-					public Object invoke (Object proxy, Method method, Object[] args) {
-						if (method.getName().equals("handleQuit")) {
-							HOLogger.instance().debug(getClass(), "ApplicationListener.handleQuit() fired! Quitting MacOS Application!");
-							beenden();
+			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(),
+					new Class[] { applicationListenerClass }, new InvocationHandler() {
+						public Object invoke(Object proxy, Method method, Object[] args) {
+							if (method.getName().equals("handleQuit")) {
+								HOLogger.instance()
+										.debug(getClass(),
+												"ApplicationListener.handleQuit() fired! Quitting MacOS Application!");
+								beenden();
+							}
+							return null;
 						}
-						return null;
-					}
-			});
+					});
 
 			// Register the ApplicationListener
-			Method addApplicationListenerMethod = applicationClass.getDeclaredMethod("addApplicationListener", new Class[] { applicationListenerClass });
+			Method addApplicationListenerMethod = applicationClass.getDeclaredMethod(
+					"addApplicationListener", new Class[] { applicationListenerClass });
 			addApplicationListenerMethod.invoke(appleApp, new Object[] { appleListener });
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -435,21 +445,23 @@ public final class HOMainFrame extends JFrame
 			new OptionenDialog(this).setVisible(true);
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
-					"Depending on database volume this process takes several minutes. Start recalculation ?", "Subskill Recalculation",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+					"Depending on database volume this process takes several minutes. Start recalculation ?",
+					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				m_hov.recalcSubskills(true, null);
 			}
 		} else if (source.equals(m_jmTraining2)) { // recalc training (7 weeks)
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
 			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
-			if (JOptionPane.showConfirmDialog(this, "Start recalculation subskill recalculation for the last 7 weeks (since "
-					+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?", "Subskill Recalculation",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+			if (JOptionPane.showConfirmDialog(this,
+					"Start recalculation subskill recalculation for the last 7 weeks (since "
+							+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())
+							+ ")?", "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
 				m_hov.recalcSubskills(true, from);
 			}
-		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen mode
+		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen
+														// mode
 			FullScreen.instance().toggle(this);
 		} else if (source.equals(m_jmBeendenItem)) { // Quit
 			// Restore normal window mode (i.e. leave full screen)
@@ -482,8 +494,7 @@ public final class HOMainFrame extends JFrame
 			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
-		}
-		else if (source.equals(m_jmiKeeperTool)) {
+		} else if (source.equals(m_jmiKeeperTool)) {
 			keeperTool.reload();
 			keeperTool.setVisible(true);
 		} else if (source.equals(m_jmiNotepad)) {
@@ -547,41 +558,45 @@ public final class HOMainFrame extends JFrame
 	public void beenden() {
 		HOLogger.instance().debug(getClass(), "Shutting down HO!");
 
-		//Keine Sicherheitsabfrage mehr
-		//int value = JOptionPane.showConfirmDialog( this, model.m_hov.getLanguageString("BeendenMeldung"), model.m_hov.getLanguageString("BeendenTitel"), JOptionPane.YES_NO_OPTION);
-		//        int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
-		//        if ( value == JOptionPane.OK_OPTION )
-		//aktuelle UserParameter speichern
+		// Keine Sicherheitsabfrage mehr
+		// int value = JOptionPane.showConfirmDialog( this,
+		// model.m_hov.getLanguageString("BeendenMeldung"),
+		// model.m_hov.getLanguageString("BeendenTitel"),
+		// JOptionPane.YES_NO_OPTION);
+		// int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
+		// if ( value == JOptionPane.OK_OPTION )
+		// aktuelle UserParameter speichern
 		saveUserParameter();
 
 		HOLogger.instance().debug(getClass(), "UserParameters saved");
 
-		//Scoutliste speichern
+		// Scoutliste speichern
 		m_jpTransferScout.saveScoutListe();
 
 		HOLogger.instance().debug(getClass(), "ScoutList saved");
 
-		//Faktoren saven
+		// Faktoren saven
 		FormulaFactors.instance().save();
 
 		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
 
-		//Disconnect
+		// Disconnect
 		DBZugriff.instance().disconnect();
 
 		HOLogger.instance().debug(getClass(), "Disconnected");
 
-//		//Ausloggen
-//		try {
-//			if ((UserParameter.instance().logoutOnExit)
-//				&& (MyConnector.instance().isAuthenticated())) {
-//				MyConnector.instance().logout();
-//			}
-//		} catch (Exception e) {
-//		}
+		// //Ausloggen
+		// try {
+		// if ((UserParameter.instance().logoutOnExit)
+		// && (MyConnector.instance().isAuthenticated())) {
+		// MyConnector.instance().logout();
+		// }
+		// } catch (Exception e) {
+		// }
 
 		HOLogger.instance().debug(getClass(), "Shutdown complete!");
-		//Dispose führt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
+		// Dispose führt zu einem windowClosed, sobald alle windowClosing
+		// (Plugins) durch sind
 		isAppTerminated = true; // enable System.exit in windowClosed()
 		try {
 			dispose();
@@ -594,9 +609,10 @@ public final class HOMainFrame extends JFrame
 	 */
 	public static void checkSprachFile(String dateiname) {
 		try {
-			//java.net.URL resource = new gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource( "sprache/"+dateiname+".properties" );
-			final java.io.File sprachdatei =
-				new java.io.File("sprache/" + dateiname + ".properties");
+			// java.net.URL resource = new
+			// gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource(
+			// "sprache/"+dateiname+".properties" );
+			final java.io.File sprachdatei = new java.io.File("sprache/" + dateiname + ".properties");
 
 			if (sprachdatei.exists()) {
 				double sprachfileversion = 0;
@@ -612,10 +628,10 @@ public final class HOMainFrame extends JFrame
 				if (sprachfileversion >= de.hattrickorganizer.gui.HOMainFrame.SPRACHVERSION) {
 					HOLogger.instance().log(HOMainFrame.class, "use " + sprachdatei.getName());
 
-					//Alles ok!!
+					// Alles ok!!
 					return;
 				}
-				//Nicht passende Version
+				// Nicht passende Version
 				else {
 					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
 				}
@@ -624,8 +640,8 @@ public final class HOMainFrame extends JFrame
 			HOLogger.instance().log(HOMainFrame.class, "not use " + e);
 		}
 
-		//Irgendein Fehler -> neue Datei aussuchen!
-		//new gui.menue.optionen.InitOptionsDialog();
+		// Irgendein Fehler -> neue Datei aussuchen!
+		// new gui.menue.optionen.InitOptionsDialog();
 		m_up.sprachDatei = "English";
 	}
 
@@ -640,96 +656,102 @@ public final class HOMainFrame extends JFrame
 
 		m_jtpTabbedPane = new JTabbedPane();
 
-		//Hinzufügen der Tabs nur, wenn von der Userparameter gewünscht
-		//Spieler
+		// Hinzufügen der Tabs nur, wenn von der Userparameter gewünscht
+		// Spieler
 		m_jpSpielerUebersicht = new SpielerUebersichtsPanel();
 
 		if (!m_up.tempTabSpieleruebersicht) {
-			m_jtpTabbedPane.addTab(
-				m_hov.getLanguageString("Spieleruebersicht"),
-				m_jpSpielerUebersicht);
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Spieleruebersicht"), m_jpSpielerUebersicht);
 		}
 
-		//Aufstellung
+		// Aufstellung
 		m_jpAufstellung = new LineupPanel();
 
 		if (!m_up.tempTabAufstellung) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Aufstellung"), m_jpAufstellung);
 		}
 
-		//Tabelle
+		// Tabelle
 		m_jpLigaTabelle = new LigaTabellePanel();
 
 		if (!m_up.tempTabLigatabelle) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Ligatabelle"), m_jpLigaTabelle);
 		}
 
-		//Spiele
+		// Spiele
 		m_jpSpielePanel = new SpielePanel();
 
 		if (!m_up.tempTabSpiele) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Spiele"), m_jpSpielePanel);
 		}
 
-		//SpielerAnalyse
+		// SpielerAnalyse
 		m_jpSpielerAnalysePanel = new SpielerAnalyseMainPanel();
 
 		if (!m_up.tempTabSpieleranalyse) {
-			m_jtpTabbedPane.addTab(
-				m_hov.getLanguageString("SpielerAnalyse"),
-				m_jpSpielerAnalysePanel);
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("SpielerAnalyse"), m_jpSpielerAnalysePanel);
 		}
 
-		//        //Training
-		//        m_jtpTraining = new JTabbedPane();
-		//        //Trainingshilfe
-		//        m_jpTrainingshelfer = new TrainingsPanel();
-		//        m_jtpTraining.addTab ( model.m_hov.getLanguageString("Training"), m_jpTrainingshelfer );
-		//        //SkillAenderung
-		//        m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
-		//        m_jtpTraining.addTab ( model.m_hov.getLanguageString("Training") + " 2", m_jpSkillAenderungsPanel );
-		//        //Adden
-		//        m_jtpTabbedPane.addTab ( model.m_hov.getLanguageString("Training"), m_jtpTraining );
+		// //Training
+		// m_jtpTraining = new JTabbedPane();
+		// //Trainingshilfe
+		// m_jpTrainingshelfer = new TrainingsPanel();
+		// m_jtpTraining.addTab ( model.m_hov.getLanguageString("Training"),
+		// m_jpTrainingshelfer );
+		// //SkillAenderung
+		// m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
+		// m_jtpTraining.addTab ( model.m_hov.getLanguageString("Training") +
+		// " 2", m_jpSkillAenderungsPanel );
+		// //Adden
+		// m_jtpTabbedPane.addTab ( model.m_hov.getLanguageString("Training"),
+		// m_jtpTraining );
 		//
-		//Transferscout
+		// Transferscout
 		m_jpTransferScout = new TransferScoutPanel();
 
 		if (!m_up.tempTabTransferscout) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("TransferScout"), m_jpTransferScout);
 		}
 
-		//Arena
+		// Arena
 		m_jpArenaSizer = new ArenaSizerPanel();
 
 		if (!m_up.tempTabArenasizer) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("ArenaSizer"), m_jpArenaSizer);
 		}
 
-		//Sonstiges
+		// Sonstiges
 		m_jpInformation = new InformationsPanel();
 
 		if (!m_up.tempTabInformation) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Verschiedenes"), m_jpInformation);
 		}
 
-		//Statistiken
+		// Statistiken
 		m_jpStatistikPanel = new StatistikMainPanel();
 
 		if (!m_up.tempTabStatistik) {
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Statistik"), m_jpStatistikPanel);
 		}
 
-		//Matchpaneltest
+		// Matchpaneltest
 		/*
-		   logik.matchEngine.TeamData a = new logik.matchEngine.TeamData("Team1",new logik.matchEngine.TeamRatings(8, 18, 15, 13, 12, 8, 13),plugins.IMatchDetails.TAKTIK_KONTER,10);
-		   logik.matchEngine.TeamData b = new logik.matchEngine.TeamData("Team2",new logik.matchEngine.TeamRatings(12, 10, 12, 12, 10, 8, 10),plugins.IMatchDetails.TAKTIK_NORMAL,0);
-		   //gui.matchprediction.MatchEnginePanel enginepanel    =   new gui.matchprediction.MatchEnginePanel( a, b );
-
-		   JDialog dialog = new JDialog( );
-		   dialog.getContentPane().setLayout( new BorderLayout() );
-		   dialog.getContentPane().add( model.HOMiniModel.instance ().getGUI().createMatchPredictionPanel( a, b ), BorderLayout.CENTER );
-		   dialog.setSize( 800, 600 );
-		   dialog.setVisible( true );
+		 * logik.matchEngine.TeamData a = new
+		 * logik.matchEngine.TeamData("Team1",new
+		 * logik.matchEngine.TeamRatings(8, 18, 15, 13, 12, 8,
+		 * 13),plugins.IMatchDetails.TAKTIK_KONTER,10);
+		 * logik.matchEngine.TeamData b = new
+		 * logik.matchEngine.TeamData("Team2",new
+		 * logik.matchEngine.TeamRatings(12, 10, 12, 12, 10, 8,
+		 * 10),plugins.IMatchDetails.TAKTIK_NORMAL,0);
+		 * //gui.matchprediction.MatchEnginePanel enginepanel = new
+		 * gui.matchprediction.MatchEnginePanel( a, b );
+		 * 
+		 * JDialog dialog = new JDialog( ); dialog.getContentPane().setLayout(
+		 * new BorderLayout() ); dialog.getContentPane().add(
+		 * model.HOMiniModel.instance ().getGUI().createMatchPredictionPanel( a,
+		 * b ), BorderLayout.CENTER ); dialog.setSize( 800, 600 );
+		 * dialog.setVisible( true );
 		 */
 		getContentPane().add(m_jtpTabbedPane, BorderLayout.CENTER);
 
@@ -740,39 +762,38 @@ public final class HOMainFrame extends JFrame
 
 		injuryTool = new InjuryDialog(this);
 		keeperTool = new KeeperToolDialog(this);
-		setLocation(
-			UserParameter.instance().hoMainFrame_PositionX,
-			UserParameter.instance().hoMainFrame_PositionY);
-		setSize(
-			UserParameter.instance().hoMainFrame_width,
-			UserParameter.instance().hoMainFrame_height);
+		setLocation(UserParameter.instance().hoMainFrame_PositionX,
+				UserParameter.instance().hoMainFrame_PositionY);
+		setSize(UserParameter.instance().hoMainFrame_width, UserParameter.instance().hoMainFrame_height);
 	}
 
 	/**
 	 * Initialize the menu.
 	 */
 	public void initMenue() {
-		//Kein F10!
-		((InputMap) UIManager.get("Table.ancestorInputMap")).remove(
-			KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+		// Kein F10!
+		((InputMap) UIManager.get("Table.ancestorInputMap"))
+				.remove(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 
-		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove( KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
-		//m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
-		//Datei
-		//Download HRF
+		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove(
+		// KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
+		// m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke(
+		// KeyEvent.VK_F10, 0 ) );
+		// Datei
+		// Download HRF
 		m_jmDownloadItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		m_jmDownloadItem.addActionListener(this);
 		m_jmDatei.add(m_jmDownloadItem);
 
-		//Import HRF
+		// Import HRF
 		m_jmImportItem.addActionListener(this);
 		m_jmDatei.add(m_jmImportItem);
 
-		//Updating Menu
+		// Updating Menu
 		m_jmiLanguages.addActionListener(this);
 		m_jmiPluginsDelete.addActionListener(this);
 		m_jmiFlags.addActionListener(this);
-		if (isMac()) { // update doesn't work on MacOs' strange packet structure 
+		if (isMac()) { // update doesn't work on MacOs' strange packet structure
 			m_jmiHO.setEnabled(false);
 			m_jmiHObeta.setEnabled(false);
 		} else {
@@ -798,12 +819,12 @@ public final class HOMainFrame extends JFrame
 
 		m_jmDatei.add(m_jmUpdating);
 
-		//Download Spielplan
-		//m_jmFixturesItem.addActionListener ( this );
-		//m_jmDatei.add ( m_jmFixturesItem );
+		// Download Spielplan
+		// m_jmFixturesItem.addActionListener ( this );
+		// m_jmDatei.add ( m_jmFixturesItem );
 		m_jmDatei.addSeparator();
 
-		//Training
+		// Training
 		m_jmTraining.addActionListener(this);
 		m_jmDatei.add(m_jmTraining);
 		m_jmTraining2.addActionListener(this);
@@ -811,7 +832,7 @@ public final class HOMainFrame extends JFrame
 
 		m_jmDatei.addSeparator();
 
-		//Optionen
+		// Optionen
 		m_jmOptionen.addActionListener(this);
 		m_jmDatei.add(m_jmOptionen);
 
@@ -819,7 +840,8 @@ public final class HOMainFrame extends JFrame
 
 		// Toggle full screen mode
 		if (FullScreen.instance().isFullScreenSupported(this)) {
-			m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, KeyEvent.SHIFT_DOWN_MASK));
+			m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11,
+					KeyEvent.SHIFT_DOWN_MASK));
 		} else {
 			m_jmFullScreenItem.setEnabled(false);
 		}
@@ -828,76 +850,66 @@ public final class HOMainFrame extends JFrame
 
 		m_jmDatei.addSeparator();
 
-		//Beenden
+		// Beenden
 		m_jmBeendenItem.addActionListener(this);
 		m_jmDatei.add(m_jmBeendenItem);
 
 		m_jmMenuBar.add(m_jmDatei);
 
-		/////
-		//Verschiedenes
-		//Spieleruebersicht
-		m_jmiSpieleruebersicht.setAccelerator(
-			KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		// ///
+		// Verschiedenes
+		// Spieleruebersicht
+		m_jmiSpieleruebersicht.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		m_jmiSpieleruebersicht.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleruebersicht);
 
-		//Aufstellung
+		// Aufstellung
 		m_jmiAufstellung.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		m_jmiAufstellung.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiAufstellung);
 
-		//Ligatabelle
+		// Ligatabelle
 		m_jmiLigatabelle.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		m_jmiLigatabelle.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiLigatabelle);
 
-		//Spiele
+		// Spiele
 		m_jmiSpiele.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		m_jmiSpiele.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpiele);
 
-		//Spieleranalyse
+		// Spieleranalyse
 		m_jmiSpieleranalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		m_jmiSpieleranalyse.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleranalyse);
 
-		//Statistik
+		// Statistik
 		m_jmiStatistik.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		m_jmiStatistik.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiStatistik);
 
-		//Transferscout
+		// Transferscout
 		m_jmiTransferscout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		m_jmiTransferscout.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTransferscout);
 
-		//ArenaSizer
+		// ArenaSizer
 		m_jmiArena.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
 		m_jmiArena.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiArena);
 
-		//Verschiedenes
+		// Verschiedenes
 		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		m_jmiVerschiedenes.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiVerschiedenes);
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-		if(DEVELOPER_MODE){
-	        JMenu menu = new JMenu("Developer");
-	        JMenuItem newItem = new JMenuItem("SQL Editor");
-	        newItem.addActionListener(new ActionListener() {
-				
-				public void actionPerformed(ActionEvent e) {
-					new SQLDialog().setVisible(true);
-				}
-			});
-	        menu.add(newItem);
-	        m_jmMenuBar.add(menu);
+		if (DEVELOPER_MODE) {
+			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
 		}
-		
-		//Tool Menu
+
+		// Tool Menu
 		m_jmiKeeperTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiKeeperTool);
 
@@ -918,10 +930,10 @@ public final class HOMainFrame extends JFrame
 
 		m_jmMenuBar.add(m_jmToolsMenu);
 
-		//Plugin Menu
+		// Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
 
-		//About
+		// About
 		m_jmHomepageItem.addActionListener(this);
 		m_jmAbout.add(m_jmHomepageItem);
 
@@ -937,7 +949,7 @@ public final class HOMainFrame extends JFrame
 		m_jmAbout.add(m_jmCreditsItem);
 
 		Action substitutionTest = new AbstractAction("Substitution test") {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				JDialog dlg = new JDialog();
 				dlg.getContentPane().add(new SubstitutionOverview());
@@ -946,14 +958,14 @@ public final class HOMainFrame extends JFrame
 				dlg.setVisible(true);
 			}
 		};
-		// UNCOMMENT FOR Substitution test (Menu About->Substitution test)		
+		// UNCOMMENT FOR Substitution test (Menu About->Substitution test)
 //		m_jmAbout.add(substitutionTest);
 
 		m_jmMenuBar.add(m_jmAbout);
 
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);
 
-		//Adden
+		// Adden
 		this.setJMenuBar(m_jmMenuBar);
 	}
 
@@ -998,10 +1010,9 @@ public final class HOMainFrame extends JFrame
 	 * Reinit, set currency.
 	 */
 	public void reInit() {
-		//Die Währung auf die aus dem HRF setzen
+		// Die Währung auf die aus dem HRF setzen
 		try {
-			float faktorgeld =
-				(float) m_hov.getModel().getXtraDaten().getCurrencyRate();
+			float faktorgeld = (float) m_hov.getModel().getXtraDaten().getCurrencyRate();
 
 			if (faktorgeld > -1) {
 				m_up.faktorGeld = faktorgeld;
@@ -1010,17 +1021,17 @@ public final class HOMainFrame extends JFrame
 			HOLogger.instance().log(HOMainFrame.class, "Währungsanpassung gescheitert!");
 		}
 
-		//Tabs prüfen
+		// Tabs prüfen
 		checkTabs();
 	}
 
-	//------Refreshfunktionen-------------------------------
+	// ------Refreshfunktionen-------------------------------
 
 	/**
 	 * Wird bei einer Datenänderung aufgerufen
 	 */
 	public void refresh() {
-		//nix?
+		// nix?
 	}
 
 	/**
@@ -1030,22 +1041,23 @@ public final class HOMainFrame extends JFrame
 		removeWindowListener(listener);
 	}
 
-	//--------------------------------------------------------------
+	// --------------------------------------------------------------
 	public void showMatch(int matchid) {
 		showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELE);
 
 		m_jpSpielePanel.showMatch(matchid);
 	}
 
-	//----------------Hilfsmethoden---------------------------------
+	// ----------------Hilfsmethoden---------------------------------
 
 	/**
 	 * Zeigt das Tab an (Nicht Index, sondern Konstante benutzen!
-	 *
-	 * @param tabnumber number of the tab to show
+	 * 
+	 * @param tabnumber
+	 *            number of the tab to show
 	 */
 	public void showTab(int tabnumber) {
-		//Erstmal weg damit
+		// Erstmal weg damit
 		m_jtpTabbedPane.removeChangeListener(this);
 
 		Component component;
@@ -1054,191 +1066,186 @@ public final class HOMainFrame extends JFrame
 		String removeTabName = null;
 
 		switch (tabnumber) {
-			case SPIELERUEBERSICHT :
-				component = m_jpSpielerUebersicht;
-				titel = m_hov.getLanguageString("Spieleruebersicht");
-				temporaer = m_up.tempTabSpieleruebersicht;
-				break;
+		case SPIELERUEBERSICHT:
+			component = m_jpSpielerUebersicht;
+			titel = m_hov.getLanguageString("Spieleruebersicht");
+			temporaer = m_up.tempTabSpieleruebersicht;
+			break;
 
-			case AUFSTELLUNG :
-				component = m_jpAufstellung;
-				m_jpAufstellung.update(); // - blaghaid
-				titel = m_hov.getLanguageString("Aufstellung");
-				temporaer = m_up.tempTabAufstellung;
-				break;
+		case AUFSTELLUNG:
+			component = m_jpAufstellung;
+			m_jpAufstellung.update(); // - blaghaid
+			titel = m_hov.getLanguageString("Aufstellung");
+			temporaer = m_up.tempTabAufstellung;
+			break;
 
-			case LIGATABELLE :
-				component = m_jpLigaTabelle;
-				titel = m_hov.getLanguageString("Ligatabelle");
-				temporaer = m_up.tempTabLigatabelle;
-				break;
+		case LIGATABELLE:
+			component = m_jpLigaTabelle;
+			titel = m_hov.getLanguageString("Ligatabelle");
+			temporaer = m_up.tempTabLigatabelle;
+			break;
 
-			case SPIELE :
-				component = m_jpSpielePanel;
-				titel = m_hov.getLanguageString("Spiele");
-				temporaer = m_up.tempTabSpiele;
-				break;
+		case SPIELE:
+			component = m_jpSpielePanel;
+			titel = m_hov.getLanguageString("Spiele");
+			temporaer = m_up.tempTabSpiele;
+			break;
 
-			case SPIELERANALYSE :
-				component = m_jpSpielerAnalysePanel;
-				titel = m_hov.getLanguageString("SpielerAnalyse");
-				temporaer = m_up.tempTabSpieleranalyse;
-				break;
+		case SPIELERANALYSE:
+			component = m_jpSpielerAnalysePanel;
+			titel = m_hov.getLanguageString("SpielerAnalyse");
+			temporaer = m_up.tempTabSpieleranalyse;
+			break;
 
-			case STATISTIK :
-				component = m_jpStatistikPanel;
-				titel = m_hov.getLanguageString("Statistik");
-				temporaer = m_up.tempTabStatistik;
-				break;
+		case STATISTIK:
+			component = m_jpStatistikPanel;
+			titel = m_hov.getLanguageString("Statistik");
+			temporaer = m_up.tempTabStatistik;
+			break;
 
-			case TRANSFERSCOUT :
-				component = m_jpTransferScout;
-				titel = m_hov.getLanguageString("TransferScout");
-				temporaer = m_up.tempTabTransferscout;
-				break;
+		case TRANSFERSCOUT:
+			component = m_jpTransferScout;
+			titel = m_hov.getLanguageString("TransferScout");
+			temporaer = m_up.tempTabTransferscout;
+			break;
 
-			case ARENASIZER :
-				component = m_jpArenaSizer;
-				titel = m_hov.getLanguageString("ArenaSizer");
-				temporaer = m_up.tempTabArenasizer;
-				break;
+		case ARENASIZER:
+			component = m_jpArenaSizer;
+			titel = m_hov.getLanguageString("ArenaSizer");
+			temporaer = m_up.tempTabArenasizer;
+			break;
 
-			case INFORMATIONEN :
-				component = m_jpInformation;
-				titel = m_hov.getLanguageString("Verschiedenes");
-				temporaer = m_up.tempTabInformation;
-				break;
+		case INFORMATIONEN:
+			component = m_jpInformation;
+			titel = m_hov.getLanguageString("Verschiedenes");
+			temporaer = m_up.tempTabInformation;
+			break;
 
-			default :
-				return;
+		default:
+			return;
 		}
 
-		//Wenn Temp, dann jetzt Hinzufügen
+		// Wenn Temp, dann jetzt Hinzufügen
 		int index = m_jtpTabbedPane.indexOfTab(titel);
 
-		//Hinzufügen, aber später per ChangeListener löschen
+		// Hinzufügen, aber später per ChangeListener löschen
 		if (index < 0) {
 			m_jtpTabbedPane.addTab(titel, component);
 			index = m_jtpTabbedPane.indexOfTab(titel);
 
-			//Name von Tab merken, um ihn nachher zu entfernen
+			// Name von Tab merken, um ihn nachher zu entfernen
 			if (temporaer) {
 				removeTabName = titel;
 			}
 		}
 
-		//Und Listener wieder hinzu
+		// Und Listener wieder hinzu
 		m_jtpTabbedPane.addChangeListener(this);
 
-		//Tab markieren
+		// Tab markieren
 		if (m_jtpTabbedPane.getTabCount() > index) {
 			m_jtpTabbedPane.setSelectedIndex(index);
 		}
 
-		//Damit das setSelectedIndex nicht sofort das neue Tab killt erst hier den Namen setzen, wenn temp
+		// Damit das setSelectedIndex nicht sofort das neue Tab killt erst hier
+		// den Namen setzen, wenn temp
 		m_sToRemoveTabName = removeTabName;
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////77
-	//helper
-	/////////////////////////////////////////////////////////////////////////////////////////////////77
-	public void startPluginModuls(
-		InterruptionWindow interuptionWindow) {
+	// ///////////////////////////////////////////////////////////////////////////////////////////////77
+	// helper
+	// ///////////////////////////////////////////////////////////////////////////////////////////////77
+	public void startPluginModuls(InterruptionWindow interuptionWindow) {
 		try {
-			//Den Ordner mit den Plugins holen
+			// Den Ordner mit den Plugins holen
 			final java.io.File folder = new java.io.File("hoplugins");
-			HOLogger.instance().log(
-				HOMainFrame.class,
-				folder.getAbsolutePath() + " " + folder.exists() + " " + folder.isDirectory());
+			HOLogger.instance().log(HOMainFrame.class,
+					folder.getAbsolutePath() + " " + folder.exists() + " " + folder.isDirectory());
 
-			//Filter, nur class-Datein in dem Ordner interessant
-			final de.hattrickorganizer.gui.utils.ExampleFileFilter filter =
-				new de.hattrickorganizer.gui.utils.ExampleFileFilter();
+			// Filter, nur class-Datein in dem Ordner interessant
+			final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
 			filter.addExtension("class");
 			filter.setDescription("Java Class File");
 			filter.setIgnoreDirectories(true);
 
-			//Alle class-Dateien in den Ordner holen
+			// Alle class-Dateien in den Ordner holen
 			final java.io.File[] files = folder.listFiles(filter);
 
-			//Libs -> Alle Dateien durchlaufen
-			for (int i = 0;(files != null) && (i < files.length); i++) {
+			// Libs -> Alle Dateien durchlaufen
+			for (int i = 0; (files != null) && (i < files.length); i++) {
 				try {
-					//Name der Klasse erstellen und Class-Object erstellen
-					final String name =
-						"hoplugins."
+					// Name der Klasse erstellen und Class-Object erstellen
+					final String name = "hoplugins."
 							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
 					final Class<?> fileclass = Class.forName(name);
-					//Das Class-Object definiert kein Interface ...
+					// Das Class-Object definiert kein Interface ...
 					if (!fileclass.isInterface()) {
-						//... und ist von ILib abgeleitet
+						// ... und ist von ILib abgeleitet
 						if (plugins.ILib.class.isAssignableFrom(fileclass)) {
-							//Object davon erstellen und starten
+							// Object davon erstellen und starten
 							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
 
-							//Plugin im Vector gespeichert
+							// Plugin im Vector gespeichert
 							m_vPlugins.add(modul);
-							HOLogger.instance().log(
-								HOMainFrame.class, " Starte " + files[i].getName() + "  (init MiniModel)");
+							HOLogger.instance().log(HOMainFrame.class,
+									" Starte " + files[i].getName() + "  (init MiniModel)");
 							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
 							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
 
-							HOLogger.instance().log(
-								HOMainFrame.class, "+ " + files[i].getName() + " gestartet als lib");
+							HOLogger.instance().log(HOMainFrame.class,
+									"+ " + files[i].getName() + " gestartet als lib");
 						} else {
-							HOLogger.instance().log(
-								HOMainFrame.class, "- " + files[i].getName() + " nicht von ILib abgeleitet");
+							HOLogger.instance().log(HOMainFrame.class,
+									"- " + files[i].getName() + " nicht von ILib abgeleitet");
 						}
 					} else {
-						HOLogger.instance().log(
-							HOMainFrame.class, "- " + files[i].getName() + " ist Interface");
+						HOLogger.instance().log(HOMainFrame.class,
+								"- " + files[i].getName() + " ist Interface");
 					}
 				} catch (Throwable e2) {
-					HOLogger.instance().log( HOMainFrame.class, "- " + files[i].getName() + " wird übersprungen: " + e2);
-					//HOLogger.instance().log(HOMainFrame.class, e2);
+					HOLogger.instance().log(HOMainFrame.class,
+							"- " + files[i].getName() + " wird übersprungen: " + e2);
+					// HOLogger.instance().log(HOMainFrame.class, e2);
 				}
 			}
 
-			//Plugins -> Alle Dateien durchlaufen
-			for (int i = 0;(files != null) && (i < files.length); i++) {
+			// Plugins -> Alle Dateien durchlaufen
+			for (int i = 0; (files != null) && (i < files.length); i++) {
 				try {
-					//Name der Klasse erstellen und Class-Object erstellen
-					final String name =
-						"hoplugins."
+					// Name der Klasse erstellen und Class-Object erstellen
+					final String name = "hoplugins."
 							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
 					final Class<?> fileclass = Class.forName(name);
-					//Das Class-Object definiert kein Interface ...
+					// Das Class-Object definiert kein Interface ...
 					if (!fileclass.isInterface()) {
-						//... und ist von IPlugin abgeleitet, nicht die Libs nochmal starten!
+						// ... und ist von IPlugin abgeleitet, nicht die Libs
+						// nochmal starten!
 						if (plugins.IPlugin.class.isAssignableFrom(fileclass)
-							&& !plugins.ILib.class.isAssignableFrom(fileclass)) {
-							//Object davon erstellen und starten
+								&& !plugins.ILib.class.isAssignableFrom(fileclass)) {
+							// Object davon erstellen und starten
 							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
 
-							//Plugin im Vector gespeichert
+							// Plugin im Vector gespeichert
 							m_vPlugins.add(modul);
-							HOLogger.instance().log(
-								HOMainFrame.class,
-								" Starte " + files[i].getName() + "  (init MiniModel)");
+							HOLogger.instance().log(HOMainFrame.class,
+									" Starte " + files[i].getName() + "  (init MiniModel)");
 							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
 							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
 
-							HOLogger.instance().log(
-								HOMainFrame.class,
-								"+ " + files[i].getName() + " gestartet");
+							HOLogger.instance().log(HOMainFrame.class,
+									"+ " + files[i].getName() + " gestartet");
 						} else {
-							HOLogger.instance().log(
-								HOMainFrame.class,
-								"- " + files[i].getName() + " nicht von IPlugin abgeleitet");
+							HOLogger.instance().log(HOMainFrame.class,
+									"- " + files[i].getName() + " nicht von IPlugin abgeleitet");
 						}
 					} else {
-						HOLogger.instance().log(
-							HOMainFrame.class,
-							"- " + files[i].getName() + " ist Interface");
+						HOLogger.instance().log(HOMainFrame.class,
+								"- " + files[i].getName() + " ist Interface");
 					}
 				} catch (Throwable e2) {
-					HOLogger.instance().log(HOMainFrame.class, "- " + files[i].getName() + " wird übersprungen: " + e2);
-					//HOLogger.instance().log(HOMainFrame.class, e2);
+					HOLogger.instance().log(HOMainFrame.class,
+							"- " + files[i].getName() + " wird übersprungen: " + e2);
+					// HOLogger.instance().log(HOMainFrame.class, e2);
 				}
 			}
 		} catch (Exception e) {
@@ -1250,7 +1257,7 @@ public final class HOMainFrame extends JFrame
 	 * React on state changed events.
 	 */
 	public void stateChanged(ChangeEvent changeEvent) {
-		//Wenn ein Tab als Temp gespeichert wurde dieses entfernen
+		// Wenn ein Tab als Temp gespeichert wurde dieses entfernen
 		if (m_sToRemoveTabName != null) {
 			final int index = m_jtpTabbedPane.indexOfTab(m_sToRemoveTabName);
 
@@ -1260,30 +1267,26 @@ public final class HOMainFrame extends JFrame
 				m_jtpTabbedPane.removeTabAt(index);
 			} else {
 				HOLogger.instance().log(
-					HOMainFrame.class,
-					"Fehler Tabremove: "
-						+ m_sToRemoveTabName
-						+ " "
-						+ index
-						+ "/"
-						+ m_jtpTabbedPane.getTabCount());
+						HOMainFrame.class,
+						"Fehler Tabremove: " + m_sToRemoveTabName + " " + index + "/"
+								+ m_jtpTabbedPane.getTabCount());
 				m_sToRemoveTabName = null;
 			}
 		}
 	}
 
-	//----------------Unused Listener----------------------------
+	// ----------------Unused Listener----------------------------
 	public void windowActivated(WindowEvent windowEvent) {
 	}
 
 	/**
 	 * Finally shutting down the application when the main window is closed.
-	 * This is initiated through the call to dispose().
-	 * System.exit is called only in the case when @see beenden() is called
-	 * in advance. This event is called when switching into full screen
-	 * mode, too.
-	 *
-	 * @param windowEvent is ignored
+	 * This is initiated through the call to dispose(). System.exit is called
+	 * only in the case when @see beenden() is called in advance. This event is
+	 * called when switching into full screen mode, too.
+	 * 
+	 * @param windowEvent
+	 *            is ignored
 	 */
 	public void windowClosed(WindowEvent windowEvent) {
 		if (isAppTerminated) {
@@ -1291,7 +1294,7 @@ public final class HOMainFrame extends JFrame
 		}
 	}
 
-	//----------------Listener--------------------------------------
+	// ----------------Listener--------------------------------------
 
 	/**
 	 * Close HO window.
@@ -1324,11 +1327,11 @@ public final class HOMainFrame extends JFrame
 				try {
 					LookAndFeelInfo win = null;
 					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				        if ("Windows".equals(info.getName())) {
-				            win = info;
-				            break;
-				        }
-				    }
+						if ("Windows".equals(info.getName())) {
+							win = info;
+							break;
+						}
+					}
 					if (win != null) {
 						HOLogger.instance().log(getClass(), "Use " + win.getName() + " l&f");
 						UIManager.setLookAndFeel(win.getClassName());
@@ -1342,13 +1345,17 @@ public final class HOMainFrame extends JFrame
 				} catch (Exception e) {
 					succ = false;
 				}
-			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { // Nimbus is the default theme
+			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { // Nimbus
+																						// is
+																						// the
+																						// default
+																						// theme
 				succ = NimbusTheme.enableNimbusTheme(size);
 			}
 			if (!succ) {
 				final MetalLookAndFeel laf = new MetalLookAndFeel();
 				MetalLookAndFeel.setCurrentTheme(new HOTheme(UserParameter.instance().schriftGroesse));
-				
+
 				// Um die systemweite MenuBar von Mac OS X zu verwenden
 				// http://www.pushing-pixels.org/?p=366
 				if (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).startsWith("mac")) {
@@ -1358,9 +1365,9 @@ public final class HOMainFrame extends JFrame
 					Object cbmiUI = UIManager.get("CheckBoxMenuItemUI");
 					Object rbmiUI = UIManager.get("RadioButtonMenuItemUI");
 					Object pmUI = UIManager.get("PopupMenuUI");
-	
+
 					UIManager.setLookAndFeel(laf);
-	
+
 					UIManager.put("MenuBarUI", mbUI);
 					UIManager.put("MenuUI", mUI);
 					UIManager.put("CheckBoxMenuItemUI", cbmiUI);
@@ -1385,9 +1392,7 @@ public final class HOMainFrame extends JFrame
 		m_jtpTabbedPane.removeChangeListener(this);
 
 		if (m_up.tempTabSpieleruebersicht) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("Spieleruebersicht"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("Spieleruebersicht"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1395,9 +1400,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabAufstellung) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("Aufstellung"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("Aufstellung"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1405,9 +1408,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabLigatabelle) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("Ligatabelle"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("Ligatabelle"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1415,9 +1416,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabSpiele) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("Spiele"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("Spiele"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1425,9 +1424,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabSpieleranalyse) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("SpielerAnalyse"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("SpielerAnalyse"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1435,9 +1432,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabStatistik) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("Statistik"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("Statistik"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1445,9 +1440,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabTransferscout) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("TransferScout"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("TransferScout"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1455,9 +1448,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabArenasizer) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("ArenaSizer"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("ArenaSizer"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1465,9 +1456,7 @@ public final class HOMainFrame extends JFrame
 		}
 
 		if (m_up.tempTabInformation) {
-			index =
-				m_jtpTabbedPane.indexOfTab(
-					m_hov.getLanguageString("Verschiedenes"));
+			index = m_jtpTabbedPane.indexOfTab(m_hov.getLanguageString("Verschiedenes"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1494,12 +1483,10 @@ public final class HOMainFrame extends JFrame
 		final int locy = Math.max(getLocation().y, 0);
 		parameter.hoMainFrame_PositionX = locx;
 		parameter.hoMainFrame_PositionY = locy;
-		parameter.hoMainFrame_width =
-			Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
-		parameter.hoMainFrame_height =
-			Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
-		parameter.bestPostWidth =
-			Math.max(m_jpSpielerUebersicht.getBestPosWidth(), m_jpAufstellung.getBestPosWidth());
+		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
+		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
+		parameter.bestPostWidth = Math.max(m_jpSpielerUebersicht.getBestPosWidth(),
+				m_jpAufstellung.getBestPosWidth());
 
 		parameter.aufstellungsAssistentPanel_gruppe = aap.getGruppe();
 		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getReihenfolge();
@@ -1511,25 +1498,25 @@ public final class HOMainFrame extends JFrame
 		parameter.aufstellungsAssistentPanel_gesperrt = aap.isGesperrtIgnorieren();
 		parameter.aufstellungsAssistentPanel_notLast = aap.isExcludeLastMatch();
 
-		//      SpielerÜbersichtsPanel
+		// SpielerÜbersichtsPanel
 		parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = sup[0];
 		parameter.spielerUebersichtsPanel_horizontalRightSplitPane = sup[1];
 		parameter.spielerUebersichtsPanel_verticalSplitPane = sup[2];
 
-		//AufstellungsPanel
+		// AufstellungsPanel
 		parameter.aufstellungsPanel_verticalSplitPaneLow = ap[0];
 		parameter.aufstellungsPanel_horizontalLeftSplitPane = ap[1];
 		parameter.aufstellungsPanel_horizontalRightSplitPane = ap[2];
 		parameter.aufstellungsPanel_verticalSplitPane = ap[3];
 
-		//SpielePanel
+		// SpielePanel
 		parameter.spielePanel_horizontalLeftSplitPane = sp[0];
 		parameter.spielePanel_verticalSplitPane = sp[1];
 
-		//SpielerAnalyse
+		// SpielerAnalyse
 		parameter.spielerAnalysePanel_horizontalSplitPane = spa;
 
-		//      TransferScoutPanel
+		// TransferScoutPanel
 		parameter.transferScoutPanel_horizontalSplitPane = tsp;
 
 		DBZugriff.instance().saveUserParameter();
@@ -1544,7 +1531,7 @@ public final class HOMainFrame extends JFrame
 	public static void main(String[] args) {
 		final long start = System.currentTimeMillis();
 
-		//Schnauze!
+		// Schnauze!
 		// nur wenn Kein Debug
 		if ((args != null) && (args.length > 0)) {
 			String debugLvl = args[0].trim();
@@ -1563,19 +1550,14 @@ public final class HOMainFrame extends JFrame
 		// Set HOE file
 		// This creates a file called ho.dir in $home
 		// Do we really need this? Removed by flattermann 2009-01-18
-//		FileExtensionManager.createDirFile();
+		// FileExtensionManager.createDirFile();
 
 		// Usermanagement Login-Dialog
 		try {
 			if (!User.getCurrentUser().isSingleUser()) {
 				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
-				int choice =
-					JOptionPane.showConfirmDialog(
-						null,
-						comboBox,
-						"Login",
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(null, comboBox, "Login",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (choice == JOptionPane.OK_OPTION) {
 					User.INDEX = comboBox.getSelectedIndex();
@@ -1587,10 +1569,9 @@ public final class HOMainFrame extends JFrame
 			HOLogger.instance().log(HOMainFrame.class, ex);
 		}
 
-		////Spoofing test
+		// //Spoofing test
 		try {
-			final BufferedReader buffy =
-				new BufferedReader(new java.io.FileReader("ident.txt"));
+			final BufferedReader buffy = new BufferedReader(new java.io.FileReader("ident.txt"));
 			final Vector<String> ids = new Vector<String>();
 			String tmp = "";
 
@@ -1605,9 +1586,8 @@ public final class HOMainFrame extends JFrame
 			buffy.close();
 
 			if (ids.size() > 0) {
-				//Math.floor(Math.random()*10)
-				MyConnector.m_sIDENTIFIER =
-					ids.get((int) Math.floor(Math.random() * ids.size())).toString();
+				// Math.floor(Math.random()*10)
+				MyConnector.m_sIDENTIFIER = ids.get((int) Math.floor(Math.random() * ids.size())).toString();
 			}
 		} catch (Exception e) {
 		}
@@ -1618,10 +1598,10 @@ public final class HOMainFrame extends JFrame
 
 			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
 				JOptionPane.showMessageDialog(
-					null,
-					"Your HO version is very old!\nPlease download a new version at "+ MyConnector.getHOSite(),
-					"Update strongly recommended",
-					JOptionPane.WARNING_MESSAGE);
+						null,
+						"Your HO version is very old!\nPlease download a new version at "
+								+ MyConnector.getHOSite(), "Update strongly recommended",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
 
@@ -1630,19 +1610,14 @@ public final class HOMainFrame extends JFrame
 			final Timestamp datum = new Timestamp(System.currentTimeMillis());
 
 			if (datum.after(Timestamp.valueOf(LIMITED_DATE))) {
-				JOptionPane.showMessageDialog(
-					null,
-					"Download new Version at "+ MyConnector.getHOSite(),
-					"Update required",
-					JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Download new Version at " + MyConnector.getHOSite(),
+						"Update required", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			}
 		}
 
-		//Startbild
-		final InterruptionWindow interuptionsWindow =
-			new InterruptionWindow(
-				new ImagePanel());
+		// Startbild
+		final InterruptionWindow interuptionsWindow = new InterruptionWindow(new ImagePanel());
 
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {
@@ -1650,24 +1625,22 @@ public final class HOMainFrame extends JFrame
 			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
 		}
 
-		//Standardparameter aus der DB holen
+		// Standardparameter aus der DB holen
 		interuptionsWindow.setInfoText("Initialize Database");
 		DBZugriff.instance().loadUserParameter();
 
-		
-		//init Theme
+		// init Theme
 		try {
 			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
-			JOptionPane.showMessageDialog(null,
-					e.getMessage(),
+			JOptionPane.showMessageDialog(null, e.getMessage(),
 					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
 		}
-		//Init!
+		// Init!
 		interuptionsWindow.setInfoText("Initialize Data-Administration");
 
-		//Beim ersten Start Sprache erfragen
+		// Beim ersten Start Sprache erfragen
 		if (DBZugriff.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
@@ -1677,11 +1650,12 @@ public final class HOMainFrame extends JFrame
 			interuptionsWindow.setVisible(true);
 		}
 
-		//Check -> Sprachdatei in Ordnung?
+		// Check -> Sprachdatei in Ordnung?
 		interuptionsWindow.setInfoText("Check Languagefiles");
 		checkSprachFile(UserParameter.instance().sprachDatei);
 
-		//font switch, because the default font doesn't support Georgian and Chinese characters
+		// font switch, because the default font doesn't support Georgian and
+		// Chinese characters
 		// TODO
 		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
 
@@ -1693,42 +1667,41 @@ public final class HOMainFrame extends JFrame
 		// TableColumn
 		UserColumnController.instance().load();
 
-		//Die Währung auf die aus dem HRF setzen
-		float faktorgeld =
-			(float) m_hov.getModel().getXtraDaten().getCurrencyRate();
+		// Die Währung auf die aus dem HRF setzen
+		float faktorgeld = (float) m_hov.getModel().getXtraDaten().getCurrencyRate();
 
 		if (faktorgeld > -1) {
 			m_up.faktorGeld = faktorgeld;
 		}
 
-		//Training
+		// Training
 		interuptionsWindow.setInfoText("Initialize Training");
 
-		//Training erstellen -> dabei Trainingswochen berechnen auf Grundlage der manuellen DB Einträge
-		TrainingsManager.instance().calculateTrainings(
-			DBZugriff.instance().getTrainingsVector());
+		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
+		// der manuellen DB Einträge
+		TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
 
-		//INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich selbst aufruft!
+		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
+		// selbst aufruft!
 		interuptionsWindow.setInfoText("Starting Plugins");
 		HOMainFrame.instance().startPluginModuls(interuptionsWindow);
 
-		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
+		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
+				.exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
-		//Anzeigen
+		// Anzeigen
 		interuptionsWindow.setInfoText("Prepare to show");
 		HOMainFrame.instance().setVisible(true);
 
-		//Startbild weg
+		// Startbild weg
 		interuptionsWindow.setVisible(false);
 
 		if (GebChecker.checkTWGeb()) {
-			new de.hattrickorganizer.gui.birthday.GebDialog(
-				HOMainFrame.instance(),"birthdayTom");
+			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayTom");
 		}
 
 		if (GebChecker.checkVFGeb()) {
-			new de.hattrickorganizer.gui.birthday.GebDialog(
-				HOMainFrame.instance(),"birthdayVolker");
+			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayVolker");
 		}
 
 		new ExtensionListener().run();
@@ -1743,7 +1716,7 @@ public final class HOMainFrame extends JFrame
 	public static void setHOStatus(int i) {
 		status = i;
 	}
-	
+
 	public static int getRevisionNumber() {
 		if (revision == 0) {
 			InputStream is = null;
@@ -1753,7 +1726,10 @@ public final class HOMainFrame extends JFrame
 				if (is != null) {
 					br = new BufferedReader(new InputStreamReader(is));
 					String line = null;
-					if (br != null && (line = br.readLine()) != null) { // expect one line only
+					if (br != null && (line = br.readLine()) != null) { // expect
+																		// one
+																		// line
+																		// only
 						revision = Integer.parseInt(line.trim());
 					}
 				} else {
