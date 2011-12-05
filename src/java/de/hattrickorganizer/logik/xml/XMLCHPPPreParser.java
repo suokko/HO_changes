@@ -49,10 +49,10 @@ public class XMLCHPPPreParser {
 	            		case 90:
 	            		case 91:
 	            		case 99:
-	            			sErrString = hov.getLanguageString("CHPP.Error" + sTmpError);
+	            			sErrString = sTmpError + " - " + hov.getLanguageString("CHPP.Error" + sTmpError);
 	            			break;
             			default:
-            				sErrString = hov.getLanguageString("CHPP.Error99");
+            				sErrString = sTmpError + " - " + hov.getLanguageString("CHPP.Unknown");
             				break;
             		}
             		sError = hov.getLanguageString("CHPP.Error") + " - " + sErrString;
