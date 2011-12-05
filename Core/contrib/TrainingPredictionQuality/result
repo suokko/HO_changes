@@ -1,0 +1,18 @@
+ChiSquare = 0.269140
+SkillFactor7=0.994180
+
+baseLengthGK= 3.0206 # err=0.014246
+baseLengthDE= 5.4824 # err=0.007218
+baseLengthWI= 3.2341 # err=0.007690
+baseLengthPM= 4.6613 # err=0.004403
+baseLengthSC= 4.8536 # err=0.009578
+baseLengthPS= 4.2989 # err=0.007632
+baseLengthSP= 0.9938 # err=0.004640
+     ageBase= 0.0404 # err=0.000132
+trainerMulti= 0.0910 # err=0.001256
+   assiMulti= 0.2749 # err=0.006143
+ skillMulti0=-0.1349 # err=0.000775
+ skillMulti1= 3.7535 # err=0.001700
+ skillMulti2=-1.4595 # err=0.003232
+ skillMulti3= 0.0000 # err=0.000000
+

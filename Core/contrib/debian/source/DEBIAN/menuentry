@@ -1,0 +1,4 @@
+?package(PACKAGE):needs="X11" section="Games" \
+  title="HattrickOrganizer! HOVERSION" command="/usr/bin/PACKAGE"\
+  icon="/usr/lib/ho1-beta/ho_logo.png"\
+  description="Manager tool for http://www.hattrick.org"
