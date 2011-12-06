@@ -5,12 +5,12 @@ import java.sql.Types;
 
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class SpielerNotizenTable extends AbstractTable {
+final class SpielerNotizenTable extends AbstractTable {
 
 	/** tablename **/
 	public final static String TABLENAME = "SPIELERNOTIZ";
 	
-	protected SpielerNotizenTable(JDBCAdapter  adapter){
+	SpielerNotizenTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
 	}
 
@@ -32,7 +32,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public byte getSpielerUserPosFlag(int spielerId) {
+	byte getSpielerUserPosFlag(int spielerId) {
 		if (spielerId <= 0) {
 			return plugins.ISpielerPosition.UNKNOWN;
 		}
@@ -66,7 +66,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public String getManuellerSmilie(int spielerId) {
+	String getManuellerSmilie(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
 
@@ -95,7 +95,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public String getSpielerNotiz(int spielerId) {
+	String getSpielerNotiz(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
 
@@ -117,7 +117,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 		return "";
 	}
 	
-	public boolean getSpielerSpielberechtigt(int spielerId) {
+	boolean getSpielerSpielberechtigt(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
 
@@ -146,7 +146,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public String getTeamInfoSmilie(int spielerId) {
+	String getTeamInfoSmilie(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
 
@@ -172,7 +172,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 * @param spielerId TODO Missing Method Parameter Documentation
 	 * @param smilie TODO Missing Method Parameter Documentation
 	 */
-	public void saveManuellerSmilie(int spielerId, String smilie) {
+	void saveManuellerSmilie(int spielerId, String smilie) {
 		String statement = null;
 
 		//        String[]                awhereS     =   { "SpielerID" };
@@ -201,7 +201,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 * @param spielerId TODO Missing Method Parameter Documentation
 	 * @param notiz TODO Missing Method Parameter Documentation
 	 */
-	public void saveSpielerNotiz(int spielerId, String notiz) {
+	void saveSpielerNotiz(int spielerId, String notiz) {
 		String statement = null;
 
 		if (spielerId > 0) {
@@ -228,7 +228,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 * @param spielerId TODO Missing Method Parameter Documentation
 	 * @param spielberechtigt TODO Missing Method Parameter Documentation
 	 */
-	public void saveSpielerSpielberechtigt(int spielerId, boolean spielberechtigt) {
+	void saveSpielerSpielberechtigt(int spielerId, boolean spielberechtigt) {
 		String statement = null;
 
 		//       String[]                awhereS     =   { "SpielerID" };
@@ -257,7 +257,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 * @param spielerId TODO Missing Method Parameter Documentation
 	 * @param flag TODO Missing Method Parameter Documentation
 	 */
-	public void saveSpielerUserPosFlag(int spielerId, byte flag) {
+	void saveSpielerUserPosFlag(int spielerId, byte flag) {
 		String statement = null;
 
 		if (spielerId > 0) {
@@ -283,7 +283,7 @@ public final class SpielerNotizenTable extends AbstractTable {
 	 * @param spielerId TODO Missing Method Parameter Documentation
 	 * @param smilie TODO Missing Method Parameter Documentation
 	 */
-	public void saveTeamInfoSmilie(int spielerId, String smilie) {
+	void saveTeamInfoSmilie(int spielerId, String smilie) {
 		String statement = null;
 
 		if (spielerId > 0) {

@@ -14,14 +14,11 @@ import de.hattrickorganizer.tools.HOLogger;
  * CONFIG_KEY = Primary Key, fieldname of the class
  * CONFIG_VALUE = value of the field, save as VARCHAR. Convert to right datatype if loaded
  * 
- * @author Thorsten Dietz
  * @since 1.36
  *
  */
-public final class UserConfigurationTable extends AbstractTable {
-
-	/** tablename **/
-	public final static String TABLENAME = "USERCONFIGURATION";
+final class UserConfigurationTable extends AbstractTable {
+	final static String TABLENAME = "USERCONFIGURATION";
 
 	protected UserConfigurationTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
@@ -58,7 +55,7 @@ public final class UserConfigurationTable extends AbstractTable {
 	 * @param key
 	 * @param value
 	 */
-	public void update(String key, String value) {
+	void update(String key, String value) {
 		final StringBuffer updateSQL = new StringBuffer(80);
 		updateSQL.append("UPDATE ");
 		updateSQL.append(getTableName());
@@ -103,7 +100,7 @@ public final class UserConfigurationTable extends AbstractTable {
 	}
 
 
-	public int getDBVersion() {
+	int getDBVersion() {
 		int version = 0;
 		try {
 			//      	 in the next version we have to change statement!!!
@@ -135,7 +132,7 @@ public final class UserConfigurationTable extends AbstractTable {
 	 * Get the last HO release where we have completed successfully a config update
 	 * @return	the ho version of the last conf update
 	 */
-	public double getLastConfUpdate() {
+	double getLastConfUpdate() {
 		double version = 0;
 		try {
 			final ResultSet rs = adapter.executeQuery("SELECT CONFIG_VALUE FROM " + TABLENAME + " WHERE CONFIG_KEY = 'LastConfUpdate'");
@@ -155,7 +152,7 @@ public final class UserConfigurationTable extends AbstractTable {
 	 * update/ insert method
 	 * @param obj
 	 */
-	public void store(IUserConfiguration obj) {
+	void store(IUserConfiguration obj) {
 		final HashMap<String, String> values = obj.getValues();
 		final Set<String> keys = values.keySet();
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
@@ -168,7 +165,7 @@ public final class UserConfigurationTable extends AbstractTable {
 	 * 
 	 * @param obj
 	 */
-	public void load(IUserConfiguration obj) {
+	void load(IUserConfiguration obj) {
 		final HashMap<String,String> values = new HashMap<String,String>();
 		final Set<String> keys = obj.getValues().keySet();
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {

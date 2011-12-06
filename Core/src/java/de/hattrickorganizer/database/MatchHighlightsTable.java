@@ -54,7 +54,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 	 *
 	 * @param details TODO Missing Constructuor Parameter Documentation
 	 */
-	public void storeMatchHighlights(Matchdetails details) {
+	void storeMatchHighlights(Matchdetails details) {
 		if (details != null) {
 			//Vorhandene Einträge entfernen
 			final String[] where = { "MatchID" };
@@ -112,6 +112,8 @@ public final class MatchHighlightsTable extends AbstractTable {
 		}
 	}
 
+	
+	
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
 	 *
@@ -119,7 +121,7 @@ public final class MatchHighlightsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<IMatchHighlight> getMatchHighlights(int matchId) {
+	Vector<IMatchHighlight> getMatchHighlights(int matchId) {
 		try {
 			//Highlights holen
 			final Vector<IMatchHighlight> vMatchHighlights = new Vector<IMatchHighlight>();
