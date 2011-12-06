@@ -298,6 +298,17 @@ final public class UserColumnFactory {
 		return playerPositionArray;
 	}
 	
+	
+	protected static MatchesOverviewColumn[] createMatchesStatisticsArray(){
+		MatchesOverviewColumn[] columns = new MatchesOverviewColumn[6];
+		columns[0] = new MatchesOverviewColumn(701, " ","",50);
+		columns[1] = new MatchesOverviewColumn(702, "Spiele","Spiele",100);
+		columns[2] = new MatchesOverviewColumn(703, "SerieAuswaertsSieg","SerieAuswaertsSieg",50);
+		columns[3] = new MatchesOverviewColumn(704, "SerieAuswaertsUnendschieden","SerieAuswaertsUnendschieden",50);
+		columns[4] = new MatchesOverviewColumn(706, "SerieAuswaertsNiederlage","SerieAuswaertsNiederlage",50);
+		columns[5] = new MatchesOverviewColumn(707, "Tore","Tore",50);
+		return columns;
+	}
 	/**
 	 * 
 	 * @return MatchKurzInfoColumn[]
@@ -718,10 +729,8 @@ final public class UserColumnFactory {
 			};
 				
 			return playerAdditionalArray;
-
-			
-			
-			
 	}
+	
+	
 	
 }

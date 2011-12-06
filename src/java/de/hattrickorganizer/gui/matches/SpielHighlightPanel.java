@@ -207,11 +207,8 @@ public class SpielHighlightPanel extends ImagePanel {
     /**
      * Refresh the highlights from the short info.
      */
-    public final void refresh(MatchKurzInfo info) {
+    public final void refresh(MatchKurzInfo info,Matchdetails details) {
         clear();
-        //m_clMatchKurzInfo = info;
-
-        final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
         //Teams
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
