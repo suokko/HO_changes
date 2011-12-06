@@ -72,8 +72,9 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private AufstellungsSternePanel m_jpAufstellungHeimPanel;
     private JButton m_jbAufstellungUebernehmen = new JButton(ThemeManager.getIcon(HOIconName.GETLINEUP));
     private JButton printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton deleteButton = new JButton(new ImageIcon(ImageUtilities
-			.getImageDurchgestrichen(new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB), Color.red, new Color(200, 0, 0))));
+//    private JButton deleteButton = new JButton(new ImageIcon(ImageUtilities
+//			.getImageDurchgestrichen(new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB), Color.red, new Color(200, 0, 0))));
+    private JButton deleteButton = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
     private JButton m_jbReloadMatch = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
     private JButton m_jbSimMatch = new JButton(ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
     

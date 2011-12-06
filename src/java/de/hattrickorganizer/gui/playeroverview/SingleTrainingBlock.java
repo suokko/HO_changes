@@ -1,5 +1,7 @@
 package de.hattrickorganizer.gui.playeroverview;
 
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
@@ -15,6 +17,7 @@ import javax.swing.JPanel;
 import com.toedter.calendar.JDateChooser;
 
 import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -33,10 +36,10 @@ final class SingleTrainingBlock extends JPanel {
 	private JDateChooser m_jdcBlockEnd;
 	private SpielerTrainingBlockDialog parent;
 	
-    private JButton m_jbRemove = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(
-    													15, 15, BufferedImage.TYPE_INT_ARGB),
-    													Color.RED, new Color(200, 0, 0))));
-    
+ //   private JButton m_jbRemove = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(
+ //   													15, 15, BufferedImage.TYPE_INT_ARGB),
+ //   													Color.RED, new Color(200, 0, 0))));
+	private JButton m_jbRemove = new JButton(ThemeManager.getIcon(HOIconName.REMOVE)); 
     //~ Constructors -------------------------------------------------------------------------------
 	protected SingleTrainingBlock(SpielerTrainingBlockDialog parent) {
 		this (parent, HOMiniModel.instance().getBasics().getDatum());
