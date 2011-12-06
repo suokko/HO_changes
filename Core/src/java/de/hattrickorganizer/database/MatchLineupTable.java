@@ -44,7 +44,7 @@ public final class MatchLineupTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public MatchLineup getMatchLineup(int matchID) {
+	MatchLineup getMatchLineup(int matchID) {
 		MatchLineup lineup = null;
 		String sql = null;
 		ResultSet rs = null;
@@ -88,7 +88,7 @@ public final class MatchLineupTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public boolean isMatchLineupVorhanden(int matchid) {
+	boolean isMatchLineupVorhanden(int matchid) {
 		boolean vorhanden = false;
 
 		try {
@@ -112,7 +112,7 @@ public final class MatchLineupTable extends AbstractTable {
 	 *
 	 * @param lineup TODO Missing Constructuor Parameter Documentation
 	 */
-	public void storeMatchLineup(MatchLineup lineup) {
+	void storeMatchLineup(MatchLineup lineup) {
 		if (lineup != null) {
 			//Vorhandene Einträge entfernen
 			final String[] where = { "MatchID" };
@@ -157,7 +157,7 @@ public final class MatchLineupTable extends AbstractTable {
 		}
 	}
 	
-	public void updateMatchLineup(MatchLineup lineup) {
+	void updateMatchLineup(MatchLineup lineup) {
 		
 		// first - delete all old players.
 		((MatchLineupPlayerTable) DBZugriff.instance().getTable(MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayers(lineup.getMatchID());

@@ -68,7 +68,7 @@ public final class FinanzenTable extends AbstractTable {
 	 * @param finanzen TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	protected void saveFinanzen(int hrfId, Finanzen finanzen, Timestamp date) {
+	void saveFinanzen(int hrfId, Finanzen finanzen, Timestamp date) {
 		String statement = null;
 		final String[] awhereS = { columns[0].getColumnName() };
 		final String[] awhereV = { "" + hrfId };
@@ -154,7 +154,7 @@ public final class FinanzenTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Finanzen getFinanzen(int hrfID) {
+	Finanzen getFinanzen(int hrfID) {
 		ResultSet rs = null;
 		Finanzen finanzen = null;
 

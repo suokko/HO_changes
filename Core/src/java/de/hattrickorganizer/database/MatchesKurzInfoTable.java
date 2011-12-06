@@ -11,10 +11,8 @@ import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
-public final class MatchesKurzInfoTable extends AbstractTable {
-
-	/** tablename **/
-	public final static String TABLENAME = "MATCHESKURZINFO";
+final class MatchesKurzInfoTable extends AbstractTable {
+	final static String TABLENAME = "MATCHESKURZINFO";
 	
 	protected MatchesKurzInfoTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
@@ -49,7 +47,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	 * @param matchtyp Welche Matches? Konstanten im SpielePanel!
 	 *
 	 */
-	public MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
+	MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
 		MatchKurzInfo match = null;
 		String sql = null;
@@ -150,7 +148,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	/**
 	 * Check if a match is already in the database.
 	 */
-	public boolean isMatchVorhanden(int matchid) {
+	boolean isMatchVorhanden(int matchid) {
 		boolean vorhanden = false;
 
 		try {
@@ -179,7 +177,7 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	 * @param teamId the teamid or -1 for all matches
 	 * @param matchStatus the match status (e.g. IMatchKurzInfo.UPCOMING) or -1 to ignore this parameter
 	 */
-	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
+	MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
 		MatchKurzInfo match = null;
 		String sql = null;
@@ -229,14 +227,14 @@ public final class MatchesKurzInfoTable extends AbstractTable {
 	 * 
 	 * @param teamId the teamid or -1 for all matches
 	 */
-	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId) {
+	MatchKurzInfo[] getMatchesKurzInfo(final int teamId) {
 		return getMatchesKurzInfo(teamId, -1);
 	}
 
 	/**
 	 * Saves matches into the databse.
 	 */
-	public void storeMatchKurzInfos(MatchKurzInfo[] matches) {
+	void storeMatchKurzInfos(MatchKurzInfo[] matches) {
 		String sql = null;
 		final String[] where = { "MatchID" };
 		final String[] werte = new String[1];

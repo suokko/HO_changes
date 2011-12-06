@@ -73,7 +73,7 @@ final class MatchDetailsTable extends AbstractTable {
 	}	
 
 	
-	public MatchesOverviewRow[] getMatchesOverviewValues(int matchtype){
+	MatchesOverviewRow[] getMatchesOverviewValues(int matchtype){
 		ArrayList<MatchesOverviewRow> rows = new ArrayList<MatchesOverviewRow>(20);
 		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("AlleSpiele"), MatchesOverviewRow.TYPE_ALL));
 		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Aufstellung"), MatchesOverviewRow.TYPE_TITLE));
@@ -244,7 +244,7 @@ final class MatchDetailsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Matchdetails getMatchDetails(int matchId) {
+	Matchdetails getMatchDetails(int matchId) {
 		final Matchdetails details = new Matchdetails();
 
 		try {
@@ -308,7 +308,7 @@ final class MatchDetailsTable extends AbstractTable {
 	 *
 	 * @param details TODO Missing Constructuor Parameter Documentation
 	 */
-	public void storeMatchDetails(Matchdetails details) {
+	void storeMatchDetails(Matchdetails details) {
 		if (details != null) {
 			//Vorhandene Einträge entfernen
 			final String[] where = { "MatchID" };

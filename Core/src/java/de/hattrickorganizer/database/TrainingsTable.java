@@ -7,10 +7,8 @@ import java.util.Vector;
 import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class TrainingsTable extends AbstractTable {
-
-	/** tablename **/
-	public final static String TABLENAME = "TRAINING";
+final class TrainingsTable extends AbstractTable {
+	final static String TABLENAME = "TRAINING";
 	
 	protected TrainingsTable(JDBCAdapter  adapter){
 		super(TABLENAME, adapter);
@@ -32,7 +30,7 @@ public final class TrainingsTable extends AbstractTable {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	public void saveTraining(de.hattrickorganizer.model.TrainingPerWeek training) {
+	void saveTraining(de.hattrickorganizer.model.TrainingPerWeek training) {
 		if (training != null) {
 			final String[] awhereS = { "Week", "Year" };
 			final String[] awhereV = { "" + training.getWeek(), "" + training.getYear()};
@@ -51,7 +49,7 @@ public final class TrainingsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<TrainingPerWeek> getTrainingsVector() {
+	Vector<TrainingPerWeek> getTrainingsVector() {
 		final Vector<TrainingPerWeek> vTrainings = new Vector<TrainingPerWeek>();
 
 		final String statement = "SELECT * FROM "+getTableName()+" ORDER BY year, week ASC";

@@ -58,7 +58,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 *            The matchId for the match in question
 	 * 
 	 */
-	public java.util.List<ISubstitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
+	java.util.List<ISubstitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
 		return getSubBySql("SELECT * FROM " + getTableName() + " WHERE MatchID = " + matchId
 				+ " AND TeamID = " + teamId);
 
@@ -71,7 +71,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 *            The teamId for the team in question
 	 * 
 	 */
-	public java.util.List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
+	java.util.List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
 		return getSubBySql("SELECT * FROM " + getTableName() + " WHERE HrfID = " + hrfId
 				+ " AND LineupName = '" + lineupName + "'");
 	}
@@ -81,7 +81,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 * must be unique for the match. All previous substitutions for the
 	 * team/match combination will be deleted.
 	 */
-	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, java.util.List<ISubstitution> subs) {
+	void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, java.util.List<ISubstitution> subs) {
 		if ((matchId == DUMMY) || (teamId == DUMMY)) {
 			// Rather not...
 			return;
@@ -95,7 +95,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 * must be unique for the match. All previous substitutions for the hrf will
 	 * be deleted.
 	 */
-	public void storeMatchSubstitutionsByHrf(int hrfId, java.util.List<ISubstitution> subs, String lineupName) {
+	void storeMatchSubstitutionsByHrf(int hrfId, java.util.List<ISubstitution> subs, String lineupName) {
 		if (hrfId == DUMMY) {
 			// Rather not...
 			return;

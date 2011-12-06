@@ -10,10 +10,8 @@ import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
-public final class SpielplanTable extends AbstractTable {
-
-	/** tablename **/
-	public final static String TABLENAME = "SPIELPLAN";
+final class SpielplanTable extends AbstractTable {
+	final static String TABLENAME = "SPIELPLAN";
 	
 	protected SpielplanTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
@@ -36,7 +34,7 @@ public final class SpielplanTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Spielplan[] getAllSpielplaene(boolean mitPaarungen) {
+	Spielplan[] getAllSpielplaene(boolean mitPaarungen) {
 		final Vector<ISpielplan> vec = new Vector<ISpielplan>();
 		Spielplan plan = null;
 		Spielplan[] plaene = null;
@@ -89,7 +87,7 @@ public final class SpielplanTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Spielplan getSpielplan(int ligaId, int saison) {
+	Spielplan getSpielplan(int ligaId, int saison) {
 		Spielplan plan = null;
 		String sql = null;
 		ResultSet rs = null;
@@ -136,7 +134,7 @@ public final class SpielplanTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public int getLigaID4SaisonID(int seasonid) {
+	int getLigaID4SaisonID(int seasonid) {
 		int ligaid = -1;
 
 		try {
@@ -158,7 +156,7 @@ public final class SpielplanTable extends AbstractTable {
 	 *
 	 * @param plan TODO Missing Constructuor Parameter Documentation
 	 */
-	public void storeSpielplan(Spielplan plan) {
+	void storeSpielplan(Spielplan plan) {
 		if (plan != null) {
 			try {
 				String sql = "SELECT LigaID FROM "+getTableName()+" WHERE LigaID = " + plan.getLigaId() + " AND Saison = " + plan.getSaison();
