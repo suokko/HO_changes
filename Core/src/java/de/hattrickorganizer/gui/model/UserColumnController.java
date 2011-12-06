@@ -17,6 +17,9 @@ public final class UserColumnController {
 	
 	/** model for matches table **/
 	private  MatchesColumnModel matchesColumnModel			= null;
+
+	/** model for matches statistic table **/
+	private  MatchesOverviewColumnModel matchesOverview1ColumnModel		= null;
 	
 	/** model for player overview **/
 	private  PlayerOverviewModel playerOverviewColumnModel	= null;
@@ -57,6 +60,7 @@ public final class UserColumnController {
 		dbZugriff.loadHOColumModel( getLineupModel() );
 		dbZugriff.loadHOColumModel( getAnalysis1Model() );
 		dbZugriff.loadHOColumModel( getAnalysis2Model() );
+		dbZugriff.loadHOColumModel( getMatchesOverview1ColumnModel() );
 	}
 	
 	/**
@@ -89,6 +93,12 @@ public final class UserColumnController {
 			matchesColumnModel = new MatchesColumnModel(1);
 		
 		return matchesColumnModel;
+	}
+	
+	public final MatchesOverviewColumnModel getMatchesOverview1ColumnModel(){
+		if(matchesOverview1ColumnModel == null)
+			matchesOverview1ColumnModel = new MatchesOverviewColumnModel(6);
+		return matchesOverview1ColumnModel;	
 	}
 	
 	/**
@@ -126,6 +136,7 @@ public final class UserColumnController {
 		v.add( getLineupModel() );
 		v.add( getAnalysis1Model() );
 		v.add( getAnalysis2Model() );
+		// MatchesOverView1Model should not add in this vector, because columns should not be edit
 		return v;
 	}
 	

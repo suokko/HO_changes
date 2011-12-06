@@ -35,7 +35,7 @@ import de.hattrickorganizer.model.matches.Matchdetails;
 /**
  * Zeigt die Stärken eines Matches an
  */
-class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
+class ManschaftsBewertungs2Panel extends ImagePanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static final long serialVersionUID = 1835093736247065469L;
@@ -45,10 +45,16 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
 
     private JLabel m_clGastTeamName = new JLabel();
     private JLabel m_clHeimTeamName = new JLabel();
+    private JLabel m_clHeimTeamTore = new JLabel();
+    private JLabel m_clGastTeamTore = new JLabel();
     private JProgressBar[] bars = new JProgressBar[8];
+    private JLabel[] homePercent = new JLabel[8];
+    private JLabel[] awayPercent = new JLabel[8];
     private Color green = ThemeManager.getColor(HOColorName.MATCHDETAILS_PROGRESSBAR_GREEN);
     private Color red = ThemeManager.getColor(HOColorName.MATCHDETAILS_PROGRESSBAR_RED);
     private MatchKurzInfo m_clMatchKurzInfo;
+    private final GridBagLayout layout = new GridBagLayout();
+    private final GridBagConstraints constraints = new GridBagConstraints();
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -63,7 +69,8 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
         super(print);
         for (int i = 0; i < bars.length; i++) {
 			bars[i] = new JProgressBar(0,100);
-			bars[i].setStringPainted(true);
+			homePercent[i] = new JLabel(" ");
+			awayPercent[i] = new JLabel(" ");
 		}
         setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
 
@@ -77,8 +84,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
 
         setLayout(mainlayout);
 
-        final GridBagLayout layout = new GridBagLayout();
-        final GridBagConstraints constraints = new GridBagConstraints();
+        
         constraints.anchor = GridBagConstraints.NORTH;
         constraints.weighty = 0.0;
         constraints.weightx = 1.0;
@@ -123,6 +129,15 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
         layout.setConstraints(m_clHeimTeamName, constraints);
         panel.add(m_clHeimTeamName);
 
+        constraints.anchor = GridBagConstraints.EAST;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1.0;
+        constraints.gridx = 2;
+        constraints.gridy = 4;
+        m_clHeimTeamTore.setFont(m_clHeimTeamTore.getFont().deriveFont(Font.BOLD));
+        layout.setConstraints(m_clHeimTeamTore, constraints);
+        panel.add(m_clHeimTeamTore);
+        
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1.0;
@@ -132,79 +147,37 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
         m_clGastTeamName.setFont(m_clGastTeamName.getFont().deriveFont(Font.BOLD));
         layout.setConstraints(m_clGastTeamName, constraints);
         panel.add(m_clGastTeamName);
+        
+        constraints.anchor = GridBagConstraints.EAST;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1.0;
+        constraints.gridx = 4;
+        constraints.gridy = 4;
+        m_clGastTeamTore.setFont(m_clGastTeamTore.getFont().deriveFont(Font.BOLD));
+        layout.setConstraints(m_clGastTeamTore, constraints);
+        panel.add(m_clGastTeamTore);
 
         //Platzhalter
         label = new JLabel(" ");
-//        label.setBorder(BorderFactory.createLineBorder(red));
         add(panel,label,layout,constraints,0,5);
 
         //Bewertungen
         //Mittelfeld
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
-        add(panel,label,layout,constraints,1,6);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
-        add(panel,label,layout,constraints,5,6);
-        add(panel,bars[0],layout,constraints,3,6);
+        initRow(panel,"Gesamtstaerke","Gesamtstaerke",0, 6);
+       
 
         //Platzhalter
         label = new JLabel(" ");
         add(panel,label,layout,constraints,0,7);
 
-        //Mittelfeld
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-        add(panel,label,layout,constraints,1,8);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-        add(panel,label,layout,constraints,5,8);
-        
-        add(panel,bars[1],layout,constraints,3,8);
- 
-        //rechte Abwehrseite
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-        add(panel,label,layout,constraints,1,9);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-        add(panel,label,layout,constraints,5,9);
-        add(panel,bars[2],layout,constraints,3,9);
- 
-        //Abwehrzentrum
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-        add(panel,label,layout,constraints,1,10);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-        add(panel,label,layout,constraints,5,10);
-
-        add(panel,bars[3],layout,constraints,3,10);
-
-
-        //Linke Abwehrseite
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-        add(panel,label,layout,constraints,1,11);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-        add(panel,label,layout,constraints,5,11);
-        add(panel,bars[4],layout,constraints,3,11);
-
-
-        //Rechte Angriffsseite
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-        add(panel,label,layout,constraints,1,12);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-        add(panel,label,layout,constraints,5,12);
-        add(panel,bars[5],layout,constraints,3,12);
- 
-
-        //Angriffszentrum
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-        add(panel,label,layout,constraints,1,13);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-        add(panel,label,layout,constraints,5,13);
-        add(panel,bars[6],layout,constraints,3,13);
-        
-
-        //Linke Angriffsseite
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-        add(panel,label,layout,constraints,1,14);
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-        add(panel,label,layout,constraints,5,14);
-        add(panel,bars[7],layout,constraints,3,14);
-
+       
+        initRow(panel,"MatchMittelfeld","MatchMittelfeld",1, 8);
+        initRow(panel,"rechteAbwehrseite","linkeAngriffsseite",2, 9);
+        initRow(panel,"Abwehrzentrum","Angriffszentrum",3, 10);
+        initRow(panel,"linkeAbwehrseite","rechteAngriffsseite",4, 11);
+        initRow(panel,"rechteAngriffsseite","linkeAbwehrseite",5, 12);
+        initRow(panel,"Angriffszentrum","Abwehrzentrum",6, 13);
+        initRow(panel,"linkeAngriffsseite","rechteAbwehrseite",7, 14);
 
         mainconstraints.gridx = 0;
         mainconstraints.gridy = 0;
@@ -213,7 +186,15 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
 
         clear();
     }
-
+    
+    private void initRow(JPanel panel , String txt1,String txt2, int index, int row){
+         add(panel,new JLabel(HOVerwaltung.instance().getLanguageString(txt1)),layout,constraints,1,row);
+         add(panel,homePercent[index],layout,constraints,2,row);
+         add(panel,bars[index],layout,constraints,3,row);
+         add(panel,awayPercent[index],layout,constraints,4,row);
+         add(panel,new JLabel(HOVerwaltung.instance().getLanguageString(txt2)),layout,constraints,5,row);
+        
+    }
    
     private void add(JPanel panel,JComponent label,GridBagLayout layout,GridBagConstraints constraints, int x, int y){
     	if(x == 0){
@@ -221,7 +202,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
             constraints.gridwidth = 1;
     	} else {
             constraints.weightx = 1.0;
-            constraints.gridwidth = 2;
+            constraints.gridwidth = 1;
     	}
     		
     	constraints.gridx = x;
@@ -233,41 +214,32 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
     }
     //~ Methods ------------------------------------------------------------------------------------
 
-
-    public final void actionPerformed(ActionEvent e) {
-        final int matchid = m_clMatchKurzInfo.getMatchID();
-        HOMainFrame.instance().getOnlineWorker().getMatchlineup(m_clMatchKurzInfo.getMatchID(),
-                                                                                         m_clMatchKurzInfo.getHeimID(),
-                                                                                         m_clMatchKurzInfo.getGastID());
-        HOMainFrame.instance().getOnlineWorker().getMatchDetails(m_clMatchKurzInfo.getMatchID());
-        RefreshManager.instance().doReInit();
-        HOMainFrame.instance().showMatch(matchid);
-    }
-
     final void clear() {
         m_clHeimTeamName.setText(" ");
         m_clGastTeamName.setText(" ");
+        m_clHeimTeamTore.setText(" ");
+        m_clGastTeamTore.setText(" ");
         m_clHeimTeamName.setIcon(null);
         m_clGastTeamName.setIcon(null);
 
         for (int i = 0; i < bars.length; i++) {
 			bars[i].setValue(0);
-			bars[i].setString("");
+			homePercent[i].setText(" ");
+			awayPercent[i].setText(" ");
 		}
 
     }
 
-    final void refresh(MatchKurzInfo info) {
+    final void refresh(MatchKurzInfo info,Matchdetails details) {
         m_clMatchKurzInfo = info;
-
-        final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
         //Teams
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
         m_clHeimTeamName.setText(info.getHeimName());
         m_clGastTeamName.setText(info.getGastName());
-
+        m_clHeimTeamTore.setText(info.getHeimTore() + " ");
+        m_clGastTeamTore.setText(info.getGastTore() + " ");
         if (info.getHeimID() == teamid) {
             m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
         } else {
@@ -316,6 +288,8 @@ class ManschaftsBewertungs2Panel extends ImagePanel implements ActionListener {
     private void setBarValue(int index,float home, float away){
         bars[index].setValue((int)getPercent(home,away));
         bars[index].setToolTipText(bars[index].getValue()+" %"+ " -- "+(100-bars[index].getValue())+" %");
+        homePercent[index].setText(bars[index].getValue()+" %");
+        awayPercent[index].setText((100-bars[index].getValue())+" %");
         bars[index].setForeground(bars[index].getValue()<50?red:green);
         bars[index].setBackground(bars[index].getValue()<50?green:red);
     }

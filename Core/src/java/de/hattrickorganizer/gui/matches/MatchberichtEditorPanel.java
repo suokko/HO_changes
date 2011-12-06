@@ -18,7 +18,7 @@ import de.hattrickorganizer.tools.HOLogger;
 /**
  * Zeigt den Spielstand an
  */
-public class MatchberichtEditorPanel extends ImagePanel {
+class MatchberichtEditorPanel extends ImagePanel {
 	
 	private static final long serialVersionUID = -6744361289975460222L;
 	
@@ -32,7 +32,7 @@ public class MatchberichtEditorPanel extends ImagePanel {
     /**
      * Creates a new MatchberichtEditorPanel object.
      */
-    public MatchberichtEditorPanel() {
+    MatchberichtEditorPanel() {
         initComponents();
     }
 
