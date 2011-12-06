@@ -90,4 +90,6 @@ public interface HOIconName {
 	
 	// 1.431
 	public static final String STATISTICS = "statistics";
+	public static final String REMOVE	= "remove";
+	
 }

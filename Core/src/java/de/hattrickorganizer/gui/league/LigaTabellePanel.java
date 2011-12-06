@@ -59,8 +59,10 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     //~ Instance fields ----------------------------------------------------------------------------
 
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton m_jbLoeschen = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(20, 20,  java.awt.image.BufferedImage.TYPE_INT_ARGB),
-                                                                                      Color.red,new Color(200,0, 0))));
+ //   private JButton m_jbLoeschen = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(20, 20,  java.awt.image.BufferedImage.TYPE_INT_ARGB),
+ //                                                                                     Color.red,new Color(200,0, 0))));
+    private JButton m_jbLoeschen = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
+    
     private JComboBox m_jcbSaison;
     private LigaTabelle m_jpLigaTabelle;
     private SpieltagPanel m_jpSpielPlan1;
