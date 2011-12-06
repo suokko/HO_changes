@@ -7,14 +7,14 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
-public class XMLCHPPPreParser {
+public final class XMLCHPPPreParser {
 
-	public XMLCHPPPreParser() {
+	private XMLCHPPPreParser() {
     }
 	
-	public String Error(String xmlIn) {
-		String sError = "";
-		HOVerwaltung hov = HOVerwaltung.instance();
+	public static String getError(String xmlIn) {
+		String sReturnError = "";
+		final HOVerwaltung hov = HOVerwaltung.instance();
 		if(xmlIn.length() > 0 ) {
 	        Document doc = XMLManager.instance().parseString(xmlIn);;
 	        if (doc != null) {
@@ -23,54 +23,29 @@ public class XMLCHPPPreParser {
 	            try {
 	            	// See if an error is found
 	            	if (root.getElementsByTagName("ErrorCode").getLength() > 0) {
+	            		sReturnError = "CHPP" + hov.getLanguageString("Fehler");
 	            		ele = (Element) root.getElementsByTagName("ErrorCode").item(0);
-	            		String sTmpError = XMLManager.instance().getFirstChildNodeValue(ele);
-	            		String sErrString = "";
-	            		
-	            		switch (Integer.parseInt(sTmpError)) {
-		            		case -1:
-		            		case 0:
-		            		case 1:
-		            		case 2:
-		            		case 3:
-		            		case 4:
-		            		case 5:
-		            		case 6:
-		            		case 7:
-		            		case 10:
-		            		case 50:
-		            		case 51:
-		            		case 52:
-		            		case 53:
-		            		case 54:
-		            		case 55:
-		            		case 56:
-		            		case 57:
-		            		case 58:
-		            		case 90:
-		            		case 91:
-		            		case 99:
-		            			sErrString = sTmpError + " - " + hov.getLanguageString("CHPP.Error" + sTmpError);
-		            			break;
-	            			default:
-	            				sErrString = sTmpError + " - " + hov.getLanguageString("CHPP.ErrorUnknown");
-	            				break;
+	            		if (ele != null) {
+	            			sReturnError += " " + XMLManager.instance().getFirstChildNodeValue(ele);
 	            		}
-	            		sError = hov.getLanguageString("CHPP.Error") + " - " + sErrString;
+	            		ele = (Element) root.getElementsByTagName("Error").item(0);
+	            		if (ele != null) {
+	            			sReturnError += " - " + XMLManager.instance().getFirstChildNodeValue(ele);
+	            		}
 	            	}
 	            }
 	        	catch (Exception ex)
 	        	{
-	        		 HOLogger.instance().log(getClass(),"XMLCHPPPreParser Exception: " + ex);
-	        		 sError = ex.getMessage();
+	        		 HOLogger.instance().log(XMLCHPPPreParser.class,"XMLCHPPPreParser Exception: " + ex);
+	        		 sReturnError = "XMLCHPPPreParser Exception - " + ex.getMessage();
 	        	}
 	                
 	        } else {
-	        	sError = hov.getLanguageString("CHPP.NoData");
+	        	sReturnError = hov.getLanguageString("NO_HRF_ERROR");
 	        }
 		} else {
-        	sError = hov.getLanguageString("CHPP.NoData");
+			sReturnError = hov.getLanguageString("NO_HRF_ERROR");
         }
-        return sError;
+        return sReturnError;
     }
 }
