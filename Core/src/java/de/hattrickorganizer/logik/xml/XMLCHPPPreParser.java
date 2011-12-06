@@ -23,10 +23,10 @@ public final class XMLCHPPPreParser {
 	            try {
 	            	// See if an error is found
 	            	if (root.getElementsByTagName("ErrorCode").getLength() > 0) {
-	            		sReturnError = "CHPP" + hov.getLanguageString("Fehler");
+	            		sReturnError = "CHPP " + hov.getLanguageString("Fehler");
 	            		ele = (Element) root.getElementsByTagName("ErrorCode").item(0);
 	            		if (ele != null) {
-	            			sReturnError += " " + XMLManager.instance().getFirstChildNodeValue(ele);
+	            			sReturnError += " - " + XMLManager.instance().getFirstChildNodeValue(ele);
 	            		}
 	            		ele = (Element) root.getElementsByTagName("Error").item(0);
 	            		if (ele != null) {
@@ -36,7 +36,7 @@ public final class XMLCHPPPreParser {
 	            }
 	        	catch (Exception ex)
 	        	{
-	        		 HOLogger.instance().log(XMLCHPPPreParser.class,"XMLCHPPPreParser Exception: " + ex);
+	        		 HOLogger.instance().error(XMLCHPPPreParser.class, "XMLCHPPPreParser Exception: " + ex);
 	        		 sReturnError = "XMLCHPPPreParser Exception - " + ex.getMessage();
 	        	}
 	                
