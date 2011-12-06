@@ -56,7 +56,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<float[]> getAlleBewertungen(int spielerid) {
+	Vector<float[]> getAlleBewertungen(int spielerid) {
 		final Vector<float[]> bewertung = new Vector<float[]>();
 
 		//Alle Möglichen Kombos durchlaufen
@@ -83,7 +83,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public float[] getBewertungen4Player(int spielerid) {
+	float[] getBewertungen4Player(int spielerid) {
 		//Max, Min, Durchschnitt
 		final float[] bewertungen = { 0f, 0f, 0f, 0f };
 
@@ -137,7 +137,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public float[] getBewertungen4PlayerUndPosition(int spielerid, byte position) {
+	float[] getBewertungen4PlayerUndPosition(int spielerid, byte position) {
 		//Max, Min, Durchschnitt
 		final float[] bewertungen = { 0f, 0f, 0f, 0f };
 
@@ -192,7 +192,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 * 
 	 * @author blaghaid
 	 */
-	protected void deleteMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+	void deleteMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
 		if (player != null) {
 			final String[] where = { "MatchID" , "TeamID", "RoleID", "SpielerID"};
 			final String[] werte = { "" + matchID, "" + teamID, "" + player.getId(), "" + player.getSpielerId()};			
@@ -206,7 +206,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 * 
 	 * @author blaghaid
 	 */
-	protected void deleteMatchLineupPlayers(int matchID) {
+	void deleteMatchLineupPlayers(int matchID) {
 		final String[] where = { "MatchID"};
 		final String[] werte = { "" + matchID};			
 		delete(where, werte);			
@@ -221,7 +221,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 * 
 	 * @author blaghaid
 	 */
-	protected void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+	void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
 		// As some weirdness may be present in the db (like old role IDs), we do a delete and
 		// insert rather than an update. It is not desired to end up with the same player in both
 		// and old style and new style position.
@@ -274,7 +274,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 * @param teamID TODO Missing Method Parameter Documentation
 	 */
 	@SuppressWarnings("deprecation")
-	protected void storeMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+	void storeMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
 		if (player != null) {
 			
 			// Need to check for spieler, there may now be multiple players with -1 role.
@@ -337,7 +337,7 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<IMatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
+	Vector<IMatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		MatchLineupPlayer player = null;
 		final Vector<IMatchLineupPlayer> vec = new Vector<IMatchLineupPlayer>();
 		String sql = null;

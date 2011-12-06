@@ -6,10 +6,8 @@ import java.sql.Types;
 import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class StadionTable extends AbstractTable {
-
-	/** tablename **/
-	public final static String TABLENAME = "STADION";
+final class StadionTable extends AbstractTable {
+	final static String TABLENAME = "STADION";
 	
 	protected StadionTable(JDBCAdapter  adapter){
 		super(TABLENAME, adapter);
@@ -50,7 +48,7 @@ public final class StadionTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param stadion TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveStadion(int hrfId, de.hattrickorganizer.model.Stadium stadion) {
+	void saveStadion(int hrfId, de.hattrickorganizer.model.Stadium stadion) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -110,7 +108,7 @@ public final class StadionTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Stadium getStadion(int hrfID) {
+	Stadium getStadion(int hrfID) {
 		ResultSet rs = null;
 		Stadium stadion = null;
 		String sql = null;

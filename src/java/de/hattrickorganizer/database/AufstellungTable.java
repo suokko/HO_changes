@@ -10,9 +10,8 @@ import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-public final class AufstellungTable extends AbstractTable {
-	/** tablename **/
-	public final static String TABLENAME = "AUFSTELLUNG";
+final class AufstellungTable extends AbstractTable {
+	final static String TABLENAME = "AUFSTELLUNG";
 	
 	protected AufstellungTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
@@ -38,7 +37,7 @@ public final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Lineup getAufstellung(int hrfID, String name) {
+	Lineup getAufstellung(int hrfID, String name) {
 		ResultSet rs = null;
 		de.hattrickorganizer.model.Lineup auf = null;
 		String sql = null;
@@ -75,7 +74,7 @@ public final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<String> getAufstellungsListe(int hrfID) {
+	Vector<String> getAufstellungsListe(int hrfID) {
 		final Vector<String> ret = new Vector<String>();
 		ResultSet rs = null;
 		String sql = null;
@@ -103,7 +102,7 @@ public final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<String> getUserAufstellungsListe() {
+	Vector<String> getUserAufstellungsListe() {
 		ResultSet rs = null;
 		final String statement = "SELECT Aufstellungsname FROM "+getTableName()+" WHERE HRF_ID=" + Lineup.NO_HRF_VERBINDUNG;
 		final Vector<String> ret = new Vector<String>();
@@ -132,7 +131,7 @@ public final class AufstellungTable extends AbstractTable {
 	 * @param aufstellung TODO Missing Constructuor Parameter Documentation
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
+	void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
 		String statement = null;
 
 		if (aufstellung != null) {
@@ -153,7 +152,4 @@ public final class AufstellungTable extends AbstractTable {
 	
 		}
 	}
-	
-	
-	
 }

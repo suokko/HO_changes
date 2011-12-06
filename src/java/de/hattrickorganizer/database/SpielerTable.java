@@ -9,12 +9,12 @@ import plugins.ISpieler;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class SpielerTable extends AbstractTable {
+final class SpielerTable extends AbstractTable {
 
 	/** tablename **/
-	public final static String TABLENAME = "SPIELER";
+	final static String TABLENAME = "SPIELER";
 
-	protected SpielerTable(JDBCAdapter adapter) {
+	SpielerTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
 	}
 
@@ -97,7 +97,7 @@ public final class SpielerTable extends AbstractTable {
 	 * @param player	the player to be saved
 	 */
 
-	protected void saveSpieler(int hrfId, Spieler player, Timestamp date) {
+	void saveSpieler(int hrfId, Spieler player, Timestamp date) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID", "SpielerId" };
 		final String[] awhereV = { "" + hrfId, "" + player.getSpielerID()};
@@ -251,7 +251,7 @@ public final class SpielerTable extends AbstractTable {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
+	void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
 //		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -278,7 +278,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return player
 	 */
-	protected Spieler getSpielerFromHrf(int hrfID, int playerId) {
+	Spieler getSpielerFromHrf(int hrfID, int playerId) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -309,7 +309,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected Vector<ISpieler> getSpieler(int hrfID) {
+	Vector<ISpieler> getSpieler(int hrfID) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -341,7 +341,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<ISpieler> getAllSpieler() {
+	Vector<ISpieler> getAllSpieler() {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -386,7 +386,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public int getLetzteBewertung4Spieler(int spielerid) {
+	int getLetzteBewertung4Spieler(int spielerid) {
 		int bewertung = 0;
 
 		try {
@@ -411,7 +411,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Spieler getSpielerAtDate(int spielerid, Timestamp time) {
+	Spieler getSpielerAtDate(int spielerid, Timestamp time) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -488,7 +488,7 @@ public final class SpielerTable extends AbstractTable {
 
 	//------------------------------------------------------------------------------
 
-	public Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
+	Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -523,7 +523,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Spieler getSpielerFirstHRF(int spielerid) {
+	Spieler getSpielerFirstHRF(int spielerid) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -555,7 +555,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Timestamp getTimestamp4FirstPlayerHRF(int spielerid) {
+	Timestamp getTimestamp4FirstPlayerHRF(int spielerid) {
 		Timestamp time = null;
 
 		try {
@@ -579,7 +579,7 @@ public final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public int getTrainerType(int hrfID) {
+	int getTrainerType(int hrfID) {
 		ResultSet rs = null;
 		String sql = null;
 

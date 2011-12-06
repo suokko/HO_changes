@@ -13,13 +13,13 @@ import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class SpielerSkillupTable extends AbstractTable {
+final class SpielerSkillupTable extends AbstractTable {
 
 	/** tablename **/						
-	public final static String TABLENAME = "SPIELERSKILLUP";
+	final static String TABLENAME = "SPIELERSKILLUP";
 	private static Map<String,Vector<Object[]>> playerSkillup = null;
 
-	protected SpielerSkillupTable(JDBCAdapter adapter) {
+	SpielerSkillupTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);					
 	}
 
@@ -48,7 +48,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSkillup(int hrfId, int spielerId, Timestamp date, int skillValue, int skillCode) {
+	void saveSkillup(int hrfId, int spielerId, Timestamp date, int skillValue, int skillCode) {
 		storeSkillup(hrfId,spielerId,date,skillValue,skillCode,true);
 	}
 
@@ -84,7 +84,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		}				
 	}
 
-	public Object[] getLastLevelUp(int skillCode, int spielerId) {
+	Object[] getLastLevelUp(int skillCode, int spielerId) {
 		Vector<Object[]> data = getSpielerSkillUp(spielerId);
 		for (Iterator<Object[]> iter = data.iterator(); iter.hasNext();) {
 			Object[] element = iter.next();
@@ -96,7 +96,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		return new Object[] { new Timestamp(System.currentTimeMillis()), Boolean.FALSE};						
 	}
 
-	public Vector<Object[]> getAllLevelUp(int skillCode, int spielerId) {		
+	Vector<Object[]> getAllLevelUp(int skillCode, int spielerId) {		
 		Vector<Object[]> data = getSpielerSkillUp(spielerId);
 		Vector<Object[]> v = new Vector<Object[]>();
 		for (Iterator<Object[]> iter = data.iterator(); iter.hasNext();) {
@@ -172,7 +172,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 
 	// -------------------------------- Importing PArt ----------------------------------------------
 
-	public void importNewSkillup(HOModel homodel) {
+	void importNewSkillup(HOModel homodel) {
 		Vector<ISpieler> players = homodel.getAllSpieler();
 		for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
 			ISpieler nPlayer = iter.next();
@@ -200,7 +200,7 @@ public final class SpielerSkillupTable extends AbstractTable {
 		
 	}
 
-	public void importFromSpieler() {
+	void importFromSpieler() {
 		playerSkillup = null;
 		ResultSet rs = null;
 		String sql = "SELECT DISTINCT SpielerID FROM SPIELER";

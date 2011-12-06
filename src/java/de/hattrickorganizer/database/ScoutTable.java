@@ -7,12 +7,12 @@ import java.util.Vector;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class ScoutTable extends AbstractTable {
+final class ScoutTable extends AbstractTable {
 
 	/** tablename **/
 	public final static String TABLENAME = "SCOUT";
 	
-	protected ScoutTable(JDBCAdapter  adapter){
+	ScoutTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
 	}
 
@@ -53,7 +53,7 @@ public final class ScoutTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param list TODO Missing Constructuor Parameter Documentation
 	 */
-	protected void saveScoutList(Vector<ScoutEintrag> list) {
+	void saveScoutList(Vector<ScoutEintrag> list) {
 		String sql = "";
 		String bool = "0";
 		String hg = "0";
@@ -147,7 +147,7 @@ public final class ScoutTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<ScoutEintrag> getScoutList() {
+	Vector<ScoutEintrag> getScoutList() {
 		final Vector<ScoutEintrag> ret = new Vector<ScoutEintrag>();
 
 		try {

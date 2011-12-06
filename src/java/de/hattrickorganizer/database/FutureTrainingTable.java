@@ -32,7 +32,7 @@ public final class FutureTrainingTable extends AbstractTable {
 		columns[4] = new ColumnDescriptor("STAMINATRAININGPART",Types.INTEGER,false);
 	}
 	
-	public List<IFutureTrainingWeek> getFutureTrainingsVector() {
+	List<IFutureTrainingWeek> getFutureTrainingsVector() {
 		final Vector<IFutureTrainingWeek> vTrainings = new Vector<IFutureTrainingWeek>();
 		String query = "select * from "+getTableName();
 		ResultSet rs = adapter.executeQuery(query);
@@ -115,7 +115,7 @@ public final class FutureTrainingTable extends AbstractTable {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	public void saveFutureTraining(IFutureTrainingWeek training) {
+	void saveFutureTraining(IFutureTrainingWeek training) {
 		if (training != null) {
 			String statement =
 				"update "+getTableName()+" set TYPE= " + training.getTyp() + ", INTENSITY=" + training.getIntensitaet() + ", STAMINATRAININGPART=" + training.getStaminaTrainingPart() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();

@@ -6,10 +6,8 @@ import java.sql.Types;
 import de.hattrickorganizer.model.XtraData;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class XtraDataTable extends AbstractTable {
-
-	/** tablename **/
-	public final static String TABLENAME = "XTRADATA";
+final class XtraDataTable extends AbstractTable {
+	final static String TABLENAME = "XTRADATA";
 	
 	protected XtraDataTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
@@ -42,7 +40,7 @@ public final class XtraDataTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public XtraData getXtraDaten(int hrfID) {
+	XtraData getXtraDaten(int hrfID) {
 		ResultSet rs = null;
 		XtraData xtra = null;
 		String sql = null;
@@ -68,7 +66,7 @@ public final class XtraDataTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param xtra TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveXtraDaten(int hrfId, XtraData xtra) {
+	void saveXtraDaten(int hrfId, XtraData xtra) {
 		String statement = null;
 
 		if (xtra != null) {
