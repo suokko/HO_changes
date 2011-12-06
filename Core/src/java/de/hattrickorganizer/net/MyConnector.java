@@ -39,6 +39,7 @@ import de.hattrickorganizer.logik.xml.XMLExtensionParser;
 import de.hattrickorganizer.logik.xml.XMLNewsParser;
 import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
 import de.hattrickorganizer.model.Extension;
+import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
@@ -675,7 +676,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 					if (DEBUGSAVE) {
 						saveCHPP(surl, returnString);
 					}
-					String sError = (new XMLCHPPPreParser()).Error(returnString);
+					String sError = XMLCHPPPreParser.getError(returnString);
 					if (sError.length() > 0)
 						throw new RuntimeException(sError);
 					tryAgain = false;
@@ -701,7 +702,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 			}
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
-			JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), "error",
+			JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), HOVerwaltung.instance().getLanguageString("Fehler"),
 					JOptionPane.ERROR_MESSAGE);
 			returnString = "";
 		}
@@ -730,7 +731,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
-				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl, "error",
+				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl, HOVerwaltung.instance().getLanguageString("Fehler"),
 						JOptionPane.ERROR_MESSAGE);
 			returnStream = null;
 		}
@@ -777,7 +778,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 				case 201:
 					// We are done!
 					returnStream = getResultStream(response);
-					String sError = (new XMLCHPPPreParser()).Error(readStream(returnStream));
+					String sError = XMLCHPPPreParser.getError(readStream(returnStream));
 					if (sError.length() > 0)
 						throw new RuntimeException(sError);
 					tryAgain = false;
@@ -806,7 +807,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
-				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl, "error",
+				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl, HOVerwaltung.instance().getLanguageString("Fehler"),
 						JOptionPane.ERROR_MESSAGE);
 			returnStream = null;
 		}
