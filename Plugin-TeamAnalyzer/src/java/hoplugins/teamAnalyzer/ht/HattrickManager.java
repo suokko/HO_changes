@@ -62,9 +62,13 @@ public class HattrickManager {
     				}
     				String matchId = matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i).getFirstChild().getNodeValue();
     				if (!matches.contains(matchId)) {
-    					Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId));
-    					matches.add(matchId);
-    					if (matches.size() >= Math.max(20, SystemManager.getFilter().getNumber() * 3)) { // [3 x limit] matches ought to be enough for anybody.
+    					if (Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId))) {
+	    					matches.add(matchId);
+	    					if (matches.size() >= Math.max(20, SystemManager.getFilter().getNumber() * 3)) { // [3 x limit] matches ought to be enough for anybody.
+	    						download = false;
+	    						return;
+	    					}
+    					} else {
     						download = false;
     						return;
     					}

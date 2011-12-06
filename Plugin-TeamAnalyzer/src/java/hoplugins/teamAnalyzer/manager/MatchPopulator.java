@@ -60,26 +60,27 @@ public class MatchPopulator {
         List<MatchDetail> list = new ArrayList<MatchDetail>();
 
         analyzedMatch = new ArrayList<MatchDetail>();
-
+        boolean bOK = true;
         for (Iterator<Match> iter = matches.iterator(); iter.hasNext();) {
+        	bOK = true;
             Match element = iter.next();
-
             if (!isMatchAvailable(element.getMatchId()) && CHPPManager.isDownloadAllowed(element)) {
-                downloadMatch(element.getMatchId());
+                bOK = downloadMatch(element.getMatchId());
             }
-
-            try {
-                MatchDetail md = populateMatch(element);
-
-                if (md != null) {
-                    list.add(md);
-                    analyzedMatch.add(md);
-                }
-            } catch (RuntimeException e) {
-                // DO NOTHING
+            if (bOK) {
+	            try {
+	                MatchDetail md = populateMatch(element);
+	                if (md != null) {
+	                    list.add(md);
+	                    analyzedMatch.add(md);
+	                }
+	            } catch (RuntimeException e) {
+	                // DO NOTHING
+	            }
+            } else {
+            	break;
             }
         }
-
         return list;
     }
 
