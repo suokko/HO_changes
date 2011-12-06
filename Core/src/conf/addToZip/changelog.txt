@@ -17,6 +17,7 @@ Changelist HO! 1.431
 	. HRF saving is now optional. You can actually cancel!
 	. Reworked Download to abort on failure. Cancel only once!
 	. CHPP is now checked for status via it's XML
+	. Sanity checks added for downloads of matches...
 	
 - Added better error message when database is unable to create its file.
 - Fixed sort issue on player tables.
@@ -65,9 +66,9 @@ Plugin Updates:
   - Added set piece filter, and removed occurrences of no longer existing general and stamina training
   - Changed icon drawing on Analyzer panel to show values > 99
 
-- Team Analyzer v 2.82:
+- Team Analyzer v 2.84:
   - Fixed icon issue with Nimbus skin
-  - Match download is updated to work better
+  - Match download is updated to work even better
 
 - Special Events v 1.24
   - Added missing events
