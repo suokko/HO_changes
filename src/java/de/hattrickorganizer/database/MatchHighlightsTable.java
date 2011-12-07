@@ -10,10 +10,8 @@ import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
 
-public final class MatchHighlightsTable extends AbstractTable {
-
-	/** tablename **/						
-	public final static String TABLENAME = "MATCHHIGHLIGHTS";
+final class MatchHighlightsTable extends AbstractTable {
+	final static String TABLENAME = "MATCHHIGHLIGHTS";
 
 	protected MatchHighlightsTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
@@ -36,7 +34,6 @@ public final class MatchHighlightsTable extends AbstractTable {
 		columns[11] = new ColumnDescriptor("GehilfeName", Types.VARCHAR, false, 256);
 		columns[12] = new ColumnDescriptor("GehilfeHeim", Types.BOOLEAN, false);
 		columns[13] = new ColumnDescriptor("EventText", Types.VARCHAR, false, 512);
-
 	}
 
 	@Override
