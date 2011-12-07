@@ -6,7 +6,6 @@ import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,10 +17,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -48,7 +45,6 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -611,12 +607,21 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                                                                         .getZahl());
                 refresh(info);
                 final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
-                teamsComparePanel.refresh(info,details);
-                m_jpManschaftsBewertungsPanel.refresh(info,details);
-                m_jpManschaftsBewertungs2Panel.refresh(info,details);
-                matchHighlightPanel.refresh(info,details);
-                matchReportPanel.refresh(info,details);
-
+                if (details != null && details.getMatchID() > 0) {
+	                teamsComparePanel.refresh(info,details);
+	                m_jpManschaftsBewertungsPanel.refresh(info,details);
+	                m_jpManschaftsBewertungs2Panel.refresh(info,details);
+	                matchHighlightPanel.refresh(info,details);
+	                matchReportPanel.refresh(info,details);
+                } else {
+                	teamsComparePanel.clear();
+	                m_jpManschaftsBewertungsPanel.clear();
+	                m_jpManschaftsBewertungs2Panel.clear();
+	                matchHighlightPanel.clear();
+	                matchReportPanel.clear();
+	                m_jpAufstellungHeimPanel.clearAll();
+	                m_jpAufstellungGastPanel.clearAll();
+	            }
                 if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
                     m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
