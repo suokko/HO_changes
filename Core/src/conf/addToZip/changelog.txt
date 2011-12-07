@@ -18,7 +18,7 @@ Changelist HO! 1.431
 	. Reworked Download to abort on failure. Cancel only once!
 	. CHPP is now checked for status via it's XML
 	. Sanity checks added for downloads of matches...
-	
+	. Removed double proxy dialog on download of non chpp files.
 - Added better error message when database is unable to create its file.
 - Fixed sort issue on player tables.
 - Fixed localization issue messing up ratings for some locales

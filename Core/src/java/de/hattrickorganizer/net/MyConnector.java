@@ -621,9 +621,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen, boolean showErrorMessage)
 			throws IOException {
 		if (displaysettingsScreen) {
-			// Show Screen
-			final ProxyDialog proxyDialog = new ProxyDialog(HOMainFrame.instance());
-			proxyDialog.setVisible(true);
+			// Show proxy Screen
+			new ProxyDialog(HOMainFrame.instance());
 		}
 		return getNonCHPPWebFile(url, showErrorMessage);
 	}
@@ -638,10 +637,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
 		if (displaysettingsScreen) {
-			// Show Screen
-			final de.hattrickorganizer.gui.login.ProxyDialog proxyDialog = new de.hattrickorganizer.gui.login.ProxyDialog(
-					de.hattrickorganizer.gui.HOMainFrame.instance());
-			proxyDialog.setVisible(true);
+			// Show Proxy Screen
+			new ProxyDialog(HOMainFrame.instance());
 		}
 
 		return getWebPage(url, true);
