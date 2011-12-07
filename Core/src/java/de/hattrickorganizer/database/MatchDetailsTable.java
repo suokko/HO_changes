@@ -136,7 +136,7 @@ final class MatchDetailsTable extends AbstractTable {
 			break;
 		}
 		
-		setMatchesOverviewRow(rows.get(0), whereClause,home);
+		setMatchesOverviewRow(rows.get(0), whereClause.toString(),home);
 		setFormationRows(rows,whereClause, home);
 		setRows(rows, whereClause, home);
 	}
@@ -203,12 +203,12 @@ final class MatchDetailsTable extends AbstractTable {
 		for (int i = 1; i < rows.size(); i++) {
 			if(rows.get(i).getTypeValue() > Integer.MIN_VALUE){
 				String whereSpecial = " AND "+columns[rows.get(i).getColumnIndex(home)].getColumnName()+" = "+rows.get(i).getTypeValue() ;
-				setMatchesOverviewRow(rows.get(i), whereClause.append(whereSpecial),home);
+				setMatchesOverviewRow(rows.get(i), whereClause+whereSpecial,home);
 			}
 		}
 	}
 	
-	private void setMatchesOverviewRow(MatchesOverviewRow row,StringBuilder whereClause, boolean home){
+	private void setMatchesOverviewRow(MatchesOverviewRow row,String whereClause, boolean home){
 		StringBuilder sql = new StringBuilder(500);
 		String from = " FROM MATCHDETAILS inner join MATCHESKURZINFO ON MATCHDETAILS.MATCHID = MATCHESKURZINFO.MATCHID ";
 		sql.append("SELECT SUM(ANZAHL) AS A1,SUM(G1) AS G,SUM(U1) AS U,SUM(V1) AS V, SUM(HTORE1) AS HEIMTORE, SUM(GTORE1) AS GASTTORE FROM (");
