@@ -32,6 +32,7 @@ import javax.swing.InputMap;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -48,7 +49,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import plugins.IPlugin;
 import plugins.ISpieler;
-import de.hattrickorganizer.credits.VAPCredits;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
 import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
@@ -486,8 +486,13 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.ARENASIZER);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
-		} else if (source.equals(m_jmCreditsItem)) { // Credits
-			new VAPCredits(this);
+		} else if (source.equals(m_jmCreditsItem)) { 
+			StringBuilder text = new StringBuilder(200);
+			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
+			text.append("2003 development started by Thomas Wert & Volker Fischer.\n");
+			text.append("Since 2006 this project is open source and developed by changing developers.");
+			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
+			//new VAPCredits(this);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmForumItem)) { // Forum
