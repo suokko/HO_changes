@@ -59,6 +59,7 @@ import de.hattrickorganizer.gui.injury.InjuryDialog;
 import de.hattrickorganizer.gui.keepertool.KeeperToolDialog;
 import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
+import de.hattrickorganizer.gui.lineup.LineupMasterPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
 import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.gui.matches.SpielePanel;
@@ -154,7 +155,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	// ----------------------------------------------------------------------------
 
 	private ArenaSizerPanel m_jpArenaSizer;
-	private LineupPanel m_jpAufstellung;
+	private LineupMasterPanel lineupMasterPanel;
 	private InfoPanel m_jpInfoPanel;
 
 	private static HOVerwaltung m_hov = HOVerwaltung.instance();
@@ -345,6 +346,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return DEVELOPMENT;
 	}
 
+	public static boolean isDeveloperMode() {
+		return DEVELOPER_MODE;
+	}
+	
 	/**
 	 * Getter for the singleton HOMainFrame instance.
 	 */
@@ -367,7 +372,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	}
 
 	public LineupPanel getAufstellungsPanel() {
-		return m_jpAufstellung;
+		return this.lineupMasterPanel.getLineupPanel();
 	}
 
 	public InfoPanel getInfoPanel() {
@@ -670,10 +675,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Aufstellung
-		m_jpAufstellung = new LineupPanel();
+		this.lineupMasterPanel = new LineupMasterPanel();
 
 		if (!m_up.tempTabAufstellung) {
-			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Aufstellung"), m_jpAufstellung);
+			m_jtpTabbedPane.addTab(m_hov.getLanguageString("Aufstellung"), this.lineupMasterPanel);
 		}
 
 		// Tabelle
@@ -910,7 +915,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-		if (DEVELOPER_MODE) {
+		if (isDeveloperMode()) {
 			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
 		}
 
@@ -1078,8 +1083,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			break;
 
 		case AUFSTELLUNG:
-			component = m_jpAufstellung;
-			m_jpAufstellung.update(); // - blaghaid
+			component = this.lineupMasterPanel.getLineupPanel();
+			this.lineupMasterPanel.getLineupPanel().update(); // - blaghaid
 			titel = m_hov.getLanguageString("Aufstellung");
 			temporaer = m_up.tempTabAufstellung;
 			break;
@@ -1478,10 +1483,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		UserParameter parameter = UserParameter.instance();
 
 		final int[] sup = m_jpSpielerUebersicht.getDividerLocations();
-		final int[] ap = m_jpAufstellung.getDividerLocations();
+		final int[] ap = this.lineupMasterPanel.getLineupPanel().getDividerLocations();
 		final int[] sp = m_jpSpielePanel.getDividerLocations();
 		final int spa = m_jpSpielerAnalysePanel.getDividerLocation();
-		final AufstellungsAssistentPanel aap = m_jpAufstellung.getAufstellungsAssitentPanel();
+		final AufstellungsAssistentPanel aap = this.lineupMasterPanel.getLineupPanel().getAufstellungsAssitentPanel();
 		final int tsp = m_jpTransferScout.getDividerLocation();
 
 		final int locx = Math.max(getLocation().x, 0);
@@ -1491,7 +1496,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
 		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
 		parameter.bestPostWidth = Math.max(m_jpSpielerUebersicht.getBestPosWidth(),
-				m_jpAufstellung.getBestPosWidth());
+				this.lineupMasterPanel.getLineupPanel().getBestPosWidth());
 
 		parameter.aufstellungsAssistentPanel_gruppe = aap.getGruppe();
 		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getReihenfolge();
@@ -1528,7 +1533,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jpSpielerUebersicht.saveColumnOrder();
 		m_jpSpielePanel.saveColumnOrder();
-		m_jpAufstellung.saveColumnOrder();
+		this.lineupMasterPanel.getLineupPanel().saveColumnOrder();
 		m_jpSpielerAnalysePanel.saveColumnOrder();
 
 	}
