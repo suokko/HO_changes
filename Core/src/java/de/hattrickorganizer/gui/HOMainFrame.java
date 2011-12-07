@@ -493,7 +493,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		} else if (source.equals(m_jmCreditsItem)) { 
 			StringBuilder text = new StringBuilder(200);
 			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
-			text.append("2003 development started by Thomas Wert & Volker Fischer.\n");
+			text.append("2003 development started by Thomas Werth & Volker Fischer.\n");
 			text.append("Since 2006 this project is open source and developed by changing developers.");
 			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
 			//new VAPCredits(this);
