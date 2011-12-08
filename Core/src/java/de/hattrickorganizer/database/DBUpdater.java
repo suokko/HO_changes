@@ -359,6 +359,9 @@ final class DBUpdater {
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	void updateConfig () {
+		if(m_clJDBCAdapter== null)
+			m_clJDBCAdapter = dbZugriff.getAdapter();
+		
 		double lastConfigUpdate = ((UserConfigurationTable) dbZugriff.getTable(UserConfigurationTable.TABLENAME)).getLastConfUpdate();
 		/**
 		 * We have to use separate 'if-then' clauses for each conf version (ascending order)
