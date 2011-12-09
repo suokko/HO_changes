@@ -48,6 +48,10 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 * @param matchtype
 	 * @param statistic
 	 * @return count of matches
+	 * //	select (MATCHHIGHLIGHTS.HEIMTORE- MATCHHIGHLIGHTS.GASTTORE) AS DIFFH, (MATCHESKURZINFO.HEIMTORE-MATCHESKURZINFO.GASTTORE) AS DIFF, HEIMID, GASTID,MATCHID
+//	from  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID
+//	WHERE TYP = 0 AND MINUTE = 45 AND MATCHHIGHLIGHTS.TEAMID = 0
+//	AND HEIMID = 1247417 AND DIFFH >0 AND DIFF <0
 	 */
 	int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
 		int tmp = 0;
@@ -59,6 +63,10 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		sql.append(" FROM ").append(getTableName());
 		sql.append(" WHERE ");
 		switch(statistic){
+			case MatchesOverviewCommonPanel.LeadingHTLosingFT:
+			case MatchesOverviewCommonPanel.TrailingHTWinningFT:
+				return getX(teamId,matchtype,statistic);
+		
 			case MatchesOverviewCommonPanel.WonWithoutOppGoal:
 				whereHomeClause="AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
 				whereAwayClause="AND HEIMTORE < GASTTORE AND HEIMTORE = 0 )";
@@ -91,6 +99,34 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		return tmp;
 	}
 	
+	int getX(int teamId, int matchtype, int statistic){
+		StringBuilder sql = new StringBuilder(200);
+		ResultSet rs = null;
+		int tmp = 0;
+		sql.append("SELECT MatchTyp,(MATCHHIGHLIGHTS.HEIMTORE- MATCHHIGHLIGHTS.GASTTORE) AS DIFFH, (MATCHESKURZINFO.HEIMTORE-MATCHESKURZINFO.GASTTORE) AS DIFF, HEIMID, GASTID,MATCHID");
+		sql.append(" FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID ");
+		sql.append(" WHERE TYP = 0 AND MINUTE = 45 AND MATCHHIGHLIGHTS.TEAMID = 0 ");
+		switch(statistic){
+		case MatchesOverviewCommonPanel.LeadingHTLosingFT:
+			sql.append("AND ((HEIMID = "+teamId+" AND DIFFH >0 AND DIFF <0) or (GASTID = "+teamId+" AND DIFFH <0 AND DIFF >0))");
+			break;
+		case MatchesOverviewCommonPanel.TrailingHTWinningFT:
+			sql.append("AND ((HEIMID = "+teamId+" AND DIFFH <0 AND DIFF >0) or (GASTID = "+teamId+" AND DIFFH >0 AND DIFF <0))");
+			break;
+		}
+		sql.append(getMatchTypWhereClause(matchtype));
+		
+		rs = adapter.executeQuery(sql.toString());
+		try {
+			for (int i = 0; rs.next(); i++) {
+				tmp=i;
+			}
+		} catch (SQLException e) {
+			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+		}
+		return tmp;
+		
+	}
 	
 	MatchKurzInfo getMatchesKurzInfo(int teamId, int matchtyp, int statistic, boolean home){
 
