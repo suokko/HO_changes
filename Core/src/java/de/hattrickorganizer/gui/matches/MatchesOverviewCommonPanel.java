@@ -90,8 +90,6 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		MatchKurzInfo home = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestVictory, true);
 		MatchKurzInfo away = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestVictory, false);
-		System.out.println("home:"+home.getMatchID());
-		System.out.println("away:"+away.getMatchID());
 		MatchKurzInfo info = getHighestMatch(home, away);
 		if(info != null){
 			teamNames[HighestVictory].setText(info.getHeimName()+" - "+info.getGastName());
@@ -102,8 +100,6 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 		}
 		home = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, true);
 		away = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, false);
-		System.out.println("home:"+home.getMatchID());
-		System.out.println("away:"+away.getMatchID());
 		info = getHighestMatch(home, away);
 
 		if(info != null){
@@ -113,10 +109,10 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 			teamNames[HighestDefeat].setText("");
 			resultLabels[HighestDefeat].setText("0 : 0");
 		}
-		resultLabels[WonWithoutOppGoal].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, WonWithoutOppGoal));
-		resultLabels[LostWithoutOwnGoal].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, LostWithoutOwnGoal));
-		resultLabels[FiveGoalsDiffWin].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, FiveGoalsDiffWin));
-		resultLabels[FiveGoalsDiffDefeat].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, FiveGoalsDiffDefeat));
+		for (int i = 2; i < 8; i++) {
+			resultLabels[i].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, i));
+		}
+
 	}
 	
 	
