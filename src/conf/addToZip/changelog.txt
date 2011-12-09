@@ -24,6 +24,7 @@ Changelist HO! 1.431
 - Fixed sort issue on player tables.
 - Fixed localization issue messing up ratings for some locales
 - Added new parameter to ratings, called postDelta, which is added after postMulti has been applied (defaults to 0).
+- Added two more new parameter to CA ratings calculations only, called playerPostMulti and playerPostDelta, for use in CA player contribution calculations (default to 1 and 0 respectively) 
 - Modified button behaviour on matches screen to be enabled/disabled appropriately
 - Fixed player regainer string not showing.
 - Fixed wrong set piece taker on corners
