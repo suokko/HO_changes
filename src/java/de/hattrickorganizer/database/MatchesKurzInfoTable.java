@@ -1,15 +1,17 @@
 package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
+import de.hattrickorganizer.gui.matches.MatchesOverviewCommonPanel;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 final class MatchesKurzInfoTable extends AbstractTable {
 	final static String TABLENAME = "MATCHESKURZINFO";
@@ -41,6 +43,97 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	}
 	
 	/**
+	 *  
+	 * @param teamId
+	 * @param matchtype
+	 * @param statistic
+	 * @return count of matches
+	 */
+	int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
+		int tmp = 0;
+		StringBuilder sql = new StringBuilder(200);
+		ResultSet rs = null;
+		String whereHomeClause = "";
+		String whereAwayClause = "";
+		sql.append("SELECT COUNT(*) AS C ");
+		sql.append(" FROM ").append(getTableName());
+		sql.append(" WHERE ");
+		switch(statistic){
+			case MatchesOverviewCommonPanel.WonWithoutOppGoal:
+				whereHomeClause="AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
+				whereAwayClause="AND HEIMTORE < GASTTORE AND HEIMTORE = 0 )";
+				break;
+			case MatchesOverviewCommonPanel.LostWithoutOwnGoal:
+				whereHomeClause="AND HEIMTORE < GASTTORE AND HEIMTORE = 0 )";
+				whereAwayClause="AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
+				break;
+			case MatchesOverviewCommonPanel.FiveGoalsDiffWin:
+				whereHomeClause="AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 )";
+				whereAwayClause="AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
+				break;
+			case MatchesOverviewCommonPanel.FiveGoalsDiffDefeat:
+				whereHomeClause="AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
+				whereAwayClause="AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 )";
+				break;	
+		}
+		sql.append(" (HEIMID = ").append(teamId).append(whereHomeClause);
+		sql.append(" OR (GASTID = ").append(teamId).append(whereAwayClause);
+		sql.append(getMatchTypWhereClause(matchtype));
+
+		rs = adapter.executeQuery(sql.toString());
+		try {
+			if(rs.next()){
+				tmp = rs.getInt("C");
+			}
+		} catch (SQLException e) {
+			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+		}
+		return tmp;
+	}
+	
+	
+	MatchKurzInfo getMatchesKurzInfo(int teamId, int matchtyp, int statistic, boolean home){
+
+		MatchKurzInfo match = null;
+		StringBuilder sql = new StringBuilder(200);
+		ResultSet rs = null;
+		String column = "";
+		String column2 = "";
+		try {
+			switch(statistic){
+			case MatchesOverviewCommonPanel.HighestVictory:
+				column = home?"(HEIMTORE-GASTTORE) AS DIFF ":"(GASTTORE-HEIMTORE) AS DIFF ";
+				column2 = home?">":"<";
+				break;
+			case MatchesOverviewCommonPanel.HighestDefeat:
+				column = home?"(GASTTORE-HEIMTORE) AS DIFF ":"(HEIMTORE-GASTTORE) AS DIFF ";
+				column2 = home?"<":">";
+				break;
+				
+			}
+			sql.append("SELECT *,");
+			sql.append(column);
+			sql.append(" FROM ").append(getTableName());
+			sql.append(" WHERE ").append(home?"HEIMID":"GASTID").append(" = ");
+			sql.append(teamId);
+			sql.append(" AND HEIMTORE "+column2+" GASTTORE ");
+			sql.append(getMatchTypWhereClause(matchtyp));
+			
+			sql.append(" ORDER BY DIFF DESC ");
+			rs = adapter.executeQuery(sql.toString());
+
+			rs.beforeFirst();
+
+			if (rs.next()) {
+				match =createMatchKurzInfo(rs);
+			}
+			} catch (Exception e) {
+				HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+			}
+			return match; 
+	}
+	
+	/**
 	 * Wichtig: Wenn die Teamid = -1 ist muss der Matchtyp ALLE_SPIELE sein!
 	 *
 	 * @param teamId Die Teamid oder -1 für alle
@@ -48,101 +141,103 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 *
 	 */
 	MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
-		MatchKurzInfo[] matches = new MatchKurzInfo[0];
+//		MatchKurzInfo[] matches = new MatchKurzInfo[0];
 		MatchKurzInfo match = null;
-		String sql = null;
+		StringBuilder sql = new StringBuilder(100);
 		ResultSet rs = null;
-		final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
+		final ArrayList<IMatchKurzInfo> liste = new ArrayList<IMatchKurzInfo>();
 
 		//Ohne Matchid nur AlleSpiele möglich!
 		if ((teamId < 0) && (matchtyp != ISpielePanel.ALLE_SPIELE)) {
-			return matches;
+			return new MatchKurzInfo[0];
 		}
 
 		try {
-			sql = "SELECT * FROM "+getTableName();
+			sql.append("SELECT * FROM ").append(getTableName());
 
 			if ((teamId > -1) && (matchtyp != ISpielePanel.ALLE_SPIELE) && (matchtyp != ISpielePanel.NUR_FREMDE_SPIELE)) {
-				sql += (" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + " )");
+				sql.append(" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + " )");
 			}
 
 			if ((teamId > -1) && (matchtyp == ISpielePanel.NUR_FREMDE_SPIELE)) {
-				sql += (" WHERE ( GastID != " + teamId + " AND HeimID != " + teamId + " )");
+				sql.append(" WHERE ( GastID != " + teamId + " AND HeimID != " + teamId + " )");
 			}
 
 			//Nur eigene gewählt
 			if (matchtyp >= 10) {
 				matchtyp = matchtyp - 10;
 
-				sql += (" AND Status=" + IMatchKurzInfo.FINISHED);
+				sql.append(" AND Status=" + IMatchKurzInfo.FINISHED);
 			}
-
-			//Matchtypen
-			switch (matchtyp) {
-				case ISpielePanel.NUR_EIGENE_SPIELE :
-
-					//Nix zu tun, da die teamId die einzige Einschränkung ist
-					break;
-
-				case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-					sql += (" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
-					break;
-
-				case ISpielePanel.NUR_EIGENE_POKALSPIELE :
-					sql += (" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
-					break;
-
-				case ISpielePanel.NUR_EIGENE_LIGASPIELE :
-					sql += (" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
-					break;
-
-				case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-					sql += (" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.INT_TESTSPIEL + " )");
-					break;
-			}
+			sql.append( getMatchTypWhereClause(matchtyp));
 
 			//nicht desc
-			sql += " ORDER BY MatchDate";
+			sql.append( " ORDER BY MatchDate");
 
 			if (!asc) {
-				sql += " DESC";
+				sql.append(" DESC");
 			}
 
-			rs = adapter.executeQuery(sql);
+			rs = adapter.executeQuery(sql.toString());
 
 			rs.beforeFirst();
 
 			while (rs.next()) {
-				match = new MatchKurzInfo();
-				match.setMatchDate(rs.getString("MatchDate"));
-				match.setGastID(rs.getInt("GastID"));
-				match.setGastName(DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
-				match.setHeimID(rs.getInt("HeimID"));
-				match.setHeimName(DBZugriff.deleteEscapeSequences(rs.getString("HeimName")));
-				match.setMatchID(rs.getInt("MatchID"));
-				match.setGastTore(rs.getInt("GastTore"));
-				match.setHeimTore(rs.getInt("HeimTore"));
-
-				match.setMatchTyp(rs.getInt("MatchTyp"));
-				match.setMatchStatus(rs.getInt("Status"));
-				match.setAufstellung(rs.getBoolean("Aufstellung"));
-
-				//Adden
-				liste.add(match);
+				liste.add(createMatchKurzInfo(rs));
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
 		}
 
-		matches = new MatchKurzInfo[liste.size()];
-		Helper.copyVector2Array(liste, matches);
+//		matches = new MatchKurzInfo[liste.size()];
+//		Helper.copyVector2Array(liste, matches);
 
-		return matches;
+		return liste.toArray(new MatchKurzInfo[liste.size()]);
+	}
+	
+	
+	private StringBuilder getMatchTypWhereClause(int matchtype){
+		StringBuilder sql = new StringBuilder(50);
+		switch (matchtype) {
+			case ISpielePanel.NUR_EIGENE_SPIELE :
+
+				//Nix zu tun, da die teamId die einzige Einschränkung ist
+				break;
+			case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
+				sql.append(" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
+				sql.append(" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
+				sql.append(" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
+				break;
+			case ISpielePanel.NUR_EIGENE_POKALSPIELE :
+				sql.append(" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
+				break;
+			case ISpielePanel.NUR_EIGENE_LIGASPIELE :
+				sql.append(" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
+				break;
+			case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
+				sql.append(" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
+				sql.append(" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
+				sql.append(" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
+				sql.append(" OR MatchTyp=" + IMatchLineup.INT_TESTSPIEL + " )");
+				break;
+			}
+		return sql;
+	}
+	
+	private MatchKurzInfo createMatchKurzInfo(ResultSet rs) throws SQLException {
+		MatchKurzInfo match = new MatchKurzInfo();
+		match.setMatchDate(rs.getString("MatchDate"));
+		match.setGastID(rs.getInt("GastID"));
+		match.setGastName(DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
+		match.setHeimID(rs.getInt("HeimID"));
+		match.setHeimName(DBZugriff.deleteEscapeSequences(rs.getString("HeimName")));
+		match.setMatchID(rs.getInt("MatchID"));
+		match.setGastTore(rs.getInt("GastTore"));
+		match.setHeimTore(rs.getInt("HeimTore"));
+		match.setMatchTyp(rs.getInt("MatchTyp"));
+		match.setMatchStatus(rs.getInt("Status"));
+		match.setAufstellung(rs.getBoolean("Aufstellung"));
+		return match;
 	}
 	
 	/**
@@ -199,19 +294,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 			rs = adapter.executeQuery(sql);
 
 			while (rs.next()) {
-				match = new MatchKurzInfo();
-				match.setMatchDate(rs.getString("MatchDate"));
-				match.setGastID(rs.getInt("GastID"));
-				match.setGastName(DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
-				match.setHeimID(rs.getInt("HeimID"));
-				match.setHeimName(DBZugriff.deleteEscapeSequences(rs.getString("HeimName")));
-				match.setMatchID(rs.getInt("MatchID"));
-				match.setGastTore(rs.getInt("GastTore"));
-				match.setHeimTore(rs.getInt("HeimTore"));
-				match.setMatchTyp(rs.getInt("MatchTyp"));
-				match.setMatchStatus(rs.getInt("Status"));
-				match.setAufstellung(rs.getBoolean("Aufstellung"));
-				liste.add(match);
+				liste.add(createMatchKurzInfo(rs));
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
