@@ -304,14 +304,14 @@ public class DBZugriff {
 			m_iSpielerID);
 	}
 
-	public void saveSkillup(int hrfId, Timestamp datum, int m_iSpielerID, int skill, int value) {
-		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).saveSkillup(
-			hrfId,
-			m_iSpielerID,
-			datum,
-			skill,
-			value);
-	}
+//	public void saveSkillup(int hrfId, Timestamp datum, int m_iSpielerID, int skill, int value) {
+//		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).saveSkillup(
+//			hrfId,
+//			m_iSpielerID,
+//			datum,
+//			skill,
+//			value);
+//	}
 
 	public void reimportSkillup() {
 		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).importFromSpieler();
@@ -379,17 +379,17 @@ public class DBZugriff {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerAtDate(spielerid, time);
 	}
 
-	/**
-	 *
-	 * @param time
-	 * @param spielerid
-	 * @return
-	 */
-	public Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerBeforeDate(
-			time,
-			spielerid);
-	}
+//	/**
+//	 *
+//	 * @param time
+//	 * @param spielerid
+//	 * @return
+//	 */
+//	public Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
+//		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerBeforeDate(
+//			time,
+//			spielerid);
+//	}
 
 	/**
 	 * Gibt einen Spieler zurück aus dem ersten HRF
@@ -612,40 +612,40 @@ public class DBZugriff {
 			teamID);
 	}
 	
-	/**
-	 * Deletes the given player based on teamID and matchID.
-	 * He is only deleted from the role set in the player object.
-	 *
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 * 
-	 */
-	protected void deleteMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
-		(
-				(MatchLineupPlayerTable) getTable(
-					MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayer(
-				player,
-				matchID,
-				teamID);
-		}
+//	/**
+//	 * Deletes the given player based on teamID and matchID.
+//	 * He is only deleted from the role set in the player object.
+//	 *
+//	 * @param player TODO Missing Method Parameter Documentation
+//	 * @param matchID TODO Missing Method Parameter Documentation
+//	 * @param teamID TODO Missing Method Parameter Documentation
+//	 * 
+//	 */
+//	protected void deleteMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+//		(
+//				(MatchLineupPlayerTable) getTable(
+//					MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayer(
+//				player,
+//				matchID,
+//				teamID);
+//		}
 	
-	/**
-	 * Updates a player in a match.
-	 *
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 * 
-	 */
-	public void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
-		(
-				(MatchLineupPlayerTable) getTable(
-				MatchLineupPlayerTable.TABLENAME)).updateMatchLineupPlayer(
-			player,
-			matchID,
-			teamID);
-	}
+//	/**
+//	 * Updates a player in a match.
+//	 *
+//	 * @param player TODO Missing Method Parameter Documentation
+//	 * @param matchID TODO Missing Method Parameter Documentation
+//	 * @param teamID TODO Missing Method Parameter Documentation
+//	 * 
+//	 */
+//	public void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
+//		(
+//				(MatchLineupPlayerTable) getTable(
+//				MatchLineupPlayerTable.TABLENAME)).updateMatchLineupPlayer(
+//			player,
+//			matchID,
+//			teamID);
+//	}
 
 	// ------------------------------- AufstellungTable -------------------------------------------------
 
@@ -1086,6 +1086,13 @@ public class DBZugriff {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(teamId, matchtyp, asc);
 	}
 
+	public MatchKurzInfo getMatchesKurzInfo(int teamId, int matchtyp, int statistic, boolean home){
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfo(teamId, matchtyp,statistic,home);
+	}
+	
+	public int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
+	}
 	/**
 	 * speichert die Matches
 	 *
