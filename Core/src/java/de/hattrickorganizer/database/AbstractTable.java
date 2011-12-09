@@ -6,12 +6,6 @@ import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-/**
- * TODO DOC!
- * @author Thorsten Dietz
- *
- */
-
 abstract class AbstractTable {
 	
 	/** tableName**/
@@ -76,19 +70,15 @@ abstract class AbstractTable {
 	public void createTable() {
 		ColumnDescriptor[] columns = getColumns();
 		StringBuffer sql = new StringBuffer(500);
-		sql.append("CREATE ");
-		sql.append(getTableType());
-		sql.append(" TABLE ");
-		sql.append(getTableName());
+		sql.append("CREATE ").append(getTableType());
+		sql.append(" TABLE ").append(getTableName());
 		sql.append("(");
 
 		for (int i = 0; i < columns.length; i++) {
 			try {
-				
 				DBInfo dbInfo = adapter.getDBInfo();
 				sql.append(columns[i].getCreateString(dbInfo));
 			} catch (Exception e) {
-				
 				HOLogger.instance().log(getClass(),e);
 			}
 			if (i < columns.length - 1)
@@ -99,14 +89,6 @@ abstract class AbstractTable {
 		adapter.executeUpdate(sql.toString());
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param tableName TODO Missing Method Parameter Documentation
-	 * @param hrfID TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	protected ResultSet getSelectByHrfID(int hrfID) {
 		final StringBuffer sql = new StringBuffer("SELECT * FROM ");
 		sql.append(tableName);
