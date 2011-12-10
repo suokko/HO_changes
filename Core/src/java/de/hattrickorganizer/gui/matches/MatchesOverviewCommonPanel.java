@@ -1,11 +1,14 @@
 package de.hattrickorganizer.gui.matches;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -40,6 +43,8 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 	private void initialize() {
 		for (int i = 0; i < resultLabels.length; i++) {
 			resultLabels[i] = new JLabel("0");
+			resultLabels[i].setHorizontalTextPosition(SwingConstants.RIGHT);
+			//resultLabels[i].setBorder(BorderFactory.createLineBorder(Color.RED));
 		}
 		for (int i = 0; i < teamNames.length; i++) {
 			teamNames[i] = new JLabel();
@@ -60,18 +65,21 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
         add(new JLabel(HOVerwaltung.instance().getLanguageString("HighestDefeat")),1,3,2);
         add(teamNames[HighestDefeat],1,4,1);
         add(resultLabels[HighestDefeat],2,4,1);
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("WonWithoutOppGoal")),1,5,1);
-        add(resultLabels[WonWithoutOppGoal],2,5,1);
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("LostWithoutOwnGoal")),1,6,1);
-        add(resultLabels[LostWithoutOwnGoal],2,6,1);
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("5GoalsDiffWin")),1,7,1);
-        add(resultLabels[FiveGoalsDiffWin],2,7,1);
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("5GoalsDiffDefeat")),1,8,1);
-        add(resultLabels[FiveGoalsDiffDefeat],2,8,1);
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("TrailingHTWinningFT")),1,9,1);
-        add(resultLabels[TrailingHTWinningFT],2,9,1);
-        add(new JLabel(HOVerwaltung.instance().getLanguageString("LeadingHTLosingFT")),1,10,1);
-        add(resultLabels[LeadingHTLosingFT],2,10,1);
+        add(new JLabel(" "),1,5,2);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("WonWithoutOppGoal")),1,6,1);
+        add(resultLabels[WonWithoutOppGoal],2,6,1);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("LostWithoutOwnGoal")),1,7,1);
+        add(resultLabels[LostWithoutOwnGoal],2,7,1);
+        add(new JLabel(" "),1,8,2);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("5GoalsDiffWin")),1,9,1);
+        add(resultLabels[FiveGoalsDiffWin],2,9,1);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("5GoalsDiffDefeat")),1,10,1);
+        add(resultLabels[FiveGoalsDiffDefeat],2,10,1);
+        add(new JLabel(" "),1,11,2);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("TrailingHTWinningFT")),1,12,1);
+        add(resultLabels[TrailingHTWinningFT],2,12,1);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("LeadingHTLosingFT")),1,13,1);
+        add(resultLabels[LeadingHTLosingFT],2,13,1);
         refresh(matchtypes);
 	}
 	
