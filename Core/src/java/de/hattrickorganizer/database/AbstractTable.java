@@ -48,6 +48,10 @@ abstract class AbstractTable {
 		return new String[0];
 	}
 	
+	protected String[] getConstraintStatements(){
+		return new String[0];
+	}
+	
 	protected int delete(String[] whereColumns, String[] whereValues) {
 		
 		final StringBuffer sql = new StringBuffer("DELETE FROM ");
@@ -84,8 +88,14 @@ abstract class AbstractTable {
 			if (i < columns.length - 1)
 				sql.append(",");
 			else
-				sql.append(")");
+				sql.append(" ");
 		}
+		String[] contraints = getConstraintStatements();
+		for (int i = 0; i < contraints.length; i++) {
+			sql.append(",");
+			sql.append(contraints[i]);
+		}
+		sql.append(" ) ");
 		adapter.executeUpdate(sql.toString());
 	}
 	
