@@ -265,7 +265,7 @@ public final class UserParameter extends Configuration {
     public String skin = "Nimbus";
 
     //Spiele
-    public int spieleFilter;
+    public int spieleFilter = 1;
 
     //Spiele
     public int spielePanel_horizontalLeftSplitPane = 400;
