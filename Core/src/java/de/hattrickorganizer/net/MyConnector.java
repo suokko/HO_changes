@@ -131,7 +131,15 @@ public class MyConnector implements plugins.IDownloadHelper {
 	}
 
 	public static String getPluginSite() {
-		return "http://ho1.sourceforge.net/onlinefiles";
+		return getHOSite() + "onlinefiles";
+	}
+
+	public static String getBetaSite() {
+		return getHOSite() + "development";
+	}
+	
+	public static String getFinalSite() {
+		return getHOSite() + "final";
 	}
 
 	/**
@@ -508,7 +516,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 		BufferedReader br = null;
 		InputStream is = null;
 		try {
-			is = getNonCHPPWebFile(MyConnector.getPluginSite() + "/betaversion.htm", false);
+			is = getNonCHPPWebFile(MyConnector.getBetaSite() + "/betaversion.htm", false);
 			if (is != null) {
 				br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 				VersionInfo ret = new VersionInfo();
