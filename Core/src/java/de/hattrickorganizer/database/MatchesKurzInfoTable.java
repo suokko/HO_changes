@@ -68,23 +68,23 @@ final class MatchesKurzInfoTable extends AbstractTable {
 				return getX(teamId,matchtype,statistic);
 		
 			case MatchesOverviewCommonPanel.WonWithoutOppGoal:
-				whereHomeClause="AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
-				whereAwayClause="AND HEIMTORE < GASTTORE AND HEIMTORE = 0 )";
+				whereHomeClause=" AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
+				whereAwayClause=" AND HEIMTORE < GASTTORE AND HEIMTORE = 0 ))";
 				break;
 			case MatchesOverviewCommonPanel.LostWithoutOwnGoal:
-				whereHomeClause="AND HEIMTORE < GASTTORE AND HEIMTORE = 0 )";
-				whereAwayClause="AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
+				whereHomeClause=" AND HEIMTORE < GASTTORE AND HEIMTORE = 0 )";
+				whereAwayClause=" AND HEIMTORE > GASTTORE AND GASTTORE = 0 ))";
 				break;
 			case MatchesOverviewCommonPanel.FiveGoalsDiffWin:
-				whereHomeClause="AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 )";
-				whereAwayClause="AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
+				whereHomeClause=" AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 )";
+				whereAwayClause=" AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 ))";
 				break;
 			case MatchesOverviewCommonPanel.FiveGoalsDiffDefeat:
-				whereHomeClause="AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
-				whereAwayClause="AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 )";
+				whereHomeClause=" AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
+				whereAwayClause=" AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 ))";
 				break;	
 		}
-		sql.append(" (HEIMID = ").append(teamId).append(whereHomeClause);
+		sql.append(" ((HEIMID = ").append(teamId).append(whereHomeClause);
 		sql.append(" OR (GASTID = ").append(teamId).append(whereAwayClause);
 		sql.append(getMatchTypWhereClause(matchtype));
 
