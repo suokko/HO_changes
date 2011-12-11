@@ -51,7 +51,11 @@ public class HattrickManager {
     			url = "/chppxml.axd?file=matchesarchive&teamID=" + teamId + "&FirstMatchDate=" + sdf.format(start.getTime()) + "&LastMatchDate=" + sdf.format(end.getTime());
     			log(url + " / " + matches.size());
     			xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(url);
-
+    			if (xml.length() == 0){
+    				download = false;
+    				return;
+    			}
+    				
     			IXMLParser parser = Commons.getModel().getXMLParser();
     			Document dom = parser.parseString(xml);
     			Node matchesList = dom.getElementsByTagName("MatchList").item(0);
