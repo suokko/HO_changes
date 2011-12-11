@@ -1,11 +1,15 @@
 // %2560498359:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import gui.HOIconName;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
+
+import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
  * JPanel mit HintergrundGrafik für Fenster
@@ -110,10 +114,7 @@ public class RasenPanel extends JPanel {
 
         if (background == null) {
             final java.awt.MediaTracker tracker = new java.awt.MediaTracker(this);
-
-            final java.net.URL resource = getClass().getClassLoader().getResource("gui/bilder/Rasen_mit_Streifen.jpg");
-            background = getToolkit().createImage(resource);
-
+            background = ThemeManager.getIcon(HOIconName.GRASSPANEL_BACKGROUND).getImage();
             tracker.addImage(background, 1);
 
             //Der MediaTracker wartet, bis alle Grafiken als Image-Objekte verfügbar sind.

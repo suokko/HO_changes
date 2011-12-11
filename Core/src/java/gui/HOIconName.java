@@ -3,6 +3,7 @@ package gui;
 public interface HOIconName {
 
 	public static final String IMAGEPANEL_BACKGROUND = "imagePanel.background";
+	public static final String GRASSPANEL_BACKGROUND = "grassPanel.background";
 	
 	public static final String[] MATCHTYPES 	= { "","MatchType1","MatchType2","MatchType3","MatchType4","MatchType5","MatchType6","MatchType7","MatchType8","MatchType9","MatchType10","MatchType11","MatchType12"};
 	public static final String[] WEATHER 		= { "weather0","weather1","weather2","weather3"};
@@ -87,9 +88,7 @@ public interface HOIconName {
 	public static final String STAR_GRAY = "star_gray";
 
 	public static final String HOMEGROWN = "homegrown";
-	
-	// 1.431
-	public static final String STATISTICS = "statistics";
 	public static final String REMOVE	= "remove";
+	public static final String BALL = "ball";
 	
 }

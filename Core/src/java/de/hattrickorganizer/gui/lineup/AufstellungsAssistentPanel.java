@@ -53,7 +53,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-	private JButton m_jbElfmeter = new JButton(new ImageIcon(ImageUtilities.changeColor(ThemeManager.loadImage("gui/bilder/credits/Ball.png"),
+	private JButton m_jbElfmeter = new JButton(new ImageIcon(ImageUtilities.changeColor(ThemeManager.loadImage("gui/bilder/Ball.png"),
 			Color.red,
 			Color.white)
 			.getScaledInstance(24,
