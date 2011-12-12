@@ -48,10 +48,6 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 * @param matchtype
 	 * @param statistic
 	 * @return count of matches
-	 * //	select (MATCHHIGHLIGHTS.HEIMTORE- MATCHHIGHLIGHTS.GASTTORE) AS DIFFH, (MATCHESKURZINFO.HEIMTORE-MATCHESKURZINFO.GASTTORE) AS DIFF, HEIMID, GASTID,MATCHID
-//	from  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID
-//	WHERE TYP = 0 AND MINUTE = 45 AND MATCHHIGHLIGHTS.TEAMID = 0
-//	AND HEIMID = 1247417 AND DIFFH >0 AND DIFF <0
 	 */
 	int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
 		int tmp = 0;
@@ -65,7 +61,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		switch(statistic){
 			case MatchesOverviewCommonPanel.LeadingHTLosingFT:
 			case MatchesOverviewCommonPanel.TrailingHTWinningFT:
-				return getX(teamId,matchtype,statistic);
+				return getChangeGameStat(teamId,matchtype,statistic);
 		
 			case MatchesOverviewCommonPanel.WonWithoutOppGoal:
 				whereHomeClause=" AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
@@ -82,7 +78,10 @@ final class MatchesKurzInfoTable extends AbstractTable {
 			case MatchesOverviewCommonPanel.FiveGoalsDiffDefeat:
 				whereHomeClause=" AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
 				whereAwayClause=" AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 ))";
-				break;	
+				break;
+			case MatchesOverviewCommonPanel.YELLOW_CARDS:
+			case MatchesOverviewCommonPanel.RED_CARDS:
+				return getHighlightStats(teamId, matchtype, statistic);
 		}
 		sql.append(" ((HEIMID = ").append(teamId).append(whereHomeClause);
 		sql.append(" OR (GASTID = ").append(teamId).append(whereAwayClause);
@@ -99,7 +98,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		return tmp;
 	}
 	
-	int getX(int teamId, int matchtype, int statistic){
+	int getChangeGameStat(int teamId, int matchtype, int statistic){
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
 		int tmp = 0;
@@ -121,6 +120,33 @@ final class MatchesKurzInfoTable extends AbstractTable {
 			for (int i = 0; rs.next(); i++) {
 				tmp=i;
 			}
+		} catch (SQLException e) {
+			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+		}
+		return tmp;
+		
+	}
+	
+	private int getHighlightStats( int teamId, int matchtype, int statistic){
+		StringBuilder sql = new StringBuilder(200);
+		ResultSet rs = null;
+		int tmp = 0;
+		sql.append("SELECT COUNT(*) AS C  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID WHERE ");
+		sql.append(" TEAMID =").append(teamId).append(" AND ");
+		switch(statistic){
+		case MatchesOverviewCommonPanel.YELLOW_CARDS:
+			sql.append(" TYP = 5 AND SUBTYP in(10,11) ");
+			break;
+		case MatchesOverviewCommonPanel.RED_CARDS:
+			sql.append(" TYP = 5 AND SUBTYP in(12,13,14) ");
+			break;
+		}
+		sql.append(getMatchTypWhereClause(matchtype));
+		
+		rs = adapter.executeQuery(sql.toString());
+		try {
+			if(rs.next())
+				tmp = rs.getInt("C");
 		} catch (SQLException e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
 		}

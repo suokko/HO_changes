@@ -29,11 +29,13 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 	public static final int FiveGoalsDiffDefeat	= 5;
 	public static final int TrailingHTWinningFT = 6;
 	public static final int LeadingHTLosingFT 	= 7;
+	public static final int YELLOW_CARDS	 	= 8;
+	public static final int RED_CARDS	 		= 9;
     
 	private int matchtypes;
 	private JLabel[] highestVictoryLabels = new JLabel[2];
 	private JLabel[] highestDefeatLabels = new JLabel[2];
-	private JLabel[] resultLabels = new JLabel[8];
+	private JLabel[] resultLabels = new JLabel[10];
 	private JLabel[] teamNames = new JLabel[2];
 	
     MatchesOverviewCommonPanel(int matchtypes){
@@ -81,6 +83,12 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
         add(resultLabels[TrailingHTWinningFT],2,12,1);
         add(new JLabel(HOVerwaltung.instance().getLanguageString("LeadingHTLosingFT")),1,13,1);
         add(resultLabels[LeadingHTLosingFT],2,13,1);
+        add(new JLabel(" "),1,14,2);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("highlight_yellowcard")),1,15,1);
+        add(resultLabels[YELLOW_CARDS],2,15,1);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("highlight_redcard")),1,16,1);
+        add(resultLabels[RED_CARDS],2,16,1);
+        
         refresh(matchtypes);
 	}
 	
@@ -118,7 +126,7 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 			teamNames[HighestDefeat].setText("");
 			resultLabels[HighestDefeat].setText(StringUtilities.getResultString(-1,-1));
 		}
-		for (int i = 2; i < 8; i++) {
+		for (int i = 2; i < resultLabels.length; i++) {
 			resultLabels[i].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, i));
 		}
 
