@@ -50,4 +50,24 @@ public class StringUtilities {
 		return (str == null || str.length() == 0);
 	}
 
+	public static  String getResultString(int homeGoals, int awayGoals) {
+		final StringBuffer buffer = new StringBuffer();
+		if(homeGoals < 0 || awayGoals < 0)
+			return " - : - ";
+
+        if (homeGoals < 10) {
+            buffer.append(" ");
+        }
+
+        buffer.append(homeGoals);
+        buffer.append(" : ");
+
+        if (awayGoals < 10) {
+            buffer.append(" ");
+        }
+
+        buffer.append(awayGoals);
+
+        return buffer.toString();
+    }
 }

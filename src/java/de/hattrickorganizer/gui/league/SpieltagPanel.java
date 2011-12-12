@@ -36,6 +36,7 @@ import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matchlist.Paarung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.StringUtilities;
 
 
 /**
@@ -195,22 +196,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         }
     }
 
-    private String convertResult(String homeGoals, String awayGoals) {
-        char[] result = new char[]{' ', ' ', ' ', ' ', ' ', ':', ' ', ' ', ' ', ' '};
-
-        if (homeGoals.length() == 2) {
-            result[0] = homeGoals.charAt(0);
-        }
-
-        result[1] = homeGoals.charAt(homeGoals.length() - 1);
-
-        if (awayGoals.length() == 2) {
-            result[8] = awayGoals.charAt(0);
-        }
-
-        result[9] = awayGoals.charAt(awayGoals.length() - 1);
-        return new String(result);
-    }
+    
 
     private void fillLabels() {
         int spieltag = m_iSpieltag;
@@ -317,7 +303,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     	homeTeam.setText(paarung.getHeimName());
     	visitorTeam.setText(paarung.getGastName());
         if ((paarung.getToreHeim() > -1) && (paarung.getToreGast() > -1)) {
-            result.setText(convertResult(paarung.getToreHeim() + "", "" + paarung.getToreGast()));
+            result.setText(StringUtilities.getResultString(paarung.getToreHeim() , paarung.getToreGast()));
 
             //HomeVictory
             if (paarung.getToreHeim() > paarung.getToreGast()) {
@@ -335,7 +321,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
                 visitorTeam.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
             }
         } else {
-            result.setText(convertResult("-", "-"));
+            result.setText(StringUtilities.getResultString(-1, -1));
             homeTeam.setIcon(ImageUtilities.NOIMAGEICON);
             visitorTeam.setIcon(ImageUtilities.NOIMAGEICON);
         }
