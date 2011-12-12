@@ -29,6 +29,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.series.LigaTabellenEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
+import de.hattrickorganizer.tools.StringUtilities;
 
 
 /**
@@ -250,26 +251,6 @@ class LigaTabelle extends ImagePanel {
         columnModel.getColumn(23).setPreferredWidth(Helper.calcCellWidth(30));
     }
 
- 
-    private String createTorString(int heim, int gast) {
-        final StringBuffer buffer = new StringBuffer();
-
-        if (heim < 10) {
-            buffer.append(" ");
-        }
-
-        buffer.append(heim);
-        buffer.append(" : ");
-
-        if (gast < 10) {
-            buffer.append(" ");
-        }
-
-        buffer.append(gast);
-
-        return buffer.toString();
-    }
-
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -399,7 +380,7 @@ class LigaTabelle extends ImagePanel {
                         ((ColorLabelEntry) tabellenwerte[j][4]).setText(eintrag.getG_Siege() + "");
                         ((ColorLabelEntry) tabellenwerte[j][5]).setText(eintrag.getG_Un() + "");
                         ((ColorLabelEntry) tabellenwerte[j][6]).setText(eintrag.getG_Nied() + "");
-                        ((ColorLabelEntry) tabellenwerte[j][7]).setText(createTorString(eintrag
+                        ((ColorLabelEntry) tabellenwerte[j][7]).setText(StringUtilities.getResultString(eintrag
                                                                                         .getToreFuer(),
                                                                                         eintrag
                                                                                         .getToreGegen()));
@@ -411,7 +392,7 @@ class LigaTabelle extends ImagePanel {
                         ((ColorLabelEntry) tabellenwerte[j][11]).setText(eintrag.getH_Siege() + "");
                         ((ColorLabelEntry) tabellenwerte[j][12]).setText(eintrag.getH_Un() + "");
                         ((ColorLabelEntry) tabellenwerte[j][13]).setText(eintrag.getH_Nied() + "");
-                        ((ColorLabelEntry) tabellenwerte[j][14]).setText(createTorString(eintrag
+                        ((ColorLabelEntry) tabellenwerte[j][14]).setText(StringUtilities.getResultString(eintrag
                                                                                          .getH_ToreFuer(),
                                                                                          eintrag
                                                                                          .getH_ToreGegen()));
@@ -423,7 +404,7 @@ class LigaTabelle extends ImagePanel {
                         ((ColorLabelEntry) tabellenwerte[j][18]).setText(eintrag.getA_Siege() + "");
                         ((ColorLabelEntry) tabellenwerte[j][19]).setText(eintrag.getA_Un() + "");
                         ((ColorLabelEntry) tabellenwerte[j][20]).setText(eintrag.getA_Nied() + "");
-                        ((ColorLabelEntry) tabellenwerte[j][21]).setText(createTorString(eintrag
+                        ((ColorLabelEntry) tabellenwerte[j][21]).setText(StringUtilities.getResultString(eintrag
                                                                                          .getA_ToreFuer(),
                                                                                          eintrag
                                                                                          .getA_ToreGegen()));

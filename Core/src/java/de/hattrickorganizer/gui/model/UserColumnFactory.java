@@ -29,6 +29,7 @@ import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.PlayerHelper;
+import de.hattrickorganizer.tools.StringUtilities;
 
 /**
  * Create the userColumns
@@ -434,7 +435,7 @@ final public class UserColumnFactory {
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
 				final Color background = getColor4Matchtyp(match.getMatchTyp());
-				return new ColorLabelEntry(createTorString(match.getHeimTore(),
+				return new ColorLabelEntry(StringUtilities.getResultString(match.getHeimTore(),
                         match.getGastTore()),
                         	ColorLabelEntry.FG_STANDARD, background,
                         	SwingConstants.CENTER);
@@ -443,7 +444,7 @@ final public class UserColumnFactory {
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
-				return new ColorLabelEntry(createTorString(spielerCBItem.getMatchdetails().getHomeGoals(),
+				return new ColorLabelEntry(StringUtilities.getResultString(spielerCBItem.getMatchdetails().getHomeGoals(),
 						spielerCBItem.getMatchdetails().getGuestGoals()),
                         	ColorLabelEntry.FG_STANDARD, background,
                         	SwingConstants.CENTER);

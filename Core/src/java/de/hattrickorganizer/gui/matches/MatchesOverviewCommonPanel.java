@@ -14,6 +14,7 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
+import de.hattrickorganizer.tools.StringUtilities;
 
 public class MatchesOverviewCommonPanel extends ImagePanel {
 
@@ -101,10 +102,10 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 		MatchKurzInfo info = getHighestMatch(home, away);
 		if(info != null){
 			teamNames[HighestVictory].setText(info.getHeimName()+" - "+info.getGastName());
-			resultLabels[HighestVictory].setText(info.getHeimTore()+" : "+info.getGastTore());
+			resultLabels[HighestVictory].setText(StringUtilities.getResultString(info.getHeimTore(),info.getGastTore()));
 		} else {
 			teamNames[HighestVictory].setText("");
-			resultLabels[HighestVictory].setText("0 : 0");
+			resultLabels[HighestVictory].setText(StringUtilities.getResultString(-1,-1));
 		}
 		home = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, true);
 		away = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, false);
@@ -112,10 +113,10 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 
 		if(info != null){
 			teamNames[HighestDefeat].setText(info.getHeimName()+" - "+info.getGastName());
-			resultLabels[HighestDefeat].setText(info.getHeimTore()+" : "+info.getGastTore());
+			resultLabels[HighestDefeat].setText(StringUtilities.getResultString(info.getHeimTore(),info.getGastTore()));
 		}else {
 			teamNames[HighestDefeat].setText("");
-			resultLabels[HighestDefeat].setText("0 : 0");
+			resultLabels[HighestDefeat].setText(StringUtilities.getResultString(-1,-1));
 		}
 		for (int i = 2; i < 8; i++) {
 			resultLabels[i].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, i));
