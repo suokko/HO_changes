@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.model;
 
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
+import de.hattrickorganizer.tools.StringUtilities;
 
 
 public final class MatchesOverviewColumnModel extends HOColumnModel {
@@ -29,7 +30,7 @@ public final class MatchesOverviewColumnModel extends HOColumnModel {
 			m_clData[i][2] = title?"":Integer.valueOf(rows[i].getWin());
 			m_clData[i][3] = title?"":Integer.valueOf(rows[i].getDraw());
 			m_clData[i][4] = title?"":Integer.valueOf(rows[i].getLoss());
-			m_clData[i][5] = title?"":String.valueOf(rows[i].getHomeGoals()+" : "+rows[i].getAwayGoals());
+			m_clData[i][5] = title?"":String.valueOf(StringUtilities.getResultString(rows[i].getHomeGoals(),rows[i].getAwayGoals()));
 		}
 										
 	}

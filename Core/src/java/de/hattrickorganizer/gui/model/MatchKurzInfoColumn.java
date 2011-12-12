@@ -100,40 +100,5 @@ class MatchKurzInfoColumn extends UserColumn {
                 return Color.white;
         }
     }
-    
-    /**
-     * return a String with shows the result
-     *
-     * @param home 
-     * @param guesz 
-     *
-     * @return String
-     */
-    protected String createTorString(int home, int guest) {
-        final StringBuffer buffer = new StringBuffer();
 
-        if ((home < 0) || (guest < 0)) {
-            return "-";
-        }
-
-        if (home < 10) {
-            buffer.append(" ");
-        }
-
-        if (home >= 0) {
-            buffer.append(home);
-        }
-
-        buffer.append(" : ");
-
-        if (guest < 10) {
-            buffer.append(" ");
-        }
-
-        if (guest >= 0) {
-            buffer.append(guest);
-        }
-
-        return buffer.toString();
-    }
 }
