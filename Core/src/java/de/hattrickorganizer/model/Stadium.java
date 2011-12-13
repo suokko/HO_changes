@@ -1,7 +1,6 @@
 // %4073173605:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Enthält die Stadiendaten
@@ -84,32 +83,6 @@ public class Stadium implements plugins.IStadium {
 
         if (m_bAusbau) {
             m_iAusbauKosten = Integer.parseInt(properties.getProperty("expandcost", "0"));
-        }
-    }
-
-    /**
-     * Creates a new Stadium object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     */
-    public Stadium(java.sql.ResultSet rs) {
-        try {
-            m_sStadienname = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("StadionName"));
-            m_iStadiumId = rs.getInt("ArenaID");
-            //m_iGesamtgroesse = rs.getInt("GesamtGr");
-            m_iStehplaetze = rs.getInt("AnzSteh");
-            m_iSitzplaetze = rs.getInt("AnzSitz");
-            m_iUeberdachteSitzplaetze = rs.getInt("AnzDach");
-            m_iLogen = rs.getInt("AnzLogen");
-
-            m_iAusbauStehplaetze = rs.getInt("AusbauSteh");
-            m_iAusbauSitzplaetze = rs.getInt("AusbauSitz");
-            m_iAusbauUeberdachteSitzplaetze = rs.getInt("AusbauDach");
-            m_iAusbauLogen = rs.getInt("AusbauLogen");
-            m_bAusbau = rs.getBoolean("Ausbau");
-            m_iAusbauKosten = rs.getInt("AusbauKosten");
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Konstruktor Stadium Resultset error " + e.toString());
         }
     }
 
@@ -251,8 +224,6 @@ public class Stadium implements plugins.IStadium {
      */
     public final int getGesamtgroesse() {
         return getStehplaetze() + getSitzplaetze() + getUeberdachteSitzplaetze() + getLogen();
-
-        //return m_iGesamtgroesse;
     }
 
     /**

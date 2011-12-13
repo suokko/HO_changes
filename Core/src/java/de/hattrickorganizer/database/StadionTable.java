@@ -1,6 +1,7 @@
 package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 
 import de.hattrickorganizer.model.Stadium;
@@ -15,8 +16,8 @@ final class StadionTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[18];
-		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
+		columns = new ColumnDescriptor[14];
+		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true); // is Primary Key
 		columns[1]= new ColumnDescriptor("StadionName",Types.VARCHAR,false,127);
 		columns[2]= new ColumnDescriptor("GesamtGr",Types.INTEGER,false);
 		columns[3]= new ColumnDescriptor("AnzSteh",Types.INTEGER,false);
@@ -28,76 +29,55 @@ final class StadionTable extends AbstractTable {
 		columns[9]= new ColumnDescriptor("AusbauDach",Types.INTEGER,false);
 		columns[10]= new ColumnDescriptor("AusbauLogen",Types.INTEGER,false);
 		columns[11]= new ColumnDescriptor("Ausbau",Types.INTEGER,false);
-		columns[12]= new ColumnDescriptor("VerkaufteSteh",Types.INTEGER,false);
-		columns[13]= new ColumnDescriptor("VerkaufteSitz",Types.INTEGER,false);
-		columns[14]= new ColumnDescriptor("VerkaufteDach",Types.INTEGER,false);
-		columns[15]= new ColumnDescriptor("VerkaufteLogen",Types.INTEGER,false);
-		columns[16]= new ColumnDescriptor("AusbauKosten",Types.INTEGER,false);
-		columns[17]= new ColumnDescriptor("ArenaID",Types.INTEGER,false);
+		columns[12]= new ColumnDescriptor("AusbauKosten",Types.INTEGER,false);
+		columns[13]= new ColumnDescriptor("ArenaID",Types.INTEGER,false);
 	}
-	
-	@Override
-	protected String[] getCreateIndizeStatements() {
-		return new String[] {
-			"CREATE INDEX ISTADION_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
-	}	
 
 	/**
-	 * speichert die Finanzen
+	 * save Arena
 	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param stadion TODO Missing Constructuor Parameter Documentation
+	 * @param hrfId 
+	 * @param stadion 
 	 */
-	void saveStadion(int hrfId, de.hattrickorganizer.model.Stadium stadion) {
-		String statement = null;
-		final String[] awhereS = { "HRF_ID" };
-		final String[] awhereV = { "" + hrfId };
+	void saveStadion(int hrfId, Stadium stadion) {
+		StringBuilder statement = new StringBuilder(200);
+		final String[] awhereS = { columns[0].getColumnName() };
+		final String[] awhereV = { String.valueOf(hrfId) };
 
 		if (stadion != null) {
 			//erst Vorhandene Aufstellung löschen
 			delete( awhereS, awhereV );
 			//insert vorbereiten
-			statement =
-				"INSERT INTO "+getTableName()+" ( HRF_ID, StadionName, GesamtGr, AnzSteh, AnzSitz , AnzDach , AnzLogen , AusbauSteh , AusbauSitz , AusbauDach , AusbauLogen , Ausbau , VerkaufteSteh , VerkaufteSitz , VerkaufteDach , VerkaufteLogen , AusbauKosten , ArenaID ) VALUES(";
-			statement
-				+= (""
-					+ hrfId
-					+ ",'"
-					+ de.hattrickorganizer.database.DBZugriff.insertEscapeSequences(stadion.getStadienname())
-					+ "',"
-					+ stadion.getGesamtgroesse()
-					+ ","
-					+ stadion.getStehplaetze()
-					+ ","
-					+ stadion.getSitzplaetze()
-					+ ","
-					+ stadion.getUeberdachteSitzplaetze()
-					+ ","
-					+ stadion.getLogen()
-					+ ","
-					+ stadion.getAusbauStehplaetze()
-					+ ","
-					+ stadion.getAusbauSitzplaetze()
-					+ ","
-					+ stadion.getAusbauUeberdachteSitzplaetze()
-					+ ","
-					+ stadion.getAusbauLogen()
-					+ ","
-					+ stadion.getAusbau()
-					+ ","
-					+ "0"
-					+ ","
-					+ "0"
-					+ ","
-					+ "0"
-					+ ","
-					+ "0"
-					+ ","
-					+ stadion.getAusbauKosten()
-					+ ","
-					+ stadion.getArenaId()
-					+ " )");
-			adapter.executeUpdate(statement);
+			statement.append("INSERT INTO "+getTableName()+" ( HRF_ID, StadionName, GesamtGr, AnzSteh, AnzSitz , AnzDach , AnzLogen , AusbauSteh , AusbauSitz , AusbauDach , AusbauLogen , Ausbau ,  AusbauKosten , ArenaID ) VALUES(");
+			statement.append(hrfId);
+			statement.append(",'");
+			statement.append(DBZugriff.insertEscapeSequences(stadion.getStadienname()));
+			statement.append("',");
+			statement.append(stadion.getGesamtgroesse());
+			statement.append(",");
+			statement.append(stadion.getStehplaetze());
+			statement.append(",");
+			statement.append(stadion.getSitzplaetze());
+			statement.append(",");
+			statement.append(stadion.getUeberdachteSitzplaetze());
+			statement.append(",");
+			statement.append(stadion.getLogen());
+			statement.append(",");
+			statement.append(stadion.getAusbauStehplaetze());
+			statement.append(",");
+			statement.append(stadion.getAusbauSitzplaetze());
+			statement.append(",");
+			statement.append(stadion.getAusbauUeberdachteSitzplaetze());
+			statement.append(",");
+			statement.append(stadion.getAusbauLogen());
+			statement.append(",");
+			statement.append(stadion.getAusbau());
+			statement.append(",");
+			statement.append(stadion.getAusbauKosten());
+			statement.append(",");
+			statement.append(stadion.getArenaId());
+			statement.append(" )");
+			adapter.executeUpdate(statement.toString());
 		}
 	}
 	
@@ -117,15 +97,31 @@ final class StadionTable extends AbstractTable {
 		rs = adapter.executeQuery(sql);
 
 		try {
-			if (rs != null) {
-				rs.first();
-				stadion = new Stadium(rs);
+			if (rs.next()) {
+				stadion = createStadionObject(rs);
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getStadion: " + e);
 		}
 
 		return stadion;
+	}
+	
+	private Stadium createStadionObject(ResultSet rs) throws SQLException {
+		Stadium arena = new Stadium();
+		arena.setStadienname(DBZugriff.deleteEscapeSequences(rs.getString("StadionName")));
+		arena.setArenaId(rs.getInt("ArenaID"));
+		arena.setSitzplaetze(rs.getInt("AnzSitz"));
+		arena.setStehplaetze(rs.getInt("AnzSteh"));
+		arena.setUeberdachteSitzplaetze(rs.getInt("AnzDach"));
+        arena.setLogen(rs.getInt("AnzLogen"));
+        arena.setAusbauStehplaetze(rs.getInt("AusbauSteh"));
+        arena.setAusbauSitzplaetze(rs.getInt("AusbauSitz"));
+        arena.setAusbauUeberdachteSitzplaetze(rs.getInt("AusbauDach"));
+        arena.setAusbauLogen(rs.getInt("AusbauLogen"));
+        arena.setAusbau(rs.getBoolean("Ausbau"));
+        arena.setAusbauKosten(rs.getInt("AusbauKosten"));
+        return arena;
 	}
 	
 }
