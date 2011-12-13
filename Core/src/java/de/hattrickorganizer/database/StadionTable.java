@@ -1,10 +1,11 @@
 package de.hattrickorganizer.database;
 
+import ho.modul.arenasizer.Stadium;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.tools.HOLogger;
 
 final class StadionTable extends AbstractTable {

@@ -1,5 +1,6 @@
 // %3644680912:de.hattrickorganizer.gui.arenasizer%
-package de.hattrickorganizer.gui.arenasizer;
+package ho.modul.arenasizer;
+
 
 import java.awt.Component;
 import java.awt.GridLayout;

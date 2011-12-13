@@ -1,5 +1,5 @@
 // %4073173605:de.hattrickorganizer.model%
-package de.hattrickorganizer.model;
+package ho.modul.arenasizer;
 
 
 /**
@@ -339,13 +339,13 @@ public class Stadium implements plugins.IStadium {
     public final int calcMaxEinahmen() {
         int einahmen = 0;
 
-        einahmen += ((this.getStehplaetze() * de.hattrickorganizer.logik.ArenaSizer.STEH_EINTRITT) / gui.UserParameter
+        einahmen += ((this.getStehplaetze() * ho.modul.arenasizer.ArenaSizer.STEH_EINTRITT) / gui.UserParameter
                                                                                                      .instance().faktorGeld);
-        einahmen += ((this.getSitzplaetze() * de.hattrickorganizer.logik.ArenaSizer.SITZ_EINTRITT) / gui.UserParameter
+        einahmen += ((this.getSitzplaetze() * ho.modul.arenasizer.ArenaSizer.SITZ_EINTRITT) / gui.UserParameter
                                                                                                      .instance().faktorGeld);
-        einahmen += ((this.getUeberdachteSitzplaetze() * de.hattrickorganizer.logik.ArenaSizer.DACH_EINTRITT) / gui.UserParameter
+        einahmen += ((this.getUeberdachteSitzplaetze() * ho.modul.arenasizer.ArenaSizer.DACH_EINTRITT) / gui.UserParameter
                                                                                                                 .instance().faktorGeld);
-        einahmen += ((this.getLogen() * de.hattrickorganizer.logik.ArenaSizer.LOGEN_EINTRITT) / gui.UserParameter
+        einahmen += ((this.getLogen() * ho.modul.arenasizer.ArenaSizer.LOGEN_EINTRITT) / gui.UserParameter
                                                                                                 .instance().faktorGeld);
 
         return einahmen;

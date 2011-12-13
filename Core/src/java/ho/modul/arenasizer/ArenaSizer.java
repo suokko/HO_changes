@@ -4,9 +4,8 @@
  *
  * Created on 21. März 2003, 08:19
  */
-package de.hattrickorganizer.logik;
+package ho.modul.arenasizer;
 
-import de.hattrickorganizer.model.Stadium;
 
 
 /**
@@ -14,88 +13,47 @@ import de.hattrickorganizer.model.Stadium;
  *
  * @author thomas.werth
  */
-public class ArenaSizer {
+class ArenaSizer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     //Einnahmen
 
-    /** TODO Missing Parameter Documentation */
-    public static final float STEH_EINTRITT = 65f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float SITZ_EINTRITT = 95f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float DACH_EINTRITT = 180f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float LOGEN_EINTRITT = 325f;
+    static final float STEH_EINTRITT = 65f;
+    static final float SITZ_EINTRITT = 95f;
+    static final float DACH_EINTRITT = 180f;
+    static final float LOGEN_EINTRITT = 325f;
 
     //laufende Kosten
-
-    /** TODO Missing Parameter Documentation */
-    public static final float STEH_UNTERHALT = 5f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float SITZ_UNTERHALT = 7f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float DACH_UNTERHALT = 10f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float LOGEN_UNTERHALT = 25f;
+    static final float STEH_UNTERHALT = 5f;
+    static final float SITZ_UNTERHALT = 7f;
+    static final float DACH_UNTERHALT = 10f;
+    static final float LOGEN_UNTERHALT = 25f;
 
     //Bau
-
-    /** TODO Missing Parameter Documentation */
-    public static float STEH_AUSBAU = 450f;
-
-    /** TODO Missing Parameter Documentation */
-    public static float SITZ_AUSBAU = 750f;
-
-    /** TODO Missing Parameter Documentation */
-    public static float DACH_AUSBAU = 900f;
-
-    /** TODO Missing Parameter Documentation */
-    public static float LOGEN_AUSBAU = 3000f;
-
-    /** TODO Missing Parameter Documentation */
-    public static float ABRISS = 60f;
-
-    /** TODO Missing Parameter Documentation */
-    public static float FIXKOSTEN = 100000f;
+    static float STEH_AUSBAU = 450f;
+    static float SITZ_AUSBAU = 750f;
+    static float DACH_AUSBAU = 900f;
+    static float LOGEN_AUSBAU = 3000f;
+    static float ABRISS = 60f;
+    static float FIXKOSTEN = 100000f;
 
     //Verteilung
-
-    /** TODO Missing Parameter Documentation */
-    public static final float STEH_PROZENT = 60.0f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float SITZ_PROZENT = 23.5f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float DACH_PROZENT = 14.0f;
-
-    /** TODO Missing Parameter Documentation */
-    public static final float LOGEN_PROZENT = 2.5f;
+    static final float STEH_PROZENT = 60.0f;
+    static final float SITZ_PROZENT = 23.5f;
+    static final float DACH_PROZENT = 14.0f;
+    static final float LOGEN_PROZENT = 2.5f;
 
     //Fan-FAKTOREn
-
-    /** TODO Missing Parameter Documentation */
-    public static final int FANS_GUT = 25;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int FANS_NORMAL = 20;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int FANS_SCHLECHT = 15;
+    static final int FANS_GUT = 25;
+    static final int FANS_NORMAL = 20;
+    static final int FANS_SCHLECHT = 15;
 
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of ArenaSizer
      */
-    public ArenaSizer() {
+    ArenaSizer() {
         /* Neue Kosten für die nächste Saison schon angepasst
            if( updatetest )
            {
@@ -126,7 +84,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Stadium[] berechneAusbaustufen(Stadium aktuell, int anzFans) {
+    final Stadium[] berechneAusbaustufen(Stadium aktuell, int anzFans) {
         Stadium arenaGut = null;
         Stadium arenaNormal = null;
         Stadium arenaSchlecht = null;
@@ -200,7 +158,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float calcBauKosten(float steh, float sitz, float dach, float logen) {
+    final float calcBauKosten(float steh, float sitz, float dach, float logen) {
         float kosten = FIXKOSTEN / gui.UserParameter.instance().faktorGeld;
 
         if (steh > 0) {
@@ -237,7 +195,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int calcDachVerteilung(float stadionGr) {
+    final int calcDachVerteilung(float stadionGr) {
         return (int) ((stadionGr / 100.0f) * DACH_PROZENT);
     }
 
@@ -248,7 +206,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int calcLogenVerteilung(float stadionGr) {
+    final int calcLogenVerteilung(float stadionGr) {
         return (int) ((stadionGr / 100.0f) * LOGEN_PROZENT);
     }
 
@@ -260,7 +218,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int calcOptimalSize(int fanFaktor, int anzahlFans) {
+    final int calcOptimalSize(int fanFaktor, int anzahlFans) {
         return fanFaktor * anzahlFans;
     }
 
@@ -271,7 +229,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int calcSitzVerteilung(float stadionGr) {
+    final int calcSitzVerteilung(float stadionGr) {
         return (int) ((stadionGr / 100.0f) * SITZ_PROZENT);
     }
 
@@ -282,7 +240,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int calcStehVerteilung(float stadionGr) {
+    final int calcStehVerteilung(float stadionGr) {
         return (int) ((stadionGr / 100.0f) * STEH_PROZENT);
     }
 
@@ -293,7 +251,7 @@ public class ArenaSizer {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final float calcUnterhalt(Stadium arena) {
+    final float calcUnterhalt(Stadium arena) {
         float kosten = 0.0f;
 
         kosten += ((arena.getStehplaetze() * STEH_UNTERHALT) / gui.UserParameter.instance().faktorGeld);

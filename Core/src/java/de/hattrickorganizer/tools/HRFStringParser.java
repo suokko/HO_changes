@@ -5,10 +5,11 @@ import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.Liga;
 import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.model.XtraData;
+
+import ho.modul.arenasizer.Stadium;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
