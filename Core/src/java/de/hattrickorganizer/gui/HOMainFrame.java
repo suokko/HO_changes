@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.modul.arenasizer.ArenaSizerPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -49,7 +50,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import plugins.IPlugin;
 import plugins.ISpieler;
 import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
 import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
 import de.hattrickorganizer.gui.exporter.CsvPlayerExport;
 import de.hattrickorganizer.gui.exporter.XMLExporter;
