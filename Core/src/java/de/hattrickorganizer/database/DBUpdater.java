@@ -57,6 +57,8 @@ final class DBUpdater {
 						updateDBv10();
 					case 10: 
 						updateDBv11();
+					case 11:
+						updateDBv12();
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -67,6 +69,7 @@ final class DBUpdater {
 			HOLogger.instance().log(getClass(), "No DB update necessary.");
 		}
 	}
+
 
 	/**
 	  * Update database to version 1.
@@ -337,6 +340,17 @@ final class DBUpdater {
 		dbZugriff.saveUserParameter("DBVersion", 11);
 	}
 	
+	private void updateDBv12() {
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSteh");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSitz");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteDach");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteLogen");
+		m_clJDBCAdapter.executeUpdate("DROP INDEX ISTADION_1");
+		
+		//m_clJDBCAdapter.executeUpdate("CHECKPOINT DEFRAG ");
+		dbZugriff.saveUserParameter("DBVersion", 12);
+	}
+
 	private void changeColumnType(String table,String oldName, String newName, String type) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
 		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
