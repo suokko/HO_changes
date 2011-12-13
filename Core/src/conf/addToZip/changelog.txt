@@ -1,6 +1,21 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
 forum at https://sourceforge.net/apps/phpbb/ho1/ if you have any questions!
 
+Changelist HO! 1.432
+====================
+
+
+ThemeManager:
+------------
+- add new keys: 
+	icons: imagePanel.background, grassPanel.background, remove
+	colors:
+
+Plugin Updates:
+---------------
+-  MatchesOverview 
+	MatchesOverview is deprecated. Functions are integrated in matches tab
+
 Changelist HO! 1.431
 ====================
 
