@@ -1198,7 +1198,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 							m_vPlugins.add(modul);
 							HOLogger.instance().log(HOMainFrame.class,
 									" Starte " + files[i].getName() + "  (init MiniModel)");
-							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
+							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
 							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
 
 							HOLogger.instance().log(HOMainFrame.class,
@@ -1238,7 +1238,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 							m_vPlugins.add(modul);
 							HOLogger.instance().log(HOMainFrame.class,
 									" Starte " + files[i].getName() + "  (init MiniModel)");
-							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
+							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
 							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
 
 							HOLogger.instance().log(HOMainFrame.class,
@@ -1626,16 +1626,16 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Startbild
-		final InterruptionWindow interuptionsWindow = new InterruptionWindow(new ImagePanel());
+		final InterruptionWindow interuptionsWindow = new InterruptionWindow();
 
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {
-			interuptionsWindow.setInfoText("Backup Database");
+			interuptionsWindow.setInfoText(1,"Backup Database");
 			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
 		}
 
 		// Standardparameter aus der DB holen
-		interuptionsWindow.setInfoText("Initialize Database");
+		interuptionsWindow.setInfoText(2,"Initialize Database");
 		DBZugriff.instance().loadUserParameter();
 
 		// init Theme
@@ -1647,7 +1647,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
 		}
 		// Init!
-		interuptionsWindow.setInfoText("Initialize Data-Administration");
+		interuptionsWindow.setInfoText(3,"Initialize Data-Administration");
 
 		// Beim ersten Start Sprache erfragen
 		if (DBZugriff.instance().isFirstStart()) {
@@ -1660,7 +1660,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Check -> Sprachdatei in Ordnung?
-		interuptionsWindow.setInfoText("Check Languagefiles");
+		interuptionsWindow.setInfoText(4,"Check Languagefiles");
 		checkSprachFile(UserParameter.instance().sprachDatei);
 
 		// font switch, because the default font doesn't support Georgian and
@@ -1669,9 +1669,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
 
 		m_hov.setResource(UserParameter.instance().sprachDatei, loader);
-		interuptionsWindow.setInfoText("Load latest Data");
+		interuptionsWindow.setInfoText(5,"Load latest Data");
 		m_hov.loadLatestHoModel();
-		interuptionsWindow.setInfoText("Load  XtraDaten");
+		interuptionsWindow.setInfoText(6,"Load  XtraDaten");
 
 		// TableColumn
 		UserColumnController.instance().load();
@@ -1684,7 +1684,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Training
-		interuptionsWindow.setInfoText("Initialize Training");
+		interuptionsWindow.setInfoText(7,"Initialize Training");
 
 		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
 		// der manuellen DB Einträge
@@ -1692,14 +1692,14 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
 		// selbst aufruft!
-		interuptionsWindow.setInfoText("Starting Plugins");
+		interuptionsWindow.setInfoText(8,"Starting Plugins");
 		HOMainFrame.instance().startPluginModuls(interuptionsWindow);
 
 		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
 				.exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
 		// Anzeigen
-		interuptionsWindow.setInfoText("Prepare to show");
+		interuptionsWindow.setInfoText(9,"Prepare to show");
 		HOMainFrame.instance().setVisible(true);
 
 		// Startbild weg
