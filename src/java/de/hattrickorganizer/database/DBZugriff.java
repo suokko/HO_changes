@@ -2,6 +2,7 @@
 package de.hattrickorganizer.database;
 
 import gui.UserParameter;
+import ho.modul.arenasizer.Stadium;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -33,7 +34,6 @@ import de.hattrickorganizer.model.Liga;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.model.User;
@@ -1142,7 +1142,7 @@ public class DBZugriff {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param stadion TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveStadion(int hrfId, de.hattrickorganizer.model.Stadium stadion) {
+	public void saveStadion(int hrfId, ho.modul.arenasizer.Stadium stadion) {
 		((StadionTable) getTable(StadionTable.TABLENAME)).saveStadion(hrfId, stadion);
 	}
 

@@ -1,5 +1,5 @@
 // %3426612608:de.hattrickorganizer.gui.arenasizer%
-package de.hattrickorganizer.gui.arenasizer;
+package ho.modul.arenasizer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,13 +19,12 @@ import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
+import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.TableEntry;
-import de.hattrickorganizer.logik.ArenaSizer;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Stadium;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 
@@ -33,9 +32,7 @@ import de.hattrickorganizer.tools.Helper;
 /**
  * Panel mit JTabel für die Arena anzeige und zum Testen
  */
-final class ArenaPanel extends ImagePanel implements ActionListener, FocusListener,
-                                                     de.hattrickorganizer.gui.Refreshable
-{
+final class ArenaPanel extends ImagePanel implements ActionListener, FocusListener, Refreshable {
 
 	private static final long serialVersionUID = -3049319214078126491L;
 
@@ -74,7 +71,7 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
      *
      * @param typ TODO Missing Constructuor Parameter Documentation
      */
-    protected ArenaPanel(byte typ) {
+    ArenaPanel(byte typ) {
         m_clTyp = typ;
 
         RefreshManager.instance().registerRefreshable(this);
