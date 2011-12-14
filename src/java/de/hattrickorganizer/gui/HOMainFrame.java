@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.modul.arenasizer.ArenaSizerDialog;
 import ho.modul.arenasizer.ArenaSizerPanel;
 
 import java.awt.BorderLayout;
@@ -77,7 +78,6 @@ import de.hattrickorganizer.gui.theme.jgoodies.JGoodiesTheme;
 import de.hattrickorganizer.gui.theme.nimbus.NimbusTheme;
 import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
-import de.hattrickorganizer.gui.utils.InterruptionWindow;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
 import de.hattrickorganizer.logik.GebChecker;
 import de.hattrickorganizer.logik.TrainingsManager;
@@ -212,6 +212,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiStatistik = new JMenuItem(m_hov.getLanguageString("Statistik"));
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(m_hov.getLanguageString("TransferScout"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(m_hov.getLanguageString("Verschiedenes"));
+	private final JMenuItem m_jmiArenaSizer = new JMenuItem(m_hov.getLanguageString("ArenaSizer"));
 
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
@@ -490,6 +491,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.ARENASIZER);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
+		}else if(source.equals(m_jmiArenaSizer)){
+			new ArenaSizerDialog(this).setVisible(true);
 		} else if (source.equals(m_jmCreditsItem)) { 
 			StringBuilder text = new StringBuilder(200);
 			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
@@ -937,6 +940,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiDbCleanupTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiDbCleanupTool);
 
+		m_jmiArenaSizer.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiArenaSizer);
+		
 		m_jmMenuBar.add(m_jmToolsMenu);
 
 		// Plugin Menu
@@ -1164,7 +1170,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	// ///////////////////////////////////////////////////////////////////////////////////////////////77
 	// helper
 	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-	public void startPluginModuls(InterruptionWindow interuptionWindow) {
+	public void startPluginModuls(SplashFrame interuptionWindow) {
 		try {
 			// Den Ordner mit den Plugins holen
 			final java.io.File folder = new java.io.File("hoplugins");
@@ -1626,7 +1632,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Startbild
-		final InterruptionWindow interuptionsWindow = new InterruptionWindow();
+		final SplashFrame interuptionsWindow = new SplashFrame();
 
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {

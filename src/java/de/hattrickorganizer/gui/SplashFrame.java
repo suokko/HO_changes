@@ -1,5 +1,5 @@
 // %1876740819:de.hattrickorganizer.gui.utils%
-package de.hattrickorganizer.gui.utils;
+package de.hattrickorganizer.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.plaf.FontUIResource;
 
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
@@ -23,20 +22,21 @@ import de.hattrickorganizer.tools.HOLogger;
  * @author Volker Fischer
  * @version 0.2a 28.08.01
  */
-public final class InterruptionWindow extends JFrame {
+final class SplashFrame extends JFrame {
 	private static final long serialVersionUID = -4948885175460734368L;
 	private Image background;
 	private String m_sInfotext = "";
 	private String m_sVersionText = HOMainFrame.getVersionString();
 	private int step;
 	private int subStep = 0;
+	private int maxStep = 9;
 	private FontUIResource fontText = new FontUIResource("SansSerif", Font.PLAIN, 10);
 	private FontUIResource fontVersion = new FontUIResource("SansSerif", Font.PLAIN, 14);
 
     /**
      * Creates a new InterruptionWindow object.
      */
-	public InterruptionWindow() {
+	SplashFrame() {
 		final MediaTracker tracker = new MediaTracker(this);
 
 		try {
@@ -64,8 +64,11 @@ public final class InterruptionWindow extends JFrame {
     /**
      * Set text info (e.g. progress).
      */
-    public final void setInfoText(int step, String text) {
+    final void setInfoText(int step, String text) {
         m_sInfotext = text;
+        if(step > maxStep)
+        	step = maxStep;
+        
         if(this.step == step)
         	subStep = subStep  + 2;
         else
@@ -94,7 +97,7 @@ public final class InterruptionWindow extends JFrame {
 
         
         g2d.setColor(new Color(0, 255, 0,80));
-        g2d.fillRect(5, 136, (step * (getSize().width/(9)))+subStep , 14);
+        g2d.fillRect(5, 136, (step * (getSize().width/(maxStep)))+subStep , 14);
         
         //infotext / progress
         g2d.setColor(Color.black);
