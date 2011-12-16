@@ -1,8 +1,8 @@
 package de.hattrickorganizer.database;
 
-import gui.UserParameter;
+import javax.swing.JOptionPane;
+
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.tools.HOLogger;
 
 final class DBUpdater {
@@ -36,15 +36,13 @@ final class DBUpdater {
 
 				switch (version) { // hint: fall though (no breaks) is intended here
 					case 0 :
-						updateDBv1();
 					case 1 :
-						updateDBv2();
 					case 2 :
-						updateDBv3();
 					case 3 :
-						updateDBv4();
 					case 4 :
-						updateDBv5();
+						HOLogger.instance().log(getClass(), "DB version " + DBVersion + " is to old");
+						JOptionPane.showMessageDialog(null, "DB is too old.\nPlease update first to HO 1.431","Error",JOptionPane.ERROR);
+						System.exit(0);
 					case 5 :
 						updateDBv6();
 					case 6 :
@@ -68,118 +66,6 @@ final class DBUpdater {
 		} else {
 			HOLogger.instance().log(getClass(), "No DB update necessary.");
 		}
-	}
-
-
-	/**
-	  * Update database to version 1.
-	  */
-	private void updateDBv1() throws Exception {
-		// Add TimeZone and DBVersion field
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE UserParameter ADD COLUMN DBVersion INTEGER");
-		m_clJDBCAdapter.executeUpdate(
-			"ALTER TABLE UserParameter ADD COLUMN TimeZoneDifference INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE UserParameter SET TimeZoneDifference = 0");
-
-		// Add fields to Scout and set default values for existing entries
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN PlayerID INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET PlayerID = 0");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN Speciality INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET Speciality = 0");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN Price INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET Price = 0");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE UserParameter ADD COLUMN HOUsers INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE UserParameter SET HOUsers = 0");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE UserParameter ADD COLUMN HOUsersTot INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE UserParameter SET HOUsersTot = 0");
-		m_clJDBCAdapter.executeUpdate(
-			"ALTER TABLE UserParameter ADD COLUMN AAP_ExcludeLastLineup BIT");
-		m_clJDBCAdapter.executeUpdate("UPDATE UserParameter SET AAP_ExcludeLastLineup = false");
-
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		m_clJDBCAdapter.executeUpdate("UPDATE UserParameter SET DBVersion = 1");
-	}
-
-	/**
-	 * Update database to version 2.
-	 */
-	private void updateDBv2() throws Exception {
-
-		// Move Future Weeks from TA into Main HO Database
-		//			createFutureTrainingsTabelle();
-		dbZugriff.getTable(SpielerSkillupTable.TABLENAME).createTable();
-		dbZugriff.getTable(FutureTrainingTable.TABLENAME).createTable();
-		dbZugriff.getTable(UserConfigurationTable.TABLENAME).createTable();
-		dbZugriff.getTable(UserColumnsTable.TABLENAME).createTable();
-		m_clJDBCAdapter.executeUpdate(
-			"INSERT INTO FUTURETRAINING select * from TRAININGEXPERIENCE_TRAINWEEK");
-		m_clJDBCAdapter.executeUpdate("DROP TABLE TRAININGEXPERIENCE_TRAINWEEK");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN AGE INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET AGE=ALTER");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT DROP COLUMN ALTER");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN AGE INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SPIELER SET AGE=ALTER");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN ALTER");
-
-		DBUserParameter userParameter = new DBUserParameter();
-		userParameter.loadUserParameter(m_clJDBCAdapter);
-		userParameter = null;
-
-		UserConfigurationTable configTable = (UserConfigurationTable) dbZugriff.getTable(UserConfigurationTable.TABLENAME);
-		configTable.store(UserParameter.instance());
-		configTable.store(HOParameter.instance());
-//		configTable.store(FormulaFactors.instance());
-
-		m_clJDBCAdapter.executeUpdate("DROP TABLE UserParameter");
-		m_clJDBCAdapter.executeUpdate("DROP TABLE SpaltenReihenfolge");
-
-		m_clJDBCAdapter.executeUpdate(
-			"UPDATE MATCHLINEUPPLAYER SET HOPOSCODE = 21 WHERE POSITIONCODE = 11 AND TAKTIK = 4");
-		m_clJDBCAdapter.executeUpdate(
-			"UPDATE MATCHLINEUPPLAYER SET HOPOSCODE = 21 WHERE POSITIONCODE = 10 AND TAKTIK = 4");
-
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		dbZugriff.saveUserParameter("DBVersion", 2);
-	}
-
-	/**
-	 * Update database to version 3.
-	 */
-	private void updateDBv3() throws Exception {
-
-		changeColumnType("MATCHDETAILS","Matchreport","Matchreport","VARCHAR(8196)");
-		changeColumnType("MatchHighlights","EventText","EventText","VARCHAR(512)");
-		changeColumnType("FAKTOREN","HOPosition","HOPosition","INTEGER");
-		changeColumnType("POSITIONEN","Taktik","Taktik","INTEGER");
-		changeColumnType("SPIELERNOTIZ","userPos","userPos","INTEGER");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE MatchHighLights RENAME TO MATCHHIGHLIGHTS");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SpielerSkillup RENAME TO SPIELERSKILLUP");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE USERCOLUMNS ADD COLUMN COLUMN_WIDTH INTEGER");
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		dbZugriff.saveUserParameter("DBVersion", 3);
-	}
-
-	/**
-	 * Update database to version 4.
-	 */
-	private void updateDBv4() throws Exception {
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT DROP COLUMN Finanzberater");
-
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		dbZugriff.saveUserParameter("DBVersion", 4);
 	}
 
 	/**
