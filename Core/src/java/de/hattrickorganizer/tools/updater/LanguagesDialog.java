@@ -17,9 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
+import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.SprachFileFilter;
 
 
 /**
@@ -202,7 +202,7 @@ public final class LanguagesDialog extends UpdaterDialog {
      */
     private void inizialize() {
         final File dir = new File(SPRACHE_DIRECTORY);
-        object = dir.listFiles(new SprachFileFilter());
+        object = dir.listFiles(new ExampleFileFilter("properties"));
         columnNames = new String[4];
         columnNames[0] = PROP_REFRESH;
         columnNames[1] = PROP_NAME;
