@@ -25,9 +25,6 @@ import javax.swing.ImageIcon;
 
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.ColorChangeFilter;
-import de.hattrickorganizer.tools.FuzzyTransparentFilter;
-import de.hattrickorganizer.tools.TransparentFilter;
 
 public class ImageUtilities {
 
