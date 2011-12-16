@@ -3,7 +3,6 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
-import ho.modul.arenasizer.ArenaSizerDialog;
 import ho.modul.arenasizer.ArenaSizerPanel;
 
 import java.awt.BorderLayout;
@@ -492,7 +491,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
 		}else if(source.equals(m_jmiArenaSizer)){
-			new ArenaSizerDialog(this).setVisible(true);
+			//new ArenaSizerDialog(this).setVisible(true);
 		} else if (source.equals(m_jmCreditsItem)) { 
 			StringBuilder text = new StringBuilder(200);
 			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
