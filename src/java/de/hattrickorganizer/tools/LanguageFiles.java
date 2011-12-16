@@ -8,6 +8,8 @@ package de.hattrickorganizer.tools;
 
 import java.util.Vector;
 
+import de.hattrickorganizer.gui.utils.ExampleFileFilter;
+
 /**
  * DOCUMENT ME!
  *
@@ -37,7 +39,7 @@ public class LanguageFiles {
             //java.net.URL resource = new gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource( "sprache" );
             final java.io.File sprachverzeichnis = new java.io.File("sprache");
 
-            final java.io.File[] moeglicheSprachdateien = sprachverzeichnis.listFiles(new SprachFileFilter());
+            final java.io.File[] moeglicheSprachdateien = sprachverzeichnis.listFiles(new ExampleFileFilter("properties"));
 
             for (int i = 0;
                  (moeglicheSprachdateien != null) && (i < moeglicheSprachdateien.length); i++) {
