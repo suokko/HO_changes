@@ -166,7 +166,8 @@ public final class UserParameter extends Configuration {
     public boolean statistikZinsertraege;
     public boolean statistikZuschauer;
 
-    public boolean tempTabArenasizer = true;
+    
+//    public boolean tempTabArenasizer = true;
     public boolean tempTabAufstellung;
     public boolean tempTabInformation = true;
     public boolean tempTabLigatabelle;
@@ -472,7 +473,7 @@ public final class UserParameter extends Configuration {
 		map.put("statistikZinsaufwendungen",String.valueOf(statistikZinsaufwendungen));
 		map.put("statistikZinsertraege",String.valueOf(statistikZinsertraege));
 		map.put("statistikZuschauer",String.valueOf(statistikZuschauer));
-		map.put("tempTabArenasizer",String.valueOf(tempTabArenasizer));
+//		map.put("tempTabArenasizer",String.valueOf(tempTabArenasizer));
 		map.put("tempTabAufstellung",String.valueOf(tempTabAufstellung));
 		map.put("tempTabInformation",String.valueOf(tempTabInformation));
 		map.put("tempTabLigatabelle",String.valueOf(tempTabLigatabelle));
@@ -670,7 +671,7 @@ public final class UserParameter extends Configuration {
 		statistikZinsaufwendungen = getBooleanValue(values,"statistikZinsaufwendungen");
 		statistikZinsertraege = getBooleanValue(values,"statistikZinsertraege");
 		statistikZuschauer = getBooleanValue(values,"statistikZuschauer");
-		tempTabArenasizer = getBooleanValue(values,"tempTabArenasizer");
+//		tempTabArenasizer = getBooleanValue(values,"tempTabArenasizer");
 		tempTabAufstellung = getBooleanValue(values,"tempTabAufstellung");
 		tempTabInformation = getBooleanValue(values,"tempTabInformation");
 		tempTabLigatabelle = getBooleanValue(values,"tempTabLigatabelle");
