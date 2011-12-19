@@ -79,8 +79,8 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	private JTabbedPane getTabbedPane(){
 		if(tabbedPane == null){
 			tabbedPane = new JTabbedPane();
-			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Stadion"), getArenaPanel());
 			tabbedPane.addTab(HOVerwaltung.instance().getModel().getStadium().getStadienname(), getInfoPanel());
+			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Stadion"), getArenaPanel());
 			//tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), getArenaStatistikPanel());
 			
 		}
