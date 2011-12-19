@@ -914,6 +914,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Tool Menu
+		m_jmiArenaSizer.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiArenaSizer);
+		
 		m_jmiKeeperTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiKeeperTool);
 
@@ -932,8 +935,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiDbCleanupTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiDbCleanupTool);
 
-		m_jmiArenaSizer.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiArenaSizer);
 		
 		m_jmMenuBar.add(m_jmToolsMenu);
 
