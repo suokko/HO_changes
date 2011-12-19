@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<visitedWidth>8</visitedWidth>
+	<hostedWidth>8</hostedWidth>
+	<visitedHeaderShow>true</visitedHeaderShow>
+    <visitedFooterShow>true</visitedFooterShow>
+    <hostedHeaderShow>true</hostedHeaderShow>
+    <hostedFooterShow>true</hostedFooterShow>
+    <visitedRoundly>false</visitedRoundly>
+	<visitedGrey>true</visitedGrey>
+    <visitedBrightness>50</visitedBrightness>
+    <hostedRoundly>false</hostedRoundly>
+    <hostedGrey>true</hostedGrey>
+    <hostedBrightness>50</hostedBrightness>
+	<visitedHeader>Visited</visitedHeader>
+	<hostedHeader>Hosted</hostedHeader>
+	<visitedPathEmblem>""</visitedPathEmblem>
+	<hostedPathEmblem>""</hostedPathEmblem>
+	<gifAnimated>false</gifAnimated>
+	<gifDelay>5.0</gifDelay>
+</config>
