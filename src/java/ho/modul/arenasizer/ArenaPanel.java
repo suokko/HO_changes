@@ -20,6 +20,7 @@ import javax.swing.table.TableColumnModel;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
+import de.hattrickorganizer.gui.model.VAPTableModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -126,10 +127,10 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
                 HOLogger.instance().log(getClass(),"Fehler: keine Zahl");
             }
 
-            m_jtfStehplatze.setText(m_clArenaSizer.calcStehVerteilung(groesse) + "");
-            m_jtfSitzplatze.setText(m_clArenaSizer.calcSitzVerteilung(groesse) + "");
-            m_jtfUeberdachteSitzplaetze.setText(m_clArenaSizer.calcDachVerteilung(groesse) + "");
-            m_jtfLogen.setText(m_clArenaSizer.calcLogenVerteilung(groesse) + "");
+            m_jtfStehplatze.setText(m_clArenaSizer.calcDistribution(groesse,ArenaSizer.STEH_PROZENT) + "");
+            m_jtfSitzplatze.setText(m_clArenaSizer.calcDistribution(groesse,ArenaSizer.SITZ_PROZENT) + "");
+            m_jtfUeberdachteSitzplaetze.setText(m_clArenaSizer.calcDistribution(groesse,ArenaSizer.DACH_PROZENT) + "");
+            m_jtfLogen.setText(m_clArenaSizer.calcDistribution(groesse, ArenaSizer.LOGEN_PROZENT) + "");
 
             //In Tabelle übernehmen
             m_jbUbernehmen.doClick();
@@ -315,13 +316,8 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
         m_jtfLogen.setText(m_clStadium.getLogen() + "");
         m_jtfGesamtgroesse.setText(m_clStadium.getGesamtgroesse() + "");
 
-        m_clStadien = m_clArenaSizer.berechneAusbaustufen(HOVerwaltung.instance()
-                                                                                                 .getModel()
-                                                                                                 .getStadium(),
-                                                          HOVerwaltung.instance()
-                                                                                                 .getModel()
-                                                                                                 .getVerein()
-                                                                                                 .getFans());
+        m_clStadien = m_clArenaSizer.berechneAusbaustufen(HOVerwaltung.instance().getModel().getStadium(),
+                                                          HOVerwaltung.instance().getModel().getVerein().getFans());
 
         //Entrys mit Werten füllen
         reinitTabelle();
@@ -333,116 +329,80 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     private void initTabelle() {
         //Tablewerte setzen
         tabellenwerte = new TableEntry[10][5];
-
+        HOVerwaltung hoV = HOVerwaltung.instance();
         //Spalten
         tabellenwerte[0][0] = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][1] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Aktuell"),
+        tabellenwerte[0][1] = new ColorLabelEntry(hoV.getLanguageString("Aktuell"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][2] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Maximal"),
+        tabellenwerte[0][2] = new ColorLabelEntry(hoV.getLanguageString("Maximal"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][3] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Durchschnitt"),
+        tabellenwerte[0][3] = new ColorLabelEntry(hoV.getLanguageString("Durchschnitt"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
-        tabellenwerte[0][4] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Minimal"),
+        tabellenwerte[0][4] = new ColorLabelEntry(hoV.getLanguageString("Minimal"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.CENTER);
 
         //Zeilen
-        tabellenwerte[1][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Stehplaetze"),
+        tabellenwerte[1][0] = new ColorLabelEntry(hoV.getLanguageString("Stehplaetze"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[2][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
+        tabellenwerte[2][0] = new ColorLabelEntry(hoV.getLanguageString("Sitzplaetze"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[3][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
+        tabellenwerte[3][0] = new ColorLabelEntry(hoV.getLanguageString("Ueberdachteplaetze"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[4][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Logen"),
+        tabellenwerte[4][0] = new ColorLabelEntry(hoV.getLanguageString("Logen"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[5][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Gesamt"),
+        tabellenwerte[5][0] = new ColorLabelEntry(hoV.getLanguageString("Gesamt"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[6][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Einnahmen"),
+        tabellenwerte[6][0] = new ColorLabelEntry(hoV.getLanguageString("Einnahmen"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[7][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Unterhalt"),
+        tabellenwerte[7][0] = new ColorLabelEntry(hoV.getLanguageString("Unterhalt"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[8][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Gewinn"),
+        tabellenwerte[8][0] = new ColorLabelEntry(hoV.getLanguageString("Gewinn"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
-        tabellenwerte[9][0] = new ColorLabelEntry(HOVerwaltung.instance().getLanguageString("Baukosten"),
+        tabellenwerte[9][0] = new ColorLabelEntry(hoV.getLanguageString("Baukosten"),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE,
                                                   SwingConstants.LEFT);
 
         //Platzwerte
-        tabellenwerte[1][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[1][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[1][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[1][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[2][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[2][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[2][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[2][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[3][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[3][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[3][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[3][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[4][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[4][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[4][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
-        tabellenwerte[4][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+        for (int i = 1; i < 10; i++) {
+        	for (int j = 1; j < 5; j++) {
+        		if(i<5)
+        			tabellenwerte[i][j] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
+        		else if(i == 5)
+        			tabellenwerte[i][j] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
+        		else if(i > 5)
+        			 tabellenwerte[i][j] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
+			}
+			
+		}
 
-        //Gesamt
-        tabellenwerte[5][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-        tabellenwerte[5][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-        tabellenwerte[5][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-        tabellenwerte[5][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
-
-        //Einnahmen
-        tabellenwerte[6][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[6][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[6][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[6][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-
-        //Unterhalt
-        tabellenwerte[7][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[7][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[7][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[7][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-
-        //Gewinn
-        tabellenwerte[8][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[8][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[8][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[8][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-
-        //Baukosten
-        tabellenwerte[9][1] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[9][2] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[9][3] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-        tabellenwerte[9][4] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
-
-        m_jtArena.setModel(new de.hattrickorganizer.gui.model.VAPTableModel(UEBERSCHRIFT,
-                                                                            tabellenwerte));
+        m_jtArena.setModel(new VAPTableModel(UEBERSCHRIFT, tabellenwerte));
 
         final TableColumnModel columnModel = m_jtArena.getColumnModel();
         columnModel.getColumn(0).setMinWidth(Helper.calcCellWidth(150));
@@ -469,9 +429,17 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
     }
     
     //Manuelles Init als Teststadium
-    private void reinitStadium(Stadium stadium, int fans) {
+    void reinitStadium(Stadium stadium, int fans) {
         m_clStadium = stadium;
         m_clStadien = m_clArenaSizer.berechneAusbaustufen(stadium, fans);
+
+        //Entrys mit Werten füllen
+        reinitTabelle();
+    }
+    
+    void reinitArena(Stadium currentArena, int maxSupporter, int normalSupporter, int minSupporter) {
+        m_clStadium = currentArena;
+        m_clStadien = m_clArenaSizer.calcConstructionArenas(currentArena, maxSupporter, normalSupporter, minSupporter);
 
         //Entrys mit Werten füllen
         reinitTabelle();
@@ -482,314 +450,58 @@ final class ArenaPanel extends ImagePanel implements ActionListener, FocusListen
      */
     private void reinitTabelle() {
         final Stadium stadium = HOVerwaltung.instance().getModel().getStadium();
-
-        if (m_clTyp == HRFARENA) {
-            ((DoppelLabelEntry) tabellenwerte[1][1]).getLinks().setText(stadium.getStehplaetze()
-                                                                        + "");
-            ((DoppelLabelEntry) tabellenwerte[2][1]).getLinks().setText(stadium.getSitzplaetze()
-                                                                        + "");
-            ((DoppelLabelEntry) tabellenwerte[3][1]).getLinks().setText(stadium
-                                                                        .getUeberdachteSitzplaetze()
-                                                                        + "");
-            ((DoppelLabelEntry) tabellenwerte[4][1]).getLinks().setText(stadium.getLogen() + "");
-            ((DoppelLabelEntry) tabellenwerte[5][1]).getLinks().setText(stadium.getGesamtgroesse()
-                                                                        + "");
-            ((DoppelLabelEntry) tabellenwerte[6][1]).getLinks().setSpezialNumber(stadium
-                                                                                 .calcMaxEinahmen(),
-                                                                                 true);
-            ((DoppelLabelEntry) tabellenwerte[7][1]).getLinks().setSpezialNumber(-m_clArenaSizer
-                                                                                  .calcUnterhalt(stadium),
-                                                                                 true);
-            ((DoppelLabelEntry) tabellenwerte[8][1]).getLinks().setSpezialNumber((stadium
-                                                                                  .calcMaxEinahmen()
-                                                                                 - m_clArenaSizer
-                                                                                   .calcUnterhalt(stadium)),
-                                                                                 true);
-            ((DoppelLabelEntry) tabellenwerte[9][1]).getLinks().setText("");
-
-            for (int i = 2; i < 5; i++) {
-                ((DoppelLabelEntry) tabellenwerte[1][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                            .getStehplaetze() + "");
-                ((DoppelLabelEntry) tabellenwerte[1][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                      - 2]
-                                                                                      .getStehplaetze()
-                                                                                      - stadium
-                                                                                        .getStehplaetze(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[2][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                            .getSitzplaetze() + "");
-                ((DoppelLabelEntry) tabellenwerte[2][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                      - 2]
-                                                                                      .getSitzplaetze()
-                                                                                      - stadium
-                                                                                        .getSitzplaetze(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[3][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                            .getUeberdachteSitzplaetze()
-                                                                            + "");
-                ((DoppelLabelEntry) tabellenwerte[3][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                      - 2]
-                                                                                      .getUeberdachteSitzplaetze()
-                                                                                      - stadium
-                                                                                        .getUeberdachteSitzplaetze(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[4][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                            .getLogen() + "");
-                ((DoppelLabelEntry) tabellenwerte[4][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                      - 2].getLogen()
-                                                                                      - stadium
-                                                                                        .getLogen(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[5][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                            .getGesamtgroesse()
-                                                                            + "");
-                ((DoppelLabelEntry) tabellenwerte[5][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                      - 2]
-                                                                                      .getGesamtgroesse()
-                                                                                      - stadium
-                                                                                        .getGesamtgroesse(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[6][i]).getLinks().setSpezialNumber(m_clStadien[i
-                                                                                     - 2]
-                                                                                     .calcMaxEinahmen(),
-                                                                                     true);
-                ((DoppelLabelEntry) tabellenwerte[6][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                      - 2]
-                                                                                      .calcMaxEinahmen()
-                                                                                      - stadium
-                                                                                        .calcMaxEinahmen(),
-                                                                                      true);
-                ((DoppelLabelEntry) tabellenwerte[7][i]).getLinks().setSpezialNumber(-m_clArenaSizer
-                                                                                      .calcUnterhalt(m_clStadien[i
-                                                                                                     - 2]),
-                                                                                     true);
-                ((DoppelLabelEntry) tabellenwerte[7][i]).getRechts().setSpezialNumber(-(m_clArenaSizer
-                                                                                        .calcUnterhalt(m_clStadien[i
-                                                                                                       - 2])
-                                                                                      - m_clArenaSizer
-                                                                                        .calcUnterhalt(stadium)),
-                                                                                      true);
-                ((DoppelLabelEntry) tabellenwerte[8][i]).getLinks().setSpezialNumber(m_clStadien[i
-                                                                                     - 2]
-                                                                                     .calcMaxEinahmen()
-                                                                                     - m_clArenaSizer
-                                                                                       .calcUnterhalt(m_clStadien[i
-                                                                                                      - 2]),
-                                                                                     true);
-                ((DoppelLabelEntry) tabellenwerte[8][i]).getRechts().setSpezialNumber((m_clStadien[i
-                                                                                       - 2]
-                                                                                       .calcMaxEinahmen()
-                                                                                      - m_clArenaSizer
-                                                                                        .calcUnterhalt(m_clStadien[i
-                                                                                                       - 2]))
-                                                                                      - (stadium
-                                                                                         .calcMaxEinahmen()
-                                                                                      - m_clArenaSizer
-                                                                                        .calcUnterhalt(stadium)),
-                                                                                      true);
-                ((DoppelLabelEntry) tabellenwerte[9][i]).getLinks().setSpezialNumber(-m_clStadien[i
-                                                                                      - 2]
-                                                                                      .getAusbauKosten(),
-                                                                                     true);
-            }
-
-            m_jtArena.setModel(new de.hattrickorganizer.gui.model.VAPTableModel(UEBERSCHRIFT,
-                                                                                tabellenwerte));
-
-            final TableColumnModel columnModel = m_jtArena.getColumnModel();
-            columnModel.getColumn(0).setMinWidth(Helper.calcCellWidth(150));
-            columnModel.getColumn(1).setMinWidth(Helper.calcCellWidth(160));
-            columnModel.getColumn(2).setMinWidth(Helper.calcCellWidth(160));
-            columnModel.getColumn(3).setMinWidth(Helper.calcCellWidth(160));
-            columnModel.getColumn(4).setMinWidth(Helper.calcCellWidth(160));
-
-            //Testarena
-        } else {
-            if (m_clStadium != null) {
-                ((DoppelLabelEntry) tabellenwerte[1][1]).getLinks().setText(m_clStadium
-                                                                            .getStehplaetze() + "");
-                ((DoppelLabelEntry) tabellenwerte[1][1]).getRechts().setSpezialNumber(m_clStadium
-                                                                                      .getStehplaetze()
-                                                                                      - stadium
-                                                                                        .getStehplaetze(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[2][1]).getLinks().setText(m_clStadium
-                                                                            .getSitzplaetze() + "");
-                ((DoppelLabelEntry) tabellenwerte[2][1]).getRechts().setSpezialNumber(m_clStadium
-                                                                                      .getSitzplaetze()
-                                                                                      - stadium
-                                                                                        .getSitzplaetze(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[3][1]).getLinks().setText(m_clStadium
-                                                                            .getUeberdachteSitzplaetze()
-                                                                            + "");
-                ((DoppelLabelEntry) tabellenwerte[3][1]).getRechts().setSpezialNumber(m_clStadium
-                                                                                      .getUeberdachteSitzplaetze()
-                                                                                      - stadium
-                                                                                        .getUeberdachteSitzplaetze(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[4][1]).getLinks().setText(m_clStadium.getLogen()
-                                                                            + "");
-                ((DoppelLabelEntry) tabellenwerte[4][1]).getRechts().setSpezialNumber(m_clStadium
-                                                                                      .getLogen()
-                                                                                      - stadium
-                                                                                        .getLogen(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[5][1]).getLinks().setText(m_clStadium
-                                                                            .getGesamtgroesse()
-                                                                            + "");
-                ((DoppelLabelEntry) tabellenwerte[5][1]).getRechts().setSpezialNumber(m_clStadium
-                                                                                      .getGesamtgroesse()
-                                                                                      - stadium
-                                                                                        .getGesamtgroesse(),
-                                                                                      false);
-                ((DoppelLabelEntry) tabellenwerte[6][1]).getLinks().setSpezialNumber(m_clStadium
-                                                                                     .calcMaxEinahmen(),
-                                                                                     true);
-                ((DoppelLabelEntry) tabellenwerte[6][1]).getRechts().setSpezialNumber(m_clStadium
-                                                                                      .calcMaxEinahmen()
-                                                                                      - stadium
-                                                                                        .calcMaxEinahmen(),
-                                                                                      true);
-                ((DoppelLabelEntry) tabellenwerte[7][1]).getLinks().setSpezialNumber(-m_clArenaSizer
-                                                                                      .calcUnterhalt(m_clStadium),
-                                                                                     true);
-                ((DoppelLabelEntry) tabellenwerte[7][1]).getRechts().setSpezialNumber(-(m_clArenaSizer
-                                                                                        .calcUnterhalt(m_clStadium)
-                                                                                      - m_clArenaSizer
-                                                                                        .calcUnterhalt(stadium)),
-                                                                                      true);
-                ((DoppelLabelEntry) tabellenwerte[8][1]).getLinks().setSpezialNumber(m_clStadium
-                                                                                     .calcMaxEinahmen()
-                                                                                     - m_clArenaSizer
-                                                                                       .calcUnterhalt(m_clStadium),
-                                                                                     true);
-                ((DoppelLabelEntry) tabellenwerte[8][1]).getRechts().setSpezialNumber((m_clStadium
-                                                                                       .calcMaxEinahmen()
-                                                                                      - m_clArenaSizer
-                                                                                        .calcUnterhalt(m_clStadium))
-                                                                                      - (stadium
-                                                                                         .calcMaxEinahmen()
-                                                                                      - m_clArenaSizer
-                                                                                        .calcUnterhalt(stadium)),
-                                                                                      true);
-                ((DoppelLabelEntry) tabellenwerte[9][1]).getLinks().setSpezialNumber(-m_clArenaSizer
-                                                                                      .calcBauKosten(m_clStadium
-                                                                                                     .getStehplaetze()
-                                                                                                     - stadium
-                                                                                                       .getStehplaetze(),
-                                                                                                     m_clStadium
-                                                                                                     .getSitzplaetze()
-                                                                                                     - stadium
-                                                                                                       .getSitzplaetze(),
-                                                                                                     m_clStadium
-                                                                                                     .getUeberdachteSitzplaetze()
-                                                                                                     - stadium
-                                                                                                       .getUeberdachteSitzplaetze(),
-                                                                                                     m_clStadium
-                                                                                                     .getLogen()
-                                                                                                     - stadium
-                                                                                                       .getLogen()),
-                                                                                     true);
+        if (m_clStadium != null) {
+                ((DoppelLabelEntry) tabellenwerte[1][1]).getLinks().setText(m_clStadium.getStehplaetze() + "");
+                ((DoppelLabelEntry) tabellenwerte[1][1]).getRechts().setSpezialNumber(m_clStadium.getStehplaetze() - stadium.getStehplaetze(),false);
+                ((DoppelLabelEntry) tabellenwerte[2][1]).getLinks().setText(m_clStadium.getSitzplaetze() + "");
+                ((DoppelLabelEntry) tabellenwerte[2][1]).getRechts().setSpezialNumber(m_clStadium.getSitzplaetze() - stadium.getSitzplaetze(),false);
+                ((DoppelLabelEntry) tabellenwerte[3][1]).getLinks().setText(m_clStadium.getUeberdachteSitzplaetze()+ "");
+                ((DoppelLabelEntry) tabellenwerte[3][1]).getRechts().setSpezialNumber(m_clStadium.getUeberdachteSitzplaetze() - stadium.getUeberdachteSitzplaetze(),false);
+                ((DoppelLabelEntry) tabellenwerte[4][1]).getLinks().setText(m_clStadium.getLogen()+ "");
+                ((DoppelLabelEntry) tabellenwerte[4][1]).getRechts().setSpezialNumber(m_clStadium.getLogen() - stadium.getLogen(), false);
+                ((DoppelLabelEntry) tabellenwerte[5][1]).getLinks().setText(m_clStadium.getGesamtgroesse()+ "");
+                ((DoppelLabelEntry) tabellenwerte[5][1]).getRechts().setSpezialNumber(m_clStadium.getGesamtgroesse() - stadium.getGesamtgroesse(), false);
+                ((DoppelLabelEntry) tabellenwerte[6][1]).getLinks().setSpezialNumber(m_clStadium.calcMaxEinahmen(),true);
+                ((DoppelLabelEntry) tabellenwerte[6][1]).getRechts().setSpezialNumber(m_clStadium.calcMaxEinahmen() - stadium.calcMaxEinahmen(),true);
+                ((DoppelLabelEntry) tabellenwerte[7][1]).getLinks().setSpezialNumber(-m_clArenaSizer.calcMaintenance(m_clStadium), true);
+                ((DoppelLabelEntry) tabellenwerte[7][1]).getRechts().setSpezialNumber(-(m_clArenaSizer.calcMaintenance(m_clStadium) - m_clArenaSizer.calcMaintenance(stadium)),true);
+                ((DoppelLabelEntry) tabellenwerte[8][1]).getLinks().setSpezialNumber(m_clStadium.calcMaxEinahmen() - m_clArenaSizer.calcMaintenance(m_clStadium),true);
+                ((DoppelLabelEntry) tabellenwerte[8][1]).getRechts().setSpezialNumber((m_clStadium.calcMaxEinahmen() - m_clArenaSizer.calcMaintenance(m_clStadium))- (stadium.calcMaxEinahmen()
+                                                                                      - m_clArenaSizer.calcMaintenance(stadium)), true);
+                ((DoppelLabelEntry) tabellenwerte[9][1]).getLinks().setSpezialNumber(-m_clArenaSizer.calcBauKosten(m_clStadium.getStehplaetze()- stadium.getStehplaetze(),
+                                                                                                     m_clStadium.getSitzplaetze()- stadium.getSitzplaetze(),
+                                                                                                     m_clStadium.getUeberdachteSitzplaetze()- stadium.getUeberdachteSitzplaetze(),
+                                                                                                     m_clStadium.getLogen()- stadium.getLogen()),true);
                 ((DoppelLabelEntry) tabellenwerte[9][1]).getRechts().setText("");
 
                 for (int i = 2; i < 5; i++) {
-                    ((DoppelLabelEntry) tabellenwerte[1][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                                .getStehplaetze()
-                                                                                + "");
-                    ((DoppelLabelEntry) tabellenwerte[1][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                          - 2]
-                                                                                          .getStehplaetze()
-                                                                                          - m_clStadium
-                                                                                            .getStehplaetze(),
-                                                                                          false);
-                    ((DoppelLabelEntry) tabellenwerte[2][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                                .getSitzplaetze()
-                                                                                + "");
-                    ((DoppelLabelEntry) tabellenwerte[2][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                          - 2]
-                                                                                          .getSitzplaetze()
-                                                                                          - m_clStadium
-                                                                                            .getSitzplaetze(),
-                                                                                          false);
-                    ((DoppelLabelEntry) tabellenwerte[3][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                                .getUeberdachteSitzplaetze()
-                                                                                + "");
-                    ((DoppelLabelEntry) tabellenwerte[3][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                          - 2]
-                                                                                          .getUeberdachteSitzplaetze()
-                                                                                          - m_clStadium
-                                                                                            .getUeberdachteSitzplaetze(),
-                                                                                          false);
-                    ((DoppelLabelEntry) tabellenwerte[4][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                                .getLogen() + "");
-                    ((DoppelLabelEntry) tabellenwerte[4][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                          - 2]
-                                                                                          .getLogen()
-                                                                                          - m_clStadium
-                                                                                            .getLogen(),
-                                                                                          false);
-                    ((DoppelLabelEntry) tabellenwerte[5][i]).getLinks().setText(m_clStadien[i - 2]
-                                                                                .getGesamtgroesse()
-                                                                                + "");
-                    ((DoppelLabelEntry) tabellenwerte[5][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                          - 2]
-                                                                                          .getGesamtgroesse()
-                                                                                          - m_clStadium
-                                                                                            .getGesamtgroesse(),
-                                                                                          false);
-                    ((DoppelLabelEntry) tabellenwerte[6][i]).getLinks().setSpezialNumber(m_clStadien[i
-                                                                                         - 2]
-                                                                                         .calcMaxEinahmen(),
-                                                                                         true);
-                    ((DoppelLabelEntry) tabellenwerte[6][i]).getRechts().setSpezialNumber(m_clStadien[i
-                                                                                          - 2]
-                                                                                          .calcMaxEinahmen()
-                                                                                          - m_clStadium
-                                                                                            .calcMaxEinahmen(),
-                                                                                          true);
-                    ((DoppelLabelEntry) tabellenwerte[7][i]).getLinks().setSpezialNumber(-m_clArenaSizer
-                                                                                          .calcUnterhalt(m_clStadien[i
-                                                                                                         - 2]),
-                                                                                         true);
-                    ((DoppelLabelEntry) tabellenwerte[7][i]).getRechts().setSpezialNumber(-(m_clArenaSizer
-                                                                                            .calcUnterhalt(m_clStadien[i
-                                                                                                           - 2])
-                                                                                          - m_clArenaSizer
-                                                                                            .calcUnterhalt(m_clStadium)),
-                                                                                          true);
-                    ((DoppelLabelEntry) tabellenwerte[8][i]).getLinks().setSpezialNumber(m_clStadien[i
-                                                                                         - 2]
-                                                                                         .calcMaxEinahmen()
-                                                                                         - m_clArenaSizer
-                                                                                           .calcUnterhalt(m_clStadien[i
-                                                                                                          - 2]),
-                                                                                         true);
-                    ((DoppelLabelEntry) tabellenwerte[8][i]).getRechts().setSpezialNumber((m_clStadien[i
-                                                                                           - 2]
-                                                                                           .calcMaxEinahmen()
-                                                                                          - m_clArenaSizer
-                                                                                            .calcUnterhalt(m_clStadien[i
-                                                                                                           - 2]))
-                                                                                          - (m_clStadium
-                                                                                             .calcMaxEinahmen()
-                                                                                          - m_clArenaSizer
-                                                                                            .calcUnterhalt(m_clStadium)),
-                                                                                          true);
-                    ((DoppelLabelEntry) tabellenwerte[9][i]).getLinks().setSpezialNumber(-m_clStadien[i
-                                                                                          - 2]
-                                                                                          .getAusbauKosten(),
-                                                                                         true);
+                    ((DoppelLabelEntry) tabellenwerte[1][i]).getLinks().setText(m_clStadien[i - 2].getStehplaetze()+ "");
+                    ((DoppelLabelEntry) tabellenwerte[1][i]).getRechts().setSpezialNumber(m_clStadien[i- 2].getStehplaetze()- m_clStadium.getStehplaetze(),false);
+                    ((DoppelLabelEntry) tabellenwerte[2][i]).getLinks().setText(m_clStadien[i - 2].getSitzplaetze()+ "");
+                    ((DoppelLabelEntry) tabellenwerte[2][i]).getRechts().setSpezialNumber(m_clStadien[i- 2].getSitzplaetze()- m_clStadium.getSitzplaetze(),false);
+                    ((DoppelLabelEntry) tabellenwerte[3][i]).getLinks().setText(m_clStadien[i - 2].getUeberdachteSitzplaetze()+ "");
+                    ((DoppelLabelEntry) tabellenwerte[3][i]).getRechts().setSpezialNumber(m_clStadien[i- 2].getUeberdachteSitzplaetze()- m_clStadium.getUeberdachteSitzplaetze(),false);
+                    ((DoppelLabelEntry) tabellenwerte[4][i]).getLinks().setText(m_clStadien[i - 2].getLogen() + "");
+                    ((DoppelLabelEntry) tabellenwerte[4][i]).getRechts().setSpezialNumber(m_clStadien[i- 2].getLogen()- m_clStadium.getLogen(),false);
+                    ((DoppelLabelEntry) tabellenwerte[5][i]).getLinks().setText(m_clStadien[i - 2].getGesamtgroesse()+ "");
+                    ((DoppelLabelEntry) tabellenwerte[5][i]).getRechts().setSpezialNumber(m_clStadien[i- 2].getGesamtgroesse()- m_clStadium.getGesamtgroesse(),false);
+                    ((DoppelLabelEntry) tabellenwerte[6][i]).getLinks().setSpezialNumber(m_clStadien[i- 2].calcMaxEinahmen(),true);
+                    ((DoppelLabelEntry) tabellenwerte[6][i]).getRechts().setSpezialNumber(m_clStadien[i- 2].calcMaxEinahmen()- m_clStadium.calcMaxEinahmen(),true);
+                    ((DoppelLabelEntry) tabellenwerte[7][i]).getLinks().setSpezialNumber(-m_clArenaSizer.calcMaintenance(m_clStadien[i- 2]),true);
+                    ((DoppelLabelEntry) tabellenwerte[7][i]).getRechts().setSpezialNumber(-(m_clArenaSizer.calcMaintenance(m_clStadien[i- 2])
+                                                                                          - m_clArenaSizer.calcMaintenance(m_clStadium)),true);
+                    ((DoppelLabelEntry) tabellenwerte[8][i]).getLinks().setSpezialNumber(m_clStadien[i- 2].calcMaxEinahmen()- m_clArenaSizer.calcMaintenance(m_clStadien[i- 2]),true);
+                    ((DoppelLabelEntry) tabellenwerte[8][i]).getRechts().setSpezialNumber((m_clStadien[i- 2].calcMaxEinahmen()- m_clArenaSizer.calcMaintenance(m_clStadien[i- 2]))
+                                                                                          - (m_clStadium.calcMaxEinahmen()- m_clArenaSizer.calcMaintenance(m_clStadium)),true);
+                    ((DoppelLabelEntry) tabellenwerte[9][i]).getLinks().setSpezialNumber(-m_clStadien[i- 2].getAusbauKosten(),true);
                 }
 
-                m_jtArena.setModel(new de.hattrickorganizer.gui.model.VAPTableModel(UEBERSCHRIFT,
-                                                                                    tabellenwerte));
+                m_jtArena.setModel(new VAPTableModel(UEBERSCHRIFT, tabellenwerte));
                 m_jtArena.getColumnModel().getColumn(0).setMinWidth(Helper.calcCellWidth(150));
                 m_jtArena.getColumnModel().getColumn(1).setMinWidth(Helper.calcCellWidth(160));
                 m_jtArena.getColumnModel().getColumn(2).setMinWidth(Helper.calcCellWidth(160));
                 m_jtArena.getColumnModel().getColumn(3).setMinWidth(Helper.calcCellWidth(160));
                 m_jtArena.getColumnModel().getColumn(4).setMinWidth(Helper.calcCellWidth(160));
-            }
         }
     }
 }

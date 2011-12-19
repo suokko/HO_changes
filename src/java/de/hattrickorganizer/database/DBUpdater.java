@@ -234,6 +234,7 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("DROP INDEX ISTADION_1");
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='einzelnePositionenAnzeigen'");
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='DAUER_ALLGEMEIN'");
+		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='tempTabArenasizer'");
 		
 		//m_clJDBCAdapter.executeUpdate("CHECKPOINT DEFRAG ");
 		dbZugriff.saveUserParameter("DBVersion", 12);
