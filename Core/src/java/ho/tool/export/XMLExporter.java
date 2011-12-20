@@ -1,5 +1,5 @@
 // %1127327738353:hoplugins%
-package de.hattrickorganizer.gui.exporter;
+package ho.tool.export;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

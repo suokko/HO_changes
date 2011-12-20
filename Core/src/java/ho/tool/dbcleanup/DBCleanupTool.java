@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.dbcleanup;
+package ho.tool.dbcleanup;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.notepad;
+package ho.tool.notepad;
 
 import gui.HOColorName;
 import gui.HOIconName;
