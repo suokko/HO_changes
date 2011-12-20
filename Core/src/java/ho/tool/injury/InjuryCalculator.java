@@ -1,5 +1,5 @@
 // %653779730:de.hattrickorganizer.logik%
-package de.hattrickorganizer.logik;
+package ho.tool.injury;
 
 /**
  * The Main Injury Calculator

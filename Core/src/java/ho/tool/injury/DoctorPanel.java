@@ -1,8 +1,6 @@
 // %4181403314:de.hattrickorganizer.gui.injury.panel%
-package de.hattrickorganizer.gui.injury.panel;
+package ho.tool.injury;
 
-import de.hattrickorganizer.gui.injury.InjuryDialog;
-import de.hattrickorganizer.logik.InjuryCalculator;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 

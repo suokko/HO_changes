@@ -1,12 +1,12 @@
 // %2855852157:de.hattrickorganizer.logik%
-package de.hattrickorganizer.logik;
+package ho.tool.keepertool;
 
 /**
  * Main class to calculate the keeper subskill
  *
  * @author draghetto
  */
-public class KeeperTool {
+class KeeperTool {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private double coeff = 1.0d / 3.3993;
@@ -21,7 +21,7 @@ public class KeeperTool {
      * @param _form keeper form
      * @param _tsi keeper tsi
      */
-    public KeeperTool(int _form, int _tsi) {
+    KeeperTool(int _form, int _tsi) {
         this.tsi = _tsi;
         this.form = _form;
     }
@@ -33,7 +33,7 @@ public class KeeperTool {
      *
      * @return the subskill
      */
-    public final double getAvg() {
+    final double getAvg() {
         final double fc = getFormCorrector(form, 0.5);
         final double val = tsi / (6.5258 * fc);
         return Math.pow(val, coeff) + 1;
@@ -44,7 +44,7 @@ public class KeeperTool {
      *
      * @return the subskill
      */
-    public final double getMax() {
+    final double getMax() {
         final double fc = getFormCorrector(form, 1);
         final double val = tsi / (6.5258 * fc);
         return Math.pow(val, coeff) + 1;
@@ -55,7 +55,7 @@ public class KeeperTool {
      *
      * @return the subskill
      */
-    public final double getMin() {
+    final double getMin() {
         final double fc = getFormCorrector(form, 0);
         final double val = tsi / (6.5258 * fc);
         return Math.pow(val, coeff) + 1;
