@@ -1,12 +1,13 @@
 // %4234203651:de.hattrickorganizer.gui.injury%
-package de.hattrickorganizer.gui.injury;
+package ho.tool.injury;
 
-import de.hattrickorganizer.gui.keepertool.PlayerItem;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ISpieler;
+
+import ho.tool.keepertool.PlayerItem;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -31,7 +32,7 @@ import javax.swing.SwingConstants;
  *
  * @author draghetto
  */
-public class InjuryDetailPanel extends JPanel {
+class InjuryDetailPanel extends JPanel {
 	
 	private static final long serialVersionUID = -4123995368822577858L;
 	
@@ -49,7 +50,7 @@ public class InjuryDetailPanel extends JPanel {
     /**
      * Creates a new InjuryDetailPanel object.
      */
-    public InjuryDetailPanel() {
+    InjuryDetailPanel() {
         init();
     }
 
@@ -60,7 +61,7 @@ public class InjuryDetailPanel extends JPanel {
      *
      * @return age
      */
-    public final int getAge() {
+    final int getAge() {
         try {
             return Integer.parseInt(age.getText());
         } catch (NumberFormatException e) {
@@ -73,7 +74,7 @@ public class InjuryDetailPanel extends JPanel {
      *
      * @return the rate
      */
-    public final double getDesiredLevel() {
+    final double getDesiredLevel() {
         return injuryType.getSelectedIndex() / 2.0d;
     }
 
@@ -82,7 +83,7 @@ public class InjuryDetailPanel extends JPanel {
      *
      * @return injury
      */
-    public final int getInjury() {
+    final int getInjury() {
         try {
             return Integer.parseInt(injury.getText());
         } catch (NumberFormatException e) {
@@ -95,7 +96,7 @@ public class InjuryDetailPanel extends JPanel {
      *
      * @return TSI
      */
-    public final int getTSIPost() {
+    final int getTSIPost() {
         try {
             return Integer.parseInt(tsiPost.getText());
         } catch (NumberFormatException e) {
@@ -108,7 +109,7 @@ public class InjuryDetailPanel extends JPanel {
      *
      * @return TSI
      */
-    public final int getTSIPre() {
+    final int getTSIPre() {
         try {
             return Integer.parseInt(tsiPre.getText());
         } catch (NumberFormatException e) {
@@ -119,7 +120,7 @@ public class InjuryDetailPanel extends JPanel {
     /**
      * Method called to reset panel and reload needed data
      */
-    public final void reload() {
+    final void reload() {
         players.removeAllItems();
         players.addItem(new PlayerItem());
 

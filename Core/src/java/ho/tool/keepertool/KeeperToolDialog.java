@@ -1,11 +1,12 @@
 // %3415157064:de.hattrickorganizer.gui.keepertool%
-package de.hattrickorganizer.gui.keepertool;
+package ho.tool.keepertool;
 
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,13 +53,12 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
         initComponents();
 
         //reload();
-        setSize(new java.awt.Dimension(400, 250));
-        setLocation(0, 0);
-
-        setVisible(false);
+        setSize(400, 250);
+        //setLocation(0, 0);
 
         //setResizable(false);
         addWindowListener(this);
+        reload();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -205,4 +205,15 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
 
         getContentPane().add(main, BorderLayout.CENTER);
     }
+    
+	@Override
+	public void setSize(int width, int height) {  
+	   super.setSize(width, height);  
+		    
+	   Dimension screenSize = getParent().getSize();  
+	   int x = (screenSize.width - getWidth()) / 2;  
+	   int y = (screenSize.height - getHeight()) / 2;  
+	    
+	   setLocation(getParent().getX()+x, getParent().getY()+y);     
+	}
 }

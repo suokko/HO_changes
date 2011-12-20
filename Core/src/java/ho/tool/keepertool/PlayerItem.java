@@ -1,5 +1,5 @@
 // %2775781217:de.hattrickorganizer.gui.keepertool%
-package de.hattrickorganizer.gui.keepertool;
+package ho.tool.keepertool;
 
 import de.hattrickorganizer.model.ScoutEintrag;
 

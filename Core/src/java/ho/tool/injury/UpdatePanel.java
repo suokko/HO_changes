@@ -1,19 +1,17 @@
-// %3237567999:de.hattrickorganizer.gui.injury.panel%
-package de.hattrickorganizer.gui.injury.panel;
+// %1166674044:de.hattrickorganizer.gui.injury.panel%
+package ho.tool.injury;
 
-import de.hattrickorganizer.gui.injury.InjuryDialog;
-import de.hattrickorganizer.logik.InjuryCalculator;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
- * The Panel to calculate the exact number of needed updates
+ * The Panel to calculate the number of needed updates
  *
  * @author draghetto
  */
-public class UpdateTSIPanel extends AbstractInjuryPanel {
+class UpdatePanel extends AbstractInjuryPanel {
 	
-	private static final long serialVersionUID = 1067981692979047647L;
+	private static final long serialVersionUID = -7495655025085036037L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -22,11 +20,11 @@ public class UpdateTSIPanel extends AbstractInjuryPanel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
-     * Creates a new UpdateTSIPanel object.
+     * Creates a new UpdatePanel object.
      *
      * @param dialog the main injury dialog
      */
-    public UpdateTSIPanel(InjuryDialog dialog) {
+    UpdatePanel(InjuryDialog dialog) {
         super(dialog);
         reset();
     }
@@ -38,12 +36,12 @@ public class UpdateTSIPanel extends AbstractInjuryPanel {
      */
     @Override
 	public final void doAction() {
-        final int tsi = getInput();
+        final int doctors = getInput();
 
-        final double updates = InjuryCalculator.getUpdateTSINumber(getDetail().getTSIPre(),
-                                                                   getDetail().getTSIPost(),
-                                                                   getDetail().getDesiredLevel(),
-                                                                   tsi);
+        final double updates = InjuryCalculator.getUpdateNumber(getDetail().getAge(),
+                                                                getDetail().getInjury(),
+                                                                getDetail().getDesiredLevel(),
+                                                                doctors);
 
         if (updates > -1) {
             setOutputMsg(msg + ": " + formatNumber(updates));
@@ -53,10 +51,10 @@ public class UpdateTSIPanel extends AbstractInjuryPanel {
     /**
      * Reset the panel to default data
      */
-    public final void reset() {
-        setInputMsg(HOVerwaltung.instance().getLanguageString("Injury4"));
+    final void reset() {
+        setInputMsg(HOVerwaltung.instance().getLanguageString("Doctors"));
         setOutputMsg(msg);
-        setHeader(HOVerwaltung.instance().getLanguageString("Injury3"));
+        setHeader(HOVerwaltung.instance().getLanguageString("Injury2"));
         setInputValue(HOVerwaltung.instance().getModel().getVerein().getAerzte() + "");
     }
 }

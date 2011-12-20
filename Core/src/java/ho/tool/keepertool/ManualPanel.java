@@ -1,5 +1,5 @@
 // %362946196:de.hattrickorganizer.gui.keepertool%
-package de.hattrickorganizer.gui.keepertool;
+package ho.tool.keepertool;
 
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -25,7 +25,7 @@ import javax.swing.SwingConstants;
  *
  * @author draghetto
  */
-public class ManualPanel extends JPanel {
+class ManualPanel extends JPanel {
 	
 	private static final long serialVersionUID = -4449286683961509922L;
 	
@@ -43,7 +43,7 @@ public class ManualPanel extends JPanel {
      *
      * @param panel the panel where to show results
      */
-    public ManualPanel(ResultPanel panel) {
+    ManualPanel(ResultPanel panel) {
         target = panel;
         init();
     }

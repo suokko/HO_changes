@@ -11,7 +11,7 @@ import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.model.XtraData;
 
-import ho.modul.arenasizer.Stadium;
+import ho.tool.arenasizer.Stadium;
 
 import java.io.BufferedReader;
 import java.io.File;

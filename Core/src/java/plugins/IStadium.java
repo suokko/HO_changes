@@ -190,6 +190,7 @@ public interface IStadium {
      * berechnet die Maximalen EInahmen bei vollem HAus
      *
      * @return TODO Missing Return Method Documentation
+     * @deprecated
      */
     public int calcMaxEinahmen();
 }

@@ -1,8 +1,7 @@
 // %3394711869:de.hattrickorganizer.gui.keepertool%
-package de.hattrickorganizer.gui.keepertool;
+package ho.tool.keepertool;
 
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
-import de.hattrickorganizer.logik.KeeperTool;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ISpieler;
@@ -25,7 +24,7 @@ import javax.swing.JTextArea;
  *
  * @author draghetto
  */
-public class ResultPanel extends JPanel {
+class ResultPanel extends JPanel {
 	
 	private static final long serialVersionUID = 272383166131665396L;
 	
@@ -45,7 +44,7 @@ public class ResultPanel extends JPanel {
      *
      * @param dialog the main KeeperTool dialog
      */
-    public ResultPanel(KeeperToolDialog dialog) {
+    ResultPanel(KeeperToolDialog dialog) {
         parent = dialog;
         init();
     }

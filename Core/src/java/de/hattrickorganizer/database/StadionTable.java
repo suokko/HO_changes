@@ -1,6 +1,6 @@
 package de.hattrickorganizer.database;
 
-import ho.modul.arenasizer.Stadium;
+import ho.tool.arenasizer.Stadium;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
