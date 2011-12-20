@@ -2,7 +2,7 @@
 package de.hattrickorganizer.database;
 
 import gui.UserParameter;
-import ho.modul.arenasizer.Stadium;
+import ho.tool.arenasizer.Stadium;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -1142,7 +1142,7 @@ public class DBZugriff {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param stadion TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveStadion(int hrfId, ho.modul.arenasizer.Stadium stadion) {
+	public void saveStadion(int hrfId, ho.tool.arenasizer.Stadium stadion) {
 		((StadionTable) getTable(StadionTable.TABLENAME)).saveStadion(hrfId, stadion);
 	}
 

@@ -1,10 +1,9 @@
 // %2807346442:de.hattrickorganizer.gui.injury.panel%
-package de.hattrickorganizer.gui.injury.panel;
+package ho.tool.injury;
 
-import de.hattrickorganizer.gui.injury.InjuryDetailPanel;
-import de.hattrickorganizer.gui.injury.InjuryDialog;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.model.HOVerwaltung;
+
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

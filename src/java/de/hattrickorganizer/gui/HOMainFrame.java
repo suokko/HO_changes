@@ -3,7 +3,7 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
-import ho.modul.arenasizer.ArenaSizerDialog;
+import ho.tool.ToolManager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -50,12 +50,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import plugins.IPlugin;
 import plugins.ISpieler;
 import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
-import de.hattrickorganizer.gui.exporter.CsvPlayerExport;
-import de.hattrickorganizer.gui.exporter.XMLExporter;
 import de.hattrickorganizer.gui.info.InformationsPanel;
-import de.hattrickorganizer.gui.injury.InjuryDialog;
-import de.hattrickorganizer.gui.keepertool.KeeperToolDialog;
 import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupMasterPanel;
@@ -66,7 +61,6 @@ import de.hattrickorganizer.gui.menu.DownloadDialog;
 import de.hattrickorganizer.gui.menu.HRFImport;
 import de.hattrickorganizer.gui.menu.option.OptionenDialog;
 import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.gui.notepad.NotepadDialog;
 import de.hattrickorganizer.gui.playeranalysis.SpielerAnalyseMainPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
@@ -158,12 +152,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private static HOVerwaltung m_hov = HOVerwaltung.instance();
 	private static UserParameter m_up = UserParameter.instance();
 	private InformationsPanel m_jpInformation;
-	private InjuryDialog injuryTool;
 	private final JMenu m_jmAbout = new JMenu(m_hov.getLanguageString("About"));
 	private final JMenu m_jmDatei = new JMenu(m_hov.getLanguageString("Datei"));
 	private final JMenu m_jmPluginMenu = new JMenu(m_hov.getLanguageString("Plugins"));
 	private final JMenu m_jmPluginsRefresh = new JMenu(m_hov.getLanguageString("Plugins"));
-	private final JMenu m_jmToolsMenu = new JMenu(m_hov.getLanguageString("Tools"));
 	private final JMenu m_jmUpdating = new JMenu(m_hov.getLanguageString("Refresh"));
 	private final JMenu m_jmVerschiedenes = new JMenu(m_hov.getLanguageString("Funktionen"));
 
@@ -182,7 +174,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmTraining = new JMenuItem(m_hov.getLanguageString("SubskillsBerechnen"));
 	private final JMenuItem m_jmTraining2 = new JMenuItem(m_hov.getLanguageString("SubskillsBerechnen")
 			+ " (7 " + m_hov.getLanguageString("Wochen") + ")");
-//	private final JMenuItem m_jmiArena = new JMenuItem(m_hov.getLanguageString("ArenaSizer"));
 	private final JMenuItem m_jmiAufstellung = new JMenuItem(m_hov.getLanguageString("Aufstellung"));
 	private final JMenuItem m_jmiFlags = new JMenuItem(m_hov.getLanguageString("Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem(m_hov.getLanguageString("HO"));
@@ -190,13 +181,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			+ m_hov.getLanguageString("Beta") + ")");
 	private final JMenuItem m_jmiEPV = new JMenuItem(m_hov.getLanguageString("EPV"));
 	private final JMenuItem m_jmiRatings = new JMenuItem(m_hov.getLanguageString("Ratings"));
-
-	private final JMenuItem m_jmiInjuryCalculator = new JMenuItem(m_hov.getLanguageString("InjuryCalculator"));
-	private final JMenuItem m_jmiKeeperTool = new JMenuItem(m_hov.getLanguageString("KeeperTool"));
-	private final JMenuItem m_jmiNotepad = new JMenuItem(m_hov.getLanguageString("Notizen"));
-	private final JMenuItem m_jmiExporter = new JMenuItem(m_hov.getLanguageString("XMLExporter"));
-	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem(m_hov.getLanguageString("CSVExporter"));
-	private final JMenuItem m_jmiDbCleanupTool = new JMenuItem(m_hov.getLanguageString("dbcleanup"));
 
 	private final JMenuItem m_jmiLanguages = new JMenuItem(m_hov.getLanguageString("Sprachdatei"));
 	private final JMenuItem m_jmiLigatabelle = new JMenuItem(m_hov.getLanguageString("Ligatabelle"));
@@ -210,11 +194,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiStatistik = new JMenuItem(m_hov.getLanguageString("Statistik"));
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(m_hov.getLanguageString("TransferScout"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(m_hov.getLanguageString("Verschiedenes"));
-	private final JMenuItem m_jmiArenaSizer = new JMenuItem(m_hov.getLanguageString("ArenaSizer"));
+
 
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
-	private KeeperToolDialog keeperTool;
 
 	private LigaTabellePanel m_jpLigaTabelle;
 
@@ -482,43 +465,20 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.STATISTIK);
 		} else if (source.equals(m_jmiTransferscout)) { // Transferscout
 			showTab(HOMainFrame.TRANSFERSCOUT);
-//		} else if (source.equals(m_jmiArena)) { // Arena
-//			showTab(HOMainFrame.ARENASIZER);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
-		}else if(source.equals(m_jmiArenaSizer)){
-			new ArenaSizerDialog(this).setVisible(true);
 		} else if (source.equals(m_jmCreditsItem)) { 
 			StringBuilder text = new StringBuilder(200);
 			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
 			text.append("2003 development started by Thomas Werth & Volker Fischer.\n");
 			text.append("Since 2006 this project is open source and developed by changing developers.");
 			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
-			//new VAPCredits(this);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmForumItem)) { // Forum
 			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
-		} else if (source.equals(m_jmiKeeperTool)) {
-			keeperTool.reload();
-			keeperTool.setVisible(true);
-		} else if (source.equals(m_jmiNotepad)) {
-			NotepadDialog notepad = new NotepadDialog(this, m_hov.getLanguageString("Notizen"));
-			notepad.setVisible(true);
-		} else if (source.equals(m_jmiExporter)) {
-			XMLExporter exporter = new XMLExporter();
-			exporter.doExport();
-		} else if (source.equals(m_jmiCsvPlayerExporter)) {
-			CsvPlayerExport csvExporter = new CsvPlayerExport();
-			csvExporter.showSaveDialog();
-		} else if (source.equals(m_jmiDbCleanupTool)) {
-			DBCleanupTool dbCleanupTool = new DBCleanupTool();
-			dbCleanupTool.showDialog(this);
-		} else if (source.equals(m_jmiInjuryCalculator)) {
-			injuryTool.reload();
-			injuryTool.setVisible(true);
 		} else if (source.equals(m_jmiLanguages)) {
 			UpdateController.showLanguageUpdateDialog();
 		} else if (source.equals(m_jmiFlags)) {
@@ -720,10 +680,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jtpTabbedPane.addTab(m_hov.getLanguageString("TransferScout"), m_jpTransferScout);
 		}
 
-//		if (!m_up.tempTabArenasizer) {
-//			m_jtpTabbedPane.addTab(m_hov.getLanguageString("ArenaSizer"), m_jpArenaSizer);
-//		}
-
 		// Sonstiges
 		m_jpInformation = new InformationsPanel();
 
@@ -764,8 +720,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jpInfoPanel = new InfoPanel();
 		getContentPane().add(m_jpInfoPanel, BorderLayout.SOUTH);
 
-		injuryTool = new InjuryDialog(this);
-		keeperTool = new KeeperToolDialog(this);
+		
 		setLocation(UserParameter.instance().hoMainFrame_PositionX,
 				UserParameter.instance().hoMainFrame_PositionY);
 		setSize(UserParameter.instance().hoMainFrame_width, UserParameter.instance().hoMainFrame_height);
@@ -897,11 +852,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiTransferscout.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTransferscout);
 
-		// ArenaSizer
-//		m_jmiArena.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
-//		m_jmiArena.addActionListener(this);
-//		m_jmVerschiedenes.add(m_jmiArena);
-
 		// Verschiedenes
 		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		m_jmiVerschiedenes.addActionListener(this);
@@ -913,30 +863,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
 		}
 
-		// Tool Menu
-		m_jmiArenaSizer.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiArenaSizer);
-		
-		m_jmiKeeperTool.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiKeeperTool);
-
-		m_jmiInjuryCalculator.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiInjuryCalculator);
-
-		m_jmiExporter.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiExporter);
-
-		m_jmiCsvPlayerExporter.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiCsvPlayerExporter);
-
-		m_jmiNotepad.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiNotepad);
-
-		m_jmiDbCleanupTool.addActionListener(this);
-		m_jmToolsMenu.add(m_jmiDbCleanupTool);
-
-		
-		m_jmMenuBar.add(m_jmToolsMenu);
+		m_jmMenuBar.add(new ToolManager().getToolMenu());
 
 		// Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
@@ -1051,7 +978,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	// --------------------------------------------------------------
 	public void showMatch(int matchid) {
-		showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELE);
+		showTab(HOMainFrame.SPIELE);
 
 		m_jpSpielePanel.showMatch(matchid);
 	}
@@ -1116,12 +1043,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			titel = m_hov.getLanguageString("TransferScout");
 			temporaer = m_up.tempTabTransferscout;
 			break;
-
-//		case ARENASIZER:
-//			component = m_jpArenaSizer;
-//			titel = m_hov.getLanguageString("ArenaSizer");
-//			temporaer = m_up.tempTabArenasizer;
-//			break;
 
 		case INFORMATIONEN:
 			component = m_jpInformation;
