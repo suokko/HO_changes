@@ -1,8 +1,12 @@
 package ho.tool;
 
 import ho.tool.arenasizer.ArenaSizerDialog;
+import ho.tool.dbcleanup.DBCleanupTool;
+import ho.tool.export.CsvPlayerExport;
+import ho.tool.export.XMLExporter;
 import ho.tool.injury.InjuryDialog;
 import ho.tool.keepertool.KeeperToolDialog;
+import ho.tool.notepad.NotepadDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,10 +15,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
-import de.hattrickorganizer.gui.exporter.CsvPlayerExport;
-import de.hattrickorganizer.gui.exporter.XMLExporter;
-import de.hattrickorganizer.gui.notepad.NotepadDialog;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 public class ToolManager implements ActionListener {

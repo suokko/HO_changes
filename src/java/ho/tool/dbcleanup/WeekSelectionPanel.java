@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.dbcleanup;
+package ho.tool.dbcleanup;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

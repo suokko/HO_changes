@@ -1,5 +1,5 @@
 // %198737965:de.hattrickorganizer.gui.menu.option%
-package de.hattrickorganizer.gui.dbcleanup;
+package ho.tool.dbcleanup;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
