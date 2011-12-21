@@ -8,12 +8,12 @@
   <property>
     <datei>Deutsch.properties</datei>
     <lang_id>1</lang_id>
-    <version>4.1</version>
+    <version>4.2</version>
   </property>
   <property>
     <datei>English.properties</datei>
     <lang_id>2</lang_id>
-    <version>4.2</version>
+    <version>4.3</version>
   </property>
   <property>
     <datei>Catalan.properties</datei>
