@@ -24,7 +24,7 @@ import de.hattrickorganizer.logik.xml.XMLMatchesParser;
 import de.hattrickorganizer.logik.xml.XMLTrainingParser;
 import de.hattrickorganizer.logik.xml.xmlEconomyParser;
 import de.hattrickorganizer.logik.xml.xmlLeagueDetailsParser;
-import de.hattrickorganizer.logik.xml.xmlMatchOrderParser;
+import de.hattrickorganizer.logik.xml.XMLMatchOrderParser;
 import de.hattrickorganizer.logik.xml.xmlMatchdetailsParser;
 import de.hattrickorganizer.logik.xml.xmlPlayersParser;
 import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
@@ -115,7 +115,7 @@ public class ConvertXml2Hrf {
 			for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
 				if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
 					waitDialog.setValue(54);
-					m_htNextLineup = new xmlMatchOrderParser().parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID()));
+					m_htNextLineup = new XMLMatchOrderParser().parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID()));
 					break;
 				}
 			}

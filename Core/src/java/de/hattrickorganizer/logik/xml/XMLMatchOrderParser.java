@@ -25,7 +25,7 @@ import de.hattrickorganizer.tools.xml.XMLManager;
  *
  * @author TheTom
  */
-public class xmlMatchOrderParser {
+public class XMLMatchOrderParser {
 	
 	/** List of positions used in property files */
 	final static String[] PLAYERPOSITIONS = { "Keeper", "RightBack", "RightCentralDefender", "MiddleCentralDefender", 
@@ -45,7 +45,7 @@ public class xmlMatchOrderParser {
     /**
      * Creates a new instance of xmlMatchOrderParser
      */
-    public xmlMatchOrderParser() {
+    public XMLMatchOrderParser() {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -509,7 +509,7 @@ public class xmlMatchOrderParser {
 //							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
 //						}
 					} catch (Exception e) {
-						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						HOLogger.instance().debug(XMLMatchOrderParser.class, "Err(add "+a+"): " + e);
 						hash.put(pos + "Order", "0");
 					}
 				}
@@ -534,7 +534,7 @@ public class xmlMatchOrderParser {
 //							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
 //						}
 					} catch (Exception e) {
-						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						HOLogger.instance().debug(XMLMatchOrderParser.class, "Err(add "+a+"): " + e);
 						hash.put(pos + "Order", "0");
 					}
 				}
@@ -559,13 +559,13 @@ public class xmlMatchOrderParser {
 //							hash.put(pos + "Order", String.valueOf(ISpielerPosition.ZUS_STUERMER));
 //						}
 					} catch (Exception e) {
-						HOLogger.instance().debug(xmlMatchOrderParser.class, "Err(add "+a+"): " + e);
+						HOLogger.instance().debug(XMLMatchOrderParser.class, "Err(add "+a+"): " + e);
 						hash.put(pos + "Order", "0");
 					}
 				}
 			}
     	} catch (Exception e) {
-    		HOLogger.instance().debug(xmlMatchOrderParser.class, e);
+    		HOLogger.instance().debug(XMLMatchOrderParser.class, e);
     	}
     }
     
