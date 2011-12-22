@@ -282,24 +282,23 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Auto-select the set best captain.
 	 */
-	public final void setAutoKapitaen(List<ISpieler> spieler) {
-		Spieler player = null;
+	public final void setAutoKapitaen(List<ISpieler> players) {
 		float maxValue = -1;
 
-		if (spieler == null) {
-			spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		if (players == null) {
+			players = HOVerwaltung.instance().getModel().getAllSpieler();
 		}
 
-		for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-			player = (Spieler) spieler.get(i);
-
-			if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
-				int curPlayerId = player.getSpielerID();
-				float curCaptainsValue = HOVerwaltung.instance().getModel().getAufstellung()
-						.getAverageExperience(curPlayerId);
-				if (maxValue < curCaptainsValue) {
-					maxValue = curCaptainsValue;
-					m_iKapitaen = curPlayerId;
+		if (players != null) {
+			for (ISpieler player : players) {
+				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
+					int curPlayerId = player.getSpielerID();
+					float curCaptainsValue = HOVerwaltung.instance().getModel().getAufstellung()
+							.getAverageExperience(curPlayerId);
+					if (maxValue < curCaptainsValue) {
+						maxValue = curCaptainsValue;
+						m_iKapitaen = curPlayerId;
+					}
 				}
 			}
 		}
@@ -308,27 +307,26 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Auto-select the set best pieces taker.
 	 */
-	public final void setAutoKicker(List<ISpieler> spieler) {
+	public final void setAutoKicker(List<ISpieler> players) {
 		int maxStandard = -1;
 		int form = -1;
-		Spieler player = null;
 
-		if (spieler == null) {
-			spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		if (players == null) {
+			players = HOVerwaltung.instance().getModel().getAllSpieler();
 		}
 
-		for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-			player = (Spieler) spieler.get(i);
-
-			if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
-				if (player.getStandards() > maxStandard) {
-					maxStandard = player.getStandards();
-					form = player.getForm();
-					m_iKicker = player.getSpielerID();
-				} else if ((player.getStandards() == maxStandard) && (form < player.getForm())) {
-					maxStandard = player.getStandards();
-					form = player.getForm();
-					m_iKicker = player.getSpielerID();
+		if (players != null) {
+			for (ISpieler player : players) {
+				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
+					if (player.getStandards() > maxStandard) {
+						maxStandard = player.getStandards();
+						form = player.getForm();
+						m_iKicker = player.getSpielerID();
+					} else if ((player.getStandards() == maxStandard) && (form < player.getForm())) {
+						maxStandard = player.getStandards();
+						form = player.getForm();
+						m_iKicker = player.getSpielerID();
+					}
 				}
 			}
 		}
@@ -352,34 +350,31 @@ public class Lineup implements plugins.ILineUp {
 	 */
 	public final float getAverageExperience(int captainsId) {
 		float value = 0;
-		try {
-			Spieler pl = null;
-			Spieler captain = null;
-			Vector<ISpieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
 
-			for (int i = 0; (players != null) && (i < players.size()); i++) {
-				pl = (Spieler) players.elementAt(i);
-				if (m_clAssi.isSpielerInAnfangsElf(pl.getSpielerID(), m_vPositionen)) {
-					value += pl.getErfahrung();
+		Spieler captain = null;
+		List<ISpieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+
+		if (players != null) {
+			for (ISpieler player : players) {
+				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
+					value += player.getErfahrung();
 					if (captainsId > 0) {
-						if (captainsId == pl.getSpielerID()) {
-							captain = pl;
+						if (captainsId == player.getSpielerID()) {
+							captain = (Spieler) player;
 						}
-					} else if (m_iKapitaen == pl.getSpielerID()) {
-						captain = pl;
+					} else if (m_iKapitaen == player.getSpielerID()) {
+						captain = (Spieler) player;
 					}
 				}
 			}
-			if (captain != null) {
-				value = ((float) (value + captain.getErfahrung()) / 12)
-						* (1f - (float) (7 - captain.getFuehrung()) * 0.05f);
-			} else {
-				// HOLogger.instance().log(getClass(),
-				// "Can't calc average experience, captain not set.");
-				value = -1f;
-			}
-		} catch (Exception e) {
-			HOLogger.instance().error(getClass(), e);
+		}
+		if (captain != null) {
+			value = ((float) (value + captain.getErfahrung()) / 12)
+					* (1f - (float) (7 - captain.getFuehrung()) * 0.05f);
+		} else {
+			// HOLogger.instance().log(getClass(),
+			// "Can't calc average experience, captain not set.");
+			value = -1f;
 		}
 		return value;
 	}
@@ -802,9 +797,10 @@ public class Lineup implements plugins.ILineUp {
 	 * Get the position object by position id.
 	 */
 	public final SpielerPosition getPositionById(int id) {
-		for (int i = 0; i < m_vPositionen.size(); i++) {
-			if (((SpielerPosition) m_vPositionen.get(i)).getId() == id) {
-				return (SpielerPosition) m_vPositionen.get(i);
+		for (ISpielerPosition position : m_vPositionen) {
+			SpielerPosition spielerPosition = (SpielerPosition) position;
+			if (spielerPosition.getId() == id) {
+				return spielerPosition;
 			}
 		}
 		return null;
@@ -814,9 +810,10 @@ public class Lineup implements plugins.ILineUp {
 	 * Get the position object by player id.
 	 */
 	public final SpielerPosition getPositionBySpielerId(int playerid) {
-		for (int i = 0; i < m_vPositionen.size(); i++) {
-			if (((SpielerPosition) m_vPositionen.get(i)).getSpielerId() == playerid) {
-				return (SpielerPosition) m_vPositionen.get(i);
+		for (ISpielerPosition position : m_vPositionen) {
+			SpielerPosition spielerPosition = (SpielerPosition) position;
+			if (spielerPosition.getSpielerId() == playerid) {
+				return spielerPosition;
 			}
 		}
 		return null;
@@ -826,20 +823,20 @@ public class Lineup implements plugins.ILineUp {
 	 * Setter for property m_vPositionen. All previous entries of the linup are
 	 * cleared.
 	 * 
-	 * @param m_vPositionen
+	 * @param positions
 	 *            New value of property m_vPositionen.
 	 */
-	public final void setPositionen(List<ISpielerPosition> posVec) {
+	public final void setPositionen(List<ISpielerPosition> positions) {
 		// Replace the existing positions with the incoming on a one by one
 		// basis. Otherwise we will miss 3 positions when loading
 		// an old style lineup.
 		// We need to avoid the regular methods, as some required stuff like the
 		// Model may not be created yet.
 
-		if (posVec != null) {
+		if (positions != null) {
 			initPositionen553();
-			for (int i = 0; i < posVec.size(); i++) {
-				SpielerPosition spos = (SpielerPosition) posVec.get(i);
+			for (ISpielerPosition pos : positions) {
+				SpielerPosition spos = (SpielerPosition) pos;
 				for (int j = 0; j < m_vPositionen.size(); j++) {
 					if (((SpielerPosition) m_vPositionen.get(j)).getId() == spos.getId()) {
 						m_vPositionen.setElementAt(spos, j);
@@ -1032,16 +1029,13 @@ public class Lineup implements plugins.ILineUp {
 		case plugins.IMatchDetails.TAKTIK_PRESSING:
 			value = getTacticLevelPressing();
 			break;
-
 		case plugins.IMatchDetails.TAKTIK_KONTER:
 			value = getTacticLevelCounter();
 			break;
-
 		case plugins.IMatchDetails.TAKTIK_MIDDLE:
 		case plugins.IMatchDetails.TAKTIK_WINGS:
 			value = getTacticLevelAimAow();
 			break;
-
 		case plugins.IMatchDetails.TAKTIK_LONGSHOTS:
 			value = getTacticLevelLongShots();
 			break;
@@ -1079,47 +1073,36 @@ public class Lineup implements plugins.ILineUp {
 		case SYS_MURKS:
 			erfahrung = -1;
 			break;
-
 		case SYS_451:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung451();
 			break;
-
 		case SYS_352:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung352();
 			break;
-
 		case SYS_442:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience442();
 			break;
-
 		case SYS_343:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung343();
 			break;
-
 		case SYS_433:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung433();
 			break;
-
 		case SYS_532:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung532();
 			break;
-
 		case SYS_541:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung541();
 			break;
-
 		case SYS_523:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience523();
 			break;
-
 		case SYS_550:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience550();
 			break;
-
 		case SYS_253:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience253();
 			break;
-
 		}
 
 		return erfahrung;
@@ -1136,15 +1119,15 @@ public class Lineup implements plugins.ILineUp {
 	 * Check if the players are still in the team (not sold or fired).
 	 */
 	public final void checkAufgestellteSpieler() {
-		SpielerPosition pos = null;
-
-		for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
-			pos = (SpielerPosition) m_vPositionen.elementAt(i);
-			// existiert Spieler noch ?
-			if ((HOVerwaltung.instance().getModel() != null)
-					&& (HOVerwaltung.instance().getModel().getSpieler(pos.getSpielerId()) == null)) {
-				// nein dann zuweisung aufheben
-				pos.setSpielerId(0, this);
+		if (m_vPositionen != null) {
+			for (ISpielerPosition pos : m_vPositionen) {
+				SpielerPosition position = (SpielerPosition) pos;
+				// existiert Spieler noch ?
+				if ((HOVerwaltung.instance().getModel() != null)
+						&& (HOVerwaltung.instance().getModel().getSpieler(position.getSpielerId()) == null)) {
+					// nein dann zuweisung aufheben
+					position.setSpielerId(0, this);
+				}
 			}
 		}
 	}
@@ -1169,76 +1152,74 @@ public class Lineup implements plugins.ILineUp {
 		Lineup clone = null;
 
 		try {
-			properties.setProperty("keeper", getPositionById(ISpielerPosition.keeper).getSpielerId() + "");
-			properties.setProperty("rightback", getPositionById(ISpielerPosition.rightBack).getSpielerId()
-					+ "");
-			properties.setProperty("insideback1", getPositionById(ISpielerPosition.rightCentralDefender)
-					.getSpielerId() + "");
-			properties.setProperty("insideback2", getPositionById(ISpielerPosition.leftCentralDefender)
-					.getSpielerId() + "");
-			properties.setProperty("insideback3", getPositionById(ISpielerPosition.middleCentralDefender)
-					.getSpielerId() + "");
-			properties
-					.setProperty("leftback", getPositionById(ISpielerPosition.leftBack).getSpielerId() + "");
-			properties.setProperty("rightwinger", getPositionById(ISpielerPosition.rightWinger)
-					.getSpielerId() + "");
-			properties.setProperty("insidemid1", getPositionById(ISpielerPosition.rightInnerMidfield)
-					.getSpielerId() + "");
-			properties.setProperty("insidemid2", getPositionById(ISpielerPosition.leftInnerMidfield)
-					.getSpielerId() + "");
-			properties.setProperty("insidemid3", getPositionById(ISpielerPosition.centralInnerMidfield)
-					.getSpielerId() + "");
-			properties.setProperty("leftwinger", getPositionById(ISpielerPosition.leftWinger).getSpielerId()
-					+ "");
-			properties.setProperty("forward1", getPositionById(ISpielerPosition.rightForward).getSpielerId()
-					+ "");
-			properties.setProperty("forward2", getPositionById(ISpielerPosition.leftForward).getSpielerId()
-					+ "");
-			properties.setProperty("forward3", getPositionById(ISpielerPosition.centralForward)
-					.getSpielerId() + "");
-			properties.setProperty("substback", getPositionById(ISpielerPosition.substDefender)
-					.getSpielerId() + "");
-			properties.setProperty("substinsidemid", getPositionById(ISpielerPosition.substInnerMidfield)
-					.getSpielerId() + "");
-			properties.setProperty("substwinger", getPositionById(ISpielerPosition.substWinger)
-					.getSpielerId() + "");
-			properties.setProperty("substkeeper", getPositionById(ISpielerPosition.substKeeper)
-					.getSpielerId() + "");
-			properties.setProperty("substforward", getPositionById(ISpielerPosition.substForward)
-					.getSpielerId() + "");
-
-			properties.setProperty("behrightback", getPositionById(ISpielerPosition.rightBack).getTaktik()
-					+ "");
-			properties.setProperty("behinsideback1", getPositionById(ISpielerPosition.rightCentralDefender)
-					.getTaktik() + "");
-			properties.setProperty("behinsideback2", getPositionById(ISpielerPosition.leftCentralDefender)
-					.getTaktik() + "");
-			properties.setProperty("behinsideback3", getPositionById(ISpielerPosition.middleCentralDefender)
-					.getTaktik() + "");
-			properties
-					.setProperty("behleftback", getPositionById(ISpielerPosition.leftBack).getTaktik() + "");
-			properties.setProperty("behrightwinger", getPositionById(ISpielerPosition.rightWinger)
-					.getTaktik() + "");
-			properties.setProperty("behinsidemid1", getPositionById(ISpielerPosition.rightInnerMidfield)
-					.getTaktik() + "");
-			properties.setProperty("behinsidemid2", getPositionById(ISpielerPosition.leftInnerMidfield)
-					.getTaktik() + "");
-			properties.setProperty("behinsidemid3", getPositionById(ISpielerPosition.centralInnerMidfield)
-					.getTaktik() + "");
-			properties.setProperty("behleftwinger", getPositionById(ISpielerPosition.leftWinger).getTaktik()
-					+ "");
-			properties.setProperty("behforward1", getPositionById(ISpielerPosition.rightForward).getTaktik()
-					+ "");
-			properties.setProperty("behforward2", getPositionById(ISpielerPosition.leftForward).getTaktik()
-					+ "");
-			properties.setProperty("behforward3", getPositionById(ISpielerPosition.centralForward)
-					.getTaktik() + "");
-
-			properties.setProperty("kicker1", getKicker() + "");
-			properties.setProperty("captain", getKapitaen() + "");
-
-			properties.setProperty("tactictype", getTacticType() + "");
-			properties.setProperty("installning", getAttitude() + "");
+			properties.setProperty("keeper",
+					String.valueOf(getPositionById(ISpielerPosition.keeper).getSpielerId()));
+			properties.setProperty("rightback",
+					String.valueOf(getPositionById(ISpielerPosition.rightBack).getSpielerId()));
+			properties.setProperty("insideback1",
+					String.valueOf(getPositionById(ISpielerPosition.rightCentralDefender).getSpielerId()));
+			properties.setProperty("insideback2",
+					String.valueOf(getPositionById(ISpielerPosition.leftCentralDefender).getSpielerId()));
+			properties.setProperty("insideback3",
+					String.valueOf(getPositionById(ISpielerPosition.middleCentralDefender).getSpielerId()));
+			properties.setProperty("leftback",
+					String.valueOf(getPositionById(ISpielerPosition.leftBack).getSpielerId()));
+			properties.setProperty("rightwinger",
+					String.valueOf(getPositionById(ISpielerPosition.rightWinger).getSpielerId()));
+			properties.setProperty("insidemid1",
+					String.valueOf(getPositionById(ISpielerPosition.rightInnerMidfield).getSpielerId()));
+			properties.setProperty("insidemid2",
+					String.valueOf(getPositionById(ISpielerPosition.leftInnerMidfield).getSpielerId()));
+			properties.setProperty("insidemid3",
+					String.valueOf(getPositionById(ISpielerPosition.centralInnerMidfield).getSpielerId()));
+			properties.setProperty("leftwinger",
+					String.valueOf(getPositionById(ISpielerPosition.leftWinger).getSpielerId()));
+			properties.setProperty("forward1",
+					String.valueOf(getPositionById(ISpielerPosition.rightForward).getSpielerId()));
+			properties.setProperty("forward2",
+					String.valueOf(getPositionById(ISpielerPosition.leftForward).getSpielerId()));
+			properties.setProperty("forward3",
+					String.valueOf(getPositionById(ISpielerPosition.centralForward).getSpielerId()));
+			properties.setProperty("substback",
+					String.valueOf(getPositionById(ISpielerPosition.substDefender).getSpielerId()));
+			properties.setProperty("substinsidemid",
+					String.valueOf(getPositionById(ISpielerPosition.substInnerMidfield).getSpielerId()));
+			properties.setProperty("substwinger",
+					String.valueOf(getPositionById(ISpielerPosition.substWinger).getSpielerId()));
+			properties.setProperty("substkeeper",
+					String.valueOf(getPositionById(ISpielerPosition.substKeeper).getSpielerId()));
+			properties.setProperty("substforward",
+					String.valueOf(getPositionById(ISpielerPosition.substForward).getSpielerId()));
+			properties.setProperty("behrightback",
+					String.valueOf(getPositionById(ISpielerPosition.rightBack).getTaktik()));
+			properties.setProperty("behinsideback1",
+					String.valueOf(getPositionById(ISpielerPosition.rightCentralDefender).getTaktik()));
+			properties.setProperty("behinsideback2",
+					String.valueOf(getPositionById(ISpielerPosition.leftCentralDefender).getTaktik()));
+			properties.setProperty("behinsideback3",
+					String.valueOf(getPositionById(ISpielerPosition.middleCentralDefender).getTaktik()));
+			properties.setProperty("behleftback",
+					String.valueOf(getPositionById(ISpielerPosition.leftBack).getTaktik()));
+			properties.setProperty("behrightwinger",
+					String.valueOf(getPositionById(ISpielerPosition.rightWinger).getTaktik()));
+			properties.setProperty("behinsidemid1",
+					String.valueOf(getPositionById(ISpielerPosition.rightInnerMidfield).getTaktik()));
+			properties.setProperty("behinsidemid2",
+					String.valueOf(getPositionById(ISpielerPosition.leftInnerMidfield).getTaktik()));
+			properties.setProperty("behinsidemid3",
+					String.valueOf(getPositionById(ISpielerPosition.centralInnerMidfield).getTaktik()));
+			properties.setProperty("behleftwinger",
+					String.valueOf(getPositionById(ISpielerPosition.leftWinger).getTaktik()));
+			properties.setProperty("behforward1",
+					String.valueOf(getPositionById(ISpielerPosition.rightForward).getTaktik()));
+			properties.setProperty("behforward2",
+					String.valueOf(getPositionById(ISpielerPosition.leftForward).getTaktik()));
+			properties.setProperty("behforward3",
+					String.valueOf(getPositionById(ISpielerPosition.centralForward).getTaktik()));
+			properties.setProperty("kicker1", String.valueOf(getKicker()));
+			properties.setProperty("captain", String.valueOf(getKapitaen()));
+			properties.setProperty("tactictype", String.valueOf(getTacticType()));
+			properties.setProperty("installning", String.valueOf(getAttitude()));
 
 			for (int i = 0; i < this.substitutions.size(); i++) {
 				ISubstitution sub = this.substitutions.get(i);
@@ -1409,9 +1390,9 @@ public class Lineup implements plugins.ILineUp {
 	public final void resetReserveBank() {
 		// Nur Reservespieler
 		final Vector<ISpielerPosition> vReserve = new Vector<ISpielerPosition>();
-		for (int i = 0; i < m_vPositionen.size(); i++) {
-			if (((SpielerPosition) m_vPositionen.get(i)).getId() >= ISpielerPosition.startReserves) {
-				vReserve.add(m_vPositionen.get(i));
+		for (ISpielerPosition pos : m_vPositionen) {
+			if (((SpielerPosition) pos).getId() >= ISpielerPosition.startReserves) {
+				vReserve.add(pos);
 			}
 		}
 		m_clAssi.resetPositionsbesetzungen(vReserve);
@@ -1443,12 +1424,10 @@ public class Lineup implements plugins.ILineUp {
 	 */
 	private int getAnzAbwehr() {
 		int anzahl = 0;
-
 		anzahl += getAnzPosImSystem(ISpielerPosition.BACK);
 		anzahl += getAnzPosImSystem(ISpielerPosition.BACK_TOMID);
 		anzahl += getAnzPosImSystem(ISpielerPosition.BACK_OFF);
 		anzahl += getAnzPosImSystem(ISpielerPosition.BACK_DEF);
-
 		return anzahl + getAnzInnenverteidiger();
 	}
 
@@ -1457,11 +1436,9 @@ public class Lineup implements plugins.ILineUp {
 	 */
 	private int getAnzInnenverteidiger() {
 		int anzahl = 0;
-
 		anzahl += getAnzPosImSystem(ISpielerPosition.CENTRAL_DEFENDER);
 		anzahl += getAnzPosImSystem(ISpielerPosition.CENTRAL_DEFENDER_TOWING);
 		anzahl += getAnzPosImSystem(ISpielerPosition.CENTRAL_DEFENDER_OFF);
-
 		return anzahl;
 	}
 
@@ -1503,15 +1480,13 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Generic "counter" for the given position in the current lineup.
 	 */
-	private int getAnzPosImSystem(byte position) {
-		SpielerPosition pos = null;
+	private int getAnzPosImSystem(byte positionId) {
 		int anzahl = 0;
 
-		for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
-			pos = (SpielerPosition) m_vPositionen.elementAt(i);
-
-			if ((position == pos.getPosition()) && (pos.getId() < ISpielerPosition.startReserves)
-					&& (pos.getSpielerId() > 0)) {
+		for (ISpielerPosition pos : m_vPositionen) {
+			SpielerPosition position = (SpielerPosition) pos;
+			if ((positionId == position.getPosition()) && (position.getId() < ISpielerPosition.startReserves)
+					&& (position.getSpielerId() > 0)) {
 				++anzahl;
 			}
 		}
@@ -1524,14 +1499,14 @@ public class Lineup implements plugins.ILineUp {
 	 *         field
 	 */
 	public boolean hasFreePosition() {
-		SpielerPosition pos = null;
 		int numPlayers = 0;
-		for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
-			pos = (SpielerPosition) m_vPositionen.elementAt(i);
+		for (ISpielerPosition pos : m_vPositionen) {
+			SpielerPosition position = (SpielerPosition) pos;
 
-			if ((pos.getId() < ISpielerPosition.KEEPER) || (pos.getId() >= ISpielerPosition.startReserves)) {
-				continue; // We are not interested in reserves, captain, set
-							// piece taker.
+			if ((position.getId() < ISpielerPosition.KEEPER)
+					|| (position.getId() >= ISpielerPosition.startReserves)) {
+				// We are not interested in reserves, captain, set piece taker.
+				continue;
 			}
 
 			// SpielerID of 0 indicates the position is empty. -1 is the first
@@ -1539,7 +1514,7 @@ public class Lineup implements plugins.ILineUp {
 			// At some time, clean up by adding some boolean value to Spieler
 			// instead (isTemp or something).
 
-			if (pos.getSpielerId() != 0) {
+			if (position.getSpielerId() != 0) {
 				numPlayers++;
 				if (numPlayers == 11) {
 					return false;
@@ -1553,32 +1528,28 @@ public class Lineup implements plugins.ILineUp {
 	 * Calculate player strength for the given position.
 	 */
 	private float calcPlayerStk(List<ISpieler> spieler, int spielerId, byte position, boolean mitForm) {
-		Spieler player = null;
-
-		for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-			player = (Spieler) spieler.get(i);
-
-			if (player.getSpielerID() == spielerId) {
-				return player.calcPosValue(position, mitForm);
+		if (spieler != null) {
+			for (ISpieler current : spieler) {
+				Spieler player = (Spieler) current;
+				if (player.getSpielerID() == spielerId) {
+					return player.calcPosValue(position, mitForm);
+				}
 			}
 		}
-
 		return 0.0f;
 	}
 
 	/**
 	 * Calculate team strength for the given position.
 	 */
-	private float calcTeamStk(List<ISpieler> spieler, byte position, boolean useForm) {
+	private float calcTeamStk(List<ISpieler> spieler, byte positionId, boolean useForm) {
 		float stk = 0.0f;
 		if (spieler != null) {
-			SpielerPosition pos = null;
-
-			for (int i = 0; (m_vPositionen != null) && (spieler != null) && (i < m_vPositionen.size()); i++) {
-				pos = (SpielerPosition) m_vPositionen.elementAt(i);
-
-				if ((pos.getPosition() == position) && (pos.getId() < ISpielerPosition.startReserves)) {
-					stk += calcPlayerStk(spieler, pos.getSpielerId(), position, useForm);
+			for (ISpielerPosition pos : m_vPositionen) {
+				SpielerPosition position = (SpielerPosition) pos;
+				if ((position.getPosition() == positionId)
+						&& (position.getId() < ISpielerPosition.startReserves)) {
+					stk += calcPlayerStk(spieler, position.getSpielerId(), positionId, useForm);
 				}
 			}
 		}
@@ -1589,25 +1560,23 @@ public class Lineup implements plugins.ILineUp {
 	 * Debug log lineup.
 	 */
 	private void dumpValues() {
-		for (int i = 0; (m_vPositionen != null) && (i < m_vPositionen.size()); i++) {
-			final Spieler temp = HOVerwaltung.instance().getModel()
-					.getSpieler(((SpielerPosition) m_vPositionen.elementAt(i)).getSpielerId());
-			String name = "";
-			float stk = 0.0f;
+		if (m_vPositionen != null) {
+			for (ISpielerPosition pos : m_vPositionen) {
+				final Spieler temp = HOVerwaltung.instance().getModel()
+						.getSpieler(((SpielerPosition) pos).getSpielerId());
+				String name = "";
+				float stk = 0.0f;
 
-			if (temp != null) {
-				name = temp.getName();
-				stk = temp.calcPosValue(((SpielerPosition) m_vPositionen.elementAt(i)).getPosition(), true);
+				if (temp != null) {
+					name = temp.getName();
+					stk = temp.calcPosValue(((SpielerPosition) pos).getPosition(), true);
+				}
+
+				HOLogger.instance().log(getClass(),
+						"PosID: " + SpielerPosition.getNameForID(((SpielerPosition) pos).getId()) //
+								+ ", Player :" + name + " , Stk : " + stk);
 			}
-
-			HOLogger.instance().log(
-					getClass(),
-					"PosID: "
-							+ SpielerPosition.getNameForID(((SpielerPosition) m_vPositionen.elementAt(i))
-									.getId()) //
-							+ ", Player :" + name + " , Stk : " + stk);
 		}
-
 		if (m_iKapitaen > 0) {
 			HOLogger.instance().log(getClass(),
 					"Captain: " + HOVerwaltung.instance().getModel().getSpieler(m_iKapitaen).getName());
