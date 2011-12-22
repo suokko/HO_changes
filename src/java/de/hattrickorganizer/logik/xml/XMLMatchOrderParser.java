@@ -42,12 +42,12 @@ public class XMLMatchOrderParser {
 	/**
 	 * Parse match orders from a file.
 	 */
-	public static Hashtable<String, String> parseMatchOrder(File datei) {
+	public static Map<String, String> parseMatchOrder(File datei) {
 		Document doc = XMLManager.instance().parseFile(datei);
 		return parseDetails(doc);
 	}
 
-	public static Hashtable<String, String> parseMatchOrderFromString(String inputStream) {
+	public static Map<String, String> parseMatchOrderFromString(String inputStream) {
 		Document doc = null;
 		doc = XMLManager.instance().parseString(inputStream);
 		return parseDetails(doc);
