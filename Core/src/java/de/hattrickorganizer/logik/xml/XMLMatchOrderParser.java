@@ -47,9 +47,9 @@ public class XMLMatchOrderParser {
 		return parseDetails(doc);
 	}
 
-	public static Map<String, String> parseMatchOrderFromString(String inputStream) {
+	public static Map<String, String> parseMatchOrderFromString(String xmlData) {
 		Document doc = null;
-		doc = XMLManager.instance().parseString(inputStream);
+		doc = XMLManager.instance().parseString(xmlData);
 		return parseDetails(doc);
 	}
 
