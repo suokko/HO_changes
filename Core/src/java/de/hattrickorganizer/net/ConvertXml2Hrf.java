@@ -115,7 +115,7 @@ public class ConvertXml2Hrf {
 			for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
 				if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
 					waitDialog.setValue(54);
-					m_htNextLineup = new XMLMatchOrderParser().parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID()));
+					m_htNextLineup = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID()));
 					break;
 				}
 			}

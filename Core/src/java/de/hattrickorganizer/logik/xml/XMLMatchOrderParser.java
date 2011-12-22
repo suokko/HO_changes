@@ -33,36 +33,21 @@ public class XMLMatchOrderParser {
 			"LeftForward", "SubstKeeper", "SubstBack", "SubstInsideMid", "SubstWinger", "SubstForward",
 			"Kicker", "Captain" };
 
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
 	/**
-	 * Creates a new instance of xmlMatchOrderParser
+	 * Utility class - private constructor enforces noninstantiability.
 	 */
-	public XMLMatchOrderParser() {
-	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
-	/**
-	 * Parse match orders from a file name.
-	 */
-	public final Hashtable<String, String> parseMatchOrder(String dateiname) {
-		Document doc = XMLManager.instance().parseFile(dateiname);
-		return parseDetails(doc);
+	private XMLMatchOrderParser() {
 	}
 
 	/**
 	 * Parse match orders from a file.
 	 */
-	public final Hashtable<String, String> parseMatchOrder(File datei) {
+	public static Hashtable<String, String> parseMatchOrder(File datei) {
 		Document doc = XMLManager.instance().parseFile(datei);
 		return parseDetails(doc);
 	}
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// parse public
-	// //////////////////////////////////////////////////////////////////////////////
-	public final Hashtable<String, String> parseMatchOrderFromString(String inputStream) {
+	public static Hashtable<String, String> parseMatchOrderFromString(String inputStream) {
 		Document doc = null;
 		doc = XMLManager.instance().parseString(inputStream);
 		return parseDetails(doc);
@@ -360,10 +345,6 @@ public class XMLMatchOrderParser {
 		map.put("subst" + num + "standing", standing);
 
 	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Parser Helper private
-	// //////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * erstellt das MAtchlineup Objekt
