@@ -6,6 +6,7 @@
  */
 package de.hattrickorganizer.logik;
 
+import java.util.List;
 import java.util.Vector;
 
 import plugins.ILineUp;
@@ -128,9 +129,9 @@ public class LineupAssistant {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean isSpielerAufgestellt(int spielerId, Vector<ISpielerPosition> positionen) {
+    public final boolean isSpielerAufgestellt(int spielerId, List<ISpielerPosition> positionen) {
         for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
-            if (((SpielerPosition) positionen.elementAt(i)).getSpielerId() == spielerId) {
+            if (((SpielerPosition) positionen.get(i)).getSpielerId() == spielerId) {
                 return true;
             }
         }
@@ -189,7 +190,7 @@ public class LineupAssistant {
      * @param wetterBonus Schwellwert der angibt an wie auf WetterEffekte reagiert werden soll
      * @param wetter das aktuelle Wetter
      */
-    public final void doAufstellung(Vector<ISpielerPosition> positionen, Vector<ISpieler> spieler, byte reihenfolge,
+    public final void doAufstellung(List<ISpielerPosition> positionen, List<ISpieler> spieler, byte reihenfolge,
                                     boolean mitForm, boolean idealPosFirst,
                                     boolean ignoreVerletzung, boolean ignoreSperre,
                                     float wetterBonus, int wetter) {
@@ -530,15 +531,15 @@ public class LineupAssistant {
                                                                       boolean mitForm,
                                                                       boolean ignoreVerletzung,
                                                                       boolean ignoreSperre,
-                                                                      Vector<ISpieler> vSpieler,
-                                                                      Vector<ISpielerPosition> positionen) {
+                                                                      List<ISpieler> vSpieler,
+                                                                      List<ISpielerPosition> positionen) {
         de.hattrickorganizer.model.Spieler spieler = null;
         de.hattrickorganizer.model.Spieler bestSpieler = null;
         float bestStk = -1.0f;
         float aktuStk = 0.0f;
 
         for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
-            spieler = (de.hattrickorganizer.model.Spieler) vSpieler.elementAt(i);
+            spieler = (de.hattrickorganizer.model.Spieler) vSpieler.get(i);
 
             //stk inklusive Wetter effekt errechnen
             aktuStk = spieler.calcPosValue(position, mitForm);
@@ -574,8 +575,8 @@ public class LineupAssistant {
                                                                                   boolean mitForm,
                                                                                   boolean ignoreVerletzung,
                                                                                   boolean ignoreSperre,
-                                                                                  Vector<ISpieler> vSpieler,
-                                                                                  Vector<ISpielerPosition> positionen) {
+                                                                                  List<ISpieler> vSpieler,
+                                                                                  List<ISpielerPosition> positionen) {
         Spieler spieler = null;
         Spieler bestSpieler = null;
         float bestStk = -1.0f;
@@ -583,7 +584,7 @@ public class LineupAssistant {
 
         for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
             //Spieler holen
-            spieler = (Spieler) vSpieler.elementAt(i);
+            spieler = (Spieler) vSpieler.get(i);
 
             //stk inklusive Wetter effekt errechnen
             aktuStk = spieler.calcPosValue(position, mitForm);
@@ -618,13 +619,13 @@ public class LineupAssistant {
      */
     protected final void doReserveSpielerAufstellen(byte position, boolean mitForm,
                                                     boolean ignoreVerletzung, boolean ignoreSperre,
-                                                    Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
+                                                    List<ISpieler> vSpieler, List<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
-            pos = (SpielerPosition) positionen.elementAt(i);
+            pos = (SpielerPosition) positionen.get(i);
 
             //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
             if ((pos.getSpielerId() > 0)
@@ -657,14 +658,14 @@ public class LineupAssistant {
      */
     protected final void doReserveSpielerAufstellenIdealPos(byte position, boolean mitForm,
                                                             boolean ignoreVerletzung,
-                                                            boolean ignoreSperre, Vector<ISpieler> vSpieler,
-                                                            Vector<ISpielerPosition> positionen) {
+                                                            boolean ignoreSperre, List<ISpieler> vSpieler,
+                                                            List<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
-            pos = (de.hattrickorganizer.model.SpielerPosition) positionen.elementAt(i);
+            pos = (de.hattrickorganizer.model.SpielerPosition) positionen.get(i);
 
             //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
             if ((pos.getSpielerId() > 0)
@@ -697,14 +698,14 @@ public class LineupAssistant {
      */
     protected final void doSpielerAufstellen(byte position, boolean mitForm,
                                              boolean ignoreVerletzung, boolean ignoreSperre,
-                                             Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
+                                             List<ISpieler> vSpieler, List<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
         final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
-            pos = (SpielerPosition) positionen.elementAt(i);
+            pos = (SpielerPosition) positionen.get(i);
 
             //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
             if ((pos.getSpielerId() > 0)
@@ -768,15 +769,15 @@ public class LineupAssistant {
      */
     protected final void doSpielerAufstellenIdealPos(byte position, boolean mitForm,
                                                      boolean ignoreVerletzung,
-                                                     boolean ignoreSperre, Vector<ISpieler> vSpieler,
-                                                     Vector<ISpielerPosition> positionen) {
+                                                     boolean ignoreSperre, List<ISpieler> vSpieler,
+                                                     List<ISpielerPosition> positionen) {
        SpielerPosition pos = null;
         Spieler spieler = null;
         final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
-            pos = (SpielerPosition) positionen.elementAt(i);
+            pos = (SpielerPosition) positionen.get(i);
 
             //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
             if ((pos.getSpielerId() > 0)
@@ -835,7 +836,7 @@ public class LineupAssistant {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcAveragePosValue(Vector<ISpieler> spieler) {
+    private float calcAveragePosValue(List<ISpieler> spieler) {
         float average = 0.0f;
         Spieler player = null;
 
@@ -853,7 +854,7 @@ public class LineupAssistant {
         return average;
     }
     
-    private Vector<ISpielerPosition> filterPositions(Vector<ISpielerPosition> positions) {
+    private Vector<ISpielerPosition> filterPositions(List<ISpielerPosition> positions) {
     	// Remove "red" positions from the position selection of the AssistantPanel.
     	Vector<ISpielerPosition> returnVec = new Vector<ISpielerPosition>();
     	java.util.HashMap<Integer, Boolean> statusMap = 

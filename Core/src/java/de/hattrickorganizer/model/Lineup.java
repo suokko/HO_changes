@@ -247,7 +247,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Calculates the total star rating for defense This is CA-rating?
 	 */
-	public final float getAWTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
+	public final float getAWTeamStk(List<ISpieler> spieler, boolean mitForm) {
 		float stk = 0.0f;
 		stk += calcTeamStk(spieler, ISpielerPosition.CENTRAL_DEFENDER, mitForm);
 		stk += calcTeamStk(spieler, ISpielerPosition.CENTRAL_DEFENDER_OFF, mitForm);
@@ -282,7 +282,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Auto-select the set best captain.
 	 */
-	public final void setAutoKapitaen(Vector<ISpieler> spieler) {
+	public final void setAutoKapitaen(List<ISpieler> spieler) {
 		Spieler player = null;
 		float maxValue = -1;
 
@@ -291,7 +291,7 @@ public class Lineup implements plugins.ILineUp {
 		}
 
 		for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-			player = (Spieler) spieler.elementAt(i);
+			player = (Spieler) spieler.get(i);
 
 			if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
 				int curPlayerId = player.getSpielerID();
@@ -308,7 +308,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Auto-select the set best pieces taker.
 	 */
-	public final void setAutoKicker(Vector<ISpieler> spieler) {
+	public final void setAutoKicker(List<ISpieler> spieler) {
 		int maxStandard = -1;
 		int form = -1;
 		Spieler player = null;
@@ -318,7 +318,7 @@ public class Lineup implements plugins.ILineUp {
 		}
 
 		for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-			player = (Spieler) spieler.elementAt(i);
+			player = (Spieler) spieler.get(i);
 
 			if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
 				if (player.getStandards() > maxStandard) {
@@ -434,7 +434,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Total strength.
 	 */
-	public final float getGesamtStaerke(Vector<ISpieler> spieler, boolean useForm) {
+	public final float getGesamtStaerke(List<ISpieler> spieler, boolean useForm) {
 		return Helper.round(getTWTeamStk(spieler, useForm) + getAWTeamStk(spieler, useForm) //
 				+ getMFTeamStk(spieler, useForm) + getSTTeamStk(spieler, useForm), 1);
 	}
@@ -574,7 +574,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Midfield and winger total star rating.
 	 */
-	public final float getMFTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
+	public final float getMFTeamStk(List<ISpieler> spieler, boolean mitForm) {
 		float stk = 0.0f;
 		stk += calcTeamStk(spieler, ISpielerPosition.MIDFIELDER, mitForm);
 		stk += calcTeamStk(spieler, ISpielerPosition.WINGER, mitForm);
@@ -829,7 +829,7 @@ public class Lineup implements plugins.ILineUp {
 	 * @param m_vPositionen
 	 *            New value of property m_vPositionen.
 	 */
-	public final void setPositionen(Vector<ISpielerPosition> posVec) {
+	public final void setPositionen(List<ISpielerPosition> posVec) {
 		// Replace the existing positions with the incoming on a one by one
 		// basis. Otherwise we will miss 3 positions when loading
 		// an old style lineup.
@@ -908,7 +908,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Team star rating for attackers
 	 */
-	public final float getSTTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
+	public final float getSTTeamStk(List<ISpieler> spieler, boolean mitForm) {
 		float stk = 0.0f;
 		stk += calcTeamStk(spieler, ISpielerPosition.FORWARD, mitForm);
 		stk += calcTeamStk(spieler, ISpielerPosition.FORWARD_DEF, mitForm);
@@ -1009,7 +1009,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Star rating for the keeper.
 	 */
-	public final float getTWTeamStk(Vector<ISpieler> spieler, boolean mitForm) {
+	public final float getTWTeamStk(List<ISpieler> spieler, boolean mitForm) {
 		return calcTeamStk(spieler, ISpielerPosition.KEEPER, mitForm);
 	}
 
@@ -1152,7 +1152,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * erstellt die automatische Aufstellung
 	 */
-	public final void doAufstellung(Vector<ISpieler> spieler, byte reihenfolge, boolean mitForm,
+	public final void doAufstellung(List<ISpieler> spieler, byte reihenfolge, boolean mitForm,
 			boolean idealPosFirst, boolean ignoreVerletzung, boolean ignoreSperren, float wetterBonus,
 			int wetter) {
 		m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst, ignoreVerletzung,
@@ -1552,11 +1552,11 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Calculate player strength for the given position.
 	 */
-	private float calcPlayerStk(Vector<ISpieler> spieler, int spielerId, byte position, boolean mitForm) {
+	private float calcPlayerStk(List<ISpieler> spieler, int spielerId, byte position, boolean mitForm) {
 		Spieler player = null;
 
 		for (int i = 0; (spieler != null) && (i < spieler.size()); i++) {
-			player = (Spieler) spieler.elementAt(i);
+			player = (Spieler) spieler.get(i);
 
 			if (player.getSpielerID() == spielerId) {
 				return player.calcPosValue(position, mitForm);
@@ -1569,7 +1569,7 @@ public class Lineup implements plugins.ILineUp {
 	/**
 	 * Calculate team strength for the given position.
 	 */
-	private float calcTeamStk(Vector<ISpieler> spieler, byte position, boolean useForm) {
+	private float calcTeamStk(List<ISpieler> spieler, byte position, boolean useForm) {
 		float stk = 0.0f;
 		if (spieler != null) {
 			SpielerPosition pos = null;
