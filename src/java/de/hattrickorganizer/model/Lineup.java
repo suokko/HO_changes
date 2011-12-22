@@ -41,26 +41,17 @@ import de.hattrickorganizer.tools.Helper;
  * @author thomas.werth
  */
 public class Lineup implements plugins.ILineUp {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
-
-	// Systeme
 
 	public static final String DEFAULT_NAME = "HO!";
 	public static final String DEFAULT_NAMELAST = "HO!LastLineup";
 	public static final int NO_HRF_VERBINDUNG = -1;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
 
 	/** Aufstellungsassistent */
 	private LineupAssistant m_clAssi = new LineupAssistant();
 
 	/** positions */
 	private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
-
-	// A list of 5 substitution positions, position indicates order.
-	private ArrayList<ISubstitution> m_vSubstitutions = new ArrayList<ISubstitution>();
+	private List<ISubstitution> substitutions = new ArrayList<ISubstitution>();
 
 	/** Attitude */
 	private int m_iAttitude;
@@ -89,13 +80,8 @@ public class Lineup implements plugins.ILineUp {
 	 * Creates a new Aufstellung object.
 	 */
 	public Lineup() {
-		// initPositionen442();
 		initPositionen553();
 	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Konstruktor
-	// ///////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Creates a new instance of Lineup
@@ -192,7 +178,7 @@ public class Lineup implements plugins.ILineUp {
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i + "behaviour")));
 					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
 					sub.setStanding(Byte.parseByte(properties.getProperty("subst" + i + "standing")));
-					m_vSubstitutions.add(sub);
+					this.substitutions.add(sub);
 				} else {
 					break;
 				}
@@ -213,9 +199,6 @@ public class Lineup implements plugins.ILineUp {
 			HOLogger.instance().log(getClass(), e);
 		}
 	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/**
 	 * get the tactic level for AiM/AoW
@@ -260,33 +243,6 @@ public class Lineup implements plugins.ILineUp {
 				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(),
 				RatingPredictionConfig.getInstance()).getTacticLevelLongShots());
 	}
-
-	// /**
-	// * Calculate the HO-Index for playing creatively
-	// * @author Thorsten Dietz
-	// * @param Vector spieler
-	// * @return tacticStrength
-	// */
-	// public float getCreativeSTK(Vector spieler){
-	// float strength = 0f;
-	// boolean isHeadmanInLineUp = false;
-	// for (int i = ISpielerPosition.rightBack; i <
-	// ISpielerPosition.beginnReservere; i++) {
-	// ISpieler player = HOVerwaltung.instance().getModel().getAufstellung()
-	// .getPlayerByPositionID(i);
-	//
-	// if(player != null && player.getSpezialitaet() == ISpieler.KOPFBALLSTARK)
-	// isHeadmanInLineUp = true;
-	// byte tactic =
-	// HOVerwaltung.instance().getModel().getAufstellung().getTactic4PositionID(i);
-	// strength+=PlayerHelper.getSpecialEventEffect(player,i,tactic);
-	//
-	//
-	// }
-	// if(isHeadmanInLineUp)
-	// strength++;
-	// return strength;
-	// }
 
 	/**
 	 * Calculates the total star rating for defense This is CA-rating?
@@ -900,10 +856,6 @@ public class Lineup implements plugins.ILineUp {
 		initPositionen553();
 	}
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Accessor
-	// ///////////////////////////////////////////////////////////////////////////////
-
 	/**
 	 * Getter for property m_vPositionen.
 	 * 
@@ -1025,13 +977,13 @@ public class Lineup implements plugins.ILineUp {
 	}
 
 	/**
-	 * Returns an array with any substitutions (max 5). It may have slots with
-	 * orderID -1.
+	 * Returns a list with the substitutions for this lineup.
 	 * 
+	 * @return the substitutions for this lineup. If there are no substitutions,
+	 *         an empty list will be returned.
 	 */
 	public List<ISubstitution> getSubstitutionList() {
-
-		return m_vSubstitutions;
+		return this.substitutions;
 	}
 
 	/**
@@ -1040,7 +992,11 @@ public class Lineup implements plugins.ILineUp {
 	 */
 
 	public void setSubstitionList(List<ISubstitution> subs) {
-		m_vSubstitutions = new ArrayList<ISubstitution>(subs);
+		if (subs == null) {
+			this.substitutions = new ArrayList<ISubstitution>();
+		} else {
+			this.substitutions = new ArrayList<ISubstitution>(subs);
+		}
 	}
 
 	/**
@@ -1069,9 +1025,6 @@ public class Lineup implements plugins.ILineUp {
 		}
 	}
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// STK Funcs
-	// ///////////////////////////////////////////////////////////////////////////////
 	public final float getTacticLevel(int type) {
 		float value = 0.0f;
 
@@ -1196,10 +1149,6 @@ public class Lineup implements plugins.ILineUp {
 		}
 	}
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Aktions Funcs
-	// ///////////////////////////////////////////////////////////////////////////////
-
 	/**
 	 * erstellt die automatische Aufstellung
 	 */
@@ -1211,36 +1160,6 @@ public class Lineup implements plugins.ILineUp {
 		setAutoKicker(null);
 		setAutoKapitaen(null);
 	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Debug Funcs
-	// ///////////////////////////////////////////////////////////////////////////////
-	// public final void dump() {
-	// HOLogger.instance().log(getClass(),"Std-aufstellung");
-	// dumpValues();
-	// HOLogger.instance().log(getClass(),"idelaPos");
-	//
-	// //3-5-2
-	// initPositionen352();
-	//
-	// //353 mit idealpos first
-	// doAufstellung(HOVerwaltung.instance().getModel().getAllSpieler(),
-	// ILineUp.MF_AW_ST, true, true, false,
-	// false, 0.2f, ISpieler.LEICHTBEWOELKT);
-	//
-	// //dumpen
-	// dumpValues();
-	// HOLogger.instance().log(getClass(),"Ohne idelaPos");
-	//
-	// //3-5-2 aufgestellte SPieler leeren
-	// resetAufgestellteSpieler();
-	//
-	// //353 mit idealpos first
-	// doAufstellung(HOVerwaltung.instance().getModel().getAllSpieler(),
-	// ILineUp.MF_AW_ST, true, false,
-	// false, false, 0.2f, ISpieler.LEICHTBEWOELKT);
-	// dumpValues();
-	// }
 
 	/**
 	 * Clone this lineup, creates and returns a new Lineup object.
@@ -1321,8 +1240,8 @@ public class Lineup implements plugins.ILineUp {
 			properties.setProperty("tactictype", getTacticType() + "");
 			properties.setProperty("installning", getAttitude() + "");
 
-			for (int i = 0; i < m_vSubstitutions.size(); i++) {
-				ISubstitution sub = m_vSubstitutions.get(i);
+			for (int i = 0; i < this.substitutions.size(); i++) {
+				ISubstitution sub = this.substitutions.get(i);
 				if (sub != null) {
 					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerOrderId());
 					properties.setProperty("subst" + i + "playerin", "" + sub.getPlayerIn());
@@ -1469,10 +1388,6 @@ public class Lineup implements plugins.ILineUp {
 		m_iKapitaen = temp.getKapitaen();
 	}
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Datenbank Funcs
-	// ///////////////////////////////////////////////////////////////////////////////
-
 	/**
 	 * Load a system from the DB.
 	 */
@@ -1480,10 +1395,6 @@ public class Lineup implements plugins.ILineUp {
 		m_vPositionen = DBZugriff.instance().getSystemPositionen(NO_HRF_VERBINDUNG, name);
 		checkAufgestellteSpieler();
 	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Helper Funcs
-	// ///////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Remove a player.
@@ -1660,16 +1571,17 @@ public class Lineup implements plugins.ILineUp {
 	 */
 	private float calcTeamStk(Vector<ISpieler> spieler, byte position, boolean useForm) {
 		float stk = 0.0f;
-		SpielerPosition pos = null;
+		if (spieler != null) {
+			SpielerPosition pos = null;
 
-		for (int i = 0; (m_vPositionen != null) && (spieler != null) && (i < m_vPositionen.size()); i++) {
-			pos = (SpielerPosition) m_vPositionen.elementAt(i);
+			for (int i = 0; (m_vPositionen != null) && (spieler != null) && (i < m_vPositionen.size()); i++) {
+				pos = (SpielerPosition) m_vPositionen.elementAt(i);
 
-			if ((pos.getPosition() == position) && (pos.getId() < ISpielerPosition.startReserves)) {
-				stk += calcPlayerStk(spieler, pos.getSpielerId(), position, useForm);
+				if ((pos.getPosition() == position) && (pos.getId() < ISpielerPosition.startReserves)) {
+					stk += calcPlayerStk(spieler, pos.getSpielerId(), position, useForm);
+				}
 			}
 		}
-
 		return Helper.round(stk, 1);
 	}
 
@@ -1717,10 +1629,6 @@ public class Lineup implements plugins.ILineUp {
 						+ getMFTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " ST : "
 						+ getSTTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true));
 	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// INIT
-	// ///////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Initializes the 553 lineup
@@ -1791,12 +1699,5 @@ public class Lineup implements plugins.ILineUp {
 	public void setPullBackOverride(boolean pullBackOverride) {
 		this.pullBackOverride = pullBackOverride;
 	}
-
-	/**
-	 * Debug logging.
-	 */
-	// private static void debug(String txt) {
-	// HOLogger.instance().debug(Aufstellung.class, txt);
-	// }
 
 }
