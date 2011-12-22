@@ -8,13 +8,13 @@ package de.hattrickorganizer.logik.xml;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import plugins.ISpielerPosition;
-
 import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
@@ -71,7 +71,7 @@ public class XMLMatchOrderParser {
 	/**
 	 * Create a player from the given XML.
 	 */
-	private static void addPlayer(Element ele, Hashtable<String, String> hash) throws Exception {
+	private static void addPlayer(Element ele, Map<String, String> map) throws Exception {
 		Element tmp = null;
 		int roleID = -1;
 		String behavior = "-1";
@@ -107,200 +107,200 @@ public class XMLMatchOrderParser {
 		// removed.
 
 		case ISpielerPosition.keeper:
-			hash.put("KeeperID", spielerID);
-			hash.put("KeeperName", name);
-			hash.put("KeeperOrder", "0");
+			map.put("KeeperID", spielerID);
+			map.put("KeeperName", name);
+			map.put("KeeperOrder", "0");
 			break;
 
 		case ISpielerPosition.rightBack:
-			hash.put("RightBackID", spielerID);
-			hash.put("RightBackName", name);
-			hash.put("RightBackOrder", behavior);
+			map.put("RightBackID", spielerID);
+			map.put("RightBackName", name);
+			map.put("RightBackOrder", behavior);
 			break;
 
 		case ISpielerPosition.rightCentralDefender:
-			if (!hash.containsKey("RightCentralDefenderID")) {
-				hash.put("RightCentralDefenderID", spielerID);
-				hash.put("RightCentralDefenderName", name);
-				hash.put("RightCentralDefenderOrder", behavior);
+			if (!map.containsKey("RightCentralDefenderID")) {
+				map.put("RightCentralDefenderID", spielerID);
+				map.put("RightCentralDefenderName", name);
+				map.put("RightCentralDefenderOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.middleCentralDefender:
-			if (!hash.containsKey("MiddleCentralDefenderID")) {
-				hash.put("MiddleCentralDefenderID", spielerID);
-				hash.put("MiddleCentralDefenderName", name);
-				hash.put("MiddleCentralDefenderOrder", behavior);
+			if (!map.containsKey("MiddleCentralDefenderID")) {
+				map.put("MiddleCentralDefenderID", spielerID);
+				map.put("MiddleCentralDefenderName", name);
+				map.put("MiddleCentralDefenderOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.leftCentralDefender:
-			hash.put("LeftCentralDefenderID", spielerID);
-			hash.put("LeftCentralDefenderName", name);
-			hash.put("LeftCentralDefenderOrder", behavior);
+			map.put("LeftCentralDefenderID", spielerID);
+			map.put("LeftCentralDefenderName", name);
+			map.put("LeftCentralDefenderOrder", behavior);
 			break;
 
 		case ISpielerPosition.leftBack:
-			hash.put("LeftBackID", spielerID);
-			hash.put("LeftBackName", name);
-			hash.put("LeftBackOrder", behavior);
+			map.put("LeftBackID", spielerID);
+			map.put("LeftBackName", name);
+			map.put("LeftBackOrder", behavior);
 			break;
 
 		case ISpielerPosition.leftWinger:
-			if (!hash.containsKey("LeftWingerID")) {
-				hash.put("LeftWingerID", spielerID);
-				hash.put("LeftWingerName", name);
-				hash.put("LeftWingerOrder", behavior);
+			if (!map.containsKey("LeftWingerID")) {
+				map.put("LeftWingerID", spielerID);
+				map.put("LeftWingerName", name);
+				map.put("LeftWingerOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.leftInnerMidfield:
-			if (!hash.containsKey("LeftInnerMidfieldID")) {
-				hash.put("LeftInnerMidfieldID", spielerID);
-				hash.put("LeftInnerMidfieldName", name);
-				hash.put("LeftInnerMidfieldOrder", behavior);
+			if (!map.containsKey("LeftInnerMidfieldID")) {
+				map.put("LeftInnerMidfieldID", spielerID);
+				map.put("LeftInnerMidfieldName", name);
+				map.put("LeftInnerMidfieldOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.centralInnerMidfield:
-			if (!hash.containsKey("CentralInnerMidfieldID")) {
-				hash.put("CentralInnerMidfieldID", spielerID);
-				hash.put("CentralInnerMidfieldName", name);
-				hash.put("CentralInnerMidfieldOrder", behavior);
+			if (!map.containsKey("CentralInnerMidfieldID")) {
+				map.put("CentralInnerMidfieldID", spielerID);
+				map.put("CentralInnerMidfieldName", name);
+				map.put("CentralInnerMidfieldOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.rightInnerMidfield:
-			hash.put("RightInnerMidfieldID", spielerID);
-			hash.put("RightInnerMidfieldName", name);
-			hash.put("RightInnerMidfieldOrder", behavior);
+			map.put("RightInnerMidfieldID", spielerID);
+			map.put("RightInnerMidfieldName", name);
+			map.put("RightInnerMidfieldOrder", behavior);
 			break;
 
 		case ISpielerPosition.rightWinger:
-			if (!hash.containsKey("RightWingerID")) {
-				hash.put("RightWingerID", spielerID);
-				hash.put("RightWingerName", name);
-				hash.put("RightWingerOrder", behavior);
+			if (!map.containsKey("RightWingerID")) {
+				map.put("RightWingerID", spielerID);
+				map.put("RightWingerName", name);
+				map.put("RightWingerOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.rightForward:
-			if (!hash.containsKey("RightForward")) {
-				hash.put("RightForwardID", spielerID);
-				hash.put("RightForwardName", name);
-				hash.put("RightForwardOrder", behavior);
+			if (!map.containsKey("RightForward")) {
+				map.put("RightForwardID", spielerID);
+				map.put("RightForwardName", name);
+				map.put("RightForwardOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.centralForward:
-			if (!hash.containsKey("CentralForward")) {
-				hash.put("CentralForwardID", spielerID);
-				hash.put("CentralForwardName", name);
-				hash.put("CentralForwardOrder", behavior);
+			if (!map.containsKey("CentralForward")) {
+				map.put("CentralForwardID", spielerID);
+				map.put("CentralForwardName", name);
+				map.put("CentralForwardOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.leftForward:
-			if (!hash.containsKey("LeftForward")) {
-				hash.put("LeftForwardID", spielerID);
-				hash.put("LeftForwardName", name);
-				hash.put("LeftForwardOrder", behavior);
+			if (!map.containsKey("LeftForward")) {
+				map.put("LeftForwardID", spielerID);
+				map.put("LeftForwardName", name);
+				map.put("LeftForwardOrder", behavior);
 			} else {
-				addAdditionalPlayer(hash, roleID, spielerID, name, behavior);
+				addAdditionalPlayer(map, roleID, spielerID, name, behavior);
 			}
 			break;
 
 		case ISpielerPosition.substKeeper:
-			hash.put("SubstKeeperID", spielerID);
-			hash.put("SubstKeeperName", name);
+			map.put("SubstKeeperID", spielerID);
+			map.put("SubstKeeperName", name);
 			break;
 
 		case ISpielerPosition.substDefender:
-			hash.put("SubstBackID", spielerID);
-			hash.put("SubstBackName", name);
+			map.put("SubstBackID", spielerID);
+			map.put("SubstBackName", name);
 			break;
 
 		case ISpielerPosition.substInnerMidfield:
-			hash.put("SubstInsideMidID", spielerID);
-			hash.put("SubstInsideMidName", name);
+			map.put("SubstInsideMidID", spielerID);
+			map.put("SubstInsideMidName", name);
 			break;
 
 		case ISpielerPosition.substWinger:
-			hash.put("SubstWingerID", spielerID);
-			hash.put("SubstWingerName", name);
+			map.put("SubstWingerID", spielerID);
+			map.put("SubstWingerName", name);
 			break;
 
 		case ISpielerPosition.substForward:
-			hash.put("SubstForwardID", spielerID);
-			hash.put("SubstForwardName", name);
+			map.put("SubstForwardID", spielerID);
+			map.put("SubstForwardName", name);
 			break;
 
 		case ISpielerPosition.setPieces:
-			hash.put("KickerID", spielerID);
-			hash.put("KickerName", name);
+			map.put("KickerID", spielerID);
+			map.put("KickerName", name);
 			break;
 
 		case ISpielerPosition.captain:
-			hash.put("CaptainID", spielerID);
-			hash.put("CaptainName", name);
+			map.put("CaptainID", spielerID);
+			map.put("CaptainName", name);
 			break;
 		}
 	}
 
-	private static void addAdditionalPlayer(Hashtable<String, String> hash, int roleID, String spielerID,
+	private static void addAdditionalPlayer(Map<String, String> map, int roleID, String spielerID,
 			String name, String behavior) {
 		String key = "Additional1";
-		if (!hash.containsKey(key + "ID")) {
-			hash.put(key + "ID", spielerID);
-			hash.put(key + "Role", String.valueOf(roleID));
-			hash.put(key + "Name", name);
-			hash.put(key + "Behaviour", behavior);
+		if (!map.containsKey(key + "ID")) {
+			map.put(key + "ID", spielerID);
+			map.put(key + "Role", String.valueOf(roleID));
+			map.put(key + "Name", name);
+			map.put(key + "Behaviour", behavior);
 			return;
 		}
 		key = "Additional2";
-		if (!hash.containsKey(key + "ID")) {
-			hash.put(key + "ID", spielerID);
-			hash.put(key + "Role", String.valueOf(roleID));
-			hash.put(key + "Name", name);
-			hash.put(key + "Behaviour", behavior);
+		if (!map.containsKey(key + "ID")) {
+			map.put(key + "ID", spielerID);
+			map.put(key + "Role", String.valueOf(roleID));
+			map.put(key + "Name", name);
+			map.put(key + "Behaviour", behavior);
 			return;
 		}
 		key = "Additional3";
-		if (!hash.containsKey(key + "ID")) {
-			hash.put(key + "ID", spielerID);
-			hash.put(key + "Role", String.valueOf(roleID));
-			hash.put(key + "Name", name);
-			hash.put(key + "Behaviour", behavior);
+		if (!map.containsKey(key + "ID")) {
+			map.put(key + "ID", spielerID);
+			map.put(key + "Role", String.valueOf(roleID));
+			map.put(key + "Name", name);
+			map.put(key + "Behaviour", behavior);
 			return;
 		}
 		key = "Additional4";
-		if (!hash.containsKey(key + "ID")) {
-			hash.put(key + "ID", spielerID);
-			hash.put(key + "Role", String.valueOf(roleID));
-			hash.put(key + "Name", name);
-			hash.put(key + "Behaviour", behavior);
+		if (!map.containsKey(key + "ID")) {
+			map.put(key + "ID", spielerID);
+			map.put(key + "Role", String.valueOf(roleID));
+			map.put(key + "Name", name);
+			map.put(key + "Behaviour", behavior);
 			return;
 		}
 		// max. 4 additional/repositioned players in the new lineup?
 	}
 
-	private static void addPlayerOrder(Element ele, Hashtable<String, String> hash, int num) throws Exception {
+	private static void addPlayerOrder(Element ele, Map<String, String> map, int num) throws Exception {
 		Element tmp = null;
 		String playerOrderID = "" + num;
 		String playerIn = "-1";
@@ -348,16 +348,16 @@ public class XMLMatchOrderParser {
 			behaviour = XMLManager.instance().getFirstChildNodeValue(tmp);
 		}
 
-		hash.put("subst" + num + "playerOrderID", playerOrderID);
-		hash.put("subst" + num + "playerIn", playerIn);
-		hash.put("subst" + num + "playerOut", playerOut);
-		hash.put("subst" + num + "orderType", orderType);
-		hash.put("subst" + num + "minute", minute);
-		hash.put("subst" + num + "matchMinuteCriteria", matchMinuteCriteria);
-		hash.put("subst" + num + "pos", pos);
-		hash.put("subst" + num + "behaviour", behaviour);
-		hash.put("subst" + num + "card", card);
-		hash.put("subst" + num + "standing", standing);
+		map.put("subst" + num + "playerOrderID", playerOrderID);
+		map.put("subst" + num + "playerIn", playerIn);
+		map.put("subst" + num + "playerOut", playerOut);
+		map.put("subst" + num + "orderType", orderType);
+		map.put("subst" + num + "minute", minute);
+		map.put("subst" + num + "matchMinuteCriteria", matchMinuteCriteria);
+		map.put("subst" + num + "pos", pos);
+		map.put("subst" + num + "behaviour", behaviour);
+		map.put("subst" + num + "card", card);
+		map.put("subst" + num + "standing", standing);
 
 	}
 
@@ -450,53 +450,53 @@ public class XMLMatchOrderParser {
 		return hash;
 	}
 
-	private static void fillEmptySpotsWithAdditionalPlayers(Hashtable<String, String> hash) {
+	private static void fillEmptySpotsWithAdditionalPlayers(Map<String, String> map) {
 		// Does this have any role? I guess noone will miss it if deleted after
 		// 553 change
 
 		try {
 			int a = 1;
-			String add = hash.get("Additional" + a + "ID");
+			String add = map.get("Additional" + a + "ID");
 			if (add == null) {
 				return;
 			} else {
-				String pos = getNextFreeSlot(hash);
+				String pos = getNextFreeSlot(map);
 				if (pos != null) {
-					hash.put(pos + "ID", add);
-					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					map.put(pos + "ID", add);
+					map.put(pos + "Name", map.get("Additional" + a + "Name"));
 				}
 			}
 			a = 2;
-			add = hash.get("Additional" + a + "ID");
+			add = map.get("Additional" + a + "ID");
 			if (add == null) {
 				return;
 			} else {
-				String pos = getNextFreeSlot(hash);
+				String pos = getNextFreeSlot(map);
 				if (pos != null) {
-					hash.put(pos + "ID", add);
-					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					map.put(pos + "ID", add);
+					map.put(pos + "Name", map.get("Additional" + a + "Name"));
 				}
 			}
 			a = 3;
-			add = hash.get("Additional" + a + "ID");
+			add = map.get("Additional" + a + "ID");
 			if (add == null) {
 				return;
 			} else {
-				String pos = getNextFreeSlot(hash);
+				String pos = getNextFreeSlot(map);
 				if (pos != null) {
-					hash.put(pos + "ID", add);
-					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					map.put(pos + "ID", add);
+					map.put(pos + "Name", map.get("Additional" + a + "Name"));
 				}
 			}
 			a = 4;
-			add = hash.get("Additional" + a + "ID");
+			add = map.get("Additional" + a + "ID");
 			if (add == null) {
 				return;
 			} else {
-				String pos = getNextFreeSlot(hash);
+				String pos = getNextFreeSlot(map);
 				if (pos != null) {
-					hash.put(pos + "ID", add);
-					hash.put(pos + "Name", hash.get("Additional" + a + "Name"));
+					map.put(pos + "ID", add);
+					map.put(pos + "Name", map.get("Additional" + a + "Name"));
 				}
 			}
 		} catch (Exception e) {
@@ -504,9 +504,9 @@ public class XMLMatchOrderParser {
 		}
 	}
 
-	private static String getNextFreeSlot(Hashtable<String, String> hash) {
+	private static String getNextFreeSlot(Map<String, String> map) {
 		for (String pos : PLAYERPOSITIONS) {
-			if (!hash.containsKey(pos + "ID")) {
+			if (!map.containsKey(pos + "ID")) {
 				return pos;
 			}
 		}
