@@ -3,18 +3,20 @@ forum at https://sourceforge.net/apps/phpbb/ho1/ if you have any questions!
 
 Changelist HO! 1.432
 ====================
-
+- ArenaSizer become a extra tool
 
 ThemeManager:
 ------------
 - add new keys:
-	icons: imagePanel.background, grassPanel.background, remove
+	icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out
 	colors:
 
 Plugin Updates:
 ---------------
 -  MatchesOverview
 	MatchesOverview is deprecated. Functions are integrated in matches tab
+-  Transfer EPV
+	This plugin is deprecated. Merged into function transferscout.
 
 =======
 Changelist HO! 1.432
