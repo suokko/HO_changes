@@ -18,21 +18,6 @@ Plugin Updates:
 -  Transfer EPV
 	This plugin is deprecated. Merged into function transferscout.
 
-=======
-Changelist HO! 1.432
-====================
-
-
-ThemeManager:
-------------
-- add new keys:
-	icons: imagePanel.background, grassPanel.background, remove
-	colors:
-
-Plugin Updates:
----------------
--  MatchesOverview
-	MatchesOverview is deprecated. Functions are integrated in matches tab
 
 Changelist HO! 1.431
 ====================
