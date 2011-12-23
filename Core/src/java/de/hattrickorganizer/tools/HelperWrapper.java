@@ -7,6 +7,9 @@
 package de.hattrickorganizer.tools;
 
 import gui.HOIconName;
+import ho.modul.transfer.scout.Player;
+import ho.modul.transfer.scout.PlayerConverter;
+import ho.modul.transfer.scout.TransferEingabePanel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -45,9 +48,6 @@ import de.hattrickorganizer.gui.matches.SpielHighlightPanel;
 import de.hattrickorganizer.gui.menu.HRFImport;
 import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
-import de.hattrickorganizer.gui.transferscout.Player;
-import de.hattrickorganizer.gui.transferscout.PlayerConverter;
-import de.hattrickorganizer.gui.transferscout.TransferEingabePanel;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;

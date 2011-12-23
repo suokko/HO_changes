@@ -4,7 +4,7 @@
  *
  * Created on 8. April 2003, 10:14
  */
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -17,7 +17,7 @@ import de.hattrickorganizer.gui.HOMainFrame;
  *
  * @author thomas.werth
  */
-public class Wecker extends javax.swing.JFrame implements java.awt.event.ActionListener {
+class Wecker extends javax.swing.JFrame implements java.awt.event.ActionListener {
 
 	private static final long serialVersionUID = -8263831429834255080L;
 	
@@ -30,7 +30,7 @@ public class Wecker extends javax.swing.JFrame implements java.awt.event.ActionL
      *
      * @param text TODO Missing Constructuor Parameter Documentation
      */
-    public Wecker(String text) {
+    Wecker(String text) {
         //javax.swing.JOptionPane temp    =   new javax.swing.JOptionPane( text, javax.swing.JOptionPane.INFORMATION_MESSAGE ) ;
         final JTextArea ta = new JTextArea();
 
