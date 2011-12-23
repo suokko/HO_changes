@@ -2,9 +2,10 @@
 package ho.tool.keepertool;
 
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.model.TransferTableModel;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
-import de.hattrickorganizer.model.ScoutEintrag;
+
+import ho.modul.transfer.scout.ScoutEintrag;
+import ho.modul.transfer.scout.TransferTableModel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -55,8 +56,7 @@ class ScoutPanel extends JPanel {
         players.removeAllItems();
         players.addItem(new PlayerItem());
 
-        final TransferTableModel model = HOMainFrame.instance()
-                                                                         .getTransferScoutPanel()
+        final TransferTableModel model = HOMainFrame.instance().getTransferScoutPanel().getScoutPanel()
                                                                          .getTransferTable()
                                                                          .getTransferTableModel();
 

@@ -1,5 +1,5 @@
 // %1128099595437:de.hattrickorganizer.gui.transferscout%
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -33,7 +33,6 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.Helper;
@@ -43,7 +42,7 @@ import de.hattrickorganizer.tools.Helper;
  *
  * @author Marco Senn
  */
-public class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, FocusListener {
+class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, FocusListener {
 	
 	private static final long serialVersionUID = -2092930481559683730L;
 	
@@ -86,7 +85,7 @@ public class MiniScoutDialog extends JFrame implements ItemListener, ActionListe
      *
      * @param owner the parent control holding this dialog
      */
-    public MiniScoutDialog(TransferEingabePanel owner) {
+    MiniScoutDialog(TransferEingabePanel owner) {
         super(HOVerwaltung.instance().getLanguageString("ScoutMini"));
         this.setIconImage(HOMainFrame.instance().getIconImage());
         clOwner = owner;

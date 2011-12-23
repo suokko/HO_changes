@@ -108,7 +108,7 @@ public class DBCleanupTool {
 	 * @param keepWeeksOtherMatches keep x weeks of other matches (-1=keep All, 0=remove All)
 	 * @param keepWeeksOtherFriendlies keep x weeks of other friendlies (-1=keep All, 0=remove All)
 	 */
-	public void cleanupMatches (int keepWeeksOwnMatches, int keepWeeksOwnFriendlies, int keepWeeksOtherMatches, int keepWeeksOtherFriendlies) {
+	void cleanupMatches (int keepWeeksOwnMatches, int keepWeeksOwnFriendlies, int keepWeeksOtherMatches, int keepWeeksOtherFriendlies) {
 		Timestamp removeDateOwnMatches = null;
 		Timestamp removeDateOwnFriendlies = null;
 		Timestamp removeDateOtherMatches = null;
@@ -147,7 +147,7 @@ public class DBCleanupTool {
 	 * @param removeDateOtherMatches remove other matches older than x (null=keep All)
 	 * @param removeDateOtherFriendlies remove other friendlies older than x (null=keep All)
 	 */
-	public void cleanupMatches (Timestamp removeDateOwnMatches, Timestamp removeDateOwnFriendlies, 
+	private void cleanupMatches (Timestamp removeDateOwnMatches, Timestamp removeDateOwnFriendlies, 
 			Timestamp removeDateOtherMatches, Timestamp removeDateOtherFriendlies) {
 		HOLogger.instance().debug(getClass(),  
 				"Removing old matches: "

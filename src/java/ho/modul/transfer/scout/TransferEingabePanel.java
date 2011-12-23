@@ -1,5 +1,5 @@
 // %1128099595984:de.hattrickorganizer.gui.transferscout%
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 import gui.HOIconName;
 
@@ -39,7 +39,6 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;

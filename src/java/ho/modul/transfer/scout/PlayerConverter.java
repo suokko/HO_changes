@@ -1,5 +1,5 @@
 // %1329240092:de.hattrickorganizer.gui.transferscout%
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

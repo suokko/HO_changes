@@ -4,11 +4,10 @@
  *
  * Created on 8. April 2003, 10:49
  */
-package de.hattrickorganizer.logik;
+package ho.modul.transfer.scout;
 
 import java.util.Vector;
 
-import de.hattrickorganizer.model.ScoutEintrag;
 
 
 /**
@@ -39,7 +38,7 @@ public class ScoutThread implements Runnable {
      * TODO Missing Method Documentation
      */
     public final void run() {
-        de.hattrickorganizer.model.ScoutEintrag se = null;
+        ho.modul.transfer.scout.ScoutEintrag se = null;
         final java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
         final java.sql.Timestamp ts2 = new java.sql.Timestamp(System.currentTimeMillis());
 
@@ -69,7 +68,7 @@ public class ScoutThread implements Runnable {
                    else */
                 if (ts2.before(ts) && !se.getDeadline().before(ts) && !se.isWecker()) {
                     //melden
-                    new de.hattrickorganizer.gui.transferscout.Wecker(se.getName() + " ("
+                    new ho.modul.transfer.scout.Wecker(se.getName() + " ("
                                                                       + se.getPlayerID() + ")"
                                                                       + "\r\n"
                                                                       + se.getDeadline().toString());

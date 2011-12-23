@@ -1,10 +1,11 @@
 package de.hattrickorganizer.database;
 
+import ho.modul.transfer.scout.ScoutEintrag;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 
 final class ScoutTable extends AbstractTable {

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 import de.hattrickorganizer.model.HOVerwaltung;
 
-public class WeekSelectionPanel extends JPanel implements ActionListener, FocusListener {
+class WeekSelectionPanel extends JPanel implements ActionListener, FocusListener {
 
 	private static final long serialVersionUID = -8423470613835503603L;
 	private JLabel labelNone = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.none"));
@@ -27,7 +27,7 @@ public class WeekSelectionPanel extends JPanel implements ActionListener, FocusL
 		this (weeks, true);
 	}
 	
-	public WeekSelectionPanel (int weeks, boolean showRemoveAll) {
+	WeekSelectionPanel (int weeks, boolean showRemoveAll) {
 		m_jcbNone.setSelected(false);
 		m_jcbAll.setSelected(false);
 		m_jtfWeeks.setText("0");
@@ -75,7 +75,7 @@ public class WeekSelectionPanel extends JPanel implements ActionListener, FocusL
 
 	}
 
-	public int getWeeks () {
+	int getWeeks () {
 		if (m_jcbNone.isSelected()) {
 			return DBCleanupTool.REMOVE_NONE;			
 		} else if (m_jcbAll.isSelected()) {

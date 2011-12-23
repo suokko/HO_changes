@@ -4,7 +4,7 @@
  *
  * Created on 26. März 2003, 13:57
  */
-package de.hattrickorganizer.model;
+package ho.modul.transfer.scout;
 
 import de.hattrickorganizer.tools.HOLogger;
 
