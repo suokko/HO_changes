@@ -3,6 +3,8 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.modul.transfer.TransfersPanel;
+import ho.modul.transfer.scout.TransferScoutPanel;
 import ho.tool.ToolManager;
 
 import java.awt.BorderLayout;
@@ -69,7 +71,6 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.gui.theme.ho.HOTheme;
 import de.hattrickorganizer.gui.theme.jgoodies.JGoodiesTheme;
 import de.hattrickorganizer.gui.theme.nimbus.NimbusTheme;
-import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
 import de.hattrickorganizer.logik.GebChecker;
@@ -135,7 +136,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int SPIELE = 3; // matches
 	public static final int SPIELERANALYSE = 4; // player analysis
 	public static final int STATISTIK = 5; // statistics
-	public static final int TRANSFERSCOUT = 6;
+	public static final int TRANSFERS = 6;
 	public static final int ARENASIZER = 7;
 	public static final int INFORMATIONEN = 8;
 
@@ -205,7 +206,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private SpielerUebersichtsPanel m_jpSpielerUebersicht;
 	private StatistikMainPanel m_jpStatistikPanel;
 	private String m_sToRemoveTabName;
-	private TransferScoutPanel m_jpTransferScout;
+	private TransfersPanel m_jpTransferScout;
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
@@ -406,7 +407,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Get the transfer scout panel.
 	 */
-	public TransferScoutPanel getTransferScoutPanel() {
+	public TransfersPanel getTransferScoutPanel() {
 		return m_jpTransferScout;
 	}
 
@@ -462,7 +463,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		} else if (source.equals(m_jmiStatistik)) { // Statistics
 			showTab(HOMainFrame.STATISTIK);
 		} else if (source.equals(m_jmiTransferscout)) { // Transferscout
-			showTab(HOMainFrame.TRANSFERSCOUT);
+			showTab(HOMainFrame.TRANSFERS);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
 		} else if (source.equals(m_jmCreditsItem)) { 
@@ -536,7 +537,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		HOLogger.instance().debug(getClass(), "UserParameters saved");
 
 		// Scoutliste speichern
-		m_jpTransferScout.saveScoutListe();
+		m_jpTransferScout.getScoutPanel().saveScoutListe();
 
 		HOLogger.instance().debug(getClass(), "ScoutList saved");
 
@@ -672,7 +673,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		// m_jtpTraining );
 		//
 		// Transferscout
-		m_jpTransferScout = new TransferScoutPanel();
+		m_jpTransferScout = new TransfersPanel();
 
 		if (!UserParameter.instance().tempTabTransferscout) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TransferScout"), m_jpTransferScout);
@@ -1036,7 +1037,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			temporaer = UserParameter.instance().tempTabStatistik;
 			break;
 
-		case TRANSFERSCOUT:
+		case TRANSFERS:
 			component = m_jpTransferScout;
 			titel = HOVerwaltung.instance().getLanguageString("TransferScout");
 			temporaer = UserParameter.instance().tempTabTransferscout;
@@ -1404,7 +1405,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		final int[] sp = m_jpSpielePanel.getDividerLocations();
 		final int spa = m_jpSpielerAnalysePanel.getDividerLocation();
 		final AufstellungsAssistentPanel aap = this.lineupMasterPanel.getLineupPanel().getAufstellungsAssitentPanel();
-		final int tsp = m_jpTransferScout.getDividerLocation();
+		final int tsp = m_jpTransferScout.getScoutPanel().getDividerLocation();
 
 		final int locx = Math.max(getLocation().x, 0);
 		final int locy = Math.max(getLocation().y, 0);

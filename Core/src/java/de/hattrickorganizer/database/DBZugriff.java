@@ -2,6 +2,7 @@
 package de.hattrickorganizer.database;
 
 import gui.UserParameter;
+import ho.modul.transfer.scout.ScoutEintrag;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.ResultSet;
@@ -32,7 +33,6 @@ import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.model.HRF;
 import de.hattrickorganizer.model.Liga;
 import de.hattrickorganizer.model.Lineup;
-import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.TrainingPerWeek;

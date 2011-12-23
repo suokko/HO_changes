@@ -1,5 +1,5 @@
 // %4201738339:de.hattrickorganizer.gui.transferscout%
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,8 +15,6 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
 import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.logik.ScoutThread;
-import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.gui.print.ComponentPrintObject;

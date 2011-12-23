@@ -138,10 +138,10 @@ public class TableSorter extends TableMap {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final de.hattrickorganizer.model.ScoutEintrag getScoutEintrag(int row) {
+    public final ho.modul.transfer.scout.ScoutEintrag getScoutEintrag(int row) {
         if (row > -1) {
             try {
-                return ((de.hattrickorganizer.gui.model.TransferTableModel) getModel())
+                return ((ho.modul.transfer.scout.TransferTableModel) getModel())
                        .getScoutEintrag(Integer.parseInt(((ColorLabelEntry) getValueAt(row, idSpalte)).getText()));
             } catch (Exception e) {
                 HOLogger.instance().log(getClass(),"TableSorter.getScoutEintrag: " + e);

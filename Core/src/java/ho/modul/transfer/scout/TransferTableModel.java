@@ -1,5 +1,6 @@
 // %3702132305:de.hattrickorganizer.gui.model%
-package de.hattrickorganizer.gui.model;
+package ho.modul.transfer.scout;
+
 
 import java.util.Vector;
 
@@ -12,7 +13,6 @@ import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.gui.model.HomegrownEntry;

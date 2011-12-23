@@ -1,5 +1,5 @@
 // %3800124443:de.hattrickorganizer.gui.transferscout%
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 /**
  * Player used for PlayerConverter (TransferScout)

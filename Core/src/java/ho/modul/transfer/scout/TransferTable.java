@@ -1,5 +1,5 @@
 // %1101944701:de.hattrickorganizer.gui.transferscout%
-package de.hattrickorganizer.gui.transferscout;
+package ho.modul.transfer.scout;
 
 import javax.swing.JTable;
 
@@ -7,7 +7,6 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.gui.model.TransferTableModel;
 import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.gui.utils.ToolTipHeader;
 import de.hattrickorganizer.tools.Helper;
@@ -28,7 +27,7 @@ public class TransferTable extends JTable implements Refreshable {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    public TransferTable() {
+    TransferTable() {
         super();
         m_clTableModel = new TransferTableModel(DBZugriff.instance().getScoutList());
         initModel();
@@ -38,20 +37,10 @@ public class TransferTable extends JTable implements Refreshable {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final TableSorter getSorter() {
+    final TableSorter getSorter() {
         return m_clTableSorter;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final TransferTableModel getTransferTableModel() {
         return ((TransferTableModel) ((TableSorter) this.getModel()).getModel());
     }
@@ -72,22 +61,10 @@ public class TransferTable extends JTable implements Refreshable {
         repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param index TODO Missing Method Parameter Documentation
-     * @param width TODO Missing Method Parameter Documentation
-     */
     private void setMinWidth(int index, int width) {
         getColumnModel().getColumn(getColumnModel().getColumnIndex(Integer.valueOf(index))).setMinWidth(Helper.calcCellWidth(width));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param index TODO Missing Method Parameter Documentation
-     * @param width TODO Missing Method Parameter Documentation
-     */
     private void setPreferredWidth(int index, int width) {
         getColumnModel().getColumn(getColumnModel().getColumnIndex(Integer.valueOf(index)))
             .setPreferredWidth(Helper.calcCellWidth(width));

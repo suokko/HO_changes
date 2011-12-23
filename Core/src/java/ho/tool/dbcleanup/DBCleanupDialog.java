@@ -27,7 +27,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
  * 
  * @author flattermann <HO@flattermann.net>
  */
-public class DBCleanupDialog extends JDialog implements ActionListener {
+class DBCleanupDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 3533368597781557223L;
 	private JButton m_jbCleanupNow = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cleanupnow"));
@@ -57,7 +57,7 @@ public class DBCleanupDialog extends JDialog implements ActionListener {
 	/**
 	 * Creates a new DBCleanupDialog object.
 	 */
-	public DBCleanupDialog(JFrame owner, DBCleanupTool cleanupTool) {
+	DBCleanupDialog(JFrame owner, DBCleanupTool cleanupTool) {
 		super(owner, 
 				HOVerwaltung.instance().getLanguageString("dbcleanup"),
 				true);

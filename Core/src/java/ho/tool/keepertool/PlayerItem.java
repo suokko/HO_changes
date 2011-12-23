@@ -1,7 +1,7 @@
 // %2775781217:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
-import de.hattrickorganizer.model.ScoutEintrag;
+import ho.modul.transfer.scout.ScoutEintrag;
 
 import plugins.ISpieler;
 
