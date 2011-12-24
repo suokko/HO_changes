@@ -1,5 +1,5 @@
 // %3815329211:de.hattrickorganizer.gui.league%
-package de.hattrickorganizer.gui.league;
+package ho.modul.series;
 
 import gui.HOColorName;
 import gui.HOIconName;
@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -42,39 +43,26 @@ import de.hattrickorganizer.tools.StringUtilities;
 /**
  * Display a matchday
  */
-final class SpieltagPanel extends JPanel implements ActionListener {
+final class MatchDayPanel extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 6884532906036202996L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
-    public static final int NAECHSTER_SPIELTAG = -2;
-    public static final int LETZTER_SPIELTAG = -1;
+    static final int NAECHSTER_SPIELTAG = -2;
+    static final int LETZTER_SPIELTAG = -1;
 
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private JButton m_jbFirstMatch = new JButton();
-    private JButton m_jbFourthMatch = new JButton();
-    private JButton m_jbSecondMatch = new JButton();
-    private JButton m_jbThirdMatch = new JButton();
-    private JLabel m_jlFirstHomeTeam = new JLabel();
-    private JLabel m_jlFirstResult = new JLabel();
-    private JLabel m_jlFirstVisitorTeam = new JLabel();
-    private JLabel m_jlFourthHomeTeam = new JLabel();
-    private JLabel m_jlFourthResult = new JLabel();
-    private JLabel m_jlFourthVisitorTeam = new JLabel();
-    private JLabel m_jlSecondHomeTeam = new JLabel();
-    private JLabel m_jlSecondResult = new JLabel();
-    private JLabel m_jlSecondVisitorTeam = new JLabel();
-    private JLabel m_jlThirdHomeTeam = new JLabel();
-    private JLabel m_jlThirdResult = new JLabel();
-    private JLabel m_jlThirdVisitorTeam = new JLabel();
-    private int m_iSpieltag = -1;
+    private JButton[] buttons = new JButton[4];
+    private JLabel[] homeTeams = new JLabel[4];
+    private JLabel[] visitorTeams = new JLabel[4];
+    private JLabel[] results = new JLabel[4];
+    private int matchround = -1;
     private static Color foreground = ThemeManager.getColor(HOColorName.LABEL_FG);
     
     
-    protected SpieltagPanel(int spieltag) {
+    protected MatchDayPanel(int spieltag) {
         //Kann codiert sein!
-        m_iSpieltag = spieltag;
+        matchround = spieltag;
 
         initComponents();
     }
@@ -199,16 +187,13 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     
 
     private void fillLabels() {
-        int spieltag = m_iSpieltag;
+        int spieltag = matchround;
         Vector<IPaarung> paarungen = null;
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
-        if (LigaTabellePanel.getAktuellerSpielPlan() == null) {
-            //Button aktualisieren
-            setMatchButton(m_jbFirstMatch, null);
-            setMatchButton(m_jbSecondMatch, null);
-            setMatchButton(m_jbThirdMatch, null);
-            setMatchButton(m_jbFourthMatch, null);
+        if (SeriesPanel.getAktuellerSpielPlan() == null) {
+        	for (int i = 0; i < buttons.length; i++) 
+        		setMatchButton(buttons[i], null);
 
             return;
         }
@@ -231,7 +216,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
 
         }
 
-        paarungen = LigaTabellePanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
+        paarungen = SeriesPanel.getAktuellerSpielPlan().getPaarungenBySpieltag(spieltag);
 
         String bordertext = HOVerwaltung.instance().getLanguageString("Spieltag") + " "
                             + spieltag;
@@ -239,7 +224,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         if (paarungen != null && paarungen.size()>0) {
         	try {
         		bordertext += ("  ( "
-        				+ java.text.DateFormat.getDateTimeInstance().format(((Paarung) paarungen.get(0))
+        				+ DateFormat.getDateTimeInstance().format(((Paarung) paarungen.get(0))
         						.getDatum()) + " )");
         	} catch (Exception e) {
         		bordertext += ("  ( " + ((Paarung) paarungen.get(0)).getStringDate() + " )");
@@ -253,48 +238,20 @@ final class SpieltagPanel extends JPanel implements ActionListener {
             resetMarkierung();
 
             //Erste Paarung------------------------------------------
-            Paarung paarung = (Paarung) paarungen.get(0);
-            m_jbFirstMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
-                                            + paarung.getGastId() + "," + paarung.getToreHeim()
-                                            + "," + paarung.getToreGast());
-            setMatchButton(m_jbFirstMatch, paarung);
-
-            fillRow(m_jlFirstHomeTeam, m_jlFirstVisitorTeam, m_jlFirstResult, paarung, teamid);
-
-            //Zweite Paarung------------------------------------------
-            paarung = (Paarung) paarungen.get(1);
-            m_jbSecondMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
-                                             + paarung.getGastId() + "," + paarung.getToreHeim()
-                                             + "," + paarung.getToreGast());
-            setMatchButton(m_jbSecondMatch, paarung);
-
-            fillRow(m_jlSecondHomeTeam, m_jlSecondVisitorTeam, m_jlSecondResult, paarung, teamid);
-
-            //Dritte Paarung------------------------------------------
-            paarung = (Paarung) paarungen.get(2);
-            m_jbThirdMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
-                                            + paarung.getGastId() + "," + paarung.getToreHeim()
-                                            + "," + paarung.getToreGast());
-            setMatchButton(m_jbThirdMatch, paarung);
-
-            fillRow(m_jlThirdHomeTeam, m_jlThirdVisitorTeam, m_jlThirdResult, paarung, teamid);
-
-            //Vierte Paarung------------------------------------------
-            paarung = (Paarung) paarungen.get(3);
-            m_jbFourthMatch.setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
-                                             + paarung.getGastId() + "," + paarung.getToreHeim()
-                                             + "," + paarung.getToreGast());
-            setMatchButton(m_jbFourthMatch, paarung);
-
-            fillRow(m_jlFourthHomeTeam, m_jlFourthVisitorTeam, m_jlFourthResult, paarung, teamid);
+            
+            for (int i = 0; i < buttons.length; i++) {
+            	Paarung paarung = (Paarung) paarungen.get(i);
+				buttons[i].setActionCommand(paarung.getMatchId() + "," + paarung.getHeimId() + ","
+                        + paarung.getGastId() + "," + paarung.getToreHeim()
+                        + "," + paarung.getToreGast());
+				 setMatchButton(buttons[i], paarung);
+	            fillRow(homeTeams[i], visitorTeams[i], results[i], paarung, teamid);
+			}
         }
         //Keine Paarungen
         else {
-            //Button aktualisieren
-            setMatchButton(m_jbFirstMatch, null);
-            setMatchButton(m_jbSecondMatch, null);
-            setMatchButton(m_jbThirdMatch, null);
-            setMatchButton(m_jbFourthMatch, null);
+        	for (int i = 0; i < buttons.length; i++) 
+        		setMatchButton(buttons[i], null);
         }
     }
 
@@ -351,6 +308,12 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     }
 
     private void initComponents() {
+    	for (int i = 0; i < buttons.length; i++) {
+			buttons[i] = new JButton();
+			homeTeams[i] = new JLabel();
+			visitorTeams[i] = new JLabel();
+			results[i] = new JLabel();
+		}
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.CENTER;
@@ -398,33 +361,13 @@ final class SpieltagPanel extends JPanel implements ActionListener {
         layout.setConstraints(label, constraints);
         add(label);
 
-        //First Match
-        initTeam(m_jlFirstHomeTeam, constraints, layout, 1, 0);
-        initColon(constraints, layout, 1);
-        initTeam(m_jlFirstVisitorTeam, constraints, layout, 1, 2);
-        initResultLabel(m_jlFirstResult, constraints, layout, 1);
-        initButton(m_jbFirstMatch, constraints, layout, 1);
-
-        //Second Match
-        initTeam(m_jlSecondHomeTeam, constraints, layout, 2, 0);
-        initColon(constraints, layout, 2);
-        initTeam(m_jlSecondVisitorTeam, constraints, layout, 2, 2);
-        initResultLabel(m_jlSecondResult, constraints, layout, 2);
-        initButton(m_jbSecondMatch, constraints, layout, 2);
-
-        //Third Match
-        initTeam(m_jlThirdHomeTeam, constraints, layout, 3, 0);
-        initColon(constraints, layout, 3);
-        initTeam(m_jlThirdVisitorTeam, constraints, layout, 3, 2);
-        initResultLabel(m_jlThirdResult, constraints, layout, 3);
-        initButton(m_jbThirdMatch, constraints, layout, 3);
-
-        //Fourth Match
-        initTeam(m_jlFourthHomeTeam, constraints, layout, 4, 0);
-        initColon(constraints, layout, 4);
-        initTeam(m_jlFourthVisitorTeam, constraints, layout, 4, 2);
-        initResultLabel(m_jlFourthResult, constraints, layout, 4);
-        initButton(m_jbFourthMatch, constraints, layout, 4);
+        for (int j = 0; j < buttons.length; j++) {
+        	initTeam(homeTeams[j], constraints, layout, j+1, 0);
+            initColon(constraints, layout, j+1);
+            initTeam(visitorTeams[j], constraints, layout, j+1, 2);
+            initResultLabel(results[j], constraints, layout, j+1);
+            initButton(buttons[j], constraints, layout, j+1);
+		}
 
         fillLabels();
     }
@@ -452,7 +395,7 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     }
 
     private void markSelectedTeam(JLabel team, String teamName) {
-        if (teamName.equals(LigaTabellePanel.getMarkierterVerein())) {
+        if (teamName.equals(SeriesPanel.getMarkierterVerein())) {
             team.setOpaque(true);
             team.setBackground(SpielerTableRenderer.SELECTION_BG);
             team.setForeground(SpielerTableRenderer.SELECTION_FG);
@@ -460,14 +403,10 @@ final class SpieltagPanel extends JPanel implements ActionListener {
     }
 
     private void resetMarkierung() {
-        resetMarkup(m_jlFirstHomeTeam);
-        resetMarkup(m_jlFirstVisitorTeam);
-        resetMarkup(m_jlSecondHomeTeam);
-        resetMarkup(m_jlSecondVisitorTeam);
-        resetMarkup(m_jlThirdHomeTeam);
-        resetMarkup(m_jlThirdVisitorTeam);
-        resetMarkup(m_jlFourthHomeTeam);
-        resetMarkup(m_jlFourthVisitorTeam);
+    	for (int i = 0; i < buttons.length; i++) {
+    		 resetMarkup(homeTeams[i]);
+    	     resetMarkup(visitorTeams[i]);
+		}
     }
 
     private void resetMarkup(JLabel label) {
