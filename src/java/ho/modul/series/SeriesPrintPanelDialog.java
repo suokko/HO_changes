@@ -1,5 +1,5 @@
 // %1351448296:de.hattrickorganizer.gui.league%
-package de.hattrickorganizer.gui.league;
+package ho.modul.series;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -15,23 +15,23 @@ import de.hattrickorganizer.tools.HOLogger;
 /**
  * Dialog zum Drucken der Ligatabelle
  */
-public class LigaTabellePrintDialog extends JDialog {
+public class SeriesPrintPanelDialog extends JDialog {
 	
 	private static final long serialVersionUID = 2345698230109077443L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
 
-	private LigaTabelle m_jpLigaTabelle;
-    private SpieltagPanel m_jpSpielPlan1;
-    private SpieltagPanel m_jpSpielPlan2;
-    private TabellenverlaufStatistikPanel m_jpTabellenverlaufStatistik;
+	private SeriesTablePanel m_jpLigaTabelle;
+    private MatchDayPanel m_jpSpielPlan1;
+    private MatchDayPanel m_jpSpielPlan2;
+    private SeriesHistoryPanel m_jpTabellenverlaufStatistik;
 
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new LigaTabellePrintDialog object.
      */
-    public LigaTabellePrintDialog() {
+    public SeriesPrintPanelDialog() {
         initComponents();
         initValues();
 
@@ -85,28 +85,28 @@ public class LigaTabellePrintDialog extends JDialog {
         //background important for printing, so static white
         getContentPane().setBackground(Color.WHITE);
 
-        m_jpLigaTabelle = new LigaTabelle();
+        m_jpLigaTabelle = new SeriesTablePanel();
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
         layout.setConstraints(m_jpLigaTabelle, constraints);
         getContentPane().add(m_jpLigaTabelle);
 
-        m_jpTabellenverlaufStatistik = new TabellenverlaufStatistikPanel();
+        m_jpTabellenverlaufStatistik = new SeriesHistoryPanel();
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 2;
         layout.setConstraints(m_jpTabellenverlaufStatistik, constraints);
         getContentPane().add(m_jpTabellenverlaufStatistik);
 
-        m_jpSpielPlan1 = new SpieltagPanel(SpieltagPanel.LETZTER_SPIELTAG);
+        m_jpSpielPlan1 = new MatchDayPanel(MatchDayPanel.LETZTER_SPIELTAG);
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jpSpielPlan1, constraints);
         getContentPane().add(m_jpSpielPlan1);
 
-        m_jpSpielPlan2 = new SpieltagPanel(SpieltagPanel.NAECHSTER_SPIELTAG);
+        m_jpSpielPlan2 = new MatchDayPanel(MatchDayPanel.NAECHSTER_SPIELTAG);
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;

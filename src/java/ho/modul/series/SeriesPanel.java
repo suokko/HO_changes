@@ -1,11 +1,10 @@
 // %155607735:de.hattrickorganizer.gui.league%
-package de.hattrickorganizer.gui.league;
+package ho.modul.series;
 
 import gui.HOColorName;
 import gui.HOIconName;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -19,10 +18,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -35,7 +32,6 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matchlist.Spielplan;
@@ -44,10 +40,8 @@ import de.hattrickorganizer.model.matchlist.Spielplan;
 /**
  * Panel, das die Ligatabelle sowie das letzte und das nächste Spiel enthält
  */
-public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemListener,
-                                                            ActionListener, MouseListener,
-                                                            KeyListener
-{
+public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener, ActionListener, MouseListener, KeyListener{
+	
 	private static final long serialVersionUID = -5179683183917344230L;
 	
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -59,34 +53,19 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     //~ Instance fields ----------------------------------------------------------------------------
 
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
- //   private JButton m_jbLoeschen = new JButton(new ImageIcon(ImageUtilities.getImageDurchgestrichen(new BufferedImage(20, 20,  java.awt.image.BufferedImage.TYPE_INT_ARGB),
- //                                                                                     Color.red,new Color(200,0, 0))));
     private JButton m_jbLoeschen = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
     
     private JComboBox m_jcbSaison;
-    private LigaTabelle m_jpLigaTabelle;
-    private SpieltagPanel m_jpSpielPlan1;
-    private SpieltagPanel m_jpSpielPlan10;
-    private SpieltagPanel m_jpSpielPlan11;
-    private SpieltagPanel m_jpSpielPlan12;
-    private SpieltagPanel m_jpSpielPlan13;
-    private SpieltagPanel m_jpSpielPlan14;
-    private SpieltagPanel m_jpSpielPlan2;
-    private SpieltagPanel m_jpSpielPlan3;
-    private SpieltagPanel m_jpSpielPlan4;
-    private SpieltagPanel m_jpSpielPlan5;
-    private SpieltagPanel m_jpSpielPlan6;
-    private SpieltagPanel m_jpSpielPlan7;
-    private SpieltagPanel m_jpSpielPlan8;
-    private SpieltagPanel m_jpSpielPlan9;
-    private TabellenverlaufStatistikPanel m_jpTabellenverlaufStatistik;
+    private SeriesTablePanel m_jpLigaTabelle;
+    private MatchDayPanel[] matchDayPanels = new MatchDayPanel[14];
+    private SeriesHistoryPanel m_jpTabellenverlaufStatistik;
 
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new LigaTabellePanel object.
      */
-    public LigaTabellePanel() {
+    public SeriesPanel() {
         RefreshManager.instance().registerRefreshable(this);
         initComponents();
 
@@ -134,7 +113,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
                                  + " - "
                                  + DateFormat.getDateTimeInstance().format(calendar.getTime());
 
-            final LigaTabellePrintDialog printDialog = new LigaTabellePrintDialog();
+            final SeriesPrintPanelDialog printDialog = new SeriesPrintPanelDialog();
             printDialog.doPrint(titel);
             printDialog.setVisible(false);
             printDialog.dispose();
@@ -237,74 +216,55 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     private void informSaisonChange() {
         m_jpLigaTabelle.changeSaison();
         m_jpTabellenverlaufStatistik.changeSaison();
-
-        m_jpSpielPlan1.changeSaison();
-        m_jpSpielPlan2.changeSaison();
-        m_jpSpielPlan3.changeSaison();
-        m_jpSpielPlan4.changeSaison();
-        m_jpSpielPlan5.changeSaison();
-        m_jpSpielPlan6.changeSaison();
-        m_jpSpielPlan7.changeSaison();
-        m_jpSpielPlan8.changeSaison();
-        m_jpSpielPlan9.changeSaison();
-        m_jpSpielPlan10.changeSaison();
-        m_jpSpielPlan11.changeSaison();
-        m_jpSpielPlan12.changeSaison();
-        m_jpSpielPlan13.changeSaison();
-        m_jpSpielPlan14.changeSaison();
+        markierungInfo();
     }
 
     private void initComponents() {
         setLayout(new BorderLayout());
-
+        
         //ComboBox für Saisonauswahl
         final JPanel panel = new ImagePanel(new BorderLayout());
 
-        final JPanel cbpanel = new ImagePanel(null);
+        final JPanel toolbarPanel = new ImagePanel(null);
         m_jcbSaison = new JComboBox();
         m_jcbSaison.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_Saisonauswahl"));
         m_jcbSaison.addItemListener(this);
         m_jcbSaison.setSize(200, 25);
         m_jcbSaison.setLocation(10, 5);
-        cbpanel.add(m_jcbSaison);
+        toolbarPanel.add(m_jcbSaison);
 
         m_jbLoeschen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonLoeschen"));
         m_jbLoeschen.addActionListener(this);
         m_jbLoeschen.setSize(25, 25);
         m_jbLoeschen.setLocation(220, 5);
         m_jbLoeschen.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
-        cbpanel.add(m_jbLoeschen);
+        toolbarPanel.add(m_jbLoeschen);
 
         m_jbDrucken.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SaisonDrucken"));
         m_jbDrucken.addActionListener(this);
         m_jbDrucken.setSize(25, 25);
         m_jbDrucken.setLocation(255, 5);
-        cbpanel.add(m_jbDrucken);
+        toolbarPanel.add(m_jbDrucken);
 
-        cbpanel.setPreferredSize(new Dimension(240, 35));
-        panel.add(cbpanel, BorderLayout.NORTH);
+        toolbarPanel.setPreferredSize(new Dimension(240, 35));
+        panel.add(toolbarPanel, BorderLayout.NORTH);
 
-        final JPanel panel2 = new ImagePanel(new BorderLayout());
-        Component component = initLigaTabelle();
-        panel2.add(component, BorderLayout.NORTH);
+        final JPanel tablePanel = new ImagePanel(new BorderLayout());
+        tablePanel.add(initLigaTabelle(), BorderLayout.NORTH);
 
-        final JPanel panel3 = new ImagePanel(new BorderLayout());
+        final JPanel historyPanel = new ImagePanel(new BorderLayout());
+        historyPanel.add(initTabellenverlaufStatistik(), BorderLayout.NORTH);
+        historyPanel.add(initSpielPlan(), BorderLayout.CENTER);
 
-        component = initTabellenverlaufStatistik();
-        panel3.add(component, BorderLayout.NORTH);
+        tablePanel.add(historyPanel, BorderLayout.CENTER);
 
-        component = initSpielPlan();
-        panel3.add(component, BorderLayout.CENTER);
-
-        panel2.add(panel3, BorderLayout.CENTER);
-
-        panel.add(panel2, BorderLayout.CENTER);
+        panel.add(tablePanel, BorderLayout.CENTER);
 
         add(panel, BorderLayout.CENTER);
     }
 
     private Component initLigaTabelle() {
-        m_jpLigaTabelle = new LigaTabelle();
+        m_jpLigaTabelle = new SeriesTablePanel();
         m_jpLigaTabelle.addMouseListener(this);
         m_jpLigaTabelle.addKeyListener(this);
 
@@ -319,21 +279,9 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
 
     private Component initSpielPlan() {
         JLabel label = null;
-
-        m_jpSpielPlan1 = new SpieltagPanel(1);
-        m_jpSpielPlan2 = new SpieltagPanel(2);
-        m_jpSpielPlan3 = new SpieltagPanel(3);
-        m_jpSpielPlan4 = new SpieltagPanel(4);
-        m_jpSpielPlan5 = new SpieltagPanel(5);
-        m_jpSpielPlan6 = new SpieltagPanel(6);
-        m_jpSpielPlan7 = new SpieltagPanel(7);
-        m_jpSpielPlan8 = new SpieltagPanel(8);
-        m_jpSpielPlan9 = new SpieltagPanel(9);
-        m_jpSpielPlan10 = new SpieltagPanel(10);
-        m_jpSpielPlan11 = new SpieltagPanel(11);
-        m_jpSpielPlan12 = new SpieltagPanel(12);
-        m_jpSpielPlan13 = new SpieltagPanel(13);
-        m_jpSpielPlan14 = new SpieltagPanel(14);
+        for (int i = 0; i < matchDayPanels.length; i++) {
+        	matchDayPanels[i] = new MatchDayPanel(i+1);
+		}
 
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -353,41 +301,14 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.gridheight = 1;
-        layout.setConstraints(m_jpSpielPlan1, constraints);
-        panel.add(m_jpSpielPlan1);
+        for (int i = 0; i < 7; i++) {
+        	constraints.gridx = 1;
+            constraints.gridy = i;
+            constraints.gridheight = 1;
+            layout.setConstraints(matchDayPanels[i], constraints);
+            panel.add(matchDayPanels[i]);
+		}
 
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        layout.setConstraints(m_jpSpielPlan2, constraints);
-        panel.add(m_jpSpielPlan2);
-
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        layout.setConstraints(m_jpSpielPlan3, constraints);
-        panel.add(m_jpSpielPlan3);
-
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        layout.setConstraints(m_jpSpielPlan4, constraints);
-        panel.add(m_jpSpielPlan4);
-
-        constraints.gridx = 1;
-        constraints.gridy = 4;
-        layout.setConstraints(m_jpSpielPlan5, constraints);
-        panel.add(m_jpSpielPlan5);
-
-        constraints.gridx = 1;
-        constraints.gridy = 5;
-        layout.setConstraints(m_jpSpielPlan6, constraints);
-        panel.add(m_jpSpielPlan6);
-
-        constraints.gridx = 1;
-        constraints.gridy = 6;
-        layout.setConstraints(m_jpSpielPlan7, constraints);
-        panel.add(m_jpSpielPlan7);
 
         label = new JLabel();
         constraints.gridx = 2;
@@ -397,41 +318,13 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
         layout.setConstraints(label, constraints);
         panel.add(label);
 
-        constraints.gridx = 3;
-        constraints.gridy = 0;
-        constraints.gridheight = 1;
-        layout.setConstraints(m_jpSpielPlan8, constraints);
-        panel.add(m_jpSpielPlan8);
-
-        constraints.gridx = 3;
-        constraints.gridy = 1;
-        layout.setConstraints(m_jpSpielPlan9, constraints);
-        panel.add(m_jpSpielPlan9);
-
-        constraints.gridx = 3;
-        constraints.gridy = 2;
-        layout.setConstraints(m_jpSpielPlan10, constraints);
-        panel.add(m_jpSpielPlan10);
-
-        constraints.gridx = 3;
-        constraints.gridy = 3;
-        layout.setConstraints(m_jpSpielPlan11, constraints);
-        panel.add(m_jpSpielPlan11);
-
-        constraints.gridx = 3;
-        constraints.gridy = 4;
-        layout.setConstraints(m_jpSpielPlan12, constraints);
-        panel.add(m_jpSpielPlan12);
-
-        constraints.gridx = 3;
-        constraints.gridy = 5;
-        layout.setConstraints(m_jpSpielPlan13, constraints);
-        panel.add(m_jpSpielPlan13);
-
-        constraints.gridx = 3;
-        constraints.gridy = 6;
-        layout.setConstraints(m_jpSpielPlan14, constraints);
-        panel.add(m_jpSpielPlan14);
+        for (int i = 7; i < matchDayPanels.length; i++) {
+        	constraints.gridx = 3;
+            constraints.gridy = i-7;
+            constraints.gridheight = 1;
+            layout.setConstraints(matchDayPanels[i], constraints);
+            panel.add(matchDayPanels[i]);
+		}
 
         label = new JLabel();
         constraints.gridx = 4;
@@ -449,7 +342,7 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     }
 
     private Component initTabellenverlaufStatistik() {
-        m_jpTabellenverlaufStatistik = new TabellenverlaufStatistikPanel();
+        m_jpTabellenverlaufStatistik = new SeriesHistoryPanel();
 
         final JPanel panel = new ImagePanel();
         panel.add(m_jpTabellenverlaufStatistik);
@@ -464,19 +357,8 @@ public class LigaTabellePanel extends ImagePanel implements Refreshable, ItemLis
     }
 
     private void markierungInfo() {
-        m_jpSpielPlan1.changeSaison();
-        m_jpSpielPlan2.changeSaison();
-        m_jpSpielPlan3.changeSaison();
-        m_jpSpielPlan4.changeSaison();
-        m_jpSpielPlan5.changeSaison();
-        m_jpSpielPlan6.changeSaison();
-        m_jpSpielPlan7.changeSaison();
-        m_jpSpielPlan8.changeSaison();
-        m_jpSpielPlan9.changeSaison();
-        m_jpSpielPlan10.changeSaison();
-        m_jpSpielPlan11.changeSaison();
-        m_jpSpielPlan12.changeSaison();
-        m_jpSpielPlan13.changeSaison();
-        m_jpSpielPlan14.changeSaison();
+    	for (int i = 0; i < matchDayPanels.length; i++) {
+    		matchDayPanels[i].changeSaison();
+		}
     }
 }

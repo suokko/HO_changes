@@ -1,5 +1,5 @@
 // %3066887473:de.hattrickorganizer.gui.league%
-package de.hattrickorganizer.gui.league;
+package ho.modul.series;
 
 import gui.HOColorName;
 
@@ -19,7 +19,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
 /**
  * Zeigt den Tabellenverlauf der Saison als Grafik an
  */
-final class TabellenverlaufStatistikPanel extends JPanel {
+final class SeriesHistoryPanel extends JPanel {
 	
 	private static final long serialVersionUID = -8411572558790555924L;
 	
@@ -47,7 +47,7 @@ final class TabellenverlaufStatistikPanel extends JPanel {
     /**
      * Creates a new TabellenverlaufStatistikPanel object.
      */
-    protected TabellenverlaufStatistikPanel() {
+    protected SeriesHistoryPanel() {
         setPreferredSize(new Dimension(700, 130));
 
         initValues();
@@ -215,8 +215,8 @@ final class TabellenverlaufStatistikPanel extends JPanel {
     }
 
     private void initValues() {
-        if (LigaTabellePanel.getAktuellerSpielPlan() != null) {
-            m_clVerlaufeintraege = LigaTabellePanel.getAktuellerSpielPlan().getVerlauf()
+        if (SeriesPanel.getAktuellerSpielPlan() != null) {
+            m_clVerlaufeintraege = SeriesPanel.getAktuellerSpielPlan().getVerlauf()
                                                    .getEintraege();
         }
 

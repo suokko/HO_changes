@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.modul.series.SeriesPanel;
 import ho.modul.transfer.TransfersPanel;
 import ho.modul.transfer.scout.TransferScoutPanel;
 import ho.tool.ToolManager;
@@ -53,7 +54,6 @@ import plugins.IPlugin;
 import plugins.ISpieler;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.info.InformationsPanel;
-import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupMasterPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
@@ -198,7 +198,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
 
-	private LigaTabellePanel m_jpLigaTabelle;
+	private SeriesPanel m_jpLigaTabelle;
 
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
 	private SpielePanel m_jpSpielePanel;
@@ -638,7 +638,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Tabelle
-		m_jpLigaTabelle = new LigaTabellePanel();
+		m_jpLigaTabelle = new SeriesPanel();
 
 		if (!UserParameter.instance().tempTabLigatabelle) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"), m_jpLigaTabelle);
