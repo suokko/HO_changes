@@ -1074,25 +1074,25 @@ public class Lineup implements plugins.ILineUp {
 			erfahrung = -1;
 			break;
 		case SYS_451:
-			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung451();
+			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience451();
 			break;
 		case SYS_352:
-			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung352();
+			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience352();
 			break;
 		case SYS_442:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience442();
 			break;
 		case SYS_343:
-			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung343();
+			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience343();
 			break;
 		case SYS_433:
-			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung433();
+			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience433();
 			break;
 		case SYS_532:
-			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung532();
+			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience532();
 			break;
 		case SYS_541:
-			erfahrung = HOVerwaltung.instance().getModel().getTeam().getErfahrung541();
+			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience541();
 			break;
 		case SYS_523:
 			erfahrung = HOVerwaltung.instance().getModel().getTeam().getFormationExperience523();
