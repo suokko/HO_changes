@@ -50,129 +50,145 @@ public interface ITeam {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * Setter for property m_iErfahrung343.
-     *
-     * @param m_iErfahrung343 New value of property m_iErfahrung343.
-     */
-    public void setErfahrung343(int m_iErfahrung343);
+	/**
+	 * Sets the team's experience for the 3-4-3 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience343(int exp);
 
-    /**
-     * Getter for property m_iErfahrung343.
-     *
-     * @return Value of property m_iErfahrung343.
-     */
-    public int getErfahrung343();
+	/**
+	 * Gets the team's experience for the 3-4-3 formation.
+	 * 
+	 * @return the experience for the 3-4-3 formation
+	 */
+    public int getFormationExperience343();
 
-    /**
-     * Setter for property m_iErfahrung352.
-     *
-     * @param m_iErfahrung352 New value of property m_iErfahrung352.
-     */
-    public void setErfahrung352(int m_iErfahrung352);
+	/**
+	 * Sets the team's experience for the 3-5-2 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience352(int exp);
 
-    /**
-     * Getter for property m_iErfahrung352.
-     *
-     * @return Value of property m_iErfahrung352.
-     */
-    public int getErfahrung352();
+	/**
+	 * Gets the team's experience for the 3-5-2 formation.
+	 * 
+	 * @return the experience for the 3-5-2 formation
+	 */
+    public int getFormationExperience352();
 
-    /**
-     * Setter for property m_iErfahrung433.
-     *
-     * @param m_iErfahrung433 New value of property m_iErfahrung433.
-     */
-    public void setErfahrung433(int m_iErfahrung433);
+	/**
+	 * Sets the team's experience for the 4-3-3 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience433(int exp);
 
-    /**
-     * Getter for property m_iErfahrung433.
-     *
-     * @return Value of property m_iErfahrung433.
-     */
-    public int getErfahrung433();
+	/**
+	 * Gets the team's experience for the 4-3-3 formation.
+	 * 
+	 * @return the experience for the 4-3-3 formation
+	 */
+    public int getFormationExperience433();
 
-    /**
-     * Setter for property m_iErfahrung451.
-     *
-     * @param m_iErfahrung451 New value of property m_iErfahrung451.
-     */
-    public void setErfahrung451(int m_iErfahrung451);
+	/**
+	 * Sets the team's experience for the 4-5-1 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience451(int exp);
 
-    /**
-     * Getter for property m_iErfahrung451.
-     *
-     * @return Value of property m_iErfahrung451.
-     */
-    public int getErfahrung451();
+	/**
+	 * Gets the team's experience for the 4-5-1 formation.
+	 * 
+	 * @return the experience for the 4-5-1 formation
+	 */
+    public int getFormationExperience451();
 
-    /**
-     * Setter for property m_iErfahrung532.
-     *
-     * @param m_iErfahrung532 New value of property m_iErfahrung532.
-     */
-    public void setErfahrung532(int m_iErfahrung532);
+	/**
+	 * Sets the team's experience for the 5-3-2 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience532(int exp);
 
-    /**
-     * Getter for property m_iErfahrung532.
-     *
-     * @return Value of property m_iErfahrung532.
-     */
-    public int getErfahrung532();
+	/**
+	 * Gets the team's experience for the 5-3-2 formation.
+	 * 
+	 * @return the experience for the 5-3-2 formation
+	 */
+    public int getFormationExperience532();
 
-    /**
-     * Setter for property m_iErfahrung541.
-     *
-     * @param m_iErfahrung541 New value of property m_iErfahrung541.
-     */
-    public void setErfahrung541(int m_iErfahrung541);
+	/**
+	 * Sets the team's experience for the 5-4-1 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience541(int exp);
 
-    /**
-     * Getter for property m_iErfahrung541.
-     *
-     * @return Value of property m_iErfahrung541.
-     */
-    public int getErfahrung541();
+	/**
+	 * Gets the team's experience for the 5-4-1 formation.
+	 * 
+	 * @return the experience for the 5-4-1 formation
+	 */
+    public int getFormationExperience541();
     
-    /**
-     * Get the formation experience for the 442 system.
-     */
+	/**
+	 * Gets the team's experience for the 4-4-2 formation.
+	 * 
+	 * @return the experience for the 4-4-2 formation
+	 */
     public int getFormationExperience442();
 
-    /**
-     * Set the formation experience for the 442 system.
-     */
-    public void setFormationExperience442(int formationXp442);
+	/**
+	 * Sets the team's experience for the 4-4-2 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience442(int exp);
     
-    /**
-     * Get the formation experience for the 523 system.
-     */
+	/**
+	 * Gets the team's experience for the 5-2-3 formation.
+	 * 
+	 * @return the experience for the 5-2-3 formation
+	 */
     public int getFormationExperience523();
 
-    /**
-     * Set the formation experience for the 523 system.
-     */
-    public void setFormationExperience523(int formationXp523);
+	/**
+	 * Sets the team's experience for the 5-2-3 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience523(int exp);
     
-    /**
-     * Get the formation experience for the 550 system.
-     */
+	/**
+	 * Gets the team's experience for the 5-5-0 formation.
+	 * 
+	 * @return the experience for the 5-5-0 formation
+	 */
     public int getFormationExperience550();
 
-    /**
-     * Set the formation experience for the 550 system.
-     */
-    public void setFormationExperience550(int formationXp550);
+	/**
+	 * Sets the team's experience for the 5-5-0 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience550(int exp);
 
-    /**
-     * Get the formation experience for the 253 system.
-     */
+	/**
+	 * Gets the team's experience for the 2-5-3 formation.
+	 * 
+	 * @return the experience for the 2-5-3 formation
+	 */
     public int getFormationExperience253();
 
-    /**
-     * Set the formation experience for the 253 system.
-     */
-    public void setFormationExperience253(int formationXp253);
+	/**
+	 * Sets the team's experience for the 2-5-3 formation.
+	 * 
+	 * @param exp the experience value
+	 */
+    public void setFormationExperience253(int exp);
 
     /**
      * Setter for property m_sSelbstvertrauen.

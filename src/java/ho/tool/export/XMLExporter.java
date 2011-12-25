@@ -544,25 +544,25 @@ public class XMLExporter  {
 				return -1;
 
 			case ILineUp.SYS_451 :
-				return team.getErfahrung451();
+				return team.getFormationExperience451();
 
 			case ILineUp.SYS_352 :
-				return team.getErfahrung352();
+				return team.getFormationExperience352();
 
 			case ILineUp.SYS_442 :
 				return team.getFormationExperience442();
 
 			case ILineUp.SYS_343 :
-				return team.getErfahrung343();
+				return team.getFormationExperience343();
 
 			case ILineUp.SYS_433 :
-				return team.getErfahrung433();
+				return team.getFormationExperience433();
 
 			case ILineUp.SYS_532 :
-				return team.getErfahrung532();
+				return team.getFormationExperience532();
 
 			case ILineUp.SYS_541 :
-				return team.getErfahrung541();
+				return team.getFormationExperience541();
 				
 			case ILineUp.SYS_523 :
 				return team.getFormationExperience523();
