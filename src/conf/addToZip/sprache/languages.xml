@@ -23,7 +23,7 @@
   <property>
     <datei>Czech.properties</datei>
     <lang_id>4</lang_id>
-    <version>3.8</version>
+    <version>3.9</version>
   </property>
   <property>
     <datei>Danish.properties</datei>
@@ -58,7 +58,7 @@
   <property>
     <datei>Portugues.properties</datei>
     <lang_id>11</lang_id>
-    <version>4.2</version>
+    <version>4.3</version>
   </property>
   <property>
     <datei>Romanian.properties</datei>
@@ -156,7 +156,7 @@
   <property>
     <datei>Georgian.properties</datei>
     <lang_id>31</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>Slovenian.properties</datei>
