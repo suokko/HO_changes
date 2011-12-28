@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -20,11 +19,11 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JTabbedPane tabbedPane;
 	private ArenaPanel panel;
-	private JPanel historyPanel;
+	private DistributionStatisticsPanel historyPanel;
 	private ArenaPanel infoPanel;
 	private ControlPanel controlPanel;
-	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
-	private JButton closeButton = new JButton(HOVerwaltung.instance().getLanguageString("Beenden"));
+	private JPanel toolbar;
+	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
 	
 	public ArenaSizerDialog(JFrame owner){
 		super(owner,true);
@@ -32,20 +31,32 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	}
 
 	private void initialize() {
-		setSize(900,480);
+		setSize(900,430);
 		setLayout(new BorderLayout());
 		setTitle(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
+		add(getToolbar(), BorderLayout.NORTH);
+		
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		
 		JPanel panelC = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		panelC.add(getControlPanel());
-		add(panelC,BorderLayout.NORTH);
-		add(new JScrollPane(getTabbedPane()), BorderLayout.CENTER);
-		JPanel tmp = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		tmp.add(refreshButton);
-		tmp.add(closeButton);
-		refreshButton.addActionListener(this);
-		closeButton.addActionListener(this);
-		add(tmp, BorderLayout.SOUTH);
+		centerPanel.add(panelC,BorderLayout.NORTH);
+		centerPanel.add(getTabbedPane(), BorderLayout.CENTER);
 		
+		add(centerPanel,BorderLayout.CENTER);
+		
+	}
+	
+	private JPanel getToolbar(){
+		if(toolbar == null){
+			toolbar = new JPanel(new FlowLayout(FlowLayout.LEADING));
+			toolbar.add(refreshButton);
+			refreshButton.addActionListener(this);
+			refreshButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+			// reset
+			// save
+		}
+		return toolbar;
 	}
 	
 	private ControlPanel getControlPanel(){
@@ -57,7 +68,7 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	
 	private JPanel getHistoryPanel(){
 		if(historyPanel == null){
-			historyPanel = new JPanel();
+			historyPanel = new DistributionStatisticsPanel();
 		}
 		return historyPanel;
 	}
@@ -79,10 +90,10 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	private JTabbedPane getTabbedPane(){
 		if(tabbedPane == null){
 			tabbedPane = new JTabbedPane();
-			tabbedPane.addTab(HOVerwaltung.instance().getModel().getStadium().getStadienname(), getInfoPanel());
-			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Stadion"), getArenaPanel());
-			//tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), getArenaStatistikPanel());
-			
+			HOVerwaltung hoV = HOVerwaltung.instance();
+			tabbedPane.addTab(hoV.getLanguageString("Stadion"), getArenaPanel());
+			tabbedPane.addTab(hoV.getModel().getStadium().getStadienname(), getInfoPanel());
+			tabbedPane.addTab(hoV.getLanguageString("Statistik"), getHistoryPanel());
 		}
 		return tabbedPane;
 	}
@@ -99,9 +110,7 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == closeButton){
-			dispose();
-		} else if(e.getSource() == refreshButton){
+		 if(e.getSource() == refreshButton){
 			Stadium stadium = getControlPanel().getStadium();
 			int[] supporter = getControlPanel().getModifiedSupporter();
             getArenaPanel().reinitArena(stadium, supporter[0],supporter[1],supporter[2]);

@@ -24,7 +24,7 @@ import de.hattrickorganizer.tools.HelperWrapper;
  *
  * @since 1.35
  */
-public final class DeleteDialog extends UpdaterDialog {
+final class DeleteDialog extends UpdaterDialog {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
@@ -38,7 +38,7 @@ public final class DeleteDialog extends UpdaterDialog {
     /**
      * Creates a new DeleteDialog object.
      */
-    public DeleteDialog() {
+    DeleteDialog() {
         super(null, PROP_DELETE);
         inizialize();
 
