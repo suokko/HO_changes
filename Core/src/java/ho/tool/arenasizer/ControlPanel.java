@@ -27,7 +27,8 @@ class ControlPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private static final BigDecimal HUNDRED = new BigDecimal(100);
-	private JButton m_jbUbernehmenGesamt = new JButton(HOVerwaltung.instance().getLanguageString("Calculate"));
+	private JButton m_jbUbernehmenGesamt = new JButton("   =>");
+	
 	private JTextField m_jtfFans = new JTextField(7);
 	private JTextField m_jtfGesamtgroesse = new JTextField(7);
 	
@@ -66,43 +67,44 @@ class ControlPanel extends JPanel implements ActionListener{
        // m_jtfGesamtgroesse.addFocusListener(this);
         addToLayout(m_jtfGesamtgroesse, 1, 0);
         
-        m_jbUbernehmenGesamt.addActionListener(this);
-        addToLayout (m_jbUbernehmenGesamt,2,0);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Stehplaetze"));
-        addToLayout(label,3,0);
+        addToLayout(label,2,0);
         setFieldProperties(terracesPercentField);
-        addToLayout(terracesPercentField,4,0);
+        addToLayout(terracesPercentField,3,0);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sitzplaetze"));
-        addToLayout(label,5,0);
+        addToLayout(label,4,0);
         setFieldProperties(basicPercentField);
-        addToLayout(basicPercentField,6,0);
+        addToLayout(basicPercentField,5,0);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"));
-        addToLayout(label,7,0);
+        addToLayout(label,6,0);
         setFieldProperties(roofPercentField);
-        addToLayout(roofPercentField,8,0);
+        addToLayout(roofPercentField,7,0);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Logen"));
-        addToLayout(label,9,0);
+        addToLayout(label,8,0);
         setFieldProperties(vipPercentField);
-        addToLayout(vipPercentField,10,0);
+        addToLayout(vipPercentField,9,0);
         
         
         
         terracesField.setHorizontalAlignment(SwingConstants.RIGHT);
-        addToLayout(terracesField,4,1);
+        addToLayout(terracesField,3,1);
 
         basicField.setHorizontalAlignment(SwingConstants.RIGHT);
-        addToLayout(basicField,6,1);
+        addToLayout(basicField,5,1);
 
         roofField.setHorizontalAlignment(SwingConstants.RIGHT);
-        addToLayout(roofField,8,1);
+        addToLayout(roofField,7,1);
 
         vipField.setHorizontalAlignment(SwingConstants.RIGHT);
-        addToLayout(vipField,10,1);
+        addToLayout(vipField,9,1);
 
+        m_jbUbernehmenGesamt.setToolTipText(HOVerwaltung.instance().getLanguageString("Calculate"));
+        m_jbUbernehmenGesamt.addActionListener(this);
+        addToLayout (m_jbUbernehmenGesamt,1,1);
 
         
         
@@ -113,20 +115,19 @@ class ControlPanel extends JPanel implements ActionListener{
         addToLayout(m_jtfFans,1,2);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Maximal"));
-        addToLayout(label,3,2);
+        addToLayout(label,2,2);
         setFieldProperties(factorMaxField);
-        addToLayout(factorMaxField,4,2);
+        addToLayout(factorMaxField,3,2);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Durchschnitt"));
-        addToLayout(label,5,2);
+        addToLayout(label,4,2);
         setFieldProperties(factorNormalField);
-        addToLayout(factorNormalField,6,2);
+        addToLayout(factorNormalField,5,2);
         
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Minimal"));
-        addToLayout(label,7,2);
+        addToLayout(label,6,2);
         setFieldProperties(factorMinField);
-        addToLayout(factorMinField,8,2);
-        
+        addToLayout(factorMinField,7,2);
        
         Dimension dim = vipField.getPreferredSize();
         vipPercentField.setPreferredSize(dim);
