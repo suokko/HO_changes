@@ -12,51 +12,36 @@ import de.hattrickorganizer.tools.Helper;
 
 class ArenaSizer {
 
-    //INCOME
-    static final float STEH_EINTRITT = 65f;
-    static final float SITZ_EINTRITT = 95f;
-    static final float DACH_EINTRITT = 180f;
-    static final float LOGEN_EINTRITT = 325f;
+    private static final float ADMISSION_PRICE_TERRACES = 65f;
+    private static final float ADMISSION_PRICE_BASICS = 95f;
+    private static final float ADMISSION_PRICE_ROOF = 180f;
+    private static final float ADMISSION_PRICE_VIP = 325f;
 
-    //COSTS
-    static final float STEH_UNTERHALT = 5f;
-    static final float SITZ_UNTERHALT = 7f;
-    static final float DACH_UNTERHALT = 10f;
-    static final float LOGEN_UNTERHALT = 25f;
+    private static final float MAINTENANCE_TERRACES = 5f;
+    private static final float MAINTENANCE_BASICS = 7f;
+    private static final float MAINTENANCE_ROOF = 10f;
+    private static final float MAINTENANCE_VIP = 25f;
 
     //CREATE
-    static float STEH_AUSBAU = 450f;
-    static float SITZ_AUSBAU = 750f;
-    static float DACH_AUSBAU = 900f;
-    static float LOGEN_AUSBAU = 3000f;
-    static float ABRISS = 60f;
-    static float FIXKOSTEN = 100000f;
+    private static float STEH_AUSBAU = 450f;
+    private static float SITZ_AUSBAU = 750f;
+    private static float DACH_AUSBAU = 900f;
+    private static float LOGEN_AUSBAU = 3000f;
+    private static float ABRISS = 60f;
+    private static float FIXKOSTEN = 100000f;
 
-    //DISTRIBUTION
-    static final float STEH_PROZENT = 60.0f;
-    static final float SITZ_PROZENT = 23.5f;
-    static final float DACH_PROZENT = 14.0f;
-    static final float LOGEN_PROZENT = 2.5f;
-    
-    static final BigDecimal TERRACES_PERCENT = new BigDecimal(0.60).setScale(3, BigDecimal.ROUND_HALF_DOWN);
-    static final BigDecimal BASICS_PERCENT = new BigDecimal(0.235).setScale(3, BigDecimal.ROUND_HALF_DOWN);
-    static final BigDecimal ROOF_PERCENT = new BigDecimal(0.14).setScale(3, BigDecimal.ROUND_HALF_DOWN);
-    static final BigDecimal VIP_PERCENT = new BigDecimal(0.025).setScale(3, BigDecimal.ROUND_HALF_DOWN);
+    static final BigDecimal TERRACES_PERCENT 	= new BigDecimal(0.60).setScale(3, BigDecimal.ROUND_HALF_DOWN);
+    static final BigDecimal BASICS_PERCENT 		= new BigDecimal(0.235).setScale(3, BigDecimal.ROUND_HALF_DOWN);
+    static final BigDecimal ROOF_PERCENT 		= new BigDecimal(0.14).setScale(3, BigDecimal.ROUND_HALF_DOWN);
+    static final BigDecimal VIP_PERCENT 		= new BigDecimal(0.025).setScale(3, BigDecimal.ROUND_HALF_DOWN);
 
     //SUPPORTER-DISTRIBUTION
-    static final int FANS_GUT = 25;
-    static final int FANS_NORMAL = 20;
-    static final int FANS_SCHLECHT = 15;
-
     static final Integer SUPPORTER_MAX = 25;
     static final Integer SUPPORTER_NORMAL = 20;
     static final Integer SUPPORTER_MIN = 15;
-    //~ Constructors -------------------------------------------------------------------------------
 
     float currencyFactor = gui.UserParameter.instance().faktorGeld;
-    /**
-     * Creates a new instance of ArenaSizer
-     */
+
     ArenaSizer() {
 
     }
@@ -66,20 +51,21 @@ class ArenaSizer {
     final int calcMaxIncome(Stadium arena) {
         int income = 0;
 
-        income += ((arena.getStehplaetze() * STEH_EINTRITT) / currencyFactor);
-        income += ((arena.getSitzplaetze() * SITZ_EINTRITT) /currencyFactor);
-        income += ((arena.getUeberdachteSitzplaetze() * DACH_EINTRITT) /currencyFactor);
-        income += ((arena.getLogen() * LOGEN_EINTRITT) / currencyFactor);
+        income += ((arena.getStehplaetze() * ADMISSION_PRICE_TERRACES) / currencyFactor);
+        income += ((arena.getSitzplaetze() * ADMISSION_PRICE_BASICS) /currencyFactor);
+        income += ((arena.getUeberdachteSitzplaetze() * ADMISSION_PRICE_ROOF) /currencyFactor);
+        income += ((arena.getLogen() * ADMISSION_PRICE_VIP) / currencyFactor);
 
         return income;
     }
     
-    final Stadium[] calcDifferentLevelArenas(Stadium aktuell, int anzFans) {
-        Stadium arenaMax = createArena(FANS_GUT * anzFans,aktuell);
-        Stadium arenaNormal = createArena(FANS_NORMAL * anzFans,aktuell);
-        Stadium arenaMin = createArena(FANS_SCHLECHT * anzFans,aktuell);
+    final Stadium[] calcConstructionArenas(Stadium currentArena, int supporter){
+    	Stadium arenaMax = createArena(supporter * SUPPORTER_MAX.intValue() ,currentArena);
+        Stadium arenaNormal = createArena(supporter * SUPPORTER_NORMAL.intValue(),currentArena);
+        Stadium arenaMin = createArena(supporter * SUPPORTER_MIN.intValue(),currentArena);
         return new Stadium[]{arenaMax, arenaNormal, arenaMin};
     }
+    
     
     final Stadium[] calcConstructionArenas(Stadium currentArena, int maxSupporter, int normalSupporter, int minSupporter){
         Stadium arenaMax = createArena(maxSupporter,currentArena);
@@ -107,16 +93,6 @@ class ArenaSizer {
         return tmp;
     }
     
-    /**
-     * berehnet die Baukosten
-     *
-     * @param steh TODO Missing Constructuor Parameter Documentation
-     * @param sitz TODO Missing Constructuor Parameter Documentation
-     * @param dach TODO Missing Constructuor Parameter Documentation
-     * @param logen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     final float calcConstructionCosts(float steh, float sitz, float dach, float logen) {
         float kosten = FIXKOSTEN / currencyFactor;
 
@@ -147,18 +123,19 @@ class ArenaSizer {
         return kosten;
     }
 
-    final int calcDistribution(float stadionGr,float percent) {
-        return (int) ((stadionGr / 100.0f) * percent);
+    final int calcDistribution(float arenaSize,float percent) {
+        return (int) ((arenaSize / 100.0f) * percent);
     }
 
     final float calcMaintenance(Stadium arena) {
         float costs = 0.0f;
 
-        costs += ((arena.getStehplaetze() * STEH_UNTERHALT) / currencyFactor);
-        costs += ((arena.getSitzplaetze() * SITZ_UNTERHALT) / currencyFactor);
-        costs += ((arena.getUeberdachteSitzplaetze() * DACH_UNTERHALT) / currencyFactor);
-        costs += ((arena.getLogen() * LOGEN_UNTERHALT) / currencyFactor);
+        costs += ((arena.getStehplaetze() * MAINTENANCE_TERRACES) / currencyFactor);
+        costs += ((arena.getSitzplaetze() * MAINTENANCE_BASICS) / currencyFactor);
+        costs += ((arena.getUeberdachteSitzplaetze() * MAINTENANCE_ROOF) / currencyFactor);
+        costs += ((arena.getLogen() * MAINTENANCE_VIP) / currencyFactor);
 
         return Helper.round(costs, 1);
     }
+    
 }
