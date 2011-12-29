@@ -22,7 +22,7 @@ import de.hattrickorganizer.tools.HOLogger;
  * @author Volker Fischer
  * @version 0.2a 28.08.01
  */
-final class SplashFrame extends JFrame {
+public final class SplashFrame extends JFrame {
 	private static final long serialVersionUID = -4948885175460734368L;
 	private Image background;
 	private String m_sInfotext = "";
@@ -36,7 +36,7 @@ final class SplashFrame extends JFrame {
     /**
      * Creates a new InterruptionWindow object.
      */
-	SplashFrame() {
+	public SplashFrame() {
 		final MediaTracker tracker = new MediaTracker(this);
 
 		try {
@@ -64,7 +64,7 @@ final class SplashFrame extends JFrame {
     /**
      * Set text info (e.g. progress).
      */
-    final void setInfoText(int step, String text) {
+	public final void setInfoText(int step, String text) {
         m_sInfotext = text;
         if(step > maxStep)
         	step = maxStep;

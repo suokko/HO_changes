@@ -6,8 +6,15 @@
  */
 package de.hattrickorganizer.tools;
 
+import gui.UserParameter;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
 import java.util.Vector;
 
+import de.hattrickorganizer.HO;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 
 /**
@@ -53,7 +60,7 @@ public class LanguageFiles {
                     HOLogger.instance().log(LanguageFiles.class,"- " + moeglicheSprachdateien[i].getName());
                 }
 
-                if (sprachfileversion >= de.hattrickorganizer.gui.HOMainFrame.SPRACHVERSION) {
+                if (sprachfileversion >= HO.SPRACHVERSION) {
                     final String name = moeglicheSprachdateien[i].getName().substring(0,
                                                                                       moeglicheSprachdateien[i].getName()
                                                                                                                .indexOf('.'));
@@ -79,4 +86,45 @@ public class LanguageFiles {
 
         return files;
     }
+
+	/**
+	 * Checked die Sprachdatei oder Fragt nach einer passenden
+	 */
+	public static void checkLanguageFile(String dateiname) {
+		try {
+			// java.net.URL resource = new
+			// gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource(
+			// "sprache/"+dateiname+".properties" );
+			final java.io.File sprachdatei = new java.io.File("sprache/" + dateiname + ".properties");
+	
+			if (sprachdatei.exists()) {
+				double sprachfileversion = 0;
+				final java.util.Properties temp = new java.util.Properties();
+				temp.load(new java.io.FileInputStream(sprachdatei));
+	
+				try {
+					sprachfileversion = Double.parseDouble(temp.getProperty("Version"));
+				} catch (Exception e) {
+					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
+				}
+	
+				if (sprachfileversion >= HO.SPRACHVERSION) {
+					HOLogger.instance().log(HOMainFrame.class, "use " + sprachdatei.getName());
+	
+					// Alles ok!!
+					return;
+				}
+				// Nicht passende Version
+				else {
+					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
+				}
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(HOMainFrame.class, "not use " + e);
+		}
+	
+		// Irgendein Fehler -> neue Datei aussuchen!
+		// new gui.menue.optionen.InitOptionsDialog();
+		UserParameter.instance().sprachDatei = "English";
+	}
 }
