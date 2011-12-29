@@ -335,8 +335,7 @@ public class SubstitutionOverview extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei,
-						HOVerwaltung.instance().getClass().getClassLoader());
+				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 				HOVerwaltung.instance().loadLatestHoModel();
 
 				try {

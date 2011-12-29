@@ -2,6 +2,7 @@ package de.hattrickorganizer.database;
 
 import javax.swing.JOptionPane;
 
+import de.hattrickorganizer.HO;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -25,7 +26,7 @@ final class DBUpdater {
 		version = 	((UserConfigurationTable) dbZugriff.getTable(UserConfigurationTable.TABLENAME)).getDBVersion();
 
 		// If development always force to rebuild latest DB
-		if (version == DBVersion && HOMainFrame.isDevelopment()) {
+		if (version == DBVersion && HO.isDevelopment()) {
 			version = DBVersion - 1;
 		}
 
@@ -272,37 +273,37 @@ final class DBUpdater {
 		 *
 		 * DO NOT use 'if-then-else' here, as this would ignores some updates!
 		 */
-		if (lastConfigUpdate < 1.4101 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.4101)) {
+		if (lastConfigUpdate < 1.4101 || (HO.isDevelopment() && lastConfigUpdate == 1.4101)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.410-1...");
-			updateConfigTo1410_1(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.4101);
+			updateConfigTo1410_1(HO.isDevelopment() && lastConfigUpdate == 1.4101);
 		}
 
-		if (lastConfigUpdate < 1.420 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.420)) {
+		if (lastConfigUpdate < 1.420 || (HO.isDevelopment() && lastConfigUpdate == 1.420)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.420...");
-			updateConfigTo1420(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.420);
+			updateConfigTo1420(HO.isDevelopment() && lastConfigUpdate == 1.420);
 		}
 
-		if (lastConfigUpdate < 1.424 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.424)) {
+		if (lastConfigUpdate < 1.424 || (HO.isDevelopment() && lastConfigUpdate == 1.424)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.424...");
-			updateConfigTo1424(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.424);
+			updateConfigTo1424(HO.isDevelopment() && lastConfigUpdate == 1.424);
 		}
 
-		if (lastConfigUpdate < 1.425 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425)) {
+		if (lastConfigUpdate < 1.425 || (HO.isDevelopment() && lastConfigUpdate == 1.425)) {
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.425...");
-			updateConfigTo1425(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.425);
+			updateConfigTo1425(HO.isDevelopment() && lastConfigUpdate == 1.425);
 		}
 		
-		if (lastConfigUpdate < 1.429 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.429)) {
+		if (lastConfigUpdate < 1.429 || (HO.isDevelopment() && lastConfigUpdate == 1.429)) {
 
 			// Lets not reset poor user's custom training setting each time they start...
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.429...");
-			updateConfigTo1429(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.429);
+			updateConfigTo1429(HO.isDevelopment() && lastConfigUpdate == 1.429);
 		}
 		
-		if (lastConfigUpdate < 1.431 || (HOMainFrame.isDevelopment() && lastConfigUpdate == 1.431)) {
+		if (lastConfigUpdate < 1.431 || (HO.isDevelopment() && lastConfigUpdate == 1.431)) {
 
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.431...");
-			updateConfigTo1431(HOMainFrame.isDevelopment() && lastConfigUpdate == 1.431);
+			updateConfigTo1431(HO.isDevelopment() && lastConfigUpdate == 1.431);
 		}
 		
 	}

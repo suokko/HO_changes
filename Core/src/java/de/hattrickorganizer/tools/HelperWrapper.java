@@ -13,7 +13,6 @@ import ho.modul.transfer.scout.TransferEingabePanel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -42,6 +41,7 @@ import plugins.IMatchHelper;
 import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.matches.SpielHighlightPanel;
@@ -288,7 +288,7 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     public Vector<IPlugin> getPlugins() {
-        return HOMainFrame.getPlugins();
+        return HO.getPlugins();
     }
 
     /**
