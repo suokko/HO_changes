@@ -551,11 +551,6 @@ public interface IHelper {
      */
     public void showMessage(Component parent, String message, String titel, int typ);
 
-    /**
-     * Returns an IMP3Player. Set the mp3-filename and path with setMP3File( String )
-     * and start the playback with run(). You can end the playback with close()
-     */
-    public IMP3Player getMP3Player();
     
     //--------------------------------------------------------------------------
 
