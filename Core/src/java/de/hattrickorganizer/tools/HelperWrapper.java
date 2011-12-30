@@ -36,7 +36,6 @@ import javax.swing.UIManager;
 
 import plugins.IHOMiniModel;
 import plugins.IHTCalendar;
-import plugins.IMP3Player;
 import plugins.IMatchHelper;
 import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
@@ -592,11 +591,7 @@ public class HelperWrapper implements plugins.IHelper {
         Helper.showMessage(parent, message, titel, typ);
     }
 
-    public IMP3Player getMP3Player()
-    {
-    	return new de.hattrickorganizer.gui.utils.MP3PlayerWrapper();
-    }
-
+ 
     public int[][] sortintArray(int[][] toSort, int spaltenindex) {
         return Helper.sortintArray(toSort, spaltenindex);
     }

@@ -286,7 +286,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 						m_jchVerletzte.isSelected(),
 						m_jchGesperrte.isSelected(),
 						gui.UserParameter.instance().WetterEffektBonus,
-						HOMainFrame.getWetter());
+						getWetter());
 		mainFrame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Autoaufstellung_fertig"));
 		mainFrame.getAufstellungsPanel().update();
 
