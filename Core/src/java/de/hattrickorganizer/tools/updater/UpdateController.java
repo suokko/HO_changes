@@ -287,7 +287,7 @@ public final class UpdateController {
 
 			if (update == JOptionPane.YES_OPTION) {
 				// updateHO(version.getVersion());
-				updateHO("http://downloads.sourceforge.net/ho1/" + version.getZipFileName());
+				updateHO(MyConnector.getFinalSite() +"/" + version.getZipFileName());
 			}
 		} else {
 			final int currRev = HOMainFrame.getRevisionNumber();
@@ -302,7 +302,7 @@ public final class UpdateController {
 	public static void updateHO(double version) {
 		String ver = "" + version;
 		ver = ver.replaceAll("\\.", "");
-		updateHO("http://downloads.sourceforge.net/ho1/HO_" + ver + ".zip");
+		updateHO(MyConnector.getFinalSite() +"/HO_" + ver + ".zip");
 	}
 
 	public static void updateHO(final String urlString) {
@@ -344,13 +344,13 @@ public final class UpdateController {
 		if (vi != null && vi.isValid()
 				&& (vi.getVersion() >= HOMainFrame.VERSION || (currRev > 1 && currRev < vi.getBuild()))) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), "Update your HO to this "
-					+ (vi.isBeta() ? " beta" : "") + "version:" + "\n\nVersion: " + vi.getVersionString()
+					+ (vi.isBeta() ? "beta " : "") + "version:" + "\n\nVersion: " + vi.getVersionString()
 					+ "\nReleased: " + vi.getReleaseDate() + "\n\n"
 					+ HOVerwaltung.instance().getLanguageString("update") + "?", HOVerwaltung.instance()
 					.getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
-				updateHO("http://downloads.sourceforge.net/ho1/" + vi.getZipFileName());
+				updateHO(MyConnector.getBetaSite() + "/" + vi.getZipFileName());
 			}
 		} else {
 			JOptionPane.showMessageDialog(HOMainFrame.instance(),

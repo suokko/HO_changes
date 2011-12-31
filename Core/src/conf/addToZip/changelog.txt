@@ -28,6 +28,7 @@ Changelist HO! 1.431
 - Added rest of HOMainFrame non language string to language files
 - Added Hatstats and Loddar stats to Matches view
 - Minor fixes and tweaks that is probably not mentioned...
+- Download of beta and update via HO now works.
 
 Language updates:
 -----------------

@@ -19,6 +19,7 @@ public class VersionInfo {
 	private boolean beta;
 	final static private DecimalFormat DECF = new DecimalFormat("0.000##");
 	final static private DateFormat DATF = new SimpleDateFormat("dd.MM.yyyy");
+	final static private DateFormat DATFILE = new SimpleDateFormat("yyyyMMdd");
 	
 	static {
 		DecimalFormatSymbols ds = new DecimalFormatSymbols();
@@ -41,11 +42,14 @@ public class VersionInfo {
 		String fn = "HO_";
 		fn += (DECF.format(version).replace(".", ""));
 		if (beta) {
-			fn += "_BETA";
+			fn += "_BETA_trunk";
 		}
 		if (build > 0) {
 			fn += ("_r" + build);
 		}
+		if (getFileNameDate().length() > 0) { 
+		 	fn += ("_" + getFileNameDate()); 
+		} 
 		fn += ".zip";
 		return fn;
 	}
@@ -74,6 +78,9 @@ public class VersionInfo {
 		return released != null ? DATF.format(released) : "";
 	}
 
+	public String getFileNameDate() { 
+	 	return released != null ? DATFILE.format(released) : ""; 
+	} 
 	public void setReleased(Date released) {
 		this.released = released;
 	}
