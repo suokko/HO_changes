@@ -629,7 +629,7 @@ public class MyConnector implements plugins.IDownloadHelper {
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen, boolean showErrorMessage)
 			throws IOException {
 		if (displaysettingsScreen) {
-			// Show proxy Screen
+			//Show Screen
 			new ProxyDialog(HOMainFrame.instance());
 		}
 		return getNonCHPPWebFile(url, showErrorMessage);
