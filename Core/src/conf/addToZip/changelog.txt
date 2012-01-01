@@ -21,6 +21,7 @@ Changelist HO! 1.431
 - Fixed sort issue on player tables.
 - Fixed localization issue messing up ratings for some locales
 - Added new parameter to ratings, called postDelta, which is added after postMulti has been applied (defaults to 0).
+- Added two more new parameter to CA ratings calculations only, called playerPostMulti and playerPostDelta, for use in CA player contribution calculations (default to 1 and 0 respectively) 
 - Modified button behaviour on matches screen to be enabled/disabled appropriately
 - Fixed player regainer string not showing.
 - Fixed wrong set piece taker on corners
@@ -29,6 +30,8 @@ Changelist HO! 1.431
 - Added Hatstats and Loddar stats to Matches view
 - Minor fixes and tweaks that is probably not mentioned...
 - Download of beta and update via HO now works.
+- Removed double proxy dialog on download of non chpp files.
+- Can now delete 'corrupted' matches
 
 Language updates:
 -----------------
@@ -65,9 +68,9 @@ Plugin Updates:
   - Added set piece filter, and removed occurrences of no longer existing general and stamina training
   - Changed icon drawing on Analyzer panel to show values > 99
 
-- Team Analyzer v 2.83:
+- Team Analyzer v 2.84:
   - Fixed icon issue with Nimbus skin
-  - Match download is updated to work better
+  - Match download is updated to work even better
 
 - Special Events v 1.24
   - Added missing events

@@ -11,8 +11,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-
 import plugins.IMatchKurzInfo;
+import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.model.matches.Matchdetails;
 
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -157,9 +158,10 @@ public class SpielePrintDialog extends JDialog {
         if (info != null) {
             //Selektiertes Spiel des Models holen und alle 3 Panel informieren 
             try {
-                m_jpStaerkenvergleichsPanel.refresh(info);
-                m_jpManschaftsBewertungsPanel.refresh(info);
-                m_jpSpielHighlightPanel.refresh(info);
+            	final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
+                m_jpStaerkenvergleichsPanel.refresh(info,details);
+                m_jpManschaftsBewertungsPanel.refresh(info,details);
+                m_jpSpielHighlightPanel.refresh(info,details);
 
                 if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());

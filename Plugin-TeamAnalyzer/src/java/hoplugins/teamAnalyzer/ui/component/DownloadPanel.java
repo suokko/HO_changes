@@ -74,15 +74,14 @@ public class DownloadPanel extends JPanel {
                         return;
                     }
 
-                    Commons.getModel().getHelper().downloadMatchData(id);
-
-                    IMatchDetails md = Commons.getModel().getMatchDetails(id);
-
-                    if (md.getFetchDatum() != null) {
-                        status.setText(PluginProperty.getString("Download.Ok"));
-                        matchId.setText("");
-                    } else {
-                        status.setText(PluginProperty.getString("Download.Error"));
+                    if (Commons.getModel().getHelper().downloadMatchData(id)) { 
+                     	IMatchDetails md = Commons.getModel().getMatchDetails(id); 
+                     	if (md.getFetchDatum() != null) { 
+                     		status.setText(PluginProperty.getString("Download.Ok")); 
+                     		matchId.setText(""); 
+                     	} else { 
+                     		status.setText(PluginProperty.getString("Download.Error")); 
+                     	} 
                     }
                 }
             });

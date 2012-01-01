@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
@@ -91,14 +90,12 @@ public class MatchberichtPanel extends ImagePanel implements ActionListener {
     }
 
 
-    public final void refresh(MatchKurzInfo info) {
+    public final void refresh(MatchKurzInfo info, Matchdetails details) {
         m_clKurzInfo = info;
 
         if ((info != null)
             && info.getMatchDateAsTimestamp().before(new java.sql.Timestamp(System
                                                                             .currentTimeMillis()))) {
-            final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
-
             m_sMatchtext = details.getMatchreport();
 
             m_jbMaximieren.setEnabled(true);

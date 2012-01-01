@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -316,10 +315,8 @@ class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
         m_clGastLeftAtt.setIcon(null);
     }
 
-    final void refresh(MatchKurzInfo info) {
+    final void refresh(MatchKurzInfo info, Matchdetails details) {
         m_clMatchKurzInfo = info;
-
-        final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
 
         //Teams
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();

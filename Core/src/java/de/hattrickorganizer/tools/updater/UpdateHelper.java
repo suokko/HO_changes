@@ -108,9 +108,7 @@ public class UpdateHelper {
      */
     public boolean download(String urlName, File targetFile) {
         int data;
-        boolean showDialog = false;
-
-        try {
+       try {
             FileOutputStream outStream = new FileOutputStream(targetFile);
             InputStream in = MyConnector.instance().getFileFromWeb(urlName, true);
             BufferedOutputStream out = new BufferedOutputStream(outStream);

@@ -407,8 +407,7 @@ class StaerkenvergleichPanel extends ImagePanel {
     }
 
  
-    final void refresh(MatchKurzInfo info) {
-        final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
+    final void refresh(MatchKurzInfo info, Matchdetails details) {
         m_clZuschauer.setText(details.getZuschauer() + "");
         if(info.getMatchStatus() == IMatchKurzInfo.FINISHED)
         	m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));

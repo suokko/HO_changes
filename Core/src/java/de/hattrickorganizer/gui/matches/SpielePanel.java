@@ -621,13 +621,23 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 final MatchKurzInfo info = ((MatchesColumnModel) m_jtSpieleTable.getSorter().getModel())
                                                                 .getMatch((int) ((ColorLabelEntry) m_jtSpieleTable.getSorter().getValueAt(row,5))
                                                                                         .getZahl());
+                final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
                 refresh(info);
-                m_jpStaerkenvergleichsPanel.refresh(info);
-                m_jpManschaftsBewertungsPanel.refresh(info);
-                m_jpManschaftsBewertungs2Panel.refresh(info);
-                m_jpSpielHighlightPanel.refresh(info);
-                m_jpMatchberichtPanel.refresh(info);
-
+                if (details != null && details.getMatchID() > 0) {
+                	m_jpStaerkenvergleichsPanel.refresh(info,details);
+	                m_jpManschaftsBewertungsPanel.refresh(info,details);
+	                m_jpManschaftsBewertungs2Panel.refresh(info,details);
+	                m_jpSpielHighlightPanel.refresh(info,details);
+	                m_jpMatchberichtPanel.refresh(info,details);
+                } else {
+                	m_jpStaerkenvergleichsPanel.clear();
+	                m_jpManschaftsBewertungsPanel.clear();
+	                m_jpManschaftsBewertungs2Panel.clear();
+	                m_jpSpielHighlightPanel.clear();
+	                m_jpMatchberichtPanel.clear();
+	                m_jpAufstellungHeimPanel.clearAll();
+	                m_jpAufstellungGastPanel.clearAll();
+	            }
                 if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
                     m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());

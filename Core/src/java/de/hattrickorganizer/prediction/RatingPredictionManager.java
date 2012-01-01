@@ -969,19 +969,21 @@ public class RatingPredictionManager implements IRatingPredictionManager
     {
         float deDefender = 0.0F;
         float psDefender = 0.0F;
+        double playerContribution = 0d;
     	IRatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
         for(int pos = ISpielerPosition.rightBack; pos <= ISpielerPosition.leftBack; pos++)
         {
+        	playerContribution = 0d;
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             if(spieler != null) {
-            		deDefender += calcPlayerStrength(spieler, DEFENDING);
-            		psDefender += calcPlayerStrength(spieler, PASSING);
+            	playerContribution = (params.getParam("counter", "multiPs", 1.0) * calcPlayerStrength(spieler, PASSING)); 
+             	playerContribution += (params.getParam("counter", "multiDe", 1.0) * calcPlayerStrength(spieler, DEFENDING)); 
+             	playerContribution *= params.getParam("counter", "playerPostMulti", 1.0); 
+             	playerContribution += params.getParam("counter", "playerPostDelta", 0); 
+             	retVal += playerContribution; 
             }
         }
-        deDefender *= params.getParam("counter", "multiDe", 1.0);
-        psDefender *= params.getParam("counter", "multiPs", 1.0);
-        retVal += deDefender + psDefender;
         retVal *= params.getParam("counter", "postMulti", 1.0);
         retVal += params.getParam("counter", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "counter");
