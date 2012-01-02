@@ -7,6 +7,7 @@
 package de.hattrickorganizer.tools;
 
 import gui.HOIconName;
+import ho.core.plugins.PluginManager;
 import ho.modul.transfer.scout.Player;
 import ho.modul.transfer.scout.PlayerConverter;
 import ho.modul.transfer.scout.TransferEingabePanel;
@@ -287,7 +288,7 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     public Vector<IPlugin> getPlugins() {
-        return HO.getPlugins();
+        return PluginManager.getPlugins();
     }
 
     /**

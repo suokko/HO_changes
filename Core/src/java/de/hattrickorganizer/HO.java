@@ -1,6 +1,7 @@
 package de.hattrickorganizer;
 
 import gui.UserParameter;
+import ho.core.plugins.PluginManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,13 +11,11 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import plugins.IPlugin;
-
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.SplashFrame;
+import de.hattrickorganizer.gui.birthday.GebDialog;
 import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.GebChecker;
 import de.hattrickorganizer.logik.TrainingsManager;
@@ -35,7 +34,7 @@ import de.hattrickorganizer.tools.extension.FileExtensionManager;
  * @author thomas.werth
  */
 public class HO {
-	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
+
 	/**
 	 * After that date, the user gets a nag screen if he starts his old HO
 	 * version, set to empty string for no warning (DEVELOPMENT versions do not
@@ -204,7 +203,7 @@ public class HO {
 		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
 		// selbst aufruft!
 		interuptionsWindow.setInfoText(8,"Starting Plugins");
-		startPluginModuls(interuptionsWindow);
+		PluginManager.startPluginModuls(interuptionsWindow,8);
 
 		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
 				.exportOldLineup("Actual");
@@ -217,11 +216,11 @@ public class HO {
 		interuptionsWindow.setVisible(false);
 
 		if (GebChecker.checkTWGeb()) {
-			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayTom");
+			new GebDialog(HOMainFrame.instance(), "birthdayTom");
 		}
 
 		if (GebChecker.checkVFGeb()) {
-			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayVolker");
+			new GebDialog(HOMainFrame.instance(), "birthdayVolker");
 		}
 
 		new ExtensionListener().run();
@@ -229,111 +228,5 @@ public class HO {
 
     }
     
-	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-	// helper
-	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-	private static void startPluginModuls(SplashFrame interuptionWindow) {
-		try {
-			// Den Ordner mit den Plugins holen
-			final java.io.File folder = new java.io.File("hoplugins");
-			HOLogger.instance().log(HOMainFrame.class,
-					folder.getAbsolutePath() + " " + folder.exists() + " " + folder.isDirectory());
 
-			// Filter, nur class-Datein in dem Ordner interessant
-			final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
-			filter.addExtension("class");
-			filter.setDescription("Java Class File");
-			filter.setIgnoreDirectories(true);
-
-			// Alle class-Dateien in den Ordner holen
-			final java.io.File[] files = folder.listFiles(filter);
-
-			// Libs -> Alle Dateien durchlaufen
-			for (int i = 0; (files != null) && (i < files.length); i++) {
-				try {
-					// Name der Klasse erstellen und Class-Object erstellen
-					final String name = "hoplugins."
-							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-					final Class<?> fileclass = Class.forName(name);
-					// Das Class-Object definiert kein Interface ...
-					if (!fileclass.isInterface()) {
-						// ... und ist von ILib abgeleitet
-						if (plugins.ILib.class.isAssignableFrom(fileclass)) {
-							// Object davon erstellen und starten
-							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
-
-							// Plugin im Vector gespeichert
-							m_vPlugins.add(modul);
-							HOLogger.instance().log(HOMainFrame.class,
-									" Starte " + files[i].getName() + "  (init MiniModel)");
-							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
-							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
-
-							HOLogger.instance().log(HOMainFrame.class,
-									"+ " + files[i].getName() + " gestartet als lib");
-						} else {
-							HOLogger.instance().log(HOMainFrame.class,
-									"- " + files[i].getName() + " nicht von ILib abgeleitet");
-						}
-					} else {
-						HOLogger.instance().log(HOMainFrame.class,
-								"- " + files[i].getName() + " ist Interface");
-					}
-				} catch (Throwable e2) {
-					HOLogger.instance().log(HOMainFrame.class,
-							"- " + files[i].getName() + " wird übersprungen: " + e2);
-					// HOLogger.instance().log(HOMainFrame.class, e2);
-				}
-			}
-
-			// Plugins -> Alle Dateien durchlaufen
-			for (int i = 0; (files != null) && (i < files.length); i++) {
-				try {
-					// Name der Klasse erstellen und Class-Object erstellen
-					final String name = "hoplugins."
-							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-					final Class<?> fileclass = Class.forName(name);
-					// Das Class-Object definiert kein Interface ...
-					if (!fileclass.isInterface()) {
-						// ... und ist von IPlugin abgeleitet, nicht die Libs
-						// nochmal starten!
-						if (plugins.IPlugin.class.isAssignableFrom(fileclass)
-								&& !plugins.ILib.class.isAssignableFrom(fileclass)) {
-							// Object davon erstellen und starten
-							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
-
-							// Plugin im Vector gespeichert
-							m_vPlugins.add(modul);
-							HOLogger.instance().log(HOMainFrame.class,
-									" Starte " + files[i].getName() + "  (init MiniModel)");
-							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
-							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
-
-							HOLogger.instance().log(HOMainFrame.class,
-									"+ " + files[i].getName() + " gestartet");
-						} else {
-							HOLogger.instance().log(HOMainFrame.class,
-									"- " + files[i].getName() + " nicht von IPlugin abgeleitet");
-						}
-					} else {
-						HOLogger.instance().log(HOMainFrame.class,
-								"- " + files[i].getName() + " ist Interface");
-					}
-				} catch (Throwable e2) {
-					HOLogger.instance().log(HOMainFrame.class,
-							"- " + files[i].getName() + " wird übersprungen: " + e2);
-					// HOLogger.instance().log(HOMainFrame.class, e2);
-				}
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class, e);
-		}
-	}
-	
-	/**
-	 * Returns the Vector with the started Plugins
-	 */
-	public static Vector<IPlugin> getPlugins() {
-		return m_vPlugins;
-	}
 }

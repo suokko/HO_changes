@@ -33,7 +33,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 /**
  *
  */
-public final class SpielerLabelEntry extends TableEntry {
+public final class SpielerLabelEntry implements TableEntry {
  
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -103,7 +103,6 @@ public final class SpielerLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Override
 	public final JComponent getComponent(boolean isSelected) {
     	 m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
     	 m_jlName.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:getForegroundForSpieler(m_clPlayer));
@@ -120,7 +119,6 @@ public final class SpielerLabelEntry extends TableEntry {
     }
 
     //----Zugriff----------------------------
-    @Override
 	public final void clear() {
         m_clPlayer = null;
         m_clCurrentPlayerPosition = null;
@@ -135,7 +133,6 @@ public final class SpielerLabelEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SpielerLabelEntry) {
             final SpielerLabelEntry entry = (SpielerLabelEntry) obj;
@@ -151,7 +148,6 @@ public final class SpielerLabelEntry extends TableEntry {
     /**
      * Erstellt eine passende Komponente
      */
-    @Override
 	public final void createComponent() {
         m_clComponent = new JPanel();
 
@@ -246,7 +242,6 @@ public final class SpielerLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void updateComponent() {
         if (m_clPlayer != null) {
             m_jlName.setForeground(getForegroundForSpieler(m_clPlayer));
