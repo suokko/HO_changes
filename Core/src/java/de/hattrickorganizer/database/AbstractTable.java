@@ -6,7 +6,7 @@ import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-abstract class AbstractTable {
+public abstract class AbstractTable {
 	
 	/** tableName**/
 	private String tableName = "";
@@ -21,7 +21,7 @@ abstract class AbstractTable {
 	 * constructor
 	 * @param tableName
 	 */
-	protected AbstractTable(String tableName,JDBCAdapter  adapter){
+	public AbstractTable(String tableName,JDBCAdapter  adapter){
 		this.tableName = tableName;
 		this.adapter = adapter;
 		initColumns();

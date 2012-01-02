@@ -22,7 +22,7 @@ import de.hattrickorganizer.tools.Helper;
 /**
  *
  */
-public class ColorLabelEntry extends TableEntry {
+public class ColorLabelEntry implements TableEntry {
 	   private static Color IMPROVEMENT = ThemeManager.getColor(HOColorName.TABLEENTRY_IMPROVEMENT_FG);
 	   private static Color DECLINE = ThemeManager.getColor(HOColorName.TABLEENTRY_DECLINE_FG);
 	   public static final Color FG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_FG);//gui.UserParameter.instance().FG_STANDARD;
@@ -207,7 +207,6 @@ public class ColorLabelEntry extends TableEntry {
         m_clComponent.setBackground(m_clBGColor);
     }
 
-    @Override
 	public final JComponent getComponent(boolean isSelected) {
         
         if (isSelected) {
@@ -328,7 +327,6 @@ public class ColorLabelEntry extends TableEntry {
         return m_dZahl;
     }
     
-	@Override
 	public final void clear() {
         m_sText = "";
         m_clIcon = null;
@@ -339,7 +337,6 @@ public class ColorLabelEntry extends TableEntry {
      * Vergleich zum Sortieren
      *
      */
-    @Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof ColorLabelEntry) {
             final ColorLabelEntry entry = (ColorLabelEntry) obj;
@@ -370,7 +367,6 @@ public class ColorLabelEntry extends TableEntry {
     /**
      * Erstellt eine passende Komponente
      */
-    @Override
 	public final void createComponent() {
     	m_clComponent = new JLabel(m_sText, horizontalAlignment);
 
@@ -381,7 +377,6 @@ public class ColorLabelEntry extends TableEntry {
         m_clComponent.setForeground(m_clFGColor);
     }
 
-    @Override
 	public final void updateComponent() {
          m_clComponent.setText(m_sText);
          m_clComponent.setIcon(m_clIcon);

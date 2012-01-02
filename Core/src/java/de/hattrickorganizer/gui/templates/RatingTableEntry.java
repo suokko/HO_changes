@@ -21,7 +21,7 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
  *
  * @author TODO Author Name
  */
-public class RatingTableEntry extends TableEntry {
+public class RatingTableEntry implements TableEntry {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static ImageIcon FULL10STARIMAGEICON;
@@ -81,7 +81,6 @@ public class RatingTableEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Override
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
         m_clComponent.setBackground((isSelected)?SpielerTableRenderer.SELECTION_BG:bgColor);
         m_clComponent.setOpaque(isOpaque);
@@ -160,7 +159,6 @@ public class RatingTableEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void clear() {
         m_clComponent.removeAll();
 
@@ -178,7 +176,6 @@ public class RatingTableEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof RatingTableEntry) {
             final RatingTableEntry entry = (RatingTableEntry) obj;
@@ -198,7 +195,6 @@ public class RatingTableEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void createComponent() {
         float f = m_fRating / 2;
         JPanel renderer = new JPanel();
@@ -230,7 +226,6 @@ public class RatingTableEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void updateComponent() {
         float f = m_fRating / 2;
         

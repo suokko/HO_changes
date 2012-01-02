@@ -15,6 +15,7 @@ import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.playeroverview.SpielerStatusLabelEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
+import de.hattrickorganizer.gui.templates.HomegrownEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
