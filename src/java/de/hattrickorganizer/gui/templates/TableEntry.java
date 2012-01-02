@@ -7,7 +7,7 @@ import plugins.IHOTableEntry;
 /**
  *
  */
-public abstract class TableEntry implements plugins.IHOTableEntry {
+public interface TableEntry extends plugins.IHOTableEntry {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**

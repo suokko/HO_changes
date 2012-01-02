@@ -29,7 +29,7 @@ import de.hattrickorganizer.tools.Helper;
  *
  * @author Pirania
  */
-public class SkillEntry extends TableEntry {
+public class SkillEntry implements TableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;
@@ -99,7 +99,6 @@ public class SkillEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Override
 	public final JComponent getComponent(boolean isSelected) {
         m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:m_clBGColor);
         m_jlLabel1.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
@@ -139,7 +138,6 @@ public class SkillEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void clear() {
         m_dZahl = 0d;
         updateComponent();
@@ -152,7 +150,6 @@ public class SkillEntry extends TableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    @Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SkillEntry) {
             final SkillEntry entry = (SkillEntry) obj;
@@ -176,7 +173,6 @@ public class SkillEntry extends TableEntry {
     /**
      * Erstellt eine passende Komponente
      */
-    @Override
 	public final void createComponent() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -232,7 +228,6 @@ public class SkillEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void updateComponent() {
         m_jlLabel1.setText(m_sText);
         m_jlLabel2.setText(m_sNachkomma);

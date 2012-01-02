@@ -18,7 +18,7 @@ import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
-public class TorLabelEntry extends TableEntry {
+public class TorLabelEntry implements TableEntry {
 
     private static ImageIcon BALLIMAGEICON;
 
@@ -43,7 +43,6 @@ public class TorLabelEntry extends TableEntry {
         createComponent();
     }
 
-    @Override
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
     	m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
         return m_clComponent;
@@ -60,12 +59,12 @@ public class TorLabelEntry extends TableEntry {
         return m_iTore;
     }
 
-    @Override
+
 	public final void clear() {
         m_clComponent.removeAll();
     }
 
-    @Override
+
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof TorLabelEntry) {
             final TorLabelEntry entry = (TorLabelEntry) obj;
@@ -85,7 +84,6 @@ public class TorLabelEntry extends TableEntry {
     /**
      * TODO Missing Method Documentation
      */
-    @Override
 	public final void createComponent() {
         JPanel renderer = new JPanel();
         renderer.setLayout(new BoxLayout(renderer, 0));
@@ -104,7 +102,6 @@ public class TorLabelEntry extends TableEntry {
         setTore(getTore() + 1);
     }
 
-    @Override
 	public final void updateComponent() {
         m_clComponent.removeAll();
 

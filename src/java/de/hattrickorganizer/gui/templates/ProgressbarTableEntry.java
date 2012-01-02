@@ -13,7 +13,7 @@ import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 /**
  * Progress bar as table cell.
  */
-public class ProgressbarTableEntry extends TableEntry {
+public class ProgressbarTableEntry implements TableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private Color m_clBGColor = Color.WHITE;
@@ -118,7 +118,6 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Implement getComponent().
      */
-    @Override
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clProgressbar.setOpaque(true);
@@ -221,7 +220,6 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Clear value.
      */
-    @Override
 	public final void clear() {
         m_clProgressbar.setString("");
         m_clProgressbar.setValue(0);
@@ -230,7 +228,6 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Implement compareTo() for sorting.
      */
-    @Override
 	public final int compareTo(IHOTableEntry o) {
         if (o instanceof ProgressbarTableEntry) {
             final ProgressbarTableEntry entry = (ProgressbarTableEntry) o;
@@ -250,7 +247,6 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Create the component and set the text.
      */
-    @Override
 	public final void createComponent() {
         m_clProgressbar = new JProgressBar();
         m_clProgressbar.setStringPainted(true);
@@ -260,7 +256,6 @@ public class ProgressbarTableEntry extends TableEntry {
     /**
      * Update label text.
      */
-    @Override
 	public final void updateComponent() {
         m_clProgressbar.setMinimum(m_iMinWert);
         m_clProgressbar.setMaximum(m_iMaxWert);

@@ -1,14 +1,12 @@
-package de.hattrickorganizer.gui.model;
+package de.hattrickorganizer.gui.templates;
 
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 
-public class HomegrownEntry extends TableEntry{
+public class HomegrownEntry implements TableEntry{
 
 	private ColorLabelEntry icon = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_STANDARD,
@@ -33,7 +31,7 @@ public class HomegrownEntry extends TableEntry{
 		return spieler;
 	}
 
-	@Override
+
 	public int compareTo(IHOTableEntry obj) {
 		if (obj instanceof HomegrownEntry) {
 			final HomegrownEntry entry = (HomegrownEntry) obj;
@@ -53,7 +51,6 @@ public class HomegrownEntry extends TableEntry{
 	}
 
 	
-	@Override
 	public final void updateComponent() {
 		if (spieler != null) {
 			if (spieler.isHomeGrown()) {
@@ -67,19 +64,19 @@ public class HomegrownEntry extends TableEntry{
 		}
 	}
 
-	@Override
+
 	public JComponent getComponent(boolean isSelected) {
 		return icon.getComponent(isSelected);
 	}
 
-	@Override
+
 	public void clear() {
 		spieler = null;
 		updateComponent();
 		
 	}
 
-	@Override
+
 	public void createComponent() {
 		icon = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 				ColorLabelEntry.BG_STANDARD,

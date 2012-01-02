@@ -5,7 +5,7 @@ package de.hattrickorganizer.database;
  * @author Thorsten Dietz
  *
  */
-final class ColumnDescriptor {
+public final class ColumnDescriptor {
 
 	private String columnName;
 	private int type;
@@ -14,37 +14,37 @@ final class ColumnDescriptor {
 	private boolean primaryKey;
 	
 	
-	protected ColumnDescriptor(String columnName,int type,boolean nullable){
+	public ColumnDescriptor(String columnName,int type,boolean nullable){
 		this(columnName,type,nullable,0);
 	}
 	
-	protected ColumnDescriptor(String columnName,int type,boolean nullable,int length){
+	public ColumnDescriptor(String columnName,int type,boolean nullable,int length){
 		this(columnName,type,nullable,false,length);
 	}
 	
-	protected ColumnDescriptor(String columnName,int type,boolean nullable, boolean primaryKey){
+	public ColumnDescriptor(String columnName,int type,boolean nullable, boolean primaryKey){
 		this(columnName,type,nullable,primaryKey,0);
 	}
-	protected ColumnDescriptor(String columnName,int type,boolean nullable, boolean primaryKey, int length){
+	public ColumnDescriptor(String columnName,int type,boolean nullable, boolean primaryKey, int length){
 		this.columnName = columnName;
 		this.type 		= type;
 		this.nullable 	= nullable;
 		this.primaryKey = primaryKey;
 		this.length		= length;
 	}
-	protected final String getColumnName() {
+	public final String getColumnName() {
 		return columnName;
 	}
 
-	protected final boolean isNullable() {
+	public final boolean isNullable() {
 		return nullable;
 	}
 
-	protected final boolean isPrimaryKey() {
+	public final boolean isPrimaryKey() {
 		return primaryKey;
 	}
 
-	protected final int getType() {
+	public final int getType() {
 		return type;
 	}
 	

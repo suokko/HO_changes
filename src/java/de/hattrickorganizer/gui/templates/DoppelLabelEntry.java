@@ -11,7 +11,7 @@ import plugins.IHOTableEntry;
 /**
  * Ein Panel mit zwei Labels, um zwei Werte in einer Spalte anzuzeigen ( Wert, Verbesserung )
  */
-public class DoppelLabelEntry extends TableEntry {
+public class DoppelLabelEntry implements TableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private DoppelLabel m_clComponent = new DoppelLabel();
@@ -49,7 +49,6 @@ public class DoppelLabelEntry extends TableEntry {
         createComponent();
     }
 
-    @Override
 	public final JComponent getComponent(boolean isSelected) {
         m_clComponent.removeAll();
         m_clComponent.setOpaque(false);
@@ -93,13 +92,11 @@ public class DoppelLabelEntry extends TableEntry {
         return m_clRechts;
     }
 
-    @Override
 	public final void clear() {
         m_clLinks.clear();
         m_clRechts.clear();
     }
 
-    @Override
 	public int compareTo(IHOTableEntry obj) {
         if (obj instanceof DoppelLabelEntry) {
             final DoppelLabelEntry entry = (DoppelLabelEntry) obj;
@@ -109,12 +106,12 @@ public class DoppelLabelEntry extends TableEntry {
         return 0;
     }
 
-    @Override
+
 	public final void createComponent() {
         m_clComponent = new DoppelLabel();
     }
 
-    @Override
+
 	public void updateComponent() {
         m_clLinks.updateComponent();
         m_clRechts.updateComponent();
