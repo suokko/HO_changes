@@ -6,6 +6,7 @@
 package de.hattrickorganizer.tools.updater;
 
 import gui.HOIconName;
+import ho.core.plugins.PluginManager;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -65,7 +66,7 @@ final class RefreshDialog extends UpdaterDialog {
 
 	protected ArrayList<XMLPLuginInfo> getAllPlugins() {
 		ArrayList<XMLPLuginInfo> plugins = new ArrayList<XMLPLuginInfo>();
-		File hopluginsDir = new File(HOPLUGINS_DIRECTORY);
+		File hopluginsDir = new File(PluginManager.HOPLUGINS_DIRECTORY);
 		File[] filesAfter = hopluginsDir.listFiles();
 
 		for (int i = 0; i < filesAfter.length; i++) {
@@ -157,10 +158,10 @@ final class RefreshDialog extends UpdaterDialog {
 
 						// Wenn schon installiert, dann lösche vorher
 						if (officialPlugin != null) {
-							deletePlugin(officialPlugin, false);
+							PluginManager.deletePlugin(officialPlugin, false);
 						}
 
-						ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(HOPLUGINS_DIRECTORY));
+						ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(PluginManager.HOPLUGINS_DIRECTORY));
                     }// selected
                 }// for
 
@@ -224,7 +225,7 @@ final class RefreshDialog extends UpdaterDialog {
 							continue;
 						}
 
-						ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(HOPLUGINS_DIRECTORY));
+						ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(PluginManager.HOPLUGINS_DIRECTORY));
 				
                         ok = true;
                     } else {
@@ -241,8 +242,8 @@ final class RefreshDialog extends UpdaterDialog {
 											continue;
 										}
 
-										deletePlugin(runplugins[k], false);
-										ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(HOPLUGINS_DIRECTORY));
+										PluginManager.deletePlugin(runplugins[k], false);
+										ZipHelper.unzip(UpdateController.getLocalZipFile(), new File(PluginManager.HOPLUGINS_DIRECTORY));
 									}
 								}
                             }// instanceof

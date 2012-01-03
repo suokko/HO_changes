@@ -372,7 +372,7 @@ public class HOVerwaltung {
 	    		return temp;
     	}
         //Return key if nothing found in english.properties
-        HOLogger.instance().warning(getClass(),"HOVerwaltung.getLanguageString: Key: "+key+" not found!");
+        HOLogger.instance().warning(getClass(),"getLanguageString: '"+key+"' not found!");
     	return "!"+key+"!";
     }
 }

@@ -41,6 +41,10 @@ public class ArenaStatistikModel {
     private int m_iLigaPlatz;
     private int m_iWetter;
     private int m_iZuschaueranzahl;
+    private int terraces;
+    private int basics;
+    private int roof;
+    private int vip;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -340,7 +344,39 @@ public class ArenaStatistikModel {
         return m_iZuschaueranzahl;
     }
 
-    //--------------------------------------------------------------
+    public int getTerraces() {
+		return terraces;
+	}
+
+	public void setTerraces(int terraces) {
+		this.terraces = terraces;
+	}
+
+	public int getBasics() {
+		return basics;
+	}
+
+	public void setBasics(int basics) {
+		this.basics = basics;
+	}
+
+	public int getRoof() {
+		return roof;
+	}
+
+	public void setRoof(int roof) {
+		this.roof = roof;
+	}
+
+	public int getVip() {
+		return vip;
+	}
+
+	public void setVip(int vip) {
+		this.vip = vip;
+	}
+
+	//--------------------------------------------------------------
     public final int compareTo(Object obj) {
         if (obj instanceof ArenaStatistikModel) {
             final ArenaStatistikModel info = (ArenaStatistikModel) obj;
