@@ -48,7 +48,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -991600939074866793L;
 	protected JTable table;
 	protected String ACT_SHOW_INFO = "ShowInfo";
-	protected String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator + "hoplugins";
 	protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("Uebernehmen");
 	protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getLanguageString("DateiNichtGefunden");
 	protected String PROP_HOMEPAGE = HOVerwaltung.instance().getLanguageString("Homepage");
@@ -125,37 +124,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         return tmp;
     }
 
-    protected boolean isUnquenchable(File file, File[] files) {
-        if (files == null) {
-            return false;
-        }
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].exists() && file.getName().equals(files[i].getName())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected void clearDirectory(String path, File[] unquenchablesFiles) {
-        File dir = new File(path);
-
-        if (dir.exists() && dir.isDirectory()) {
-            File[] files = dir.listFiles();
-
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) {
-                    clearDirectory(files[i].getAbsolutePath(), unquenchablesFiles);
-                }
-
-                if (!isUnquenchable(files[i], unquenchablesFiles)) {
-                    files[i].delete();
-                }
-            }
-        }
-    }
 
     protected JPanel createButtons() {
         JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
@@ -204,51 +173,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 		JScrollPane scroll = new JScrollPane(table);
 		return scroll;
 	}
-
-    protected void deletePlugin(Object plugin, boolean withTables) {
-        File[] unquenchableFiles = new File[0];
-        String pluginName = plugin.getClass().getName();
-        pluginName = pluginName.substring(pluginName.indexOf(".") + 1);
-
-        // nur beim richtiges Löschen und nicht beim Update
-        if (withTables) {
-            deletePluginTables(pluginName);
-        }
-
-        File classFile = new File(HOPLUGINS_DIRECTORY + File.separator + pluginName + ".class");
-
-        if (classFile.exists()) {
-            classFile.delete();
-
-            if (plugin instanceof IOfficialPlugin) {
-                unquenchableFiles = ((IOfficialPlugin) plugin).getUnquenchableFiles();
-            }
-
-            clearDirectory(HOPLUGINS_DIRECTORY + File.separator + pluginName, unquenchableFiles);
-            classFile = new File(HOPLUGINS_DIRECTORY + File.separator + pluginName);
-
-            classFile.delete();
-        }
-    }
-
-    protected void deletePluginTables(String pluginname) {
-        try {
-            ArrayList<String> droptables = new ArrayList<String>();
-            Object [] tables = DBZugriff.instance().getAdapter().getDBInfo().getAllTablesNames();
-    
-            for (int i = 0; i < tables.length; i++) {
-				if(tables[i].toString().toUpperCase(java.util.Locale.ENGLISH).startsWith(pluginname.toUpperCase(java.util.Locale.ENGLISH))) {
-                    droptables.add(tables[i].toString());
-                }
-			}
-    
-            for (int i = 0; i < droptables.size(); i++) {
-                DBZugriff.instance().getAdapter().executeUpdate("DROP TABLE " + droptables.get(i));
-            }
-        } catch (Exception e) {
-            handleException(e, "");
-        }
-    }
 
     protected void handleException(Exception e, String txt) {
         //	    JOptionPane.showMessageDialog(null,	txt

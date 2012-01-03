@@ -5,6 +5,8 @@
  */
 package de.hattrickorganizer.tools.updater;
 
+import ho.core.plugins.PluginManager;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 
@@ -88,7 +90,7 @@ final class DeleteDialog extends UpdaterDialog {
                     selected = ((JCheckBox) table.getValueAt(i, 0)).isSelected();
 
                     if (selected) {
-                        deletePlugin(object[i], true);
+                        PluginManager.deletePlugin(object[i], true);
                     }
                      // selected
                 }

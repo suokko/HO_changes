@@ -300,12 +300,10 @@ public final class TransfersDAO {
             DBZugriff.instance().getAdapter().executeUpdate("CREATE INDEX sell_id ON " + TABLE_NAME
                                                           + " (sellerid)"); //$NON-NLS-1$ 
 
-            TransferSettingDAO.setCalendarFix();
         } else {
             // This part is to solve incorrect calculated values from the 1.01 version of the plugin
-            final boolean calendarfix = TransferSettingDAO.isCalendarFix();
 
-            if (!calendarfix) {
+           // if (!calendarfix) {
                 final Map<Integer,Timestamp> map = new HashMap<Integer,Timestamp>();
 
                 try {
@@ -325,12 +323,10 @@ public final class TransfersDAO {
                         DBZugriff.instance().getAdapter().executeUpdate(sqlStmt.toString());
                     }
 
-                    TransferSettingDAO.setCalendarFix();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-        }
     }
 
     /**

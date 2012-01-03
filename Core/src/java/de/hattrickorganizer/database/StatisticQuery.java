@@ -168,6 +168,10 @@ public class StatisticQuery {
 				arenamodel.setMatchID(rs.getInt("MatchID"));
 				arenamodel.setMatchTyp(rs.getInt("MatchTyp"));
 				arenamodel.setMatchStatus(rs.getInt("Status"));
+				arenamodel.setTerraces(rs.getInt("soldTerraces"));
+				arenamodel.setBasics(rs.getInt("soldBasic"));
+				arenamodel.setRoof(rs.getInt("soldRoof"));
+				arenamodel.setVip(rs.getInt("soldVIP"));
 
 				//Adden
 				liste.add(arenamodel);
