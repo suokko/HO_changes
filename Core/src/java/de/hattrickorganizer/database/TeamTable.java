@@ -6,8 +6,13 @@ import java.sql.Types;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.tools.HOLogger;
 
+/**
+ * Implementation of the team table.
+ * @author Thorsten Dietz
+ */
+public final class TeamTable extends AbstractTable {
 
-final class TeamTable extends AbstractTable {
+	/** tablename **/
 	public final static String TABLENAME = "TEAM";
 	
 	protected TeamTable(JDBCAdapter  adapter){
@@ -46,7 +51,7 @@ final class TeamTable extends AbstractTable {
 	/**
 	 * Save the team data for the given HRF id.
 	 */
-	void saveTeam(int hrfId, Team team) {
+	public void saveTeam(int hrfId, Team team) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -66,12 +71,12 @@ final class TeamTable extends AbstractTable {
 					+ ",'" + DBZugriff.insertEscapeSequences(team.getStimmung())
 					+ "'," + team.getSelbstvertrauenAsInt()
 					+ ",'" + DBZugriff.insertEscapeSequences(team.getSelbstvertrauen())
-					+ "'," + team.getFormationExperience541()
-					+ "," + team.getFormationExperience433()
-					+ "," + team.getFormationExperience352()
-					+ "," + team.getFormationExperience451()
-					+ "," + team.getFormationExperience532()
-					+ "," + team.getFormationExperience343()
+					+ "'," + team.getErfahrung541()
+					+ "," + team.getErfahrung433()
+					+ "," + team.getErfahrung352()
+					+ "," + team.getErfahrung451()
+					+ "," + team.getErfahrung532()
+					+ "," + team.getErfahrung343()
 					+ "," + team.getFormationExperience442()
 					+ "," + team.getFormationExperience523()
 					+ "," + team.getFormationExperience550()
@@ -86,7 +91,7 @@ final class TeamTable extends AbstractTable {
 	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
 	 * Selbstvertrauen
 	 */
-	String[] getStimmmungSelbstvertrauen(int hrfid) {
+	public String[] getStimmmungSelbstvertrauen(int hrfid) {
 		final int[] intvalue = new int[2];
 		final String[] returnvalue = new String[2];
 		final String sql = "SELECT iStimmung, iSelbstvertrauen, sStimmung, sSelbstvertrauen FROM "+getTableName()+" WHERE HRF_ID=" + hrfid;
@@ -118,7 +123,7 @@ final class TeamTable extends AbstractTable {
 	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] = Stimmung [1] =
 	 * Selbstvertrauen
 	 */
-	int[] getStimmmungSelbstvertrauenValues(int hrfid) {
+	public int[] getStimmmungSelbstvertrauenValues(int hrfid) {
 		final int[] intvalue = new int[2];
 		final String sql = "SELECT iStimmung, iSelbstvertrauen, sStimmung, sSelbstvertrauen FROM "+getTableName()+" WHERE HRF_ID=" + hrfid;
 
@@ -139,7 +144,7 @@ final class TeamTable extends AbstractTable {
 	/**
 	 * load the team data for the given HRF id
 	 */
-	Team getTeam(int hrfID) {
+	public Team getTeam(int hrfID) {
 		ResultSet rs = null;
 		Team team = null;
 

@@ -10,8 +10,9 @@ import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-final class AufstellungTable extends AbstractTable {
-	final static String TABLENAME = "AUFSTELLUNG";
+public final class AufstellungTable extends AbstractTable {
+	/** tablename **/
+	public final static String TABLENAME = "AUFSTELLUNG";
 	
 	protected AufstellungTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
@@ -37,7 +38,7 @@ final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Lineup getAufstellung(int hrfID, String name) {
+	public Lineup getAufstellung(int hrfID, String name) {
 		ResultSet rs = null;
 		de.hattrickorganizer.model.Lineup auf = null;
 		String sql = null;
@@ -74,7 +75,7 @@ final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<String> getAufstellungsListe(int hrfID) {
+	public Vector<String> getAufstellungsListe(int hrfID) {
 		final Vector<String> ret = new Vector<String>();
 		ResultSet rs = null;
 		String sql = null;
@@ -102,7 +103,7 @@ final class AufstellungTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<String> getUserAufstellungsListe() {
+	public Vector<String> getUserAufstellungsListe() {
 		ResultSet rs = null;
 		final String statement = "SELECT Aufstellungsname FROM "+getTableName()+" WHERE HRF_ID=" + Lineup.NO_HRF_VERBINDUNG;
 		final Vector<String> ret = new Vector<String>();
@@ -131,7 +132,7 @@ final class AufstellungTable extends AbstractTable {
 	 * @param aufstellung TODO Missing Constructuor Parameter Documentation
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
+	public void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
 		String statement = null;
 
 		if (aufstellung != null) {
@@ -152,4 +153,7 @@ final class AufstellungTable extends AbstractTable {
 	
 		}
 	}
+	
+	
+	
 }

@@ -46,10 +46,6 @@ public class DetailsView extends JPanel {
 
 	public void setSubstitution(ISubstitution sub) {
 		this.substitution = sub;
-		refresh();
-	}
-	
-	public void refresh() {
 		updateData();
 		updateView();
 	}
@@ -91,7 +87,7 @@ public class DetailsView extends JPanel {
 				break;
 			case NEW_BEHAVIOUR:
 				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Player"));
-				this.playerInLabel.setText("");
+				this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
 				break;
 			case POSITION_SWAP:
 				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));

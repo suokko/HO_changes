@@ -655,7 +655,7 @@ public class SpieleStatistikPanel extends ImagePanel
                 for (int j = 0; j < team.size(); j++) {
                     final MatchLineupPlayer player = (MatchLineupPlayer) team.get(j);
 
-                    if (player.getId() < ISpielerPosition.startReserves && player.getId() >= ISpielerPosition.startLineup) {
+                    if (player.getId() < ISpielerPosition.startReserves) {
                         float rating = (float) player.getRating();
 
                         if (rating > 0) {

@@ -302,35 +302,35 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
                                                         .getTeamErfahrung4AktuellesSystem() + "");
             m_jpErfahrung550.setText(homodel.getTeam().getFormationExperience550() + "");
-            m_jpErfahrung541.setText(homodel.getTeam().getFormationExperience541() + "");
-            m_jpErfahrung532.setText(homodel.getTeam().getFormationExperience532() + "");
+            m_jpErfahrung541.setText(homodel.getTeam().getErfahrung541() + "");
+            m_jpErfahrung532.setText(homodel.getTeam().getErfahrung532() + "");
             m_jpErfahrung523.setText(homodel.getTeam().getFormationExperience523() + "");
-            m_jpErfahrung451.setText(homodel.getTeam().getFormationExperience451() + "");
+            m_jpErfahrung451.setText(homodel.getTeam().getErfahrung451() + "");
             m_jpErfahrung442.setText(homodel.getTeam().getFormationExperience442() + "");
-            m_jpErfahrung433.setText(homodel.getTeam().getFormationExperience433() + "");
-            m_jpErfahrung352.setText(homodel.getTeam().getFormationExperience352() + "");
-            m_jpErfahrung343.setText(homodel.getTeam().getFormationExperience343() + "");
+            m_jpErfahrung433.setText(homodel.getTeam().getErfahrung433() + "");
+            m_jpErfahrung352.setText(homodel.getTeam().getErfahrung352() + "");
+            m_jpErfahrung343.setText(homodel.getTeam().getErfahrung343() + "");
             m_jpErfahrung253.setText(homodel.getTeam().getFormationExperience253() + "");
             m_jpErfahrungAktuellesSystem.setFGColor(new Color(Math.min(Math.max(
             		((8 - homodel.getAufstellung().getTeamErfahrung4AktuellesSystem()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung550.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getFormationExperience550()) * 32) - 1, 0), 255), 0, 0));
 			m_jpErfahrung541.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience541()) * 32) - 1, 0), 255), 0, 0));
+					((8 - homodel.getTeam().getErfahrung541()) * 32) - 1, 0), 255), 0, 0));
 			m_jpErfahrung532.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience532()) * 32) - 1, 0), 255), 0, 0));
+					((8 - homodel.getTeam().getErfahrung532()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung523.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getFormationExperience523()) * 32) - 1, 0), 255), 0, 0));
 			m_jpErfahrung451.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience451()) * 32) - 1, 0), 255), 0, 0));
+					((8 - homodel.getTeam().getErfahrung451()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung442.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getFormationExperience442()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung433.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience433()) * 32) - 1, 0),255), 0, 0));
+					((8 - homodel.getTeam().getErfahrung433()) * 32) - 1, 0),255), 0, 0));
 			m_jpErfahrung352.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience352()) * 32) - 1, 0), 255), 0, 0));
+					((8 - homodel.getTeam().getErfahrung352()) * 32) - 1, 0), 255), 0, 0));
 			m_jpErfahrung343.setFGColor(new Color(Math.min(Math.max(
-					((8 - homodel.getTeam().getFormationExperience343()) * 32) - 1, 0), 255), 0, 0));
+					((8 - homodel.getTeam().getErfahrung343()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung253.setFGColor(new Color(Math.min(Math.max(
 					((8 - homodel.getTeam().getFormationExperience253()) * 32) - 1, 0), 255), 0, 0));
         }

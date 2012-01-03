@@ -72,7 +72,14 @@ public final class UserParameter extends Configuration {
     public boolean aufstellungsAssistentPanel_notLast;
     public boolean aufstellungsAssistentPanel_verletzt;
 
+    //Einzelnen Positionen in den Tabellen anzeigen
+
+    /** @deprecated since HO! 1.36 columns configurable */
+    @Deprecated
+	public boolean einzelnePositionenAnzeigen = true;
+
     //Logout
+
     /** option parameter */
     public boolean logoutOnExit = true;
 
@@ -166,8 +173,7 @@ public final class UserParameter extends Configuration {
     public boolean statistikZinsertraege;
     public boolean statistikZuschauer;
 
-    
-//    public boolean tempTabArenasizer = true;
+    public boolean tempTabArenasizer = true;
     public boolean tempTabAufstellung;
     public boolean tempTabInformation = true;
     public boolean tempTabLigatabelle;
@@ -203,6 +209,9 @@ public final class UserParameter extends Configuration {
 
     // These defaults are never used anywhere, they are read from db,
     // and are initialized from the config update routine.
+    // General training no longer exists
+    @Deprecated
+    public float DAUER_ALLGEMEIN = 1.0f;
     public float TRAINING_OFFSET_SCORING = 0f;
     public float TRAINING_OFFSET_WINGER = 0f;
     public float TRAINING_OFFSET_STAMINA = 0f;
@@ -256,7 +265,7 @@ public final class UserParameter extends Configuration {
     public String skin = "Nimbus";
 
     //Spiele
-    public int spieleFilter = 1;
+    public int spieleFilter;
 
     //Spiele
     public int spielePanel_horizontalLeftSplitPane = 400;
@@ -400,6 +409,7 @@ public final class UserParameter extends Configuration {
 		map.put("aufstellungsAssistentPanel_not",String.valueOf(aufstellungsAssistentPanel_not));
 		map.put("aufstellungsAssistentPanel_notLast",String.valueOf(aufstellungsAssistentPanel_notLast));
 		map.put("aufstellungsAssistentPanel_verletzt",String.valueOf(aufstellungsAssistentPanel_verletzt));
+		map.put("einzelnePositionenAnzeigen",String.valueOf(einzelnePositionenAnzeigen));
 		map.put("xmlDownload",String.valueOf(xmlDownload));
 		map.put("fixtures",String.valueOf(fixtures));
 		map.put("currentMatchlist",String.valueOf(currentMatchlist));
@@ -473,7 +483,7 @@ public final class UserParameter extends Configuration {
 		map.put("statistikZinsaufwendungen",String.valueOf(statistikZinsaufwendungen));
 		map.put("statistikZinsertraege",String.valueOf(statistikZinsertraege));
 		map.put("statistikZuschauer",String.valueOf(statistikZuschauer));
-//		map.put("tempTabArenasizer",String.valueOf(tempTabArenasizer));
+		map.put("tempTabArenasizer",String.valueOf(tempTabArenasizer));
 		map.put("tempTabAufstellung",String.valueOf(tempTabAufstellung));
 		map.put("tempTabInformation",String.valueOf(tempTabInformation));
 		map.put("tempTabLigatabelle",String.valueOf(tempTabLigatabelle));
@@ -494,6 +504,7 @@ public final class UserParameter extends Configuration {
 		map.put("WetterEffektBonus",String.valueOf(WetterEffektBonus));
 		map.put("faktorGeld",String.valueOf(faktorGeld));
 		map.put("zellenbreitenFaktor",String.valueOf(zellenbreitenFaktor));
+		map.put("DAUER_ALLGEMEIN",String.valueOf(DAUER_ALLGEMEIN));
 		map.put("DAUER_CHANCENVERWERTUNG",String.valueOf(TRAINING_OFFSET_SCORING));
 		map.put("DAUER_FLUEGELSPIEL",String.valueOf(TRAINING_OFFSET_WINGER));
 		map.put("DAUER_KONDITION",String.valueOf(TRAINING_OFFSET_STAMINA));
@@ -597,6 +608,7 @@ public final class UserParameter extends Configuration {
 		aufstellungsAssistentPanel_not = getBooleanValue(values,"aufstellungsAssistentPanel_not");
 		aufstellungsAssistentPanel_notLast = getBooleanValue(values,"aufstellungsAssistentPanel_notLast");
 		aufstellungsAssistentPanel_verletzt = getBooleanValue(values,"aufstellungsAssistentPanel_verletzt");
+		einzelnePositionenAnzeigen = getBooleanValue(values,"einzelnePositionenAnzeigen");
 		xmlDownload = getBooleanValue(values,"xmlDownload");
 		fixtures = getBooleanValue(values,"fixtures");
 		currentMatchlist = getBooleanValue(values,"currentMatchlist");
@@ -671,7 +683,7 @@ public final class UserParameter extends Configuration {
 		statistikZinsaufwendungen = getBooleanValue(values,"statistikZinsaufwendungen");
 		statistikZinsertraege = getBooleanValue(values,"statistikZinsertraege");
 		statistikZuschauer = getBooleanValue(values,"statistikZuschauer");
-//		tempTabArenasizer = getBooleanValue(values,"tempTabArenasizer");
+		tempTabArenasizer = getBooleanValue(values,"tempTabArenasizer");
 		tempTabAufstellung = getBooleanValue(values,"tempTabAufstellung");
 		tempTabInformation = getBooleanValue(values,"tempTabInformation");
 		tempTabLigatabelle = getBooleanValue(values,"tempTabLigatabelle");
@@ -700,6 +712,7 @@ public final class UserParameter extends Configuration {
 		leftAttackOffset = getFloatValue(values,"leftAttackOffset");
 		middleAttackOffset = getFloatValue(values,"middleAttackOffset");
 		rightAttackOffset = getFloatValue(values,"rightAttackOffset");
+		DAUER_ALLGEMEIN = getFloatValue(values,"DAUER_ALLGEMEIN");
 		TRAINING_OFFSET_SCORING = getFloatValue(values,"DAUER_CHANCENVERWERTUNG");
 		TRAINING_OFFSET_WINGER = getFloatValue(values,"DAUER_FLUEGELSPIEL");
 		TRAINING_OFFSET_STAMINA = getFloatValue(values,"DAUER_KONDITION");

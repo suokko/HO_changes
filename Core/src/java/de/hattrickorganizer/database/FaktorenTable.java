@@ -70,7 +70,7 @@ public final class FaktorenTable extends AbstractTable {
 	}
 	
 	///////////////////Faktoren holen//////////////////////////
-	void getFaktorenFromDB() {
+	public void getFaktorenFromDB() {
 		final FormulaFactors factors = FormulaFactors.instance();
 		final ResultSet rs = adapter.executeQuery("SELECT * FROM " + getTableName() + "");
 

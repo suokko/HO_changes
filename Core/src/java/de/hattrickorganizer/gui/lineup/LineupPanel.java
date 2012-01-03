@@ -303,7 +303,7 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
 
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("",
-                          new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/Ball.png"),
+                          new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/credits/Ball.png"),
                                                                                                Color.red)
                                                                          .getScaledInstance(13, 13,
                                                                                             Image.SCALE_SMOOTH)),

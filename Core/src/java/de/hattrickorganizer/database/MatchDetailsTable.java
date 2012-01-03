@@ -2,22 +2,18 @@ package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Vector;
 
-import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.IMatchLineup;
-import plugins.ISpielePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
+
 import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.tools.HOLogger;
 
-final class MatchDetailsTable extends AbstractTable {
+public final class MatchDetailsTable extends AbstractTable {
 
+	/** tablename **/
 	public final static String TABLENAME = "MATCHDETAILS";
-
+	
 	protected MatchDetailsTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
 	}
@@ -72,171 +68,6 @@ final class MatchDetailsTable extends AbstractTable {
 			"CREATE INDEX IMATCHDETAILS_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
 	}	
 
-	
-	MatchesOverviewRow[] getMatchesOverviewValues(int matchtype){
-		ArrayList<MatchesOverviewRow> rows = new ArrayList<MatchesOverviewRow>(20);
-		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("AlleSpiele"), MatchesOverviewRow.TYPE_ALL));
-		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Aufstellung"), MatchesOverviewRow.TYPE_TITLE));
-		rows.add(new MatchesOverviewRow("5-5-0", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("5-4-1", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("5-3-2", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("5-2-3", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("4-5-1", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("4-4-2", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("4-3-3",MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("3-5-2", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Taktik"), MatchesOverviewRow.TYPE_TITLE));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_NORMAL));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_PRESSING));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_KONTER), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_KONTER));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_MIDDLE));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_WINGS));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_CREATIVE));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_LONGSHOTS));
-		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Einstellung"),MatchesOverviewRow.TYPE_TITLE));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForEinstellung(IMatchDetails.EINSTELLUNG_PIC), MatchesOverviewRow.TYPE_MOT, IMatchDetails.EINSTELLUNG_PIC));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForEinstellung(IMatchDetails.EINSTELLUNG_NORMAL), MatchesOverviewRow.TYPE_MOT, IMatchDetails.EINSTELLUNG_NORMAL));
-		rows.add(new MatchesOverviewRow(Matchdetails.getNameForEinstellung(IMatchDetails.EINSTELLUNG_MOTS), MatchesOverviewRow.TYPE_MOT, IMatchDetails.EINSTELLUNG_MOTS));
-		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Wetter"), MatchesOverviewRow.TYPE_TITLE));
-		rows.add(new MatchesOverviewRow("IMatchDetails.WETTER_SONNE", MatchesOverviewRow.TYPE_WEATHER, IMatchDetails.WETTER_SONNE));
-		rows.add(new MatchesOverviewRow("IMatchDetails.WETTER_WOLKIG",  MatchesOverviewRow.TYPE_WEATHER, IMatchDetails.WETTER_WOLKIG));
-		rows.add(new MatchesOverviewRow("IMatchDetails.WETTER_BEWOELKT", MatchesOverviewRow.TYPE_WEATHER, IMatchDetails.WETTER_BEWOELKT));
-		rows.add(new MatchesOverviewRow("IMatchDetails.WETTER_REGEN",  MatchesOverviewRow.TYPE_WEATHER, IMatchDetails.WETTER_REGEN));
-		setMatchesOverviewValues(rows,matchtype,true);
-		setMatchesOverviewValues(rows,matchtype,false);
-		return rows.toArray(new MatchesOverviewRow[rows.size()]);
-	}
-	
-	
-	
-	private void setMatchesOverviewValues(ArrayList<MatchesOverviewRow> rows,int matchtype, boolean home){
-		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		StringBuilder whereClause = new StringBuilder(100);
-		whereClause.append(" AND ").append(home?"HEIMID=":"GASTID=").append(teamId);
-		switch(matchtype){
-			case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-				whereClause.append(" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
-				whereClause.append(" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
-				whereClause.append(" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
-			break;
-
-		case ISpielePanel.NUR_EIGENE_POKALSPIELE :
-			whereClause.append(" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
-			break;
-
-		case ISpielePanel.NUR_EIGENE_LIGASPIELE :
-			whereClause.append(" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
-			break;
-
-		case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-			whereClause.append(" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
-			whereClause.append(" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
-			whereClause.append(" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
-			whereClause.append(" OR MatchTyp=" + IMatchLineup.INT_TESTSPIEL + " )");
-			break;
-		}
-		
-		setMatchesOverviewRow(rows.get(0), whereClause.toString(),home);
-		setFormationRows(rows,whereClause, home);
-		setRows(rows, whereClause, home);
-	}
-	
-	private void setFormationRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause, boolean home){
-		
-		StringBuilder sql = new StringBuilder(500);
-		sql.append("select MATCHID,HEIMTORE,GASTTORE, "); 
-		sql.append("LOCATE('5-5-0',MATCHREPORT) AS F550,");
-		sql.append("LOCATE('5-4-1',MATCHREPORT) AS F541,");
-		sql.append("LOCATE('5-3-2',MATCHREPORT) AS F532,");
-		sql.append("LOCATE('5-2-3',MATCHREPORT) AS F523,");
-		sql.append("LOCATE('4-5-1',MATCHREPORT) AS F451,");
-		sql.append("LOCATE('4-4-2',MATCHREPORT) AS F442,");
-		sql.append("LOCATE('4-3-3',MATCHREPORT) AS F433,");
-		sql.append("LOCATE('3-5-2',MATCHREPORT) AS F352");
-		sql.append(" FROM MATCHDETAILS inner join MATCHESKURZINFO ON MATCHDETAILS.MATCHID = MATCHESKURZINFO.MATCHID ");
-		sql.append(" where 1=1 ");
-		sql.append(whereClause);
-		try{
-			ResultSet rs = adapter.executeQuery(sql.toString());
-			
-			while(rs.next()){
-				String[] fArray = {"0","",""};
-				setSystem(rs.getInt("F550"), "5-5-0", fArray);
-				setSystem(rs.getInt("F541"), "5-4-1", fArray);
-				setSystem(rs.getInt("F532"), "5-3-2", fArray);
-				setSystem(rs.getInt("F523"), "5-2-3", fArray);
-				setSystem(rs.getInt("F451"), "4-5-1", fArray);
-				setSystem(rs.getInt("F442"), "4-4-2", fArray);
-				setSystem(rs.getInt("F433"), "4-3-3", fArray);
-				setSystem(rs.getInt("F352"), "3-5-2", fArray);
-				for (int i = 1; i <rows.size(); i++) {
-					String txt = home?fArray[1]:fArray[2].length()==0?fArray[1]:fArray[2];
-
-					if(rows.get(i).getType() == 1 && rows.get(i).getDescription().equals(txt)){
-						rows.get(i).setMatchResult(rs.getInt("HEIMTORE"), rs.getInt("GASTTORE"), home);
-					}
-				}
-			}
-			} catch(Exception e){
-				HOLogger.instance().log(getClass(),"DatenbankZugriff.setMatchesOverviewRow : " + e);
-				HOLogger.instance().log(getClass(),e);
-			}
-	}
-	
-	private void setSystem(int column,String formation, String[] fArray){
-		int max = Integer.parseInt(fArray[0]);
-		if(column > 0){
-			if(max == 0){
-				fArray[0] = String.valueOf(column);
-				fArray[1] = formation;
-			} else if(max > column){
-				fArray[2] = fArray[1];
-				fArray[1] = formation;
-			} else {
-				fArray[0] = String.valueOf(column);
-				fArray[2] = formation;
-			}
-		}
-	}
-	
-	private void setRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause,boolean home){
-		for (int i = 1; i < rows.size(); i++) {
-			if(rows.get(i).getTypeValue() > Integer.MIN_VALUE){
-				String whereSpecial = " AND "+columns[rows.get(i).getColumnIndex(home)].getColumnName()+" = "+rows.get(i).getTypeValue() ;
-				setMatchesOverviewRow(rows.get(i), whereClause+whereSpecial,home);
-			}
-		}
-	}
-	
-	private void setMatchesOverviewRow(MatchesOverviewRow row,String whereClause, boolean home){
-		StringBuilder sql = new StringBuilder(500);
-		String from = " FROM MATCHDETAILS inner join MATCHESKURZINFO ON MATCHDETAILS.MATCHID = MATCHESKURZINFO.MATCHID ";
-		sql.append("SELECT SUM(ANZAHL) AS A1,SUM(G1) AS G,SUM(U1) AS U,SUM(V1) AS V, SUM(HTORE1) AS HEIMTORE, SUM(GTORE1) AS GASTTORE FROM (");
-		sql.append("select  COUNT(*) AS ANZAHL, 0 AS G1,0 AS U1, 0 AS V1, SUM(HEIMTORE) AS HTORE1, SUM(GASTTORE) AS GTORE1 "+from+" where 1 = 1 ");
-		sql.append(whereClause).append(" UNION ");
-		sql.append("SELECT 0 AS ANZAHL,  COUNT(*) AS G1,0 AS U1, 0 AS V1, 0 AS HTORE1, 0 AS GTORE1 "+from+" where HEIMTORE "+(home?">":"<")+" GASTTORE ");
-		sql.append(whereClause).append(" UNION ");
-		sql.append("SELECT  0 AS ANZAHL,  0 AS G1,COUNT(*) AS U1, 0 AS V1, 0 AS HTORE1, 0 AS GTORE1 "+from+" where HEIMTORE = GASTTORE ");
-		sql.append(whereClause).append(" UNION ");
-		sql.append("select  0 AS ANZAHL,  0 AS G1, 0 AS U1, COUNT(*) AS V1, 0 AS HTORE1, 0 AS GTORE1 "+from+" where HEIMTORE "+(home?"<":">")+" GASTTORE ");
-		sql.append(whereClause);
-		sql.append(")");
-		try{
-		ResultSet rs = adapter.executeQuery(sql.toString());
-		if(rs.next()){
-			row.setCount(rs.getInt("A1"));
-			row.setWin(rs.getInt("G"));
-			row.setDraw(rs.getInt("U"));
-			row.setLoss(rs.getInt("V"));
-			row.setHomeGoals(rs.getInt("HEIMTORE"));
-			row.setAwayGoals(rs.getInt("GASTTORE"));
-		}
-		} catch(Exception e){
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.setMatchesOverviewRow : " + e);
-			HOLogger.instance().log(getClass(),e);
-		}
-	}
-	
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
 	 *
@@ -244,7 +75,7 @@ final class MatchDetailsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Matchdetails getMatchDetails(int matchId) {
+	public Matchdetails getMatchDetails(int matchId) {
 		final Matchdetails details = new Matchdetails();
 
 		try {
@@ -303,68 +134,12 @@ final class MatchDetailsTable extends AbstractTable {
 		return details;
 	}
 	
-	Matchdetails[] getMatchDetailsFromArenaId(int arenaId) {
-		ArrayList<Matchdetails> list = new ArrayList<Matchdetails>();
-		try {
-			String sql = "SELECT TOP 30 * FROM "+getTableName()+" WHERE ArenaId=" + arenaId+" ORDER BY MATCHID desc";
-			ResultSet rs = adapter.executeQuery(sql);
-
-			while (rs.next()) {
-				final Matchdetails details = new Matchdetails();
-				details.setArenaID(rs.getInt("ArenaId"));
-				details.setArenaName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("ArenaName")));
-				details.setRegionId(rs.getInt("RegionID"));
-				details.setFetchDatum(rs.getTimestamp("Fetchdatum"));
-				details.setGastId(rs.getInt("GastId"));
-				details.setGastName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
-				details.setGuestEinstellung(rs.getInt("GastEinstellung"));
-				details.setGuestGoals(rs.getInt("GastTore"));
-				details.setGuestLeftAtt(rs.getInt("GastLeftAtt"));
-				details.setGuestLeftDef(rs.getInt("GastLeftDef"));
-				details.setGuestMidAtt(rs.getInt("GastMidAtt"));
-				details.setGuestMidDef(rs.getInt("GastMidDef"));
-				details.setGuestMidfield(rs.getInt("GastMidfield"));
-				details.setGuestRightAtt(rs.getInt("GastRightAtt"));
-				details.setGuestRightDef(rs.getInt("GastRightDef"));
-				details.setGuestTacticSkill(rs.getInt("GastTacticSkill"));
-				details.setGuestTacticType(rs.getInt("GastTacticType"));
-				details.setHeimId(rs.getInt("HeimId"));
-				details.setHeimName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("HeimName")));
-				details.setHomeEinstellung(rs.getInt("HeimEinstellung"));
-				details.setHomeGoals(rs.getInt("HeimTore"));
-				details.setHomeLeftAtt(rs.getInt("HeimLeftAtt"));
-				details.setHomeLeftDef(rs.getInt("HeimLeftDef"));
-				details.setHomeMidAtt(rs.getInt("HeimMidAtt"));
-				details.setHomeMidDef(rs.getInt("HeimMidDef"));
-				details.setHomeMidfield(rs.getInt("HeimMidfield"));
-				details.setHomeRightAtt(rs.getInt("HeimRightAtt"));
-				details.setHomeRightDef(rs.getInt("HeimRightDef"));
-				details.setHomeTacticSkill(rs.getInt("HeimTacticSkill"));
-				details.setHomeTacticType(rs.getInt("HeimTacticType"));
-				details.setMatchID(rs.getInt("MATCHID"));
-				details.setSpielDatum(rs.getTimestamp("SpielDatum"));
-				details.setWetterId(rs.getInt("WetterId"));
-				details.setZuschauer(rs.getInt("Zuschauer"));
-				details.setSoldTerraces(rs.getInt("soldTerraces"));
-				details.setSoldBasic(rs.getInt("soldBasic"));
-				details.setSoldRoof(rs.getInt("soldRoof"));
-				details.setSoldVIP(rs.getInt("soldVIP"));
-				list.add(details);
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.getMatchDetails : " + e);
-			HOLogger.instance().log(getClass(),e);
-		}
-
-		return list.toArray(new Matchdetails[list.size()]);
-	}
-	
 	/**
 	 * speichert die MatchDetails
 	 *
 	 * @param details TODO Missing Constructuor Parameter Documentation
 	 */
-	void storeMatchDetails(Matchdetails details) {
+	public void storeMatchDetails(Matchdetails details) {
 		if (details != null) {
 			//Vorhandene Einträge entfernen
 			final String[] where = { "MatchID" };

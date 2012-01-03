@@ -7,8 +7,10 @@ import plugins.IVerein;
 import de.hattrickorganizer.model.Verein;
 import de.hattrickorganizer.tools.HOLogger;
 
-final class VereinTable extends AbstractTable {
-	final static String TABLENAME = "VEREIN";
+public final class VereinTable extends AbstractTable {
+
+	/** tablename **/
+	public final static String TABLENAME = "VEREIN";
 
 	protected VereinTable(JDBCAdapter  adapter){
 		super( TABLENAME, adapter );
@@ -42,7 +44,7 @@ final class VereinTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param verein TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveVerein(int hrfId, IVerein verein) {
+	public void saveVerein(int hrfId, IVerein verein) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -90,7 +92,7 @@ final class VereinTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Verein getVerein(int hrfID) {
+	public Verein getVerein(int hrfID) {
 		ResultSet rs = null;
 		Verein verein = null;
 		String sql = null;

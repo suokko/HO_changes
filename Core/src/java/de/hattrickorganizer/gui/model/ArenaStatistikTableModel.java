@@ -18,7 +18,6 @@ import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.StringUtilities;
 
 
 /**
@@ -220,7 +219,36 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 
 
- 
+    /**
+     * Gibt eine String zurück, der die Tore darstellt
+     */
+    private String createTorString(int heim, int gast) {
+        final StringBuffer buffer = new StringBuffer();
+
+        if ((heim < 0) || (gast < 0)) {
+            return "-";
+        }
+
+        if (heim < 10) {
+            buffer.append(" ");
+        }
+
+        if (heim >= 0) {
+            buffer.append(heim);
+        }
+
+        buffer.append(" : ");
+
+        if (gast < 10) {
+            buffer.append(" ");
+        }
+
+        if (gast >= 0) {
+            buffer.append(gast);
+        }
+
+        return buffer.toString();
+    }
 
     //-----initialisierung-----------------------------------------
 
@@ -245,7 +273,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
 			    		background, SwingConstants.LEFT);
 			    //Ergebnis
-			    m_clData[i][3] = new ColorLabelEntry(StringUtilities.getResultString(match.getHeimTore(), match.getGastTore()),
+			    m_clData[i][3] = new ColorLabelEntry(createTorString(match.getHeimTore(), match.getGastTore()),
 			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
 
 			    //Sterne für Sieger!

@@ -10,8 +10,10 @@ import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
 
-final class MatchHighlightsTable extends AbstractTable {
-	final static String TABLENAME = "MATCHHIGHLIGHTS";
+public final class MatchHighlightsTable extends AbstractTable {
+
+	/** tablename **/						
+	public final static String TABLENAME = "MATCHHIGHLIGHTS";
 
 	protected MatchHighlightsTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
@@ -34,6 +36,7 @@ final class MatchHighlightsTable extends AbstractTable {
 		columns[11] = new ColumnDescriptor("GehilfeName", Types.VARCHAR, false, 256);
 		columns[12] = new ColumnDescriptor("GehilfeHeim", Types.BOOLEAN, false);
 		columns[13] = new ColumnDescriptor("EventText", Types.VARCHAR, false, 512);
+
 	}
 
 	@Override
@@ -51,7 +54,7 @@ final class MatchHighlightsTable extends AbstractTable {
 	 *
 	 * @param details TODO Missing Constructuor Parameter Documentation
 	 */
-	void storeMatchHighlights(Matchdetails details) {
+	public void storeMatchHighlights(Matchdetails details) {
 		if (details != null) {
 			//Vorhandene Einträge entfernen
 			final String[] where = { "MatchID" };
@@ -109,8 +112,6 @@ final class MatchHighlightsTable extends AbstractTable {
 		}
 	}
 
-	
-	
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
 	 *
@@ -118,7 +119,7 @@ final class MatchHighlightsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<IMatchHighlight> getMatchHighlights(int matchId) {
+	public Vector<IMatchHighlight> getMatchHighlights(int matchId) {
 		try {
 			//Highlights holen
 			final Vector<IMatchHighlight> vMatchHighlights = new Vector<IMatchHighlight>();

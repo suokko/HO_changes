@@ -1,19 +1,18 @@
 package de.hattrickorganizer.database;
 
-import ho.modul.transfer.scout.ScoutEintrag;
-
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
+import de.hattrickorganizer.model.ScoutEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 
-final class ScoutTable extends AbstractTable {
+public final class ScoutTable extends AbstractTable {
 
 	/** tablename **/
 	public final static String TABLENAME = "SCOUT";
 	
-	ScoutTable(JDBCAdapter  adapter){
+	protected ScoutTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
 	}
 
@@ -54,7 +53,7 @@ final class ScoutTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param list TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveScoutList(Vector<ScoutEintrag> list) {
+	protected void saveScoutList(Vector<ScoutEintrag> list) {
 		String sql = "";
 		String bool = "0";
 		String hg = "0";
@@ -148,7 +147,7 @@ final class ScoutTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<ScoutEintrag> getScoutList() {
+	public Vector<ScoutEintrag> getScoutList() {
 		final Vector<ScoutEintrag> ret = new Vector<ScoutEintrag>();
 
 		try {

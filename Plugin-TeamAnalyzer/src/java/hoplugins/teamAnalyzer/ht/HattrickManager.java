@@ -51,11 +51,10 @@ public class HattrickManager {
     			url = "/chppxml.axd?file=matchesarchive&teamID=" + teamId + "&FirstMatchDate=" + sdf.format(start.getTime()) + "&LastMatchDate=" + sdf.format(end.getTime());
     			log(url + " / " + matches.size());
     			xml = Commons.getModel().getDownloadHelper().getHattrickXMLFile(url);
-    			if (xml.length() == 0){
-    				download = false;
-    				return;
-    			}
-    				
+    			if (xml.length() == 0){ 
+    			 	download = false; 
+    			 	return; 
+    			} 
     			IXMLParser parser = Commons.getModel().getXMLParser();
     			Document dom = parser.parseString(xml);
     			Node matchesList = dom.getElementsByTagName("MatchList").item(0);
@@ -66,13 +65,13 @@ public class HattrickManager {
     				}
     				String matchId = matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i).getFirstChild().getNodeValue();
     				if (!matches.contains(matchId)) {
-    					if (Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId))) {
-	    					matches.add(matchId);
-	    					if (matches.size() >= Math.max(20, SystemManager.getFilter().getNumber() * 3)) { // [3 x limit] matches ought to be enough for anybody.
-	    						download = false;
-	    						return;
-	    					}
-    					} else {
+    					if (Commons.getModel().getHelper().downloadMatchData(Integer.parseInt(matchId))) { 
+    					 		matches.add(matchId); 
+    					 		if (matches.size() >= Math.max(20, SystemManager.getFilter().getNumber() * 3)) { // [3 x limit] matches ought to be enough for anybody. 
+    					 			download = false; 
+    					 			return; 
+    					 		} 
+    					 	} else { 
     						download = false;
     						return;
     					}

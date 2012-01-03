@@ -34,7 +34,7 @@ public final class MatchLineupTeamTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	MatchLineupTeam getMatchLineupTeam(int matchID, int teamID) {
+	protected MatchLineupTeam getMatchLineupTeam(int matchID, int teamID) {
 		MatchLineupTeam team = null;
 		String sql = null;
 		ResultSet rs = null;
@@ -65,7 +65,7 @@ public final class MatchLineupTeamTable extends AbstractTable {
 	 * @param team TODO Missing Method Parameter Documentation
 	 * @param matchID TODO Missing Method Parameter Documentation
 	 */
-	void storeMatchLineupTeam(MatchLineupTeam team, int matchID) {
+	protected void storeMatchLineupTeam(MatchLineupTeam team, int matchID) {
 		if (team != null) {
 			final String[] where = { "MatchID" , "TeamID"};
 			final String[] werte = { "" + matchID, "" +team.getTeamID()};			

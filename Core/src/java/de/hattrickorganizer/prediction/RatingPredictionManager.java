@@ -977,11 +977,11 @@ public class RatingPredictionManager implements IRatingPredictionManager
         	playerContribution = 0d;
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             if(spieler != null) {
-            		playerContribution = (params.getParam("counter", "multiPs", 1.0) * calcPlayerStrength(spieler, PASSING));
-            		playerContribution += (params.getParam("counter", "multiDe", 1.0) * calcPlayerStrength(spieler, DEFENDING));
-            		playerContribution *= params.getParam("counter", "playerPostMulti", 1.0);
-            		playerContribution += params.getParam("counter", "playerPostDelta", 0);
-            		retVal += playerContribution;
+            	playerContribution = (params.getParam("counter", "multiPs", 1.0) * calcPlayerStrength(spieler, PASSING)); 
+             	playerContribution += (params.getParam("counter", "multiDe", 1.0) * calcPlayerStrength(spieler, DEFENDING)); 
+             	playerContribution *= params.getParam("counter", "playerPostMulti", 1.0); 
+             	playerContribution += params.getParam("counter", "playerPostDelta", 0); 
+             	retVal += playerContribution; 
             }
         }
         retVal *= params.getParam("counter", "postMulti", 1.0);

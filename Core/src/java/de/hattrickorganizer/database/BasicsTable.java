@@ -9,8 +9,10 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.model.Basics;
 import de.hattrickorganizer.tools.HOLogger;
 
-final class BasicsTable extends AbstractTable {
-	final static String TABLENAME = "BASICS";
+public final class BasicsTable extends AbstractTable {
+
+	/** tablename **/
+	public final static String TABLENAME = "BASICS";
 	
 	protected BasicsTable(JDBCAdapter  adapter){
 		super(TABLENAME,adapter);
@@ -45,7 +47,7 @@ final class BasicsTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param basics TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveBasics(int hrfId, de.hattrickorganizer.model.Basics basics) {
+	protected void saveBasics(int hrfId, de.hattrickorganizer.model.Basics basics) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -91,7 +93,7 @@ final class BasicsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Basics getBasics(int hrfID) {
+	public Basics getBasics(int hrfID) {
 		ResultSet rs = null;
 		Basics basics = null;
 
@@ -117,7 +119,7 @@ final class BasicsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
+	public Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
 		ResultSet rs = null;
 		final String statement = "SELECT * FROM "+getTableName()+" WHERE Datum >='" + datum.toString() + "' ORDER BY Datum DESC";
 		final Vector<CBItem> hrfs = new Vector<CBItem>();
@@ -158,7 +160,7 @@ final class BasicsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	int getHrfIDSameTraining(Timestamp time) {
+	public int getHrfIDSameTraining(Timestamp time) {
 		ResultSet rs = null;
 		String sql = null;
 		int hrfID = -1;

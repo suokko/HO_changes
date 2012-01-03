@@ -9,12 +9,12 @@ import plugins.ISpieler;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 
-final class SpielerTable extends AbstractTable {
+public final class SpielerTable extends AbstractTable {
 
 	/** tablename **/
-	final static String TABLENAME = "SPIELER";
+	public final static String TABLENAME = "SPIELER";
 
-	SpielerTable(JDBCAdapter adapter) {
+	protected SpielerTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
 	}
 
@@ -97,7 +97,7 @@ final class SpielerTable extends AbstractTable {
 	 * @param player	the player to be saved
 	 */
 
-	void saveSpieler(int hrfId, Spieler player, Timestamp date) {
+	protected void saveSpieler(int hrfId, Spieler player, Timestamp date) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID", "SpielerId" };
 		final String[] awhereV = { "" + hrfId, "" + player.getSpielerID()};
@@ -251,7 +251,7 @@ final class SpielerTable extends AbstractTable {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
+	public void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
 //		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -278,7 +278,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return player
 	 */
-	Spieler getSpielerFromHrf(int hrfID, int playerId) {
+	protected Spieler getSpielerFromHrf(int hrfID, int playerId) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -309,7 +309,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<ISpieler> getSpieler(int hrfID) {
+	protected Vector<ISpieler> getSpieler(int hrfID) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -341,7 +341,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<ISpieler> getAllSpieler() {
+	public Vector<ISpieler> getAllSpieler() {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -386,7 +386,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	int getLetzteBewertung4Spieler(int spielerid) {
+	public int getLetzteBewertung4Spieler(int spielerid) {
 		int bewertung = 0;
 
 		try {
@@ -411,7 +411,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Spieler getSpielerAtDate(int spielerid, Timestamp time) {
+	public Spieler getSpielerAtDate(int spielerid, Timestamp time) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -488,7 +488,7 @@ final class SpielerTable extends AbstractTable {
 
 	//------------------------------------------------------------------------------
 
-	Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
+	public Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -523,7 +523,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Spieler getSpielerFirstHRF(int spielerid) {
+	public Spieler getSpielerFirstHRF(int spielerid) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
@@ -555,7 +555,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Timestamp getTimestamp4FirstPlayerHRF(int spielerid) {
+	public Timestamp getTimestamp4FirstPlayerHRF(int spielerid) {
 		Timestamp time = null;
 
 		try {
@@ -579,7 +579,7 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	int getTrainerType(int hrfID) {
+	public int getTrainerType(int hrfID) {
 		ResultSet rs = null;
 		String sql = null;
 

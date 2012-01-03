@@ -279,7 +279,6 @@ public interface ISpieler {
      * Setter for property m_sAgressivitaet.
      *
      * @param m_sAgressivitaet New value of property m_sAgressivitaet.
-     * @deprecated
      */
     public void setAgressivitaetString(java.lang.String m_sAgressivitaet);
 
@@ -363,7 +362,6 @@ public interface ISpieler {
      * Setter for property m_sAnsehen.
      *
      * @param m_sAnsehen New value of property m_sAnsehen.
-     * @deprecated
      */
     public void setAnsehenString(java.lang.String m_sAnsehen);
 
@@ -413,7 +411,6 @@ public interface ISpieler {
      * Setter for property m_sCharakter.
      *
      * @param m_sCharakter New value of property m_sCharakter.
-     * @deprecated
      */
     public void setCharakterString(java.lang.String m_sCharakter);
 

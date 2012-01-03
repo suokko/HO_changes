@@ -42,7 +42,7 @@ public final class PaarungTable extends AbstractTable {
 	 * @param ligaId TODO Missing Constructuor Parameter Documentation
 	 * @param saison TODO Missing Constructuor Parameter Documentation
 	 */
-	void storePaarung(Vector<IPaarung> paarungen, int ligaId, int saison) {
+	protected void storePaarung(Vector<IPaarung> paarungen, int ligaId, int saison) {
 		Paarung match = null;
 		String sql = null;
 
@@ -84,7 +84,7 @@ public final class PaarungTable extends AbstractTable {
 	 *
 	 * @param plan TODO Missing Constructuor Parameter Documentation
 	 */
-	void getPaarungen(Spielplan plan) {
+	protected void getPaarungen(Spielplan plan) {
 		Paarung match = null;
 		String sql = null;
 		ResultSet rs = null;

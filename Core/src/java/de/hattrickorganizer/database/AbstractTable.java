@@ -6,6 +6,12 @@ import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
 
+/**
+ * TODO DOC!
+ * @author Thorsten Dietz
+ *
+ */
+
 abstract class AbstractTable {
 	
 	/** tableName**/
@@ -48,10 +54,6 @@ abstract class AbstractTable {
 		return new String[0];
 	}
 	
-	protected String[] getConstraintStatements(){
-		return new String[0];
-	}
-	
 	protected int delete(String[] whereColumns, String[] whereValues) {
 		
 		final StringBuffer sql = new StringBuffer("DELETE FROM ");
@@ -74,31 +76,37 @@ abstract class AbstractTable {
 	public void createTable() {
 		ColumnDescriptor[] columns = getColumns();
 		StringBuffer sql = new StringBuffer(500);
-		sql.append("CREATE ").append(getTableType());
-		sql.append(" TABLE ").append(getTableName());
+		sql.append("CREATE ");
+		sql.append(getTableType());
+		sql.append(" TABLE ");
+		sql.append(getTableName());
 		sql.append("(");
 
 		for (int i = 0; i < columns.length; i++) {
 			try {
+				
 				DBInfo dbInfo = adapter.getDBInfo();
 				sql.append(columns[i].getCreateString(dbInfo));
 			} catch (Exception e) {
+				
 				HOLogger.instance().log(getClass(),e);
 			}
 			if (i < columns.length - 1)
 				sql.append(",");
 			else
-				sql.append(" ");
+				sql.append(")");
 		}
-		String[] contraints = getConstraintStatements();
-		for (int i = 0; i < contraints.length; i++) {
-			sql.append(",");
-			sql.append(contraints[i]);
-		}
-		sql.append(" ) ");
 		adapter.executeUpdate(sql.toString());
 	}
 	
+	/**
+	 * TODO Missing Method Documentation
+	 *
+	 * @param tableName TODO Missing Method Parameter Documentation
+	 * @param hrfID TODO Missing Method Parameter Documentation
+	 *
+	 * @return TODO Missing Return Method Documentation
+	 */
 	protected ResultSet getSelectByHrfID(int hrfID) {
 		final StringBuffer sql = new StringBuffer("SELECT * FROM ");
 		sql.append(tableName);

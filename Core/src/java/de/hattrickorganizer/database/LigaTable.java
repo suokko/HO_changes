@@ -61,7 +61,7 @@ public final class LigaTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Integer[] getAllLigaIDs() {
+	public Integer[] getAllLigaIDs() {
 		final Vector<Integer> vligaids = new Vector<Integer>();
 		Integer[] ligaids = null;
 
@@ -95,7 +95,7 @@ public final class LigaTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Liga getLiga(int hrfID) {
+	public Liga getLiga(int hrfID) {
 		ResultSet rs = null;
 		Liga liga = null;
 

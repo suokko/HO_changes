@@ -286,6 +286,7 @@ public final class UpdateController {
 							.instance().getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
+				// updateHO(version.getVersion());
 				updateHO(MyConnector.getFinalSite() +"/" + version.getZipFileName());
 			}
 		} else {

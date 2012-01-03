@@ -29,7 +29,6 @@ import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.PlayerHelper;
-import de.hattrickorganizer.tools.StringUtilities;
 
 /**
  * Create the userColumns
@@ -299,17 +298,6 @@ final public class UserColumnFactory {
 		return playerPositionArray;
 	}
 	
-	
-	protected static MatchesOverviewColumn[] createMatchesStatisticsArray(){
-		MatchesOverviewColumn[] columns = new MatchesOverviewColumn[6];
-		columns[0] = new MatchesOverviewColumn(701, " ","",50);
-		columns[1] = new MatchesOverviewColumn(702, "Spiele","Spiele",100);
-		columns[2] = new MatchesOverviewColumn(703, "SerieAuswaertsSieg","SerieAuswaertsSieg",50);
-		columns[3] = new MatchesOverviewColumn(704, "SerieAuswaertsUnendschieden","SerieAuswaertsUnendschieden",50);
-		columns[4] = new MatchesOverviewColumn(706, "SerieAuswaertsNiederlage","SerieAuswaertsNiederlage",50);
-		columns[5] = new MatchesOverviewColumn(707, "Tore","Tore",50);
-		return columns;
-	}
 	/**
 	 * 
 	 * @return MatchKurzInfoColumn[]
@@ -435,7 +423,7 @@ final public class UserColumnFactory {
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
 				final Color background = getColor4Matchtyp(match.getMatchTyp());
-				return new ColorLabelEntry(StringUtilities.getResultString(match.getHeimTore(),
+				return new ColorLabelEntry(createTorString(match.getHeimTore(),
                         match.getGastTore()),
                         	ColorLabelEntry.FG_STANDARD, background,
                         	SwingConstants.CENTER);
@@ -444,7 +432,7 @@ final public class UserColumnFactory {
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
-				return new ColorLabelEntry(StringUtilities.getResultString(spielerCBItem.getMatchdetails().getHomeGoals(),
+				return new ColorLabelEntry(createTorString(spielerCBItem.getMatchdetails().getHomeGoals(),
 						spielerCBItem.getMatchdetails().getGuestGoals()),
                         	ColorLabelEntry.FG_STANDARD, background,
                         	SwingConstants.CENTER);
@@ -730,8 +718,10 @@ final public class UserColumnFactory {
 			};
 				
 			return playerAdditionalArray;
+
+			
+			
+			
 	}
-	
-	
 	
 }

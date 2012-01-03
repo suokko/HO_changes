@@ -35,14 +35,14 @@ public final class HRFTable extends AbstractTable {
 		};
 	}
 
-	HRF getLatestHrf() {
+	public HRF getLatestHrf() {
 		if (latestHrf.getHrfId()==-1) {
 			latestHrf = loadLatestHrf();			
 		}
 		return latestHrf;
 	}
 
-	HRF getMaxHrf() {
+	public HRF getMaxHrf() {
 		if (maxHrf.getHrfId()==-1) {
 			maxHrf = loadMaxHrf();		
 		}
@@ -96,7 +96,7 @@ public final class HRFTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	int getPreviousHRF(int hrfId) {
+	public int getPreviousHRF(int hrfId) {
 		String sql;
 		int previousHrfId = -1;
 
@@ -125,7 +125,7 @@ public final class HRFTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	int getFollowingHRF(int hrfId) {
+	public int getFollowingHRF(int hrfId) {
 		String sql;
 		int followingHrfId = -1;
 
@@ -153,7 +153,7 @@ public final class HRFTable extends AbstractTable {
 	 * @param name TODO Missing Constructuor Parameter Documentation
 	 * @param datum TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveHRF(int hrfId, String name, Timestamp datum) {
+	public void saveHRF(int hrfId, String name, Timestamp datum) {
 		String statement = null;
 		
 		//insert vorbereiten
@@ -178,7 +178,7 @@ public final class HRFTable extends AbstractTable {
 	 * @return Das Datum der Datei, an den die Datei importiert wurde oder null, wenn keine
 	 *         passende Datei vorhanden ist
 	 */
-	String getHrfName4Date(Timestamp date) {
+	public String getHrfName4Date(Timestamp date) {
 		ResultSet rs = null;
 		final String statement = "select Name from "+getTableName()+" where Datum='" + date.toString() + "'";
 
@@ -208,7 +208,7 @@ public final class HRFTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	int getHrfId4Date(Timestamp time) {
+	public int getHrfId4Date(Timestamp time) {
 		ResultSet rs = null;
 		String sql = null;
 		int hrfID = 0;
@@ -248,7 +248,7 @@ public final class HRFTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	HRF getHRF(int hrfID) {
+	public HRF getHRF(int hrfID) {
 		ResultSet rs = null;
 		HRF hrf = null;
 
@@ -275,7 +275,7 @@ public final class HRFTable extends AbstractTable {
 	 * 
 	 * @return all matching HRFs
 	 */
-	HRF[] getAllHRFs (int minId, int maxId, boolean asc) {
+	public HRF[] getAllHRFs (int minId, int maxId, boolean asc) {
 		Vector<HRF> liste = new Vector<HRF>();
 		ResultSet rs = null;
 		String sql = null;

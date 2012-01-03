@@ -3,9 +3,6 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
-import ho.modul.series.SeriesPanel;
-import ho.modul.transfer.TransfersPanel;
-import ho.tool.ToolManager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -16,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationHandler;
@@ -31,6 +29,7 @@ import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.InputMap;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -47,18 +46,27 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import plugins.IPlugin;
 import plugins.ISpieler;
-import de.hattrickorganizer.HO;
+import de.hattrickorganizer.credits.VAPCredits;
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.arenasizer.ArenaSizerPanel;
+import de.hattrickorganizer.gui.dbcleanup.DBCleanupTool;
+import de.hattrickorganizer.gui.exporter.CsvPlayerExport;
+import de.hattrickorganizer.gui.exporter.XMLExporter;
 import de.hattrickorganizer.gui.info.InformationsPanel;
+import de.hattrickorganizer.gui.injury.InjuryDialog;
+import de.hattrickorganizer.gui.keepertool.KeeperToolDialog;
+import de.hattrickorganizer.gui.league.LigaTabellePanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
-import de.hattrickorganizer.gui.lineup.LineupMasterPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
 import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.menu.DownloadDialog;
 import de.hattrickorganizer.gui.menu.HRFImport;
 import de.hattrickorganizer.gui.menu.option.OptionenDialog;
+import de.hattrickorganizer.gui.model.UserColumnController;
+import de.hattrickorganizer.gui.notepad.NotepadDialog;
 import de.hattrickorganizer.gui.playeranalysis.SpielerAnalyseMainPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
@@ -67,54 +75,73 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.gui.theme.ho.HOTheme;
 import de.hattrickorganizer.gui.theme.jgoodies.JGoodiesTheme;
 import de.hattrickorganizer.gui.theme.nimbus.NimbusTheme;
+import de.hattrickorganizer.gui.transferscout.TransferScoutPanel;
 import de.hattrickorganizer.gui.utils.FullScreen;
+import de.hattrickorganizer.gui.utils.InterruptionWindow;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
+import de.hattrickorganizer.logik.GebChecker;
+import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.FormulaFactors;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
+import de.hattrickorganizer.tools.backup.BackupHelper;
+import de.hattrickorganizer.tools.developer.SQLDialog;
+import de.hattrickorganizer.tools.extension.ExtensionListener;
+import de.hattrickorganizer.tools.extension.FileExtensionManager;
 import de.hattrickorganizer.tools.updater.UpdateController;
 
 /**
  * The Main HO window
  */
-public final class HOMainFrame extends JFrame implements Refreshable, WindowListener, ActionListener,
-		ChangeListener {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
+public final class HOMainFrame extends JFrame
+	implements Refreshable, WindowListener, ActionListener, ChangeListener {
+	//~ Static fields/initializers -----------------------------------------------------------------
 
 	private static final long serialVersionUID = -6333275250973872365L;
 
 	/**
-	 * Release Notes: ============== The first SVN commit AFTER a release should
-	 * include an increased VERSION number with DEVELOPMENT set to true an
-	 * updated VERSION number in conf/addToZip/version.txt new headers in
-	 * conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt The last
-	 * SVN commit BEFORE a release should set DEVELOPMENT to false and set
-	 * WARN_DATE to 12 (?) months after the release date
+	 * Release Notes:
+	 * ==============
+	 * The first SVN commit AFTER a release should include
+	 *      an increased VERSION number with DEVELOPMENT set to true
+	 *      an updated VERSION number in conf/addToZip/version.txt
+	 *      new headers in conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt
+	 * The last SVN commit BEFORE a release should set DEVELOPMENT to false
+	 *      and set WARN_DATE to 12 (?) months after the release date
 	 */
 
 	/** HO Version */
-	public static final double VERSION = 1.432d;
-
+	public static final double VERSION = 1.431d;
+	
 	private static int revision = 0;
 
+	/** Is this a development version? */
+	private static final boolean DEVELOPMENT = true;
 
+	/**
+	 * After that date, the user gets a nag screen if he starts his old HO version,
+	 * set to empty string for no warning
+	 * (DEVELOPMENT versions do not show the nag screen)
+	 */
+	private static final String WARN_DATE = "2012-06-30 00:00:00.0";
 
-	/** enable functions for the developers */
-	private static final boolean DEVELOPER_MODE = false;
+	public static final int SPRACHVERSION = 2; // language version
 	private static HOMainFrame m_clHOMainFrame;
+	private static final boolean LIMITED = false;
+	private static final String LIMITED_DATE = "2004-09-01 00:00:00.0";
+	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
 
-
-	// ---------Konstanten----------------------
-	public static final int SPIELERUEBERSICHT = 0; // player overview
-	public static final int AUFSTELLUNG = 1; // lineup
-	public static final int LIGATABELLE = 2; // league table
-	public static final int SPIELE = 3; // matches
-	public static final int SPIELERANALYSE = 4; // player analysis
-	public static final int STATISTIK = 5; // statistics
-	public static final int TRANSFERS = 6;
+	//---------Konstanten----------------------
+	public static final int SPIELERUEBERSICHT = 0;	// player overview
+	public static final int AUFSTELLUNG = 1; 		// lineup
+	public static final int LIGATABELLE = 2;		// league table
+	public static final int SPIELE = 3;				// matches
+	public static final int SPIELERANALYSE = 4;		// player analysis
+	public static final int STATISTIK = 5;			// statistics
+	public static final int TRANSFERSCOUT = 6;
 	public static final int ARENASIZER = 7;
 	public static final int INFORMATIONEN = 8;
 
@@ -122,17 +149,19 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int READY = 1;
 
 	private static int status = READY;
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
+	//~ Instance fields ----------------------------------------------------------------------------
 
-	private LineupMasterPanel lineupMasterPanel;
+	private ArenaSizerPanel m_jpArenaSizer;
+	private LineupPanel m_jpAufstellung;
 	private InfoPanel m_jpInfoPanel;
 
 	private InformationsPanel m_jpInformation;
+	private InjuryDialog injuryTool;
 	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
 	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
 	private final JMenu m_jmPluginMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenu m_jmPluginsRefresh = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
+	private final JMenu m_jmToolsMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Tools"));
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
 
@@ -146,18 +175,25 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
 	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
 
-	private final JMenuItem m_jmImportItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
+	private final JMenuItem m_jmImportItem =new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
 	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
 	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
 	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen")
 			+ " (7 " + HOVerwaltung.instance().getLanguageString("Wochen") + ")");
+	private final JMenuItem m_jmiArena = new JMenuItem(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
 	private final JMenuItem m_jmiAufstellung = new JMenuItem(HOVerwaltung.instance().getLanguageString("Aufstellung"));
 	private final JMenuItem m_jmiFlags = new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO"));
-	private final JMenuItem m_jmiHObeta = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO") + " ("
-			+ HOVerwaltung.instance().getLanguageString("Beta") + ")");
+	private final JMenuItem m_jmiHObeta = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO") + " (" + HOVerwaltung.instance().getLanguageString("Beta") +")");
 	private final JMenuItem m_jmiEPV = new JMenuItem(HOVerwaltung.instance().getLanguageString("EPV"));
 	private final JMenuItem m_jmiRatings = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ratings"));
+
+	private final JMenuItem m_jmiInjuryCalculator = new JMenuItem(HOVerwaltung.instance().getLanguageString("InjuryCalculator"));
+	private final JMenuItem m_jmiKeeperTool = new JMenuItem(HOVerwaltung.instance().getLanguageString("KeeperTool"));
+	private final JMenuItem m_jmiNotepad = new JMenuItem(HOVerwaltung.instance().getLanguageString("Notizen"));
+	private final JMenuItem m_jmiExporter = new JMenuItem(HOVerwaltung.instance().getLanguageString("XMLExporter"));
+	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem(HOVerwaltung.instance().getLanguageString("CSVExporter"));
+	private final JMenuItem m_jmiDbCleanupTool= new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
 
 	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
 	private final JMenuItem m_jmiLigatabelle = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
@@ -166,17 +202,16 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiPluginsNormal = new JMenuItem(HOVerwaltung.instance().getLanguageString("Normal"));
 	private final JMenuItem m_jmiSpiele = new JMenuItem(HOVerwaltung.instance().getLanguageString("Spiele"));
 	private final JMenuItem m_jmiSpieleranalyse = new JMenuItem(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
-	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(
-			HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
+	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
 	private final JMenuItem m_jmiStatistik = new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
-
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
+	private KeeperToolDialog keeperTool;
 
-	private SeriesPanel m_jpLigaTabelle;
+	private LigaTabellePanel m_jpLigaTabelle;
 
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
 	private SpielePanel m_jpSpielePanel;
@@ -184,35 +219,31 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private SpielerUebersichtsPanel m_jpSpielerUebersicht;
 	private StatistikMainPanel m_jpStatistikPanel;
 	private String m_sToRemoveTabName;
-	private TransfersPanel m_jpTransferScout;
+	private TransferScoutPanel m_jpTransferScout;
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
-	private boolean isAppTerminated = false; // /< set when HO should be
-												// terminated
+	private boolean isAppTerminated = false; ///< set when HO should be terminated
 
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
+	//~ Constructors -------------------------------------------------------------------------------
 
 	/**
 	 * Singleton
 	 */
 	private HOMainFrame() {
-
+		
 		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 
 		// Log Operating System
-		HOLogger.instance().info(
-				getClass(),
-				"Operating system found: " + System.getProperty("os.name") + " on "
-						+ System.getProperty("os.arch") + " (" + System.getProperty("os.version") + ")");
+		HOLogger.instance().info(getClass(), "Operating system found: "
+				+ System.getProperty("os.name")
+				+ " on " + System.getProperty("os.arch")
+				+ " (" + System.getProperty("os.version") + ")");
 
 		// Log Java version
-		HOLogger.instance().info(
-				getClass(),
-				"Using java: " + System.getProperty("java.version") + " ("
-						+ System.getProperty("java.vendor") + ")");
+		HOLogger.instance().info(getClass(), "Using java: "
+				+ System.getProperty("java.version") + " ("+ System.getProperty("java.vendor") + ")");
 
 		RefreshManager.instance().registerRefreshable(this);
 
@@ -226,6 +257,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
 
+
 		// Catch Apple-Q for MacOS
 		if (isMac()) {
 			addMacOSListener();
@@ -237,21 +269,18 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		RefreshManager.instance().doRefresh();
 	}
-
+	
 	final public static boolean isMac() {
 		return (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).indexOf("mac") != -1);
 	}
 
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
+	//~ Methods ------------------------------------------------------------------------------------
 
 	/**
-	 * This method creates a MacOS specific listener for the quit operation
-	 * ("Command-Q")
-	 * 
-	 * We need to use reflections here, because the com.apple.eawt.* classes are
-	 * Apple specific
-	 * 
+	 * This method creates a MacOS specific listener for the quit operation ("Command-Q")
+	 *
+	 * We need to use reflections here, because the com.apple.eawt.* classes are Apple specific
+	 *
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void addMacOSListener() {
@@ -263,22 +292,19 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 			// Create the ApplicationListener
 			Class<?> applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
-			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(),
-					new Class[] { applicationListenerClass }, new InvocationHandler() {
-						public Object invoke(Object proxy, Method method, Object[] args) {
-							if (method.getName().equals("handleQuit")) {
-								HOLogger.instance()
-										.debug(getClass(),
-												"ApplicationListener.handleQuit() fired! Quitting MacOS Application!");
-								beenden();
-							}
-							return null;
+			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] { applicationListenerClass },
+				new InvocationHandler() {
+					public Object invoke (Object proxy, Method method, Object[] args) {
+						if (method.getName().equals("handleQuit")) {
+							HOLogger.instance().debug(getClass(), "ApplicationListener.handleQuit() fired! Quitting MacOS Application!");
+							beenden();
 						}
-					});
+						return null;
+					}
+			});
 
 			// Register the ApplicationListener
-			Method addApplicationListenerMethod = applicationClass.getDeclaredMethod(
-					"addApplicationListener", new Class[] { applicationListenerClass });
+			Method addApplicationListenerMethod = applicationClass.getDeclaredMethod("addApplicationListener", new Class[] { applicationListenerClass });
 			addApplicationListenerMethod.invoke(appleApp, new Object[] { appleListener });
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -290,7 +316,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		nf.setMinimumFractionDigits(3);
 		String txt = nf.format(VERSION);
 
-		if (HO.isDevelopment()) {
+		if (isDevelopment()) {
 			txt += " DEV";
 			final int r = getRevisionNumber();
 			if (r > 1) {
@@ -300,14 +326,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return txt;
 	}
 
-//	public static boolean isDevelopment() {
-//		return DEVELOPMENT;
-//	}
-
-	public static boolean isDeveloperMode() {
-		return DEVELOPER_MODE;
+	public static boolean isDevelopment() {
+		return DEVELOPMENT;
 	}
-	
+
 	/**
 	 * Getter for the singleton HOMainFrame instance.
 	 */
@@ -325,9 +347,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		getSpielerUebersichtPanel().newSelectionInform();
 	}
 
+	public ArenaSizerPanel getArenaSizerPanel() {
+		return m_jpArenaSizer;
+	}
 
 	public LineupPanel getAufstellungsPanel() {
-		return this.lineupMasterPanel.getLineupPanel();
+		return m_jpAufstellung;
 	}
 
 	public InfoPanel getInfoPanel() {
@@ -338,12 +363,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return m_jpInformation;
 	}
 
-//	/**
-//	 * Returns the Vector with the started Plugins
-//	 */
-//	public static Vector<IPlugin> getPlugins() {
-//		return m_vPlugins;
-//	}
+	/**
+	 * Returns the Vector with the started Plugins
+	 */
+	public static Vector<IPlugin> getPlugins() {
+		return m_vPlugins;
+	}
 
 	public SpielerAnalyseMainPanel getSpielerAnalyseMainPanel() {
 		return m_jpSpielerAnalysePanel;
@@ -385,7 +410,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Get the transfer scout panel.
 	 */
-	public TransfersPanel getTransferScoutPanel() {
+	public TransferScoutPanel getTransferScoutPanel() {
 		return m_jpTransferScout;
 	}
 
@@ -405,23 +430,21 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			new OptionenDialog(this).setVisible(true);
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
-					"Depending on database volume this process takes several minutes. Start recalculation ?",
-					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+					"Depending on database volume this process takes several minutes. Start recalculation ?", "Subskill Recalculation",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				HOVerwaltung.instance().recalcSubskills(true, null);
 			}
 		} else if (source.equals(m_jmTraining2)) { // recalc training (7 weeks)
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
 			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
-			if (JOptionPane.showConfirmDialog(this,
-					"Start recalculation subskill recalculation for the last 7 weeks (since "
-							+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())
-							+ ")?", "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, "Start recalculation subskill recalculation for the last 7 weeks (since "
+					+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime()) + ")?", "Subskill Recalculation",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
 				HOVerwaltung.instance().recalcSubskills(true, from);
 			}
-		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen
-														// mode
+		} else if (source.equals(m_jmFullScreenItem)) { // Toggle full screen mode
 			FullScreen.instance().toggle(this);
 		} else if (source.equals(m_jmBeendenItem)) { // Quit
 			// Restore normal window mode (i.e. leave full screen)
@@ -441,21 +464,38 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		} else if (source.equals(m_jmiStatistik)) { // Statistics
 			showTab(HOMainFrame.STATISTIK);
 		} else if (source.equals(m_jmiTransferscout)) { // Transferscout
-			showTab(HOMainFrame.TRANSFERS);
+			showTab(HOMainFrame.TRANSFERSCOUT);
+		} else if (source.equals(m_jmiArena)) { // Arena
+			showTab(HOMainFrame.ARENASIZER);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
-		} else if (source.equals(m_jmCreditsItem)) { 
-			StringBuilder text = new StringBuilder(200);
-			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
-			text.append("2003 development started by Thomas Werth & Volker Fischer.\n");
-			text.append("Since 2006 this project is open source and developed by changing developers.");
-			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
+		} else if (source.equals(m_jmCreditsItem)) { // Credits
+			new VAPCredits(this);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmForumItem)) { // Forum
 			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
 			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
+		}
+		else if (source.equals(m_jmiKeeperTool)) {
+			keeperTool.reload();
+			keeperTool.setVisible(true);
+		} else if (source.equals(m_jmiNotepad)) {
+			NotepadDialog notepad = new NotepadDialog(this, HOVerwaltung.instance().getLanguageString("Notizen"));
+			notepad.setVisible(true);
+		} else if (source.equals(m_jmiExporter)) {
+			XMLExporter exporter = new XMLExporter();
+			exporter.doExport();
+		} else if (source.equals(m_jmiCsvPlayerExporter)) {
+			CsvPlayerExport csvExporter = new CsvPlayerExport();
+			csvExporter.showSaveDialog();
+		} else if (source.equals(m_jmiDbCleanupTool)) {
+			DBCleanupTool dbCleanupTool = new DBCleanupTool();
+			dbCleanupTool.showDialog(this);
+		} else if (source.equals(m_jmiInjuryCalculator)) {
+			injuryTool.reload();
+			injuryTool.setVisible(true);
 		} else if (source.equals(m_jmiLanguages)) {
 			UpdateController.showLanguageUpdateDialog();
 		} else if (source.equals(m_jmiFlags)) {
@@ -502,45 +542,41 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public void beenden() {
 		HOLogger.instance().debug(getClass(), "Shutting down HO!");
 
-		// Keine Sicherheitsabfrage mehr
-		// int value = JOptionPane.showConfirmDialog( this,
-		// model.HOVerwaltung.instance().getLanguageString("BeendenMeldung"),
-		// model.HOVerwaltung.instance().getLanguageString("BeendenTitel"),
-		// JOptionPane.YES_NO_OPTION);
-		// int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
-		// if ( value == JOptionPane.OK_OPTION )
-		// aktuelle UserParameter speichern
+		//Keine Sicherheitsabfrage mehr
+		//int value = JOptionPane.showConfirmDialog( this, model.HOVerwaltung.instance().getLanguageString("BeendenMeldung"), model.HOVerwaltung.instance().getLanguageString("BeendenTitel"), JOptionPane.YES_NO_OPTION);
+		//        int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
+		//        if ( value == JOptionPane.OK_OPTION )
+		//aktuelle UserParameter speichern
 		saveUserParameter();
 
 		HOLogger.instance().debug(getClass(), "UserParameters saved");
 
-		// Scoutliste speichern
-		m_jpTransferScout.getScoutPanel().saveScoutListe();
+		//Scoutliste speichern
+		m_jpTransferScout.saveScoutListe();
 
 		HOLogger.instance().debug(getClass(), "ScoutList saved");
 
-		// Faktoren saven
+		//Faktoren saven
 		FormulaFactors.instance().save();
 
 		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
 
-		// Disconnect
+		//Disconnect
 		DBZugriff.instance().disconnect();
 
 		HOLogger.instance().debug(getClass(), "Disconnected");
 
-		// //Ausloggen
-		// try {
-		// if ((UserParameter.instance().logoutOnExit)
-		// && (MyConnector.instance().isAuthenticated())) {
-		// MyConnector.instance().logout();
-		// }
-		// } catch (Exception e) {
-		// }
+//		//Ausloggen
+//		try {
+//			if ((UserParameter.instance().logoutOnExit)
+//				&& (MyConnector.instance().isAuthenticated())) {
+//				MyConnector.instance().logout();
+//			}
+//		} catch (Exception e) {
+//		}
 
 		HOLogger.instance().debug(getClass(), "Shutdown complete!");
-		// Dispose führt zu einem windowClosed, sobald alle windowClosing
-		// (Plugins) durch sind
+		//Dispose führt zu einem windowClosed, sobald alle windowClosing (Plugins) durch sind
 		isAppTerminated = true; // enable System.exit in windowClosed()
 		try {
 			dispose();
@@ -548,46 +584,45 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 	}
 
-//	/**
-//	 * Checked die Sprachdatei oder Fragt nach einer passenden
-//	 */
-//	public static void checkSprachFile(String dateiname) {
-//		try {
-//			// java.net.URL resource = new
-//			// gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource(
-//			// "sprache/"+dateiname+".properties" );
-//			final java.io.File sprachdatei = new java.io.File("sprache/" + dateiname + ".properties");
-//
-//			if (sprachdatei.exists()) {
-//				double sprachfileversion = 0;
-//				final java.util.Properties temp = new java.util.Properties();
-//				temp.load(new java.io.FileInputStream(sprachdatei));
-//
-//				try {
-//					sprachfileversion = Double.parseDouble(temp.getProperty("Version"));
-//				} catch (Exception e) {
-//					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
-//				}
-//
-//				if (sprachfileversion >= de.hattrickorganizer.gui.HOMainFrame.SPRACHVERSION) {
-//					HOLogger.instance().log(HOMainFrame.class, "use " + sprachdatei.getName());
-//
-//					// Alles ok!!
-//					return;
-//				}
-//				// Nicht passende Version
-//				else {
-//					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
-//				}
-//			}
-//		} catch (Exception e) {
-//			HOLogger.instance().log(HOMainFrame.class, "not use " + e);
-//		}
-//
-//		// Irgendein Fehler -> neue Datei aussuchen!
-//		// new gui.menue.optionen.InitOptionsDialog();
-//		UserParameter.instance().sprachDatei = "English";
-//	}
+	/**
+	 * Checked die Sprachdatei oder Fragt nach einer passenden
+	 */
+	public static void checkSprachFile(String dateiname) {
+		try {
+			//java.net.URL resource = new gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource( "sprache/"+dateiname+".properties" );
+			final java.io.File sprachdatei =
+				new java.io.File("sprache/" + dateiname + ".properties");
+
+			if (sprachdatei.exists()) {
+				double sprachfileversion = 0;
+				final java.util.Properties temp = new java.util.Properties();
+				temp.load(new java.io.FileInputStream(sprachdatei));
+
+				try {
+					sprachfileversion = Double.parseDouble(temp.getProperty("Version"));
+				} catch (Exception e) {
+					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
+				}
+
+				if (sprachfileversion >= de.hattrickorganizer.gui.HOMainFrame.SPRACHVERSION) {
+					HOLogger.instance().log(HOMainFrame.class, "use " + sprachdatei.getName());
+
+					//Alles ok!!
+					return;
+				}
+				//Nicht passende Version
+				else {
+					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
+				}
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(HOMainFrame.class, "not use " + e);
+		}
+
+		//Irgendein Fehler -> neue Datei aussuchen!
+		//new gui.menue.optionen.InitOptionsDialog();
+		UserParameter.instance().sprachDatei = "English";
+	}
 
 	/**
 	 * Frame aufbauen
@@ -600,95 +635,96 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jtpTabbedPane = new JTabbedPane();
 
-		// Hinzufügen der Tabs nur, wenn von der Userparameter gewünscht
-		// Spieler
+		//Hinzufügen der Tabs nur, wenn von der Userparameter gewünscht
+		//Spieler
 		m_jpSpielerUebersicht = new SpielerUebersichtsPanel();
 
 		if (!UserParameter.instance().tempTabSpieleruebersicht) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"), m_jpSpielerUebersicht);
+			m_jtpTabbedPane.addTab(
+				HOVerwaltung.instance().getLanguageString("Spieleruebersicht"),
+				m_jpSpielerUebersicht);
 		}
 
-		// Aufstellung
-		this.lineupMasterPanel = new LineupMasterPanel();
+		//Aufstellung
+		m_jpAufstellung = new LineupPanel();
 
 		if (!UserParameter.instance().tempTabAufstellung) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), this.lineupMasterPanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), m_jpAufstellung);
 		}
 
-		// Tabelle
-		m_jpLigaTabelle = new SeriesPanel();
+		//Tabelle
+		m_jpLigaTabelle = new LigaTabellePanel();
 
 		if (!UserParameter.instance().tempTabLigatabelle) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"), m_jpLigaTabelle);
 		}
 
-		// Spiele
+		//Spiele
 		m_jpSpielePanel = new SpielePanel();
 
 		if (!UserParameter.instance().tempTabSpiele) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), m_jpSpielePanel);
 		}
 
-		// SpielerAnalyse
+		//SpielerAnalyse
 		m_jpSpielerAnalysePanel = new SpielerAnalyseMainPanel();
 
 		if (!UserParameter.instance().tempTabSpieleranalyse) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"), m_jpSpielerAnalysePanel);
+			m_jtpTabbedPane.addTab(
+				HOVerwaltung.instance().getLanguageString("SpielerAnalyse"),
+				m_jpSpielerAnalysePanel);
 		}
 
-		// //Training
-		// m_jtpTraining = new JTabbedPane();
-		// //Trainingshilfe
-		// m_jpTrainingshelfer = new TrainingsPanel();
-		// m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"),
-		// m_jpTrainingshelfer );
-		// //SkillAenderung
-		// m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
-		// m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training") +
-		// " 2", m_jpSkillAenderungsPanel );
-		// //Adden
-		// m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"),
-		// m_jtpTraining );
+		//        //Training
+		//        m_jtpTraining = new JTabbedPane();
+		//        //Trainingshilfe
+		//        m_jpTrainingshelfer = new TrainingsPanel();
+		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"), m_jpTrainingshelfer );
+		//        //SkillAenderung
+		//        m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
+		//        m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training") + " 2", m_jpSkillAenderungsPanel );
+		//        //Adden
+		//        m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"), m_jtpTraining );
 		//
-		// Transferscout
-		m_jpTransferScout = new TransfersPanel();
+		//Transferscout
+		m_jpTransferScout = new TransferScoutPanel();
 
 		if (!UserParameter.instance().tempTabTransferscout) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TransferScout"), m_jpTransferScout);
 		}
 
-		// Sonstiges
+		//Arena
+		m_jpArenaSizer = new ArenaSizerPanel();
+
+		if (!UserParameter.instance().tempTabArenasizer) {
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ArenaSizer"), m_jpArenaSizer);
+		}
+
+		//Sonstiges
 		m_jpInformation = new InformationsPanel();
 
 		if (!UserParameter.instance().tempTabInformation) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"), m_jpInformation);
 		}
 
-		// Statistiken
+		//Statistiken
 		m_jpStatistikPanel = new StatistikMainPanel();
 
 		if (!UserParameter.instance().tempTabStatistik) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), m_jpStatistikPanel);
 		}
 
-		// Matchpaneltest
+		//Matchpaneltest
 		/*
-		 * logik.matchEngine.TeamData a = new
-		 * logik.matchEngine.TeamData("Team1",new
-		 * logik.matchEngine.TeamRatings(8, 18, 15, 13, 12, 8,
-		 * 13),plugins.IMatchDetails.TAKTIK_KONTER,10);
-		 * logik.matchEngine.TeamData b = new
-		 * logik.matchEngine.TeamData("Team2",new
-		 * logik.matchEngine.TeamRatings(12, 10, 12, 12, 10, 8,
-		 * 10),plugins.IMatchDetails.TAKTIK_NORMAL,0);
-		 * //gui.matchprediction.MatchEnginePanel enginepanel = new
-		 * gui.matchprediction.MatchEnginePanel( a, b );
-		 * 
-		 * JDialog dialog = new JDialog( ); dialog.getContentPane().setLayout(
-		 * new BorderLayout() ); dialog.getContentPane().add(
-		 * model.HOMiniModel.instance ().getGUI().createMatchPredictionPanel( a,
-		 * b ), BorderLayout.CENTER ); dialog.setSize( 800, 600 );
-		 * dialog.setVisible( true );
+		   logik.matchEngine.TeamData a = new logik.matchEngine.TeamData("Team1",new logik.matchEngine.TeamRatings(8, 18, 15, 13, 12, 8, 13),plugins.IMatchDetails.TAKTIK_KONTER,10);
+		   logik.matchEngine.TeamData b = new logik.matchEngine.TeamData("Team2",new logik.matchEngine.TeamRatings(12, 10, 12, 12, 10, 8, 10),plugins.IMatchDetails.TAKTIK_NORMAL,0);
+		   //gui.matchprediction.MatchEnginePanel enginepanel    =   new gui.matchprediction.MatchEnginePanel( a, b );
+
+		   JDialog dialog = new JDialog( );
+		   dialog.getContentPane().setLayout( new BorderLayout() );
+		   dialog.getContentPane().add( model.HOMiniModel.instance ().getGUI().createMatchPredictionPanel( a, b ), BorderLayout.CENTER );
+		   dialog.setSize( 800, 600 );
+		   dialog.setVisible( true );
 		 */
 		getContentPane().add(m_jtpTabbedPane, BorderLayout.CENTER);
 
@@ -697,39 +733,41 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jpInfoPanel = new InfoPanel();
 		getContentPane().add(m_jpInfoPanel, BorderLayout.SOUTH);
 
-		
-		setLocation(UserParameter.instance().hoMainFrame_PositionX,
-				UserParameter.instance().hoMainFrame_PositionY);
-		setSize(UserParameter.instance().hoMainFrame_width, UserParameter.instance().hoMainFrame_height);
+		injuryTool = new InjuryDialog(this);
+		keeperTool = new KeeperToolDialog(this);
+		setLocation(
+			UserParameter.instance().hoMainFrame_PositionX,
+			UserParameter.instance().hoMainFrame_PositionY);
+		setSize(
+			UserParameter.instance().hoMainFrame_width,
+			UserParameter.instance().hoMainFrame_height);
 	}
 
 	/**
 	 * Initialize the menu.
 	 */
 	public void initMenue() {
-		// Kein F10!
-		((InputMap) UIManager.get("Table.ancestorInputMap"))
-				.remove(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+		//Kein F10!
+		((InputMap) UIManager.get("Table.ancestorInputMap")).remove(
+			KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 
-		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove(
-		// KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
-		// m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke(
-		// KeyEvent.VK_F10, 0 ) );
-		// Datei
-		// Download HRF
+		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove( KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
+		//m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
+		//Datei
+		//Download HRF
 		m_jmDownloadItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		m_jmDownloadItem.addActionListener(this);
 		m_jmDatei.add(m_jmDownloadItem);
 
-		// Import HRF
+		//Import HRF
 		m_jmImportItem.addActionListener(this);
 		m_jmDatei.add(m_jmImportItem);
 
-		// Updating Menu
+		//Updating Menu
 		m_jmiLanguages.addActionListener(this);
 		m_jmiPluginsDelete.addActionListener(this);
 		m_jmiFlags.addActionListener(this);
-		if (isMac()) { // update doesn't work on MacOs' strange packet structure
+		if (isMac()) { // update doesn't work on MacOs' strange packet structure 
 			m_jmiHO.setEnabled(false);
 			m_jmiHObeta.setEnabled(false);
 		} else {
@@ -755,12 +793,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmDatei.add(m_jmUpdating);
 
-		// Download Spielplan
-		// m_jmFixturesItem.addActionListener ( this );
-		// m_jmDatei.add ( m_jmFixturesItem );
+		//Download Spielplan
+		//m_jmFixturesItem.addActionListener ( this );
+		//m_jmDatei.add ( m_jmFixturesItem );
 		m_jmDatei.addSeparator();
 
-		// Training
+		//Training
 		m_jmTraining.addActionListener(this);
 		m_jmDatei.add(m_jmTraining);
 		m_jmTraining2.addActionListener(this);
@@ -768,7 +806,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmDatei.addSeparator();
 
-		// Optionen
+		//Optionen
 		m_jmOptionen.addActionListener(this);
 		m_jmDatei.add(m_jmOptionen);
 
@@ -776,8 +814,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		// Toggle full screen mode
 		if (FullScreen.instance().isFullScreenSupported(this)) {
-			m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11,
-					KeyEvent.SHIFT_DOWN_MASK));
+			m_jmFullScreenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, KeyEvent.SHIFT_DOWN_MASK));
 		} else {
 			m_jmFullScreenItem.setEnabled(false);
 		}
@@ -786,66 +823,100 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmDatei.addSeparator();
 
-		// Beenden
+		//Beenden
 		m_jmBeendenItem.addActionListener(this);
 		m_jmDatei.add(m_jmBeendenItem);
 
 		m_jmMenuBar.add(m_jmDatei);
 
-		// ///
-		// Verschiedenes
-		// Spieleruebersicht
-		m_jmiSpieleruebersicht.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		/////
+		//Verschiedenes
+		//Spieleruebersicht
+		m_jmiSpieleruebersicht.setAccelerator(
+			KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		m_jmiSpieleruebersicht.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleruebersicht);
 
-		// Aufstellung
+		//Aufstellung
 		m_jmiAufstellung.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		m_jmiAufstellung.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiAufstellung);
 
-		// Ligatabelle
+		//Ligatabelle
 		m_jmiLigatabelle.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		m_jmiLigatabelle.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiLigatabelle);
 
-		// Spiele
+		//Spiele
 		m_jmiSpiele.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		m_jmiSpiele.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpiele);
 
-		// Spieleranalyse
+		//Spieleranalyse
 		m_jmiSpieleranalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 		m_jmiSpieleranalyse.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiSpieleranalyse);
 
-		// Statistik
+		//Statistik
 		m_jmiStatistik.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		m_jmiStatistik.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiStatistik);
 
-		// Transferscout
+		//Transferscout
 		m_jmiTransferscout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		m_jmiTransferscout.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTransferscout);
 
-		// Verschiedenes
+		//ArenaSizer
+		m_jmiArena.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
+		m_jmiArena.addActionListener(this);
+		m_jmVerschiedenes.add(m_jmiArena);
+
+		//Verschiedenes
 		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		m_jmiVerschiedenes.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiVerschiedenes);
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-		if (isDeveloperMode()) {
-			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
+		if(isDevelopment()){
+	        JMenu menu = new JMenu("Developer");
+	        JMenuItem newItem = new JMenuItem("SQL Editor");
+	        newItem.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					new SQLDialog().setVisible(true);
+				}
+			});
+	        menu.add(newItem);
+	        m_jmMenuBar.add(menu);
 		}
+		
+		//Tool Menu
+		m_jmiKeeperTool.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiKeeperTool);
 
-		m_jmMenuBar.add(new ToolManager().getToolMenu());
+		m_jmiInjuryCalculator.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiInjuryCalculator);
 
-		// Plugin Menu
+		m_jmiExporter.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiExporter);
+
+		m_jmiCsvPlayerExporter.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiCsvPlayerExporter);
+
+		m_jmiNotepad.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiNotepad);
+
+		m_jmiDbCleanupTool.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiDbCleanupTool);
+
+		m_jmMenuBar.add(m_jmToolsMenu);
+
+		//Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
 
-		// About
+		//About
 		m_jmHomepageItem.addActionListener(this);
 		m_jmAbout.add(m_jmHomepageItem);
 
@@ -861,7 +932,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmAbout.add(m_jmCreditsItem);
 
 		Action substitutionTest = new AbstractAction("Substitution test") {
-
+			
 			public void actionPerformed(ActionEvent e) {
 				JDialog dlg = new JDialog();
 				dlg.getContentPane().add(new SubstitutionOverview());
@@ -870,14 +941,14 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				dlg.setVisible(true);
 			}
 		};
-		// UNCOMMENT FOR Substitution test (Menu About->Substitution test)
+		// UNCOMMENT FOR Substitution test (Menu About->Substitution test)		
 //		m_jmAbout.add(substitutionTest);
 
 		m_jmMenuBar.add(m_jmAbout);
 
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);
 
-		// Adden
+		//Adden
 		this.setJMenuBar(m_jmMenuBar);
 	}
 
@@ -922,9 +993,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * Reinit, set currency.
 	 */
 	public void reInit() {
-		// Die Währung auf die aus dem HRF setzen
+		//Die Währung auf die aus dem HRF setzen
 		try {
-			float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
+			float faktorgeld =
+				(float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
 
 			if (faktorgeld > -1) {
 				UserParameter.instance().faktorGeld = faktorgeld;
@@ -933,17 +1005,17 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			HOLogger.instance().log(HOMainFrame.class, "Währungsanpassung gescheitert!");
 		}
 
-		// Tabs prüfen
+		//Tabs prüfen
 		checkTabs();
 	}
 
-	// ------Refreshfunktionen-------------------------------
+	//------Refreshfunktionen-------------------------------
 
 	/**
 	 * Wird bei einer Datenänderung aufgerufen
 	 */
 	public void refresh() {
-		// nix?
+		//nix?
 	}
 
 	/**
@@ -953,23 +1025,22 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		removeWindowListener(listener);
 	}
 
-	// --------------------------------------------------------------
+	//--------------------------------------------------------------
 	public void showMatch(int matchid) {
-		showTab(HOMainFrame.SPIELE);
+		showTab(de.hattrickorganizer.gui.HOMainFrame.SPIELE);
 
 		m_jpSpielePanel.showMatch(matchid);
 	}
 
-	// ----------------Hilfsmethoden---------------------------------
+	//----------------Hilfsmethoden---------------------------------
 
 	/**
 	 * Zeigt das Tab an (Nicht Index, sondern Konstante benutzen!
-	 * 
-	 * @param tabnumber
-	 *            number of the tab to show
+	 *
+	 * @param tabnumber number of the tab to show
 	 */
 	public void showTab(int tabnumber) {
-		// Erstmal weg damit
+		//Erstmal weg damit
 		m_jtpTabbedPane.removeChangeListener(this);
 
 		Component component;
@@ -978,192 +1049,203 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		String removeTabName = null;
 
 		switch (tabnumber) {
-		case SPIELERUEBERSICHT:
-			component = m_jpSpielerUebersicht;
-			titel = HOVerwaltung.instance().getLanguageString("Spieleruebersicht");
-			temporaer = UserParameter.instance().tempTabSpieleruebersicht;
-			break;
+			case SPIELERUEBERSICHT :
+				component = m_jpSpielerUebersicht;
+				titel = HOVerwaltung.instance().getLanguageString("Spieleruebersicht");
+				temporaer = UserParameter.instance().tempTabSpieleruebersicht;
+				break;
 
-		case AUFSTELLUNG:
-			component = this.lineupMasterPanel.getLineupPanel();
-			this.lineupMasterPanel.getLineupPanel().update(); // - blaghaid
-			titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
-			temporaer = UserParameter.instance().tempTabAufstellung;
-			break;
+			case AUFSTELLUNG :
+				component = m_jpAufstellung;
+				m_jpAufstellung.update(); // - blaghaid
+				titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
+				temporaer = UserParameter.instance().tempTabAufstellung;
+				break;
 
-		case LIGATABELLE:
-			component = m_jpLigaTabelle;
-			titel = HOVerwaltung.instance().getLanguageString("Ligatabelle");
-			temporaer = UserParameter.instance().tempTabLigatabelle;
-			break;
+			case LIGATABELLE :
+				component = m_jpLigaTabelle;
+				titel = HOVerwaltung.instance().getLanguageString("Ligatabelle");
+				temporaer = UserParameter.instance().tempTabLigatabelle;
+				break;
 
-		case SPIELE:
-			component = m_jpSpielePanel;
-			titel = HOVerwaltung.instance().getLanguageString("Spiele");
-			temporaer = UserParameter.instance().tempTabSpiele;
-			break;
+			case SPIELE :
+				component = m_jpSpielePanel;
+				titel = HOVerwaltung.instance().getLanguageString("Spiele");
+				temporaer = UserParameter.instance().tempTabSpiele;
+				break;
 
-		case SPIELERANALYSE:
-			component = m_jpSpielerAnalysePanel;
-			titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse");
-			temporaer = UserParameter.instance().tempTabSpieleranalyse;
-			break;
+			case SPIELERANALYSE :
+				component = m_jpSpielerAnalysePanel;
+				titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse");
+				temporaer = UserParameter.instance().tempTabSpieleranalyse;
+				break;
 
-		case STATISTIK:
-			component = m_jpStatistikPanel;
-			titel = HOVerwaltung.instance().getLanguageString("Statistik");
-			temporaer = UserParameter.instance().tempTabStatistik;
-			break;
+			case STATISTIK :
+				component = m_jpStatistikPanel;
+				titel = HOVerwaltung.instance().getLanguageString("Statistik");
+				temporaer = UserParameter.instance().tempTabStatistik;
+				break;
 
-		case TRANSFERS:
-			component = m_jpTransferScout;
-			titel = HOVerwaltung.instance().getLanguageString("TransferScout");
-			temporaer = UserParameter.instance().tempTabTransferscout;
-			break;
+			case TRANSFERSCOUT :
+				component = m_jpTransferScout;
+				titel = HOVerwaltung.instance().getLanguageString("TransferScout");
+				temporaer = UserParameter.instance().tempTabTransferscout;
+				break;
 
-		case INFORMATIONEN:
-			component = m_jpInformation;
-			titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");
-			temporaer = UserParameter.instance().tempTabInformation;
-			break;
+			case ARENASIZER :
+				component = m_jpArenaSizer;
+				titel = HOVerwaltung.instance().getLanguageString("ArenaSizer");
+				temporaer = UserParameter.instance().tempTabArenasizer;
+				break;
 
-		default:
-			return;
+			case INFORMATIONEN :
+				component = m_jpInformation;
+				titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");
+				temporaer = UserParameter.instance().tempTabInformation;
+				break;
+
+			default :
+				return;
 		}
 
-		// Wenn Temp, dann jetzt Hinzufügen
+		//Wenn Temp, dann jetzt Hinzufügen
 		int index = m_jtpTabbedPane.indexOfTab(titel);
 
-		// Hinzufügen, aber später per ChangeListener löschen
+		//Hinzufügen, aber später per ChangeListener löschen
 		if (index < 0) {
 			m_jtpTabbedPane.addTab(titel, component);
 			index = m_jtpTabbedPane.indexOfTab(titel);
 
-			// Name von Tab merken, um ihn nachher zu entfernen
+			//Name von Tab merken, um ihn nachher zu entfernen
 			if (temporaer) {
 				removeTabName = titel;
 			}
 		}
 
-		// Und Listener wieder hinzu
+		//Und Listener wieder hinzu
 		m_jtpTabbedPane.addChangeListener(this);
 
-		// Tab markieren
+		//Tab markieren
 		if (m_jtpTabbedPane.getTabCount() > index) {
 			m_jtpTabbedPane.setSelectedIndex(index);
 		}
 
-		// Damit das setSelectedIndex nicht sofort das neue Tab killt erst hier
-		// den Namen setzen, wenn temp
+		//Damit das setSelectedIndex nicht sofort das neue Tab killt erst hier den Namen setzen, wenn temp
 		m_sToRemoveTabName = removeTabName;
 	}
 
-//	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-//	// helper
-//	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-//	public void startPluginModuls(SplashFrame interuptionWindow) {
-//		try {
-//			// Den Ordner mit den Plugins holen
-//			final java.io.File folder = new java.io.File("hoplugins");
-//			HOLogger.instance().log(HOMainFrame.class,
-//					folder.getAbsolutePath() + " " + folder.exists() + " " + folder.isDirectory());
-//
-//			// Filter, nur class-Datein in dem Ordner interessant
-//			final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
-//			filter.addExtension("class");
-//			filter.setDescription("Java Class File");
-//			filter.setIgnoreDirectories(true);
-//
-//			// Alle class-Dateien in den Ordner holen
-//			final java.io.File[] files = folder.listFiles(filter);
-//
-//			// Libs -> Alle Dateien durchlaufen
-//			for (int i = 0; (files != null) && (i < files.length); i++) {
-//				try {
-//					// Name der Klasse erstellen und Class-Object erstellen
-//					final String name = "hoplugins."
-//							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-//					final Class<?> fileclass = Class.forName(name);
-//					// Das Class-Object definiert kein Interface ...
-//					if (!fileclass.isInterface()) {
-//						// ... und ist von ILib abgeleitet
-//						if (plugins.ILib.class.isAssignableFrom(fileclass)) {
-//							// Object davon erstellen und starten
-//							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
-//
-//							// Plugin im Vector gespeichert
-//							m_vPlugins.add(modul);
-//							HOLogger.instance().log(HOMainFrame.class,
-//									" Starte " + files[i].getName() + "  (init MiniModel)");
-//							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
-//							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
-//
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"+ " + files[i].getName() + " gestartet als lib");
-//						} else {
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"- " + files[i].getName() + " nicht von ILib abgeleitet");
-//						}
-//					} else {
-//						HOLogger.instance().log(HOMainFrame.class,
-//								"- " + files[i].getName() + " ist Interface");
-//					}
-//				} catch (Throwable e2) {
-//					HOLogger.instance().log(HOMainFrame.class,
-//							"- " + files[i].getName() + " wird übersprungen: " + e2);
-//					// HOLogger.instance().log(HOMainFrame.class, e2);
-//				}
-//			}
-//
-//			// Plugins -> Alle Dateien durchlaufen
-//			for (int i = 0; (files != null) && (i < files.length); i++) {
-//				try {
-//					// Name der Klasse erstellen und Class-Object erstellen
-//					final String name = "hoplugins."
-//							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-//					final Class<?> fileclass = Class.forName(name);
-//					// Das Class-Object definiert kein Interface ...
-//					if (!fileclass.isInterface()) {
-//						// ... und ist von IPlugin abgeleitet, nicht die Libs
-//						// nochmal starten!
-//						if (plugins.IPlugin.class.isAssignableFrom(fileclass)
-//								&& !plugins.ILib.class.isAssignableFrom(fileclass)) {
-//							// Object davon erstellen und starten
-//							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
-//
-//							// Plugin im Vector gespeichert
-//							m_vPlugins.add(modul);
-//							HOLogger.instance().log(HOMainFrame.class,
-//									" Starte " + files[i].getName() + "  (init MiniModel)");
-//							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
-//							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
-//
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"+ " + files[i].getName() + " gestartet");
-//						} else {
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"- " + files[i].getName() + " nicht von IPlugin abgeleitet");
-//						}
-//					} else {
-//						HOLogger.instance().log(HOMainFrame.class,
-//								"- " + files[i].getName() + " ist Interface");
-//					}
-//				} catch (Throwable e2) {
-//					HOLogger.instance().log(HOMainFrame.class,
-//							"- " + files[i].getName() + " wird übersprungen: " + e2);
-//					// HOLogger.instance().log(HOMainFrame.class, e2);
-//				}
-//			}
-//		} catch (Exception e) {
-//			HOLogger.instance().log(HOMainFrame.class, e);
-//		}
-//	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////77
+	//helper
+	/////////////////////////////////////////////////////////////////////////////////////////////////77
+	public void startPluginModuls(
+		InterruptionWindow interuptionWindow) {
+		try {
+			//Den Ordner mit den Plugins holen
+			final java.io.File folder = new java.io.File("hoplugins");
+			HOLogger.instance().log(
+				HOMainFrame.class,
+				folder.getAbsolutePath() + " " + folder.exists() + " " + folder.isDirectory());
+
+			//Filter, nur class-Datein in dem Ordner interessant
+			final de.hattrickorganizer.gui.utils.ExampleFileFilter filter =
+				new de.hattrickorganizer.gui.utils.ExampleFileFilter();
+			filter.addExtension("class");
+			filter.setDescription("Java Class File");
+			filter.setIgnoreDirectories(true);
+
+			//Alle class-Dateien in den Ordner holen
+			final java.io.File[] files = folder.listFiles(filter);
+
+			//Libs -> Alle Dateien durchlaufen
+			for (int i = 0;(files != null) && (i < files.length); i++) {
+				try {
+					//Name der Klasse erstellen und Class-Object erstellen
+					final String name =
+						"hoplugins."
+							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
+					final Class<?> fileclass = Class.forName(name);
+					//Das Class-Object definiert kein Interface ...
+					if (!fileclass.isInterface()) {
+						//... und ist von ILib abgeleitet
+						if (plugins.ILib.class.isAssignableFrom(fileclass)) {
+							//Object davon erstellen und starten
+							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
+
+							//Plugin im Vector gespeichert
+							m_vPlugins.add(modul);
+							HOLogger.instance().log(
+								HOMainFrame.class, " Starte " + files[i].getName() + "  (init MiniModel)");
+							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
+							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
+
+							HOLogger.instance().log(
+								HOMainFrame.class, "+ " + files[i].getName() + " gestartet als lib");
+						} else {
+							HOLogger.instance().log(
+								HOMainFrame.class, "- " + files[i].getName() + " nicht von ILib abgeleitet");
+						}
+					} else {
+						HOLogger.instance().log(
+							HOMainFrame.class, "- " + files[i].getName() + " ist Interface");
+					}
+				} catch (Throwable e2) {
+					HOLogger.instance().log( HOMainFrame.class, "- " + files[i].getName() + " wird übersprungen: " + e2);
+					//HOLogger.instance().log(HOMainFrame.class, e2);
+				}
+			}
+
+			//Plugins -> Alle Dateien durchlaufen
+			for (int i = 0;(files != null) && (i < files.length); i++) {
+				try {
+					//Name der Klasse erstellen und Class-Object erstellen
+					final String name =
+						"hoplugins."
+							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
+					final Class<?> fileclass = Class.forName(name);
+					//Das Class-Object definiert kein Interface ...
+					if (!fileclass.isInterface()) {
+						//... und ist von IPlugin abgeleitet, nicht die Libs nochmal starten!
+						if (plugins.IPlugin.class.isAssignableFrom(fileclass)
+							&& !plugins.ILib.class.isAssignableFrom(fileclass)) {
+							//Object davon erstellen und starten
+							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
+
+							//Plugin im Vector gespeichert
+							m_vPlugins.add(modul);
+							HOLogger.instance().log(
+								HOMainFrame.class,
+								" Starte " + files[i].getName() + "  (init MiniModel)");
+							interuptionWindow.setInfoText("Start Plugin: " + modul.getName());
+							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
+
+							HOLogger.instance().log(
+								HOMainFrame.class,
+								"+ " + files[i].getName() + " gestartet");
+						} else {
+							HOLogger.instance().log(
+								HOMainFrame.class,
+								"- " + files[i].getName() + " nicht von IPlugin abgeleitet");
+						}
+					} else {
+						HOLogger.instance().log(
+							HOMainFrame.class,
+							"- " + files[i].getName() + " ist Interface");
+					}
+				} catch (Throwable e2) {
+					HOLogger.instance().log(HOMainFrame.class, "- " + files[i].getName() + " wird übersprungen: " + e2);
+					//HOLogger.instance().log(HOMainFrame.class, e2);
+				}
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(HOMainFrame.class, e);
+		}
+	}
 
 	/**
 	 * React on state changed events.
 	 */
 	public void stateChanged(ChangeEvent changeEvent) {
-		// Wenn ein Tab als Temp gespeichert wurde dieses entfernen
+		//Wenn ein Tab als Temp gespeichert wurde dieses entfernen
 		if (m_sToRemoveTabName != null) {
 			final int index = m_jtpTabbedPane.indexOfTab(m_sToRemoveTabName);
 
@@ -1173,26 +1255,30 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				m_jtpTabbedPane.removeTabAt(index);
 			} else {
 				HOLogger.instance().log(
-						HOMainFrame.class,
-						"Fehler Tabremove: " + m_sToRemoveTabName + " " + index + "/"
-								+ m_jtpTabbedPane.getTabCount());
+					HOMainFrame.class,
+					"Fehler Tabremove: "
+						+ m_sToRemoveTabName
+						+ " "
+						+ index
+						+ "/"
+						+ m_jtpTabbedPane.getTabCount());
 				m_sToRemoveTabName = null;
 			}
 		}
 	}
 
-	// ----------------Unused Listener----------------------------
+	//----------------Unused Listener----------------------------
 	public void windowActivated(WindowEvent windowEvent) {
 	}
 
 	/**
 	 * Finally shutting down the application when the main window is closed.
-	 * This is initiated through the call to dispose(). System.exit is called
-	 * only in the case when @see beenden() is called in advance. This event is
-	 * called when switching into full screen mode, too.
-	 * 
-	 * @param windowEvent
-	 *            is ignored
+	 * This is initiated through the call to dispose().
+	 * System.exit is called only in the case when @see beenden() is called
+	 * in advance. This event is called when switching into full screen
+	 * mode, too.
+	 *
+	 * @param windowEvent is ignored
 	 */
 	public void windowClosed(WindowEvent windowEvent) {
 		if (isAppTerminated) {
@@ -1200,7 +1286,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 	}
 
-	// ----------------Listener--------------------------------------
+	//----------------Listener--------------------------------------
 
 	/**
 	 * Close HO window.
@@ -1233,11 +1319,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				try {
 					LookAndFeelInfo win = null;
 					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if ("Windows".equals(info.getName())) {
-							win = info;
-							break;
-						}
-					}
+				        if ("Windows".equals(info.getName())) {
+				            win = info;
+				            break;
+				        }
+				    }
 					if (win != null) {
 						HOLogger.instance().log(getClass(), "Use " + win.getName() + " l&f");
 						UIManager.setLookAndFeel(win.getClassName());
@@ -1251,17 +1337,13 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				} catch (Exception e) {
 					succ = false;
 				}
-			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { // Nimbus
-																						// is
-																						// the
-																						// default
-																						// theme
+			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { // Nimbus is the default theme
 				succ = NimbusTheme.enableNimbusTheme(size);
 			}
 			if (!succ) {
 				final MetalLookAndFeel laf = new MetalLookAndFeel();
 				MetalLookAndFeel.setCurrentTheme(new HOTheme(UserParameter.instance().schriftGroesse));
-
+				
 				// Um die systemweite MenuBar von Mac OS X zu verwenden
 				// http://www.pushing-pixels.org/?p=366
 				if (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).startsWith("mac")) {
@@ -1271,9 +1353,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 					Object cbmiUI = UIManager.get("CheckBoxMenuItemUI");
 					Object rbmiUI = UIManager.get("RadioButtonMenuItemUI");
 					Object pmUI = UIManager.get("PopupMenuUI");
-
+	
 					UIManager.setLookAndFeel(laf);
-
+	
 					UIManager.put("MenuBarUI", mbUI);
 					UIManager.put("MenuUI", mUI);
 					UIManager.put("CheckBoxMenuItemUI", cbmiUI);
@@ -1298,7 +1380,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jtpTabbedPane.removeChangeListener(this);
 
 		if (UserParameter.instance().tempTabSpieleruebersicht) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1306,7 +1390,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabAufstellung) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Aufstellung"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("Aufstellung"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1314,7 +1400,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabLigatabelle) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("Ligatabelle"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1322,7 +1410,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabSpiele) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Spiele"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("Spiele"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1330,7 +1420,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabSpieleranalyse) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1338,7 +1430,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabStatistik) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Statistik"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("Statistik"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1346,23 +1440,29 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabTransferscout) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("TransferScout"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("TransferScout"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
 
-//		if (UserParameter.instance().tempTabArenasizer) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
+		if (UserParameter.instance().tempTabArenasizer) {
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("ArenaSizer"));
+
+			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
+				m_jtpTabbedPane.removeTabAt(index);
+			}
+		}
 
 		if (UserParameter.instance().tempTabInformation) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
+			index =
+				m_jtpTabbedPane.indexOfTab(
+					HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
@@ -1379,20 +1479,22 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		UserParameter parameter = UserParameter.instance();
 
 		final int[] sup = m_jpSpielerUebersicht.getDividerLocations();
-		final int[] ap = this.lineupMasterPanel.getLineupPanel().getDividerLocations();
+		final int[] ap = m_jpAufstellung.getDividerLocations();
 		final int[] sp = m_jpSpielePanel.getDividerLocations();
 		final int spa = m_jpSpielerAnalysePanel.getDividerLocation();
-		final AufstellungsAssistentPanel aap = this.lineupMasterPanel.getLineupPanel().getAufstellungsAssitentPanel();
-		final int tsp = m_jpTransferScout.getScoutPanel().getDividerLocation();
+		final AufstellungsAssistentPanel aap = m_jpAufstellung.getAufstellungsAssitentPanel();
+		final int tsp = m_jpTransferScout.getDividerLocation();
 
 		final int locx = Math.max(getLocation().x, 0);
 		final int locy = Math.max(getLocation().y, 0);
 		parameter.hoMainFrame_PositionX = locx;
 		parameter.hoMainFrame_PositionY = locy;
-		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
-		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
-		parameter.bestPostWidth = Math.max(m_jpSpielerUebersicht.getBestPosWidth(),
-				this.lineupMasterPanel.getLineupPanel().getBestPosWidth());
+		parameter.hoMainFrame_width =
+			Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
+		parameter.hoMainFrame_height =
+			Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
+		parameter.bestPostWidth =
+			Math.max(m_jpSpielerUebersicht.getBestPosWidth(), m_jpAufstellung.getBestPosWidth());
 
 		parameter.aufstellungsAssistentPanel_gruppe = aap.getGruppe();
 		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getReihenfolge();
@@ -1404,216 +1506,230 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.aufstellungsAssistentPanel_gesperrt = aap.isGesperrtIgnorieren();
 		parameter.aufstellungsAssistentPanel_notLast = aap.isExcludeLastMatch();
 
-		// SpielerÜbersichtsPanel
+		//      SpielerÜbersichtsPanel
 		parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = sup[0];
 		parameter.spielerUebersichtsPanel_horizontalRightSplitPane = sup[1];
 		parameter.spielerUebersichtsPanel_verticalSplitPane = sup[2];
 
-		// AufstellungsPanel
+		//AufstellungsPanel
 		parameter.aufstellungsPanel_verticalSplitPaneLow = ap[0];
 		parameter.aufstellungsPanel_horizontalLeftSplitPane = ap[1];
 		parameter.aufstellungsPanel_horizontalRightSplitPane = ap[2];
 		parameter.aufstellungsPanel_verticalSplitPane = ap[3];
 
-		// SpielePanel
+		//SpielePanel
 		parameter.spielePanel_horizontalLeftSplitPane = sp[0];
 		parameter.spielePanel_verticalSplitPane = sp[1];
 
-		// SpielerAnalyse
+		//SpielerAnalyse
 		parameter.spielerAnalysePanel_horizontalSplitPane = spa;
 
-		// TransferScoutPanel
+		//      TransferScoutPanel
 		parameter.transferScoutPanel_horizontalSplitPane = tsp;
 
 		DBZugriff.instance().saveUserParameter();
 
 		m_jpSpielerUebersicht.saveColumnOrder();
 		m_jpSpielePanel.saveColumnOrder();
-		this.lineupMasterPanel.getLineupPanel().saveColumnOrder();
+		m_jpAufstellung.saveColumnOrder();
 		m_jpSpielerAnalysePanel.saveColumnOrder();
 
 	}
 
-//	public static void main(String[] args) {
-//		final long start = System.currentTimeMillis();
-//
-//		// Schnauze!
-//		// nur wenn Kein Debug
-//		if ((args != null) && (args.length > 0)) {
-//			String debugLvl = args[0].trim();
-//
-//			if (debugLvl.equalsIgnoreCase("INFO")) {
-//				HOLogger.instance().setLogLevel(HOLogger.INFORMATION);
-//			} else if (debugLvl.equalsIgnoreCase("DEBUG")) {
-//				HOLogger.instance().setLogLevel(HOLogger.DEBUG);
-//			} else if (debugLvl.equalsIgnoreCase("WARNING")) {
-//				HOLogger.instance().setLogLevel(HOLogger.WARNING);
-//			} else if (debugLvl.equalsIgnoreCase("ERROR")) {
-//				HOLogger.instance().setLogLevel(HOLogger.ERROR);
-//			}
-//		}
-//
-//		// Set HOE file
-//		// This creates a file called ho.dir in $home
-//		// Do we really need this? Removed by flattermann 2009-01-18
-//		// FileExtensionManager.createDirFile();
-//
-//		// Usermanagement Login-Dialog
-//		try {
-//			if (!User.getCurrentUser().isSingleUser()) {
-//				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
-//				int choice = JOptionPane.showConfirmDialog(null, comboBox, "Login",
-//						JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-//
-//				if (choice == JOptionPane.OK_OPTION) {
-//					User.INDEX = comboBox.getSelectedIndex();
-//				} else {
-//					System.exit(0);
-//				}
-//			}
-//		} catch (Exception ex) {
-//			HOLogger.instance().log(HOMainFrame.class, ex);
-//		}
-//
-//		// //Spoofing test
-//		try {
-//			final BufferedReader buffy = new BufferedReader(new java.io.FileReader("ident.txt"));
-//			final Vector<String> ids = new Vector<String>();
-//			String tmp = "";
-//
-//			while (buffy.ready()) {
-//				tmp = buffy.readLine();
-//
-//				if (!tmp.startsWith("#") && !tmp.trim().equals("")) {
-//					ids.add(tmp);
-//				}
-//			}
-//
-//			buffy.close();
-//
-//			if (ids.size() > 0) {
-//				// Math.floor(Math.random()*10)
-//				MyConnector.m_sIDENTIFIER = ids.get((int) Math.floor(Math.random() * ids.size())).toString();
-//			}
-//		} catch (Exception e) {
-//		}
-//
-//		// Check if this HO version is (soft) expired
-//		if (!DEVELOPMENT && WARN_DATE != null && WARN_DATE.length() > 0) {
-//			final Timestamp datum = new Timestamp(System.currentTimeMillis());
-//
-//			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
-//				JOptionPane.showMessageDialog(
-//						null,
-//						"Your HO version is very old!\nPlease download a new version at "
-//								+ MyConnector.getHOSite(), "Update strongly recommended",
-//						JOptionPane.WARNING_MESSAGE);
-//			}
-//		}
-//
-//		// Check if this HO version is (hard) expired
-//		if (LIMITED) {
-//			final Timestamp datum = new Timestamp(System.currentTimeMillis());
-//
-//			if (datum.after(Timestamp.valueOf(LIMITED_DATE))) {
-//				JOptionPane.showMessageDialog(null, "Download new Version at " + MyConnector.getHOSite(),
-//						"Update required", JOptionPane.ERROR_MESSAGE);
-//				System.exit(1);
-//			}
-//		}
-//
-//		// Startbild
-//		final SplashFrame interuptionsWindow = new SplashFrame();
-//
-//		// Backup
-//		if (User.getCurrentUser().isHSQLDB()) {
-//			interuptionsWindow.setInfoText(1,"Backup Database");
-//			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
-//		}
-//
-//		// Standardparameter aus der DB holen
-//		interuptionsWindow.setInfoText(2,"Initialize Database");
-//		DBZugriff.instance().loadUserParameter();
-//
-//		// init Theme
-//		try {
-//			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
-//		} catch (Exception e) {
-//			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
-//			JOptionPane.showMessageDialog(null, e.getMessage(),
-//					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
-//		}
-//		// Init!
-//		interuptionsWindow.setInfoText(3,"Initialize Data-Administration");
-//
-//		// Beim ersten Start Sprache erfragen
-//		if (DBZugriff.instance().isFirstStart()) {
-//			interuptionsWindow.setVisible(false);
-//			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
-//			JOptionPane.showMessageDialog(null,
-//					"To load your team data into HO! select File > Download from the main menu.",
-//					"Team Data", JOptionPane.INFORMATION_MESSAGE);
-//			interuptionsWindow.setVisible(true);
-//		}
-//
-//		// Check -> Sprachdatei in Ordnung?
-//		interuptionsWindow.setInfoText(4,"Check Languagefiles");
-//		checkSprachFile(UserParameter.instance().sprachDatei);
-//
-//		// font switch, because the default font doesn't support Georgian and
-//		// Chinese characters
-//		// TODO
-//		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
-//
-//		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei, loader);
-//		interuptionsWindow.setInfoText(5,"Load latest Data");
-//		HOVerwaltung.instance().loadLatestHoModel();
-//		interuptionsWindow.setInfoText(6,"Load  XtraDaten");
-//
-//		// TableColumn
-//		UserColumnController.instance().load();
-//
-//		// Die Währung auf die aus dem HRF setzen
-//		float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
-//
-//		if (faktorgeld > -1) {
-//			UserParameter.instance().faktorGeld = faktorgeld;
-//		}
-//
-//		// Training
-//		interuptionsWindow.setInfoText(7,"Initialize Training");
-//
-//		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
-//		// der manuellen DB Einträge
-//		TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
-//
-//		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
-//		// selbst aufruft!
-//		interuptionsWindow.setInfoText(8,"Starting Plugins");
-//		HOMainFrame.instance().startPluginModuls(interuptionsWindow);
-//
-//		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
-//				.exportOldLineup("Actual");
-//		FileExtensionManager.extractLineup("Actual");
-//		// Anzeigen
-//		interuptionsWindow.setInfoText(9,"Prepare to show");
-//		HOMainFrame.instance().setVisible(true);
-//
-//		// Startbild weg
-//		interuptionsWindow.setVisible(false);
-//
-//		if (GebChecker.checkTWGeb()) {
-//			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayTom");
-//		}
-//
-//		if (GebChecker.checkVFGeb()) {
-//			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayVolker");
-//		}
-//
-//		new ExtensionListener().run();
-//		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
+	public static void main(String[] args) {
+		final long start = System.currentTimeMillis();
 
-//	}
+		//Schnauze!
+		// nur wenn Kein Debug
+		if ((args != null) && (args.length > 0)) {
+			String debugLvl = args[0].trim();
+
+			if (debugLvl.equalsIgnoreCase("INFO")) {
+				HOLogger.instance().setLogLevel(HOLogger.INFORMATION);
+			} else if (debugLvl.equalsIgnoreCase("DEBUG")) {
+				HOLogger.instance().setLogLevel(HOLogger.DEBUG);
+			} else if (debugLvl.equalsIgnoreCase("WARNING")) {
+				HOLogger.instance().setLogLevel(HOLogger.WARNING);
+			} else if (debugLvl.equalsIgnoreCase("ERROR")) {
+				HOLogger.instance().setLogLevel(HOLogger.ERROR);
+			}
+		}
+
+		// Set HOE file
+		// This creates a file called ho.dir in $home
+		// Do we really need this? Removed by flattermann 2009-01-18
+//		FileExtensionManager.createDirFile();
+
+		// Usermanagement Login-Dialog
+		try {
+			if (!User.getCurrentUser().isSingleUser()) {
+				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
+				int choice =
+					JOptionPane.showConfirmDialog(
+						null,
+						comboBox,
+						"Login",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+
+				if (choice == JOptionPane.OK_OPTION) {
+					User.INDEX = comboBox.getSelectedIndex();
+				} else {
+					System.exit(0);
+				}
+			}
+		} catch (Exception ex) {
+			HOLogger.instance().log(HOMainFrame.class, ex);
+		}
+
+		////Spoofing test
+		try {
+			final BufferedReader buffy =
+				new BufferedReader(new java.io.FileReader("ident.txt"));
+			final Vector<String> ids = new Vector<String>();
+			String tmp = "";
+
+			while (buffy.ready()) {
+				tmp = buffy.readLine();
+
+				if (!tmp.startsWith("#") && !tmp.trim().equals("")) {
+					ids.add(tmp);
+				}
+			}
+
+			buffy.close();
+
+			if (ids.size() > 0) {
+				//Math.floor(Math.random()*10)
+				MyConnector.m_sIDENTIFIER =
+					ids.get((int) Math.floor(Math.random() * ids.size())).toString();
+			}
+		} catch (Exception e) {
+		}
+
+		// Check if this HO version is (soft) expired
+		if (!DEVELOPMENT && WARN_DATE != null && WARN_DATE.length() > 0) {
+			final Timestamp datum = new Timestamp(System.currentTimeMillis());
+
+			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
+				JOptionPane.showMessageDialog(
+					null,
+					"Your HO version is very old!\nPlease download a new version at "+ MyConnector.getHOSite(),
+					"Update strongly recommended",
+					JOptionPane.WARNING_MESSAGE);
+			}
+		}
+
+		// Check if this HO version is (hard) expired
+		if (LIMITED) {
+			final Timestamp datum = new Timestamp(System.currentTimeMillis());
+
+			if (datum.after(Timestamp.valueOf(LIMITED_DATE))) {
+				JOptionPane.showMessageDialog(
+					null,
+					"Download new Version at "+ MyConnector.getHOSite(),
+					"Update required",
+					JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
+		}
+
+		//Startbild
+		final InterruptionWindow interuptionsWindow =
+			new InterruptionWindow(
+				new ImagePanel());
+
+		// Backup
+		if (User.getCurrentUser().isHSQLDB()) {
+			interuptionsWindow.setInfoText("Backup Database");
+			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
+		}
+
+		//Standardparameter aus der DB holen
+		interuptionsWindow.setInfoText("Initialize Database");
+		DBZugriff.instance().loadUserParameter();
+
+		
+		//init Theme
+		try {
+			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
+		} catch (Exception e) {
+			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
+			JOptionPane.showMessageDialog(null,
+					e.getMessage(),
+					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
+		}
+		//Init!
+		interuptionsWindow.setInfoText("Initialize Data-Administration");
+
+		//Beim ersten Start Sprache erfragen
+		if (DBZugriff.instance().isFirstStart()) {
+			interuptionsWindow.setVisible(false);
+			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
+			JOptionPane.showMessageDialog(null,
+					"To load your team data into HO! select File > Download from the main menu.",
+					"Team Data", JOptionPane.INFORMATION_MESSAGE);
+			interuptionsWindow.setVisible(true);
+		}
+
+		//Check -> Sprachdatei in Ordnung?
+		interuptionsWindow.setInfoText("Check Languagefiles");
+		checkSprachFile(UserParameter.instance().sprachDatei);
+
+		//font switch, because the default font doesn't support Georgian and Chinese characters
+		// TODO
+		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
+
+		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei, loader);
+		interuptionsWindow.setInfoText("Load latest Data");
+		HOVerwaltung.instance().loadLatestHoModel();
+		interuptionsWindow.setInfoText("Load  XtraDaten");
+
+		// TableColumn
+		UserColumnController.instance().load();
+
+		//Die Währung auf die aus dem HRF setzen
+		float faktorgeld =
+			(float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
+
+		if (faktorgeld > -1) {
+			UserParameter.instance().faktorGeld = faktorgeld;
+		}
+
+		//Training
+		interuptionsWindow.setInfoText("Initialize Training");
+
+		//Training erstellen -> dabei Trainingswochen berechnen auf Grundlage der manuellen DB Einträge
+		TrainingsManager.instance().calculateTrainings(
+			DBZugriff.instance().getTrainingsVector());
+
+		//INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich selbst aufruft!
+		interuptionsWindow.setInfoText("Starting Plugins");
+		HOMainFrame.instance().startPluginModuls(interuptionsWindow);
+
+		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
+		FileExtensionManager.extractLineup("Actual");
+		//Anzeigen
+		interuptionsWindow.setInfoText("Prepare to show");
+		HOMainFrame.instance().setVisible(true);
+
+		//Startbild weg
+		interuptionsWindow.setVisible(false);
+
+		if (GebChecker.checkTWGeb()) {
+			new de.hattrickorganizer.gui.birthday.GebDialog(
+				HOMainFrame.instance(),"birthdayTom");
+		}
+
+		if (GebChecker.checkVFGeb()) {
+			new de.hattrickorganizer.gui.birthday.GebDialog(
+				HOMainFrame.instance(),"birthdayVolker");
+		}
+
+		new ExtensionListener().run();
+		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
+
+	}
 
 	public static int getHOStatus() {
 		return status;
@@ -1622,7 +1738,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static void setHOStatus(int i) {
 		status = i;
 	}
-
+	
 	public static int getRevisionNumber() {
 		if (revision == 0) {
 			InputStream is = null;
@@ -1632,10 +1748,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				if (is != null) {
 					br = new BufferedReader(new InputStreamReader(is));
 					String line = null;
-					if (br != null && (line = br.readLine()) != null) { // expect
-																		// one
-																		// line
-																		// only
+					if (br != null && (line = br.readLine()) != null) { // expect one line only
 						revision = Integer.parseInt(line.trim());
 					}
 				} else {

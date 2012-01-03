@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -207,8 +206,9 @@ public class SpielHighlightPanel extends ImagePanel {
     /**
      * Refresh the highlights from the short info.
      */
-    public final void refresh(MatchKurzInfo info,Matchdetails details) {
+    public final void refresh(MatchKurzInfo info, Matchdetails details) {
         clear();
+        //m_clMatchKurzInfo = info;
 
         //Teams
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();

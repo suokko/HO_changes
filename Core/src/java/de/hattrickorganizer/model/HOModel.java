@@ -1,8 +1,6 @@
 // %2418151228:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
-import ho.tool.arenasizer.Stadium;
-
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;

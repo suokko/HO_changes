@@ -53,7 +53,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-	private JButton m_jbElfmeter = new JButton(new ImageIcon(ImageUtilities.changeColor(ThemeManager.loadImage("gui/bilder/Ball.png"),
+	private JButton m_jbElfmeter = new JButton(new ImageIcon(ImageUtilities.changeColor(ThemeManager.loadImage("gui/bilder/credits/Ball.png"),
 			Color.red,
 			Color.white)
 			.getScaledInstance(24,
@@ -286,7 +286,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 						m_jchVerletzte.isSelected(),
 						m_jchGesperrte.isSelected(),
 						gui.UserParameter.instance().WetterEffektBonus,
-						getWetter());
+						HOMainFrame.getWetter());
 		mainFrame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Autoaufstellung_fertig"));
 		mainFrame.getAufstellungsPanel().update();
 

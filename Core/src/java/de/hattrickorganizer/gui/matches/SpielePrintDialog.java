@@ -11,11 +11,10 @@ import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-
 import plugins.IMatchKurzInfo;
 import de.hattrickorganizer.database.DBZugriff;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
+
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -155,7 +154,7 @@ public class SpielePrintDialog extends JDialog {
      *
      * @param info TODO Missing Method Parameter Documentation
      */
-    private void initValues(MatchKurzInfo info) {
+    private void initValues(de.hattrickorganizer.model.matches.MatchKurzInfo info) {
         if (info != null) {
             //Selektiertes Spiel des Models holen und alle 3 Panel informieren 
             try {

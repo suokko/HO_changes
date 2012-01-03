@@ -350,9 +350,9 @@ public class OnlineWorker {
                 if (getMatchDetails(matches[i].getMatchID())) {
                 de.hattrickorganizer.logik.MatchUpdater.
                 	updateMatch(HOMiniModel.instance(), matches[i].getMatchID());
-                }
-                else
-                	return false;
+                } 
+             	else 
+             		return false; 
             }
         }
         return true;
@@ -457,14 +457,13 @@ public class OnlineWorker {
 	        	{
 	                boolean retLineup = getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
 	                boolean retDetails = getMatchDetails(curMatchId);
-	                if (retDetails) {
-	                	HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails);
-	                	MatchUpdater.updateMatch(HOMiniModel.instance(),matches[i].getMatchID());
-	                }
-	                else {
-	                	bOK = false;
-	                	break;
-	                }
+	                if (retDetails) { 
+	                 	HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails); 
+	                 	MatchUpdater.updateMatch(HOMiniModel.instance(),matches[i].getMatchID()); 
+	                 } else { 
+	                 	bOK = false; 
+	                 	break; 
+	                 } 
 	            }
 	        }
         }
@@ -684,10 +683,10 @@ public class OnlineWorker {
 
         try {
             matchDetails = MyConnector.instance().getMatchdetails(matchID);
-            if (matchDetails.length() == 0) {
-            	HOLogger.instance().warning(getClass(), "Unable to fetch details for match " + matchID); 
-            	return null;
-            }
+            if (matchDetails.length() == 0) { 
+             	HOLogger.instance().warning(getClass(), "Unable to fetch details for match " + matchID);  
+             	return null; 
+            } 
             waitDialog.setValue(20);
             final xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
             details = parser.parseMachtdetailsFromString(matchDetails);

@@ -17,7 +17,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 1L;
-//	private JCheckBox m_jchArenasizer;
+	private JCheckBox m_jchArenasizer;
     private JCheckBox m_jchAufstellung;
     private JCheckBox m_jchInformation;
     private JCheckBox m_jchLigatabelle;
@@ -61,7 +61,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         gui.UserParameter.temp().tempTabSpieleranalyse = !m_jchSpielerAnalyse.isSelected();
         gui.UserParameter.temp().tempTabStatistik = !m_jchStatistik.isSelected();
         gui.UserParameter.temp().tempTabTransferscout = !m_jchTransferscout.isSelected();
-//        gui.UserParameter.temp().tempTabArenasizer = !m_jchArenasizer.isSelected();
+        gui.UserParameter.temp().tempTabArenasizer = !m_jchArenasizer.isSelected();
         gui.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
     }
 
@@ -124,12 +124,12 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchTransferscout.addItemListener(this);
         add(m_jchTransferscout);
 
-//        m_jchArenasizer = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ArenaSizer"));
-//        m_jchArenasizer.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
-//        m_jchArenasizer.setOpaque(false);
-//        m_jchArenasizer.setSelected(!gui.UserParameter.temp().tempTabArenasizer);
-//        m_jchArenasizer.addItemListener(this);
-//        add(m_jchArenasizer);
+        m_jchArenasizer = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("ArenaSizer"));
+        m_jchArenasizer.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
+        m_jchArenasizer.setOpaque(false);
+        m_jchArenasizer.setSelected(!gui.UserParameter.temp().tempTabArenasizer);
+        m_jchArenasizer.addItemListener(this);
+        add(m_jchArenasizer);
 
         m_jchInformation = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verschiedenes"));
         m_jchInformation.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));

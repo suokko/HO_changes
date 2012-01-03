@@ -7,12 +7,10 @@
 package de.hattrickorganizer.tools;
 
 import gui.HOIconName;
-import ho.modul.transfer.scout.Player;
-import ho.modul.transfer.scout.PlayerConverter;
-import ho.modul.transfer.scout.TransferEingabePanel;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,17 +34,20 @@ import javax.swing.UIManager;
 
 import plugins.IHOMiniModel;
 import plugins.IHTCalendar;
+import plugins.IMP3Player;
 import plugins.IMatchHelper;
 import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.matches.SpielHighlightPanel;
 import de.hattrickorganizer.gui.menu.HRFImport;
 import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.gui.transferscout.Player;
+import de.hattrickorganizer.gui.transferscout.PlayerConverter;
+import de.hattrickorganizer.gui.transferscout.TransferEingabePanel;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -287,7 +288,7 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     public Vector<IPlugin> getPlugins() {
-        return HO.getPlugins();
+        return HOMainFrame.getPlugins();
     }
 
     /**
@@ -591,7 +592,11 @@ public class HelperWrapper implements plugins.IHelper {
         Helper.showMessage(parent, message, titel, typ);
     }
 
- 
+    public IMP3Player getMP3Player()
+    {
+    	return new de.hattrickorganizer.gui.utils.MP3PlayerWrapper();
+    }
+
     public int[][] sortintArray(int[][] toSort, int spaltenindex) {
         return Helper.sortintArray(toSort, spaltenindex);
     }

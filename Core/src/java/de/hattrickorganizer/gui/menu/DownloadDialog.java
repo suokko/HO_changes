@@ -47,20 +47,19 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 7837303870465506844L;
 
 	// ~ Instance fields
-	// ----------------------------------------------------------------------------/
-	private static HOVerwaltung hov = HOVerwaltung.instance();
-	private JButton m_jbAbort = new JButton(hov.getLanguageString("Abbrechen"));
-	final private JButton m_jbDownload = new JButton(hov.getLanguageString("Download"));
-	private JButton m_jbProxy = new JButton(hov.getLanguageString("ConfigureProxy"));
-	private JCheckBox m_jchOldFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), false);
-	private JCheckBox m_jchOwnFixtures = new JCheckBox(hov.getLanguageString("AktuellerSpielplanDownload"),
+	// ----------------------------------------------------------------------------
+	private JButton m_jbAbbrechen = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+	final private JButton m_jbDownload = new JButton(HOVerwaltung.instance().getLanguageString("Download"));
+	private JButton m_jbProxy = new JButton(HOVerwaltung.instance().getLanguageString("ConfigureProxy"));
+	private JCheckBox m_jchAlterSpielplan = new JCheckBox(HOVerwaltung.instance().getLanguageString("FixturesDownload"), false);
+	private JCheckBox m_jchEigenenSpiele = new JCheckBox(HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"),
 			gui.UserParameter.instance().currentMatchlist);
-	private JCheckBox m_jchHRF = new JCheckBox(hov.getLanguageString("HRFDownload"),
+	private JCheckBox m_jchHRF = new JCheckBox(HOVerwaltung.instance().getLanguageString("HRFDownload"),
 			gui.UserParameter.instance().xmlDownload);
-	private JCheckBox m_jchMatchArchive = new JCheckBox(hov.getLanguageString("Matcharchiv"), false);
-	private JCheckBox m_jchFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), gui.UserParameter
+	private JCheckBox m_jchMatchArchiv = new JCheckBox(HOVerwaltung.instance().getLanguageString("Matcharchiv"), false);
+	private JCheckBox m_jchSpielplan = new JCheckBox(HOVerwaltung.instance().getLanguageString("FixturesDownload"), gui.UserParameter
 			.instance().fixtures);
-	private JList m_jlOldSeasons = new JList();
+	private JList m_jlAlterSeasons = new JList();
 	private SpinnerDateModel m_clSpinnerModel = new SpinnerDateModel();
 	private JSpinner m_jsSpinner = new JSpinner(m_clSpinnerModel);
 
@@ -71,7 +70,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 * Creates a new DownloadDialog object.
 	 */
 	public DownloadDialog() {
-		super(HOMainFrame.instance(), hov.getLanguageString("Download"), true);
+		super(HOMainFrame.instance(), HOVerwaltung.instance().getLanguageString("Download"), true);
 		initComponents();
 	}
 
@@ -80,13 +79,13 @@ public class DownloadDialog extends JDialog implements ActionListener {
 
 	// ------------------------------------------------------------------------
 	public final void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(m_jchOldFixtures)) {
-			m_jlOldSeasons.setEnabled(m_jchOldFixtures.isSelected());
+		if (e.getSource().equals(m_jchAlterSpielplan)) {
+			m_jlAlterSeasons.setEnabled(m_jchAlterSpielplan.isSelected());
 		} else if (e.getSource().equals(m_jbDownload)) {
 			startDownload();
 			RefreshManager.instance().doReInit();
 			setVisible(false);
-		} else if (e.getSource().equals(m_jbAbort)) {
+		} else if (e.getSource().equals(m_jbAbbrechen)) {
 			setVisible(false);
 		} else if (e.getSource().equals(m_jbProxy)) {
 			new ProxyDialog(HOMainFrame.instance());
@@ -96,14 +95,14 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	/**
 	 * Fill season list box.
 	 */
-	private void fillOldFixturesList() {
-		final int aktuelleSaison = hov.getModel().getBasics().getSeason();
+	private void fillSpielplanListe() {
+		final int aktuelleSaison = HOVerwaltung.instance().getModel().getBasics().getSeason();
 		final DefaultListModel listModel = new DefaultListModel();
 
 		for (int i = aktuelleSaison; i > 0; i--) {
-			listModel.addElement(new CBItem(hov.getLanguageString("Season") + " " + i, i));
+			listModel.addElement(new CBItem(HOVerwaltung.instance().getLanguageString("Season") + " " + i, i));
 		}
-		m_jlOldSeasons.setModel(listModel);
+		m_jlAlterSeasons.setModel(listModel);
 	}
 
 	/**
@@ -117,60 +116,63 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		setContentPane(new ImagePanel(null));
 
 		final JPanel normalDownloadPanel = new ImagePanel(new GridLayout(3, 1, 4, 4));
-		normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(hov.getLanguageString("Download")));
+		normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Download")));
 
-		m_jchHRF.setToolTipText(hov.getLanguageString("tt_Download_XML"));
-		m_jchOwnFixtures.setToolTipText(hov.getLanguageString("tt_Download_AktuellerSpielplan"));
-		m_jchFixtures.setToolTipText(hov.getLanguageString("tt_Download_Ligatabelle"));
+		m_jchHRF.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_XML"));
+		m_jchEigenenSpiele.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_AktuellerSpielplan"));
+		m_jchSpielplan.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Ligatabelle"));
 		m_jchHRF.setOpaque(false);
-		m_jchOwnFixtures.setOpaque(false);
-		m_jchFixtures.setOpaque(false);
+		m_jchEigenenSpiele.setOpaque(false);
+		m_jchSpielplan.setOpaque(false);
 		normalDownloadPanel.add(m_jchHRF);
-		normalDownloadPanel.add(m_jchOwnFixtures);
-		normalDownloadPanel.add(m_jchFixtures);
+		normalDownloadPanel.add(m_jchEigenenSpiele);
+		normalDownloadPanel.add(m_jchSpielplan);
 
 		normalDownloadPanel.setSize(200, 200);
 		normalDownloadPanel.setLocation(10, 10);
 		getContentPane().add(normalDownloadPanel);
 
-		final JPanel specialDownload = new ImagePanel(new GridLayout(1, 1, 4, 4));
-		specialDownload.setBorder(BorderFactory.createTitledBorder(hov.getLanguageString("Verschiedenes")));
+		final JPanel speziellerDownload = new ImagePanel(new GridLayout(1, 1, 4, 4));
+		speziellerDownload.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Verschiedenes")));
 
 		// Alte Spielpläne
-		final JPanel oldFixturePanel = new ImagePanel(new BorderLayout());
+		final JPanel alteSpielplaenePanel = new ImagePanel(new BorderLayout());
 
-		m_jchOldFixtures.setToolTipText(hov.getLanguageString("tt_Download_AlteLigatabelle"));
-		m_jchOldFixtures.addActionListener(this);
-		m_jchOldFixtures.setOpaque(false);
-		oldFixturePanel.add(m_jchOldFixtures, BorderLayout.NORTH);
+		m_jchAlterSpielplan.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_AlteLigatabelle"));
+		m_jchAlterSpielplan.addActionListener(this);
+		m_jchAlterSpielplan.setOpaque(false);
+		alteSpielplaenePanel.add(m_jchAlterSpielplan, BorderLayout.NORTH);
 
-		m_jlOldSeasons.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		m_jlOldSeasons.setEnabled(false);
-		fillOldFixturesList();
-		oldFixturePanel.add(new JScrollPane(m_jlOldSeasons), BorderLayout.CENTER);
+		m_jlAlterSeasons.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		m_jlAlterSeasons.setEnabled(false);
+		fillSpielplanListe();
+		alteSpielplaenePanel.add(new JScrollPane(m_jlAlterSeasons), BorderLayout.CENTER);
 
-		// MatchArchive
-		final JPanel matchArchivePanel = new JPanel(new BorderLayout(1, 2));
-		matchArchivePanel.setOpaque(false);
+		// MatchArchiv
+		final JPanel matchArchivPanel = new JPanel(new BorderLayout(1, 2));
+		matchArchivPanel.setOpaque(false);
 
-		m_jchMatchArchive.setToolTipText(hov.getLanguageString("tt_Download_Matcharchiv"));
-		m_jchMatchArchive.addActionListener(this);
-		m_jchMatchArchive.setOpaque(false);
-		matchArchivePanel.add(m_jchMatchArchive, BorderLayout.WEST);
+		m_jchMatchArchiv.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Matcharchiv"));
+		m_jchMatchArchiv.addActionListener(this);
+		m_jchMatchArchiv.setOpaque(false);
+		matchArchivPanel.add(m_jchMatchArchiv, BorderLayout.WEST);
 
 		m_clSpinnerModel.setCalendarField(java.util.Calendar.MONTH);
 		((JSpinner.DateEditor) m_jsSpinner.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
-		matchArchivePanel.add(m_jsSpinner, BorderLayout.EAST);
 
-		oldFixturePanel.add(matchArchivePanel, BorderLayout.SOUTH);
+		// JSpinner.DateEditor m_jspDateSpinner = new JSpinner.DateEditor(
+		// m_jsSpinner, "dd-MM-yyyy" );
+		matchArchivPanel.add(m_jsSpinner, BorderLayout.EAST);
 
-		specialDownload.add(oldFixturePanel);
+		alteSpielplaenePanel.add(matchArchivPanel, BorderLayout.SOUTH);
 
-		specialDownload.setSize(300, 200);
-		specialDownload.setLocation(220, 10);
-		getContentPane().add(specialDownload);
+		speziellerDownload.add(alteSpielplaenePanel);
 
-		m_jbDownload.setToolTipText(hov.getLanguageString("tt_Download_Start"));
+		speziellerDownload.setSize(300, 200);
+		speziellerDownload.setLocation(220, 10);
+		getContentPane().add(speziellerDownload);
+
+		m_jbDownload.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Start"));
 		m_jbDownload.addActionListener(this);
 		m_jbDownload.setFont(m_jbDownload.getFont().deriveFont(Font.BOLD));
 		m_jbDownload.setSize(140, 30);
@@ -181,7 +183,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 
 		getContentPane().add(m_jbDownload);
 		
-		m_jbProxy.setToolTipText(hov.getLanguageString("tt_ConfigureProxy"));
+		m_jbProxy.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_ConfigureProxy"));
 		m_jbProxy.addActionListener(this);
 		m_jbProxy.setFont(m_jbProxy.getFont().deriveFont(Font.BOLD));
 		m_jbProxy.setSize(140, 30);
@@ -189,18 +191,18 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		
 		getContentPane().add(m_jbProxy);
 
-		m_jbAbort.setToolTipText(hov.getLanguageString("tt_Download_Abbrechen"));
-		m_jbAbort.addActionListener(this);
-		m_jbAbort.setSize(140, 30);
-		m_jbAbort.setLocation(380, 220);
-		getContentPane().add(m_jbAbort);
+		m_jbAbbrechen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Download_Abbrechen"));
+		m_jbAbbrechen.addActionListener(this);
+		m_jbAbbrechen.setSize(140, 30);
+		m_jbAbbrechen.setLocation(380, 220);
+		getContentPane().add(m_jbAbbrechen);
 
 		setSize(530, 280);
 
 		final Dimension size = getToolkit().getScreenSize();
 
 		if (size.width > this.getSize().width) {
-			// Center
+			// Mittig positionieren
 			this.setLocation((size.width / 2) - (this.getSize().width / 2), (size.height / 2) - (this.getSize().height / 2));
 		}
 		
@@ -220,60 +222,72 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 * The download action.
 	 */
 	private void startDownload() {
-		boolean bOK = true;
+		boolean bOK = false;
 		OnlineWorker worker = HOMainFrame.instance().getOnlineWorker();
-		HOModel model = hov.getModel();
-		if (m_jchOwnFixtures.isSelected()) {
+		HOModel model = HOVerwaltung.instance().getModel();
+		if (m_jchEigenenSpiele.isSelected()) {
 			// Only get lineups for own fixtures
 			bOK = worker.getMatches(model.getBasics().getTeamId(), false);
-			if (bOK) {
+			if (bOK)
+			{
 				worker.getAllLineups();
 				StadiumCreator.extractHistoric();
 			}
 		}
-		if (bOK && m_jchMatchArchive.isSelected()) {
-			final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
-			tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
-			bOK = worker.getMatchArchive(model.getBasics().getTeamId(), tempdate);
-			if (bOK) {
-				// Get all lineups for matches, if they don't exist already
-				worker.getAllLineups();
+		if (bOK)
+		{
+			if (m_jchMatchArchiv.isSelected()) {
+				final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
+				tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
+				bOK = worker.getMatchArchive(model.getBasics().getTeamId(), tempdate);
+				if (bOK)
+				{
+					// Get all lineups for matches, if they don't exist already
+					worker.getAllLineups();
+				}
 			}
-		}
-		
-		if (bOK && m_jchFixtures.isSelected()) {
-			// Always get actual season and league
-			bOK = worker.getSpielplan(-1, -1);
-			if (bOK){
-				StandingCreator.extractActual();
-			}
-		}
-		
-		if (bOK && m_jchOldFixtures.isSelected()) {
-			if (m_jlOldSeasons.getSelectedValues() != null) {
-				final Object[] saisons = m_jlOldSeasons.getSelectedValues();
-				for (int i = 0; i < saisons.length; i++) {
-					if (saisons[i] instanceof CBItem) {
-						// Liga
-						final int saisonid = ((CBItem)saisons[i]).getId();
-
-						// Abfragen!
-						final LigaAuswahlDialog auswahlDialog = new LigaAuswahlDialog(this, saisonid);
-						final int ligaid = auswahlDialog.getLigaID();
-
-						if (ligaid > -2) {
-							bOK = worker.getSpielplan(saisonid, ligaid);
+			if (bOK)
+			{
+				if (m_jchSpielplan.isSelected()) {
+					// Always get actual season and league
+					bOK = worker.getSpielplan(-1, -1);
+					if (bOK)
+						StandingCreator.extractActual();
+				}
+				if (bOK)
+				{
+					if (m_jchAlterSpielplan.isSelected()) 
+					{
+						if (m_jlAlterSeasons.getSelectedValues() != null) 
+						{
+							final Object[] saisons = m_jlAlterSeasons.getSelectedValues();
+							for (int i = 0; i < saisons.length; i++) {
+								if (saisons[i] instanceof CBItem) {
+									// Liga
+									final int saisonid = ((CBItem)saisons[i]).getId();
+			
+									// Abfragen!
+									final LigaAuswahlDialog auswahlDialog = new LigaAuswahlDialog(this, saisonid);
+									final int ligaid = auswahlDialog.getLigaID();
+			
+									if (ligaid > -2) {
+										bOK = worker.getSpielplan(saisonid, ligaid);
+									}
+									if (!bOK)
+										break;
+								}
+							}
 						}
-						if (!bOK) {
-							break;
-						}
+					}
+					if (bOK)
+					{
+						// Als letztes, damit die Matches für die Trainingsberechnung schon
+						// vorhanden sind
+						if (m_jchHRF.isSelected()) 
+							worker.getHrf();
 					}
 				}
 			}
-		}
-		// Lastly, so that the matches for training are there
-		if (bOK && m_jchHRF.isSelected()) {
-				worker.getHrf();
 		}
 	}
 }

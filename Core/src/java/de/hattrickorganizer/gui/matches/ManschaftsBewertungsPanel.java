@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -17,7 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
@@ -31,7 +34,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 /**
  * Zeigt die Stärken eines Matches an
  */
-class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/ {
+class ManschaftsBewertungsPanel extends ImagePanel implements ActionListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static final long serialVersionUID = 1835093736247065469L;
@@ -259,6 +262,16 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
     //~ Methods ------------------------------------------------------------------------------------
 
 
+    public final void actionPerformed(ActionEvent e) {
+        final int matchid = m_clMatchKurzInfo.getMatchID();
+        HOMainFrame.instance().getOnlineWorker().getMatchlineup(m_clMatchKurzInfo.getMatchID(),
+                                                                                         m_clMatchKurzInfo.getHeimID(),
+                                                                                         m_clMatchKurzInfo.getGastID());
+        HOMainFrame.instance().getOnlineWorker().getMatchDetails(m_clMatchKurzInfo.getMatchID());
+        RefreshManager.instance().doReInit();
+        HOMainFrame.instance().showMatch(matchid);
+    }
+
     final void clear() {
         m_clHeimTeamName.setText(" ");
         m_clGastTeamName.setText(" ");
@@ -302,7 +315,7 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
         m_clGastLeftAtt.setIcon(null);
     }
 
-    final void refresh(MatchKurzInfo info,Matchdetails details) {
+    final void refresh(MatchKurzInfo info, Matchdetails details) {
         m_clMatchKurzInfo = info;
 
         //Teams

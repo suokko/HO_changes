@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.ZipHelper;
@@ -83,9 +82,7 @@ public final class BackupDialog extends JDialog implements ActionListener{
 	private JScrollPane getList(){
 		
 		File dbDirectory = new File(User.getCurrentUser().getDBPath());
-		ExampleFileFilter filter = new ExampleFileFilter("zip");
-		filter.setIgnoreDirectories(true);
-		File[] files = dbDirectory.listFiles(filter);
+		File[] files = dbDirectory.listFiles(new ZipFileFilter());
 		list = new JList(files);
 		
         JScrollPane scroll = new JScrollPane(list);

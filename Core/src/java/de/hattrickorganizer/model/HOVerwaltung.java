@@ -217,7 +217,7 @@ public class HOVerwaltung {
         return m_clInstance;
     }
 
-    public void setResource(String pfad) {
+    public void setResource(String pfad, ClassLoader loader) {
         //Die Properies-Endung entfernen!
         //pfad = pfad.substring ( 0, pfad.indexOf ( ".properties" ) );
 
@@ -243,7 +243,7 @@ public class HOVerwaltung {
            {
          */
         m_clResource = new java.util.Properties();
-        final ClassLoader loader = this.getClass().getClassLoader();
+
         try {
             m_clResource.load(loader.getResourceAsStream("sprache/" + pfad + ".properties"));
         } catch (Exception e) {

@@ -4,7 +4,6 @@ package de.hattrickorganizer.tools.backup;
 import java.io.File;
 import java.util.Calendar;
 
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -58,9 +57,7 @@ public class BackupHelper {
      */
 	 private static void deleteOldFiles(File dbDirectory){
 			 File toDelete = null;
-			 ExampleFileFilter filter = new ExampleFileFilter("zip");
-			 filter.setIgnoreDirectories(true);
-			 File[] files = dbDirectory.listFiles(filter); 
+			 File[] files = dbDirectory.listFiles(new ZipFileFilter()); 
 			 if(files.length>User.getCurrentUser().getBackupLevel()){
 				 for (int i = 0; i < files.length; i++) {
 					if(i == 0 || (toDelete != null && toDelete.lastModified() > files[i].lastModified())){
@@ -69,6 +66,7 @@ public class BackupHelper {
 				}
 				if (toDelete != null)
 					toDelete.delete();
+				deleteOldFiles(dbDirectory);
 			 }
 		  }
 	 

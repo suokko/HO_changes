@@ -10,8 +10,10 @@ import de.hattrickorganizer.gui.model.UserColumnFactory;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-class UserColumnsTable extends AbstractTable {
-	final static String TABLENAME = "USERCOLUMNS";
+public class UserColumnsTable extends AbstractTable {
+
+	/** tablename **/
+	public final static String TABLENAME = "USERCOLUMNS";
 
 	protected UserColumnsTable(JDBCAdapter  adapter){
 		super(TABLENAME, adapter);
@@ -28,7 +30,7 @@ class UserColumnsTable extends AbstractTable {
 	}
 
 
-	void saveModel(HOColumnModel model){
+	public void saveModel(HOColumnModel model){
 
 		adapter.executeUpdate("DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN "+(model.getId()*1000)+" AND "+((model.getId()+1)*1000));
 
@@ -66,7 +68,7 @@ class UserColumnsTable extends AbstractTable {
 		}
 	}
 
-	void insertDefault(HOColumnModel model){
+	public void insertDefault(HOColumnModel model){
 
 		adapter.executeUpdate("DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN "+(model.getId()*1000)+" AND "+((model.getId()+1)*1000));
 
@@ -100,7 +102,7 @@ class UserColumnsTable extends AbstractTable {
 			values.delete(0,values.length());
 		}
 	}
-	void loadModel(HOColumnModel model){
+	public void loadModel(HOColumnModel model){
 		int modelIndex 	= 0;
 		int tableIndex 	= 0;
 		int width		= 10;
