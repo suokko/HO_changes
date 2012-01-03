@@ -3,27 +3,27 @@
   <property>
     <datei>languages.properties</datei>
     <lang_id>-1</lang_id>
-    <version>1.6</version>
+    <version>1.7</version>
   </property>
   <property>
     <datei>Deutsch.properties</datei>
     <lang_id>1</lang_id>
-    <version>4.1</version>
+    <version>4.2</version>
   </property>
   <property>
     <datei>English.properties</datei>
     <lang_id>2</lang_id>
-    <version>4.1</version>
+    <version>4.3</version>
   </property>
   <property>
     <datei>Catalan.properties</datei>
     <lang_id>3</lang_id>
-    <version>3.9</version>
+    <version>4.0</version>
   </property>
   <property>
     <datei>Czech.properties</datei>
     <lang_id>4</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>Danish.properties</datei>
@@ -48,7 +48,7 @@
   <property>
     <datei>Norsk.properties</datei>
     <lang_id>9</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>Polish.properties</datei>
@@ -58,7 +58,7 @@
   <property>
     <datei>Portugues.properties</datei>
     <lang_id>11</lang_id>
-    <version>4.1</version>
+    <version>4.2</version>
   </property>
   <property>
     <datei>Romanian.properties</datei>
@@ -98,7 +98,7 @@
   <property>
     <datei>Bulgarian.properties</datei>
     <lang_id>19</lang_id>
-    <version>3.7</version>
+    <version>3.8</version>
   </property>
   <property>
     <datei>PortuguesBrasil.properties</datei>
@@ -111,6 +111,9 @@
     <version>3.8</version>
   </property>
   <property>
+  	<datei>Indonesian.properties</datei>
+  	<lang_id>22</lang_id>
+  	<version>2.0</version></property><property>
     <datei>Slovak.properties</datei>
     <lang_id>23</lang_id>
     <version>3.9</version>
@@ -118,7 +121,7 @@
   <property>
     <datei>Russian.properties</datei>
     <lang_id>24</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>Ukranian.properties</datei>
@@ -128,7 +131,7 @@
   <property>
     <datei>Turkish.properties</datei>
     <lang_id>26</lang_id>
-    <version>3.8</version>
+    <version>3.9</version>
   </property>
   <property>
     <datei>Galego.properties</datei>
@@ -153,7 +156,7 @@
   <property>
     <datei>Georgian.properties</datei>
     <lang_id>31</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
     <datei>Slovenian.properties</datei>
@@ -178,15 +181,16 @@
   <property>
   	<datei>Hangul(Korean).properties</datei> 
   	<lang_id>36</lang_id> 
-  	<version>3.6</version> 
+  	<version>3.7</version> 
   </property>
   <property>
     <datei>Persian.properties</datei>
     <lang_id>37</lang_id>
-    <version>3.6</version>
+    <version>3.7</version>
   </property>
   <property>
   	<datei>Hebrew.properties</datei>
   	<lang_id>38</lang_id>
   	<version>2.3</version></property>
+  
 </languages>
