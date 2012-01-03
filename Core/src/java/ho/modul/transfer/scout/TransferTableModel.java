@@ -11,11 +11,11 @@ import javax.swing.table.AbstractTableModel;
 import plugins.ISpielerPosition;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.gui.templates.HomegrownEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.gui.model.HomegrownEntry;
 
 /**
  * DOCUMENT ME!
