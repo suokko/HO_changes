@@ -159,7 +159,6 @@ public class HOLogger {
 
 		String msg;
 		String text;
-		String callerName = (caller != null) ? caller.getName() : "?";
 		
 		if (obj instanceof Throwable) {
 			Throwable t = (Throwable) obj;
@@ -186,12 +185,12 @@ public class HOLogger {
 			return;
 		}
 
-		System.out.println(msg + callerName + ": " + text);
+		System.out.println(msg + ((caller != null) ? caller.getSimpleName() : "?") + ": " + text);
 
 		if (logWriter != null) {
 			try {
 				Date d = new Date();
-				String txt = (sdf.format(d) + msg + callerName + ": " + text + "\r\n");
+				String txt = (sdf.format(d) + msg + ((caller != null) ? caller.getName() : "?") + ": " + text + "\r\n");
 				logWriter.write(txt);
 				logWriter.flush();
 			} catch (Exception e) {
