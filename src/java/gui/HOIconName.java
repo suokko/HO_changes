@@ -94,4 +94,6 @@ public interface HOIconName {
 	public static final String TRANSFER_IN = "transfer.in";
 	public static final String TRANSFER_OUT = "transfer.out";
 	
+	public static final String STATISTICS = "statistics";
+	
 }
