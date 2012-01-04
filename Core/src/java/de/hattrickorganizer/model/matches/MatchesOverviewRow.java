@@ -22,8 +22,8 @@ public final class MatchesOverviewRow {
 	private int homeGoals;
 	private int awayGoals;
 	private String description;
-	private int homeColumn;
-	private int awayColumn;
+	private String homeColumn;
+	private String awayColumn;
 	
 	public MatchesOverviewRow(String description, int type){
 		this.description = description;
@@ -40,21 +40,21 @@ public final class MatchesOverviewRow {
 	private void setColumn(int type){
 		switch(type){
 		case TYPE_TACTICS:
-			homeColumn = 29;
-			awayColumn = 16;
+			homeColumn = "HeimTacticType";
+			awayColumn = "GastTacticType";
 			break;
 		case TYPE_MOT:
-			homeColumn = 19;
-			awayColumn = 6;
+			homeColumn = "HeimEinstellung";
+			awayColumn = "GastEinstellung";
 			break;
 		case TYPE_WEATHER:
-			homeColumn = 31;
-			awayColumn = 31;
+			homeColumn = "WetterId";
+			awayColumn = "WetterId";
 			break;
 		}
 	}
 	
-	public int getColumnIndex(boolean home){
+	public String getColumnName(boolean home){
 		return home?homeColumn:awayColumn;
 	}
 	
