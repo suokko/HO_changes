@@ -6,12 +6,13 @@
  */
 package de.hattrickorganizer.logik.xml;
 
+import ho.modul.series.model.LigaTabelle;
+import ho.modul.series.model.LigaTabellenEintrag;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.hattrickorganizer.model.series.LigaTabelle;
-import de.hattrickorganizer.model.series.LigaTabellenEintrag;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.xml.XMLManager;
 
