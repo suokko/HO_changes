@@ -16,7 +16,8 @@ import de.hattrickorganizer.tools.HOLogger;
 public final class PluginManager {
 	private static String HOPLUGINS = "hoplugins";
 	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
-	private static int[] deprecatedlist = new int[0];//{25/*Transfer-Plugin*/};
+	private static int[] deprecatedlist = {1 //MatchesOverview
+		/* 25Transfer-Plugin*/};
 	public static String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator + HOPLUGINS;
 	
 	
