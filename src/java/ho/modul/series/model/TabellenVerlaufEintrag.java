@@ -4,7 +4,7 @@
  *
  * Created on 13. Oktober 2003, 07:47
  */
-package de.hattrickorganizer.model.series;
+package ho.modul.series.model;
 
 /**
  * DOCUMENT ME!

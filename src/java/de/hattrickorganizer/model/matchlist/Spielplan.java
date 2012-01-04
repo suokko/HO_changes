@@ -6,6 +6,11 @@
  */
 package de.hattrickorganizer.model.matchlist;
 
+import ho.modul.series.model.LigaTabelle;
+import ho.modul.series.model.LigaTabellenEintrag;
+import ho.modul.series.model.TabellenVerlaufEintrag;
+import ho.modul.series.model.Tabellenverlauf;
+
 import java.sql.Timestamp;
 import java.util.Vector;
 
@@ -13,10 +18,6 @@ import plugins.ILigaTabelle;
 import plugins.ILigaTabellenEintrag;
 import plugins.IPaarung;
 import plugins.ITabellenverlauf;
-import de.hattrickorganizer.model.series.LigaTabelle;
-import de.hattrickorganizer.model.series.LigaTabellenEintrag;
-import de.hattrickorganizer.model.series.TabellenVerlaufEintrag;
-import de.hattrickorganizer.model.series.Tabellenverlauf;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 

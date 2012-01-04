@@ -1475,7 +1475,7 @@ public class DBZugriff {
 	 * @return
 	 */
 	public MatchesOverviewRow[] getMatchesOverviewValues(int matchtype) {
-		return ((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).getMatchesOverviewValues(matchtype);
+		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getMatchesOverviewValues(matchtype);
 	}
 	
 	/**
