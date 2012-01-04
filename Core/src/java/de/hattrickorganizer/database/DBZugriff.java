@@ -202,6 +202,7 @@ public class DBZugriff {
 		tables.put(UserConfigurationTable.TABLENAME, new UserConfigurationTable(adapter));
 		tables.put(SpielerSkillupTable.TABLENAME, new SpielerSkillupTable(adapter));
 		tables.put(MatchSubstitutionTable.TABLENAME, new MatchSubstitutionTable(adapter));
+		tables.put(MatchesOverviewQuery.KEY, new MatchesOverviewQuery(adapter));
 
 	}
 
@@ -1091,7 +1092,7 @@ public class DBZugriff {
 	}
 	
 	public int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
-		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
+		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
 	}
 	/**
 	 * speichert die Matches
