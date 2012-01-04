@@ -288,7 +288,7 @@ class MatchesOverviewQuery extends AbstractTable {
 	private void setRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause,boolean home){
 		for (int i = 1; i < rows.size(); i++) {
 			if(rows.get(i).getTypeValue() > Integer.MIN_VALUE){
-				String whereSpecial = " AND "+columns[rows.get(i).getColumnIndex(home)].getColumnName()+" = "+rows.get(i).getTypeValue() ;
+				String whereSpecial = " AND "+rows.get(i).getColumnName(home)+" = "+rows.get(i).getTypeValue() ;
 				setMatchesOverviewRow(rows.get(i), whereClause+whereSpecial,home);
 			}
 		}
