@@ -2,6 +2,7 @@ package de.hattrickorganizer.database;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import plugins.IMatchKurzInfo;
@@ -14,7 +15,6 @@ import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 public class StatisticQuery {
 
@@ -112,14 +112,17 @@ public class StatisticQuery {
 		ArenaStatistikModel arenamodel = null;
 		String sql = null;
 		ResultSet rs = null;
-		final Vector<ArenaStatistikModel> liste = new Vector<ArenaStatistikModel>();
+		final ArrayList<ArenaStatistikModel> liste = new ArrayList<ArenaStatistikModel>();
 		final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		int maxFans = 0;
 		int maxArenaGroesse = 0;
 
 		try {
-			sql = ("SELECT " + MatchesKurzInfoTable.TABLENAME + ".* FROM " + MatchesKurzInfoTable.TABLENAME + " INNER JOIN  " + MatchDetailsTable.TABLENAME + " on " + MatchesKurzInfoTable.TABLENAME + ".matchid = " + MatchDetailsTable.TABLENAME + ".matchid ");
-			sql += (" WHERE  Arenaname in (SELECT DISTINCT Stadionname as Arenaname FROM " + StadionTable.TABLENAME + ") AND " + MatchDetailsTable.TABLENAME + ".HeimID = " + teamId + " AND Status=" + IMatchKurzInfo.FINISHED);
+			sql = "SELECT " + MatchDetailsTable.TABLENAME + ".*,";
+			sql += MatchesKurzInfoTable.TABLENAME + ".MatchTyp, ";
+			sql += MatchesKurzInfoTable.TABLENAME + ".status ";
+			sql += " FROM " + MatchesKurzInfoTable.TABLENAME + " INNER JOIN  " + MatchDetailsTable.TABLENAME + " on " + MatchesKurzInfoTable.TABLENAME + ".matchid = " + MatchDetailsTable.TABLENAME + ".matchid ";
+			sql += " WHERE  Arenaname in (SELECT DISTINCT Stadionname as Arenaname FROM " + StadionTable.TABLENAME + ") AND " + MatchDetailsTable.TABLENAME + ".HeimID = " + teamId + " AND Status=" + IMatchKurzInfo.FINISHED;
 
 			//Matchtypen
 			switch (matchtyp) {
@@ -159,46 +162,36 @@ public class StatisticQuery {
 			while (rs.next()) {
 				//Paarung auslesen
 				arenamodel = new de.hattrickorganizer.gui.model.ArenaStatistikModel();
-				arenamodel.setMatchDate(rs.getString("MatchDate"));
+				arenamodel.setMatchDate(rs.getString("SpielDatum"));
 				arenamodel.setGastName(DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
 				arenamodel.setHeimName(DBZugriff.deleteEscapeSequences(rs.getString("HeimName")));
 				arenamodel.setMatchID(rs.getInt("MatchID"));
 				arenamodel.setGastTore(rs.getInt("GastTore"));
 				arenamodel.setHeimTore(rs.getInt("HeimTore"));
-				arenamodel.setMatchID(rs.getInt("MatchID"));
 				arenamodel.setMatchTyp(rs.getInt("MatchTyp"));
 				arenamodel.setMatchStatus(rs.getInt("Status"));
 				arenamodel.setTerraces(rs.getInt("soldTerraces"));
 				arenamodel.setBasics(rs.getInt("soldBasic"));
 				arenamodel.setRoof(rs.getInt("soldRoof"));
 				arenamodel.setVip(rs.getInt("soldVIP"));
+				arenamodel.setZuschaueranzahl(rs.getInt("Zuschauer"));
+				arenamodel.setWetter(rs.getInt("WetterId"));
 
 				//Adden
 				liste.add(arenamodel);
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(StatisticQuery.class, "DB.getArenaStatistikModel 1 Error" + e);
-			//HOLogger.instance().log(MarketQuery.class,e);
+			HOLogger.instance().log(StatisticQuery.class, e);
 		}
 
-		arenamodels = new ArenaStatistikModel[liste.size()];
-		Helper.copyVector2Array(liste, arenamodels);
+		arenamodels = liste.toArray(new ArenaStatistikModel[liste.size()]);
+		
 
 		// Jetzt noch die Arenadate für die Zeit holen
 		for (int i = 0; i < arenamodels.length; i++) {
 			final int hrfid = DBZugriff.instance().getHRFID4Date(arenamodels[i].getTimestampMatchDate());
 
 			try {
-				//Zuschauer
-				sql = "SELECT Zuschauer, WetterId FROM " + MatchDetailsTable.TABLENAME + " WHERE MatchID=" + arenamodels[i].getMatchID();
-				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
-
-				if (rs.first()) {
-					arenamodels[i].setZuschaueranzahl(rs.getInt("Zuschauer"));
-					arenamodels[i].setWetter(rs.getInt("WetterId"));
-				}
-				rs.close();
-
 				//Stadiongrösse
 				sql = "SELECT GesamtGr FROM " + StadionTable.TABLENAME + " WHERE HRF_ID=" + hrfid;
 				rs = DBZugriff.instance().getAdapter().executeQuery(sql);
@@ -248,7 +241,6 @@ public class StatisticQuery {
 				}
 				rs.close();
 			} catch (Exception e) {
-				HOLogger.instance().warning(StatisticQuery.class, "DB.getArenaStatistikModel 2 Error" + e);
 				HOLogger.instance().log(StatisticQuery.class, e);
 			}
 		}
@@ -392,9 +384,9 @@ public class StatisticQuery {
 			ResultSet rs =
 				DBZugriff.instance().getAdapter().executeQuery(
 					"SELECT FINANZEN.*, VEREIN.Fans FROM FINANZEN, VEREIN where FINANZEN.HRF_ID="
-						+ de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getID()
+						+ HOVerwaltung.instance().getModel().getID()
 						+ " AND VEREIN.HRF_ID="
-						+ de.hattrickorganizer.model.HOVerwaltung.instance().getModel().getID());
+						+ HOVerwaltung.instance().getModel().getID());
 
 			if (rs.first()) {
 				final double[] tempwerte = new double[anzahlSpalten];
@@ -483,7 +475,6 @@ public class StatisticQuery {
 				}
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(StatisticQuery.class, "DatenbankZugriff.getFinanzen4Statistik " + e);
 			HOLogger.instance().log(StatisticQuery.class, e);
 		}
 
@@ -531,7 +522,7 @@ public class StatisticQuery {
 					}
 				}
 			} catch (Exception e) {
-				HOLogger.instance().log(StatisticQuery.class, "DatenbankZugriff.getSpielerFinanzDaten4Statistik " + e);
+				HOLogger.instance().log(StatisticQuery.class, e);
 			}
 		}
 
@@ -580,7 +571,7 @@ public class StatisticQuery {
 					}
 				}
 			} catch (Exception e) {
-				HOLogger.instance().log(StatisticQuery.class, "DatenbankZugriff.getMarktwert4Statistik " + e);
+				HOLogger.instance().log(StatisticQuery.class, e);
 			}
 		}
 

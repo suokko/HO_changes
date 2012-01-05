@@ -35,6 +35,7 @@ public class ArenaStatistikTable extends JTable {
         super();
         setDefaultRenderer(Object.class, new SpielerTableRenderer());
         setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+        initModel(matchtyp);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -67,7 +68,7 @@ public class ArenaStatistikTable extends JTable {
      * @param matchtypen matches typ (e.g. own league matches only)
      */
     public final void refresh(int matchtypen) {
-        initModel(matchtypen);
+    	reInitModel(matchtypen);
         repaint();
     }
 
@@ -79,15 +80,12 @@ public class ArenaStatistikTable extends JTable {
     private void initModel(int matchtyp) {
         setOpaque(false);
 
-        m_clTableModel = DBZugriff.instance().getArenaStatistikModel(matchtyp);
-        m_clTableSorter = new TableSorter(m_clTableModel, 5, -1);
-
+        reInitModel(matchtyp);
+        
         final ToolTipHeader header = new ToolTipHeader(getColumnModel());
         header.setToolTipStrings(m_clTableModel.m_sToolTipStrings);
         header.setToolTipText("");
         setTableHeader(header);
-
-        setModel(m_clTableSorter);
 
         final TableColumnModel tableColumnModel = getColumnModel();
 
@@ -122,4 +120,11 @@ public class ArenaStatistikTable extends JTable {
 
         m_clTableSorter.initsort();
     }
+    
+    private void reInitModel(int matchtyp) {
+        m_clTableModel = DBZugriff.instance().getArenaStatistikModel(matchtyp);
+        m_clTableSorter = new TableSorter(m_clTableModel, 5, -1);
+        setModel(m_clTableSorter);
+    }
+    
 }
