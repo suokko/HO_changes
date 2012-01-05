@@ -199,29 +199,7 @@ class MatchesOverviewQuery extends AbstractTable {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		StringBuilder whereClause = new StringBuilder(100);
 		whereClause.append(" AND ").append(home?"HEIMID=":"GASTID=").append(teamId);
-		switch(matchtype){
-			case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-				whereClause.append(" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
-				whereClause.append(" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
-				whereClause.append(" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
-			break;
-
-		case ISpielePanel.NUR_EIGENE_POKALSPIELE :
-			whereClause.append(" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
-			break;
-
-		case ISpielePanel.NUR_EIGENE_LIGASPIELE :
-			whereClause.append(" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
-			break;
-
-		case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-			whereClause.append(" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
-			whereClause.append(" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
-			whereClause.append(" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
-			whereClause.append(" OR MatchTyp=" + IMatchLineup.INT_TESTSPIEL + " )");
-			break;
-		}
-		
+		whereClause.append(getMatchTypWhereClause(matchtype));
 		setMatchesOverviewRow(rows.get(0), whereClause.toString(),home);
 		setFormationRows(rows,whereClause, home);
 		setRows(rows, whereClause, home);

@@ -53,6 +53,10 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			HOVerwaltung.instance().getLanguageString("Zuschauer"),
 			// Auslastung
 			"%",
+			HOVerwaltung.instance().getLanguageString("Stehplaetze"),
+			HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
+			HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
+			HOVerwaltung.instance().getLanguageString("Logen"),
 			// Fananzahl
 			HOVerwaltung.instance().getLanguageString("Fans"),
 			HOVerwaltung.instance().getLanguageString("Fans") + " / "
@@ -62,7 +66,9 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			// Stimmung
 			HOVerwaltung.instance().getLanguageString("Fans"),
 			// LigaPlatz
-			HOVerwaltung.instance().getLanguageString("Platzierung") };
+			HOVerwaltung.instance().getLanguageString("Platzierung")
+
+			};
 
     protected Object[][] m_clData;
 
@@ -76,6 +82,10 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			HOVerwaltung.instance().getLanguageString("Aktuell"), // Stadiongroesse
 			HOVerwaltung.instance().getLanguageString("Zuschauer"), // Zuschauer
 			"%", // Auslastung
+			HOVerwaltung.instance().getLanguageString("Stehplaetze"),
+			HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
+			HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
+			HOVerwaltung.instance().getLanguageString("Logen"),
 			HOVerwaltung.instance().getLanguageString("Fans"), // Fananzahl
 			HOVerwaltung.instance().getLanguageString("Fans") + " / "
 					+ HOVerwaltung.instance().getLanguageString("Wochen"),
@@ -83,6 +93,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 					+ HOVerwaltung.instance().getLanguageString("Fans"),
 			HOVerwaltung.instance().getLanguageString("Fans"), // Stimmung
 			HOVerwaltung.instance().getLanguageString("Platzierung") // LigaPlatz
+			
     };
     private ArenaStatistikModel[] m_clMatches;
     private int m_iMaxArenaGroesse;
@@ -282,8 +293,28 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    		(int) ((float) match.getZuschaueranzahl() / (float) match.getArenaGroesse() * 1000),
 			    		0, 1000, 1, 0.1, background, new Color(0, 120, 120), " %");
 
+				  //Ligaplatz
+			    m_clData[i][9] = new ColorLabelEntry(match.getTerraces()+"",
+			                                          ColorLabelEntry.FG_STANDARD, background,
+			                                          SwingConstants.CENTER);
+			    
+			  //Ligaplatz
+			    m_clData[i][10] = new ColorLabelEntry(match.getBasics()+"",
+			                                          ColorLabelEntry.FG_STANDARD, background,
+			                                          SwingConstants.CENTER);
+			    
+			  //Ligaplatz
+			    m_clData[i][11] = new ColorLabelEntry(match.getRoof()+"",
+			                                          ColorLabelEntry.FG_STANDARD, background,
+			                                          SwingConstants.CENTER);
+			    
+			  //Ligaplatz
+			    m_clData[i][12] = new ColorLabelEntry(match.getVip()+"",
+			                                          ColorLabelEntry.FG_STANDARD, background,
+			                                          SwingConstants.CENTER);
+			    
 			    //Fananzahl
-			    m_clData[i][9] = new ProgressbarTableEntry(match.getFans(), 0, m_iMaxFananzahl, 0, 1, background, new Color(80, 80, 80), "");
+			    m_clData[i][13] = new ProgressbarTableEntry(match.getFans(), 0, m_iMaxFananzahl, 0, 1, background, new Color(80, 80, 80), "");
 
 			    //Fanzuwachs pro Woche
 			    float fanzuwachs = 0;
@@ -293,25 +324,25 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			                     - m_clMatches[i + 1].getMatchDateAsTimestamp().getTime());
 			    }
 
-			    m_clData[i][10] = new ColorLabelEntry(fanzuwachs, background, false,false,0);
+			    m_clData[i][14] = new ColorLabelEntry(fanzuwachs, background, false,false,0);
 
 			    //Quotione  Zuschauer/Fans
-			    m_clData[i][11] = new ColorLabelEntry(Helper.round((float) match.getZuschaueranzahl()
+			    m_clData[i][15] = new ColorLabelEntry(Helper.round((float) match.getZuschaueranzahl()
 						/ (float) match.getFans(), 2) + "", ColorLabelEntry.FG_STANDARD, background,
 						SwingConstants.RIGHT);
 
 			    // Fanstimmung
-			    m_clData[i][12] = new ColorLabelEntry(Finanzen.getNameForLevelFans(match.getFanZufriedenheit(), match.getMatchDateAsTimestamp()),
+			    m_clData[i][16] = new ColorLabelEntry(Finanzen.getNameForLevelFans(match.getFanZufriedenheit(), match.getMatchDateAsTimestamp()),
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.LEFT);
 
 			    //Ligaplatz
-			    m_clData[i][13] = new ColorLabelEntry(match.getLigaPlatz() + ".",
+			    m_clData[i][17] = new ColorLabelEntry(match.getLigaPlatz() + ".",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
+			    
 			}
 		} catch (Exception e) {
-			HOLogger.instance().error(getClass(), "Error initialising arena stats: " + e);
 			HOLogger.instance().error(getClass(), e);
 		}
     }
