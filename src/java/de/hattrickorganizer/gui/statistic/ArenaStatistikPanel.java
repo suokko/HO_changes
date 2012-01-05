@@ -71,7 +71,7 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
         m_jtArenaStatistikTable.addKeyListener(this);
 
         final JScrollPane scrollpane = new JScrollPane(m_jtArenaStatistikTable);
-        scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+        //scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
 
         add(scrollpane, BorderLayout.CENTER);
     }
@@ -108,7 +108,7 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
      * TODO Missing Method Documentation
      */
     public final void initStatistik() {
-        m_jtArenaStatistikTable.refresh(((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId());
+       // m_jtArenaStatistikTable.refresh(((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId());
     }
 
     /**
