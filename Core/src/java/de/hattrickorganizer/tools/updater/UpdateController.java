@@ -286,6 +286,7 @@ public final class UpdateController {
 							.instance().getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
+				// updateHO(version.getVersion());
 				updateHO(MyConnector.getFinalSite() +"/" + version.getZipFileName());
 			}
 		} else {
@@ -341,7 +342,7 @@ public final class UpdateController {
 		final VersionInfo vi = MyConnector.instance().getLatestBetaVersion();
 		final int currRev = HOMainFrame.getRevisionNumber();
 		if (vi != null && vi.isValid()
-				&& (vi.getVersion() >= HOMainFrame.VERSION || (currRev > 1 && currRev < vi.getBuild()))) {
+				&& (vi.getVersion() > HOMainFrame.VERSION || (vi.getVersion() == HOMainFrame.VERSION && currRev > 1 && currRev < vi.getBuild()))) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), "Update your HO to this "
 					+ (vi.isBeta() ? "beta " : "") + "version:" + "\n\nVersion: " + vi.getVersionString()
 					+ "\nReleased: " + vi.getReleaseDate() + "\n\n"

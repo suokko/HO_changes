@@ -42,7 +42,7 @@ public class VersionInfo {
 		String fn = "HO_";
 		fn += (DECF.format(version).replace(".", ""));
 		if (beta) {
-			fn += "_BETA_trunk";
+			fn += "_BETA";
 		}
 		if (build > 0) {
 			fn += ("_r" + build);
