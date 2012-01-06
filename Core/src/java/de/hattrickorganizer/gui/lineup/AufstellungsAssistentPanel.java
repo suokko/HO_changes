@@ -6,12 +6,10 @@ import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -21,7 +19,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -36,7 +33,6 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -53,12 +49,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-	private JButton m_jbElfmeter = new JButton(new ImageIcon(ImageUtilities.changeColor(ThemeManager.loadImage("gui/bilder/Ball.png"),
-			Color.red,
-			Color.white)
-			.getScaledInstance(24,
-					24,
-					Image.SCALE_SMOOTH)));
+	private JButton m_jbElfmeter = new JButton(ThemeManager.getScaledIcon(HOIconName.BALL,24,24));
 	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
 	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
 	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));

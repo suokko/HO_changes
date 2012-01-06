@@ -141,61 +141,7 @@ final class MatchDetailsTable extends AbstractTable {
 		return details;
 	}
 	
-	Matchdetails[] getMatchDetailsFromArenaId(int arenaId) {
-		ArrayList<Matchdetails> list = new ArrayList<Matchdetails>();
-		try {
-			String sql = "SELECT TOP 30 * FROM "+getTableName()+" WHERE ArenaId=" + arenaId+" ORDER BY MATCHID desc";
-			ResultSet rs = adapter.executeQuery(sql);
 
-			while (rs.next()) {
-				final Matchdetails details = new Matchdetails();
-				details.setArenaID(rs.getInt("ArenaId"));
-				details.setArenaName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("ArenaName")));
-				details.setRegionId(rs.getInt("RegionID"));
-				details.setFetchDatum(rs.getTimestamp("Fetchdatum"));
-				details.setGastId(rs.getInt("GastId"));
-				details.setGastName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("GastName")));
-				details.setGuestEinstellung(rs.getInt("GastEinstellung"));
-				details.setGuestGoals(rs.getInt("GastTore"));
-				details.setGuestLeftAtt(rs.getInt("GastLeftAtt"));
-				details.setGuestLeftDef(rs.getInt("GastLeftDef"));
-				details.setGuestMidAtt(rs.getInt("GastMidAtt"));
-				details.setGuestMidDef(rs.getInt("GastMidDef"));
-				details.setGuestMidfield(rs.getInt("GastMidfield"));
-				details.setGuestRightAtt(rs.getInt("GastRightAtt"));
-				details.setGuestRightDef(rs.getInt("GastRightDef"));
-				details.setGuestTacticSkill(rs.getInt("GastTacticSkill"));
-				details.setGuestTacticType(rs.getInt("GastTacticType"));
-				details.setHeimId(rs.getInt("HeimId"));
-				details.setHeimName(de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("HeimName")));
-				details.setHomeEinstellung(rs.getInt("HeimEinstellung"));
-				details.setHomeGoals(rs.getInt("HeimTore"));
-				details.setHomeLeftAtt(rs.getInt("HeimLeftAtt"));
-				details.setHomeLeftDef(rs.getInt("HeimLeftDef"));
-				details.setHomeMidAtt(rs.getInt("HeimMidAtt"));
-				details.setHomeMidDef(rs.getInt("HeimMidDef"));
-				details.setHomeMidfield(rs.getInt("HeimMidfield"));
-				details.setHomeRightAtt(rs.getInt("HeimRightAtt"));
-				details.setHomeRightDef(rs.getInt("HeimRightDef"));
-				details.setHomeTacticSkill(rs.getInt("HeimTacticSkill"));
-				details.setHomeTacticType(rs.getInt("HeimTacticType"));
-				details.setMatchID(rs.getInt("MATCHID"));
-				details.setSpielDatum(rs.getTimestamp("SpielDatum"));
-				details.setWetterId(rs.getInt("WetterId"));
-				details.setZuschauer(rs.getInt("Zuschauer"));
-				details.setSoldTerraces(rs.getInt("soldTerraces"));
-				details.setSoldBasic(rs.getInt("soldBasic"));
-				details.setSoldRoof(rs.getInt("soldRoof"));
-				details.setSoldVIP(rs.getInt("soldVIP"));
-				list.add(details);
-			}
-		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.getMatchDetails : " + e);
-			HOLogger.instance().log(getClass(),e);
-		}
-
-		return list.toArray(new Matchdetails[list.size()]);
-	}
 	
 	/**
 	 * speichert die MatchDetails

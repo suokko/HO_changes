@@ -2,6 +2,8 @@
 package de.hattrickorganizer.gui.templates;
 
 //import java.awt.Color;
+import gui.HOIconName;
+
 import java.awt.Color;
 import java.awt.Image;
 
@@ -32,11 +34,7 @@ public class TorLabelEntry implements TableEntry {
 
     public TorLabelEntry(int tore) {
         if (BALLIMAGEICON == null) {
-            BALLIMAGEICON = new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/Ball.png"),
-                                                                                                 Color.RED)
-                                                                           .getScaledInstance(14,
-                                                                                              14,
-                                                                                              Image.SCALE_SMOOTH));
+            BALLIMAGEICON = ThemeManager.getScaledIcon(HOIconName.BALL, 14, 14);
         }
 
         setTore(tore);
