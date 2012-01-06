@@ -344,7 +344,7 @@ public class ArenaStatistikModel {
         return m_iZuschaueranzahl;
     }
 
-    public int getTerraces() {
+    public int getSoldTerraces() {
 		return terraces;
 	}
 
@@ -352,7 +352,7 @@ public class ArenaStatistikModel {
 		this.terraces = terraces;
 	}
 
-	public int getBasics() {
+	public int getSoldBasics() {
 		return basics;
 	}
 
@@ -360,7 +360,7 @@ public class ArenaStatistikModel {
 		this.basics = basics;
 	}
 
-	public int getRoof() {
+	public int getSoldRoof() {
 		return roof;
 	}
 
@@ -368,7 +368,7 @@ public class ArenaStatistikModel {
 		this.roof = roof;
 	}
 
-	public int getVip() {
+	public int getSoldVip() {
 		return vip;
 	}
 

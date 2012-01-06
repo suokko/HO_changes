@@ -294,22 +294,22 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    		0, 1000, 1, 0.1, background, new Color(0, 120, 120), " %");
 
 				  //Ligaplatz
-			    m_clData[i][9] = new ColorLabelEntry(match.getTerraces()+"",
+			    m_clData[i][9] = new ColorLabelEntry(match.getSoldTerraces()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
 			    
 			  //Ligaplatz
-			    m_clData[i][10] = new ColorLabelEntry(match.getBasics()+"",
+			    m_clData[i][10] = new ColorLabelEntry(match.getSoldBasics()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
 			    
 			  //Ligaplatz
-			    m_clData[i][11] = new ColorLabelEntry(match.getRoof()+"",
+			    m_clData[i][11] = new ColorLabelEntry(match.getSoldRoof()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
 			    
 			  //Ligaplatz
-			    m_clData[i][12] = new ColorLabelEntry(match.getVip()+"",
+			    m_clData[i][12] = new ColorLabelEntry(match.getSoldVip()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
 			    
