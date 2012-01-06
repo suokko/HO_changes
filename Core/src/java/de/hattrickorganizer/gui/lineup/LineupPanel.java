@@ -302,12 +302,7 @@ public class LineupPanel extends de.hattrickorganizer.gui.templates.ImagePanel
         verticalSplitPaneLow = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
 
         final JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("",
-                          new ImageIcon(ImageUtilities.makeColorTransparent(ThemeManager.loadImage("gui/bilder/Ball.png"),
-                                                                                               Color.red)
-                                                                         .getScaledInstance(13, 13,
-                                                                                            Image.SCALE_SMOOTH)),
-                          initButtons());
+        tabbedPane.addTab("",ThemeManager.getScaledIcon(HOIconName.BALL, 13, 13), initButtons());
         tabbedPane.addTab("",ThemeManager.getIcon(HOIconName.DISK),initAufstellungsHistory());
         horizontalLeftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
                                                  initSpielerPositionen(), initSpielerTabelle());

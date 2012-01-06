@@ -42,9 +42,8 @@ class ControlPanel extends JPanel implements ActionListener{
 	private JFormattedTextField terracesPercentField = new JFormattedTextField( new DecimalFormat  ( "###.# %" ));
 	private JFormattedTextField roofPercentField = new JFormattedTextField( new DecimalFormat  ( "###.# %" ));
 	
-	private JFormattedTextField factorMaxField = new JFormattedTextField( new DecimalFormat  ( "##" ));
 	private JFormattedTextField factorNormalField = new JFormattedTextField( new DecimalFormat  ( "##" ));
-	private JFormattedTextField factorMinField = new JFormattedTextField( new DecimalFormat  ( "##" ));
+	private JLabel exampleLabel = new JLabel("");
     final GridBagLayout layout2 = new GridBagLayout();
     final GridBagConstraints constraints2 = new GridBagConstraints();
 	
@@ -114,30 +113,22 @@ class ControlPanel extends JPanel implements ActionListener{
         m_jtfFans.setHorizontalAlignment(SwingConstants.RIGHT);
         addToLayout(m_jtfFans,1,2);
         
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Maximal"));
-        addToLayout(label,2,2);
-        setFieldProperties(factorMaxField);
-        addToLayout(factorMaxField,3,2);
-        
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Durchschnitt"));
-        addToLayout(label,4,2);
+        addToLayout(label,2,2);
         setFieldProperties(factorNormalField);
-        addToLayout(factorNormalField,5,2);
+        addToLayout(factorNormalField,3,2);
         
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Minimal"));
-        addToLayout(label,6,2);
-        setFieldProperties(factorMinField);
-        addToLayout(factorMinField,7,2);
-       
+        constraints2.gridwidth = 2;
+        addToLayout(exampleLabel,4,2);
+        constraints2.gridwidth = 1;
+
         Dimension dim = vipField.getPreferredSize();
         vipPercentField.setPreferredSize(dim);
         basicPercentField.setPreferredSize(dim);
         terracesPercentField.setPreferredSize(dim);
         roofPercentField.setPreferredSize(dim);
         
-        factorMaxField.setPreferredSize(dim);
         factorNormalField.setPreferredSize(dim);
-        factorMinField.setPreferredSize(dim);
         
         initStadium();
 	}
@@ -172,9 +163,8 @@ class ControlPanel extends JPanel implements ActionListener{
         roofPercentField.setValue(ArenaSizer.ROOF_PERCENT);
         vipPercentField.setValue(ArenaSizer.VIP_PERCENT);
         
-        factorMaxField.setValue(ArenaSizer.SUPPORTER_MAX);
     	factorNormalField.setValue(ArenaSizer.SUPPORTER_NORMAL);
-    	factorMinField.setValue(ArenaSizer.SUPPORTER_MIN);
+    	exampleLabel.setText("=> " + fans+" * "+((Number)factorNormalField.getValue()).intValue()+" = "+(fans*((Number)factorNormalField.getValue()).intValue())+" ("+ HOVerwaltung.instance().getLanguageString("Zuschauer")+" )");
         
     }
     
@@ -211,9 +201,13 @@ class ControlPanel extends JPanel implements ActionListener{
     
     int[] getModifiedSupporter(){
     	int[] supporter = new int[3];
-    	supporter[0] =  ((Number)factorMaxField.getValue()).intValue() * getSupporter();
-    	supporter[1] =  ((Number)factorMaxField.getValue()).intValue() * getSupporter();
-    	supporter[2] =  ((Number)factorMaxField.getValue()).intValue() * getSupporter();
+    	supporter[0] =  (((Number)factorNormalField.getValue()).intValue()+5) * getSupporter();
+    	supporter[1] =  ((Number)factorNormalField.getValue()).intValue() * getSupporter();
+    	supporter[2] =  (((Number)factorNormalField.getValue()).intValue()-5) * getSupporter();
+    	
+    	// the wrong place for this, only temp playCE
+    	exampleLabel.setText("=> " + m_jtfFans.getText()+" * "+((Number)factorNormalField.getValue()).intValue()+" = "+(Integer.parseInt(m_jtfFans.getText())*((Number)factorNormalField.getValue()).intValue())+" ("+ HOVerwaltung.instance().getLanguageString("Zuschauer")+" )");
+
     	return supporter;
     }
     

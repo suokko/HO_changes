@@ -1466,9 +1466,6 @@ public class DBZugriff {
 		return ((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).getMatchDetails(matchId);
 	}
 	
-	public Matchdetails[] getMatchDetailsFromArenaId(int arenaId) {
-		return ((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).getMatchDetailsFromArenaId(arenaId);
-	}
 	/**
 	 * Return match statistics (Count,Win,Draw,Loss,Goals)
 	 * @param matchtype
