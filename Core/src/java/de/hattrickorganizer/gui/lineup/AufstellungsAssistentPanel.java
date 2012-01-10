@@ -49,7 +49,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
-	private JButton m_jbElfmeter = new JButton(ThemeManager.getScaledIcon(HOIconName.BALL,24,24));
+	private JButton m_jbElfmeter = new JButton(ThemeManager.getScaledIcon(HOIconName.BUTTON_BALL,24,24));
 	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
 	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
 	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));
