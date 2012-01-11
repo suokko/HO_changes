@@ -52,7 +52,6 @@ import de.hattrickorganizer.HO;
 import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.info.InformationsPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
-import de.hattrickorganizer.gui.lineup.LineupMasterPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
 import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.gui.matches.SpielePanel;
@@ -103,7 +102,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 
 	/** enable functions for the developers */
-	private static final boolean DEVELOPER_MODE = false;
+	private static final boolean DEVELOPER_MODE = true;
 	private static HOMainFrame m_clHOMainFrame;
 
 
@@ -125,7 +124,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
 
-	private LineupMasterPanel lineupMasterPanel;
+	private LineupPanel m_jpAufstellung;
 	private InfoPanel m_jpInfoPanel;
 
 	private InformationsPanel m_jpInformation;
@@ -304,10 +303,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 //		return DEVELOPMENT;
 //	}
 
-	public static boolean isDeveloperMode() {
-		return DEVELOPER_MODE;
-	}
-	
 	/**
 	 * Getter for the singleton HOMainFrame instance.
 	 */
@@ -327,7 +322,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 
 	public LineupPanel getAufstellungsPanel() {
-		return this.lineupMasterPanel.getLineupPanel();
+		return m_jpAufstellung;
 	}
 
 	public InfoPanel getInfoPanel() {
@@ -609,10 +604,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Aufstellung
-		this.lineupMasterPanel = new LineupMasterPanel();
+		m_jpAufstellung = new LineupPanel();
 
 		if (!UserParameter.instance().tempTabAufstellung) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), this.lineupMasterPanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), m_jpAufstellung);
 		}
 
 		// Tabelle
@@ -836,7 +831,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-		if (isDeveloperMode()) {
+		if (DEVELOPER_MODE) {
 			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
 		}
 
@@ -859,19 +854,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmCreditsItem.addActionListener(this);
 		m_jmAbout.add(m_jmCreditsItem);
-
-		Action substitutionTest = new AbstractAction("Substitution test") {
-
-			public void actionPerformed(ActionEvent e) {
-				JDialog dlg = new JDialog();
-				dlg.getContentPane().add(new SubstitutionOverview());
-				dlg.setSize(new Dimension(800, 600));
-				dlg.setLocationRelativeTo(getContentPane());
-				dlg.setVisible(true);
-			}
-		};
-		// UNCOMMENT FOR Substitution test (Menu About->Substitution test)
-//		m_jmAbout.add(substitutionTest);
 
 		m_jmMenuBar.add(m_jmAbout);
 
@@ -985,8 +967,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			break;
 
 		case AUFSTELLUNG:
-			component = this.lineupMasterPanel.getLineupPanel();
-			this.lineupMasterPanel.getLineupPanel().update(); // - blaghaid
+			component = m_jpAufstellung;
+			m_jpAufstellung.update(); // - blaghaid
 			titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
 			temporaer = UserParameter.instance().tempTabAufstellung;
 			break;
@@ -1379,10 +1361,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		UserParameter parameter = UserParameter.instance();
 
 		final int[] sup = m_jpSpielerUebersicht.getDividerLocations();
-		final int[] ap = this.lineupMasterPanel.getLineupPanel().getDividerLocations();
+		final int[] ap = m_jpAufstellung.getDividerLocations();
 		final int[] sp = m_jpSpielePanel.getDividerLocations();
 		final int spa = m_jpSpielerAnalysePanel.getDividerLocation();
-		final AufstellungsAssistentPanel aap = this.lineupMasterPanel.getLineupPanel().getAufstellungsAssitentPanel();
+		final AufstellungsAssistentPanel aap = m_jpAufstellung.getAufstellungsAssitentPanel();
 		final int tsp = m_jpTransferScout.getScoutPanel().getDividerLocation();
 
 		final int locx = Math.max(getLocation().x, 0);
@@ -1392,7 +1374,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
 		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
 		parameter.bestPostWidth = Math.max(m_jpSpielerUebersicht.getBestPosWidth(),
-				this.lineupMasterPanel.getLineupPanel().getBestPosWidth());
+				m_jpAufstellung.getBestPosWidth());
 
 		parameter.aufstellungsAssistentPanel_gruppe = aap.getGruppe();
 		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getReihenfolge();
@@ -1429,7 +1411,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jpSpielerUebersicht.saveColumnOrder();
 		m_jpSpielePanel.saveColumnOrder();
-		this.lineupMasterPanel.getLineupPanel().saveColumnOrder();
+		m_jpAufstellung.saveColumnOrder();
 		m_jpSpielerAnalysePanel.saveColumnOrder();
 
 	}
