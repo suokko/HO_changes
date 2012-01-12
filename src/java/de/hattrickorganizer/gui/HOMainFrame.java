@@ -9,7 +9,6 @@ import ho.tool.ToolManager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,10 +27,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.InputMap;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -53,7 +49,6 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.info.InformationsPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
-import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.menu.DownloadDialog;
 import de.hattrickorganizer.gui.menu.HRFImport;
@@ -101,8 +96,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 
 
-	/** enable functions for the developers */
-	private static final boolean DEVELOPER_MODE = true;
+
 	private static HOMainFrame m_clHOMainFrame;
 
 
@@ -114,7 +108,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int SPIELERANALYSE = 4; // player analysis
 	public static final int STATISTIK = 5; // statistics
 	public static final int TRANSFERS = 6;
-	public static final int ARENASIZER = 7;
 	public static final int INFORMATIONEN = 8;
 
 	public static final int BUSY = 0;
@@ -168,7 +161,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(
 			HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
 	private final JMenuItem m_jmiStatistik = new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
-	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("TransferScout"));
+	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("transfers"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
 
@@ -543,46 +536,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 	}
 
-//	/**
-//	 * Checked die Sprachdatei oder Fragt nach einer passenden
-//	 */
-//	public static void checkSprachFile(String dateiname) {
-//		try {
-//			// java.net.URL resource = new
-//			// gui.vorlagen.ImagePanel().getClass().getClassLoader().getResource(
-//			// "sprache/"+dateiname+".properties" );
-//			final java.io.File sprachdatei = new java.io.File("sprache/" + dateiname + ".properties");
-//
-//			if (sprachdatei.exists()) {
-//				double sprachfileversion = 0;
-//				final java.util.Properties temp = new java.util.Properties();
-//				temp.load(new java.io.FileInputStream(sprachdatei));
-//
-//				try {
-//					sprachfileversion = Double.parseDouble(temp.getProperty("Version"));
-//				} catch (Exception e) {
-//					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
-//				}
-//
-//				if (sprachfileversion >= de.hattrickorganizer.gui.HOMainFrame.SPRACHVERSION) {
-//					HOLogger.instance().log(HOMainFrame.class, "use " + sprachdatei.getName());
-//
-//					// Alles ok!!
-//					return;
-//				}
-//				// Nicht passende Version
-//				else {
-//					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
-//				}
-//			}
-//		} catch (Exception e) {
-//			HOLogger.instance().log(HOMainFrame.class, "not use " + e);
-//		}
-//
-//		// Irgendein Fehler -> neue Datei aussuchen!
-//		// new gui.menue.optionen.InitOptionsDialog();
-//		UserParameter.instance().sprachDatei = "English";
-//	}
 
 	/**
 	 * Frame aufbauen
@@ -649,7 +602,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jpTransferScout = new TransfersPanel();
 
 		if (!UserParameter.instance().tempTabTransferscout) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TransferScout"), m_jpTransferScout);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("transfers"), m_jpTransferScout);
 		}
 
 		// Sonstiges
@@ -831,7 +784,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
 
-		if (DEVELOPER_MODE) {
+		if (DeveloperMode.DEVELOPER_MODE) {
 			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
 		}
 
@@ -999,7 +952,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		case TRANSFERS:
 			component = m_jpTransferScout;
-			titel = HOVerwaltung.instance().getLanguageString("TransferScout");
+			titel = HOVerwaltung.instance().getLanguageString("transfers");
 			temporaer = UserParameter.instance().tempTabTransferscout;
 			break;
 
@@ -1040,106 +993,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_sToRemoveTabName = removeTabName;
 	}
 
-//	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-//	// helper
-//	// ///////////////////////////////////////////////////////////////////////////////////////////////77
-//	public void startPluginModuls(SplashFrame interuptionWindow) {
-//		try {
-//			// Den Ordner mit den Plugins holen
-//			final java.io.File folder = new java.io.File("hoplugins");
-//			HOLogger.instance().log(HOMainFrame.class,
-//					folder.getAbsolutePath() + " " + folder.exists() + " " + folder.isDirectory());
-//
-//			// Filter, nur class-Datein in dem Ordner interessant
-//			final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
-//			filter.addExtension("class");
-//			filter.setDescription("Java Class File");
-//			filter.setIgnoreDirectories(true);
-//
-//			// Alle class-Dateien in den Ordner holen
-//			final java.io.File[] files = folder.listFiles(filter);
-//
-//			// Libs -> Alle Dateien durchlaufen
-//			for (int i = 0; (files != null) && (i < files.length); i++) {
-//				try {
-//					// Name der Klasse erstellen und Class-Object erstellen
-//					final String name = "hoplugins."
-//							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-//					final Class<?> fileclass = Class.forName(name);
-//					// Das Class-Object definiert kein Interface ...
-//					if (!fileclass.isInterface()) {
-//						// ... und ist von ILib abgeleitet
-//						if (plugins.ILib.class.isAssignableFrom(fileclass)) {
-//							// Object davon erstellen und starten
-//							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
-//
-//							// Plugin im Vector gespeichert
-//							m_vPlugins.add(modul);
-//							HOLogger.instance().log(HOMainFrame.class,
-//									" Starte " + files[i].getName() + "  (init MiniModel)");
-//							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
-//							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
-//
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"+ " + files[i].getName() + " gestartet als lib");
-//						} else {
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"- " + files[i].getName() + " nicht von ILib abgeleitet");
-//						}
-//					} else {
-//						HOLogger.instance().log(HOMainFrame.class,
-//								"- " + files[i].getName() + " ist Interface");
-//					}
-//				} catch (Throwable e2) {
-//					HOLogger.instance().log(HOMainFrame.class,
-//							"- " + files[i].getName() + " wird übersprungen: " + e2);
-//					// HOLogger.instance().log(HOMainFrame.class, e2);
-//				}
-//			}
-//
-//			// Plugins -> Alle Dateien durchlaufen
-//			for (int i = 0; (files != null) && (i < files.length); i++) {
-//				try {
-//					// Name der Klasse erstellen und Class-Object erstellen
-//					final String name = "hoplugins."
-//							+ files[i].getName().substring(0, files[i].getName().lastIndexOf('.'));
-//					final Class<?> fileclass = Class.forName(name);
-//					// Das Class-Object definiert kein Interface ...
-//					if (!fileclass.isInterface()) {
-//						// ... und ist von IPlugin abgeleitet, nicht die Libs
-//						// nochmal starten!
-//						if (plugins.IPlugin.class.isAssignableFrom(fileclass)
-//								&& !plugins.ILib.class.isAssignableFrom(fileclass)) {
-//							// Object davon erstellen und starten
-//							final plugins.IPlugin modul = (plugins.IPlugin) fileclass.newInstance();
-//
-//							// Plugin im Vector gespeichert
-//							m_vPlugins.add(modul);
-//							HOLogger.instance().log(HOMainFrame.class,
-//									" Starte " + files[i].getName() + "  (init MiniModel)");
-//							interuptionWindow.setInfoText(8,"Start Plugin: " + modul.getName());
-//							modul.start(de.hattrickorganizer.model.HOMiniModel.instance());
-//
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"+ " + files[i].getName() + " gestartet");
-//						} else {
-//							HOLogger.instance().log(HOMainFrame.class,
-//									"- " + files[i].getName() + " nicht von IPlugin abgeleitet");
-//						}
-//					} else {
-//						HOLogger.instance().log(HOMainFrame.class,
-//								"- " + files[i].getName() + " ist Interface");
-//					}
-//				} catch (Throwable e2) {
-//					HOLogger.instance().log(HOMainFrame.class,
-//							"- " + files[i].getName() + " wird übersprungen: " + e2);
-//					// HOLogger.instance().log(HOMainFrame.class, e2);
-//				}
-//			}
-//		} catch (Exception e) {
-//			HOLogger.instance().log(HOMainFrame.class, e);
-//		}
-//	}
 
 	/**
 	 * React on state changed events.
@@ -1328,20 +1181,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabTransferscout) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("TransferScout"));
+			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("transfers"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
 			}
 		}
-
-//		if (UserParameter.instance().tempTabArenasizer) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
 
 		if (UserParameter.instance().tempTabInformation) {
 			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
@@ -1416,186 +1261,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	}
 
-//	public static void main(String[] args) {
-//		final long start = System.currentTimeMillis();
-//
-//		// Schnauze!
-//		// nur wenn Kein Debug
-//		if ((args != null) && (args.length > 0)) {
-//			String debugLvl = args[0].trim();
-//
-//			if (debugLvl.equalsIgnoreCase("INFO")) {
-//				HOLogger.instance().setLogLevel(HOLogger.INFORMATION);
-//			} else if (debugLvl.equalsIgnoreCase("DEBUG")) {
-//				HOLogger.instance().setLogLevel(HOLogger.DEBUG);
-//			} else if (debugLvl.equalsIgnoreCase("WARNING")) {
-//				HOLogger.instance().setLogLevel(HOLogger.WARNING);
-//			} else if (debugLvl.equalsIgnoreCase("ERROR")) {
-//				HOLogger.instance().setLogLevel(HOLogger.ERROR);
-//			}
-//		}
-//
-//		// Set HOE file
-//		// This creates a file called ho.dir in $home
-//		// Do we really need this? Removed by flattermann 2009-01-18
-//		// FileExtensionManager.createDirFile();
-//
-//		// Usermanagement Login-Dialog
-//		try {
-//			if (!User.getCurrentUser().isSingleUser()) {
-//				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
-//				int choice = JOptionPane.showConfirmDialog(null, comboBox, "Login",
-//						JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-//
-//				if (choice == JOptionPane.OK_OPTION) {
-//					User.INDEX = comboBox.getSelectedIndex();
-//				} else {
-//					System.exit(0);
-//				}
-//			}
-//		} catch (Exception ex) {
-//			HOLogger.instance().log(HOMainFrame.class, ex);
-//		}
-//
-//		// //Spoofing test
-//		try {
-//			final BufferedReader buffy = new BufferedReader(new java.io.FileReader("ident.txt"));
-//			final Vector<String> ids = new Vector<String>();
-//			String tmp = "";
-//
-//			while (buffy.ready()) {
-//				tmp = buffy.readLine();
-//
-//				if (!tmp.startsWith("#") && !tmp.trim().equals("")) {
-//					ids.add(tmp);
-//				}
-//			}
-//
-//			buffy.close();
-//
-//			if (ids.size() > 0) {
-//				// Math.floor(Math.random()*10)
-//				MyConnector.m_sIDENTIFIER = ids.get((int) Math.floor(Math.random() * ids.size())).toString();
-//			}
-//		} catch (Exception e) {
-//		}
-//
-//		// Check if this HO version is (soft) expired
-//		if (!DEVELOPMENT && WARN_DATE != null && WARN_DATE.length() > 0) {
-//			final Timestamp datum = new Timestamp(System.currentTimeMillis());
-//
-//			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
-//				JOptionPane.showMessageDialog(
-//						null,
-//						"Your HO version is very old!\nPlease download a new version at "
-//								+ MyConnector.getHOSite(), "Update strongly recommended",
-//						JOptionPane.WARNING_MESSAGE);
-//			}
-//		}
-//
-//		// Check if this HO version is (hard) expired
-//		if (LIMITED) {
-//			final Timestamp datum = new Timestamp(System.currentTimeMillis());
-//
-//			if (datum.after(Timestamp.valueOf(LIMITED_DATE))) {
-//				JOptionPane.showMessageDialog(null, "Download new Version at " + MyConnector.getHOSite(),
-//						"Update required", JOptionPane.ERROR_MESSAGE);
-//				System.exit(1);
-//			}
-//		}
-//
-//		// Startbild
-//		final SplashFrame interuptionsWindow = new SplashFrame();
-//
-//		// Backup
-//		if (User.getCurrentUser().isHSQLDB()) {
-//			interuptionsWindow.setInfoText(1,"Backup Database");
-//			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
-//		}
-//
-//		// Standardparameter aus der DB holen
-//		interuptionsWindow.setInfoText(2,"Initialize Database");
-//		DBZugriff.instance().loadUserParameter();
-//
-//		// init Theme
-//		try {
-//			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
-//		} catch (Exception e) {
-//			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
-//			JOptionPane.showMessageDialog(null, e.getMessage(),
-//					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
-//		}
-//		// Init!
-//		interuptionsWindow.setInfoText(3,"Initialize Data-Administration");
-//
-//		// Beim ersten Start Sprache erfragen
-//		if (DBZugriff.instance().isFirstStart()) {
-//			interuptionsWindow.setVisible(false);
-//			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
-//			JOptionPane.showMessageDialog(null,
-//					"To load your team data into HO! select File > Download from the main menu.",
-//					"Team Data", JOptionPane.INFORMATION_MESSAGE);
-//			interuptionsWindow.setVisible(true);
-//		}
-//
-//		// Check -> Sprachdatei in Ordnung?
-//		interuptionsWindow.setInfoText(4,"Check Languagefiles");
-//		checkSprachFile(UserParameter.instance().sprachDatei);
-//
-//		// font switch, because the default font doesn't support Georgian and
-//		// Chinese characters
-//		// TODO
-//		final ClassLoader loader = new ImagePanel().getClass().getClassLoader();
-//
-//		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei, loader);
-//		interuptionsWindow.setInfoText(5,"Load latest Data");
-//		HOVerwaltung.instance().loadLatestHoModel();
-//		interuptionsWindow.setInfoText(6,"Load  XtraDaten");
-//
-//		// TableColumn
-//		UserColumnController.instance().load();
-//
-//		// Die Währung auf die aus dem HRF setzen
-//		float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
-//
-//		if (faktorgeld > -1) {
-//			UserParameter.instance().faktorGeld = faktorgeld;
-//		}
-//
-//		// Training
-//		interuptionsWindow.setInfoText(7,"Initialize Training");
-//
-//		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
-//		// der manuellen DB Einträge
-//		TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
-//
-//		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
-//		// selbst aufruft!
-//		interuptionsWindow.setInfoText(8,"Starting Plugins");
-//		HOMainFrame.instance().startPluginModuls(interuptionsWindow);
-//
-//		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
-//				.exportOldLineup("Actual");
-//		FileExtensionManager.extractLineup("Actual");
-//		// Anzeigen
-//		interuptionsWindow.setInfoText(9,"Prepare to show");
-//		HOMainFrame.instance().setVisible(true);
-//
-//		// Startbild weg
-//		interuptionsWindow.setVisible(false);
-//
-//		if (GebChecker.checkTWGeb()) {
-//			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayTom");
-//		}
-//
-//		if (GebChecker.checkVFGeb()) {
-//			new de.hattrickorganizer.gui.birthday.GebDialog(HOMainFrame.instance(), "birthdayVolker");
-//		}
-//
-//		new ExtensionListener().run();
-//		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
 
-//	}
 
 	public static int getHOStatus() {
 		return status;
