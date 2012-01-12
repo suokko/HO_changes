@@ -13,7 +13,9 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.developer.SQLDialog;
 
 public class DeveloperMode {
-
+	/** enable functions for the developers */
+	static final boolean DEVELOPER_MODE = true;
+	
 	public static JMenu getDeveloperMenu() {
 		JMenu menu = new JMenu("Developer");
 		menu.add(getSQLDialogMenuItem());
