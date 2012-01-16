@@ -2,54 +2,37 @@ package de.hattrickorganizer.gui.lineup2;
 
 import gui.UserParameter;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 
-public class LineupView extends JPanel {
+public class MatchLineupView extends JPanel {
 
-	private static final long serialVersionUID = 1882335792142040473L;
+	private static final long serialVersionUID = -1646037839028508537L;
 
-	public LineupView(Lineup lineup) {
+	public MatchLineupView(Lineup lineup) {
 		initComponents(lineup);
 	}
 
-	private void initComponents(Lineup lineup) {
-		setLayout(new GridBagLayout());
-
-		JPanel detailsPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		AufstellungsRatingPanel ratingPanel = new AufstellungsRatingPanel(lineup);
-		detailsPanel.add(ratingPanel, gbc);
-
-		gbc.gridy = 1;
-		AufstellungsDetailPanel aufstellungsDetailPanel = new AufstellungsDetailPanel();
-		detailsPanel.add(aufstellungsDetailPanel, gbc);
-
-		LineupPositionsPanel lineupPositionsPanel = new LineupPositionsPanel(lineup, new LineupSettings());
-		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(10, 10, 10, 5);
-		add(lineupPositionsPanel, gbc);
-		new Insets(10, 5, 10, 10);
-		gbc.gridx = 1;
-		add(detailsPanel, gbc);
-
-		aufstellungsDetailPanel.reInit();
-		lineupPositionsPanel.refresh();
+	private void initComponents(Lineup lineup) {	
+		setLayout(new BorderLayout());
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.addTab("lineup", new LineupView(lineup));
+		tabbedPane.addTab("subs", new SubstitutionOverview(lineup));
+		add(tabbedPane, BorderLayout.CENTER);
 	}
 
 	public static void main(String[] args) {
@@ -76,7 +59,7 @@ public class LineupView extends JPanel {
 				}
 				JDialog dlg = new JDialog();
 				dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				dlg.getContentPane().add(new LineupView(lineup));
+				dlg.getContentPane().add(new MatchLineupView(lineup));
 				dlg.pack();
 				// dlg.setSize(new Dimension(1300, 800));
 				dlg.setVisible(true);
