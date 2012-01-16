@@ -25,7 +25,7 @@ import de.hattrickorganizer.tools.HelperWrapper;
  *
  * @author <a href=mailto:nethyperon@users.sourceforge.net>Boy van der Werf</a>
  */
-final class XMLParser {
+public final class XMLParser {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static final SimpleDateFormat DATETIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -51,7 +51,7 @@ final class XMLParser {
      *
      * @throws IOException If something goes wrong.
      */
-    static List<PlayerTransfer> getAllPlayerTransfers(int playerId) throws IOException {
+    public static List<PlayerTransfer> getAllPlayerTransfers(int playerId) throws IOException {
         //final String url = "/common/transferHistory.asp?outputType=XML&actionType=player&playerID="+playerId;
     	final String url = "/common/chppxml.axd?file=transfersPlayer&playerID="+playerId;
         final String xml = MyConnector.instance().getHattrickXMLFile(url);
@@ -147,7 +147,7 @@ final class XMLParser {
      * @param teamid the team id
      * @param endDate end date for the transfers
      */
-    static List<PlayerTransfer> getAllTeamTransfers(int teamid, Date endDate) throws IOException, ParseException, Exception {
+    public static List<PlayerTransfer> getAllTeamTransfers(int teamid, Date endDate) throws IOException, ParseException, Exception {
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
         final String url = "/common/chppxml.axd?file=transfersTeam&teamID="+teamid+"&pageIndex=";
 
@@ -227,7 +227,7 @@ final class XMLParser {
      *
      * @return List of transfers.
      */
-    private static List<PlayerTransfer> parseTeamTransfers(Document doc, Date activatedDate, Date endDate) {
+    public static List<PlayerTransfer> parseTeamTransfers(Document doc, Date activatedDate, Date endDate) {
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
         //get Root element ('HattrickData') :

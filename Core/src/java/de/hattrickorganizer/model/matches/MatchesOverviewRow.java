@@ -2,8 +2,6 @@ package de.hattrickorganizer.model.matches;
 
 /**
  * Model for MatchesOverviewTable on the matches panel
- * @author thorsten
- *
  */
 public final class MatchesOverviewRow {
 	public static final int TYPE_TITLE = -1;

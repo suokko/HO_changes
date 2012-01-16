@@ -1,9 +1,10 @@
 package de.hattrickorganizer.database;
 
+import java.sql.ResultSet;
+
 import javax.swing.JOptionPane;
 
 import de.hattrickorganizer.HO;
-import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.tools.HOLogger;
 
 final class DBUpdater {
@@ -236,8 +237,15 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='einzelnePositionenAnzeigen'");
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='DAUER_ALLGEMEIN'");
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='tempTabArenasizer'");
-		
-		//m_clJDBCAdapter.executeUpdate("CHECKPOINT DEFRAG ");
+		final ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TRANSFERS_TRANSFERS");
+		if(rs == null){
+			dbZugriff.getTable(TransferTable.TABLENAME).createTable();
+			dbZugriff.getTable(TransferTypeTable.TABLENAME).createTable();
+		} else{
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TRANSFERS RENAME TO TRANSFER");
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TYPE RENAME TO TRANSFERTYPE");
+		}
+			
 		dbZugriff.saveUserParameter("DBVersion", 12);
 	}
 

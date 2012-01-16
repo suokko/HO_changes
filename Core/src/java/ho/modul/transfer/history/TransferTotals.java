@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author <a href=mailto:nethyperon@users.sourceforge.net>Boy van der Werf</a>
  */
-public class TransferTotals {
+class TransferTotals {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private int number_buy;
@@ -31,7 +31,7 @@ public class TransferTotals {
      *
      * @return TransferTotals object containing totals for the list of transfers.
      */
-    public static TransferTotals calculateTotals(List<PlayerTransfer> transfers) {
+    static TransferTotals calculateTotals(List<PlayerTransfer> transfers) {
         final TransferTotals totals = new TransferTotals();
 
         for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
@@ -63,7 +63,7 @@ public class TransferTotals {
      *
      * @return Number of BUY transfers
      */
-    public final int getAmountBuy() {
+    final int getAmountBuy() {
         return number_buy;
     }
 
@@ -72,7 +72,7 @@ public class TransferTotals {
      *
      * @return Number of SELL transfers
      */
-    public final int getAmountSell() {
+    final int getAmountSell() {
         return number_sell;
     }
 
@@ -81,7 +81,7 @@ public class TransferTotals {
      *
      * @return Average price
      */
-    public final double getBuyPriceAvg() {
+    final double getBuyPriceAvg() {
         if (number_buy > 0) {
             return total_buy_price / number_buy;
         } else {
@@ -94,7 +94,7 @@ public class TransferTotals {
      *
      * @return Total price
      */
-    public final int getBuyPriceTotal() {
+    final int getBuyPriceTotal() {
         return total_buy_price;
     }
 
@@ -103,7 +103,7 @@ public class TransferTotals {
      *
      * @return Average TSI value
      */
-    public final double getBuyTsiAvg() {
+    final double getBuyTsiAvg() {
         if (number_buy > 0) {
             return total_buy_tsi / number_buy;
         } else {
@@ -116,7 +116,7 @@ public class TransferTotals {
      *
      * @return Total TSI value
      */
-    public final int getBuyTsiTotal() {
+    final int getBuyTsiTotal() {
         return total_buy_tsi;
     }
 
@@ -125,7 +125,7 @@ public class TransferTotals {
      *
      * @return Average price
      */
-    public final double getSellPriceAvg() {
+    final double getSellPriceAvg() {
         if (number_sell > 0) {
             return total_sell_price / number_sell;
         } else {
@@ -138,7 +138,7 @@ public class TransferTotals {
      *
      * @return Total price
      */
-    public final int getSellPriceTotal() {
+    final int getSellPriceTotal() {
         return total_sell_price;
     }
 
@@ -147,7 +147,7 @@ public class TransferTotals {
      *
      * @return Average TSI value
      */
-    public final double getSellTsiAvg() {
+    final double getSellTsiAvg() {
         if (number_sell > 0) {
             return total_sell_tsi / number_sell;
         } else {
@@ -160,7 +160,7 @@ public class TransferTotals {
      *
      * @return Total TSI value
      */
-    public final int getSellTsiTotal() {
+    final int getSellTsiTotal() {
         return total_sell_tsi;
     }
 }

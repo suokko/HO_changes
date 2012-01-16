@@ -229,6 +229,9 @@ public final class UserParameter extends Configuration {
     //AufstellungsPanel
     public int aufstellungsPanel_verticalSplitPaneLow = 250;
 
+    
+    public int transferHistoryPane_splitPane = 200;
+    public int transferTypePane_splitPane = 200;
     //Breite der BestPos-Spalte
 
     /** @deprecated column width configurable
@@ -560,6 +563,8 @@ public final class UserParameter extends Configuration {
 		map.put("assistant113", String.valueOf(assistant113));
 		map.put("assistantSaved", String.valueOf(assistantSaved));
 		map.put("theme", String.valueOf(theme));
+		map.put("transferHistoryPane_splitPane", String.valueOf(transferHistoryPane_splitPane));
+		map.put("transferTypePane_splitPane", String.valueOf(transferTypePane_splitPane));
 		return map;
 	}
 
@@ -762,6 +767,8 @@ public final class UserParameter extends Configuration {
 		assistantSaved = getBooleanValue(values,"assistantSaved");
 
 		theme = getStringValue(values, "theme");
+		transferHistoryPane_splitPane = getIntValue(values, "transferHistoryPane_splitPane");
+		transferTypePane_splitPane = getIntValue(values, "transferTypePane_splitPane");
 	}
 
 }
