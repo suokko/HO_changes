@@ -40,7 +40,7 @@ public final class SplashFrame extends JFrame {
 		final MediaTracker tracker = new MediaTracker(this);
 
 		try {
-			final URL resource = getClass().getClassLoader().getResource("gui/bilder/intro.jpg");
+			final URL resource = getClass().getClassLoader().getResource("gui/bilder/intro.png");
 			background = ImageIO.read(resource);
 			tracker.addImage(background, 1);
 
@@ -68,13 +68,13 @@ public final class SplashFrame extends JFrame {
         m_sInfotext = text;
         if(step > maxStep)
         	step = maxStep;
-        
+
         if(this.step == step)
         	subStep = subStep  + 2;
         else
         	subStep = 0;
         this.step = step;
-        
+
         repaint();
     }
 
@@ -95,10 +95,10 @@ public final class SplashFrame extends JFrame {
         g2d.setColor(Color.lightGray);
         g2d.drawRect(2, 2, getSize().width - 5, getSize().height - 5);
 
-        
+
         g2d.setColor(new Color(0, 255, 0,80));
         g2d.fillRect(5, 136, (step * (getSize().width/(maxStep)))+subStep , 14);
-        
+
         //infotext / progress
         g2d.setColor(Color.black);
         g2d.setFont(fontText);
