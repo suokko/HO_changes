@@ -19,12 +19,7 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.Helper;
 
 
-/**
- *
- */
-public class ColorLabelEntry implements TableEntry {
-	   private static Color IMPROVEMENT = ThemeManager.getColor(HOColorName.TABLEENTRY_IMPROVEMENT_FG);
-	   private static Color DECLINE = ThemeManager.getColor(HOColorName.TABLEENTRY_DECLINE_FG);
+public class ColorLabelEntry extends JLabel implements TableEntry {
 	   public static final Color FG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_FG);//gui.UserParameter.instance().FG_STANDARD;
 	   public static final Color BG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_BG);
 	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);
@@ -35,23 +30,18 @@ public class ColorLabelEntry implements TableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;
     private Color m_clFGColor = ColorLabelEntry.FG_STANDARD;
-    private Icon m_clIcon;
-    private JLabel m_clComponent;
-    private String m_sText = "";
     
     //Für Compareto
     private double m_dZahl = Double.NEGATIVE_INFINITY;
-    private int horizontalAlignment = SwingConstants.LEFT;
-//    private int fontStyle = Font.PLAIN;
-    private int imageAligment = SwingConstants.TRAILING;
+
 
     //~ Constructors -------------------------------------------------------------------------------
 
     public ColorLabelEntry(String text){
-    	m_sText = text;
+    	super(text,SwingConstants.LEFT);
         m_dZahl = Double.NEGATIVE_INFINITY;
         createComponent();
-        m_clComponent.setOpaque(false);
+        setOpaque(false);
     }
     
     /**
@@ -67,10 +57,8 @@ public class ColorLabelEntry implements TableEntry {
      */
     public ColorLabelEntry(double sortindex, String text, Color foreground, Color background,
                            int horizontalAusrichtung) {
-        m_sText = text;
+       super(text,horizontalAusrichtung);
         m_dZahl = sortindex;
-        m_clIcon = null;
-        horizontalAlignment = horizontalAusrichtung;
         m_clFGColor = foreground;
         m_clBGColor = background;
         createComponent();
@@ -81,10 +69,8 @@ public class ColorLabelEntry implements TableEntry {
      */
     public ColorLabelEntry(Icon icon, double sortindex, Color foreground, Color background,
                            int horizontalAusrichtung) {
-        m_sText = "";
+        super("",icon,horizontalAusrichtung);
         m_dZahl = sortindex;
-        m_clIcon = icon;
-        horizontalAlignment = horizontalAusrichtung;
         m_clFGColor = foreground;
         m_clBGColor = background;
         createComponent();
@@ -95,10 +81,10 @@ public class ColorLabelEntry implements TableEntry {
      */
     public ColorLabelEntry(int intzahl, double zahl, boolean aktuell, Color background,boolean mitText) {
         if ((Math.abs(intzahl) != 0) || !mitText) {
-            m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell);
+            setIcon(ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell));
         }
 
-        horizontalAlignment = SwingConstants.RIGHT;
+        setHorizontalAlignment(SwingConstants.RIGHT);
         m_clBGColor = background;
     	
         // Create Component first, then change the text accordingly [setValueAsText()]
@@ -125,10 +111,10 @@ public class ColorLabelEntry implements TableEntry {
     public ColorLabelEntry(int changeVal, String text, double sortVal, boolean aktuell, Color background,
                            boolean mitText) {
         if ((Math.abs(changeVal) != 0) || !mitText) {
-            m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell);
+            setIcon(ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell));
         }
 
-        horizontalAlignment = SwingConstants.RIGHT;
+        setHorizontalAlignment(SwingConstants.RIGHT);
         m_clBGColor = background;
         m_dZahl = sortVal;
     	
@@ -148,7 +134,7 @@ public class ColorLabelEntry implements TableEntry {
      */
     public ColorLabelEntry(float zahl, Color bg_color, boolean currencyformat,
                            boolean farbeInvertieren, int nachkommastellen) {
-    	horizontalAlignment = SwingConstants.RIGHT;
+    	setHorizontalAlignment(SwingConstants.RIGHT);
         createComponent();
     	setValueAsText(zahl, bg_color, currencyformat, farbeInvertieren, 
     			nachkommastellen, true);
@@ -161,12 +147,18 @@ public class ColorLabelEntry implements TableEntry {
      */
     public ColorLabelEntry(double zahl, Color bg_color, boolean currencyformat,
                            int nachkommastellen) {
-        horizontalAlignment = SwingConstants.RIGHT;
+        setHorizontalAlignment(SwingConstants.RIGHT);
         createComponent();
         setValueAsText(zahl, bg_color, currencyformat, false, nachkommastellen, 
         		false);
     }
 
+    
+    
+    
+    
+    
+    
     /**
      * Sammelmethode, um den Wert aus 'zahl' zu formatieren und die Instanz-Felder 
      * dementsprechend füllen. 
@@ -175,21 +167,21 @@ public class ColorLabelEntry implements TableEntry {
             boolean farbeInvertieren, int nachkommastellen, boolean colorAndSign) { 
         m_dZahl = zahl;
 
-        m_sText = (m_dZahl>0&&colorAndSign?"+":"") + 
-        				Helper.getNumberFormat(currencyformat, nachkommastellen).format(m_dZahl);
+        setText((m_dZahl>0&&colorAndSign?"+":"") + 
+        				Helper.getNumberFormat(currencyformat, nachkommastellen).format(m_dZahl));
         	
         if (colorAndSign) {
         	if (m_dZahl > 0 && !farbeInvertieren ||
         		m_dZahl < 0 && farbeInvertieren) {
         		// Positiv
-        		m_clFGColor = IMPROVEMENT;    		
+        		m_clFGColor = ThemeManager.getColor(HOColorName.TABLEENTRY_IMPROVEMENT_FG);    		
         	} else if (m_dZahl == 0) {
         		// Neutral
-        		m_sText = "";
+        		setText("");
         		m_clFGColor = FG_STANDARD;    		
         	} else {
         		// Negativ
-        		m_clFGColor = DECLINE;
+        		m_clFGColor = ThemeManager.getColor(HOColorName.TABLEENTRY_DECLINE_FG);
         	}
         }
         if (bg_color != null)
@@ -198,25 +190,24 @@ public class ColorLabelEntry implements TableEntry {
     }
 
     public final void setAusrichtung(int ausrichtung) {
-        horizontalAlignment = ausrichtung;
-        updateComponent();
+    	setHorizontalAlignment(ausrichtung);
     }
 
     public final void setBGColor(Color bgcolor) {
         m_clBGColor = bgcolor;
-        m_clComponent.setBackground(m_clBGColor);
+       setBackground(m_clBGColor);
     }
 
 	public final JComponent getComponent(boolean isSelected) {
         
         if (isSelected) {
-            m_clComponent.setBackground(SpielerTableRenderer.SELECTION_BG);
+           setBackground(SpielerTableRenderer.SELECTION_BG);
             
         } else {
-            m_clComponent.setBackground(m_clBGColor);
+           setBackground(m_clBGColor);
         }
-        m_clComponent.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
-        return m_clComponent;
+       setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
+        return this;
     }
 
     public final void setFGColor(Color fgcolor) {
@@ -224,13 +215,8 @@ public class ColorLabelEntry implements TableEntry {
         updateComponent();
     }
 
-    public final void setFont(Font font) {
-    	 m_clComponent.setFont(font);
-    }
-
-
     public final void setFontStyle(int fontStyle) {
-    	 m_clComponent.setFont( m_clComponent.getFont().deriveFont(fontStyle));
+    	 setFont( getFont().deriveFont(fontStyle));
     }
 
  
@@ -239,7 +225,7 @@ public class ColorLabelEntry implements TableEntry {
      *
      */
     public final void setGrafischeVeraenderungswert(double zahl, boolean aktuell, boolean mitText) {
-        m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(zahl, 1),aktuell);
+        setIcon(ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(zahl, 1),aktuell));
 
         if (mitText) {
             setGraphicalChangeValue(zahl);
@@ -253,7 +239,7 @@ public class ColorLabelEntry implements TableEntry {
       */
     public final void setGrafischeVeraenderungswert(int intzahl, double zahl, boolean aktuell,
                                                     boolean mitText) {
-        m_clIcon = ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1),aktuell);
+        setIcon(ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1),aktuell));
 
         if (mitText) {
             //Keine negativen Subskills, kann beim Levelup passieren
@@ -273,20 +259,15 @@ public class ColorLabelEntry implements TableEntry {
     			true);
     }
  
-    public final void setIcon(Icon icon) {
-        m_clIcon = icon;
-        updateComponent();
-    }
-
 
     public final void setIcon(Icon icon, int imageAusrichtung) {
-        m_clIcon = icon;
-        imageAligment = imageAusrichtung;
+       setIcon(icon);
+       setHorizontalTextPosition(imageAusrichtung);
         updateComponent();
     }
 
     public final void setIconWithSort(Icon icon, double sortindex) {
-        m_clIcon = icon;
+    	setIcon(icon);
         m_dZahl = sortindex;
         updateComponent();
     }
@@ -298,7 +279,7 @@ public class ColorLabelEntry implements TableEntry {
     public final void setSpezialNumber(int zahl, boolean currencyformat, boolean showZero) {
     	setValueAsText(zahl, null, currencyformat, false, 0, true);
     	if (zahl == 0 && !showZero) {
-    		m_sText = "";
+    		setText("");
     		updateComponent();
     	}
     }
@@ -309,27 +290,13 @@ public class ColorLabelEntry implements TableEntry {
     			true);
     }
 
-    //----Zugriff----------------------------
-    public final void setText(String text) {
-        m_sText = text;
-        updateComponent();
-    }
-
-    public final String getText() {
-        return m_sText;
-    }
-
-    public final void setToolTipText(String text) {
-        m_clComponent.setToolTipText(text);
-    }
-
     public final double getZahl() {
         return m_dZahl;
     }
     
 	public final void clear() {
-        m_sText = "";
-        m_clIcon = null;
+        setText("");
+        setIcon(null);
         updateComponent();
     }
 
@@ -351,11 +318,11 @@ public class ColorLabelEntry implements TableEntry {
                 } else if (zahl1 > zahl2) {
                     return 1;
                 } else {
-                    return m_sText.compareTo(entry.getText());
+                    return getText().compareTo(entry.getText());
                 }
             }
             //Not number -> String
-            return m_sText.compareTo(entry.getText());
+            return getText().compareTo(entry.getText());
             
         }
 
@@ -368,26 +335,17 @@ public class ColorLabelEntry implements TableEntry {
      * Erstellt eine passende Komponente
      */
 	public final void createComponent() {
-    	m_clComponent = new JLabel(m_sText, horizontalAlignment);
-
-        if (m_clIcon != null) 
-        	m_clComponent.setIcon(m_clIcon);
-         
-        m_clComponent.setOpaque(true);
-        m_clComponent.setForeground(m_clFGColor);
+        setOpaque(true);
+        setForeground(m_clFGColor);
     }
 
 	public final void updateComponent() {
-         m_clComponent.setText(m_sText);
-         m_clComponent.setIcon(m_clIcon);
-         m_clComponent.setHorizontalAlignment(horizontalAlignment);
-         m_clComponent.setHorizontalTextPosition(imageAligment);
-         m_clComponent.setBackground(m_clBGColor);
-         m_clComponent.setForeground(m_clFGColor);
+         setBackground(m_clBGColor);
+         setForeground(m_clFGColor);
     }
     
     public void setBold(boolean bold) {
     	int style = (bold) ? Font.BOLD : Font.PLAIN;
-    	this.m_clComponent.setFont(this.m_clComponent.getFont().deriveFont(style));
+    	setFont(getFont().deriveFont(style));
     }
 }
