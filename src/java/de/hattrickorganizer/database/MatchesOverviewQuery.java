@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
-
-import de.hattrickorganizer.gui.matches.MatchesOverviewCommonPanel;
+import de.hattrickorganizer.gui.matches.statistics.MatchesOverviewCommonPanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.Matchdetails;
+import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -56,9 +56,6 @@ class MatchesOverviewQuery extends AbstractTable {
 				whereHomeClause=" AND HEIMTORE < GASTTORE AND (GASTTORE - HEIMTORE ) >= 5 )";
 				whereAwayClause=" AND HEIMTORE > GASTTORE AND (HEIMTORE - GASTTORE ) >= 5 ))";
 				break;
-			case MatchesOverviewCommonPanel.YELLOW_CARDS:
-			case MatchesOverviewCommonPanel.RED_CARDS:
-				return getHighlightStats(teamId, matchtype, statistic);
 		}
 		sql.append(" ((HEIMID = ").append(teamId).append(whereHomeClause);
 		sql.append(" OR (GASTID = ").append(teamId).append(whereAwayClause);
@@ -70,7 +67,7 @@ class MatchesOverviewQuery extends AbstractTable {
 				tmp = rs.getInt("C");
 			}
 		} catch (SQLException e) {
-			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+			HOLogger.instance().log(getClass(), e);
 		}
 		return tmp;
 	}
@@ -98,37 +95,72 @@ class MatchesOverviewQuery extends AbstractTable {
 				tmp=i;
 			}
 		} catch (SQLException e) {
-			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+			HOLogger.instance().log(getClass(),e);
 		}
 		return tmp;
 		
 	}
 	
-	private int getHighlightStats( int teamId, int matchtype, int statistic){
+	/**
+	 * SELECT TYP, COUNT(*)  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID 
+WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING TYP in (1,2) ORDER BY TYP
+	 * @param teamId
+	 * @return
+	 */
+	
+	public MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		
+		MatchesHighlightsStat[] rows = new MatchesHighlightsStat[12];
+		rows[0] = new MatchesHighlightsStat("highlight_penalty", "4,14,24,34,54,64,74,84");
+		rows[1] = new MatchesHighlightsStat("highlight_freekick", "0,10,20,30,50,60,70,80");
+		rows[2] = new MatchesHighlightsStat("highlight_links", "2,12,22,32,52,62,72,82");
+		rows[3] = new MatchesHighlightsStat("highlight_middle", "1,11,21,31,51,61,71,81");
+		rows[4] = new MatchesHighlightsStat("highlight_rechts", "3,13,23,33,53,63,73,83");
+		rows[5] = new MatchesHighlightsStat("highlight_freekick", "85,86");
+		rows[5].appendDescription("indirect");
+		rows[6] = new MatchesHighlightsStat("Tactic.LongShots", "87");
+		rows[7] = new MatchesHighlightsStat("highlight_counter", "40,41,42,43");
+		rows[8] = new MatchesHighlightsStat("highlight_special","5,6,7,8,9,15,16,17,18,19,25,35,36,37,38,39");
+		rows[9] = new MatchesHighlightsStat("highlight_yellowcard","5", "10,11");
+		rows[10] = new MatchesHighlightsStat("highlight_redcard","5", "12,13,14");
+		rows[11] = new MatchesHighlightsStat("Verletzt","0","90,91,92,93,94,95,96,97");
+		
+		for (int i = 0; i < rows.length; i++) {
+			if(!rows[i].isTitle())
+				fillMatchesOverviewChanceRow(ownTeam, teamId, rows[i], matchtype);
+		}
+		return rows;
+	}
+	
+	
+	private void fillMatchesOverviewChanceRow(boolean ownTeam, int teamId, MatchesHighlightsStat row, int matchtype){
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
-		int tmp = 0;
-		sql.append("SELECT COUNT(*) AS C  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID WHERE ");
-		sql.append(" TEAMID =").append(teamId).append(" AND ");
-		switch(statistic){
-		case MatchesOverviewCommonPanel.YELLOW_CARDS:
-			sql.append(" TYP = 5 AND SUBTYP in(10,11) ");
-			break;
-		case MatchesOverviewCommonPanel.RED_CARDS:
-			sql.append(" TYP = 5 AND SUBTYP in(12,13,14) ");
-			break;
-		}
+		sql.append("SELECT TYP, COUNT(*) AS C  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID ");
+		sql.append("WHERE TEAMID ");
+		if(!ownTeam)
+			sql.append("!");
+		sql.append("=").append(teamId).append(" AND SUBTYP IN(");
+		sql.append(row.getSubtyps()).append(")");
 		sql.append(getMatchTypWhereClause(matchtype));
-		
+		sql.append("GROUP BY TYP HAVING TYP in (");
+		sql.append(row.getTypes());
+		sql.append(") ORDER BY TYP");
 		rs = adapter.executeQuery(sql.toString());
 		try {
-			if(rs.next())
-				tmp = rs.getInt("C");
+			int typ = 0;
+			while(rs.next()){
+				typ = rs.getInt("TYP");
+				if(typ == 1 )
+					row.setGoals(rs.getInt("C"));
+				if(typ == 2 || typ == 5 || typ == 0)
+					row.setNoGoals(rs.getInt("C"));
+			}
+			rs.close();
 		} catch (SQLException e) {
-			HOLogger.instance().log(getClass(),"DB.getMatchesKurzInfo Error" + e);
+			HOLogger.instance().log(getClass(), e);
 		}
-		return tmp;
-		
 	}
 	
 	private StringBuilder getMatchTypWhereClause(int matchtype){
@@ -242,7 +274,7 @@ class MatchesOverviewQuery extends AbstractTable {
 				}
 			}
 			} catch(Exception e){
-				HOLogger.instance().log(getClass(),"DatenbankZugriff.setMatchesOverviewRow : " + e);
+				
 				HOLogger.instance().log(getClass(),e);
 			}
 	}

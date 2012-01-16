@@ -25,7 +25,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
  *
  * @author <a href=mailto:nethyperon@users.sourceforge.net>Boy van der Werf</a>
  */
-public class TeamTransfersPane extends JPanel implements ListSelectionListener {
+class TeamTransfersPane extends JPanel implements ListSelectionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
@@ -44,7 +44,7 @@ public class TeamTransfersPane extends JPanel implements ListSelectionListener {
     /**
      * Creates a new TeamTransfersPane object.
      */
-    public TeamTransfersPane() {
+    TeamTransfersPane() {
         super(new BorderLayout());
 
         final JPanel mainPanel = new ImagePanel();

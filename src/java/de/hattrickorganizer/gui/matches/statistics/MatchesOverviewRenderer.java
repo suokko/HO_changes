@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.matches;
+package de.hattrickorganizer.gui.matches.statistics;
 
 import gui.HOColorName;
 import gui.HOIconName;
@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.hsqldb.lib.StringUtil;
 
 import de.hattrickorganizer.gui.theme.ThemeManager;
+import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 
 class MatchesOverviewRenderer extends DefaultTableCellRenderer {
@@ -41,9 +42,14 @@ class MatchesOverviewRenderer extends DefaultTableCellRenderer {
 			}
 			if(mrow.getType() == MatchesOverviewRow.TYPE_TITLE)
 				setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
-			
-				
 		}
+		if(value instanceof MatchesHighlightsStat){
+			MatchesHighlightsStat mrow = (MatchesHighlightsStat)value;
+			if(mrow.isTitle())
+				setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
+		}
+		
+		
 		return this;
 	}
 

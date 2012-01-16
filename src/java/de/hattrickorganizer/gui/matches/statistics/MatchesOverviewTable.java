@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.matches;
+package de.hattrickorganizer.gui.matches.statistics;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -13,13 +13,13 @@ import de.hattrickorganizer.gui.utils.ToolTipHeader;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.tools.Helper;
 
-class MatchesOverviewTable extends JTable {
+public class MatchesOverviewTable extends JTable {
 	private static final long serialVersionUID = -8724051830928497450L;
 	
 	private MatchesOverviewColumnModel tableModel;
 	// private TableSorter m_clTableSorter;
 	 
-	MatchesOverviewTable(int matchtyp){
+	public MatchesOverviewTable(int matchtyp){
 		super();
 	    initModel(matchtyp);
         setDefaultRenderer(Object.class,new MatchesOverviewRenderer());
@@ -33,15 +33,17 @@ class MatchesOverviewTable extends JTable {
 
         if (tableModel == null) {
         	tableModel = UserColumnController.instance().getMatchesOverview1ColumnModel();
-        	tableModel.setValues(DBZugriff.instance().getMatchesOverviewValues(matchtyp));
-            //m_clTableSorter = new TableSorter(tableModel,  tableModel.getDisplayedColumns().length-1, -1);
+        	if(matchtyp == ISpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
+            	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
+            	tableModel.setValues(tmp);
+            } else {
+            	tableModel.setValues(DBZugriff.instance().getMatchesOverviewValues(matchtyp));
+            }
 
             final ToolTipHeader header = new ToolTipHeader(getColumnModel());
             header.setToolTipStrings(tableModel.getTooltips());
             header.setToolTipText("");
             setTableHeader(header);
-
-            //setModel(m_clTableSorter);
             setModel(tableModel);
 
             final TableColumnModel tableColumnModel = getColumnModel();
@@ -65,9 +67,7 @@ class MatchesOverviewTable extends JTable {
             //m_clTableSorter.addMouseListenerToHeaderInTable(this);
             tableModel.setColumnsSize(getColumnModel());
         } else {
-            //Werte neu setzen
         	tableModel.setValues(DBZugriff.instance().getMatchesOverviewValues(matchtyp));
-            //m_clTableSorter.reallocateIndexes();
         }
 
         setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -91,7 +91,7 @@ class MatchesOverviewTable extends JTable {
         return reihenfolge;
     }
 
-    final void saveColumnOrder(){
+    public final void saveColumnOrder(){
     	final UserColumn[] columns = tableModel.getDisplayedColumns();
     	final TableColumnModel tableColumnModel = getColumnModel();
     	for (int i = 0; i < columns.length; i++) {
@@ -102,7 +102,7 @@ class MatchesOverviewTable extends JTable {
     	DBZugriff.instance().saveHOColumnModel(tableModel);
     }
     
-    void refresh(int matchtypen) {
+    public void refresh(int matchtypen) {
         if(matchtypen == ISpielePanel.ALLE_SPIELE || matchtypen == ISpielePanel.NUR_FREMDE_SPIELE){
         	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
         	tableModel.setValues(tmp);

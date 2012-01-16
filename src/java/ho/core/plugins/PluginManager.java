@@ -16,8 +16,9 @@ import de.hattrickorganizer.tools.HOLogger;
 public final class PluginManager {
 	private static String HOPLUGINS = "hoplugins";
 	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
-	private static int[] deprecatedlist = {1 //MatchesOverview
-		/* 25Transfer-Plugin*/};
+	private static int[] deprecatedlist = {	1, //MatchesOverview
+											25,//Transfer-Plugin*/
+		};
 	public static String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator + HOPLUGINS;
 	
 	
@@ -86,7 +87,7 @@ public final class PluginManager {
 								for (int j = 0; j < deprecatedlist.length; j++) {
 									if(pluginId ==deprecatedlist[j] ){
 										deprecated = true;
-										deletePlugin(modul, false);
+										deletePlugin(modul, true);
 										HOLogger.instance().log(PluginManager.class,files[i].getName() + " deleted");
 									} 
 								}
@@ -105,7 +106,8 @@ public final class PluginManager {
 					}
 				} catch (Throwable e2) {
 					HOLogger.instance().log(PluginManager.class,
-							"- " + files[i].getName() + " skipped: " + e2);
+							"- " + files[i].getName() + " skipped: " );
+					HOLogger.instance().log(PluginManager.class,e2);
 				}
 			}
 		} catch (Exception e) {

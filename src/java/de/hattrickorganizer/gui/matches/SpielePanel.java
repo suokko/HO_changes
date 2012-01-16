@@ -6,7 +6,6 @@ import gui.HOIconName;
 import gui.UserParameter;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,10 +17,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -30,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JViewport;
 
 import plugins.ILineUp;
 import plugins.IMPTeamData;
@@ -44,11 +40,13 @@ import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
+import de.hattrickorganizer.gui.matches.statistics.MatchesHighlightsTable;
+import de.hattrickorganizer.gui.matches.statistics.MatchesOverviewCommonPanel;
+import de.hattrickorganizer.gui.matches.statistics.MatchesOverviewTable;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -72,8 +70,6 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private AufstellungsSternePanel m_jpAufstellungHeimPanel;
     private JButton m_jbAufstellungUebernehmen = new JButton(ThemeManager.getIcon(HOIconName.GETLINEUP));
     private JButton printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-//    private JButton deleteButton = new JButton(new ImageIcon(ImageUtilities
-//			.getImageDurchgestrichen(new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB), Color.red, new Color(200, 0, 0))));
     private JButton deleteButton = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
     private JButton m_jbReloadMatch = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
     private JButton m_jbSimMatch = new JButton(ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
@@ -93,6 +89,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private MatchesTable matchesTable;
     private MatchesOverviewTable matchesOverviewTable;
     private MatchesOverviewCommonPanel matchesOverviewCommonPanel;
+    private MatchesHighlightsTable matchesHighlightsTable;
     private StaerkenvergleichPanel teamsComparePanel;
 
     private CBItem[] SPIELEFILTER = {
@@ -409,6 +406,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             matchesTable.refresh(id);
             matchesOverviewTable.refresh(id);
             matchesOverviewCommonPanel.refresh(id);
+            matchesHighlightsTable.refresh(id);
             UserParameter.instance().spieleFilter = id;
 
             //Dann alle anderen Panels
@@ -586,21 +584,22 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         matchesTable.addKeyListener(this);
         
         final JScrollPane scrollpane = new JScrollPane(matchesTable);
-        scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
         
         matchesOverviewTable = new MatchesOverviewTable(UserParameter.instance().spieleFilter);
         final JScrollPane scrollpane1 = new JScrollPane(matchesOverviewTable);
-        scrollpane1.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
 
         matchesOverviewCommonPanel = new MatchesOverviewCommonPanel(UserParameter.instance().spieleFilter);
         final JScrollPane scrollpane2 = new JScrollPane(matchesOverviewCommonPanel);
-        scrollpane1.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+        
+        matchesHighlightsTable = new MatchesHighlightsTable(UserParameter.instance().spieleFilter);
+        final JScrollPane scrollpane3 = new JScrollPane(matchesHighlightsTable);
         
         JTabbedPane pane = new JTabbedPane();
         HOVerwaltung hov = HOVerwaltung.instance();
         pane.addTab(hov.getLanguageString("Spiele"), scrollpane);
         pane.addTab(hov.getLanguageString("Statistik")+" ("+hov.getLanguageString("SerieAuswaertsSieg")+"-"+hov.getLanguageString("SerieAuswaertsUnendschieden")+"-"+hov.getLanguageString("SerieAuswaertsNiederlage")+")",scrollpane1);
         pane.addTab(hov.getLanguageString("Statistik")+" ("+hov.getLanguageString("Allgemein")+")",scrollpane2);
+        pane.addTab(hov.getLanguageString("Statistik")+" ("+hov.getLanguageString("Highlights")+")",scrollpane3);
         panel.add(pane, BorderLayout.CENTER);
         
         return panel;

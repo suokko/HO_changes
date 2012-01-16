@@ -3,6 +3,8 @@ package ho.modul.transfer;
 
 
 
+import gui.UserParameter;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -38,7 +40,9 @@ public class DividerListener implements PropertyChangeListener {
      */
     public final void propertyChange(PropertyChangeEvent e) {
         final Number value = (Number) e.getNewValue();
-        final int newDivLoc = value.intValue();
-        DividerDAO.setDividerPosition(key, newDivLoc);
+        if(key.equals("HistoryTabDivider"))
+        	UserParameter.instance().transferHistoryPane_splitPane = value.intValue();
+        else
+        	UserParameter.instance().transferTypePane_splitPane = value.intValue();
     }
 }
