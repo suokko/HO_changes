@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -96,8 +97,10 @@ public final class SplashFrame extends JFrame {
         g2d.drawRect(2, 2, getSize().width - 5, getSize().height - 5);
 
 
-        g2d.setColor(new Color(0, 255, 0,80));
-        g2d.fillRect(5, 136, (step * (getSize().width/(maxStep)))+subStep , 14);
+
+        GradientPaint pat= new GradientPaint(5, 136, Color.LIGHT_GRAY, getSize().width - 10, 14, Color.WHITE);
+        g2d.setPaint(pat);
+        g2d.fillRect(5, 136, Math.min((step * (getSize().width/(maxStep)))+subStep,getSize().width - 10) , 14);
 
         //infotext / progress
         g2d.setColor(Color.black);
