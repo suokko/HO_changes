@@ -13,6 +13,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,9 @@ import javax.swing.table.AbstractTableModel;
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
 import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.lineup2.Helper;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.tools.GUIUtilities;
 
 public class SubstitutionOverview extends JPanel {
@@ -45,8 +48,10 @@ public class SubstitutionOverview extends JPanel {
 	private DetailsView detailsView;
 	private EditAction editAction;
 	private RemoveAction removeAction;
+	private Lineup lineup;
 
-	public SubstitutionOverview() {
+	public SubstitutionOverview(Lineup lineup) {
+		this.lineup = lineup;
 		createActions();
 		initComponents();
 		addListeners();
@@ -66,7 +71,7 @@ public class SubstitutionOverview extends JPanel {
 
 	private void refresh() {
 		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
-		model.setData(HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList());
+		model.setData(this.lineup.getSubstitutionList());
 	}
 
 	private void addListeners() {
@@ -160,7 +165,7 @@ public class SubstitutionOverview extends JPanel {
 
 		if (!dlg.isCanceled()) {
 			ISubstitution sub = dlg.getSubstitution();
-			HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList().add(sub);
+			this.lineup.getSubstitutionList().add(sub);
 			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
 			int idx = model.getRowCount() - 1;
 			model.fireTableRowsInserted(idx, idx);
@@ -282,7 +287,7 @@ public class SubstitutionOverview extends JPanel {
 			ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
-			HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList().remove(sub);
+			lineup.getSubstitutionList().remove(sub);
 			((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsDeleted(selectedRowIndex,
 					selectedRowIndex);
 			detailsView.refresh();
@@ -335,8 +340,19 @@ public class SubstitutionOverview extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				DBZugriff.instance().loadUserParameter();
 				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 				HOVerwaltung.instance().loadLatestHoModel();
+
+				Lineup lineup = null;
+				try {
+					lineup = Helper.getLineup(new File(
+							"/home/chr/tmp/matchorders_version_1_8_matchID_362419131_isYouth_false.xml"));
+					// lineup = Helper.getLineup(new
+					// File("/home/chr/tmp/matchorders_version_1_8_matchID_362217696_isYouth_false.xml"));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 				try {
 					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -345,7 +361,7 @@ public class SubstitutionOverview extends JPanel {
 				}
 				JDialog dlg = new JDialog();
 				dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				dlg.getContentPane().add(new SubstitutionOverview());
+				dlg.getContentPane().add(new SubstitutionOverview(lineup));
 				dlg.pack();
 				dlg.setSize(new Dimension(800, 600));
 				dlg.setVisible(true);
