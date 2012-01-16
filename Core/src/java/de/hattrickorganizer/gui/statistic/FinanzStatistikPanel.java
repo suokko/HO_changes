@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -46,11 +47,11 @@ public class FinanzStatistikPanel extends ImagePanel
     private Color costSumColor 			= ThemeManager.getColor(HOColorName.STAT_COSTSUM);
     private Color incomeSpectatorsColor = ThemeManager.getColor(HOColorName.STAT_INCOMESPECTATORS);
     private Color incomeSponsorsColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMESPONSORS);
-    private Color incomeFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMEFINANCIAL);
+//    private Color incomeFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMEFINANCIAL);
     private Color incomeTemporaryColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMETEMPORARY);
     private Color costArena 			= ThemeManager.getColor(HOColorName.STAT_COSTARENA);
     private Color costsPlayersColor 	= ThemeManager.getColor(HOColorName.STAT_COSTSPLAYERS);
-    private Color costFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_COSTFINANCIAL);
+//    private Color costFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_COSTFINANCIAL);
     private Color costTemporaryColor 	= ThemeManager.getColor(HOColorName.STAT_COSTTEMPORARY);
     private Color costStaffColor 		= ThemeManager.getColor(HOColorName.STAT_COSTSTAFF);
     private Color costsYouthColor 		= ThemeManager.getColor(HOColorName.STAT_COSTSYOUTH);
@@ -84,10 +85,10 @@ public class FinanzStatistikPanel extends ImagePanel
                                                            costArena,gui.UserParameter.instance().statistikStadion);
     private ImageCheckbox m_jchTrainerstab = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Trainerstab"),
                                                                costStaffColor,gui.UserParameter.instance().statistikTrainerstab);
-    private ImageCheckbox m_jchZinsaufwendungen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"),
-                                                                    costFinancialColor,gui.UserParameter.instance().statistikZinsaufwendungen);
-    private ImageCheckbox m_jchZinsertraege = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsertraege"),
-                                                                incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
+//    private ImageCheckbox m_jchZinsaufwendungen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"),
+//                                                                    costFinancialColor,gui.UserParameter.instance().statistikZinsaufwendungen);
+//    private ImageCheckbox m_jchZinsertraege = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsertraege"),
+//                                                                incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
     private ImageCheckbox m_jchZuschauer = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zuschauer"),
                                                              incomeSpectatorsColor,gui.UserParameter.instance().statistikZuschauer);
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
@@ -152,9 +153,9 @@ public class FinanzStatistikPanel extends ImagePanel
         } else if (actionEvent.getSource().equals(m_jchSponsoren.getCheckbox())) {
             m_clStatistikPanel.setShow("Sponsoren", m_jchSponsoren.isSelected());
             gui.UserParameter.instance().statistikSponsoren = m_jchSponsoren.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchZinsertraege.getCheckbox())) {
-            m_clStatistikPanel.setShow("Zinsertraege", m_jchZinsertraege.isSelected());
-            gui.UserParameter.instance().statistikZinsertraege = m_jchZinsertraege.isSelected();
+//        } else if (actionEvent.getSource().equals(m_jchZinsertraege.getCheckbox())) {
+//            m_clStatistikPanel.setShow("Zinsertraege", m_jchZinsertraege.isSelected());
+//            gui.UserParameter.instance().statistikZinsertraege = m_jchZinsertraege.isSelected();
         } else if (actionEvent.getSource().equals(m_jchSonstigeEinnahmen.getCheckbox())) {
             m_clStatistikPanel.setShow("SonstigeEinnahmen", m_jchSonstigeEinnahmen.isSelected());
             gui.UserParameter.instance().statistikSonstigeEinnahmen = m_jchSonstigeEinnahmen
@@ -166,10 +167,10 @@ public class FinanzStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("Spielergehaelter", m_jchSpielergehaelter.isSelected());
             gui.UserParameter.instance().statistikSpielergehaelter = m_jchSpielergehaelter
                                                                      .isSelected();
-        } else if (actionEvent.getSource().equals(m_jchZinsaufwendungen.getCheckbox())) {
-            m_clStatistikPanel.setShow("Zinsaufwendungen", m_jchZinsaufwendungen.isSelected());
-            gui.UserParameter.instance().statistikZinsaufwendungen = m_jchZinsaufwendungen
-                                                                     .isSelected();
+//        } else if (actionEvent.getSource().equals(m_jchZinsaufwendungen.getCheckbox())) {
+//            m_clStatistikPanel.setShow("Zinsaufwendungen", m_jchZinsaufwendungen.isSelected());
+//            gui.UserParameter.instance().statistikZinsaufwendungen = m_jchZinsaufwendungen
+//                                                                     .isSelected();
         } else if (actionEvent.getSource().equals(m_jchSonstigeAusgaben.getCheckbox())) {
             m_clStatistikPanel.setShow("SonstigeAusgaben", m_jchSonstigeAusgaben.isSelected());
             gui.UserParameter.instance().statistikSonstigeAusgaben = m_jchSonstigeAusgaben
@@ -335,17 +336,17 @@ public class FinanzStatistikPanel extends ImagePanel
         layout2.setConstraints(m_jchSponsoren, constraints2);
         panel2.add(m_jchSponsoren);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 10;
-        m_jchZinsertraege.setOpaque(false);
-        m_jchZinsertraege.addActionListener(this);
-        layout2.setConstraints(m_jchZinsertraege, constraints2);
-        panel2.add(m_jchZinsertraege);
+//        constraints2.gridwidth = 1;
+//        constraints2.gridx = 0;
+//        constraints2.gridy = 10;
+//        m_jchZinsertraege.setOpaque(false);
+//        m_jchZinsertraege.addActionListener(this);
+//        layout2.setConstraints(m_jchZinsertraege, constraints2);
+//        panel2.add(m_jchZinsertraege);
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 0;
-        constraints2.gridy = 11;
+        constraints2.gridy = 10;
         m_jchSonstigeEinnahmen.setOpaque(false);
         m_jchSonstigeEinnahmen.addActionListener(this);
         layout2.setConstraints(m_jchSonstigeEinnahmen, constraints2);
@@ -367,17 +368,17 @@ public class FinanzStatistikPanel extends ImagePanel
         layout2.setConstraints(m_jchSpielergehaelter, constraints2);
         panel2.add(m_jchSpielergehaelter);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 10;
-        m_jchZinsaufwendungen.setOpaque(false);
-        m_jchZinsaufwendungen.addActionListener(this);
-        layout2.setConstraints(m_jchZinsaufwendungen, constraints2);
-        panel2.add(m_jchZinsaufwendungen);
+//        constraints2.gridwidth = 1;
+//        constraints2.gridx = 1;
+//        constraints2.gridy = 10;
+//        m_jchZinsaufwendungen.setOpaque(false);
+//        m_jchZinsaufwendungen.addActionListener(this);
+//        layout2.setConstraints(m_jchZinsaufwendungen, constraints2);
+//        panel2.add(m_jchZinsaufwendungen);
 
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
-        constraints2.gridy = 11;
+        constraints2.gridy = 10;
         m_jchSonstigeAusgaben.setOpaque(false);
         m_jchSonstigeAusgaben.addActionListener(this);
         layout2.setConstraints(m_jchSonstigeAusgaben, constraints2);
@@ -457,10 +458,9 @@ public class FinanzStatistikPanel extends ImagePanel
             final java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance();
             final java.text.NumberFormat format2 = java.text.NumberFormat.getInstance();
 
-            final double[][] statistikWerte = de.hattrickorganizer.database.DBZugriff.instance()
-                                                                                     .getFinanzen4Statistik(anzahlHRF);
+            final double[][] statistikWerte = DBZugriff.instance().getFinanzen4Statistik(anzahlHRF);
             StatistikModel[] models = null;
-            models = new StatistikModel[16];
+            models = new StatistikModel[14];
 
             if (statistikWerte.length > 0) {
                 models[0] = new StatistikModel(statistikWerte[0], "Kontostand",
@@ -478,29 +478,29 @@ public class FinanzStatistikPanel extends ImagePanel
                                                m_jchZuschauer.isSelected(), incomeSpectatorsColor, format);
                 models[5] = new StatistikModel(statistikWerte[5], "Sponsoren",
                                                m_jchSponsoren.isSelected(), incomeSponsorsColor, format);
-                models[6] = new StatistikModel(statistikWerte[6], "Zinsertraege",
-                                               m_jchZinsertraege.isSelected(), incomeFinancialColor, format);
-                models[7] = new StatistikModel(statistikWerte[7], "SonstigeEinnahmen",
+//                models[6] = new StatistikModel(statistikWerte[6], "Zinsertraege",
+//                                               m_jchZinsertraege.isSelected(), incomeFinancialColor, format);
+                models[6] = new StatistikModel(statistikWerte[7], "SonstigeEinnahmen",
                                                m_jchSonstigeEinnahmen.isSelected(),
                                                incomeTemporaryColor, format);
-                models[8] = new StatistikModel(statistikWerte[8], "Stadion",
+                models[7] = new StatistikModel(statistikWerte[8], "Stadion",
                                                m_jchStadion.isSelected(), costArena, format);
-                models[9] = new StatistikModel(statistikWerte[9], "Spielergehaelter",
+                models[8] = new StatistikModel(statistikWerte[9], "Spielergehaelter",
                                                m_jchSpielergehaelter.isSelected(),
                                                costsPlayersColor, format);
-                models[10] = new StatistikModel(statistikWerte[10], "Zinsaufwendungen",
-                                                m_jchZinsaufwendungen.isSelected(),
-                                                costFinancialColor, format);
-                models[11] = new StatistikModel(statistikWerte[11], "SonstigeAusgaben",
+//                models[10] = new StatistikModel(statistikWerte[10], "Zinsaufwendungen",
+//                                                m_jchZinsaufwendungen.isSelected(),
+//                                                costFinancialColor, format);
+                models[9] = new StatistikModel(statistikWerte[11], "SonstigeAusgaben",
                                                 m_jchSonstigeAusgaben.isSelected(),
                                                 costTemporaryColor, format);
-                models[12] = new StatistikModel(statistikWerte[12], "Trainerstab",
+                models[10] = new StatistikModel(statistikWerte[12], "Trainerstab",
                                                 m_jchTrainerstab.isSelected(), costStaffColor, format);
-                models[13] = new StatistikModel(statistikWerte[13], "Jugend",
+                models[11] = new StatistikModel(statistikWerte[13], "Jugend",
                                                 m_jchJugend.isSelected(), costsYouthColor, format);
-                models[14] = new StatistikModel(statistikWerte[14], "Fans", m_jchFans.isSelected(),
+                models[12] = new StatistikModel(statistikWerte[14], "Fans", m_jchFans.isSelected(),
                                                 fansColor, format2, 100);
-                models[15] = new StatistikModel(statistikWerte[15], "Marktwert",
+                models[13] = new StatistikModel(statistikWerte[15], "Marktwert",
                                                 m_jchMarktwert.isSelected(), marketValueColor, format2, 10);
             }
 
