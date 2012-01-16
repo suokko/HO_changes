@@ -22,7 +22,7 @@ import de.hattrickorganizer.model.HOVerwaltung;
  *
  * @author <a href=mailto:nethyperon@users.sourceforge.net>Boy van der Werf</a>
  */
-public class TotalsPanel extends JPanel {
+class TotalsPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
@@ -47,7 +47,7 @@ public class TotalsPanel extends JPanel {
      *
      * @param title Name for the type of transfers.
      */
-    public TotalsPanel(String title) {
+    TotalsPanel(String title) {
         this(title, "");
     }
 

@@ -3,10 +3,9 @@ package ho.modul.transfer.history;
 
 
 import gui.HOIconName;
-import ho.modul.transfer.DividerDAO;
+import gui.UserParameter;
 import ho.modul.transfer.DividerListener;
 import ho.modul.transfer.PlayerTransfer;
-import ho.modul.transfer.TransfersDAO;
 import ho.modul.transfer.ui.layout.TableLayout;
 import ho.modul.transfer.ui.layout.TableLayoutConstants;
 
@@ -29,6 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -77,7 +77,7 @@ public class HistoryPane extends JSplitPane {
         final JPanel sidePanel = new ImagePanel();
         sidePanel.setLayout(new TableLayout(sizes));
         sidePanel.setOpaque(false);
-
+        HOVerwaltung hoV = HOVerwaltung.instance();
         final JPanel filterPanel = new ImagePanel();
         filterPanel.setLayout(new TableLayout(new double[][]{
                                                   {
@@ -87,18 +87,18 @@ public class HistoryPane extends JSplitPane {
                                                   {10, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED}
                                               }));
 
-        final JRadioButton rb1 = new JRadioButton(HOVerwaltung.instance().getLanguageString("AllSeasons")); //$NON-NLS-1$
+        final JRadioButton rb1 = new JRadioButton(hoV.getLanguageString("AllSeasons")); //$NON-NLS-1$
         rb1.setFocusable(false);
         rb1.setOpaque(false);
 
-        final JRadioButton rb2 = new JRadioButton(HOVerwaltung.instance().getLanguageString("Season")); //$NON-NLS-1$
+        final JRadioButton rb2 = new JRadioButton(hoV.getLanguageString("Season")); //$NON-NLS-1$
         spinSeason = rb2.getModel();
         rb2.setFocusable(false);
         rb2.setOpaque(false);
 
-        if (HOVerwaltung.instance().getModel().getBasics().getSeason() > 0) {
-            spinner.setModel(new SpinnerNumberModel(HOVerwaltung.instance().getModel().getBasics().getSeason(), 1,
-            		HOVerwaltung.instance().getModel().getBasics().getSeason(), 1));
+        if (hoV.getModel().getBasics().getSeason() > 0) {
+            spinner.setModel(new SpinnerNumberModel(hoV.getModel().getBasics().getSeason(), 1,
+            		hoV.getModel().getBasics().getSeason(), 1));
         } else {
             rb2.setEnabled(false);
             spinner.setModel(new SpinnerNumberModel());
@@ -113,16 +113,23 @@ public class HistoryPane extends JSplitPane {
             });
 
         rb1.setSelected(true);
+        
         rb1.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
-                    spinner.setEnabled(false);
-                    refresh();
+                	JRadioButton button = (JRadioButton)e.getSource();
+                    if(button.getModel().isPressed()){
+                    	spinner.setEnabled(false);
+                    	refresh();
+                    }
                 }
             });
         rb2.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
-                    spinner.setEnabled(true);
-                    refresh();
+                	JRadioButton button = (JRadioButton)e.getSource();
+                    if(button.getModel().isPressed()){
+                    	spinner.setEnabled(true);
+                    	refresh();
+                    }
                 }
             });
 
@@ -140,11 +147,11 @@ public class HistoryPane extends JSplitPane {
                                                   {10, 20, 20}
                                               }));
 
-        final JLabel amTrans = new JLabel(HOVerwaltung.instance().getLanguageString("Transfers") + ":", SwingConstants.LEFT);
-        final JLabel amTransIn = new JLabel(HOVerwaltung.instance().getLanguageString("In") + ":", SwingConstants.LEFT);
+        final JLabel amTrans = new JLabel(hoV.getLanguageString("Transfers") + ":", SwingConstants.LEFT);
+        final JLabel amTransIn = new JLabel(hoV.getLanguageString("In") + ":", SwingConstants.LEFT);
         amTransIn.setIcon(ThemeManager.getIcon(HOIconName.TRANSFER_IN));
 
-        final JLabel amTransOut = new JLabel(HOVerwaltung.instance().getLanguageString("Out") + ":", SwingConstants.LEFT);
+        final JLabel amTransOut = new JLabel(hoV.getLanguageString("Out") + ":", SwingConstants.LEFT);
         amTransOut.setIcon(ThemeManager.getIcon(HOIconName.TRANSFER_OUT));
         amountPanel.add(amTrans, "1, 1");
         amountPanel.add(amountTransfers, "2, 1");
@@ -153,9 +160,9 @@ public class HistoryPane extends JSplitPane {
         amountPanel.add(amTransOut, "4, 2");
         amountPanel.add(amountTransfersOut, "5, 2");
 
-        pricePanel = new TotalsPanel(HOVerwaltung.instance().getLanguageString("Price"),
-        		HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyName()); 
-        tsiPanel = new TotalsPanel(HOVerwaltung.instance().getLanguageString("TSI")); //$NON-NLS-1$
+        pricePanel = new TotalsPanel(hoV.getLanguageString("Price"),
+        		hoV.getModel().getXtraDaten().getCurrencyName()); 
+        tsiPanel = new TotalsPanel(hoV.getLanguageString("TSI")); //$NON-NLS-1$
 
         sidePanel.add(filterPanel, "0, 0");
         sidePanel.add(new JSeparator(), "0, 2");
@@ -177,7 +184,7 @@ public class HistoryPane extends JSplitPane {
         topPanel.add(transferPane, BorderLayout.CENTER);
         topPanel.add(sidePane, BorderLayout.WEST);
 
-        setDividerLocation(DividerDAO.getDividerPosition("HistoryTabDivider")); //$NON-NLS-1$
+        setDividerLocation(UserParameter.instance().transferHistoryPane_splitPane); //$NON-NLS-1$
         addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
                                   new DividerListener("HistoryTabDivider")); //$NON-NLS-1$
 
@@ -195,9 +202,9 @@ public class HistoryPane extends JSplitPane {
     public final void refresh() {
         if (spinSeason.isSelected()) {
             final SpinnerNumberModel model = (SpinnerNumberModel) this.spinner.getModel();
-            this.transfers = TransfersDAO.getTransfers(model.getNumber().intValue(), true, true);
+            this.transfers = DBZugriff.instance().getTransfers(model.getNumber().intValue(), true, true);
         } else {
-            this.transfers = TransfersDAO.getTransfers(0, true, true);
+            this.transfers = DBZugriff.instance().getTransfers(0, true, true);
         }
 
         final TransferTotals totals = TransferTotals.calculateTotals(transfers);

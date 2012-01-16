@@ -1,12 +1,11 @@
 // %1126721330823:hoplugins.transfers.ui%
 package ho.modul.transfer.transfertype;
 
-import ho.modul.transfer.DividerDAO;
+import gui.UserParameter;
 import ho.modul.transfer.DividerListener;
 import ho.modul.transfer.PlayerRetriever;
 import ho.modul.transfer.PlayerTransfer;
 import ho.modul.transfer.TransferTypes;
-import ho.modul.transfer.TransfersDAO;
 import ho.modul.transfer.history.PlayerDetailPanel;
 import ho.modul.transfer.ui.layout.TableLayout;
 import ho.modul.transfer.ui.layout.TableLayoutConstants;
@@ -41,6 +40,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import plugins.ISpieler;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -106,7 +106,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
         topPanel.add(transferPane, BorderLayout.CENTER);
         topPanel.add(sidePane, BorderLayout.WEST);
 
-        setDividerLocation(DividerDAO.getDividerPosition("TypeTabDivider")); //$NON-NLS-1$
+        setDividerLocation(UserParameter.instance().transferTypePane_splitPane); //$NON-NLS-1$
         addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
                                   new DividerListener("TypeTabDivider")); //$NON-NLS-1$
 
@@ -279,7 +279,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
      * @param e TableModelEvent
      */
     public final void tableChanged(TableModelEvent e) {
-        refresh(TransfersDAO.getTransfers(0, true, true));
+        refresh(DBZugriff.instance().getTransfers(0, true, true));
     }
 
     /** {@inheritDoc} */

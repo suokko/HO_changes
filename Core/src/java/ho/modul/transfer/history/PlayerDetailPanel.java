@@ -5,7 +5,6 @@ package ho.modul.transfer.history;
 
 import ho.modul.transfer.PlayerRetriever;
 import ho.modul.transfer.PlayerTransfer;
-import ho.modul.transfer.TransfersDAO;
 import ho.modul.transfer.ui.layout.TableLayout;
 import ho.modul.transfer.ui.layout.TableLayoutConstants;
 import ho.modul.transfer.ui.sorter.DefaultTableSorter;
@@ -30,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableModel;
 
 import plugins.ISpieler;
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -190,7 +190,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     /** {@inheritDoc} */
     public final void actionPerformed(ActionEvent e) {
         if (this.playerId > 0) {
-            TransfersDAO.updatePlayerTransfers(this.playerId);
+        	DBZugriff.instance().updatePlayerTransfers(this.playerId);
             updatePanel();
         }
     }
@@ -278,7 +278,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
                 arrow_experience.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_EXPIERIENCE).size(),true));
             }
 
-            final List<PlayerTransfer> transfers = TransfersDAO.getTransfers(this.playerId, true);
+            final List<PlayerTransfer> transfers = DBZugriff.instance().getTransfers(this.playerId, true);
             int valIncome = 0;
             final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 

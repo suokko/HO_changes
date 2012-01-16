@@ -2,10 +2,12 @@
 package de.hattrickorganizer.database;
 
 import gui.UserParameter;
+import ho.modul.transfer.PlayerTransfer;
 import ho.modul.transfer.scout.ScoutEintrag;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Hashtable;
@@ -43,6 +45,7 @@ import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
 import de.hattrickorganizer.model.matches.MatchLineupTeam;
 import de.hattrickorganizer.model.matches.Matchdetails;
+import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
@@ -203,6 +206,8 @@ public class DBZugriff {
 		tables.put(SpielerSkillupTable.TABLENAME, new SpielerSkillupTable(adapter));
 		tables.put(MatchSubstitutionTable.TABLENAME, new MatchSubstitutionTable(adapter));
 		tables.put(MatchesOverviewQuery.KEY, new MatchesOverviewQuery(adapter));
+		tables.put(TransferTable.TABLENAME, new TransferTable(adapter));
+		tables.put(TransferTypeTable.TABLENAME, new TransferTypeTable(adapter));
 
 	}
 
@@ -1094,6 +1099,8 @@ public class DBZugriff {
 	public int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
 		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
 	}
+	
+
 	/**
 	 * speichert die Matches
 	 *
@@ -1498,6 +1505,10 @@ public class DBZugriff {
 			matchId);
 	}
 
+	public MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
+		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getChancesStat(ownTeam, matchtype);
+	
+	}
 	/**
 	 * Speichert die Highlights zu einem Spiel
 	 *
@@ -1508,6 +1519,33 @@ public class DBZugriff {
 			details);
 	}
 
+	// Transfer
+	
+	 public List<PlayerTransfer> getTransfers(int playerid, boolean allTransfers){
+		 return ((TransferTable)getTable(TransferTable.TABLENAME)).getTransfers(playerid,allTransfers);
+	 }
+	
+	 public List<PlayerTransfer> getTransfers(int season, boolean bought, boolean sold) {
+		 return ((TransferTable)getTable(TransferTable.TABLENAME)).getTransfers(season, bought, sold);
+	 }
+	 
+	 public void updatePlayerTransfers(int playerId) {
+		 ((TransferTable)getTable(TransferTable.TABLENAME)).updatePlayerTransfers(playerId);
+	 }
+	 
+	 public void updateTeamTransfers(int teamid) {
+		 ((TransferTable)getTable(TransferTable.TABLENAME)).updateTeamTransfers(teamid);
+	 }
+	 
+	 public int getTransferType(int playerId) {
+		 return ((TransferTypeTable)getTable(TransferTypeTable.TABLENAME)).getTransferType(playerId);
+	 }
+	 
+	 public void setTransferType(int playerId, int type) {
+		 ((TransferTypeTable)getTable(TransferTypeTable.TABLENAME)).setTransferType(playerId, type);
+	 }
+	 
+	 
 	//	--------------------------------------------------------------------------------
 	//	-------------------------------- Statistik Part --------------------------------
 	//	--------------------------------------------------------------------------------
@@ -1570,6 +1608,34 @@ public class DBZugriff {
 		return null;
 	}
 
+	public int getCountOfPlayedMatches(int playerId, boolean official) {
+        String sqlStmt = "select count(MATCHESKURZINFO.matchid) as MatchNumber FROM MATCHLINEUPPLAYER INNER JOIN MATCHESKURZINFO ON MATCHESKURZINFO.matchid = MATCHLINEUPPLAYER.matchid ";
+        sqlStmt = sqlStmt + "where spielerId = " + playerId + " and FIELDPOS>-1 ";
+
+        if (official) {
+            sqlStmt = sqlStmt + "and matchtyp <8";
+        } else {
+            sqlStmt = sqlStmt + "and matchtyp >7";
+        }
+
+        final ResultSet rs = getAdapter().executeQuery(sqlStmt.toString());
+
+        if (rs == null) {
+            return 0;
+        }
+
+        int count = 0;
+
+        try {
+            while (rs.next()) {
+                count = rs.getInt("MatchNumber");
+            }
+        } catch (SQLException e) {
+        }
+
+        return count;
+    }
+	
 	/**
 	 * Gibt eine Liste mit SpielerMatchCBItems zu den einzelnen Matches zurück
 	 *

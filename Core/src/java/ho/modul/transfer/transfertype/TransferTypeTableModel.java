@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
@@ -90,7 +91,7 @@ class TransferTypeTableModel extends AbstractTableModel {
             final Object id = getValueAt(row, 0);
 
             try {
-                TransferTypeDAO.setType(Integer.parseInt("" + id),
+                DBZugriff.instance().setTransferType(Integer.parseInt("" + id),
                                         TransferTypes.getTransferCode(type));
             } catch (Exception e) {
                 // DO Nothing
