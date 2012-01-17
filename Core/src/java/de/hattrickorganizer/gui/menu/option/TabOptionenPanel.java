@@ -117,7 +117,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchStatistik.addItemListener(this);
         add(m_jchStatistik);
 
-        m_jchTransferscout = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("transfers"));
+        m_jchTransferscout = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Transfers"));
         m_jchTransferscout.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
         m_jchTransferscout.setOpaque(false);
         m_jchTransferscout.setSelected(!gui.UserParameter.temp().tempTabTransferscout);
