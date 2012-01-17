@@ -161,7 +161,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiSpieleruebersicht = new JMenuItem(
 			HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
 	private final JMenuItem m_jmiStatistik = new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
-	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("transfers"));
+	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("Transfers"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 
 
@@ -602,7 +602,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jpTransferScout = new TransfersPanel();
 
 		if (!UserParameter.instance().tempTabTransferscout) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("transfers"), m_jpTransferScout);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Transfers"), m_jpTransferScout);
 		}
 
 		// Sonstiges
@@ -952,7 +952,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		case TRANSFERS:
 			component = m_jpTransferScout;
-			titel = HOVerwaltung.instance().getLanguageString("transfers");
+			titel = HOVerwaltung.instance().getLanguageString("Transfers");
 			temporaer = UserParameter.instance().tempTabTransferscout;
 			break;
 
@@ -1181,7 +1181,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		if (UserParameter.instance().tempTabTransferscout) {
-			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("transfers"));
+			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Transfers"));
 
 			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
 				m_jtpTabbedPane.removeTabAt(index);
