@@ -4,8 +4,8 @@ package ho.tool.keepertool;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 
-import ho.modul.transfer.scout.ScoutEintrag;
-import ho.modul.transfer.scout.TransferTableModel;
+import ho.module.transfer.scout.ScoutEintrag;
+import ho.module.transfer.scout.TransferTableModel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

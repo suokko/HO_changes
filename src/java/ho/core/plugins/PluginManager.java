@@ -17,6 +17,7 @@ public final class PluginManager {
 	private static String HOPLUGINS = "hoplugins";
 	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
 	private static int[] deprecatedlist = {	1, //MatchesOverview
+											23, // trainingExperience
 											25,//Transfer-Plugin*/
 		};
 	public static String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator + HOPLUGINS;
