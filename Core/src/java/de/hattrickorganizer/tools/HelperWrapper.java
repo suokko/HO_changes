@@ -8,9 +8,9 @@ package de.hattrickorganizer.tools;
 
 import gui.HOIconName;
 import ho.core.plugins.PluginManager;
-import ho.modul.transfer.scout.Player;
-import ho.modul.transfer.scout.PlayerConverter;
-import ho.modul.transfer.scout.TransferEingabePanel;
+import ho.module.transfer.scout.Player;
+import ho.module.transfer.scout.PlayerConverter;
+import ho.module.transfer.scout.TransferEingabePanel;
 
 import java.awt.Color;
 import java.awt.Component;

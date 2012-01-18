@@ -1,6 +1,6 @@
 package de.hattrickorganizer.database;
 
-import ho.modul.transfer.scout.ScoutEintrag;
+import ho.module.transfer.scout.ScoutEintrag;
 
 import java.sql.ResultSet;
 import java.sql.Types;

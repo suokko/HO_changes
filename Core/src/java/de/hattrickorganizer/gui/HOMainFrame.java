@@ -3,8 +3,9 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
-import ho.modul.series.SeriesPanel;
-import ho.modul.transfer.TransfersPanel;
+import ho.module.series.SeriesPanel;
+import ho.module.training.TrainingPanel;
+import ho.module.transfer.TransfersPanel;
 import ho.tool.ToolManager;
 
 import java.awt.BorderLayout;
@@ -108,6 +109,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int SPIELERANALYSE = 4; // player analysis
 	public static final int STATISTIK = 5; // statistics
 	public static final int TRANSFERS = 6;
+	public static final int TRAINING = 7;
 	public static final int INFORMATIONEN = 8;
 
 	public static final int BUSY = 0;
@@ -163,6 +165,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiStatistik = new JMenuItem(HOVerwaltung.instance().getLanguageString("Statistik"));
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("Transfers"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
+	private final JMenuItem m_jmiTrainingExperience = new JMenuItem(HOVerwaltung.instance().getLanguageString("Training"));
 
 
 	// Components
@@ -177,6 +180,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private StatistikMainPanel m_jpStatistikPanel;
 	private String m_sToRemoveTabName;
 	private TransfersPanel m_jpTransferScout;
+	private TrainingPanel trainingPanel;
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
@@ -430,6 +434,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.STATISTIK);
 		} else if (source.equals(m_jmiTransferscout)) { // Transferscout
 			showTab(HOMainFrame.TRANSFERS);
+		} else if (source.equals(m_jmiTrainingExperience)) { // Transferscout
+			showTab(HOMainFrame.TRAINING);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
 		} else if (source.equals(m_jmCreditsItem)) { 
@@ -584,20 +590,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"), m_jpSpielerAnalysePanel);
 		}
 
-		// //Training
-		// m_jtpTraining = new JTabbedPane();
-		// //Trainingshilfe
-		// m_jpTrainingshelfer = new TrainingsPanel();
-		// m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"),
-		// m_jpTrainingshelfer );
-		// //SkillAenderung
-		// m_jpSkillAenderungsPanel = new SkillAenderungsPanel();
-		// m_jtpTraining.addTab ( model.HOVerwaltung.instance().getLanguageString("Training") +
-		// " 2", m_jpSkillAenderungsPanel );
-		// //Adden
-		// m_jtpTabbedPane.addTab ( model.HOVerwaltung.instance().getLanguageString("Training"),
-		// m_jtpTraining );
-		//
+
 		// Transferscout
 		m_jpTransferScout = new TransfersPanel();
 
@@ -605,6 +598,14 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Transfers"), m_jpTransferScout);
 		}
 
+		//Training
+		trainingPanel = new TrainingPanel();
+		
+		if (!UserParameter.instance().tempTabTraining) {
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"), trainingPanel);
+		}
+		
+		
 		// Sonstiges
 		m_jpInformation = new InformationsPanel();
 
@@ -777,6 +778,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiTransferscout.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTransferscout);
 
+		// Training
+		
+		m_jmiTrainingExperience.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
+		m_jmiTrainingExperience.addActionListener(this);
+		m_jmVerschiedenes.add(m_jmiTrainingExperience);
 		// Verschiedenes
 		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		m_jmiVerschiedenes.addActionListener(this);
@@ -955,7 +961,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			titel = HOVerwaltung.instance().getLanguageString("Transfers");
 			temporaer = UserParameter.instance().tempTabTransferscout;
 			break;
-
+		case TRAINING:
+			component = trainingPanel;
+			titel = HOVerwaltung.instance().getLanguageString("Training");
+			temporaer = UserParameter.instance().tempTabTraining;
+			break;
+			
 		case INFORMATIONEN:
 			component = m_jpInformation;
 			titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");

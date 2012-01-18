@@ -1,8 +1,8 @@
 package de.hattrickorganizer.database;
 
-import ho.modul.transfer.PlayerRetriever;
-import ho.modul.transfer.PlayerTransfer;
-import ho.modul.transfer.XMLParser;
+import ho.module.transfer.PlayerRetriever;
+import ho.module.transfer.PlayerTransfer;
+import ho.module.transfer.XMLParser;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -6,8 +6,8 @@
  */
 package de.hattrickorganizer.logik.xml;
 
-import ho.modul.series.model.LigaTabelle;
-import ho.modul.series.model.LigaTabellenEintrag;
+import ho.module.series.model.LigaTabelle;
+import ho.module.series.model.LigaTabellenEintrag;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
