@@ -4,7 +4,7 @@ package ho.module.transfer.history;
 
 import gui.HOIconName;
 import gui.UserParameter;
-import ho.module.transfer.DividerListener;
+import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.ui.layout.TableLayout;
 import ho.module.transfer.ui.layout.TableLayoutConstants;
@@ -186,7 +186,7 @@ public class HistoryPane extends JSplitPane {
 
         setDividerLocation(UserParameter.instance().transferHistoryPane_splitPane); //$NON-NLS-1$
         addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                  new DividerListener("HistoryTabDivider")); //$NON-NLS-1$
+                                  new DividerListener(DividerListener.transferHistoryPane_splitPane)); //$NON-NLS-1$
 
         setLeftComponent(topPanel);
         setRightComponent(playerDetailPanel);

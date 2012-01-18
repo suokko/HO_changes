@@ -1,5 +1,6 @@
 package ho.module.training;
 
+import gui.UserParameter;
 import ho.module.training.ui.MainPanel;
 import ho.module.training.ui.PlayerDetailPanel;
 import ho.module.training.ui.SkillupPanel;
@@ -55,30 +56,30 @@ public class TrainingPanel extends JPanel implements IRefreshable {
             JSplitPane leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, skillupPanel, staffPanel);
 
             leftPane.setResizeWeight(1);
-            leftPane.setDividerLocation(DividerDAO.getDividerPosition("LowerLeftDivider")); //$NON-NLS-1$
+            leftPane.setDividerLocation(UserParameter.instance().training_lowerLeftSplitPane); //$NON-NLS-1$
             leftPane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                               new DividerListener("LowerLeftDivider")); //$NON-NLS-1$
+                                               new DividerListener(DividerListener.training_lowerLeftSplitPane)); //$NON-NLS-1$
 
             JSplitPane bottomPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane,
                                                     playerDetailPanel);
 
-            bottomPanel.setDividerLocation(DividerDAO.getDividerPosition("BottomDivider")); //$NON-NLS-1$
+            bottomPanel.setDividerLocation(UserParameter.instance().training_bottomSplitPane); //$NON-NLS-1$
             bottomPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                                  new DividerListener("BottomDivider")); //$NON-NLS-1$
+                                                  new DividerListener(DividerListener.training_bottomSplitPane)); //$NON-NLS-1$
 
             JSplitPane splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabbedPanel,
                                                    bottomPanel);
 
-            splitPanel.setDividerLocation(DividerDAO.getDividerPosition("MainDivider")); //$NON-NLS-1$
+            splitPanel.setDividerLocation(UserParameter.instance().training_mainSplitPane); //$NON-NLS-1$
             splitPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                                 new DividerListener("MainDivider")); //$NON-NLS-1$
+                                                 new DividerListener(DividerListener.training_mainSplitPane)); //$NON-NLS-1$
 
             JSplitPane mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPanel,
                                                   trainPanel);
 
-            mainPanel.setDividerLocation(DividerDAO.getDividerPosition("RightDivider")); //$NON-NLS-1$
+            mainPanel.setDividerLocation(UserParameter.instance().training_rightSplitPane); //$NON-NLS-1$
             mainPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                                new DividerListener("RightDivider")); //$NON-NLS-1$
+                                                new DividerListener(DividerListener.training_rightSplitPane)); //$NON-NLS-1$
 
             mainPanel.setOpaque(false);
             add(mainPanel, BorderLayout.CENTER);

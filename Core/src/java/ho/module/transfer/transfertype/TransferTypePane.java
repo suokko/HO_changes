@@ -2,7 +2,7 @@
 package ho.module.transfer.transfertype;
 
 import gui.UserParameter;
-import ho.module.transfer.DividerListener;
+import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.TransferTypes;
@@ -108,7 +108,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
 
         setDividerLocation(UserParameter.instance().transferTypePane_splitPane); //$NON-NLS-1$
         addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                  new DividerListener("TypeTabDivider")); //$NON-NLS-1$
+                                  new DividerListener(DividerListener.transferTypePane_splitPane)); //$NON-NLS-1$
 
         setLeftComponent(topPanel);
         setRightComponent(playerDetailPanel);
