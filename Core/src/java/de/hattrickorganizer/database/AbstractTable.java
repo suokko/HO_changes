@@ -1,8 +1,9 @@
 package de.hattrickorganizer.database;
 
+import ho.core.db.User;
+
 import java.sql.ResultSet;
 
-import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
 

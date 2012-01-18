@@ -1,5 +1,5 @@
 // %1916127255:de.hattrickorganizer.model%
-package de.hattrickorganizer.model;
+package ho.core.db;
 
 import java.io.File;
 import java.io.FileWriter;

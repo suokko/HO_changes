@@ -1,4 +1,4 @@
-package de.hattrickorganizer.tools.developer;
+package ho.core.db.frontend;
 
 import java.awt.Color;
 import java.awt.event.KeyAdapter;

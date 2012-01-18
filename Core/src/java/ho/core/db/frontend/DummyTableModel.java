@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   DummyTableModel.java
 
-package de.hattrickorganizer.tools.developer;
+package ho.core.db.frontend;
 
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
