@@ -2,8 +2,8 @@
 package de.hattrickorganizer.database;
 
 import gui.UserParameter;
-import ho.modul.transfer.PlayerTransfer;
-import ho.modul.transfer.scout.ScoutEintrag;
+import ho.module.transfer.PlayerTransfer;
+import ho.module.transfer.scout.ScoutEintrag;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.ResultSet;

@@ -177,6 +177,7 @@ public final class UserParameter extends Configuration {
     //Temporäre Tabs
     public boolean tempTabSpieleruebersicht;
     public boolean tempTabStatistik;
+    public boolean tempTabTraining = true;
     public boolean tempTabTransferscout = true;
 
     //Update
@@ -232,6 +233,12 @@ public final class UserParameter extends Configuration {
     
     public int transferHistoryPane_splitPane = 200;
     public int transferTypePane_splitPane = 200;
+    
+    public int training_splitPane =300;
+    public int training_bottomSplitPane =400;
+    public int training_rightSplitPane =700;
+    public int training_mainSplitPane =300;
+    public int training_lowerLeftSplitPane =200;
     //Breite der BestPos-Spalte
 
     /** @deprecated column width configurable
@@ -565,6 +572,16 @@ public final class UserParameter extends Configuration {
 		map.put("theme", String.valueOf(theme));
 		map.put("transferHistoryPane_splitPane", String.valueOf(transferHistoryPane_splitPane));
 		map.put("transferTypePane_splitPane", String.valueOf(transferTypePane_splitPane));
+		map.put("tempTabTraining", String.valueOf(tempTabTraining));
+		map.put("training_splitPane", String.valueOf(training_splitPane));
+		map.put("training_bottomSplitPane", String.valueOf(training_bottomSplitPane));
+		map.put("training_rightSplitPane", String.valueOf(training_rightSplitPane));
+		map.put("training_mainSplitPane", String.valueOf(training_mainSplitPane));
+		map.put("training_lowerLeftSplitPane", String.valueOf(training_lowerLeftSplitPane));
+		
+		
+		
+		
 		return map;
 	}
 
@@ -769,6 +786,12 @@ public final class UserParameter extends Configuration {
 		theme = getStringValue(values, "theme");
 		transferHistoryPane_splitPane = getIntValue(values, "transferHistoryPane_splitPane");
 		transferTypePane_splitPane = getIntValue(values, "transferTypePane_splitPane");
+		tempTabTraining = getBooleanValue(values, "tempTabTraining");
+		training_splitPane= getIntValue(values, "training_splitPane");
+		training_bottomSplitPane= getIntValue(values, "training_bottomSplitPane");
+		training_rightSplitPane= getIntValue(values, "training_rightSplitPane");
+		training_mainSplitPane= getIntValue(values, "training_mainSplitPane");
+		training_lowerLeftSplitPane= getIntValue(values, "training_lowerLeftSplitPane");
 	}
 
 }

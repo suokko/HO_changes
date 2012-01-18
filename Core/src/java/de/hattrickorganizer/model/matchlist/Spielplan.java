@@ -6,10 +6,10 @@
  */
 package de.hattrickorganizer.model.matchlist;
 
-import ho.modul.series.model.LigaTabelle;
-import ho.modul.series.model.LigaTabellenEintrag;
-import ho.modul.series.model.TabellenVerlaufEintrag;
-import ho.modul.series.model.Tabellenverlauf;
+import ho.module.series.model.LigaTabelle;
+import ho.module.series.model.LigaTabellenEintrag;
+import ho.module.series.model.TabellenVerlaufEintrag;
+import ho.module.series.model.Tabellenverlauf;
 
 import java.sql.Timestamp;
 import java.util.Vector;

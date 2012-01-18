@@ -138,10 +138,10 @@ public class TableSorter extends TableMap {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final ho.modul.transfer.scout.ScoutEintrag getScoutEintrag(int row) {
+    public final ho.module.transfer.scout.ScoutEintrag getScoutEintrag(int row) {
         if (row > -1) {
             try {
-                return ((ho.modul.transfer.scout.TransferTableModel) getModel())
+                return ((ho.module.transfer.scout.TransferTableModel) getModel())
                        .getScoutEintrag(Integer.parseInt(((ColorLabelEntry) getValueAt(row, idSpalte)).getText()));
             } catch (Exception e) {
                 HOLogger.instance().log(getClass(),"TableSorter.getScoutEintrag: " + e);
