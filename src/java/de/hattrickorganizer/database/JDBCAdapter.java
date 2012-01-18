@@ -1,12 +1,13 @@
 // %4089797104:de.hattrickorganizer.database%
 package de.hattrickorganizer.database;
 
+import ho.core.db.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
 
