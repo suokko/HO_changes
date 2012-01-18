@@ -1,6 +1,8 @@
 // %1127327738353:hoplugins%
 package ho.tool.export;
 
+import ho.core.db.backup.HOZip;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +36,6 @@ import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.backup.HOZip;
 import de.hattrickorganizer.tools.xml.XMLManager;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 

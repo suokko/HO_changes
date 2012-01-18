@@ -3,7 +3,8 @@ package de.hattrickorganizer.gui.menu.option;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.User;
+
+import ho.core.db.User;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

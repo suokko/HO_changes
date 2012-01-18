@@ -1,6 +1,8 @@
 package de.hattrickorganizer;
 
 import gui.UserParameter;
+import ho.core.db.User;
+import ho.core.db.backup.BackupHelper;
 import ho.core.plugins.PluginManager;
 
 import java.io.BufferedReader;
@@ -20,11 +22,9 @@ import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.GebChecker;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.LanguageFiles;
-import de.hattrickorganizer.tools.backup.BackupHelper;
 import de.hattrickorganizer.tools.extension.ExtensionListener;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 

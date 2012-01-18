@@ -1,11 +1,12 @@
 // %2388812641:de.hattrickorganizer.tools.backup%
-package de.hattrickorganizer.tools.backup;
+package ho.core.db.backup;
+
+import ho.core.db.User;
 
 import java.io.File;
 import java.util.Calendar;
 
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
-import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.tools.HOLogger;
 
 

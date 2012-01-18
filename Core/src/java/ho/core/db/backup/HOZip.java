@@ -1,5 +1,5 @@
 // %3454675265:de.hattrickorganizer.tools.backup%
-package de.hattrickorganizer.tools.backup;
+package ho.core.db.backup;
 
 import java.io.File;
 import java.io.FileInputStream;

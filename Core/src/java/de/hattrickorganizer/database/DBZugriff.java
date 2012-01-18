@@ -2,6 +2,8 @@
 package de.hattrickorganizer.database;
 
 import gui.UserParameter;
+import ho.core.db.User;
+import ho.core.db.backup.BackupDialog;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.scout.ScoutEintrag;
 import ho.tool.arenasizer.Stadium;
@@ -38,7 +40,6 @@ import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.TrainingPerWeek;
-import de.hattrickorganizer.model.User;
 import de.hattrickorganizer.model.XtraData;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
@@ -49,7 +50,6 @@ import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.model.matchlist.Spielplan;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.backup.BackupDialog;
 
 /**
  * DOCUMENT ME!

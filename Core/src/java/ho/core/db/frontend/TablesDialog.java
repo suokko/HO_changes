@@ -1,4 +1,4 @@
-package de.hattrickorganizer.tools.developer;
+package ho.core.db.frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
