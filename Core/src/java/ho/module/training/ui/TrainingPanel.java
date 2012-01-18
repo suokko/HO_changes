@@ -1,7 +1,7 @@
 // %1126721451963:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.module.training.DividerDAO;
+import gui.UserParameter;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -150,9 +150,9 @@ public class TrainingPanel extends JPanel {
 
         JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, pane2);
 
-        pane.setDividerLocation(DividerDAO.getDividerPosition("TrainingDivider")); //$NON-NLS-1$
+        pane.setDividerLocation(UserParameter.instance().training_splitPane); //$NON-NLS-1$
         pane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                       new DividerListener("TrainingDivider")); //$NON-NLS-1$
+                                       new DividerListener(DividerListener.training_splitPane)); //$NON-NLS-1$
         pane.setDividerSize(1);
         setLayout(new BorderLayout());
         setOpaque(false);
