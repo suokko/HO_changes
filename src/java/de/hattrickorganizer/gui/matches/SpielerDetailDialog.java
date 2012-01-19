@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.matches;
 
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -24,7 +25,6 @@ import javax.swing.WindowConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.playeroverview.SpielerDetailPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerStatusLabelEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
@@ -244,7 +244,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
     public SpielerDetailDialog(JFrame owner, MatchLineupPlayer matchplayer, MatchLineup matchlineup) {
         super(owner);
         HOLogger.instance().log(getClass(),"SpielerDetailDialog");
-        final Spieler player = DBZugriff.instance().getSpielerAtDate(matchplayer.getSpielerId(),matchlineup.getSpielDatum());
+        final Spieler player = DBManager.instance().getSpielerAtDate(matchplayer.getSpielerId(),matchlineup.getSpielDatum());
 
         //Nicht gefunden
         if (player == null) {
@@ -262,7 +262,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         initComponents(player, matchplayer);
 
         m_jpRating.setRating((float) matchplayer.getRating() * 2, true);
-        m_jpAktuellRating.setRating(DBZugriff.instance().getLetzteBewertung4Spieler(player.getSpielerID()));
+        m_jpAktuellRating.setRating(DBManager.instance().getLetzteBewertung4Spieler(player.getSpielerID()));
         setLabels(player);
 
         pack();
@@ -1175,10 +1175,10 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 		}
 
         ////////////////////////////////////////////////////////////////////////
-        final float[] rating = de.hattrickorganizer.database.DBZugriff.instance()
+        final float[] rating = ho.core.db.DBManager.instance()
                                                                       .getBewertungen4Player(player
                                                                                              .getSpielerID());
-        final float[] ratingPos = de.hattrickorganizer.database.DBZugriff.instance()
+        final float[] ratingPos = ho.core.db.DBManager.instance()
                                                                          .getBewertungen4PlayerUndPosition(player
                                                                                                            .getSpielerID(),
                                                                                                            matchplayer

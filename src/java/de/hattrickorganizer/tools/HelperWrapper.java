@@ -7,6 +7,7 @@
 package de.hattrickorganizer.tools;
 
 import gui.HOIconName;
+import ho.core.db.DBManager;
 import ho.core.plugins.PluginManager;
 import ho.module.transfer.scout.Player;
 import ho.module.transfer.scout.PlayerConverter;
@@ -42,7 +43,6 @@ import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.HO;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.matches.SpielHighlightPanel;
 import de.hattrickorganizer.gui.menu.HRFImport;
@@ -423,11 +423,11 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     public String decodeStringFromDatabase(String text) {
-        return DBZugriff.deleteEscapeSequences(text);
+        return DBManager.deleteEscapeSequences(text);
     }
 
     public String deleteEscapeSequences(String text) {
-        return DBZugriff.deleteEscapeSequences(text);
+        return DBManager.deleteEscapeSequences(text);
     }
 
     /**
@@ -436,12 +436,12 @@ public class HelperWrapper implements plugins.IHelper {
      */
     public boolean downloadMatchData(int matchID) {
         //Spiel nicht vorhanden, dann erst runterladen!
-        if (!DBZugriff.instance().isMatchVorhanden(matchID)) {
+        if (!DBManager.instance().isMatchVorhanden(matchID)) {
             try {
                 //details
                 if (HOMainFrame.instance().getOnlineWorker()
                                                         .getMatchDetails(matchID)) {
-                    Matchdetails details = DBZugriff.instance()
+                    Matchdetails details = DBManager.instance()
                                                                                         .getMatchDetails(matchID);
 
                     //Lineups
@@ -458,11 +458,11 @@ public class HelperWrapper implements plugins.IHelper {
                     	// Fetch matchDetails again
                     	HOLogger.instance().debug(getClass(), "Fetching missing match highlights / report");
                     	HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchID);
-                    	details = DBZugriff.instance().getMatchDetails(matchID);
+                    	details = DBManager.instance().getMatchDetails(matchID);
                     }
 
                     //MatchKurzInfo muss hier erstellt werden!!
-                    final MatchLineup lineup = DBZugriff.instance()
+                    final MatchLineup lineup = DBManager.instance()
                                                                                       .getMatchLineup(matchID);
 
                     if (lineup != null) {
@@ -482,7 +482,7 @@ public class HelperWrapper implements plugins.IHelper {
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};
-                        DBZugriff.instance().storeMatchKurzInfos(infos);
+                        DBManager.instance().storeMatchKurzInfos(infos);
                     }
 
                     MatchUpdater.updateMatch(HOMiniModel.instance(), matchID);
@@ -501,11 +501,11 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     public String encodeString4Database(String text) {
-        return DBZugriff.insertEscapeSequences(text);
+        return DBManager.insertEscapeSequences(text);
     }
 
     public boolean existsMatchInDB(int matchID) {
-        return DBZugriff.instance().isMatchVorhanden(matchID);
+        return DBManager.instance().isMatchVorhanden(matchID);
     }
 
     public int[] generateIntArray(String text) {
@@ -521,7 +521,7 @@ public class HelperWrapper implements plugins.IHelper {
     }
 
     public String insertEscapeSequences(String text) {
-        return DBZugriff.insertEscapeSequences(text);
+        return DBManager.insertEscapeSequences(text);
     }
 
     public BufferedImage loadImage(String datei) {

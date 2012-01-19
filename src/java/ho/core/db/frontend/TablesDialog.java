@@ -1,5 +1,7 @@
 package ho.core.db.frontend;
 
+import ho.core.db.DBManager;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -13,7 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 
-import de.hattrickorganizer.database.DBZugriff;
 
 
 final class TablesDialog extends JDialog implements MouseListener {
@@ -50,7 +51,7 @@ final class TablesDialog extends JDialog implements MouseListener {
     {
         if(tablelist == null)
         {
-            tablelist = new JList(DBZugriff.instance().getAdapter().getAllTableNames());
+            tablelist = new JList(DBManager.instance().getAdapter().getAllTableNames());
             tablelist.addMouseListener(this);
         }
         return tablelist;
@@ -69,7 +70,7 @@ final class TablesDialog extends JDialog implements MouseListener {
     private Object[][] setTable(String tablename)
         throws Exception
     {
-        ResultSet rs = DBZugriff.instance().getAdapter().executeQuery("SELECT * FROM " + tablename + " where 1 = 2");
+        ResultSet rs = DBManager.instance().getAdapter().executeQuery("SELECT * FROM " + tablename + " where 1 = 2");
         int columns = rs.getMetaData().getColumnCount();
         Object columnData[][] = new Object[columns][4];
         for(int i = 0; i < columns; i++)

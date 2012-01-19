@@ -2,6 +2,7 @@
 package ho.module.training;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HelperWrapper;
 
@@ -78,7 +78,7 @@ public class EffectDAO {
                 }
             }
 
-            IJDBCAdapter db = DBZugriff.instance().getAdapter();
+            IJDBCAdapter db = DBManager.instance().getAdapter();
 
             trainWeeks.clear();
 

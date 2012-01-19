@@ -1,5 +1,7 @@
 package ho.tool.dbcleanup;
 
+import ho.core.db.DBManager;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -7,7 +9,6 @@ import java.util.GregorianCalendar;
 import javax.swing.JFrame;
 
 import plugins.IMatchLineup;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HRF;
@@ -61,8 +62,8 @@ public class DBCleanupTool {
 	public void cleanupHRFs (Timestamp removeDate, boolean autoRemove) {
 		HOLogger.instance().debug(getClass(), 
 				"Removing old HRFs: removeDate=" + removeDate + ", autoRemove="+autoRemove);
-		HRF[] allHrfs = DBZugriff.instance().getAllHRFs(-1, -1, true);
-		int latestHrf = DBZugriff.instance().getLatestHrfId();
+		HRF[] allHrfs = DBManager.instance().getAllHRFs(-1, -1, true);
+		int latestHrf = DBManager.instance().getLatestHrfId();
 		int lastSeason = -1;
 		int lastWeek = -1;
 		int counter = 0;
@@ -87,7 +88,7 @@ public class DBCleanupTool {
 			if (remove && curId != latestHrf) {
 				HOLogger.instance().debug(getClass(),
 						"Removing Hrf: " + curId + " @ " + curDate + " (" + curHtSeasonTraining + "/" + curHtWeekTraining + ")");
-				DBZugriff.instance().deleteHRF(curId);
+				DBManager.instance().deleteHRF(curId);
 				counter++;
 			} else {
 //				HOLogger.instance().debug(getClass(),
@@ -155,7 +156,7 @@ public class DBCleanupTool {
 				+ ", removeDateOwnFriendlies="+removeDateOwnFriendlies 
 				+ ", removeDateOtherMatches="+removeDateOtherMatches
 				+ ", removeDateOtherFriendlies="+removeDateOtherFriendlies);
-		MatchKurzInfo[] kurzInfos = DBZugriff.instance().getMatchesKurzInfo(-1);
+		MatchKurzInfo[] kurzInfos = DBManager.instance().getMatchesKurzInfo(-1);
 		int counter = 0;
 		int myTeamId = HOMiniModel.instance().getBasics().getTeamId();
 		for (MatchKurzInfo curKurzInfo : kurzInfos) {
@@ -190,7 +191,7 @@ public class DBCleanupTool {
 				// Remove match
 				HOLogger.instance().debug(getClass(), 
 						"Removing match "+curMatchId+" @ "+curMatchDate+ " (myMatch="+isMyMatch+", type="+curMatchType+")");
-	            DBZugriff.instance().deleteMatch(curMatchId);
+	            DBManager.instance().deleteMatch(curMatchId);
 				counter++;
 			} 
 		}

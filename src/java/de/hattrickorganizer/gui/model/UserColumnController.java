@@ -1,8 +1,9 @@
 package de.hattrickorganizer.gui.model;
 
+import ho.core.db.DBManager;
+
 import java.util.Vector;
 
-import de.hattrickorganizer.database.DBZugriff;
 /**
  * Controller for the UserColumns.
  * Create columns and managed the models
@@ -53,7 +54,7 @@ public final class UserColumnController {
 	 *
 	 */
 	public final void load(){
-		final DBZugriff dbZugriff = DBZugriff.instance();
+		final DBManager dbZugriff = DBManager.instance();
 		
 		dbZugriff.loadHOColumModel( getMatchesModel() );
 		dbZugriff.loadHOColumModel( getPlayerOverviewModel() );

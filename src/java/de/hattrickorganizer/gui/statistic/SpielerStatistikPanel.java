@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.statistic;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +31,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
@@ -565,7 +565,7 @@ class SpielerStatistikPanel extends ImagePanel
             final java.text.NumberFormat format2 = NumberFormat.getCurrencyInstance();
 
             if (m_jcbSpieler.getSelectedItem() != null) {
-                final double[][] statistikWerte = DBZugriff.instance().getSpielerDaten4Statistik(((SpielerCBItem) m_jcbSpieler
+                final double[][] statistikWerte = DBManager.instance().getSpielerDaten4Statistik(((SpielerCBItem) m_jcbSpieler
                                                                                                                      .getSelectedItem()).getSpieler()
                                                                                                                      .getSpielerID(),
                                                                                                                     anzahlHRF);

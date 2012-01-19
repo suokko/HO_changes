@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.statistic;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.StatistikModel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -458,7 +458,7 @@ public class FinanzStatistikPanel extends ImagePanel
             final java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance();
             final java.text.NumberFormat format2 = java.text.NumberFormat.getInstance();
 
-            final double[][] statistikWerte = DBZugriff.instance().getFinanzen4Statistik(anzahlHRF);
+            final double[][] statistikWerte = DBManager.instance().getFinanzen4Statistik(anzahlHRF);
             StatistikModel[] models = null;
             models = new StatistikModel[14];
 

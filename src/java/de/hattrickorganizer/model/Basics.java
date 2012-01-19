@@ -104,8 +104,8 @@ public final class Basics implements plugins.IBasics {
     public Basics(ResultSet rs) throws Exception {
         try {
             m_iTeamId = rs.getInt("TeamID");
-            m_sTeamName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("TeamName"));
-            m_sManager = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Manager"));
+            m_sTeamName = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("TeamName"));
+            m_sManager = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("Manager"));
             m_iLand = rs.getInt("Land");
             m_iLiga = rs.getInt("Liga");
             m_iSeason = rs.getInt("Saison");

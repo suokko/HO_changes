@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.model;
 
+import ho.core.db.DBManager;
+
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
@@ -13,7 +15,6 @@ import java.util.Properties;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
@@ -208,7 +209,7 @@ public class HOVerwaltung {
             m_clInstance = new HOVerwaltung();
 
             //TODO : defaults für FaktorObjekte einladen
-            DBZugriff.instance().getFaktorenFromDB();
+            DBManager.instance().getFaktorenFromDB();
 
             //Krücke bisher
             //berechnung.FormulaFactors.instance ().init ();
@@ -268,7 +269,7 @@ public class HOVerwaltung {
      * läadt das zuletzt importtiert model ein
      */
     public void loadLatestHoModel() {
-        int id = DBZugriff.instance().getLatestHrfId();
+        int id = DBManager.instance().getLatestHrfId();
         m_clHoModel = loadModel(id);
     }
 
@@ -291,7 +292,7 @@ public class HOVerwaltung {
         }
 
         final Vector<CBItem> hrfListe = new Vector<CBItem>();
-        hrfListe.addAll(DBZugriff.instance().getCBItemHRFListe(hrfDate));
+        hrfListe.addAll(DBManager.instance().getCBItemHRFListe(hrfDate));
         Collections.reverse(hrfListe);
         long s1, s2, lSum=0, mSum=0;
         HOLogger.instance().log(getClass(), "Subskill calculation prepared. " + new Date());
@@ -329,19 +330,19 @@ public class HOVerwaltung {
      */
     protected HOModel loadModel(int id) {
         final HOModel model = new HOModel();
-        model.setSpieler(DBZugriff.instance().getSpieler(id));
-        model.setAllOldSpieler(DBZugriff.instance().getAllSpieler());
-        model.setAufstellung(DBZugriff.instance().getAufstellung(id,Lineup.DEFAULT_NAME));
-        model.setLastAufstellung(DBZugriff.instance().getAufstellung(id,Lineup.DEFAULT_NAMELAST));
-        model.setBasics(DBZugriff.instance().getBasics(id));
-        model.setFinanzen(DBZugriff.instance().getFinanzen(id));
-        model.setLiga(DBZugriff.instance().getLiga(id));
-        model.setStadium(DBZugriff.instance().getStadion(id));
-        model.setTeam(DBZugriff.instance().getTeam(id));
-        model.setVerein(DBZugriff.instance().getVerein(id));
+        model.setSpieler(DBManager.instance().getSpieler(id));
+        model.setAllOldSpieler(DBManager.instance().getAllSpieler());
+        model.setAufstellung(DBManager.instance().getAufstellung(id,Lineup.DEFAULT_NAME));
+        model.setLastAufstellung(DBManager.instance().getAufstellung(id,Lineup.DEFAULT_NAMELAST));
+        model.setBasics(DBManager.instance().getBasics(id));
+        model.setFinanzen(DBManager.instance().getFinanzen(id));
+        model.setLiga(DBManager.instance().getLiga(id));
+        model.setStadium(DBManager.instance().getStadion(id));
+        model.setTeam(DBManager.instance().getTeam(id));
+        model.setVerein(DBManager.instance().getVerein(id));
         model.setID(id);
-        model.setSpielplan(DBZugriff.instance().getSpielplan(-1, -1));
-        model.setXtraDaten(DBZugriff.instance().getXtraDaten(id));
+        model.setSpielplan(DBManager.instance().getSpielplan(-1, -1));
+        model.setXtraDaten(DBManager.instance().getXtraDaten(id));
 
         return model;
     }

@@ -1,6 +1,7 @@
 package ho.core.db.frontend;
 
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +29,6 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HelperWrapper;
@@ -196,7 +196,7 @@ public class SQLDialog extends JDialog implements ActionListener {
             table.setModel(model);
         } else {
             try {
-                int rows = DBZugriff.instance().getAdapter().executeUpdate(getTextArea().getText());
+                int rows = DBManager.instance().getAdapter().executeUpdate(getTextArea().getText());
                 getInfoLabel().setText(rows + " rows updated");
             }
             catch(Exception ex)
@@ -222,7 +222,7 @@ public class SQLDialog extends JDialog implements ActionListener {
         try
         {
             long start = System.currentTimeMillis();
-            ResultSet rs = DBZugriff.instance().getAdapter().executeQuery(select + " " + sql);
+            ResultSet rs = DBManager.instance().getAdapter().executeQuery(select + " " + sql);
             rs.last();
             rowCount = rs.getRow();
             rs.beforeFirst();

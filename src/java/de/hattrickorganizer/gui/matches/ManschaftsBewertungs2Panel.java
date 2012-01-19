@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.matches;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +22,6 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ImagePanel;

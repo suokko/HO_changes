@@ -1,10 +1,11 @@
 package de.hattrickorganizer.model.matches;
 
+import ho.core.db.DBManager;
+
 import java.util.Vector;
 
 import plugins.IMatchHighlight;
 import plugins.ISubstitution;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.tools.HOLogger;
 
 public class MatchStatistics {
@@ -231,7 +232,7 @@ public class MatchStatistics {
 	 */
 	public int getMatchEndMinute() {
 		if (endMinute == -111) { 
-			Vector<IMatchHighlight> hls = DBZugriff.instance().getMatchDetails(matchId).getHighlights();
+			Vector<IMatchHighlight> hls = DBManager.instance().getMatchDetails(matchId).getHighlights();
 			for (int i = 0; i < hls.size() ; i++) {
 				if ((hls.get(i).getHighlightTyp() == 0) && (hls.get(i).getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_BESTER_SPIELER)) {
 					endMinute = hls.get(i).getMinute();

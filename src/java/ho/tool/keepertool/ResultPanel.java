@@ -121,7 +121,7 @@ class ResultPanel extends JPanel {
                     }
 
                     sp.setTrainingsOffsetTorwart(decimals);
-                    de.hattrickorganizer.database.DBZugriff.instance().saveSpieler(de.hattrickorganizer.model.HOVerwaltung.instance()
+                    ho.core.db.DBManager.instance().saveSpieler(de.hattrickorganizer.model.HOVerwaltung.instance()
                                                                                                                           .getModel()
                                                                                                                           .getID(),
                                                                                    de.hattrickorganizer.model.HOVerwaltung.instance()

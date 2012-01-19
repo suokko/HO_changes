@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.playeroverview;
 
 import gui.HOColorName;
+import ho.core.db.DBManager;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -20,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -96,8 +96,8 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	private void initTrainingBlockList() {
 		allTrainingBlocks = new ArrayList<SingleTrainingBlock>();
 		int playerId = m_clPlayer.getSpielerID();
-		Timestamp timestampFirstPlayerHRF = DBZugriff.instance().getTimestamp4FirstPlayerHRF(playerId);
-		int hrfId = DBZugriff.instance().getHRFID4Date(timestampFirstPlayerHRF);
+		Timestamp timestampFirstPlayerHRF = DBManager.instance().getTimestamp4FirstPlayerHRF(playerId);
+		int hrfId = DBManager.instance().getHRFID4Date(timestampFirstPlayerHRF);
 		boolean lastBlock = false;
 		Timestamp startDate = null;
 		Timestamp lastDate = null;
@@ -105,7 +105,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		// Iterate through all HRFs for this player
 		do {
 			// Fetch the player from that HRF
-			Spieler player = DBZugriff.instance().getSpielerFromHrf(hrfId, playerId);
+			Spieler player = DBManager.instance().getSpielerFromHrf(hrfId, playerId);
 			if (player == null) {
 				HOLogger.instance().log(getClass(), "Warning! Player "+playerId+" at hrf "+ hrfId+" is NULL");
 				continue;
@@ -126,7 +126,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 				lastBlock = curBlock;
 			}
 			lastDate = player.getHrfDate();
-		} while ((hrfId = DBZugriff.instance().getFollowingHRF(hrfId)) > 0);
+		} while ((hrfId = DBManager.instance().getFollowingHRF(hrfId)) > 0);
 		
 		// Block is still active
         if (lastBlock) {
@@ -141,13 +141,13 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	private void saveBlocks() {
 		int playerId = m_clPlayer.getSpielerID();
 
-		Timestamp timestampFirstPlayerHRF = DBZugriff.instance().getTimestamp4FirstPlayerHRF(playerId);
-		int hrfId = DBZugriff.instance().getHRFID4Date(timestampFirstPlayerHRF);
+		Timestamp timestampFirstPlayerHRF = DBManager.instance().getTimestamp4FirstPlayerHRF(playerId);
+		int hrfId = DBManager.instance().getHRFID4Date(timestampFirstPlayerHRF);
 			
 		// Iterate through all HRFs for this player
 		do {
 			// Fetch the player from that HRF
-			Spieler player = DBZugriff.instance().getSpielerFromHrf(hrfId, playerId);
+			Spieler player = DBManager.instance().getSpielerFromHrf(hrfId, playerId);
 			if (player == null) {
 				HOLogger.instance().log(getClass(), "Warning@SaveBlocks! Player "+playerId+" at hrf "+ hrfId+" is NULL");
 				continue;
@@ -157,9 +157,9 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 			boolean newBlock = isBlockedAt (curTimestamp);
 			if (curBlock != newBlock) {
 				player.setTrainingBlock(newBlock);
-				DBZugriff.instance().saveSpieler(hrfId, player, curTimestamp);
+				DBManager.instance().saveSpieler(hrfId, player, curTimestamp);
 			}
-		} while ((hrfId = DBZugriff.instance().getFollowingHRF(hrfId)) > 0);
+		} while ((hrfId = DBManager.instance().getFollowingHRF(hrfId)) > 0);
 	}
 	
 	/**

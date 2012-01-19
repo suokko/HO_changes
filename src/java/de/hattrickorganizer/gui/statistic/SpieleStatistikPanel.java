@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui.statistic;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +31,6 @@ import plugins.IMatchLineupPlayer;
 import plugins.IRefreshable;
 import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.StatistikModel;
@@ -504,7 +504,7 @@ public class SpieleStatistikPanel extends ImagePanel
             final java.text.NumberFormat format2 = Helper.INTEGERFORMAT;
             final java.text.NumberFormat format3 = Helper.DEZIMALFORMAT_2STELLEN;
 
-            final MatchKurzInfo[] matchkurzinfos = DBZugriff
+            final MatchKurzInfo[] matchkurzinfos = DBManager
 					.instance()
 					.getMatchesKurzInfo(
 							HOVerwaltung.instance().getModel().getBasics()
@@ -518,7 +518,7 @@ public class SpieleStatistikPanel extends ImagePanel
 			
 			// Infos zusammenstellen
 			for (int i = 0; i < anzahl; i++) {
-				final Matchdetails details = DBZugriff.instance()
+				final Matchdetails details = DBManager.instance()
 						.getMatchDetails(matchkurzinfos[matchkurzinfos.length - i - 1]
 										.getMatchID());
 
@@ -633,10 +633,10 @@ public class SpieleStatistikPanel extends ImagePanel
                 }
 
                 //Stimmung, Selbstvertrauen
-                final int hrfid = DBZugriff.instance().getHRFID4Date(
+                final int hrfid = DBManager.instance().getHRFID4Date(
 						matchkurzinfos[matchkurzinfos.length - i - 1]
 								.getMatchDateAsTimestamp());
-				final int[] stimmungSelbstvertrauen = DBZugriff.instance()
+				final int[] stimmungSelbstvertrauen = DBManager.instance()
 						.getStimmmungSelbstvertrauenValues(hrfid);
 
 				statistikWerte[9][i] = stimmungSelbstvertrauen[0];
@@ -645,7 +645,7 @@ public class SpieleStatistikPanel extends ImagePanel
 				statistikWerte[13][i] = matchkurzinfos[matchkurzinfos.length
 						- i - 1].getMatchDateAsTimestamp().getTime();
 
-				final Vector<IMatchLineupPlayer> team = DBZugriff.instance()
+				final Vector<IMatchLineupPlayer> team = DBManager.instance()
 						.getMatchLineupPlayers(
 								matchkurzinfos[matchkurzinfos.length - i - 1]
 										.getMatchID(), teamid);

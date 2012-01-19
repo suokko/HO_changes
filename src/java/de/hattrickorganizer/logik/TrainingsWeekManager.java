@@ -1,6 +1,8 @@
 // %2201242558:de.hattrickorganizer.logik%
 package de.hattrickorganizer.logik;
 
+import ho.core.db.DBManager;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -11,7 +13,6 @@ import java.util.Vector;
 import plugins.IHOMiniModel;
 import plugins.IJDBCAdapter;
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HattrickDate;
 import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.tools.HOLogger;
@@ -73,7 +74,7 @@ public class TrainingsWeekManager {
      */
     public ITrainingWeek getTrainingWeek(int hrfId) {
         // TODO Load last valid training week!
-        final Timestamp tStamp = DBZugriff.instance().getPreviousTrainingDate(hrfId);
+        final Timestamp tStamp = DBManager.instance().getPreviousTrainingDate(hrfId);
 
         if (tStamp == null) {
             return null;
@@ -114,7 +115,7 @@ public class TrainingsWeekManager {
      */
     public Vector<ITrainingWeek> getTrainingsVector() {
         if (m_vTrainings == null) {
-            return calculateTrainings(de.hattrickorganizer.database.DBZugriff.instance()
+            return calculateTrainings(ho.core.db.DBManager.instance()
                                                                              .getTrainingsVector());
         }
 
@@ -336,7 +337,7 @@ public class TrainingsWeekManager {
             newTrain.setHattrickSeason(htDate.getSeason());
             newTrain.setHattrickWeek(htDate.getWeek());
             newTrain.setHrfId(train.getHrfId());
-            newTrain.setPreviousHrfId(DBZugriff.instance().getPreviousHRF(train.getHrfId()));
+            newTrain.setPreviousHrfId(DBManager.instance().getPreviousHRF(train.getHrfId()));
             updatedTrainings.add(newTrain);
         }
 

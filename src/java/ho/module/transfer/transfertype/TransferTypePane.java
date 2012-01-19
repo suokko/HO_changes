@@ -2,6 +2,7 @@
 package ho.module.transfer.transfertype;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
@@ -40,7 +41,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -279,7 +279,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
      * @param e TableModelEvent
      */
     public final void tableChanged(TableModelEvent e) {
-        refresh(DBZugriff.instance().getTransfers(0, true, true));
+        refresh(DBManager.instance().getTransfers(0, true, true));
     }
 
     /** {@inheritDoc} */

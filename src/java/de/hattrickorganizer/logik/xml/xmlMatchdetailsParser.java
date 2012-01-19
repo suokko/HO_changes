@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.logik.xml;
 
+import ho.core.db.DBManager;
+
 import java.util.Vector;
 
 import org.w3c.dom.Document;
@@ -14,7 +16,6 @@ import org.w3c.dom.NodeList;
 
 import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.Matchdetails;
@@ -93,7 +94,7 @@ public class xmlMatchdetailsParser {
 
                 readGeneral(doc, md);
                 // Match lineup needs to be available, if not -> ignore match highlights/report
-                if (!DBZugriff.instance().isMatchLineupVorhanden(md.getMatchID())) {
+                if (!DBManager.instance().isMatchLineupVorhanden(md.getMatchID())) {
                 	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available first!");
                 } else {
                     readHighlights(doc, md);
@@ -121,7 +122,7 @@ public class xmlMatchdetailsParser {
     private final void readHighlights(Document doc, Matchdetails md) {
         final Vector<IMatchHighlight> myHighlights = new Vector<IMatchHighlight>();
         final Vector<Integer> broken = new Vector<Integer>();
-        final MatchLineup lineup = DBZugriff.instance().getMatchLineup(md.getMatchID());
+        final MatchLineup lineup = DBManager.instance().getMatchLineup(md.getMatchID());
         Element ele = null;
         Element eventList = null;
         Element root = null;

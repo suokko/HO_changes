@@ -1,5 +1,6 @@
 package ho.module.transfer;
 
+import ho.core.db.DBManager;
 import ho.module.transfer.history.HistoryPane;
 import ho.module.transfer.scout.TransferScoutPanel;
 import ho.module.transfer.transfertype.TransferTypePane;
@@ -14,7 +15,6 @@ import javax.swing.JTabbedPane;
 
 import plugins.IRefreshable;
 import plugins.ISpieler;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -83,13 +83,13 @@ public class TransfersPanel extends JPanel implements IRefreshable{
             }
         }
 
-        if ((outdated.size() > 0) && (DBZugriff.instance().getTransfers(0, true, true).size() == 0)) {
-        	DBZugriff.instance().updateTeamTransfers(HOVerwaltung.instance().getModel().getBasics().getTeamId());
+        if ((outdated.size() > 0) && (DBManager.instance().getTransfers(0, true, true).size() == 0)) {
+        	DBManager.instance().updateTeamTransfers(HOVerwaltung.instance().getModel().getBasics().getTeamId());
         }
 
         for (Iterator<ISpieler> iter = outdated.iterator(); iter.hasNext();) {
             final ISpieler player = iter.next();
-            DBZugriff.instance().updatePlayerTransfers(player.getSpielerID());
+            DBManager.instance().updatePlayerTransfers(player.getSpielerID());
         }
 
         final List<PlayerTransfer> transfers = reloadData();
@@ -105,7 +105,7 @@ public class TransfersPanel extends JPanel implements IRefreshable{
     	this.players = HOVerwaltung.instance().getModel().getAllSpieler();
         this.oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
 
-        final List<PlayerTransfer> transfers = DBZugriff.instance().getTransfers(0, true, true);
+        final List<PlayerTransfer> transfers = DBManager.instance().getTransfers(0, true, true);
 
         historyPane.refresh();
         transferTypePane.refresh(transfers);

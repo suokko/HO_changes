@@ -1,5 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
+import ho.core.db.StatisticQuery;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,7 +14,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.ISpielePanel;
-import de.hattrickorganizer.database.StatisticQuery;
 import de.hattrickorganizer.gui.model.ArenaStatistikModel;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.model.HOVerwaltung;

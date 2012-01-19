@@ -1,6 +1,7 @@
 // %638597353:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.db.DBManager;
 import ho.module.training.TrainingPanel;
 import ho.module.training.Trainings;
 import ho.module.training.ui.comp.CBItem;
@@ -11,7 +12,6 @@ import java.util.Vector;
 
 import plugins.IFutureTrainingWeek;
 import plugins.ITeam;
-import de.hattrickorganizer.database.DBZugriff;
 
 
 /**
@@ -64,7 +64,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
             Integer staminaTrainingPart = (Integer) value;
             train.setStaminaTrainingPart(staminaTrainingPart.intValue());
         }
-        DBZugriff.instance().saveFutureTraining(train);
+        DBManager.instance().saveFutureTraining(train);
         fireTableCellUpdated(row, col);
         TrainingPanel.refreshPlayerDetail();
     }
@@ -82,7 +82,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
 
         IFutureTrainingWeek oldTrain = null;
 
-        List<IFutureTrainingWeek> futureTrainings = DBZugriff.instance().getFutureTrainingsVector();
+        List<IFutureTrainingWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
 
         for (Iterator<IFutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
             IFutureTrainingWeek train = iter.next();
@@ -99,7 +99,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
                     train.setTyp(ITeam.TA_STANDARD);
                 }
 
-                DBZugriff.instance().saveFutureTraining(train);
+                DBManager.instance().saveFutureTraining(train);
             }
 
             String selectedTrain = Trainings.getTrainingDescription(train.getTyp());

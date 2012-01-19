@@ -7,6 +7,7 @@
 package de.hattrickorganizer.model;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.LineupAssistant;
 import de.hattrickorganizer.model.lineup.Substitution;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
@@ -694,7 +694,7 @@ public class Lineup implements plugins.ILineUp {
 		if (m_sLocation < 0) {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-				final IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(teamId,
+				final IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId,
 						IMatchKurzInfo.UPCOMING);
 				IMatchKurzInfo match;
 
@@ -1112,7 +1112,7 @@ public class Lineup implements plugins.ILineUp {
 	 * Delete lineup system.
 	 */
 	public final void AufstellungsSystemLoeschen(String name) {
-		DBZugriff.instance().deleteSystem(NO_HRF_VERBINDUNG, name);
+		DBManager.instance().deleteSystem(NO_HRF_VERBINDUNG, name);
 	}
 
 	/**
@@ -1350,7 +1350,7 @@ public class Lineup implements plugins.ILineUp {
 	 * Load a lineup by name.
 	 */
 	public final void load(String name) {
-		final Lineup temp = DBZugriff.instance().getAufstellung(NO_HRF_VERBINDUNG, name);
+		final Lineup temp = DBManager.instance().getAufstellung(NO_HRF_VERBINDUNG, name);
 		m_vPositionen = null;
 		m_vPositionen = temp.getPositionen();
 		m_iKicker = temp.getKicker();
@@ -1361,7 +1361,7 @@ public class Lineup implements plugins.ILineUp {
 	 * Load a lineup from HRF.
 	 */
 	public final void load4HRF() {
-		final Lineup temp = DBZugriff.instance().getAufstellung(HOVerwaltung.instance().getModel().getID(),
+		final Lineup temp = DBManager.instance().getAufstellung(HOVerwaltung.instance().getModel().getID(),
 				"HRF");
 		m_vPositionen = null;
 		m_vPositionen = temp.getPositionen();
@@ -1373,7 +1373,7 @@ public class Lineup implements plugins.ILineUp {
 	 * Load a system from the DB.
 	 */
 	public final void loadAufstellungsSystem(String name) {
-		m_vPositionen = DBZugriff.instance().getSystemPositionen(NO_HRF_VERBINDUNG, name);
+		m_vPositionen = DBManager.instance().getSystemPositionen(NO_HRF_VERBINDUNG, name);
 		checkAufgestellteSpieler();
 	}
 
@@ -1402,21 +1402,21 @@ public class Lineup implements plugins.ILineUp {
 	 * Save a lineup using the given name.
 	 */
 	public final void save(final String name) {
-		DBZugriff.instance().saveAufstellung(NO_HRF_VERBINDUNG, this, name);
+		DBManager.instance().saveAufstellung(NO_HRF_VERBINDUNG, this, name);
 	}
 
 	/**
 	 * Save a lineup.
 	 */
 	public final void save4HRF() {
-		DBZugriff.instance().saveAufstellung(HOVerwaltung.instance().getModel().getID(), this, "HRF");
+		DBManager.instance().saveAufstellung(HOVerwaltung.instance().getModel().getID(), this, "HRF");
 	}
 
 	/**
 	 * Save the current system in the DB.
 	 */
 	public final void saveAufstellungsSystem(String name) {
-		DBZugriff.instance().saveSystemPositionen(NO_HRF_VERBINDUNG, m_vPositionen, name);
+		DBManager.instance().saveSystemPositionen(NO_HRF_VERBINDUNG, m_vPositionen, name);
 	}
 
 	/**

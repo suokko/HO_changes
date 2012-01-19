@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.playeroverview;
 
 import gui.HOColorName;
+import ho.core.db.DBManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.menu.option.SliderPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
@@ -97,7 +97,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 			m_clSpieler.setTrainingsOffsetVerteidigung(m_jpVerteidigung.getValue() / 100d);
 
 			// Recalcualte subskills
-			DBZugriff.instance().saveSpieler(
+			DBManager.instance().saveSpieler(
 				HOVerwaltung.instance().getModel().getID(),
 				HOVerwaltung.instance().getModel().getAllSpieler(),
 				HOVerwaltung.instance().getModel().getBasics().getDatum());

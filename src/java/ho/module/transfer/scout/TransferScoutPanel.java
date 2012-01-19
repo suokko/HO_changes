@@ -1,6 +1,8 @@
 // %4201738339:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import ho.core.db.DBManager;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,7 +16,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.gui.print.ComponentPrintObject;
@@ -224,7 +225,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
      * TODO Missing Method Documentation
      */
     public final void saveScoutListe() {
-        DBZugriff.instance().saveScoutList(m_jtTransferTable.getTransferTableModel().getScoutListe());
+        DBManager.instance().saveScoutList(m_jtTransferTable.getTransferTableModel().getScoutListe());
     }
 
     /**
@@ -241,7 +242,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         verticalSplitPane.setDividerLocation(gui.UserParameter.instance().transferScoutPanel_horizontalSplitPane);
 
         //Thread mit Wecker starten
-        m_clScoutThread = ScoutThread.start(DBZugriff.instance().getScoutList());
+        m_clScoutThread = ScoutThread.start(DBManager.instance().getScoutList());
     }
 
     /**

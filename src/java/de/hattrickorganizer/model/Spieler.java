@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.model;
 
+import ho.core.db.DBManager;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Hashtable;
@@ -15,7 +17,6 @@ import plugins.IEPVData;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
@@ -255,7 +256,7 @@ public final class Spieler implements plugins.ISpieler {
     public Spieler(java.sql.ResultSet rs) {
         try {
             m_iSpielerID = rs.getInt("SpielerID");
-            m_sName = DBZugriff.deleteEscapeSequences(rs.getString("Name"));
+            m_sName = DBManager.deleteEscapeSequences(rs.getString("Name"));
             m_iAlter = rs.getInt("Age");
             m_iAgeDays = rs.getInt("AgeDays");
             m_iKondition = rs.getInt("Kondition");
@@ -268,13 +269,13 @@ public final class Spieler implements plugins.ISpieler {
             m_iTorschuss = rs.getInt("Torschuss");
             m_iStandards = rs.getInt("Standards");
             m_iSpezialitaet = rs.getInt("iSpezialitaet");
-            m_sSpezialitaet = DBZugriff.deleteEscapeSequences(rs.getString("sSpezialitaet"));
+            m_sSpezialitaet = DBManager.deleteEscapeSequences(rs.getString("sSpezialitaet"));
             m_iCharakter = rs.getInt("iCharakter");
-            m_sCharakter = DBZugriff.deleteEscapeSequences(rs.getString("sCharakter"));
+            m_sCharakter = DBManager.deleteEscapeSequences(rs.getString("sCharakter"));
             m_iAnsehen = rs.getInt("iAnsehen");
-            m_sAnsehen = DBZugriff.deleteEscapeSequences(rs.getString("sAnsehen"));
+            m_sAnsehen = DBManager.deleteEscapeSequences(rs.getString("sAnsehen"));
             m_iAgressivitaet = rs.getInt("iAgressivitaet");
-            m_sAgressivitaet = DBZugriff.deleteEscapeSequences(rs.getString("sAgressivitaet"));
+            m_sAgressivitaet = DBManager.deleteEscapeSequences(rs.getString("sAgressivitaet"));
             m_iErfahrung = rs.getInt("Erfahrung");
             m_iLoyalty = rs.getInt("Loyalty");
             m_bHomeGrown = rs.getBoolean("HomeGrown");
@@ -286,7 +287,7 @@ public final class Spieler implements plugins.ISpieler {
             //TSI, alles vorher durch 1000 teilen
             m_clhrfDate = rs.getTimestamp("Datum");
 
-            if (m_clhrfDate.before(DBZugriff.TSIDATE)) {
+            if (m_clhrfDate.before(DBManager.TSIDATE)) {
                 m_iTSI /= 1000d;
             }
 
@@ -376,7 +377,7 @@ public final class Spieler implements plugins.ISpieler {
         //TSI, alles vorher durch 1000 teilen
         m_clhrfDate = hrfdate;
 
-        if (hrfdate.before(DBZugriff.TSIDATE)) {
+        if (hrfdate.before(DBManager.TSIDATE)) {
             m_iTSI /= 1000d;
         }
 
@@ -484,7 +485,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return TODO Missing Return Method Documentation
      */
     public Vector<Object[]> getAllLevelUp(int skill) {
-        return DBZugriff.instance().getAllLevelUp(skill,m_iSpielerID);
+        return DBManager.instance().getAllLevelUp(skill,m_iSpielerID);
     }
 
     /**
@@ -1036,7 +1037,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return TODO Missing Return Method Documentation
      */
     public Object[] getLastLevelUp(int skill) {
-        return DBZugriff.instance().getLastLevelUp(skill, m_iSpielerID);
+        return DBManager.instance().getLastLevelUp(skill, m_iSpielerID);
     }
 
     /**
@@ -1069,7 +1070,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public int getLetzteBewertung() {
         if (m_iLastBewertung < 0) {
-            m_iLastBewertung = DBZugriff.instance().getLetzteBewertung4Spieler(m_iSpielerID);
+            m_iLastBewertung = DBManager.instance().getLetzteBewertung4Spieler(m_iSpielerID);
         }
 
         return m_iLastBewertung;
@@ -1106,7 +1107,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         m_sManuellerSmilie = manuellerSmilie;
-        DBZugriff.instance().saveManuellerSmilie(m_iSpielerID, manuellerSmilie);
+        DBManager.instance().saveManuellerSmilie(m_iSpielerID, manuellerSmilie);
     }
 
     /**
@@ -1116,7 +1117,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public java.lang.String getManuellerSmilie() {
         if (m_sManuellerSmilie == null) {
-            m_sManuellerSmilie = DBZugriff.instance().getManuellerSmilie(m_iSpielerID);
+            m_sManuellerSmilie = DBManager.instance().getManuellerSmilie(m_iSpielerID);
 
             //Steht null in der DB?
             if (m_sManuellerSmilie == null) {
@@ -1193,7 +1194,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return Value of property m_sName.
      */
     public java.lang.String getName() {
-        return DBZugriff.deleteEscapeSequences(m_sName);
+        return DBManager.deleteEscapeSequences(m_sName);
     }
 
     /**
@@ -1237,7 +1238,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         m_sNotiz = notiz;
-        DBZugriff.instance().saveSpielerNotiz(m_iSpielerID, notiz);
+        DBManager.instance().saveSpielerNotiz(m_iSpielerID, notiz);
     }
 
     /**
@@ -1247,7 +1248,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public String getNotiz() {
         if (m_sNotiz == null) {
-            m_sNotiz = DBZugriff.instance().getSpielerNotiz(m_iSpielerID);
+            m_sNotiz = DBManager.instance().getSpielerNotiz(m_iSpielerID);
         }
 
         //database.DBZugriff.instance ().getSpielerNotiz ( m_iSpielerID );
@@ -1296,7 +1297,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return TODO Missing Return Method Documentation
      */
     public int getSaveMarktwert() {
-        if (m_clhrfDate == null || m_clhrfDate.before(DBZugriff.TSIDATE)) {
+        if (m_clhrfDate == null || m_clhrfDate.before(DBManager.TSIDATE)) {
             //Echter Marktwert
             return m_iTSI * 1000;
         }
@@ -1380,7 +1381,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void setSpielberechtigt(boolean flag) {
         m_bSpielberechtigt = Boolean.valueOf(flag);
-        DBZugriff.instance().saveSpielerSpielberechtigt(m_iSpielerID,
+        DBManager.instance().saveSpielerSpielberechtigt(m_iSpielerID,
                                                                                       flag);
     }
 
@@ -1392,7 +1393,7 @@ public final class Spieler implements plugins.ISpieler {
     public boolean isSpielberechtigt() {
         //Nur pr�fen, wenn nicht Spielberechtigt: Reduziert Zugriffe!
         if (m_bSpielberechtigt == null) {
-            m_bSpielberechtigt = Boolean.valueOf(DBZugriff.instance().getSpielerSpielberechtigt(m_iSpielerID));
+            m_bSpielberechtigt = Boolean.valueOf(DBManager.instance().getSpielerSpielberechtigt(m_iSpielerID));
         }
 
         return m_bSpielberechtigt.booleanValue();
@@ -1537,7 +1538,7 @@ public final class Spieler implements plugins.ISpieler {
         }
 
         m_sTeamInfoSmilie = teamInfoSmilie;
-        DBZugriff.instance().saveTeamInfoSmilie(m_iSpielerID, teamInfoSmilie);
+        DBManager.instance().saveTeamInfoSmilie(m_iSpielerID, teamInfoSmilie);
     }
 
     /**
@@ -1547,7 +1548,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public java.lang.String getTeamInfoSmilie() {
         if (m_sTeamInfoSmilie == null) {
-            m_sTeamInfoSmilie = DBZugriff.instance().getTeamInfoSmilie(m_iSpielerID);
+            m_sTeamInfoSmilie = DBManager.instance().getTeamInfoSmilie(m_iSpielerID);
 
             //Steht null in der DB?
             if (m_sTeamInfoSmilie == null) {
@@ -1566,7 +1567,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public Timestamp getTimestamp4FirstPlayerHRF() {
         if (m_tsTime4FirstHRF == null) {
-            m_tsTime4FirstHRF = DBZugriff.instance().getTimestamp4FirstPlayerHRF(m_iSpielerID);
+            m_tsTime4FirstHRF = DBManager.instance().getTimestamp4FirstPlayerHRF(m_iSpielerID);
         }
 
         return m_tsTime4FirstHRF;
@@ -1947,7 +1948,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void setUserPosFlag(byte flag) {
         m_bUserPosFlag = flag;
-        DBZugriff.instance().saveSpielerUserPosFlag(m_iSpielerID, m_bUserPosFlag);
+        DBManager.instance().saveSpielerUserPosFlag(m_iSpielerID, m_bUserPosFlag);
     }
 
     /**
@@ -1957,7 +1958,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public byte getUserPosFlag() {
         if (m_bUserPosFlag < SpielerPosition.UNKNOWN) {
-            m_bUserPosFlag = DBZugriff.instance().getSpielerUserPosFlag(m_iSpielerID);
+            m_bUserPosFlag = DBManager.instance().getSpielerUserPosFlag(m_iSpielerID);
         }
 
         //database.DBZugriff.instance ().getSpielerNotiz ( m_iSpielerID );

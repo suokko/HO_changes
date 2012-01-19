@@ -1,5 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
+import ho.core.db.DBManager;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +27,6 @@ import plugins.ISkillup;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
 import plugins.IXtraData;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.TrainingPerWeek;
@@ -104,9 +105,9 @@ public class PlayerCreator extends XMLCreator {
 
 	private static int addRoster(Element root, int hrfId, boolean extended, int oldWeek) throws IOException {
 
-		List<ISpieler> players = DBZugriff.instance().getSpieler(hrfId);
-		IBasics basics = DBZugriff.instance().getBasics(hrfId);
-		IXtraData xtradata = DBZugriff.instance().getXtraDaten(hrfId);
+		List<ISpieler> players = DBManager.instance().getSpieler(hrfId);
+		IBasics basics = DBManager.instance().getBasics(hrfId);
+		IXtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
 
 		int actualSeason = basics.getSeason();
 		int actualWeek = basics.getSpieltag();
