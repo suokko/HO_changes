@@ -20,125 +20,51 @@ import de.hattrickorganizer.model.TeamLineup;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class Matchdetails implements plugins.IMatchDetails {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
-    private String m_sArenaName = "";
-
-    /** TODO Missing Parameter Documentation */
+	private String m_sArenaName = "";
     private String m_sGastName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sHeimName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sMatchreport = "";
-
-    /** TODO Missing Parameter Documentation */
     private Timestamp m_clFetchDatum;
-
-    /** TODO Missing Parameter Documentation */
     private Timestamp m_clSpielDatum;
-
-    /** TODO Missing Parameter Documentation */
     private Vector<IMatchHighlight> m_vHighlights = new Vector<IMatchHighlight>();
-
-    /** TODO Missing Parameter Documentation */
     private int m_iArenaID = -1;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGastId = -1;
-
-    /** TODO Missing Parameter Documentation */
 
     //-1pic,0=nor,1=mots
     private int m_iGuestEinstellung;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestGoals;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestLeftAtt;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestLeftDef;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestMidAtt;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestMidDef;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestMidfield;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestRightAtt;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestRightDef;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestTacticSkill;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGuestTacticType;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHeimId = -1;
-
-    /** TODO Missing Parameter Documentation */
 
     //-1pic,0=nor,1=mots, -1000 Unbekannt
     private int m_iHomeEinstellung;
 
     //Ratings
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeGoals;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeLeftAtt;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeLeftDef;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeMidAtt;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeMidDef;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeMidfield;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeRightAtt;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeRightDef;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeTacticSkill;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iHomeTacticType;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iMatchID = -1;
-
-    /** TODO Missing Parameter Documentation */
 
     //0=Regen,1=Bewölkt,2=wolkig,3=Sonne
     private int m_iWetterId = -1;
 
-    /** TODO Missing Parameter Documentation */
     private int m_iZuschauer;
     
     /** Spectators in category Terraces, is 0 if not our home match **/
@@ -153,9 +79,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     /** Spectators in category VIP, is 0 if not our home match **/
     private int soldVIP = -1;
 
-    /** Region ID */
     private int m_iRegionId;
-    //~ Constructors -------------------------------------------------------------------------------
 
     ////////////////////////////////////////////////////////////////////////////////
     //Konstruktor
@@ -232,6 +156,24 @@ public class Matchdetails implements plugins.IMatchDetails {
         }
     }
 
+    public final int getGuestHalfTimeGoals() {
+    	Vector<IMatchHighlight> highLights = getHighlights();
+    	for (IMatchHighlight iMatchHighlight : highLights) {
+			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
+				return iMatchHighlight.getGastTore();
+		}
+    	return -1;
+	}
+
+	public final int getHomeHalfTimeGoals() {
+		Vector<IMatchHighlight> highLights = getHighlights();
+    	for (IMatchHighlight iMatchHighlight : highLights) {
+			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
+				return iMatchHighlight.getHeimTore();
+		}
+    	return -1;
+	}
+	
     /**
      * Setter for property m_iArenaID.
      *

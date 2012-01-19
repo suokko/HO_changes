@@ -311,8 +311,8 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
         m_clHeimTeamName.setText(info.getHeimName());
         m_clGastTeamName.setText(info.getGastName());
 
-        m_clHeimTeamTore.setText(info.getHeimTore() + " ");
-        m_clGastTeamTore.setText(info.getGastTore() + " ");
+        m_clHeimTeamTore.setText(info.getHeimTore() + " ("+details.getHomeHalfTimeGoals()+") ");
+        m_clGastTeamTore.setText(info.getGastTore() + " ("+details.getGuestHalfTimeGoals()+") ");
 
         if (info.getHeimID() == teamid) {
             m_clHeimTeamName.setForeground(ThemeManager.getColor(HOColorName.TEAM_FG));
