@@ -1,6 +1,7 @@
 // %2418151228:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import ho.core.db.DBManager;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.Timestamp;
@@ -16,7 +17,6 @@ import plugins.IHelper;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
 import plugins.IVerein;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.EPV;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
@@ -54,7 +54,7 @@ public class HOModel {
     public HOModel() {
         //erst einbauen wenn db angebunden ist
         try {
-            m_iID = DBZugriff.instance().getMaxHrfId() + 1;
+            m_iID = DBManager.instance().getMaxHrfId() + 1;
         } catch (Exception e) {
         }
     }
@@ -404,8 +404,8 @@ public class HOModel {
                calcDate    =   m_clBasics.getDatum ();
            }
          */
-        final int previousHrfId = DBZugriff.instance().getPreviousHRF(m_iID);
-        final Timestamp previousTrainingDate = DBZugriff.instance()
+        final int previousHrfId = DBManager.instance().getPreviousHRF(m_iID);
+        final Timestamp previousTrainingDate = DBManager.instance()
                                                                                       .getXtraDaten(previousHrfId)
                                                                                       .getTrainingDate();
         final Timestamp actualTrainingDate = m_clXtraDaten.getTrainingDate();
@@ -435,7 +435,7 @@ public class HOModel {
 
         final Map<String,ISpieler> players = new HashMap<String,ISpieler>();
 
-        for (Iterator<ISpieler> iter = DBZugriff.instance().getSpieler(previousHrfId).iterator();
+        for (Iterator<ISpieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
              iter.hasNext();) {
             final ISpieler element = iter.next();
             players.put(element.getSpielerID() + "", element);
@@ -522,7 +522,7 @@ public class HOModel {
         }
 
         //Spieler
-        DBZugriff.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
+        DBManager.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
     }
 
     private void logPlayerProgress (ISpieler before, ISpieler after) {
@@ -587,7 +587,7 @@ public class HOModel {
      * TODO Missing Method Documentation
      */
     public final void loadStdAufstellung() {
-        m_clAufstellung = DBZugriff.instance().getAufstellung(-1,
+        m_clAufstellung = DBManager.instance().getAufstellung(-1,
                                                                                             Lineup.DEFAULT_NAME);
 
         //prüfen ob alle aufgstellen Spieler noch existieren
@@ -598,7 +598,7 @@ public class HOModel {
      * TODO Missing Method Documentation
      */
     public final void loadStdLastAufstellung() {
-        m_clLastAufstellung = DBZugriff.instance().getAufstellung(-1,
+        m_clLastAufstellung = DBManager.instance().getAufstellung(-1,
                                                                                                 Lineup.DEFAULT_NAMELAST);
 
         //prüfen ob alle aufgstellen Spieler noch existieren
@@ -621,30 +621,30 @@ public class HOModel {
     //java.sql.Timestamp hrfDateiDatum )
     public final synchronized void saveHRF() {
         //HRF //TODO Datum angabe in Modell aus file last modified übernehmen ersetzen
-        DBZugriff.instance().saveHRF(m_iID,
+        DBManager.instance().saveHRF(m_iID,
         		java.text.DateFormat.getDateTimeInstance().format(new java.util.Date(
         				System.currentTimeMillis())), m_clBasics.getDatum());
 
         //basics
-        DBZugriff.instance().saveBasics(m_iID, m_clBasics);
+        DBManager.instance().saveBasics(m_iID, m_clBasics);
         //Verein
-        DBZugriff.instance().saveVerein(m_iID, m_clVerein);
+        DBManager.instance().saveVerein(m_iID, m_clVerein);
         //Team
-        DBZugriff.instance().saveTeam(m_iID, m_clTeam);
+        DBManager.instance().saveTeam(m_iID, m_clTeam);
         //Finanzen
-        DBZugriff.instance().saveFinanzen(m_iID, m_clFinanzen, m_clBasics.getDatum());
+        DBManager.instance().saveFinanzen(m_iID, m_clFinanzen, m_clBasics.getDatum());
         //Stadion
-        DBZugriff.instance().saveStadion(m_iID, m_clStadium);
+        DBManager.instance().saveStadion(m_iID, m_clStadium);
         //Liga
-        DBZugriff.instance().saveLiga(m_iID, m_clLiga);
+        DBManager.instance().saveLiga(m_iID, m_clLiga);
         //Aufstellung + aktu Sys als Standard saven
-        DBZugriff.instance().saveAufstellung(m_iID, m_clAufstellung, Lineup.DEFAULT_NAME);
+        DBManager.instance().saveAufstellung(m_iID, m_clAufstellung, Lineup.DEFAULT_NAME);
         //Aufstellung + aktu Sys als Standard saven
-        DBZugriff.instance().saveAufstellung(m_iID, m_clLastAufstellung, Lineup.DEFAULT_NAMELAST);
+        DBManager.instance().saveAufstellung(m_iID, m_clLastAufstellung, Lineup.DEFAULT_NAMELAST);
         //Xtra Daten
-        DBZugriff.instance().saveXtraDaten(m_iID, m_clXtraDaten);
+        DBManager.instance().saveXtraDaten(m_iID, m_clXtraDaten);
         //Spieler
-        DBZugriff.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
+        DBManager.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
     }
 
     /**
@@ -652,6 +652,6 @@ public class HOModel {
      */
     public final synchronized void saveSpielplan2DB() {
         if (m_clSpielplan != null) 
-            DBZugriff.instance().storeSpielplan(m_clSpielplan);
+            DBManager.instance().storeSpielplan(m_clSpielplan);
     }
 }

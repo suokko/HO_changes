@@ -2,11 +2,11 @@
 package de.hattrickorganizer.gui.playeroverview;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.PlayerOverviewModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
@@ -81,7 +81,7 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 			columns[i].setPreferredWidth(tableColumnModel.getColumn(convertColumnIndexToView(i)).getWidth());
 		}
 		m_clTableModel.setCurrentValueToColumns(columns);
-		DBZugriff.instance().saveHOColumnModel(m_clTableModel);
+		DBManager.instance().saveHOColumnModel(m_clTableModel);
 	}
 
 	public final void setSpieler(int spielerid) {

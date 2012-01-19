@@ -1,6 +1,7 @@
 package de.hattrickorganizer;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 import ho.core.db.User;
 import ho.core.db.backup.BackupHelper;
 import ho.core.plugins.PluginManager;
@@ -13,7 +14,6 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.SplashFrame;
 import de.hattrickorganizer.gui.birthday.GebDialog;
@@ -146,7 +146,7 @@ public class HO {
 
 		// Standardparameter aus der DB holen
 		interuptionsWindow.setInfoText(2,"Initialize Database");
-		DBZugriff.instance().loadUserParameter();
+		DBManager.instance().loadUserParameter();
 
 		// init Theme
 		try {
@@ -160,7 +160,7 @@ public class HO {
 		interuptionsWindow.setInfoText(3,"Initialize Data-Administration");
 
 		// Beim ersten Start Sprache erfragen
-		if (DBZugriff.instance().isFirstStart()) {
+		if (DBManager.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			new de.hattrickorganizer.gui.menu.option.InitOptionsDialog();
 			JOptionPane.showMessageDialog(null,
@@ -198,7 +198,7 @@ public class HO {
 
 		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
 		// der manuellen DB Einträge
-		TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
+		TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
 
 		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
 		// selbst aufruft!

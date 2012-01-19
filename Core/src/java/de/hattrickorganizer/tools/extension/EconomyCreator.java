@@ -1,6 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,6 @@ import plugins.IBasics;
 import plugins.IFinanzen;
 import plugins.ITrainingWeek;
 import plugins.IXtraData;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.TrainingPerWeek;
@@ -49,11 +49,11 @@ public class EconomyCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 
-			int latestId = DBZugriff.instance().getLatestHrfId();
-			IXtraData d1 = DBZugriff.instance().getXtraDaten(latestId);
+			int latestId = DBManager.instance().getLatestHrfId();
+			IXtraData d1 = DBManager.instance().getXtraDaten(latestId);
 
 			int lastTrainingId = ((TrainingPerWeek) l.get(l.size() - 1)).getHrfId();
-			IXtraData d2 = DBZugriff.instance().getXtraDaten(lastTrainingId);
+			IXtraData d2 = DBManager.instance().getXtraDaten(lastTrainingId);
 
 			if (!d2.getEconomyDate().equals(d1.getEconomyDate())) {
 				addEconomy(root, latestId);
@@ -77,9 +77,9 @@ public class EconomyCreator extends XMLCreator {
 
 	private static void addEconomy(Element root, int hrfId) throws IOException {
 
-		IBasics basics = DBZugriff.instance().getBasics(hrfId);
-		IFinanzen finance = DBZugriff.instance().getFinanzen(hrfId);
-		IXtraData xtradata = DBZugriff.instance().getXtraDaten(hrfId);
+		IBasics basics = DBManager.instance().getBasics(hrfId);
+		IFinanzen finance = DBManager.instance().getFinanzen(hrfId);
+		IXtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
 
 		double rate = UserParameter.instance().faktorGeld;
 		int actualSeason = basics.getSeason();
@@ -137,10 +137,10 @@ public class EconomyCreator extends XMLCreator {
 
 		try {
 
-			int latestId = DBZugriff.instance().getLatestHrfId();
-			IBasics basics = DBZugriff.instance().getBasics(latestId);
-			IFinanzen finance = DBZugriff.instance().getFinanzen(latestId);
-			IXtraData xtradata = DBZugriff.instance().getXtraDaten(latestId);
+			int latestId = DBManager.instance().getLatestHrfId();
+			IBasics basics = DBManager.instance().getBasics(latestId);
+			IFinanzen finance = DBManager.instance().getFinanzen(latestId);
+			IXtraData xtradata = DBManager.instance().getXtraDaten(latestId);
 
 			double rate = UserParameter.instance().faktorGeld;
 			int actualSeason = basics.getSeason();

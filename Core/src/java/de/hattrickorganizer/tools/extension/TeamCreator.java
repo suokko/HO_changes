@@ -1,5 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
+import ho.core.db.DBManager;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,7 +16,6 @@ import plugins.IBasics;
 import plugins.IMatchKurzInfo;
 import plugins.ISpielePanel;
 import plugins.IXtraData;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
@@ -63,7 +64,7 @@ public class TeamCreator extends XMLCreator {
 	}
 
 	public static Timestamp getNextCupDate() {
-		IMatchKurzInfo[] cupMatches = DBZugriff.instance().getMatchesKurzInfo(teamId,
+		IMatchKurzInfo[] cupMatches = DBManager.instance().getMatchesKurzInfo(teamId,
 																			ISpielePanel.NUR_EIGENE_POKALSPIELE,
 																			false);
 																			
@@ -72,7 +73,7 @@ public class TeamCreator extends XMLCreator {
 			return time;																			
 		}
 		
-		IMatchKurzInfo[] friendlyMatches = DBZugriff.instance().getMatchesKurzInfo(teamId,
+		IMatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
 																				 ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
 																				 false);
 

@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.lineup;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -21,7 +22,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
@@ -162,7 +162,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements de.
 			if (m_jlAufstellungen.getSelectedIndex() > 0) {
 				aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText();
 			}
-			DBZugriff.instance().deleteAufstellung(Lineup.NO_HRF_VERBINDUNG,
+			DBManager.instance().deleteAufstellung(Lineup.NO_HRF_VERBINDUNG,
 					((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText());
 			HOMainFrame.instance().getInfoPanel().setLangInfoText(
 					HOVerwaltung.instance().getLanguageString("Aufstellung") + " "
@@ -356,11 +356,11 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements de.
      * Load the linup list.
      */
 	private Vector<AufstellungCBItem> loadAufstellungsListe() {
-		final Vector<String> aufstellungsnamen = DBZugriff.instance().getUserAufstellungsListe();
+		final Vector<String> aufstellungsnamen = DBManager.instance().getUserAufstellungsListe();
 		final Vector<AufstellungCBItem> aufstellungsCBItems = new Vector<AufstellungCBItem>();
 
 		for (int i = 0; i < aufstellungsnamen.size(); i++) {
-			aufstellungsCBItems.add(new AufstellungCBItem(aufstellungsnamen.get(i).toString(), DBZugriff.instance().getAufstellung(
+			aufstellungsCBItems.add(new AufstellungCBItem(aufstellungsnamen.get(i).toString(), DBManager.instance().getAufstellung(
 					Lineup.NO_HRF_VERBINDUNG, aufstellungsnamen.get(i).toString())));
 		}
 

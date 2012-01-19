@@ -162,7 +162,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
      * @return TODO Missing Return Method Documentation
      */
     private Spieler getVergleichsSpielerFirstHRF(Spieler vorlage) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getSpielerFirstHRF(vorlage
+        return ho.core.db.DBManager.instance().getSpielerFirstHRF(vorlage
                                                                                      .getSpielerID());
     }
     

@@ -1,12 +1,13 @@
 package ho.core.plugins;
 
+import ho.core.db.DBManager;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
 
 import plugins.IOfficialPlugin;
 import plugins.IPlugin;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.SplashFrame;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -152,7 +153,7 @@ public final class PluginManager {
     private static void deletePluginTables(String pluginname) {
         try {
             ArrayList<String> droptables = new ArrayList<String>();
-            Object [] tables = DBZugriff.instance().getAdapter().getDBInfo().getAllTablesNames();
+            Object [] tables = DBManager.instance().getAdapter().getDBInfo().getAllTablesNames();
     
             for (int i = 0; i < tables.length; i++) {
 				if(tables[i].toString().toUpperCase(java.util.Locale.ENGLISH).startsWith(pluginname.toUpperCase(java.util.Locale.ENGLISH))) {
@@ -161,7 +162,7 @@ public final class PluginManager {
 			}
     
             for (int i = 0; i < droptables.size(); i++) {
-                DBZugriff.instance().getAdapter().executeUpdate("DROP TABLE " + droptables.get(i));
+                DBManager.instance().getAdapter().executeUpdate("DROP TABLE " + droptables.get(i));
             }
         } catch (Exception e) {
            HOLogger.instance().log(PluginManager.class,e);

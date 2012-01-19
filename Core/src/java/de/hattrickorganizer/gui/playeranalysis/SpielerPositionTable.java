@@ -72,7 +72,7 @@ final class SpielerPositionTable extends JTable {
         setOpaque(false);
 
         if (m_clTableModel == null) {
-            m_clTableModel = new SpielerPositionTableModel(de.hattrickorganizer.database.DBZugriff.instance()
+            m_clTableModel = new SpielerPositionTableModel(ho.core.db.DBManager.instance()
                                                                                                   .getAlleBewertungen(m_iSpielerId));
             m_clTableSorter = new TableSorter(m_clTableModel, -1, -1);
 
@@ -92,7 +92,7 @@ final class SpielerPositionTable extends JTable {
             m_clTableSorter.addMouseListenerToHeaderInTable(this);
         } else {
             //Werte neu setzen
-            m_clTableModel.setValues(de.hattrickorganizer.database.DBZugriff.instance()
+            m_clTableModel.setValues(ho.core.db.DBManager.instance()
                                                                             .getAlleBewertungen(m_iSpielerId));
             m_clTableSorter.reallocateIndexes();
         }

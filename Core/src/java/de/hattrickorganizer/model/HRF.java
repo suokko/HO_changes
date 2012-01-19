@@ -49,7 +49,7 @@ public final class HRF {
     public HRF(java.sql.ResultSet rs) throws Exception {
         try {
             hrfId = rs.getInt("HRF_ID");
-            name = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("Name"));
+            name = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("Name"));
             datum = rs.getTimestamp("Datum");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor HRF: " + e.toString());

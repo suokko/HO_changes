@@ -1,11 +1,12 @@
 // %3884409028:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import ho.core.db.DBManager;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
@@ -55,7 +56,7 @@ final class MatchesTable extends JTable {
     		columns[i].setPreferredWidth(tableColumnModel.getColumn(convertColumnIndexToView(i)).getWidth());
     	}
     	m_clTableModel.setCurrentValueToColumns(columns);
-    	DBZugriff.instance().saveHOColumnModel(m_clTableModel);
+    	DBManager.instance().saveHOColumnModel(m_clTableModel);
     }
     
     public void refresh(int matchtypen) {
@@ -82,7 +83,7 @@ final class MatchesTable extends JTable {
 
         if (m_clTableModel == null) {
             m_clTableModel = UserColumnController.instance().getMatchesModel();
-            m_clTableModel.setValues(DBZugriff.instance().getMatchesKurzInfo(HOVerwaltung.instance().getModel()
+            m_clTableModel.setValues(DBManager.instance().getMatchesKurzInfo(HOVerwaltung.instance().getModel()
                                                                                .getBasics().getTeamId(), matchtyp,false));
             m_clTableSorter = new TableSorter(m_clTableModel,  m_clTableModel.getDisplayedColumns().length-1, -1);
 
@@ -115,7 +116,7 @@ final class MatchesTable extends JTable {
             m_clTableModel.setColumnsSize(getColumnModel());
         } else {
             //Werte neu setzen
-            m_clTableModel.setValues(DBZugriff.instance().getMatchesKurzInfo(HOVerwaltung.instance().getModel()
+            m_clTableModel.setValues(DBManager.instance().getMatchesKurzInfo(HOVerwaltung.instance().getModel()
                                                                                                     .getBasics()
                                                                                                     .getTeamId(),
                                                                                                 matchtyp,

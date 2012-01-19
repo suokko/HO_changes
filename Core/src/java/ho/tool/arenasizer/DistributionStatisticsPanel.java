@@ -2,6 +2,7 @@ package ho.tool.arenasizer;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.math.BigDecimal;
@@ -13,7 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ISpielePanel;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.model.ArenaStatistikModel;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
@@ -62,7 +62,7 @@ class DistributionStatisticsPanel extends JPanel {
 					hoV.getLanguageString("Fans")+" ( )"};
 
 		int arenaId = HOVerwaltung.instance().getModel().getStadium().getArenaId();
-		ArenaStatistikModel[] matches=  DBZugriff.instance().getArenaStatistikModel(ISpielePanel.NUR_EIGENE_LIGASPIELE).getMatches();
+		ArenaStatistikModel[] matches=  DBManager.instance().getArenaStatistikModel(ISpielePanel.NUR_EIGENE_LIGASPIELE).getMatches();
 		TableEntry[][] value = new TableEntry[matches.length][columnNames.length];
         for (int i = 0; i < matches.length; i++) {
         	 value[i][0] = new ColorLabelEntry(matches[i].getMatchID()+"",

@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.playeroverview;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -19,7 +20,6 @@ import javax.swing.event.ListSelectionListener;
 
 import plugins.ISpieler;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
@@ -106,14 +106,14 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
         if (value == JOptionPane.OK_OPTION) {
             for (int i = 0; i < hrfs.length; i++) {
-                DBZugriff.instance().deleteHRF(((CBItem) hrfs[i]).getId());
+                DBManager.instance().deleteHRF(((CBItem) hrfs[i]).getId());
             }
 
             loadHRFListe(false);
             vergleichsSpieler.removeAllElements();
 
             // HRF Deleted, recalculate Skillups
-			DBZugriff.instance().reimportSkillup();
+			DBManager.instance().reimportSkillup();
 
             //Nur manuelles Update der Tabelle, kein reInit, damit die Sortierung bleibt.
             HOMainFrame.instance().getSpielerUebersichtPanel().refreshHRFVergleich();
@@ -140,7 +140,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 	public final void valueChanged(javax.swing.event.ListSelectionEvent listSelectionEvent) {
 		// Markierung vorhanden
 		if (m_jlHRFs.getSelectedValue() != null) {
-			vergleichsSpieler = DBZugriff.instance().getSpieler(((CBItem) m_jlHRFs.getSelectedValue()).getId());
+			vergleichsSpieler = DBManager.instance().getSpieler(((CBItem) m_jlHRFs.getSelectedValue()).getId());
 			vergleichsMarkierung = true;
 
 			if (m_jlHRFs.getSelectedIndex() > 0) {
@@ -191,7 +191,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      * @param init TODO Missing Method Parameter Documentation
      */
     private void loadHRFListe(boolean init) {
-        final Vector<CBItem> hrfListe = DBZugriff.instance().getCBItemHRFListe(new Timestamp(0));
+        final Vector<CBItem> hrfListe = DBManager.instance().getCBItemHRFListe(new Timestamp(0));
 
         m_jlHRFs.removeListSelectionListener(this);
 

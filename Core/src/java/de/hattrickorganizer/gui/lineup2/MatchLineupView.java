@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.lineup2;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -14,7 +15,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.lineup.substitution.SubstitutionOverview;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
@@ -38,7 +38,7 @@ public class MatchLineupView extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				DBZugriff.instance().loadUserParameter();
+				DBManager.instance().loadUserParameter();
 				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 				HOVerwaltung.instance().loadLatestHoModel();
 
@@ -77,7 +77,7 @@ public class MatchLineupView extends JPanel {
 
 			@Override
 			public void run() {
-				DBZugriff.instance().disconnect();
+				DBManager.instance().disconnect();
 			}
 		});
 	}

@@ -280,7 +280,7 @@ public class FormulaFactors {
         final FactorObject[] allFaktoren = getAllObj();
 
         for (int i = 0; (allFaktoren != null) && (i < allFaktoren.length); i++) {
-            de.hattrickorganizer.database.DBZugriff.instance().setFaktorenFromDB(allFaktoren[i]);
+            ho.core.db.DBManager.instance().setFaktorenFromDB(allFaktoren[i]);
         }
     }
 

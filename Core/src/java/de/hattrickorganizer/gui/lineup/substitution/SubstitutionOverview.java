@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.lineup.substitution;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -35,7 +36,6 @@ import javax.swing.table.AbstractTableModel;
 
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.lineup2.Helper;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
@@ -340,7 +340,7 @@ public class SubstitutionOverview extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				DBZugriff.instance().loadUserParameter();
+				DBManager.instance().loadUserParameter();
 				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 				HOVerwaltung.instance().loadLatestHoModel();
 
@@ -379,7 +379,7 @@ public class SubstitutionOverview extends JPanel {
 
 			@Override
 			public void run() {
-				DBZugriff.instance().disconnect();
+				DBManager.instance().disconnect();
 			}
 		});
 	}

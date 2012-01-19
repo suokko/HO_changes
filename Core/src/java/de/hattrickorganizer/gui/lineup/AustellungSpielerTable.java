@@ -1,10 +1,11 @@
 // %2863750181:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import ho.core.db.DBManager;
+
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.BooleanTableCellrenderer;
 import de.hattrickorganizer.gui.model.LineupColumnModel;
@@ -230,7 +231,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
     		columns[i].setPreferredWidth(tableColumnModel.getColumn(convertColumnIndexToView(i)).getWidth());
     	}
     	m_clTableModel.setCurrentValueToColumns(columns);
-    	DBZugriff.instance().saveHOColumnModel(m_clTableModel);
+    	DBManager.instance().saveHOColumnModel(m_clTableModel);
     }
     
     /**

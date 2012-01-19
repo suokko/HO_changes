@@ -1,7 +1,7 @@
 // %4165694865:de.hattrickorganizer.logik%
 package de.hattrickorganizer.logik;
 
-import de.hattrickorganizer.database.DBZugriff;
+import ho.core.db.DBManager;
 import de.hattrickorganizer.model.matches.MatchLineup;
 
 import plugins.IHOMiniModel;
@@ -25,6 +25,6 @@ public class MatchUpdater {
     public static void updateMatch(IHOMiniModel model, int matchId) {
         
         IMatchLineup lineup = model.getMatchLineup(matchId);
-        DBZugriff.instance().updateMatchLineup((MatchLineup) lineup);
+        DBManager.instance().updateMatchLineup((MatchLineup) lineup);
     }
 }

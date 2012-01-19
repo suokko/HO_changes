@@ -60,8 +60,8 @@ public class XtraData implements plugins.IXtraData {
     public XtraData(java.sql.ResultSet rs) throws Exception {
         try {
             m_dCurrencyRate = rs.getDouble("CurrencyRate");
-            m_sCurrencyName = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("CurrencyName"));
-            m_sLogoURL = de.hattrickorganizer.database.DBZugriff.deleteEscapeSequences(rs.getString("LogoURL"));
+            m_sCurrencyName = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("CurrencyName"));
+            m_sLogoURL = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("LogoURL"));
             m_bHasPromoted = rs.getBoolean("HasPromoted");
             m_clSeriesMatchDate = rs.getTimestamp("SeriesMatchDate");
             m_clTrainingDate = rs.getTimestamp("TrainingDate");

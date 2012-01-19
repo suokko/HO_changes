@@ -7,6 +7,7 @@
 package de.hattrickorganizer.gui.utils;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.io.IOException;
 import java.io.File;
@@ -24,7 +25,6 @@ import plugins.IMatchKurzInfo;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.InfoPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
@@ -140,7 +140,7 @@ public class OnlineWorker {
 	    			homodel.setSpielplan(hov.getModel().getSpielplan());
 	
     				// Add old players to the model
-    				homodel.setAllOldSpieler(DBZugriff.instance().getAllSpieler());
+    				homodel.setAllOldSpieler(DBManager.instance().getAllSpieler());
     				// Only update when the model is newer than existing
     				if ((homodel != null) && ((hov.getModel() == null)
     						|| (homodel.getBasics().getDatum().after(hov.getModel().getBasics().getDatum())))) 
@@ -153,12 +153,12 @@ public class OnlineWorker {
     						lastEconomyDate = new Date(hov.getModel().getXtraDaten().getEconomyDate().getTime());                            	
     					} 
     					// Reimport Skillup
-    					DBZugriff.instance().checkSkillup(homodel);
+    					DBManager.instance().checkSkillup(homodel);
     					//Show
     					hov.setModel(homodel);
     					//Recalculate Training
     					//Training->Subskill calculation
-    					TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
+    					TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
     					homodel.calcSubskills();
     					AufstellungsVergleichHistoryPanel.setHRFAufstellung(homodel.getAufstellung(), homodel.getLastAufstellung());
     					AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(
@@ -334,7 +334,7 @@ public class OnlineWorker {
 
         //Ab in die DB packen
         if (matches != null)
-            DBZugriff.instance().storeMatchKurzInfos(matches);
+            DBManager.instance().storeMatchKurzInfos(matches);
 
         waitDialog.setValue(100);
         waitDialog.setVisible(false);
@@ -342,8 +342,8 @@ public class OnlineWorker {
         //Automatisch alle MatchLineups runterladen
         for (int i = 0; (matches != null) && (i < matches.length); i++) {
             //Match noch nicht in der DB
-            if ((DBZugriff.instance().isMatchVorhanden(matches[i].getMatchID()))
-                && (!DBZugriff.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
+            if ((DBManager.instance().isMatchVorhanden(matches[i].getMatchID()))
+                && (!DBManager.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
                 && (matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED)) {
                 getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
                                matches[i].getGastID());
@@ -376,7 +376,7 @@ public class OnlineWorker {
         details = fetchDetails(matchId, waitDialog);
 
         if (details != null) {
-            DBZugriff.instance().storeMatchDetails(details);
+            DBManager.instance().storeMatchDetails(details);
         } else {
             success = false;
         }
@@ -436,7 +436,7 @@ public class OnlineWorker {
 	
 	        // Store in DB
 	        if (matches != null) {
-	            DBZugriff.instance().storeMatchKurzInfos(matches);
+	            DBManager.instance().storeMatchKurzInfos(matches);
 	        }
 	
 	        waitDialog.setValue(100);
@@ -445,11 +445,11 @@ public class OnlineWorker {
 	        // Automatically download all MatchLineups
 	        for (int i = 0; (matches != null) && (i < matches.length); i++) {
 	        	int curMatchId = matches[i].getMatchID();
-	        	Matchdetails curDetails = DBZugriff.instance().getMatchDetails(curMatchId); 
+	        	Matchdetails curDetails = DBManager.instance().getMatchDetails(curMatchId); 
 	            // No match in DB
-	        	if (DBZugriff.instance().isMatchVorhanden(curMatchId)
+	        	if (DBManager.instance().isMatchVorhanden(curMatchId)
 	            		&& matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED
-	            		&& (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId) ||
+	            		&& (!DBManager.instance().isMatchLineupVorhanden(curMatchId) ||
 	            				curDetails == null ||
 	            				curDetails.getMatchreport() == null ||
 	            				curDetails.getMatchreport().trim().length() == 0
@@ -527,7 +527,7 @@ public class OnlineWorker {
 	                    lineUp1.setGast((MatchLineupTeam)lineUp2.getGast());
 	            }
 	        }
-	        DBZugriff.instance().storeMatchLineup(lineUp1);
+	        DBManager.instance().storeMatchLineup(lineUp1);
         }
         waitDialog.setVisible(false);
         return bOK;
@@ -805,13 +805,13 @@ public class OnlineWorker {
 	 * Get all lineups for MatchKurzInfos, if they're not there already
 	 */
 	public void getAllLineups() {
-		final MatchKurzInfo[] infos = DBZugriff.instance().getMatchesKurzInfo(-1);
+		final MatchKurzInfo[] infos = DBManager.instance().getMatchesKurzInfo(-1);
 		String haveLineups = "";
 		boolean bOK = false;
 		OnlineWorker ow = HOMainFrame.instance().getOnlineWorker();
 		for (int i = 0; i < infos.length; i++) {
 			int curMatchId = infos[i].getMatchID();
-			if (!DBZugriff.instance().isMatchLineupVorhanden(curMatchId)) 
+			if (!DBManager.instance().isMatchLineupVorhanden(curMatchId)) 
 			{
 				// Check if the lineup is available
 				if (infos[i].getMatchStatus() == IMatchKurzInfo.FINISHED) 

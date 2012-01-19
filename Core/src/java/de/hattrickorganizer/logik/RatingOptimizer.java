@@ -7,6 +7,8 @@
  */
 package de.hattrickorganizer.logik;
 
+import ho.core.db.DBManager;
+
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -18,7 +20,6 @@ import plugins.IRatingPredictionManager;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Lineup;
@@ -138,8 +139,8 @@ public class RatingOptimizer {
 			lineup.setTacticType(det.getGuestTacticType());
 		}
 
-		int hrfID = DBZugriff.instance().getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
-		RatingPredictionManager rpm = new RatingPredictionManager(lineup, DBZugriff.instance().getTeam(hrfID), (short) DBZugriff.instance().getTrainerType(hrfID), RatingPredictionConfig.getInstance() );
+		int hrfID = DBManager.instance().getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
+		RatingPredictionManager rpm = new RatingPredictionManager(lineup, DBManager.instance().getTeam(hrfID), (short) DBManager.instance().getTrainerType(hrfID), RatingPredictionConfig.getInstance() );
 		double[] offset = new double[7];		
 		if (details.getHeimId() == HOMiniModel.instance().getBasics().getTeamId()) {
 					offset[0] = 0.875d + det.getHomeRightDef() / 4.0d - rpm.getRightDefenseRatings();                    
@@ -161,13 +162,13 @@ public class RatingOptimizer {
 					offset[6] = 0.875d + det.getGuestLeftAtt() / 4.0d - rpm.getLeftAttackRatings();
                     
                 }
-        debugDiffs ("cd", det, rpm, DBZugriff.instance().getTeam(hrfID));
-        debugDiffs ("sd_l", det, rpm, DBZugriff.instance().getTeam(hrfID));
-        debugDiffs ("sd_r", det, rpm, DBZugriff.instance().getTeam(hrfID));
-        debugDiffs ("mid", det, rpm, DBZugriff.instance().getTeam(hrfID));
-        debugDiffs ("sa_l", det, rpm, DBZugriff.instance().getTeam(hrfID));
-        debugDiffs ("sa_r", det, rpm, DBZugriff.instance().getTeam(hrfID));
-        debugDiffs ("ca", det, rpm, DBZugriff.instance().getTeam(hrfID));
+        debugDiffs ("cd", det, rpm, DBManager.instance().getTeam(hrfID));
+        debugDiffs ("sd_l", det, rpm, DBManager.instance().getTeam(hrfID));
+        debugDiffs ("sd_r", det, rpm, DBManager.instance().getTeam(hrfID));
+        debugDiffs ("mid", det, rpm, DBManager.instance().getTeam(hrfID));
+        debugDiffs ("sa_l", det, rpm, DBManager.instance().getTeam(hrfID));
+        debugDiffs ("sa_r", det, rpm, DBManager.instance().getTeam(hrfID));
+        debugDiffs ("ca", det, rpm, DBManager.instance().getTeam(hrfID));
 		return offset;
 	}
 

@@ -1,10 +1,11 @@
 // %1896649635:de.hattrickorganizer.gui.statistic%
 package de.hattrickorganizer.gui.statistic;
 
+import ho.core.db.DBManager;
+
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.utils.TableSorter;
@@ -122,7 +123,7 @@ public class ArenaStatistikTable extends JTable {
     }
     
     private void reInitModel(int matchtyp) {
-        m_clTableModel = DBZugriff.instance().getArenaStatistikModel(matchtyp);
+        m_clTableModel = DBManager.instance().getArenaStatistikModel(matchtyp);
         m_clTableSorter = new TableSorter(m_clTableModel, 5, -1);
         setModel(m_clTableSorter);
     }
