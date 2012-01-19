@@ -1,5 +1,7 @@
 package de.hattrickorganizer.model.matches;
 
+import ho.core.db.DBManager;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ISpielerPosition;
@@ -270,9 +271,9 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 				}
 
 				if (isHome) {
-					team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(match).getHeim();
+					team = (MatchLineupTeam) DBManager.instance().getMatchLineup(match).getHeim();
 				} else {
-					team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(match).getGast();
+					team = (MatchLineupTeam) DBManager.instance().getMatchLineup(match).getGast();
 				}
 
 				if (team == null) {
@@ -308,9 +309,9 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 				}
 
 				if (isHome) {
-					team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(match).getHeim();
+					team = (MatchLineupTeam) DBManager.instance().getMatchLineup(match).getHeim();
 				} else {
-					team = (MatchLineupTeam) DBZugriff.instance().getMatchLineup(match).getGast();
+					team = (MatchLineupTeam) DBManager.instance().getMatchLineup(match).getGast();
 				}
 
 				if (team == null) {

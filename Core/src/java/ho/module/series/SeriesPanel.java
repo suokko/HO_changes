@@ -3,6 +3,7 @@ package ho.module.series;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -96,8 +96,8 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
                     final String[] dbvalue = {spielplan.getSaison() + "", spielplan.getLigaId()
                                              + ""};
 
-                    DBZugriff.instance().deleteSpielplanTabelle(dbkey, dbvalue);
-                    DBZugriff.instance().deletePaarungTabelle(dbkey, dbvalue);
+                    DBManager.instance().deleteSpielplanTabelle(dbkey, dbvalue);
+                    DBManager.instance().deletePaarungTabelle(dbkey, dbvalue);
                     AKTUELLER_SPIELPLAN = null;
 
                     RefreshManager.instance().doReInit();
@@ -179,7 +179,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
 
     private void fillSaisonCB() {
         //Die Spielpläne als Objekte mit den Paarungen holen
-        final Spielplan[] spielplaene = DBZugriff.instance().getAllSpielplaene(true);
+        final Spielplan[] spielplaene = DBManager.instance().getAllSpielplaene(true);
 
         m_jcbSaison.removeItemListener(this);
 

@@ -1,6 +1,8 @@
 // %1056836646:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import ho.core.db.DBManager;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -28,7 +30,6 @@ import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
 import plugins.IVerein;
 import plugins.IXtraData;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.FutureTrainingManager;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.tools.HOLogger;
@@ -72,7 +73,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return Value of property m_clDBAdapter.
      */
     public IJDBCAdapter getAdapter() {
-        return de.hattrickorganizer.database.DBZugriff.instance().getAdapter();
+        return ho.core.db.DBManager.instance().getAdapter();
     }
 
     /**
@@ -81,7 +82,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return a valid IDBAdapter instance
      */
     public IDBAdapter getDBAdapter() {
-        return de.hattrickorganizer.database.DBZugriff.instance().getDBAdapter();
+        return ho.core.db.DBManager.instance().getDBAdapter();
     }
 
     /**
@@ -121,7 +122,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public Vector<TrainingPerWeek> getDBManualTrainingsVector() {
-        return DBZugriff.instance().getTrainingsVector();
+        return DBManager.instance().getTrainingsVector();
     }
 
     /**
@@ -208,7 +209,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchDetails getMatchDetails(int matchId) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getMatchDetails(matchId);
+        return ho.core.db.DBManager.instance().getMatchDetails(matchId);
     }
 
     /**
@@ -219,7 +220,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchLineup getMatchLineup(int matchID) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getMatchLineup(matchID);
+        return ho.core.db.DBManager.instance().getMatchLineup(matchID);
     }
 
     /**
@@ -239,7 +240,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchKurzInfo[] getMatchesKurzInfo(int teamId) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getMatchesKurzInfo(teamId);
+        return ho.core.db.DBManager.instance().getMatchesKurzInfo(teamId);
     }
 
     /**
@@ -252,7 +253,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getMatchesKurzInfo(teamId,
+        return ho.core.db.DBManager.instance().getMatchesKurzInfo(teamId,
                                                                                      matchtyp, asc);
     }
 
@@ -304,7 +305,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return ISpieler containing data to player
      */
     public ISpieler getSpielerAtDate(int spielerid, java.sql.Timestamp time) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getSpielerAtDate(spielerid, time);
+        return ho.core.db.DBManager.instance().getSpielerAtDate(spielerid, time);
     }
 
     /**
@@ -313,7 +314,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public ISpielplan[] getSpielplaene() {
-        return de.hattrickorganizer.database.DBZugriff.instance().getAllSpielplaene(true);
+        return ho.core.db.DBManager.instance().getAllSpielplaene(true);
     }
 
     /**
@@ -327,7 +328,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public ISpielplan getSpielplan(int ligaId, int saison) {
-        return de.hattrickorganizer.database.DBZugriff.instance().getSpielplan(ligaId, saison);
+        return ho.core.db.DBManager.instance().getSpielplan(ligaId, saison);
     }
 
     //--------Stadium----------------------------------------
@@ -414,7 +415,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @param hrfid TODO Missing Method Parameter Documentation
      */
     public void deleteHRF(int hrfid) {
-        de.hattrickorganizer.database.DBZugriff.instance().deleteHRF(hrfid);
+        ho.core.db.DBManager.instance().deleteHRF(hrfid);
     }
 
     /**
@@ -423,7 +424,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @param training TODO Missing Method Parameter Documentation
      */
     public void saveTraining(ITrainingWeek training) {
-        de.hattrickorganizer.database.DBZugriff.instance().saveTraining((de.hattrickorganizer.model.TrainingPerWeek) training);
+        ho.core.db.DBManager.instance().saveTraining((de.hattrickorganizer.model.TrainingPerWeek) training);
     }
 
     /**
@@ -445,11 +446,11 @@ public class HOMiniModel implements IHOMiniModel {
 	}
 
 	public List<IFutureTrainingWeek> getFutureTrainingWeeks() {
-		return DBZugriff.instance().getFutureTrainingsVector();
+		return DBManager.instance().getFutureTrainingsVector();
 	}
 
 	public void saveFutureTraining(IFutureTrainingWeek training) {
-		DBZugriff.instance().saveFutureTraining(training);
+		DBManager.instance().saveFutureTraining(training);
 	}
 
 	public ISpieler createPlayer(IPlayerData data) {

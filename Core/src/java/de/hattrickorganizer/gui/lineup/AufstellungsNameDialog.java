@@ -1,6 +1,8 @@
 // %771549764:de.hattrickorganizer.gui.lineup%
 package de.hattrickorganizer.gui.lineup;
 
+import ho.core.db.DBManager;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.model.Lineup;
@@ -150,7 +151,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
         //nicht schon vorhanden
         if (dbcheck) {
-            aufstellungsNamen = DBZugriff.instance().getAufstellungsListe(Lineup.NO_HRF_VERBINDUNG);
+            aufstellungsNamen = DBManager.instance().getAufstellungsListe(Lineup.NO_HRF_VERBINDUNG);
         }
 
         //nicht Aktuelle Aufstellung

@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui.statistic;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
@@ -378,7 +378,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
             gup.statistikAnzahlHRF = anzahlHRF;
             final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT;
             final java.text.NumberFormat format2 = NumberFormat.getCurrencyInstance();
-            final double[][] statistikWerte = DBZugriff.instance().
+            final double[][] statistikWerte = DBManager.instance().
             	getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, m_jcbGruppe.getSelectedItem().toString());
             final StatistikModel[] models = new StatistikModel[statistikWerte.length];
 

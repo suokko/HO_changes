@@ -2,6 +2,7 @@
 package de.hattrickorganizer.logik;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -26,7 +27,6 @@ import plugins.ITrainingPerPlayer;
 import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -565,7 +565,7 @@ public class TrainingsManager implements ITrainingsManager {
     		IMatchLineupPlayer player;
 
     		Vector<IMatchLineupPlayer> playerVec = 
-    			DBZugriff.instance().getMatchLineupPlayers(matchId, 
+    			DBManager.instance().getMatchLineupPlayers(matchId, 
     					p_IHMM_HOMiniModel.getBasics().getTeamId());	
 
     		for (int i = 0 ; i < playerVec.size() ; i++) {

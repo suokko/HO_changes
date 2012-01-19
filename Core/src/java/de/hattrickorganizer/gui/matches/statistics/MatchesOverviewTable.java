@@ -1,11 +1,12 @@
 package de.hattrickorganizer.gui.matches.statistics;
 
+import ho.core.db.DBManager;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ISpielePanel;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.model.MatchesOverviewColumnModel;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
@@ -37,7 +38,7 @@ public class MatchesOverviewTable extends JTable {
             	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
             	tableModel.setValues(tmp);
             } else {
-            	tableModel.setValues(DBZugriff.instance().getMatchesOverviewValues(matchtyp));
+            	tableModel.setValues(DBManager.instance().getMatchesOverviewValues(matchtyp));
             }
 
             final ToolTipHeader header = new ToolTipHeader(getColumnModel());
@@ -67,7 +68,7 @@ public class MatchesOverviewTable extends JTable {
             //m_clTableSorter.addMouseListenerToHeaderInTable(this);
             tableModel.setColumnsSize(getColumnModel());
         } else {
-        	tableModel.setValues(DBZugriff.instance().getMatchesOverviewValues(matchtyp));
+        	tableModel.setValues(DBManager.instance().getMatchesOverviewValues(matchtyp));
         }
 
         setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -99,7 +100,7 @@ public class MatchesOverviewTable extends JTable {
     		columns[i].setPreferredWidth(tableColumnModel.getColumn(convertColumnIndexToView(i)).getWidth());
     	}
     	tableModel.setCurrentValueToColumns(columns);
-    	DBZugriff.instance().saveHOColumnModel(tableModel);
+    	DBManager.instance().saveHOColumnModel(tableModel);
     }
     
     public void refresh(int matchtypen) {

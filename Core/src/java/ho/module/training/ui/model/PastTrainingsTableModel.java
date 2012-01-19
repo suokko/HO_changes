@@ -1,6 +1,7 @@
 // %1126721451604:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.db.DBManager;
 import ho.module.training.Trainings;
 import ho.module.training.ui.comp.CBItem;
 
@@ -8,7 +9,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.TrainingPerWeek;
 
@@ -63,7 +63,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
             train.setStaminaTrainingPart(staminaTrainingPart.intValue());
         }
 
-        DBZugriff.instance().saveTraining((TrainingPerWeek) train);
+        DBManager.instance().saveTraining((TrainingPerWeek) train);
         fireTableCellUpdated(row, col);
     }
 

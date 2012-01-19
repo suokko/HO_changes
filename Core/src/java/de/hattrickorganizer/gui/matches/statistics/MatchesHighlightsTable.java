@@ -1,11 +1,12 @@
 package de.hattrickorganizer.gui.matches.statistics;
 
+import ho.core.db.DBManager;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import plugins.ISpielePanel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
@@ -34,7 +35,7 @@ public class MatchesHighlightsTable extends JTable {
     	if(matchtyp == ISpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
          	return new Object[0][0];
          }
-    	MatchesHighlightsStat[] rows = DBZugriff.instance().getChancesStat(true,matchtyp);
+    	MatchesHighlightsStat[] rows = DBManager.instance().getChancesStat(true,matchtyp);
     	Object[][] data = new Object[rows.length][columns.length];
     	for (int i = 0; i < rows.length; i++) {
 			data[i][0] = rows[i];

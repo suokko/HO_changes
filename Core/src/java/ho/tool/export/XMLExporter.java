@@ -1,6 +1,7 @@
 // %1127327738353:hoplugins%
 package ho.tool.export;
 
+import ho.core.db.DBManager;
 import ho.core.db.backup.HOZip;
 
 import java.awt.BorderLayout;
@@ -29,7 +30,6 @@ import plugins.IMatchLineupTeam;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.logik.exporter.ExportMatchData;
 import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -240,7 +240,7 @@ public class XMLExporter  {
 
 				//Details holen
 				//details = (IMatchDetails) usefulMatches.get(new Integer(matchID));
-				int hrfID = DBZugriff.instance().getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
+				int hrfID = DBManager.instance().getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
 
 				//HRF ID vermerken
 				ele = doc.createElement("HRFID");
@@ -255,7 +255,7 @@ public class XMLExporter  {
 					lineupTeam = HOMiniModel.instance().getMatchLineup(details.getMatchID()).getGast();
 				}
 
-				Team team = DBZugriff.instance().getTeam(hrfID);
+				Team team = DBManager.instance().getTeam(hrfID);
 
 				//Daten schreiben
 				ele = doc.createElement("TeamID");
@@ -269,7 +269,7 @@ public class XMLExporter  {
 				ele.appendChild(doc.createTextNode("" + getTeamErfahrung(team, lineupTeam.determinateSystem())));
 				ele = doc.createElement("TrainerType");
 				tmpEle.appendChild(ele);
-				ele.appendChild(doc.createTextNode("" + DBZugriff.instance().getTrainerType(hrfID)));
+				ele.appendChild(doc.createTextNode("" + DBManager.instance().getTrainerType(hrfID)));
 				ele.appendChild(doc.createComment(" 0=Defense, 2= Normal, 1=Offense Trainer, -99 NOT Found "));
 
 				if (heimspiel) {

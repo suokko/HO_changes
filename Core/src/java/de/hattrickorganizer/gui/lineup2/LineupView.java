@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.lineup2;
 
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,7 +16,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 
@@ -55,7 +55,7 @@ public class LineupView extends JPanel {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				DBZugriff.instance().loadUserParameter();
+				DBManager.instance().loadUserParameter();
 				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 				HOVerwaltung.instance().loadLatestHoModel();
 
@@ -94,7 +94,7 @@ public class LineupView extends JPanel {
 
 			@Override
 			public void run() {
-				DBZugriff.instance().disconnect();
+				DBManager.instance().disconnect();
 			}
 		});
 	}

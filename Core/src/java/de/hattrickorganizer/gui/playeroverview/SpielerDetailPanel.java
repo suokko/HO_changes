@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.playeroverview;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -24,7 +25,6 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
@@ -306,7 +306,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      */
     public final void focusLost(java.awt.event.FocusEvent event) {
         if (m_clPlayer != null) {
-            DBZugriff.instance().saveSpielerNotiz(m_clPlayer.getSpielerID(), m_jtaNotes.getText());
+            DBManager.instance().saveSpielerNotiz(m_clPlayer.getSpielerID(), m_jtaNotes.getText());
         }
     }
 
@@ -545,7 +545,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         }
         m_jpInTeamSince.setText(temp);
         m_jtaNotes.setEditable(true);
-        m_jtaNotes.setText(DBZugriff.instance().getSpielerNotiz(m_clPlayer.getSpielerID()));
+        m_jtaNotes.setText(DBManager.instance().getSpielerNotiz(m_clPlayer.getSpielerID()));
         EPVData data = new EPVData(m_clPlayer);
         double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
         final String epvtext = Helper.getNumberFormat(true, 0).format(price);
@@ -577,7 +577,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      * @return player
      */
     private Spieler getComparisonPlayerFirstHRF(Spieler vorlage) {
-        return de.hattrickorganizer.database.DBZugriff.instance()
+        return ho.core.db.DBManager.instance()
         	.getSpielerFirstHRF(vorlage.getSpielerID());
     }
 

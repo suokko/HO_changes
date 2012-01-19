@@ -3,6 +3,7 @@ package ho.module.series;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +24,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
 import plugins.IPaarung;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
@@ -83,7 +83,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
         //--Match zeigen ggf runterladen--
         if (matchdata[0] > 0) {
             //Spiel nicht vorhanden, dann erst runterladen!
-            if (!DBZugriff.instance().isMatchVorhanden(matchdata[0])) {
+            if (!DBManager.instance().isMatchVorhanden(matchdata[0])) {
                 try {
                     //Lineups
                     if (!HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchdata[0],
@@ -99,7 +99,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                     }
 
                     //MatchKurzInfo muss hier erstellt werden!!
-                    final MatchLineup lineup = DBZugriff.instance().getMatchLineup(matchdata[0]);
+                    final MatchLineup lineup = DBManager.instance().getMatchLineup(matchdata[0]);
 
                     if (lineup != null) {
                         final MatchKurzInfo info = new MatchKurzInfo();
@@ -118,7 +118,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};
-                        DBZugriff.instance().storeMatchKurzInfos(infos);
+                        DBManager.instance().storeMatchKurzInfos(infos);
 
                         MatchUpdater.updateMatch(HOMiniModel.instance(), matchdata[0]);
                     }
@@ -160,7 +160,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
         //Hat das Spiel schon stattgefunden
         if ((paarung != null) && paarung.hatStattgefunden()) {
             //Match schon in der Datenbank
-            if (DBZugriff.instance().isMatchVorhanden(paarung
+            if (DBManager.instance().isMatchVorhanden(paarung
                                                                                     .getMatchId())) {
                 button.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Ligatabelle_SpielAnzeigen"));
                 button.setEnabled(true);

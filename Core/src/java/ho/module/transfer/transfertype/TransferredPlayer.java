@@ -1,8 +1,8 @@
 // %368918737:hoplugins.transfers.vo%
 package ho.module.transfer.transfertype;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
+import ho.core.db.DBManager;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.TransferTypes;
 import plugins.ISpieler;
@@ -53,7 +53,7 @@ class TransferredPlayer {
 
         //player.getAllLevelUp(ISpieler.SKILL_KONDITION).size();
         experienceSkillups = player.getAllLevelUp(ISpieler.SKILL_EXPIERIENCE).size();
-        officialMatch = DBZugriff.instance().getCountOfPlayedMatches(player.getSpielerID(), true);
+        officialMatch = DBManager.instance().getCountOfPlayedMatches(player.getSpielerID(), true);
 
         //testMatch = PlayerMatchesDAO.getAppearance(player.getSpielerID(), false);
         endWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag()
@@ -106,7 +106,7 @@ class TransferredPlayer {
      * @return transfer type code
      */
     final int getTransferType() {
-        int type = DBZugriff.instance().getTransferType(id);
+        int type = DBManager.instance().getTransferType(id);
 
         if (type > -2) {
             return type;

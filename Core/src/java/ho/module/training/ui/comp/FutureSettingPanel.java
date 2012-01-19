@@ -1,6 +1,7 @@
 // %1956788941:hoplugins.trainingExperience.ui.component%
 package ho.module.training.ui.comp;
 
+import ho.core.db.DBManager;
 import ho.module.training.TrainingPanel;
 import ho.module.training.Trainings;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -15,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import plugins.IFutureTrainingWeek;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 
@@ -55,14 +55,14 @@ public class FutureSettingPanel extends JPanel {
      * Populate the Future training table with the future training
      */
     protected void resetFutureTrainings() {
-        List<IFutureTrainingWeek> futureTrainings =  DBZugriff.instance().getFutureTrainingsVector();
+        List<IFutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
 
         for (Iterator<IFutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
             IFutureTrainingWeek train = iter.next();
             train.setIntensitaet(intensity.getSelectedIndex());
             train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
             train.setTyp(((CBItem)training.getSelectedItem()).getId());
-            DBZugriff.instance().saveFutureTraining(train);
+            DBManager.instance().saveFutureTraining(train);
         }
 
         futureModel.populate();
@@ -75,7 +75,7 @@ public class FutureSettingPanel extends JPanel {
      */
     private void jbInit() {
 
-        List<IFutureTrainingWeek> futureTrainings =  DBZugriff.instance().getFutureTrainingsVector();
+        List<IFutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
     	IFutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
         final int ttyp = firstFutureTraining.getTyp();

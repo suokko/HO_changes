@@ -1,6 +1,8 @@
 // %1127327738353:hoplugins%
 package de.hattrickorganizer.logik.exporter;
 
+import ho.core.db.DBManager;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -15,7 +17,6 @@ import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.matches.MatchHelper;
 import de.hattrickorganizer.tools.HOLogger;
@@ -60,7 +61,7 @@ public class MatchExporter {
 		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
 		List<IExportMatchData> export = new ArrayList<IExportMatchData>();
 
-		IMatchKurzInfo[] matches = DBZugriff.instance().getMatchesKurzInfo(HOMiniModel.instance().getBasics().getTeamId());
+		IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(HOMiniModel.instance().getBasics().getTeamId());
 
 		//Alle matches prï¿½fen        
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
@@ -74,7 +75,7 @@ public class MatchExporter {
 					|| isValidMatch(matches[i], details, startingDate, strict, skipPullBack) && !isFriendly ) {				
 
 				//Nun lineup durchlaufen und Spielerdaten holen
-				Vector<IMatchLineupPlayer> aufstellung = DBZugriff.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
+				Vector<IMatchLineupPlayer> aufstellung = DBManager.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
 				Hashtable<Integer,ISpieler> lineUpISpieler = new Hashtable<Integer,ISpieler>();
 
 				boolean dataOK = true;
@@ -135,7 +136,7 @@ public class MatchExporter {
 		//Aussortieren starten...
 		if (info.getMatchDateAsTimestamp().before(startingDate)) { //Zu alt !!!
 			return false;
-		} else if (DBZugriff.instance().getHrfIDSameTraining(info.getMatchDateAsTimestamp()) == -1) //Kein HRF gefunden
+		} else if (DBManager.instance().getHrfIDSameTraining(info.getMatchDateAsTimestamp()) == -1) //Kein HRF gefunden
 		{
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": No matching HRF found");
 			return false;

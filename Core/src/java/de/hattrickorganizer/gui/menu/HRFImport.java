@@ -1,12 +1,13 @@
 // %2363747329:de.hattrickorganizer.gui.menu%
 package de.hattrickorganizer.gui.menu;
 
+import ho.core.db.DBManager;
+
 import java.sql.Timestamp;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.InfoPanel;
 import de.hattrickorganizer.gui.RefreshManager;
@@ -106,7 +107,7 @@ public class HRFImport {
                         frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFSave"));
 
                         //Datei schon importiert worden?
-                        final String oldHRFName = DBZugriff.instance()
+                        final String oldHRFName = DBManager.instance()
                                                                                          .getHRFName4Date(homodel.getBasics()
                                                                                                                  .getDatum());
                         int value = JOptionPane.OK_OPTION;
@@ -141,11 +142,11 @@ public class HRFImport {
                 }
             }
 
-			DBZugriff.instance().reimportSkillup();
+			DBManager.instance().reimportSkillup();
 			
             HOVerwaltung.instance().loadLatestHoModel();
 
-            TrainingsManager.instance().calculateTrainings(DBZugriff.instance().getTrainingsVector());
+            TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
             HOVerwaltung.instance().recalcSubskills(true, olderHrf);
 
             HOVerwaltung.instance().loadLatestHoModel();

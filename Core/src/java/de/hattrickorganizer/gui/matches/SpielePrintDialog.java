@@ -1,6 +1,8 @@
 // %1645704922:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import ho.core.db.DBManager;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -13,7 +15,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.HOLogger;
@@ -159,7 +160,7 @@ public class SpielePrintDialog extends JDialog {
         if (info != null) {
             //Selektiertes Spiel des Models holen und alle 3 Panel informieren 
             try {
-            	final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
+            	final Matchdetails details = DBManager.instance().getMatchDetails(info.getMatchID());
                 m_jpStaerkenvergleichsPanel.refresh(info,details);
                 m_jpManschaftsBewertungsPanel.refresh(info,details);
                 m_jpSpielHighlightPanel.refresh(info,details);

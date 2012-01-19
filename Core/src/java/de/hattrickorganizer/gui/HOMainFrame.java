@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.db.DBManager;
 import ho.module.series.SeriesPanel;
 import ho.module.training.TrainingPanel;
 import ho.module.transfer.TransfersPanel;
@@ -46,7 +47,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import plugins.ISpieler;
 import de.hattrickorganizer.HO;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.info.InformationsPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
@@ -519,7 +519,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
 
 		// Disconnect
-		DBZugriff.instance().disconnect();
+		DBManager.instance().disconnect();
 
 		HOLogger.instance().debug(getClass(), "Disconnected");
 
@@ -1263,7 +1263,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		// TransferScoutPanel
 		parameter.transferScoutPanel_horizontalSplitPane = tsp;
 
-		DBZugriff.instance().saveUserParameter();
+		DBManager.instance().saveUserParameter();
 
 		m_jpSpielerUebersicht.saveColumnOrder();
 		m_jpSpielePanel.saveColumnOrder();

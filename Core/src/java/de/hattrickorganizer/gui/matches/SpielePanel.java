@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui.matches;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -36,7 +37,6 @@ import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchPredictionManager;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
@@ -166,7 +166,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
             if (value == JOptionPane.YES_OPTION) {
                 for (int i = 0; i < infos.length; i++) {
-                    DBZugriff.instance().deleteMatch(infos[i].getMatchID());
+                    DBManager.instance().deleteMatch(infos[i].getMatchID());
                 }
                 RefreshManager.instance().doReInit();
             }
@@ -183,7 +183,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             if ((matchShortInfo != null)
             		&& (matchShortInfo.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
                 final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-                final Vector<IMatchLineupPlayer> vteamspieler = DBZugriff.instance().getMatchLineupPlayers(matchShortInfo.getMatchID(),
+                final Vector<IMatchLineupPlayer> vteamspieler = DBManager.instance().getMatchLineupPlayers(matchShortInfo.getMatchID(),
                                                                                        teamid);
                 final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
@@ -210,7 +210,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             }
         } else if (e.getSource() == m_jbSimMatch) {
         	if (matchShortInfo != null) {
-        		final Matchdetails details = DBZugriff.instance().getMatchDetails(matchShortInfo.getMatchID());
+        		final Matchdetails details = DBManager.instance().getMatchDetails(matchShortInfo.getMatchID());
         		final IMatchPredictionManager manager = HOMiniModel.instance().getMatchPredictionManager();
         		final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
         		boolean homeMatch = false;
@@ -616,7 +616,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                                                 .getMatch((int) ((ColorLabelEntry) matchesTable.getSorter().getValueAt(row,5))
                                                                                         .getZahl());
                 refresh(info);
-                final Matchdetails details = DBZugriff.instance().getMatchDetails(info.getMatchID());
+                final Matchdetails details = DBManager.instance().getMatchDetails(info.getMatchID());
                 if (details != null && details.getMatchID() > 0) {
 	                teamsComparePanel.refresh(info,details);
 	                m_jpManschaftsBewertungsPanel.refresh(info,details);

@@ -1,5 +1,7 @@
 package de.hattrickorganizer.gui.matches.statistics;
 
+import ho.core.db.DBManager;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,7 +12,6 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpielePanel;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
@@ -106,8 +107,8 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 			 return;
 		 }
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		MatchKurzInfo home = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestVictory, true);
-		MatchKurzInfo away = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestVictory, false);
+		MatchKurzInfo home = DBManager.instance().getMatchesKurzInfo(teamId, matchtypes, HighestVictory, true);
+		MatchKurzInfo away = DBManager.instance().getMatchesKurzInfo(teamId, matchtypes, HighestVictory, false);
 		MatchKurzInfo info = getHighestMatch(home, away);
 		if(info != null){
 			teamNames[HighestVictory].setText(info.getHeimName()+" - "+info.getGastName());
@@ -116,8 +117,8 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 			teamNames[HighestVictory].setText("");
 			resultLabels[HighestVictory].setText(StringUtilities.getResultString(-1,-1));
 		}
-		home = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, true);
-		away = DBZugriff.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, false);
+		home = DBManager.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, true);
+		away = DBManager.instance().getMatchesKurzInfo(teamId, matchtypes, HighestDefeat, false);
 		info = getHighestMatch(home, away);
 
 		if(info != null){
@@ -128,7 +129,7 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 			resultLabels[HighestDefeat].setText(StringUtilities.getResultString(-1,-1));
 		}
 		for (int i = 2; i < resultLabels.length; i++) {
-			resultLabels[i].setText(""+DBZugriff.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, i));
+			resultLabels[i].setText(""+DBManager.instance().getMatchesKurzInfoStatisticsCount(teamId, matchtypes, i));
 		}
 
 	}

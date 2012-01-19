@@ -4,34 +4,42 @@ package ho.module.transfer.history;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.db.DBManager;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.ui.layout.TableLayout;
 import ho.module.transfer.ui.layout.TableLayoutConstants;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
+import javax.swing.JWindow;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.hattrickorganizer.database.DBZugriff;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -84,7 +92,7 @@ public class HistoryPane extends JSplitPane {
                                                       10, TableLayoutConstants.PREFERRED, 50,
                                                       TableLayoutConstants.FILL, 10
                                                   },
-                                                  {10, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED}
+                                                  {10, TableLayoutConstants.PREFERRED, TableLayoutConstants.PREFERRED,TableLayoutConstants.PREFERRED}
                                               }));
 
         final JRadioButton rb1 = new JRadioButton(hoV.getLanguageString("AllSeasons")); //$NON-NLS-1$
@@ -133,9 +141,53 @@ public class HistoryPane extends JSplitPane {
                 }
             });
 
-        filterPanel.add(rb1, "1, 1, 2, 1"); //$NON-NLS-1$
-        filterPanel.add(rb2, "1, 2"); //$NON-NLS-1$
-        filterPanel.add(spinner, "2, 2"); //$NON-NLS-1$
+        JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Menu.refreshData"));
+        button.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				 HOVerwaltung hoV = HOVerwaltung.instance();
+				 int teamId = hoV.getModel().getBasics().getTeamId(); 
+	            if ( teamId != 0) {
+	                final StringBuffer sBuffer = new StringBuffer();
+	               
+	                sBuffer.append(hoV.getLanguageString("UpdConfirmMsg.0"));
+	                sBuffer.append("\n" + hoV.getLanguageString("UpdConfirmMsg.1"));
+	                sBuffer.append("\n" + hoV.getLanguageString("UpdConfirmMsg.2"));
+	                sBuffer.append("\n\n" + hoV.getLanguageString("UpdConfirmMsg.3"));
+
+	                final int choice = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
+	                                                                 sBuffer.toString(),
+	                                                                 hoV.getLanguageString("Warning"),
+	                                                                 JOptionPane.YES_NO_OPTION);
+
+	                if (choice == JOptionPane.YES_OPTION) {
+	                    try {
+	                        final JWindow waitWindow = new LoginWaitDialog(HOMainFrame.instance());
+	                        waitWindow.setVisible(true);
+	                        
+	                        DBManager.instance().reloadTeamTransfers(teamId);
+	                        waitWindow.setVisible(false);
+	                        waitWindow.dispose();
+	                    } catch (Exception ex) {
+	                        ex.printStackTrace();
+	                    }
+
+	                    refresh();
+	                }
+	            } else {
+	            	 Helper.showMessage(HOMainFrame.instance(),hoV.getLanguageString("UpdMsg"), "", 1);
+	            }
+				
+			}
+		});
+        		
+        		
+        filterPanel.add(button,"1,1,2,1");
+        filterPanel.add(rb1, "1, 2"); //$NON-NLS-1$
+        filterPanel.add(rb2, "1, 3"); //$NON-NLS-1$
+        filterPanel.add(spinner, "2, 3"); //$NON-NLS-1$
+        
 
         final ButtonGroup bg = new ButtonGroup();
         bg.add(rb1);
@@ -202,9 +254,9 @@ public class HistoryPane extends JSplitPane {
     public final void refresh() {
         if (spinSeason.isSelected()) {
             final SpinnerNumberModel model = (SpinnerNumberModel) this.spinner.getModel();
-            this.transfers = DBZugriff.instance().getTransfers(model.getNumber().intValue(), true, true);
+            this.transfers = DBManager.instance().getTransfers(model.getNumber().intValue(), true, true);
         } else {
-            this.transfers = DBZugriff.instance().getTransfers(0, true, true);
+            this.transfers = DBManager.instance().getTransfers(0, true, true);
         }
 
         final TransferTotals totals = TransferTotals.calculateTotals(transfers);

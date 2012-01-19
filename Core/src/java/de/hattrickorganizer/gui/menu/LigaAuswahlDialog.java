@@ -1,6 +1,8 @@
 // %2333829392:de.hattrickorganizer.gui.menu%
 package de.hattrickorganizer.gui.menu;
 
+import ho.core.db.DBManager;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -15,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -105,7 +106,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
      */
     private Integer[] fillCB() {
         //Alle möglichen LigaIDs holen
-        return de.hattrickorganizer.database.DBZugriff.instance().getAllLigaIDs();
+        return ho.core.db.DBManager.instance().getAllLigaIDs();
     }
 
     /**
@@ -144,7 +145,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
         m_jcbLiga = new JComboBox(fillCB());
         m_jcbLiga.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_LigaDownload_LigaID"));
         m_jcbLiga.setEnabled(false);
-        m_jcbLiga.setSelectedItem(Integer.valueOf(DBZugriff.instance().getLigaID4SaisonID(seasonid)));
+        m_jcbLiga.setSelectedItem(Integer.valueOf(DBManager.instance().getLigaID4SaisonID(seasonid)));
         m_jcbLiga.setEditable(true);
         getContentPane().add(m_jcbLiga);
 

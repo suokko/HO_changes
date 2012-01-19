@@ -1,10 +1,11 @@
 // %233313029:de.hattrickorganizer.model%
 package de.hattrickorganizer.model;
 
+import ho.core.db.DBManager;
+
 import java.sql.ResultSet;
 import java.util.Properties;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**
@@ -107,9 +108,9 @@ public final class Team implements plugins.ITeam {
 	public Team(ResultSet rs) throws Exception {
 		m_iTrainingslevel = rs.getInt("TrainingsIntensitaet");
 		m_iStaminaTrainingPart = rs.getInt("StaminaTrainingPart");
-		m_sTrainingsArt = DBZugriff.deleteEscapeSequences(rs.getString("sTrainingsArt"));
-		m_sStimmung = DBZugriff.deleteEscapeSequences(rs.getString("sStimmung"));
-		m_sSelbstvertrauen = DBZugriff.deleteEscapeSequences(rs.getString("sSelbstvertrauen"));
+		m_sTrainingsArt = DBManager.deleteEscapeSequences(rs.getString("sTrainingsArt"));
+		m_sStimmung = DBManager.deleteEscapeSequences(rs.getString("sStimmung"));
+		m_sSelbstvertrauen = DBManager.deleteEscapeSequences(rs.getString("sSelbstvertrauen"));
 		m_iSelbstvertrauen = rs.getInt("iSelbstvertrauen");
 		m_iStimmungInt = rs.getInt("iStimmung");
 		formationXp433 = rs.getInt("iErfahrung433");

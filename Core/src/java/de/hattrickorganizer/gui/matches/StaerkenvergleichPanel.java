@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.matches;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.db.DBManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +22,6 @@ import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
@@ -447,9 +447,9 @@ class StaerkenvergleichPanel extends ImagePanel {
         }
 
         if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
-            final Vector<IMatchLineupPlayer> heimteam = DBZugriff.instance().getMatchLineupPlayers(info.getMatchID(),
+            final Vector<IMatchLineupPlayer> heimteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
                                                                                info.getHeimID());
-            final Vector<IMatchLineupPlayer> gastteam = DBZugriff.instance().getMatchLineupPlayers(info.getMatchID(),
+            final Vector<IMatchLineupPlayer> gastteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
                                                                                info.getGastID());
 
             float heimSterne = 0;
@@ -569,9 +569,9 @@ class StaerkenvergleichPanel extends ImagePanel {
             }
 
             //Stimmung und Selbstvertrauen
-            final int hrfid = DBZugriff.instance().getHRFID4Date(info.getMatchDateAsTimestamp());
+            final int hrfid = DBManager.instance().getHRFID4Date(info.getMatchDateAsTimestamp());
             
-            final String[] stimmungSelbstvertrauen = DBZugriff.instance().getStimmmungSelbstvertrauen(hrfid);
+            final String[] stimmungSelbstvertrauen = DBManager.instance().getStimmmungSelbstvertrauen(hrfid);
 
             if (info.getHeimID() == teamid) {
                 m_clHeimStimmung.setText(stimmungSelbstvertrauen[0]);

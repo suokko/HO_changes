@@ -1,6 +1,8 @@
 // %2675300316:de.hattrickorganizer.gui.matches%
 package de.hattrickorganizer.gui.matches;
 
+import ho.core.db.DBManager;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +19,6 @@ import javax.swing.JLabel;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
-import de.hattrickorganizer.database.DBZugriff;
 import de.hattrickorganizer.gui.templates.RasenPanel;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;
@@ -128,7 +129,7 @@ public class AufstellungsSternePanel extends RasenPanel {
      * Get match lineup and refresh this SpielerSternePanels.
      */
 	public final void refresh(int matchid, int teamid) {
-		final MatchLineup lineup = DBZugriff.instance().getMatchLineup(matchid);
+		final MatchLineup lineup = DBManager.instance().getMatchLineup(matchid);
 		MatchLineupTeam lineupteam = null;
 
 		if (lineup.getHeimId() == teamid) {
