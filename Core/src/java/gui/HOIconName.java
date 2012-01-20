@@ -23,6 +23,8 @@ public interface HOIconName {
 	public static final String WEATHER_RAIN_NEG = "weather.rain.neg";
 	public static final String WEATHER_SUN_POS 	= "weather.sun.pos";
 	public static final String WEATHER_SUN_NEG 	= "weather.sun.neg";
+	public static final String WEATHER_EFFECT_GOOD 	= "weather.effect.1";
+	public static final String WEATHER_EFFECT_BAD 	= "weather.effect.-1";
 	
 	public static final String REDCARD 			= "redCard";
 	public static final String YELLOWCARD 		= "yellowCard";
@@ -94,7 +96,5 @@ public interface HOIconName {
 	
 	public static final String TRANSFER_IN = "transfer.in";
 	public static final String TRANSFER_OUT = "transfer.out";
-	
-	public static final String STATISTICS = "statistics";
 	
 }

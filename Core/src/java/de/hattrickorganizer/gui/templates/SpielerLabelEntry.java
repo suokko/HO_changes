@@ -334,7 +334,7 @@ public final class SpielerLabelEntry implements TableEntry {
     	if (m_bShowWeatherEffect) {
     		int effect = PlayerHelper.getWeatherEffect(HOMainFrame.getWetter(),player.getSpezialitaet());
     		if(effect != 0){
-    			final ImageIcon wettericon = ThemeManager.getIcon("weatherEffect"+effect);
+    			final ImageIcon wettericon = ThemeManager.getIcon("weather.effect."+effect);
     			m_jlWeatherEffect.setIcon(wettericon);
     		}
         }
