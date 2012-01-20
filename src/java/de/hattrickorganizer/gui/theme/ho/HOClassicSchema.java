@@ -66,8 +66,8 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 		put(WEATHER[1],"gui/bilder/wetter/bewoelkt.gif");
 		put(WEATHER[2],"gui/bilder/wetter/leichtbewoelkt.gif");
 		put(WEATHER[3],"gui/bilder/wetter/sonnig.gif");
-		put("weatherEffect1","gui/bilder/wetter/gut.gif");
-		put("weatherEffect-1","gui/bilder/wetter/schlecht.gif");
+		put(WEATHER_EFFECT_GOOD,"gui/bilder/wetter/gut.gif");
+		put(WEATHER_EFFECT_BAD,"gui/bilder/wetter/schlecht.gif");
 		put(WEATHER_RAIN_POS,"gui/bilder/wetter/se_rain_positive.gif");
 		put(WEATHER_RAIN_NEG,"gui/bilder/wetter/se_rain_negative.gif");
 		put(WEATHER_SUN_POS,"gui/bilder/wetter/se_sun_positive.gif");
@@ -166,8 +166,6 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 		
 		put(TRANSFER_IN,"gui/bilder/in.gif");
 		put(TRANSFER_OUT,"gui/bilder/out.gif");
-		
-		put(STATISTICS,"gui/bilder/gotoStatistik.png");
 		
 	}
 
