@@ -47,14 +47,14 @@ final class MatchHighlightsTable extends AbstractTable {
 			final String[] where = { "MatchID" };
 			final String[] werte = { "" + details.getMatchID()};
 			delete(where, werte);
-			StringBuilder sql = new StringBuilder(100);
+			
 			
 			try {
 				final Vector<IMatchHighlight> vHighlights = details.getHighlights();
 				HOLogger.instance().debug(getClass(),"count of highlights: " + vHighlights.size());
 				for (int i = 0; i < vHighlights.size(); i++) {
 					final MatchHighlight highlight = (MatchHighlight) vHighlights.get(i);
-
+					StringBuilder sql = new StringBuilder(100);
 					//insert vorbereiten
 					sql.append("INSERT INTO ").append(getTableName());
 					sql.append(" ( MatchId, GastTore, HeimTore, Typ, Minute, SpielerId, SpielerName, TeamId, SubTyp, SpielerHeim, GehilfeID, GehilfeName, GehilfeHeim, EventText ) VALUES (");
