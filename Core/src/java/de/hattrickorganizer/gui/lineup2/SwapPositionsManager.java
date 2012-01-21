@@ -3,7 +3,6 @@ package de.hattrickorganizer.gui.lineup2;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.Updateable;
-import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 
 public class SwapPositionsManager {
