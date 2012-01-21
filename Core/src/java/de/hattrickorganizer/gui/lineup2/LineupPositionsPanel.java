@@ -73,6 +73,7 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 	public LineupPositionsPanel(Lineup lineup, LineupSettings lineupSettings) {
 		this.lineup = lineup;
 		this.lineupSettings = lineupSettings;
+		this.swapPositionsManager.setLineup(this.lineup);
 		initComponentes();
 	}
 
