@@ -28,7 +28,6 @@ import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
@@ -52,10 +51,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	// ComboBox for individual orders (offensive, towards middle...)
 	private final JComboBox tacticComboBox = new JComboBox();
 	private final JLabel positionLabel = new JLabel();
-	// Für Minimized
-	private final JLabel m_jlPlayer = new JLabel();
-	private final SpielerCBItem m_clSelectedPlayer = new SpielerCBItem("", 0f, null, true);
-	private Updateable m_clUpdater;
+	private final SpielerCBItem playerCombo = new SpielerCBItem("", 0f, null, true);
+	private Updateable updater;
 	// The ID of the player's position
 	private int positionID = -1;
 	private int playerId = -1;
@@ -64,21 +61,172 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	private JLayeredPane layeredPane = new JLayeredPane();
 	private Lineup lineup;
 
-	protected PlayerPositionPanel(Updateable updater, Lineup lineup, int positionsID) {
+	public PlayerPositionPanel(Updateable updateable, Lineup lineup, int positionsID) {
 		super(false);
 
 		this.lineup = lineup;
-		m_clUpdater = updater;
+		this.updater = updateable;
 		this.positionID = positionsID;
 
 		setOpaque(true);
-
 		initTaktik(null);
 		initLabel();
 		initComponents(true);
 	}
 
-	protected int getPositionsID() {
+	public void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
+		if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
+			ISpieler spieler = getSelectedPlayer();
+
+			// Spieler setzen
+			if (itemEvent.getSource().equals(this.playerComboBox)) {
+				// Standart
+				switch (this.positionID) {
+				case ISpielerPosition.setPieces:
+					int id = (spieler != null) ? spieler.getSpielerID() : 0;
+					this.lineup.setKicker(id);
+					break;
+				case ISpielerPosition.captain:
+					id = (spieler != null) ? spieler.getSpielerID() : 0;
+					this.lineup.setKapitaen(id);
+					break;
+				default:
+					id = (spieler != null) ? spieler.getSpielerID() : 0;
+					this.lineup.setSpielerAtPosition(this.positionID, id);
+				}
+
+				// CBFarben anpassen
+				if (spieler != null) {
+					this.playerComboBox.setForeground(SpielerLabelEntry.getForegroundForSpieler(spieler));
+				}
+
+				// Taktikwerte anpassen
+				setTaktik(getTactic(), spieler);
+			} else if (itemEvent.getSource().equals(this.tacticComboBox)) {
+				this.lineup.getPositionById(this.positionID).setTaktik(getTactic());
+			}
+
+			// Aktualisierung der Tabellen
+			if (spieler != null) {
+				// HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
+			}
+			// Alle anderen Position aktualisieren
+			this.updater.update();
+		}
+	}
+
+	/**
+	 * Erneuert die Daten in den Komponenten
+	 * 
+	 * @param spieler
+	 */
+	public void refresh(Vector<ISpieler> spieler) {
+		Spieler aktuellerSpieler = null;
+		playerId = -1;
+		if (this.positionID == ISpielerPosition.setPieces) {
+			aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(this.lineup.getKicker());
+			if (aktuellerSpieler != null) {
+				playerId = aktuellerSpieler.getSpielerID();
+			}
+			tacticOrder = -1;
+
+			// Filter keeper from the spieler vector (can't be sp taker)
+			// Make sure the incoming spieler list is not modified, it
+			// seems to visit the captain position later.
+			ISpieler keeper = this.lineup.getPlayerByPositionID(ISpielerPosition.keeper);
+			if (keeper != null) {
+				Vector<ISpieler> tmpSpieler = new Vector<ISpieler>(spieler.size() - 1);
+				for (int i = 0; i < spieler.size(); i++) {
+					if (keeper.getSpielerID() != spieler.get(i).getSpielerID()) {
+						tmpSpieler.add(spieler.get(i));
+					}
+				}
+				spieler = tmpSpieler;
+			}
+		} else if (this.positionID == ISpielerPosition.captain) {
+			aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(this.lineup.getKapitaen());
+			if (aktuellerSpieler != null) {
+				playerId = aktuellerSpieler.getSpielerID();
+			}
+			tacticOrder = -1;
+		} else {
+			// Aktuell aufgestellten Spieler holen
+			SpielerPosition position = this.lineup.getPositionById(this.positionID);
+
+			if (position != null) {
+				aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(position.getSpielerId());
+
+				if (aktuellerSpieler != null) {
+					this.playerComboBox.setEnabled(true); // To be sure
+					playerId = aktuellerSpieler.getSpielerID();
+				} else {
+					// We want to disable the player selection box if there is
+					// already 11 players on the field and this is an on field
+					// position.
+					if ((this.lineup.hasFreePosition() == false)
+							&& (this.positionID >= ISpielerPosition.keeper)
+							&& (this.positionID < ISpielerPosition.startReserves)) {
+						this.playerComboBox.setEnabled(false);
+					} else {
+						// And enable empty positions if there is room in the
+						// lineup
+						this.playerComboBox.setEnabled(true);
+					}
+				}
+				tacticOrder = position.getTaktik();
+				setTaktik(position.getTaktik(), aktuellerSpieler);
+			}
+		}
+
+		setSpielerListe(spieler, aktuellerSpieler);
+		initLabel();
+	}
+
+	public int getPlayerId() {
+		return playerId;
+	}
+
+	public int getTacticOrder() {
+		return tacticOrder;
+	}
+
+	public LayoutManager getSwapLayout() {
+		return layout;
+	}
+
+	public void addSwapItem(Component c) {
+		this.layeredPane.add(c, 1);
+	}
+
+	public void addAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = 1.0;
+		constraints.weighty = 1.0;
+		constraints.insets = new Insets(2, 2, 2, 2);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 3;
+		this.layeredPane.add(overlay, constraints, 2);
+		repaint();
+	}
+
+	public void removeAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
+		this.layeredPane.remove(overlay);
+		repaint();
+	}
+
+	/**
+	 * Exposes the player combo box to reset the swap button if needed.
+	 * 
+	 * @return the player {@link JComboBox}.
+	 */
+	JComboBox getPlayerComboBox() {
+		return this.playerComboBox;
+	}
+
+	int getPositionsID() {
 		return this.positionID;
 	}
 
@@ -88,8 +236,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * 
 	 * @return
 	 */
-	private plugins.ISpieler getSelectedPlayer() {
-		final Object obj = this.playerComboBox.getSelectedItem();
+	private ISpieler getSelectedPlayer() {
+		Object obj = this.playerComboBox.getSelectedItem();
 
 		if ((obj != null) && obj instanceof SpielerCBItem) {
 			return ((SpielerCBItem) obj).getSpieler();
@@ -117,7 +265,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * @param aenderbar
 	 */
 	private void initComponents(boolean aenderbar) {
-		final GridBagConstraints constraints = new GridBagConstraints();
+		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.weightx = 1.0;
 		constraints.weighty = 0;
@@ -125,12 +273,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 
 		this.layeredPane.setLayout(layout);
 		// No gaps around the layeredpane.
-		FlowLayout fl = new FlowLayout();
-		fl.setHgap(0);
-		fl.setVgap(0);
-		fl.setAlignment(FlowLayout.CENTER);
-		setLayout(fl);
-
+		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
 		constraints.gridx = 0;
@@ -168,128 +311,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 		}
 		this.layeredPane.setPreferredSize(getPreferredSize());
 		add(this.layeredPane);
-	}
-
-	public void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
-		if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
-			final plugins.ISpieler spieler = getSelectedPlayer();
-
-			// Spieler setzen
-			if (itemEvent.getSource().equals(this.playerComboBox)) {
-				// Standart
-				if (this.positionID == ISpielerPosition.setPieces) {
-					if (spieler != null) {
-						this.lineup.setKicker(spieler.getSpielerID());
-					} else {
-						this.lineup.setKicker(0);
-					}
-				}
-				// Spielführer
-				else if (this.positionID == ISpielerPosition.captain) {
-					if (spieler != null) {
-						this.lineup.setKapitaen(spieler.getSpielerID());
-					} else {
-						this.lineup.setKapitaen(0);
-					}
-				}
-				// Andere
-				else {
-					if (spieler != null) {
-						this.lineup.setSpielerAtPosition(this.positionID, spieler.getSpielerID());
-					} else {
-						this.lineup.setSpielerAtPosition(this.positionID, 0);
-					}
-				}
-
-				// CBFarben anpassen
-				if (spieler != null) {
-					this.playerComboBox.setForeground(SpielerLabelEntry.getForegroundForSpieler(spieler));
-				}
-
-				// Taktikwerte anpassen
-				setTaktik(getTactic(), spieler);
-			} else if (itemEvent.getSource().equals(this.tacticComboBox)) {
-				this.lineup.getPositionById(this.positionID).setTaktik(getTactic());
-			}
-
-			// Aktualisierung der Tabellen
-			if (spieler != null) {
-				// HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
-			}
-			// Alle anderen Position aktualisieren
-			m_clUpdater.update();
-		}
-	}
-
-	/**
-	 * Erneuert die Daten in den Komponenten
-	 * 
-	 * @param spieler
-	 */
-	public void refresh(Vector<ISpieler> spieler) {
-		Spieler aktuellerSpieler = null;
-		playerId = -1;
-		if (this.positionID == ISpielerPosition.setPieces) {
-			aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(this.lineup.getKicker());
-			if (aktuellerSpieler != null) {
-				playerId = aktuellerSpieler.getSpielerID();
-			}
-			tacticOrder = -1;
-
-			// Filter keeper from the spieler vector (can't be sp taker)
-			// Make sure the incoming spieler list is not modified, it
-			// seems to visit the captain position later.
-
-			ISpieler keeper = this.lineup.getPlayerByPositionID(ISpielerPosition.keeper);
-			if (keeper != null) {
-				Vector<ISpieler> tmpSpieler = new Vector<ISpieler>(spieler.size() - 1);
-				for (int i = 0; i < spieler.size(); i++) {
-					if (keeper.getSpielerID() != spieler.get(i).getSpielerID()) {
-						tmpSpieler.add(spieler.get(i));
-					}
-				}
-				spieler = tmpSpieler;
-			}
-		} else if (this.positionID == ISpielerPosition.captain) {
-			aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(this.lineup.getKapitaen());
-			if (aktuellerSpieler != null) {
-				playerId = aktuellerSpieler.getSpielerID();
-			}
-			tacticOrder = -1;
-		} else {
-			// Aktuell aufgestellten Spieler holen
-			final SpielerPosition position = this.lineup.getPositionById(this.positionID);
-
-			if (position != null) {
-				aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(position.getSpielerId());
-
-				if (aktuellerSpieler != null) {
-					this.playerComboBox.setEnabled(true); // To be sure
-					playerId = aktuellerSpieler.getSpielerID();
-				} else {
-					// We want to disable the player selection box if there is
-					// already 11 players on the field and this is an on field
-					// position.
-					if ((this.lineup.hasFreePosition() == false)
-							&& (this.positionID >= ISpielerPosition.keeper)
-							&& (this.positionID < ISpielerPosition.startReserves)) {
-						this.playerComboBox.setEnabled(false);
-					} else {
-						// And enable empty positions if there is room in the
-						// lineup
-						this.playerComboBox.setEnabled(true);
-					}
-				}
-				tacticOrder = position.getTaktik();
-				setTaktik(position.getTaktik(), aktuellerSpieler);
-			}
-		}
-
-		setSpielerListe(spieler, aktuellerSpieler);
-
-		initLabel();
-
-		repaint();
 	}
 
 	/**
@@ -341,17 +362,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 		// Listener wieder hinzu
 		this.playerComboBox.addItemListener(this);
 
-		// Minimized
-		if ((m_clSelectedPlayer != null) && (m_clSelectedPlayer.getSpieler() != null)) {
-			m_jlPlayer.setText(m_clSelectedPlayer.getSpieler().getName());
-			m_jlPlayer.setIcon(ImageUtilities.getImage4Position(
-					this.lineup.getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
-					m_clSelectedPlayer.getSpieler().getTrikotnummer()));
-		} else {
-			m_jlPlayer.setText("");
-			m_jlPlayer.setIcon(null);
-		}
-
 		if (aktuellerSpieler != null) {
 			setTaktik(getTactic(), aktuellerSpieler);
 		}
@@ -363,16 +373,13 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * @param taktik
 	 * @param aktuellerSpieler
 	 */
-	private void setTaktik(byte taktik, plugins.ISpieler aktuellerSpieler) {
+	private void setTaktik(byte taktik, ISpieler aktuellerSpieler) {
 		// Listener entfernen
 		this.tacticComboBox.removeItemListener(this);
-
 		// Taktik neu füllen!
 		initTaktik(aktuellerSpieler);
-
 		// Suche nach der Taktik
 		Helper.markierenComboBox(this.tacticComboBox, taktik);
-
 		// Listener hinzu
 		this.tacticComboBox.addItemListener(this);
 	}
@@ -381,18 +388,14 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * Setzt das Label
 	 */
 	private void initLabel() {
-
 		if (this.positionID == ISpielerPosition.setPieces) {
 			this.positionLabel.setText(getLanguageString("Standards"));
 		} else if (this.positionID == ISpielerPosition.captain) {
 			this.positionLabel.setText(getLanguageString("Spielfuehrer"));
 		} else {
-			final SpielerPosition position = this.lineup.getPositionById(this.positionID);
-
+			SpielerPosition position = this.lineup.getPositionById(this.positionID);
 			if (position != null) {
 				// Reserve
-				final String nameForPosition = SpielerPosition.getNameForPosition(position.getPosition());
-
 				if ((this.tacticComboBox.getItemCount() == 1)
 						&& (position.getId() != ISpielerPosition.keeper)) {
 					// special naming for reserve defender
@@ -400,23 +403,13 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 						this.positionLabel.setText(getLanguageString("Reserve") + " "
 								+ getLanguageString("defender"));
 					} else {
-						this.positionLabel.setText(getLanguageString("Reserve") + " " + nameForPosition);
+						this.positionLabel.setText(getLanguageString("Reserve") + " "
+								+ position.getPositionName());
 					}
 				} else {
-					this.positionLabel.setText(nameForPosition);
+					this.positionLabel.setText(position.getPositionName());
 				}
 			}
-		}
-
-		// Minimized
-		if ((m_clSelectedPlayer != null) && (m_clSelectedPlayer.getSpieler() != null)) {
-			m_jlPlayer.setText(m_clSelectedPlayer.getSpieler().getName());
-			m_jlPlayer.setIcon(ImageUtilities.getImage4Position(
-					this.lineup.getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
-					m_clSelectedPlayer.getSpieler().getTrikotnummer()));
-		} else {
-			m_jlPlayer.setText("");
-			m_jlPlayer.setIcon(null);
 		}
 	}
 
@@ -425,7 +418,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * 
 	 * @param aktuellerSpieler
 	 */
-	private void initTaktik(plugins.ISpieler aktuellerSpieler) {
+	private void initTaktik(ISpieler aktuellerSpieler) {
 		this.tacticComboBox.removeAllItems();
 
 		switch (this.positionID) {
@@ -433,69 +426,60 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 			this.tacticComboBox.addItem(new CBItem(getLanguageString("Normal"), ISpielerPosition.NORMAL));
 			break;
 		}
-
 		case ISpielerPosition.rightBack:
 		case ISpielerPosition.leftBack: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Offensiv"), ISpielerPosition.OFFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("Defensiv"), ISpielerPosition.DEFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("zurMitte"), ISpielerPosition.TOWARDS_MIDDLE);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.OFFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.DEFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.TOWARDS_MIDDLE);
 			break;
 		}
-
 		case ISpielerPosition.rightCentralDefender:
 		case ISpielerPosition.leftCentralDefender: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Offensiv"), ISpielerPosition.OFFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("nachAussen"), ISpielerPosition.TOWARDS_WING);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.OFFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.TOWARDS_WING);
 			break;
 		}
-
 		case ISpielerPosition.middleCentralDefender: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Offensiv"), ISpielerPosition.OFFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.OFFENSIVE);
 			break;
 		}
-
 		case ISpielerPosition.rightInnerMidfield:
 		case ISpielerPosition.leftInnerMidfield: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Offensiv"), ISpielerPosition.OFFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("Defensiv"), ISpielerPosition.DEFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("nachAussen"), ISpielerPosition.TOWARDS_WING);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.OFFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.DEFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.TOWARDS_WING);
 			break;
 		}
-
 		case ISpielerPosition.centralInnerMidfield: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Offensiv"), ISpielerPosition.OFFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("Defensiv"), ISpielerPosition.DEFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.OFFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.DEFENSIVE);
 			break;
 		}
-
 		case ISpielerPosition.leftWinger:
 		case ISpielerPosition.rightWinger: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Offensiv"), ISpielerPosition.OFFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("Defensiv"), ISpielerPosition.DEFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("zurMitte"), ISpielerPosition.TOWARDS_MIDDLE);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.OFFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.DEFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.TOWARDS_MIDDLE);
 			break;
 		}
-
 		case ISpielerPosition.rightForward:
 		case ISpielerPosition.leftForward: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Defensiv"), ISpielerPosition.DEFENSIVE);
-			addTactic(aktuellerSpieler, getLanguageString("nachAussen"), ISpielerPosition.TOWARDS_WING);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.DEFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.TOWARDS_WING);
 			break;
 		}
-
 		case ISpielerPosition.centralForward: {
-			addTactic(aktuellerSpieler, getLanguageString("Normal"), ISpielerPosition.NORMAL);
-			addTactic(aktuellerSpieler, getLanguageString("Defensiv"), ISpielerPosition.DEFENSIVE);
+			addTactic(aktuellerSpieler, ISpielerPosition.NORMAL);
+			addTactic(aktuellerSpieler, ISpielerPosition.DEFENSIVE);
 			break;
 		}
-
 		case ISpielerPosition.substDefender:
 		case ISpielerPosition.substForward:
 		case ISpielerPosition.substInnerMidfield:
@@ -504,26 +488,36 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 			this.tacticComboBox.addItem(new CBItem(getLanguageString("Normal"), ISpielerPosition.NORMAL));
 			break;
 		}
-
 		default:
 			this.tacticComboBox.addItem(new CBItem(getLanguageString("Normal"), ISpielerPosition.NORMAL));
 		}
 	}
 
-	private void addTactic(ISpieler player, String text, byte playerPosition) {
+	private void addTactic(ISpieler player, byte playerPosition) {
+		String text = null;
+		switch (playerPosition) {
+		case ISpielerPosition.OFFENSIVE:
+			text = getLanguageString("Offensiv");
+			break;
+		case ISpielerPosition.DEFENSIVE:
+			text = getLanguageString("Defensiv");
+			break;
+		case ISpielerPosition.TOWARDS_MIDDLE:
+			text = getLanguageString("zurMitte");
+			break;
+		default:
+			text = getLanguageString("Normal");
+		}
 		if (player != null) {
-			text += " ("
-					+ player.calcPosValue(SpielerPosition.getPosition(this.positionID, playerPosition), true)
-					+ ")";
+			byte position = SpielerPosition.getPosition(this.positionID, playerPosition);
+			text += " (" + player.calcPosValue(position, true) + ")";
 		}
 		this.tacticComboBox.addItem(new CBItem(text, playerPosition));
 	}
 
 	private SpielerCBItem createSpielerCBItem(Spieler spieler) {
 		SpielerCBItem item = new SpielerCBItem("", 0f, null, true);
-		// Create a string with just initial as first name
-		String spielerName = spieler.getName().substring(0, 1) + "."
-				+ spieler.getName().substring(spieler.getName().indexOf(" ") + 1);
+		String spielerName = getShortPlayerName(spieler);
 
 		if (this.positionID == ISpielerPosition.setPieces) {
 			item.setValues(spielerName,
@@ -545,48 +539,15 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 		return item;
 	}
 
-	public int getPlayerId() {
-		return playerId;
-	}
-
-	public int getTacticOrder() {
-		return tacticOrder;
-	}
-
 	/**
-	 * Exposes the player combo box to reset the swap button if needed.
+	 * Returns a string with just initial as first name
 	 * 
-	 * @return the player {@link JComboBox}.
+	 * @param spieler
+	 * @return
 	 */
-	protected JComboBox getPlayerComboBox() {
-		return this.playerComboBox;
-	}
-
-	public LayoutManager getSwapLayout() {
-		return layout;
-	}
-
-	public void addSwapItem(Component c) {
-		this.layeredPane.add(c, 1);
-	}
-
-	public void addAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = GridBagConstraints.BOTH;
-		constraints.weightx = 1.0;
-		constraints.weighty = 1.0;
-		constraints.insets = new Insets(2, 2, 2, 2);
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.gridwidth = 2;
-		constraints.gridheight = 3;
-		this.layeredPane.add(overlay, constraints, 2);
-		repaint();
-	}
-
-	public void removeAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
-		this.layeredPane.remove(overlay);
-		repaint();
+	private String getShortPlayerName(Spieler spieler) {
+		String fullName = spieler.getName();
+		return fullName.substring(0, 1) + "." + fullName.substring(fullName.indexOf(" ") + 1);
 	}
 
 	private String getLanguageString(String key) {
