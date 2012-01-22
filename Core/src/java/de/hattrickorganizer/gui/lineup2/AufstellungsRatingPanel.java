@@ -6,31 +6,20 @@
  */
 package de.hattrickorganizer.gui.lineup2;
 
-import gui.HOIconName;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 /**
  * Zeigt das Rating für eine Aufstellung an
@@ -49,101 +38,38 @@ final class AufstellungsRatingPanel extends JPanel {
 	private double topCenterValue;
 	private double topLeftValue;
 	private double topRightValue;
-	private ColorLabelEntry m_clBottomCenterCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clBottomCenterMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
-	private ColorLabelEntry m_clBottomLeftCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clBottomLeftMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
-	private ColorLabelEntry m_clBottomRightCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clBottomRightMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
-	private ColorLabelEntry m_clMiddleCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clMiddleMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
-	private ColorLabelEntry m_clTopCenterCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clTopCenterMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
-	private ColorLabelEntry m_clTopLeftCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clTopLeftMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
-	private ColorLabelEntry m_clTopRightCompare = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.CENTER);
-	private ColorLabelEntry m_clTopRightMain = new ColorLabelEntry("", Color.BLACK, Color.WHITE,
-			SwingConstants.RIGHT);
 	private Dimension GROESSE = new Dimension(Helper.calcCellWidth(80), Helper.calcCellWidth(25));
-	private JLabel bottomCenterLabel = new JLabel("", SwingConstants.LEFT);
-	private JLabel bottomLeftLabel = new JLabel("", SwingConstants.LEFT);
-	private JLabel bottomRightLabel = new JLabel("", SwingConstants.LEFT);
-	private JLabel midFieldLabel = new JLabel("", SwingConstants.LEFT);
-	private JLabel topCenterLabel = new JLabel("", SwingConstants.LEFT);
-	private JLabel topLeftLabel = new JLabel("", SwingConstants.LEFT);
-	private JLabel topRightLabel = new JLabel("", SwingConstants.LEFT);
-	private JPanel m_clBottomCenterPanel = new JPanel(new BorderLayout());
-	private JPanel m_clBottomLeftPanel = new JPanel(new BorderLayout());
-	private JPanel m_clBottomRightPanel = new JPanel(new BorderLayout());
-	private JPanel m_clMiddlePanel = new JPanel(new BorderLayout());
-	private JPanel m_clTopCenterPanel = new JPanel(new BorderLayout());
-	private JPanel m_clTopLeftPanel = new JPanel(new BorderLayout());
-	private JPanel m_clTopRightPanel = new JPanel(new BorderLayout());
-	private NumberFormat m_clFormat;
-	private boolean m_bReihenfolge = REIHENFOLGE_STURM2VERTEIDIGUNG;
+	private RatingPanel bottomCenterPanel;
+	private RatingPanel bottomLeftPanel;
+	private RatingPanel bottomRightPanel;
+	private RatingPanel middlePanel;
+	private RatingPanel topCenterPanel;
+	private RatingPanel topLeftPanel;
+	private RatingPanel topRightPanel;
+	private NumberFormat numberFormat;
+	private boolean reihenfolge = REIHENFOLGE_STURM2VERTEIDIGUNG;
 	private final JButton copyButton = new JButton();
 	private Lineup lineup;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
 
 	/**
 	 * Creates a new instance of AufstellungsRatingPanel
 	 */
-	protected AufstellungsRatingPanel(Lineup lineup) {
+	public AufstellungsRatingPanel(Lineup lineup) {
 		this.lineup = lineup;
 		initComponents();
 
 		if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-			m_clFormat = Helper.DEFAULTDEZIMALFORMAT;
+			numberFormat = Helper.DEFAULTDEZIMALFORMAT;
 		} else {
-			m_clFormat = Helper.DEZIMALFORMAT_2STELLEN;
+			numberFormat = Helper.DEZIMALFORMAT_2STELLEN;
 		}
-
 		refresh();
 	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/**
 	 * Clear all fields.
 	 */
 	public void clear() {
-		topLeftLabel.setText("");
-		m_clTopLeftMain.clear();
-		m_clTopLeftCompare.clear();
-		topCenterLabel.setText("");
-		m_clTopCenterMain.clear();
-		m_clTopCenterCompare.clear();
-		topRightLabel.setText("");
-		m_clTopRightMain.clear();
-		m_clTopRightCompare.clear();
-		midFieldLabel.setText("");
-		m_clMiddleMain.clear();
-		m_clMiddleCompare.clear();
-		bottomLeftLabel.setText("");
-		m_clBottomLeftMain.clear();
-		m_clBottomLeftCompare.clear();
-		bottomCenterLabel.setText("");
-		m_clBottomCenterMain.clear();
-		m_clBottomCenterCompare.clear();
-		bottomRightLabel.setText("");
-		m_clBottomRightMain.clear();
-		m_clBottomRightCompare.clear();
 	}
 
 	public void refresh() {
@@ -159,64 +85,87 @@ final class AufstellungsRatingPanel extends JPanel {
 		calcColorBorders();
 	}
 
-	private String getNameForSkill(double skill) {
-		return PlayerHelper.getNameForSkill(this.lineup.getIntValue4Rating(skill), false, true);
+	String getCentralDefenseRating() {
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			return numberFormat.format(topCenterValue);
+		} else {
+			return numberFormat.format(bottomCenterValue);
+		}
+	}
+
+	String getRightDefenseRating() {
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			return numberFormat.format(topLeftValue);
+		} else {
+			return numberFormat.format(bottomRightValue);
+		}
+	}
+
+	String getLeftAttackRating() {
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			return numberFormat.format(bottomRightValue);
+		} else {
+			return numberFormat.format(topLeftValue);
+		}
+	}
+
+	String getCentralAttackRating() {
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			return numberFormat.format(bottomCenterValue);
+		} else {
+			return numberFormat.format(topCenterValue);
+		}
+	}
+
+	String getRightAttackRating() {
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			return numberFormat.format(bottomLeftValue);
+		} else {
+			return numberFormat.format(topRightValue);
+		}
 	}
 
 	private void setBottomCenter(double value) {
-		this.bottomCenterLabel.setText(getNameForSkill(value));
-		m_clBottomCenterMain.setText(m_clFormat.format(value));
-		m_clBottomCenterCompare.setSpezialNumber((float) (value - bottomCenterValue), false);
-		bottomCenterValue = value;
+		this.bottomCenterPanel.setRating(value);
+		this.bottomCenterValue = value;
 	}
 
 	private void setBottomLeft(double value) {
-		this.bottomLeftLabel.setText(getNameForSkill(value));
-		m_clBottomLeftMain.setText(m_clFormat.format(value));
-		m_clBottomLeftCompare.setSpezialNumber((float) (value - bottomLeftValue), false);
-		bottomLeftValue = value;
+		this.bottomLeftPanel.setRating(value);
+		this.bottomLeftValue = value;
 	}
 
 	private void setBottomRight(double value) {
-		this.bottomRightLabel.setText(getNameForSkill(value));
-		m_clBottomRightMain.setText(m_clFormat.format(value));
-		m_clBottomRightCompare.setSpezialNumber((float) (value - bottomRightValue), false);
-		bottomRightValue = value;
+		this.bottomRightPanel.setRating(value);
+		this.bottomRightValue = value;
 	}
 
 	private void setMiddle(double value) {
-		this.midFieldLabel.setText(getNameForSkill(value));
-		m_clMiddleMain.setText(m_clFormat.format(value));
-		m_clMiddleCompare.setSpezialNumber((float) (value - middleValue), false);
-		middleValue = value;
+		this.middlePanel.setRating(value);
+		this.middleValue = value;
 	}
 
 	private void setTopCenter(double value) {
-		this.topCenterLabel.setText(getNameForSkill(value));
-		m_clTopCenterMain.setText(m_clFormat.format(value));
-		m_clTopCenterCompare.setSpezialNumber((float) (value - topCenterValue), false);
-		topCenterValue = value;
+		this.topCenterPanel.setRating(value);
+		this.topCenterValue = value;
 	}
 
 	private void setTopLeft(double value) {
-		this.topLeftLabel.setText(getNameForSkill(value));
-		m_clTopLeftMain.setText(m_clFormat.format(value));
-		m_clTopLeftCompare.setSpezialNumber((float) (value - topLeftValue), false);
-		topLeftValue = value;
+		this.topLeftPanel.setRating(value);
+		this.topLeftValue = value;
 	}
 
 	private void setTopRight(double value) {
-		this.topRightLabel.setText(getNameForSkill(value));
-		m_clTopRightMain.setText(m_clFormat.format(value));
-		m_clTopRightCompare.setSpezialNumber((float) (value - topRightValue), false);
-		topRightValue = value;
+		this.topRightPanel.setRating(value);
+		this.topRightValue = value;
 	}
 
-	protected void calcColorBorders() {
+	private void calcColorBorders() {
 		final int faktor = 60;
 		double temp = 0d;
 		Color tempcolor = null;
-		final double durchschnitt = (topLeftValue + topCenterValue + topRightValue + middleValue + bottomLeftValue + bottomCenterValue + bottomRightValue) / 7d;
+		final double durchschnitt = (topLeftValue + topCenterValue + topRightValue + middleValue
+				+ bottomLeftValue + bottomCenterValue + bottomRightValue) / 7d;
 
 		// Topleft
 		temp = topLeftValue - durchschnitt;
@@ -225,8 +174,8 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clTopLeftPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
-		
+		topLeftPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+
 		// Topcenter
 		temp = topCenterValue - durchschnitt;
 		if (temp < 0) {
@@ -234,7 +183,7 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clTopCenterPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+		topCenterPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
 
 		// TopRight
 		temp = topRightValue - durchschnitt;
@@ -243,7 +192,7 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clTopRightPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+		topRightPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
 
 		// Middel
 		temp = middleValue - durchschnitt;
@@ -252,7 +201,7 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clMiddlePanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+		middlePanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
 
 		// Bottomleft
 		temp = bottomLeftValue - durchschnitt;
@@ -261,7 +210,7 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clBottomLeftPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+		bottomLeftPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
 
 		// BottomCenter
 		temp = bottomCenterValue - durchschnitt;
@@ -270,7 +219,7 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clBottomCenterPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+		bottomCenterPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
 
 		// Bottomricht
 		temp = bottomRightValue - durchschnitt;
@@ -279,528 +228,165 @@ final class AufstellungsRatingPanel extends JPanel {
 		} else {
 			tempcolor = new Color(0, Math.min(255, (int) (temp * faktor)), 0);
 		}
-		m_clBottomRightPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
+		bottomRightPanel.setBorder(BorderFactory.createLineBorder(tempcolor, 2));
 	}
 
-	/**
-	 * Initialize GUI components.
-	 */
 	private void initComponents() {
-		final GridBagLayout layout = new GridBagLayout();
-		final GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.weightx = 1.0;
-		constraints.weighty = 0.0;
-		constraints.insets = new Insets(1, 1, 1, 1);
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(2, 2, 2, 2);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
 
-//		setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
-		setLayout(layout);
+		// ========== ROW 1 ==========
+		JPanel row1 = new JPanel(new GridBagLayout());		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		add(row1, gbc);
 
-		JComponent tempcomponent;
-		JPanel temppanel;
-		JPanel mainpanel;
-		JPanel innerpanel;
-		JPanel subpanel;
+		GridBagConstraints row1gbc = new GridBagConstraints();
+		Insets rowInsets = new Insets(0, 2, 0, 2);
+		row1gbc.insets = rowInsets;
+		row1gbc.fill = GridBagConstraints.HORIZONTAL;
+		row1gbc.anchor = GridBagConstraints.CENTER;
+		// dummy panel to consume 1/4 of the space on the left
+		row1gbc.gridx = 0;
+		row1gbc.gridy = 0;
+		row1gbc.weightx = 0.25;
+		row1.add(new JPanel(), row1gbc);
+		// visible panel in the middle of the row
+		this.topCenterPanel = new RatingPanel();
+		this.topCenterPanel.setPreferredSize(GROESSE);
+		row1gbc.gridx = 1;
+		row1gbc.gridy = 0;
+		row1gbc.weightx = 0.5;
+		row1.add(this.topCenterPanel, row1gbc);
+		// dummy panel to consume 1/4 of the space on the right
+		row1gbc.gridx = 2;
+		row1gbc.gridy = 0;
+		row1gbc.weightx = 0.25;
+		row1.add(new JPanel(), row1gbc);
 
-		GridBagLayout sublayout = new GridBagLayout();
-		GridBagConstraints subconstraints = new GridBagConstraints();
-		subconstraints.anchor = GridBagConstraints.CENTER;
-		subconstraints.fill = GridBagConstraints.HORIZONTAL;
-		subconstraints.weightx = 1.0;
-		subconstraints.weighty = 0.0;
-		subconstraints.insets = new Insets(1, 1, 1, 1);
-		subpanel = new JPanel(sublayout);
-		subpanel.setOpaque(false);
+		// ========== ROW 2 ==========
+		JPanel row2 = new JPanel(new GridBagLayout());
+		gbc.gridy = 1;
+		add(row2, gbc);
 
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		subconstraints.gridx = 1;
-		subconstraints.gridy = 1;
-		subconstraints.gridwidth = 1;
+		GridBagConstraints row2gbc = new GridBagConstraints();
+		row2gbc.insets = rowInsets;
+		row2gbc.fill = GridBagConstraints.HORIZONTAL;
+		row2gbc.anchor = GridBagConstraints.CENTER;
+		row2gbc.weightx = 0.5;
+		// left panel
+		this.topLeftPanel = new RatingPanel();
+		this.topLeftPanel.setPreferredSize(GROESSE);
+		row2gbc.gridx = 0;
+		row2.add(this.topLeftPanel, row2gbc);
+		// right panel
+		this.topRightPanel = new RatingPanel();
+		this.topRightPanel.setPreferredSize(GROESSE);
+		row2gbc.gridx = 1;
+		row2.add(this.topRightPanel, row2gbc);
 
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
+		// ========== ROW 3 ==========
+		JPanel row3 = new JPanel(new GridBagLayout());
+		gbc.gridy = 2;
+		add(row3, gbc);
 
-		// Top Center
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clTopCenterMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clTopCenterMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clTopCenterCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
+		GridBagConstraints row3gbc = new GridBagConstraints();
+		row3gbc.insets = rowInsets;
+		row3gbc.fill = GridBagConstraints.HORIZONTAL;
+		row3gbc.anchor = GridBagConstraints.CENTER;
+		// dummy panel to consume 1/4 of the space on the left
+		row3gbc.gridx = 0;
+		row3gbc.gridy = 0;
+		row3gbc.weightx = 0.25;
+		row3.add(new JPanel(), row3gbc);
+		// visible panel in the middle of the row
+		this.middlePanel = new RatingPanel();
+		this.middlePanel.setPreferredSize(GROESSE);
+		row3gbc.gridx = 1;
+		row3gbc.gridy = 0;
+		row3gbc.weightx = 0.5;
+		row3.add(this.middlePanel, row3gbc);
+		// dummy panel to consume 1/4 of the space on the right
+		row3gbc.gridx = 2;
+		row3gbc.gridy = 0;
+		row3gbc.weightx = 0.25;
+		row3.add(new JPanel(), row3gbc);
 
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(topCenterLabel);
-		innerpanel.add(temppanel);
+		// ========== ROW 4 ==========
+		JPanel row4 = new JPanel(new GridBagLayout());
+		gbc.gridy = 3;
+		add(row4, gbc);
 
-		m_clTopCenterPanel.setBackground(Color.WHITE);
-		topCenterLabel
-				.setFont(topCenterLabel.getFont().deriveFont(topCenterLabel.getFont().getSize2D() - 1f));
-		topCenterLabel.setOpaque(true);
-		m_clTopCenterPanel.add(innerpanel, BorderLayout.CENTER);
-		m_clTopCenterPanel.setPreferredSize(GROESSE);
+		GridBagConstraints row4gbc = new GridBagConstraints();
+		row4gbc.insets = rowInsets;
+		row4gbc.fill = GridBagConstraints.HORIZONTAL;
+		row4gbc.anchor = GridBagConstraints.CENTER;
+		row4gbc.weightx = 0.5;
+		// left panel
+		this.bottomLeftPanel = new RatingPanel();
+		this.bottomLeftPanel.setPreferredSize(GROESSE);
+		row4gbc.gridx = 0;
+		row4.add(this.bottomLeftPanel, row4gbc);
+		// right panel
+		this.bottomRightPanel = new RatingPanel();
+		this.bottomRightPanel.setPreferredSize(GROESSE);
+		row4gbc.gridx = 1;
+		row4.add(this.bottomRightPanel, row4gbc);
 
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clTopCenterPanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 2;
-		subconstraints.gridy = 1;
-		subconstraints.gridwidth = 3;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
+		// ========== ROW 5 ==========
+		JPanel row5 = new JPanel(new GridBagLayout());
+		gbc.gridy = 4;
+		add(row5, gbc);
 
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		subconstraints.gridx = 5;
-		subconstraints.gridy = 1;
-		subconstraints.gridwidth = 1;
+		GridBagConstraints row5gbc = new GridBagConstraints();
+		row5gbc.insets = rowInsets;
+		row5gbc.fill = GridBagConstraints.HORIZONTAL;
+		row5gbc.anchor = GridBagConstraints.CENTER;
+		// dummy panel to consume 1/4 of the space on the left
+		row5gbc.gridx = 0;
+		row5gbc.gridy = 0;
+		row5gbc.weightx = 0.25;
+		row5.add(new JPanel(), row5gbc);
+		// visible panel in the middle of the row
+		this.bottomCenterPanel = new RatingPanel();
+		this.bottomCenterPanel.setPreferredSize(GROESSE);
+		row5gbc.gridx = 1;
+		row5gbc.gridy = 0;
+		row5gbc.weightx = 0.5;
+		row5.add(this.bottomCenterPanel, row5gbc);
+		// dummy panel to consume 1/4 of the space on the right
+		row5gbc.gridx = 2;
+		row5gbc.gridy = 0;
+		row5gbc.weightx = 0.25;
+		row5.add(new JPanel(), row5gbc);
 
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
-
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		layout.setConstraints(subpanel, constraints);
-		add(subpanel);
-
-		// //////////////////////////////////////////////////////////////////////
-		sublayout = new GridBagLayout();
-		subconstraints = new GridBagConstraints();
-		subconstraints.anchor = GridBagConstraints.CENTER;
-		subconstraints.fill = GridBagConstraints.HORIZONTAL;
-		subconstraints.weightx = 1.0;
-		subconstraints.weighty = 0.0;
-		subconstraints.insets = new Insets(1, 1, 1, 1);
-		subpanel = new JPanel(sublayout);
-		subpanel.setOpaque(false);
-
-		// Top Left
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clTopLeftMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clTopLeftMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clTopLeftCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(topLeftLabel);
-		innerpanel.add(temppanel);
-
-		m_clTopLeftPanel.setBackground(Color.WHITE);
-		topLeftLabel.setFont(topLeftLabel.getFont().deriveFont(topLeftLabel.getFont().getSize2D() - 1f));
-		topLeftLabel.setOpaque(true);
-		m_clTopLeftPanel.add(innerpanel, BorderLayout.CENTER);
-		m_clTopLeftPanel.setPreferredSize(GROESSE);
-
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clTopLeftPanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 1;
-		subconstraints.gridy = 2;
-		subconstraints.gridwidth = 2;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
-
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		subconstraints.gridx = 3;
-		subconstraints.gridy = 2;
-		subconstraints.gridwidth = 1;
-		subconstraints.weightx = 0.0;
-
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
-
-		// Top Right
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clTopRightMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clTopRightMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clTopRightCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(topRightLabel);
-		innerpanel.add(temppanel);
-
-		m_clTopRightPanel.setBackground(Color.WHITE);
-		topRightLabel.setFont(topRightLabel.getFont().deriveFont(topRightLabel.getFont().getSize2D() - 1f));
-		topRightLabel.setOpaque(true);
-		m_clTopRightPanel.add(innerpanel, BorderLayout.CENTER);
-		m_clTopRightPanel.setPreferredSize(GROESSE);
-
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clTopRightPanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 4;
-		subconstraints.gridy = 2;
-		subconstraints.gridwidth = 2;
-		subconstraints.weightx = 1.0;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
-
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		layout.setConstraints(subpanel, constraints);
-		add(subpanel);
-
-		// //////////////////////////////////////////////////////////////////////
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		constraints.gridx = 0;
-		constraints.gridy = 2;
-		constraints.weightx = 0.0;
-
-		layout.setConstraints(tempcomponent, constraints);
-		add(tempcomponent);
-
-		// //////////////////////////////////////////////////////////////////////
-		sublayout = new GridBagLayout();
-		subconstraints = new GridBagConstraints();
-		subconstraints.anchor = GridBagConstraints.CENTER;
-		subconstraints.fill = GridBagConstraints.HORIZONTAL;
-		subconstraints.weightx = 1.0;
-		subconstraints.weighty = 0.0;
-		subconstraints.insets = new Insets(1, 1, 1, 1);
-		subpanel = new JPanel(sublayout);
-		subpanel.setOpaque(false);
-
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		subconstraints.gridx = 1;
-		subconstraints.gridy = 4;
-		subconstraints.gridwidth = 1;
-
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
-
-		// Middle
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clMiddleMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clMiddleMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clMiddleCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(midFieldLabel);
-		innerpanel.add(temppanel);
-
-		m_clMiddlePanel.setBackground(Color.WHITE);
-		midFieldLabel.setFont(midFieldLabel.getFont().deriveFont(midFieldLabel.getFont().getSize2D() - 1f));
-		midFieldLabel.setOpaque(true);
-		m_clMiddlePanel.add(innerpanel, BorderLayout.CENTER);
-		m_clMiddlePanel.setPreferredSize(GROESSE);
-
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clMiddlePanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 2;
-		subconstraints.gridy = 4;
-		subconstraints.gridwidth = 3;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
-
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		subconstraints.gridx = 5;
-		subconstraints.gridy = 4;
-		subconstraints.gridwidth = 1;
-
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
-
-		constraints.gridx = 0;
-		constraints.gridy = 3;
-		layout.setConstraints(subpanel, constraints);
-		add(subpanel);
-
-		// //////////////////////////////////////////////////////////////////////
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		constraints.gridx = 0;
-		constraints.gridy = 4;
-		constraints.weightx = 0.0;
-
-		layout.setConstraints(tempcomponent, constraints);
-		add(tempcomponent);
-
-		// //////////////////////////////////////////////////////////////////////
-		sublayout = new GridBagLayout();
-		subconstraints = new GridBagConstraints();
-		subconstraints.anchor = GridBagConstraints.CENTER;
-		subconstraints.fill = GridBagConstraints.HORIZONTAL;
-		subconstraints.weightx = 1.0;
-		subconstraints.weighty = 0.0;
-		subconstraints.insets = new Insets(1, 1, 1, 1);
-		subpanel = new JPanel(sublayout);
-		subpanel.setOpaque(false);
-
-		// Bottom Left
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clBottomLeftMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clBottomLeftMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clBottomLeftCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(bottomLeftLabel);
-		innerpanel.add(temppanel);
-
-		m_clBottomLeftPanel.setBackground(Color.WHITE);
-		bottomLeftLabel.setFont(bottomLeftLabel.getFont().deriveFont(bottomLeftLabel.getFont().getSize2D() - 1f));
-		bottomLeftLabel.setOpaque(true);
-		m_clBottomLeftPanel.add(innerpanel, BorderLayout.CENTER);
-		m_clBottomLeftPanel.setPreferredSize(GROESSE);
-
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clBottomLeftPanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 1;
-		subconstraints.gridy = 6;
-		subconstraints.gridwidth = 2;
-		subconstraints.weightx = 1.0;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
-
-		// Platzhalter
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), Helper.calcCellWidth(2)));
-		subconstraints.gridx = 3;
-		subconstraints.gridy = 6;
-		subconstraints.gridwidth = 1;
-		subconstraints.weightx = 0.0;
-
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
-
-		// Bottom Right
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clBottomRightMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clBottomRightMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clBottomRightCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(bottomRightLabel);
-		innerpanel.add(temppanel);
-
-		m_clBottomRightPanel.setBackground(Color.WHITE);
-		bottomRightLabel.setFont(bottomRightLabel.getFont().deriveFont(bottomRightLabel.getFont().getSize2D() - 1f));
-		bottomRightLabel.setOpaque(true);
-		m_clBottomRightPanel.add(innerpanel, BorderLayout.CENTER);
-		m_clBottomRightPanel.setPreferredSize(GROESSE);
-
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clBottomRightPanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 4;
-		subconstraints.gridy = 6;
-		subconstraints.gridwidth = 2;
-		subconstraints.weightx = 1.0;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
-
-		constraints.gridx = 0;
-		constraints.gridy = 5;
-		layout.setConstraints(subpanel, constraints);
-		add(subpanel);
-
-		// //////////////////////////////////////////////////////////////////////
-		sublayout = new GridBagLayout();
-		subconstraints = new GridBagConstraints();
-		subconstraints.anchor = GridBagConstraints.CENTER;
-		subconstraints.fill = GridBagConstraints.HORIZONTAL;
-		subconstraints.weightx = 1.0;
-		subconstraints.weighty = 0.0;
-		subconstraints.insets = new Insets(1, 1, 1, 1);
-		subpanel = new JPanel(sublayout);
-		subpanel.setOpaque(false);
-
-		// left bottom spacer
-		tempcomponent = new JLabel();
-		tempcomponent.setFont(tempcomponent.getFont().deriveFont(tempcomponent.getFont().getSize2D() - 2f));
-		tempcomponent.setPreferredSize(new Dimension(Helper.calcCellWidth(10), 1));
-		subconstraints.gridx = 1;
-		subconstraints.gridy = 7;
-		subconstraints.gridwidth = 1;
-
-		sublayout.setConstraints(tempcomponent, subconstraints);
-		subpanel.add(tempcomponent);
-
-		// Bottom Center
-		temppanel = new JPanel(new GridLayout(1, 2));
-		temppanel.setOpaque(true);
-		m_clBottomCenterMain.setFontStyle(Font.BOLD);
-		tempcomponent = m_clBottomCenterMain.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-		tempcomponent = m_clBottomCenterCompare.getComponent(false);
-		tempcomponent.setOpaque(true);
-		temppanel.add(tempcomponent);
-
-		innerpanel = new JPanel(new GridLayout(2, 1));
-		innerpanel.setBackground(Color.white);
-		innerpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		innerpanel.add(bottomCenterLabel);
-		innerpanel.add(temppanel);
-
-		m_clBottomCenterPanel.setBackground(Color.WHITE);
-		bottomCenterLabel.setFont(bottomCenterLabel.getFont().deriveFont(bottomCenterLabel.getFont().getSize2D() - 1f));
-		bottomCenterLabel.setOpaque(true);
-		m_clBottomCenterPanel.add(innerpanel, BorderLayout.CENTER);
-		m_clBottomCenterPanel.setPreferredSize(GROESSE);
-
-		mainpanel = new JPanel(new BorderLayout());
-		mainpanel.setBackground(Color.white);
-		mainpanel.add(m_clBottomCenterPanel, BorderLayout.CENTER);
-		mainpanel.setBorder(BorderFactory.createLineBorder(Color.white));
-		subconstraints.gridx = 2;
-		subconstraints.gridy = 7;
-		subconstraints.gridwidth = 3;
-		sublayout.setConstraints(mainpanel, subconstraints);
-		subpanel.add(mainpanel);
-
-		subconstraints.gridx = 5;
-		subconstraints.gridy = 7;
-		subconstraints.gridwidth = 1;
-
-		// --- copy ratings button start
-		temppanel = new JPanel(new BorderLayout());
-		temppanel.setOpaque(false);
-		copyButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.ToolTip"));
-		copyButton.setIcon(ThemeManager.getIcon(HOIconName.INFO));
-		copyButton.addActionListener(new CopyListener(this));
-		copyButton.setPreferredSize(new Dimension(18, 18));
-		copyButton.setMaximumSize(new Dimension(18, 18));
-		temppanel.add(copyButton, BorderLayout.EAST);
-		// --- copy ratings button end
-
-		// sublayout.setConstraints(tempcomponent, subconstraints);
-		// subpanel.add(tempcomponent);
-		sublayout.setConstraints(temppanel, subconstraints);
-		subpanel.add(temppanel);
-
-		constraints.gridx = 0;
-		constraints.gridy = 6;
-		layout.setConstraints(subpanel, constraints);
-		add(subpanel);
-
-		// //////////////////////////////////////////////////////////////////////
 		initToolTips();
-
-		// Alle zahlen auf 0, Default ist -oo
-		m_clTopLeftCompare.setSpezialNumber(0f, false);
-		m_clTopCenterCompare.setSpezialNumber(0f, false);
-		m_clTopRightCompare.setSpezialNumber(0f, false);
-		m_clMiddleCompare.setSpezialNumber(0f, false);
-		m_clBottomLeftCompare.setSpezialNumber(0f, false);
-		m_clBottomCenterCompare.setSpezialNumber(0f, false);
-		m_clBottomRightCompare.setSpezialNumber(0f, false);
 	}
 
 	/**
 	 * Initialize all tool tips.
 	 */
 	private void initToolTips() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			topLeftLabel.setToolTipText(getLanguageString("rechteAbwehrseite"));
-			m_clTopLeftMain.setToolTipText(getLanguageString("rechteAbwehrseite"));
-			m_clTopLeftCompare.setToolTipText(getLanguageString("rechteAbwehrseite"));
-			topCenterLabel.setToolTipText(getLanguageString("Abwehrzentrum"));
-			m_clTopCenterMain.setToolTipText(getLanguageString("Abwehrzentrum"));
-			m_clTopCenterCompare.setToolTipText(getLanguageString("Abwehrzentrum"));
-			topRightLabel.setToolTipText(getLanguageString("linkeAbwehrseite"));
-			m_clTopRightMain.setToolTipText(getLanguageString("linkeAbwehrseite"));
-			m_clTopRightCompare.setToolTipText(getLanguageString("linkeAbwehrseite"));
-			midFieldLabel.setToolTipText(getLanguageString("MatchMittelfeld"));
-			m_clMiddleMain.setToolTipText(getLanguageString("MatchMittelfeld"));
-			m_clMiddleCompare.setToolTipText(getLanguageString("MatchMittelfeld"));
-			bottomLeftLabel.setToolTipText(getLanguageString("rechteAngriffsseite"));
-			m_clBottomLeftMain.setToolTipText(getLanguageString("rechteAngriffsseite"));
-			m_clBottomLeftCompare.setToolTipText(getLanguageString("rechteAngriffsseite"));
-			bottomCenterLabel.setToolTipText(getLanguageString("Angriffszentrum"));
-			m_clBottomCenterMain.setToolTipText(getLanguageString("Angriffszentrum"));
-			m_clBottomCenterCompare.setToolTipText(getLanguageString("Angriffszentrum"));
-			bottomRightLabel.setToolTipText(getLanguageString("linkeAngriffsseite"));
-			m_clBottomRightMain.setToolTipText(getLanguageString("linkeAngriffsseite"));
-			m_clBottomRightCompare.setToolTipText(getLanguageString("linkeAngriffsseite"));
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			this.topLeftPanel.setToolTip(getLanguageString("rechteAbwehrseite"));
+			this.topCenterPanel.setToolTip(getLanguageString("Abwehrzentrum"));
+			this.topRightPanel.setToolTip(getLanguageString("linkeAbwehrseite"));
+			this.middlePanel.setToolTip(getLanguageString("MatchMittelfeld"));
+			this.bottomLeftPanel.setToolTip(getLanguageString("rechteAngriffsseite"));
+			this.bottomCenterPanel.setToolTip(getLanguageString("Angriffszentrum"));
+			this.bottomRightPanel.setToolTip(getLanguageString("linkeAngriffsseite"));
 		} else {
-			topLeftLabel.setToolTipText(getLanguageString("linkeAngriffsseite"));
-			m_clTopLeftMain.setToolTipText(getLanguageString("linkeAngriffsseite"));
-			m_clTopLeftCompare.setToolTipText(getLanguageString("linkeAngriffsseite"));
-			topCenterLabel.setToolTipText(getLanguageString("Angriffszentrum"));
-			m_clTopCenterMain.setToolTipText(getLanguageString("Angriffszentrum"));
-			m_clTopCenterCompare.setToolTipText(getLanguageString("Angriffszentrum"));
-			topRightLabel.setToolTipText(getLanguageString("rechteAngriffsseite"));
-			m_clTopRightMain.setToolTipText(getLanguageString("rechteAngriffsseite"));
-			m_clTopRightCompare.setToolTipText(getLanguageString("rechteAngriffsseite"));
-			midFieldLabel.setToolTipText(getLanguageString("MatchMittelfeld"));
-			m_clMiddleMain.setToolTipText(getLanguageString("MatchMittelfeld"));
-			m_clMiddleCompare.setToolTipText(getLanguageString("MatchMittelfeld"));
-			bottomLeftLabel.setToolTipText(getLanguageString("linkeAbwehrseite"));
-			m_clBottomLeftMain.setToolTipText(getLanguageString("linkeAbwehrseite"));
-			m_clBottomLeftCompare.setToolTipText(getLanguageString("linkeAbwehrseite"));
-			bottomCenterLabel.setToolTipText(getLanguageString("Abwehrzentrum"));
-			m_clBottomCenterMain.setToolTipText(getLanguageString("Abwehrzentrum"));
-			m_clBottomCenterCompare.setToolTipText(getLanguageString("Abwehrzentrum"));
-			bottomRightLabel.setToolTipText(getLanguageString("rechteAbwehrseite"));
-			m_clBottomRightMain.setToolTipText(getLanguageString("rechteAbwehrseite"));
-			m_clBottomRightCompare.setToolTipText(getLanguageString("rechteAbwehrseite"));
+			this.topLeftPanel.setToolTip(getLanguageString("linkeAngriffsseite"));
+			this.topCenterPanel.setToolTip(getLanguageString("Angriffszentrum"));
+			this.topRightPanel.setToolTip(getLanguageString("rechteAngriffsseite"));
+			this.middlePanel.setToolTip(getLanguageString("MatchMittelfeld"));
+			this.bottomLeftPanel.setToolTip(getLanguageString("linkeAbwehrseite"));
+			this.bottomCenterPanel.setToolTip(getLanguageString("Abwehrzentrum"));
+			this.bottomRightPanel.setToolTip(getLanguageString("rechteAbwehrseite"));
 		}
 	}
 
@@ -809,55 +395,14 @@ final class AufstellungsRatingPanel extends JPanel {
 	}
 
 	String getMidfieldRating() {
-		return m_clFormat.format(middleValue);
+		return numberFormat.format(middleValue);
 	}
 
 	String getLeftDefenseRating() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			return m_clFormat.format(topRightValue);
+		if (reihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
+			return numberFormat.format(topRightValue);
 		} else {
-			return m_clFormat.format(bottomLeftValue);
+			return numberFormat.format(bottomLeftValue);
 		}
 	}
-
-	String getCentralDefenseRating() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			return m_clFormat.format(topCenterValue);
-		} else {
-			return m_clFormat.format(bottomCenterValue);
-		}
-	}
-
-	String getRightDefenseRating() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			return m_clFormat.format(topLeftValue);
-		} else {
-			return m_clFormat.format(bottomRightValue);
-		}
-	}
-
-	String getLeftAttackRating() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			return m_clFormat.format(bottomRightValue);
-		} else {
-			return m_clFormat.format(topLeftValue);
-		}
-	}
-
-	String getCentralAttackRating() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			return m_clFormat.format(bottomCenterValue);
-		} else {
-			return m_clFormat.format(topCenterValue);
-		}
-	}
-
-	String getRightAttackRating() {
-		if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-			return m_clFormat.format(bottomLeftValue);
-		} else {
-			return m_clFormat.format(topRightValue);
-		}
-	}
-
 }
