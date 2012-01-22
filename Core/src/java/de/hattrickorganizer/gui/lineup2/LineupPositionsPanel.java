@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.theme.ThemeManager;
@@ -34,15 +35,13 @@ import de.hattrickorganizer.tools.HOLogger;
 /**
  * Enthält die einzelnen Positionen
  */
-public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer.gui.Updateable,
-		ActionListener {
+public class LineupPositionsPanel extends JPanel implements Updateable, ActionListener {
 
 	private static final long serialVersionUID = -9098199182886069L;
 	private JButton printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 	private JButton flipSideButton = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
 	private JButton midiFrameButton = new JButton(ThemeManager.getIcon(HOIconName.MIDLINEUPFRAME));
 	private JButton miniFrameButton = new JButton(ThemeManager.getIcon(HOIconName.MINLINEUPFRAME));
-
 	private PlayerPositionPanel centralForward;
 	private PlayerPositionPanel centralInnerMidfielder;
 	private PlayerPositionPanel leftBack;
@@ -64,7 +63,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 	private PlayerPositionPanel captain;
 	private PlayerPositionPanel setpieceTaker;
 	private PlayerPositionPanel keeper;
-
 	private javax.swing.JLayeredPane centerPanel;
 	private final SwapPositionsManager swapPositionsManager = new SwapPositionsManager(this);
 	private LineupSettings lineupSettings;
@@ -109,12 +107,12 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 
 		// Alle SpielerPositionen Informieren
 		// erste 11
-		final Vector<ISpieler> aufgestellteSpieler = new Vector<ISpieler>();
+		Vector<ISpieler> aufgestellteSpieler = new Vector<ISpieler>();
 		List<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
-		final Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
+		Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
 
 		for (int i = 0; i < alleSpieler.size(); i++) {
-			final Spieler spieler = (Spieler) alleSpieler.get(i);
+			Spieler spieler = (Spieler) alleSpieler.get(i);
 
 			// ein erste 11
 			if (this.lineup.isSpielerInAnfangsElf(spieler.getSpielerID())) {
@@ -124,7 +122,7 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 
 		// Den Gruppenfilter anwenden
 		for (int i = 0; i < alleSpieler.size(); i++) {
-			final Spieler spieler = (Spieler) alleSpieler.get(i);
+			Spieler spieler = (Spieler) alleSpieler.get(i);
 
 			// Kein Filter
 			if (!this.lineupSettings.isGroupFilter()
@@ -133,7 +131,7 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 					|| (!this.lineupSettings.getGroup().equals(spieler.getTeamInfoSmilie()) && this.lineupSettings
 							.isNotGroup())) {
 				boolean include = true;
-				final AufstellungCBItem lastLineup = AufstellungsVergleichHistoryPanel.getLastLineup();
+				AufstellungCBItem lastLineup = AufstellungsVergleichHistoryPanel.getLastLineup();
 
 				if (this.lineupSettings.isExcludeLastMatch() && (lastLineup != null)
 						&& lastLineup.getAufstellung().isSpielerInAnfangsElf(spieler.getSpielerID())) {
@@ -268,7 +266,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		// assistantPanel.addToAssistant(this.rightBack);
 
 		// Defense line
-
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
@@ -309,7 +306,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		// assistantPanel.addToAssistant(this.leftBack);
 
 		// Midfield Line
-
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
@@ -359,7 +355,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		// assistantPanel.addToAssistant(this.leftWinger);
 
 		// Forward line
-
 		constraints.gridx = 1;
 		constraints.gridy = 3;
 		constraints.gridwidth = 1;
@@ -388,7 +383,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		// assistantPanel.addToAssistant(this.leftForward);
 
 		// A spacer between forwards and reserves.
-
 		constraints.gridx = 0;
 		constraints.gridy = 4;
 		constraints.gridwidth = 5;
@@ -398,7 +392,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		centerPanel.add(box);
 
 		// The reserves
-
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		constraints.gridwidth = 1;
@@ -440,7 +433,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		swapPositionsManager.addSwapCapabilityTo(this.substWinger);
 
 		// Captain and setpieces
-
 		constraints.gridx = 0;
 		constraints.gridy = 6;
 		constraints.gridwidth = 1;
@@ -456,7 +448,6 @@ public class LineupPositionsPanel extends JPanel implements de.hattrickorganizer
 		centerPanel.add(this.setpieceTaker);
 
 		// Gruppenzuordnung des aufgestellten
-
 		constraints.gridx = 3;
 		constraints.gridy = 6;
 		constraints.gridwidth = 1;
