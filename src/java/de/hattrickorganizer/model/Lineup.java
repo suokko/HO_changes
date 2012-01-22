@@ -776,7 +776,12 @@ public class Lineup implements plugins.ILineUp {
 		return matches;
 	}
 
-	/* Umrechnung von double auf 1-80 int */
+	/**
+	 * Umrechnung von double auf 1-80 int
+	 * 
+	 * @deprecated use RatingUtil.getIntValue4Rating(double rating) instead 
+	 * @param rating
+	 */
 	public final int getIntValue4Rating(double rating) {
 		return (int) (((float) (rating - 1) * 4f) + 1);
 	}
