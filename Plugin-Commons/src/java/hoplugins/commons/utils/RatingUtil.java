@@ -141,4 +141,8 @@ public final class RatingUtil {
 
         return extra + value;
     }
+    
+	public static int getIntValue4Rating(double rating) {
+		return (int) (((float) (rating - 1) * 4f) + 1);
+	}
 }
