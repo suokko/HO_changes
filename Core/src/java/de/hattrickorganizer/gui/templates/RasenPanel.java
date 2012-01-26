@@ -1,12 +1,14 @@
 // %2560498359:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
-
+import gui.HOIconName;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.LayoutManager;
-
+import java.awt.TexturePaint; 
+import java.awt.geom.Rectangle2D; 
+import java.awt.image.BufferedImage; 
 import javax.swing.JPanel;
-
+import de.hattrickorganizer.gui.theme.ImageUtilities;
+import de.hattrickorganizer.gui.theme.ThemeManager; 
 /**
  * JPanel mit HintergrundGrafik für Fenster
  *
@@ -22,7 +24,7 @@ public class RasenPanel extends JPanel {
 	private static final long serialVersionUID = -8146276344087586861L;
 
 	/** TODO Missing Parameter Documentation */
-    public static Image background;
+    public static BufferedImage background;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -64,7 +66,7 @@ public class RasenPanel extends JPanel {
      * @param layout TODO Missing Constructuor Parameter Documentation
      * @param forprint TODO Missing Constructuor Parameter Documentation
      */
-    public RasenPanel(java.awt.LayoutManager layout, boolean forprint) {
+    public RasenPanel(LayoutManager layout, boolean forprint) {
         super(layout);
         init(forprint);
     }
@@ -83,17 +85,10 @@ public class RasenPanel extends JPanel {
         paintComponent(g2d);
 
         if (!m_bPrint) {
-            //Hintergrundgrafik zeichnen -> 4 Grafiken!
-            g2d.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null),
-                          null);
-            g2d.drawImage(background, background.getWidth(null), 0, background.getWidth(null),
-                          background.getHeight(null), null);
-            g2d.drawImage(background, 0, background.getHeight(null), background.getWidth(null),
-                          background.getHeight(null), null);
-            g2d.drawImage(background, background.getWidth(null), background.getHeight(null),
-                          background.getWidth(null), background.getHeight(null), null);
-
-            //g2d.drawImage(background,null,this);
+        	Rectangle2D tr = new Rectangle2D.Double(0, 0, background.getWidth(), background.getHeight()); 
+         	TexturePaint tp = new TexturePaint(background, tr); 
+         	g2d.setPaint(tp); 
+         	g2d.fill(g2d.getClip()); 
         }
 
         paintChildren(g2d);
@@ -109,18 +104,7 @@ public class RasenPanel extends JPanel {
         m_bPrint = printing;
 
         if (background == null) {
-            final java.awt.MediaTracker tracker = new java.awt.MediaTracker(this);
-
-            final java.net.URL resource = getClass().getClassLoader().getResource("gui/bilder/Rasen_mit_Streifen.jpg");
-            background = getToolkit().createImage(resource);
-
-            tracker.addImage(background, 1);
-
-            //Der MediaTracker wartet, bis alle Grafiken als Image-Objekte verfügbar sind.
-            try {
-                tracker.waitForAll();
-            } catch (InterruptedException ie) {
-            }
+        	background = ImageUtilities.toBufferedImage(ThemeManager.getIcon(HOIconName.GRASSPANEL_BACKGROUND).getImage()); 
         }
 
         setBackground(java.awt.Color.white);

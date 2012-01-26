@@ -3,7 +3,7 @@
  */
 package de.hattrickorganizer.gui.theme;
 
-
+import gui.HOIconName; 
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
@@ -16,7 +16,8 @@ import java.util.zip.ZipFile;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-
+import de.hattrickorganizer.gui.templates.ImagePanel; 
+import de.hattrickorganizer.gui.templates.RasenPanel; 
 import de.hattrickorganizer.gui.theme.ho.HOClassicSchema;
 
 
@@ -214,6 +215,8 @@ public final class ThemeManager {
 	public void setCurrentTheme(String name) throws Exception {
 		if(name != null && !name.equals(classicSchema.getName()))
 			extSchema = loadSchema(name);
+		RasenPanel.background = ImageUtilities.toBufferedImage(ThemeManager.getIcon(HOIconName.GRASSPANEL_BACKGROUND).getImage()); 
+		ImagePanel.background =  ImageUtilities.toBufferedImage(ThemeManager.getIcon(HOIconName.IMAGEPANEL_BACKGROUND).getImage()); 
 	}
 	
 	
