@@ -3,6 +3,11 @@ package de.hattrickorganizer.gui.templates;
 
 import gui.HOBooleanName;
 import gui.HOIconName;
+import java.awt.TexturePaint; 
+import java.awt.geom.Rectangle2D; 
+import java.awt.image.BufferedImage; 
+import javax.swing.JPanel; 
+import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
@@ -20,7 +25,7 @@ public class ImagePanel extends javax.swing.JPanel {
 	private static final long serialVersionUID = 8960221838823071903L;
 
 	/** TODO Missing Parameter Documentation */
-    public static java.awt.Image background;
+    public static BufferedImage background;
 
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -84,21 +89,10 @@ public class ImagePanel extends javax.swing.JPanel {
     		paintComponent(g2d);
 
     		if (!m_bPrint) {
-    			//Hintergrundgrafik zeichnen -> 6 Grafiken!
-    			g2d.drawImage(background, 0, 0, background.getWidth(null), background.getHeight(null),
-                          null);
-    			g2d.drawImage(background, background.getWidth(null), 0, background.getWidth(null),
-                          background.getHeight(null), null);
-    			g2d.drawImage(background, background.getWidth(null) * 2, 0, background.getWidth(null),
-                          background.getHeight(null), null);
-    			g2d.drawImage(background, 0, background.getHeight(null), background.getWidth(null),
-                          background.getHeight(null), null);
-    			g2d.drawImage(background, background.getWidth(null), background.getHeight(null),
-                          background.getWidth(null), background.getHeight(null), null);
-    			g2d.drawImage(background, background.getWidth(null) * 2, background.getHeight(null),
-                          background.getWidth(null), background.getHeight(null), null);
-
-    			//g2d.drawImage(background,null,this);
+    			Rectangle2D tr = new Rectangle2D.Double(0, 0, background.getWidth(), background.getHeight()); 
+    		 	TexturePaint tp = new TexturePaint(background, tr); 
+    		 	g2d.setPaint(tp); 
+    		 	g2d.fill(g2d.getClip()); 
     		}
 
     		paintChildren(g2d);
@@ -115,15 +109,7 @@ public class ImagePanel extends javax.swing.JPanel {
         m_bPrint = printing;
 
         if (background == null) {
-            final java.awt.MediaTracker tracker = new java.awt.MediaTracker(this);
-            background = ThemeManager.getIcon(HOIconName.IMAGEPANEL_BACKGROUND).getImage();
-            tracker.addImage(background, 1);
-
-            //Der MediaTracker wartet, bis alle Grafiken als Image-Objekte verfügbar sind.
-            try {
-                tracker.waitForAll();
-            } catch (InterruptedException ie) {
-            }
+        	background = ImageUtilities.toBufferedImage(ThemeManager.getIcon(HOIconName.IMAGEPANEL_BACKGROUND).getImage());
         }
     }
 }
