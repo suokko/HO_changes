@@ -55,50 +55,5 @@ class MatchKurzInfoColumn extends UserColumn {
 		return null;
 	}
 	
-	 /**
-     * returns the Color for a matchtyp
-     *
-     * @param typ 
-     * @return Color
-     */
-    protected Color getColor4Matchtyp(int typ) {
-        switch (typ) {
-            case IMatchLineup.LIGASPIEL:
-                return MatchesColumnModel.LIGASPIEL;
-
-            case IMatchLineup.POKALSPIEL:
-                return MatchesColumnModel.POKALSPIEL;
-
-            case IMatchLineup.QUALISPIEL:
-                return MatchesColumnModel.QUALISPIEL;
-
-            case IMatchLineup.LAENDERCUPSPIEL:
-                return MatchesColumnModel.LAENDERSPIEL;
-
-            case IMatchLineup.INTCUPSPIEL:
-                return MatchesColumnModel.INTCUPSPIEL;
-
-            case IMatchLineup.LAENDERSPIEL:
-                return MatchesColumnModel.LAENDERSPIEL;
-
-            case IMatchLineup.INTSPIEL:
-                return MatchesColumnModel.INTSPIEL;
-
-            case IMatchLineup.INT_TESTCUPSPIEL:
-            case IMatchLineup.INT_TESTSPIEL:
-                return MatchesColumnModel.INT_TESTSPIEL;
-
-            case IMatchLineup.TESTLAENDERSPIEL:
-                return MatchesColumnModel.LAENDERSPIEL;
-
-            case IMatchLineup.TESTPOKALSPIEL:
-             case IMatchLineup.TESTSPIEL:
-                return MatchesColumnModel.TESTSPIEL;
-
-            //Fehler?
-            default:
-                return Color.white;
-        }
-    }
 
 }

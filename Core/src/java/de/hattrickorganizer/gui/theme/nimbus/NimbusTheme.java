@@ -53,7 +53,7 @@ public class NimbusTheme {
 				UIDefaults uid = UIManager.getLookAndFeelDefaults();
 				final String fontName = FontUtil.getFontName(UserParameter.instance().sprachDatei);
 				final Font userFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, fontSize);
-				final Font smallFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, (fontSize-1));
+//				final Font smallFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, (fontSize-1));
 				final Font boldFont = new Font((fontName != null ? fontName : "SansSerif"), Font.BOLD, fontSize);
 				uid.put("defaultFont", userFont);
 				uid.put("DesktopIcon.font", userFont);

@@ -92,7 +92,7 @@ public class TransfersPanel extends JPanel implements IRefreshable{
             DBManager.instance().updatePlayerTransfers(player.getSpielerID());
         }
 
-        final List<PlayerTransfer> transfers = reloadData();
+        reloadData();
 
 	}
 

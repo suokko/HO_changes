@@ -3,7 +3,6 @@ package de.hattrickorganizer.gui.matches;
 
 import gui.HOColorName;
 import gui.HOIconName;
-import ho.core.db.DBManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -58,7 +57,6 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
     private JLabel m_clHeimRightDef = new JLabel("", SwingConstants.LEFT);
     private JLabel m_clHeimTeamName = new JLabel();
     private JLabel m_clHeimTeamTore = new JLabel();
-    private MatchKurzInfo m_clMatchKurzInfo;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -303,7 +301,6 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
     }
 
     final void refresh(MatchKurzInfo info,Matchdetails details) {
-        m_clMatchKurzInfo = info;
 
         //Teams
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();

@@ -23,6 +23,10 @@ public class DividerListener implements PropertyChangeListener {
     public static final int training_rightSplitPane =4;
     public static final int training_mainSplitPane =5;
     public static final int training_lowerLeftSplitPane =6;
+    public static final int teamAnalyzer_LowerLefSplitPane=7; 
+    public static final int teamAnalyzer_UpperLeftSplitPane=8;
+    public static final int teamAnalyzer_MainSplitPane=9;
+    public static final int teamAnalyzer_BottomSplitPane=10;
 	
 	private int key;
 	
@@ -46,23 +50,36 @@ public class DividerListener implements PropertyChangeListener {
         	 UserParameter.instance().transferHistoryPane_splitPane = newDivLoc;
         	 break;
         case transferTypePane_splitPane:
-       	 UserParameter.instance().transferTypePane_splitPane = newDivLoc;
-       	 break;
+       	 	UserParameter.instance().transferTypePane_splitPane = newDivLoc;
+       	 	break;
         case training_splitPane:
-       	 UserParameter.instance().training_splitPane = newDivLoc;
-       	 break;
+       	 	UserParameter.instance().training_splitPane = newDivLoc;
+       	 	break;
         case training_bottomSplitPane:
-       	 UserParameter.instance().training_bottomSplitPane = newDivLoc;
-       	 break;
+       	 	UserParameter.instance().training_bottomSplitPane = newDivLoc;
+       	 	break;
         case training_rightSplitPane:
-       	 UserParameter.instance().training_rightSplitPane = newDivLoc;
-       	 break;
+       	 	UserParameter.instance().training_rightSplitPane = newDivLoc;
+       	 	break;
         case training_mainSplitPane:
-       	 UserParameter.instance().training_mainSplitPane = newDivLoc;
-       	 break;
+       	 	UserParameter.instance().training_mainSplitPane = newDivLoc;
+       	 	break;
         case training_lowerLeftSplitPane:
-       	 UserParameter.instance().training_lowerLeftSplitPane = newDivLoc;
-       	 break;
+       	 	UserParameter.instance().training_lowerLeftSplitPane = newDivLoc;
+       	 	break;
+        case teamAnalyzer_LowerLefSplitPane:
+          	UserParameter.instance().teamAnalyzer_LowerLefSplitPane = newDivLoc;
+          	break;
+        case teamAnalyzer_UpperLeftSplitPane:
+          	 UserParameter.instance().teamAnalyzer_UpperLeftSplitPane = newDivLoc;
+          	 break;
+        case teamAnalyzer_MainSplitPane:
+          	 UserParameter.instance().teamAnalyzer_MainSplitPane = newDivLoc;
+          	 break;
+        case teamAnalyzer_BottomSplitPane:
+          	 UserParameter.instance().teamAnalyzer_BottomSplitPane = newDivLoc;
+          	 break;
         }
+        
     }
 }

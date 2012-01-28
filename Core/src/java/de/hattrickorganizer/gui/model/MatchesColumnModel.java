@@ -11,23 +11,6 @@ import de.hattrickorganizer.model.matches.MatchKurzInfo;
 
 public final class MatchesColumnModel extends HOColumnModel {
 
-	   //	League match.
-    static final Color LIGASPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_LEAGUE_BG);//new Color(255, 255, 200);
-    //	Qualification match.
-    static final Color QUALISPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_QUALIFIKATION_BG);//new Color(255, 200, 200);
-    //	Cup match (standard league cup).
-    static final Color POKALSPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_CUP_BG);//new Color(200, 255, 200);
-    //	Friendly (normal rules).
-    static final Color TESTSPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_FRIENDLY_BG);//Color.white;
-    //	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).
-    static final Color INTSPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_INT_BG);//Color.lightGray;
-    //	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).
-    static final Color INTCUPSPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_MASTERS_BG);//Color.lightGray;
-    //	International friendly (normal rules).
-    static final Color INT_TESTSPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_INTFRIENDLY_BG);//Color.white;
-    //	National teams competition match (normal rules).
-    static final Color LAENDERSPIEL = ThemeManager.getColor(HOColorName.MATCHTYPE_NATIONAL_BG);//new Color(220, 220, 255);
- 
 	private static final long serialVersionUID = -2148644586671286752L;
 
 	private MatchKurzInfo[] m_clMatches;
@@ -86,35 +69,35 @@ public final class MatchesColumnModel extends HOColumnModel {
     /**
      * Get the color for a certain match type.
      */
-    static  Color getColor4Matchtyp(int typ) {
+    public static  Color getColor4Matchtyp(int typ) {
         switch (typ) {
             case IMatchLineup.LIGASPIEL:
-                return LIGASPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_LEAGUE_BG);
 
             case IMatchLineup.POKALSPIEL:
-                return POKALSPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_CUP_BG);
 
             case IMatchLineup.QUALISPIEL:
-                return QUALISPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_QUALIFIKATION_BG);
 
             case IMatchLineup.INTCUPSPIEL:
-                return INTCUPSPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_INT_BG);
 
             case IMatchLineup.INTSPIEL:
-                return INTSPIEL;
+                return  ThemeManager.getColor(HOColorName.MATCHTYPE_MASTERS_BG);
 
             case IMatchLineup.INT_TESTCUPSPIEL:
              case IMatchLineup.INT_TESTSPIEL:
-                return INT_TESTSPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_INTFRIENDLY_BG);
 
             case IMatchLineup.LAENDERCUPSPIEL:
             case IMatchLineup.LAENDERSPIEL:
             case IMatchLineup.TESTLAENDERSPIEL:
-                return LAENDERSPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_NATIONAL_BG);
 
             case IMatchLineup.TESTPOKALSPIEL:
             case IMatchLineup.TESTSPIEL:
-                return TESTSPIEL;
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_FRIENDLY_BG);
 
             //Fehler?
             default:

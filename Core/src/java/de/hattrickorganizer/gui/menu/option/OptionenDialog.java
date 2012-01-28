@@ -1,6 +1,10 @@
 // %198737965:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
+import ho.module.ModuleConfig;
+import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
+import ho.module.teamAnalyzer.ui.component.SettingPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -38,6 +42,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     private UserPanel m_jpUserOptionen;
     private UserColumnsPanel m_jpUserColumns;
     private DownloadPanel m_jpDownloadPanel;
+    private SettingPanel taSettingsPanel;
     private JButton m_jbSave = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
     private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private ImagePanel m_jpButtonPanel = new ImagePanel();
@@ -80,7 +85,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
     	
     	gui.UserParameter.saveTempParameter();
-
+    	ModuleConfig.instance().save();
 		if (OptionManager.instance().isRestartNeeded()) {
 	            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 	            		"", JOptionPane.INFORMATION_MESSAGE);
@@ -185,6 +190,8 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		m_jpUserColumns = new UserColumnsPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("columns"),new JScrollPane(m_jpUserColumns));
 
+		taSettingsPanel = new SettingPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"),new JScrollPane(taSettingsPanel));
 
         //Tabs der plugins
         for (int i = 0;
@@ -227,6 +234,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(m_jbSave)) {
 			gui.UserParameter.saveTempParameter();
+			ModuleConfig.instance().save();
 			if (OptionManager.instance().isRestartNeeded()) {
 		            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 		            		"", JOptionPane.INFORMATION_MESSAGE);

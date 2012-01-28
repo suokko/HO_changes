@@ -14,11 +14,10 @@ import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.tools.HOLogger;
 
-class MatchesOverviewQuery extends AbstractTable {
+class MatchesOverviewQuery  {
 	final static String KEY = "MatchesOverviewQuery";
-	MatchesOverviewQuery(JDBCAdapter adapter){
-		super(KEY,adapter);
-	}
+	
+	
 	/**
 	 *  
 	 * @param teamId
@@ -26,7 +25,7 @@ class MatchesOverviewQuery extends AbstractTable {
 	 * @param statistic
 	 * @return count of matches
 	 */
-	int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
+	static int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
 		int tmp = 0;
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
@@ -61,18 +60,18 @@ class MatchesOverviewQuery extends AbstractTable {
 		sql.append(" OR (GASTID = ").append(teamId).append(whereAwayClause);
 		sql.append(getMatchTypWhereClause(matchtype));
 
-		rs = adapter.executeQuery(sql.toString());
+		rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
 		try {
 			if(rs.next()){
 				tmp = rs.getInt("C");
 			}
 		} catch (SQLException e) {
-			HOLogger.instance().log(getClass(), e);
+			HOLogger.instance().log(MatchesOverviewQuery.class, e);
 		}
 		return tmp;
 	}
 	
-	int getChangeGameStat(int teamId, int matchtype, int statistic){
+	static int getChangeGameStat(int teamId, int matchtype, int statistic){
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
 		int tmp = 0;
@@ -89,13 +88,13 @@ class MatchesOverviewQuery extends AbstractTable {
 		}
 		sql.append(getMatchTypWhereClause(matchtype));
 		
-		rs = adapter.executeQuery(sql.toString());
+		rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
 		try {
 			for (int i = 0; rs.next(); i++) {
 				tmp=i;
 			}
 		} catch (SQLException e) {
-			HOLogger.instance().log(getClass(),e);
+			HOLogger.instance().log(MatchesOverviewQuery.class,e);
 		}
 		return tmp;
 		
@@ -108,7 +107,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 	 * @return
 	 */
 	
-	public MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
+	public static MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		
 		MatchesHighlightsStat[] rows = new MatchesHighlightsStat[12];
@@ -134,7 +133,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 	}
 	
 	
-	private void fillMatchesOverviewChanceRow(boolean ownTeam, int teamId, MatchesHighlightsStat row, int matchtype){
+	private static void fillMatchesOverviewChanceRow(boolean ownTeam, int teamId, MatchesHighlightsStat row, int matchtype){
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
 		sql.append("SELECT TYP, COUNT(*) AS C  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID ");
@@ -147,7 +146,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		sql.append("GROUP BY TYP HAVING TYP in (");
 		sql.append(row.getTypes());
 		sql.append(") ORDER BY TYP");
-		rs = adapter.executeQuery(sql.toString());
+		rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
 		try {
 			int typ = 0;
 			while(rs.next()){
@@ -159,11 +158,11 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			}
 			rs.close();
 		} catch (SQLException e) {
-			HOLogger.instance().log(getClass(), e);
+			HOLogger.instance().log(MatchesOverviewQuery.class, e);
 		}
 	}
 	
-	private StringBuilder getMatchTypWhereClause(int matchtype){
+	private static StringBuilder getMatchTypWhereClause(int matchtype){
 		StringBuilder sql = new StringBuilder(50);
 		switch (matchtype) {
 			case ISpielePanel.NUR_EIGENE_SPIELE :
@@ -191,7 +190,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		return sql;
 	}
 	
-	MatchesOverviewRow[] getMatchesOverviewValues(int matchtype){
+	static MatchesOverviewRow[] getMatchesOverviewValues(int matchtype){
 		ArrayList<MatchesOverviewRow> rows = new ArrayList<MatchesOverviewRow>(20);
 		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("AlleSpiele"), MatchesOverviewRow.TYPE_ALL));
 		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Aufstellung"), MatchesOverviewRow.TYPE_TITLE));
@@ -227,7 +226,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 	
 	
 	
-	private void setMatchesOverviewValues(ArrayList<MatchesOverviewRow> rows,int matchtype, boolean home){
+	private static void setMatchesOverviewValues(ArrayList<MatchesOverviewRow> rows,int matchtype, boolean home){
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		StringBuilder whereClause = new StringBuilder(100);
 		whereClause.append(" AND ").append(home?"HEIMID=":"GASTID=").append(teamId);
@@ -237,7 +236,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		setRows(rows, whereClause, home);
 	}
 	
-	private void setFormationRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause, boolean home){
+	private static void setFormationRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause, boolean home){
 		
 		StringBuilder sql = new StringBuilder(500);
 		sql.append("select MATCHID,HEIMTORE,GASTTORE, "); 
@@ -253,7 +252,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		sql.append(" where 1=1 ");
 		sql.append(whereClause);
 		try{
-			ResultSet rs = adapter.executeQuery(sql.toString());
+			ResultSet rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
 			
 			while(rs.next()){
 				String[] fArray = {"0","",""};
@@ -275,11 +274,11 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			}
 			} catch(Exception e){
 				
-				HOLogger.instance().log(getClass(),e);
+				HOLogger.instance().log(MatchesOverviewQuery.class,e);
 			}
 	}
 	
-	private void setSystem(int column,String formation, String[] fArray){
+	private static void setSystem(int column,String formation, String[] fArray){
 		int max = Integer.parseInt(fArray[0]);
 		if(column > 0){
 			if(max == 0){
@@ -295,7 +294,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		}
 	}
 	
-	private void setRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause,boolean home){
+	private static void setRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause,boolean home){
 		for (int i = 1; i < rows.size(); i++) {
 			if(rows.get(i).getTypeValue() > Integer.MIN_VALUE){
 				String whereSpecial = " AND "+rows.get(i).getColumnName(home)+" = "+rows.get(i).getTypeValue() ;
@@ -304,7 +303,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		}
 	}
 	
-	private void setMatchesOverviewRow(MatchesOverviewRow row,String whereClause, boolean home){
+	private static void setMatchesOverviewRow(MatchesOverviewRow row,String whereClause, boolean home){
 		StringBuilder sql = new StringBuilder(500);
 		String from = " FROM MATCHDETAILS inner join MATCHESKURZINFO ON MATCHDETAILS.MATCHID = MATCHESKURZINFO.MATCHID ";
 		sql.append("SELECT SUM(ANZAHL) AS A1,SUM(G1) AS G,SUM(U1) AS U,SUM(V1) AS V, SUM(HTORE1) AS HEIMTORE, SUM(GTORE1) AS GASTTORE FROM (");
@@ -318,7 +317,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		sql.append(whereClause);
 		sql.append(")");
 		try{
-		ResultSet rs = adapter.executeQuery(sql.toString());
+		ResultSet rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
 		if(rs.next()){
 			row.setCount(rs.getInt("A1"));
 			row.setWin(rs.getInt("G"));
@@ -328,13 +327,8 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			row.setAwayGoals(rs.getInt("GASTTORE"));
 		}
 		} catch(Exception e){
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.setMatchesOverviewRow : " + e);
-			HOLogger.instance().log(getClass(),e);
+			HOLogger.instance().log(MatchesOverviewQuery.class,e);
 		}
 	}
-	@Override
-	protected void initColumns() {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

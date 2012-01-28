@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -42,7 +43,6 @@ import plugins.IMatchHelper;
 import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.HO;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.matches.SpielHighlightPanel;
 import de.hattrickorganizer.gui.menu.HRFImport;
@@ -846,4 +846,15 @@ public class HelperWrapper implements plugins.IHelper {
 		return getHTWeek(new Date(timestamp.getTime()), useTrainingCalendar);
 	}
 
+	public Date resetDay(Date date) {
+	        final Calendar cal = new GregorianCalendar();
+
+	        cal.setTime(date);
+	        cal.set(Calendar.HOUR_OF_DAY, 0);
+	        cal.set(Calendar.MINUTE, 0);
+	        cal.set(Calendar.SECOND, 0);
+	        cal.set(Calendar.MILLISECOND, 0);
+
+	        return cal.getTime();
+	}
 }

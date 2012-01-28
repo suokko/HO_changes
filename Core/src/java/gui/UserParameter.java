@@ -178,8 +178,9 @@ public final class UserParameter extends Configuration {
     //Temporäre Tabs
     public boolean tempTabSpieleruebersicht;
     public boolean tempTabStatistik;
-    public boolean tempTabTraining = true;
+    public boolean tempTabTraining;
     public boolean tempTabTransferscout = true;
+    public boolean tempTabTeamAnalyzer;
 
     //Update
 	public boolean newsCheck = false;
@@ -240,6 +241,11 @@ public final class UserParameter extends Configuration {
     public int training_rightSplitPane =700;
     public int training_mainSplitPane =300;
     public int training_lowerLeftSplitPane =200;
+    
+    public int teamAnalyzer_LowerLefSplitPane = 100;
+    public int teamAnalyzer_UpperLeftSplitPane = 350;
+    public int teamAnalyzer_MainSplitPane = 300;
+    public int teamAnalyzer_BottomSplitPane = 500;
     //Breite der BestPos-Spalte
 
     /** @deprecated column width configurable
@@ -574,12 +580,16 @@ public final class UserParameter extends Configuration {
 		map.put("transferHistoryPane_splitPane", String.valueOf(transferHistoryPane_splitPane));
 		map.put("transferTypePane_splitPane", String.valueOf(transferTypePane_splitPane));
 		map.put("tempTabTraining", String.valueOf(tempTabTraining));
+		map.put("tempTabTeamAnalyzer", String.valueOf(tempTabTeamAnalyzer));
 		map.put("training_splitPane", String.valueOf(training_splitPane));
 		map.put("training_bottomSplitPane", String.valueOf(training_bottomSplitPane));
 		map.put("training_rightSplitPane", String.valueOf(training_rightSplitPane));
 		map.put("training_mainSplitPane", String.valueOf(training_mainSplitPane));
 		map.put("training_lowerLeftSplitPane", String.valueOf(training_lowerLeftSplitPane));
-		
+		map.put("teamAnalyzer_LowerLefSplitPane", String.valueOf(teamAnalyzer_LowerLefSplitPane));
+		map.put("teamAnalyzer_UpperLeftSplitPane", String.valueOf(teamAnalyzer_UpperLeftSplitPane));
+		map.put("teamAnalyzer_MainSplitPane", String.valueOf(teamAnalyzer_MainSplitPane));
+		map.put("teamAnalyzer_BottomSplitPane", String.valueOf(teamAnalyzer_BottomSplitPane));
 		
 		
 		
@@ -788,11 +798,16 @@ public final class UserParameter extends Configuration {
 		transferHistoryPane_splitPane = getIntValue(values, "transferHistoryPane_splitPane");
 		transferTypePane_splitPane = getIntValue(values, "transferTypePane_splitPane");
 		tempTabTraining = getBooleanValue(values, "tempTabTraining");
+		tempTabTeamAnalyzer = getBooleanValue(values, "tempTabTeamAnalyzer");
 		training_splitPane= getIntValue(values, "training_splitPane");
 		training_bottomSplitPane= getIntValue(values, "training_bottomSplitPane");
 		training_rightSplitPane= getIntValue(values, "training_rightSplitPane");
 		training_mainSplitPane= getIntValue(values, "training_mainSplitPane");
 		training_lowerLeftSplitPane= getIntValue(values, "training_lowerLeftSplitPane");
+		teamAnalyzer_LowerLefSplitPane= getIntValue(values, "teamAnalyzer_LowerLefSplitPane");
+		teamAnalyzer_UpperLeftSplitPane= getIntValue(values, "teamAnalyzer_UpperLeftSplitPane");
+		teamAnalyzer_MainSplitPane= getIntValue(values, "teamAnalyzer_MainSplitPane");
+		teamAnalyzer_BottomSplitPane= getIntValue(values, "teamAnalyzer_BottomSplitPane");
 	}
 
 }

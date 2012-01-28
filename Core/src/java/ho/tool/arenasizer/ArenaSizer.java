@@ -36,7 +36,7 @@ class ArenaSizer {
     static final BigDecimal VIP_PERCENT 		= new BigDecimal(0.025).setScale(3, BigDecimal.ROUND_HALF_DOWN);
 
     //SUPPORTER-DISTRIBUTION
-    static final Integer SUPPORTER_NORMAL = 20;
+    static final Integer SUPPORTER_NORMAL = Integer.valueOf(20);
 
     float currencyFactor = gui.UserParameter.instance().faktorGeld;
 

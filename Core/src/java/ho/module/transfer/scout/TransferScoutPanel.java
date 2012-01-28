@@ -1,32 +1,39 @@
 // %4201738339:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import gui.HOIconName;
 import ho.core.db.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.gui.print.ComponentPrintObject;
 import de.hattrickorganizer.gui.print.PrintController;
+import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.gui.utils.TableSorter;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.HOLogger;
 /**
  * The TransferScout main Panel
  */
-public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.ImagePanel
-    implements MouseListener, KeyListener
-{
+public class TransferScoutPanel extends ImagePanel implements MouseListener, KeyListener, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -35,6 +42,8 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
     private ScoutThread m_clScoutThread;
     private TransferEingabePanel m_jpTransferEingabePanel;
     private TransferTable m_jtTransferTable;
+    private JPanel toolbar;
+    private JButton jbPrint = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -234,6 +243,7 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
     private void initComponents() {
         setLayout(new BorderLayout());
 
+        add(getToolBar(),BorderLayout.NORTH);
         verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false, initTransferTable(),
                                            initTransferEingabePanel());
 
@@ -245,6 +255,16 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         m_clScoutThread = ScoutThread.start(DBManager.instance().getScoutList());
     }
 
+    
+    private JPanel getToolBar(){
+    	if(toolbar == null){
+    		toolbar = new ImagePanel(new FlowLayout(FlowLayout.LEADING));
+    		jbPrint.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_drucken"));
+            jbPrint.addActionListener(this);
+            toolbar.add(jbPrint);
+    	}
+    	return toolbar;
+    }
     /**
      * TODO Missing Method Documentation
      *
@@ -269,4 +289,11 @@ public class TransferScoutPanel extends de.hattrickorganizer.gui.templates.Image
         scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
         return scrollpane;
     }
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(jbPrint)) {
+            drucken();
+        }
+		
+	}
 }

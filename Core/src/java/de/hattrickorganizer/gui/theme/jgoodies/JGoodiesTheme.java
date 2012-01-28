@@ -33,7 +33,7 @@ public class JGoodiesTheme {
 
 	public static boolean enableJGoodiesTheme(final String cfgName, final int fontSize) {
 		try {
-			LookAndFeelInfo nimbus = null;
+			
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				HOLogger.instance().log(JGoodiesTheme.class, "L&F: " + info.getName());
 				// if ("Nimbus".equals(info.getName())) {
@@ -44,7 +44,7 @@ public class JGoodiesTheme {
 
 			final String fontName = FontUtil.getFontName(UserParameter.instance().sprachDatei);
 			final Font userFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, fontSize);
-			final Font smallFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, (fontSize - 1));
+//			final Font smallFont = new Font((fontName != null ? fontName : "SansSerif"), Font.PLAIN, (fontSize - 1));
 			final Font boldFont = new Font((fontName != null ? fontName : "SansSerif"), Font.BOLD, fontSize);
 
 			if (cfgName != null && cfgName.contains("Green")) {
