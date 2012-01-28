@@ -6,6 +6,7 @@
 package de.hattrickorganizer.tools.updater;
 
 import gui.HOIconName;
+import ho.core.plugins.GUIPluginWrapper;
 import ho.core.plugins.PluginManager;
 
 import java.awt.BorderLayout;
@@ -23,7 +24,6 @@ import org.w3c.dom.Document;
 
 import plugins.IOfficialPlugin;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HelperWrapper;

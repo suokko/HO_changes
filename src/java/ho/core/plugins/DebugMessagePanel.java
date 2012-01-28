@@ -1,5 +1,5 @@
 // %1930709824:de.hattrickorganizer.gui.pluginWrapper%
-package de.hattrickorganizer.gui.pluginWrapper;
+package ho.core.plugins;
 
 import java.awt.BorderLayout;
 
@@ -14,10 +14,7 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-/**
- * Zeigt den Spielstand an
- */
-public class DebugMessagePanel extends ImagePanel {
+class DebugMessagePanel extends ImagePanel {
 	
 	private static final long serialVersionUID = -3522133930680570812L;
 	
@@ -36,18 +33,11 @@ public class DebugMessagePanel extends ImagePanel {
     /**
      * Creates a new DebugMessagePanel object.
      */
-    public DebugMessagePanel() {
+    DebugMessagePanel() {
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
-    public final void append(String text) {
+    final void append(String text) {
         try {
             text = "<br>" + text + "</br>";
 
@@ -65,16 +55,10 @@ public class DebugMessagePanel extends ImagePanel {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void clear() {
+    final void clear() {
         m_jepTextModusEditorPane.setText("");
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setLayout(new BorderLayout());
 
@@ -82,8 +66,6 @@ public class DebugMessagePanel extends ImagePanel {
         m_jepTextModusEditorPane.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         m_jepTextModusEditorPane.setEditable(false);
 
-        //m_jepTextModusEditorPane.setBackground ( new Color( 240, 240, 230 ) );
-        //m_jepTextModusEditorPane.addHyperlinkListener(this);
         m_jscTextModusScrollPane = new JScrollPane(m_jepTextModusEditorPane);
         m_jscTextModusScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(m_jscTextModusScrollPane, BorderLayout.CENTER);

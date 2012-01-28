@@ -5,6 +5,8 @@
  */
 package de.hattrickorganizer.tools.updater;
 
+import ho.core.plugins.GUIPluginWrapper;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.File;
@@ -16,7 +18,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
