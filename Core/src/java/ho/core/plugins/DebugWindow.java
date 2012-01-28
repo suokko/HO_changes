@@ -1,11 +1,13 @@
 // %37322930:de.hattrickorganizer.gui.pluginWrapper%
-package de.hattrickorganizer.gui.pluginWrapper;
+package ho.core.plugins;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JDialog;
+
+import de.hattrickorganizer.gui.HOMainFrame;
 
 
 /**
@@ -28,7 +30,7 @@ public class DebugWindow extends JDialog implements plugins.IDebugWindow {
      * @param size TODO Missing Constructuor Parameter Documentation
      */
     public DebugWindow(Point position, Dimension size) {
-        super(de.hattrickorganizer.gui.HOMainFrame.instance(), "Debug Window");
+        super(HOMainFrame.instance(), "Debug Window");
 
         setLocation(position);
         setSize(size);
@@ -37,13 +39,6 @@ public class DebugWindow extends JDialog implements plugins.IDebugWindow {
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param throwable TODO Missing Method Parameter Documentation
-     */
     public final void append(Throwable throwable) {
         final StackTraceElement[] elemente = throwable.getStackTrace();
 
@@ -61,25 +56,14 @@ public class DebugWindow extends JDialog implements plugins.IDebugWindow {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     public final void append(String text) {
         m_jpText.append(text);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void clear() {
         m_jpText.clear();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(m_jpText, BorderLayout.CENTER);

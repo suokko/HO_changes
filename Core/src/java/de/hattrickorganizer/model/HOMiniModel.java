@@ -160,7 +160,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public plugins.IGUI getGUI() {
-        return de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper.instance();
+        return ho.core.plugins.GUIPluginWrapper.instance();
     }
 
     /**

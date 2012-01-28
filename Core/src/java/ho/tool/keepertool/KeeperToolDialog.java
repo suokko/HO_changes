@@ -1,8 +1,9 @@
 // %3415157064:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
-import de.hattrickorganizer.gui.pluginWrapper.GUIPluginWrapper;
 import de.hattrickorganizer.model.HOVerwaltung;
+
+import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
