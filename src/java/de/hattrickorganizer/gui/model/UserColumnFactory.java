@@ -320,7 +320,7 @@ final public class UserColumnFactory {
 		matchesArray[0] = new MatchKurzInfoColumn(450,"Datum",70){
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
-				final Color background = getColor4Matchtyp(match.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 				return new ColorLabelEntry(match.getMatchDateAsTimestamp().getTime(),
                         java.text.DateFormat.getDateTimeInstance().format(match
                                 .getMatchDateAsTimestamp()),
@@ -339,7 +339,7 @@ final public class UserColumnFactory {
 		matchesArray[1] = new MatchKurzInfoColumn(460," ","Spielart",20){
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
-				final Color background = getColor4Matchtyp(match.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[match.getMatchTyp()]),
                         match.getMatchTyp(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.CENTER);
@@ -347,7 +347,7 @@ final public class UserColumnFactory {
 			
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
-				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(spielerCBItem.getMatchTyp());
 				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[spielerCBItem.getMatchTyp()]),
                         spielerCBItem.getMatchTyp(),
                         ColorLabelEntry.FG_STANDARD, background,
@@ -358,7 +358,7 @@ final public class UserColumnFactory {
 		matchesArray[2] = new MatchKurzInfoColumn(470,"Heim",60){
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
-				final Color background = getColor4Matchtyp(match.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 				ColorLabelEntry entry = new ColorLabelEntry(match.getHeimName(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.LEFT);
 				entry.setFGColor((match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
@@ -377,7 +377,7 @@ final public class UserColumnFactory {
 			
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
-				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(spielerCBItem.getMatchTyp());
 				ColorLabelEntry entry = new ColorLabelEntry(spielerCBItem.getHeimteam() + "",
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.LEFT);
@@ -396,7 +396,7 @@ final public class UserColumnFactory {
 		matchesArray[3] = new MatchKurzInfoColumn(480,"Gast",60){
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
-				final Color background = getColor4Matchtyp(match.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 				ColorLabelEntry entry = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.LEFT);
 				entry.setFGColor((match.getGastID() == HOVerwaltung.instance().getModel().getBasics()
@@ -416,7 +416,7 @@ final public class UserColumnFactory {
 			
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
-				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(spielerCBItem.getMatchTyp());
 				ColorLabelEntry entry = new ColorLabelEntry(spielerCBItem.getGastteam() + "",
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.LEFT);
@@ -435,7 +435,7 @@ final public class UserColumnFactory {
 		matchesArray[4] = new MatchKurzInfoColumn(490,"Ergebnis",45){
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
-				final Color background = getColor4Matchtyp(match.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 				return new ColorLabelEntry(StringUtilities.getResultString(match.getHeimTore(),
                         match.getGastTore()),
                         	ColorLabelEntry.FG_STANDARD, background,
@@ -444,7 +444,7 @@ final public class UserColumnFactory {
 			
 			@Override
 			public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
-				final Color background = getColor4Matchtyp(spielerCBItem.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(spielerCBItem.getMatchTyp());
 				return new ColorLabelEntry(StringUtilities.getResultString(spielerCBItem.getMatchdetails().getHomeGoals(),
 						spielerCBItem.getMatchdetails().getGuestGoals()),
                         	ColorLabelEntry.FG_STANDARD, background,
@@ -457,7 +457,7 @@ final public class UserColumnFactory {
 			
 			@Override
 			public TableEntry getTableEntry(MatchKurzInfo match){
-				final Color background = getColor4Matchtyp(match.getMatchTyp());
+				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
 				return new ColorLabelEntry(match.getMatchID(), match.getMatchID() + "",
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.RIGHT);

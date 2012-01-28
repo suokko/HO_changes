@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui.info;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -51,11 +52,13 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
     }
 
     public final void refresh() {
-    	m_jpBasics.setLabels();
-    	m_jpAktuelleFinanzen.setLabels();
-    	m_jpVorwochenFinanzen.setLabels();
-    	m_jpSonstiges.setLabels();
-    	m_jpTrainerStab.setLabels();
+    	if(HOVerwaltung.instance().getModel().getBasics().getTeamId() > 0){
+    		m_jpBasics.setLabels();
+    		m_jpAktuelleFinanzen.setLabels();
+    		m_jpVorwochenFinanzen.setLabels();
+    		m_jpSonstiges.setLabels();
+    		m_jpTrainerStab.setLabels();
+    	}
     }
     
     //~ Methods ------------------------------------------------------------------------------------

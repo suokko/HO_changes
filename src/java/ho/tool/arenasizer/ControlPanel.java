@@ -169,14 +169,12 @@ class ControlPanel extends JPanel implements ActionListener{
     }
     
     Stadium getStadium(){
-        int fans = 0;
         int steh = 0;
         int sitz = 0;
         int ueber = 0;
         int loge = 0;
 
         try {
-            fans = Integer.parseInt(m_jtfFans.getText());
             steh = Integer.parseInt(terracesField.getText());
             sitz = Integer.parseInt(basicField.getText());
             ueber = Integer.parseInt(roofField.getText());
@@ -235,7 +233,6 @@ class ControlPanel extends JPanel implements ActionListener{
             	basicPercentField.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
             	roofPercentField.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
             	vipPercentField.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
-            	ArenaSizer m_clArenaSizer = new ArenaSizer();
             
             	terracesField.setText(tPercent.multiply(groesse).intValue()+"");
             	basicField.setText(bPercent.multiply(groesse).intValue()+"");

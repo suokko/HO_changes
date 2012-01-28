@@ -1,6 +1,8 @@
 package ho.core.db;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
@@ -71,22 +73,6 @@ final class DBUpdater {
 	}
 
 	/**
-	 * Update database to version 5.
-	 */
-	private void updateDBv5() throws Exception {
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAM ADD COLUMN STAMINATRAININGPART INTEGER");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE TRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE FUTURETRAINING ADD COLUMN STAMINATRAININGPART INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE FUTURETRAINING SET STAMINATRAININGPART=5 WHERE STAMINATRAININGPART IS NULL");
-
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		dbZugriff.saveUserParameter("DBVersion", 5);
-	}
-
-	/**
 	 * Update DB structure to v6
 	 */
 	private void updateDBv6() throws Exception {
@@ -112,7 +98,7 @@ final class DBUpdater {
 
 		// Drop and recreate the table
 		// (i.e. use defaults from defaults.xml)
-		AbstractTable faktorenTab = (AbstractTable)dbZugriff.getTable(FaktorenTable.TABLENAME);
+		AbstractTable faktorenTab = dbZugriff.getTable(FaktorenTable.TABLENAME);
 		if (faktorenTab != null) {
 			faktorenTab.dropTable();
 			faktorenTab.createTable();
@@ -237,26 +223,55 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='einzelnePositionenAnzeigen'");
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='DAUER_ALLGEMEIN'");
 		m_clJDBCAdapter.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='tempTabArenasizer'");
-		final ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TRANSFERS_TRANSFERS");
+		
+		// Transfers-plugin
+		ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TRANSFERS_TRANSFERS");
 		if(rs == null){
 			dbZugriff.getTable(TransferTable.TABLENAME).createTable();
 			dbZugriff.getTable(TransferTypeTable.TABLENAME).createTable();
 		} else{
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TRANSFERS RENAME TO TRANSFER");
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TYPE RENAME TO TRANSFERTYPE");
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TRANSFERS RENAME TO "+TransferTable.TABLENAME);
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TYPE RENAME TO "+TransferTypeTable.TABLENAME);
 		}
-			
+		
+		// TeamAnalyzer-plugin
+		rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_FAVORITES");
+		if(rs == null){
+			dbZugriff.getTable(TAFavoriteTable.TABLENAME).createTable();
+			dbZugriff.getTable(TAPlayerTable.TABLENAME).createTable();
+		} else{
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAMANALYZER_FAVORITES RENAME TO "+TAFavoriteTable.TABLENAME);
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAMANALYZER_PLAYERDATA RENAME TO "+TAPlayerTable.TABLENAME);
+		}
+		
+		
+		
+		ModuleConfigTable mConfigTable = (ModuleConfigTable)dbZugriff.getTable(ModuleConfigTable.TABLENAME);
+		mConfigTable.createTable();
+		rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_SETTINGS");
+		HashMap<String,Object> tmp = new HashMap<String,Object>();
+		if(rs != null){
+			try {
+				while(rs.next())
+					tmp.put("TA_"+rs.getString("NAME"), Boolean.valueOf(rs.getBoolean("VALUE")));
+				mConfigTable.saveConfig(tmp);	
+			} catch (SQLException e) {
+				HOLogger.instance().warning(this.getClass(), e);
+			}
+		}
+		
+		
 		dbZugriff.saveUserParameter("DBVersion", 12);
 	}
 
-	private void changeColumnType(String table,String oldName, String newName, String type) {
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
-		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN "+oldName);
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN "+newName+" "+ type);
-		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET "+newName+"=TEMPCOLUMN");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN TEMPCOLUMN");
-}
+//	private void changeColumnType(String table,String oldName, String newName, String type) {
+//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
+//		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
+//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN "+oldName);
+//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN "+newName+" "+ type);
+//		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET "+newName+"=TEMPCOLUMN");
+//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN TEMPCOLUMN");
+//}
 	
 	/**
 	 * Automatic update of User Configuration parameters

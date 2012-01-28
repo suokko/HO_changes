@@ -58,8 +58,6 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     private Box m_jpDummy = new Box(BoxLayout.X_AXIS);
     
     private JPanel m_jpParent;
-    private int m_iXcoord;
-    private int m_iYcoord;
     private boolean m_bOnScreen = false;
     GridBagConstraints m_gbcConstraints = new GridBagConstraints();
 
@@ -73,8 +71,6 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         super(print);
 
         m_iPositionsID = positionsID;
-        m_iXcoord = x;
-        m_iYcoord = y;
         m_jpParent = parent;
         
         initComponents();

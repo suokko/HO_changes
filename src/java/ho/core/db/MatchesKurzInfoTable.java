@@ -93,8 +93,6 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 *
 	 */
 	MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
-//		MatchKurzInfo[] matches = new MatchKurzInfo[0];
-		MatchKurzInfo match = null;
 		StringBuilder sql = new StringBuilder(100);
 		ResultSet rs = null;
 		final ArrayList<IMatchKurzInfo> liste = new ArrayList<IMatchKurzInfo>();
@@ -226,7 +224,6 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 */
 	MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
-		MatchKurzInfo match = null;
 		String sql = null;
 		ResultSet rs = null;
 		final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();

@@ -37,15 +37,7 @@ import de.hattrickorganizer.tools.StringUtilities;
 
 public class OAuthDialog extends JDialog implements ActionListener, FocusListener, KeyListener, WindowListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1798304851624958795L;
-
-	private static LoginWaitDialog loginWaitDialog;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
 
 
 	private HOMainFrame m_clMainFrame;
@@ -56,7 +48,6 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 	private JTextField m_jtfAuthString = new JTextField();
 	private JTextField m_jtfAuthURL = new JTextField();
 	
-	private String m_sUserCode;
 	private String m_sUserURL;
 	private boolean m_bUserCancel = false;
 	private boolean m_bFirstTry = true;

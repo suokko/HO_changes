@@ -83,7 +83,6 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private DoppelLabelEntry jpRatingForwardDefensive = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE);
     private DoppelLabelEntry jpRatingKeeper = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private JButton jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
-    private JButton jbPrint = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton jbRemove = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
     private JButton jbAdd = new JButton(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
     private JButton jbMiniScout = new JButton(HOVerwaltung.instance().getLanguageString("ScoutMini"));
@@ -228,9 +227,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 clOwner.removeScoutEintrag(clScoutEntry);
             } else if (actionEvent.getSource().equals(jbMiniScout)) {
                 new MiniScoutDialog(this);
-            } else if (actionEvent.getSource().equals(jbPrint)) {
-                clOwner.drucken();
-            }
+            } 
         }
         checkFields();
     }
@@ -814,9 +811,6 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jbMiniScout.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_Miniscout"));
         jbMiniScout.addActionListener(this);
         panel.add(jbMiniScout);
-        jbPrint.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_drucken"));
-        jbPrint.addActionListener(this);
-        panel.add(jbPrint);
         jbAddTempSpieler.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_add_tempspieler"));
         jbAddTempSpieler.addActionListener(this);
         panel.add(jbAddTempSpieler);

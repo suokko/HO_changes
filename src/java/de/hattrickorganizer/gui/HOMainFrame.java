@@ -5,6 +5,8 @@ import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.module.series.SeriesPanel;
+import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
+import ho.module.teamAnalyzer.ui.component.TAMenu;
 import ho.module.training.TrainingPanel;
 import ho.module.transfer.TransfersPanel;
 import ho.tool.ToolManager;
@@ -92,11 +94,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	/** HO Version */
 	public static final double VERSION = 1.432d;
-
 	private static int revision = 0;
-
-
-
 
 	private static HOMainFrame m_clHOMainFrame;
 
@@ -111,6 +109,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int TRANSFERS = 6;
 	public static final int TRAINING = 7;
 	public static final int INFORMATIONEN = 8;
+	public static final int TEAM_ANALYZER = 9;
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
@@ -121,22 +120,26 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	private LineupPanel m_jpAufstellung;
 	private InfoPanel m_jpInfoPanel;
-
 	private InformationsPanel m_jpInformation;
+	
+	
+	private final JMenuBar m_jmMenuBar = new JMenuBar();
+	// Top level Menu
 	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
 	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
 	private final JMenu m_jmPluginMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
+	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
+	private final JMenu m_jmModuleMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Module"));
+	
+	// Menus
 	private final JMenu m_jmPluginsRefresh = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
-	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
-
-	// Menus
-	private final JMenuBar m_jmMenuBar = new JMenuBar();
 	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
 	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
 	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Download"));
 	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Forum"));
 	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Hattrick"));
+	private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Help"));
 	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
 	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
 
@@ -166,7 +169,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiTransferscout = new JMenuItem(HOVerwaltung.instance().getLanguageString("Transfers"));
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 	private final JMenuItem m_jmiTrainingExperience = new JMenuItem(HOVerwaltung.instance().getLanguageString("Training"));
-
+	private final JMenuItem m_jmiTeamAnalyzer = new JMenuItem(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"));
 
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
@@ -181,6 +184,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private String m_sToRemoveTabName;
 	private TransfersPanel m_jpTransferScout;
 	private TrainingPanel trainingPanel;
+	private TeamAnalyzerPanel teamAnalyzerPanel;
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
@@ -391,7 +395,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		if (source.equals(m_jmImportItem)) { // HRF Import
 			new HRFImport(this);
 		} else if (source.equals(m_jmDownloadItem)) { // HRF Download
-			System.out.println("new DownloadDialog");
 			new DownloadDialog();
 		} else if (source.equals(m_jmOptionen)) { // Options
 			new OptionenDialog(this).setVisible(true);
@@ -434,8 +437,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.STATISTIK);
 		} else if (source.equals(m_jmiTransferscout)) { // Transferscout
 			showTab(HOMainFrame.TRANSFERS);
-		} else if (source.equals(m_jmiTrainingExperience)) { // Transferscout
+		} else if (source.equals(m_jmiTrainingExperience)) { // Training
 			showTab(HOMainFrame.TRAINING);
+		} else if (source.equals(m_jmiTeamAnalyzer)) { // TeamAnalyzer
+			showTab(HOMainFrame.TEAM_ANALYZER);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
 		} else if (source.equals(m_jmCreditsItem)) { 
@@ -446,6 +451,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
+		} else if (source.equals(m_jmWikiItem)) { // Forum
+			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/trac/ho1/wiki/Manual");
 		} else if (source.equals(m_jmForumItem)) { // Forum
 			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
@@ -620,6 +627,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), m_jpStatistikPanel);
 		}
 
+		teamAnalyzerPanel = new TeamAnalyzerPanel();
+		if (!UserParameter.instance().tempTabTeamAnalyzer) {
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"), teamAnalyzerPanel);
+		}
+		
 		// Matchpaneltest
 		/*
 		 * logik.matchEngine.TeamData a = new
@@ -787,8 +799,17 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiVerschiedenes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
 		m_jmiVerschiedenes.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiVerschiedenes);
+		
+		m_jmiTeamAnalyzer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
+		m_jmiTeamAnalyzer.addActionListener(this);
+		m_jmVerschiedenes.add(m_jmiTeamAnalyzer);
+		
 
 		m_jmMenuBar.add(m_jmVerschiedenes);
+		
+		m_jmModuleMenu.add(new TAMenu());
+		
+		
 
 		if (DeveloperMode.DEVELOPER_MODE) {
 			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
@@ -796,6 +817,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmMenuBar.add(new ToolManager().getToolMenu());
 
+		
+		m_jmMenuBar.add(m_jmModuleMenu);
 		// Plugin Menu
 		m_jmMenuBar.add(m_jmPluginMenu);
 
@@ -809,6 +832,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmHattrickItem.addActionListener(this);
 		m_jmAbout.add(m_jmHattrickItem);
 
+		m_jmWikiItem.addActionListener(this);
+		m_jmAbout.add(m_jmWikiItem);
+		
 		m_jmAbout.addSeparator();
 
 		m_jmCreditsItem.addActionListener(this);
@@ -971,6 +997,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			component = m_jpInformation;
 			titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");
 			temporaer = UserParameter.instance().tempTabInformation;
+			break;
+		case TEAM_ANALYZER:
+			component = teamAnalyzerPanel;
+			titel = HOVerwaltung.instance().getLanguageString("TeamAnalyzer");
+			temporaer = UserParameter.instance().tempTabTeamAnalyzer;
 			break;
 
 		default:

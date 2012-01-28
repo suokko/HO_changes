@@ -33,6 +33,7 @@ public abstract class AbstractTable {
 	
 	protected abstract void initColumns();
 	
+	
 	protected String getTableName(){
 		return tableName;
 	}
@@ -97,6 +98,7 @@ public abstract class AbstractTable {
 		}
 		sql.append(" ) ");
 		adapter.executeUpdate(sql.toString());
+		insertDefaultValues();
 	}
 	
 	protected ResultSet getSelectByHrfID(int hrfID) {
@@ -105,6 +107,10 @@ public abstract class AbstractTable {
 		sql.append(" WHERE HRF_ID = ");
 		sql.append(hrfID);
 		return adapter.executeQuery(sql.toString());
+	}
+
+	protected void insertDefaultValues(){
+		// override if values exists
 	}
 	
 	/** 

@@ -15,14 +15,12 @@ import javax.swing.table.TableColumnModel;
 
 import plugins.ISpielePanel;
 import de.hattrickorganizer.gui.model.ArenaStatistikModel;
-import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.TableModel;
 
@@ -61,7 +59,6 @@ class DistributionStatisticsPanel extends JPanel {
 					hoV.getLanguageString("Sitzplaetze")+" ( %)",hoV.getLanguageString("Ueberdachteplaetze")+" ( %)",hoV.getLanguageString("Logen")+" ( %)",
 					hoV.getLanguageString("Fans")+" ( )"};
 
-		int arenaId = HOVerwaltung.instance().getModel().getStadium().getArenaId();
 		ArenaStatistikModel[] matches=  DBManager.instance().getArenaStatistikModel(ISpielePanel.NUR_EIGENE_LIGASPIELE).getMatches();
 		TableEntry[][] value = new TableEntry[matches.length][columnNames.length];
         for (int i = 0; i < matches.length; i++) {
@@ -103,8 +100,4 @@ class DistributionStatisticsPanel extends JPanel {
                 	            		   ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT));
     }
 	
-	private int getPercent(int spectators, int part){
-		return part*100/spectators;
-		
-	}
 }

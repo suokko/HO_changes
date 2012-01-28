@@ -3,6 +3,7 @@ package ho.core.db;
 
 import gui.UserParameter;
 import ho.core.db.backup.BackupDialog;
+import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.scout.ScoutEintrag;
 import ho.tool.arenasizer.Stadium;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
@@ -147,14 +149,11 @@ public class DBManager {
 			//          Does DB already exists?
 			final boolean existsDB = tempInstance.checkIfDBExists();
 
-			// What is this for? jailbird.
+			// for startup
 			tempInstance.setFirstStart(!existsDB);
-
-			//final FirstStart firstStart = new FirstStart(tempInstance);
 
 			// Do we need to create the database from scratch?
 			if (!existsDB) {
-				//firstStart.createAllTables();
 				tempInstance.createAllTables();
 				UserConfigurationTable configTable = (UserConfigurationTable) tempInstance.getTable(UserConfigurationTable.TABLENAME);
 				configTable.store(UserParameter.instance());
@@ -162,8 +161,8 @@ public class DBManager {
 			} else {
 				//Check if there are any updates on the database to be done.
 				dbUpdater.updateDB(DBVersion);
-				//tempInstance.updateDB();
 			}
+
 			// Check if there are any config updates
 			// new since 1.401 - flattermann
 			dbUpdater.updateConfig();
@@ -204,9 +203,11 @@ public class DBManager {
 		tables.put(UserConfigurationTable.TABLENAME, new UserConfigurationTable(adapter));
 		tables.put(SpielerSkillupTable.TABLENAME, new SpielerSkillupTable(adapter));
 		tables.put(MatchSubstitutionTable.TABLENAME, new MatchSubstitutionTable(adapter));
-		tables.put(MatchesOverviewQuery.KEY, new MatchesOverviewQuery(adapter));
 		tables.put(TransferTable.TABLENAME, new TransferTable(adapter));
 		tables.put(TransferTypeTable.TABLENAME, new TransferTypeTable(adapter));
+		tables.put(ModuleConfigTable.TABLENAME, new ModuleConfigTable(adapter));
+		tables.put(TAFavoriteTable.TABLENAME, new TAFavoriteTable(adapter));
+		tables.put(TAPlayerTable.TABLENAME, new TAPlayerTable(adapter));
 
 	}
 
@@ -1096,7 +1097,7 @@ public class DBManager {
 	}
 	
 	public int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic){
-		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
+		return MatchesOverviewQuery.getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
 	}
 	
 
@@ -1478,7 +1479,7 @@ public class DBManager {
 	 * @return
 	 */
 	public MatchesOverviewRow[] getMatchesOverviewValues(int matchtype) {
-		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getMatchesOverviewValues(matchtype);
+		return MatchesOverviewQuery.getMatchesOverviewValues(matchtype);
 	}
 	
 	/**
@@ -1505,7 +1506,7 @@ public class DBManager {
 	}
 
 	public MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
-		return ((MatchesOverviewQuery) getTable(MatchesOverviewQuery.KEY)).getChancesStat(ownTeam, matchtype);
+		return MatchesOverviewQuery.getChancesStat(ownTeam, matchtype);
 	
 	}
 	/**
@@ -1811,6 +1812,18 @@ public class DBManager {
 		}
 	}
 
+	public HashMap<String,Object> loadModuleConfigs(){
+		return ((ModuleConfigTable)getTable(ModuleConfigTable.TABLENAME)).findAll();
+	}
+	
+	public void saveModuleConfigs(HashMap<String,Object> values){
+		((ModuleConfigTable)getTable(ModuleConfigTable.TABLENAME)).saveConfig(values);
+	}
+	
+	public void deleteModuleConfigsKey(String key){
+		((ModuleConfigTable)getTable(ModuleConfigTable.TABLENAME)).deleteConfig(key);
+	}
+	
 	/**
 	 * Set a single UserParameter in the DB
 	 *
@@ -1849,6 +1862,51 @@ public class DBManager {
 		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME)).loadModel(model);
 	}
 
+	public void removeTAFavoriteTeam(int teamId) {
+		((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).removeTeam(teamId);
+    }
+    
+	public void addTAFavoriteTeam(ho.module.teamAnalyzer.vo.Team team) {
+		((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).addTeam(team); 
+    }
+
+	public boolean isTAFavourite(int teamId) {
+		return ((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).isTAFavourite(teamId);
+    }
+
+    /**
+     * Returns all favourite teams
+     *
+     * @return List of Teams Object
+     */
+	public List<ho.module.teamAnalyzer.vo.Team> getTAFavoriteTeams() {
+		return ((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).getTAFavoriteTeams();
+	}
+	
+	
+    public PlayerInfo getPlayerInfo(int playerId, int week, int season) {
+    	return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo( playerId, week, season);
+    }
+
+    public PlayerInfo getPlayerInfo(int playerId) {
+    	return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo(playerId);
+    }
+    
+    public PlayerInfo getPreviousPlayeInfo(int playerId) {
+    	return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPreviousPlayeInfo(playerId);
+    }
+    
+    public void addPlayerInfo(PlayerInfo info) {
+    	((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).addPlayer(info);
+    }
+    
+	public void updatePlayerInfo(PlayerInfo info) {
+		((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).updatePlayer(info);
+	}
+	
+	public void deleteOldPlayerInfos() {
+		((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).deleteOldPlayers();
+	}
 	/**
 	 * Alle \ entfernen
 	 */
