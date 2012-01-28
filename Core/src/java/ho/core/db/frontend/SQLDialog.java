@@ -36,7 +36,6 @@ import de.hattrickorganizer.tools.HelperWrapper;
 public class SQLDialog extends JDialog implements ActionListener {
 	
 	private static final long serialVersionUID = 7727562652486277083L;
-	private static final Dimension BUTTON_SIZE = new Dimension(23, 23);
     private JTable table;
     private JTextPane txtArea;
     private JLabel lbl;
@@ -147,9 +146,9 @@ public class SQLDialog extends JDialog implements ActionListener {
 
     private JScrollPane getSQLPanel() {
         JScrollPane scroll = new JScrollPane(getTextArea());
-        LineNumbers l = new LineNumbers(getTextArea(), scroll);
-        scroll.setRowHeaderView(l);
-        scroll.setPreferredSize(new Dimension(0, 150));
+//        LineNumbers l = new LineNumbers(getTextArea(), scroll);
+//        scroll.setRowHeaderView(l);
+//        scroll.setPreferredSize(new Dimension(0, 150));
         return scroll;
     }
 

@@ -8,20 +8,12 @@ package de.hattrickorganizer.tools;
 
 import gui.UserParameter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 import java.util.Vector;
 
 import de.hattrickorganizer.HO;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 
-/**
- * DOCUMENT ME!
- *
- * @author Marco Senn
- */
 public class LanguageFiles {
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -31,14 +23,7 @@ public class LanguageFiles {
     public LanguageFiles() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Returns a list of possible language files
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static String[] getSprachDateien() {
+   public static String[] getSprachDateien() {
         String[] files = null;
         final Vector<String> sprachdateien = new Vector<String>();
 
@@ -77,7 +62,7 @@ public class LanguageFiles {
             files = new String[sprachdateien.size()];
 
             for (int i = 0; i < sprachdateien.size(); i++) {
-                files[i] = (String) sprachdateien.get(i);
+                files[i] = sprachdateien.get(i);
             }
         } catch (Exception e) {
             HOLogger.instance().log(LanguageFiles.class,"Fehler Sprachdatei " + e);
@@ -111,13 +96,12 @@ public class LanguageFiles {
 				if (sprachfileversion >= HO.SPRACHVERSION) {
 					HOLogger.instance().log(HOMainFrame.class, "use " + sprachdatei.getName());
 	
-					// Alles ok!!
+					// ok!!
 					return;
 				}
-				// Nicht passende Version
-				else {
-					HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
-				}
+				
+				HOLogger.instance().log(HOMainFrame.class, "not use " + sprachdatei.getName());
+				
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, "not use " + e);

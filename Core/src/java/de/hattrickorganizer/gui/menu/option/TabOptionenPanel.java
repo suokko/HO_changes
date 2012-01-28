@@ -29,6 +29,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
     private JCheckBox m_jchStatistik;
     private JCheckBox m_jchTransferscout;
     private JCheckBox trainingCheckBox;
+    private JCheckBox teamAnalyzerCheckBox;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -63,7 +64,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         gui.UserParameter.temp().tempTabStatistik = !m_jchStatistik.isSelected();
         gui.UserParameter.temp().tempTabTransferscout = !m_jchTransferscout.isSelected();
         gui.UserParameter.temp().tempTabTraining =!trainingCheckBox.isSelected();
-//        gui.UserParameter.temp().tempTabArenasizer = !m_jchArenasizer.isSelected();
+        gui.UserParameter.temp().tempTabTeamAnalyzer = !teamAnalyzerCheckBox.isSelected();
         gui.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
     }
 
@@ -139,5 +140,12 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchInformation.setSelected(!gui.UserParameter.temp().tempTabInformation);
         m_jchInformation.addItemListener(this);
         add(m_jchInformation);
+        
+        teamAnalyzerCheckBox = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TeamAnalyzer"));
+        teamAnalyzerCheckBox.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
+        teamAnalyzerCheckBox.setOpaque(false);
+        teamAnalyzerCheckBox.setSelected(!gui.UserParameter.temp().tempTabTeamAnalyzer);
+        teamAnalyzerCheckBox.addItemListener(this);
+        add(teamAnalyzerCheckBox);
     }
 }

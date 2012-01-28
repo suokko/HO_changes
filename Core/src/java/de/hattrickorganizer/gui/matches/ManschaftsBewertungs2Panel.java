@@ -3,7 +3,6 @@ package de.hattrickorganizer.gui.matches;
 
 import gui.HOColorName;
 import gui.HOIconName;
-import ho.core.db.DBManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,8 +10,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -22,11 +19,8 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.theme.ThemeManager;
-import de.hattrickorganizer.gui.theme.ho.HOClassicSchema;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.Matchdetails;
@@ -52,7 +46,6 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
     private JLabel[] awayPercent = new JLabel[8];
     private Color green = ThemeManager.getColor(HOColorName.MATCHDETAILS_PROGRESSBAR_GREEN);
     private Color red = ThemeManager.getColor(HOColorName.MATCHDETAILS_PROGRESSBAR_RED);
-    private MatchKurzInfo m_clMatchKurzInfo;
     private final GridBagLayout layout = new GridBagLayout();
     private final GridBagConstraints constraints = new GridBagConstraints();
 
@@ -231,7 +224,6 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
     }
 
     final void refresh(MatchKurzInfo info,Matchdetails details) {
-        m_clMatchKurzInfo = info;
 
         //Teams
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();

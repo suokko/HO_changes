@@ -726,7 +726,5 @@ public class SpieleStatistikPanel extends ImagePanel
         //StatistikModel[] model   = { new StatistikModel( werte, "Fuehrung", true, FUEHRUNG ) };
         //m_clStatistikPanel.setModel ( model );
     }
-    private double hq(double value) {
-        return (2 * value) / (value + 80);
-    }
+ 
 }
