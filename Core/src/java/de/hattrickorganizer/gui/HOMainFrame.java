@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui;
 import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.module.misc.InformationsPanel;
 import ho.module.series.SeriesPanel;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.ui.component.TAMenu;
@@ -49,7 +50,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import plugins.ISpieler;
 import de.hattrickorganizer.HO;
-import de.hattrickorganizer.gui.info.InformationsPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsAssistentPanel;
 import de.hattrickorganizer.gui.lineup.LineupPanel;
 import de.hattrickorganizer.gui.matches.SpielePanel;
