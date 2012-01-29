@@ -115,12 +115,19 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int READY = 1;
 
 	private static int status = READY;
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
 
+	// tabs
 	private LineupPanel m_jpAufstellung;
 	private InfoPanel m_jpInfoPanel;
 	private InformationsPanel m_jpInformation;
+	private SeriesPanel m_jpLigaTabelle;
+	private SpielePanel m_jpSpielePanel;
+	private SpielerAnalyseMainPanel m_jpSpielerAnalysePanel;
+	private SpielerUebersichtsPanel m_jpSpielerUebersicht;
+	private StatistikMainPanel m_jpStatistikPanel;
+	private TransfersPanel m_jpTransferScout;
+	private TrainingPanel trainingPanel;
+	private TeamAnalyzerPanel teamAnalyzerPanel;
 	
 	
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
@@ -173,18 +180,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
-
-	private SeriesPanel m_jpLigaTabelle;
-
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
-	private SpielePanel m_jpSpielePanel;
-	private SpielerAnalyseMainPanel m_jpSpielerAnalysePanel;
-	private SpielerUebersichtsPanel m_jpSpielerUebersicht;
-	private StatistikMainPanel m_jpStatistikPanel;
+
 	private String m_sToRemoveTabName;
-	private TransfersPanel m_jpTransferScout;
-	private TrainingPanel trainingPanel;
-	private TeamAnalyzerPanel teamAnalyzerPanel;
+
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
@@ -323,39 +322,61 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 
 	public LineupPanel getAufstellungsPanel() {
+		if(m_jpAufstellung == null)
+			m_jpAufstellung = new LineupPanel();
 		return m_jpAufstellung;
 	}
 
 	public InfoPanel getInfoPanel() {
+		if(m_jpInfoPanel == null)
+			m_jpInfoPanel = new InfoPanel();
 		return m_jpInfoPanel;
 	}
 
 	public InformationsPanel getInformationsPanel() {
+		if(m_jpInformation == null)
+			m_jpInformation = new InformationsPanel();
 		return m_jpInformation;
 	}
 
-//	/**
-//	 * Returns the Vector with the started Plugins
-//	 */
-//	public static Vector<IPlugin> getPlugins() {
-//		return m_vPlugins;
-//	}
-
 	public SpielerAnalyseMainPanel getSpielerAnalyseMainPanel() {
+		if(m_jpSpielerAnalysePanel == null)
+			m_jpSpielerAnalysePanel = new SpielerAnalyseMainPanel();
 		return m_jpSpielerAnalysePanel;
 	}
 
 	public SpielerUebersichtsPanel getSpielerUebersichtPanel() {
+		if(m_jpSpielerUebersicht == null)
+			m_jpSpielerUebersicht = new SpielerUebersichtsPanel();
 		return m_jpSpielerUebersicht;
 	}
 
+	public SeriesPanel getSeriesPanel(){
+		if(m_jpLigaTabelle == null)
+			m_jpLigaTabelle = new SeriesPanel();
+		return m_jpLigaTabelle;
+	}
 	/**
 	 * Get the main statistics panel.
 	 */
 	public StatistikMainPanel getStatistikMainPanel() {
+		if(m_jpStatistikPanel == null)
+			m_jpStatistikPanel = new StatistikMainPanel();
 		return m_jpStatistikPanel;
 	}
 
+	public TeamAnalyzerPanel getTeamAnalyzerPanel(){
+		if(teamAnalyzerPanel == null)
+		teamAnalyzerPanel = new TeamAnalyzerPanel();
+		return teamAnalyzerPanel;
+	}
+	
+	public TrainingPanel getTrainingPanel(){
+		if(trainingPanel == null)
+			trainingPanel = new TrainingPanel();
+		return trainingPanel;
+	}
+	
 	public JTabbedPane getTabbedPane() {
 		return m_jtpTabbedPane;
 	}
@@ -382,9 +403,17 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * Get the transfer scout panel.
 	 */
 	public TransfersPanel getTransferScoutPanel() {
+		if(m_jpTransferScout == null)
+			m_jpTransferScout = new TransfersPanel();
 		return m_jpTransferScout;
 	}
 
+	public SpielePanel getMatchesPanel(){
+		if(m_jpSpielePanel == null)
+			m_jpSpielePanel = new SpielePanel();
+		return m_jpSpielePanel;
+	}
+	
 	/**
 	 * Handle action events.
 	 */
@@ -516,7 +545,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		HOLogger.instance().debug(getClass(), "UserParameters saved");
 
 		// Scoutliste speichern
-		m_jpTransferScout.getScoutPanel().saveScoutListe();
+		getTransferScoutPanel().getScoutPanel().saveScoutListe();
 
 		HOLogger.instance().debug(getClass(), "ScoutList saved");
 
@@ -562,74 +591,70 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jtpTabbedPane = new JTabbedPane();
 
 		// Hinzufügen der Tabs nur, wenn von der Userparameter gewünscht
-		// Spieler
-		m_jpSpielerUebersicht = new SpielerUebersichtsPanel();
-
+		// PlayerOverview
 		if (!UserParameter.instance().tempTabSpieleruebersicht) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"), m_jpSpielerUebersicht);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"), getSpielerUebersichtPanel());
 		}
 
 		// Aufstellung
-		m_jpAufstellung = new LineupPanel();
+		
 
 		if (!UserParameter.instance().tempTabAufstellung) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), m_jpAufstellung);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), getAufstellungsPanel());
 		}
 
 		// Tabelle
-		m_jpLigaTabelle = new SeriesPanel();
-
 		if (!UserParameter.instance().tempTabLigatabelle) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"), m_jpLigaTabelle);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"), getSeriesPanel());
 		}
 
 		// Spiele
-		m_jpSpielePanel = new SpielePanel();
+		
 
 		if (!UserParameter.instance().tempTabSpiele) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), m_jpSpielePanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), getMatchesPanel());
 		}
 
 		// SpielerAnalyse
-		m_jpSpielerAnalysePanel = new SpielerAnalyseMainPanel();
+		
 
 		if (!UserParameter.instance().tempTabSpieleranalyse) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"), m_jpSpielerAnalysePanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"), getSpielerAnalyseMainPanel());
 		}
 
 
 		// Transferscout
-		m_jpTransferScout = new TransfersPanel();
+		
 
 		if (!UserParameter.instance().tempTabTransferscout) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Transfers"), m_jpTransferScout);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Transfers"), getTransferScoutPanel());
 		}
 
 		//Training
-		trainingPanel = new TrainingPanel();
+		
 		
 		if (!UserParameter.instance().tempTabTraining) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"), trainingPanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"), getTrainingPanel());
 		}
 		
 		
 		// Sonstiges
-		m_jpInformation = new InformationsPanel();
+		
 
 		if (!UserParameter.instance().tempTabInformation) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"), m_jpInformation);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"), getInformationsPanel());
 		}
 
 		// Statistiken
-		m_jpStatistikPanel = new StatistikMainPanel();
+		
 
 		if (!UserParameter.instance().tempTabStatistik) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), m_jpStatistikPanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), getStatistikMainPanel());
 		}
 
-		teamAnalyzerPanel = new TeamAnalyzerPanel();
+		
 		if (!UserParameter.instance().tempTabTeamAnalyzer) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"), teamAnalyzerPanel);
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"), getTeamAnalyzerPanel());
 		}
 		
 		// Matchpaneltest
@@ -655,8 +680,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jtpTabbedPane.addChangeListener(this);
 
-		m_jpInfoPanel = new InfoPanel();
-		getContentPane().add(m_jpInfoPanel, BorderLayout.SOUTH);
+		
+		getContentPane().add(getInfoPanel(), BorderLayout.SOUTH);
 
 		
 		setLocation(UserParameter.instance().hoMainFrame_PositionX,
@@ -924,7 +949,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public void showMatch(int matchid) {
 		showTab(HOMainFrame.SPIELE);
 
-		m_jpSpielePanel.showMatch(matchid);
+		getMatchesPanel().showMatch(matchid);
 	}
 
 	// ----------------Hilfsmethoden---------------------------------
@@ -946,60 +971,60 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		switch (tabnumber) {
 		case SPIELERUEBERSICHT:
-			component = m_jpSpielerUebersicht;
+			component = getSpielerUebersichtPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Spieleruebersicht");
 			temporaer = UserParameter.instance().tempTabSpieleruebersicht;
 			break;
 
 		case AUFSTELLUNG:
-			component = m_jpAufstellung;
-			m_jpAufstellung.update(); // - blaghaid
+			component = getAufstellungsPanel();
+			getAufstellungsPanel().update(); // - blaghaid
 			titel = HOVerwaltung.instance().getLanguageString("Aufstellung");
 			temporaer = UserParameter.instance().tempTabAufstellung;
 			break;
 
 		case LIGATABELLE:
-			component = m_jpLigaTabelle;
+			component = getSeriesPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Ligatabelle");
 			temporaer = UserParameter.instance().tempTabLigatabelle;
 			break;
 
 		case SPIELE:
-			component = m_jpSpielePanel;
+			component = getMatchesPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Spiele");
 			temporaer = UserParameter.instance().tempTabSpiele;
 			break;
 
 		case SPIELERANALYSE:
-			component = m_jpSpielerAnalysePanel;
+			component = getSpielerAnalyseMainPanel();
 			titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse");
 			temporaer = UserParameter.instance().tempTabSpieleranalyse;
 			break;
 
 		case STATISTIK:
-			component = m_jpStatistikPanel;
+			component = getStatistikMainPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Statistik");
 			temporaer = UserParameter.instance().tempTabStatistik;
 			break;
 
 		case TRANSFERS:
-			component = m_jpTransferScout;
+			component = getTransferScoutPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Transfers");
 			temporaer = UserParameter.instance().tempTabTransferscout;
 			break;
 		case TRAINING:
-			component = trainingPanel;
+			component = getTrainingPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Training");
 			temporaer = UserParameter.instance().tempTabTraining;
 			break;
 			
 		case INFORMATIONEN:
-			component = m_jpInformation;
+			component = getInformationsPanel();
 			titel = HOVerwaltung.instance().getLanguageString("Verschiedenes");
 			temporaer = UserParameter.instance().tempTabInformation;
 			break;
 		case TEAM_ANALYZER:
-			component = teamAnalyzerPanel;
+			component = getTeamAnalyzerPanel();
 			titel = HOVerwaltung.instance().getLanguageString("TeamAnalyzer");
 			temporaer = UserParameter.instance().tempTabTeamAnalyzer;
 			break;
@@ -1247,12 +1272,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private void saveUserParameter() {
 		UserParameter parameter = UserParameter.instance();
 
-		final int[] sup = m_jpSpielerUebersicht.getDividerLocations();
-		final int[] ap = m_jpAufstellung.getDividerLocations();
-		final int[] sp = m_jpSpielePanel.getDividerLocations();
-		final int spa = m_jpSpielerAnalysePanel.getDividerLocation();
-		final AufstellungsAssistentPanel aap = m_jpAufstellung.getAufstellungsAssitentPanel();
-		final int tsp = m_jpTransferScout.getScoutPanel().getDividerLocation();
+		final int[] sup = getSpielerUebersichtPanel().getDividerLocations();
+		final int[] ap = getAufstellungsPanel().getDividerLocations();
+		final int[] sp = getMatchesPanel().getDividerLocations();
+		final int spa = getSpielerAnalyseMainPanel().getDividerLocation();
+		final AufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
+		final int tsp = getTransferScoutPanel().getScoutPanel().getDividerLocation();
 
 		final int locx = Math.max(getLocation().x, 0);
 		final int locy = Math.max(getLocation().y, 0);
@@ -1260,8 +1285,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.hoMainFrame_PositionY = locy;
 		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
 		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
-		parameter.bestPostWidth = Math.max(m_jpSpielerUebersicht.getBestPosWidth(),
-				m_jpAufstellung.getBestPosWidth());
+		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
+				getAufstellungsPanel().getBestPosWidth());
 
 		parameter.aufstellungsAssistentPanel_gruppe = aap.getGruppe();
 		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getReihenfolge();
@@ -1296,10 +1321,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		DBManager.instance().saveUserParameter();
 
-		m_jpSpielerUebersicht.saveColumnOrder();
-		m_jpSpielePanel.saveColumnOrder();
-		m_jpAufstellung.saveColumnOrder();
-		m_jpSpielerAnalysePanel.saveColumnOrder();
+		getSpielerUebersichtPanel().saveColumnOrder();
+		getMatchesPanel().saveColumnOrder();
+		getAufstellungsPanel().saveColumnOrder();
+		getSpielerAnalyseMainPanel().saveColumnOrder();
 
 	}
 
