@@ -5,6 +5,7 @@ import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.module.misc.InformationsPanel;
+import ho.module.playerCompare.PlayerComparePanel;
 import ho.module.series.SeriesPanel;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.ui.component.TAMenu;
@@ -110,6 +111,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int TRAINING = 7;
 	public static final int INFORMATIONEN = 8;
 	public static final int TEAM_ANALYZER = 9;
+	public static final int PLAYER_COMPARE = 10;
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
@@ -128,6 +130,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private TransfersPanel m_jpTransferScout;
 	private TrainingPanel trainingPanel;
 	private TeamAnalyzerPanel teamAnalyzerPanel;
+	private PlayerComparePanel playerComparePanel;
 	
 	
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
@@ -177,7 +180,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 	private final JMenuItem m_jmiTrainingExperience = new JMenuItem(HOVerwaltung.instance().getLanguageString("Training"));
 	private final JMenuItem m_jmiTeamAnalyzer = new JMenuItem(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"));
-
+	private final JMenuItem m_jmiPlayerCompare = new JMenuItem(HOVerwaltung.instance().getLanguageString("PlayerCompare"));
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
@@ -356,6 +359,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jpLigaTabelle = new SeriesPanel();
 		return m_jpLigaTabelle;
 	}
+	
+	public PlayerComparePanel getPlayerComparePanel(){
+		if(playerComparePanel == null)
+			playerComparePanel = new PlayerComparePanel();
+		return playerComparePanel;
+	}
 	/**
 	 * Get the main statistics panel.
 	 */
@@ -470,6 +479,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.TRAINING);
 		} else if (source.equals(m_jmiTeamAnalyzer)) { // TeamAnalyzer
 			showTab(HOMainFrame.TEAM_ANALYZER);
+		}else if(source.equals(m_jmiPlayerCompare)) {
+			showTab(HOMainFrame.PLAYER_COMPARE);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
 		} else if (source.equals(m_jmCreditsItem)) { 
@@ -657,6 +668,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"), getTeamAnalyzerPanel());
 		}
 		
+		if (!UserParameter.instance().tempTabPlayerCompare) {
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("PlayerCompare"), getPlayerComparePanel());
+		}
+		
 		// Matchpaneltest
 		/*
 		 * logik.matchEngine.TeamData a = new
@@ -829,7 +844,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiTeamAnalyzer.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTeamAnalyzer);
 		
-
+		
+		m_jmiPlayerCompare.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, KeyEvent.CTRL_MASK));
+		m_jmiPlayerCompare.addActionListener(this);
+		m_jmVerschiedenes.add(m_jmiPlayerCompare);
+		
 		m_jmMenuBar.add(m_jmVerschiedenes);
 		
 		m_jmModuleMenu.add(new TAMenu());
@@ -1028,7 +1047,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			titel = HOVerwaltung.instance().getLanguageString("TeamAnalyzer");
 			temporaer = UserParameter.instance().tempTabTeamAnalyzer;
 			break;
-
+		case PLAYER_COMPARE:
+			component = getPlayerComparePanel();
+			titel = HOVerwaltung.instance().getLanguageString("PlayerCompare");
+			temporaer = UserParameter.instance().tempTabPlayerCompare;
+			break;
 		default:
 			return;
 		}
@@ -1272,19 +1295,18 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private void saveUserParameter() {
 		UserParameter parameter = UserParameter.instance();
 
-		final int[] sup = getSpielerUebersichtPanel().getDividerLocations();
-		final int[] ap = getAufstellungsPanel().getDividerLocations();
-		final int[] sp = getMatchesPanel().getDividerLocations();
-		final int spa = getSpielerAnalyseMainPanel().getDividerLocation();
-		final AufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
-		final int tsp = getTransferScoutPanel().getScoutPanel().getDividerLocation();
+		parameter.hoMainFrame_PositionX =  Math.max(getLocation().x, 0);
+		parameter.hoMainFrame_PositionY = Math.max(getLocation().y, 0);
+		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - parameter.hoMainFrame_PositionX);
+		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
 
-		final int locx = Math.max(getLocation().x, 0);
-		final int locy = Math.max(getLocation().y, 0);
-		parameter.hoMainFrame_PositionX = locx;
-		parameter.hoMainFrame_PositionY = locy;
-		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - locx);
-		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - locy);
+		
+		
+		
+		
+		
+		final AufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
+
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
 				getAufstellungsPanel().getBestPosWidth());
 
@@ -1299,33 +1321,46 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.aufstellungsAssistentPanel_notLast = aap.isExcludeLastMatch();
 
 		// SpielerÜbersichtsPanel
-		parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = sup[0];
-		parameter.spielerUebersichtsPanel_horizontalRightSplitPane = sup[1];
-		parameter.spielerUebersichtsPanel_verticalSplitPane = sup[2];
+		if(m_jpSpielerUebersicht != null){
+			final int[] sup = getSpielerUebersichtPanel().getDividerLocations();
+			parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = sup[0];
+			parameter.spielerUebersichtsPanel_horizontalRightSplitPane = sup[1];
+			parameter.spielerUebersichtsPanel_verticalSplitPane = sup[2];
+			getSpielerUebersichtPanel().saveColumnOrder();
+		}
 
 		// AufstellungsPanel
-		parameter.aufstellungsPanel_verticalSplitPaneLow = ap[0];
-		parameter.aufstellungsPanel_horizontalLeftSplitPane = ap[1];
-		parameter.aufstellungsPanel_horizontalRightSplitPane = ap[2];
-		parameter.aufstellungsPanel_verticalSplitPane = ap[3];
+		if(m_jpAufstellung != null){
+			final int[] ap = getAufstellungsPanel().getDividerLocations();
+			parameter.aufstellungsPanel_verticalSplitPaneLow = ap[0];
+			parameter.aufstellungsPanel_horizontalLeftSplitPane = ap[1];
+			parameter.aufstellungsPanel_horizontalRightSplitPane = ap[2];
+			parameter.aufstellungsPanel_verticalSplitPane = ap[3];
+			getAufstellungsPanel().saveColumnOrder();
+		}
 
 		// SpielePanel
-		parameter.spielePanel_horizontalLeftSplitPane = sp[0];
-		parameter.spielePanel_verticalSplitPane = sp[1];
+		if(m_jpSpielePanel != null){
+			final int[] sp = getMatchesPanel().getDividerLocations();
+			parameter.spielePanel_horizontalLeftSplitPane = sp[0];
+			parameter.spielePanel_verticalSplitPane = sp[1];
+			getMatchesPanel().saveColumnOrder();
+		}
 
 		// SpielerAnalyse
-		parameter.spielerAnalysePanel_horizontalSplitPane = spa;
+		if(m_jpSpielerAnalysePanel != null){
+			final int spa = getSpielerAnalyseMainPanel().getDividerLocation();
+			parameter.spielerAnalysePanel_horizontalSplitPane = spa;
+			getSpielerAnalyseMainPanel().saveColumnOrder();
+		}
 
 		// TransferScoutPanel
-		parameter.transferScoutPanel_horizontalSplitPane = tsp;
+		if(m_jpTransferScout != null){
+			final int tsp = getTransferScoutPanel().getScoutPanel().getDividerLocation();
+			parameter.transferScoutPanel_horizontalSplitPane = tsp;
+		}
 
 		DBManager.instance().saveUserParameter();
-
-		getSpielerUebersichtPanel().saveColumnOrder();
-		getMatchesPanel().saveColumnOrder();
-		getAufstellungsPanel().saveColumnOrder();
-		getSpielerAnalyseMainPanel().saveColumnOrder();
-
 	}
 
 

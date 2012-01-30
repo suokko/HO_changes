@@ -30,6 +30,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
     private JCheckBox m_jchTransferscout;
     private JCheckBox trainingCheckBox;
     private JCheckBox teamAnalyzerCheckBox;
+    private JCheckBox playerCompareCheckBox;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -66,6 +67,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         gui.UserParameter.temp().tempTabTraining =!trainingCheckBox.isSelected();
         gui.UserParameter.temp().tempTabTeamAnalyzer = !teamAnalyzerCheckBox.isSelected();
         gui.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
+        gui.UserParameter.temp().tempTabPlayerCompare = !playerCompareCheckBox.isSelected();
     }
 
     /**
@@ -147,5 +149,12 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         teamAnalyzerCheckBox.setSelected(!gui.UserParameter.temp().tempTabTeamAnalyzer);
         teamAnalyzerCheckBox.addItemListener(this);
         add(teamAnalyzerCheckBox);
+        
+        playerCompareCheckBox = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("PlayerCompare"));
+        playerCompareCheckBox.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
+        playerCompareCheckBox.setOpaque(false);
+        playerCompareCheckBox.setSelected(!gui.UserParameter.temp().tempTabPlayerCompare);
+        playerCompareCheckBox.addItemListener(this);
+        add(playerCompareCheckBox);
     }
 }
