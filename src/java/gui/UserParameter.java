@@ -181,6 +181,7 @@ public final class UserParameter extends Configuration {
     public boolean tempTabTraining;
     public boolean tempTabTransferscout = true;
     public boolean tempTabTeamAnalyzer;
+    public boolean tempTabPlayerCompare = true;
 
     //Update
 	public boolean newsCheck = false;
@@ -581,6 +582,7 @@ public final class UserParameter extends Configuration {
 		map.put("transferTypePane_splitPane", String.valueOf(transferTypePane_splitPane));
 		map.put("tempTabTraining", String.valueOf(tempTabTraining));
 		map.put("tempTabTeamAnalyzer", String.valueOf(tempTabTeamAnalyzer));
+		map.put("tempTabPlayerCompare", String.valueOf(tempTabPlayerCompare));
 		map.put("training_splitPane", String.valueOf(training_splitPane));
 		map.put("training_bottomSplitPane", String.valueOf(training_bottomSplitPane));
 		map.put("training_rightSplitPane", String.valueOf(training_rightSplitPane));
@@ -799,6 +801,7 @@ public final class UserParameter extends Configuration {
 		transferTypePane_splitPane = getIntValue(values, "transferTypePane_splitPane");
 		tempTabTraining = getBooleanValue(values, "tempTabTraining");
 		tempTabTeamAnalyzer = getBooleanValue(values, "tempTabTeamAnalyzer");
+		tempTabPlayerCompare = getBooleanValue(values, "tempTabPlayerCompare");
 		training_splitPane= getIntValue(values, "training_splitPane");
 		training_bottomSplitPane= getIntValue(values, "training_bottomSplitPane");
 		training_rightSplitPane= getIntValue(values, "training_rightSplitPane");

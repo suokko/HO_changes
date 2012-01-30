@@ -1,5 +1,6 @@
 package ho.core.plugins;
 
+import gui.UserParameter;
 import ho.core.db.DBManager;
 
 import java.io.File;
@@ -8,6 +9,7 @@ import java.util.Vector;
 
 import plugins.IOfficialPlugin;
 import plugins.IPlugin;
+import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.SplashFrame;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.HOMiniModel;
@@ -21,6 +23,7 @@ public final class PluginManager {
 											23, // trainingExperience
 											25, //Transfer-Plugin*/
 											14, // TeamAnalyzer
+											45, // PlayerCompare	
 		};
 	public static String HOPLUGINS_DIRECTORY = System.getProperty("user.dir") + File.separator + HOPLUGINS;
 	
@@ -91,6 +94,7 @@ public final class PluginManager {
 									if(pluginId ==deprecatedlist[j] ){
 										deprecated = true;
 										deletePlugin(modul, true);
+										setTabVisible(pluginId);
 										HOLogger.instance().log(PluginManager.class,files[i].getName() + " deleted");
 									} 
 								}
@@ -118,6 +122,19 @@ public final class PluginManager {
 		}
 	}
 	
+	private static void setTabVisible(int pluginId) {
+		switch (pluginId) {
+		case 45:
+			UserParameter.instance().tempTabPlayerCompare = false;
+			HOMainFrame.instance().showTab(HOMainFrame.PLAYER_COMPARE);
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+
 	/**
 	 * Returns the Vector with the started Plugins
 	 */
