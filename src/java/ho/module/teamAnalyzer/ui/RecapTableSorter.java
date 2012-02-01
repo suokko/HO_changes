@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.module.ModuleConfig;
+import ho.module.teamAnalyzer.SystemManager;
 import ho.module.transfer.ui.sorter.AbstractTableSorter;
 
 import java.text.DecimalFormat;
@@ -81,12 +82,12 @@ public class RecapTableSorter extends AbstractTableSorter {
                     public int compare(String arg0, String arg1) {
                         try {
                             double d1 = RatingUtil.getRating(arg0 + "",
-                            		ModuleConfig.instance().getBoolean(ModuleConfig.isNumericRating),
-                            		ModuleConfig.instance().getBoolean(ModuleConfig.isDescriptionRating),
+                            		ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
+                            		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING),
                                                              skills);
                             double d2 = RatingUtil.getRating(arg1 + "",
-                            		ModuleConfig.instance().getBoolean(ModuleConfig.isNumericRating),
-                            		ModuleConfig.instance().getBoolean(ModuleConfig.isDescriptionRating),
+                            		ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
+                            		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING),
                                                              skills);
 
                             if (d1 > d2) {

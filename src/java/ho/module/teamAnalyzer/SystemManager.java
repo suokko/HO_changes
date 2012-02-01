@@ -20,7 +20,20 @@ import de.hattrickorganizer.model.HOVerwaltung;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class SystemManager {
-    //~ Static fields/initializers -----------------------------------------------------------------
+	public final static String ISNUMERICRATING = "TA_numericRating";
+    public final static String  ISLINEUP= "TA_lineupCompare"; 
+    public final static String  ISTACTICDETAIL= "TA_tacticDetail";
+    public final static String  ISDESCRIPTIONRATING= "TA_descriptionRating";
+    public final static String  ISSHOWUNAVAILABLE= "TA_isShowPlayerInfo";
+    public final static String  ISMIXEDLINEUP= "TA_mixedLineup";
+    public final static String  ISSTARS= "TA_isStars";
+    public final static String  ISTOTALSTRENGTH= "TA_isTotalStrength";
+    public final static String  ISSQUAD= "TA_isSquad";
+    public final static String  ISSMARTSQUAD= "TA_isSmartSquad";
+    public final static String  ISLODDARSTATS= "TA_isLoddarStats";
+    public final static String  ISSHOWPLAYERINFO= "TA_isShowPlayerInfo";
+    public final static String  ISCHECKTEAMNAME= "TA_isCheckTeamName";
+	//~ Static fields/initializers -----------------------------------------------------------------
 
     /** The Selected Team */
     private static Team selectedTeam;

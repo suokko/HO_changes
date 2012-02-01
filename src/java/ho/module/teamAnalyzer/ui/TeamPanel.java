@@ -193,8 +193,8 @@ public class TeamPanel extends JPanel {
         fillPanel(lineupPanel.getOpponentTeam().getMiddleCentralDefenderPanel(), middleCentral);
         fillPanel(lineupPanel.getOpponentTeam().getCentralMidfieldPanel(), centralMidfielder);
 
-        lineupPanel.reload(ModuleConfig.instance().getBoolean(ModuleConfig.isLineup),
-        		ModuleConfig.instance().getBoolean(ModuleConfig.isMixedLineup));
+        lineupPanel.reload(ModuleConfig.instance().getBoolean(SystemManager.ISLINEUP),
+        		ModuleConfig.instance().getBoolean(SystemManager.ISMIXEDLINEUP));
         grassPanel.repaint();
     }
 

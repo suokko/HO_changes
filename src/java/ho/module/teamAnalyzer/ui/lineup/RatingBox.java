@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui.lineup;
 
 import ho.module.ModuleConfig;
+import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RatingUtil;
 
 import java.awt.Color;
@@ -34,10 +35,10 @@ class RatingBox extends JPanel {
     }
 
     void reload(int r1, int r2) {
-        myValue.setText(RatingUtil.getRating(r1, ModuleConfig.instance().getBoolean(ModuleConfig.isNumericRating),
-        		ModuleConfig.instance().getBoolean(ModuleConfig.isDescriptionRating)));
-        opponentValue.setText(RatingUtil.getRating(r2, ModuleConfig.instance().getBoolean(ModuleConfig.isNumericRating),
-        		ModuleConfig.instance().getBoolean(ModuleConfig.isDescriptionRating)));
+        myValue.setText(RatingUtil.getRating(r1, ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
+        		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING)));
+        opponentValue.setText(RatingUtil.getRating(r2, ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
+        		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING)));
         arrow.setIcon(HelperWrapper.instance().getImageIcon4Veraenderung(r1 - r2));
     }
 

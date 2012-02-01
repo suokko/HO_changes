@@ -10,19 +10,9 @@ import java.util.HashMap;
 
 
 public final class ModuleConfig  {
-    public final static String isNumericRating = "TA_numericRating";
-    public final static String  isLineup= "TA_lineupCompare"; 
-    public final static String  isTacticDetail= "TA_tacticDetail";
-    public final static String  isDescriptionRating= "TA_descriptionRating";
-    public final static String  isShowUnavailable= "TA_isShowPlayerInfo";
-    public final static String  isMixedLineup= "TA_mixedLineup";
-    public final static String  isStars= "TA_isStars";
-    public final static String  isTotalStrength= "TA_isTotalStrength";
-    public final static String  isSquad= "TA_isSquad";
-    public final static String  isSmartSquad= "TA_isSmartSquad";
-    public final static String  isLoddarStats= "TA_isLoddarStats";
-    public final static String  isShowPlayerInfo= "TA_isShowPlayerInfo";
-    public final static String  isCheckTeamName= "TA_isCheckTeamName";
+    
+    
+
 	
 	
 	private HashMap<String,Object> configMap = new HashMap<String,Object>();
@@ -110,7 +100,9 @@ public final class ModuleConfig  {
 	public void setDate(String key,Date value){
 		configMap.put(key,value);
 	}
-	
+	public boolean containsKey(String key){
+		return configMap.containsKey(key);
+	}
 	public final int[] getIntArray(String key){
 		int[] values = new int[1];
 		String value = getString(key);
