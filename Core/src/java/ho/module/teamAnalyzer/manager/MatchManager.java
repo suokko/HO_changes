@@ -5,7 +5,6 @@ import ho.core.db.DBManager;
 import ho.module.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
-import ho.module.teamAnalyzer.ui.component.SettingPanel;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.MatchDetail;
 
@@ -122,7 +121,7 @@ public class MatchManager {
                 temp = match.getAwayTeam();
             }
 
-            if (ModuleConfig.instance().getBoolean(ModuleConfig.isCheckTeamName)) {
+            if (ModuleConfig.instance().getBoolean(SystemManager.ISCHECKTEAMNAME)) {
                 // Fix for missing last dot!
                 String oldShort = oldName.substring(0, oldName.length() - 1);
 

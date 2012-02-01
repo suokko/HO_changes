@@ -51,31 +51,31 @@ public class SettingPanel extends JPanel {
      */
     public SettingPanel() {
         super();
-        numberRating.setSelected(config.getBoolean(ModuleConfig.isNumericRating));
+        numberRating.setSelected(config.getBoolean(SystemManager.ISNUMERICRATING));
         numberRating.setOpaque(false);
-        descRating.setSelected(config.getBoolean(ModuleConfig.isDescriptionRating));
+        descRating.setSelected(config.getBoolean(SystemManager.ISDESCRIPTIONRATING));
         descRating.setOpaque(false);
-        myLineup.setSelected(config.getBoolean(ModuleConfig.isLineup));
+        myLineup.setSelected(config.getBoolean(SystemManager.ISLINEUP));
         myLineup.setOpaque(false);
-        tacticDetail.setSelected(config.getBoolean(ModuleConfig.isTacticDetail));
+        tacticDetail.setSelected(config.getBoolean(SystemManager.ISTACTICDETAIL));
         tacticDetail.setOpaque(false);
-        unavailable.setSelected(config.getBoolean(ModuleConfig.isShowUnavailable));
+        unavailable.setSelected(config.getBoolean(SystemManager.ISSHOWUNAVAILABLE));
         unavailable.setOpaque(false);
-        playerInfo.setSelected(config.getBoolean(ModuleConfig.isShowPlayerInfo));
+        playerInfo.setSelected(config.getBoolean(SystemManager.ISSHOWPLAYERINFO));
         playerInfo.setOpaque(false);
-        mixedLineup.setSelected(config.getBoolean(ModuleConfig.isMixedLineup));
+        mixedLineup.setSelected(config.getBoolean(SystemManager.ISMIXEDLINEUP));
         mixedLineup.setOpaque(false);
-        stars.setSelected(config.getBoolean(ModuleConfig.isStars));
+        stars.setSelected(config.getBoolean(SystemManager.ISSTARS));
         stars.setOpaque(false);
-        smartSquad.setSelected(config.getBoolean(ModuleConfig.isSmartSquad));
+        smartSquad.setSelected(config.getBoolean(SystemManager.ISSMARTSQUAD));
         smartSquad.setOpaque(false);
-        loddarStats.setSelected(config.getBoolean(ModuleConfig.isLoddarStats));
+        loddarStats.setSelected(config.getBoolean(SystemManager.ISLODDARSTATS));
         loddarStats.setOpaque(false);
-        squad.setSelected(config.getBoolean(ModuleConfig.isSquad));
+        squad.setSelected(config.getBoolean(SystemManager.ISSQUAD));
         squad.setOpaque(false);
-        totalStrength.setSelected(config.getBoolean(ModuleConfig.isTotalStrength));
+        totalStrength.setSelected(config.getBoolean(SystemManager.ISTOTALSTRENGTH));
         totalStrength.setOpaque(false);
-        checkName.setSelected(config.getBoolean(ModuleConfig.isCheckTeamName));
+        checkName.setSelected(config.getBoolean(SystemManager.ISCHECKTEAMNAME));
         checkName.setOpaque(false);
         jbInit();
     }
@@ -114,7 +114,7 @@ public class SettingPanel extends JPanel {
         numberRating.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (numberRating.isSelected() || descRating.isSelected()) {
-                    	config.setBoolean(ModuleConfig.isNumericRating,numberRating.isSelected());
+                    	config.setBoolean(SystemManager.ISNUMERICRATING,numberRating.isSelected());
                         SystemManager.updateUI();
                     } else {
                         numberRating.setSelected(true);
@@ -125,7 +125,7 @@ public class SettingPanel extends JPanel {
         descRating.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (numberRating.isSelected() || descRating.isSelected()) {
-                    	config.setBoolean(ModuleConfig.isDescriptionRating,descRating.isSelected());
+                    	config.setBoolean(SystemManager.ISDESCRIPTIONRATING,descRating.isSelected());
                         SystemManager.updateUI();
                     } else {
                         descRating.setSelected(true);
@@ -135,21 +135,21 @@ public class SettingPanel extends JPanel {
 
         stars.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isStars,stars.isSelected());
+                	config.setBoolean(SystemManager.ISSTARS,stars.isSelected());
                     SystemManager.updateUI();
                     
                 }
             });
         totalStrength.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isTotalStrength,totalStrength.isSelected());
+                	config.setBoolean(SystemManager.ISTOTALSTRENGTH,totalStrength.isSelected());
                     SystemManager.updateUI();
                    
                 }
             });
         checkName.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isCheckTeamName,checkName.isSelected());
+                	config.setBoolean(SystemManager.ISCHECKTEAMNAME,checkName.isSelected());
                     SystemManager.updateUI();
                     
                 }
@@ -157,14 +157,14 @@ public class SettingPanel extends JPanel {
 
         squad.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isSquad,squad.isSelected());
+                	config.setBoolean(SystemManager.ISSQUAD,squad.isSelected());
                     SystemManager.updateUI();
                     
                 }
             });
         smartSquad.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isSmartSquad,smartSquad.isSelected());
+                	config.setBoolean(SystemManager.ISSMARTSQUAD,smartSquad.isSelected());
                     SystemManager.updateUI();
                     
                 }
@@ -172,7 +172,7 @@ public class SettingPanel extends JPanel {
 
         loddarStats.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isLoddarStats,loddarStats.isSelected());
+                	config.setBoolean(SystemManager.ISLODDARSTATS,loddarStats.isSelected());
                     SystemManager.updateUI();
                    
                 }
@@ -180,33 +180,33 @@ public class SettingPanel extends JPanel {
 
         myLineup.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isLineup,myLineup.isSelected());
+                	config.setBoolean(SystemManager.ISLINEUP,myLineup.isSelected());
                     SystemManager.updateUI();
                 }
             });
 
         tacticDetail.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isTacticDetail,tacticDetail.isSelected());
+                	config.setBoolean(SystemManager.ISTACTICDETAIL,tacticDetail.isSelected());
                     SystemManager.updateUI();
                 }
             });
 
         unavailable.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isShowUnavailable,unavailable.isSelected());
+                	config.setBoolean(SystemManager.ISSHOWUNAVAILABLE,unavailable.isSelected());
                     SystemManager.updateUI();
                 }
             });
         playerInfo.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isShowPlayerInfo,playerInfo.isSelected());
+                	config.setBoolean(SystemManager.ISSHOWPLAYERINFO,playerInfo.isSelected());
                     SystemManager.updateUI();
                 }
             });
         mixedLineup.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(ModuleConfig.isMixedLineup,mixedLineup.isSelected());
+                	config.setBoolean(SystemManager.ISMIXEDLINEUP,mixedLineup.isSelected());
                     SystemManager.updateUI();
                 }
             });

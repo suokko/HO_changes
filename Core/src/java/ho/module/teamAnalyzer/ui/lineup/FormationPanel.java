@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui.lineup;
 
 import ho.module.ModuleConfig;
+import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.TeamLineupData;
 
 import javax.swing.JPanel;
@@ -53,7 +54,7 @@ public class FormationPanel extends JPanel {
      * Creates a new FormationPanel object.
      */
     public FormationPanel() {
-        setLayout(ModuleConfig.instance().getBoolean(ModuleConfig.isLineup), ModuleConfig.instance().getBoolean(ModuleConfig.isMixedLineup));
+        setLayout(ModuleConfig.instance().getBoolean(SystemManager.ISLINEUP), ModuleConfig.instance().getBoolean(SystemManager.ISMIXEDLINEUP));
     }
 
     //~ Methods ------------------------------------------------------------------------------------

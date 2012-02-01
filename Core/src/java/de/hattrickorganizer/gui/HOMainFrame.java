@@ -4,13 +4,16 @@ package de.hattrickorganizer.gui;
 import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.tabbedPane.TabCloseIcon;
 import ho.module.misc.InformationsPanel;
-import ho.module.playerCompare.PlayerComparePanel;
+import ho.module.playeranalysis.PlayerAnalysisPanel;
+import ho.module.playeranalysis.skillCompare.PlayerComparePanel;
 import ho.module.series.SeriesPanel;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.ui.component.TAMenu;
 import ho.module.training.TrainingPanel;
 import ho.module.transfer.TransfersPanel;
+import ho.module.tsforecast.TSForecast;
 import ho.tool.ToolManager;
 
 import java.awt.BorderLayout;
@@ -57,7 +60,6 @@ import de.hattrickorganizer.gui.matches.SpielePanel;
 import de.hattrickorganizer.gui.menu.DownloadDialog;
 import de.hattrickorganizer.gui.menu.HRFImport;
 import de.hattrickorganizer.gui.menu.option.OptionenDialog;
-import de.hattrickorganizer.gui.playeranalysis.SpielerAnalyseMainPanel;
 import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtsPanel;
 import de.hattrickorganizer.gui.statistic.StatistikMainPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
@@ -111,7 +113,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final int TRAINING = 7;
 	public static final int INFORMATIONEN = 8;
 	public static final int TEAM_ANALYZER = 9;
-	public static final int PLAYER_COMPARE = 10;
+	public static final int TSFORECAST = 10;
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
@@ -124,13 +126,13 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private InformationsPanel m_jpInformation;
 	private SeriesPanel m_jpLigaTabelle;
 	private SpielePanel m_jpSpielePanel;
-	private SpielerAnalyseMainPanel m_jpSpielerAnalysePanel;
+	private PlayerAnalysisPanel m_jpSpielerAnalysePanel;
 	private SpielerUebersichtsPanel m_jpSpielerUebersicht;
 	private StatistikMainPanel m_jpStatistikPanel;
 	private TransfersPanel m_jpTransferScout;
 	private TrainingPanel trainingPanel;
 	private TeamAnalyzerPanel teamAnalyzerPanel;
-	private PlayerComparePanel playerComparePanel;
+	private TSForecast tsForecastPanel;
 	
 	
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
@@ -180,7 +182,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiVerschiedenes = new JMenuItem(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
 	private final JMenuItem m_jmiTrainingExperience = new JMenuItem(HOVerwaltung.instance().getLanguageString("Training"));
 	private final JMenuItem m_jmiTeamAnalyzer = new JMenuItem(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"));
-	private final JMenuItem m_jmiPlayerCompare = new JMenuItem(HOVerwaltung.instance().getLanguageString("PlayerCompare"));
+	private final JMenuItem m_jmiTSForecast = new JMenuItem(HOVerwaltung.instance().getLanguageString("TSForecast"));
 	// Components
 	private JTabbedPane m_jtpTabbedPane;
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
@@ -342,9 +344,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return m_jpInformation;
 	}
 
-	public SpielerAnalyseMainPanel getSpielerAnalyseMainPanel() {
+	public PlayerAnalysisPanel getSpielerAnalyseMainPanel() {
 		if(m_jpSpielerAnalysePanel == null)
-			m_jpSpielerAnalysePanel = new SpielerAnalyseMainPanel();
+			m_jpSpielerAnalysePanel = new PlayerAnalysisPanel();
 		return m_jpSpielerAnalysePanel;
 	}
 
@@ -360,10 +362,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return m_jpLigaTabelle;
 	}
 	
-	public PlayerComparePanel getPlayerComparePanel(){
-		if(playerComparePanel == null)
-			playerComparePanel = new PlayerComparePanel();
-		return playerComparePanel;
+	public TSForecast getTSForecastPanel(){
+		if(tsForecastPanel == null)
+			tsForecastPanel = new TSForecast();
+		return tsForecastPanel;
 	}
 	/**
 	 * Get the main statistics panel.
@@ -479,8 +481,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			showTab(HOMainFrame.TRAINING);
 		} else if (source.equals(m_jmiTeamAnalyzer)) { // TeamAnalyzer
 			showTab(HOMainFrame.TEAM_ANALYZER);
-		}else if(source.equals(m_jmiPlayerCompare)) {
-			showTab(HOMainFrame.PLAYER_COMPARE);
+		}else if (source.equals(m_jmiTSForecast)){
+			showTab(HOMainFrame.TSFORECAST);
 		} else if (source.equals(m_jmiVerschiedenes)) { // Misc
 			showTab(HOMainFrame.INFORMATIONEN);
 		} else if (source.equals(m_jmCreditsItem)) { 
@@ -608,10 +610,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Aufstellung
-		
-
 		if (!UserParameter.instance().tempTabAufstellung) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Aufstellung"), getAufstellungsPanel());
+			m_jtpTabbedPane.setIconAt(m_jtpTabbedPane.getComponentCount()-1, new TabCloseIcon());
 		}
 
 		// Tabelle
@@ -620,56 +621,41 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 
 		// Spiele
-		
-
 		if (!UserParameter.instance().tempTabSpiele) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), getMatchesPanel());
 		}
 
 		// SpielerAnalyse
-		
-
 		if (!UserParameter.instance().tempTabSpieleranalyse) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"), getSpielerAnalyseMainPanel());
 		}
 
-
 		// Transferscout
-		
-
 		if (!UserParameter.instance().tempTabTransferscout) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Transfers"), getTransferScoutPanel());
 		}
 
 		//Training
-		
-		
 		if (!UserParameter.instance().tempTabTraining) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"), getTrainingPanel());
 		}
 		
-		
 		// Sonstiges
-		
-
 		if (!UserParameter.instance().tempTabInformation) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"), getInformationsPanel());
 		}
 
 		// Statistiken
-		
-
 		if (!UserParameter.instance().tempTabStatistik) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Statistik"), getStatistikMainPanel());
 		}
 
-		
 		if (!UserParameter.instance().tempTabTeamAnalyzer) {
 			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"), getTeamAnalyzerPanel());
 		}
 		
-		if (!UserParameter.instance().tempTabPlayerCompare) {
-			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("PlayerCompare"), getPlayerComparePanel());
+		if (!UserParameter.instance().tempTabTSForecast) {
+			m_jtpTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TSForecast"), getTSForecastPanel());
 		}
 		
 		// Matchpaneltest
@@ -844,10 +830,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiTeamAnalyzer.addActionListener(this);
 		m_jmVerschiedenes.add(m_jmiTeamAnalyzer);
 		
+		m_jmiTSForecast.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, KeyEvent.CTRL_MASK));
+		m_jmiTSForecast.addActionListener(this);
+		m_jmVerschiedenes.add(m_jmiTSForecast);
 		
-		m_jmiPlayerCompare.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, KeyEvent.CTRL_MASK));
-		m_jmiPlayerCompare.addActionListener(this);
-		m_jmVerschiedenes.add(m_jmiPlayerCompare);
 		
 		m_jmMenuBar.add(m_jmVerschiedenes);
 		
@@ -1047,10 +1033,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			titel = HOVerwaltung.instance().getLanguageString("TeamAnalyzer");
 			temporaer = UserParameter.instance().tempTabTeamAnalyzer;
 			break;
-		case PLAYER_COMPARE:
-			component = getPlayerComparePanel();
-			titel = HOVerwaltung.instance().getLanguageString("PlayerCompare");
-			temporaer = UserParameter.instance().tempTabPlayerCompare;
+		case TSFORECAST:
+			component = getTSForecastPanel();
+			titel = HOVerwaltung.instance().getLanguageString("TSForecast");
+			temporaer = UserParameter.instance().tempTabTSForecast;
 			break;
 		default:
 			return;
