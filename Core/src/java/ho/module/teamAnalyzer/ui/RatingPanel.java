@@ -59,7 +59,7 @@ public class RatingPanel extends JPanel {
         tableModel = new UiRatingTableModel(new Vector<Object>(), new Vector<String>(Arrays.asList(columns)));
         table.setModel(tableModel);
 
-        if ((lineup == null) || (!ModuleConfig.instance().getBoolean(ModuleConfig.isLineup))) {
+        if ((lineup == null) || (!ModuleConfig.instance().getBoolean(SystemManager.ISLINEUP))) {
             return;
         }
 
@@ -96,8 +96,8 @@ public class RatingPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     private String getRating(int rating) {
-        return RatingUtil.getRating(rating, ModuleConfig.instance().getBoolean(ModuleConfig.isNumericRating),
-        		ModuleConfig.instance().getBoolean(ModuleConfig.isDescriptionRating));
+        return RatingUtil.getRating(rating, ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
+        		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING));
     }
 
     /**

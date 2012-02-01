@@ -5,7 +5,6 @@ import ho.module.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.report.TeamReport;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
-import ho.module.teamAnalyzer.ui.component.SettingPanel;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.MatchDetail;
 import ho.module.teamAnalyzer.vo.TeamLineup;
@@ -77,7 +76,7 @@ public class ReportManager {
         for (Iterator<?> iter = matchDetails.iterator(); iter.hasNext();) {
             MatchDetail match = (MatchDetail) iter.next();
 
-            report.addMatch(match, ModuleConfig.instance().getBoolean(ModuleConfig.isShowUnavailable));
+            report.addMatch(match, ModuleConfig.instance().getBoolean(SystemManager.ISSHOWUNAVAILABLE));
         }
 
         TeamLineupBuilder builder = new TeamLineupBuilder(report);

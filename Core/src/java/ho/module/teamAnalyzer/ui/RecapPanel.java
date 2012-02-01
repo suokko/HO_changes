@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.ui;
 
 //import ho.module.teamAnalyzer.SystemManager;
 import ho.module.ModuleConfig;
+import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.MatchPopulator;
 import ho.module.teamAnalyzer.ui.controller.RecapListSelectionListener;
 import ho.module.teamAnalyzer.ui.model.UiRecapTableModel;
@@ -204,31 +205,31 @@ public class RecapPanel extends JPanel {
         setColumnWidth(3, 50);
         setColumnWidth(4, 50);
 
-        if (ModuleConfig.instance().getBoolean(ModuleConfig.isStars)) {
+        if (ModuleConfig.instance().getBoolean(SystemManager.ISSTARS)) {
             setColumnWidth(12, 50);
         } else {
             setColumnInvisible(12);
         }
 
-        if (ModuleConfig.instance().getBoolean(ModuleConfig.isTotalStrength)) {
+        if (ModuleConfig.instance().getBoolean(SystemManager.ISTOTALSTRENGTH)) {
             setColumnWidth(13, 50);
         } else {
             setColumnInvisible(13);
         }
 
-        if (ModuleConfig.instance().getBoolean(ModuleConfig.isSquad)) {
+        if (ModuleConfig.instance().getBoolean(SystemManager.ISSQUAD)) {
             setColumnWidth(14, 50);
         } else {
             setColumnInvisible(14);
         }
 
-        if (ModuleConfig.instance().getBoolean(ModuleConfig.isSmartSquad)) {
+        if (ModuleConfig.instance().getBoolean(SystemManager.ISSMARTSQUAD)) {
             setColumnWidth(15, 50);
         } else {
             setColumnInvisible(15);
         }
 
-        if (ModuleConfig.instance().getBoolean(ModuleConfig.isLoddarStats)) {
+        if (ModuleConfig.instance().getBoolean(SystemManager.ISLODDARSTATS)) {
             setColumnWidth(16, 50);
         } else {
             setColumnInvisible(16);
@@ -297,8 +298,8 @@ public class RecapPanel extends JPanel {
      */
     private String getRating(int rating) {
         return RatingUtil.getRating(rating, 
-        		ModuleConfig.instance().getBoolean(ModuleConfig.isNumericRating),
-        		ModuleConfig.instance().getBoolean(ModuleConfig.isDescriptionRating));
+        		ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
+        		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING));
     }
 
     /**

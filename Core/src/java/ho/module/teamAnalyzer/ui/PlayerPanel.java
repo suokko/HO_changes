@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.module.ModuleConfig;
+import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.report.TacticReport;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
@@ -114,12 +115,12 @@ public class PlayerPanel extends JPanel {
         int height = 60;
 
         if (!(this instanceof UserTeamPlayerPanel)) {
-            if (ModuleConfig.instance().getBoolean(ModuleConfig.isShowPlayerInfo)) {
+            if (ModuleConfig.instance().getBoolean(SystemManager.ISSHOWPLAYERINFO)) {
                 height = height + 50;
             }
         }
 
-        if (ModuleConfig.instance().getBoolean(ModuleConfig.isTacticDetail)) {
+        if (ModuleConfig.instance().getBoolean(SystemManager.ISTACTICDETAIL)) {
             height = height + 50;
         }
        
@@ -135,7 +136,7 @@ public class PlayerPanel extends JPanel {
      * Reload and refresh data for a certain spot/player.
      */
     public void reload(SpotLineup lineup, int week, int season) {
-        tacticPanel.setVisible(ModuleConfig.instance().getBoolean(ModuleConfig.isTacticDetail));
+        tacticPanel.setVisible(ModuleConfig.instance().getBoolean(SystemManager.ISTACTICDETAIL));
         mainPanel.setPreferredSize(getDefaultSize());
 
         if (lineup != null) {
@@ -163,7 +164,7 @@ public class PlayerPanel extends JPanel {
 
             appearanceField.setText("" + lineup.getAppearance());
 
-            if (ModuleConfig.instance().getBoolean(ModuleConfig.isShowPlayerInfo)) {
+            if (ModuleConfig.instance().getBoolean(SystemManager.ISSHOWPLAYERINFO)) {
                 PlayerInfo pi = PlayerDataManager.getPlayerInfo(lineup.getPlayerId(), week, season);
 
                 if (pi.getAge() != 0) {
