@@ -163,9 +163,10 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 		put(REMOVE,"gui/bilder/remove.png");
 		put(BALL,"gui/bilder/Ball.png");
 		put(BUTTON_BALL,"gui/bilder/Ball.png");
-		
 		put(TRANSFER_IN,"gui/bilder/in.gif");
 		put(TRANSFER_OUT,"gui/bilder/out.gif");
+		
+		put(TABBEDPANE_CLOSE,"gui/bilder/closeTab.gif");
 		
 	}
 

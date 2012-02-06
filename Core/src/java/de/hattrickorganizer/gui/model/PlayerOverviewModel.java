@@ -1,10 +1,11 @@
 package de.hattrickorganizer.gui.model;
 
+import ho.module.playerOverview.SpielerTrainingsVergleichsPanel;
+
 import java.util.Vector;
 
 import plugins.ISpieler;
 
-import de.hattrickorganizer.gui.playeroverview.SpielerTrainingsVergleichsPanel;
 import de.hattrickorganizer.model.Spieler;
 
 /**

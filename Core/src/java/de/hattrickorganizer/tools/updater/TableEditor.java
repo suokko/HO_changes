@@ -13,11 +13,14 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
 
+import de.hattrickorganizer.gui.model.SpielerTableRenderer;
+import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -94,7 +97,7 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
      */
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
                                                  int row, int column) {
-        editor = (TableCellEditor) editors.get(new Integer(row));
+        editor = editors.get(Integer.valueOf(row));
 
         if (editor == null) {
             editor = defaultEditor;
@@ -102,6 +105,11 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
 
         if (value != null) {
             try {
+            	if(value instanceof JComponent){
+            		((JComponent)value).setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
+            		((JComponent)value).setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:ColorLabelEntry.FG_STANDARD);
+            	}
+            		
                 if (value instanceof JTextField) {
                     ((JTextField) value).setFocusCycleRoot(true);
                     return (JTextField) value;

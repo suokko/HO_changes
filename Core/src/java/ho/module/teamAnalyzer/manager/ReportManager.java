@@ -1,7 +1,7 @@
 // %3860311605:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.report.TeamReport;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;

@@ -1,7 +1,9 @@
 // %198737965:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
-import ho.module.ModuleConfig;
+import ho.core.module.ModuleConfigPanel;
+import ho.core.module.ModuleManager;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.ui.component.SettingPanel;
 
@@ -37,7 +39,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     private RatingOffsetPanel m_jpRatingOffset;
     private SonstigeOptionenPanel m_jpSonstigeOptionen;
     private CheckOptionPanel hoConnectionOptions;
-    private TabOptionenPanel m_jpTabOptionen;
+//    private TabOptionenPanel m_jpTabOptionen;
     private TrainingsOptionenPanel m_jpTrainingsOptionen;
     private UserPanel m_jpUserOptionen;
     private UserColumnsPanel m_jpUserColumns;
@@ -150,9 +152,9 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
                           new JScrollPane(m_jpSonstigeOptionen));
 
         //Tab
-        m_jpTabOptionen = new TabOptionenPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TabManagement"),
-                          new JScrollPane(m_jpTabOptionen));
+//        m_jpTabOptionen = new TabOptionenPanel();
+//        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TabManagement"),
+//                          new JScrollPane(m_jpTabOptionen));
 
         //Farben
         m_jpFarben = new FarbPanel();
@@ -193,6 +195,8 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		taSettingsPanel = new SettingPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"),new JScrollPane(taSettingsPanel));
 
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Module"),new JScrollPane(new ModuleConfigPanel()));
+		
         //Tabs der plugins
         for (int i = 0;
              (i < HOMainFrame.instance().getOptionPanelNames().size())
@@ -234,7 +238,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(m_jbSave)) {
 			gui.UserParameter.saveTempParameter();
-			ModuleConfig.instance().save();
+			ModuleManager.instance().saveTemp();
 			if (OptionManager.instance().isRestartNeeded()) {
 		            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 		            		"", JOptionPane.INFORMATION_MESSAGE);
@@ -251,6 +255,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		}
 		else if (e.getSource().equals(m_jbCancel)) {
 			gui.UserParameter.deleteTempParameter();
+			ModuleManager.instance().clearTemp();
 		}
 		OptionManager.deleteInstance();
 		setVisible(false);

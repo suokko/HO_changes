@@ -1,7 +1,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import gui.UserParameter;
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.ReportManager;
 import ho.module.teamAnalyzer.ui.controller.SimButtonListener;
