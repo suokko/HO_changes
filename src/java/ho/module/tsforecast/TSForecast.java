@@ -1,7 +1,7 @@
 package ho.module.tsforecast;
 
 import ho.core.db.DBManager;
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -33,6 +33,33 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.PlayerHelper;
 
+/**
+ * Tab_TSForecast -> „hinzugefügt“
+
+Training -> Trainingsintensity
+
+trainer_start -> Trainerlevel
+
+no_teamleader -> "nicht weiterverwendet"
+
+teamleader -> "nicht weiterverwendet"
+
+beloved_team_member -> "nicht weiterverwendet"
+
+popular -> "nicht weiterverwendet"
+
+sympathetic -> "nicht weiterverwendet"
+
+pleasant -> "nicht weiterverwendet"
+
+controversial --> "nicht weiterverwendet"
+
+nasty --> "nicht weiterverwendet"
+ * 
+ * 
+ * @author thorsten
+ *
+ */
 public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListener,ItemListener {
   
 	private static final long serialVersionUID = 1L;
@@ -106,7 +133,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
       gridbagconstraints.gridheight = -1;
       add(m_jpGraphics, gridbagconstraints);
       
-      createTeamData(1);
+      //createTeamData(1);
       double d = ModuleConfig.instance().getBigDecimal(TS_GENERALSPIRIT).doubleValue();
       try { 
         m_LoepiForecast.setGeneralSpirit( d);
@@ -257,81 +284,81 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 
   //- private -------------------------------------------------------------------------
 
-  private int createTeamData(int gridy) throws SQLException {
-    IJDBCAdapter ijdbcadapter = DBManager.instance().getAdapter();
-    
-    GridBagConstraints gridbagconstraints = new GridBagConstraints();
-    gridbagconstraints.anchor = GridBagConstraints.WEST;
-    gridbagconstraints.insets = new Insets(0, 5, 5, 5);
-    gridbagconstraints.gridy = gridy;
-    gridbagconstraints.gridx = 1;
-    
-    String strLabel = new String();
-    
-    ResultSet resultset = ijdbcadapter.executeQuery("select FUEHRUNG from SPIELER where TRAINER > 0 order by DATUM desc");
-    if( resultset != null && resultset.first()) {
-      strLabel += HOVerwaltung.instance().getLanguageString( "FQTrainer")
-               + PlayerHelper.getNameForSkill( resultset.getInt("FUEHRUNG"), true)
-               + ". ";
-    }
-    
-    resultset = ijdbcadapter.executeQuery( "select max(FUEHRUNG) as MAXF, max(DATUM) as MAXD from SPIELER where TRAINER=0");
-    resultset.first();
-    resultset = ijdbcadapter.executeQuery( "select count(SPIELERID) as COUNTF from SPIELER where FUEHRUNG = "
-                                         + resultset.getInt("MAXF") + " and DATUM = '"
-                                         + resultset.getTimestamp("MAXD") + "' and TRAINER=0");
-    resultset.first();
-    if( resultset.getInt("COUNTF") > 1) {
-      strLabel += HOVerwaltung.instance().getLanguageString("no_teamleader");
-    } else {
-      strLabel += HOVerwaltung.instance().getLanguageString("teamleader") + " ";
-      resultset = ijdbcadapter.executeQuery("select ICHARAKTER from SPIELER order by FUEHRUNG desc, DATUM desc");
-
-      if(resultset != null && resultset.first()) {
-        switch(resultset.getInt("ICHARAKTER")) {
-          case 5: 
-              strLabel +=HOVerwaltung.instance().getLanguageString("beloved_team_member") + ". ";
-              break;
-          case 4: 
-              strLabel += HOVerwaltung.instance().getLanguageString("popular") + ". ";
-              break;
-          case 3: 
-              strLabel += HOVerwaltung.instance().getLanguageString("sympathetic") + ". ";
-              break;
-          case 2: 
-              strLabel +=HOVerwaltung.instance().getLanguageString("pleasant") + ". ";
-              break;
-          case 1: 
-              strLabel +=HOVerwaltung.instance().getLanguageString("controversial") + ". ";
-              break;
-          case 0: 
-              strLabel += HOVerwaltung.instance().getLanguageString("nasty") + ". ";
-              break;
-          default:
-              strLabel += "free of character. ";
-              break;
-        }
-      }
-    }
-    
-    resultset = ijdbcadapter.executeQuery("select PSCHYOLOGEN from VEREIN order by HRF_ID desc");
-    if(resultset != null && resultset.first()) {
-      strLabel += HOVerwaltung.instance().getLanguageString("Staff") 
-               + resultset.getInt("PSCHYOLOGEN") + " " 
-               + HOVerwaltung.instance().getLanguageString("Psychologen")
-               + ". ";
-    }
-    resultset = ijdbcadapter.executeQuery("select TRAININGSINTENSITAET from TEAM order by HRF_ID desc");
-    if(resultset != null && resultset.first()) {
-      strLabel += HOVerwaltung.instance().getLanguageString("Training") 
-               + resultset.getInt("TRAININGSINTENSITAET") 
-               + "% . ";
-    }
-    JLabel jlabel = new JLabel(strLabel, 2);
-    jlabel.setOpaque(true);
-    add(jlabel, gridbagconstraints);
-    return gridbagconstraints.gridy;
-  }
+//  private int createTeamData(int gridy) throws SQLException {
+//    IJDBCAdapter ijdbcadapter = DBManager.instance().getAdapter();
+//    
+//    GridBagConstraints gridbagconstraints = new GridBagConstraints();
+//    gridbagconstraints.anchor = GridBagConstraints.WEST;
+//    gridbagconstraints.insets = new Insets(0, 5, 5, 5);
+//    gridbagconstraints.gridy = gridy;
+//    gridbagconstraints.gridx = 1;
+//    
+//    String strLabel = new String();
+//    
+//    ResultSet resultset = ijdbcadapter.executeQuery("select FUEHRUNG from SPIELER where TRAINER > 0 order by DATUM desc");
+//    if( resultset != null && resultset.first()) {
+//      strLabel += HOVerwaltung.instance().getLanguageString( "FQTrainer")
+//               + PlayerHelper.getNameForSkill( resultset.getInt("FUEHRUNG"), true)
+//               + ". ";
+//    }
+//    
+//    resultset = ijdbcadapter.executeQuery( "select max(FUEHRUNG) as MAXF, max(DATUM) as MAXD from SPIELER where TRAINER=0");
+//    resultset.first();
+//    resultset = ijdbcadapter.executeQuery( "select count(SPIELERID) as COUNTF from SPIELER where FUEHRUNG = "
+//                                         + resultset.getInt("MAXF") + " and DATUM = '"
+//                                         + resultset.getTimestamp("MAXD") + "' and TRAINER=0");
+//    resultset.first();
+//    if( resultset.getInt("COUNTF") > 1) {
+//      strLabel += HOVerwaltung.instance().getLanguageString("no_teamleader");
+//    } else {
+//      strLabel += HOVerwaltung.instance().getLanguageString("teamleader") + " ";
+//      resultset = ijdbcadapter.executeQuery("select ICHARAKTER from SPIELER order by FUEHRUNG desc, DATUM desc");
+//
+//      if(resultset != null && resultset.first()) {
+//        switch(resultset.getInt("ICHARAKTER")) {
+//          case 5: 
+//              strLabel +=HOVerwaltung.instance().getLanguageString("beloved_team_member") + ". ";
+//              break;
+//          case 4: 
+//              strLabel += HOVerwaltung.instance().getLanguageString("popular") + ". ";
+//              break;
+//          case 3: 
+//              strLabel += HOVerwaltung.instance().getLanguageString("sympathetic") + ". ";
+//              break;
+//          case 2: 
+//              strLabel +=HOVerwaltung.instance().getLanguageString("pleasant") + ". ";
+//              break;
+//          case 1: 
+//              strLabel +=HOVerwaltung.instance().getLanguageString("controversial") + ". ";
+//              break;
+//          case 0: 
+//              strLabel += HOVerwaltung.instance().getLanguageString("nasty") + ". ";
+//              break;
+//          default:
+//              strLabel += "free of character. ";
+//              break;
+//        }
+//      }
+//    }
+//    
+//    resultset = ijdbcadapter.executeQuery("select PSCHYOLOGEN from VEREIN order by HRF_ID desc");
+//    if(resultset != null && resultset.first()) {
+//      strLabel += HOVerwaltung.instance().getLanguageString("Staff") 
+//               + resultset.getInt("PSCHYOLOGEN") + " " 
+//               + HOVerwaltung.instance().getLanguageString("Psychologen")
+//               + ". ";
+//    }
+//    resultset = ijdbcadapter.executeQuery("select TRAININGSINTENSITAET from TEAM order by HRF_ID desc");
+//    if(resultset != null && resultset.first()) {
+//      strLabel += HOVerwaltung.instance().getLanguageString("Trainingsintensity") 
+//               + resultset.getInt("TRAININGSINTENSITAET") 
+//               + "% . ";
+//    }
+//    JLabel jlabel = new JLabel(strLabel, 2);
+//    jlabel.setOpaque(true);
+//    add(jlabel, gridbagconstraints);
+//    return gridbagconstraints.gridy;
+//  }
 
 
   private void createSettingsPanel(JPanel jpanel) {

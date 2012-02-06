@@ -1,7 +1,7 @@
 // %1193228360:hoplugins.teamAnalyzer.ui.component%
 package ho.module.teamAnalyzer.ui.component;
 
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.awt.BorderLayout;

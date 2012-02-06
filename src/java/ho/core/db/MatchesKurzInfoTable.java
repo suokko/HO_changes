@@ -1,5 +1,7 @@
 package ho.core.db;
 
+import ho.module.matches.statistics.MatchesOverviewCommonPanel;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -9,7 +11,6 @@ import java.util.Vector;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
-import de.hattrickorganizer.gui.matches.statistics.MatchesOverviewCommonPanel;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.tools.HOLogger;
 

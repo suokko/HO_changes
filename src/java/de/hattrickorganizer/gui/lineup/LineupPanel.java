@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.lineup;
 
 import gui.HOIconName;
+import ho.module.playerOverview.SpielerUebersichtNamenTable;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,7 +23,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.gui.playeroverview.SpielerUebersichtNamenTable;
 import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;

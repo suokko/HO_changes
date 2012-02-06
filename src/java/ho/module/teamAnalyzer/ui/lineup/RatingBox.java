@@ -1,7 +1,7 @@
 // %2624369625:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui.lineup;
 
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RatingUtil;
 

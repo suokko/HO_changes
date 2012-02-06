@@ -1,21 +1,21 @@
 // %1128099595984:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
-import gui.HOIconName;
+import ho.core.module.IModule;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 
 import javax.swing.JButton;
@@ -32,19 +32,18 @@ import javax.swing.SwingConstants;
 
 import plugins.IEPVData;
 import plugins.ISpielerPosition;
+import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.EPVData;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
 
 /**
  * A player can be created and modified here.
@@ -207,7 +206,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             tempSpieler.setHomeGrown(jchHomegrown.isSelected());
             HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
             RefreshManager.instance().doReInit();
-            HOMainFrame.instance().showTab(HOMainFrame.SPIELERUEBERSICHT);
+            HOMainFrame.instance().showTab(IModule.PLAYEROVERVIEW);
         }
 		else if (actionEvent.getSource().equals(jbRemoveAll)) {
 			clOwner.removeScoutEntries();

@@ -32,7 +32,6 @@ import de.hattrickorganizer.model.HOParameter;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.MyConnector;
-import de.hattrickorganizer.net.NewsPanel;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.ZipHelper;

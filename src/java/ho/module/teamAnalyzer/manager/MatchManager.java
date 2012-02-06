@@ -2,7 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.vo.Match;

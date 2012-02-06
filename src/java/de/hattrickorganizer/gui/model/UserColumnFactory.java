@@ -2,6 +2,7 @@ package de.hattrickorganizer.gui.model;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.module.playerOverview.SpielerStatusLabelEntry;
 
 import java.awt.Color;
 
@@ -12,7 +13,6 @@ import plugins.IEPVData;
 import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.playeroverview.SpielerStatusLabelEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.HomegrownEntry;
