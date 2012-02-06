@@ -79,3 +79,8 @@ Plugin Updates:
 
 - Special Events v 1.24
   - Added missing events
+
+Themes:
+---------------
+- Fatcow
+  - Added first version (thanks Werder0405)

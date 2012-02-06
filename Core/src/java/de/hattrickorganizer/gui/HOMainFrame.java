@@ -126,7 +126,7 @@ public final class HOMainFrame extends JFrame
 	 * set to empty string for no warning
 	 * (DEVELOPMENT versions do not show the nag screen)
 	 */
-	private static final String WARN_DATE = "2012-06-30 00:00:00.0";
+	private static final String WARN_DATE = "2012-12-31 00:00:00.0";
 
 	public static final int SPRACHVERSION = 2; // language version
 	private static HOMainFrame m_clHOMainFrame;
