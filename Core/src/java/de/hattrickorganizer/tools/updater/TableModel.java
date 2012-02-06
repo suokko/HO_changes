@@ -1,6 +1,8 @@
 // %390576536:de.hattrickorganizer.tools.updater%
 package de.hattrickorganizer.tools.updater;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -41,6 +43,6 @@ public final class TableModel extends DefaultTableModel {
      */
     @Override
 	public boolean isCellEditable(int row, int col) {
-        return ((col == 0) || (col == 4)) ? true : false;
+        return getValueAt(row, col) instanceof JCheckBox || getValueAt(row, col) instanceof JButton;
     }
 }

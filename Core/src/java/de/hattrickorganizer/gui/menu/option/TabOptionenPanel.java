@@ -27,10 +27,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
     //private ComboBoxPanel       m_jcbHTIP           = null;
     private JCheckBox m_jchSpieleruebersicht;
     private JCheckBox m_jchStatistik;
-    private JCheckBox m_jchTransferscout;
-    private JCheckBox trainingCheckBox;
-    private JCheckBox teamAnalyzerCheckBox;
-    private JCheckBox tsForecastCheckBox;
+
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -63,11 +60,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         gui.UserParameter.temp().tempTabSpiele = !m_jchSpiele.isSelected();
         gui.UserParameter.temp().tempTabSpieleranalyse = !m_jchSpielerAnalyse.isSelected();
         gui.UserParameter.temp().tempTabStatistik = !m_jchStatistik.isSelected();
-        gui.UserParameter.temp().tempTabTransferscout = !m_jchTransferscout.isSelected();
-        gui.UserParameter.temp().tempTabTraining =!trainingCheckBox.isSelected();
-        gui.UserParameter.temp().tempTabTeamAnalyzer = !teamAnalyzerCheckBox.isSelected();
         gui.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
-        gui.UserParameter.temp().tempTabTSForecast = !tsForecastCheckBox.isSelected();
     }
 
     /**
@@ -122,20 +115,6 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchStatistik.addItemListener(this);
         add(m_jchStatistik);
 
-        m_jchTransferscout = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Transfers"));
-        m_jchTransferscout.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
-        m_jchTransferscout.setOpaque(false);
-        m_jchTransferscout.setSelected(!gui.UserParameter.temp().tempTabTransferscout);
-        m_jchTransferscout.addItemListener(this);
-        add(m_jchTransferscout);
-
-        trainingCheckBox = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Training"));
-        trainingCheckBox.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
-        trainingCheckBox.setOpaque(false);
-        trainingCheckBox.setSelected(!gui.UserParameter.temp().tempTabTraining);
-        trainingCheckBox.addItemListener(this);
-        add(trainingCheckBox);
-
         m_jchInformation = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Verschiedenes"));
         m_jchInformation.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
         m_jchInformation.setOpaque(false);
@@ -143,19 +122,5 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchInformation.addItemListener(this);
         add(m_jchInformation);
         
-        teamAnalyzerCheckBox = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TeamAnalyzer"));
-        teamAnalyzerCheckBox.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
-        teamAnalyzerCheckBox.setOpaque(false);
-        teamAnalyzerCheckBox.setSelected(!gui.UserParameter.temp().tempTabTeamAnalyzer);
-        teamAnalyzerCheckBox.addItemListener(this);
-        add(teamAnalyzerCheckBox);
-        
-        
-        tsForecastCheckBox = new JCheckBox(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TSForecast"));
-        tsForecastCheckBox.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
-        tsForecastCheckBox.setOpaque(false);
-        tsForecastCheckBox.setSelected(!gui.UserParameter.temp().tempTabTSForecast);
-        tsForecastCheckBox.addItemListener(this);
-        add(tsForecastCheckBox);
     }
 }

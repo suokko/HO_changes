@@ -1,7 +1,7 @@
 // %898728795:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
-import ho.module.ModuleConfig;
+import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.model.UiRatingTableModel;
 import ho.module.teamAnalyzer.ui.renderer.RatingTableCellRenderer;

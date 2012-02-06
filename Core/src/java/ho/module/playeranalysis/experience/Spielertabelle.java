@@ -1,5 +1,7 @@
 package ho.module.playeranalysis.experience;
 
+import gui.HOColorName;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -31,6 +33,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ISpieler;
+import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -446,11 +449,10 @@ Spielertabelle() {
 	}
 
 	class ColoredTableCellRenderer implements TableCellRenderer {
-
-		private Color hellblau;
-		private Color dunkelblau;
-		private Color hellgelb;
-		private Color hellgruen;
+		private Color hellblau = ThemeManager.getColor(HOColorName.PLAYER_POS_BG);
+		private Color dunkelblau = ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG);
+		private Color hellgelb = ThemeManager.getColor(HOColorName.PLAYER_SKILL_BG);
+		private Color hellgruen = ThemeManager.getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);
 		private JLabel label;
 
 		public Component getTableCellRendererComponent(JTable table,
@@ -518,13 +520,6 @@ Spielertabelle() {
 			return label;
 		}
 
-		ColoredTableCellRenderer() {
-			hellblau = new Color(220, 220, 255);
-			dunkelblau = new Color(200, 200, 255);
-			hellgelb = new Color(255, 255, 200);
-			hellgruen = new Color(200, 255, 200);
-			label = null;
-		}
 	}
 
 	private class Spaltenkonfiguration {

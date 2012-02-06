@@ -178,10 +178,7 @@ public final class UserParameter extends Configuration {
     //Temporäre Tabs
     public boolean tempTabSpieleruebersicht;
     public boolean tempTabStatistik;
-    public boolean tempTabTraining;
-    public boolean tempTabTransferscout = true;
-    public boolean tempTabTeamAnalyzer;
-    public boolean tempTabTSForecast = true;
+
 
     //Update
 	public boolean newsCheck = false;
@@ -499,7 +496,6 @@ public final class UserParameter extends Configuration {
 		map.put("tempTabSpieleranalyse",String.valueOf(tempTabSpieleranalyse));
 		map.put("tempTabSpieleruebersicht",String.valueOf(tempTabSpieleruebersicht));
 		map.put("tempTabStatistik",String.valueOf(tempTabStatistik));
-		map.put("tempTabTransferscout",String.valueOf(tempTabTransferscout));
 		map.put("newsCheck",String.valueOf(newsCheck));
 		map.put("userCheck",String.valueOf(userCheck));
 		map.put("updateCheck",String.valueOf(updateCheck));
@@ -580,9 +576,6 @@ public final class UserParameter extends Configuration {
 		map.put("theme", String.valueOf(theme));
 		map.put("transferHistoryPane_splitPane", String.valueOf(transferHistoryPane_splitPane));
 		map.put("transferTypePane_splitPane", String.valueOf(transferTypePane_splitPane));
-		map.put("tempTabTraining", String.valueOf(tempTabTraining));
-		map.put("tempTabTeamAnalyzer", String.valueOf(tempTabTeamAnalyzer));
-		map.put("tempTabTSForecast", String.valueOf(tempTabTSForecast));
 		map.put("training_splitPane", String.valueOf(training_splitPane));
 		map.put("training_bottomSplitPane", String.valueOf(training_bottomSplitPane));
 		map.put("training_rightSplitPane", String.valueOf(training_rightSplitPane));
@@ -706,16 +699,13 @@ public final class UserParameter extends Configuration {
 		statistikZinsaufwendungen = getBooleanValue(values,"statistikZinsaufwendungen");
 		statistikZinsertraege = getBooleanValue(values,"statistikZinsertraege");
 		statistikZuschauer = getBooleanValue(values,"statistikZuschauer");
-//		tempTabArenasizer = getBooleanValue(values,"tempTabArenasizer");
 		tempTabAufstellung = getBooleanValue(values,"tempTabAufstellung");
 		tempTabInformation = getBooleanValue(values,"tempTabInformation");
 		tempTabLigatabelle = getBooleanValue(values,"tempTabLigatabelle");
-		tempTabTSForecast = getBooleanValue(values, "tempTabTSForecast");
 		tempTabSpiele = getBooleanValue(values,"tempTabSpiele");
 		tempTabSpieleranalyse = getBooleanValue(values,"tempTabSpieleranalyse");
 		tempTabSpieleruebersicht = getBooleanValue(values,"tempTabSpieleruebersicht");
 		tempTabStatistik = getBooleanValue(values,"tempTabStatistik");
-		tempTabTransferscout = getBooleanValue(values,"tempTabTransferscout");
 		newsCheck = getBooleanValue(values,"newsCheck");
 		userCheck = getBooleanValue(values,"userCheck");
 		updateCheck = getBooleanValue(values,"updateCheck");
@@ -800,8 +790,6 @@ public final class UserParameter extends Configuration {
 		theme = getStringValue(values, "theme");
 		transferHistoryPane_splitPane = getIntValue(values, "transferHistoryPane_splitPane");
 		transferTypePane_splitPane = getIntValue(values, "transferTypePane_splitPane");
-		tempTabTraining = getBooleanValue(values, "tempTabTraining");
-		tempTabTeamAnalyzer = getBooleanValue(values, "tempTabTeamAnalyzer");
 		training_splitPane= getIntValue(values, "training_splitPane");
 		training_bottomSplitPane= getIntValue(values, "training_bottomSplitPane");
 		training_rightSplitPane= getIntValue(values, "training_rightSplitPane");
