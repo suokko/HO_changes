@@ -4,28 +4,29 @@ package de.hattrickorganizer.gui.menu.option;
 import ho.core.module.ModuleConfigPanel;
 import ho.core.module.ModuleManager;
 import ho.core.module.config.ModuleConfig;
-import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
-import ho.module.teamAnalyzer.ui.component.SettingPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JButton;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.OptionManager;
-import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.templates.ImagePanel;
+import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.OptionManager;
+import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -44,7 +45,6 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     private UserPanel m_jpUserOptionen;
     private UserColumnsPanel m_jpUserColumns;
     private DownloadPanel m_jpDownloadPanel;
-    private SettingPanel taSettingsPanel;
     private JButton m_jbSave = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
     private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
     private ImagePanel m_jpButtonPanel = new ImagePanel();
@@ -141,7 +141,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
      * TODO Missing Method Documentation
      */
     private void initComponents() {
-        setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());
+        setContentPane(new ImagePanel());
         getContentPane().setLayout(new BorderLayout());
 
         final JTabbedPane tabbedPane = new JTabbedPane();
@@ -151,10 +151,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
         tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"),
                           new JScrollPane(m_jpSonstigeOptionen));
 
-        //Tab
-//        m_jpTabOptionen = new TabOptionenPanel();
-//        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TabManagement"),
-//                          new JScrollPane(m_jpTabOptionen));
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Module"),new JScrollPane(new ModuleConfigPanel()));
 
         //Farben
         m_jpFarben = new FarbPanel();
@@ -192,10 +189,6 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		m_jpUserColumns = new UserColumnsPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("columns"),new JScrollPane(m_jpUserColumns));
 
-		taSettingsPanel = new SettingPanel();
-		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("TeamAnalyzer"),new JScrollPane(taSettingsPanel));
-
-		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Module"),new JScrollPane(new ModuleConfigPanel()));
 		
         //Tabs der plugins
         for (int i = 0;

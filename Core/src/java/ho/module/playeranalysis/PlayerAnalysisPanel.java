@@ -1,5 +1,6 @@
 package ho.module.playeranalysis;
 
+import ho.core.module.config.ModuleConfig;
 import ho.module.playeranalysis.experience.ExperienceViewer;
 import ho.module.playeranalysis.skillCompare.PlayerComparePanel;
 
@@ -34,8 +35,10 @@ public class PlayerAnalysisPanel extends ImagePanel {
 		if(tabbedPane == null){
 			tabbedPane = new JTabbedPane();
 			tabbedPane.add(getSpielerAnalyseMainPanel(),HOVerwaltung.instance().getLanguageString("Spiele"));
-			tabbedPane.add(getPlayerComparePanel(),HOVerwaltung.instance().getLanguageString("PlayerCompare"));
-			tabbedPane.add(getExperienceViewer(),HOVerwaltung.instance().getLanguageString("Erfahrung"));
+			if(ModuleConfig.instance().getBoolean(PlayerAnalysisModule.SHOW_PLAYERCOMPARE))
+				tabbedPane.add(getPlayerComparePanel(),HOVerwaltung.instance().getLanguageString("PlayerCompare"));
+			if(ModuleConfig.instance().getBoolean(PlayerAnalysisModule.SHOW_EXPERIENCE))
+				tabbedPane.add(getExperienceViewer(),HOVerwaltung.instance().getLanguageString("Erfahrung"));
 		}
 		return tabbedPane;
 	}

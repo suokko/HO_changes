@@ -1,6 +1,7 @@
 package ho.core.module;
 
 import gui.HOIconName;
+import ho.core.module.config.ModuleConfigDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
@@ -47,7 +47,7 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 		for (int i = 0; i < modules.length; i++) {
 			value[i][0] = getCheckbox(modules[i]);
 			value[i][1] = new ColorLabelEntry(modules[i].getDescription() );
-			value[i][2] = getButton(modules[i]);
+			value[i][2] = modules[i].hasConfigPanel()?getButton(modules[i]):"";
 		}
 
 		TableModel model = new TableModel(value, columnNames);
@@ -73,9 +73,8 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 	private JButton getButton(IModule module) {
 		JButton tmp = new JButton(ThemeManager.getIcon(HOIconName.INFO));
 		tmp.putClientProperty("MODULE", module);
-		tmp.setOpaque(false);
+		//tmp.setOpaque(false);
 		tmp.addActionListener(this);
-		tmp.setEnabled(module.hasConfigPanel());
 		return tmp;
 	}
 
@@ -89,8 +88,8 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 		} else if(e.getSource() instanceof JButton){
 			JButton button = (JButton)e.getSource();
 			IModule module = (IModule)button.getClientProperty("MODULE");
-			JOptionPane.showMessageDialog((JDialog)button.getTopLevelAncestor(),"TODO: TA Optionpanel" );
-			// show new JDialog with	module.createConfigPanel();
+			ModuleConfigDialog dialog = new ModuleConfigDialog((JDialog)getTopLevelAncestor(), module);
+			dialog.setVisible(true);
 		}
 		
 	}
