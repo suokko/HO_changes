@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
 
@@ -43,7 +44,7 @@ public class ModuleConfigPanel extends JPanel implements ActionListener {
 	}
 	private JPanel getToolbar(){
 		if(toolbar == null){
-			toolbar = new JPanel();
+			toolbar = new ImagePanel();
 			toolbar.setLayout(new FlowLayout(FlowLayout.LEADING));
 			addButton.addActionListener(this);
 			removeButton.addActionListener(this);
