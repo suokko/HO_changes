@@ -8,27 +8,27 @@
   <property>
     <datei>Deutsch.properties</datei>
     <lang_id>1</lang_id>
-    <version>4.5</version>
+    <version>4.6</version>
   </property>
   <property>
     <datei>English.properties</datei>
     <lang_id>2</lang_id>
-    <version>4.6</version>
+    <version>4.7</version>
   </property>
   <property>
     <datei>Catalan.properties</datei>
     <lang_id>3</lang_id>
-    <version>4.2</version>
+    <version>4.3</version>
   </property>
   <property>
     <datei>Czech.properties</datei>
     <lang_id>4</lang_id>
-    <version>4.2</version>
+    <version>4.3</version>
   </property>
   <property>
     <datei>Danish.properties</datei>
     <lang_id>5</lang_id>
-    <version>4.1</version>
+    <version>4.2</version>
   </property>
   <property>
     <datei>French.properties</datei>
@@ -43,7 +43,7 @@
   <property>
     <datei>Nederlands.properties</datei>
     <lang_id>8</lang_id>
-    <version>4.3</version>
+    <version>4.4</version>
   </property>
   <property>
     <datei>Norsk.properties</datei>
@@ -53,12 +53,12 @@
   <property>
     <datei>Polish.properties</datei>
     <lang_id>10</lang_id>
-    <version>4.1</version>
+    <version>4.2</version>
   </property>
   <property>
     <datei>Portugues.properties</datei>
     <lang_id>11</lang_id>
-    <version>4.5</version>
+    <version>4.6</version>
   </property>
   <property>
     <datei>Romanian.properties</datei>
@@ -68,12 +68,12 @@
   <property>
     <datei>Spanish.properties</datei>
     <lang_id>13</lang_id>
-    <version>4.3</version>
+    <version>4.4</version>
   </property>
   <property>
     <datei>Svenska.properties</datei>
     <lang_id>14</lang_id>
-    <version>4.3</version>
+    <version>4.4</version>
   </property>
   <property>
     <datei>Finnish.properties</datei>
@@ -88,7 +88,7 @@
   <property>
     <datei>Spanish_sudamericano.properties</datei>
     <lang_id>17</lang_id>
-    <version>4.1</version>
+    <version>4.2</version>
   </property>
   <property>
     <datei>Latvija.properties</datei>
