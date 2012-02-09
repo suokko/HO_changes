@@ -2,6 +2,7 @@
 package ho.module.series;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,7 +13,6 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 

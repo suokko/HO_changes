@@ -2,6 +2,8 @@
 package ho.module.playerOverview;
 
 import gui.HOIconName;
+import ho.core.gui.theme.LightGrayFilter;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,8 +29,6 @@ import javax.swing.ScrollPaneConstants;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.print.ComponentPrintObject;
 import de.hattrickorganizer.gui.print.PrintController;
-import de.hattrickorganizer.gui.theme.LightGrayFilter;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 

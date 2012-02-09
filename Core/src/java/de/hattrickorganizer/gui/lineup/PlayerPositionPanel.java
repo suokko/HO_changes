@@ -2,6 +2,8 @@
 package de.hattrickorganizer.gui.lineup;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -30,8 +32,6 @@ import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;

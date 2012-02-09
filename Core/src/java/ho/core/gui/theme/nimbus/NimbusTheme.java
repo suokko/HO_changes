@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.theme.nimbus;
+package ho.core.gui.theme.nimbus;
 
 import gui.UserParameter;
 

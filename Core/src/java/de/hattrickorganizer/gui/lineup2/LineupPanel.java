@@ -2,6 +2,8 @@
 package de.hattrickorganizer.gui.lineup2;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,8 +15,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 
 /**

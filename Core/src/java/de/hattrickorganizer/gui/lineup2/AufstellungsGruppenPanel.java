@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.lineup2;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 

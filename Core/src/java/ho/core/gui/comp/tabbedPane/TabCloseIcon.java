@@ -2,6 +2,7 @@ package ho.core.gui.comp.tabbedPane;
 
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -12,7 +13,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 final class TabCloseIcon implements Icon {
 	private final Icon mIcon = ThemeManager.getIcon(HOIconName.TABBEDPANE_CLOSE);

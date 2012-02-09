@@ -1,6 +1,8 @@
 // %4073212593:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import ho.core.gui.theme.ImageUtilities;
+
 import java.util.Vector;
 
 import javax.swing.SwingConstants;
@@ -8,7 +10,6 @@ import javax.swing.table.AbstractTableModel;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
 

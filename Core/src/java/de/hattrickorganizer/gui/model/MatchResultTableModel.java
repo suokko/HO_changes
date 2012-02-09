@@ -7,6 +7,8 @@
 package de.hattrickorganizer.gui.model;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 
@@ -14,8 +16,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 /**

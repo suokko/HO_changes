@@ -2,6 +2,8 @@
 package ho.module.matches;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,8 +27,6 @@ import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupPlayer;

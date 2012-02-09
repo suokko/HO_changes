@@ -1,10 +1,11 @@
 /**
  * 
  */
-package de.hattrickorganizer.gui.theme;
+package ho.core.gui.theme;
 
 
 import gui.HOIconName;
+import ho.core.gui.theme.ho.HOClassicSchema;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -21,7 +22,6 @@ import javax.swing.UIManager;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.gui.theme.ho.HOClassicSchema;
 
 
 

@@ -8,6 +8,7 @@ package de.hattrickorganizer.tools.updater;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.Dimension;
@@ -31,7 +32,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IDebugWindow;
 import plugins.IOfficialPlugin;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 

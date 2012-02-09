@@ -4,6 +4,7 @@ import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.db.User;
 import ho.core.db.backup.BackupHelper;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.plugins.PluginManager;
 
 import java.io.BufferedReader;
@@ -18,7 +19,6 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.SplashFrame;
 import de.hattrickorganizer.gui.birthday.GebDialog;
 import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.GebChecker;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.HOVerwaltung;

@@ -3,6 +3,8 @@ package de.hattrickorganizer.gui.templates;
 
 //import java.awt.Color;
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -16,8 +18,6 @@ import javax.swing.JPanel;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 public class TorLabelEntry implements TableEntry {

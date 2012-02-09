@@ -3,6 +3,7 @@ package ho.tool.arenasizer;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.math.BigDecimal;
@@ -19,7 +20,6 @@ import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.TableModel;

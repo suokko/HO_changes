@@ -1,12 +1,13 @@
 // %3364174802:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import ho.core.gui.theme.ThemeManager;
+
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

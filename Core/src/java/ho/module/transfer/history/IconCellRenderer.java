@@ -4,6 +4,7 @@ package ho.module.transfer.history;
 
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.module.transfer.PlayerTransfer;
 
 import java.awt.Component;
@@ -11,7 +12,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

@@ -2,6 +2,8 @@
 package de.hattrickorganizer.gui.model;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.text.DateFormat;
@@ -12,8 +14,6 @@ import javax.swing.table.AbstractTableModel;
 import plugins.IMatchKurzInfo;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ProgressbarTableEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.Finanzen;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;

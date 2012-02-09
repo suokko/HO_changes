@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.gui.birthday;
 
+import ho.core.gui.theme.ThemeManager;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 
@@ -18,7 +20,6 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.GebChecker;
 
 

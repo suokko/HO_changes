@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.theme.ho;
+package ho.core.gui.theme.ho;
 
 import gui.UserParameter;
 

@@ -3,6 +3,7 @@ package ho.module.playerOverview;
 
 import gui.HOColorName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,7 +21,6 @@ import javax.swing.JPanel;
 
 import de.hattrickorganizer.gui.menu.option.SliderPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
 

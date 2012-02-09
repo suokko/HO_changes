@@ -3,6 +3,8 @@ package de.hattrickorganizer.gui.templates;
 
 import gui.HOBooleanName;
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.TexturePaint;
 import java.awt.geom.Rectangle2D;
@@ -10,8 +12,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
  * JPanel mit HintergrundGrafik für Fenster

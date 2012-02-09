@@ -2,6 +2,7 @@
 package plugins;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -12,7 +13,6 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

@@ -4,6 +4,8 @@ package de.hattrickorganizer.gui.lineup2;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,8 +41,6 @@ import de.hattrickorganizer.gui.lineup.LineupAssistantSelectorOverlay;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
