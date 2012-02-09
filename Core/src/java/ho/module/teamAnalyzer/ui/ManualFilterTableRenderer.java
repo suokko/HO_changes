@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HelperWrapper;
 
 

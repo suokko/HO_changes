@@ -1,6 +1,8 @@
 package ho.module.playerOverview;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -16,8 +18,6 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 

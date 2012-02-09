@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.model;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
  * Für 2 Markierungen

@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.theme;
+package ho.core.gui.theme;
 
 import java.awt.Image;
 import java.awt.Toolkit;

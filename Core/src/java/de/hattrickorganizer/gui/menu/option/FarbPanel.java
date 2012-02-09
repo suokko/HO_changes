@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.menu.option;
 
 import gui.HOColorName;
 import gui.UserParameter;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -19,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
 

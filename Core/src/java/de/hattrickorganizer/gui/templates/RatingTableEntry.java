@@ -1,6 +1,9 @@
 // %3659932329:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
+
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
@@ -12,8 +15,6 @@ import javax.swing.JPanel;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

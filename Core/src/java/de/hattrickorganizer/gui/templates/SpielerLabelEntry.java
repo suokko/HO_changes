@@ -4,6 +4,8 @@ package de.hattrickorganizer.gui.templates;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,8 +25,6 @@ import plugins.IHOTableEntry;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;

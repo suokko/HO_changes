@@ -54,7 +54,7 @@ public class HomegrownEntry implements TableEntry{
 	public final void updateComponent() {
 		if (spieler != null) {
 			if (spieler.isHomeGrown()) {
-				icon.setIcon(de.hattrickorganizer.gui.theme.ThemeManager.getIcon(gui.HOIconName.HOMEGROWN));
+				icon.setIcon(ho.core.gui.theme.ThemeManager.getIcon(gui.HOIconName.HOMEGROWN));
 			} else {
 				icon.clear();
 			}

@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.lineup;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -8,7 +9,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
  * A class that is used to overlay panels with green or red color to make selection of positions for

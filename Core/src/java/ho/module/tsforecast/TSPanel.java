@@ -26,6 +26,7 @@ package ho.module.tsforecast;
 
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -46,7 +47,6 @@ import javax.swing.JPanel;
 
 import plugins.IHelper;
 import plugins.IMatchDetails;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HelperWrapper;
 

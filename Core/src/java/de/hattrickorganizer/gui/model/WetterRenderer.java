@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.model;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
@@ -10,7 +11,6 @@ import javax.swing.SwingConstants;
 import plugins.IMatchDetails;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

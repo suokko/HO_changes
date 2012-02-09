@@ -2,6 +2,7 @@ package ho.module.matches.statistics;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Component;
 
@@ -11,7 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.hsqldb.lib.StringUtil;
 
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 

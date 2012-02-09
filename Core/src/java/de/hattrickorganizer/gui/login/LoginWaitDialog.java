@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.login;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,7 +15,6 @@ import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 

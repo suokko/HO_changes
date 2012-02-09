@@ -1,11 +1,11 @@
 package de.hattrickorganizer.gui.model;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 
 import plugins.IMatchLineup;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 
 

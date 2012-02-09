@@ -2,6 +2,8 @@ package de.hattrickorganizer.gui.model;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 import ho.module.playerOverview.SpielerStatusLabelEntry;
 
 import java.awt.Color;
@@ -19,8 +21,6 @@ import de.hattrickorganizer.gui.templates.HomegrownEntry;
 import de.hattrickorganizer.gui.templates.RatingTableEntry;
 import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;

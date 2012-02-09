@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.lineup.substitution;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -18,7 +19,6 @@ import plugins.ISpieler;
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;

@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.lineup;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,7 +36,6 @@ import de.hattrickorganizer.gui.model.SpielerCBItem;
 import de.hattrickorganizer.gui.print.ComponentPrintObject;
 import de.hattrickorganizer.gui.print.PrintController;
 import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;

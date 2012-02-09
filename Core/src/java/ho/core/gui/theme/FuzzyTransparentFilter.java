@@ -1,5 +1,5 @@
 // %1272568856:de.hattrickorganizer.tools%
-package de.hattrickorganizer.gui.theme;
+package ho.core.gui.theme;
 
 import java.awt.Color;
 import java.awt.image.RGBImageFilter;

@@ -4,6 +4,7 @@ package ho.module.transfer.history;
 
 
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ImageUtilities;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.ui.layout.TableLayout;
@@ -31,7 +32,6 @@ import javax.swing.table.TableModel;
 
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
 import de.hattrickorganizer.model.HOVerwaltung;
 
 

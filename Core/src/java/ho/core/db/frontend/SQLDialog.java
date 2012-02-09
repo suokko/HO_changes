@@ -2,6 +2,7 @@ package ho.core.db.frontend;
 
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +31,6 @@ import javax.swing.JToolBar;
 import javax.swing.JTree;
 
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HelperWrapper;
 
 public class SQLDialog extends JDialog implements ActionListener {
