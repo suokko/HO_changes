@@ -1,6 +1,8 @@
 // %1562433378:de.hattrickorganizer.gui.menu%
 package de.hattrickorganizer.gui.menu;
 
+import ho.core.gui.theme.ho.HOTheme;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,7 +32,6 @@ import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.ProxyDialog;
 import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ho.HOTheme;
 import de.hattrickorganizer.gui.utils.OnlineWorker;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;

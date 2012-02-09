@@ -1,18 +1,18 @@
 /**
  * 
  */
-package de.hattrickorganizer.gui.theme.ho;
+package ho.core.gui.theme.ho;
 
 import gui.HOBooleanName;
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.theme.Schema;
 
 import java.awt.Color;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-import de.hattrickorganizer.gui.theme.Schema;
 import de.hattrickorganizer.tools.HOLogger;
 
 public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HOBooleanName {

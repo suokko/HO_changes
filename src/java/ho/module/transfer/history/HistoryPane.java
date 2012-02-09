@@ -5,6 +5,7 @@ package ho.module.transfer.history;
 import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ThemeManager;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.ui.layout.TableLayout;
@@ -37,7 +38,6 @@ import javax.swing.event.ChangeListener;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 

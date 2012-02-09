@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.menu.option;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,7 +21,6 @@ import de.hattrickorganizer.gui.model.HOColumnModel;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
 import de.hattrickorganizer.tools.updater.TableEditor;

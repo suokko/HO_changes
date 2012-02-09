@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.matchprediction;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,7 +18,6 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchResult;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HOLogger;
 
 

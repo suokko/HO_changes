@@ -2,6 +2,7 @@
 package ho.module.playeranalysis;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

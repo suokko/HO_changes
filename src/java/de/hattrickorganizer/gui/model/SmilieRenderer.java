@@ -2,11 +2,11 @@
 package de.hattrickorganizer.gui.model;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import javax.swing.SwingConstants;
 
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

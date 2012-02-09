@@ -6,6 +6,7 @@
 package de.hattrickorganizer.tools.updater;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.plugins.GUIPluginWrapper;
 import ho.core.plugins.PluginManager;
 
@@ -24,7 +25,6 @@ import org.w3c.dom.Document;
 
 import plugins.IOfficialPlugin;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HelperWrapper;
 import de.hattrickorganizer.tools.ZipHelper;

@@ -1,6 +1,8 @@
 // %3994494499:de.hattrickorganizer.gui.pluginWrapper%
 package ho.core.plugins;
 
+import ho.core.gui.theme.ThemeManager;
+
 import java.awt.Color;
 
 import javax.swing.JPanel;
@@ -11,7 +13,6 @@ import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.print.ComponentPrintObject;
 import de.hattrickorganizer.gui.print.PrintController;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HOLogger;
 
 

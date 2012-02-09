@@ -8,6 +8,8 @@ package de.hattrickorganizer.tools;
 
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.plugins.PluginManager;
 import ho.module.matches.SpielHighlightPanel;
 import ho.module.transfer.scout.Player;
@@ -46,8 +48,6 @@ import plugins.IPlugin;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.menu.HRFImport;
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;

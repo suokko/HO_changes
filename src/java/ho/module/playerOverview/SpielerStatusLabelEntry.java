@@ -2,13 +2,13 @@
 package ho.module.playerOverview;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.ServerSpieler;
 import de.hattrickorganizer.model.Spieler;
 

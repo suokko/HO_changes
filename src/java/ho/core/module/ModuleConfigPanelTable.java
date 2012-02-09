@@ -1,6 +1,7 @@
 package ho.core.module;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.module.config.ModuleConfigDialog;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +16,6 @@ import javax.swing.table.TableColumn;
 
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.updater.TableEditor;
 import de.hattrickorganizer.tools.updater.TableModel;

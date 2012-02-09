@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.lineup2;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,7 +27,6 @@ import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.Updateable;
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.Spieler;

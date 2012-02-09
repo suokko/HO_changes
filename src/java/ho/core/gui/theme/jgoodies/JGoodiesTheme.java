@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.theme.jgoodies;
+package ho.core.gui.theme.jgoodies;
 
 import gui.UserParameter;
 

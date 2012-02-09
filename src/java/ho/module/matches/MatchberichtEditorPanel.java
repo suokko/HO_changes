@@ -2,6 +2,7 @@
 package ho.module.matches;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
 
@@ -11,7 +12,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.html.StyleSheet;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.tools.HOLogger;
 
 

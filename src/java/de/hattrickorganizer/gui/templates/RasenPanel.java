@@ -2,6 +2,8 @@
 package de.hattrickorganizer.gui.templates;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Graphics;
 import java.awt.LayoutManager;
@@ -11,8 +13,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.theme.ImageUtilities;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 /**
  * JPanel mit HintergrundGrafik für Fenster

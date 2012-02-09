@@ -1,4 +1,4 @@
-package de.hattrickorganizer.gui.theme;
+package ho.core.gui.theme;
 
 import gui.HOColorName;
 import gui.HOIconName;

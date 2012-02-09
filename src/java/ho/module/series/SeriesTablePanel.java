@@ -2,6 +2,7 @@
 package ho.module.series;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 import ho.module.series.model.LigaTabellenEintrag;
 
 import java.awt.BorderLayout;
@@ -25,7 +26,6 @@ import de.hattrickorganizer.gui.model.VAPTableModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;

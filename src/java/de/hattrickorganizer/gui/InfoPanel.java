@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui;
 
 import gui.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -12,7 +13,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 
 
 /**

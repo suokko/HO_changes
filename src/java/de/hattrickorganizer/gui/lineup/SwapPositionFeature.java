@@ -1,6 +1,7 @@
 package de.hattrickorganizer.gui.lineup;
 
 import gui.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -12,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
 import de.hattrickorganizer.gui.model.SpielerCBItem;
-import de.hattrickorganizer.gui.theme.ThemeManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
 
