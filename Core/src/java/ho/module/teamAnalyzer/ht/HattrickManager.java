@@ -1,6 +1,7 @@
 // %1667190662:hoplugins.teamAnalyzer.ht%
 package ho.module.teamAnalyzer.ht;
 
+import ho.core.file.xml.XMLManager;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
@@ -22,7 +23,6 @@ import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 
 /**

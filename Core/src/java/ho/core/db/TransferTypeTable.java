@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 public class TransferTypeTable extends AbstractTable {
-	// FIXME
+
 	final static String TABLENAME = "TRANSFERTYPE";
 	
 	TransferTypeTable(JDBCAdapter adapter){

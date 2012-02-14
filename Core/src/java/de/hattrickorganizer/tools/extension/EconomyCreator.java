@@ -2,6 +2,7 @@ package de.hattrickorganizer.tools.extension;
 
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.file.xml.XMLManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +24,6 @@ import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.TrainingPerWeek;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 public class EconomyCreator extends XMLCreator {
 

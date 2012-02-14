@@ -6,6 +6,19 @@
  */
 package de.hattrickorganizer.net;
 
+import ho.core.file.xml.XMLArenaParser;
+import ho.core.file.xml.XMLClubParser;
+import ho.core.file.xml.XMLMatchLineupParser;
+import ho.core.file.xml.XMLMatchOrderParser;
+import ho.core.file.xml.XMLMatchesParser;
+import ho.core.file.xml.XMLTrainingParser;
+import ho.core.file.xml.xmlEconomyParser;
+import ho.core.file.xml.xmlLeagueDetailsParser;
+import ho.core.file.xml.xmlMatchdetailsParser;
+import ho.core.file.xml.xmlPlayersParser;
+import ho.core.file.xml.xmlTeamDetailsParser;
+import ho.core.file.xml.xmlWorldDetailsParser;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,18 +30,6 @@ import java.util.Vector;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
-import de.hattrickorganizer.logik.xml.XMLArenaParser;
-import de.hattrickorganizer.logik.xml.XMLClubParser;
-import de.hattrickorganizer.logik.xml.XMLMatchLineupParser;
-import de.hattrickorganizer.logik.xml.XMLMatchOrderParser;
-import de.hattrickorganizer.logik.xml.XMLMatchesParser;
-import de.hattrickorganizer.logik.xml.XMLTrainingParser;
-import de.hattrickorganizer.logik.xml.xmlEconomyParser;
-import de.hattrickorganizer.logik.xml.xmlLeagueDetailsParser;
-import de.hattrickorganizer.logik.xml.xmlMatchdetailsParser;
-import de.hattrickorganizer.logik.xml.xmlPlayersParser;
-import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
-import de.hattrickorganizer.logik.xml.xmlWorldDetailsParser;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;

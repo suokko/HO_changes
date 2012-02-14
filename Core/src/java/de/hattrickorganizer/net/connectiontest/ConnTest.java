@@ -1,5 +1,7 @@
 package de.hattrickorganizer.net.connectiontest;
 
+import ho.core.file.xml.XMLManager;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,7 +14,6 @@ import javax.swing.JTextArea;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 /**
  * Simple class to run a connection test with debug information.
