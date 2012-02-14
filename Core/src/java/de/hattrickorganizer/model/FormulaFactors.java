@@ -6,6 +6,8 @@
  */
 package de.hattrickorganizer.model;
 
+import ho.core.file.xml.XMLManager;
+
 import java.io.File;
 import java.util.Date;
 
@@ -17,7 +19,6 @@ import org.w3c.dom.Element;
 
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 
 /**

@@ -303,7 +303,7 @@ final public class UserColumnFactory {
 	
 	protected static MatchesOverviewColumn[] createMatchesStatisticsArray(){
 		MatchesOverviewColumn[] columns = new MatchesOverviewColumn[6];
-		columns[0] = new MatchesOverviewColumn(701, " ","",50);
+		columns[0] = new MatchesOverviewColumn(701, " "," ",50);
 		columns[1] = new MatchesOverviewColumn(702, "Spiele","Spiele",100);
 		columns[2] = new MatchesOverviewColumn(703, "SerieAuswaertsSieg","SerieAuswaertsSieg",50);
 		columns[3] = new MatchesOverviewColumn(704, "SerieAuswaertsUnendschieden","SerieAuswaertsUnendschieden",50);

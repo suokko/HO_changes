@@ -6,6 +6,12 @@
  */
 package de.hattrickorganizer.net;
 
+import ho.core.file.IOUtilities;
+import ho.core.file.xml.XMLCHPPPreParser;
+import ho.core.file.xml.XMLExtensionParser;
+import ho.core.file.xml.XMLNewsParser;
+import ho.core.file.xml.xmlTeamDetailsParser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -34,16 +40,11 @@ import sun.misc.BASE64Encoder;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.OAuthDialog;
 import de.hattrickorganizer.gui.login.ProxyDialog;
-import de.hattrickorganizer.logik.xml.XMLCHPPPreParser;
-import de.hattrickorganizer.logik.xml.XMLExtensionParser;
-import de.hattrickorganizer.logik.xml.XMLNewsParser;
-import de.hattrickorganizer.logik.xml.xmlTeamDetailsParser;
 import de.hattrickorganizer.model.Extension;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.IOUtilities;
 import de.hattrickorganizer.tools.updater.VersionInfo;
 
 /**

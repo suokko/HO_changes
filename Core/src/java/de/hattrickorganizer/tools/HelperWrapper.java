@@ -340,7 +340,7 @@ public class HelperWrapper implements plugins.IHelper {
     public boolean isUserMatch(String matchID) {
     	try {
           final String input = de.hattrickorganizer.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID));
-          final de.hattrickorganizer.model.matches.Matchdetails mdetails = new de.hattrickorganizer.logik.xml.xmlMatchdetailsParser()
+          final de.hattrickorganizer.model.matches.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
                                                                            .parseMachtdetailsFromString(input);
           final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 

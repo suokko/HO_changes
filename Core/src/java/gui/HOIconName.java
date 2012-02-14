@@ -98,4 +98,9 @@ public interface HOIconName {
 	public static final String TRANSFER_OUT = "transfer.out";
 	public static final String TABBEDPANE_CLOSE = "tabbedPane.close";
 	
+	public static final String ARROW_LEFT1 = "arrow_left1";
+	public static final String ARROW_LEFT2 = "arrow_left2";
+	public static final String ARROW_RIGHT1 = "arrow_right1";
+	public static final String ARROW_RIGHT2= "arrow_right2";
+	
 }

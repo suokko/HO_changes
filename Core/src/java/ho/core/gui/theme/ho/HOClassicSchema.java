@@ -168,6 +168,11 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 		
 		put(TABBEDPANE_CLOSE,"gui/bilder/closeTab.gif");
 		
+		put(ARROW_LEFT1,"gui/bilder/arrows/leftArrow1.gif");
+		put(ARROW_LEFT2,"gui/bilder/arrows/leftArrow2.gif");
+		put(ARROW_RIGHT1,"gui/bilder/arrows/rightArrow1.gif");
+		put(ARROW_RIGHT2,"gui/bilder/arrows/rightArrow2.gif");
+		
 	}
 
 	private void initBooleans() {

@@ -79,8 +79,7 @@ public class HOVerwaltung {
         //Trainer abziehen // without trainer
         if (numPlayers <= 1)
         	return 0;
-        else
-        	return Helper.round(getSumTSI() / (numPlayers - 1));
+       	return Helper.round(getSumTSI() / (numPlayers - 1));
     }
 
     /**
@@ -94,8 +93,7 @@ public class HOVerwaltung {
         //Trainer abziehen // without trainer
         if (numPlayers <= 1)
         	return 0;
-        else
-        	return Helper.round(getSumEPV() / (numPlayers - 1));
+       	return Helper.round(getSumEPV() / (numPlayers - 1));
     }
 
     /**
@@ -372,8 +370,9 @@ public class HOVerwaltung {
 	        if (temp != null)
 	    		return temp;
     	}
-        //Return key if nothing found in english.properties
+
         HOLogger.instance().warning(getClass(),"getLanguageString: '"+key+"' not found!");
+        //HOLogger.instance().error(this.getClass(), new Exception());
     	return "!"+key+"!";
     }
 }

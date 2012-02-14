@@ -7,8 +7,11 @@ import ho.module.misc.MiscModule;
 import ho.module.playerOverview.PlayerOverviewModule;
 import ho.module.playeranalysis.PlayerAnalysisModule;
 import ho.module.series.SeriesModule;
+import ho.module.specialEvents.SpecialEventsDM;
+import ho.module.specialEvents.SpecialEventsModule;
 import ho.module.statistics.StatisticsModule;
 import ho.module.teamAnalyzer.TeamAnalyzerModule;
+import ho.module.teamOfTheWeek.TeamOfTheWeekModule;
 import ho.module.training.TrainingModule;
 import ho.module.transfer.TransfersModule;
 import ho.module.tsforecast.TSForecastModule;
@@ -49,6 +52,8 @@ public final class ModuleManager {
 		map.put(Integer.valueOf(IModule.MISC), new MiscModule());
 		map.put(Integer.valueOf(IModule.TEAMANALYZER), new TeamAnalyzerModule());
 		map.put(Integer.valueOf(IModule.TSFORECAST), new TSForecastModule());
+		map.put(Integer.valueOf(IModule.SPECIALEVENTS), new SpecialEventsModule());
+		map.put(Integer.valueOf(IModule.TEAM_OF_THE_WEEK), new TeamOfTheWeekModule());
 	}
 	
 	private void initialize(){

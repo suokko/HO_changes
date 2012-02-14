@@ -6,6 +6,7 @@
 package de.hattrickorganizer.tools.updater;
 
 import gui.UserParameter;
+import ho.core.file.ZipHelper;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -35,7 +36,6 @@ import de.hattrickorganizer.model.News;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
-import de.hattrickorganizer.tools.ZipHelper;
 
 /**
  * DOCUMENT ME!

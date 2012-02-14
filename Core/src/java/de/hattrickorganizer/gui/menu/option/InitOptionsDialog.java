@@ -65,7 +65,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
 
         optionspanel.add(new JLabel("Languagefile"));
 
-        final String[] sprachdateien = de.hattrickorganizer.tools.LanguageFiles.getSprachDateien();
+        final String[] sprachdateien = ho.core.file.LanguageFiles.getSprachDateien();
 
         try {
             java.util.Arrays.sort(sprachdateien);
