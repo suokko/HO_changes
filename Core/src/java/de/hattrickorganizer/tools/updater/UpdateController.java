@@ -281,7 +281,7 @@ public final class UpdateController {
 		VersionInfo version = MyConnector.instance().getLatestVersion();
 		if (version != null && 
 				(version.getVersion() > HOMainFrame.VERSION || 
-				(version.getVersion() == HOMainFrame.VERSION && version.isBeta()))
+				(version.getVersion() == HOMainFrame.VERSION && HOMainFrame.isDevelopment()))
 			) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
 					HOVerwaltung.instance().getLanguageString("updateMSG") + "\n"
