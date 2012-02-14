@@ -19,6 +19,7 @@ public interface IModule {
 	public static final int TSFORECAST 		= 11;
 	public static final int SPECIALEVENTS	= 12;
 	public static final int TEAM_OF_THE_WEEK= 13;
+	public static final int NTHRF			= 14;
 	
 	
 	public int getModuleId();

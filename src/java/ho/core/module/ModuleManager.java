@@ -4,6 +4,7 @@ import gui.UserParameter;
 import ho.core.module.config.ModuleConfig;
 import ho.module.matches.MatchesModule;
 import ho.module.misc.MiscModule;
+import ho.module.nthrf.NthrfModule;
 import ho.module.playerOverview.PlayerOverviewModule;
 import ho.module.playeranalysis.PlayerAnalysisModule;
 import ho.module.series.SeriesModule;
@@ -54,6 +55,7 @@ public final class ModuleManager {
 		map.put(Integer.valueOf(IModule.TSFORECAST), new TSForecastModule());
 		map.put(Integer.valueOf(IModule.SPECIALEVENTS), new SpecialEventsModule());
 		map.put(Integer.valueOf(IModule.TEAM_OF_THE_WEEK), new TeamOfTheWeekModule());
+		map.put(Integer.valueOf(IModule.NTHRF), new NthrfModule());
 	}
 	
 	private void initialize(){
