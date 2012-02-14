@@ -1,6 +1,7 @@
 package ho.core.gui.theme.ho;
 
 import gui.UserParameter;
+import ho.core.gui.theme.FontUtil;
 
 import java.awt.Font;
 import java.util.Enumeration;
@@ -11,7 +12,6 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
 
 import de.hattrickorganizer.HO;
-import de.hattrickorganizer.gui.utils.FontUtil;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**

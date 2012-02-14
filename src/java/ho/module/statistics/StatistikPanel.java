@@ -230,7 +230,7 @@ public class StatistikPanel extends JPanel {
 	 */
 	public final void doPrint(String titel) {
 		try {
-			final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
+			final ho.core.gui.print.PrintController printController = ho.core.gui.print.PrintController
 					.getInstance();
 
 			final java.util.Calendar calendar = java.util.Calendar
@@ -242,11 +242,11 @@ public class StatistikPanel extends JPanel {
 					.getDateTimeInstance().format(calendar.getTime()));
 
 			printController
-					.add(new de.hattrickorganizer.gui.print.ComponentPrintObject(
+					.add(new ho.core.gui.print.ComponentPrintObject(
 							printController.getPf(),
 							titel,
 							clonePanel(true),
-							de.hattrickorganizer.gui.print.ComponentPrintObject.SICHTBARMAXIMIEREN));
+							ho.core.gui.print.ComponentPrintObject.SICHTBARMAXIMIEREN));
 
 			printController.print();
 		} catch (Exception e) {

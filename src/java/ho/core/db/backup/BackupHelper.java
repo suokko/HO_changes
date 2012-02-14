@@ -2,11 +2,11 @@
 package ho.core.db.backup;
 
 import ho.core.db.User;
+import ho.core.file.ExampleFileFilter;
 
 import java.io.File;
 import java.util.Calendar;
 
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.tools.HOLogger;
 
 

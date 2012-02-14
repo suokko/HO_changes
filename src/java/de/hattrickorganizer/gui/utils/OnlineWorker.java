@@ -8,6 +8,7 @@ package de.hattrickorganizer.gui.utils;
 
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.file.ExampleFileFilter;
 import ho.core.file.hrf.HRFStringParser;
 import ho.core.file.xml.XMLArenaParser;
 import ho.core.file.xml.XMLMatchLineupParser;

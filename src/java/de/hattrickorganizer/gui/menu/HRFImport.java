@@ -2,6 +2,7 @@
 package de.hattrickorganizer.gui.menu;
 
 import ho.core.db.DBManager;
+import ho.core.file.ExampleFileFilter;
 import ho.core.file.hrf.HRFFileParser;
 
 import java.sql.Timestamp;
@@ -14,7 +15,6 @@ import de.hattrickorganizer.gui.InfoPanel;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
