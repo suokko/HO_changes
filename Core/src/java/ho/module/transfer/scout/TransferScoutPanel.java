@@ -3,6 +3,8 @@ package ho.module.transfer.scout;
 
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.print.ComponentPrintObject;
+import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
@@ -24,8 +26,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.gui.print.ComponentPrintObject;
-import de.hattrickorganizer.gui.print.PrintController;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.model.HOVerwaltung;

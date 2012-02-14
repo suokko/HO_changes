@@ -1,5 +1,5 @@
 // %2755357215:de.hattrickorganizer.gui.print%
-package de.hattrickorganizer.gui.print;
+package ho.core.gui.print;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

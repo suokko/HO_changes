@@ -2,6 +2,8 @@
 package ho.module.playerOverview;
 
 import gui.HOIconName;
+import ho.core.gui.print.ComponentPrintObject;
+import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.LightGrayFilter;
 import ho.core.gui.theme.ThemeManager;
 
@@ -27,8 +29,6 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.print.ComponentPrintObject;
-import de.hattrickorganizer.gui.print.PrintController;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -189,7 +189,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
             printController.add(new ComponentPrintObject(printController.getPf(),
                                                                                         titel,
                                                                                         scrollPane,
-                                                                                        de.hattrickorganizer.gui.print.ComponentPrintObject.NICHTSICHTBAR));
+                                                                                        ho.core.gui.print.ComponentPrintObject.NICHTSICHTBAR));
 
             printController.print();
         } catch (Exception e) {

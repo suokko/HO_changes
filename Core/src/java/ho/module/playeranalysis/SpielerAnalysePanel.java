@@ -181,7 +181,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
 
             panel.add(scrollPane, BorderLayout.SOUTH);
 
-            final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
+            final ho.core.gui.print.PrintController printController = ho.core.gui.print.PrintController
                                                                                    .getInstance();
 
             final java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -193,11 +193,11 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
                                  + " - "
                                  + java.text.DateFormat.getDateTimeInstance().format(calendar
                                                                                      .getTime());
-            printController.add(new de.hattrickorganizer.gui.print.ComponentPrintObject(printController
+            printController.add(new ho.core.gui.print.ComponentPrintObject(printController
                                                                                         .getPf(),
                                                                                         titel,
                                                                                         panel,
-                                                                                        de.hattrickorganizer.gui.print.ComponentPrintObject.NICHTSICHTBAR));
+                                                                                        ho.core.gui.print.ComponentPrintObject.NICHTSICHTBAR));
 
             printController.print();
         } catch (Exception e) {

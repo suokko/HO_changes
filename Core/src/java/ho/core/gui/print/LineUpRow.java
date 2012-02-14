@@ -3,40 +3,24 @@
  * Created on 14.03.2004
  *
  */
-package de.hattrickorganizer.gui.print;
+package ho.core.gui.print;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author Thorsten Schmidt
- */
-public class LineUpRow {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
+class LineUpRow {
 
     // für den Anfang erstmal statisch
     protected static int width = 100;
-
-    //~ Instance fields ----------------------------------------------------------------------------
 
     private LineUpBox[] boxes;
 
     // für den Anfang erstmal statisch
     private int margin = 20;
 
-    //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * constructor
-     *
-     * @param boxCount
-     */
-    protected LineUpRow(int boxCount) {
+    LineUpRow(int boxCount) {
         boxes = new LineUpBox[boxCount];
 
         for (int i = 0; i < boxes.length; i++) {
@@ -46,23 +30,11 @@ public class LineUpRow {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param position TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final LineUpBox getBox(int position) {
+    final LineUpBox getBox(int position) {
         return boxes[position - 1];
     }
 
-    /**
-     * gibt die Höhe der größten Box wieder
-     *
-     * @return
-     */
-    protected final int getTotalHeight() {
+    final int getTotalHeight() {
         int maxHeight = margin;
 
         for (int i = 0; i < boxes.length; i++) {
@@ -81,7 +53,7 @@ public class LineUpRow {
      * @param pageWidth
      * @param g2
      */
-    protected final void draw(int y, int pageWidth, Graphics2D g2) {
+    final void draw(int y, int pageWidth, Graphics2D g2) {
         for (int i = 0; i < boxes.length; i++) {
             boxes[i].draw(g2, getBoxStartPoint(y, pageWidth, i));
         }
@@ -117,7 +89,7 @@ public class LineUpRow {
      *
      * @author Thorsten Schmidt
      */
-    protected final class LineUpBox {
+    final class LineUpBox {
         //~ Instance fields ------------------------------------------------------------------------
 
         /** TODO Missing Parameter Documentation */
