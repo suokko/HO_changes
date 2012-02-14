@@ -56,7 +56,7 @@ public final class XMLParser {
     	final String url = "/common/chppxml.axd?file=transfersPlayer&playerID="+playerId;
         final String xml = MyConnector.instance().getHattrickXMLFile(url);
 
-        final IXMLParser parser = de.hattrickorganizer.tools.xml.XMLManager.instance();
+        final IXMLParser parser = ho.core.file.xml.XMLManager.instance();
 
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
@@ -157,7 +157,7 @@ public final class XMLParser {
         while (stop == false) {
 	        final String xml = MyConnector.instance().getHattrickXMLFile(url+page); 
 
-	        final IXMLParser parser = de.hattrickorganizer.tools.xml.XMLManager.instance();
+	        final IXMLParser parser = ho.core.file.xml.XMLManager.instance();
 	        final Document doc = parser.parseString(xml);
 
 	        //get Root element ('HattrickData') :
@@ -204,7 +204,7 @@ public final class XMLParser {
 
                 if ((list != null) && (list.getLength() > 0)) {
                     final Element child = (Element) list.item(0);
-                    de.hattrickorganizer.tools.xml.XMLManager.instance().getFirstChildNodeValue(child);
+                    ho.core.file.xml.XMLManager.instance().getFirstChildNodeValue(child);
 
                     if ((child != null) && (element.getFirstChild() != null)) {
                         retval = child.getFirstChild().getNodeValue();

@@ -4,6 +4,7 @@ import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.db.User;
 import ho.core.db.backup.BackupHelper;
+import ho.core.file.LanguageFiles;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.plugins.PluginManager;
 
@@ -24,7 +25,6 @@ import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.LanguageFiles;
 import de.hattrickorganizer.tools.extension.ExtensionListener;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
 

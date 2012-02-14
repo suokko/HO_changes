@@ -1,5 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
+import ho.core.file.xml.XMLManager;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,7 +18,6 @@ import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 public class LineupCreator extends XMLCreator {
 

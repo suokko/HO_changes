@@ -397,7 +397,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return Value of property m_clXMLParser.
      */
     public plugins.IXMLParser getXMLParser() {
-        return de.hattrickorganizer.tools.xml.XMLManager.instance();
+        return ho.core.file.xml.XMLManager.instance();
     }
 
     /**

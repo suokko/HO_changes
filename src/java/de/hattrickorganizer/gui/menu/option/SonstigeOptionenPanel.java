@@ -1,6 +1,8 @@
 // %1942107811:de.hattrickorganizer.gui.menu.option%
 package de.hattrickorganizer.gui.menu.option;
 
+import ho.core.file.LanguageFiles;
+
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -14,7 +16,6 @@ import de.hattrickorganizer.gui.model.GeldFaktorCBItem;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.OptionManager;
-import de.hattrickorganizer.tools.LanguageFiles;
 
 /**
  * Alle weiteren Optionen, die Keine Formeln sind

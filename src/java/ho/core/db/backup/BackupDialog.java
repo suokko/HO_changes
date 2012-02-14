@@ -1,6 +1,7 @@
 package ho.core.db.backup;
 
 import ho.core.db.User;
+import ho.core.file.ZipHelper;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -20,7 +21,6 @@ import javax.swing.JScrollPane;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.ZipHelper;
 
 /**
  * Backupmanagement dialog

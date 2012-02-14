@@ -1,5 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
+import ho.core.file.xml.XMLManager;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,7 +20,6 @@ import plugins.ISpielplan;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 public class StandingCreator extends XMLCreator{
 

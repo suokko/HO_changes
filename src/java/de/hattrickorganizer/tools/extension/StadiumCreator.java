@@ -1,6 +1,7 @@
 package de.hattrickorganizer.tools.extension;
 
 import ho.core.db.StatisticQuery;
+import ho.core.file.xml.XMLManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,6 @@ import de.hattrickorganizer.gui.model.ArenaStatistikModel;
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.xml.XMLManager;
 
 public class StadiumCreator extends XMLCreator {
 

@@ -1,12 +1,13 @@
 package de.hattrickorganizer.gui.lineup2;
 
+import ho.core.file.xml.XMLMatchOrderParser;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-import de.hattrickorganizer.logik.xml.XMLMatchOrderParser;
 import de.hattrickorganizer.model.Lineup;
 
 public class Helper {

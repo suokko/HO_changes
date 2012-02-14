@@ -17,6 +17,8 @@ public interface IModule {
 	public static final int MISC 			= 9;
 	public static final int TEAMANALYZER 	= 10;
 	public static final int TSFORECAST 		= 11;
+	public static final int SPECIALEVENTS	= 12;
+	public static final int TEAM_OF_THE_WEEK= 13;
 	
 	
 	public int getModuleId();
