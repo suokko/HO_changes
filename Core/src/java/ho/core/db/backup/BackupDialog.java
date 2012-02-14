@@ -1,6 +1,7 @@
 package ho.core.db.backup;
 
 import ho.core.db.User;
+import ho.core.file.ExampleFileFilter;
 import ho.core.file.ZipHelper;
 
 import java.awt.BorderLayout;
@@ -19,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.tools.HOLogger;
 
 /**

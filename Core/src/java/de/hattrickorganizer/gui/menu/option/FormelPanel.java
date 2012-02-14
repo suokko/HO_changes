@@ -88,7 +88,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
                 fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath));
             }
 
-            final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
+            final ho.core.file.ExampleFileFilter filter = new ho.core.file.ExampleFileFilter();
             filter.addExtension("xml");
             filter.setDescription("XML");
             fileChooser.setFileFilter(filter);
@@ -112,7 +112,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
                 fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath));
             }
 
-            final de.hattrickorganizer.gui.utils.ExampleFileFilter filter = new de.hattrickorganizer.gui.utils.ExampleFileFilter();
+            final ho.core.file.ExampleFileFilter filter = new ho.core.file.ExampleFileFilter();
             filter.addExtension("xml");
             filter.setDescription("XML");
             fileChooser.setFileFilter(filter);

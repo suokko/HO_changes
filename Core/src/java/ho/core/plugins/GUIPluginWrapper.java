@@ -1,6 +1,8 @@
 // %3994494499:de.hattrickorganizer.gui.pluginWrapper%
 package ho.core.plugins;
 
+import ho.core.gui.print.ComponentPrintObject;
+import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
@@ -11,8 +13,6 @@ import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.model.SpielerTableRenderer;
-import de.hattrickorganizer.gui.print.ComponentPrintObject;
-import de.hattrickorganizer.gui.print.PrintController;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -149,7 +149,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
 
             printController.add(new ComponentPrintObject(printController.getPf(),name,
                                                          panel,
-                                                         de.hattrickorganizer.gui.print.ComponentPrintObject.SICHTBAR));
+                                                         ho.core.gui.print.ComponentPrintObject.SICHTBAR));
 
             printController.print();
         } catch (Exception e) {

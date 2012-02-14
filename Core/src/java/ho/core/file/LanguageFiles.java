@@ -12,7 +12,6 @@ import java.util.Vector;
 
 import de.hattrickorganizer.HO;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.tools.HOLogger;
 
 public class LanguageFiles {

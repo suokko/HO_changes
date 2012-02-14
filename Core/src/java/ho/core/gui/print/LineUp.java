@@ -1,5 +1,5 @@
 // %2903488262:de.hattrickorganizer.gui.print%
-package de.hattrickorganizer.gui.print;
+package ho.core.gui.print;
 
 import java.awt.Font;
 import java.awt.Graphics2D;

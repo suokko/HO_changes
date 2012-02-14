@@ -3,6 +3,7 @@ package ho.tool.export;
 
 import ho.core.db.DBManager;
 import ho.core.db.backup.HOZip;
+import ho.core.file.ExampleFileFilter;
 import ho.core.file.xml.XMLManager;
 
 import java.awt.BorderLayout;
@@ -37,7 +38,6 @@ import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
 import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 
 //implement IPlugin for integration into HO
 //Refreshable to get informed by data updates

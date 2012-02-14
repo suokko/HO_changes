@@ -1,5 +1,7 @@
 package ho.tool.export;
 
+import ho.core.file.ExampleFileFilter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Iterator;
@@ -12,7 +14,6 @@ import javax.swing.JWindow;
 import plugins.IHOMiniModel;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;

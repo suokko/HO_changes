@@ -1,6 +1,7 @@
 package ho.core.plugins;
 
 import ho.core.db.DBManager;
+import ho.core.file.ExampleFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Vector;
 import plugins.IOfficialPlugin;
 import plugins.IPlugin;
 import de.hattrickorganizer.gui.SplashFrame;
-import de.hattrickorganizer.gui.utils.ExampleFileFilter;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.tools.HOLogger;
 

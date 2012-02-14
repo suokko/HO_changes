@@ -66,14 +66,14 @@ public class SpielePrintDialog extends JDialog {
      */
     public final void doPrint(String titel) {
         try {
-            final de.hattrickorganizer.gui.print.PrintController printController = de.hattrickorganizer.gui.print.PrintController
+            final ho.core.gui.print.PrintController printController = ho.core.gui.print.PrintController
                                                                                    .getInstance();
 
-            printController.add(new de.hattrickorganizer.gui.print.ComponentPrintObject(printController
+            printController.add(new ho.core.gui.print.ComponentPrintObject(printController
                                                                                         .getPf(),
                                                                                         titel,
                                                                                         getContentPane(),
-                                                                                        de.hattrickorganizer.gui.print.ComponentPrintObject.SICHTBAR));
+                                                                                        ho.core.gui.print.ComponentPrintObject.SICHTBAR));
 
             printController.print();
         } catch (Exception e) {
