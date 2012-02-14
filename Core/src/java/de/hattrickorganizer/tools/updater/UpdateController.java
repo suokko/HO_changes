@@ -24,6 +24,7 @@ import org.w3c.dom.NodeList;
 
 import plugins.IOfficialPlugin;
 import plugins.IPlugin;
+import de.hattrickorganizer.HO;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.model.Extension;
@@ -280,7 +281,7 @@ public final class UpdateController {
 		VersionInfo version = MyConnector.instance().getLatestVersion();
 		if (version != null && 
 				(version.getVersion() > HOMainFrame.VERSION || 
-				(version.getVersion() == HOMainFrame.VERSION && version.isBeta()))
+				(version.getVersion() == HOMainFrame.VERSION && HO.isDevelopment()))
 			) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
 					HOVerwaltung.instance().getLanguageString("updateMSG") + "\n"
