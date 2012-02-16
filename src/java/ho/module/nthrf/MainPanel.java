@@ -6,10 +6,9 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.EtchedBorder;
 
 import de.hattrickorganizer.model.HOVerwaltung;
 
@@ -48,7 +47,7 @@ public class MainPanel extends JPanel implements ActionListener {
     	ta.append(hoV.getLanguageString("nthrf.hint3")+"\n");
     	ta.append(hoV.getLanguageString("nthrf.hint4"));
     	ta.setEditable(false);
-    	add(ta, BorderLayout.CENTER);
+    	add(new JScrollPane(ta), BorderLayout.CENTER);
     	btnStart = new JButton("Start");
     	btnStart.addActionListener(this);
     	add(btnStart, BorderLayout.SOUTH);

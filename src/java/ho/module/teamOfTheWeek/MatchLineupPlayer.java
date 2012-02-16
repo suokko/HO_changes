@@ -11,12 +11,7 @@ import java.util.Vector;
 import plugins.IPaarung;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class MatchLineupPlayer {
+class MatchLineupPlayer {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private String nname;
@@ -28,18 +23,15 @@ public class MatchLineupPlayer {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    public String getTeamName() {
+    String getTeamName() {
 		return teamName;
 	}
 
-	public void setTeamName(String teamName) {
+	void setTeamName(String teamName) {
 		this.teamName = teamName;
 	}
 
-	/**
-     * Creates a new MatchLineupPlayer object.
-     */
-    public MatchLineupPlayer() {
+    MatchLineupPlayer() {
         TeamID = -1;
         PositionCode = 0;
         Rating = -1F;
@@ -47,12 +39,7 @@ public class MatchLineupPlayer {
         //        nname = "";
     }
 
-    /**
-     * Creates a new MatchLineupPlayer object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     */
-    public MatchLineupPlayer(ResultSet rs,Vector<IPaarung> matches) {
+    MatchLineupPlayer(ResultSet rs,Vector<IPaarung> matches) {
         try {
             rs.next();
             TeamID = rs.getInt("TEAMID");
@@ -83,57 +70,28 @@ public class MatchLineupPlayer {
     
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final String getNname() {
+    final String getNname() {
         return nname;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public int getPositionCode() {
+    int getPositionCode() {
         return PositionCode;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float getRating() {
+    float getRating() {
         return Rating;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public int getSpielerID() {
+    int getSpielerID() {
         return SpielerID;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public int getTeamID() {
+    int getTeamID() {
         return TeamID;
     }
 
-    /**
-     * toString methode: creates a String representation of the object
-     *
-     * @return the String representation
-     */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("MatchLineupPlayer[");
         buffer.append("TeamID = ").append(TeamID);
