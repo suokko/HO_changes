@@ -9,7 +9,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -21,6 +26,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import plugins.IJDBCAdapter;
+import plugins.IPaarung;
+import plugins.ISpielerPosition;
 import plugins.LineupPanel;
 import de.hattrickorganizer.gui.templates.ImagePanel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -33,7 +41,7 @@ import de.hattrickorganizer.tools.HelperWrapper;
  *
  * @author TODO Author Name
  */
-public class PotwUI extends JPanel implements ChangeListener,ActionListener {
+public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionListener {
 
 	private static final long serialVersionUID = 7990572479100871307L;
 
@@ -51,7 +59,7 @@ public class PotwUI extends JPanel implements ChangeListener,ActionListener {
     /**
      * Creates a new PotwUI object.
      */
-    public PotwUI() {
+    public TeamOfTheWeekPanel() {
         super();
         jbInit();
     }
@@ -80,7 +88,7 @@ public class PotwUI extends JPanel implements ChangeListener,ActionListener {
 
     private MatchLineupPlayer[] calcBestLineup(int week, boolean best) {
     	 Spielplan plan = (Spielplan)seasonCombo.getSelectedItem();
-        Map<String, MatchLineupPlayer> spieler = DBManager2.getPlayers(week,plan, best);
+        Map<String, MatchLineupPlayer> spieler = getPlayers(week,plan, best);
         MatchLineupPlayer[] mlp = new MatchLineupPlayer[11];
 
         for (int i = 0; i < 11; i++) {
@@ -239,28 +247,28 @@ public class PotwUI extends JPanel implements ChangeListener,ActionListener {
         
         
 
-        JLabel jl = new JLabel("Matchweek: ");
-        JLabel sl = new JLabel("Season: ");
+        JLabel jl = new JLabel(HOVerwaltung.instance().getLanguageString("Spieltag"));
+        //JLabel sl = new JLabel(HOVerwaltung.instance().getLanguageString("Season"));
         JPanel north = new ImagePanel();
         jl.setForeground(Color.BLACK);
         jl.setLabelFor(weekSpinner);
-        sl.setForeground(Color.BLACK);
-        sl.setLabelFor(seasonCombo);
+        //sl.setForeground(Color.BLACK);
+        //sl.setLabelFor(seasonCombo);
         reloadData(true);
         //north.setPreferredSize(new Dimension(120, 30));
         north.add(jl);
         north.add(weekSpinner);
-        north.add(sl);
+        //north.add(sl);
         north.add(seasonCombo);
         north.setOpaque(true);
         m_jpPanel.setLayout(new BorderLayout());
         m_jpPanel.add(north, BorderLayout.NORTH);
 
         JTabbedPane tab = new JTabbedPane();
-        tab.addTab("Best of the Week", bestOfWeek);
-        tab.addTab("Worst of the Week", worstOfWeek);
-        tab.addTab("Best of the Year", bestOfYear);
-        tab.addTab("Worst of the Year", worstOfYear);
+        tab.addTab(HOVerwaltung.instance().getLanguageString("bestOfWeek"), bestOfWeek);
+        tab.addTab(HOVerwaltung.instance().getLanguageString("worstOfWeek"), worstOfWeek);
+        tab.addTab(HOVerwaltung.instance().getLanguageString("bestOfSeason"), bestOfYear);
+        tab.addTab(HOVerwaltung.instance().getLanguageString("worstOfSeason"), worstOfYear);
         m_jpPanel.add(tab, BorderLayout.CENTER);
         setLayout(new BorderLayout());
         add(m_jpPanel, BorderLayout.CENTER);
@@ -298,4 +306,120 @@ public class PotwUI extends JPanel implements ChangeListener,ActionListener {
         updateUI();
 		
 	}
+	
+    /**
+     * Missing Method Documentation
+     *
+     * @param week Missing Constructuor Parameter Documentation
+     * @param season Missing Constructuor Parameter Documentation
+     * @param isBest Missing Constructuor Parameter Documentation
+     *
+     * @return Missing Return Method Documentation
+     */
+    private Map<String,MatchLineupPlayer> getPlayers(int week, Spielplan plan, boolean isBest) {
+        IJDBCAdapter db = DBManager.instance().getAdapter();
+        Vector<IPaarung> matchIDs =plan.getPaarungenBySpieltag(week);
+        // TODO For match of year attention of doubles
+        Map<String,MatchLineupPlayer> spieler = new HashMap<String,MatchLineupPlayer>();
+        List<MatchLineupPlayer> players = getPlayetAt(db, matchIDs, ISpielerPosition.KEEPER, 1, isBest);
+        spieler.put("1", players.get(0));
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.BACK, 2, isBest);
+        spieler.put("2", players.get(0));
+        spieler.put("5", players.get(1));
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.CENTRAL_DEFENDER, 2, isBest);
+        spieler.put("3", players.get(0));
+        spieler.put("4", players.get(1));
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.WINGER, 2, isBest);
+        spieler.put("6", players.get(0));
+        spieler.put("9", players.get(1));
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.MIDFIELDER, 2, isBest);
+        spieler.put("7", players.get(0));
+        spieler.put("8", players.get(1));
+        players = getPlayetAt(db, matchIDs, ISpielerPosition.FORWARD, 2, isBest);
+        spieler.put("10", players.get(0));
+        spieler.put("11", players.get(1));
+        return spieler;
+    }
+
+    /**
+     * Missing Method Documentation
+     *
+     * @param db Missing Method Parameter Documentation
+     * @param matchIDs Missing Method Parameter Documentation
+     * @param position Missing Method Parameter Documentation
+     * @param number Missing Method Parameter Documentation
+     * @param isBest Missing Constructuor Parameter Documentation
+     *
+     * @return Missing Return Method Documentation
+     */
+    private List<MatchLineupPlayer> getPlayetAt(IJDBCAdapter db, Vector<IPaarung> matchIDs, int position, int number,
+                                    boolean isBest) {
+        ResultSet rs;
+        String posClase = "";
+
+		switch (position) {
+			case ISpielerPosition.KEEPER: {
+				posClase += " FIELDPOS=" + ISpielerPosition.keeper + " ";
+				break;
+			}
+
+			case ISpielerPosition.CENTRAL_DEFENDER: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftCentralDefender + " OR FIELDPOS=" + 
+						ISpielerPosition.middleCentralDefender + " OR FIELDPOS=" + ISpielerPosition.rightCentralDefender + ") ";
+				break;
+			}
+
+			case ISpielerPosition.BACK: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftBack + " OR FIELDPOS=" + ISpielerPosition.rightBack + ") ";
+				break;
+			}
+
+			case ISpielerPosition.WINGER: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftWinger + " OR FIELDPOS=" + ISpielerPosition.rightWinger + ") ";
+				break;
+			}
+
+			case ISpielerPosition.MIDFIELDER: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftInnerMidfield + " OR FIELDPOS=" + 
+						ISpielerPosition.centralInnerMidfield + " OR FIELDPOS=" + ISpielerPosition.rightInnerMidfield + ") ";
+				break;
+			}
+
+			case ISpielerPosition.FORWARD: {
+				posClase += " (FIELDPOS=" + ISpielerPosition.leftForward + " OR FIELDPOS=" + 
+						ISpielerPosition.centralForward + " OR FIELDPOS=" + ISpielerPosition.rightForward + ") ";
+				break;
+			}
+		}
+
+		String matchClause = "";
+        for (int i = 0; i < matchIDs.size(); i++) {
+            if (matchClause.length() > 1) {
+                matchClause += " OR ";
+            }
+			matchClause += " MATCHID=" + matchIDs.get(i).getMatchId();
+        }
+
+		String sql = "SELECT DISTINCT SPIELERID, NAME, RATING, HOPOSCODE, TEAMID FROM MATCHLINEUPPLAYER WHERE "+posClase;
+		if (matchClause.length()>1) {
+			sql += " AND (" + matchClause + ") ";
+		}
+        sql += "ORDER BY RATING ";
+
+        if (isBest) {
+            sql += " DESC";
+        } else {
+            sql += " ASC";
+        }
+
+        rs = db.executeQuery(sql);
+
+        List<MatchLineupPlayer> ret = new ArrayList<MatchLineupPlayer>();
+
+        for (int i = 0; i < number; i++) {
+            ret.add(new MatchLineupPlayer(rs, matchIDs));
+        }
+
+        return ret;
+    }
 }

@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import de.hattrickorganizer.model.HOVerwaltung;
+
 import ho.core.module.DefaultModule;
 
 public class TeamOfTheWeekModule extends DefaultModule {
@@ -20,13 +22,12 @@ public class TeamOfTheWeekModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "TOTW";
+		return HOVerwaltung.instance().getLanguageString("bestOfWeek");
 	}
 
 	@Override
 	public JPanel createTabPanel() {
-		return new PotwUI();
+		return new TeamOfTheWeekPanel();
 	}
 
 }
