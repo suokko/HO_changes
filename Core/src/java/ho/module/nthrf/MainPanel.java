@@ -3,7 +3,6 @@ package ho.module.nthrf;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -12,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
-import plugins.IHOMiniModel;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**
@@ -42,25 +41,14 @@ public class MainPanel extends JPanel implements ActionListener {
      */
     private void buildGui() {
     	setLayout(new BorderLayout());
-    	JPanel msg = new JPanel();
-    	JPanel doc = new JPanel();
-    	msg.setLayout(new BorderLayout());
-    	doc.setLayout(new BorderLayout());
-    	doc.setBorder(new EtchedBorder());
-    	msg.add(new JLabel("Hint: NEVER import any NT HRF files into your normal HO!"), BorderLayout.NORTH);
-    	msg.add(new JLabel("Use a secondary installation only."), BorderLayout.CENTER);
-
+    	HOVerwaltung hoV = HOVerwaltung.instance();
     	JTextArea ta = new JTextArea();
-    	ta.append("This module can be used by elected NT/U20 managers only!\n");
-    	ta.append("Press 'Start' to download your national team's data.\n");
-    	ta.append("\n");
-    	ta.append("Contact user 'aYcon' in HT if you have any questions.");
+    	ta.append(hoV.getLanguageString("nthrf.hint1")+"\n");
+    	ta.append(hoV.getLanguageString("nthrf.hint2")+"\n");
+    	ta.append(hoV.getLanguageString("nthrf.hint3")+"\n");
+    	ta.append(hoV.getLanguageString("nthrf.hint4"));
     	ta.setEditable(false);
-    	doc.add(ta, BorderLayout.CENTER);
-
-    	doc.add(new JLabel(" "), BorderLayout.SOUTH);
-    	msg.add(doc, BorderLayout.SOUTH);
-    	add(msg, BorderLayout.NORTH);
+    	add(ta, BorderLayout.CENTER);
     	btnStart = new JButton("Start");
     	btnStart.addActionListener(this);
     	add(btnStart, BorderLayout.SOUTH);

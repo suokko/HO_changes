@@ -3,7 +3,7 @@ package ho.module.nthrf;
 /**
  * Simple data class for position related information of a player.
  */
-public class NtPlayerPosition {
+class NtPlayerPosition {
 
 	private long playerId;
 	private String name;
@@ -14,45 +14,44 @@ public class NtPlayerPosition {
 
 	private float ratingStars = 0;
 
-	public long getPlayerId() {
+	long getPlayerId() {
 		return playerId;
 	}
-	public void setPlayerId(long playerId) {
+	void setPlayerId(long playerId) {
 		this.playerId = playerId;
 	}
-	public String getName() {
+	String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	void setName(String name) {
 		this.name = name;
 	}
-	public int getRoleId() {
+	int getRoleId() {
 		return roleId;
 	}
-	public int getPositionCode() {
+	int getPositionCode() {
 		return positionCode;
 	}
-	public int getBehaviour() {
+	int getBehaviour() {
 		return behaviour;
 	}
-	public float getRatingStars() {
+	float getRatingStars() {
 		return ratingStars;
 	}
-	public void setRoleId(int roleId) {
+	void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-	public void setPositionCode(int positionCode) {
+	void setPositionCode(int positionCode) {
 		this.positionCode = positionCode;
 	}
-	public void setBehaviour(int behaviour) {
+	void setBehaviour(int behaviour) {
 		this.behaviour = behaviour;
 	}
-	public void setRatingStars(float ratingStars) {
+	void setRatingStars(float ratingStars) {
 		this.ratingStars = ratingStars;
 	}
-	/**
-	 * Overwritten toString()
-	 */
+
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("--- NtPlayerPosition - " + name + " (" + playerId + ") ---");
 		sb.append("\n\trole / posi / behaviour: " + roleId + " / " + positionCode + " / " + behaviour);

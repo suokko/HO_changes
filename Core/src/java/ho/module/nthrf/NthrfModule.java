@@ -39,7 +39,7 @@ public class NthrfModule extends DefaultModule {
 	}
 	@Override
 	public JMenu getMenu(){
-		return NthrfMenu.createMenu();
+		return new NthrfMenu();
 	}
 
 }

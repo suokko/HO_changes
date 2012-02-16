@@ -8,28 +8,33 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import de.hattrickorganizer.gui.HOMainFrame;
+import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * A simple menu for the nthrf plugin.
  *
  * @author aik
  */
-public class NthrfMenu {
+public class NthrfMenu extends JMenu {
 
+	private static final long serialVersionUID = 1L;
+	
+	NthrfMenu(){
+		super("Nthrf");
+		initialize();
+	}
 	/**
 	 * Create a new Feedback menu.
 	 */
-	public static JMenu createMenu() {
-		JMenu menu = new JMenu("Nthrf");
-    	JMenuItem about = new JMenuItem("Download HRF");
+	private void initialize() {
+    	JMenuItem about = new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFDownload"));
         about.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		JOptionPane.showMessageDialog(HOMainFrame.instance(), MainPanel.getInstance(),
-        				"Download", JOptionPane.PLAIN_MESSAGE);
+        				HOVerwaltung.instance().getLanguageString("HRFDownload"), JOptionPane.PLAIN_MESSAGE);
         	}
         });
-        menu.add(about);
-        return menu;
+        add(about);
 	}
 
 }

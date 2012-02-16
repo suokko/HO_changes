@@ -1,5 +1,6 @@
 package ho.module.nthrf;
 
+import ho.core.file.ExampleFileFilter;
 import ho.core.file.xml.XMLManager;
 
 import java.io.File;
@@ -11,26 +12,22 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import plugins.IDownloadHelper;
+import plugins.IXMLParser;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.net.MyConnector;
-import de.hattrickorganizer.tools.HelperWrapper;
 
-import plugins.IDownloadHelper;
-import plugins.IHOMiniModel;
-import plugins.IXMLParser;
-
-public class NthrfUtil {
+class NthrfUtil {
 
     /**
      * TODO
      * @return success of the operation
      */
-    public static boolean createNthrf(long teamId) {
+    static boolean createNthrf(long teamId) {
         try {
             IXMLParser xp = XMLManager.instance();
             IDownloadHelper dh = MyConnector.instance();
@@ -42,18 +39,9 @@ public class NthrfUtil {
             final File path = new File(gui.UserParameter.instance().hrfImport_HRFPath);
             File file = new File(gui.UserParameter.instance().hrfImport_HRFPath + File.separator + fname);
             fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-            fileChooser.setDialogTitle("Save NT HRF File...");
+            fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("Speichern"));
 
-            FileFilter filter = new FileFilter() {
-                public boolean accept(File f) {
-                    return (f != null && (f.isDirectory() || (f.isFile() && f.getAbsolutePath().endsWith(".hrf"))));
-                }
-
-                public final String getDescription() {
-                    return "Hattrick HRF";
-                }
-            };
-            fileChooser.setFileFilter(filter);
+            fileChooser.setFileFilter(new ExampleFileFilter("hrf"));
             try {
                 if (path.exists() && path.isDirectory()) {
                     fileChooser.setCurrentDirectory(path);
@@ -168,7 +156,7 @@ public class NthrfUtil {
      * Get the countryId according to a nativeLeagueId of a player.
      */
     public static int getCountryId(int nativeLeagueId, HashMap<Integer, Integer> countryMapping) {
-        int ret = countryMapping.get(nativeLeagueId);
+        int ret = countryMapping.get(Integer.valueOf(nativeLeagueId)).intValue();
         if (ret > 0) {
             return ret;
         }

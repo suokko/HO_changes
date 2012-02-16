@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 import plugins.IDownloadHelper;
 import plugins.IXMLParser;
 
-public class NtPlayersParser {
+class NtPlayersParser {
 
 	private String fetchedDate;
 	private long teamId;
@@ -24,7 +24,7 @@ public class NtPlayersParser {
 	/**
 	 * Parse player details and store the IDs and Players in local objects.
 	 */
-	public NtPlayersParser(IXMLParser xm, String xmlData, IDownloadHelper dh, HashMap<Integer, Integer> countryMapping) {
+	NtPlayersParser(IXMLParser xm, String xmlData, IDownloadHelper dh, HashMap<Integer, Integer> countryMapping) {
 		Document doc = xm.parseString(xmlData);
 	    parseBasics(xm, doc);
 	    parsePlayerDetails(xm, dh, countryMapping);
@@ -217,6 +217,7 @@ public class NtPlayersParser {
 		return parsingSuccess;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("NtPlayers (from "+fetchedDate+"), parsingSuccess: " + parsingSuccess);
 		sb.append("\n\tTeam: " + teamName + " (" + teamId + ")");

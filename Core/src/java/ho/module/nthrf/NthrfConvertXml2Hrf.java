@@ -15,13 +15,14 @@ import org.w3c.dom.NodeList;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 
 import plugins.IDownloadHelper;
 import plugins.IHelper;
 import plugins.IXMLParser;
 
-public class NthrfConvertXml2Hrf {
+class NthrfConvertXml2Hrf {
 	private StringBuffer m_sHRFBuffer;
 	private long teamId = 0;
 	private IHelper helper;
@@ -29,7 +30,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Create the HRF file.
 	 */
-	public final String createHrf(long teamId, IDownloadHelper dh, IXMLParser xp) throws Exception {
+	final String createHrf(long teamId, IDownloadHelper dh, IXMLParser xp) throws Exception {
 		m_sHRFBuffer = new StringBuffer("");
 		helper = HelperWrapper.instance();
 		this.teamId = teamId;
@@ -91,7 +92,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Erstellt die Arena Daten
 	 */
-	protected final void createArena(NtTeamDetailsParser details) throws Exception {
+	final void createArena(NtTeamDetailsParser details) throws Exception {
 		m_sHRFBuffer.append("[arena]" + "\n");
 		m_sHRFBuffer.append("arenaname=" + details.getTeamName() + " Arena\n");
 		m_sHRFBuffer.append("arenaid=0\n"); 		// ArenaID
@@ -112,7 +113,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * basic data
 	 */
-	protected final void createBasics(NtTeamDetailsParser details, NtPlayersParser players) throws Exception {
+	final void createBasics(NtTeamDetailsParser details, NtPlayersParser players) throws Exception {
 		m_sHRFBuffer.append("[basics]\n");
 		m_sHRFBuffer.append("application=HO\n");
 		m_sHRFBuffer.append("appversion=" + HOMainFrame.VERSION + "\n");
@@ -125,7 +126,7 @@ public class NthrfConvertXml2Hrf {
 		m_sHRFBuffer.append("ownerEmail=0\n");
 		m_sHRFBuffer.append("ownerICQ=0\n");
 		m_sHRFBuffer.append("ownerHomepage=" + details.getHomePageUrl() + "\n");
-		m_sHRFBuffer.append("countryID=" + ((NtPlayer)players.getAllPlayers().get(0)).getCountryId() + "\n");
+		m_sHRFBuffer.append("countryID=" + (players.getAllPlayers().get(0)).getCountryId() + "\n");
 		m_sHRFBuffer.append("leagueID=" + details.getLeagueId() + "\n");
 		m_sHRFBuffer.append("regionID=0\n");
 	}
@@ -133,7 +134,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Club Data
 	 */
-	protected final void createClub(NtTeamDetailsParser details) throws Exception {
+	final void createClub(NtTeamDetailsParser details) throws Exception {
 		m_sHRFBuffer.append("[club]\n");
 		m_sHRFBuffer.append("hjTranare=0\n");		// AssistantTrainers
 		m_sHRFBuffer.append("psykolog=0\n");		// Psychologists
@@ -149,7 +150,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Erstellt die Econemy Daten
 	 */
-	protected final void createEconomy() throws Exception {
+	final void createEconomy() throws Exception {
 		m_sHRFBuffer.append("[economy]" + "\n");
 
 		if (false) {
@@ -188,10 +189,7 @@ public class NthrfConvertXml2Hrf {
 		m_sHRFBuffer.append("lastTotal=0\n");
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
-	protected final void createLastLineUp(NtPlayer trainer, NtLineupParser lineup) {
+	final void createLastLineUp(NtPlayer trainer, NtLineupParser lineup) {
 		m_sHRFBuffer.append("[lastlineup]" + "\n");
 
 		try {
@@ -245,8 +243,8 @@ public class NthrfConvertXml2Hrf {
 			m_sHRFBuffer.append("behInsideMid1=" + (p7 != null ? ""+p7.getBehaviour() : "0") + "\n");
 			m_sHRFBuffer.append("behInsideMid2=" + (p8 != null ? ""+p8.getBehaviour() : "0") + "\n");
 			m_sHRFBuffer.append("behLeftWinger=" + (p9 != null ? ""+p9.getBehaviour() : "0") + "\n");
-			m_sHRFBuffer.append("behForward1=" + (p10 != null ? ""+p2.getBehaviour() : "0") + "\n");
-			m_sHRFBuffer.append("behForward2=" + (p11 != null ? ""+p2.getBehaviour() : "0") + "\n");
+			m_sHRFBuffer.append("behForward1=" + (p10 != null ? ""+p10.getBehaviour() : "0") + "\n");
+			m_sHRFBuffer.append("behForward2=" + (p11 != null ? ""+p11.getBehaviour() : "0") + "\n");
 		} catch (Exception e) {
 		}
 	}
@@ -254,7 +252,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Erstellt die Liga Daten
 	 */
-	protected final void createLeague() throws Exception {
+	final void createLeague() throws Exception {
 		m_sHRFBuffer.append("[league]\n");
 		m_sHRFBuffer.append("serie=I.1\n");
 		m_sHRFBuffer.append("spelade=0\n");		// Matches
@@ -267,7 +265,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Erstellt die LineUp Daten
 	 */
-	protected final void createLineUp(NtPlayer trainer, NtLineupParser lineup) throws Exception {
+	final void createLineUp(NtPlayer trainer, NtLineupParser lineup) throws Exception {
 		m_sHRFBuffer.append("[lineup]" + "\n");
 
 		try {
@@ -321,8 +319,8 @@ public class NthrfConvertXml2Hrf {
 			m_sHRFBuffer.append("behInsideMid1=" + (p7 != null ? ""+p7.getBehaviour() : "0") + "\n");
 			m_sHRFBuffer.append("behInsideMid2=" + (p8 != null ? ""+p8.getBehaviour() : "0") + "\n");
 			m_sHRFBuffer.append("behLeftWinger=" + (p9 != null ? ""+p9.getBehaviour() : "0") + "\n");
-			m_sHRFBuffer.append("behForward1=" + (p10 != null ? ""+p2.getBehaviour() : "0") + "\n");
-			m_sHRFBuffer.append("behForward2=" + (p11 != null ? ""+p2.getBehaviour() : "0") + "\n");
+			m_sHRFBuffer.append("behForward1=" + (p10 != null ? ""+p10.getBehaviour() : "0") + "\n");
+			m_sHRFBuffer.append("behForward2=" + (p11 != null ? ""+p11.getBehaviour() : "0") + "\n");
 		} catch (Exception e) {
 		}
 	}
@@ -330,11 +328,11 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Erstellt die Player Daten
 	 */
-	protected final void createPlayers(NtPlayersParser players) throws Exception {
+	final void createPlayers(NtPlayersParser players) throws Exception {
 		List<NtPlayer> pls = players.getAllPlayers();
 
 		for (Iterator<NtPlayer> i = pls.iterator(); i.hasNext(); ) {
-			NtPlayer pl = (NtPlayer)i.next();
+			NtPlayer pl = i.next();
 
 			m_sHRFBuffer.append("[player" + pl.getPlayerId() + "]" + "\n");
 			m_sHRFBuffer.append("name=" + pl.getName() + "\n");
@@ -402,7 +400,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Erstellt die Team Daten
 	 */
-	protected final void createTeam(NtTeamDetailsParser details) throws Exception {
+	final void createTeam(NtTeamDetailsParser details) throws Exception {
 		m_sHRFBuffer.append("[team]" + "\n");
 		m_sHRFBuffer.append("trLevel=100\n");			// TrainingLevel
 		m_sHRFBuffer.append("staminaTrainingPart=5\n"); //StaminaTrainingPart
@@ -451,7 +449,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Creates the world details for the current user / country.
 	 */
-	protected final void createWorld(Hashtable<String, String> world, NtTeamDetailsParser details, NtPlayer trainer) throws Exception {
+	final void createWorld(Hashtable<String, String> world, NtTeamDetailsParser details, NtPlayer trainer) throws Exception {
 		m_sHRFBuffer.append("[xtra]\n");
 
 		m_sHRFBuffer.append("TrainingDate=" + world.get("TrainingDate") + "\n");
@@ -471,7 +469,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Parse all leagues and (nativeLeagueId) and their countryId.
 	 */
-	public HashMap<Integer, Integer> getCountryMapping(IDownloadHelper dh, IXMLParser xp) {
+	HashMap<Integer, Integer> getCountryMapping(IDownloadHelper dh, IXMLParser xp) {
 		HashMap<Integer, Integer> ret = new HashMap<Integer, Integer>(100);
 		try {
 			String str = getWorldDetailString(dh);
@@ -511,7 +509,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Save the hrf buffer to a file.
 	 */
-    public final void writeHRF(String filename) {
+    final void writeHRF(String filename) {
     	File file = new File(filename);
     	writeHRF(file);
     }
@@ -519,7 +517,7 @@ public class NthrfConvertXml2Hrf {
 	/**
 	 * Save the hrf buffer into a file.
 	 */
-	public final void writeHRF(File file) {
+	final void writeHRF(File file) {
 		debug("Create NT HRF file: " + (file != null ? file.getAbsolutePath() : "null"));
 		if (file == null) return;
 
@@ -546,6 +544,6 @@ public class NthrfConvertXml2Hrf {
 	}
 
 	private void debug(String txt) {
-		System.out.println("Nthrf: " + txt);
+		HOLogger.instance().debug(this.getClass(), txt);
 	}
 }
