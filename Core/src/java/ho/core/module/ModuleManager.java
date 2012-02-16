@@ -8,7 +8,6 @@ import ho.module.nthrf.NthrfModule;
 import ho.module.playerOverview.PlayerOverviewModule;
 import ho.module.playeranalysis.PlayerAnalysisModule;
 import ho.module.series.SeriesModule;
-import ho.module.specialEvents.SpecialEventsDM;
 import ho.module.specialEvents.SpecialEventsModule;
 import ho.module.statistics.StatisticsModule;
 import ho.module.teamAnalyzer.TeamAnalyzerModule;
@@ -61,10 +60,6 @@ public final class ModuleManager {
 	private void initialize(){
 		initMap(all_modules);
 		loadModuleInfos();
-	}
-	
-	void setTemp(HashMap<Integer,IModule> tmp){
-		
 	}
 	
 	private void copy(HashMap<Integer,IModule> from, HashMap<Integer,IModule> to){

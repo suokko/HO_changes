@@ -1,7 +1,6 @@
 package ho.module.specialEvents;
 
 import java.awt.BorderLayout;
-import java.io.File;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,10 +12,10 @@ import de.hattrickorganizer.gui.templates.ImagePanel;
 
 public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 
-	private static final int PLUGIN_ID = 33;
+	private static final long serialVersionUID = 1L;
 	private static SpecialEventsTable specialEventsTable;
 
-	public SpecialEventsPanel() {
+	SpecialEventsPanel() {
 		initialize();
 	}
 

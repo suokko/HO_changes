@@ -4,6 +4,7 @@ import ho.tool.arenasizer.ArenaSizerDialog;
 import ho.tool.dbcleanup.DBCleanupTool;
 import ho.tool.export.CsvPlayerExport;
 import ho.tool.export.XMLExporter;
+import ho.tool.hrfExplorer.HrfExplorerDialog;
 import ho.tool.injury.InjuryDialog;
 import ho.tool.keepertool.KeeperToolDialog;
 import ho.tool.notepad.NotepadDialog;
@@ -27,6 +28,7 @@ public class ToolManager implements ActionListener {
 	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem(m_hov.getLanguageString("CSVExporter"));
 	private final JMenuItem m_jmiDbCleanupTool = new JMenuItem(m_hov.getLanguageString("dbcleanup"));
 	private final JMenuItem m_jmiArenaSizer = new JMenuItem(m_hov.getLanguageString("ArenaSizer"));
+	private final JMenuItem m_jmiHrfExplorer = new JMenuItem(m_hov.getLanguageString("HrfExplorer"));
 	
 	
 	
@@ -52,6 +54,9 @@ public class ToolManager implements ActionListener {
 		m_jmiDbCleanupTool.addActionListener(this);
 		m_jmToolsMenu.add(m_jmiDbCleanupTool);
 		
+		m_jmiHrfExplorer.addActionListener(this);
+		m_jmToolsMenu.add(m_jmiHrfExplorer);
+		
 		return m_jmToolsMenu;
 	}
 
@@ -73,8 +78,10 @@ public class ToolManager implements ActionListener {
 			dbCleanupTool.showDialog(HOMainFrame.instance());
 		} else if (source.equals(m_jmiInjuryCalculator)) {
 			new InjuryDialog(HOMainFrame.instance()).setVisible(true);
-		}else if(source.equals(m_jmiArenaSizer)){
+		} else if(source.equals(m_jmiArenaSizer)){
 			new ArenaSizerDialog(HOMainFrame.instance()).setVisible(true);
+		} else if(source.equals(m_jmiHrfExplorer)){
+			new HrfExplorerDialog(HOMainFrame.instance()).setVisible(true);
 		}
 		
 	}

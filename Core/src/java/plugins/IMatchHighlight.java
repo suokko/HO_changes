@@ -309,7 +309,8 @@ public interface IMatchHighlight {
     /** (positive) unpredicatable SE */
     public static final int HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR = 8;
 
-    /** (negative) SE: Goal: Unpredictable, own goal  */
+    /** (negative) SE: Goal: Unpredictable, own goal  
+    @deprecated */
     public static final int HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR = 25;
 
     /** (negative) unpredicatable SE own goal*/

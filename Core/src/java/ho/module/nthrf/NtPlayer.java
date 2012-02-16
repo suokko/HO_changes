@@ -1,6 +1,6 @@
 package ho.module.nthrf;
 
-public class NtPlayer {
+class NtPlayer {
 
 	private long playerId;
 	private String name;
@@ -266,9 +266,7 @@ public class NtPlayer {
 		this.trainerSkill = trainerSkill;
 	}
 
-	/**
-	 * Overwritten toString()
-	 */
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("--- NtPlayer " + name + " (" + playerId + ") ---");
 		sb.append("\n\tshirtNumber: " + shirtNumber);
