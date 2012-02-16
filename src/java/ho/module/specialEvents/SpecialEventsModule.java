@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import de.hattrickorganizer.model.HOVerwaltung;
+
 public class SpecialEventsModule extends DefaultModule {
 
 	public KeyStroke getKeyStroke() {
@@ -20,8 +22,7 @@ public class SpecialEventsModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "TODO: SpecialEvents";
+		return  HOVerwaltung.instance().getLanguageString("Tab_SpecialEvents");
 	}
 
 	@Override

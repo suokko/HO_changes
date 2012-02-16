@@ -13,14 +13,16 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class NtTeamChooser extends JDialog implements ActionListener {
+import de.hattrickorganizer.model.HOVerwaltung;
+
+class NtTeamChooser extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private long selectedTeamId = -1;
 
 	public NtTeamChooser(List<String[]> teams) {
 		setLayout(new BorderLayout());
-		add(new JLabel("Choose your team:"), BorderLayout.NORTH);
+		add(new JLabel(HOVerwaltung.instance().getLanguageString("Favourite.SelectTeam")), BorderLayout.NORTH);
 		JPanel teamPanel = new JPanel();
 		for (Iterator<String[]> i=teams.iterator(); i.hasNext(); ) {
 			String[] t = i.next();

@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 
 import plugins.IXMLParser;
 
-public class NtTeamDetailsParser {
+class NtTeamDetailsParser {
 
 	private int teamId;
 	private String teamName;
@@ -32,7 +32,7 @@ public class NtTeamDetailsParser {
 	private String fetchedDate;
 	private boolean parsingSuccess;
 
-	public NtTeamDetailsParser(IXMLParser xm, String xmlData) {
+	NtTeamDetailsParser(IXMLParser xm, String xmlData) {
 		Document doc = xm.parseString(xmlData);
 	    parseDetails(xm, doc);
 	}
@@ -117,102 +117,103 @@ public class NtTeamDetailsParser {
         }
 	}
 
-	public int getTeamId() {
+	int getTeamId() {
 		return teamId;
 	}
 
-	public String getTeamName() {
+	String getTeamName() {
 		return teamName;
 	}
 
-	public long getCoachId() {
+	long getCoachId() {
 		return coachId;
 	}
 
-	public String getCoachName() {
+	String getCoachName() {
 		return coachName;
 	}
 
-	public int getLeagueId() {
+	int getLeagueId() {
 		return leagueId;
 	}
 
-	public String getLeagueName() {
+	String getLeagueName() {
 		return leagueName;
 	}
 
-	public long getTrainerId() {
+	long getTrainerId() {
 		return trainerId;
 	}
 
-	public String getTrainerName() {
+	String getTrainerName() {
 		return trainerName;
 	}
 
-	public String getHomePageUrl() {
+	String getHomePageUrl() {
 		return homePageUrl;
 	}
 
-	public int getXp433() {
+	int getXp433() {
 		return xp433;
 	}
 
-	public int getXp451() {
+	int getXp451() {
 		return xp451;
 	}
 
-	public int getXp352() {
+	int getXp352() {
 		return xp352;
 	}
 
-	public int getXp532() {
+	int getXp532() {
 		return xp532;
 	}
 
-	public int getXp343() {
+	int getXp343() {
 		return xp343;
 	}
 
-	public int getXp541() {
+	int getXp541() {
 		return xp541;
 	}
 
-	public int getMorale() {
+	int getMorale() {
 		return morale;
 	}
 
-	public int getSelfConfidence() {
+	int getSelfConfidence() {
 		return selfConfidence;
 	}
 
-	public int getSupportersPopularity() {
+	int getSupportersPopularity() {
 		return supportersPopularity;
 	}
 
-	public int getRatingScore() {
+	int getRatingScore() {
 		return ratingScore;
 	}
 
-	public int getFanclubSize() {
+	int getFanclubSize() {
 		return fanclubSize;
 	}
 
-	public int getRank() {
+	int getRank() {
 		return rank;
 	}
 
-	public String getTeamNameShort() {
+	String getTeamNameShort() {
 		return teamNameShort;
 	}
 
-	public String getFetchedDate() {
+	String getFetchedDate() {
 		return fetchedDate;
 	}
 
-	public boolean isParsingSuccess() {
+	boolean isParsingSuccess() {
 		return parsingSuccess;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("NtTeamDetails (from "+fetchedDate+"), parsingSuccess: " + parsingSuccess);
 		sb.append("\n\tteam:    " + teamName + " (" + teamId + ") - short: " + teamNameShort);

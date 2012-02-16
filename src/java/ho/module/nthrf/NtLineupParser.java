@@ -10,7 +10,7 @@ import org.w3c.dom.NodeList;
 
 import plugins.IXMLParser;
 
-public class NtLineupParser {
+class NtLineupParser {
 	private String fetchedDate;
 	private long matchId;
 	private int matchType;
@@ -24,7 +24,7 @@ public class NtLineupParser {
 	private List<NtPlayerPosition> players = new ArrayList<NtPlayerPosition>(); // <NtPlayerPosition>
 	private boolean parsingSuccess;
 
-	public NtLineupParser(IXMLParser xm, String xmlData) {
+	NtLineupParser(IXMLParser xm, String xmlData) {
 		Document doc = xm.parseString(xmlData);
 		parseDetails(xm, doc);
 	}
@@ -128,6 +128,7 @@ public class NtLineupParser {
 		return xpLevel;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("NtPlayers (from "+fetchedDate+"), parsingSuccess: " + parsingSuccess);
 		sb.append("\n\tTeam: " + teamName + " (" + teamId + ")");

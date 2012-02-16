@@ -4,8 +4,6 @@ import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.theme.ThemeManager;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Iterator;
@@ -14,19 +12,14 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
-import plugins.IDebugWindow;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
-import plugins.IMatchLineup;
-import plugins.IMatchLineupPlayer;
-import plugins.IMatchLineupTeam;
 import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchHighlight;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.HelperWrapper;
 
-public class SpecialEventsDM
+class SpecialEventsDM
 {
     private static ImageIcon goalIcon;
     private static ImageIcon chanceIcon;
@@ -62,7 +55,6 @@ public class SpecialEventsDM
 
     public SpecialEventsDM()
     {
-        // FIXME
         homeEventIcon = ThemeManager.getIcon(HOIconName.ARROW_RIGHT1);
         guestEventIcon = ThemeManager.getIcon(HOIconName.ARROW_LEFT1);
         homeEventIconNegative = ThemeManager.getIcon(HOIconName.ARROW_RIGHT2);
@@ -85,7 +77,7 @@ public class SpecialEventsDM
         teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
     }
 
-    public Vector<Vector<Object>> holeInfos(boolean allMatches, int saisonAnz, boolean friendlies) {
+    Vector<Vector<Object>> holeInfos(boolean allMatches, int saisonAnz, boolean friendlies) {
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 		highlightText = new Vector<String>();
 		try {
@@ -93,8 +85,8 @@ public class SpecialEventsDM
 			int zInd = 1;
 			for (Iterator<IMatchKurzInfo> iter = kurzInfos.iterator(); iter
 					.hasNext();) {
-				IMatchKurzInfo element = (IMatchKurzInfo) iter.next();
-				Vector<Vector<Object>> v = getMatchlines(element, allMatches, saisonAnz);
+				IMatchKurzInfo element = iter.next();
+				Vector<Vector<Object>> v = getMatchlines(element, allMatches);
 				if (v != null && v.size() > 0) {
 					for (int j = 0; j < v.size(); j++) {
 						if (j == 0) {
@@ -115,7 +107,7 @@ public class SpecialEventsDM
 		return data;
 	}
 
-    private Vector<Vector<Object>> getMatchlines(IMatchKurzInfo kurzInfos, boolean allMatches, int saisonAnz) {
+    private Vector<Vector<Object>> getMatchlines(IMatchKurzInfo kurzInfos, boolean allMatches) {
     	IMatchDetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
         String datum = getDateAsString(kurzInfos.getMatchDateAsTimestamp());
         Integer matchId = new Integer(kurzInfos.getMatchID());
@@ -131,7 +123,7 @@ public class SpecialEventsDM
         int weather = details.getWetterId();
 
         for (Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
-			IMatchHighlight highlight = (IMatchHighlight) iter.next();
+			IMatchHighlight highlight = iter.next();
 			if (checkForSE(highlight)) {
 				seHighlights.add(highlight);
 			}
@@ -197,7 +189,7 @@ public class SpecialEventsDM
                     }
                     singleLine.add(getEventTypIcon(highlight));
                     singleLine.add(se);
-                    singleLine.add(getSpielerName(highlight, kurzInfos.getMatchID()));
+                    singleLine.add(getSpielerName(highlight));
                     singleLine.add("");
                     lines.add(singleLine);
                     highlightText.add(highlight.getEventText());
@@ -227,7 +219,6 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
-    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR:
     			return unberechenbarIcon;
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
     		case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
@@ -494,8 +485,6 @@ public class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
     			return HOVerwaltung.instance().getLanguageString("UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR");
 
-    		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR:
-    			return HOVerwaltung.instance().getLanguageString("UNVORHERSEHBAR_EIGENTOR");
     		case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
     			return HOVerwaltung.instance().getLanguageString("UNVORHERSEHBAR_BALLVERLUST_TOR");
 
@@ -601,7 +590,7 @@ public class SpecialEventsDM
         }
     }
 
-    private String findName(IMatchHighlight highlight, int matchId)
+    private String findName(IMatchHighlight highlight)
     {
         if (isWeatherSE(highlight)) {
         	return highlight.getSpielerName();
@@ -670,16 +659,16 @@ public class SpecialEventsDM
         return "?";
     }
 
-    private String getSpielerName(IMatchHighlight highlight, int matchId)
+    private String getSpielerName(IMatchHighlight highlight)
     {
     	String name = "";
     	//        if(highlight.getTeamID() == teamId && !isNegativeSE(highlight))
     	if(highlight.getTeamID() == teamId) {
     		// Our team has an SE
     		if (!isNegativeSE(highlight)) {
-    			name = findName(highlight, matchId) + "|*"; // positive SE (our player) -> black
+    			name = findName(highlight) + "|*"; // positive SE (our player) -> black
     		} else if (isNegativeWeatherSE(highlight)){
-    			name = findName(highlight, matchId) + "|-"; // negative weather SE (our player) -> red
+    			name = findName(highlight) + "|-"; // negative weather SE (our player) -> red
     		} else {
     			// Negative SE of other Team
                 name = highlight.getGehilfeName() + "|#"; // negative SE (other player helps our team) -> gray
@@ -689,7 +678,7 @@ public class SpecialEventsDM
     		if (!isWeatherSE(highlight) && isNegativeSE(highlight)) {
                 name = highlight.getGehilfeName() + "|-"; // negative SE (our player helps the other team) -> red
             } else {
-            	name = findName (highlight, matchId) + "|#"; // SE from other team -> gray
+            	name = findName (highlight) + "|#"; // SE from other team -> gray
             }
     	}
         return name;

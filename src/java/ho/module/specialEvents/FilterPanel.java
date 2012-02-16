@@ -1,8 +1,6 @@
 package ho.module.specialEvents;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,22 +10,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import plugins.IDebugWindow;
-import plugins.IHOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HOLogger;
 
-public class FilterPanel extends JPanel implements ActionListener {
+class FilterPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 3213362575191990865L;
-
-	
 
 	public static final int SAISONALL = 1;
 	public static final int SAISONLAST2 = 2;
 	public static final int SAISONACT = 3;
 
-	Object matches[][];
 	private static ButtonGroup saisonGroup = new ButtonGroup();
 	private static JRadioButton saisonAct;
 	private static JRadioButton saisonLastTwo;
@@ -51,11 +44,11 @@ public class FilterPanel extends JPanel implements ActionListener {
 		}
 	}
 	
-	public FilterPanel() {
+	FilterPanel() {
 		initialize();
 	}
 
-	public static int getSaisonTyp() {
+	static int getSaisonTyp() {
 		int saison = SAISONALL;
 
 		if (saisonAct.isSelected())
@@ -68,7 +61,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 		return saison;
 	}
 
-	public void initialize() {
+	void initialize() {
 		// this.props = props;
 		try {
 			gameTypSE = new JRadioButton(HOVerwaltung.instance().getLanguageString("SpieleMitSEs"));
@@ -82,7 +75,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 			saisonAct.addActionListener(new OptionFieldActionListener());
 			saisonLastTwo = new JRadioButton(HOVerwaltung.instance().getLanguageString("2Saison"));
 			saisonLastTwo.addActionListener(new OptionFieldActionListener());
-			saisonAll = new JRadioButton(HOVerwaltung.instance().getLanguageString("AllSaison"));
+			saisonAll = new JRadioButton(HOVerwaltung.instance().getLanguageString("AllSeasons"));
 			saisonAll.addActionListener(new OptionFieldActionListener());
 			saisonGroup.add(saisonAct);
 			saisonGroup.add(saisonLastTwo);
@@ -143,75 +136,55 @@ public class FilterPanel extends JPanel implements ActionListener {
 		}
 	}
 
-	public static JRadioButton getGameTypAll() {
+	static JRadioButton getGameTypAll() {
 		return gameTypAll;
 	}
 
-	public static JRadioButton getGameTypSE() {
+	static JRadioButton getGameTypSE() {
 		return gameTypSE;
 	}
 
-	public static JRadioButton getSaisonAct() {
+	static JRadioButton getSaisonAct() {
 		return saisonAct;
 	}
 
-	public static JRadioButton getSaisonLastTwo() {
+	static JRadioButton getSaisonLastTwo() {
 		return saisonLastTwo;
 	}
 
-	public static JRadioButton getSaisonAll() {
+	static JRadioButton getSaisonAll() {
 		return saisonAll;
 	}
 
-	// public static JCheckBox getFriendlies()
-	// {
-	// return friendlies;
-	// }
-	//
-	// public static JCheckBox getSpecialtySE()
-	// {
-	// return specialtySE;
-	// }
-	//
-	// public static JCheckBox getWeatherSE()
-	// {
-	// return weatherSE;
-	// }
-	//
-	// public static JCheckBox getCounter()
-	// {
-	// return counter;
-	// }
-
-	public static boolean showFriendlies() {
+	static boolean showFriendlies() {
 		return friendlies.isSelected();
 	}
 
-	public static boolean showSpecialtySE() {
+	static boolean showSpecialtySE() {
 		return specialtySE.isSelected();
 	}
 
-	public static boolean showWeatherSE() {
+	static boolean showWeatherSE() {
 		return weatherSE.isSelected();
 	}
 
-	public static boolean showCounter() {
+	static boolean showCounter() {
 		return counter.isSelected();
 	}
 
-	public static boolean showFreekick() {
+	static boolean showFreekick() {
 		return freekick.isSelected();
 	}
 
-	public static boolean showPenalty() {
+	static boolean showPenalty() {
 		return penalty.isSelected();
 	}
 
-	public static boolean showIFK() {
+	static boolean showIFK() {
 		return ifk.isSelected();
 	}
 
-	public static boolean showLongShot() {
+	static boolean showLongShot() {
 		return longshot.isSelected();
 	}
 

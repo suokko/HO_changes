@@ -11,16 +11,18 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class SpecialEventsTableRenderer extends DefaultTableCellRenderer {
+class SpecialEventsTableRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 6621498528069679319L;
 
-	public SpecialEventsTableRenderer() {
+	SpecialEventsTableRenderer() {
 	}
 
 	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+		super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
+				row, column);
 		if (column == SpecialEventsTable.RESULTCOLUMN) {
 			setHorizontalAlignment(SwingConstants.CENTER);
 		} else if (column == SpecialEventsTable.MINUTECOLUMN) {
@@ -44,7 +46,8 @@ public class SpecialEventsTableRenderer extends DefaultTableCellRenderer {
 		}
 		int type = 0;
 		try {
-			type = Integer.parseInt((String) table.getValueAt(row, SpecialEventsTable.HIDDENCOLUMN));
+			type = Integer.parseInt((String) table.getValueAt(row,
+					SpecialEventsTable.HIDDENCOLUMN));
 		} catch (NumberFormatException numberformatexception) {
 		}
 		setBackground(ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG));
@@ -55,7 +58,7 @@ public class SpecialEventsTableRenderer extends DefaultTableCellRenderer {
 			setIcon(null);
 			setText(null);
 		} else if (value != null && value instanceof ImageIcon) {
-			setIcon((ImageIcon)value);
+			setIcon((ImageIcon) value);
 			setText(null);
 		} else {
 			setIcon(null);
