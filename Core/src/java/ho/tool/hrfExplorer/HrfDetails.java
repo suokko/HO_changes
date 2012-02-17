@@ -10,8 +10,6 @@ import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.theme.ThemeManager;
 
-import java.awt.Color;
-import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -135,8 +133,6 @@ class HrfDetails {
 		int jahr = Integer.parseInt(tStamp_datum.substring(0, 4));
 		int monat = Integer.parseInt(tStamp_datum.substring(5, 7));
 		int tag = Integer.parseInt(tStamp_datum.substring(8, 10));
-		int stunde = Integer.parseInt(tStamp_datum.substring(11, 13));
-		int minute = Integer.parseInt(tStamp_datum.substring(14, 16));
 		// int sekunde = Integer.parseInt(tStamp_datum.substring(17));
 		gc = new GregorianCalendar();
 		gc.set(Calendar.DAY_OF_MONTH, tag);
@@ -180,26 +176,26 @@ class HrfDetails {
 	/*****************
 	 * liefert einen Vector mit den Daten bez�glich des Teams
 	 */
-	Vector getTeamData() {
-		Vector teamData = new Vector();
+	Vector<Object> getTeamData() {
+		Vector<Object> teamData = new Vector<Object>();
 		teamData.add(getTeamName());
-		teamData.add(new Integer(getTeamID()));
+		teamData.add(Integer.valueOf(getTeamID()));
 		teamData.add(getStimmung());
 		teamData.add(getSelbstvertrauen());
-		teamData.add(new Integer(getAnzSpieler()));
-		teamData.add(new Integer(getAnzCoTrainer()));
-		teamData.add(new Integer(getAnzTwTrainer()));
+		teamData.add(Integer.valueOf(getAnzSpieler()));
+		teamData.add(Integer.valueOf(getAnzCoTrainer()));
+		teamData.add(Integer.valueOf(getAnzTwTrainer()));
 		teamData.add(getTrArt());
-		teamData.add(new Integer(getTrInt()));
-		teamData.add(new Integer(getFans()));
+		teamData.add(Integer.valueOf(getTrInt()));
+		teamData.add(Integer.valueOf(getFans()));
 		return teamData;
 	}
 
 	/*****************
 	 * liefert einen Vector mit den Daten bez�glich der Liga
 	 */
-	Vector getLigaData() {
-		Vector ligaData = new Vector();
+	Vector<Object> getLigaData() {
+		Vector<Object> ligaData = new Vector<Object>();
 		ligaData.add(new Integer(getSaison()));
 		ligaData.add(getLiga());
 		ligaData.add(new Integer(getSpieltag()));

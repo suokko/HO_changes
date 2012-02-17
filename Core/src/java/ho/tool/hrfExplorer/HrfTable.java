@@ -12,7 +12,7 @@ import plugins.IHOMiniModel;
  * @author KickMuck
  */
 
-public class HrfTable extends JTable
+class HrfTable extends JTable
 {
 	public HrfTable(HrfTableModel htm, String name)
 	{
