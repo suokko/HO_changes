@@ -4,6 +4,7 @@ package ho.module.series;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 
@@ -28,7 +29,6 @@ import plugins.IMatchKurzInfo;
 import plugins.IPaarung;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
@@ -397,8 +397,8 @@ final class MatchDayPanel extends JPanel implements ActionListener {
     private void markSelectedTeam(JLabel team, String teamName) {
         if (teamName.equals(SeriesPanel.getMarkierterVerein())) {
             team.setOpaque(true);
-            team.setBackground(SpielerTableRenderer.SELECTION_BG);
-            team.setForeground(SpielerTableRenderer.SELECTION_FG);
+            team.setBackground(HODefaultTableCellRenderer.SELECTION_BG);
+            team.setForeground(HODefaultTableCellRenderer.SELECTION_FG);
         }
     }
 

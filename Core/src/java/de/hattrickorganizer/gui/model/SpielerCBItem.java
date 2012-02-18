@@ -1,6 +1,8 @@
 // %1287661405:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -64,7 +66,7 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
                 return m_clEntry.getComponent(isSelected);
             } else {
                 m_jlLeer.setOpaque(true);
-                m_jlLeer.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
+                m_jlLeer.setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
                 return m_jlLeer;
             }
     }

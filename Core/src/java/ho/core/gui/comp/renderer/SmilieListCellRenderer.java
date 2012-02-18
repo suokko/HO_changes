@@ -1,5 +1,5 @@
 // %1885149141:de.hattrickorganizer.gui.model%
-package de.hattrickorganizer.gui.model;
+package ho.core.gui.comp.renderer;
 
 import gui.HOColorName;
 import ho.core.gui.theme.ThemeManager;
@@ -12,7 +12,7 @@ import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 /**
  * Renderer für eine Combobox mit SpielerCBItems
  */
-public final class SmilieRenderer implements javax.swing.ListCellRenderer {
+public final class SmilieListCellRenderer implements javax.swing.ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
@@ -48,7 +48,7 @@ public final class SmilieRenderer implements javax.swing.ListCellRenderer {
         m_jlLeer.setOpaque(true);
 
         if (isSelected) {
-            m_jlLeer.setBackground(SpielerTableRenderer.SELECTION_BG);
+            m_jlLeer.setBackground(HODefaultTableCellRenderer.SELECTION_BG);
         } else {
             m_jlLeer.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
         }

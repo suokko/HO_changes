@@ -274,7 +274,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
         panel2.add(label);
         constraints2.gridx = 0;
         constraints2.gridy = 4;
-        m_jcbGruppe.setRenderer(new de.hattrickorganizer.gui.model.SmilieRenderer());
+        m_jcbGruppe.setRenderer(new ho.core.gui.comp.renderer.SmilieListCellRenderer());
         m_jcbGruppe.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
         m_jcbGruppe.setMaximumRowCount(25);
         m_jcbGruppe.addItemListener(this);

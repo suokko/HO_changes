@@ -1,6 +1,7 @@
 // %3659932329:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 
@@ -14,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 
 
 /**
@@ -83,7 +83,7 @@ public class RatingTableEntry implements TableEntry {
      * @return TODO Missing Return Method Documentation
      */
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
-        m_clComponent.setBackground((isSelected)?SpielerTableRenderer.SELECTION_BG:bgColor);
+        m_clComponent.setBackground((isSelected)?HODefaultTableCellRenderer.SELECTION_BG:bgColor);
         m_clComponent.setOpaque(isOpaque);
         
         return m_clComponent;

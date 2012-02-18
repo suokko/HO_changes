@@ -260,7 +260,7 @@ class SeriesTablePanel extends ImagePanel {
         setLayout(new BorderLayout());
 
         seriesTable.setDefaultRenderer(java.lang.Object.class,
-                                           new de.hattrickorganizer.gui.model.SpielerTableRenderer());
+                                           new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
 
         final JPanel panel = new ImagePanel(layout);
         layout.setConstraints(panel, constraints);

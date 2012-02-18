@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.templates;
 
 
 import gui.HOColorName;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 
@@ -15,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -201,12 +201,12 @@ public class ColorLabelEntry extends JLabel implements TableEntry {
 	public final JComponent getComponent(boolean isSelected) {
         
         if (isSelected) {
-           setBackground(SpielerTableRenderer.SELECTION_BG);
+           setBackground(HODefaultTableCellRenderer.SELECTION_BG);
             
         } else {
            setBackground(m_clBGColor);
         }
-       setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
+       setForeground(isSelected?HODefaultTableCellRenderer.SELECTION_FG:m_clFGColor);
         return this;
     }
 

@@ -4,6 +4,7 @@ package de.hattrickorganizer.gui.templates;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 
@@ -24,7 +25,6 @@ import javax.swing.SwingConstants;
 import plugins.IHOTableEntry;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.model.SpielerPosition;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.PlayerHelper;
@@ -104,8 +104,8 @@ public final class SpielerLabelEntry implements TableEntry {
      * @return TODO Missing Return Method Documentation
      */
 	public final JComponent getComponent(boolean isSelected) {
-    	 m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
-    	 m_jlName.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:getForegroundForSpieler(m_clPlayer));
+    	 m_clComponent.setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
+    	 m_jlName.setForeground(isSelected?HODefaultTableCellRenderer.SELECTION_FG:getForegroundForSpieler(m_clPlayer));
     	 return m_clComponent;
     }
 

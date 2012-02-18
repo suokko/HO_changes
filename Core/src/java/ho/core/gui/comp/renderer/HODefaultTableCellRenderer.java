@@ -1,5 +1,5 @@
 // %4093469452:de.hattrickorganizer.gui.model%
-package de.hattrickorganizer.gui.model;
+package ho.core.gui.comp.renderer;
 
 import gui.HOColorName;
 import ho.core.gui.theme.ThemeManager;
@@ -17,7 +17,7 @@ import de.hattrickorganizer.gui.templates.TableEntry;
 /**
  * Render für Tabellen mit JLabels als Tabellenobjekte
  */
-public class SpielerTableRenderer implements javax.swing.table.TableCellRenderer {
+public class HODefaultTableCellRenderer implements javax.swing.table.TableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     public static Color SELECTION_BG = ThemeManager.getColor(HOColorName.TABLE_SELECTION_BG);//new java.awt.Color(235, 235, 235);

@@ -2,12 +2,12 @@
 package ho.module.transfer.scout;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 
 import javax.swing.JTable;
 
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.gui.utils.ToolTipHeader;
 import de.hattrickorganizer.tools.Helper;
@@ -32,7 +32,7 @@ public class TransferTable extends JTable implements Refreshable {
         super();
         m_clTableModel = new TransferTableModel(DBManager.instance().getScoutList());
         initModel();
-        setDefaultRenderer(java.lang.Object.class, new SpielerTableRenderer());
+        setDefaultRenderer(java.lang.Object.class, new HODefaultTableCellRenderer());
         RefreshManager.instance().registerRefreshable(this);
     }
 
