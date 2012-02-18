@@ -33,8 +33,8 @@ public class MatchScoreDiffTable extends JTable {
 	public MatchScoreDiffTable(IMatchResult mr,boolean isHome) {
 		super();
 		initModel(mr,isHome);
-		setDefaultRenderer(java.lang.Object.class, new de.hattrickorganizer.gui.model.SpielerTableRenderer());
-		setSelectionBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+		setDefaultRenderer(java.lang.Object.class, new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
+		setSelectionBackground(ho.core.gui.comp.renderer.HODefaultTableCellRenderer.SELECTION_BG);
 		setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 	}
 

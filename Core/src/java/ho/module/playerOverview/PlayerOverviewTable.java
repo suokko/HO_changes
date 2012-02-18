@@ -3,13 +3,13 @@ package ho.module.playerOverview;
 
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.model.PlayerOverviewModel;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.model.UserColumnFactory;
@@ -38,8 +38,8 @@ public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.
 	public PlayerOverviewTable() {
 		super();
 		initModel();
-		setDefaultRenderer(Object.class, new SpielerTableRenderer());
-		setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+		setDefaultRenderer(Object.class, new HODefaultTableCellRenderer());
+		setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
 		RefreshManager.instance().registerRefreshable(this);
 	}
 

@@ -2,12 +2,12 @@
 package ho.module.statistics;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.gui.utils.ToolTipHeader;
 import de.hattrickorganizer.tools.Helper;
@@ -34,8 +34,8 @@ public class ArenaStatistikTable extends JTable {
      */
     public ArenaStatistikTable(int matchtyp) {
         super();
-        setDefaultRenderer(Object.class, new SpielerTableRenderer());
-        setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+        setDefaultRenderer(Object.class, new HODefaultTableCellRenderer());
+        setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
         initModel(matchtyp);
     }
 

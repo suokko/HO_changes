@@ -1,6 +1,8 @@
 // %1341813328:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+
 import java.awt.Color;
 import java.text.NumberFormat;
 
@@ -8,7 +10,6 @@ import javax.swing.JProgressBar;
 
 import plugins.IHOTableEntry;
 
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 
 /**
  * Progress bar as table cell.
@@ -121,7 +122,7 @@ public class ProgressbarTableEntry implements TableEntry {
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
         if (isSelected) {
             m_clProgressbar.setOpaque(true);
-            m_clProgressbar.setBackground(SpielerTableRenderer.SELECTION_BG);
+            m_clProgressbar.setBackground(HODefaultTableCellRenderer.SELECTION_BG);
         } else {
             m_clProgressbar.setOpaque(true);
             m_clProgressbar.setBackground(m_clBGColor);

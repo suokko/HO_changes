@@ -1,5 +1,5 @@
 // %1968012293:de.hattrickorganizer.gui.model%
-package de.hattrickorganizer.gui.model;
+package ho.core.gui.comp.renderer;
 
 import gui.HOColorName;
 import gui.HOIconName;
@@ -10,13 +10,14 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
+import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 
 
 /**
  * Renderer für eine Combobox mit SpielerCBItems
  */
-public class WetterRenderer implements ListCellRenderer {
+public class WeatherListCellRenderer implements ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
@@ -50,16 +51,14 @@ public class WetterRenderer implements ListCellRenderer {
             }
             m_clEntry.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[wert]));
             return m_clEntry.getComponent(isSelected);
-        } else {
-            m_jlLeer.setOpaque(true);
+        } 
+        m_jlLeer.setOpaque(true);
 
-            if (isSelected) {
-                m_jlLeer.setBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
-            } else {
-                m_jlLeer.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
-            }
-
-            return m_jlLeer;
-        }
+       if (isSelected) {
+              m_jlLeer.setBackground(ThemeManager.getColor(HOColorName.TABLE_SELECTION_BG));
+       } else {
+              m_jlLeer.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
+       }
+       return m_jlLeer;
     }
 }

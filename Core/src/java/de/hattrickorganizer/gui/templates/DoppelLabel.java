@@ -1,11 +1,12 @@
 // %1614414392:de.hattrickorganizer.gui.templates%
 package de.hattrickorganizer.gui.templates;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 
 
 class DoppelLabel extends JPanel {
@@ -15,7 +16,7 @@ class DoppelLabel extends JPanel {
     public DoppelLabel() {
         setLayout(new GridLayout(1, 2));
         setOpaque(true);
-        setBackground(SpielerTableRenderer.SELECTION_BG);
+        setBackground(HODefaultTableCellRenderer.SELECTION_BG);
     }
 
 

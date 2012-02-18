@@ -1,6 +1,7 @@
 // %3994494499:de.hattrickorganizer.gui.pluginWrapper%
 package ho.core.plugins;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.ThemeManager;
@@ -12,7 +13,6 @@ import javax.swing.JPanel;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -52,8 +52,8 @@ public class GUIPluginWrapper implements plugins.IGUI {
 
     public void addHOTableRenderer(javax.swing.JTable table) {
         table.setDefaultRenderer(java.lang.Object.class,
-                                 new SpielerTableRenderer());
-        table.setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+                                 new HODefaultTableCellRenderer());
+        table.setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
     }
 
     public void addMainFrameListener(java.awt.event.WindowListener listener) {

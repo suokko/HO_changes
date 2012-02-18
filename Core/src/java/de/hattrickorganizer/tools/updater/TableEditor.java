@@ -5,6 +5,8 @@
  */
 package de.hattrickorganizer.tools.updater;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+
 import java.awt.Component;
 import java.util.EventObject;
 import java.util.HashMap;
@@ -19,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
 
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.tools.HOLogger;
 
@@ -106,8 +107,8 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
         if (value != null) {
             try {
             	if(value instanceof JComponent){
-            		((JComponent)value).setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
-            		((JComponent)value).setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:ColorLabelEntry.FG_STANDARD);
+            		((JComponent)value).setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
+            		((JComponent)value).setForeground(isSelected?HODefaultTableCellRenderer.SELECTION_FG:ColorLabelEntry.FG_STANDARD);
             	}
             		
                 if (value instanceof JTextField) {

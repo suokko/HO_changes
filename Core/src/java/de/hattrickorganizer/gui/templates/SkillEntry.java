@@ -7,6 +7,7 @@
 package de.hattrickorganizer.gui.templates;
 
 import gui.HOColorName;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
@@ -20,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -100,9 +100,9 @@ public class SkillEntry implements TableEntry {
      * @return TODO Missing Return Method Documentation
      */
 	public final JComponent getComponent(boolean isSelected) {
-        m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:m_clBGColor);
-        m_jlLabel1.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
-        m_jlLabel2.setForeground(isSelected?SpielerTableRenderer.SELECTION_FG:m_clFGColor);
+        m_clComponent.setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:m_clBGColor);
+        m_jlLabel1.setForeground(isSelected?HODefaultTableCellRenderer.SELECTION_FG:m_clFGColor);
+        m_jlLabel2.setForeground(isSelected?HODefaultTableCellRenderer.SELECTION_FG:m_clFGColor);
         return m_clComponent;
     }
 
