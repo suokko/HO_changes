@@ -1,8 +1,7 @@
 // %3053844359:de.hattrickorganizer.gui.model%
 package de.hattrickorganizer.gui.model;
 
-import java.awt.Color;
-
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 
 /**
@@ -24,16 +23,16 @@ public class SpielerCBItemRenderer implements javax.swing.ListCellRenderer {
         if (obj instanceof SpielerCBItem) {
             final SpielerCBItem spielerCBItem = ((SpielerCBItem) obj);
             return spielerCBItem.getListCellRendererComponent(jList, index, isSelected);
-        } else {
+        }
             m_jlLeer.setOpaque(true);
 
             if (isSelected) {
-                m_jlLeer.setBackground(SpielerTableRenderer.SELECTION_BG);
+                m_jlLeer.setBackground(HODefaultTableCellRenderer.SELECTION_BG);
             } else {
                 m_jlLeer.setBackground(ColorLabelEntry.BG_STANDARD);
             }
 
             return m_jlLeer;
-        }
+        
     }
 }

@@ -41,8 +41,8 @@ final class SpielerPositionTable extends JTable {
 
         initModel();
         setDefaultRenderer(java.lang.Object.class,
-                           new de.hattrickorganizer.gui.model.SpielerTableRenderer());
-        setSelectionBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+                           new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
+        setSelectionBackground(ho.core.gui.comp.renderer.HODefaultTableCellRenderer.SELECTION_BG);
     }
 
     //~ Methods ------------------------------------------------------------------------------------

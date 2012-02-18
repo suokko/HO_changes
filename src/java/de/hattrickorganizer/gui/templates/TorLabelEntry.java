@@ -3,6 +3,7 @@ package de.hattrickorganizer.gui.templates;
 
 //import java.awt.Color;
 import gui.HOIconName;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 
@@ -17,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 
 
 public class TorLabelEntry implements TableEntry {
@@ -42,7 +42,7 @@ public class TorLabelEntry implements TableEntry {
     }
 
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
-    	m_clComponent.setBackground(isSelected?SpielerTableRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
+    	m_clComponent.setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
         return m_clComponent;
     }
 

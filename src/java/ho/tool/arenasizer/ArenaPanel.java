@@ -1,6 +1,8 @@
 // %3426612608:de.hattrickorganizer.gui.arenasizer%
 package ho.tool.arenasizer;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -10,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
@@ -44,7 +45,7 @@ final class ArenaPanel extends JPanel {
     ArenaPanel() {
     	setLayout(new BorderLayout());
     	add(new JScrollPane(m_jtArena));
-        m_jtArena.setDefaultRenderer(java.lang.Object.class, new SpielerTableRenderer());
+        m_jtArena.setDefaultRenderer(java.lang.Object.class, new HODefaultTableCellRenderer());
         m_jtArena.getTableHeader().setReorderingAllowed(false);
         initTabelle();
         reInit();

@@ -1,6 +1,7 @@
 package ho.core.module;
 
 import gui.HOIconName;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.module.config.ModuleConfigDialog;
 
@@ -14,7 +15,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.updater.TableEditor;
@@ -33,7 +33,7 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 	private void initialize() {
 		refresh();
 		setRowHeight(25);
-		setDefaultRenderer(Object.class, new SpielerTableRenderer());
+		setDefaultRenderer(Object.class, new HODefaultTableCellRenderer());
 		getTableHeader().setReorderingAllowed(false);
 		
 

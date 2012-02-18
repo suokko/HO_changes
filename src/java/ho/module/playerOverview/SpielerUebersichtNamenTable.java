@@ -1,12 +1,13 @@
 // %733429640:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+
 import javax.swing.JTable;
 
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.ReduzedTableModel;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.utils.TableSorter;
 
 
@@ -36,7 +37,7 @@ public class SpielerUebersichtNamenTable extends JTable implements Refreshable
         model.addTableModelListener(this);
         setSelectionMode(0);
         setModel(new ReduzedTableModel(model, 0));
-        setDefaultRenderer(java.lang.Object.class, new SpielerTableRenderer());
+        setDefaultRenderer(java.lang.Object.class, new HODefaultTableCellRenderer());
         RefreshManager.instance().registerRefreshable(this);
 
         //Kein init hier!

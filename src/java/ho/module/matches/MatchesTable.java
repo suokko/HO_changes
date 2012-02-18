@@ -2,13 +2,13 @@
 package ho.module.matches;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.utils.TableSorter;
@@ -29,8 +29,8 @@ final class MatchesTable extends JTable {
     protected MatchesTable(int matchtyp) {
         super();
         initModel(matchtyp);
-        setDefaultRenderer(java.lang.Object.class,new SpielerTableRenderer());
-        setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+        setDefaultRenderer(java.lang.Object.class,new HODefaultTableCellRenderer());
+        setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
         setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 

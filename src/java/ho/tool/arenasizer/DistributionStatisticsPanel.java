@@ -3,6 +3,7 @@ package ho.tool.arenasizer;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
@@ -16,7 +17,6 @@ import javax.swing.table.TableColumnModel;
 
 import plugins.ISpielePanel;
 import de.hattrickorganizer.gui.model.ArenaStatistikModel;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.TableEntry;
@@ -41,7 +41,7 @@ class DistributionStatisticsPanel extends JPanel {
 	protected JScrollPane createTable() {
 		JTable table = new JTable(getModel());
 		//table.setDefaultRenderer(Object.class, new UpdaterCellRenderer());
-		table.setDefaultRenderer(java.lang.Object.class, new SpielerTableRenderer());
+		table.setDefaultRenderer(java.lang.Object.class, new HODefaultTableCellRenderer());
 		table.getTableHeader().setReorderingAllowed(false);
 		
 		final TableColumnModel columnModel = table.getColumnModel();

@@ -33,8 +33,8 @@ public class MatchResultTable extends JTable {
 	public MatchResultTable(IMatchResult matchresults,boolean isHome) {
 		super();
 		initModel(matchresults,isHome);
-		setDefaultRenderer(java.lang.Object.class, new de.hattrickorganizer.gui.model.SpielerTableRenderer());
-		setSelectionBackground(de.hattrickorganizer.gui.model.SpielerTableRenderer.SELECTION_BG);
+		setDefaultRenderer(java.lang.Object.class, new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
+		setSelectionBackground(ho.core.gui.comp.renderer.HODefaultTableCellRenderer.SELECTION_BG);
 		setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 	}
 

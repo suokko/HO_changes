@@ -2,14 +2,14 @@
 package de.hattrickorganizer.gui.lineup2;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.BooleanTableCellRenderer;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.model.BooleanTableCellrenderer;
 import de.hattrickorganizer.gui.model.LineupColumnModel;
-import de.hattrickorganizer.gui.model.SpielerTableRenderer;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
 import de.hattrickorganizer.gui.model.UserColumnFactory;
@@ -45,9 +45,9 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
         super();
 
         initModel();
-        setDefaultRenderer(Boolean.class,new BooleanTableCellrenderer());
-        setDefaultRenderer(Object.class,new SpielerTableRenderer());
-        setSelectionBackground(SpielerTableRenderer.SELECTION_BG);
+        setDefaultRenderer(Boolean.class,new BooleanTableCellRenderer());
+        setDefaultRenderer(Object.class,new HODefaultTableCellRenderer());
+        setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
         setBackground(ColorLabelEntry.BG_STANDARD);
         addMouseListener(this);
         RefreshManager.instance().registerRefreshable(this);
