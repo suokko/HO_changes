@@ -21,6 +21,8 @@ public interface IModule {
 	public static final int TEAM_OF_THE_WEEK= 13;
 	public static final int NTHRF			= 14;
 	public static final int EVIL_CARD		= 15;
+	public static final int IFA				= 16;
+	public static final int FLAGSCOLLECTOR	= 17;
 	
 	
 	public int getModuleId();
