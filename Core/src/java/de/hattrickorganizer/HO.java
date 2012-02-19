@@ -18,9 +18,7 @@ import javax.swing.JOptionPane;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.SplashFrame;
-import de.hattrickorganizer.gui.birthday.GebDialog;
 import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.logik.GebChecker;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.net.MyConnector;
@@ -214,14 +212,6 @@ public class HO {
 
 		// Startbild weg
 		interuptionsWindow.setVisible(false);
-
-		if (GebChecker.checkTWGeb()) {
-			new GebDialog(HOMainFrame.instance(), "birthdayTom");
-		}
-
-		if (GebChecker.checkVFGeb()) {
-			new GebDialog(HOMainFrame.instance(), "birthdayVolker");
-		}
 
 		new ExtensionListener().run();
 		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
