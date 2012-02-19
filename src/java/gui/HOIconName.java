@@ -102,5 +102,7 @@ public interface HOIconName {
 	public static final String ARROW_LEFT2 = "arrow_left2";
 	public static final String ARROW_RIGHT1 = "arrow_right1";
 	public static final String ARROW_RIGHT2= "arrow_right2";
+	public static final String ARROW_UP= "arrow_up";
+	public static final String ARROW_DOWN= "arrow_down";
 	
 }
