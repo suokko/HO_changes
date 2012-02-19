@@ -11,6 +11,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.LineupColumnModel;
 import de.hattrickorganizer.gui.model.PlayerOverviewModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
@@ -312,12 +313,10 @@ public class TableSorter extends TableMap {
             return 1;
         }
 
-        if (obj instanceof de.hattrickorganizer.gui.templates.TableEntry
-            && obj1 instanceof de.hattrickorganizer.gui.templates.TableEntry) {
-            final de.hattrickorganizer.gui.templates.TableEntry colorLabelentry1 = (de.hattrickorganizer.gui.templates.TableEntry) model
-                                                                                   .getValueAt(i, k);
-            final de.hattrickorganizer.gui.templates.TableEntry colorLabelentry2 = (de.hattrickorganizer.gui.templates.TableEntry) model
-                                                                                   .getValueAt(j, k);
+        if (obj instanceof IHOTableEntry
+            && obj1 instanceof IHOTableEntry) {
+            final IHOTableEntry colorLabelentry1 = (IHOTableEntry) model.getValueAt(i, k);
+            final IHOTableEntry colorLabelentry2 = (IHOTableEntry) model.getValueAt(j, k);
             return colorLabelentry1.compareTo(colorLabelentry2);
         } 
         

@@ -10,8 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 
 
 /**
@@ -29,8 +29,8 @@ public class HODefaultTableCellRenderer implements javax.swing.table.TableCellRe
                                                                   boolean hasFocus, int row,
                                                                   int column) {
 
-        if (value instanceof TableEntry) {
-            final JComponent component = ((TableEntry) value).getComponent(isSelected);
+        if (value instanceof IHOTableEntry) {
+            final JComponent component = ((IHOTableEntry) value).getComponent(isSelected);
 
             if (isSelected) {
                 component.setOpaque(true);

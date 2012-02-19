@@ -1,6 +1,6 @@
 package de.hattrickorganizer.gui.model;
 
-import de.hattrickorganizer.gui.templates.TableEntry;
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.model.matches.Matchdetails;
 
 /**
@@ -39,7 +39,7 @@ class MatchDetailsColumn extends UserColumn {
 	 * @param matchdetails
 	 * @return TableEntry
 	 */
-	public TableEntry getTableEntry(Matchdetails match){
+	public IHOTableEntry getTableEntry(Matchdetails match){
 		return null;
 	}
 }

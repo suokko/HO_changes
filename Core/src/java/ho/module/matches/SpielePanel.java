@@ -49,7 +49,6 @@ import de.hattrickorganizer.gui.model.CBItem;
 import de.hattrickorganizer.gui.model.MatchesColumnModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Lineup;
@@ -132,8 +131,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 			HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchShortInfo.getMatchID(),
 					matchShortInfo.getHeimID(), matchShortInfo.getGastID());
 			HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchShortInfo.getMatchID());
-			MatchUpdater.updateMatch(HOMiniModel.instance(), // Dragettho werte setzen
-					matchShortInfo.getMatchID());
+			DBManager.instance().updateMatch(matchShortInfo.getMatchID());
 			RefreshManager.instance().doReInit();
 			showMatch(matchid);
         } else if (e.getSource() == deleteButton ) {

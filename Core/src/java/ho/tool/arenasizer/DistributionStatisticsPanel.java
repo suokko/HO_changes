@@ -15,11 +15,11 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
+import plugins.IHOTableEntry;
 import plugins.ISpielePanel;
 import de.hattrickorganizer.gui.model.ArenaStatistikModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.updater.TableModel;
@@ -60,7 +60,7 @@ class DistributionStatisticsPanel extends JPanel {
 					hoV.getLanguageString("Fans")+" ( )"};
 
 		ArenaStatistikModel[] matches=  DBManager.instance().getArenaStatistikModel(ISpielePanel.NUR_EIGENE_LIGASPIELE).getMatches();
-		TableEntry[][] value = new TableEntry[matches.length][columnNames.length];
+		IHOTableEntry[][] value = new IHOTableEntry[matches.length][columnNames.length];
         for (int i = 0; i < matches.length; i++) {
         	 value[i][0] = new ColorLabelEntry(matches[i].getMatchID()+"",
                      ColorLabelEntry.FG_STANDARD,  ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);

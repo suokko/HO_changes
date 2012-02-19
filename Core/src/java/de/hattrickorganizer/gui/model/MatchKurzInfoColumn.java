@@ -1,9 +1,6 @@
 package de.hattrickorganizer.gui.model;
 
-import java.awt.Color;
-
-import plugins.IMatchLineup;
-import de.hattrickorganizer.gui.templates.TableEntry;
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 
 /**
@@ -42,7 +39,7 @@ class MatchKurzInfoColumn extends UserColumn {
 	 * @param match
 	 * @return
 	 */
-	public TableEntry getTableEntry(MatchKurzInfo match){
+	public IHOTableEntry getTableEntry(MatchKurzInfo match){
 		return null;
 	}
 	
@@ -51,7 +48,7 @@ class MatchKurzInfoColumn extends UserColumn {
 	 * @param spielerCBItem
 	 * @return
 	 */
-	public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
+	public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 		return null;
 	}
 	

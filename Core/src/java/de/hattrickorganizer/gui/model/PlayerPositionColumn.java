@@ -6,10 +6,10 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
+import plugins.IHOTableEntry;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.Helper;
 
@@ -40,7 +40,7 @@ class PlayerPositionColumn extends PlayerColumn {
 	 * will not be overwrite
 	 */
 	@Override
-	public TableEntry getTableEntry(Spieler player,Spieler comparePlayer){
+	public IHOTableEntry getTableEntry(Spieler player,Spieler comparePlayer){
 		return new DoppelLabelEntry(getEntryValue(player),getCompareValue(player,comparePlayer));
 	}
 	
