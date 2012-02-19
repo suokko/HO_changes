@@ -29,8 +29,6 @@ import plugins.IMatchKurzInfo;
 import plugins.IPaarung;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.logik.MatchUpdater;
-import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
@@ -120,7 +118,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                         final MatchKurzInfo[] infos = {info};
                         DBManager.instance().storeMatchKurzInfos(infos);
 
-                        MatchUpdater.updateMatch(HOMiniModel.instance(), matchdata[0]);
+                        DBManager.instance().updateMatch(matchdata[0]);
                     }
 
                     fillLabels();

@@ -22,7 +22,7 @@ import plugins.IHOTableEntry;
  *
  * @author TODO Author Name
  */
-public class RatingTableEntry implements TableEntry {
+public class RatingTableEntry implements IHOTableEntry {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static ImageIcon FULL10STARIMAGEICON;

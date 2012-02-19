@@ -5,11 +5,11 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
+import plugins.IHOTableEntry;
 import plugins.ISpieler;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
 import de.hattrickorganizer.gui.templates.SkillEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.Helper;
 
@@ -47,11 +47,11 @@ class PlayerSkillColumn extends PlayerColumn {
 	 * overwritten by created columns
 	 */
 	@Override
-	public TableEntry getTableEntry(Spieler player,Spieler comparePlayer){
+	public IHOTableEntry getTableEntry(Spieler player,Spieler comparePlayer){
 		return new DoppelLabelEntry(getSkillValue(player),getCompareValue(player,comparePlayer));
 	}
 	
-	public  TableEntry getSkillValue(Spieler player){
+	public  IHOTableEntry getSkillValue(Spieler player){
 		if(skill == ISpieler.SKILL_EXPIERIENCE
 				||  skill == ISpieler.SKILL_FORM
 				|| skill == ISpieler.SKILL_KONDITION

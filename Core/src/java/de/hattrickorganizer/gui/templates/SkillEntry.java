@@ -29,7 +29,7 @@ import de.hattrickorganizer.tools.Helper;
  *
  * @author Pirania
  */
-public class SkillEntry implements TableEntry {
+public class SkillEntry implements IHOTableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private Color m_clBGColor = ColorLabelEntry.BG_STANDARD;

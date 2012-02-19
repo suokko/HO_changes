@@ -12,9 +12,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.Helper;
@@ -38,7 +38,7 @@ final class ArenaPanel extends JPanel {
     private String[] UEBERSCHRIFT = {"", HOVerwaltung.instance().getLanguageString("Aktuell"), HOVerwaltung.instance().getLanguageString("Maximal"),
     		HOVerwaltung.instance().getLanguageString("Durchschnitt"), HOVerwaltung.instance().getLanguageString("Minimal")};
     private Stadium[] m_clStadien;
-    private TableEntry[][] values;
+    private IHOTableEntry[][] values;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -62,7 +62,7 @@ final class ArenaPanel extends JPanel {
 
     private void initTabelle() {
         //Tablewerte setzen
-        values = new TableEntry[9][5];
+        values = new IHOTableEntry[9][5];
         HOVerwaltung hoV = HOVerwaltung.instance();
  
         String[] columnText = {"Stehplaetze","Sitzplaetze","Ueberdachteplaetze","Logen","Gesamt","Einnahmen","Unterhalt","Gewinn","Baukosten"};

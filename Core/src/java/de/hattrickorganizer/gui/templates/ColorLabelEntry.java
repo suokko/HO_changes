@@ -19,7 +19,7 @@ import plugins.IHOTableEntry;
 import de.hattrickorganizer.tools.Helper;
 
 
-public class ColorLabelEntry extends JLabel implements TableEntry {
+public class ColorLabelEntry extends JLabel implements IHOTableEntry {
 	   public static final Color FG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_FG);//gui.UserParameter.instance().FG_STANDARD;
 	   public static final Color BG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_BG);
 	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);

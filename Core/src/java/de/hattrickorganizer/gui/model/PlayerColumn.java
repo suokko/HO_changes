@@ -1,8 +1,8 @@
 package de.hattrickorganizer.gui.model;
 
 
+import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.TableEntry;
 import de.hattrickorganizer.model.Spieler;
 
 /**
@@ -53,7 +53,7 @@ class PlayerColumn extends UserColumn {
 	 * @param comparePlayer
 	 * @return
 	 */
-	public TableEntry getTableEntry(Spieler player,Spieler comparePlayer){
+	public IHOTableEntry getTableEntry(Spieler player,Spieler comparePlayer){
 		return new ColorLabelEntry(getValue(player),
 	            ColorLabelEntry.BG_STANDARD, false, 0);
 	}

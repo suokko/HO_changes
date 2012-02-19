@@ -48,7 +48,6 @@ import plugins.IPlugin;
 import plugins.ISpielerPosition;
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.menu.HRFImport;
-import de.hattrickorganizer.logik.MatchUpdater;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.Spieler;
@@ -485,7 +484,7 @@ public class HelperWrapper implements plugins.IHelper {
                         DBManager.instance().storeMatchKurzInfos(infos);
                     }
 
-                    MatchUpdater.updateMatch(HOMiniModel.instance(), matchID);
+                    DBManager.instance().updateMatch( matchID);
                 } else {
                     return false;
                 }

@@ -6,7 +6,7 @@ import javax.swing.SwingConstants;
 import plugins.IHOTableEntry;
 
 
-public class HomegrownEntry implements TableEntry{
+public class HomegrownEntry implements IHOTableEntry{
 
 	private ColorLabelEntry icon = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_STANDARD,

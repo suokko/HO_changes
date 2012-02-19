@@ -33,7 +33,7 @@ import de.hattrickorganizer.tools.PlayerHelper;
 /**
  *
  */
-public final class SpielerLabelEntry implements TableEntry {
+public final class SpielerLabelEntry implements IHOTableEntry {
  
     //~ Instance fields ----------------------------------------------------------------------------
 

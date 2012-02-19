@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import plugins.IHOTableEntry;
 
 
-public class TorLabelEntry implements TableEntry {
+public class TorLabelEntry implements IHOTableEntry {
 
     private static ImageIcon BALLIMAGEICON;
 
