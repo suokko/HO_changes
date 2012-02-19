@@ -19,7 +19,9 @@ import java.util.Locale;
 import java.util.Vector;
 
 import plugins.IFutureTrainingWeek;
+import plugins.IHOMiniModel;
 import plugins.IMatchHighlight;
+import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
 import plugins.IPaarung;
 import plugins.ISpieler;
@@ -1047,6 +1049,9 @@ public class DBManager {
 	
 	//	------------------------------- MatchesKurzInfoTable -------------------------------------------------
 
+	public void updateMatch(int matchId) {
+        updateMatchLineup(getMatchLineup(matchId));
+    }
 	/**
 	 * Ist das Match schon in der Datenbank vorhanden?
 	 *
@@ -1553,14 +1558,6 @@ public class DBManager {
 	//	-------------------------------- Statistik Part --------------------------------
 	//	--------------------------------------------------------------------------------
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param anzahlHRF TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double[][] getSpielerDaten4Statistik(int spielerId, int anzahlHRF) {
 		return StatisticQuery.getSpielerDaten4Statistik(spielerId,anzahlHRF);
 	}
@@ -1662,8 +1659,8 @@ public class DBManager {
 
 			//Alle Daten zu dem Spieler holen
 			while (rs.next()) {
-				final de.hattrickorganizer.gui.model.SpielerMatchCBItem temp =
-					new de.hattrickorganizer.gui.model.SpielerMatchCBItem(
+				final SpielerMatchCBItem temp =
+					new SpielerMatchCBItem(
 						null,
 						rs.getInt("MatchID"),
 						rs.getFloat("Rating") * 2,
@@ -1689,15 +1686,7 @@ public class DBManager {
 
 			//Die Spielerdaten zu den Matches holen
 			for (int i = 0; i < tempSpielerMatchCBItems.size(); i++) {
-				final de.hattrickorganizer.gui.model.SpielerMatchCBItem item =
-					(
-						de
-							.hattrickorganizer
-							.gui
-							.model
-							.SpielerMatchCBItem) tempSpielerMatchCBItems
-							.get(
-						i);
+				final SpielerMatchCBItem item =	tempSpielerMatchCBItems.get(i);
 				try {
 					datum = simpleFormat.parse(item.getMatchdate());
 				} catch (Exception e1) {
