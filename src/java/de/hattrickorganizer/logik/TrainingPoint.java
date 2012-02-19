@@ -22,7 +22,7 @@ import plugins.ITrainingWeek;
  *
  * @author Draghetto HO
  */
-public class TrainingPoint implements ITrainingPoint {
+class TrainingPoint implements ITrainingPoint {
 	/**
 	 * Private class to represent a single match for the training,
 	 * it consists of a minutes/value pair

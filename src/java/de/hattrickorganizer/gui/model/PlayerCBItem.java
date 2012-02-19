@@ -1,6 +1,6 @@
 package de.hattrickorganizer.gui.model;
 
-import de.hattrickorganizer.gui.templates.TableEntry;
+import plugins.IHOTableEntry;
 
 /**
  * show a value from a SpielerMatchCBItem
@@ -26,7 +26,7 @@ class PlayerCBItem extends UserColumn {
 	 * @param spielerCBItem
 	 * @return
 	 */
-	public TableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
+	public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 		return null;
 	}
 }

@@ -14,7 +14,7 @@ import plugins.IHOTableEntry;
 /**
  * Progress bar as table cell.
  */
-public class ProgressbarTableEntry implements TableEntry {
+public class ProgressbarTableEntry implements IHOTableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private Color m_clBGColor = Color.WHITE;

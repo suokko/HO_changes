@@ -11,12 +11,12 @@ import plugins.IHOTableEntry;
 /**
  * Ein Panel mit zwei Labels, um zwei Werte in einer Spalte anzuzeigen ( Wert, Verbesserung )
  */
-public class DoppelLabelEntry implements TableEntry {
+public class DoppelLabelEntry implements IHOTableEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private DoppelLabel m_clComponent = new DoppelLabel();
-    private TableEntry m_clLinks;
-    private TableEntry m_clRechts;
+    private IHOTableEntry m_clLinks;
+    private IHOTableEntry m_clRechts;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ public class DoppelLabelEntry implements TableEntry {
      * Creates a new DoppelLabelEntry object.
      *
      */
-    public DoppelLabelEntry(TableEntry links, TableEntry rechts) {
+    public DoppelLabelEntry(IHOTableEntry links, IHOTableEntry rechts) {
         m_clLinks = links;
         m_clRechts = rechts;
         createComponent();
@@ -62,7 +62,7 @@ public class DoppelLabelEntry implements TableEntry {
         return m_clComponent;
     }
 
-    public final void setLabels(TableEntry links, TableEntry rechts) {
+    public final void setLabels(IHOTableEntry links, IHOTableEntry rechts) {
         m_clLinks = links;
         m_clRechts = rechts;
         updateComponent();
@@ -84,11 +84,11 @@ public class DoppelLabelEntry implements TableEntry {
         return (ColorLabelEntry) m_clRechts;
     }
 
-    public final TableEntry getTableEntryLinks() {
+    public final IHOTableEntry getTableEntryLinks() {
         return m_clLinks;
     }
 
-    public final TableEntry getTableRechts() {
+    public final IHOTableEntry getTableRechts() {
         return m_clRechts;
     }
 

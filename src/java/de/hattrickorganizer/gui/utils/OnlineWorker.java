@@ -17,8 +17,8 @@ import ho.core.file.xml.XMLSpielplanParser;
 import ho.core.file.xml.xmlMatchArchivParser;
 import ho.core.file.xml.xmlMatchdetailsParser;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,14 +32,12 @@ import javax.swing.JOptionPane;
 import plugins.IMatchKurzInfo;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
-
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.InfoPanel;
 import de.hattrickorganizer.gui.lineup.AufstellungsVergleichHistoryPanel;
 import de.hattrickorganizer.gui.login.LoginWaitDialog;
 import de.hattrickorganizer.gui.model.AufstellungCBItem;
-import de.hattrickorganizer.logik.MatchUpdater;
-import de.hattrickorganizer.model.HOMiniModel;
+import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.model.HOModel;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.model.matches.MatchKurzInfo;
@@ -51,7 +49,6 @@ import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.Helper;
 import de.hattrickorganizer.tools.extension.FileExtensionManager;
-import de.hattrickorganizer.logik.TrainingsManager;
 
 /**
  * DOCUMENT ME!
@@ -349,8 +346,7 @@ public class OnlineWorker {
                 getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
                                matches[i].getGastID());
                 if (getMatchDetails(matches[i].getMatchID())) {
-                de.hattrickorganizer.logik.MatchUpdater.
-                	updateMatch(HOMiniModel.instance(), matches[i].getMatchID());
+                	DBManager.instance().updateMatch(matches[i].getMatchID());
                 }
                 else
                 	return false;
@@ -460,7 +456,7 @@ public class OnlineWorker {
 	                boolean retDetails = getMatchDetails(curMatchId);
 	                if (retDetails) {
 	                	HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails);
-	                	MatchUpdater.updateMatch(HOMiniModel.instance(),matches[i].getMatchID());
+	                	DBManager.instance().updateMatch(matches[i].getMatchID());
 	                }
 	                else {
 	                	bOK = false;
