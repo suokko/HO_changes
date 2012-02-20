@@ -1,6 +1,8 @@
 // %1605218128:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.gui.comp.table.TableSorter;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -20,7 +22,6 @@ import javax.swing.event.ListSelectionListener;
 
 import de.hattrickorganizer.gui.HOMainFrame;
 import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.model.Spieler;
 
 /**
@@ -106,7 +107,7 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		final int row = m_jtSpielerUebersichtTable.getSelectedRow();
 
 		if (row > -1) {
-			final de.hattrickorganizer.gui.utils.TableSorter model = m_jtSpielerUebersichtTable
+			final ho.core.gui.comp.table.TableSorter model = m_jtSpielerUebersichtTable
 					.getSorter();
 			m_jpSpielerDetailPanel.setSpieler(model.getSpieler(row));
 			m_jpSpielerTrainingsSimulatorPanel

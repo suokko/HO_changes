@@ -2,13 +2,13 @@
 package ho.module.playerOverview;
 
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.comp.table.TableSorter;
 
 import javax.swing.JTable;
 
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
 import de.hattrickorganizer.gui.model.ReduzedTableModel;
-import de.hattrickorganizer.gui.utils.TableSorter;
 
 
 /**

@@ -1,13 +1,14 @@
 // %1378604643:de.hattrickorganizer.gui.matchprediction%
 package ho.tool.matchPrediction;
 
+import ho.core.gui.comp.table.TableSorter;
+
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import plugins.IMatchResult;
 
 import de.hattrickorganizer.gui.model.MatchResultTableModel;
-import de.hattrickorganizer.gui.utils.TableSorter;
 
 class MatchResultTable extends JTable {
 	
@@ -37,7 +38,7 @@ class MatchResultTable extends JTable {
 			m_clTableModel = new MatchResultTableModel(matchresults,isHome);
 			m_clTableSorter = new TableSorter(m_clTableModel, 1, -1);
 
-			final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
+			final ho.core.gui.comp.table.ToolTipHeader header = new ho.core.gui.comp.table.ToolTipHeader(getColumnModel());
 			header.setToolTipStrings(MatchResultTableModel.columnNames);
 			header.setToolTipText("");
 			setTableHeader(header);

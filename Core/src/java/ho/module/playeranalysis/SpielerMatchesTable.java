@@ -2,6 +2,7 @@
 package ho.module.playeranalysis;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.table.TableSorter;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -9,7 +10,6 @@ import javax.swing.table.TableColumnModel;
 import de.hattrickorganizer.gui.model.PlayerAnalysisModel;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.gui.utils.TableSorter;
 
 
 /**
@@ -111,7 +111,7 @@ final class SpielerMatchesTable extends JTable {
 
             m_clTableSorter = new TableSorter(m_clTableModel, -1, -1);
 
-            final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
+            final ho.core.gui.comp.table.ToolTipHeader header = new ho.core.gui.comp.table.ToolTipHeader(getColumnModel());
             header.setToolTipStrings(m_clTableModel.getTooltips());
             header.setToolTipText("");
             setTableHeader(header);

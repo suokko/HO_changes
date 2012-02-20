@@ -1,11 +1,12 @@
 // %932302465:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.gui.comp.table.TableSorter;
+
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.model.PlayerOverviewModel;
-import de.hattrickorganizer.gui.utils.TableSorter;
 
 
 /**
