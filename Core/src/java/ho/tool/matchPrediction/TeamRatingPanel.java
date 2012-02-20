@@ -1,5 +1,8 @@
 // %1301666028:de.hattrickorganizer.gui.matchprediction%
-package de.hattrickorganizer.gui.matchprediction;
+package ho.tool.matchPrediction;
+
+import ho.tool.matchPrediction.engine.TeamData;
+import ho.tool.matchPrediction.engine.TeamRatings;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,18 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IMatchDetails;
-import de.hattrickorganizer.logik.matchengine.TeamData;
-import de.hattrickorganizer.logik.matchengine.TeamRatings;
 import de.hattrickorganizer.model.HOVerwaltung;
+import de.hattrickorganizer.model.matches.Matchdetails;
 import de.hattrickorganizer.tools.PlayerHelper;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class TeamRatingPanel extends JPanel implements ItemListener {
+class TeamRatingPanel extends JPanel implements ItemListener {
 	private static final long serialVersionUID = -6238120571629957579L;
     //~ Instance fields ----------------------------------------------------------------------------
 	private GridBagConstraints m_clConstraints;
@@ -39,12 +36,7 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * Creates a new TeamRatingPanel object.
-     *
-     * @param team TODO Missing Constructuor Parameter Documentation
-     */
-    public TeamRatingPanel(plugins.IMPTeamData team) {
+    TeamRatingPanel(plugins.IMPTeamData team) {
         super();
         teamName = team.getTeamName();
         initLevel();
@@ -108,14 +100,7 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         setOpaque(false);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param teamdata TODO Missing Method Parameter Documentation
-     */
-    public final void setTeamData(plugins.IMPTeamData teamdata) {
+    final void setTeamData(plugins.IMPTeamData teamdata) {
         teamName = teamdata.getTeamName();
 
         final TeamRatings ratings = (TeamRatings) teamdata.getRatings();
@@ -158,12 +143,7 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         values[6][1].setSelectedIndex(subLvl);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final TeamData getTeamData() {
+    final TeamData getTeamData() {
         final TeamRatings rat = new TeamRatings();
         rat.setMidfield(getValue(0));
         rat.setLeftDef(getValue(1));
@@ -178,11 +158,6 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         return teamData;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(ItemEvent e) {
         //Taktik
         if (values[7][0].getSelectedItem() instanceof RatingItem
@@ -193,25 +168,12 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private double getValue(int row) {
         final int lvl = values[row][0].getSelectedIndex();
         final int subLvl = values[row][1].getSelectedIndex();
         return (lvl * 4) + subLvl + 1;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param d TODO Missing Method Parameter Documentation
-     * @param zone TODO Missing Method Parameter Documentation
-     */
     private void addLine(double d, String zone) {
         m_clConstraints.gridx = 0;
         m_clConstraints.gridy = row;
@@ -231,9 +193,6 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         row++;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initLevel() {
         subLevels = new ArrayList<RatingItem>();
 
@@ -244,9 +203,6 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         subLevels.add(new RatingItem(verwaltung.getLanguageString("veryhigh"), 3));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initSubLevel() {
         levels = new ArrayList<RatingItem>();
 
@@ -255,24 +211,14 @@ public class TeamRatingPanel extends JPanel implements ItemListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initTactics() {
         tactics = new ArrayList<RatingItem>();
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL),
-                                   IMatchDetails.TAKTIK_NORMAL));
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING),
-                                   IMatchDetails.TAKTIK_PRESSING));
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_KONTER),
-                                   IMatchDetails.TAKTIK_KONTER));
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE),
-                                   IMatchDetails.TAKTIK_MIDDLE));
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS),
-                                   IMatchDetails.TAKTIK_WINGS));
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE),
-                                   IMatchDetails.TAKTIK_CREATIVE));
-        tactics.add(new RatingItem(de.hattrickorganizer.model.matches.Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS),
-                                   IMatchDetails.TAKTIK_LONGSHOTS));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL),IMatchDetails.TAKTIK_NORMAL));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING),IMatchDetails.TAKTIK_PRESSING));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_KONTER), IMatchDetails.TAKTIK_KONTER));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE),IMatchDetails.TAKTIK_MIDDLE));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS), IMatchDetails.TAKTIK_WINGS));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE),IMatchDetails.TAKTIK_CREATIVE));
+        tactics.add(new RatingItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS), IMatchDetails.TAKTIK_LONGSHOTS));
     }
 }

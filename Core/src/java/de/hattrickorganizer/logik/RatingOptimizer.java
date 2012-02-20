@@ -8,6 +8,7 @@
 package de.hattrickorganizer.logik;
 
 import ho.core.db.DBManager;
+import ho.core.file.xml.MatchExporter;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -20,7 +21,6 @@ import plugins.IRatingPredictionManager;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Lineup;
 import de.hattrickorganizer.prediction.RatingPredictionConfig;
