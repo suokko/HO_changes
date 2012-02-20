@@ -95,7 +95,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(15);
             m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),m_htTeamdetails.get("TeamID").toString());
             waitDialog.setValue(20);
-            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(),m_htTeamdetails.get("LeagueID").toString());
+            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(Integer.parseInt(m_htTeamdetails.get("LeagueID").toString())),m_htTeamdetails.get("LeagueID").toString());
             waitDialog.setValue(25);
             m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1).toString());
             waitDialog.setValue(30);

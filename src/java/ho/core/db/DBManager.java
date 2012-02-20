@@ -3,6 +3,7 @@ package ho.core.db;
 
 import gui.UserParameter;
 import ho.core.db.backup.BackupDialog;
+import ho.core.model.WorldDetailLeague;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.scout.ScoutEintrag;
@@ -210,6 +211,7 @@ public class DBManager {
 		tables.put(ModuleConfigTable.TABLENAME, new ModuleConfigTable(adapter));
 		tables.put(TAFavoriteTable.TABLENAME, new TAFavoriteTable(adapter));
 		tables.put(TAPlayerTable.TABLENAME, new TAPlayerTable(adapter));
+		tables.put(WorldDetailsTable.TABLENAME, new WorldDetailsTable(adapter));
 
 	}
 
@@ -1552,8 +1554,27 @@ public class DBManager {
 	 public void setTransferType(int playerId, int type) {
 		 ((TransferTypeTable)getTable(TransferTypeTable.TABLENAME)).setTransferType(playerId, type);
 	 }
+	 // WorldDetail
+	
+	 WorldDetailLeague getWorldDetailLeagueByLeagueId(int leagueId){
+		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getWorldDetailLeagueByLeagueId(leagueId);
+	 }
 	 
+	 WorldDetailLeague getWorldDetailLeagueByCountryId(int countryId){
+		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getWorldDetailLeagueByCountryId(countryId);
+	 }
 	 
+	 WorldDetailLeague[] getAllWorldDetailLeagues(){
+		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getAllWorldDetailLeagues();
+	 }
+	 
+	 void saveWorldDetailLeagues(WorldDetailLeague[] leagues){
+		 WorldDetailsTable table = (WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME);
+		 table.truncateTable();
+		 for (int i = 0; i < leagues.length; i++) {
+			table.insertWorldDetailsLeague(leagues[i]);
+		}
+	 }
 	//	--------------------------------------------------------------------------------
 	//	-------------------------------- Statistik Part --------------------------------
 	//	--------------------------------------------------------------------------------
