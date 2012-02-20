@@ -3,13 +3,13 @@ package ho.module.transfer.scout;
 
 import ho.core.db.DBManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.comp.table.ToolTipHeader;
 
 import javax.swing.JTable;
 
 import de.hattrickorganizer.gui.RefreshManager;
 import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.utils.TableSorter;
-import de.hattrickorganizer.gui.utils.ToolTipHeader;
 import de.hattrickorganizer.tools.Helper;
 
 
