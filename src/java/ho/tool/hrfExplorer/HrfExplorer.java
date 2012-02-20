@@ -99,7 +99,6 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 	private JButton m_Button_ImportList = null;
 	private JButton m_Button_Select_All = null;
 	private JButton m_Button_reset = null;
-	private JButton m_Button_help = null;
 	private JButton m_Button_Month_Forward = null;
 	private JButton m_Button_Month_Back = null;
 	private JButton m_Button_GoTo = null;
@@ -427,10 +426,6 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Button_reset.setToolTipText(hoV.getLanguageString("ttReset"));
         m_Button_reset.addActionListener(this);
         
-        m_Button_help = new JButton(hoV.getLanguageString("btHelp"));
-        m_Button_help.setToolTipText(hoV.getLanguageString("ttHelp"));
-        m_Button_help.addActionListener(this);
-        
         m_Button_Delete_Row = new JButton(hoV.getLanguageString("btRemove"));
         m_Button_Delete_Row.setToolTipText(hoV.getLanguageString("ttRemove"));
         m_Button_Delete_Row.addActionListener(this);
@@ -529,7 +524,6 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Panel_FileTable_main_north.add(m_Button_delete_db);
         m_Panel_FileTable_main_north.add(m_Button_Delete_Row);
         m_Panel_FileTable_main_north.add(m_Button_Select_All);
-        m_Panel_FileTable_main_north.add(m_Button_help);
         
         m_Panel_FileTable_main.add(m_Panel_FileTable_main_north,BorderLayout.NORTH);
         m_Panel_FileTable_main.add(m_ScrollPane_FileTable,BorderLayout.CENTER);
@@ -562,7 +556,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_SplitPane_top_left = new JSplitPane(JSplitPane.VERTICAL_SPLIT,m_Panel_Calendar_main,m_Panel_Imports_main);
         m_SplitPane_top = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,m_SplitPane_top_left,m_Panel_FileTable_main);
 		m_SplitPane_main = new JSplitPane(JSplitPane.VERTICAL_SPLIT,m_SplitPane_top,m_Panel_Details_main);
-        m_SplitPane_main.setDividerLocation(400);
+        m_SplitPane_main.setDividerLocation(350);
         m_SplitPane_top.setDividerLocation(340);
         m_SplitPane_top_left.setDividerLocation(220);
         
@@ -1321,31 +1315,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 			m_Table_Imports.revalidate();
 			m_Table_Imports.repaint();
 		}
-		else if(e.getSource().equals(m_Button_help))
-		{
-//			JFrame helpFrame = new JFrame("Help for plugin 'PlayerCompare'");
-//	        
-//	        JTextArea helpArea = new JTextArea();
-//	        Vector zeilen = new Vector();
-//	        for(int ii = 1; ii <= 11; ii++)
-//	        {
-//	        	helpArea.append(hoV.getLanguageString(("zeile" + ii)) + "\n");
-//	        }
-//	        helpArea.append("\n\nThis plugin \u00A9 by KickMuck, Manager of Schwarz-Rot Langenbach(VI.683), home of the pirates");
-//	        if(m_Language_ID != 1 && m_Language_ID != 2)
-//	        {
-//	        	helpArea.append("\n" + hoV.getLanguageString("UebersetzungIn") + ", thanx a lot!!!");
-//	        }
-//	        helpArea.setEditable(false);
-//            helpArea.setLineWrap(true);
-//            helpArea.setWrapStyleWord(true);
-//            
-//            JScrollPane helpSP = new JScrollPane(helpArea);
-//            helpSP.setPreferredSize(new Dimension(250, 500));
-//            helpFrame.getContentPane().add(helpSP, "Center");
-//            helpFrame.setSize(700, 400);
-//            helpFrame.show();
-		}
+		
     }
 	
 	/*****************

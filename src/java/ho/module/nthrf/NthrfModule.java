@@ -19,7 +19,6 @@ public class NthrfModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Nthrf";
 	}
 
