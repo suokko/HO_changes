@@ -1,6 +1,7 @@
 package ho.module.matches.statistics;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.table.ToolTipHeader;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -10,7 +11,6 @@ import plugins.ISpielePanel;
 import de.hattrickorganizer.gui.model.MatchesOverviewColumnModel;
 import de.hattrickorganizer.gui.model.UserColumn;
 import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.gui.utils.ToolTipHeader;
 import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 import de.hattrickorganizer.tools.Helper;
 

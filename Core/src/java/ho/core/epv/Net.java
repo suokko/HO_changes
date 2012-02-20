@@ -1,4 +1,4 @@
-package de.hattrickorganizer.prediction.rjmlp;
+package ho.core.epv;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Christian Erpelding <flattermannHO@gmail.com>
  *
  */
-public class Net {
+class Net {
 	private static final int INVALID = 0;
 	private static final int INPUT_NORM = 1;
 	private static final int OUTPUT_NORM = 2;
@@ -38,28 +38,27 @@ public class Net {
 	ArrayList<Layer> allLayers;
 	boolean classifyOutputs = false;
 	
-	public Net (String structure) {
+	Net (String structure) {
 		this.structure = structure;
 		initStruct ();
 	}
 
-	public Net (String structure, String filename) {
+	Net (String structure, String filename) {
 		this (structure);
 		loadWeights(filename);
 	}
 
-	public double calculate (double inputPar[]) {
+	double calculate (double inputPar[]) {
 		return calculate(0, inputPar);
 	}
 
-	public double calculate (String outvarName, double[] inputPar) {
+	double calculate (String outvarName, double[] inputPar) {
 		int index = getOutParIndex(outvarName);
 		if (index >= 0)
 			return calculate(index, inputPar);
-		else {
-			System.out.println ("Net: Output parameter name not found: "+outvarName);
-			return 0;
-		}
+		System.out.println ("Net: Output parameter name not found: "+outvarName);
+		return 0;
+
 	}
 	
 	public double calculate (int index, double[]inputPar) {
@@ -69,10 +68,10 @@ public class Net {
 			
 			// calc output
 			return getOutputLayer().getNeuron(index).calculate();
-		} else {
-			System.out.println ("Net: Wrong number of input parameters");
-			return 0;
-		}
+		} 
+		System.out.println ("Net: Wrong number of input parameters");
+		return 0;
+
 	}
 
 	public double calculate (int index, Map<?, ?> inputMap) {
@@ -92,10 +91,8 @@ public class Net {
 		int index = getOutParIndex(outvarName);
 		if (index >= 0)
 			return calculate(index, inputMap);
-		else {
-			System.out.println ("Net: Output parameter name not found: "+outvarName);
-			return 0;
-		}
+		System.out.println ("Net: Output parameter name not found: "+outvarName);
+		return 0;
 	}
 
 	private int getOutParIndex (String name) {
@@ -136,8 +133,7 @@ public class Net {
 	private Layer getLastLayer () {
 		if (allLayers.size() > 0)
 			return allLayers.get(allLayers.size()-1);
-		else
-			return null;
+		return null;
 	}
 	
 	private void addLayer (int type, int numNeurons) {

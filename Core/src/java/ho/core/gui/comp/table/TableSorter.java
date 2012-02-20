@@ -1,5 +1,5 @@
 // %649934645:de.hattrickorganizer.gui.utils%
-package de.hattrickorganizer.gui.utils;
+package ho.core.gui.comp.table;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,34 +15,22 @@ import plugins.IHOTableEntry;
 import de.hattrickorganizer.gui.model.LineupColumnModel;
 import de.hattrickorganizer.gui.model.PlayerOverviewModel;
 import de.hattrickorganizer.gui.templates.ColorLabelEntry;
+import de.hattrickorganizer.model.Spieler;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class TableSorter extends TableMap {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
+public class TableSorter extends TableMap {
+
 	private static final long serialVersionUID = 1132334126127788944L;
 	private Vector<Integer> sortingColumns;
     private int[] indexes;
     private boolean ascending;
-    private int compares;
+
     private int currentColumn;
     private int idSpalte;
     private int m_iInitSortColumnIndex = -1;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new TableSorter object.
-     */
     public TableSorter() {
         sortingColumns = new Vector<Integer>();
         ascending = false;
@@ -50,13 +38,6 @@ public class TableSorter extends TableMap {
         indexes = new int[0];
     }
 
-    /**
-     * Creates a new TableSorter object.
-     *
-     * @param tablemodel TODO Missing Constructuor Parameter Documentation
-     * @param idSpalte TODO Missing Constructuor Parameter Documentation
-     * @param initsortcolumnindex TODO Missing Constructuor Parameter Documentation
-     */
     public TableSorter(TableModel tablemodel, int idSpalte, int initsortcolumnindex) {
         this.idSpalte = idSpalte;
         this.m_iInitSortColumnIndex = initsortcolumnindex;
@@ -66,26 +47,12 @@ public class TableSorter extends TableMap {
         setModel(tablemodel);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param tablemodel TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void setModel(TableModel tablemodel) {
         super.setModel(tablemodel);
         reallocateIndexes();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param matchid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getRow4Match(int matchid) {
         if (matchid > 0) {
             for (int i = 0; i < getRowCount(); i++) {
@@ -104,13 +71,6 @@ public class TableSorter extends TableMap {
         return -1;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spielerid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getRow4Spieler(int spielerid) {
         //Kann < 0 für Tempspieler sein if ( spielerid > 0 )
         if (spielerid != 0) {
@@ -132,13 +92,6 @@ public class TableSorter extends TableMap {
         return -1;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final ho.module.transfer.scout.ScoutEintrag getScoutEintrag(int row) {
         if (row > -1) {
             try {
@@ -153,14 +106,8 @@ public class TableSorter extends TableMap {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final de.hattrickorganizer.model.Spieler getSpieler(int row) {
+
+    public final Spieler getSpieler(int row) {
         if (row > -1) {
             try {
             	final int id = Integer.parseInt(((ColorLabelEntry) getValueAt(row,idSpalte)).getText());
@@ -182,30 +129,13 @@ public class TableSorter extends TableMap {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     * @param i TODO Missing Method Parameter Documentation
-     * @param j TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void setValueAt(Object obj, int i, int j) {
-        checkModel();
         model.setValueAt(obj, indexes[i], j);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     * @param j TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final Object getValueAt(int i, int j) {
-        checkModel();
 
         if ((i < 0) || (j < 0)) {
             return null;
@@ -215,11 +145,6 @@ public class TableSorter extends TableMap {
        
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param jtable TODO Missing Method Parameter Documentation
-     */
     public final void addMouseListenerToHeaderInTable(JTable jtable) {
         final TableSorter sorter = this;
         final JTable tableView = jtable;
@@ -255,29 +180,10 @@ public class TableSorter extends TableMap {
         jtableheader.addMouseListener(mouseadapter);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    private void checkModel() {
-        //        if(indexes.length != model.getRowCount())
-        //        {
-        //            //Problem###
-        //        }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     * @param j TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int compare(int i, int j) {
-        compares++;
 
         for (int k = 0; k < sortingColumns.size(); k++) {
-            final Integer integer = (Integer) sortingColumns.elementAt(k);
+            final Integer integer = sortingColumns.elementAt(k);
             final int l = compareRowsByColumn(i, j, integer.intValue());
 
             if (l != 0) {
@@ -288,15 +194,6 @@ public class TableSorter extends TableMap {
         return 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     * @param j TODO Missing Method Parameter Documentation
-     * @param k TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private final int compareRowsByColumn(int i, int j, int k) {
         final Object obj = model.getValueAt(i, k);
         final Object obj1 = model.getValueAt(j, k);
@@ -334,9 +231,6 @@ public class TableSorter extends TableMap {
         
     }
 
-    /**
-     * Sortierung am Anfang beim Erstellen der Tabelle und bei Modeländerungen
-     */
     public final void initsort() {
         //InitSortColumnIndex
         if (m_iInitSortColumnIndex > 0) {
@@ -346,22 +240,7 @@ public class TableSorter extends TableMap {
         }
     }
 
-//    /**
-//     * TODO Missing Method Documentation
-//     */
-//    public final void n2sort() {
-//        for (int i = 0; i < getRowCount(); i++) {
-//            for (int j = i + 1; j < getRowCount(); j++) {
-//                if (compare(indexes[i], indexes[j]) == -1) {
-//                    swap(i, j);
-//                }
-//            }
-//        }
-//    }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void reallocateIndexes() {
         final int i = model.getRowCount();
         indexes = new int[i];
@@ -371,14 +250,6 @@ public class TableSorter extends TableMap {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param ai TODO Missing Method Parameter Documentation
-     * @param ai1 TODO Missing Method Parameter Documentation
-     * @param i TODO Missing Method Parameter Documentation
-     * @param j TODO Missing Method Parameter Documentation
-     */
     public final void shuttlesort(int[] ai, int[] ai1, int i, int j) {
         if ((j - i) < 2) {
             return;
@@ -408,58 +279,15 @@ public class TableSorter extends TableMap {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     */
-    private final void sort(Object obj) {
-        checkModel();
-        compares = 0;
-        shuttlesort(indexes.clone(), indexes, 0, indexes.length);
-    }
-
-//    /**
-//     * TODO Missing Method Documentation
-//     *
-//     * @param i TODO Missing Method Parameter Documentation
-//     */
-//    public final void sortByColumn(int i) {
-//        sortByColumn(i, true);
-//    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     * @param flag TODO Missing Method Parameter Documentation
-     */
     private final void sortByColumn(int i, boolean flag) {
         ascending = flag;
         currentColumn = i;
         sortingColumns.removeAllElements();
         sortingColumns.addElement(Integer.valueOf(i));
-        sort(this);
+        shuttlesort(indexes.clone(), indexes, 0, indexes.length);
         super.tableChanged(new TableModelEvent(this));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     * @param j TODO Missing Method Parameter Documentation
-     */
-/*    private final void swap(int i, int j) {
-        int k = indexes[i];
-        indexes[i] = indexes[j];
-        indexes[j] = k;
-    }*/
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param tablemodelevent TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void tableChanged(TableModelEvent tablemodelevent) {
         reallocateIndexes();

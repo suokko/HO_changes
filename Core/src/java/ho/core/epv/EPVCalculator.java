@@ -1,13 +1,13 @@
-package de.hattrickorganizer.prediction;
+package ho.core.epv;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 import plugins.IEPVData;
-import de.hattrickorganizer.prediction.rjmlp.Net;
 import de.hattrickorganizer.tools.Helper;
 
-public class EPVCalculator
+class EPVCalculator
 {
 
     private static EPVCalculator epvCalculator = null;
@@ -20,7 +20,7 @@ public class EPVCalculator
 //    	System.out.println(neuronalNetwork.toString());
     }
 
-    public static EPVCalculator getInstance() {
+    static EPVCalculator getInstance() {
         if (epvCalculator == null)
             epvCalculator = new EPVCalculator();
         return epvCalculator;
@@ -31,7 +31,7 @@ public class EPVCalculator
     	inputMap.put("age", new Double(age-17));
     }
 
-    public final double getPrice (IEPVData iepvdata, int week, double currencyRate) {
+    final double getPrice (IEPVData iepvdata, int week, double currencyRate) {
     	Map<String,Double> inputMap = new HashMap<String,Double>();
     	inputMap.put("age", new Double(iepvdata.getAge() + iepvdata.getAgeDays()/112d));
     	inputMap.put("fo", new Double(iepvdata.getForm()));

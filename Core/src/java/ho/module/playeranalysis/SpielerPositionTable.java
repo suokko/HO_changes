@@ -1,11 +1,12 @@
 // %2655100108:de.hattrickorganizer.gui.playeranalysis%
 package ho.module.playeranalysis;
 
+import ho.core.gui.comp.table.TableSorter;
+
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.hattrickorganizer.gui.model.SpielerPositionTableModel;
-import de.hattrickorganizer.gui.utils.TableSorter;
 import de.hattrickorganizer.tools.Helper;
 
 
@@ -76,7 +77,7 @@ final class SpielerPositionTable extends JTable {
                                                                                                   .getAlleBewertungen(m_iSpielerId));
             m_clTableSorter = new TableSorter(m_clTableModel, -1, -1);
 
-            final de.hattrickorganizer.gui.utils.ToolTipHeader header = new de.hattrickorganizer.gui.utils.ToolTipHeader(getColumnModel());
+            final ho.core.gui.comp.table.ToolTipHeader header = new ho.core.gui.comp.table.ToolTipHeader(getColumnModel());
             header.setToolTipStrings(m_clTableModel.m_sToolTipStrings);
             header.setToolTipText("");
             setTableHeader(header);

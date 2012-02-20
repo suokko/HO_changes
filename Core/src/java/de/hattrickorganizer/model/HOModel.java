@@ -2,6 +2,7 @@
 package de.hattrickorganizer.model;
 
 import ho.core.db.DBManager;
+import ho.core.epv.EPV;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.Timestamp;
@@ -17,7 +18,6 @@ import plugins.IHelper;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
 import plugins.IVerein;
-import de.hattrickorganizer.logik.EPV;
 import de.hattrickorganizer.logik.TrainingsManager;
 import de.hattrickorganizer.logik.TrainingsWeekManager;
 import de.hattrickorganizer.model.matchlist.Spielplan;
