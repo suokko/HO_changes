@@ -1,12 +1,8 @@
-package de.hattrickorganizer.logik.matchengine.engine.common;
+package ho.tool.matchPrediction.engine;
 
 import plugins.IMPActions;
 import plugins.IMatchResult;
 
-/**
- * @author Draghetto
- *
- */
 public class MatchResult implements IMatchResult {
 
 	private int[] resultDetail = new int[25];

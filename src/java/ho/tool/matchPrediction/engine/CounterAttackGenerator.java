@@ -1,24 +1,14 @@
-// %1844304500:de.hattrickorganizer.logik.matchengine.engine.core%
-package de.hattrickorganizer.logik.matchengine.engine.core;
+package ho.tool.matchPrediction.engine;
 
-import de.hattrickorganizer.logik.matchengine.TeamData;
-import de.hattrickorganizer.logik.matchengine.engine.common.Action;
-import de.hattrickorganizer.logik.matchengine.engine.common.TeamGameData;
 
 import plugins.IMatchDetails;
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class CounterAttackGenerator extends BaseActionGenerator {
-	//~ Methods ------------------------------------------------------------------------------------
+class CounterAttackGenerator extends BaseActionGenerator {
 
 	private int home = 0;
 	private int away = 0;
 
-	public CounterAttackGenerator(TeamData homeTeamData, TeamData awayTeamData) {
+	CounterAttackGenerator(TeamData homeTeamData, TeamData awayTeamData) {
 		home = getCounterAction(homeTeamData, awayTeamData);
 		away = getCounterAction(awayTeamData, homeTeamData);
 	}
@@ -60,13 +50,6 @@ public class CounterAttackGenerator extends BaseActionGenerator {
 		return ca;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param team TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	private int getCounterAction(TeamData homeTeamData, TeamData awayTeamData) {
 		if (homeTeamData.getTacticType() != IMatchDetails.TAKTIK_KONTER) {
 			return 0;

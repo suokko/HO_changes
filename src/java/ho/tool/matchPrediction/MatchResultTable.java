@@ -1,5 +1,5 @@
 // %1378604643:de.hattrickorganizer.gui.matchprediction%
-package de.hattrickorganizer.gui.matchprediction;
+package ho.tool.matchPrediction;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -9,28 +9,14 @@ import plugins.IMatchResult;
 import de.hattrickorganizer.gui.model.MatchResultTableModel;
 import de.hattrickorganizer.gui.utils.TableSorter;
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class MatchResultTable extends JTable {
+class MatchResultTable extends JTable {
 	
 	private static final long serialVersionUID = 8245352979596154576L;
 	
-	//~ Instance fields ----------------------------------------------------------------------------
-
 	private MatchResultTableModel m_clTableModel;
 	private TableSorter m_clTableSorter;
 
-	//~ Constructors -------------------------------------------------------------------------------
-
-	/**
-	 * Creates a new MatchPredictionSpieleTable object.
-	 *
-	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
-	 */
-	public MatchResultTable(IMatchResult matchresults,boolean isHome) {
+	MatchResultTable(IMatchResult matchresults,boolean isHome) {
 		super();
 		initModel(matchresults,isHome);
 		setDefaultRenderer(java.lang.Object.class, new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
@@ -38,35 +24,12 @@ public class MatchResultTable extends JTable {
 		setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 	}
 
-	//~ Methods ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public final TableSorter getSorter() {
-		return m_clTableSorter;
-	}
-
-	//----------------Refresh-------------------------------------------
-
-	/**
-	 * DOCUMENT ME!
-	 *
-	 * @param vErgebnisse Die Typen der Matches ( Im SpielePanel definiert )
-	 */
 	public final void refresh(IMatchResult matchresults,boolean isHome) {
 		initModel(matchresults,isHome);
 
 		repaint();
 	}
 
-	/**
-	 * Initialisiert das Model
-	 *
-	 * @param vErgebnisse Die Typen der Matches ( Im SpielePanel definiert )
-	 */
 	private void initModel(IMatchResult matchresults,boolean isHome) {
 		setOpaque(false);
 

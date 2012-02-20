@@ -99,7 +99,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
 
     public JPanel createMatchPredictionPanel(plugins.IMPTeamData hometeam,
                                              plugins.IMPTeamData guestteam) {
-        return new de.hattrickorganizer.gui.matchprediction.MatchEnginePanel(hometeam, guestteam);
+        return new ho.tool.matchPrediction.MatchEnginePanel(hometeam, guestteam);
     }
 
     public plugins.IHOTableEntry createPlayerTableEntry(plugins.ISpieler player, int positionid,

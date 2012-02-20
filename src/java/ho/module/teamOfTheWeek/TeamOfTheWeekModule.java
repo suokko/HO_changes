@@ -22,7 +22,7 @@ public class TeamOfTheWeekModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		return HOVerwaltung.instance().getLanguageString("bestOfWeek");
+		return HOVerwaltung.instance().getLanguageString("Tab_TeamOfTheWeek");
 	}
 
 	@Override

@@ -4,10 +4,8 @@
  *
  * Created on 22. Dezember 2004, 14:01
  */
-package de.hattrickorganizer.logik.matchengine;
+package ho.tool.matchPrediction.engine;
 
-import de.hattrickorganizer.logik.matchengine.engine.common.MatchData;
-import de.hattrickorganizer.logik.matchengine.engine.common.MatchResult;
 
 import plugins.IMPActions;
 import plugins.IMPMatchData;

@@ -1,68 +1,35 @@
-// %2530051946:de.hattrickorganizer.logik.matchengine.engine.common%
-package de.hattrickorganizer.logik.matchengine.engine.common;
+package ho.tool.matchPrediction.engine;
 
-import de.hattrickorganizer.logik.matchengine.TeamData;
-import de.hattrickorganizer.logik.matchengine.engine.core.ActionGenerator;
 import de.hattrickorganizer.tools.HOLogger;
 
 import plugins.IMPActions;
 import plugins.IMatchDetails;
 
+
 import java.util.List;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class MatchData implements plugins.IMPMatchData {
-    //~ Instance fields ----------------------------------------------------------------------------
+class MatchData implements plugins.IMPMatchData {
 
     private ActionGenerator generator = new ActionGenerator();
     private TeamData awayTeam;
     private TeamData homeTeam;
     private int minute;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new MatchData object.
-     *
-     * @param home TODO Missing Constructuor Parameter Documentation
-     * @param away TODO Missing Constructuor Parameter Documentation
-     */
-    public MatchData(TeamData home, TeamData away) {
+    MatchData(TeamData home, TeamData away) {
         homeTeam = home;
         awayTeam = away;
         generator.setTeams(homeTeam, awayTeam);
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final List<IMPActions> getAwayTeamActionList() {
         return awayTeam.getActions();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final List<IMPActions> getHomeTeamActionList() {
         return homeTeam.getActions();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final plugins.IMPActions[] advance() {
         final Action[] actions = generator.predict(minute);
 
@@ -80,11 +47,6 @@ public class MatchData implements plugins.IMPMatchData {
         return actions;
     }
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final plugins.IMPActions[] simulate() {
 		final Action[] actions = generator.simulate();
 		for (int i = 0; i < actions.length; i++) {
@@ -97,19 +59,12 @@ public class MatchData implements plugins.IMPMatchData {
 		}
 		return actions;
 	}
-    /**
-     * TODO Missing Method Documentation
-     */
+
     public final void recap() {
         printRecap(homeTeam);
         printRecap(awayTeam);
     }
 
-    /**
-     * toString methode: creates a String representation of the object
-     *
-     * @return the String representation
-     */
     @Override
 	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
@@ -122,11 +77,6 @@ public class MatchData implements plugins.IMPMatchData {
         return buffer.toString();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param team TODO Missing Method Parameter Documentation
-     */
     private void printRecap(TeamData team) {
         final List<IMPActions> actions = team.getActions();
         HOLogger.instance().log(getClass(),team.getTeamName());

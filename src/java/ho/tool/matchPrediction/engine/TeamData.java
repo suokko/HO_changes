@@ -1,5 +1,5 @@
 // %2070140242:de.hattrickorganizer.logik.matchengine%
-package de.hattrickorganizer.logik.matchengine;
+package ho.tool.matchPrediction.engine;
 
 import plugins.IMPActions;
 import plugins.IMPTeamRatings;

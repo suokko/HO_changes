@@ -10,6 +10,8 @@ import ho.core.module.IModule;
 import ho.module.matches.statistics.MatchesHighlightsTable;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 import ho.module.matches.statistics.MatchesOverviewTable;
+import ho.tool.matchPrediction.MatchEnginePanel;
+import ho.tool.matchPrediction.MatchPredictionDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -254,13 +256,9 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         		}
         		
                 String match = matchShortInfo.getHeimName() + " - " + matchShortInfo.getGastName();
-                JPanel matchPredictionPanel = HOMiniModel.instance().getGUI().createMatchPredictionPanel(homeTeamValues, awayTeamValues);
+                MatchEnginePanel matchPredictionPanel = (MatchEnginePanel)HOMiniModel.instance().getGUI().createMatchPredictionPanel(homeTeamValues, awayTeamValues);
 
-                JDialog d = new JDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
-                d.getContentPane().setLayout(new BorderLayout());
-                d.getContentPane().add(matchPredictionPanel, BorderLayout.CENTER);
-                d.setResizable(true);
-                d.setSize(900, 600);
+                MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel);
                 d.setTitle(match);
                 d.setVisible(true);
         	}

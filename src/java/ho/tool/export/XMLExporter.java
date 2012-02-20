@@ -4,6 +4,8 @@ package ho.tool.export;
 import ho.core.db.DBManager;
 import ho.core.db.backup.HOZip;
 import ho.core.file.ExampleFileFilter;
+import ho.core.file.xml.ExportMatchData;
+import ho.core.file.xml.MatchExporter;
 import ho.core.file.xml.XMLManager;
 
 import java.awt.BorderLayout;
@@ -32,8 +34,6 @@ import plugins.IMatchLineupTeam;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import de.hattrickorganizer.logik.exporter.ExportMatchData;
-import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.model.HOMiniModel;
 import de.hattrickorganizer.model.Team;
 import de.hattrickorganizer.prediction.RatingPredictionManager;
