@@ -64,7 +64,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 	private final static String VERSION_MATCHLINEUP = "1.6";
 	private final static String VERSION_PLAYERS = "2.1";
 	private final static String VERSION_PLAYERDETAILS = "2.0";
-
+	private final static String VERSION_WORLDDETAILS = "1.4";
+	
 	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
 	// ~ Instance fields
@@ -484,9 +485,10 @@ public class MyConnector implements plugins.IDownloadHelper {
 	/**
 	 * holt die Weltdaten
 	 */
-	public String getWorldDetails() throws IOException {
-		final String url = htUrl + "?file=worlddetails";
-
+	public String getWorldDetails(int leagueId) throws IOException {
+		String url = htUrl + "?file=worlddetails&version=" + VERSION_WORLDDETAILS;
+		if(leagueId > 0)
+			url +="&leagueID="+leagueId;
 		return getCHPPWebFile(url);
 	}
 
