@@ -27,7 +27,7 @@ public class NthrfMenu extends JMenu {
 	 * Create a new Feedback menu.
 	 */
 	private void initialize() {
-    	JMenuItem about = new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFDownload"));
+    	JMenuItem about = new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFDownload")+"(Nthrf)");
         about.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent ev) {
         		JOptionPane.showMessageDialog(HOMainFrame.instance(), MainPanel.getInstance(),

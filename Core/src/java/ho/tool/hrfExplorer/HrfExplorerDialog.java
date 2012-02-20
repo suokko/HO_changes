@@ -1,6 +1,7 @@
 package ho.tool.hrfExplorer;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -17,12 +18,22 @@ public class HrfExplorerDialog extends JDialog {
 	}
 
 	private void initialize() {
-		setSize(1024,768);
+		setSize(1024,668);
 		setLayout(new BorderLayout());
-		setTitle(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
+		setTitle(HOVerwaltung.instance().getLanguageString("HrfExplorer"));
 		
 		add(new HrfExplorer(),BorderLayout.CENTER);
 		
 	}
 
+	@Override
+	public void setSize(int width, int height) {  
+	   super.setSize(width, height);  
+		    
+	   Dimension screenSize = getParent().getSize();  
+	   int x = (screenSize.width - getWidth()) / 2;  
+	   int y = (screenSize.height - getHeight()) / 2;  
+	    
+	   setLocation(getParent().getX()+x, getParent().getY()+y);     
+	}
 }
