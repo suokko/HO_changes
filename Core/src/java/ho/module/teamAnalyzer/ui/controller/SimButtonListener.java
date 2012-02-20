@@ -5,6 +5,9 @@ import ho.core.plugins.GUIPluginWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
 import ho.module.teamAnalyzer.ui.TeamLineupData;
+import ho.tool.matchPrediction.MatchEnginePanel;
+import ho.tool.matchPrediction.MatchPredictionDialog;
+import ho.tool.matchPrediction.engine.MatchPredictionManager;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -21,7 +24,6 @@ import plugins.IMPTeamRatings;
 import plugins.IMatchDetails;
 import plugins.IMatchPredictionManager;
 import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.logik.matchengine.MatchPredictionManager;
 import de.hattrickorganizer.model.HOVerwaltung;
 import de.hattrickorganizer.tools.HelperWrapper;
 
@@ -67,7 +69,6 @@ public class SimButtonListener implements ActionListener {
      * @param e the event
      */
     public void actionPerformed(ActionEvent e) {
-    	System.out.println("SimButton");
         if ((myTeam.getMidfield() < 1) || (opponentTeam.getMidfield() < 1)) {
             JPanel pan = new JPanel();
 
@@ -102,30 +103,20 @@ public class SimButtonListener implements ActionListener {
         		opponentTeamRatings, getTacticType(recapPanel.getSelectedTacticType()),
         		getTacticSkill(recapPanel.getSelectedTacticSkill()));
 
-        JPanel matchPredictionPanel;
+        MatchEnginePanel matchPredictionPanel;
         String match = "";
 
         if (HOVerwaltung.instance().getModel().getAufstellung().getHeimspiel() == 1) {
-            matchPredictionPanel =
+            matchPredictionPanel = (MatchEnginePanel)
             	GUIPluginWrapper.instance().createMatchPredictionPanel(myTeamValues, opponentTeamValues);
             match = myTeamValues.getTeamName() + " - " + opponentTeamValues.getTeamName();
         } else {
-            matchPredictionPanel =
+            matchPredictionPanel = (MatchEnginePanel)
             		GUIPluginWrapper.instance().createMatchPredictionPanel(opponentTeamValues, myTeamValues);
             match = opponentTeamValues.getTeamName() + " - " + myTeamValues.getTeamName();
         }
 
-        JDialog d = new JDialog(HOMainFrame.instance());
-
-        d.getContentPane().setLayout(new BorderLayout());
-        d.getContentPane().add(matchPredictionPanel, BorderLayout.CENTER);
-        d.setResizable(true);
-        d.setSize(900, 600);
-        Dimension screenSize = HOMainFrame.instance().getSize();  
- 	   int x = (screenSize.width - d.getWidth()) / 2;  
- 	   int y = (screenSize.height - d.getHeight()) / 2;  
- 	    
- 	   d.setLocation(HOMainFrame.instance().getX()+x, HOMainFrame.instance().getY()+y); 
+        MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel);
         d.setTitle(match);
         d.setVisible(true);
     }

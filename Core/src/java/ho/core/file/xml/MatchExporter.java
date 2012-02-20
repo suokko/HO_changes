@@ -1,5 +1,5 @@
 // %1127327738353:hoplugins%
-package de.hattrickorganizer.logik.exporter;
+package ho.core.file.xml;
 
 import ho.core.db.DBManager;
 

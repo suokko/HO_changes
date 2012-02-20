@@ -2,6 +2,7 @@
 package de.hattrickorganizer.model;
 
 import ho.core.db.DBManager;
+import ho.core.file.xml.MatchExporter;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,6 @@ import plugins.ITrainingsManager;
 import plugins.IVerein;
 import plugins.IXtraData;
 import de.hattrickorganizer.logik.FutureTrainingManager;
-import de.hattrickorganizer.logik.exporter.MatchExporter;
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -229,7 +229,7 @@ public class HOMiniModel implements IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public IMatchPredictionManager getMatchPredictionManager() {
-        return de.hattrickorganizer.logik.matchengine.MatchPredictionManager.instance();
+        return ho.tool.matchPrediction.engine.MatchPredictionManager.instance();
     }
 
     /**

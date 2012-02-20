@@ -1,5 +1,5 @@
 // %3942717939:de.hattrickorganizer.gui.matchprediction%
-package de.hattrickorganizer.gui.matchprediction;
+package ho.tool.matchPrediction;
 
 import gui.HOColorName;
 import ho.core.gui.theme.ThemeManager;
@@ -21,14 +21,8 @@ import plugins.IMatchResult;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class PredictPanel extends JPanel {
+class PredictPanel extends JPanel {
 	private static final long serialVersionUID = -9143223883848733076L;
-	//~ Instance fields ----------------------------------------------------------------------------
 
     private JLabel m_jlGesamtChancenGuest;
     private JLabel m_jlGesamtChancenHome;
@@ -63,44 +57,20 @@ public class PredictPanel extends JPanel {
     private JProgressBar m_jpbUnendschieden;
     private JProgressBar m_jpbVerloren;
 
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new PredictPanel object.
-     *
-     * @param hometeam TODO Missing Constructuor Parameter Documentation
-     * @param guestteam TODO Missing Constructuor Parameter Documentation
-     */
-    public PredictPanel(String hometeam, String guestteam) {
+    PredictPanel(String hometeam, String guestteam) {
         m_jlHomeTeam = new JLabel(hometeam, SwingConstants.CENTER);
         m_jlGuestTeam = new JLabel(guestteam, SwingConstants.CENTER);
         initComponents();
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param teamname TODO Missing Method Parameter Documentation
-     */
     public final void setGuestTeamName(String teamname) {
     	m_jlGuestTeam.setText(getShortenedTeamName(teamname));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param teamname TODO Missing Method Parameter Documentation
-     */
     public final void setHomeTeamName(String teamname) {
     	m_jlHomeTeam.setText(getShortenedTeamName(teamname));
     }
 
-    /**
-     * Get the shortened team name string, if it exceeds a certain length.
-     * Keep team ID intact.
-     */
     private String getShortenedTeamName(String in) {
 	    try {
 	    	if (in != null) {
@@ -121,21 +91,6 @@ public class PredictPanel extends JPanel {
     	return in;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param gewonnen TODO Missing Method Parameter Documentation
-     * @param unendschieden TODO Missing Method Parameter Documentation
-     * @param verloren TODO Missing Method Parameter Documentation
-     * @param HomeGoals TODO Missing Method Parameter Documentation
-     * @param HomeChances TODO Missing Method Parameter Documentation
-     * @param GuestGoals TODO Missing Method Parameter Documentation
-     * @param GuestChances TODO Missing Method Parameter Documentation
-     * @param HomeSuccess TODO Missing Method Parameter Documentation
-     * @param HomeFailed TODO Missing Method Parameter Documentation
-     * @param GuestSuccess TODO Missing Method Parameter Documentation
-     * @param GuestFailed TODO Missing Method Parameter Documentation
-     */
 	public final void refresh(IMatchResult mr) {
 
         m_jlGewonnen.setText(mr.getHomeWin() + "");
@@ -180,9 +135,6 @@ public class PredictPanel extends JPanel {
                                  + mr.getGuestSuccess()[0]));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setLayout(new BorderLayout());
         setBackground(ThemeManager.getColor(HOColorName.PANEL_BG));
