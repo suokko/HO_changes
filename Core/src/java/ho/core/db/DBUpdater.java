@@ -260,7 +260,7 @@ final class DBUpdater {
 			}
 		}
 		
-		
+		dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
 		dbZugriff.saveUserParameter("DBVersion", 12);
 	}
 

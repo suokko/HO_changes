@@ -73,32 +73,39 @@ public abstract class AbstractTable {
 	
 }
 	public void createTable() {
-		ColumnDescriptor[] columns = getColumns();
-		StringBuffer sql = new StringBuffer(500);
-		sql.append("CREATE ").append(getTableType());
-		sql.append(" TABLE ").append(getTableName());
-		sql.append("(");
+		ResultSet rs = adapter.executeQuery("SELECT * from "+getTableName());
+		
+		if( rs == null){
+			ColumnDescriptor[] columns = getColumns();
+			StringBuffer sql = new StringBuffer(500);
+			sql.append("CREATE ").append(getTableType());
+			sql.append(" TABLE ").append(getTableName());
+			sql.append("(");
 
-		for (int i = 0; i < columns.length; i++) {
-			try {
-				DBInfo dbInfo = adapter.getDBInfo();
-				sql.append(columns[i].getCreateString(dbInfo));
-			} catch (Exception e) {
-				HOLogger.instance().log(getClass(),e);
+			for (int i = 0; i < columns.length; i++) {
+				try {
+					DBInfo dbInfo = adapter.getDBInfo();
+					sql.append(columns[i].getCreateString(dbInfo));
+				} catch (Exception e) {
+					HOLogger.instance().log(getClass(),e);
+				}
+				if (i < columns.length - 1)
+					sql.append(",");
+				else
+					sql.append(" ");
 			}
-			if (i < columns.length - 1)
+		
+			String[] contraints = getConstraintStatements();
+			for (int i = 0; i < contraints.length; i++) {
 				sql.append(",");
-			else
-				sql.append(" ");
+				sql.append(contraints[i]);
+			}
+			sql.append(" ) ");
+		
+			adapter.executeUpdate(sql.toString());
+		
+			insertDefaultValues();
 		}
-		String[] contraints = getConstraintStatements();
-		for (int i = 0; i < contraints.length; i++) {
-			sql.append(",");
-			sql.append(contraints[i]);
-		}
-		sql.append(" ) ");
-		adapter.executeUpdate(sql.toString());
-		insertDefaultValues();
 	}
 	
 	protected ResultSet getSelectByHrfID(int hrfID) {

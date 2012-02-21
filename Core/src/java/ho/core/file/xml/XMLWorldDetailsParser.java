@@ -7,6 +7,9 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.WorldDetailLeague;
+
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.w3c.dom.Document;
@@ -17,35 +20,12 @@ import de.hattrickorganizer.model.MyHashtable;
 import de.hattrickorganizer.tools.HOLogger;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
-public class xmlWorldDetailsParser {
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new instance of xmlLeagureFixturesMiniParser
-     */
-    public xmlWorldDetailsParser() {
+class XMLWorldDetailsParser {
+ 
+    XMLWorldDetailsParser() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /////////////////////////////////////////////////////////////////////////////////    
-    //parse public
-    ////////////////////////////////////////////////////////////////////////////////    
-
-    /**
-     * parst die Welt Details
-     *
-     * @param inputStream xml Src
-     * @param leagueID ID der Liga die von Interesse ist
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final Hashtable<String,String> parseWorldDetailsFromString(String inputStream, String leagueID) {
+    final Hashtable<String,String> parseWorldDetailsFromString(String inputStream, String leagueID) {
         Document doc = null;
 
         doc = XMLManager.instance().parseString(inputStream);
@@ -53,19 +33,7 @@ public class xmlWorldDetailsParser {
         return parseDetails(doc, leagueID);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////       
-
-    /**
-     * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     * @param leagueID TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final Hashtable<String,String> parseDetails(Document doc, String leagueID) {
+    final Hashtable<String,String> parseDetails(Document doc, String leagueID) {
         Element ele = null;
         Element root = null;
         final MyHashtable hash = new MyHashtable();
@@ -130,5 +98,43 @@ public class xmlWorldDetailsParser {
         }
 
         return hash;
+    }
+    
+    final WorldDetailLeague[] parseDetails(Document doc) {
+    	Element ele = null;
+        Element root = null;
+        final ArrayList<WorldDetailLeague> arrayList = new ArrayList<WorldDetailLeague>();
+        NodeList list = null;
+        String tempLeagueID = null;
+        XMLManager xml = XMLManager.instance();
+        if (doc == null) {
+            return new WorldDetailLeague[0];
+        }
+
+        //Tabelle erstellen
+        root = doc.getDocumentElement();
+        
+        try {
+            root = (Element) root.getElementsByTagName("LeagueList").item(0);
+            list = root.getElementsByTagName("League");
+
+            for (int i = 0; (list != null) && (i < list.getLength()); i++) {
+                 root = (Element) list.item(i);
+                 WorldDetailLeague tmp = new WorldDetailLeague();
+                 ele = (Element) root.getElementsByTagName("LeagueID").item(0);
+                 tmp.setLeagueId(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
+                 ele = (Element) root.getElementsByTagName("EnglishName").item(0);
+                 tmp.setCountryName(xml.getFirstChildNodeValue(ele));
+                  root = (Element) root.getElementsByTagName("Country").item(0);
+                  ele = (Element) root.getElementsByTagName("CountryID").item(0);
+                  tmp.setCountryId(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
+                  arrayList.add(tmp);
+                }
+        } catch (Exception e) {
+            HOLogger.instance().log(getClass(),"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
+            HOLogger.instance().log(getClass(),e);
+        }
+
+        return arrayList.toArray(new WorldDetailLeague[arrayList.size()]);
     }
 }
