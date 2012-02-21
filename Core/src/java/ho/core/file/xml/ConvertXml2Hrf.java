@@ -4,20 +4,8 @@
  *
  * Created on 12. Januar 2004, 09:44
  */
-package de.hattrickorganizer.net;
+package ho.core.file.xml;
 
-import ho.core.file.xml.XMLArenaParser;
-import ho.core.file.xml.XMLClubParser;
-import ho.core.file.xml.XMLMatchLineupParser;
-import ho.core.file.xml.XMLMatchOrderParser;
-import ho.core.file.xml.XMLMatchesParser;
-import ho.core.file.xml.XMLTrainingParser;
-import ho.core.file.xml.xmlEconomyParser;
-import ho.core.file.xml.xmlLeagueDetailsParser;
-import ho.core.file.xml.xmlMatchdetailsParser;
-import ho.core.file.xml.xmlPlayersParser;
-import ho.core.file.xml.xmlTeamDetailsParser;
-import ho.core.file.xml.xmlWorldDetailsParser;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,6 +23,7 @@ import de.hattrickorganizer.model.matches.MatchKurzInfo;
 import de.hattrickorganizer.model.matches.MatchLineup;
 import de.hattrickorganizer.model.matches.MatchLineupTeam;
 import de.hattrickorganizer.model.matches.Matchdetails;
+import de.hattrickorganizer.net.MyConnector;
 import de.hattrickorganizer.tools.HOLogger;
 import de.hattrickorganizer.tools.PlayerHelper;
 
@@ -95,7 +84,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(15);
             m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),m_htTeamdetails.get("TeamID").toString());
             waitDialog.setValue(20);
-            m_htWorld = new xmlWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(Integer.parseInt(m_htTeamdetails.get("LeagueID").toString())),m_htTeamdetails.get("LeagueID").toString());
+            m_htWorld = new XMLWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(Integer.parseInt(m_htTeamdetails.get("LeagueID").toString())),m_htTeamdetails.get("LeagueID").toString());
             waitDialog.setValue(25);
             m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1).toString());
             waitDialog.setValue(30);
