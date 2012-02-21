@@ -1,6 +1,8 @@
 // %955353293:de.hattrickorganizer.tools.xml%
 package ho.core.file.xml;
 
+import ho.core.model.WorldDetailLeague;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -17,7 +19,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.IMatchLineup;
-
 import de.hattrickorganizer.tools.HOLogger;
 
 
@@ -277,8 +278,15 @@ public class XMLManager implements plugins.IXMLParser {
 	/**
 	 * Parse the worldDetails from the given xml string.
 	 */
+	public WorldDetailLeague[] parseWorldDetails(String worldDetails) {
+		return new XMLWorldDetailsParser().parseDetails(parseString(worldDetails));
+	}
+	
+	/**
+	 * Parse the worldDetails from the given xml string.
+	 */
 	public Hashtable<String,String> parseWorldDetails(String worldDetails, String leagueID) {
-		return new xmlWorldDetailsParser().parseWorldDetailsFromString(worldDetails, leagueID);
+		return new XMLWorldDetailsParser().parseWorldDetailsFromString(worldDetails, leagueID);
 	}
 
 	/**
