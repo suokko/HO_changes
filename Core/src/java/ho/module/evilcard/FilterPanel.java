@@ -85,7 +85,7 @@ public class FilterPanel extends ImagePanel implements ActionListener {
 //		//this.add(chooseMatchTypeComboBox);
 
 		JLabel choosePlayersLabel = new javax.swing.JLabel(HOVerwaltung
-				.instance().getLanguageString("label.ChoosePlayers"));
+				.instance().getLanguageString("Spieler"));
 		//choosePlayersLabel.setForeground(java.awt.Color.WHITE);
 		//choosePlayersLabel.setFont(new Font(choosePlayersLabel.getFont()
 		//		.getName(), Font.BOLD, 10));
@@ -97,7 +97,7 @@ public class FilterPanel extends ImagePanel implements ActionListener {
 		choosePlayersComboBox.addItem(HOVerwaltung.instance()
 				.getLanguageString("label.CurrentPlayersOnly"));
 		choosePlayersComboBox.addItem(HOVerwaltung.instance()
-				.getLanguageString("label.AllPlayers"));
+				.getLanguageString("alle"));
 //		choosePlayersComboBox.setSize(120, 25);
 		//choosePlayersComboBox.setLocation(25, 370);
 		choosePlayersComboBox.addActionListener(this);
