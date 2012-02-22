@@ -57,16 +57,16 @@ class PlayersTableModel extends AbstractTableModel {
         columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString("Ansehen");
         columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString("Aggressivitaet");
         columnNames[COL_HONESTY] = HOVerwaltung.instance().getLanguageString("Charakter");
-        columnNames[COL_CARDS] = HOVerwaltung.instance().getLanguageString("column.CardsTotal");
+        columnNames[COL_CARDS] = HOVerwaltung.instance().getLanguageString("Gesamt");
         columnNames[COL_DIRECT_RED_CARDS] = HOVerwaltung.instance().getLanguageString("column.RedCards");
-        columnNames[COL_WARNINGS] = HOVerwaltung.instance().getLanguageString("column.Warnings");
+        columnNames[COL_WARNINGS] = HOVerwaltung.instance().getLanguageString("GelbeKarten");
         columnNames[COL_WARNINGS_TYPE1] = HOVerwaltung.instance().getLanguageString("column.WarningType1");
         columnNames[COL_WARNINGS_TYPE2] = HOVerwaltung.instance().getLanguageString("column.WarningType2");
         columnNames[COL_WARNINGS_TYPE3] = HOVerwaltung.instance().getLanguageString("column.WarningType3");
         columnNames[COL_WARNINGS_TYPE4] = HOVerwaltung.instance().getLanguageString("column.WarningType4");
         columnNames[COL_RAW_AVERAGE] = HOVerwaltung.instance().getLanguageString("column.RawAverage");
         columnNames[COL_WEIGHTED_AVERAGE] = HOVerwaltung.instance().getLanguageString("column.WeightedAverage");
-        columnNames[COL_MATCHES] = HOVerwaltung.instance().getLanguageString("column.MatchCount");
+        columnNames[COL_MATCHES] = HOVerwaltung.instance().getLanguageString("Spiele_kurz");
 
         refresh(typePlayer);
     }
