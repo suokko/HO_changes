@@ -35,7 +35,7 @@ class DetailsTable extends JTable {
         columnToolTips[DetailsTableModel.COL_WARNINGS_TYPE2] = HOVerwaltung.instance().getLanguageString("tooltip.WarningType2");
         columnToolTips[DetailsTableModel.COL_WARNINGS_TYPE3] = HOVerwaltung.instance().getLanguageString("tooltip.WarningType3");
         columnToolTips[DetailsTableModel.COL_WARNINGS_TYPE4] = HOVerwaltung.instance().getLanguageString("tooltip.WarningType4");
-        columnToolTips[DetailsTableModel.COL_DIRECT_RED_CARDS] = HOVerwaltung.instance().getLanguageString("tooltip.RedCards");
+        columnToolTips[DetailsTableModel.COL_DIRECT_RED_CARDS] = HOVerwaltung.instance().getLanguageString("RoteKarten");
 
         detailsTableModel = new DetailsTableModel(0);
         this.setModel(new TableSorter(detailsTableModel));
