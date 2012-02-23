@@ -3,6 +3,7 @@ package ho.core.module;
 import gui.UserParameter;
 import ho.core.module.config.ModuleConfig;
 import ho.module.evilcard.EvilCardModule;
+import ho.module.ifa.IfaModule;
 import ho.module.matches.MatchesModule;
 import ho.module.misc.MiscModule;
 import ho.module.nthrf.NthrfModule;
@@ -57,6 +58,7 @@ public final class ModuleManager {
 		map.put(Integer.valueOf(IModule.TEAM_OF_THE_WEEK), new TeamOfTheWeekModule());
 		map.put(Integer.valueOf(IModule.NTHRF), new NthrfModule());
 		map.put(Integer.valueOf(IModule.EVIL_CARD), new EvilCardModule());
+		map.put(Integer.valueOf(IModule.IFA), new IfaModule());
 	}
 	
 	private void initialize(){
