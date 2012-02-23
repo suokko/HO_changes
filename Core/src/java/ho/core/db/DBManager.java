@@ -4,6 +4,7 @@ package ho.core.db;
 import gui.UserParameter;
 import ho.core.db.backup.BackupDialog;
 import ho.core.model.WorldDetailLeague;
+import ho.module.ifa.IfaMatch;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.scout.ScoutEintrag;
@@ -20,9 +21,7 @@ import java.util.Locale;
 import java.util.Vector;
 
 import plugins.IFutureTrainingWeek;
-import plugins.IHOMiniModel;
 import plugins.IMatchHighlight;
-import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
 import plugins.IPaarung;
 import plugins.ISpieler;
@@ -212,6 +211,7 @@ public class DBManager {
 		tables.put(TAFavoriteTable.TABLENAME, new TAFavoriteTable(adapter));
 		tables.put(TAPlayerTable.TABLENAME, new TAPlayerTable(adapter));
 		tables.put(WorldDetailsTable.TABLENAME, new WorldDetailsTable(adapter));
+		tables.put(IfaMatchTable.TABLENAME, new IfaMatchTable(adapter));
 
 	}
 
@@ -1554,17 +1554,9 @@ public class DBManager {
 	 public void setTransferType(int playerId, int type) {
 		 ((TransferTypeTable)getTable(TransferTypeTable.TABLENAME)).setTransferType(playerId, type);
 	 }
+	 
 	 // WorldDetail
-	
-	 WorldDetailLeague getWorldDetailLeagueByLeagueId(int leagueId){
-		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getWorldDetailLeagueByLeagueId(leagueId);
-	 }
-	 
-	 WorldDetailLeague getWorldDetailLeagueByCountryId(int countryId){
-		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getWorldDetailLeagueByCountryId(countryId);
-	 }
-	 
-	 WorldDetailLeague[] getAllWorldDetailLeagues(){
+	 public WorldDetailLeague[] getAllWorldDetailLeagues(){
 		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getAllWorldDetailLeagues();
 	 }
 	 
@@ -1917,6 +1909,32 @@ public class DBManager {
 	public void deleteOldPlayerInfos() {
 		((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).deleteOldPlayers();
 	}
+	
+	
+	public boolean isLeagueIDinDB(int leagueID, boolean homeAway) {
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).isLeagueIDinDB(leagueID, homeAway);
+	}
+	
+	public boolean isMatchinDB(int matchId) {
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).isMatchinDB(matchId);
+	}
+	
+	public String getLastIfaMatchDate() {
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getLastMatchDate();
+	}
+	
+	public Vector<Object[]> getIfaMatches(boolean home) {
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getMatches(home);
+	}
+	
+	
+	public void insertMatch(IfaMatch match){
+		((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).insertMatch(match);
+	}
+	
+	
+	
+	
 	/**
 	 * Alle \ entfernen
 	 */

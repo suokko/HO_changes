@@ -259,8 +259,13 @@ final class DBUpdater {
 				HOLogger.instance().warning(this.getClass(), e);
 			}
 		}
-		
+		m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_TEAM");
 		dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
+		rs = m_clJDBCAdapter.executeQuery("Select * from PLUGIN_IFA_MATCHES_2");
+		if(rs == null)
+			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
+		else
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "+IfaMatchTable.TABLENAME);	
 		dbZugriff.saveUserParameter("DBVersion", 12);
 	}
 
