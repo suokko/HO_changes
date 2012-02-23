@@ -48,20 +48,34 @@ class WorldDetailsTable extends AbstractTable {
 		StringBuilder statement = new StringBuilder(100);
 		statement.append("select * from ").append(getTableName()).append(" where ");
 		statement.append(columns[0].getColumnName()).append("=").append(leagueId);
-		return createObject(adapter.executeQuery(statement.toString()));
+		ResultSet rs = adapter.executeQuery(statement.toString());
+		try {
+			if(rs.next())
+				return createObject(rs);
+		} catch (SQLException e) {
+			HOLogger.instance().error(this.getClass(), e);
+		}
+		return null;
 	}
 	
 	WorldDetailLeague getWorldDetailLeagueByCountryId(int countryId){
 		StringBuilder statement = new StringBuilder(100);
 		statement.append("select * from ").append(getTableName()).append(" where ");
 		statement.append(columns[1].getColumnName()).append("=").append(countryId);
-		return createObject(adapter.executeQuery(statement.toString()));
+		ResultSet rs = adapter.executeQuery(statement.toString());
+		try {
+			if(rs.next())
+				return createObject(rs);
+		} catch (SQLException e) {
+			HOLogger.instance().error(this.getClass(), e);
+		}
+		return null;
 	}
 	
 	WorldDetailLeague[] getAllWorldDetailLeagues(){
 		ArrayList<WorldDetailLeague> tmp = new ArrayList<WorldDetailLeague>();
 		StringBuilder statement = new StringBuilder(100);
-		statement.append("select * from ").append(getTableName()).append(" order by 1 ");
+		statement.append("select * from ").append(getTableName());
 		ResultSet rs = adapter.executeQuery(statement.toString());
 		try {
 			while(rs.next()){
@@ -77,11 +91,9 @@ class WorldDetailsTable extends AbstractTable {
 		
 		WorldDetailLeague league = new WorldDetailLeague();
 		try {
-			if(rs.next()){
 				league.setLeagueId(rs.getInt(columns[0].getColumnName()));
 				league.setCountryId(rs.getInt(columns[1].getColumnName()));
 				league.setCountryName(DBManager.deleteEscapeSequences(rs.getString(columns[2].getColumnName())));
-			}
 		} catch (SQLException ex){
 			HOLogger.instance().error(this.getClass(), ex);
 		}
