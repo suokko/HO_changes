@@ -1,6 +1,7 @@
 package ho.module.teamAnalyzer.ui.controller;
 
 import gui.UserParameter;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.ReportManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
@@ -14,7 +15,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 /**
  * Listener for the recap panel.

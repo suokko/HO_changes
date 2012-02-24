@@ -6,10 +6,11 @@
  */
 package ho.module.series.model;
 
-import de.hattrickorganizer.tools.Helper;
 
 import plugins.ILigaTabelle;
 import plugins.ILigaTabellenEintrag;
+
+import ho.core.util.Helper;
 
 import java.util.Vector;
 

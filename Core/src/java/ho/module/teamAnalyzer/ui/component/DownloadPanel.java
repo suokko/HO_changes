@@ -2,6 +2,8 @@
 package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.ui.NumberTextField;
 
 import java.awt.BorderLayout;
@@ -13,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IMatchDetails;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

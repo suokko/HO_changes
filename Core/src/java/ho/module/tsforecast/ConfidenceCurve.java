@@ -15,13 +15,14 @@ package ho.module.tsforecast;
  * @author  michael.roux
  */
 
+import ho.core.model.HOVerwaltung;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 // Referenced classes of package hoplugins.tsforecast:
 //            Curve

@@ -1,5 +1,6 @@
 package ho.core.module.config;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.IModule;
 import ho.core.plugins.GUIPluginWrapper;
 
@@ -14,7 +15,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class ModuleConfigDialog extends JDialog implements ActionListener{
 

@@ -3,6 +3,8 @@ package ho.module.playerOverview;
 import gui.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -18,8 +20,6 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
-import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * Represents a single training block with start and end date

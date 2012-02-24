@@ -4,9 +4,10 @@ package ho.module.transfer;
 
 import plugins.ISpieler;
 
+import ho.core.model.HOVerwaltung;
+
 import java.sql.Timestamp;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

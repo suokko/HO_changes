@@ -218,7 +218,7 @@ public class Player {
         String info = "";
 
         if (getInjury() > 0) {
-            final String tmp = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_injury");
+            final String tmp = ho.core.model.HOVerwaltung.instance().getLanguageString("scout_injury");
             info = info + tmp.replaceAll("%weeks%", String.valueOf(getInjury())) + "\r\n";
         }
 

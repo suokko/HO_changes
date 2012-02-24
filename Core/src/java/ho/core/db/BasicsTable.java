@@ -1,13 +1,14 @@
 package ho.core.db;
 
+import ho.core.datatype.CBItem;
+import ho.core.model.Basics;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.model.Basics;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class BasicsTable extends AbstractTable {
 	final static String TABLENAME = "BASICS";
@@ -45,7 +46,7 @@ final class BasicsTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param basics TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveBasics(int hrfId, de.hattrickorganizer.model.Basics basics) {
+	void saveBasics(int hrfId, ho.core.model.Basics basics) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -130,14 +131,14 @@ final class BasicsTable extends AbstractTable {
 
 				while (rs.next()) {
 					hrfs.add(
-						new de.hattrickorganizer.gui.model.CBItem(
+						new ho.core.datatype.CBItem(
 							java.text.DateFormat.getDateTimeInstance().format(rs.getTimestamp("Datum"))
 								+ " ( "
-								+ de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Season")
+								+ ho.core.model.HOVerwaltung.instance().getLanguageString("Season")
 								+ " "
 								+ rs.getInt("Saison")
 								+ "  "
-								+ de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieltag")
+								+ ho.core.model.HOVerwaltung.instance().getLanguageString("Spieltag")
 								+ " "
 								+ rs.getInt("Spieltag")
 								+ " )",

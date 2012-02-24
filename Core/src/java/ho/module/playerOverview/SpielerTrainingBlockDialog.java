@@ -3,7 +3,11 @@ package ho.module.playerOverview;
 
 import gui.HOColorName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.util.HOLogger;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -22,10 +26,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Dialog to enter the training block dates for a player
@@ -77,7 +77,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		pack();
 
 		final Dimension size =
-			de.hattrickorganizer.gui.HOMainFrame.instance().getToolkit().getScreenSize();
+			ho.core.gui.HOMainFrame.instance().getToolkit().getScreenSize();
 
 		if (size.width > this.getSize().width) {
 			//Mittig positionieren
@@ -251,7 +251,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	 * Init the GUI components
 	 */
 	private void initComponents() {
-		setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());
+		setContentPane(new ho.core.gui.comp.panel.ImagePanel());
 
 		final GridBagLayout layout = new GridBagLayout();
 		final GridBagConstraints constraints = new GridBagConstraints();

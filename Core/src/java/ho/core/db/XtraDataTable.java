@@ -1,10 +1,11 @@
 package ho.core.db;
 
+import ho.core.model.XtraData;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
-import de.hattrickorganizer.model.XtraData;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class XtraDataTable extends AbstractTable {
 	final static String TABLENAME = "XTRADATA";

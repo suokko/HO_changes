@@ -1,5 +1,7 @@
 package ho.tool.dbcleanup;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -10,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 class WeekSelectionPanel extends JPanel implements ActionListener, FocusListener {
 

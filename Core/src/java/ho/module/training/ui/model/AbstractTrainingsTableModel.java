@@ -1,11 +1,12 @@
 // %1126721451323:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.model.HOVerwaltung;
+
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;

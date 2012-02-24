@@ -22,6 +22,8 @@ package ho.module.tsforecast;
  */
 
 
+import ho.core.model.HOVerwaltung;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -34,7 +36,6 @@ import java.util.Properties;
 import plugins.IBasics;
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 // Referenced classes of package hoplugins.tsforecast:
 //            Curve

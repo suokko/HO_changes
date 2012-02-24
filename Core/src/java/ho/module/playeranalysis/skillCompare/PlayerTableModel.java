@@ -8,10 +8,11 @@ package ho.module.playeranalysis.skillCompare;
 //import java.awt.*;
 //import javax.swing.*;
 
+import ho.core.model.HOVerwaltung;
+
 import javax.swing.table.DefaultTableModel;
 
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 class PlayerTableModel extends DefaultTableModel{
 

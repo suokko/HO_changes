@@ -1,14 +1,15 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.series.Paarung;
+import ho.module.series.Spielplan;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
 import plugins.IPaarung;
 
-import de.hattrickorganizer.model.matchlist.Paarung;
-import de.hattrickorganizer.model.matchlist.Spielplan;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class PaarungTable extends AbstractTable {
 

@@ -1,6 +1,11 @@
 // %4263391236:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.file.extension.PlayerCreator;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.training.FutureTrainingManager;
+import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
 
@@ -18,11 +23,6 @@ import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.logik.FutureTrainingManager;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
-import de.hattrickorganizer.tools.extension.PlayerCreator;
 
 
 /**

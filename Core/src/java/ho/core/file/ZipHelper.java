@@ -1,5 +1,7 @@
 package ho.core.file;
 
+import ho.core.util.HOLogger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,7 +12,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Utility class for handling ZipFiles.

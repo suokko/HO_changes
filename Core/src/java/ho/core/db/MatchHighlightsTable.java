@@ -1,13 +1,14 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchHighlight;
+import ho.module.matches.model.Matchdetails;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
 import plugins.IMatchHighlight;
-import de.hattrickorganizer.model.matches.MatchHighlight;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class MatchHighlightsTable extends AbstractTable {
 	final static String TABLENAME = "MATCHHIGHLIGHTS";

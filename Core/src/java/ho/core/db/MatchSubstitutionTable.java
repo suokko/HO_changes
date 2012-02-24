@@ -1,12 +1,13 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.lineup.substitution.Substitution;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
-import de.hattrickorganizer.model.lineup.Substitution;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class MatchSubstitutionTable extends AbstractTable {
 	/** tablename **/

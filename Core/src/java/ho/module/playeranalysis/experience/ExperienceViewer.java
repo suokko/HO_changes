@@ -1,5 +1,8 @@
 package ho.module.playeranalysis.experience;
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.ImagePanel;
+
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
@@ -7,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import plugins.IRefreshable;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.templates.ImagePanel;
 
 public class ExperienceViewer extends ImagePanel implements IRefreshable {
 

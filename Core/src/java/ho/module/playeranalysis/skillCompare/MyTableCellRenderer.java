@@ -7,6 +7,8 @@ import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,8 +24,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 import plugins.IXtraData;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 class MyTableCellRenderer  implements TableCellRenderer{
 

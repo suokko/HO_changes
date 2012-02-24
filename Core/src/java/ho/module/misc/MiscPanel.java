@@ -2,7 +2,11 @@
 package ho.module.misc;
 
 import gui.HOColorName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.Finanzen;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.PlayerHelper;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -15,10 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IVerein;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**

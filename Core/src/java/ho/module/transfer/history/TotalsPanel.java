@@ -2,6 +2,8 @@
 package ho.module.transfer.history;
 
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.module.transfer.ui.layout.TableLayout;
 
 import java.awt.BorderLayout;
@@ -13,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

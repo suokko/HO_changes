@@ -3,26 +3,26 @@ package ho.module.playerOverview;
 
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.comp.table.UserColumn;
+import ho.core.gui.model.PlayerOverviewModel;
+import ho.core.gui.model.UserColumnController;
+import ho.core.gui.model.UserColumnFactory;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.Helper;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.model.PlayerOverviewModel;
-import de.hattrickorganizer.gui.model.UserColumn;
-import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.gui.model.UserColumnFactory;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
 
 /**
  * The main player table.
  * 
  * @author Thorsten Dietz
  */
-public class PlayerOverviewTable extends JTable implements de.hattrickorganizer.gui.Refreshable {
+public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshable {
 
 	private static final long serialVersionUID = -6074136156090331418L;
 

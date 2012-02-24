@@ -2,13 +2,12 @@
 package ho.tool.matchPrediction;
 
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.util.Helper;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import plugins.IMatchResult;
-import de.hattrickorganizer.gui.model.MatchScoreTableModel;
-import de.hattrickorganizer.tools.Helper;
 
 class MatchScoreTable extends JTable {
 	

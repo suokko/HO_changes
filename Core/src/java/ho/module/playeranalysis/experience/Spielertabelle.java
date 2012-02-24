@@ -2,6 +2,8 @@ package ho.module.playeranalysis.experience;
 
 import gui.HOColorName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -34,8 +36,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 class Spielertabelle extends JTable {
 	private static final long serialVersionUID = 3117625304079832033L;

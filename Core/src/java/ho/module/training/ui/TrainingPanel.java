@@ -2,6 +2,8 @@
 package ho.module.training.ui;
 
 import gui.UserParameter;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -27,8 +29,6 @@ import javax.swing.table.TableCellEditor;
 
 import plugins.IFutureTrainingWeek;
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

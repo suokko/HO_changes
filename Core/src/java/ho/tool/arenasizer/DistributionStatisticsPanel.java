@@ -3,8 +3,14 @@ package ho.tool.arenasizer;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.model.ArenaStatistikModel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.Helper;
+import ho.tool.updater.TableModel;
 
 import java.awt.BorderLayout;
 import java.math.BigDecimal;
@@ -17,12 +23,6 @@ import javax.swing.table.TableColumnModel;
 
 import plugins.IHOTableEntry;
 import plugins.ISpielePanel;
-import de.hattrickorganizer.gui.model.ArenaStatistikModel;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.updater.TableModel;
 
 class DistributionStatisticsPanel extends JPanel {
 

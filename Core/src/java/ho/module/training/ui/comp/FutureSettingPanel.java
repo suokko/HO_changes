@@ -2,6 +2,7 @@
 package ho.module.training.ui.comp;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.training.TrainingPanel;
 import ho.module.training.Trainings;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -16,7 +17,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import plugins.IFutureTrainingWeek;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

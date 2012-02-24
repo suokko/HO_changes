@@ -1,6 +1,7 @@
 package ho.module.training;
 
 import gui.UserParameter;
+import ho.core.util.HOLogger;
 import ho.module.training.ui.MainPanel;
 import ho.module.training.ui.PlayerDetailPanel;
 import ho.module.training.ui.SkillupPanel;
@@ -14,7 +15,6 @@ import javax.swing.JSplitPane;
 
 import plugins.IRefreshable;
 import plugins.ISpieler;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class TrainingPanel extends JPanel implements IRefreshable {
     /** The currently selected player */

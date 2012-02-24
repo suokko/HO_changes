@@ -2,12 +2,12 @@
 package gui;
 
 import ho.core.db.DBManager;
+import ho.core.model.Configuration;
 
 import java.awt.Color;
 import java.util.HashMap;
 
 import plugins.ILineUp;
-import de.hattrickorganizer.model.Configuration;
 
 
 /**

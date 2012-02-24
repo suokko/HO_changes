@@ -3,6 +3,9 @@ package ho.module.specialEvents;
 import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -15,9 +18,6 @@ import javax.swing.ImageIcon;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 class SpecialEventsDM
 {

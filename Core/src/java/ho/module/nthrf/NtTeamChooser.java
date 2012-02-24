@@ -1,5 +1,7 @@
 package ho.module.nthrf;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 class NtTeamChooser extends JDialog implements ActionListener {
 

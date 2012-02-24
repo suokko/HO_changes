@@ -6,6 +6,8 @@ import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.LightGrayFilter;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,14 +31,12 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
  * Alle Spieler der Gruppe werden einer Gruppe zugeordnet
  */
-public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.ImagePanel
+public class RemoveGruppenPanel extends ho.core.gui.comp.panel.ImagePanel
     implements ActionListener
 {
 
@@ -214,7 +214,7 @@ public class RemoveGruppenPanel extends de.hattrickorganizer.gui.templates.Image
                 }
             }
 
-            de.hattrickorganizer.gui.HOMainFrame.instance().getAufstellungsPanel().update();
+            ho.core.gui.HOMainFrame.instance().getAufstellungsPanel().update();
 
             //gui.RefreshManager.instance ().doRefresh ();
         }

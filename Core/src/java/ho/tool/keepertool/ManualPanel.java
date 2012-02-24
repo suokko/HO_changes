@@ -1,8 +1,8 @@
 // %362946196:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
-import de.hattrickorganizer.model.HOMiniModel;
 
+import ho.core.model.HOMiniModel;
 import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
@@ -76,7 +76,7 @@ class ManualPanel extends JPanel {
         buttonPanel.add(tsi);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));
-        buttonPanel.add(label(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Form")));
+        buttonPanel.add(label(ho.core.model.HOVerwaltung.instance().getLanguageString("Form")));
         buttonPanel.add(form);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));
@@ -92,7 +92,7 @@ class ManualPanel extends JPanel {
                 }
             });
 
-        final JButton b = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
+        final JButton b = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
         b.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     final int tsiValue = Integer.parseInt(tsi.getText());

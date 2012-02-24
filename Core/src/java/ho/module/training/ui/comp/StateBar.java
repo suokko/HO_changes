@@ -1,13 +1,14 @@
 // %1126721451073:hoplugins.trainingExperience.ui.bar%
 package ho.module.training.ui.comp;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

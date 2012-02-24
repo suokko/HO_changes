@@ -55,7 +55,7 @@ public final class PrintController {
 
         //job.pageDialog(attributes);
         if (job.printDialog(attributes)) {
-            final de.hattrickorganizer.gui.login.LoginWaitDialog waitDialog = new de.hattrickorganizer.gui.login.LoginWaitDialog(de.hattrickorganizer.gui.HOMainFrame
+            final ho.core.net.login.LoginWaitDialog waitDialog = new ho.core.net.login.LoginWaitDialog(ho.core.gui.HOMainFrame
                                                                                                                                  .instance());
             waitDialog.setVisible(true);
 

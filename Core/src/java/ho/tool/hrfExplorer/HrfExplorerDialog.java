@@ -1,12 +1,13 @@
 package ho.tool.hrfExplorer;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class HrfExplorerDialog extends JDialog {
 	

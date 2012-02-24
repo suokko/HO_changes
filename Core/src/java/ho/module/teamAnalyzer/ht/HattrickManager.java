@@ -2,6 +2,10 @@
 package ho.module.teamAnalyzer.ht;
 
 import ho.core.file.xml.XMLManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.net.MyConnector;
+import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
@@ -19,10 +23,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import plugins.IXMLParser;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.net.MyConnector;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

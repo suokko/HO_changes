@@ -1,6 +1,8 @@
 package ho.module.playeranalysis.experience;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -12,8 +14,6 @@ import java.util.Iterator;
 
 import plugins.IMatchLineup;
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class Spieler {
 	static double fehlerAbsolutZuSigma = 0.66;

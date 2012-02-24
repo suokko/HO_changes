@@ -1,5 +1,10 @@
 package ho.core.db;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.module.matches.model.Matchdetails;
+import ho.module.matches.model.MatchesHighlightsStat;
+import ho.module.matches.model.MatchesOverviewRow;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 
 import java.sql.ResultSet;
@@ -9,11 +14,6 @@ import java.util.ArrayList;
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
-import de.hattrickorganizer.model.matches.MatchesOverviewRow;
-import de.hattrickorganizer.tools.HOLogger;
 
 class MatchesOverviewQuery  {
 	final static String KEY = "MatchesOverviewQuery";

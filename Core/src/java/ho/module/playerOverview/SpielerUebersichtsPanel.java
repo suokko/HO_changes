@@ -1,7 +1,10 @@
 // %1605218128:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.model.Spieler;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -20,9 +23,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.Spieler;
 
 /**
  * Bietet Übersicht über alle Spieler (main class of the package)
@@ -173,21 +173,21 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		JScrollPane scrollPane = new JScrollPane(m_jpSpielerDetailPanel);
 		scrollPane.getVerticalScrollBar().setBlockIncrement(100);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance()
+		tabbedPane.addTab(ho.core.model.HOVerwaltung.instance()
 				.getLanguageString("SpielerDetails"), scrollPane);
 
 		m_jpSpielerTrainingsSimulatorPanel = new SpielerTrainingsSimulatorPanel();
 		scrollPane = new JScrollPane(m_jpSpielerTrainingsSimulatorPanel);
 		scrollPane.getVerticalScrollBar().setBlockIncrement(100);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		tabbedPane.addTab(de.hattrickorganizer.model.HOVerwaltung.instance()
+		tabbedPane.addTab(ho.core.model.HOVerwaltung.instance()
 				.getLanguageString("Skilltester"), scrollPane);
 
 		return tabbedPane;
 	}
 
 	private Component initSpielerHistory() {
-		final JPanel panel = new de.hattrickorganizer.gui.templates.ImagePanel();
+		final JPanel panel = new ho.core.gui.comp.panel.ImagePanel();
 		panel.setLayout(new BorderLayout());
 		m_jpSpielerTrainingsVergleichsPanel = new SpielerTrainingsVergleichsPanel();
 

@@ -4,8 +4,19 @@ package ho.module.statistics;
 import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
+import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
+import ho.core.util.PlayerHelper;
+import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.Matchdetails;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,17 +43,6 @@ import plugins.IMatchLineupPlayer;
 import plugins.IRefreshable;
 import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.model.StatistikModel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 /**
  * Das StatistikPanel
@@ -247,7 +247,7 @@ public class SpieleStatistikPanel extends ImagePanel
     }
 
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
+        Helper.parseInt(ho.core.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 

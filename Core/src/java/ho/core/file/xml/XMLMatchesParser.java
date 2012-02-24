@@ -7,6 +7,10 @@
 package ho.core.file.xml;
 
 
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
+import ho.module.matches.model.MatchKurzInfo;
+
 import java.util.Vector;
 
 import org.w3c.dom.Document;
@@ -15,9 +19,6 @@ import org.w3c.dom.NodeList;
 
 import plugins.IMatchKurzInfo;
 
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**

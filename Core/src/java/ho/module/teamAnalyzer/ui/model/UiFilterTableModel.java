@@ -1,11 +1,12 @@
 // %511085336:hoplugins.teamAnalyzer.ui.model%
 package ho.module.teamAnalyzer.ui.model;
 
+import ho.core.gui.model.BaseTableModel;
+
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
-import de.hattrickorganizer.gui.model.BaseTableModel;
 
 
 /**

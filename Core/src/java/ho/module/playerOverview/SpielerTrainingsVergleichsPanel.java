@@ -2,7 +2,14 @@
 package ho.module.playerOverview;
 
 import gui.UserParameter;
+import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.AufstellungsListRenderer;
+import ho.core.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -20,13 +27,6 @@ import javax.swing.event.ListSelectionListener;
 
 import plugins.ISpieler;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.model.AufstellungsListRenderer;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

@@ -2,9 +2,34 @@
 package ho.core.db;
 
 import gui.UserParameter;
+import ho.core.datatype.CBItem;
 import ho.core.db.backup.BackupDialog;
+import ho.core.file.hrf.HRF;
+import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.model.ArenaStatistikTableModel;
+import ho.core.gui.model.SpielerMatchCBItem;
+import ho.core.model.Basics;
+import ho.core.model.FactorObject;
+import ho.core.model.Finanzen;
+import ho.core.model.HOModel;
+import ho.core.model.HOParameter;
+import ho.core.model.Spieler;
+import ho.core.model.Team;
 import ho.core.model.WorldDetailLeague;
+import ho.core.model.XtraData;
+import ho.core.training.TrainingPerWeek;
+import ho.core.util.HOLogger;
 import ho.module.ifa.IfaMatch;
+import ho.module.lineup.Lineup;
+import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
+import ho.module.matches.model.Matchdetails;
+import ho.module.matches.model.MatchesHighlightsStat;
+import ho.module.matches.model.MatchesOverviewRow;
+import ho.module.series.Spielplan;
+import ho.module.series.model.Liga;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.scout.ScoutEintrag;
@@ -28,31 +53,6 @@ import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 import plugins.IVerein;
-import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.model.HOColumnModel;
-import de.hattrickorganizer.gui.model.SpielerMatchCBItem;
-import de.hattrickorganizer.model.Basics;
-import de.hattrickorganizer.model.FactorObject;
-import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.model.HOModel;
-import de.hattrickorganizer.model.HOParameter;
-import de.hattrickorganizer.model.HRF;
-import de.hattrickorganizer.model.Liga;
-import de.hattrickorganizer.model.Lineup;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.Team;
-import de.hattrickorganizer.model.TrainingPerWeek;
-import de.hattrickorganizer.model.XtraData;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.model.matches.MatchLineupTeam;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
-import de.hattrickorganizer.model.matches.MatchesOverviewRow;
-import de.hattrickorganizer.model.matchlist.Spielplan;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * DOCUMENT ME!
@@ -746,7 +746,7 @@ public class DBManager {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param basics TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveBasics(int hrfId, de.hattrickorganizer.model.Basics basics) {
+	public void saveBasics(int hrfId, ho.core.model.Basics basics) {
 		((BasicsTable) getTable(BasicsTable.TABLENAME)).saveBasics(hrfId, basics);
 	}
 
@@ -1312,7 +1312,7 @@ public class DBManager {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	public void saveTraining(de.hattrickorganizer.model.TrainingPerWeek training) {
+	public void saveTraining(ho.core.training.TrainingPerWeek training) {
 		((TrainingsTable) getTable(TrainingsTable.TABLENAME)).saveTraining(training);
 	}
 
@@ -1714,11 +1714,11 @@ public class DBManager {
 				}
 
 				//Spieler
-				final de.hattrickorganizer.model.Spieler player =
+				final ho.core.model.Spieler player =
 					getSpielerAtDate(spielerid, filter);
 
 				//Matchdetails
-				final de.hattrickorganizer.model.matches.Matchdetails details =
+				final ho.module.matches.model.Matchdetails details =
 					getMatchDetails(item.getMatchID());
 
 				//Stimmung und Selbstvertrauen

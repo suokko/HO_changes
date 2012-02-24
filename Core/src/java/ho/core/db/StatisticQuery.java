@@ -1,5 +1,12 @@
 package ho.core.db;
 
+import ho.core.gui.model.ArenaStatistikModel;
+import ho.core.gui.model.ArenaStatistikTableModel;
+import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
+import ho.core.training.TrainingPerWeek;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -9,12 +16,6 @@ import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.gui.model.ArenaStatistikModel;
-import de.hattrickorganizer.gui.model.ArenaStatistikTableModel;
-import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.TrainingPerWeek;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class StatisticQuery {
 
@@ -161,7 +162,7 @@ public class StatisticQuery {
 
 			while (rs.next()) {
 				//Paarung auslesen
-				arenamodel = new de.hattrickorganizer.gui.model.ArenaStatistikModel();
+				arenamodel = new ho.core.gui.model.ArenaStatistikModel();
 				arenamodel.setMatchDate(rs.getString("SpielDatum"));
 				arenamodel.setGastName(DBManager.deleteEscapeSequences(rs.getString("GastName")));
 				arenamodel.setHeimName(DBManager.deleteEscapeSequences(rs.getString("HeimName")));

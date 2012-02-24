@@ -7,10 +7,11 @@
  */
 package ho.module.teamOfTheWeek;
 
+import ho.core.gui.comp.panel.RasenPanel;
+
 import java.awt.BorderLayout;
 
 import plugins.LineupPanel;
-import de.hattrickorganizer.gui.templates.RasenPanel;
 
 
 

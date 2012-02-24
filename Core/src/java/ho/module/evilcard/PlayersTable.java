@@ -1,12 +1,13 @@
 package ho.module.evilcard;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.JTableHeader;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 class PlayersTable extends JTable {

@@ -1,6 +1,7 @@
 // %3903747163:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
+import ho.core.file.extension.PlayerCreator;
 import ho.module.training.Skills;
 import ho.module.training.ui.TrainingLegendPanel;
 
@@ -9,7 +10,6 @@ import java.awt.Component;
 
 import javax.swing.JTable;
 
-import de.hattrickorganizer.tools.extension.PlayerCreator;
 
 
 /**

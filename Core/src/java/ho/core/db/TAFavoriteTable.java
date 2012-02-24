@@ -1,5 +1,6 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.vo.Team;
 
 import java.sql.ResultSet;
@@ -8,7 +9,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hattrickorganizer.tools.HOLogger;
 /**
  * The Table UserConfiguration contain all User properties.
  * CONFIG_KEY = Primary Key, fieldname of the class

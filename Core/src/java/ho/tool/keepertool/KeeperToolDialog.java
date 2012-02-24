@@ -1,8 +1,8 @@
 // %3415157064:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
@@ -167,16 +167,16 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
         final JPanel main = new JPanel(new BorderLayout());
         main.setOpaque(false);
 
-        rosterButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
+        rosterButton = new JRadioButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
         rosterButton.setSelected(true);
         rosterButton.addActionListener(this);
         rosterButton.setOpaque(false);
 
-        scoutButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TransferScout"));
+        scoutButton = new JRadioButton(ho.core.model.HOVerwaltung.instance().getLanguageString("TransferScout"));
         scoutButton.addActionListener(this);
         scoutButton.setOpaque(false);
 
-        final JRadioButton manualButton = new JRadioButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Manual"));
+        final JRadioButton manualButton = new JRadioButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Manual"));
         manualButton.addActionListener(this);
         manualButton.setOpaque(false);
 

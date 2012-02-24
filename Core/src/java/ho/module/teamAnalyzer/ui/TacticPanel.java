@@ -7,6 +7,8 @@
  */
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.model.BaseTableModel;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.report.TacticReport;
 
 import java.awt.BorderLayout;
@@ -23,8 +25,6 @@ import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
-import de.hattrickorganizer.gui.model.BaseTableModel;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

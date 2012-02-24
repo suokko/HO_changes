@@ -7,12 +7,12 @@
 package ho.core.file;
 
 import gui.UserParameter;
+import ho.HO;
+import ho.core.gui.HOMainFrame;
+import ho.core.util.HOLogger;
 
 import java.util.Vector;
 
-import de.hattrickorganizer.HO;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class LanguageFiles {
     //~ Constructors -------------------------------------------------------------------------------

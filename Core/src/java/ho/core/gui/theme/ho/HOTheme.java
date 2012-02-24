@@ -1,7 +1,9 @@
 package ho.core.gui.theme.ho;
 
 import gui.UserParameter;
+import ho.HO;
 import ho.core.gui.theme.FontUtil;
+import ho.core.util.HOLogger;
 
 import java.awt.Font;
 import java.util.Enumeration;
@@ -11,8 +13,6 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
 
-import de.hattrickorganizer.HO;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Theme configuring HO colors, fonts and sizes.

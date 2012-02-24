@@ -6,7 +6,7 @@
  */
 package ho.module.transfer.scout;
 
-import de.hattrickorganizer.tools.HOLogger;
+import ho.core.util.HOLogger;
 
 /**
  * DOCUMENT ME!

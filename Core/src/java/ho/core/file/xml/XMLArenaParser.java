@@ -7,12 +7,13 @@
 package ho.core.file.xml;
 
 
+import ho.core.util.HOLogger;
+
 import java.util.Hashtable;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -87,7 +88,7 @@ public class XMLArenaParser {
         Element ele = null;
         Element root = null;
         Element tmpRoot = null;
-        final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();
+        final ho.core.file.xml.MyHashtable hash = new ho.core.file.xml.MyHashtable();
 
         if (doc == null) {
             return hash;

@@ -1,7 +1,7 @@
 // %3237567999:de.hattrickorganizer.gui.injury.panel%
 package ho.tool.injury;
 
-import de.hattrickorganizer.model.HOVerwaltung;
+import ho.core.model.HOVerwaltung;
 
 
 /**

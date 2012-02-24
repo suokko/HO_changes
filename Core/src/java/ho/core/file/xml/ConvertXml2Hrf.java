@@ -7,6 +7,16 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.Team;
+import ho.core.net.MyConnector;
+import ho.core.net.login.LoginWaitDialog;
+import ho.core.util.HOLogger;
+import ho.core.util.PlayerHelper;
+import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupTeam;
+import ho.module.matches.model.Matchdetails;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,15 +27,6 @@ import java.util.Vector;
 
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
-import de.hattrickorganizer.gui.login.LoginWaitDialog;
-import de.hattrickorganizer.model.Team;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupTeam;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.net.MyConnector;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
@@ -117,14 +118,14 @@ public class ConvertXml2Hrf {
                 final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID()));
 
                 if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdetails.get("TeamID").toString())) {
-                    m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp.getHeim();
+                    m_clTeam = (ho.module.matches.model.MatchLineupTeam) m_clLineUp.getHeim();
 
                     if (md != null) {
                         m_iLastAttitude = md.getHomeEinstellung();
                         m_iLastTactic = md.getHomeTacticType();
                     }
                 } else {
-                    m_clTeam = (de.hattrickorganizer.model.matches.MatchLineupTeam) m_clLineUp.getGast();
+                    m_clTeam = (ho.module.matches.model.MatchLineupTeam) m_clLineUp.getGast();
 
                     if (md != null) {
                         m_iLastAttitude = md.getGuestEinstellung();
@@ -221,7 +222,7 @@ public class ConvertXml2Hrf {
     protected final void createBasics() throws Exception {
         m_sHRFBuffer.append("[basics]\n");
         m_sHRFBuffer.append("application=HO\n");
-        m_sHRFBuffer.append("appversion=" + de.hattrickorganizer.gui.HOMainFrame.VERSION + "\n");
+        m_sHRFBuffer.append("appversion=" + ho.core.gui.HOMainFrame.VERSION + "\n");
         m_sHRFBuffer.append("date=" + m_htTeamdetails.get("FetchedDate") + "\n");
         m_sHRFBuffer.append("season=" + m_htWorld.get("Season") + "\n");
         m_sHRFBuffer.append("matchround=" + m_htWorld.get("MatchRound") + "\n");

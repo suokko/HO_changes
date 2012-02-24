@@ -1,5 +1,8 @@
 package ho.module.specialEvents;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -9,8 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class SpecialEventsTable extends JTable {
 

@@ -1,6 +1,8 @@
 // %1329240092:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import ho.core.model.HOVerwaltung;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

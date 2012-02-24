@@ -2,6 +2,7 @@
 package ho.core.file.xml;
 
 import ho.core.model.WorldDetailLeague;
+import ho.core.util.HOLogger;
 
 import java.io.File;
 import java.io.InputStream;
@@ -19,7 +20,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.IMatchLineup;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

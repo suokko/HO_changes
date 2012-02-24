@@ -1,7 +1,7 @@
 // %2218737670:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
-import de.hattrickorganizer.tools.HelperWrapper;
+import ho.core.util.HelperWrapper;
 
 
 

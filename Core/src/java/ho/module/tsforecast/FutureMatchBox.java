@@ -17,6 +17,9 @@ package ho.module.tsforecast;
  * @author  michael.roux
  */
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -27,8 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 import plugins.IMatchDetails;
 

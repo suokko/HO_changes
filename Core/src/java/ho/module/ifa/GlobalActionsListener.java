@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+import ho.core.util.HOLogger;
 import ho.module.ifa.gif.Gif89Encoder;
 import ho.module.ifa.gif.Quantize;
 
@@ -24,7 +25,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 public class GlobalActionsListener extends MouseAdapter implements
 		ActionListener {

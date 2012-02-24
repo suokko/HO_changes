@@ -1,19 +1,19 @@
 // %3994494499:de.hattrickorganizer.gui.pluginWrapper%
 package ho.core.plugins;
 
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.net.login.LoginWaitDialog;
+import ho.core.util.HOLogger;
 
 import java.awt.Color;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.login.LoginWaitDialog;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -69,7 +69,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
     }
 
     public void addPlayerComboboxRenderer(javax.swing.JComboBox combobox) {
-        combobox.setRenderer(new de.hattrickorganizer.gui.model.SpielerCBItemRenderer());
+        combobox.setRenderer(new ho.core.gui.model.SpielerCBItemRenderer());
     }
 
     public void addTab(String name, JPanel panel) {
@@ -81,7 +81,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
     }
 
     public JPanel createBallPanel(int ballcount) {
-        return (JPanel) new de.hattrickorganizer.gui.templates.TorLabelEntry(ballcount)
+        return (JPanel) new ho.core.gui.comp.entry.TorLabelEntry(ballcount)
                .getComponent(false);
     }
 
@@ -90,11 +90,11 @@ public class GUIPluginWrapper implements plugins.IGUI {
     }
 
     public javax.swing.JPanel createGrassPanel() {
-        return new de.hattrickorganizer.gui.templates.RasenPanel();
+        return new ho.core.gui.comp.panel.RasenPanel();
     }
 
     public javax.swing.JPanel createImagePanel() {
-        return new de.hattrickorganizer.gui.templates.ImagePanel();
+        return new ho.core.gui.comp.panel.ImagePanel();
     }
 
     public JPanel createMatchPredictionPanel(plugins.IMPTeamData hometeam,
@@ -106,22 +106,22 @@ public class GUIPluginWrapper implements plugins.IGUI {
                                                         byte taktic, float positionvalue,
                                                         boolean showTrikot,
                                                         boolean showWeatherwarning) {
-        final de.hattrickorganizer.model.SpielerPosition spielerpos = new de.hattrickorganizer.model.SpielerPosition(positionid,
+        final ho.core.model.SpielerPosition spielerpos = new ho.core.model.SpielerPosition(positionid,
                                                                                                                      player
                                                                                                                      .getSpielerID(),
                                                                                                                      taktic);
-        return new de.hattrickorganizer.gui.templates.SpielerLabelEntry(player, spielerpos,
+        return new ho.core.gui.comp.entry.SpielerLabelEntry(player, spielerpos,
                                                                         positionvalue, showTrikot,
                                                                         showWeatherwarning);
     }
 
     public plugins.ISpielerComboboxItem createSpielerComboboxItem(String text, float posvalue,
                                                                   plugins.ISpieler player) {
-        return new de.hattrickorganizer.gui.model.SpielerCBItem(text, posvalue, player);
+        return new ho.core.gui.model.SpielerCBItem(text, posvalue, player);
     }
 
     public JPanel createStarPanel(int starcount, boolean yellowstar) {
-        return (JPanel) new de.hattrickorganizer.gui.templates.RatingTableEntry(starcount,
+        return (JPanel) new ho.core.gui.comp.entry.RatingTableEntry(starcount,
                                                                                 yellowstar)
                .getComponent(false);
     }

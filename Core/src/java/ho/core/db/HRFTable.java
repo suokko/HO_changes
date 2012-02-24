@@ -1,12 +1,13 @@
 package ho.core.db;
 
+import ho.core.file.hrf.HRF;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.HRF;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class HRFTable extends AbstractTable {
 

@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.controller.FavoriteItemListener;
 import ho.module.teamAnalyzer.vo.Team;
@@ -17,7 +18,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

@@ -1,11 +1,12 @@
 package ho.core.db;
 
+import ho.core.training.TrainingPerWeek;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.TrainingPerWeek;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class TrainingsTable extends AbstractTable {
 	final static String TABLENAME = "TRAINING";
@@ -30,7 +31,7 @@ final class TrainingsTable extends AbstractTable {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	void saveTraining(de.hattrickorganizer.model.TrainingPerWeek training) {
+	void saveTraining(ho.core.training.TrainingPerWeek training) {
 		if (training != null) {
 			final String[] awhereS = { "Week", "Year" };
 			final String[] awhereV = { "" + training.getWeek(), "" + training.getYear()};

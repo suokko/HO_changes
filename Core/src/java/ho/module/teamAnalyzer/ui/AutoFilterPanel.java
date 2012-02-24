@@ -6,6 +6,8 @@
  */
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.vo.Filter;
 
 import java.awt.BorderLayout;
@@ -17,8 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

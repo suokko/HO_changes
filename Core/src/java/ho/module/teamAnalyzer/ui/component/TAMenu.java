@@ -1,11 +1,11 @@
 package ho.module.teamAnalyzer.ui.component;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.ui.controller.DownloadItemListener;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class TAMenu extends JMenu {
 

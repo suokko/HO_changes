@@ -3,6 +3,11 @@ package ho.module.training.ui;
 
 
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.training.TrainingsManager;
+import ho.core.util.HelperWrapper;
 import ho.module.training.ui.model.OutputTableModel;
 import ho.module.training.ui.renderer.OutputTableRenderer;
 
@@ -19,11 +24,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.logik.TrainingsManager;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

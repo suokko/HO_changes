@@ -1,7 +1,7 @@
 // %4044085182:hoplugins.trainingExperience.constants%
 package ho.module.training;
 
-import de.hattrickorganizer.model.HOVerwaltung;
+import ho.core.model.HOVerwaltung;
 import plugins.IHOMiniModel;
 import plugins.ITeam;
 

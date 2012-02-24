@@ -1,7 +1,10 @@
 // %2588915486:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.comp.entry.RatingTableEntry;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.report.TacticReport;
@@ -19,9 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

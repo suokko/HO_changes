@@ -7,6 +7,9 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.Spieler;
+import ho.core.util.HOLogger;
+
 import java.sql.Timestamp;
 import java.util.Vector;
 
@@ -16,8 +19,6 @@ import org.w3c.dom.NodeList;
 
 import plugins.ISpieler;
 
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

@@ -1,5 +1,7 @@
 package ho.module.playeranalysis;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.playeranalysis.experience.ExperienceViewer;
 import ho.module.playeranalysis.skillCompare.PlayerComparePanel;
@@ -8,8 +10,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JTabbedPane;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class PlayerAnalysisPanel extends ImagePanel {
 

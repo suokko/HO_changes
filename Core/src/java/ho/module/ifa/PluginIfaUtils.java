@@ -2,9 +2,14 @@ package ho.module.ifa;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
+import ho.core.gui.HOMainFrame;
+import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
+import ho.core.net.MyConnector;
 import ho.core.plugins.GUIPluginWrapper;
+import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -23,11 +28,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.IDebugWindow;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.net.MyConnector;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 public class PluginIfaUtils {
 	public static final boolean HOME = true;

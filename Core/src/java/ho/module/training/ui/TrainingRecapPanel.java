@@ -1,6 +1,10 @@
 // %776182880:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.BaseTableModel;
+import ho.core.model.HOVerwaltung;
+import ho.core.training.FutureTrainingManager;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
@@ -24,10 +28,6 @@ import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.model.BaseTableModel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.logik.FutureTrainingManager;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

@@ -1,11 +1,12 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.series.model.Liga;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.Liga;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class LigaTable extends AbstractTable {
 
